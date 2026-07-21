@@ -16,6 +16,7 @@ import forge.game.card.CardFactoryUtil;
 import forge.game.card.perpetual.PerpetualKeywords;
 import forge.game.card.perpetual.PerpetualPTBoost;
 import forge.game.event.GameEventCardStatsChanged;
+import forge.game.keyword.KeywordInterface;
 import forge.game.player.PlayerCollection;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
@@ -56,10 +57,10 @@ public class PumpAllEffect extends SpellAbilityEffect {
             }
 
             if (!kws.isEmpty()) {
+                final List<KeywordInterface> appliedKws = tgtC.addChangedCardKeywords(kws, null, false, timestamp, null);
                 if (perpetual) {
-                    tgtC.addPerpetual(new PerpetualKeywords(timestamp, kws, null, false));
+                    tgtC.addPerpetual(new PerpetualKeywords(timestamp, kws, null, false, appliedKws));
                 }
-                tgtC.addChangedCardKeywords(kws, null, false, timestamp, null);
             }
             if (redrawPT) {
                 tgtC.updatePTforView();

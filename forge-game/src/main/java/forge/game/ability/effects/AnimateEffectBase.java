@@ -34,6 +34,7 @@ import forge.game.card.ICardTraitChanges;
 import forge.game.card.perpetual.*;
 import forge.game.event.GameEventCardStatsChanged;
 import forge.game.keyword.Keyword;
+import forge.game.keyword.KeywordInterface;
 import forge.game.replacement.ReplacementEffect;
 import forge.game.replacement.ReplacementHandler;
 import forge.game.spellability.AbilityStatic;
@@ -117,10 +118,10 @@ public abstract class AnimateEffectBase extends SpellAbilityEffect {
         }
 
         if (!keywords.isEmpty() || !removeKeywords.isEmpty() || removeAllKeywords) {
+            final List<KeywordInterface> appliedKeywords = c.addChangedCardKeywords(keywords, removeKeywords, removeAllKeywords, timestamp, null);
             if (perpetual) {
-                c.addPerpetual(new PerpetualKeywords(timestamp, keywords, removeKeywords, removeAllKeywords));
+                c.addPerpetual(new PerpetualKeywords(timestamp, keywords, removeKeywords, removeAllKeywords, appliedKeywords));
             }
-            c.addChangedCardKeywords(keywords, removeKeywords, removeAllKeywords, timestamp, null);
         }
 
         // do this after changing types in case it wasn't a creature before

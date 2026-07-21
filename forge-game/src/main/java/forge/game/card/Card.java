@@ -5031,11 +5031,11 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         getView().updateLethalDamage(this);
     }
 
-    public final void addChangedCardKeywords(final List<String> keywords, final List<String> removeKeywords,
+    public final List<KeywordInterface> addChangedCardKeywords(final List<String> keywords, final List<String> removeKeywords,
             final boolean removeAllKeywords, final long timestamp, final StaticAbility st) {
-        addChangedCardKeywords(keywords, removeKeywords, removeAllKeywords, timestamp, st, true);
+        return addChangedCardKeywords(keywords, removeKeywords, removeAllKeywords, timestamp, st, true);
     }
-    public final void addChangedCardKeywords(final List<String> keywords, final List<String> removeKeywords,
+    public final List<KeywordInterface> addChangedCardKeywords(final List<String> keywords, final List<String> removeKeywords,
             final boolean removeAllKeywords, final long timestamp, final StaticAbility st, final boolean updateView) {
         List<KeywordInterface> kws = Lists.newArrayList();
         if (keywords != null) {
@@ -5062,6 +5062,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         if (updateView) {
             updateKeywords();
         }
+        return kws;
     }
 
     public final KeywordInterface getKeywordForStaticAbility(String kw, final StaticAbility st, final long idx) {

@@ -20,6 +20,7 @@ import forge.game.card.CardUtil;
 import forge.game.card.perpetual.PerpetualKeywords;
 import forge.game.card.perpetual.PerpetualPTBoost;
 import forge.game.event.GameEventCardStatsChanged;
+import forge.game.keyword.KeywordInterface;
 import forge.game.player.Player;
 import forge.game.player.PlayerCollection;
 import forge.game.spellability.AbilitySub;
@@ -63,10 +64,10 @@ public class PumpEffect extends SpellAbilityEffect {
         }
 
         if (!kws.isEmpty()) {
+            final List<KeywordInterface> appliedKws = gameCard.addChangedCardKeywords(kws, Lists.newArrayList(), false, timestamp, null);
             if (perpetual) {
-                gameCard.addPerpetual(new PerpetualKeywords(timestamp, kws, Lists.newArrayList(), false));
+                gameCard.addPerpetual(new PerpetualKeywords(timestamp, kws, Lists.newArrayList(), false, appliedKws));
             }
-            gameCard.addChangedCardKeywords(kws, Lists.newArrayList(), false, timestamp, null);
         }
         if (!hiddenKws.isEmpty()) {
             gameCard.addHiddenExtrinsicKeywords(timestamp, 0, hiddenKws);
