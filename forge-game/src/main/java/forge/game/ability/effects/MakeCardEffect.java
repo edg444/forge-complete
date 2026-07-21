@@ -76,6 +76,40 @@ public class MakeCardEffect extends SpellAbilityEffect {
                 }
             } else if (sa.hasParam("Spellbook")) {
                 faces.addAll(parseFaces(sa, "Spellbook"));
+            } else if (sa.hasParam("RandomSet")) {
+                // Whole-edition pool (e.g. "Conjure a random instant or sorcery card from the X
+                // expansion") rather than a hand-curated Spellbook list. Pair with AtRandom$ True.
+                // Type restriction uses its own RandomSetTypes$ (comma-separated OR, e.g.
+                // "Instant,Sorcery") rather than the existing Filter$ param below: Filter$ ultimately
+                // calls Card.isValid(), whose restriction-string grammar only supports a single
+                // condition (optionally with a Card./Permanent./etc. prefix carrying its own meaning,
+                // not a namespace) - it was never built to OR multiple bare type names together.
+                // Comma-separated: e.g. "YECL,ECL" to pull from both an Alchemy digital-only set and
+                // its paper counterpart, since Arena's "from the X expansion" wording can span both.
+                final List<String> setCodes = Arrays.asList(sa.getParam("RandomSet").split(","));
+                final List<String> randomSetTypes = sa.hasParam("RandomSetTypes")
+                        ? Arrays.asList(sa.getParam("RandomSetTypes").split(",")) : null;
+                final java.util.Set<String> seenNames = new java.util.HashSet<>();
+                for (PaperCard pc : StaticData.instance().getCommonCards().streamAllCards()
+                        .filter(c -> setCodes.stream().anyMatch(s -> c.getEdition().equalsIgnoreCase(s))).collect(java.util.stream.Collectors.toList())) {
+                    ICardFace face = pc.getRules().getMainPart();
+                    if (face == null || !seenNames.add(face.getName())) {
+                        continue;
+                    }
+                    if (randomSetTypes != null) {
+                        boolean typeMatch = false;
+                        for (String t : randomSetTypes) {
+                            if (pc.getRules().getType().hasStringType(t)) {
+                                typeMatch = true;
+                                break;
+                            }
+                        }
+                        if (!typeMatch) {
+                            continue;
+                        }
+                    }
+                    faces.add(face);
+                }
             } else if (sa.hasParam("Choices")) {
                 faces.addAll(parseFaces(sa, "Choices"));
             } else if (sa.hasParam("Booster")) {

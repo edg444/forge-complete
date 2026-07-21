@@ -69,6 +69,12 @@ public class AlterAttributeEffect extends SpellAbilityEffect {
                                 continue;
                             }
                             Card prepared = CopyPermanentEffect.getProtoType(sa, gameCard, activator);
+                            // The prepared copy is cast from the same physical card that's already on the
+                            // battlefield - it isn't a foreign/conjured spell, so it should carry over
+                            // whether that source card was part of the starting deck (e.g. so Ursine Guide
+                            // casting its own prepared Ranger's Merit doesn't trigger its own "spell that
+                            // isn't from your starting deck" ability).
+                            prepared.setStartingDeckCard(gameCard.isStartingDeckCard());
                             prepared.setState(CardStateName.PreparedSpell, true);
                             prepared.getOwner().getZone(ZoneType.Exile).add(prepared);
                             eff = createEffect(null, gameCard, activator, gameCard + "'s Prepared Spell", prepared.getImageKey(), game.getNextTimestamp());

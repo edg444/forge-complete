@@ -60,6 +60,7 @@ public class CardCopyService {
         out.setBackSide(copyFrom.isBackSide());
         out.setGamePieceType(copyFrom.getGamePieceType());
         out.setTokenCard(copyFrom.isTokenCard());
+        out.setStartingDeckCard(copyFrom.isStartingDeckCard());
 
         if (toGame == copyFrom.getGame()) {
             // Only copy these things if we're not copying them into a new game
@@ -290,6 +291,7 @@ public class CardCopyService {
 
         newCopy.setGamePieceType(copyFrom.getGamePieceType());
         newCopy.setTokenCard(copyFrom.isTokenCard());
+        newCopy.setStartingDeckCard(copyFrom.isStartingDeckCard());
         newCopy.setEmblem(copyFrom.isEmblem());
 
         // lock in the current P/T

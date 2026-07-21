@@ -55,6 +55,14 @@ public class ChooseColorEffect extends SpellAbilityEffect {
                 colorChoices.remove(s);
             }
         }
+        if (sa.hasParam("ExcludeOwnColors")) {
+            // Unlike Exclude$ (a static literal list), this reads the host card's
+            // actual current colors at resolve time - needed for effects like
+            // Opulent Clomper that gain a random color they don't already have.
+            for (MagicColor.Color mc : card.getColor()) {
+                colorChoices.remove(mc.getName());
+            }
+        }
 
         for (Player p : getTargetPlayers(sa)) {
             if (!p.isInGame()) {

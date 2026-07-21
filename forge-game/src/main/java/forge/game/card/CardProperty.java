@@ -1344,6 +1344,10 @@ public class CardProperty {
             if (property.contains("Created") && card.getCastSA() != null) {
                 return false;
             }
+        } else if (property.equals("notFromStartingDeck")) {
+            if (card.isStartingDeckCard()) {
+                return false;
+            }
         } else if (property.startsWith("copiedSpell")) {
             if (!card.isCopiedSpell()) {
                 return false;
@@ -1466,6 +1470,10 @@ public class CardProperty {
         } else if (property.startsWith("ManaCost")) {
             String cost = card.getManaCost().getShortString();
             if (property.contains("Partial") ? !cost.contains(MagicColor.toShortString(property.substring(15))) : !cost.equals(property.substring(8))) {
+                return false;
+            }
+        } else if (property.equals("hasHybridManaCost")) {
+            if (!card.getManaCost().hasHybrid()) {
                 return false;
             }
         } else if (property.equals("HasCounters")) {

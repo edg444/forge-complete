@@ -401,6 +401,15 @@ public final class ManaCost implements Comparable<ManaCost>, Iterable<ManaCostSh
         return this.shards.iterator();
     }
 
+    public boolean hasHybrid() {
+        for (ManaCostShard shard : shards) {
+            if (shard.isHybrid()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public int getGlyphCount() { // counts all colored shards or 1 for {0} costs 
         int width = shards.size();
         if (genericCost > 0 || (genericCost == 0 && width == 0)) {

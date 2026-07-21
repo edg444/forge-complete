@@ -202,6 +202,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     private boolean sickness = true; // summoning sickness
     private boolean collectible = false;
     private boolean tokenCard = false;
+    private boolean startingDeckCard = false;
     private Card copiedPermanent;
 
     private boolean unearthed;
@@ -3547,6 +3548,18 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         if (tokenCard == tokenC) { return; }
         tokenCard = tokenC;
         view.updateTokenCard(this);
+    }
+
+    // Set once, at initial deck-to-library setup (Match.preparePlayerZone), never toggled
+    // afterward. Persists across the "new Card object per zone change" model (rule 400.7) via
+    // CardCopyService, same as tokenCard above. Cards created mid-game (Conjure/MakeCard, Token
+    // effects, spellbook drafts, etc.) never pass through that setup path, so they correctly
+    // default to false - i.e. "not from your starting deck" per rule 702.139f (Companion).
+    public final boolean isStartingDeckCard() {
+        return startingDeckCard;
+    }
+    public final void setStartingDeckCard(boolean startingDeckC) {
+        startingDeckCard = startingDeckC;
     }
 
     public final void setCollectible(boolean collectible) {

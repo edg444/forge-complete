@@ -310,6 +310,19 @@ public enum ManaCostShard {
         return isOfKind(ManaAtom.COLORLESS);
     }
 
+    // True hybrid mana symbols per rule 107.4e/g/h: two-color ({W/U}), monocolored-or-generic
+    // ({2/W}), and colorless-or-color ({C/W}). Excludes Phyrexian ({W/P}) - rule 107.4f treats
+    // those as their own symbol type, not hybrid, even though they share the "/" notation.
+    public boolean isHybrid() {
+        if (isPhyrexian()) {
+            return false;
+        }
+        if (isMultiColor() || isOr2Generic()) {
+            return true;
+        }
+        return isColorless() && BinaryUtil.bitCount(this.shard & COLORS_SUPERPOSITION) == 1;
+    }
+
     public boolean isGeneric() {
     	return isOfKind(ManaAtom.GENERIC)|| isOfKind(ManaAtom.IS_X) || this.isSnow() || this.isOr2Generic();
     }

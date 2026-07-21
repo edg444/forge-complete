@@ -210,6 +210,10 @@ public class Match {
                     card.setRandomFoil();
                 }
                 card.setCollectible(true);
+                if (zoneType == ZoneType.Library) {
+                    // Sideboard is explicitly excluded from "starting deck" per rule 702.139f (Companion)
+                    card.setStartingDeckCard(true);
+                }
 
                 newLibrary.add(card);
             }
