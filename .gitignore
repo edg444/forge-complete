@@ -36,6 +36,15 @@ bin
 gen
 *.log
 
+# Local convenience junction -> forge-installer/target/forge-installer-*, not part of the project
+/dist
+
+# Fast dev-run dir: jar loaded straight from target, res junctioned to live forge-gui/res (no rebuild needed for script edits)
+/devrun
+
+# Local Maven toolchain + throwaway build/debug logs, not part of the project
+/_tools
+
 # Ignore macOS Spotlight rubbish
 .DS_Store
 
