@@ -58,6 +58,30 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <!-- Personal-fork addition: android-maven-plugin's own
+                        versionCodeUpdateFromVersion auto-generation (see the android-debug
+                        profile's override below) isn't reliably monotonic across builds of the
+                        same base version (observed: a same-day rebuild produced a LOWER
+                        versionCode than the previous day's build, causing adb install -r to be
+                        rejected as INSTALL_FAILED_VERSION_DOWNGRADE, which then required
+                        uninstalling first and wiping all local app data/settings). Full 4-digit
+                        year (yyyyMMddHH, ~2,026,072,112 today) both fits well within Android's
+                        32-bit versionCode limit (max 2,147,483,647) and safely exceeds every
+                        versionCode this fork's builds have produced before switching to this
+                        scheme (up to ~200,140,720) - a 2-digit year (yyMMddHH) was tried first
+                        but came out smaller than those older values and still got rejected as a
+                        downgrade. -->
+                        <id>version-code-timestamp-property</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>timestamp-property</goal>
+                        </goals>
+                        <configuration>
+                            <name>version.code.timestamp</name>
+                            <pattern>yyyyMMddHH</pattern>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>regex-property</id>
                         <phase>initialize</phase>
                         <goals>
@@ -263,6 +287,17 @@
             <id>android-debug</id>
             <properties>
                 <packaging.type>apk</packaging.type>
+                <!-- Personal-fork addition: use a properly monotonic build-timestamp-based
+                versionCode instead of the plugin's own auto-generation (see the
+                version-code-timestamp-property execution above for why) - keeps adb install -r
+                working as a true in-place update across rebuilds, without ever needing an
+                uninstall (which wipes local decks/settings) just to work around a downgrade
+                rejection. Our profile uses the manifest-merger goal, whose versionCode param
+                (inconsistently, vs. its own versionCodeUpdateFromVersion sibling param below)
+                binds to android.manifestMerger.versionCode, NOT android.manifest.versionCode -
+                that property name belongs to the separate manifest-update goal instead. -->
+                <android.manifest.versionCodeUpdateFromVersion>false</android.manifest.versionCodeUpdateFromVersion>
+                <android.manifestMerger.versionCode>${version.code.timestamp}</android.manifestMerger.versionCode>
             </properties>
             <build>
                 <plugins>
@@ -291,8 +326,14 @@
                         <version>4.6.2</version>
                         <extensions>true</extensions>
                         <configuration>
+                            <!-- The plugin's built-in debug signer (SignedJarBuilder) directly
+                            references sun.security.pkcs.SignerInfo, which JDK 9+ blocks by
+                            default. Forcing the module exports open lets the build finish, but
+                            the resulting signature is actually corrupted (fails signature
+                            verification on-device: "no verified SignerInfos"). Skip in-plugin
+                            signing and sign with the modern apksigner tool afterward instead. -->
                             <sign>
-                                <debug>true</debug>
+                                <debug>false</debug>
                             </sign>
                             <sdk>
                                 <platform>${androidPlatform}</platform>
@@ -350,6 +391,64 @@
                                 <configuration>
                                     <skip>true</skip>
                                 </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <!-- Personal-fork addition: bundle cardsfolder/res straight into the APK
+                        instead of relying on AssetsDownloader's runtime download, which is
+                        hardcoded to pull assets.zip from upstream Card-Forge's own GitHub
+                        releases (see AssetsDownloader.GITHUB_SNAPSHOT_URL) - never this fork's
+                        own cards. Mirrors the android-release-build profile's asset-zipping
+                        step below, but writes straight into this module's own assets/ folder
+                        (bundled into the APK) instead of a standalone target/assets.zip meant
+                        for separate upload. Bound to initialize (the earliest usable phase) -
+                        the android-maven-plugin snapshots assets/ into
+                        target/generated-sources/combined-assets surprisingly early (before
+                        prepare-package, where this was originally bound - that ran too late and
+                        the zip was silently left out of the APK). Generates the nested
+                        res/build.txt directly from the same ${timestamp} Maven property the
+                        module's own filtered assets/build.txt uses, rather than copying the
+                        resources-plugin's filtered output, since that copy doesn't exist yet
+                        this early in the lifecycle. -->
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>3.0.0</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.apache.ant</groupId>
+                                <artifactId>ant-nodeps</artifactId>
+                                <version>1.8.1</version>
+                            </dependency>
+                        </dependencies>
+                        <executions>
+                            <execution>
+                                <id>bundle-assets-zip</id>
+                                <phase>initialize</phase>
+                                <configuration>
+                                    <target>
+                                        <delete file="${basedir}/assets/assets.zip" />
+                                        <copy todir="${project.build.directory}/bundled-assets">
+                                            <fileset dir="${basedir}/../forge-gui/" includes="LICENSE.txt" />
+                                            <fileset dir="${basedir}/../forge-gui/release-files/" includes="CONTRIBUTORS.txt" />
+                                            <fileset dir="${basedir}/../forge-gui/release-files/" includes="INSTALLATION.txt" />
+                                            <fileset dir="${basedir}/../forge-gui/release-files/" includes="ISSUES.txt" />
+                                            <fileset dir="${basedir}/../forge-gui-mobile-dev/" includes="sentry.properties" />
+                                            <fileset dir="${basedir}/../forge-gui/">
+                                                <include name="res/**" />
+                                                <exclude name="res/cardsfolder/**" />
+                                            </fileset>
+                                        </copy>
+                                        <mkdir dir="${project.build.directory}/bundled-assets/res/cardsfolder" />
+                                        <echo file="${project.build.directory}/bundled-assets/res/build.txt" message="${timestamp}" />
+                                        <zip destfile="${project.build.directory}/bundled-assets/res/cardsfolder/cardsfolder.zip" basedir="${basedir}/../forge-gui/res/cardsfolder" level="1" />
+                                        <zip destfile="${basedir}/assets/assets.zip" basedir="${project.build.directory}/bundled-assets" level="1" excludes="**/*.xcf" />
+                                        <delete dir="${project.build.directory}/bundled-assets" />
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
                             </execution>
                         </executions>
                     </plugin>

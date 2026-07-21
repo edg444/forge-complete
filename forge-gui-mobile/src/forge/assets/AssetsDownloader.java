@@ -166,6 +166,37 @@ public class AssetsDownloader {
             run(runnable);
             return;
         }
+
+        // Personal-fork addition: this fork's Android builds bundle assets.zip straight into
+        // the APK (see forge-gui-android's bundle-assets-zip antrun step) instead of relying on
+        // the download below, which is hardcoded to pull upstream Card-Forge's own assets.zip
+        // from GITHUB_SNAPSHOT_URL - never this fork's own cards. Extract the bundled copy
+        // instead of ever hitting the network for this.
+        FileHandle bundledAssetsZip = Gdx.files.internal("assets.zip");
+        if (bundledAssetsZip.exists()) {
+            FileHandle bundledResBuildDate = resDir.child("build.txt");
+            boolean alreadyExtracted = buildTxtFileHandle.exists() && bundledResBuildDate.exists()
+                    && buildTxtFileHandle.readString().equals(bundledResBuildDate.readString());
+            if (!alreadyExtracted) {
+                Forge.getSplashScreen().getProgressBar().setDescription("Extracting bundled resource files...");
+                FileHandle localZipCopy = assetsDir.child("temp.zip");
+                bundledAssetsZip.copyTo(localZipCopy);
+                new GuiDownloadZipService("", "resource files", "", ASSETS_DIR, RES_DIR,
+                        Forge.getSplashScreen().getProgressBar(), true)
+                        .extract(localZipCopy.file().getAbsolutePath());
+                try {
+                    FileHandle bundledVersionFile = assetsDir.child("version.txt");
+                    if (!bundledVersionFile.exists()) {
+                        bundledVersionFile.file().createNewFile();
+                    }
+                    FileUtil.writeFile(bundledVersionFile.file(), versionString);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            run(runnable);
+            return;
+        }
         // Android assets fallback
         String build = "";
 
