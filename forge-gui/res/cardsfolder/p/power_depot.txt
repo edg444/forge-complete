@@ -1,7 +1,7 @@
 Name:Power Depot
 ManaCost:no cost
 Types:Artifact Land
-R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ CARDNAME enters tapped.
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This land enters tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 K:Modular:1
 A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.

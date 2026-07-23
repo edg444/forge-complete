@@ -3,5 +3,5 @@ ManaCost:2 B
 Types:Creature Spirit
 PT:1/1
 K:Flying
-A:AB$ Regenerate | Cost$ PayLife<1> | SpellDescription$ Regenerate CARDNAME.
+A:AB$ Regenerate | Cost$ PayLife<1> | SpellDescription$ Regenerate this creature.
 Oracle:Flying\nPay 1 life: Regenerate Mischievous Poltergeist.

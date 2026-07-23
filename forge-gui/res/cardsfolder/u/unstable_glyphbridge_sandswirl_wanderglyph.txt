@@ -1,7 +1,7 @@
 Name:Unstable Glyphbridge
 ManaCost:3 W W
 Types:Artifact
-T:Mode$ ChangesZone | ValidCard$ Card.Self+wasCastByYou | Destination$ Battlefield | Execute$ TrigRepeat | TriggerDescription$ When CARDNAME enters, if you cast it, for each player, choose a creature with power 2 or less that player controls. Then destroy all creatures except creatures chosen this way.
+T:Mode$ ChangesZone | ValidCard$ Card.Self+wasCastByYou | Destination$ Battlefield | Execute$ TrigRepeat | TriggerDescription$ When this artifact enters, if you cast it, for each player, choose a creature with power 2 or less that player controls. Then destroy all creatures except creatures chosen this way.
 SVar:TrigRepeat:DB$ RepeatEach | RepeatPlayers$ Player | RepeatSubAbility$ DBChoose | SubAbility$ DBDestroyAll
 SVar:DBChoose:DB$ ChooseCard | Choices$ Creature.RememberedPlayerCtrl+powerLE2 | Mandatory$ True | ChoiceTitle$ Choose a creature card with power 2 or less | ImprintChosen$ True
 SVar:DBDestroyAll:DB$ DestroyAll | ValidCards$ Creature.!IsImprinted | SubAbility$ DBCleanup

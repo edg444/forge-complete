@@ -5,7 +5,7 @@ PT:0/0
 K:Ravenous
 K:Flying
 K:Ward:2
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDamage | TriggerDescription$ Warp Blast — When CARDNAME enters, it deals X damage to any target.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDamage | TriggerDescription$ Warp Blast — When this creature enters, it deals X damage to any target.
 SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ X
 SVar:X:Count$xPaid
 DeckHas:Ability$Counters

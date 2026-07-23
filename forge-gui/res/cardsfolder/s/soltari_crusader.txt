@@ -3,5 +3,5 @@ ManaCost:2 W
 Types:Creature Soltari Knight
 PT:2/1
 K:Shadow
-A:AB$ Pump | Cost$ 1 W | NumAtt$ +1 | SpellDescription$ CARDNAME gets +1/+0 until end of turn.
+A:AB$ Pump | Cost$ 1 W | NumAtt$ +1 | SpellDescription$ This creature gets +1/+0 until end of turn.
 Oracle:Shadow (This creature can block or be blocked by only creatures with shadow.)\n{1}{W}: Soltari Crusader gets +1/+0 until end of turn.

@@ -2,5 +2,5 @@ Name:Revered Dead
 ManaCost:1 W
 Types:Creature Spirit Soldier
 PT:1/1
-A:AB$ Regenerate | Cost$ W | SpellDescription$ Regenerate CARDNAME.
+A:AB$ Regenerate | Cost$ W | SpellDescription$ Regenerate this creature.
 Oracle:{W}: Regenerate Revered Dead.

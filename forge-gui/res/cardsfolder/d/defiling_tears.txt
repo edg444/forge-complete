@@ -3,5 +3,5 @@ ManaCost:2 B
 Types:Instant
 A:SP$ Pump | ValidTgts$ Creature | NumAtt$ +1 | NumDef$ -1 | SubAbility$ DBAnimate | SpellDescription$ Until end of turn, target creature becomes black, gets +1/-1, and gains "{B}: Regenerate this creature."
 SVar:DBAnimate:DB$ Animate | Colors$ Black | OverwriteColors$ True | Abilities$ ABRegenerate | Defined$ Targeted
-SVar:ABRegenerate:AB$ Regenerate | Cost$ B | SpellDescription$ Regenerate CARDNAME.
+SVar:ABRegenerate:AB$ Regenerate | Cost$ B | SpellDescription$ Regenerate this creature.
 Oracle:Until end of turn, target creature becomes black, gets +1/-1, and gains "{B}: Regenerate this creature."

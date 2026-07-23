@@ -3,7 +3,7 @@ ManaCost:3 G
 Types:Creature Human Citizen
 PT:2/2
 K:etbCounter:SHIELD:1
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigAnimate | TriggerDescription$ Whenever CARDNAME attacks, target creature you control has base power and toughness 4/4 until end of turn.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigAnimate | TriggerDescription$ Whenever this creature attacks, target creature you control has base power and toughness 4/4 until end of turn.
 SVar:TrigAnimate:DB$ Animate | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | Power$ 4 | Toughness$ 4
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Counters

@@ -4,7 +4,7 @@ Types:Planeswalker Duck
 Loyalty:X
 Text:CARDNAME enters with a number of loyalty counters on it equal to your life total.
 SVar:X:Count$YourLifeTotal
-R:Event$ Moved | ActiveZones$ Battlefield | Origin$ Battlefield | ExcludeDestination$ Exile | ValidCard$ Card.Self | ReplaceWith$ ToExile | Description$ If CARDNAME would leave the battlefield, exile it instead of putting it anywhere else.
+R:Event$ Moved | ActiveZones$ Battlefield | Origin$ Battlefield | ExcludeDestination$ Exile | ValidCard$ Card.Self | ReplaceWith$ ToExile | Description$ If it would leave the battlefield, exile it instead of putting it anywhere else.
 SVar:ToExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | Defined$ ReplacedCard
 S:Mode$ CantAttack | ValidCard$ Creature | Target$ You | Description$ Creatures can't attack you.
 A:AB$ GainLife | Cost$ AddCounter<1/LOYALTY> | Planeswalker$ True | LifeAmount$ 1 | SpellDescription$ You gain 1 life.

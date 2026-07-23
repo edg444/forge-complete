@@ -2,7 +2,7 @@ Name:Tribal Golem
 ManaCost:6
 Types:Artifact Creature Golem
 PT:4/4
-S:Mode$ Continuous | Affected$ Card.Self | AddKeyword$ Trample | IsPresent$ Beast.YouCtrl | Description$ CARDNAME has trample as long as you control a Beast,
+S:Mode$ Continuous | Affected$ Card.Self | AddKeyword$ Trample | IsPresent$ Beast.YouCtrl | Description$ This creature has trample as long as you control a Beast,
 S:Mode$ Continuous | Affected$ Card.Self | AddKeyword$ Haste | IsPresent$ Goblin.YouCtrl | Description$ CARDNAME has haste as long as you control a Goblin,
 S:Mode$ Continuous | Affected$ Card.Self | AddKeyword$ First Strike | IsPresent$ Soldier.YouCtrl | Description$ CARDNAME has first strike as long as you control a Soldier,
 S:Mode$ Continuous | Affected$ Card.Self | AddKeyword$ Flying | IsPresent$ Wizard.YouCtrl | Description$ CARDNAME has flying as long as you control a Wizard,

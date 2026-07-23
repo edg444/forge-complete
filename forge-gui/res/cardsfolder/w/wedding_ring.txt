@@ -1,7 +1,7 @@
 Name:Wedding Ring
 ManaCost:2 W W
 Types:Artifact
-T:Mode$ ChangesZone | ValidCard$ Card.Self+wasCast | Origin$ Any | Destination$ Battlefield | Execute$ TrigCopy | TriggerDescription$ When CARDNAME enters, if it was cast, target opponent creates a token that's a copy of it.
+T:Mode$ ChangesZone | ValidCard$ Card.Self+wasCast | Origin$ Any | Destination$ Battlefield | Execute$ TrigCopy | TriggerDescription$ When this artifact enters, if it was cast, target opponent creates a token that's a copy of it.
 SVar:TrigCopy:DB$ CopyPermanent | ValidTgts$ Opponent | Defined$ Self | Controller$ TargetedPlayer
 T:Mode$ Drawn | ValidCard$ Card.OppOwn | ValidPlayer$ Player.Opponent+Active+controlsArtifact.namedWedding Ring | TriggerZones$ Battlefield | Execute$ TrigDraw | TriggerDescription$ Whenever an opponent who controls an artifact named Wedding Ring draws a card during their turn, you draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1

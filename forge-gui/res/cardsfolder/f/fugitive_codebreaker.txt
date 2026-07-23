@@ -6,7 +6,7 @@ K:Prowess
 K:Haste
 K:Disguise:5 R:X:This cost is reduced by {1} for each instant and sorcery card in your graveyard.
 SVar:X:Count$ValidGraveyard Instant.YouOwn,Sorcery.YouOwn
-T:Mode$ TurnFaceUp | ValidCard$ Card.Self | Execute$ TrigDiscard | TriggerZones$ Battlefield | TriggerDescription$ When CARDNAME is turned face up, discard your hand, then draw three cards.
+T:Mode$ TurnFaceUp | ValidCard$ Card.Self | Execute$ TrigDiscard | TriggerZones$ Battlefield | TriggerDescription$ When this creature is turned face up, discard your hand, then draw three cards.
 SVar:TrigDiscard:DB$ Discard | Mode$ Hand | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | NumCards$ 3
 DeckHas:Ability$Discard

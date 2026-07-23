@@ -2,7 +2,7 @@ Name:Oasis Gardener
 ManaCost:3
 Types:Artifact Creature Scarecrow
 PT:2/2
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ When CARDNAME enters, you gain 2 life.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ When this creature enters, you gain 2 life.
 SVar:TrigGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 2
 A:AB$ Mana | Cost$ T | Produced$ Any | SpellDescription$ Add one mana of any color.
 DeckHas:Ability$LifeGain

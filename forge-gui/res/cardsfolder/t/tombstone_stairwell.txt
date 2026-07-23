@@ -2,7 +2,7 @@ Name:Tombstone Stairwell
 ManaCost:2 B B
 Types:World Enchantment
 K:Cumulative upkeep:1 B
-T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ Player | TriggerZones$ Battlefield | IsPresent$ Card.Self | Execute$ TrigRepeat | TriggerDescription$ At the beginning of each upkeep, if CARDNAME is on the battlefield, each player creates a 2/2 black Zombie creature token with haste named Tombspawn for each creature card in their graveyard.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ Player | TriggerZones$ Battlefield | IsPresent$ Card.Self | Execute$ TrigRepeat | TriggerDescription$ At the beginning of each upkeep, if this enchantment is on the battlefield, each player creates a 2/2 black Zombie creature token with haste named Tombspawn for each creature card in their graveyard.
 SVar:TrigRepeat:DB$ RepeatEach | RepeatPlayers$ Player | RepeatSubAbility$ DBToken | ChangeZoneTable$ True
 SVar:DBToken:DB$ Token | TokenAmount$ X | TokenScript$ tombspawn | TokenOwner$ Player.IsRemembered | RememberTokens$ True
 SVar:X:Count$ValidGraveyard Creature.RememberedPlayerCtrl

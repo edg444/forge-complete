@@ -6,7 +6,7 @@ K:Flying
 K:Vigilance
 K:Trample
 K:ETBReplacement:Other:ChooseT
-SVar:ChooseT:DB$ ChooseType | Type$ Card | ValidTypes$ Artifact,Enchantment,Instant,Sorcery,Planeswalker | SpellDescription$ As CARDNAME enters, choose artifact, enchantment, instant, sorcery, or planeswalker.
+SVar:ChooseT:DB$ ChooseType | Type$ Card | ValidTypes$ Artifact,Enchantment,Instant,Sorcery,Planeswalker | SpellDescription$ As this creature enters, choose artifact, enchantment, instant, sorcery, or planeswalker.
 S:Mode$ CantBeCast | ValidCard$ Card.ChosenType | Description$ Players can't cast spells of the chosen type.
 AI:RemoveDeck:All
 AI:RemoveDeck:Random

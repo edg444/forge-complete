@@ -2,7 +2,7 @@ Name:Stromgald Spy
 ManaCost:3 B
 Types:Creature Human Rogue
 PT:2/4
-T:Mode$ AttackerUnblocked | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigExile | OptionalDecider$ You | TriggerDescription$ Whenever CARDNAME attacks and isn't blocked, you may have defending player play with their hand revealed for as long as CARDNAME remains on the battlefield. If you do, CARDNAME assigns no combat damage this turn.
+T:Mode$ AttackerUnblocked | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigExile | OptionalDecider$ You | TriggerDescription$ Whenever this creature attacks and isn't blocked, you may have defending player play with their hand revealed for as long as this creature remains on the battlefield. If you do, this creature assigns no combat damage this turn.
 SVar:TrigExile:DB$ Effect | StaticAbilities$ STRevealHand | RememberObjects$ DefendingPlayer | Duration$ AsLongAsInPlay | SubAbility$ DBNoCombatDamage
 SVar:DBNoCombatDamage:DB$ Effect | StaticAbilities$ SNoCombatDamage | Duration$ UntilHostLeavesPlayOrEOT
 SVar:SNoCombatDamage:Mode$ AssignNoCombatDamage | ValidCard$ Card.EffectSource | Description$ EFFECTSOURCE assigns no combat damage this turn.

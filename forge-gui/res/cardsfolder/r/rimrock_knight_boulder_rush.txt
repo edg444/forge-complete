@@ -2,7 +2,7 @@ Name:Rimrock Knight
 ManaCost:1 R
 Types:Creature Dwarf Knight
 PT:3/1
-S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ CARDNAME can't block.
+S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't block.
 AlternateMode:Adventure
 Oracle:Rimrock Knight can't block.
 

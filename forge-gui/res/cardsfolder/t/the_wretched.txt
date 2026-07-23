@@ -2,7 +2,7 @@ Name:The Wretched
 ManaCost:3 B B
 Types:Creature Demon
 PT:2/5
-T:Mode$ Phase | Phase$ EndCombat | ValidPlayer$ You | Execute$ TrigGainControl | TriggerZones$ Battlefield | TriggerDescription$ At end of combat, gain control of all creatures blocking CARDNAME for as long as you control CARDNAME.
+T:Mode$ Phase | Phase$ EndCombat | ValidPlayer$ You | Execute$ TrigGainControl | TriggerZones$ Battlefield | TriggerDescription$ At end of combat, gain control of all creatures blocking this creature for as long as you control this creature.
 SVar:TrigGainControl:DB$ GainControl | AllValid$ Card.blockingSource | LoseControl$ LoseControl,LeavesPlay
 SVar:HasAttackEffect:Blocked
 Oracle:At end of combat, gain control of all creatures blocking The Wretched for as long as you control The Wretched.

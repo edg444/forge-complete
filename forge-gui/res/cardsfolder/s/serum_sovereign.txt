@@ -3,7 +3,7 @@ ManaCost:4 U
 Types:Creature Phyrexian Sphinx
 PT:4/4
 K:Flying
-T:Mode$ SpellCast | ValidCard$ Card.nonCreature | ValidActivatingPlayer$ You | Execute$ TrigPutCounter | TriggerZones$ Battlefield | TriggerDescription$ Whenever you cast a noncreature spell, put an oil counter on CARDNAME.
+T:Mode$ SpellCast | ValidCard$ Card.nonCreature | ValidActivatingPlayer$ You | Execute$ TrigPutCounter | TriggerZones$ Battlefield | TriggerDescription$ Whenever you cast a noncreature spell, put an oil counter on this creature.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ OIL | CounterNum$ 1
 A:AB$ Draw | Cost$ U SubCounter<1/OIL/NICKNAME> | SubAbility$ DBScry | SpellDescription$ Draw a card, then scry 2.
 SVar:DBScry:DB$ Scry | ScryNum$ 2

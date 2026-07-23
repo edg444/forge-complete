@@ -2,7 +2,7 @@ Name:Angelheart Vial
 ManaCost:5
 Types:Artifact
 A:AB$ GainLife | Cost$ 2 T SubCounter<4/CHARGE> | Defined$ You | LifeAmount$ 2 | SubAbility$ DBDraw | SpellDescription$ You gain 2 life and draw a card.
-T:Mode$ DamageDoneOnce | ValidTarget$ You | TriggerZones$ Battlefield | Execute$ TrigPutCounter | OptionalDecider$ You | TriggerDescription$ Whenever you're dealt damage, you may put that many charge counters on CARDNAME.
+T:Mode$ DamageDoneOnce | ValidTarget$ You | TriggerZones$ Battlefield | Execute$ TrigPutCounter | OptionalDecider$ You | TriggerDescription$ Whenever you're dealt damage, you may put that many charge counters on this artifact.
 SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ CHARGE | CounterNum$ X
 SVar:X:TriggerCount$DamageAmount

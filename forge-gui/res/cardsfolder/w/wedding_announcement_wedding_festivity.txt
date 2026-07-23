@@ -1,7 +1,7 @@
 Name:Wedding Announcement
 ManaCost:2 W
 Types:Enchantment
-T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ At the beginning of your end step, put an invitation counter on CARDNAME. If you attacked with two or more creatures this turn, draw a card. Otherwise, create a 1/1 white Human creature token. Then if CARDNAME has three or more invitation counters on it, transform it.
+T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ At the beginning of your end step, put an invitation counter on this enchantment. If you attacked with two or more creatures this turn, draw a card. Otherwise, create a 1/1 white Human creature token. Then if this enchantment has three or more invitation counters on it, transform it.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ INVITATION | CounterNum$ 1 | SubAbility$ DBBranch
 SVar:DBBranch:DB$ Branch | BranchConditionSVar$ X | BranchConditionSVarCompare$ GE2 | TrueSubAbility$ DBDraw | FalseSubAbility$ DBToken
 SVar:X:Count$AttackersDeclared

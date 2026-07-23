@@ -3,7 +3,7 @@ ManaCost:2 G U
 Types:Creature Human Wizard
 PT:1/1
 K:Evolve
-T:Mode$ CounterAdded | ValidCard$ Card.Self | TriggerZones$ Battlefield | CounterType$ P1P1 | Execute$ FathomDraw | OptionalDecider$ You | TriggerDescription$ Whenever a +1/+1 counter is put on CARDNAME, you may draw a card.
+T:Mode$ CounterAdded | ValidCard$ Card.Self | TriggerZones$ Battlefield | CounterType$ P1P1 | Execute$ FathomDraw | OptionalDecider$ You | TriggerDescription$ Whenever a +1/+1 counter is put on this creature, you may draw a card.
 SVar:FathomDraw:DB$ Draw | Defined$ You | NumCards$ 1
 DeckHas:Ability$Counters
 DeckHints:Ability$Counters

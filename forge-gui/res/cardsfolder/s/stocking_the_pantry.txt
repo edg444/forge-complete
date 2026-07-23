@@ -1,7 +1,7 @@
 Name:Stocking the Pantry
 ManaCost:G
 Types:Enchantment
-T:Mode$ CounterAddedOnce | CounterType$ P1P1 | ValidSource$ You | ValidCard$ Creature.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ Whenever you put one or more +1/+1 counters on a creature you control, put a supply counter on CARDNAME.
+T:Mode$ CounterAddedOnce | CounterType$ P1P1 | ValidSource$ You | ValidCard$ Creature.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ Whenever you put one or more +1/+1 counters on a creature you control, put a supply counter on this enchantment.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ SUPPLY | CounterNum$ 1
 A:AB$ Draw | Cost$ 2 SubCounter<1/SUPPLY> | SpellDescription$ Draw a card.
 DeckNeeds:Ability$Counters

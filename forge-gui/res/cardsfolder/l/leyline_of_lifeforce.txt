@@ -2,7 +2,7 @@ Name:Leyline of Lifeforce
 ManaCost:2 G G
 Types:Enchantment
 K:MayEffectFromOpeningHand:FromHand
-SVar:FromHand:DB$ ChangeZone | Defined$ Self | Origin$ Hand | Destination$ Battlefield | SpellDescription$ If CARDNAME is in your opening hand, you may begin the game with it on the battlefield.
+SVar:FromHand:DB$ ChangeZone | Defined$ Self | Origin$ Hand | Destination$ Battlefield | SpellDescription$ If this card is in your opening hand, you may begin the game with it on the battlefield.
 R:Event$ Counter | ValidSA$ Spell.Creature | Layer$ CantHappen | ActiveZones$ Battlefield | Description$ Creature spells can't be countered.
 SVar:NonStackingEffect:True
 AI:RemoveDeck:Random

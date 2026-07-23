@@ -2,7 +2,7 @@ Name:Sister Repentia
 ManaCost:3 W B
 Types:Creature Human Warrior
 PT:5/1
-T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ Martyrdom — When CARDNAME dies, you gain 2 life and draw two cards.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ Martyrdom — When this creature dies, you gain 2 life and draw two cards.
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 2 | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | NumCards$ 2
 DeckHas:Ability$LifeGain

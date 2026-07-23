@@ -5,7 +5,7 @@ PT:6/1
 K:Haste
 K:Trample
 K:Lifelink
-T:Mode$ Phase | Phase$ End of Turn | TriggerZones$ Battlefield | Execute$ TrigSac | TriggerDescription$ At the beginning of the end step, sacrifice CARDNAME.
+T:Mode$ Phase | Phase$ End of Turn | TriggerZones$ Battlefield | Execute$ TrigSac | TriggerDescription$ At the beginning of the end step, sacrifice this creature.
 SVar:TrigSac:DB$ Sacrifice | SacValid$ Self
 SVar:EndOfTurnLeavePlay:True
 SVar:PlayMain1:TRUE

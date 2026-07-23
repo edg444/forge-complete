@@ -4,7 +4,7 @@ Types:Creature Kor Cleric
 PT:1/1
 K:Kicker:2 W
 K:Flying
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self+kicked | Execute$ TrigTap | TriggerDescription$ When CARDNAME enters, if it was kicked, tap up to two target creatures.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self+kicked | Execute$ TrigTap | TriggerDescription$ When this creature enters, if it was kicked, tap up to two target creatures.
 SVar:TrigTap:DB$ Tap | TargetMin$ 0 | TargetMax$ 2 | TgtPrompt$ Select up to two target creatures | ValidTgts$ Creature
 SVar:NeedsToPlayKickedVar:Z GE2
 SVar:Z:Count$Valid Creature.OppCtrl

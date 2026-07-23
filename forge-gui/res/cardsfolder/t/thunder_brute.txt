@@ -4,7 +4,7 @@ Types:Creature Cyclops
 PT:5/5
 K:Trample
 K:Tribute:3
-SVar:TrigNotTribute:DB$ Pump | KW$ Haste | Defined$ Self | SpellDescription$ When CARDNAME enters, if tribute wasn't paid, it gains haste until end of turn.
+SVar:TrigNotTribute:DB$ Pump | KW$ Haste | Defined$ Self | SpellDescription$ When this creature enters, if tribute wasn't paid, it gains haste until end of turn.
 SVar:PlayMain1:ALWAYS
 SVar:TributeAILogic:CanBlockThisTurn
 DeckHas:Ability$Counters

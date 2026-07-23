@@ -3,5 +3,5 @@ ManaCost:4 U
 Types:Creature Drake
 PT:3/3
 K:Flying
-A:AB$ Untap | Cost$ 2 U | SpellDescription$ Untap CARDNAME.
+A:AB$ Untap | Cost$ 2 U | SpellDescription$ Untap this creature.
 Oracle:Flying\n{2}{U}: Untap Vigilant Drake.

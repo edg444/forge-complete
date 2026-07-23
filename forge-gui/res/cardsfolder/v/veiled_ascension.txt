@@ -1,7 +1,7 @@
 Name:Veiled Ascension
 ManaCost:3 W
 Types:Enchantment
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPutCounters | TriggerDescription$ When CARDNAME enters, put a flying counter on each face-down creature you control.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPutCounters | TriggerDescription$ When this enchantment enters, put a flying counter on each face-down creature you control.
 SVar:TrigPutCounters:DB$ PutCounterAll | ValidCards$ Creature.faceDown+YouCtrl | CounterType$ Flying | CounterNum$ 1
 K:ETBReplacement:Other:AddExtraCounter:Mandatory:Battlefield:Creature.faceDown+YouCtrl
 SVar:AddExtraCounter:DB$ PutCounter | ETB$ True | Defined$ ReplacedCard | CounterType$ Flying | CounterNum$ 1 | SpellDescription$ Face-down creatures you control enter with a flying counter on them.

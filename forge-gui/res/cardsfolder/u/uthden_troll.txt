@@ -2,5 +2,5 @@ Name:Uthden Troll
 ManaCost:2 R
 Types:Creature Troll
 PT:2/2
-A:AB$ Regenerate | Cost$ R | SpellDescription$ Regenerate CARDNAME.
+A:AB$ Regenerate | Cost$ R | SpellDescription$ Regenerate this creature.
 Oracle:{R}: Regenerate Uthden Troll.

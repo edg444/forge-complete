@@ -2,7 +2,7 @@ Name:Invasion of Amonkhet
 ManaCost:1 U B
 Types:Battle Siege
 Defense:4
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigMill | TriggerDescription$ When CARDNAME enters, each player mills three cards, then each opponent discards a card and you draw a card. (To mill three cards, a player puts the top three cards of their library into their graveyard.)
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigMill | TriggerDescription$ When this Siege enters, each player mills three cards, then each opponent discards a card and you draw a card. (To mill three cards, a player puts the top three cards of their library into their graveyard.)
 SVar:TrigMill:DB$ Mill | Defined$ Player | NumCards$ 3 | SubAbility$ DBDiscard
 SVar:DBDiscard:DB$ Discard | Defined$ Opponent | Mode$ TgtChoose | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw

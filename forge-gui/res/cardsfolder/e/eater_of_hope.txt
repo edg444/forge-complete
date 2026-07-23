@@ -3,7 +3,7 @@ ManaCost:5 B B
 Types:Creature Demon
 PT:6/4
 K:Flying
-A:AB$ Regenerate | Cost$ B Sac<1/Creature.Other/another creature> | SpellDescription$ Regenerate CARDNAME.
+A:AB$ Regenerate | Cost$ B Sac<1/Creature.Other/another creature> | SpellDescription$ Regenerate this creature.
 A:AB$ Destroy | Cost$ 2 B Sac<2/Creature.Other/other creature> | ValidTgts$ Creature | SpellDescription$ Destroy target creature.
 AI:RemoveDeck:All
 AI:RemoveDeck:Random

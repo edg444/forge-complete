@@ -1,7 +1,7 @@
 Name:Gnottvold Slumbermound
 ManaCost:no cost
 Types:Land
-R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ CARDNAME enters tapped.
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This land enters tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ Mana | Cost$ T | Produced$ R | SpellDescription$ Add {R}.
 A:AB$ Destroy | Cost$ 3 R G G T Sac<1/CARDNAME> | ValidTgts$ Land | SubAbility$ DBToken | SpellDescription$ Destroy target land. Create a 4/4 green Troll Warrior creature token with trample.

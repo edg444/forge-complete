@@ -1,7 +1,7 @@
 Name:City of Traitors
 ManaCost:no cost
 Types:Land
-T:Mode$ LandPlayed | ValidCard$ Land.Other+YouCtrl | TriggerZones$ Battlefield | Execute$ TrigSac | TriggerDescription$ When you play another land, sacrifice CARDNAME.
+T:Mode$ LandPlayed | ValidCard$ Land.Other+YouCtrl | TriggerZones$ Battlefield | Execute$ TrigSac | TriggerDescription$ When you play another land, sacrifice this land.
 SVar:TrigSac:DB$ Sacrifice
 A:AB$ Mana | Cost$ T | Produced$ C | Amount$ 2 | SpellDescription$ Add {C}{C}.
 AI:RemoveDeck:All

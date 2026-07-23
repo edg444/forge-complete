@@ -2,7 +2,7 @@ Name:Pugnacious Pugilist
 ManaCost:3 R R
 Types:Creature Ogre Warrior
 PT:4/4
-T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigToken | TriggerDescription$ Whenever CARDNAME attacks, create a tapped and attacking 1/1 red Devil creature token with "When this token dies, it deals 1 damage to any target."
+T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigToken | TriggerDescription$ Whenever this creature attacks, create a tapped and attacking 1/1 red Devil creature token with "When this token dies, it deals 1 damage to any target."
 SVar:TrigToken:DB$ Token | TokenScript$ r_1_1_devil_burn | TokenTapped$ True | TokenAttacking$ True
 K:Blitz:3 R
 SVar:HasAttackEffect:TRUE

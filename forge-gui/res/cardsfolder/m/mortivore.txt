@@ -4,6 +4,6 @@ Types:Creature Lhurgoyf
 PT:*/*
 S:Mode$ Continuous | CharacteristicDefining$ True | SetPower$ X | SetToughness$ X | Description$ CARDNAME's power and toughness are each equal to the number of creature cards in all graveyards.
 SVar:X:Count$ValidGraveyard Creature
-A:AB$ Regenerate | Cost$ B | SpellDescription$ Regenerate CARDNAME.
+A:AB$ Regenerate | Cost$ B | SpellDescription$ Regenerate this creature.
 SVar:NeedsToPlayVar:X GE2
 Oracle:Mortivore's power and toughness are each equal to the number of creature cards in all graveyards.\n{B}: Regenerate Mortivore.

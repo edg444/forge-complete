@@ -3,7 +3,7 @@ ManaCost:1 W
 Types:Creature Human Citizen
 PT:1/3
 K:Squad:2
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPumpAll | TriggerDescription$ Whenever CARDNAME attacks, each creature you control named Gary Clone gets +1/+0 until end of turn.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPumpAll | TriggerDescription$ Whenever this creature attacks, each creature you control named Gary Clone gets +1/+0 until end of turn.
 SVar:TrigPumpAll:DB$ PumpAll | ValidCards$ Creature.YouCtrl+namedGary Clone | NumAtt$ +1
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Token

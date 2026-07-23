@@ -5,7 +5,7 @@ PT:3/3
 K:Flash
 K:Flying
 K:Exploit
-T:Mode$ Exploited | ValidCard$ Creature | ValidSource$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigCounter | TriggerDescription$ When CARDNAME exploits a creature, counter target spell, activated ability, or triggered ability.
+T:Mode$ Exploited | ValidCard$ Creature | ValidSource$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigCounter | TriggerDescription$ When this creature exploits a creature, counter target spell, activated ability, or triggered ability.
 SVar:TrigCounter:DB$ Counter | TargetType$ Spell,Activated,Triggered | TgtPrompt$ Select target spell or ability | ValidTgts$ Card,Emblem | SpellDescription$ Counter target spell, activated ability, or triggered ability.
 AI:RemoveDeck:All
 DeckHas:Ability$Sacrifice

@@ -3,7 +3,7 @@ ManaCost:2 BR BR
 Types:Creature Goblin Assassin
 PT:2/2
 K:Persist
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDealDamage | TriggerDescription$ When CARDNAME enters, it deals damage equal to its power to any target.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDealDamage | TriggerDescription$ When this creature enters, it deals damage equal to its power to any target.
 SVar:TrigDealDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ X
 SVar:X:Count$CardPower
 SVar:PlayMain1:TRUE

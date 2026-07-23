@@ -3,7 +3,7 @@ ManaCost:4 U
 Types:Enchantment Aura
 K:Enchant:Creature
 SVar:AttachAILogic:GainControl
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigMonarch | TriggerDescription$ When CARDNAME enters, you become the monarch.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigMonarch | TriggerDescription$ When this Aura enters, you become the monarch.
 SVar:TrigMonarch:DB$ BecomeMonarch
 S:Mode$ Continuous | Affected$ Card.EnchantedBy | GainControl$ Player.isMonarch | Description$ The monarch controls enchanted creature.
 S:Mode$ CantAttack | ValidCard$ Creature.EnchantedBy | Target$ You | Description$ Enchanted creature attacks each combat if able and can't attack you.

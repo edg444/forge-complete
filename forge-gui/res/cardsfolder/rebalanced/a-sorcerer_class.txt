@@ -1,7 +1,7 @@
 Name:A-Sorcerer Class
 ManaCost:U R
 Types:Enchantment Class
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When CARDNAME enters, draw two cards, then discard two cards.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When this Class enters, draw two cards, then discard two cards.
 SVar:TrigDraw:DB$ Draw | NumCards$ 2 | SubAbility$ DBDiscard
 SVar:DBDiscard:DB$ Discard | Defined$ You | NumCards$ 2 | Mode$ TgtChoose
 K:Class:2:U R:AddStaticAbility$ STapMana

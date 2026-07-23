@@ -3,7 +3,7 @@ ManaCost:5 U U
 Types:Creature Beast
 PT:4/4
 K:Morph:4 U
-T:Mode$ TurnFaceUp | ValidCard$ Card.Self | Execute$ DBWeaverofLiesSetState | TriggerZones$ Battlefield | TriggerDescription$ When CARDNAME is turned face up, turn any number of target creatures with morph abilities other than CARDNAME face down.
+T:Mode$ TurnFaceUp | ValidCard$ Card.Self | Execute$ DBWeaverofLiesSetState | TriggerZones$ Battlefield | TriggerDescription$ When this creature is turned face up, turn any number of target creatures with morph abilities other than this creature face down.
 SVar:DBWeaverofLiesSetState:DB$ SetState | ValidTgts$ Creature.withMorph+Other,Creature.withMegamorph+Other | TargetMin$ 0 | TargetMax$ WeaverofLiesX | Mode$ TurnFaceDown | SpellDescription$ Turn CARDNAME face down.
 SVar:WeaverofLiesX:Count$Valid Creature.withMorph+Other,Creature.withMegamorph+Other
 AI:RemoveDeck:All

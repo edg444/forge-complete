@@ -2,6 +2,6 @@ Name:Loyal Sentry
 ManaCost:W
 Types:Creature Human Soldier
 PT:1/1
-T:Mode$ AttackerBlocked | ValidCard$ Creature | ValidBlocker$ Card.Self | Execute$ TrigDestroy | TriggerDescription$ When CARDNAME blocks a creature, destroy that creature and CARDNAME.
+T:Mode$ AttackerBlocked | ValidCard$ Creature | ValidBlocker$ Card.Self | Execute$ TrigDestroy | TriggerDescription$ When this creature blocks a creature, destroy that creature and this creature.
 SVar:TrigDestroy:DB$ Destroy | Defined$ TriggeredAttackerLKICopy & Self
 Oracle:When Loyal Sentry blocks a creature, destroy that creature and Loyal Sentry.

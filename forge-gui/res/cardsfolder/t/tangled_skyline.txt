@@ -1,7 +1,7 @@
 Name:Tangled Skyline
 ManaCost:4 G
 Types:Enchantment
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ When CARDNAME enters, you gain 5 life and incubate 5. (Create an Incubator token with five +1/+1 counters on it and "{2}: Transform this token." It transforms into a 0/0 Phyrexian artifact creature.)
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ When this enchantment enters, you gain 5 life and incubate 5. (Create an Incubator token with five +1/+1 counters on it and "{2}: Transform this token." It transforms into a 0/0 Phyrexian artifact creature.)
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 5 | SubAbility$ DBIncubate
 SVar:DBIncubate:DB$ Incubate | Amount$ 5
 S:Mode$ Continuous | Affected$ Phyrexian.YouCtrl | AddKeyword$ Reach | Description$ Phyrexians you control have reach.

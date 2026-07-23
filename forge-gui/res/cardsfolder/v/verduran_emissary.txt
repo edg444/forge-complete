@@ -3,7 +3,7 @@ ManaCost:2 G
 Types:Creature Human Wizard
 PT:2/3
 K:Kicker:1 R
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self+kicked | Execute$ TrigKicker | TriggerDescription$ When CARDNAME enters, if it was kicked, destroy target artifact. It can't be regenerated.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self+kicked | Execute$ TrigKicker | TriggerDescription$ When this creature enters, if it was kicked, destroy target artifact. It can't be regenerated.
 SVar:TrigKicker:DB$ Destroy | ValidTgts$ Artifact | NoRegen$ True | TgtPrompt$ Select target artifact
 SVar:NeedsToPlayKicked:Artifact.OppCtrl
 DeckHints:Color$Red

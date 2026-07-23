@@ -1,7 +1,7 @@
 Name:Balamb Garden, SeeD Academy
 ManaCost:no cost
 Types:Land Town
-R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ CARDNAME enters tapped.
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This land enters tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ Mana | Cost$ T | Produced$ Combo G U | SpellDescription$ Add {G} or {U}.
 A:AB$ SetState | Cost$ 5 G U T | ReduceCost$ X | Defined$ Self | Mode$ Transform | AILogic$ Always | SpellDescription$ Transform this land. This ability costs {1} less to activate for each other Town you control.

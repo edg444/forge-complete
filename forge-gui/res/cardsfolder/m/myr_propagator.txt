@@ -2,5 +2,5 @@ Name:Myr Propagator
 ManaCost:3
 Types:Artifact Creature Myr
 PT:1/1
-A:AB$ CopyPermanent | Cost$ 3 T | Defined$ Self | SpellDescription$ Create a token that's a copy of CARDNAME.
+A:AB$ CopyPermanent | Cost$ 3 T | Defined$ Self | SpellDescription$ Create a token that's a copy of this creature.
 Oracle:{3}, {T}: Create a token that's a copy of Myr Propagator.

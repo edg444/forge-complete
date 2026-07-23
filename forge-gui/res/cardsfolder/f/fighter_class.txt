@@ -1,7 +1,7 @@
 Name:Fighter Class
 ManaCost:R W
 Types:Enchantment Class
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChange | TriggerDescription$ When CARDNAME enters, search your library for an Equipment card, reveal it, put it into your hand, then shuffle.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChange | TriggerDescription$ When this Class enters, search your library for an Equipment card, reveal it, put it into your hand, then shuffle.
 SVar:TrigChange:DB$ ChangeZone | Origin$ Library | Destination$ Hand | ChangeType$ Card.Equipment | ChangeNum$ 1
 K:Class:2:1 R W:AddStaticAbility$ SReduceCost
 SVar:SReduceCost:Mode$ ReduceCost | ValidCard$ Card | ValidSpell$ Activated.Equip | Activator$ You | Amount$ 2 | Secondary$ True | Description$ Equip abilities you activate cost {2} less to activate.

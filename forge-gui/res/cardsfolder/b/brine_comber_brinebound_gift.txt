@@ -23,7 +23,7 @@ SVar:AttachAILogic:Pump
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When CARDNAME enters or enchanted creature becomes the target of an Aura spell, create a 1/1 white Spirit creature token with flying.
 T:Mode$ BecomesTarget | ValidTarget$ Creature.EnchantedBy | ValidSource$ Spell.Aura | TriggerZones$ Battlefield | Execute$ TrigToken | Secondary$ True | TriggerDescription$ When CARDNAME enters or enchanted creature becomes the target of an Aura spell, create a 1/1 white Spirit creature token with flying.
 SVar:TrigToken:DB$ Token | TokenScript$ w_1_1_spirit_flying
-R:Event$ Moved | ValidCard$ Card.Self | Destination$ Graveyard | ReplaceWith$ Exile | Description$ If CARDNAME would be put into a graveyard from anywhere, exile it instead.
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Graveyard | ReplaceWith$ Exile | Description$ If this Aura would be put into a graveyard from anywhere, exile it instead.
 SVar:Exile:DB$ ChangeZone | Hidden$ True | Origin$ All | Destination$ Exile | Defined$ ReplacedCard
 S:Mode$ Continuous | Affected$ Creature.EnchantedBy | AddSVar$ EnMe | Secondary$ True
 SVar:EnMe:SVar:EnchantMe:Multiple

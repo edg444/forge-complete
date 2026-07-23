@@ -17,6 +17,6 @@ Name:Temple of Civilization
 ManaCost:no cost
 Types:Land
 A:AB$ Mana | Cost$ T | Produced$ W | SpellDescription$ Add {W}.
-A:AB$ SetState | Cost$ 2 W T | CheckSVar$ X | SVarCompare$ GE3 | Defined$ Self | Mode$ Transform | SorcerySpeed$ True | SpellDescription$ Transform CARDNAME. Activate only if you attacked with three or more creatures this turn and only as a sorcery.
+A:AB$ SetState | Cost$ 2 W T | CheckSVar$ X | SVarCompare$ GE3 | Defined$ Self | Mode$ Transform | SorcerySpeed$ True | SpellDescription$ Transform this land. Activate only if you attacked with three or more creatures this turn and only as a sorcery.
 SVar:X:Count$AttackersDeclared
 Oracle:(Transforms from Ojer Taq, Deepest Foundation.)\n{T}: Add {W}.\n{2}{W}, {T}: Transform Temple of Civilization. Activate only if you attacked with three or more creatures this turn and only as a sorcery.

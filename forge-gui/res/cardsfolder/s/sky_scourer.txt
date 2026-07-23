@@ -4,7 +4,7 @@ Types:Creature Eldrazi Drone
 PT:1/2
 K:Devoid
 K:Flying
-T:Mode$ SpellCast | ValidCard$ Card.Colorless | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPump | TriggerDescription$ Whenever you cast a colorless spell, CARDNAME gets +1/+0 until end of turn.
+T:Mode$ SpellCast | ValidCard$ Card.Colorless | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPump | TriggerDescription$ Whenever you cast a colorless spell, this creature gets +1/+0 until end of turn.
 SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +1
 SVar:BuffedBy:Card.Colorless
 DeckHints:Color$Colorless & Keyword$Devoid

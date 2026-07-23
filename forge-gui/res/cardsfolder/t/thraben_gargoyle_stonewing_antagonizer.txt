@@ -3,7 +3,7 @@ ManaCost:1
 Types:Artifact Creature Gargoyle
 PT:2/2
 K:Defender
-A:AB$ SetState | Cost$ 6 | Defined$ Self | Mode$ Transform | SpellDescription$ Transform CARDNAME.
+A:AB$ SetState | Cost$ 6 | Defined$ Self | Mode$ Transform | SpellDescription$ Transform this creature.
 AlternateMode:DoubleFaced
 Oracle:Defender\n{6}: Transform Thraben Gargoyle.
 

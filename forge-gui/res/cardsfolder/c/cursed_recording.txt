@@ -1,7 +1,7 @@
 Name:Cursed Recording
 ManaCost:2 R R
 Types:Artifact
-T:Mode$ SpellCast | ValidCard$ Instant,Sorcery | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ Whenever you cast an instant or sorcery spell, put a time counter on CARDNAME. Then if there are seven or more time counters on it, remove those counters and it deals 20 damage to you.
+T:Mode$ SpellCast | ValidCard$ Instant,Sorcery | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ Whenever you cast an instant or sorcery spell, put a time counter on this artifact. Then if there are seven or more time counters on it, remove those counters and it deals 20 damage to you.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ TIME | CounterNum$ 1 | SubAbility$ DBBranch
 SVar:DBBranch:DB$ Branch | BranchConditionSVar$ Count$CardCounters.TIME | BranchConditionSVarCompare$ GE7 | TrueSubAbility$ DBRemoveCounter
 SVar:DBRemoveCounter:DB$ RemoveCounter | CounterType$ TIME | CounterNum$ All | SubAbility$ DBDealDamage

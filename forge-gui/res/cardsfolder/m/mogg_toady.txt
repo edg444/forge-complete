@@ -2,8 +2,8 @@ Name:Mogg Toady
 ManaCost:1 R
 Types:Creature Goblin
 PT:2/2
-S:Mode$ CantAttack | ValidCard$ Card.Self | UnlessDefender$ hasFewerCreaturesInPlayThanYou | Description$ CARDNAME can't attack unless you control more creatures than defending player.
-S:Mode$ CantBlock | ValidCard$ Card.Self | Condition$ NotPlayerTurn | CheckSVar$ Y | SVarCompare$ GEX | Description$ CARDNAME can't block unless you control more creatures than attacking player.
+S:Mode$ CantAttack | ValidCard$ Card.Self | UnlessDefender$ hasFewerCreaturesInPlayThanYou | Description$ This creature can't attack unless you control more creatures than defending player.
+S:Mode$ CantBlock | ValidCard$ Card.Self | Condition$ NotPlayerTurn | CheckSVar$ Y | SVarCompare$ GEX | Description$ This creature can't block unless you control more creatures than attacking player.
 SVar:X:Count$Valid Creature.YouCtrl
 SVar:Y:Count$Valid Creature.ActivePlayerCtrl
 SVar:BuffedBy:Creature

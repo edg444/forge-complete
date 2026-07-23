@@ -3,7 +3,7 @@ ManaCost:1 U
 Types:Enchantment Creature Human Ninja
 PT:2/1
 K:Ninjutsu:U
-T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigDraw | TriggerDescription$ Whenever CARDNAME deals combat damage to a player, you may draw a card. If you do, discard a card unless CARDNAME entered this turn.
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigDraw | TriggerDescription$ Whenever this creature deals combat damage to a player, you may draw a card. If you do, discard a card unless this creature entered this turn.
 SVar:TrigDraw:AB$ Discard | Defined$ You | Mode$ TgtChoose | NumCards$ X | Cost$ Draw<1/You>
 SVar:X:TriggeredSource$Valid Card.!ThisTurnEntered
 DeckHas:Ability$Discard

@@ -3,7 +3,7 @@ ManaCost:5 G G
 Types:Creature Beast
 PT:3/3
 K:Devour:3
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDmg | TriggerDescription$ When CARDNAME enters, it deals X damage divided as you choose among up to X target creatures, where X is its power. Each of those creatures deals damage equal to its power to CARDNAME.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDmg | TriggerDescription$ When this creature enters, it deals X damage divided as you choose among up to X target creatures, where X is its power. Each of those creatures deals damage equal to its power to this creature.
 SVar:TrigDmg:DB$ DealDamage | ValidTgts$ Creature | TgtPrompt$ Select target creature to distribute damage to | NumDmg$ FirePower | TargetMin$ 0 | TargetMax$ FirePower | DividedAsYouChoose$ FirePower | SubAbility$ GigantotheriumFight
 SVar:GigantotheriumFight:DB$ EachDamage | DefinedDamagers$ Targeted | NumDmg$ Count$CardPower | Defined$ Self
 SVar:FirePower:Count$CardPower

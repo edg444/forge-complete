@@ -1,7 +1,7 @@
 Name:Sheltered Valley
 ManaCost:no cost
 Types:Land
-R:Event$ Moved | Destination$ Battlefield | ValidCard$ Card.Self | ReplaceWith$ SacBeforeETB | Description$ If CARDNAME would enter, instead sacrifice each other permanent named Sheltered Valley you control, then put CARDNAME onto the battlefield.
+R:Event$ Moved | Destination$ Battlefield | ValidCard$ Card.Self | ReplaceWith$ SacBeforeETB | Description$ If this land would enter, instead sacrifice each other permanent named Sheltered Valley you control, then put this land onto the battlefield.
 SVar:SacBeforeETB:DB$ SacrificeAll | ValidCards$ Permanent.YouCtrl+namedSheltered Valley | SubAbility$ MoveToBattlefield
 SVar:MoveToBattlefield:DB$ ChangeZone | Origin$ All | Destination$ Battlefield | Defined$ ReplacedCard
 A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.

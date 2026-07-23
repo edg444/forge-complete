@@ -1,7 +1,7 @@
 Name:Mind Unbound
 ManaCost:4 U U
 Types:Enchantment
-T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ At the beginning of your upkeep, put a lore counter on CARDNAME, then draw a card for each lore counter on CARDNAME.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ At the beginning of your upkeep, put a lore counter on this enchantment, then draw a card for each lore counter on this enchantment.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ LORE | CounterNum$ 1 | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ X
 SVar:X:Count$CardCounters.LORE

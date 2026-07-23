@@ -9,7 +9,7 @@ SVar:TrigPhoenix:DB$ Pump | ValidTgts$ Phoenix.YouCtrl | AILogic$ PowerDmg | Tgt
 SVar:DBDamage:DB$ DealDamage | ValidTgts$ Any | AILogic$ PowerDmg | NumDmg$ Y | DamageSource$ ParentTarget
 SVar:X:Count$LeftGraveyardThisTurn Card.Creature+YouOwn
 SVar:Y:ParentTargeted$CardPower
-T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Phoenix.Other+YouCtrl | TriggerZones$ Graveyard | Execute$ TrigPlay | OptionalDecider$ You | TriggerDescription$ Whenever another Phoenix you control dies, you may cast CARDNAME from your graveyard.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Phoenix.Other+YouCtrl | TriggerZones$ Graveyard | Execute$ TrigPlay | OptionalDecider$ You | TriggerDescription$ Whenever another Phoenix you control dies, you may cast this card from your graveyard.
 SVar:TrigPlay:DB$ Play | Optional$ True
 DeckNeeds:Type$Phoenix
 DeckHints:Ability$Graveyard

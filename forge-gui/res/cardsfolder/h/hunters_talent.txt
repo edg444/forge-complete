@@ -1,7 +1,7 @@
 Name:Hunter's Talent
 ManaCost:1 G
 Types:Enchantment Class
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigHit | TriggerDescription$ When CARDNAME enters, target creature you control deals damage equal to its power to target creature you don't control.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigHit | TriggerDescription$ When this Class enters, target creature you control deals damage equal to its power to target creature you don't control.
 SVar:TrigHit:DB$ Pump | ValidTgts$ Creature.YouCtrl | AILogic$ PowerDmg | TgtPrompt$ Select target creature you control | SubAbility$ SoulsDamage | StackDescription$ None
 SVar:SoulsDamage:DB$ DealDamage | ValidTgts$ Creature.YouDontCtrl | AILogic$ PowerDmg | TgtPrompt$ Select target creature you don't control | NumDmg$ X | DamageSource$ ParentTarget
 K:Class:2:1 G:AddTrigger$ TriggerAttackersDeclared

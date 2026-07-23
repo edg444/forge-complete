@@ -4,7 +4,7 @@ Types:Creature Werewolf Horror
 PT:1/2
 K:Defender
 A:AB$ Mana | Cost$ T | Produced$ G | SpellDescription$ Add {G}.
-A:AB$ SetState | Cost$ 5 G G | Defined$ Self | Mode$ Transform | SpellDescription$ Transform CARDNAME.
+A:AB$ SetState | Cost$ 5 G G | Defined$ Self | Mode$ Transform | SpellDescription$ Transform this creature.
 AlternateMode:DoubleFaced
 Oracle:Defender\n{T}: Add {G}.\n{5}{G}{G}: Transform Ulvenwald Captive.
 

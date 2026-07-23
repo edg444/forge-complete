@@ -2,7 +2,7 @@ Name:Night Clubber
 ManaCost:1 B B
 Types:Creature Human Warrior
 PT:2/2
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPumpAll | TriggerDescription$ When CARDNAME enters, creatures your opponents control get -1/-1 until end of turn.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPumpAll | TriggerDescription$ When this creature enters, creatures your opponents control get -1/-1 until end of turn.
 SVar:TrigPumpAll:DB$ PumpAll | NumAtt$ -1 | NumDef$ -1 | ValidCards$ Creature.OppCtrl | IsCurse$ True
 K:Blitz:2 B
 SVar:PlayMain1:TRUE

@@ -2,7 +2,7 @@ Name:Outcaster Trailblazer
 ManaCost:2 G
 Types:Creature Human Druid
 PT:4/2
-T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigMana | TriggerDescription$ When CARDNAME enters, add one mana of any color.
+T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigMana | TriggerDescription$ When this creature enters, add one mana of any color.
 SVar:TrigMana:DB$ Mana | Produced$ Any | Amount$ 1
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.powerGE4+Other+YouCtrl | TriggerZones$ Battlefield | Execute$ TrigDraw | TriggerDescription$ Whenever another creature you control with power 4 or greater enters, draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1

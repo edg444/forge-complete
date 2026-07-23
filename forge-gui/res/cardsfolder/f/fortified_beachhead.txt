@@ -1,7 +1,7 @@
 Name:Fortified Beachhead
 ManaCost:no cost
 Types:Land
-R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplaceWith$ DBReveal | ReplacementResult$ Updated | Description$ As CARDNAME enters, you may reveal a Soldier card from your hand. CARDNAME enters tapped unless you revealed a Soldier card this way or you control a Soldier.
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplaceWith$ DBReveal | ReplacementResult$ Updated | Description$ As this land enters, you may reveal a Soldier card from your hand. This land enters tapped unless you revealed a Soldier card this way or you control a Soldier.
 SVar:DBReveal:DB$ Reveal | RevealValid$ Soldier | Optional$ True | RememberRevealed$ True | SubAbility$ DBTap
 SVar:DBTap:DB$ Tap | ETB$ True | Defined$ Self | ConditionCheckSVar$ SoldierPresence | ConditionSVarCompare$ EQ0 | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True

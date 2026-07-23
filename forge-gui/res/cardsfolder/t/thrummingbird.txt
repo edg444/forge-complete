@@ -3,7 +3,7 @@ ManaCost:1 U
 Types:Creature Phyrexian Bird Horror
 PT:1/1
 K:Flying
-T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigProliferate | TriggerDescription$ Whenever CARDNAME deals combat damage to a player, proliferate.
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigProliferate | TriggerDescription$ Whenever this creature deals combat damage to a player, proliferate.
 SVar:TrigProliferate:DB$ Proliferate
 DeckHas:Ability$Proliferate
 DeckHints:Ability$Counters

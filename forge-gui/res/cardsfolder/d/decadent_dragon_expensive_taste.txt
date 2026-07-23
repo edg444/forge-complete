@@ -4,7 +4,7 @@ Types:Creature Dragon
 PT:4/4
 K:Flying
 K:Trample
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ Whenever CARDNAME attacks, create a Treasure token.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ Whenever this creature attacks, create a Treasure token.
 SVar:TrigToken:DB$ Token | TokenScript$ c_a_treasure_sac
 DeckHas:Ability$Token|Sacrifice & Type$Treasure|Artifact
 SVar:HasAttackEffect:TRUE

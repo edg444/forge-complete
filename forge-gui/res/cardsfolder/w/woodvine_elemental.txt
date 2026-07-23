@@ -3,7 +3,7 @@ ManaCost:4 G W
 Types:Creature Elemental
 PT:4/4
 K:Trample
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigReveal | TriggerDescription$ Parley — Whenever CARDNAME attacks, each player reveals the top card of their library. For each nonland card revealed this way, attacking creatures you control get +1/+1 until end of turn. Then each player draws a card.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigReveal | TriggerDescription$ Parley — Whenever this creature attacks, each player reveals the top card of their library. For each nonland card revealed this way, attacking creatures you control get +1/+1 until end of turn. Then each player draws a card.
 SVar:TrigReveal:DB$ PeekAndReveal | Defined$ Player | RememberRevealed$ True | SubAbility$ DBPump
 SVar:DBPump:DB$ PumpAll | ValidCards$ Creature.attacking+YouCtrl | NumAtt$ +X | NumDef$ +X | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | Defined$ Player | SubAbility$ DBCleanup

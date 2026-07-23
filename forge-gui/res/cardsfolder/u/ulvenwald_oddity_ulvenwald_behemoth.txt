@@ -4,7 +4,7 @@ Types:Creature Beast
 PT:4/4
 K:Trample
 K:Haste
-A:AB$ SetState | Cost$ 5 G G | Defined$ Self | Mode$ Transform | AILogic$ Always | SpellDescription$ Transform CARDNAME.
+A:AB$ SetState | Cost$ 5 G G | Defined$ Self | Mode$ Transform | AILogic$ Always | SpellDescription$ Transform this creature.
 AlternateMode:DoubleFaced
 Oracle:Trample, haste\n{5}{G}{G}: Transform Ulvenwald Oddity.
 

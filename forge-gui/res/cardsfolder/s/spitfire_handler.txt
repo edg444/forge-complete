@@ -2,7 +2,7 @@ Name:Spitfire Handler
 ManaCost:1 R
 Types:Creature Goblin
 PT:1/1
-S:Mode$ CantBlockBy | ValidAttacker$ Creature.powerGTX | ValidBlocker$ Creature.Self | Description$ CARDNAME can't block creatures with power greater than CARDNAME's power.
-A:AB$ Pump | Cost$ R | NumAtt$ +1 | SpellDescription$ CARDNAME gets +1/+0 until end of turn.
+S:Mode$ CantBlockBy | ValidAttacker$ Creature.powerGTX | ValidBlocker$ Creature.Self | Description$ This creature can't block creatures with power greater than this creature's power.
+A:AB$ Pump | Cost$ R | NumAtt$ +1 | SpellDescription$ This creature gets +1/+0 until end of turn.
 SVar:X:Count$CardPower
 Oracle:Spitfire Handler can't block creatures with power greater than Spitfire Handler's power.\n{R}: Spitfire Handler gets +1/+0 until end of turn.

@@ -2,7 +2,7 @@ Name:Invasion of Mercadia
 ManaCost:1 R
 Types:Battle Siege
 Defense:4
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDiscard | TriggerDescription$ When CARDNAME enters, you may discard a card. If you do, draw two cards.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDiscard | TriggerDescription$ When this Siege enters, you may discard a card. If you do, draw two cards.
 SVar:TrigDiscard:AB$ Draw | Cost$ Discard<1/Card> | NumCards$ 2
 DeckHas:Ability$Discard
 AlternateMode:DoubleFaced

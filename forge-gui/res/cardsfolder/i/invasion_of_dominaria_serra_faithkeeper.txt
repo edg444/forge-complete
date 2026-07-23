@@ -2,7 +2,7 @@ Name:Invasion of Dominaria
 ManaCost:2 W
 Types:Battle Siege
 Defense:5
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ When CARDNAME enters, you gain 4 life and draw a card.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ When this Siege enters, you gain 4 life and draw a card.
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 4 | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw
 DeckHas:Ability$LifeGain

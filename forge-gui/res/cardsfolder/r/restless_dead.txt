@@ -2,5 +2,5 @@ Name:Restless Dead
 ManaCost:1 B
 Types:Creature Skeleton
 PT:1/1
-A:AB$ Regenerate | Cost$ B | SpellDescription$ Regenerate CARDNAME.
+A:AB$ Regenerate | Cost$ B | SpellDescription$ Regenerate this creature.
 Oracle:{B}: Regenerate Restless Dead.

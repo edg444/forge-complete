@@ -2,7 +2,7 @@ Name:Starving Revenant
 ManaCost:2 B B
 Types:Creature Spirit Horror
 PT:4/4
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSurveil | TriggerDescription$ When CARDNAME enters, surveil 2. Then for each card you put on top of your library, you draw a card and you lose 3 life.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSurveil | TriggerDescription$ When this creature enters, surveil 2. Then for each card you put on top of your library, you draw a card and you lose 3 life.
 SVar:TrigSurveil:DB$ Surveil | Amount$ 2 | RememberKept$ True | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | NumCards$ X | SubAbility$ DBLoseLife
 SVar:DBLoseLife:DB$ LoseLife | LifeAmount$ Y | SubAbility$ DBCleanup

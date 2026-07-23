@@ -9,7 +9,7 @@ SVar:TrigChoose:DB$ Charm | MinCharmNum$ 1 | CharmNum$ MaxUniqueOpponents | Choi
 SVar:TrigDrawDiscard:DB$ Draw | ValidTgts$ Opponent | TargetUnique$ True | NumCards$ 3 | SubAbility$ Discard3 | SpellDescription$ Target opponent draws three cards, then discards three cards at random.
 SVar:Discard3:DB$ Discard | Defined$ ParentTarget | Mode$ Random | NumCards$ 3
 SVar:TrigSacrifice:DB$ Sacrifice | ValidTgts$ Opponent | TargetUnique$ True | SacValid$ Artifact.!token | SpellDescription$ Target opponent sacrifices a nontoken artifact. | SacMessage$ nontoken artifact
-SVar:TrigDmg:DB$ DealDamage | ValidTgts$ Opponent | TargetUnique$ True | NumDmg$ X | SpellDescription$ CARDNAME deals damage to target opponent equal to the number of cards in their hand.
+SVar:TrigDmg:DB$ DealDamage | ValidTgts$ Opponent | TargetUnique$ True | NumDmg$ X | SpellDescription$ This creature deals damage to target opponent equal to the number of cards in their hand.
 SVar:X:TargetedPlayer$CardsInHand
 SVar:MaxUniqueOpponents:PlayerCountOpponents$Amount
 SVar:NeedsToPlay:Artifact.OppCtrl

@@ -2,7 +2,7 @@ Name:Covert Cutpurse
 ManaCost:2 B
 Types:Creature Human Rogue
 PT:2/1
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDestroy | TriggerDescription$ When CARDNAME enters, destroy target creature you don't control that was dealt damage this turn.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDestroy | TriggerDescription$ When this creature enters, destroy target creature you don't control that was dealt damage this turn.
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Creature.YouDontCtrl+wasDealtDamageThisTurn | TgtPrompt$ Select target creature you don't control that was dealt damage this turn
 K:Disturb:4 B
 DeckHas:Ability$Graveyard

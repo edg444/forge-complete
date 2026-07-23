@@ -3,7 +3,7 @@ ManaCost:1 R W
 Types:Artifact Creature Cat Soldier
 PT:0/0
 K:First Strike
-T:Mode$ ChangesZone | ValidCard$ Card.Self | Destination$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ When CARDNAME enters, put a +1/+1 counter on each other artifact creature you control.
+T:Mode$ ChangesZone | ValidCard$ Card.Self | Destination$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ When this creature enters, put a +1/+1 counter on each other artifact creature you control.
 SVar:TrigPutCounter:DB$ PutCounterAll | ValidCards$ Creature.Artifact+StrictlyOther+YouCtrl | CounterType$ P1P1 | CounterNum$ 1
 K:Modular:2
 SVar:PlayMain1:TRUE

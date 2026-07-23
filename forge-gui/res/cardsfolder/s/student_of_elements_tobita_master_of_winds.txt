@@ -2,7 +2,7 @@ Name:Student of Elements
 ManaCost:1 U
 Types:Creature Human Wizard
 PT:1/1
-T:Mode$ Always | IsPresent$ Card.Self+withFlying | TriggerZones$ Battlefield | Execute$ TrigFlip | TriggerDescription$ When CARDNAME has flying, flip it.
+T:Mode$ Always | IsPresent$ Card.Self+withFlying | TriggerZones$ Battlefield | Execute$ TrigFlip | TriggerDescription$ When this creature has flying, flip it.
 SVar:TrigFlip:DB$ SetState | Defined$ Self | Mode$ Flip
 AI:RemoveDeck:Random
 AlternateMode:Flip

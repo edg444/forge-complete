@@ -2,7 +2,7 @@ Name:Trench Behemoth
 ManaCost:5 U U
 Types:Creature Kraken
 PT:7/7
-A:AB$ Untap | Cost$ Return<1/Land> | SubAbility$ DBPump | SpellDescription$ Untap CARDNAME. It gains hexproof until end of turn.
+A:AB$ Untap | Cost$ Return<1/Land> | SubAbility$ DBPump | SpellDescription$ Untap this creature. It gains hexproof until end of turn.
 SVar:DBPump:DB$ Pump | Defined$ Self | KW$ Hexproof
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Land.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigEffect | TriggerDescription$ Landfall — Whenever a land you control enters, target creature an opponent controls attacks during its controller's next combat phase if able.
 SVar:TrigEffect:DB$ Effect | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls | IsCurse$ True | RememberObjects$ Targeted | Triggers$ MustAttackTrig | Duration$ Permanent | ExileOnMoved$ Battlefield

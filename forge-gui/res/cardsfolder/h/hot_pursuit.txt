@@ -1,7 +1,7 @@
 Name:Hot Pursuit
 ManaCost:1 R
 Types:Enchantment
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSuspect | TriggerDescription$ When CARDNAME enters, suspect target creature an opponent controls. As long as CARDNAME remains on the battlefield, that creature is also goaded.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSuspect | TriggerDescription$ When this enchantment enters, suspect target creature an opponent controls. As long as this enchantment remains on the battlefield, that creature is also goaded.
 SVar:TrigSuspect:DB$ AlterAttribute | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls | Attributes$ Suspected | SubAbility$ DBEffect
 SVar:DBEffect:DB$ Effect | StaticAbilities$ IsGoaded | RememberObjects$ Targeted | ForgetOnMoved$ Battlefield | Duration$ UntilHostLeavesPlay
 SVar:IsGoaded:Mode$ Continuous | Affected$ Creature.IsRemembered | Goad$ True | Description$ As long as EFFECTSOURCE remains on the battlefield, that creature is also goaded.

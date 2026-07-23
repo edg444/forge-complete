@@ -1,7 +1,7 @@
 Name:Aeon Engine
 ManaCost:5
 Types:Artifact
-R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ CARDNAME enters tapped.
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This artifact enters tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ ReverseTurnOrder | Cost$ T Exile<1/CARDNAME> | SpellDescription$ Reverse the game's turn order. (For example, if play had proceeded clockwise around the table, it now goes counterclockwise.)
 AI:RemoveDeck:All

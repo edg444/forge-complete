@@ -3,7 +3,7 @@ ManaCost:1 U U
 Types:Creature Shapeshifter
 PT:2/2
 K:Kicker:2 B Discard<1/Creature>
-R:Event$ Moved | ValidCard$ Card.Self+kicked | Destination$ Battlefield | ReplaceWith$ DBPump | ReplacementResult$ Updated | Description$ If CARDNAME was kicked, it enters with flying and with X +1/+1 counters on it, where X is the discarded card's mana value.
+R:Event$ Moved | ValidCard$ Card.Self+kicked | Destination$ Battlefield | ReplaceWith$ DBPump | ReplacementResult$ Updated | Description$ If this creature was kicked, it enters with flying and with X +1/+1 counters on it, where X is the discarded card's mana value.
 SVar:DBPump:DB$ Animate | Defined$ Self | Keywords$ Flying | Duration$ Permanent | SubAbility$ DBPutCounter
 SVar:DBPutCounter:DB$ PutCounter | ETB$ True | Defined$ Self | CounterType$ P1P1 | CounterNum$ KickedPet
 SVar:KickedPet:CastSA>Discarded$CardManaCost

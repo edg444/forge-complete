@@ -3,10 +3,10 @@ ManaCost:2 B G
 Types:Creature Spider
 PT:3/3
 K:Reach
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ When CARDNAME enters, you may sacrifice another creature. When you do, destroy target nonland permanent.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ When this creature enters, you may sacrifice another creature. When you do, destroy target nonland permanent.
 SVar:TrigSac:AB$ ImmediateTrigger | Cost$ Sac<1/Creature.Other/another creature> | Execute$ TrigDestroy
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Permanent.nonLand | TgtPrompt$ Select target nonland permanent
-T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Battlefield | Destination$ Graveyard | Execute$ TrigGainLife | OptionalDecider$ TriggeredCardController | TriggerDescription$ When CARDNAME dies, you may gain 1 life for each creature card in your graveyard. If you do, exile CARDNAME from your graveyard.
+T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Battlefield | Destination$ Graveyard | Execute$ TrigGainLife | OptionalDecider$ TriggeredCardController | TriggerDescription$ When this creature dies, you may gain 1 life for each creature card in your graveyard. If you do, exile this card from your graveyard.
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ X | SubAbility$ TrigExile
 SVar:TrigExile:DB$ ChangeZone | Origin$ Graveyard | Destination$ Exile | Defined$ TriggeredNewCardLKICopy
 SVar:X:Count$ValidGraveyard Creature.YouOwn

@@ -3,7 +3,7 @@ ManaCost:1 R
 Types:Creature Devil Warrior
 PT:1/2
 K:Menace
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ Whenever CARDNAME attacks, target creature gets +1/+0 until end of turn.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ Whenever this creature attacks, target creature gets +1/+0 until end of turn.
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature | NumAtt$ +1
 K:Blitz:1 R
 SVar:HasAttackEffect:TRUE

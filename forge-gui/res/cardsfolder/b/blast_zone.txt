@@ -3,9 +3,9 @@ ManaCost:no cost
 Types:Land
 K:etbCounter:CHARGE:1
 A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
-A:AB$ PutCounter | Cost$ X X T | CounterType$ CHARGE | CounterNum$ X | SpellDescription$ Put X charge counters on CARDNAME.
+A:AB$ PutCounter | Cost$ X X T | CounterType$ CHARGE | CounterNum$ X | SpellDescription$ Put X charge counters on this land.
 SVar:X:Count$xPaid
-A:AB$ DestroyAll | Cost$ 3 T Sac<1/CARDNAME> | ValidCards$ Permanent.nonLand+cmcEQY | SpellDescription$ Destroy each nonland permanent with mana value equal to the number of charge counters on CARDNAME.
+A:AB$ DestroyAll | Cost$ 3 T Sac<1/CARDNAME> | ValidCards$ Permanent.nonLand+cmcEQY | SpellDescription$ Destroy each nonland permanent with mana value equal to the number of charge counters on this land.
 SVar:Y:Count$CardCounters.CHARGE
 AI:RemoveDeck:All
 DeckHas:Ability$Counters

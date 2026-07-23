@@ -3,7 +3,7 @@ ManaCost:W
 Types:Creature Cat Monk
 PT:0/3
 K:Defender
-T:Mode$ Blocks | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ Whenever CARDNAME blocks, you gain 3 life.
+T:Mode$ Blocks | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ Whenever this creature blocks, you gain 3 life.
 SVar:TrigGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 3
 SVar:HasBlockEffect:TRUE
 Oracle:Defender\nWhenever Pride Guardian blocks, you gain 3 life.

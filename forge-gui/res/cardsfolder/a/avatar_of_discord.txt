@@ -3,7 +3,7 @@ ManaCost:BR BR BR
 Types:Creature Avatar
 PT:5/3
 K:Flying
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ DBSacSelf | TriggerDescription$ When CARDNAME enters, sacrifice it unless you discard two cards.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ DBSacSelf | TriggerDescription$ When this creature enters, sacrifice it unless you discard two cards.
 SVar:DBSacSelf:DB$ Sacrifice | UnlessCost$ Discard<2/Card> | UnlessPayer$ You
 SVar:NeedsToPlayVar:Y GE3
 SVar:Y:Count$ValidHand Card.YouOwn

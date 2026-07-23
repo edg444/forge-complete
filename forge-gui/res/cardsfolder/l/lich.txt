@@ -1,7 +1,7 @@
 Name:Lich
 ManaCost:B B B B
 Types:Enchantment
-R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplaceWith$ LoseLife | ReplacementResult$ Updated | Description$ As CARDNAME enters, you lose life equal to your life total.
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplaceWith$ LoseLife | ReplacementResult$ Updated | Description$ As this enchantment enters, you lose life equal to your life total.
 SVar:LoseLife:DB$ LoseLife | LifeAmount$ LifeTotal
 SVar:LifeTotal:Count$YourLifeTotal
 R:Event$ GameLoss | ActiveZones$ Battlefield | ValidPlayer$ You | ValidLoseReason$ LifeReachedZero | Layer$ CantHappen | Description$ You don't lose the game for having 0 or less life.
@@ -13,7 +13,7 @@ SVar:TrigLoseOrSac:DB$ LosesGame | Defined$ You | ConditionCheckSVar$ Permanents
 SVar:DBSacrificePerm:DB$ Sacrifice | Amount$ PermanentsToSac | SacValid$ Permanent.!token | ConditionCheckSVar$ PermanentsToSac | ConditionSVarCompare$ LEY
 SVar:PermanentsToSac:TriggerCount$DamageAmount
 SVar:Y:Count$Valid Permanent.!token+YouCtrl
-T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigLose | TriggerDescription$ When CARDNAME is put into a graveyard from the battlefield, you lose the game.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigLose | TriggerDescription$ When this enchantment is put into a graveyard from the battlefield, you lose the game.
 SVar:TrigLose:DB$ LosesGame | Defined$ You
 AI:RemoveDeck:Random
 SVar:NonStackingEffect:True

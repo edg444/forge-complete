@@ -2,7 +2,7 @@ Name:Mirrodin Besieged
 ManaCost:2 U
 Types:Enchantment
 K:ETBReplacement:Other:SiegeChoice
-SVar:SiegeChoice:DB$ GenericChoice | Choices$ Mirran,Phyrexian | Defined$ You | SetChosenMode$ True | AILogic$ Mirran | ShowChoice$ ExceptSelf | LockInText$ True | SpellDescription$ As CARDNAME enters, choose Mirran or Phyrexian.
+SVar:SiegeChoice:DB$ GenericChoice | Choices$ Mirran,Phyrexian | Defined$ You | SetChosenMode$ True | AILogic$ Mirran | ShowChoice$ ExceptSelf | LockInText$ True | SpellDescription$ As this enchantment enters, choose Mirran or Phyrexian.
 SVar:Mirran:DB$ Pump | SpellDescription$ Mirran
 SVar:Phyrexian:DB$ Pump | SpellDescription$ Phyrexian
 S:Mode$ Continuous | Affected$ Card.Self+ChosenModeMirran | AddTrigger$ MirranTrigger | Description$ • Mirran — Whenever you cast an artifact spell, create a 1/1 colorless Myr artifact creature token.

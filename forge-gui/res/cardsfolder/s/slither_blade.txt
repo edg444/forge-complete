@@ -2,5 +2,5 @@ Name:Slither Blade
 ManaCost:U
 Types:Creature Snake Rogue
 PT:1/2
-S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | Description$ CARDNAME can't be blocked.
+S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | Description$ This creature can't be blocked.
 Oracle:Slither Blade can't be blocked.

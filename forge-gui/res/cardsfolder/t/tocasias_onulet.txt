@@ -2,7 +2,7 @@ Name:Tocasia's Onulet
 ManaCost:5
 Types:Artifact Creature Construct
 PT:4/4
-T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ When CARDNAME leaves the battlefield, you gain 2 life.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ When this creature leaves the battlefield, you gain 2 life.
 SVar:TrigGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 2
 K:Unearth:3 W
 SVar:SacMe:5

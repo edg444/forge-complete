@@ -2,7 +2,7 @@ Name:Tarkir Duneshaper
 ManaCost:W
 Types:Creature Dog Warrior
 PT:1/2
-A:AB$ SetState | Cost$ 4 GP | Defined$ Self | Mode$ Transform | SorcerySpeed$ True | AILogic$ Always | SpellDescription$ Transform CARDNAME. Activate only as a sorcery. ({G/P} can be paid with either {G} or 2 life.)
+A:AB$ SetState | Cost$ 4 GP | Defined$ Self | Mode$ Transform | SorcerySpeed$ True | AILogic$ Always | SpellDescription$ Transform this creature. Activate only as a sorcery. ({G/P} can be paid with either {G} or 2 life.)
 AlternateMode:DoubleFaced
 Oracle:{4}{G/P}: Transform Tarkir Duneshaper. Activate only as a sorcery. ({G/P} can be paid with either {G} or 2 life.)
 

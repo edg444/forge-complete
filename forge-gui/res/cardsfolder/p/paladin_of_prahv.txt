@@ -2,7 +2,7 @@ Name:Paladin of Prahv
 ManaCost:4 W W
 Types:Creature Human Knight
 PT:3/4
-T:Mode$ DamageDealtOnce | ValidSource$ Card.Self | Execute$ TrigGain | TriggerZones$ Battlefield | TriggerDescription$ Whenever CARDNAME deals damage, you gain that much life.
+T:Mode$ DamageDealtOnce | ValidSource$ Card.Self | Execute$ TrigGain | TriggerZones$ Battlefield | TriggerDescription$ Whenever this creature deals damage, you gain that much life.
 SVar:TrigGain:DB$ GainLife | Defined$ You | LifeAmount$ X
 SVar:X:TriggerCount$DamageAmount
 A:AB$ Effect | Cost$ 1 W Reveal<1/CARDNAME> | ValidTgts$ Creature | Triggers$ TrigDamage | RememberObjects$ Targeted | Forecast$ True | SpellDescription$ Whenever target creature deals damage this turn, you gain that much life. (Activate only during your upkeep and only once each turn.)

@@ -1,7 +1,7 @@
 Name:Blood Sun
 ManaCost:2 R
 Types:Enchantment
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ DBDraw | TriggerDescription$ When CARDNAME enters, draw a card.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ DBDraw | TriggerDescription$ When this enchantment enters, draw a card.
 SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1
 S:Mode$ Continuous | Affected$ Land | RemoveNonManaAbilities$ True | Description$ All lands lose all abilities except mana abilities.
 SVar:NonStackingEffect:True

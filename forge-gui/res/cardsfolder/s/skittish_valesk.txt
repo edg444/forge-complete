@@ -2,7 +2,7 @@ Name:Skittish Valesk
 ManaCost:6 R
 Types:Creature Beast
 PT:5/5
-T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigFlipCoin | TriggerDescription$ At the beginning of your upkeep, flip a coin. If you lose the flip, turn CARDNAME face down.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigFlipCoin | TriggerDescription$ At the beginning of your upkeep, flip a coin. If you lose the flip, turn this creature face down.
 SVar:TrigFlipCoin:DB$ FlipCoin | LoseSubAbility$ DBChange
 SVar:DBChange:DB$ SetState | NewState$ FaceDown
 K:Morph:5 R

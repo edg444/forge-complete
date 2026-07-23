@@ -3,7 +3,7 @@ ManaCost:X U U
 Types:Enchantment
 K:etbCounter:ICE:X
 SVar:X:Count$xPaid
-A:AB$ PutCounter | Cost$ 3 | CounterType$ ICE | CounterNum$ 1 | SpellDescription$ Put an ice counter on CARDNAME.
+A:AB$ PutCounter | Cost$ 3 | CounterType$ ICE | CounterNum$ 1 | SpellDescription$ Put an ice counter on this enchantment.
 A:AB$ Mana | Cost$ SubCounter<1/ICE> | Produced$ C | SpellDescription$ Add {C}.
 AI:RemoveDeck:All
 SVar:AICounterOverrideICE:Positive

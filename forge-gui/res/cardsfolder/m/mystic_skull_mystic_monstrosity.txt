@@ -2,7 +2,7 @@ Name:Mystic Skull
 ManaCost:2
 Types:Artifact
 A:AB$ Mana | Cost$ 1 T | Produced$ Any | SpellDescription$ Add one mana of any color.
-A:AB$ SetState | Cost$ 5 T | Defined$ Self | Mode$ Transform | SpellDescription$ Transform CARDNAME.
+A:AB$ SetState | Cost$ 5 T | Defined$ Self | Mode$ Transform | SpellDescription$ Transform this artifact.
 AlternateMode:DoubleFaced
 Oracle:{1}, {T}: Add one mana of any color.\n{5}, {T}: Transform Mystic Skull.
 

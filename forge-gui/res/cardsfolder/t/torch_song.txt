@@ -1,8 +1,8 @@
 Name:Torch Song
 ManaCost:2 R
 Types:Enchantment
-A:AB$ DealDamage | Cost$ 2 R Sac<1/CARDNAME> | ValidTgts$ Any | NumDmg$ X | SpellDescription$ It deals X damage to any target, where X is the number of verse counters on CARDNAME.
-T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigPutCounter | TriggerDescription$ At the beginning of your upkeep, you may put a verse counter on CARDNAME.
+A:AB$ DealDamage | Cost$ 2 R Sac<1/CARDNAME> | ValidTgts$ Any | NumDmg$ X | SpellDescription$ It deals X damage to any target, where X is the number of verse counters on this enchantment.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigPutCounter | TriggerDescription$ At the beginning of your upkeep, you may put a verse counter on this enchantment.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ VERSE | CounterNum$ 1
 SVar:X:Count$CardCounters.VERSE
 DeckHas:Ability$Counters|Sacrifice

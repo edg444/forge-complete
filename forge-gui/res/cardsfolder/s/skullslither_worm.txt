@@ -2,7 +2,7 @@ Name:Skullslither Worm
 ManaCost:3 B
 Types:Creature Worm
 PT:3/3
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDiscard | TriggerDescription$ When CARDNAME enters, each opponent discards a card. For each opponent who can't, put two +1/+1 counters on CARDNAME.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDiscard | TriggerDescription$ When this creature enters, each opponent discards a card. For each opponent who can't, put two +1/+1 counters on this creature.
 SVar:TrigDiscard:DB$ Discard | Defined$ Opponent | RememberDiscarded$ True | Mode$ TgtChoose | SubAbility$ DBPutCounter
 SVar:DBPutCounter:DB$ PutCounter | CounterType$ P1P1 | CounterNum$ X
 SVar:X:SVar$Y/Times.2

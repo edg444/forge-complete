@@ -1,7 +1,7 @@
 Name:Out of the Tombs
 ManaCost:2 B
 Types:Enchantment
-T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ BuildCounter | TriggerDescription$ At the beginning of your upkeep, put two eon counters on CARDNAME, then mill cards equal to the number of eon counters on it.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ BuildCounter | TriggerDescription$ At the beginning of your upkeep, put two eon counters on this enchantment, then mill cards equal to the number of eon counters on it.
 SVar:BuildCounter:DB$ PutCounter | CounterType$ EON | CounterNum$ 2 | Defined$ Self | SubAbility$ DBMill
 SVar:DBMill:DB$ Mill | NumCards$ X
 SVar:X:Count$CardCounters.EON

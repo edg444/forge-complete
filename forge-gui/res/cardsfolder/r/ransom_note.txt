@@ -1,7 +1,7 @@
 Name:Ransom Note
 ManaCost:1
 Types:Artifact Clue
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSurveil | TriggerDescription$ When CARDNAME enters, surveil 1.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSurveil | TriggerDescription$ When this artifact enters, surveil 1.
 SVar:TrigSurveil:DB$ Surveil | Amount$ 1
 A:AB$ Charm | Cost$ 2 Sac<1/CARDNAME> | Choices$ DBCloak,DBGoad,DBDraw
 SVar:DBCloak:DB$ Cloak | Defined$ TopOfLibrary | SpellDescription$ Cloak the top card of your library.

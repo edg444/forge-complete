@@ -4,8 +4,8 @@ Types:Creature Lizard Mutant
 PT:6/6
 K:Menace
 K:Trample
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDestroy | TriggerDescription$ When CARDNAME enters or becomes monstrous, destroy target permanent.
-T:Mode$ BecomeMonstrous | Secondary$ True | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigDestroy | TriggerDescription$ When CARDNAME enters or becomes monstrous, destroy target permanent.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDestroy | TriggerDescription$ When this creature enters or becomes monstrous, destroy target permanent.
+T:Mode$ BecomeMonstrous | Secondary$ True | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigDestroy | TriggerDescription$ When this creature enters or becomes monstrous, destroy target permanent.
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Permanent
 A:AB$ PutCounter | Cost$ 5 B G | Monstrosity$ 4
 DeckHas:Ability$Counters

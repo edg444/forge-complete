@@ -2,7 +2,7 @@ Name:Wave of Terror
 ManaCost:2 B
 Types:Enchantment
 K:Cumulative upkeep:1
-T:Mode$ Phase | Phase$ Draw | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDestroyAll | TriggerDescription$ At the beginning of your draw step, destroy each creature with mana value equal to the number of age counters on CARDNAME. They can't be regenerated.
+T:Mode$ Phase | Phase$ Draw | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDestroyAll | TriggerDescription$ At the beginning of your draw step, destroy each creature with mana value equal to the number of age counters on this enchantment. They can't be regenerated.
 SVar:TrigDestroyAll:DB$ DestroyAll | ValidCards$ Creature.cmcEQX | NoRegen$ True
 SVar:X:Count$CardCounters.AGE
 AI:RemoveDeck:All

@@ -3,7 +3,7 @@ ManaCost:3 G
 Types:Creature Phyrexian Insect
 PT:4/3
 K:etbCounter:OIL:2
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigUntap | TriggerDescription$ Whenever CARDNAME attacks, you may remove an oil counter from it. If you do, untap it and it gets +1/+1 until end of turn.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigUntap | TriggerDescription$ Whenever this creature attacks, you may remove an oil counter from it. If you do, untap it and it gets +1/+1 until end of turn.
 SVar:TrigUntap:AB$ Untap | Defined$ Self | Cost$ SubCounter<1/OIL> | SubAbility$ DBPump
 SVar:DBPump:DB$ Pump | Defined$ Self | NumAtt$ +1 | NumDef$ +1
 SVar:HasAttackEffect:TRUE

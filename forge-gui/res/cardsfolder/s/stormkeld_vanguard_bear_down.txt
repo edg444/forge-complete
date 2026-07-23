@@ -2,7 +2,7 @@ Name:Stormkeld Vanguard
 ManaCost:4 G G
 Types:Creature Giant Warrior
 PT:6/7
-S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.powerLE2 | Description$ CARDNAME can't be blocked by creatures with power 2 or less.
+S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.powerLE2 | Description$ This creature can't be blocked by creatures with power 2 or less.
 AlternateMode:Adventure
 Oracle:Stormkeld Vanguard can't be blocked by creatures with power 2 or less.
 

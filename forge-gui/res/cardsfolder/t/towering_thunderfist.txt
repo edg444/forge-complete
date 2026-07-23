@@ -2,5 +2,5 @@ Name:Towering Thunderfist
 ManaCost:4 R
 Types:Creature Giant Soldier
 PT:4/4
-A:AB$ Pump | Cost$ W | Defined$ Self | KW$ Vigilance | SpellDescription$ CARDNAME gains vigilance until end of turn.
+A:AB$ Pump | Cost$ W | Defined$ Self | KW$ Vigilance | SpellDescription$ This creature gains vigilance until end of turn.
 Oracle:{W}: Towering Thunderfist gains vigilance until end of turn.

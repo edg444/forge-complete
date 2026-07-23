@@ -3,7 +3,7 @@ ManaCost:U
 Types:Creature Otter
 PT:1/1
 K:Prowess
-S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.powerLTY | Description$ Creatures with power less than CARDNAME's power can't block it.
+S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.powerLTY | Description$ Creatures with power less than this creature's power can't block it.
 SVar:Y:Count$CardPower
 DeckHas:Ability$Counters
 AlternateMode:Adventure

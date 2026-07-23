@@ -2,7 +2,7 @@ Name:Invasion of Tolvada
 ManaCost:3 W B
 Types:Battle Siege
 Defense:5
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChangeZone | TriggerDescription$ When CARDNAME enters, return target nonbattle permanent card from your graveyard to the battlefield.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChangeZone | TriggerDescription$ When this Siege enters, return target nonbattle permanent card from your graveyard to the battlefield.
 SVar:TrigChangeZone:DB$ ChangeZone | Origin$ Graveyard | Destination$ Battlefield | ValidTgts$ Permanent.nonBattle+YouCtrl | TgtPrompt$ Select target nonbattle permanent card in your graveyard
 DeckHas:Ability$Graveyard|Token & Type$Spirit
 DeckHints:Ability$Graveyard|Mill|Token|LifeGain

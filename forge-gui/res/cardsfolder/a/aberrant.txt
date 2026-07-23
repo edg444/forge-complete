@@ -4,7 +4,7 @@ Types:Creature Tyranid Mutant
 PT:0/0
 K:Ravenous
 K:Trample
-T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | Execute$ TrigDestroy | CombatDamage$ True | TriggerDescription$ Heavy Power Hammer — Whenever CARDNAME deals combat damage to a player, destroy target artifact or enchantment that player controls.
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | Execute$ TrigDestroy | CombatDamage$ True | TriggerDescription$ Heavy Power Hammer — Whenever this creature deals combat damage to a player, destroy target artifact or enchantment that player controls.
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Artifact.ControlledBy TriggeredTarget,Enchantment.ControlledBy TriggeredTarget | TgtPrompt$ Select target artifact or enchantment damaged player controls
 SVar:X:Count$xPaid
 DeckHas:Ability$Counters

@@ -3,6 +3,6 @@ ManaCost:1 R
 Types:Creature Goblin Archer Ally
 PT:2/1
 K:First Strike
-A:AB$ DealDamage | Cost$ T tapXType<1/Ally> | ValidTgts$ Opponent,Planeswalker | TgtPrompt$ Select target opponent or planeswalker | NumDmg$ 1 | PrecostDesc$ Cohort — | SpellDescription$ CARDNAME deals 1 damage to target opponent or planeswalker.
+A:AB$ DealDamage | Cost$ T tapXType<1/Ally> | ValidTgts$ Opponent,Planeswalker | TgtPrompt$ Select target opponent or planeswalker | NumDmg$ 1 | PrecostDesc$ Cohort — | SpellDescription$ This creature deals 1 damage to target opponent or planeswalker.
 DeckHints:Type$Ally
 Oracle:First strike\nCohort — {T}, Tap an untapped Ally you control: Zada's Commando deals 1 damage to target opponent or planeswalker.

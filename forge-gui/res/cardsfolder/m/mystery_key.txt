@@ -1,7 +1,7 @@
 Name:Mystery Key
 ManaCost:1 U
 Types:Artifact Equipment
-T:Mode$ DamageDone | ValidSource$ Creature.EquippedBy | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigSacrifice | TriggerZones$ Battlefield | TriggerDescription$ When equipped creature deals combat damage to a player, sacrifice CARDNAME. If you do, draw three cards.
+T:Mode$ DamageDone | ValidSource$ Creature.EquippedBy | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigSacrifice | TriggerZones$ Battlefield | TriggerDescription$ When equipped creature deals combat damage to a player, sacrifice this Equipment. If you do, draw three cards.
 SVar:TrigSacrifice:AB$ Draw | NumCards$ 3 | Cost$ Mandatory Sac<1/CARDNAME>
 SVar:NonStackingAttachEffect:True
 K:Equip:1

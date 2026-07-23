@@ -4,7 +4,7 @@ Types:Creature Zombie Knight
 PT:2/1
 K:Protection from white
 K:Protection from black
-A:AB$ Pump | Cost$ WB | Defined$ Self | KW$ Flying | SpellDescription$ CARDNAME gains flying until end of turn.
-A:AB$ Pump | Cost$ WB | Defined$ Self | KW$ First Strike | SpellDescription$ CARDNAME gains first strike until end of turn.
-A:AB$ Pump | Cost$ WB WB | Defined$ Self | NumAtt$ +1 | SpellDescription$ CARDNAME gets +1/+0 until end of turn.
+A:AB$ Pump | Cost$ WB | Defined$ Self | KW$ Flying | SpellDescription$ This creature gains flying until end of turn.
+A:AB$ Pump | Cost$ WB | Defined$ Self | KW$ First Strike | SpellDescription$ This creature gains first strike until end of turn.
+A:AB$ Pump | Cost$ WB WB | Defined$ Self | NumAtt$ +1 | SpellDescription$ This creature gets +1/+0 until end of turn.
 Oracle:Protection from white and from black\n{W/B}: Stillmoon Cavalier gains flying until end of turn.\n{W/B}: Stillmoon Cavalier gains first strike until end of turn.\n{W/B}{W/B}: Stillmoon Cavalier gets +1/+0 until end of turn.

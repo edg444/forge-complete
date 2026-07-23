@@ -4,7 +4,7 @@ Types:Creature Zombie
 PT:2/2
 K:Trample
 K:Haste
-S:Mode$ Continuous | Affected$ Card.Self | EffectZone$ Graveyard | AffectedZone$ Graveyard | MayPlay$ True | CheckSVar$ X | Description$ You may cast CARDNAME from your graveyard if a non-Zombie creature died this turn. If you do, CARDNAME enters with a +1/+1 counter on it.
+S:Mode$ Continuous | Affected$ Card.Self | EffectZone$ Graveyard | AffectedZone$ Graveyard | MayPlay$ True | CheckSVar$ X | Description$ You may cast this card from your graveyard if a non-Zombie creature died this turn. If you do, this creature enters with a +1/+1 counter on it.
 T:Mode$ SpellCast | ValidCard$ Card.Self | ValidSA$ Spell.MayPlaySource | Static$ True | Execute$ DBEffect
 SVar:DBEffect:DB$ Effect | ExileOnMoved$ Stack | ReplacementEffects$ ETBCreat | ExileOnMoved$ Stack
 SVar:ETBCreat:Event$ Moved | ValidCard$ Card.EffectSource | Destination$ Battlefield | ReplaceWith$ DBPutP1P1 | ReplacementResult$ Updated | Description$ That creature enters with an additional +1/+1 counter on it.

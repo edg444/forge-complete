@@ -2,7 +2,7 @@ Name:Spiritual Asylum
 ManaCost:2 W W
 Types:Enchantment
 S:Mode$ Continuous | Affected$ Creature.YouCtrl,Land.YouCtrl | AddKeyword$ Shroud | Description$ Creatures and lands you control have shroud.
-T:Mode$ Attacks | ValidCard$ Creature.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigSacrifice | TriggerDescription$ When a creature you control attacks, sacrifice CARDNAME.
+T:Mode$ Attacks | ValidCard$ Creature.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigSacrifice | TriggerDescription$ When a creature you control attacks, sacrifice this enchantment.
 SVar:TrigSacrifice:DB$ Sacrifice
 SVar:NonStackingEffect:True
 AI:RemoveDeck:All

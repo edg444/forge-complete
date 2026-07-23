@@ -4,7 +4,7 @@ Types:Creature Spirit
 PT:2/1
 K:Flash
 K:Flying
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self,Spirit.YouCtrl+Other | Execute$ TrigTap | TriggerDescription$ Whenever CARDNAME or another Spirit you control enters, tap target creature an opponent controls.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self,Spirit.YouCtrl+Other | Execute$ TrigTap | TriggerDescription$ Whenever this creature or another Spirit you control enters, tap target creature an opponent controls.
 SVar:TrigTap:DB$ Tap | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Choose target creature an opponent controls.
 SVar:BuffedBy:Spirit
 DeckHints:Type$Spirit

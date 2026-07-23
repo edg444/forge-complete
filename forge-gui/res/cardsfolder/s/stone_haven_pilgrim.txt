@@ -2,7 +2,7 @@ Name:Stone Haven Pilgrim
 ManaCost:1 W
 Types:Creature Kor Cleric
 PT:2/2
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | IsPresent$ Artifact.YouCtrl,Enchantment.YouCtrl | TriggerDescription$ Whenever CARDNAME attacks, if you control an artifact or enchantment, CARDNAME gets +1/+1 and gains lifelink until end of turn.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | IsPresent$ Artifact.YouCtrl,Enchantment.YouCtrl | TriggerDescription$ Whenever this creature attacks, if you control an artifact or enchantment, this creature gets +1/+1 and gains lifelink until end of turn.
 SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +1 | NumDef$ +1 | KW$ Lifelink
 SVar:BuffedBy:Artifact,Enchantment
 DeckHints:Type$Artifact|Enchantment

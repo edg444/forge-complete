@@ -4,7 +4,7 @@ Types:Creature Beast
 PT:6/6
 K:Vigilance
 K:Trample
-T:Mode$ AttackerBlocked | ValidCard$ Creature | ValidBlocker$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigDealDamage | TriggerDescription$ Whenever CARDNAME blocks a creature, CARDNAME deals damage to that creature's controller equal to CARDNAME's power.
+T:Mode$ AttackerBlocked | ValidCard$ Creature | ValidBlocker$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigDealDamage | TriggerDescription$ Whenever this creature blocks a creature, this creature deals damage to that creature's controller equal to this creature's power.
 SVar:TrigDealDamage:DB$ DealDamage | Defined$ TriggeredAttackerController | NumDmg$ X
 SVar:X:Count$CardPower
 SVar:HasBlockEffect:TRUE

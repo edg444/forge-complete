@@ -1,7 +1,7 @@
 Name:Loot Dispute
 ManaCost:3 R
 Types:Enchantment
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigInitiative | TriggerDescription$ When CARDNAME enters, you take the initiative and create a Treasure token.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigInitiative | TriggerDescription$ When this enchantment enters, you take the initiative and create a Treasure token.
 SVar:TrigInitiative:DB$ TakeInitiative | SubAbility$ DBTreasure
 SVar:DBTreasure:DB$ Token | TokenScript$ c_a_treasure_sac
 T:Mode$ AttackersDeclaredOneTarget | ValidAttackers$ Creature.YouCtrl | AttackedTarget$ Player.hasInitiative | Execute$ DBTreasure | TriggerZones$ Battlefield | TriggerDescription$ Whenever you attack the player who has the initiative, create a Treasure token.

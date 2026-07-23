@@ -3,7 +3,7 @@ ManaCost:4 G G
 Types:Creature Hydra
 PT:7/7
 A:AB$ PutCounter | Cost$ X X G | Monstrosity$ X
-T:Mode$ BecomeMonstrous | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigToken | TriggerDescription$ When CARDNAME becomes monstrous, create X X/X green Hydra creature tokens.
+T:Mode$ BecomeMonstrous | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigToken | TriggerDescription$ When this creature becomes monstrous, create X X/X green Hydra creature tokens.
 SVar:TrigToken:DB$ Token | TokenAmount$ MonstrosityX | TokenScript$ g_x_x_hydra | TokenOwner$ You | TokenPower$ MonstrosityX | TokenToughness$ MonstrosityX
 SVar:X:Count$xPaid
 SVar:MonstrosityX:TriggerCount$Amount

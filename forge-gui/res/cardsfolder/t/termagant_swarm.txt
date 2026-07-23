@@ -3,7 +3,7 @@ ManaCost:X G
 Types:Creature Tyranid
 PT:0/0
 K:Ravenous
-T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ Death Frenzy — When CARDNAME dies, create a number of 1/1 green Tyranid creature tokens equal to CARDNAME's power.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ Death Frenzy — When this creature dies, create a number of 1/1 green Tyranid creature tokens equal to this creature's power.
 SVar:TrigToken:DB$ Token | TokenScript$ g_1_1_tyranid | TokenAmount$ Y
 SVar:X:Count$xPaid
 SVar:Y:TriggeredCard$CardPower

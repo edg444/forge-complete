@@ -1,7 +1,7 @@
 Name:Mana Cannons
 ManaCost:2 R
 Types:Enchantment
-T:Mode$ SpellCast | ValidCard$ Card.MultiColor | ValidActivatingPlayer$ You | Execute$ TrigDamage | TriggerZones$ Battlefield | TriggerDescription$ Whenever you cast a multicolored spell, CARDNAME deals X damage to any target, where X is the number of colors that spell is.
+T:Mode$ SpellCast | ValidCard$ Card.MultiColor | ValidActivatingPlayer$ You | Execute$ TrigDamage | TriggerZones$ Battlefield | TriggerDescription$ Whenever you cast a multicolored spell, this enchantment deals X damage to any target, where X is the number of colors that spell is.
 SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ X
 SVar:X:TriggeredCard$CardNumColors
 SVar:BuffedBy:Card.MultiColor

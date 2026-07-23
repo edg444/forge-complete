@@ -1,7 +1,7 @@
 Name:Hoofprints of the Stag
 ManaCost:1 W
 Types:Kindred Enchantment Elemental
-T:Mode$ Drawn | ValidCard$ Card.YouCtrl | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigPutCounter | TriggerDescription$ Whenever you draw a card, you may put a hoofprint counter on CARDNAME.
+T:Mode$ Drawn | ValidCard$ Card.YouCtrl | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigPutCounter | TriggerDescription$ Whenever you draw a card, you may put a hoofprint counter on this enchantment.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ HOOFPRINT | CounterNum$ 1
 A:AB$ Token | Cost$ 2 W SubCounter<4/HOOFPRINT> | TokenScript$ w_4_4_elemental_flying | TokenOwner$ You | PlayerTurn$ True | SpellDescription$ Create a 4/4 white Elemental creature token with flying. Activate only during your turn.
 DeckHas:Ability$Counters|Token

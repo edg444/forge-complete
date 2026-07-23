@@ -8,7 +8,7 @@ S:Mode$ Continuous | CharacteristicDefining$ True | SetPower$ X | SetToughness$ 
 SVar:X:Count$Valid Creature.YouCtrl
 SVar:BuffedBy:Creature
 SVar:NoZeroToughnessAI:True
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ Whenever CARDNAME attacks, create a number of 2/2 white Knight creature tokens with vigilance equal to the number of opponents you have.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ Whenever this creature attacks, create a number of 2/2 white Knight creature tokens with vigilance equal to the number of opponents you have.
 SVar:TrigToken:DB$ Token | TokenOwner$ You | TokenAmount$ Y | TokenScript$ w_2_2_knight_vigilance
 SVar:Y:PlayerCountOpponents$Amount
 DeckHas:Ability$Token

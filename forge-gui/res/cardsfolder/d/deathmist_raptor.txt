@@ -4,7 +4,7 @@ Types:Creature Dinosaur Beast
 PT:3/3
 K:Deathtouch
 K:Megamorph:4 G
-T:Mode$ TurnFaceUp | ValidCard$ Permanent.YouCtrl | Execute$ TrigChange | TriggerZones$ Graveyard | OptionalDecider$ You | TriggerDescription$ Whenever a permanent you control is turned face up, you may return CARDNAME from your graveyard to the battlefield face up or face down.
+T:Mode$ TurnFaceUp | ValidCard$ Permanent.YouCtrl | Execute$ TrigChange | TriggerZones$ Graveyard | OptionalDecider$ You | TriggerDescription$ Whenever a permanent you control is turned face up, you may return this card from your graveyard to the battlefield face up or face down.
 SVar:TrigChange:DB$ GenericChoice | Choices$ DBTop,DBBottom
 SVar:DBTop:DB$ ChangeZone | Origin$ Graveyard | Destination$ Battlefield | SpellDescription$ Put CARDNAME on battlefield face up.
 SVar:DBBottom:DB$ ChangeZone | Origin$ Graveyard | Destination$ Battlefield | FaceDown$ True | SpellDescription$ Put CARDNAME on battlefield face down.

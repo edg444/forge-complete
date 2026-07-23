@@ -3,6 +3,6 @@ ManaCost:2 U U
 Types:Creature Phyrexian Drake
 PT:3/2
 K:Flying
-T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigDiscard | TriggerDescription$ When CARDNAME dies, each player discards a card.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigDiscard | TriggerDescription$ When this creature dies, each player discards a card.
 SVar:TrigDiscard:DB$ Discard | Defined$ Player | Mode$ TgtChoose
 Oracle:Flying\nWhen Serum Raker dies, each player discards a card.

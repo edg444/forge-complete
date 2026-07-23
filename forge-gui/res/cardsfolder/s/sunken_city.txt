@@ -1,7 +1,7 @@
 Name:Sunken City
 ManaCost:U U
 Types:Enchantment
-T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigUpkeep | TriggerDescription$ At the beginning of your upkeep, sacrifice CARDNAME unless you pay {U}{U}.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigUpkeep | TriggerDescription$ At the beginning of your upkeep, sacrifice this enchantment unless you pay {U}{U}.
 SVar:TrigUpkeep:DB$ Sacrifice | UnlessPayer$ You | UnlessCost$ U U
 S:Mode$ Continuous | Affected$ Creature.Blue | AddPower$ 1 | AddToughness$ 1 | Description$ Blue creatures get +1/+1.
 SVar:PlayMain1:TRUE

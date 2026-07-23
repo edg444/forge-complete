@@ -1,7 +1,7 @@
 Name:Retrofitter Foundry
 ManaCost:1
 Types:Artifact
-A:AB$ Untap | Cost$ 3 | SpellDescription$ Untap CARDNAME.
+A:AB$ Untap | Cost$ 3 | SpellDescription$ Untap this artifact.
 A:AB$ Token | Cost$ 2 T | TokenScript$ c_1_1_a_servo | TokenOwner$ You | SpellDescription$ Create a 1/1 colorless Servo artifact creature token.
 A:AB$ Token | Cost$ 1 T Sac<1/Servo> | TokenScript$ c_1_1_a_thopter_flying | TokenOwner$ You | SpellDescription$ Create a 1/1 colorless Thopter artifact creature token with flying.
 DeckHas:Ability$Token

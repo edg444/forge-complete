@@ -1,7 +1,7 @@
 Name:Wand of the Worldsoul
 ManaCost:2 W
 Types:Artifact
-R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ CARDNAME enters tapped.
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This artifact enters tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ Mana | Cost$ T | Produced$ W | SpellDescription$ Add {W}.
 A:AB$ Effect | Cost$ T | StaticAbilities$ GrantConvoke | ForgetOnCast$ Card.YouCtrl | SpellDescription$ The next spell you cast this turn has convoke.

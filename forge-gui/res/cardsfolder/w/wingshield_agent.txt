@@ -3,7 +3,7 @@ ManaCost:2 U
 Types:Creature Human Soldier
 PT:2/3
 K:etbCounter:SHIELD:1
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ Whenever CARDNAME attacks, up to one other target creature gains flying until end of turn.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ Whenever this creature attacks, up to one other target creature gains flying until end of turn.
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature.Other | TgtPrompt$ Select up to one other target creature | TargetMin$ 0 | TargetMax$ 1 | KW$ Flying
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Counters

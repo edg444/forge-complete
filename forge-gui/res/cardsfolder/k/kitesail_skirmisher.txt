@@ -3,7 +3,7 @@ ManaCost:3 U
 Types:Creature Human Pirate
 PT:3/1
 K:Flying
-T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigPump | TriggerDescription$ Whenever CARDNAME attacks, another target creature attacking the same player or planeswalker gains flying until end of turn.
+T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigPump | TriggerDescription$ Whenever this creature attacks, another target creature attacking the same player or planeswalker gains flying until end of turn.
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature.Other+attackingSame | TgtPrompt$ Choose another target creature attacking the same player or planeswalker | KW$ Flying
 K:Encore:4 U
 SVar:HasAttackEffect:TRUE

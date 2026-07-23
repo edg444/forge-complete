@@ -3,7 +3,7 @@ ManaCost:2 B
 Types:Enchantment Aura
 K:Enchant:Creature
 SVar:AttachAILogic:Curse
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDiscard | TriggerDescription$ When CARDNAME enters, look at target player's hand. You may choose a nonland card from it. That player discards that card.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDiscard | TriggerDescription$ When this Aura enters, look at target player's hand. You may choose a nonland card from it. That player discards that card.
 SVar:TrigDiscard:DB$ Discard | ValidTgts$ Player | Mode$ RevealYouChoose | Optional$ True | DiscardValid$ Card.nonLand | DiscardValidDesc$ nonland card
 S:Mode$ Continuous | Affected$ Creature.EnchantedBy | AddSVar$ MortalDestroy
 SVar:MortalDestroy:SVar:DestroyWhenDamaged:True

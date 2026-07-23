@@ -2,7 +2,7 @@ Name:Voltaic Visionary
 ManaCost:1 R
 Types:Creature Human Wizard
 PT:3/1
-A:AB$ DealDamage | Cost$ T | NumDmg$ 2 | Defined$ You | SorcerySpeed$ True | SubAbility$ DBExile | SpellDescription$ CARDNAME deals 2 damage to you.
+A:AB$ DealDamage | Cost$ T | NumDmg$ 2 | Defined$ You | SorcerySpeed$ True | SubAbility$ DBExile | SpellDescription$ This creature deals 2 damage to you.
 SVar:DBExile:DB$ Dig | Defined$ You | DigNum$ 1 | ChangeNum$ All | DestinationZone$ Exile | RememberChanged$ True | SubAbility$ DBEffect | StackDescription$ SpellDescription | SpellDescription$ Exile the top card of your library.
 SVar:DBEffect:DB$ Effect | RememberObjects$ RememberedCard | StaticAbilities$ STPlay | SubAbility$ DBCleanup | ForgetOnMoved$ Exile | StackDescription$ SpellDescription | SpellDescription$ You may play that card this turn. Activate only as a sorcery.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
@@ -20,5 +20,5 @@ ManaCost:no cost
 Colors:red
 Types:Creature Human Berserker
 PT:4/3
-S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ CARDNAME can't block.
+S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't block.
 Oracle:Volt-Charged Berserker can't block.

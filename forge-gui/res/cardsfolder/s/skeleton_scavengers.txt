@@ -3,7 +3,7 @@ ManaCost:2 B
 Types:Creature Skeleton
 PT:0/0
 K:etbCounter:P1P1:1
-A:AB$ Regenerate | Cost$ Mana<1\NumTimes> | CostDesc$ Pay {1} for each +1/+1 counter on CARDNAME: | RegenerationAbility$ DBImmediateTrigger | StackDescription$ SpellDescription | SpellDescription$ Regenerate CARDNAME. When it regenerates this way, put a +1/+1 counter on it.
+A:AB$ Regenerate | Cost$ Mana<1\NumTimes> | CostDesc$ Pay {1} for each +1/+1 counter on CARDNAME: | RegenerationAbility$ DBImmediateTrigger | StackDescription$ SpellDescription | SpellDescription$ Regenerate this creature. When it regenerates this way, put a +1/+1 counter on it.
 SVar:DBImmediateTrigger:DB$ ImmediateTrigger | Execute$ TrigPutCounter | TriggerDescription$ When it regenerates this way, put a +1/+1 counter on it.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ EffectSource | CounterType$ P1P1 | CounterNum$ 1
 SVar:NumTimes:Count$CardCounters.P1P1

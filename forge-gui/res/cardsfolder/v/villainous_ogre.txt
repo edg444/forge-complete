@@ -2,9 +2,9 @@ Name:Villainous Ogre
 ManaCost:2 B
 Types:Creature Ogre Warrior
 PT:3/2
-S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ CARDNAME can't block.
-S:Mode$ Continuous | Affected$ Card.Self | AddAbility$ Regen | IsPresent$ Demon.YouCtrl | Description$ As long as you control a Demon, CARDNAME has "{B}: Regenerate CARDNAME."
-SVar:Regen:AB$ Regenerate | Cost$ B | SpellDescription$ Regenerate CARDNAME.
+S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't block.
+S:Mode$ Continuous | Affected$ Card.Self | AddAbility$ Regen | IsPresent$ Demon.YouCtrl | Description$ As long as you control a Demon, this creature has "{B}: Regenerate this creature."
+SVar:Regen:AB$ Regenerate | Cost$ B | SpellDescription$ Regenerate this creature.
 SVar:BuffedBy:Demon
 DeckNeeds:Type$Demon
 Oracle:Villainous Ogre can't block.\nAs long as you control a Demon, Villainous Ogre has "{B}: Regenerate Villainous Ogre."

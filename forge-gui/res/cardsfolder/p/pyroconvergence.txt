@@ -1,7 +1,7 @@
 Name:Pyroconvergence
 ManaCost:4 R
 Types:Enchantment
-T:Mode$ SpellCast | ValidCard$ Card.MultiColor | ValidActivatingPlayer$ You | Execute$ TrigDamage | TriggerZones$ Battlefield | TriggerDescription$ Whenever you cast a multicolored spell, CARDNAME deals 2 damage to any target.
+T:Mode$ SpellCast | ValidCard$ Card.MultiColor | ValidActivatingPlayer$ You | Execute$ TrigDamage | TriggerZones$ Battlefield | TriggerDescription$ Whenever you cast a multicolored spell, this enchantment deals 2 damage to any target.
 SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 2
 SVar:BuffedBy:Card.MultiColor
 AI:RemoveDeck:Random

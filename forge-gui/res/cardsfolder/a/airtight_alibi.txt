@@ -4,7 +4,7 @@ Types:Enchantment Aura
 K:Flash
 K:Enchant:Creature
 SVar:AttachAILogic:Pump
-T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigUntap | TriggerDescription$ When CARDNAME enters, untap enchanted creature. It gains hexproof until end of turn. If it's suspected, it's no longer suspected.
+T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigUntap | TriggerDescription$ When this Aura enters, untap enchanted creature. It gains hexproof until end of turn. If it's suspected, it's no longer suspected.
 SVar:TrigUntap:DB$ Untap | Defined$ Enchanted | SubAbility$ DBPump
 SVar:DBPump:DB$ Pump | Defined$ Enchanted | KW$ Hexproof | SubAbility$ DBUnsuspect
 SVar:DBUnsuspect:DB$ AlterAttribute | Attributes$ Suspected | ConditionDefined$ Enchanted | ConditionPresent$ Card.IsSuspected | Activate$ False | Defined$ Enchanted

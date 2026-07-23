@@ -2,7 +2,7 @@ Name:Ogre Geargrabber
 ManaCost:4 R R
 Types:Creature Ogre Warrior
 PT:4/4
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigGainControl | TriggerDescription$ Whenever CARDNAME attacks, gain control of target Equipment an opponent controls until end of turn. Attach it to CARDNAME. When you lose control of that Equipment, unattach it.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigGainControl | TriggerDescription$ Whenever this creature attacks, gain control of target Equipment an opponent controls until end of turn. Attach it to this creature. When you lose control of that Equipment, unattach it.
 SVar:TrigGainControl:DB$ GainControl | ValidTgts$ Equipment.OppCtrl | LoseControl$ EOT | TgtPrompt$ Select target Equipment an opponent controls | SubAbility$ DBAttach
 SVar:DBAttach:DB$ Attach | Object$ ParentTarget | Defined$ Self | SubAbility$ DBEffect
 SVar:DBEffect:DB$ Effect | RememberObjects$ ParentTarget | Triggers$ TrigChangeController | Duration$ Permanent

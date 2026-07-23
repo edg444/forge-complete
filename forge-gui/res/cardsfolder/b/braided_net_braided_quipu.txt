@@ -18,5 +18,5 @@ ManaCost:no cost
 Colors:blue
 Types:Artifact
 A:AB$ Draw | Cost$ 3 U T | NumCards$ Count$Valid Artifact.YouCtrl | SubAbility$ DBChangeZone | StackDescription$ SpellDescription | SpellDescription$ Draw a card for each artifact you control,
-SVar:DBChangeZone:DB$ ChangeZone | Origin$ Battlefield | Destination$ Library | LibraryPosition$ 2 | StackDescription$ SpellDescription | SpellDescription$ then put CARDNAME into its owner's library third from the top.
+SVar:DBChangeZone:DB$ ChangeZone | Origin$ Battlefield | Destination$ Library | LibraryPosition$ 2 | StackDescription$ SpellDescription | SpellDescription$ then put this artifact into its owner's library third from the top.
 Oracle:{3}{U}, {T}: Draw a card for each artifact you control, then put Braided Quipu into its owner's library third from the top.

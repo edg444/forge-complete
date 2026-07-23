@@ -2,7 +2,7 @@ Name:Invasion of Segovia
 ManaCost:2 U
 Types:Battle Siege
 Defense:4
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When CARDNAME enters, create two 1/1 blue Kraken creature tokens with trample.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When this Siege enters, create two 1/1 blue Kraken creature tokens with trample.
 SVar:TrigToken:DB$ Token | TokenAmount$ 2 | TokenScript$ u_1_1_kraken_trample
 DeckHas:Ability$Token & Type$Kraken
 AlternateMode:DoubleFaced

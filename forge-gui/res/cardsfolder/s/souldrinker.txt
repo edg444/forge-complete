@@ -2,6 +2,6 @@ Name:Souldrinker
 ManaCost:3 B
 Types:Creature Spirit
 PT:2/2
-A:AB$ PutCounter | Cost$ PayLife<3> | CounterType$ P1P1 | CounterNum$ 1 | SpellDescription$ Put a +1/+1 counter on CARDNAME.
+A:AB$ PutCounter | Cost$ PayLife<3> | CounterType$ P1P1 | CounterNum$ 1 | SpellDescription$ Put a +1/+1 counter on this creature.
 AI:RemoveDeck:Random
 Oracle:Pay 3 life: Put a +1/+1 counter on Souldrinker.

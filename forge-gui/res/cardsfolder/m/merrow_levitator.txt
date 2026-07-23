@@ -3,6 +3,6 @@ ManaCost:3 U
 Types:Creature Merfolk Wizard
 PT:2/3
 A:AB$ Pump | Cost$ T | ValidTgts$ Creature | KW$ Flying | SpellDescription$ Target creature gains flying until end of turn.
-T:Mode$ SpellCast | ValidCard$ Card.Blue | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigUntap | TriggerDescription$ Whenever you cast a blue spell, you may untap CARDNAME.
+T:Mode$ SpellCast | ValidCard$ Card.Blue | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigUntap | TriggerDescription$ Whenever you cast a blue spell, you may untap this creature.
 SVar:TrigUntap:DB$ Untap | Defined$ Self
 Oracle:{T}: Target creature gains flying until end of turn.\nWhenever you cast a blue spell, you may untap Merrow Levitator.

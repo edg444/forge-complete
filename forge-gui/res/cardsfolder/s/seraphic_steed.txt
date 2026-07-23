@@ -4,7 +4,7 @@ Types:Creature Unicorn Mount
 PT:2/2
 K:First Strike
 K:Lifelink
-T:Mode$ Attacks | ValidCard$ Card.Self+IsSaddled | TriggerZones$ Battlefield | Execute$ TrigToken | TriggerDescription$ Whenever CARDNAME attacks while saddled, create a 3/3 white Angel creature token with flying.
+T:Mode$ Attacks | ValidCard$ Card.Self+IsSaddled | TriggerZones$ Battlefield | Execute$ TrigToken | TriggerDescription$ Whenever this creature attacks while saddled, create a 3/3 white Angel creature token with flying.
 SVar:TrigToken:DB$ Token | TokenScript$ w_3_3_angel_flying
 K:Saddle:4
 DeckHas:Ability$LifeGain|Token & Type$Angel

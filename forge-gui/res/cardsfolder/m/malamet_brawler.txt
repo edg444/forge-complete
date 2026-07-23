@@ -2,7 +2,7 @@ Name:Malamet Brawler
 ManaCost:1 G
 Types:Creature Cat Warrior
 PT:2/2
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ Whenever CARDNAME attacks, target attacking creature gains trample until end of turn.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ Whenever this creature attacks, target attacking creature gains trample until end of turn.
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature.attacking | TgtPrompt$ Select target attacking creature | KW$ Trample
 SVar:HasAttackEffect:TRUE
 Oracle:Whenever Malamet Brawler attacks, target attacking creature gains trample until end of turn.

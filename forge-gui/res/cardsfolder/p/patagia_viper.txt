@@ -3,8 +3,8 @@ ManaCost:3 G
 Types:Creature Snake
 PT:2/1
 K:Flying
-T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When CARDNAME enters, create two 1/1 green and blue Snake creature tokens.
-T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSac | ManaNotSpent$ U | TriggerDescription$ When CARDNAME enters, sacrifice it unless {U} was spent to cast it.
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When this creature enters, create two 1/1 green and blue Snake creature tokens.
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSac | ManaNotSpent$ U | TriggerDescription$ When this creature enters, sacrifice it unless {U} was spent to cast it.
 SVar:TrigToken:DB$ Token | TokenAmount$ 2 | TokenScript$ gu_1_1_snake | TokenOwner$ You
 SVar:TrigSac:DB$ Sacrifice
 SVar:ManaNeededToAvoidNegativeEffect:blue

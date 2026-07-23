@@ -17,7 +17,7 @@ Name:Cosmium Catalyst
 ManaCost:no cost
 Colors:red
 Types:Artifact
-A:AB$ ChooseCard | Cost$ 1 R T | DefinedCards$ ExiledWith | ChoiceZone$ Exile | AtRandom$ True | SubAbility$ DBPlay | StackDescription$ SpellDescription | SpellDescription$ Choose an exiled card used to craft CARDNAME at random.
+A:AB$ ChooseCard | Cost$ 1 R T | DefinedCards$ ExiledWith | ChoiceZone$ Exile | AtRandom$ True | SubAbility$ DBPlay | StackDescription$ SpellDescription | SpellDescription$ Choose an exiled card used to craft this artifact at random.
 SVar:DBPlay:DB$ Play | Defined$ ChosenCard | ValidSA$ Spell | WithoutManaCost$ True | Optional$ True | SubAbility$ DBCleanup | StackDescription$ SpellDescription | SpellDescription$ You may cast that card without paying its mana cost.
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 Oracle:{1}{R}, {T}: Choose an exiled card used to craft Cosmium Catalyst at random. You may cast that card without paying its mana cost.

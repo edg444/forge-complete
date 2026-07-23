@@ -2,7 +2,7 @@ Name:Invasion of New Phyrexia
 ManaCost:X W U
 Types:Battle Siege
 Defense:6
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When CARDNAME enters, create X 2/2 white and blue Knight creature tokens with vigilance.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When this Siege enters, create X 2/2 white and blue Knight creature tokens with vigilance.
 SVar:TrigToken:DB$ Token | TokenAmount$ X | TokenScript$ wu_2_2_knight_vigilance
 SVar:X:Count$xPaid
 DeckHas:Ability$Token & Type$Knight

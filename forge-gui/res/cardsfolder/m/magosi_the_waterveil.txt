@@ -1,10 +1,10 @@
 Name:Magosi, the Waterveil
 ManaCost:no cost
 Types:Land
-R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ CARDNAME enters tapped.
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This land enters tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ Mana | Cost$ T | Produced$ U | SpellDescription$ Add {U}.
-A:AB$ PutCounter | Cost$ U T | Defined$ Self | CounterType$ EON | CounterNum$ 1 | SubAbility$ DBSkipTurn | SpellDescription$ Put an eon counter on CARDNAME. Skip your next turn.
+A:AB$ PutCounter | Cost$ U T | Defined$ Self | CounterType$ EON | CounterNum$ 1 | SubAbility$ DBSkipTurn | SpellDescription$ Put an eon counter on this land. Skip your next turn.
 A:AB$ AddTurn | Cost$ T SubCounter<1/EON> Return<1/CARDNAME> | NumTurns$ 1 | Defined$ You | SpellDescription$ Take an extra turn after this one.
 SVar:DBSkipTurn:DB$ SkipTurn | NumTurns$ 1 | Defined$ You
 AI:RemoveDeck:All

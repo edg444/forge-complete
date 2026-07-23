@@ -4,7 +4,7 @@ Types:Enchantment Aura
 K:Enchant:Land
 SVar:AttachAITgts:Land.nonBasic
 SVar:AttachAILogic:Curse
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When CARDNAME enters, draw a card.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When this Aura enters, draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
 S:Mode$ Continuous | Affected$ Land.EnchantedBy | RemoveLandTypes$ True | RemoveAllAbilities$ True | AddAbility$ ABManaC & ABManaAny | Description$ Enchanted land loses all land types and abilities and has "{T}: Add {C}" and "{T}, Pay 1 life: Add one mana of any color."
 SVar:ABManaC:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.

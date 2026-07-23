@@ -5,7 +5,7 @@ PT:7/4
 K:Affinity:Human
 K:Trample
 K:Haste
-T:Mode$ Phase | TriggerZones$ Battlefield | Phase$ End of Turn | ValidPlayer$ You | IsPresent$ Card.Self+attackedThisTurn | Execute$ TrigChangeZone | TriggerDescription$ At the beginning of your end step, if CARDNAME attacked this turn, return it to its owner's hand. If you do, create a number of 1/1 white Human Soldier creature tokens equal to its toughness.
+T:Mode$ Phase | TriggerZones$ Battlefield | Phase$ End of Turn | ValidPlayer$ You | IsPresent$ Card.Self+attackedThisTurn | Execute$ TrigChangeZone | TriggerDescription$ At the beginning of your end step, if this creature attacked this turn, return it to its owner's hand. If you do, create a number of 1/1 white Human Soldier creature tokens equal to its toughness.
 SVar:TrigChangeZone:DB$ ChangeZone | Defined$ Self | Origin$ Battlefield | Destination$ Hand | RememberChanged$ True | SubAbility$ DBToken
 SVar:DBToken:DB$ Token | TokenScript$ w_1_1_human_soldier | TokenOwner$ You | TokenAmount$ Y | ConditionDefined$ Remembered | ConditionPresent$ Card | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True

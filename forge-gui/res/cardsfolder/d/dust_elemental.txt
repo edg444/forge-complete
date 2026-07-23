@@ -5,7 +5,7 @@ PT:6/6
 K:Flash
 K:Flying
 K:Fear
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChangeZone | TriggerDescription$ When CARDNAME enters, return three creatures you control to their owner's hand.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChangeZone | TriggerDescription$ When this creature enters, return three creatures you control to their owner's hand.
 SVar:TrigChangeZone:DB$ ChangeZone | Origin$ Battlefield | Destination$ Hand | Hidden$ True | Mandatory$ True | ChangeType$ Creature.YouCtrl | ChangeNum$ 3
 SVar:NeedsToPlayVar:Z GE3
 SVar:Z:Count$Valid Creature.cmcLE4+YouCtrl

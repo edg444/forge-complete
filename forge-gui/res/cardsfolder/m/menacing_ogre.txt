@@ -4,7 +4,7 @@ Types:Creature Ogre
 PT:3/3
 K:Trample
 K:Haste
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChooseNumber | TriggerDescription$ When CARDNAME enters, each player secretly chooses a number. Then those numbers are revealed. Each player with the highest number loses that much life. If you are one of those players, put two +1/+1 counters on CARDNAME.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChooseNumber | TriggerDescription$ When this creature enters, each player secretly chooses a number. Then those numbers are revealed. Each player with the highest number loses that much life. If you are one of those players, put two +1/+1 counters on this creature.
 SVar:TrigChooseNumber:DB$ ChooseNumber | Defined$ Player | Secretly$ True | Highest$ DBLoseLife | AILogic$ HighestGetCounter | RememberHighest$ True | SubAbility$ DBPutCounter
 SVar:DBLoseLife:DB$ LoseLife | Defined$ Remembered | LifeAmount$ X
 SVar:X:Count$ChosenNumber

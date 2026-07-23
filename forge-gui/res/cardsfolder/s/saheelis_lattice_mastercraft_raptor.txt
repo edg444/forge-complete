@@ -1,7 +1,7 @@
 Name:Saheeli's Lattice
 ManaCost:1 R
 Types:Artifact
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDiscard | TriggerDescription$ When CARDNAME enters, you may discard a card. If you do, draw two cards.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDiscard | TriggerDescription$ When this artifact enters, you may discard a card. If you do, draw two cards.
 SVar:TrigDiscard:AB$ Draw | Cost$ Discard<1/Card> | NumCards$ 2
 K:Craft:4 R XMin1 ExileCtrlOrGrave<X/Dinosaur.Other>
 SVar:X:Count$xPaid

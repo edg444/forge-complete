@@ -3,7 +3,7 @@ ManaCost:5 U U
 Types:Creature Drake
 PT:5/5
 K:Flying
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ When CARDNAME enters, target creature gains flying until end of turn.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ When this creature enters, target creature gains flying until end of turn.
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature | KW$ Flying
 A:AB$ PumpAll | Cost$ 4 U U ExileFromGrave<1/CARDNAME> | ActivationZone$ Graveyard | ValidCards$ Creature.YouCtrl | KW$ Flying | SpellDescription$ Creatures you control gain flying until end of turn.
 SVar:PlayMain1:TRUE

@@ -3,5 +3,5 @@ ManaCost:3 U
 Types:Creature Metathran
 PT:2/3
 K:Flying
-A:AB$ Regenerate | Cost$ 2 G | SpellDescription$ Regenerate CARDNAME.
+A:AB$ Regenerate | Cost$ 2 G | SpellDescription$ Regenerate this creature.
 Oracle:Flying\n{2}{G}: Regenerate Living Airship.

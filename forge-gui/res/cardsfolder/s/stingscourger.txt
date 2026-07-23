@@ -2,7 +2,7 @@ Name:Stingscourger
 ManaCost:1 R
 Types:Creature Goblin Warrior
 PT:2/2
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChangeZone | TriggerDescription$ When CARDNAME enters, return target creature an opponent controls to its owner's hand.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChangeZone | TriggerDescription$ When this creature enters, return target creature an opponent controls to its owner's hand.
 SVar:TrigChangeZone:DB$ ChangeZone | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls | Origin$ Battlefield | Destination$ Hand
 K:Echo:3 R
 SVar:NeedsToPlayVar:Y GE4

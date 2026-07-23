@@ -21,7 +21,7 @@ ManaCost:no cost
 Colors:blue
 Types:Enchantment Saga
 K:Chapter:3:DBDraw,DBBounceAll,DBCastAll
-SVar:DBDraw:DB$ Draw | NumCards$ Y | SubAbility$ DBEffect | SpellDescription$ Draw cards equal to the number of cards in your hand. You have no maximum hand size for as long as you control CARDNAME.
+SVar:DBDraw:DB$ Draw | NumCards$ Y | SubAbility$ DBEffect | SpellDescription$ Draw cards equal to the number of cards in your hand. You have no maximum hand size for as long as you control this Saga.
 SVar:DBEffect:DB$ Effect | StaticAbilities$ STHandSize | Duration$ AsLongAsControl
 SVar:STHandSize:Mode$ Continuous | Affected$ You | SetMaxHandSize$ Unlimited | Description$ You have no maximum hand size.
 SVar:DBBounceAll:DB$ ChangeZoneAll | ChangeType$ Creature.nonPhyrexian | Origin$ Battlefield | Destination$ Hand | SpellDescription$ Return all non-Phyrexian creatures to their owners' hands.

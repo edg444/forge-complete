@@ -6,7 +6,7 @@ SVar:DBPutCounter:DB$ PutCounter | CounterType$ GLYPH | CounterNum$ X | ValidTgt
 SVar:X:Targeted$CardPower
 SVar:Delude:DB$ Animate | Defined$ ParentTarget | Replacements$ Delusional | Triggers$ TrigGlyphUpkeep | Duration$ Permanent | StackDescription$ None
 SVar:Delusional:Event$ Untap | ValidCard$ Card.Self+counters_GE1_GLYPH | ValidStepTurnToController$ You | Layer$ CantHappen | Description$ CARDNAME doesn't untap during your untap step if it has a glyph counter on it.
-SVar:TrigGlyphUpkeep:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ LoseGlyph | TriggerDescription$ At the beginning of your upkeep, remove a glyph counter from CARDNAME.
+SVar:TrigGlyphUpkeep:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ LoseGlyph | TriggerDescription$ At the beginning of your upkeep, remove a glyph counter from this creature.
 SVar:LoseGlyph:DB$ RemoveCounter | CounterType$ GLYPH | CounterNum$ 1
 DeckHas:Ability$Counters
 Oracle:Put X glyph counters on target creature that target Wall blocked this turn, where X is the power of that blocked creature. The creature gains "This creature doesn't untap during your untap step if it has a glyph counter on it" and "At the beginning of your upkeep, remove a glyph counter from this creature."

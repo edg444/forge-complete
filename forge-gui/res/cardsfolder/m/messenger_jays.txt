@@ -3,7 +3,7 @@ ManaCost:4 U
 Types:Creature Bird
 PT:2/1
 K:Flying
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigVote | TriggerDescription$ Council's dilemma — When CARDNAME enters, starting with you, each player votes for feather or quill. Put a +1/+1 counter on CARDNAME for each feather vote and draw a card for each quill vote. For each card drawn this way, discard a card.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigVote | TriggerDescription$ Council's dilemma — When this creature enters, starting with you, each player votes for feather or quill. Put a +1/+1 counter on this creature for each feather vote and draw a card for each quill vote. For each card drawn this way, discard a card.
 SVar:TrigVote:DB$ Vote | Defined$ Player | Choices$ DBVoteFeather,DBVoteQuill | StoreVoteNum$ True | AILogic$ FeatherOrQuill
 SVar:DBVoteFeather:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ VoteNum | SpellDescription$ Feather
 SVar:DBVoteQuill:DB$ Draw | NumCards$ VoteNum | SubAbility$ DBDiscard | RememberDrawn$ AllReplaced | SpellDescription$ Quill

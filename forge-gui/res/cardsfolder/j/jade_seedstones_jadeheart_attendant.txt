@@ -1,7 +1,7 @@
 Name:Jade Seedstones
 ManaCost:3 G
 Types:Artifact
-T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCounter | TriggerDescription$ When CARDNAME enters, distribute three +1/+1 counters among one, two, or three target creatures you control.
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCounter | TriggerDescription$ When this artifact enters, distribute three +1/+1 counters among one, two, or three target creatures you control.
 SVar:TrigCounter:DB$ PutCounter | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select one, two or three target creatures you control | CounterType$ P1P1 | CounterNum$ 3 | TargetMin$ 1 | TargetMax$ 3 | DividedAsYouChoose$ 3
 K:Craft:5 G G ExileCtrlOrGrave<1/Creature.Other>
 DeckHas:Ability$Counters|LifeGain|Graveyard
@@ -16,7 +16,7 @@ ManaCost:no cost
 Colors:green
 Types:Artifact Creature Golem
 PT:7/7
-T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ When CARDNAME enters, you gain life equal to the mana value of the exiled card used to craft it.
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ When this creature enters, you gain life equal to the mana value of the exiled card used to craft it.
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ X
 SVar:X:ExiledWith$CardManaCost
 Oracle:When Jadeheart Attendant enters, you gain life equal to the mana value of the exiled card used to craft it.

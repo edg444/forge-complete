@@ -2,7 +2,7 @@ Name:Mantle of Tides
 ManaCost:U
 Types:Artifact Equipment
 S:Mode$ Continuous | Affected$ Creature.EquippedBy | AddPower$ 1 | AddToughness$ 2 | Description$ Equipped creature gets +1/+2.
-T:Mode$ Drawn | ValidCard$ Card.YouCtrl | Number$ 2 | TriggerZones$ Battlefield | Execute$ TrigAttach | TriggerDescription$ Whenever you draw your second card each turn, attach CARDNAME to target creature you control.
+T:Mode$ Drawn | ValidCard$ Card.YouCtrl | Number$ 2 | TriggerZones$ Battlefield | Execute$ TrigAttach | TriggerDescription$ Whenever you draw your second card each turn, attach this Equipment to target creature you control.
 SVar:TrigAttach:DB$ Attach | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control
 SVar:PlayMain1:TRUE
 K:Equip:3

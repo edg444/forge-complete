@@ -2,7 +2,7 @@ Name:Spring-Loaded Sawblades
 ManaCost:1 W
 Types:Artifact
 K:Flash
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDamage | TriggerDescription$ When CARDNAME enters, it deals 5 damage to target tapped creature an opponent controls.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDamage | TriggerDescription$ When this artifact enters, it deals 5 damage to target tapped creature an opponent controls.
 SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Creature.tapped+OppCtrl | TgtPrompt$ Select target tapped creature an opponent controls | NumDmg$ 5
 K:Craft:3 W ExileCtrlOrGrave<1/Artifact.Other>
 DeckHints:Ability$Discard|Mill|Sacrifice & Type$Artifact

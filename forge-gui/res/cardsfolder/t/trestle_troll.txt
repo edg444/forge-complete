@@ -4,5 +4,5 @@ Types:Creature Troll
 PT:1/4
 K:Defender
 K:Reach
-A:AB$ Regenerate | Cost$ 1 B G | SpellDescription$ Regenerate CARDNAME.
+A:AB$ Regenerate | Cost$ 1 B G | SpellDescription$ Regenerate this creature.
 Oracle:Defender\nReach (This creature can block creatures with flying.)\n{1}{B}{G}: Regenerate Trestle Troll.

@@ -3,7 +3,7 @@ ManaCost:1 U
 Types:Enchantment Aura
 K:Enchant:Creature
 SVar:AttachAILogic:Curse
-T:Mode$ Attacks | ValidCard$ Card.EnchantedBy | Execute$ DelBounce | TriggerZones$ Battlefield | TriggerDescription$ When enchanted creature attacks, return it and CARDNAME to their owners' hands at end of combat.
+T:Mode$ Attacks | ValidCard$ Card.EnchantedBy | Execute$ DelBounce | TriggerZones$ Battlefield | TriggerDescription$ When enchanted creature attacks, return it and this Aura to their owners' hands at end of combat.
 SVar:DelBounce:DB$ DelayedTrigger | Mode$ Phase | Phase$ EndCombat | ValidPlayer$ Player | Execute$ BounceCritter | TriggerDescription$ Return enchanted creature and CARDNAME to their owners' hands.
 SVar:BounceCritter:DB$ ChangeZone | Defined$ Self & Spawner>TriggeredAttackerLKICopy | Origin$ Battlefield | Destination$ Hand
 SVar:NonStackingAttachEffect:True

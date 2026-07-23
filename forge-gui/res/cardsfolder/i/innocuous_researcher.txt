@@ -2,7 +2,7 @@ Name:Innocuous Researcher
 ManaCost:3 G
 Types:Creature Centaur Detective
 PT:3/4
-T:Mode$ Attacks | ValidCard$ Card.Self | PrecostDesc$ Parley — | Execute$ TrigPeek | TriggerZones$ Battlefield | TriggerDescription$ Parley — Whenever CARDNAME attacks, each player reveals the top card of their library. For each nonland card revealed this way, you investigate. Then each player draws a card.
+T:Mode$ Attacks | ValidCard$ Card.Self | PrecostDesc$ Parley — | Execute$ TrigPeek | TriggerZones$ Battlefield | TriggerDescription$ Parley — Whenever this creature attacks, each player reveals the top card of their library. For each nonland card revealed this way, you investigate. Then each player draws a card.
 SVar:TrigPeek:DB$ PeekAndReveal | Defined$ Player | RememberRevealed$ True | SubAbility$ DBInvestigate
 SVar:DBInvestigate:DB$ Investigate | Num$ X | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | Defined$ Player | SubAbility$ DBCleanup

@@ -8,7 +8,7 @@ SVar:DBDestroyAllRusted:DB$ RepeatEach | RepeatCards$ Artifact | RepeatSubAbilit
 SVar:DBDestroyRusted:DB$ Destroy | Defined$ Remembered | ConditionCheckSVar$ RememberedCMC | ConditionSVarCompare$ GEX | NoRegen$ True
 SVar:RememberedCMC:Remembered$CardCounters.RUST
 SVar:X:Remembered$CardManaCost
-T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigWipeCounters | TriggerDescription$ When CARDNAME leaves the battlefield, remove all rust counters from all permanents.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigWipeCounters | TriggerDescription$ When this enchantment leaves the battlefield, remove all rust counters from all permanents.
 SVar:TrigWipeCounters:DB$ RemoveCounterAll | ValidCards$ Permanent | CounterType$ RUST
 SVar:NeedsToPlayVar:Y GE1
 SVar:Y:Count$Valid Artifact.OppCtrl

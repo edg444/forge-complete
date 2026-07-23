@@ -4,6 +4,6 @@ Types:Creature Bird Wizard
 PT:4/3
 K:Flying
 K:Cycling:U
-T:Mode$ Cycled | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ When you cycle CARDNAME, target creature gains flying until end of turn.
+T:Mode$ Cycled | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ When you cycle this card, target creature gains flying until end of turn.
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature | KW$ Flying
 Oracle:Flying\nCycling {U} ({U}, Discard this card: Draw a card.)\nWhen you cycle Windcaller Aven, target creature gains flying until end of turn.

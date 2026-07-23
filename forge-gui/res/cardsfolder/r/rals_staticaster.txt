@@ -3,7 +3,7 @@ ManaCost:2 U R
 Types:Creature Lizard Wizard
 PT:3/3
 K:Trample
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | IsPresent$ Planeswalker.Ral+YouCtrl | TriggerDescription$ Whenever CARDNAME attacks, if you control a Ral planeswalker, CARDNAME gets +1/+0 for each card in your hand until end of turn.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | IsPresent$ Planeswalker.Ral+YouCtrl | TriggerDescription$ Whenever this creature attacks, if you control a Ral planeswalker, this creature gets +1/+0 for each card in your hand until end of turn.
 SVar:TrigPump:DB$ Pump | NumAtt$ +X
 SVar:X:Count$ValidHand Card.YouOwn
 SVar:BuffedBy:Ral

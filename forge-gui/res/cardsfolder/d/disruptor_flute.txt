@@ -3,7 +3,7 @@ ManaCost:2
 Types:Artifact
 K:Flash
 K:ETBReplacement:Other:DBNameCard
-SVar:DBNameCard:DB$ NameCard | Defined$ You | SpellDescription$ As CARDNAME enters, choose a card name.
+SVar:DBNameCard:DB$ NameCard | Defined$ You | SpellDescription$ As this artifact enters, choose a card name.
 S:Mode$ RaiseCost | EffectZone$ Battlefield | ValidCard$ Card.NamedCard | Type$ Spell | Activator$ Player | Amount$ 3 | Description$ Spells with the chosen name cost {3} more to cast.
 S:Mode$ CantBeActivated | ValidCard$ Card.NamedCard | ValidSA$ Activated.!ManaAbility | Description$ Activated abilities of sources with the chosen name can't be activated unless they're mana abilities.
 AI:RemoveDeck:Random

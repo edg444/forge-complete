@@ -3,7 +3,7 @@ ManaCost:3 U
 Types:Creature Snake Wizard
 PT:3/3
 K:Exploit
-T:Mode$ Exploited | ValidCard$ Creature | ValidSource$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigChangeZoneAll | TriggerDescription$ When CARDNAME exploits a creature, return to their owners' hands all creatures your opponents control with toughness less than the exploited creature's toughness.
+T:Mode$ Exploited | ValidCard$ Creature | ValidSource$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigChangeZoneAll | TriggerDescription$ When this creature exploits a creature, return to their owners' hands all creatures your opponents control with toughness less than the exploited creature's toughness.
 SVar:TrigChangeZoneAll:DB$ ChangeZoneAll | Origin$ Battlefield | Destination$ Hand | ChangeType$ Creature.toughnessLTX+OppCtrl | AbilityCount$ X
 SVar:X:TriggeredExploited$CardToughness
 AI:RemoveDeck:All

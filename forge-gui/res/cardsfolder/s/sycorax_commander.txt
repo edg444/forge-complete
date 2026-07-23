@@ -4,7 +4,7 @@ Types:Creature Alien Soldier
 PT:4/2
 K:First Strike
 K:Haste
-T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigChoice | TriggerDescription$ Sanctified Rules of Combat — When CARDNAME enters, each opponent faces a villainous choice — That opponent discards all the cards in their hand, then draws that many cards minus one, or CARDNAME deals damage to that player equal to the number of cards in their hand.
+T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigChoice | TriggerDescription$ Sanctified Rules of Combat — When this creature enters, each opponent faces a villainous choice — That opponent discards all the cards in their hand, then draws that many cards minus one, or this creature deals damage to that player equal to the number of cards in their hand.
 SVar:TrigChoice:DB$ VillainousChoice | Defined$ Opponent | Choices$ DBDiscard,DBDamage
 SVar:DBDiscard:DB$ Discard | Defined$ Player.IsRemembered | Mode$ Hand | RememberDiscarded$ True | SubAbility$ DBDraw | SpellDescription$ Opponent discards their hand, then draws that many cards minus one.
 SVar:DBDraw:DB$ Draw | NumCards$ X | Defined$ Player.IsRemembered | SubAbility$ CleanDrawn
