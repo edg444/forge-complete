@@ -51,6 +51,15 @@ public class LifeGainEffect extends SpellAbilityEffect {
         final int lifeAmount = AbilityUtils.calculateAmount(sa.getHostCard(), sa.getParam("LifeAmount"), sa);
         final List<Player> tgts = getTargetPlayersWithDuplicates(true, "Defined", sa);
 
+        // Double Dip-style delayed gain: the game this resolves in ends before the gain applies,
+        // so it can't be a normal card trigger - queue it on the Match instead (see Match.java).
+        if (sa.hasParam("NextGameFirstUpkeep")) {
+            for (final Player p : Sets.newHashSet(tgts)) {
+                p.getGame().getMatch().queueFirstUpkeepLifeGain(p.getRegisteredPlayer(), lifeAmount * Collections.frequency(tgts, p));
+            }
+            return;
+        }
+
         for (final Player p : Sets.newHashSet(tgts)) {
             if (!p.isInGame()) {
                 continue;

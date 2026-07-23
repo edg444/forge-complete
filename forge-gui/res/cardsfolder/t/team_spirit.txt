@@ -1,0 +1,5 @@
+Name:Team Spirit
+ManaCost:2 G
+Types:Instant
+A:SP$ PumpAll | ValidTgts$ Player | TgtPrompt$ Select target player | ValidCards$ Creature.TargetedPlayerTeamCtrl | NumAtt$ +1 | NumDef$ +1 | SpellDescription$ Creatures target player's team controls get +1/+1 until end of turn.
+Oracle:Creatures target player's team controls get +1/+1 until end of turn.

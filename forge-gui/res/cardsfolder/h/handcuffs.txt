@@ -1,0 +1,8 @@
+Name:Handcuffs
+ManaCost:3 B B
+Types:Enchantment
+K:ETBReplacement:Other:DBChoosePlayer
+SVar:DBChoosePlayer:DB$ ChoosePlayer | Defined$ You | Choices$ Player | SpellDescription$ As this enchantment enters, choose a player.
+A:AB$ Sacrifice | Cost$ FlavorAction<Confirm the chosen player's hands aren't touching each other/Cuffed!> | Activator$ Player | AILogic$ Chance.15 | SacValid$ Self | SubAbility$ DBSacThree | SpellDescription$ Any player may activate this ability: Sacrifice this enchantment and the chosen player sacrifices three permanents.
+SVar:DBSacThree:DB$ Sacrifice | Defined$ ChosenPlayer | SacValid$ Permanent | Amount$ 3
+Oracle:As this enchantment enters, choose a player.\nWhen the chosen player's hands aren't touching each other, sacrifice this enchantment and that player sacrifices three permanents.

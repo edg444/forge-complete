@@ -396,6 +396,12 @@ public class Cost implements Serializable {
             return new CostFlipCoin(splitStr[0]);
         }
 
+        if (parse.startsWith("FlavorAction<")) {
+            // FlavorAction<Description/YesButtonText>
+            final String[] splitStr = abCostParse(parse, 2);
+            return new CostFlavorAction(splitStr[0], splitStr[1]);
+        }
+
         if (parse.startsWith("RollDice<")) {
             // RollDice<NumDice/Sides/ResultSVar>
             final String[] splitStr = abCostParse(parse, 4);

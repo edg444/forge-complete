@@ -1,0 +1,6 @@
+Name:Clam-I-Am
+ManaCost:2 U
+Types:Creature Clamfolk
+PT:2/2
+K:If you roll a 3 on a six-sided die, you may reroll that die.
+Oracle:If you roll a 3 on a six-sided die, you may reroll that die.

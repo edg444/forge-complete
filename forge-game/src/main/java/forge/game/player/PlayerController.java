@@ -354,6 +354,10 @@ public abstract class PlayerController {
     public abstract String chooseCardName(SpellAbility sa, Predicate<ICardFace> cpp, String valid, String message);
     public abstract String chooseCardName(SpellAbility sa, List<ICardFace> faces, String message);
 
+    // Free-text guess (e.g. Squirrel Farm's "guess the artist") compared by the caller against a
+    // real hidden value - not a bounded choice from a known list, unlike chooseCardName above.
+    public abstract String guessString(SpellAbility sa, String message);
+
     // better to have this odd method than those if playerType comparison in ChangeZone
     public abstract Card chooseSingleCardForZoneChange(ZoneType destination, List<ZoneType> origin, SpellAbility sa, CardCollection fetchList, DelayedReveal delayedReveal, String selectPrompt, boolean isOptional, Player decider);
     public abstract List<Card> chooseCardsForZoneChange(ZoneType destination, List<ZoneType> origin, SpellAbility sa, CardCollection fetchList, int min, int max, DelayedReveal delayedReveal, String selectPrompt, Player decider);

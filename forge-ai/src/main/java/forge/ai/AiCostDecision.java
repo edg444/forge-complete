@@ -299,6 +299,13 @@ public class AiCostDecision extends CostDecisionMakerBase {
     }
 
     @Override
+    public PaymentDecision visit(CostFlavorAction cost) {
+        // Unenforceable real-world action - the AI can't perform it, but it can't be denied either.
+        // Whether the AI actually wants to use the ability is decided by the ability's own AI logic.
+        return PaymentDecision.number(1);
+    }
+
+    @Override
     public PaymentDecision visit(final CostForage cost) {
         CardCollection food = CardLists.filter(player.getCardsIn(ZoneType.Battlefield), CardPredicates.isType("Food"), CardPredicates.canBeSacrificedBy(ability, isEffect()));
         CardCollection exile = CardLists.filter(player.getCardsIn(ZoneType.Graveyard), CardPredicates.canExiledBy(ability, isEffect()));

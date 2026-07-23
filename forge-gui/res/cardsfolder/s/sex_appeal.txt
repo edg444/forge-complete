@@ -1,0 +1,8 @@
+Name:Sex Appeal
+ManaCost:W
+Types:Instant
+A:SP$ GenericChoice | Defined$ You | Choices$ NoAppeal,YesAppeal | ChoicePrompt$ Are there more people in the room of a different gender than you as you cast this spell? | AILogic$ Chance.35 | StackDescription$ SpellDescription | SpellDescription$ Prevent the next 3 damage that would be dealt this turn to any number of targets, divided as you choose. If there are more people in the room of a different gender than you are as you cast this spell, prevent the next 6 damage this way instead.
+SVar:NoAppeal:DB$ PreventDamage | ValidTgts$ Any | TgtPrompt$ Select targets to prevent damage to | Amount$ 3 | TargetMin$ 0 | TargetMax$ 3 | DividedAsYouChoose$ 3 | SpellDescription$ No.
+SVar:YesAppeal:DB$ PreventDamage | ValidTgts$ Any | TgtPrompt$ Select targets to prevent damage to | Amount$ 6 | TargetMin$ 0 | TargetMax$ 6 | DividedAsYouChoose$ 6 | SpellDescription$ Yes.
+AI:RemoveDeck:All
+Oracle:Prevent the next 3 damage that would be dealt this turn to any number of targets, divided as you choose. If there are more people in the room of a different gender than you are as you cast this spell, prevent the next 6 damage this way instead.

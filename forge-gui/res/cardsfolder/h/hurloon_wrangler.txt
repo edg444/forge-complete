@@ -1,0 +1,10 @@
+Name:Hurloon Wrangler
+ManaCost:2 R
+Types:Creature Minotaur
+PT:2/2
+T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigChoose | TriggerDescription$ Whenever CARDNAME attacks, you may reveal that defending player is wearing denim. If you do, CARDNAME can't be blocked this turn. (Denimwalk, honor system.)
+SVar:TrigChoose:DB$ GenericChoice | Defined$ You | Choices$ DBUnblockable,DBNothing | ChoicePrompt$ Is the defending player wearing denim? | AILogic$ Chance.15
+SVar:DBUnblockable:DB$ Effect | RememberObjects$ Self | ExileOnMoved$ Battlefield | StaticAbilities$ Unblockable | SpellDescription$ Yes.
+SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | Description$ This creature can't be blocked this turn.
+SVar:DBNothing:DB$ Cleanup | SpellDescription$ No.
+Oracle:Denimwalk (This creature can't be blocked as long as defending player is wearing denim.)

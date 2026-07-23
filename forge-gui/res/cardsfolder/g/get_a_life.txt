@@ -1,0 +1,5 @@
+Name:Get a Life
+ManaCost:W
+Types:Instant
+A:SP$ ExchangeLife | ValidTgts$ Player | TeamExchange$ True | SpellDescription$ Target player and each of that player's teammates exchange life totals.
+Oracle:Target player and each of that player's teammates exchange life totals.

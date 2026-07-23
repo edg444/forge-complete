@@ -1183,6 +1183,22 @@ public class ComputerUtilCard {
                     }
                 }
                 chosen.add(chosenColor);
+            } else if (logic.equals("AvoidTargetColors")) {
+                // Pick a color that doesn't overlap an already-chosen target further down the
+                // chain (e.g. Prismatic Wardrobe: choosing a color that matches the target's own
+                // colors would invalidate the destroy - see ConditionPresent$ Card.!AnyChosenColor).
+                Card tgt = sa.getSubAbility() != null ? sa.getSubAbility().getTargetCard() : null;
+                List<String> safe = new ArrayList<>(colorChoices);
+                if (tgt != null) {
+                    for (String c : colorChoices) {
+                        if (tgt.getColor().hasAnyColor(MagicColor.fromName(c))) {
+                            safe.remove(c);
+                        }
+                    }
+                }
+                if (!safe.isEmpty()) {
+                    chosen.add(safe.get(0));
+                }
             } else if (logic.equals("HighestDevotionToColor")) {
                 int curDevotion = 0;
                 String chosenColor = MagicColor.Constant.WHITE;

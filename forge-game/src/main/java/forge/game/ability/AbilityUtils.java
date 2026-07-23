@@ -27,6 +27,7 @@ import forge.game.phase.PhaseType;
 import forge.game.player.Player;
 import forge.game.player.PlayerCollection;
 import forge.game.player.PlayerPredicates;
+import forge.game.player.RegisteredPlayer;
 import forge.game.spellability.*;
 import forge.game.trigger.Trigger;
 import forge.game.trigger.TriggerType;
@@ -1037,6 +1038,9 @@ public class AbilityUtils {
                 if (c instanceof SpellAbility) {
                     o = ((SpellAbility) c).getActivatingPlayer().getOpponents();
                 }
+                if (c instanceof Player) {
+                    o = ((Player) c).getOpponents();
+                }
                 // For merged permanent
                 if (c instanceof CardCollection) {
                     o = ((CardCollection) c).get(0).getController().getOpponents();
@@ -1161,6 +1165,33 @@ public class AbilityUtils {
             players.add(card.getExiledBy());
         } else if (defined.equals("ActivePlayer")) {
             players.add(game.getPhaseHandler().getPlayerTurn());
+        } else if (defined.equals("PlayerWithMostGamesWonThisMatch")) {
+            // Ghazban Ogress: "if one player has won more Magic games that day than any other
+            // player" - no cross-match/cross-session state survives a Forge process, so this is
+            // scoped down to games won so far within the CURRENT match (Match.getGamesWon()), which
+            // is the only "games this player has won" data the engine actually has.
+            final Multiset<RegisteredPlayer> wins = game.getMatch().getGamesWon();
+            RegisteredPlayer leader = null;
+            int leaderCount = 0;
+            boolean tied = false;
+            for (final RegisteredPlayer rp : wins.elementSet()) {
+                final int count = wins.count(rp);
+                if (count > leaderCount) {
+                    leader = rp;
+                    leaderCount = count;
+                    tied = false;
+                } else if (count == leaderCount) {
+                    tied = true;
+                }
+            }
+            if (leader != null && leaderCount > 0 && !tied) {
+                for (final Player p : game.getPlayers()) {
+                    if (leader.equals(p.getRegisteredPlayer())) {
+                        players.add(p);
+                        break;
+                    }
+                }
+            }
         } else if (defined.equals("You")) {
             players.add(player);
         } else if (defined.equals("Opponent")) {
@@ -2421,6 +2452,36 @@ public class AbilityUtils {
             return doXMath(player.getTurn(), expr, c, ctb);
         }
 
+        if (sq[0].equals("GusLossStreakVsAllOpponents")) {
+            // Gus: "...for each Magic game you have lost to one of your opponents since you last
+            // won a game against them." No cross-match/session state survives a Forge process, so
+            // (like Ghazban Ogress) this is scoped to the current match. Tracked per-opponent: walk
+            // this match's games most-recent-first, counting a loss streak to THAT opponent that
+            // resets the moment player beats them (or the walk runs out of games), then sum across
+            // all opponents. A game some third player won (multiplayer) doesn't touch the streak
+            // either way - it wasn't a win or a loss between player and that specific opponent.
+            int total = 0;
+            if (player != null) {
+                final List<GameOutcome> outcomes = game.getMatch().getOutcomesInOrder();
+                for (final Player opp : player.getOpponents()) {
+                    int streak = 0;
+                    for (int i = outcomes.size() - 1; i >= 0; i--) {
+                        final RegisteredPlayer winner = outcomes.get(i).getWinningPlayer();
+                        if (winner == null) {
+                            continue;
+                        }
+                        if (winner.equals(player.getRegisteredPlayer())) {
+                            break;
+                        } else if (winner.equals(opp.getRegisteredPlayer())) {
+                            streak++;
+                        }
+                    }
+                    total += streak;
+                }
+            }
+            return doXMath(total, expr, c, ctb);
+        }
+
         if (sq[0].equals("NotedNumber")) {
             return doXMath(player.getNotedNumberForName(c.getName()), expr, c, ctb);
         }
@@ -2979,11 +3040,17 @@ public class AbilityUtils {
             max = Math.min(max, AbilityUtils.calculateAmount(host, ability.getParam("AnnounceMax"), ability));
         }
 
-        if (ability.usesTargeting()) {
-            // if announce is used as min targets, check what the max possible number would be
-            if (announce.equals(ability.getTargetRestrictions().getMinTargets())) {
-                max = Math.min(max, CardUtil.getValidCardsToTarget(ability).size());
+        // if announce is used as min targets (on this ability or a SubAbility$-chained one - e.g. two
+        // separate announced variables each sizing a different targeted group, see The Ultimate
+        // Nightmare of Wizards of the Coast(R) Customer Service), check what the max possible number
+        // would be. Mirrors the same root->getSubAbility() walk SpellAbility.setupTargets() uses.
+        SpellAbility current = ability;
+        while (current != null) {
+            if (current.usesTargeting() && announce.equals(current.getTargetRestrictions().getMinTargets())) {
+                max = Math.min(max, CardUtil.getValidCardsToTarget(current).size());
+                break;
             }
+            current = current.getSubAbility();
         }
 
         return Range.of(min, max);

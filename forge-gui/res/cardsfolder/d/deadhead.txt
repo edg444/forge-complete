@@ -1,0 +1,6 @@
+Name:Deadhead
+ManaCost:3 B
+Types:Creature Zombie
+PT:3/3
+A:AB$ ChangeZone | Cost$ FlavorAction<Confirm no opponent is touching their hand of cards/Confirmed!> | Defined$ Self | Origin$ Graveyard | Destination$ Battlefield | ActivationZone$ Graveyard | AILogic$ Chance.30 | SpellDescription$ Return this card from your graveyard to the battlefield. Activate only if an opponent isn't touching their hand of cards.
+Oracle:{0}: Return this card from your graveyard to the battlefield. Activate only if an opponent isn't touching their hand (of cards).

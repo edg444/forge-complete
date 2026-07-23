@@ -1,0 +1,6 @@
+Name:Prismatic Wardrobe
+ManaCost:W
+Types:Sorcery
+A:SP$ ChooseColor | Defined$ You | OrColors$ True | AILogic$ AvoidTargetColors | SubAbility$ DBDestroy | SpellDescription$ Destroy target nonartifact, nonland permanent that doesn't share a color with clothing worn by its controller.
+SVar:DBDestroy:DB$ Destroy | ValidTgts$ Permanent.nonArtifact+nonLand | TgtPrompt$ Select target nonartifact, nonland permanent | ConditionDefined$ Targeted | ConditionPresent$ Card.!AnyChosenColor
+Oracle:Destroy target nonartifact, nonland permanent that doesn't share a color with clothing worn by its controller.

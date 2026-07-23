@@ -1,0 +1,6 @@
+Name:B.F.M. (Big Furry Monster)
+ManaCost:B B B B B B B B B B B B B B B
+Types:Creature The Biggest, Baddest, Nastiest, Scariest Creature You'll Ever See
+PT:99/99
+S:Mode$ MinMaxBlocker | ValidCard$ Card.Self | Min$ 3 | Description$ This creature can't be blocked except by three or more creatures.
+Oracle:You must cast both B.F.M. cards to put B.F.M. onto the battlefield. If one B.F.M. card leaves the battlefield, sacrifice the other. B.F.M. can't be blocked except by three or more creatures.

@@ -134,6 +134,10 @@ public final class StaticAbilityContinuous {
         Set<Keyword> cantHaveKeyword = null;
 
         List<Player> mayLookAt = null;
+        // Psychic Network: "revealed to each other player" - unlike MayLookAt$ True/<players>
+        // (a single fixed set applied to every affected card), this needs to exclude each card's
+        // OWN owner specifically, so it's resolved per-card in the main loop below instead.
+        boolean mayLookAtExceptOwner = false;
 
         boolean controllerMayPlay = false, mayPlayWithoutManaCost = false, mayPlayWithFlash = false;
         String mayPlayAltManaCost = null;
@@ -466,6 +470,8 @@ public final class StaticAbilityContinuous {
                 if ("True".equals(look)) {
                     // shortcut when combined with MayPlay
                     mayLookAt = new PlayerCollection();
+                } else if ("OtherPlayers".equals(look)) {
+                    mayLookAtExceptOwner = true;
                 } else {
                     mayLookAt = AbilityUtils.getDefinedPlayers(hostCard, look, stAb);
                 }
@@ -919,8 +925,15 @@ public final class StaticAbilityContinuous {
                 }
             }
 
-            if (mayLookAt != null && (!affectedCard.getOwner().getTopXCardsFromLibrary(1).contains(affectedCard) || game.getTopLibForPlayer(affectedCard.getOwner()) == null || game.getTopLibForPlayer(affectedCard.getOwner()) == affectedCard)) {
+            boolean topLibCondition = !affectedCard.getOwner().getTopXCardsFromLibrary(1).contains(affectedCard)
+                    || game.getTopLibForPlayer(affectedCard.getOwner()) == null
+                    || game.getTopLibForPlayer(affectedCard.getOwner()) == affectedCard;
+            if (mayLookAt != null && topLibCondition) {
                 affectedCard.addMayLookAt(se.getTimestamp(), mayLookAt);
+            } else if (mayLookAtExceptOwner && topLibCondition) {
+                PlayerCollection others = new PlayerCollection(game.getPlayers());
+                others.remove(affectedCard.getOwner());
+                affectedCard.addMayLookAt(se.getTimestamp(), others);
             }
         }
 

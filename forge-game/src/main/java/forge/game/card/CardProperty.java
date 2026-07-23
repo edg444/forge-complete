@@ -4,6 +4,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import forge.StaticData;
 import forge.card.CardDb;
+import forge.card.CardEdition;
 import forge.card.ColorSet;
 import forge.card.MagicColor;
 import forge.card.mana.ManaCost;
@@ -25,6 +26,7 @@ import forge.game.spellability.SpellAbility;
 import forge.game.spellability.SpellAbilityStackInstance;
 import forge.game.zone.Zone;
 import forge.game.zone.ZoneType;
+import forge.item.IPaperCard;
 import forge.item.PaperCard;
 import forge.util.Expressions;
 import forge.util.IterableUtil;
@@ -159,6 +161,16 @@ public class CardProperty {
             if (!card.isRingBearer()) {
                 return false;
             }
+        } else if (property.equals("SilverBordered")) {
+            // Spatula of the Ages: "a silver-bordered or acorn permanent card". Forge has no
+            // separate "acorn" flag - both border styles are silver-border-equivalent Type.FUNNY
+            // editions (see forge-gui/res/editions/Unglued.txt's Type=Funny/Border=Silver), so
+            // checking edition type alone covers both without needing a second, redundant check.
+            final IPaperCard pc = card.getPaperCard();
+            final CardEdition ed = pc == null ? null : StaticData.instance().getEditions().get(pc.getEdition());
+            if (ed == null || ed.getType() != CardEdition.Type.FUNNY) {
+                return false;
+            }
         } else if (property.equals("IsTriggerRemembered")) {
             boolean found = false;
             for (Object o : spellAbility.getTriggerRemembered()) {
@@ -275,6 +287,17 @@ public class CardProperty {
             }
         } else if (property.equals("TargetedPlayerCtrl")) {
             if (!AbilityUtils.getDefinedPlayers(source, "TargetedPlayer", spellAbility).contains(controller)) {
+                return false;
+            }
+        } else if (property.equals("TargetedPlayerTeamCtrl")) {
+            boolean onTeam = false;
+            for (final Player p : AbilityUtils.getDefinedPlayers(source, "TargetedPlayer", spellAbility)) {
+                if (controller.sameTeam(p)) {
+                    onTeam = true;
+                    break;
+                }
+            }
+            if (!onTeam) {
                 return false;
             }
         } else if (property.startsWith("ActivePlayerCtrl")) {
@@ -1276,6 +1299,15 @@ public class CardProperty {
             }
             cards = CardLists.getCardsWithHighestCMC(cards);
             if (!cards.contains(card)) {
+                return false;
+            }
+        } else if (property.equals("mostLinesOfText")) {
+            // Exclude the evaluating source itself from the comparison pool - "target permanent
+            // OTHER than this creature with the most lines" should never compare a card against
+            // its own text box (see Lexivore).
+            CardCollection cards = new CardCollection(game.getCardsIn(ZoneType.Battlefield));
+            cards.remove(source);
+            if (!CardLists.getCardsWithMostTextBoxLines(cards).contains(card)) {
                 return false;
             }
         } else if (property.startsWith("greatestRememberedCMC")) {

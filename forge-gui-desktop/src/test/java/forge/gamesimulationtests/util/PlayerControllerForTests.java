@@ -768,6 +768,12 @@ public class PlayerControllerForTests extends PlayerController {
     }
 
     @Override
+    public String guessString(SpellAbility sa, String message) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
     public ICardFace chooseSingleCardFace(SpellAbility sa, List<ICardFace> faces, String message) {
         // TODO Auto-generated method stub
         return null;

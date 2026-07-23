@@ -1,0 +1,40 @@
+Name:Miss Demeanor
+ManaCost:3 W
+Types:Creature Lady of Proper Etiquette
+PT:3/1
+K:Flying
+K:First Strike
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ Player.Other | TriggerZones$ Battlefield | Execute$ TrigCompliment | TriggerDescription$ At the beginning of each other player's upkeep, you may compliment that player on their game play. If you don't, sacrifice this creature.
+SVar:TrigCompliment:DB$ Sacrifice | UnlessPayer$ You | UnlessCost$ FlavorAction<Compliment your opponent on their game play/Indeed.> | UnlessAI$ Chance.65 | UnlessResolveSubs$ WhenPaid | SubAbility$ DBRoll
+SVar:DBRoll:DB$ RollDice | Defined$ You | Sides$ 30 | ResultSubAbilities$ 1:DBC1,2:DBC2,3:DBC3,4:DBC4,5:DBC5,6:DBC6,7:DBC7,8:DBC8,9:DBC9,10:DBC10,11:DBC11,12:DBC12,13:DBC13,14:DBC14,15:DBC15,16:DBC16,17:DBC17,18:DBC18,19:DBC19,20:DBC20,21:DBC21,22:DBC22,23:DBC23,24:DBC24,25:DBC25,26:DBC26,27:DBC27,28:DBC28,29:DBC29,30:DBC30 | StackDescription$ None
+SVar:DBC1:DB$ Cleanup | NotifyMessage$ You marvel at your opponent's ability to recover after a terrible mulligan decision.
+SVar:DBC2:DB$ Cleanup | NotifyMessage$ You compliment your opponent on their deck's mana base being only mostly a disaster.
+SVar:DBC3:DB$ Cleanup | NotifyMessage$ You praise your opponent for finally remembering their triggers this game.
+SVar:DBC4:DB$ Cleanup | NotifyMessage$ You admire how confidently your opponent misplayed that last attack.
+SVar:DBC5:DB$ Cleanup | NotifyMessage$ You note that your opponent's topdecks have been almost as good as your own.
+SVar:DBC6:DB$ Cleanup | NotifyMessage$ You praise your opponent for shuffling their deck at least once this game.
+SVar:DBC7:DB$ Cleanup | NotifyMessage$ You tell your opponent that was, statistically, not their worst turn.
+SVar:DBC8:DB$ Cleanup | NotifyMessage$ You compliment your opponent's bold decision to keep that one-land hand.
+SVar:DBC9:DB$ Cleanup | NotifyMessage$ You admire how quickly your opponent found the wrong blocker.
+SVar:DBC10:DB$ Cleanup | NotifyMessage$ You tell your opponent their sideboard plan almost made sense.
+SVar:DBC11:DB$ Cleanup | NotifyMessage$ You praise your opponent's creativity in forgetting how their own card works.
+SVar:DBC12:DB$ Cleanup | NotifyMessage$ You compliment your opponent for tapping the correct land, eventually.
+SVar:DBC13:DB$ Cleanup | NotifyMessage$ You note your opponent's life total is a lovely, if declining, number.
+SVar:DBC14:DB$ Cleanup | NotifyMessage$ You admire your opponent's commitment to attacking into open mana.
+SVar:DBC15:DB$ Cleanup | NotifyMessage$ You tell your opponent their deck looks like it was built with real intention.
+SVar:DBC16:DB$ Cleanup | NotifyMessage$ You compliment your opponent's graceful acceptance of that mana screw.
+SVar:DBC17:DB$ Cleanup | NotifyMessage$ You praise your opponent for reading at least half of that card aloud correctly.
+SVar:DBC18:DB$ Cleanup | NotifyMessage$ You admire how your opponent turned a bad draw into an even worse one.
+SVar:DBC19:DB$ Cleanup | NotifyMessage$ You tell your opponent that missed lethal was a bold strategic choice.
+SVar:DBC20:DB$ Cleanup | NotifyMessage$ You compliment your opponent's very thorough deck-shuffling ritual.
+SVar:DBC21:DB$ Cleanup | NotifyMessage$ You note your opponent's board state has real, if accidental, potential.
+SVar:DBC22:DB$ Cleanup | NotifyMessage$ You admire your opponent's willingness to keep that hand.
+SVar:DBC23:DB$ Cleanup | NotifyMessage$ You praise your opponent's confident math, even when it was wrong.
+SVar:DBC24:DB$ Cleanup | NotifyMessage$ You tell your opponent their combo almost came together that time.
+SVar:DBC25:DB$ Cleanup | NotifyMessage$ You compliment your opponent for only miscounting their mana once this turn.
+SVar:DBC26:DB$ Cleanup | NotifyMessage$ You admire your opponent's steady hand while drawing dead.
+SVar:DBC27:DB$ Cleanup | NotifyMessage$ You note that your opponent's deck has a certain, undefined charm.
+SVar:DBC28:DB$ Cleanup | NotifyMessage$ You praise your opponent for surviving their own attack step.
+SVar:DBC29:DB$ Cleanup | NotifyMessage$ You tell your opponent that was a very memorable mulligan to five.
+SVar:DBC30:DB$ Cleanup | NotifyMessage$ You compliment your opponent's unwavering optimism at a nineteen percent win rate.
+Oracle:Flying, first strike\nAt the beginning of each other player's upkeep, you may compliment that player on their game play. If you don't, sacrifice this creature.

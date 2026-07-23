@@ -1,0 +1,8 @@
+Name:Infernal Spawn of Evil
+ManaCost:6 B B B
+Types:Creature Beast
+PT:7/7
+K:Flying
+K:First Strike
+A:AB$ DealDamage | Cost$ 1 B Reveal<1/CARDNAME> FlavorAction<Say "It's coming"/It's coming!> | ActivationZone$ Hand | ActivationPhases$ Upkeep | PlayerTurn$ True | ActivationLimit$ 1 | ValidTgts$ Opponent,Planeswalker | TgtPrompt$ Select target opponent or planeswalker | NumDmg$ 1 | AILogic$ Chance.40 | SpellDescription$ Reveal this card from your hand, Say "It's coming": This card deals 1 damage to target opponent or planeswalker. Activate only during your upkeep and only once each turn.
+Oracle:Flying, first strike\n{1}{B}, Reveal this card from your hand, Say "It's coming": This card deals 1 damage to target opponent or planeswalker. Activate only during your upkeep and only once each turn.

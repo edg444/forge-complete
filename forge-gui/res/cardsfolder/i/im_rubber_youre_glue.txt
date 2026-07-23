@@ -1,0 +1,11 @@
+Name:I'm Rubber, You're Glue
+ManaCost:W W
+Types:Enchantment
+A:AB$ Sacrifice | Cost$ 0 | SpellDescription$ When you speak in non-rhyming sentences, sacrifice this enchantment. (Activate this any time you have priority - on your honor.)
+T:Mode$ Phase | Phase$ Upkeep | PlayerTurn$ True | ControllerIsAI$ True | TriggerZones$ Battlefield | Secondary$ True | Execute$ TrigRoll | TriggerDescription$ At the beginning of your upkeep, if you're an AI, CARDNAME might be sacrificed (an automated stand-in for the honor system above).
+SVar:TrigRoll:DB$ RollDice | Defined$ You | Sides$ 4 | ResultSubAbilities$ 1:DBFallOff | StackDescription$ None
+SVar:DBFallOff:DB$ PutCounter | Defined$ Self | CounterType$ DOOM | CounterNum$ 1 | StackDescription$ None
+T:Mode$ CounterAdded | ValidCard$ Card.Self | TriggerZones$ Battlefield | CounterType$ DOOM | Secondary$ True | Execute$ TrigSac | TriggerDescription$ When you speak in non-rhyming sentences, sacrifice this enchantment.
+SVar:TrigSac:DB$ Sacrifice | Defined$ Self
+A:AB$ ChangeTargets | Cost$ 0 | TargetType$ SpellAbility.singleTarget+IsTargeting You | ValidTgts$ Card,Emblem | TgtPrompt$ Select target spell or ability that targets only you | SpellDescription$ Say "I'm rubber, you're glue. Everything bounces off me and sticks to you": Change the target of target spell or ability that targets only you.
+Oracle:When you speak in non-rhyming sentences, sacrifice this enchantment.\nSay "I'm rubber, you're glue. Everything bounces off me and sticks to you": Change the target of target spell or ability that targets only you.

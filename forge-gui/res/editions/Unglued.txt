@@ -37,8 +37,8 @@ ScryfallCode=UGL
 25 R Free-for-All @Claymore J. Flapdoodle
 26 R Psychic Network @Claymore J. Flapdoodle
 27 U Sorry @Kaja Foglio
-28 R B.F.M. (Big Furry Monster) A @Douglas Shuler
-29 R B.F.M. (Big Furry Monster) B @Douglas Shuler
+28 R B.F.M. (Big Furry Monster) @Douglas Shuler
+29 R B.F.M. (Big Furry Monster) @Douglas Shuler
 30 C Deadhead @Daren Bader
 31 C Double Cross @Jeff Laubenstein
 32 U Handcuffs @Jeff Laubenstein
@@ -62,7 +62,7 @@ ScryfallCode=UGL
 50 U Ricochet @David A. Cherry
 51 R Spark Fiend @Pete Venters
 52 R Strategy, Schmategy @Daniel Gelon
-53 U The Ultimate Nightmare of Wizards of the Coast Customer Service @Melissa A. Benson
+53 U The Ultimate Nightmare of Wizards of the Coast® Customer Service @Melissa A. Benson
 54 R Cardboard Carapace @Douglas Shuler
 55 C Double Play @Claymore J. Flapdoodle
 56 C Elvish Impersonators @Claymore J. Flapdoodle

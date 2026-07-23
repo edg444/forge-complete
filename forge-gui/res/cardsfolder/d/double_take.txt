@@ -1,0 +1,7 @@
+Name:Double Take
+ManaCost:3 U U
+Types:Instant
+A:SP$ ChoosePlayer | Defined$ You | Choices$ Player.Other | SubAbility$ DBDraw | SpellDescription$ Choose another player. You draw two cards. At the beginning of the first upkeep in your next game with that player, you draw two cards.
+SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 2 | SubAbility$ DBQueueNextGame
+SVar:DBQueueNextGame:DB$ Draw | Defined$ You | NumCards$ 2 | NextGameFirstUpkeep$ True
+Oracle:Choose another player. You draw two cards. At the beginning of the first upkeep in your next game with that player, you draw two cards.

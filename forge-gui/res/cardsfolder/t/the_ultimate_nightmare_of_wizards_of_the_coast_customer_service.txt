@@ -1,0 +1,11 @@
+Name:The Ultimate Nightmare of Wizards of the Coast® Customer Service
+ManaCost:X R R
+Types:Sorcery
+A:SP$ DealDamage | AnnounceTitle$ number of target creatures, then number of target players or planeswalkers | Announce$ NumCreatures,NumPlayers | ValidTgts$ Creature | TargetMin$ NumCreatures | TargetMax$ NumCreatures | NumDmg$ X | SubAbility$ DBDamagePlayers | SpellDescription$ CARDNAME deals X damage to each of Y target creatures and Z target players or planeswalkers, where Y and Z are chosen as you cast this spell. As an additional cost to cast this spell, pay {1} for each of Y and Z.
+SVar:DBDamagePlayers:DB$ DealDamage | ValidTgts$ Player,Planeswalker | TargetMin$ NumPlayers | TargetMax$ NumPlayers | NumDmg$ X | StackDescription$ None
+SVar:X:Count$xPaid
+S:Mode$ RaiseCost | ValidCard$ Card.Self | Type$ Spell | Cost$ 1 | Amount$ NumCreatures | EffectZone$ All | Description$ As an additional cost to cast this spell, pay {1} for each target creature (Y).
+S:Mode$ RaiseCost | ValidCard$ Card.Self | Type$ Spell | Cost$ 1 | Amount$ NumPlayers | EffectZone$ All | Description$ As an additional cost to cast this spell, pay {1} for each target player or planeswalker (Z).
+SVar:NumCreatures:Number$0
+SVar:NumPlayers:Number$0
+Oracle:The Ultimate Nightmare of Wizards of the Coast® Customer Service deals X damage to each of Y target creatures and Z target players or planeswalkers.

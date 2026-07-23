@@ -4128,4 +4128,28 @@ public class CardFactoryUtil {
             c.addFaceupCommand(unanimate);
         }
     }
+
+    // "Most lines of text in its text box" (Lexivore) has no comprehensive-rules definition -
+    // real line count depends on the specific printing's frame/font, which even paper players
+    // just eyeball. This approximates it from the card's stored Oracle text (which already
+    // includes keyword lines and reminder text, matching what's actually printed) by simulating
+    // word wrap at a fixed width calibrated to a typical modern card frame. Not pixel-accurate
+    // to any one printing, but deterministic and consistent across every card for comparison.
+    private static final int TEXT_BOX_CHARS_PER_LINE = 40;
+
+    public static int getTextBoxLineCount(final Card card) {
+        final String oracleText = card.getOracleText();
+        if (StringUtils.isBlank(oracleText)) {
+            return 0;
+        }
+        int totalLines = 0;
+        for (final String paragraph : oracleText.split("\r?\n")) {
+            final String trimmed = paragraph.trim();
+            if (trimmed.isEmpty()) {
+                continue;
+            }
+            totalLines += Math.max(1, (int) Math.ceil(trimmed.length() / (double) TEXT_BOX_CHARS_PER_LINE));
+        }
+        return totalLines;
+    }
 }

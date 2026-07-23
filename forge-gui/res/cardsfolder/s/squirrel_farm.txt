@@ -1,0 +1,6 @@
+Name:Squirrel Farm
+ManaCost:2 G
+Types:Enchantment
+A:AB$ GuessArtist | Cost$ 1 G Reveal<1/Card> | ValidTgts$ Opponent | TgtPrompt$ Select target opponent | DefinedCard$ Revealed | GuessWrong$ DBToken | SpellDescription$ Reveal a card in your hand, covering the artist credit. Target opponent guesses the artist. If they guess wrong, create a 1/1 green Squirrel creature token.
+SVar:DBToken:DB$ Token | TokenScript$ g_1_1_squirrel | TokenOwner$ You
+Oracle:{1}{G}: Reveal a card in your hand, covering the artist credit. Target opponent guesses the artist. If they guess wrong, create a 1/1 green Squirrel creature token.

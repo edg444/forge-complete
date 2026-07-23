@@ -1,0 +1,13 @@
+Name:Volrath's Motion Sensor
+ManaCost:B
+Types:Enchantment Aura
+K:Enchant:Player
+SVar:AttachAILogic:Curse
+Text:As this Aura enters, choose one of enchanted player's hands. That player balances this Aura on the back of that hand.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ Player.EnchantedBy | TriggerZones$ Battlefield | Secondary$ True | Execute$ TrigRoll | TriggerDescription$ At the beginning of enchanted player's upkeep, this Aura might fall off their hand.
+SVar:TrigRoll:DB$ RollDice | Defined$ EnchantedPlayer | Sides$ 10 | ResultSubAbilities$ 1:DBFallOff | StackDescription$ None
+SVar:DBFallOff:DB$ PutCounter | Defined$ Self | CounterType$ DOOM | CounterNum$ 1 | StackDescription$ None
+T:Mode$ CounterAdded | ValidCard$ Card.Self | TriggerZones$ Battlefield | CounterType$ DOOM | Execute$ TrigFallOff | TriggerDescription$ When this Aura falls off the chosen hand, sacrifice this Aura and enchanted player loses 3 life.
+SVar:TrigFallOff:DB$ Sacrifice | Defined$ Self | SubAbility$ DBLoseLife
+SVar:DBLoseLife:DB$ LoseLife | Defined$ EnchantedPlayer | LifeAmount$ 3
+Oracle:Enchant player\nAs this Aura enters, choose one of enchanted player's hands. That player balances this Aura on the back of that hand.\nWhen this Aura falls off the chosen hand, sacrifice this Aura and enchanted player loses 3 life.

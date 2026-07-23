@@ -1,0 +1,9 @@
+Name:Chaos Confetti
+ManaCost:4
+Types:Artifact
+A:AB$ Repeat | Cost$ 4 T | MaxRepeat$ 4 | RepeatSubAbility$ DBFlipPiece | SubAbility$ DBRemoveSelf | SpellDescription$ Tear this artifact into pieces (represented here as 4 pieces). Throw the pieces onto the battlefield from a distance of at least five feet. Destroy each permanent that a piece touches. Remove the pieces from the game.
+SVar:DBFlipPiece:DB$ FlipOntoBattlefield | SubAbility$ DBDestroyTouched
+SVar:DBDestroyTouched:DB$ DestroyAll | ValidCards$ Card.IsRemembered+!token | AILogic$ Always
+SVar:DBRemoveSelf:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | Defined$ Self | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:{4}, {T}: Tear this artifact into pieces. Throw the pieces onto the battlefield from a distance of at least five feet. Destroy each permanent that a piece touches. Remove the pieces from the game.

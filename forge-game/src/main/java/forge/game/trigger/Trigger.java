@@ -278,6 +278,15 @@ public abstract class Trigger extends TriggerReplacementBase {
             }
         }
 
+        // For cards whose real condition is unenforceable by the engine (e.g. an "honor system"
+        // rule a human self-polices manually) and need an automated substitute for AI-controlled
+        // copies only - see I'm Rubber, You're Glue.
+        if (hasParam("ControllerIsAI")) {
+            if (!this.getHostCard().getController().isAI()) {
+                return false;
+            }
+        }
+
         if (hasParam("TurnCount")) {
             int turn = Integer.parseInt(getParam("TurnCount"));
             if (phaseHandler.getTurn() != turn) {

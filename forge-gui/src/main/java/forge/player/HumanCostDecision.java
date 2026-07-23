@@ -616,6 +616,14 @@ public class HumanCostDecision extends CostDecisionMakerBase {
     }
 
     @Override
+    public PaymentDecision visit(final CostFlavorAction cost) {
+        List<String> options = ImmutableList.of(cost.getYesButtonText(), Localizer.getInstance().getMessage("lblNo"));
+        boolean result = controller.confirmAction(ability, PlayerActionConfirmMode.OptionalChoose,
+                cost.toString() + "?", options, null, null);
+        return result ? PaymentDecision.number(1) : null;
+    }
+
+    @Override
     public PaymentDecision visit(final CostForage cost) {
         CardCollection food = CardLists.filter(player.getCardsIn(ZoneType.Battlefield), CardPredicates.isType("Food"), CardPredicates.canBeSacrificedBy(ability, isEffect()));
         CardCollection exile = CardLists.filter(player.getCardsIn(ZoneType.Graveyard), CardPredicates.canExiledBy(ability, isEffect()));

@@ -1,0 +1,6 @@
+Name:Mesa Chicken
+ManaCost:W W
+Types:Creature Bird
+PT:2/2
+A:AB$ Pump | Cost$ FlavorAction<Stand up, Flap your arms, Cluck like a chicken/BUCKAWK!> | KW$ Flying | Defined$ Self | AILogic$ Chance.40 | SpellDescription$ This creature gains flying until end of turn.
+Oracle:Stand up, Flap your arms, Cluck like a chicken: This creature gains flying until end of turn.

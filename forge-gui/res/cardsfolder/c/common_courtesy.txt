@@ -1,0 +1,11 @@
+Name:Common Courtesy
+ManaCost:2 U U
+Types:Enchantment
+T:Mode$ SpellCast | ValidCard$ Card | TriggerZones$ Battlefield | Execute$ TrigCourtesy | TriggerDescription$ Whenever a player casts a spell without asking your permission while casting it, counter that spell. When a player asks you permission to cast a spell and you refuse, counter that spell and sacrifice this enchantment.
+SVar:TrigCourtesy:DB$ GenericChoice | Defined$ You | Choices$ Allowed,NotAsked,Refused | ChoicePrompt$ Honor system: did the caster ask your permission to cast that spell, and if so, do you allow it? | AILogic$ Chance.25
+SVar:Allowed:DB$ Cleanup | SpellDescription$ They asked, and I allow it.
+SVar:NotAsked:DB$ Counter | Defined$ TriggeredSpellAbility | SpellDescription$ They didn't ask my permission.
+SVar:Refused:DB$ Counter | Defined$ TriggeredSpellAbility | SubAbility$ DBSacSelf | SpellDescription$ They asked, and I refuse.
+SVar:DBSacSelf:DB$ Sacrifice | SacValid$ Self
+AI:RemoveDeck:All
+Oracle:Whenever a player casts a spell without asking your permission while casting it, counter that spell.\nWhen a player asks you permission to cast a spell and you refuse, counter that spell and sacrifice this enchantment.

@@ -132,6 +132,15 @@ public class DamageDealEffect extends DamageBaseEffect {
         final Card hostCard = sa.getHostCard();
         final Game game = hostCard.getGame();
 
+        // Double Deal-style delayed damage: the game this resolves in ends before the damage
+        // applies, so it can't be a normal card trigger - queue it on the Match instead (see
+        // DrawEffect/DiscardEffect and Match.java for the identical Double Dip mechanism).
+        if (sa.hasParam("NextGameFirstUpkeep")) {
+            final int queuedDmg = AbilityUtils.calculateAmount(hostCard, sa.getParam("NumDmg"), sa);
+            game.getMatch().queueFirstUpkeepDamage(sa.getActivatingPlayer().getRegisteredPlayer(), queuedDmg);
+            return;
+        }
+
         final List<Card> definedSources = AbilityUtils.getDefinedCards(hostCard, sa.getParam("DamageSource"), sa);
         if (definedSources == null || definedSources.isEmpty()) {
             return;

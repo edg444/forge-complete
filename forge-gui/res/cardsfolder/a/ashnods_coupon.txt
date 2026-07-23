@@ -1,0 +1,5 @@
+Name:Ashnod's Coupon
+ManaCost:no cost
+Types:Artifact
+A:AB$ Effect | Cost$ T Sac<1/CARDNAME> | ValidTgts$ Player | TgtPrompt$ Select target player | SpellDescription$ Target player gets you target drink. You pay any costs for the drink.
+Oracle:{T}, Sacrifice this artifact: Target player gets you target drink. You pay any costs for the drink.

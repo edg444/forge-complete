@@ -11,6 +11,8 @@ import forge.game.ability.AbilityKey;
 import forge.game.ability.AbilityUtils;
 import forge.game.ability.SpellAbilityEffect;
 import forge.game.card.Card;
+import forge.game.card.CardCollection;
+import forge.game.cost.Cost;
 import forge.game.event.GameEventFlipCoin;
 import forge.game.player.Player;
 import forge.game.player.PlayerCollection;
@@ -213,6 +215,38 @@ public class FlipCoinEffect extends SpellAbilityEffect {
         }
 
         boolean result = flipResults.size() == 1 ? flipResults.iterator().next() : flipper.getController().chooseFlipResult(sa, flipper, !noCall);
+
+        // Goblin Bookie Reflip Phase: {R}, {T}: Reflip any coin or reroll any die. Same "Reroll
+        // Phase" idiom as Monitor Monitor's dice reroll (see RollDiceEffect.getRerollCards) - has
+        // to intercept here, before the flip's result is committed/used, not announce afterward.
+        String goblinBookieKeyword = "{R}, {T}: Reflip any coin or reroll any die. (Activate only any time it makes sense.)";
+        CardCollection canReflip = RollDiceEffect.getRerollCards(flipper, goblinBookieKeyword);
+        while (!canReflip.isEmpty()) {
+            String resultName = result ? Localizer.getInstance().getMessage("lblHeads") : Localizer.getInstance().getMessage("lblTails");
+            Card c = canReflip.size() == 1 ? canReflip.getFirst() : flipper.getController().chooseSingleEntityForEffect(
+                    canReflip, sa, Localizer.getInstance().getMessage("lblChooseRerollCard"), null);
+
+            if (!flipper.getController().confirmAction(sa, null,
+                    Localizer.getInstance().getMessage("lblRerollResult", resultName) + " (" + c.getName() + ")",
+                    c, null)) {
+                break;
+            }
+
+            String[] parts = c.getSVar("ModsThisTurn").split("\\$");
+            int activationsThisTurn = Integer.parseInt(parts[1]);
+            SpellAbility modifierSA = c.getFirstSpellAbility();
+            Cost cost = new Cost(c.getSVar("RollRerollCost"), false);
+            boolean paid = flipper.getController().payCostDuringRoll(cost, modifierSA);
+            if (paid) {
+                result = MyRandom.getRandom().nextBoolean();
+                activationsThisTurn += 1;
+                c.setSVar("ModsThisTurn", "Number$" + activationsThisTurn);
+                canReflip.remove(c);
+            } else {
+                break;
+            }
+        }
+
         boolean wonOrHeads = result == choice;
 
         String outcome;

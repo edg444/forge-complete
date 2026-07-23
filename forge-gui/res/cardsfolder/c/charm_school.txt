@@ -1,0 +1,14 @@
+Name:Charm School
+ManaCost:2 W
+Types:Enchantment
+Text:Prevent all damage that would be dealt to you by sources of the chosen color.
+K:ETBReplacement:Other:ChooseColor
+SVar:ChooseColor:DB$ ChooseColor | Defined$ You | AILogic$ MostProminentInHumanDeck | SubAbility$ DBEffect | SpellDescription$ As this enchantment enters, choose a color and balance this enchantment on your head.
+SVar:DBEffect:DB$ Effect | ReplacementEffects$ RPrevent | RememberObjects$ Self | ExileOnMoved$ Battlefield | Duration$ Permanent
+SVar:RPrevent:Event$ DamageDone | ActiveZones$ Command | Prevent$ True | ValidTarget$ You | ValidSource$ Card.ChosenColor | Description$ Prevent all damage that would be dealt to you by sources of the chosen color.
+T:Mode$ Phase | Phase$ Upkeep | TriggerZones$ Battlefield | Secondary$ True | Execute$ TrigRoll | TriggerDescription$ At the beginning of each upkeep, CARDNAME might fall off your head.
+SVar:TrigRoll:DB$ RollDice | Defined$ You | Sides$ 10 | ResultSubAbilities$ 1:DBFallOff | StackDescription$ None
+SVar:DBFallOff:DB$ PutCounter | Defined$ Self | CounterType$ DOOM | CounterNum$ 1 | StackDescription$ None
+T:Mode$ CounterAdded | ValidCard$ Card.Self | TriggerZones$ Battlefield | CounterType$ DOOM | Execute$ TrigSac | TriggerDescription$ When this enchantment falls off your head, sacrifice this enchantment.
+SVar:TrigSac:DB$ Sacrifice | Defined$ Self
+Oracle:As this enchantment enters, choose a color and balance this enchantment on your head.\nPrevent all damage that would be dealt to you by sources of the chosen color.\nWhen this enchantment falls off your head, sacrifice this enchantment.

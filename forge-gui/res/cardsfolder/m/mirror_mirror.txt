@@ -1,0 +1,13 @@
+Name:Mirror Mirror
+ManaCost:7
+Types:Artifact
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This artifact enters tapped.
+SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
+A:AB$ DelayedTrigger | Cost$ 7 T Sac<1/CARDNAME> | ValidTgts$ Player | TgtPrompt$ Select target player | Mode$ Phase | Phase$ End of Turn | RememberObjects$ Targeted & You | Execute$ TrigLife | SpellDescription$ Choose target player. At the beginning of the next end step, exchange life totals with that player, exchange control of all permanents you and that player control, and exchange cards in your hands, cards in your libraries, and cards in your graveyards.
+SVar:TrigLife:DB$ ExchangeLife | Defined$ DelayTriggerRemembered | SubAbility$ TrigControl
+SVar:TrigControl:DB$ ExchangeControlVariant | Defined$ DelayTriggerRemembered | Zone$ Battlefield | All$ True | SubAbility$ TrigHand
+SVar:TrigHand:DB$ ExchangeZoneAll | Defined$ DelayTriggerRemembered | Zone$ Hand | SubAbility$ TrigLibrary
+SVar:TrigLibrary:DB$ ExchangeZoneAll | Defined$ DelayTriggerRemembered | Zone$ Library | SubAbility$ TrigGraveyard
+SVar:TrigGraveyard:DB$ ExchangeZoneAll | Defined$ DelayTriggerRemembered | Zone$ Graveyard | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:This artifact enters tapped.\n{7}, {T}, Sacrifice this artifact: Choose target player. At the beginning of the next end step, exchange life totals with that player, exchange control of all permanents you and that player control, and exchange cards in your hands, cards in your libraries, and cards in your graveyards.

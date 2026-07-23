@@ -1465,6 +1465,24 @@ public class PlayerControllerAi extends PlayerController {
     }
 
     @Override
+    public String guessString(SpellAbility sa, String message) {
+        // No way for the AI to meaningfully reason about a real-world artist name (or similar free-
+        // text fact) - pick a genuine one at random from cards it can currently see, giving it an
+        // honest small chance to guess right instead of being guaranteed wrong.
+        final CardCollection seen = new CardCollection();
+        seen.addAll(player.getCardsIn(ZoneType.Battlefield));
+        seen.addAll(player.getCardsIn(ZoneType.Hand));
+        seen.addAll(player.getCardsIn(ZoneType.Graveyard));
+        final List<String> candidates = new ArrayList<>();
+        for (final Card c : seen) {
+            if (c.getPaperCard() != null && !c.getPaperCard().getArtist().isEmpty()) {
+                candidates.add(c.getPaperCard().getArtist());
+            }
+        }
+        return candidates.isEmpty() ? "" : Aggregates.random(candidates);
+    }
+
+    @Override
     public String chooseCardName(SpellAbility sa, Predicate<ICardFace> cpp, String valid, String message) {
         if (sa.hasParam("AILogic")) {
             CardCollectionView aiLibrary = player.getCardsIn(ZoneType.Library);

@@ -1,0 +1,8 @@
+Name:Clam Session
+ManaCost:1 U U
+Types:Creature Clamfolk
+PT:2/5
+Text:As this creature enters, choose a word.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigSing | TriggerDescription$ At the beginning of your upkeep, you may sing at least six words of a song, at least one of which is the chosen word. If you don't, sacrifice this creature. You can't repeat a song.
+SVar:TrigSing:DB$ Sacrifice | UnlessPayer$ You | UnlessCost$ FlavorAction<Sing at least six words of a song, including the chosen word (no repeat songs)/Encore!> | UnlessAI$ Chance.65
+Oracle:As this creature enters, choose a word.\nAt the beginning of your upkeep, you may sing at least six words of a song, at least one of which is the chosen word. If you don't, sacrifice this creature. You can't repeat a song.

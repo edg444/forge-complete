@@ -1,0 +1,7 @@
+Name:Double Deal
+ManaCost:4 R
+Types:Sorcery
+A:SP$ ChoosePlayer | Defined$ You | Choices$ Player.Other | SubAbility$ DBDamageNow | SpellDescription$ Choose another player. CARDNAME deals 3 damage to that player. At the beginning of the first upkeep in your next game with that player, CARDNAME deals 3 damage to the player.
+SVar:DBDamageNow:DB$ DealDamage | Defined$ ChosenPlayer | NumDmg$ 3 | SubAbility$ DBQueueNextGame
+SVar:DBQueueNextGame:DB$ DealDamage | NumDmg$ 3 | NextGameFirstUpkeep$ True
+Oracle:Choose another player. Double Deal deals 3 damage to that player. At the beginning of the first upkeep in your next game with that player, Double Deal deals 3 damage to the player.

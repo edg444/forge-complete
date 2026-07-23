@@ -1,0 +1,7 @@
+Name:Lexivore
+ManaCost:3 W
+Types:Creature Beast
+PT:2/3
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | TriggerZones$ Battlefield | Execute$ TrigDestroy | TriggerDescription$ Whenever this creature deals damage to a player, destroy target permanent other than this creature with the most lines of text in its text box. (If two or more cards are tied, target any one of them.)
+SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Permanent.Other+mostLinesOfText | TgtPrompt$ Select target permanent other than CARDNAME with the most lines of text in its text box
+Oracle:Whenever this creature deals damage to a player, destroy target permanent other than this creature with the most lines of text in its text box. (If two or more cards are tied, target any one of them.)

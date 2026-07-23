@@ -442,6 +442,16 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
 
     @Override
     public void resolve(SpellAbility sa) {
+        // Double Play-style delayed search: the game this resolves in ends before the search
+        // applies, so it can't be a normal card trigger - queue it on the Match instead (see
+        // DrawEffect/DiscardEffect/DamageDealEffect and Match.java for the identical Double Dip
+        // mechanism).
+        if (sa.hasParam("NextGameFirstUpkeep")) {
+            final int count = sa.hasParam("ChangeNum") ? AbilityUtils.calculateAmount(sa.getHostCard(), sa.getParam("ChangeNum"), sa) : 1;
+            sa.getHostCard().getGame().getMatch().queueFirstUpkeepBasicLandSearch(sa.getActivatingPlayer().getRegisteredPlayer(), count);
+            return;
+        }
+
         if (!checkValidDuration(sa.getParam("Duration"), sa)) {
             return;
         }

@@ -170,6 +170,7 @@ Kobold:Kobolds
 Kor:Kors
 Kraken:Krakens
 Kree:Kree
+Lady of Proper Etiquette:Ladies of Proper Etiquette
 Lamia:Lamias
 Lammasu:Lammasus
 Leech:Leeches
@@ -308,6 +309,7 @@ Synth:Synths
 Survivor:Survivors
 Tentacle:Tentacles
 Tetravite:Tetravites
+The Biggest, Baddest, Nastiest, Scariest Creature You'll Ever See
 Thalakos:Thalakoses
 Thopter:Thopters
 Thrull:Thrulls

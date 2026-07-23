@@ -16,6 +16,7 @@ import forge.game.card.Card;
 import forge.game.card.CardCollectionView;
 import forge.game.card.CardLists;
 import forge.game.card.CardPredicates;
+import forge.game.card.CounterEnumType;
 import forge.game.card.CounterType;
 import forge.game.player.Player;
 import forge.game.player.PlayerController;
@@ -263,11 +264,14 @@ public class CountersMoveEffect extends SpellAbilityEffect {
                         continue;
                     }
 
+                    final CounterType convertType = sa.hasParam("ConvertToDestinationType")
+                            ? determineConvertedCounterType(cur) : null;
+
                     Multiset<CounterType> countersToAdd = HashMultiset.create();
                     if ("All".equals(counterName)) {
                         final Multiset<CounterType> tgtCounters = HashMultiset.create(source.getCounters());
                         for (CounterType e : tgtCounters.elementSet()) {
-                            removeCounter(sa, source, cur, e, counterNum, countersToAdd);
+                            removeCounter(sa, source, cur, e, convertType != null ? convertType : e, counterNum, countersToAdd);
                         }
                     } else if ("EachNotOn".equals(counterName)) {
                         final Multiset<CounterType> tgtCounters = HashMultiset.create(source.getCounters());
@@ -275,7 +279,7 @@ public class CountersMoveEffect extends SpellAbilityEffect {
                             if (cur.getCounters(e) > 0) {
                                 continue;
                             }
-                            removeCounter(sa, source, cur, e, counterNum, countersToAdd);
+                            removeCounter(sa, source, cur, e, convertType != null ? convertType : e, counterNum, countersToAdd);
                         }
                     } else if ("Any".equals(counterName)) {
                         // any counterType currently only Leech Bonder
@@ -284,7 +288,7 @@ public class CountersMoveEffect extends SpellAbilityEffect {
                         final List<CounterType> typeChoices = Lists.newArrayList();
                         // get types of counters
                         for (CounterType ct : tgtCounters.elementSet()) {
-                            if (dest.canReceiveCounters(ct) && source.canRemoveCounters(ct)) {
+                            if (dest.canReceiveCounters(convertType != null ? convertType : ct) && source.canRemoveCounters(ct)) {
                                 typeChoices.add(ct);
                             }
                         }
@@ -299,18 +303,18 @@ public class CountersMoveEffect extends SpellAbilityEffect {
                             String title = Localizer.getInstance().getMessage("lblSelectRemoveCounterType");
                             CounterType chosenType = pc.chooseCounterType(typeChoices, sa, title, params);
 
-                            removeCounter(sa, source, cur, chosenType, counterNum, countersToAdd);
+                            removeCounter(sa, source, cur, chosenType, convertType != null ? convertType : chosenType, counterNum, countersToAdd);
                             if (!counterNum.equals("Any")) {
                                 break;
                             }
                             typeChoices.remove(chosenType);
                         }
                     } else {
-                        removeCounter(sa, source, cur, cType, counterNum, countersToAdd);
+                        removeCounter(sa, source, cur, cType, convertType != null ? convertType : cType, counterNum, countersToAdd);
                     }
 
                     for (Multiset.Entry<CounterType> e : countersToAdd.entrySet()) {
-                        cur.addCounter(e.getElement(), e.getCount(), activator, table);
+                        cur.addCounter(convertType != null ? convertType : e.getElement(), e.getCount(), activator, table);
                     }
                 }
             }
@@ -320,7 +324,33 @@ public class CountersMoveEffect extends SpellAbilityEffect {
         table.replaceCounterEffect(game, sa);
     } // moveCounterResolve
 
+    // Giant Fan: "If the second permanent refers to any kind of counter, the moved counter becomes
+    // one of those counters. Otherwise, it becomes a +1/+1 counter." No existing Forge card converts
+    // a counter's type based on what the destination's own text refers to (only same-type moves
+    // exist), so this inspects the destination's actual printed oracle text for a counter-type name;
+    // planeswalkers/battles are checked directly since loyalty/defense counters aren't spelled out
+    // in their ability text as "loyalty counter"/"defense counter".
+    private static CounterType determineConvertedCounterType(final Card dest) {
+        if (dest.isPlaneswalker()) {
+            return CounterEnumType.LOYALTY;
+        }
+        if (dest.isBattle()) {
+            return CounterEnumType.DEFENSE;
+        }
+        final String text = dest.getOracleText().toLowerCase();
+        for (final CounterType ct : CounterType.getValues()) {
+            if (text.contains(ct.getName().toLowerCase() + " counter")) {
+                return ct;
+            }
+        }
+        return CounterEnumType.P1P1;
+    }
+
     protected void removeCounter(SpellAbility sa, final Card src, final Card dest, CounterType cType, String counterNum, Multiset<CounterType> countersToAdd) {
+        removeCounter(sa, src, dest, cType, cType, counterNum, countersToAdd);
+    }
+
+    protected void removeCounter(SpellAbility sa, final Card src, final Card dest, CounterType cType, CounterType destCheckType, String counterNum, Multiset<CounterType> countersToAdd) {
         final Card host = sa.getHostCard();
         final Player activator = sa.getActivatingPlayer();
         final PlayerController pc = activator.getController();
@@ -331,7 +361,7 @@ public class CountersMoveEffect extends SpellAbilityEffect {
             return;
         }
 
-        if (!dest.canReceiveCounters(cType)) {
+        if (!dest.canReceiveCounters(destCheckType)) {
             return;
         }
         if (!src.canRemoveCounters(cType)) {

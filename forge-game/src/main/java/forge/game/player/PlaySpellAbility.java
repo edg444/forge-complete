@@ -196,6 +196,7 @@ public class PlaySpellAbility {
             if (part instanceof CostPayLife
                     || part instanceof CostDraw
                     || part instanceof CostGainLife
+                    || part instanceof CostFlavorAction
                     || part instanceof CostFlipCoin
                     || part instanceof CostRollDice
                     || part instanceof CostDamage
@@ -207,6 +208,7 @@ public class PlaySpellAbility {
                     || part instanceof CostRemoveAnyCounter
                     || part instanceof CostMill
                     || part instanceof CostSacrifice
+                    || part instanceof CostTap
                     || part instanceof CostCollectEvidence) {
                 PaymentDecision pd = part.accept(hcd);
 

@@ -1,0 +1,8 @@
+Name:Ow
+ManaCost:B
+Types:Enchantment
+T:Mode$ DamageDone | ValidSource$ Creature | ValidTarget$ Player | Execute$ TrigOw | TriggerZones$ Battlefield | TriggerDescription$ Whenever a creature deals damage to a player, that player may say "Ow" once for each permanent named Ow. If the player doesn't, this enchantment deals 1 damage to them.
+SVar:TrigOw:DB$ GenericChoice | Defined$ TriggeredTarget | Choices$ SaidOw,DidNotSayOw | ChoicePrompt$ Honor system: did you say "Ow" (once for each permanent named Ow)? | AILogic$ Chance.10
+SVar:SaidOw:DB$ Cleanup | SpellDescription$ Yes.
+SVar:DidNotSayOw:DB$ DealDamage | Defined$ TriggeredTarget | NumDmg$ 1 | SpellDescription$ No.
+Oracle:Whenever a creature deals damage to a player, that player may say "Ow" once for each permanent named Ow. If the player doesn't, this enchantment deals 1 damage to them.

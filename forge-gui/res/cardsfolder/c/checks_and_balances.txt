@@ -1,0 +1,8 @@
+Name:Checks and Balances
+ManaCost:2 U
+Types:Enchantment
+A:SP$ PermanentNoncreature | Cost$ 2 U | CheckSVar$ X | SVarCompare$ GE3 | SpellDescription$ Cast this spell only if there are three or more players in the game.
+SVar:X:PlayerCountPlayers$Amount
+T:Mode$ SpellCast | ValidCard$ Card | TriggerZones$ Battlefield | Execute$ TrigCounter | TriggerDescription$ Whenever a player casts a spell, each of that player's opponents may discard a card. If a player does, counter that spell.
+SVar:TrigCounter:DB$ Counter | Defined$ TriggeredSpellAbility | UnlessCost$ Discard<1/Card> | UnlessPayer$ TriggeredSpellAbilityOpponent | UnlessSwitched$ True
+Oracle:Cast this spell only if there are three or more players in the game.\nWhenever a player casts a spell, each of that player's opponents may discard a card. If they do, counter that spell.

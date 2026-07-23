@@ -119,6 +119,18 @@ public class DiscardEffect extends SpellAbilityEffect {
     @Override
     public void resolve(SpellAbility sa) {
         final Card source = sa.getHostCard();
+
+        // Double Cross-style delayed discard: the game this resolves in ends before the discard
+        // applies, so it can't be a normal card trigger - queue it on the Match instead (see
+        // LifeGainEffect/DrawEffect and Match.java for the identical Double Dip/Double Take
+        // mechanism). Keyed by the caster ("you"), not by Mode$/Defined$, since those describe who
+        // discards *now* - the queued benefit belongs to whoever cast this, same as the others.
+        if (sa.hasParam("NextGameFirstUpkeep")) {
+            final int numCards = sa.hasParam("NumCards") ? AbilityUtils.calculateAmount(source, sa.getParam("NumCards"), sa) : 1;
+            source.getGame().getMatch().queueFirstUpkeepDiscard(sa.getActivatingPlayer().getRegisteredPlayer(), numCards);
+            return;
+        }
+
         final String mode = sa.getParam("Mode");
         final Game game = source.getGame();
 

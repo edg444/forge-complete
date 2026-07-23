@@ -1,0 +1,7 @@
+Name:Double Play
+ManaCost:3 G G
+Types:Sorcery
+A:SP$ ChoosePlayer | Defined$ You | Choices$ Player.Other | SubAbility$ DBSearchNow | SpellDescription$ Choose another player. Search your library for a basic land card, put it onto the battlefield, then shuffle. At the beginning of the first upkeep in your next game with that player, search your library for a basic land card, put it onto the battlefield, then shuffle.
+SVar:DBSearchNow:DB$ ChangeZone | Origin$ Library | Destination$ Battlefield | ChangeType$ Land.Basic | ChangeTypeDesc$ basic land | SubAbility$ DBQueueNextGame
+SVar:DBQueueNextGame:DB$ ChangeZone | Origin$ Library | Destination$ Battlefield | ChangeType$ Land.Basic | ChangeTypeDesc$ basic land | NextGameFirstUpkeep$ True
+Oracle:Choose another player. Search your library for a basic land card, put it onto the battlefield, then shuffle. At the beginning of the first upkeep in your next game with that player, search your library for a basic land card, put it onto the battlefield, then shuffle.

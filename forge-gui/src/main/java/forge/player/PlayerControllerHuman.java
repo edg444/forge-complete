@@ -1059,7 +1059,42 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
         }
         endTempShowCards();
         macros().addRememberedAction(new ScryAction(toTop, toBottom));
+        notifyOfScryResult(toTop, toBottom);
         return ImmutablePair.of(toTop, toBottom);
+    }
+
+    // Summarize what a scry actually did (which cards on top, in order, and which went to the
+    // bottom) as a popup instead of leaving the player to dig through the log, which only shows
+    // counts anyway.
+    private void notifyOfScryResult(final CardCollection toTop, final CardCollection toBottom) {
+        if (toTop == null && toBottom == null) {
+            return;
+        }
+        final StringBuilder sb = new StringBuilder();
+        if (toTop != null && !toTop.isEmpty()) {
+            sb.append(localizer.getMessage("lblScryKeptOnTop")).append(" ");
+            for (int i = 0; i < toTop.size(); i++) {
+                if (i > 0) {
+                    sb.append(", ");
+                }
+                sb.append(toTop.get(i).getTranslatedName());
+            }
+            sb.append(toTop.size() > 1 ? " (" + toTop.get(0).getTranslatedName() + " " + localizer.getMessage("lblScryNowOnTop") + ")." : ".");
+        }
+        if (toBottom != null && !toBottom.isEmpty()) {
+            if (sb.length() > 0) {
+                sb.append(" ");
+            }
+            sb.append(localizer.getMessage("lblScryPutOnBottom")).append(" ");
+            for (int i = 0; i < toBottom.size(); i++) {
+                if (i > 0) {
+                    sb.append(", ");
+                }
+                sb.append(toBottom.get(i).getTranslatedName());
+            }
+            sb.append(".");
+        }
+        getGui().message(sb.toString(), localizer.getMessage("lblScry"));
     }
 
     @Override
@@ -3743,6 +3778,12 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
     public String chooseCardName(SpellAbility sa, List<ICardFace> faces, String message) {
         ICardFace face = chooseSingleCardFace(sa, faces, message);
         return face == null ? "" : face.getName();
+    }
+
+    @Override
+    public String guessString(final SpellAbility sa, final String message) {
+        final String input = SOptionPane.showInputDialog(message, sa.getHostCard().getName());
+        return input == null ? "" : input;
     }
 
     @Override

@@ -1,0 +1,10 @@
+Name:Sorry
+ManaCost:U U
+Types:Enchantment
+T:Mode$ SpellCast | ValidCard$ Card | TriggerZones$ Battlefield | Execute$ TrigSorryCheck | TriggerDescription$ Before any player casts a spell with the same name as a card in any graveyard, that player may say "sorry." If they don't, any other player may say "sorry" as the spell is being cast. When another player says "sorry" this way, counter the spell.
+SVar:TrigSorryCheck:DB$ GenericChoice | Defined$ TriggeredSpellAbilityController | Choices$ SaidSorry,DidNotSay | ChoicePrompt$ Honor system: did you say "sorry" before casting this spell? | AILogic$ Chance.15 | ConditionCheckSVar$ SharesNameGrave | ConditionSVarCompare$ GE1
+SVar:SharesNameGrave:TriggeredCard$Valid Card.sharesNameWith Graveyard
+SVar:SaidSorry:DB$ Cleanup | SpellDescription$ Yes, I said sorry.
+SVar:DidNotSay:DB$ Counter | Defined$ TriggeredSpellAbility | UnlessCost$ FlavorAction<Say "sorry" as the spell is cast/Sorry!> | UnlessPayer$ TriggeredSpellAbilityOpponent | UnlessSwitched$ True | SpellDescription$ No, I didn't say sorry.
+A:AB$ DealDamage | Cost$ FlavorAction<Confirm you just said "sorry" at some other time/Sorry, again!> | Activator$ Player | AILogic$ Chance.30 | ValidTgts$ Player | TgtPrompt$ Select the player who said "sorry" | NumDmg$ 2 | SpellDescription$ Any player may activate this ability: This enchantment deals 2 damage to target player who said "sorry" at any other time.
+Oracle:Before any player casts a spell with the same name as a card in any graveyard, that player may say "sorry." If they don't, any other player may say "sorry" as the spell is being cast. When another player says "sorry" this way, counter the spell.\nWhenever a player says "sorry" at any other time, Sorry deals 2 damage to that player.

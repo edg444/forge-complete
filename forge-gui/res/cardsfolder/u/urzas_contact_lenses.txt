@@ -1,0 +1,9 @@
+Name:Urza's Contact Lenses
+ManaCost:no cost
+Types:Artifact
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This artifact enters tapped.
+SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
+R:Event$ Untap | ValidCard$ Card.Self | ValidStepTurnToController$ You | Layer$ CantHappen | Description$ This artifact doesn't untap during your untap step.
+S:Mode$ Continuous | AffectedZone$ Hand | MayLookAt$ Player | IsPresent$ Card.Self+untapped | Description$ As long as this artifact is untapped, all players play with their hands revealed.
+A:AB$ TapOrUntap | Cost$ FlavorAction<Clap your hands twice/Clap!> | Defined$ Self | SpellDescription$ You may tap or untap this artifact.
+Oracle:This artifact enters tapped.\nThis artifact doesn't untap during your untap step.\nAs long as this artifact is untapped, all players play with their hands revealed.\nClap your hands twice: You may tap or untap this artifact.

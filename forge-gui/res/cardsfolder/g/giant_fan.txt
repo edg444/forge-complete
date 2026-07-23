@@ -1,0 +1,5 @@
+Name:Giant Fan
+ManaCost:4
+Types:Artifact
+A:AB$ MoveCounter | Cost$ 2 T | ValidTgts$ Permanent | TgtPrompt$ Select the permanent to move a counter from, then the permanent to move it onto | TargetMin$ 2 | TargetMax$ 2 | CounterType$ Any | CounterNum$ 1 | ConvertToDestinationType$ True | SpellDescription$ Move a counter from one permanent onto another. If the second permanent refers to any kind of counter, the moved counter becomes one of those counters. Otherwise, it becomes a +1/+1 counter.
+Oracle:{2}, {T}: Move a counter from one permanent onto another. If the second permanent refers to any kind of counter, the moved counter becomes one of those counters. Otherwise, it becomes a +1/+1 counter.

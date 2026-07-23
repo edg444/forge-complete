@@ -1,0 +1,6 @@
+Name:Jester's Sombrero
+ManaCost:2
+Types:Artifact
+A:AB$ ChooseCard | Cost$ 2 T Sac<1/CARDNAME> | ValidTgts$ Player | TgtPrompt$ Select target player | Defined$ You | ChoiceZone$ Sideboard | Choices$ Card.TargetedPlayerOwn | Amount$ 3 | MinAmount$ 0 | Mandatory$ True | RememberChosen$ True | SubAbility$ DBRemove | StackDescription$ SpellDescription | SpellDescription$ Look at target player's sideboard, choose three cards from it, and remove those cards from the match.
+SVar:DBRemove:DB$ RemoveFromMatch | Defined$ Remembered
+Oracle:{2}, {T}, Sacrifice this artifact: Look at target player's sideboard, choose three cards from it, and remove those cards from the match.

@@ -3,11 +3,13 @@ package forge.game;
 import com.google.common.collect.*;
 import com.google.common.eventbus.EventBus;
 import forge.LobbyPlayer;
+import forge.StaticData;
 import forge.deck.CardPool;
 import forge.deck.Deck;
 import forge.deck.DeckFormat;
 import forge.deck.DeckSection;
 import forge.game.ability.AbilityKey;
+import forge.game.ability.SpellAbilityEffect;
 import forge.game.card.Card;
 import forge.game.card.CardCollectionView;
 import forge.game.event.Event;
@@ -18,9 +20,11 @@ import forge.game.player.Player;
 import forge.game.player.PlayerController;
 import forge.game.player.RegisteredPlayer;
 import forge.game.trigger.Trigger;
+import forge.game.trigger.TriggerHandler;
 import forge.game.zone.PlayerZone;
 import forge.game.zone.ZoneType;
 import forge.item.PaperCard;
+import forge.util.Lang;
 import forge.util.Localizer;
 import forge.util.MyRandom;
 import forge.util.collect.FCollectionView;
@@ -39,6 +43,24 @@ public class Match {
     private final Map<Integer, GameOutcome> gameOutcomes = Maps.newHashMap();
 
     private GameOutcome lastOutcome = null;
+
+    // Cards like Double Dip need to carry a delayed effect from one game in the match into the
+    // next - there's no Card/Player object that survives across Game instances to host a normal
+    // trigger, so this is tracked as plain Match-level state instead and applied by PhaseHandler
+    // at the new game's first upkeep.
+    private final Map<RegisteredPlayer, Integer> pendingFirstUpkeepLifeGain = Maps.newHashMap();
+    // Same mechanism, for Double Take's "you draw two cards" instead of Double Dip's life gain.
+    private final Map<RegisteredPlayer, Integer> pendingFirstUpkeepDraw = Maps.newHashMap();
+    // Same mechanism, for Double Cross's "your opponent discards a card of your choice". Keyed by
+    // the caster (the one who gets to choose), not the discarder - see DiscardEffect's
+    // NextGameFirstUpkeep handling.
+    private final Map<RegisteredPlayer, Integer> pendingFirstUpkeepDiscard = Maps.newHashMap();
+    // Same mechanism, for Double Deal's "deals 3 damage to the player". Keyed by the caster, not
+    // the chosen player being damaged - see DamageDealEffect's NextGameFirstUpkeep handling.
+    private final Map<RegisteredPlayer, Integer> pendingFirstUpkeepDamage = Maps.newHashMap();
+    // Same mechanism, for Double Play's "search your library for a basic land card, put it onto the
+    // battlefield" - see ChangeZoneEffect's NextGameFirstUpkeep handling.
+    private final Map<RegisteredPlayer, Integer> pendingFirstUpkeepBasicLand = Maps.newHashMap();
 
     public Match(final GameRules rules0, final List<RegisteredPlayer> players0, final String title) {
         players = Collections.unmodifiableList(Lists.newArrayList(players0));
@@ -79,6 +101,7 @@ public class Match {
 
     public void startGame(final Game game, Runnable startGameHook) {
         prepareAllZones(game);
+        createPendingFirstUpkeepEffects(game);
         if (rules.useAnte()) {  // Deciding which cards go to ante
             Multimap<Player, Card> list = game.chooseCardsForAnte(rules.getMatchAnteRarity(), rules.getAnteIncludeBasicLands());
             for (Entry<Player, Card> kv : list.entries()) {
@@ -116,6 +139,19 @@ public class Match {
 
     public Collection<GameOutcome> getOutcomes() {
         return gameOutcomes.values();
+    }
+
+    // gameOutcomes is a plain HashMap keyed by game ID, so .values() has no reliable order. Game
+    // IDs (Game.nextId()) are assigned in creation order, so sorting by key gives chronological
+    // order within this match - needed by Gus's "since you last won a game against them" streak.
+    public List<GameOutcome> getOutcomesInOrder() {
+        final List<Integer> ids = Lists.newArrayList(gameOutcomes.keySet());
+        Collections.sort(ids);
+        final List<GameOutcome> ordered = Lists.newArrayList();
+        for (final Integer id : ids) {
+            ordered.add(gameOutcomes.get(id));
+        }
+        return ordered;
     }
 
     public GameOutcome getLastOutcome() {
@@ -195,6 +231,114 @@ public class Match {
 
     public void removeCard(PaperCard c) {
         removedCards.add(c);
+    }
+
+    public void queueFirstUpkeepLifeGain(RegisteredPlayer player, int life) {
+        pendingFirstUpkeepLifeGain.merge(player, life, Integer::sum);
+    }
+
+    public void queueFirstUpkeepDraw(RegisteredPlayer player, int cards) {
+        pendingFirstUpkeepDraw.merge(player, cards, Integer::sum);
+    }
+
+    public void queueFirstUpkeepDiscard(RegisteredPlayer player, int cards) {
+        pendingFirstUpkeepDiscard.merge(player, cards, Integer::sum);
+    }
+
+    public void queueFirstUpkeepDamage(RegisteredPlayer player, int damage) {
+        pendingFirstUpkeepDamage.merge(player, damage, Integer::sum);
+    }
+
+    public void queueFirstUpkeepBasicLandSearch(RegisteredPlayer player, int count) {
+        pendingFirstUpkeepBasicLand.merge(player, count, Integer::sum);
+    }
+
+    // Called once per new game in this match, right after zones are prepared. Rather than
+    // applying the gain directly (which would silently happen with no trigger/stack presence),
+    // build a real Command-zone Effect carrying a genuine "first upkeep of the game" trigger -
+    // same mechanism DB$ Effect uses (see EffectEffect.java) - so it announces and resolves on
+    // the stack exactly like any other "at the beginning of the first upkeep" ability.
+    private void createPendingFirstUpkeepEffects(Game game) {
+        if (!pendingFirstUpkeepLifeGain.isEmpty()) {
+            for (Player p : game.getPlayers()) {
+                Integer life = pendingFirstUpkeepLifeGain.remove(p.getRegisteredPlayer());
+                if (life == null || life <= 0) {
+                    continue;
+                }
+                Card hostCard = Card.fromPaperCard(StaticData.instance().getCommonCards().getCard("Double Dip"), p);
+                Card eff = SpellAbilityEffect.createEffect(null, hostCard, p, "Double Dip", hostCard.getImageKey(), game.getNextTimestamp());
+                eff.setSVar("TrigGainLife", "DB$ GainLife | Defined$ You | LifeAmount$ " + life + " | SubAbility$ DBExile");
+                eff.setSVar("DBExile", "DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile");
+                Trigger trigger = TriggerHandler.parseTrigger("Mode$ Phase | Phase$ Upkeep | FirstUpkeepThisGame$ True | Execute$ TrigGainLife | TriggerDescription$ At the beginning of the first upkeep in your next game with that player, you gain " + life + " life.", eff, true);
+                trigger.setActiveZone(EnumSet.of(ZoneType.Command));
+                eff.addTrigger(trigger);
+                game.getAction().moveTo(ZoneType.Command, eff, null, AbilityKey.newMap());
+            }
+        }
+        if (!pendingFirstUpkeepDraw.isEmpty()) {
+            for (Player p : game.getPlayers()) {
+                Integer cards = pendingFirstUpkeepDraw.remove(p.getRegisteredPlayer());
+                if (cards == null || cards <= 0) {
+                    continue;
+                }
+                Card hostCard = Card.fromPaperCard(StaticData.instance().getCommonCards().getCard("Double Take"), p);
+                Card eff = SpellAbilityEffect.createEffect(null, hostCard, p, "Double Take", hostCard.getImageKey(), game.getNextTimestamp());
+                eff.setSVar("TrigDraw", "DB$ Draw | Defined$ You | NumCards$ " + cards + " | SubAbility$ DBExile");
+                eff.setSVar("DBExile", "DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile");
+                Trigger trigger = TriggerHandler.parseTrigger("Mode$ Phase | Phase$ Upkeep | FirstUpkeepThisGame$ True | Execute$ TrigDraw | TriggerDescription$ At the beginning of the first upkeep in your next game with that player, you draw " + Lang.nounWithNumeral(cards, "card") + ".", eff, true);
+                trigger.setActiveZone(EnumSet.of(ZoneType.Command));
+                eff.addTrigger(trigger);
+                game.getAction().moveTo(ZoneType.Command, eff, null, AbilityKey.newMap());
+            }
+        }
+        if (!pendingFirstUpkeepDiscard.isEmpty()) {
+            for (Player p : game.getPlayers()) {
+                Integer cards = pendingFirstUpkeepDiscard.remove(p.getRegisteredPlayer());
+                if (cards == null || cards <= 0) {
+                    continue;
+                }
+                Card hostCard = Card.fromPaperCard(StaticData.instance().getCommonCards().getCard("Double Cross"), p);
+                Card eff = SpellAbilityEffect.createEffect(null, hostCard, p, "Double Cross", hostCard.getImageKey(), game.getNextTimestamp());
+                eff.setSVar("TrigDiscard", "DB$ Discard | Defined$ Opponent | Mode$ RevealYouChoose | NumCards$ " + cards + " | DiscardValid$ Card.nonBasic | SubAbility$ DBExile");
+                eff.setSVar("DBExile", "DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile");
+                Trigger trigger = TriggerHandler.parseTrigger("Mode$ Phase | Phase$ Upkeep | FirstUpkeepThisGame$ True | Execute$ TrigDiscard | TriggerDescription$ At the beginning of the first upkeep in your next game with that player, look at that player's hand and choose a card other than a basic land card from it. They discard that card.", eff, true);
+                trigger.setActiveZone(EnumSet.of(ZoneType.Command));
+                eff.addTrigger(trigger);
+                game.getAction().moveTo(ZoneType.Command, eff, null, AbilityKey.newMap());
+            }
+        }
+        if (!pendingFirstUpkeepDamage.isEmpty()) {
+            for (Player p : game.getPlayers()) {
+                Integer damage = pendingFirstUpkeepDamage.remove(p.getRegisteredPlayer());
+                if (damage == null || damage <= 0) {
+                    continue;
+                }
+                Card hostCard = Card.fromPaperCard(StaticData.instance().getCommonCards().getCard("Double Deal"), p);
+                Card eff = SpellAbilityEffect.createEffect(null, hostCard, p, "Double Deal", hostCard.getImageKey(), game.getNextTimestamp());
+                eff.setSVar("TrigDamage", "DB$ DealDamage | Defined$ Opponent | NumDmg$ " + damage + " | SubAbility$ DBExile");
+                eff.setSVar("DBExile", "DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile");
+                Trigger trigger = TriggerHandler.parseTrigger("Mode$ Phase | Phase$ Upkeep | FirstUpkeepThisGame$ True | Execute$ TrigDamage | TriggerDescription$ At the beginning of the first upkeep in your next game with that player, Double Deal deals " + damage + " damage to the player.", eff, true);
+                trigger.setActiveZone(EnumSet.of(ZoneType.Command));
+                eff.addTrigger(trigger);
+                game.getAction().moveTo(ZoneType.Command, eff, null, AbilityKey.newMap());
+            }
+        }
+        if (!pendingFirstUpkeepBasicLand.isEmpty()) {
+            for (Player p : game.getPlayers()) {
+                Integer count = pendingFirstUpkeepBasicLand.remove(p.getRegisteredPlayer());
+                if (count == null || count <= 0) {
+                    continue;
+                }
+                Card hostCard = Card.fromPaperCard(StaticData.instance().getCommonCards().getCard("Double Play"), p);
+                Card eff = SpellAbilityEffect.createEffect(null, hostCard, p, "Double Play", hostCard.getImageKey(), game.getNextTimestamp());
+                eff.setSVar("TrigSearch", "DB$ ChangeZone | Origin$ Library | Destination$ Battlefield | ChangeType$ Land.Basic | ChangeTypeDesc$ basic land | ChangeNum$ " + count + " | SubAbility$ DBExile");
+                eff.setSVar("DBExile", "DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile");
+                Trigger trigger = TriggerHandler.parseTrigger("Mode$ Phase | Phase$ Upkeep | FirstUpkeepThisGame$ True | Execute$ TrigSearch | TriggerDescription$ At the beginning of the first upkeep in your next game with that player, search your library for a basic land card, put it onto the battlefield, then shuffle.", eff, true);
+                trigger.setActiveZone(EnumSet.of(ZoneType.Command));
+                eff.addTrigger(trigger);
+                game.getAction().moveTo(ZoneType.Command, eff, null, AbilityKey.newMap());
+            }
+        }
     }
 
     private static void preparePlayerZone(Player player, final ZoneType zoneType, CardPool section, boolean canRandomFoil) {

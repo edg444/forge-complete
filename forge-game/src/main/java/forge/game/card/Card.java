@@ -4720,6 +4720,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         runParams.put(AbilityKey.IndividualCostPaymentInstance, getGame().costPaymentStack.peek());
         getGame().getTriggerHandler().runTrigger(TriggerType.Taps, runParams, false);
 
+        if (tapper != null && !isLand()) {
+            tapper.setTappedNonlandPermanentThisTurn(true);
+        }
+
         tappedThisTurn++;
 
         setTapped(true);

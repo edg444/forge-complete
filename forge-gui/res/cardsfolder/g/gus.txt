@@ -1,0 +1,7 @@
+Name:Gus
+ManaCost:2 G
+Types:Creature Gus
+PT:2/2
+K:etbCounter:P1P1:X:no Condition:CARDNAME enters with a +1/+1 counter on it for each Magic game you have lost to one of your opponents since you last won a game against them.
+SVar:X:Count$GusLossStreakVsAllOpponents
+Oracle:This creature enters with a +1/+1 counter on it for each Magic game you have lost to one of your opponents since you last won a game against them.

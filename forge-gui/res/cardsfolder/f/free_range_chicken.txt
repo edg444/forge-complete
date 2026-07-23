@@ -1,0 +1,13 @@
+Name:Free-Range Chicken
+ManaCost:3 G
+Types:Creature Bird
+PT:3/3
+T:Mode$ TurnBegin | Execute$ ResetHistory | Static$ True
+SVar:ResetHistory:DB$ Cleanup | ClearRemembered$ True
+A:AB$ RollDice | Cost$ 1 G | Amount$ 2 | Sides$ 6 | ResultSVar$ Result | NoteDoubles$ True | NoteRepeatTotal$ True | SubAbility$ DBPump | SpellDescription$ Roll two six-sided dice. If both results are the same, this creature gets +X/+X until end of turn, where X is that result. If the total of those results is equal to any other total you have rolled this turn for this ability, sacrifice it.
+SVar:X:Count$Result/HalfDown
+SVar:DBPump:DB$ Pump | Defined$ Self | NumAtt$ X | NumDef$ X | ConditionCheckSVar$ Doubles | ConditionSVarCompare$ EQ1 | SubAbility$ DBCheckSac
+SVar:DBCheckSac:DB$ Sacrifice | Defined$ Self | ConditionCheckSVar$ RepeatedTotal | ConditionSVarCompare$ EQ1
+SVar:Doubles:Number$0
+SVar:RepeatedTotal:Number$0
+Oracle:{1}{G}: Roll two six-sided dice. If both results are the same, this creature gets +X/+X until end of turn, where X is that result. If the total of those results is equal to any other total you have rolled this turn for this ability, sacrifice it. (For example, if you roll two 3s, it gets +3/+3. If you roll a 4 and a 2 for this ability later that turn, sacrifice it.)

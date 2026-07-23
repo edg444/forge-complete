@@ -398,6 +398,24 @@ public class CardLists {
         return tiedForHighest;
     }
 
+    // See CardFactoryUtil.getTextBoxLineCount() for what "lines of text" means here (Lexivore).
+    public static CardCollection getCardsWithMostTextBoxLines(Iterable<Card> cardList) {
+        final CardCollection tiedForMost = new CardCollection();
+        int most = 0;
+        for (final Card crd : cardList) {
+            final int lines = CardFactoryUtil.getTextBoxLineCount(crd);
+
+            if (lines > most) {
+                most = lines;
+                tiedForMost.clear();
+            }
+            if (lines >= most) {
+                tiedForMost.add(crd);
+            }
+        }
+        return tiedForMost;
+    }
+
     /**
      * Given a CardCollection cardList, return a CardCollection that are tied for having the lowest CMC.
      * 

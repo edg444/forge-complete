@@ -1,0 +1,8 @@
+Name:Ricochet
+ManaCost:R
+Types:Enchantment
+T:Mode$ SpellCast | IsSingleTarget$ True | TargetsValid$ Player | TriggerZones$ Battlefield | Execute$ TrigRoll | TriggerDescription$ Whenever a player casts a spell that targets a single player, each player rolls a six-sided die. Change the target of that spell to the player with the lowest result. Reroll to break ties, if necessary.
+SVar:TrigRoll:DB$ RollDice | Defined$ Player | Sides$ 6 | RememberLowestPlayer$ True | SubAbility$ DBChangeTarget
+SVar:DBChangeTarget:DB$ ChangeTargets | Defined$ TriggeredSpellAbility | DefinedMagnet$ Remembered | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Whenever a player casts a spell that targets a single player, each player rolls a six-sided die. Change the target of that spell to the player with the lowest result. Reroll to break ties, if necessary.

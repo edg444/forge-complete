@@ -1,0 +1,7 @@
+Name:Censorship
+ManaCost:U
+Types:Enchantment
+Text:As this enchantment enters, choose a word.
+A:AB$ DealDamage | Cost$ FlavorAction<Confirm the named player said the chosen word/Guilty!> | Activator$ Player | AILogic$ Chance.35 | ValidTgts$ Player | TgtPrompt$ Select the player who said the chosen word | NumDmg$ 2 | SpellDescription$ Any player may activate this ability: This enchantment deals 2 damage to target player who said the chosen word.
+AI:RemoveDeck:All
+Oracle:As this enchantment enters, choose a word.\nWhenever a player says the chosen word, this enchantment deals 2 damage to that player.

@@ -1,0 +1,10 @@
+Name:Bureaucracy
+ManaCost:3 U U
+Types:Enchantment
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ Player | TriggerZones$ Battlefield | Execute$ TrigBureaucracy | TriggerDescription$ At the beginning of the upkeep of each player, that player performs, in order, everything previously added to the action queue, then adds another action to the queue. If that player fails to correctly perform every action in order, sacrifice this enchantment and that player discards their hand.
+SVar:TrigBureaucracy:DB$ GenericChoice | Defined$ TriggeredPlayer | Choices$ PerformedQueue,FailedQueue | ChoicePrompt$ Honor system: did you correctly perform every action in the action queue, in order? | AILogic$ Chance.12
+SVar:PerformedQueue:DB$ Cleanup | SpellDescription$ Yes. (Now add a new action to the queue.)
+SVar:FailedQueue:DB$ Sacrifice | SacValid$ Self | SubAbility$ DBDiscardHand | SpellDescription$ No.
+SVar:DBDiscardHand:DB$ Discard | Mode$ Hand | Defined$ TriggeredPlayer
+AI:RemoveDeck:All
+Oracle:Pursuant to subsection 3.1(4) of Richard's Rules of Order, at the beginning of the upkeep of each participant in this game of the Magic: The Gathering® trading card game (hereafter known as "PLAYER"), that PLAYER performs all actions in the sequence of previously added actions (hereafter known as "ACTION QUEUE"), in the order those actions were added, then adds another action to the end of the ACTION QUEUE. All actions must be simple physical or verbal actions that a player can perform while sitting in a chair, without jeopardizing the health and security of said PLAYER.\nWhen any PLAYER does not perform all the prescribed actions in the correct order, sacrifice this enchantment and said PLAYER discards their complement of cards in hand (hereafter known as "HAND").

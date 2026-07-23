@@ -1,0 +1,10 @@
+Name:Burning Cinder Fury of Crimson Chaos Fire
+ManaCost:3 R
+Types:Enchantment
+T:Mode$ Taps | TriggerZones$ Battlefield | Execute$ TrigChoose | TriggerDescription$ Whenever any player taps a permanent, that player chooses one of their opponents. The chosen player gains control of that permanent at the beginning of the next end step.
+SVar:TrigChoose:DB$ ChoosePlayer | Defined$ TriggeredPlayer | Choices$ TriggeredPlayerOpponent | ChoiceTitle$ Choose an opponent | SubAbility$ DBDelayTrig
+SVar:DBDelayTrig:DB$ DelayedTrigger | Mode$ Phase | Phase$ End of Turn | RememberObjects$ ChosenPlayer & TriggeredCard | Execute$ DBGainControl | TriggerDescription$ The chosen player gains control of that permanent at the beginning of the next end step.
+SVar:DBGainControl:DB$ GainControl | Defined$ DelayTriggerRemembered | NewController$ DelayTriggerRemembered
+T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ Player.!TappedNonlandPermanentThisTurn | TriggerZones$ Battlefield | Execute$ TrigDamage | TriggerDescription$ At the beginning of each player's end step, if that player didn't tap any nonland permanents that turn, this enchantment deals 3 damage to that player.
+SVar:TrigDamage:DB$ DealDamage | Defined$ TriggeredPlayer | NumDmg$ 3
+Oracle:Whenever any player taps a permanent, that player chooses one of their opponents. The chosen player gains control of that permanent at the beginning of the next end step.\nAt the beginning of each player's end step, if that player didn't tap any nonland permanents that turn, this enchantment deals 3 damage to that player.

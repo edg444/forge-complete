@@ -1,0 +1,6 @@
+Name:Psychic Network
+ManaCost:U
+Types:Enchantment
+S:Mode$ Continuous | Affected$ Card.TopLibrary | AffectedZone$ Library | MayLookAt$ OtherPlayers | Description$ Each player plays with the top card of their library held against their forehead, revealed to each other player.
+SVar:NonStackingEffect:True
+Oracle:Each player plays with the top card of their library held against their forehead, revealed to each other player.

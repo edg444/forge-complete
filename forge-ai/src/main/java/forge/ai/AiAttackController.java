@@ -968,6 +968,8 @@ public class AiAttackController {
         if (!doRevengeOfRavensAttackLogic(defender, attackersLeft, numForcedAttackers.get(), attackMax)) {
             return aiAggression;
         }
+        // Lexivore: don't attack if its trigger would be forced to destroy one of our own valuable permanents
+        doLexivoreAttackLogic(attackersLeft);
 
         // Only do decisive attacks against token-generating players
         if (!bAssault && defender instanceof Player opp &&
@@ -1730,6 +1732,44 @@ public class AiAttackController {
                 attUnsafe.add(cre);
             } else {
                 continue;
+            }
+        }
+
+        attackersLeft.removeAll(attUnsafe);
+    }
+
+    private void doLexivoreAttackLogic(final Queue<Card> attackersLeft) {
+        // TODO: detect Lexivore by the trigger instead of by name
+        CardCollection lexivores = CardLists.filter(new CardCollection(attackersLeft), CardPredicates.nameEquals("Lexivore"));
+        if (lexivores.isEmpty()) {
+            return;
+        }
+
+        CardCollection attUnsafe = new CardCollection();
+        for (Card lexivore : lexivores) {
+            // Whenever Lexivore deals damage to a player, it destroys target permanent (other than
+            // itself) with the most lines of text anywhere in play. If no opponent permanent is tied
+            // for that, the trigger is forced onto one of our own (see DestroyAi.doTriggerNoCost,
+            // which always prefers an opponent's permanent when one is legal).
+            CardCollection pool = new CardCollection(ai.getGame().getCardsIn(ZoneType.Battlefield));
+            pool.remove(lexivore);
+            CardCollection tied = CardLists.getCardsWithMostTextBoxLines(pool);
+
+            if (!CardLists.filterControlledBy(tied, ai.getOpponents()).isEmpty()) {
+                continue; // an opponent permanent is tied for the most text - safe to attack
+            }
+
+            CardCollection ownTied = CardLists.filterControlledBy(tied, ai);
+            if (ownTied.isEmpty()) {
+                continue; // nothing of ours is in the tied group either (e.g. a teammate's permanent)
+            }
+
+            // DestroyAi would pick the least-bad of these when forced; only hold back the attack if
+            // even that least-bad option is something worth keeping.
+            Card worst = ComputerUtilCard.getWorstAI(ownTied);
+            boolean tooValuable = worst.isCreature() ? ComputerUtilCard.evaluateCreature(worst) >= 150 : worst.getCMC() >= 3;
+            if (tooValuable) {
+                attUnsafe.add(lexivore);
             }
         }
 

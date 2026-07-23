@@ -65,6 +65,16 @@ public class DrawEffect extends SpellAbilityEffect {
 
         final List<Player> tgts = getTargetPlayersWithDuplicates(true, "Defined", sa);
 
+        // Double Take-style delayed draw: the game this resolves in ends before the draw applies,
+        // so it can't be a normal card trigger - queue it on the Match instead (see LifeGainEffect
+        // and Match.java for the identical Double Dip mechanism).
+        if (sa.hasParam("NextGameFirstUpkeep")) {
+            for (final Player p : Sets.newLinkedHashSet(tgts)) {
+                p.getGame().getMatch().queueFirstUpkeepDraw(p.getRegisteredPlayer(), numCards * Collections.frequency(tgts, p));
+            }
+            return;
+        }
+
         for (final Player p : Sets.newLinkedHashSet(tgts)) {
             if (!p.isInGame()) {
                 continue;

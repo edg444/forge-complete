@@ -197,6 +197,10 @@ public class PlayerProperty {
             if (!player.hasTappedLandForManaThisTurn()) {
                 return false;
             }
+        } else if (property.equals("TappedNonlandPermanentThisTurn")) {
+            if (!player.hasTappedNonlandPermanentThisTurn()) {
+                return false;
+            }
         } else if (property.equals("CardsInHandAtBeginningOfTurn")) {
             if (player.getNumCardsInHandStartedThisTurnWith() <= 0) {
                 return false;

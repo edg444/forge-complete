@@ -150,6 +150,7 @@ public class Player extends GameEntity implements Comparable<Player> {
     private boolean beenDealtCombatDamageSinceLastTurn = false;
 
     private boolean tappedLandForManaThisTurn = false;
+    private boolean tappedNonlandPermanentThisTurn = false;
 
     private final Map<ZoneType, PlayerZone> zones = Maps.newEnumMap(ZoneType.class);
     private List<PlayerZone> extraZones = null;
@@ -1819,6 +1820,13 @@ public class Player extends GameEntity implements Comparable<Player> {
         this.tappedLandForManaThisTurn = tappedLandForManaThisTurn;
     }
 
+    public boolean hasTappedNonlandPermanentThisTurn() {
+        return tappedNonlandPermanentThisTurn;
+    }
+    public void setTappedNonlandPermanentThisTurn(boolean tappedNonlandPermanentThisTurn) {
+        this.tappedNonlandPermanentThisTurn = tappedNonlandPermanentThisTurn;
+    }
+
     public final boolean hasBeenDealtCombatDamageSinceLastTurn() {
         return beenDealtCombatDamageSinceLastTurn;
     }
@@ -2479,6 +2487,7 @@ public class Player extends GameEntity implements Comparable<Player> {
         resetNumTokenCreatedThisTurn();
         setNumCardsInHandStartedThisTurnWith(getCardsIn(ZoneType.Hand).size());
         setTappedLandForManaThisTurn(false);
+        setTappedNonlandPermanentThisTurn(false);
         setLandsPlayedLastTurn(getLandsPlayedThisTurn());
         resetLandsPlayedThisTurn();
         resetInvestigatedThisTurn();

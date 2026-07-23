@@ -1,5 +1,6 @@
 package forge.game.ability.effects;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import forge.game.ability.AbilityKey;
@@ -171,6 +172,63 @@ public class RollDiceEffect extends SpellAbilityEffect {
                 activationsThisTurn += 1;
                 c.setSVar("ModsThisTurn", "Number$" + activationsThisTurn);
                 canRerollDice.remove(c);
+            }
+        }
+
+        // Goblin Bookie Reroll Phase: {R}, {T}: Reflip any coin or reroll any die. Same
+        // getRerollCards/payCostDuringRoll mechanism as Monitor Monitor above, just a different
+        // keyword and cost (mana + tap instead of just mana) - no RollModificationsLimit, since the
+        // real card has no "once each turn" restriction; needing to untap CARDNAME again already
+        // limits it naturally. See FlipCoinEffect.flipCoin for the coin-reflip half of this ability.
+        String goblinBookieKeyword = "{R}, {T}: Reflip any coin or reroll any die. (Activate only any time it makes sense.)";
+        CardCollection canRerollDiceBookie = getRerollCards(player, goblinBookieKeyword);
+        while (!canRerollDiceBookie.isEmpty()) {
+            List<Integer> diceToReroll = player.getController().chooseDiceToReroll(naturalRolls);
+            if (diceToReroll.isEmpty()) {break;}
+
+            String message = Localizer.getInstance().getMessage("lblChooseRerollCard");
+            Card c = canRerollDiceBookie.size() == 1 ? canRerollDiceBookie.getFirst()
+                    : player.getController().chooseSingleEntityForEffect(canRerollDiceBookie, sa, message, null);
+
+            String[] parts = c.getSVar("ModsThisTurn").split("\\$");
+            int activationsThisTurn = Integer.parseInt(parts[1]);
+            SpellAbility modifierSA = c.getFirstSpellAbility();
+            Cost cost = new Cost(c.getSVar("RollRerollCost"), false);
+            boolean paid = player.getController().payCostDuringRoll(cost, modifierSA);
+            if (paid) {
+                for (Integer roll : diceToReroll) {
+                    naturalRolls.remove(roll);
+                }
+                int amountToReroll = diceToReroll.size();
+                List<Integer> rerolls = rollAction(amountToReroll, sides, 0, null, ignored, Maps.newHashMap(), dicePTExchanges, player, repParams);
+                naturalRolls.addAll(rerolls);
+                activationsThisTurn += 1;
+                c.setSVar("ModsThisTurn", "Number$" + activationsThisTurn);
+                canRerollDiceBookie.remove(c);
+            } else {
+                break;
+            }
+        }
+
+        // Clam-I-Am Reroll Phase: If you roll a 3 on a six-sided die, you may reroll that die.
+        // Unlike Monitor Monitor, this is free, unlimited, and only offered for dice that come up 3,
+        // so it's checked separately rather than folded into getRerollCards's cost/limit-tracking flow.
+        // Templated as "If X, you may Y" (not "Whenever"), so per CR 603/614 this is a static/replacement-style
+        // permission, not a triggered ability - it has to intercept the roll here, before whatever ability
+        // caused it consumes the result, not announce on the stack afterward (see Monitor Monitor, same idiom).
+        String clamKeyword = "If you roll a 3 on a six-sided die, you may reroll that die.";
+        CardCollection clamCards = CardLists.getKeyword(player.getCardsIn(ZoneType.Battlefield), clamKeyword);
+        if (sides == 6 && !clamCards.isEmpty()) {
+            Card clam = clamCards.getFirst();
+            while (naturalRolls.contains(3)) {
+                if (!player.getController().confirmAction(sa, null,
+                        Localizer.getInstance().getMessage("lblRerollResult", 3) + " (" + clam.getName() + ")",
+                        clam, null)) {
+                    break;
+                }
+                naturalRolls.remove(Integer.valueOf(3));
+                List<Integer> reroll = rollAction(1, sides, 0, null, ignored, Maps.newHashMap(), dicePTExchanges, player, repParams);
+                naturalRolls.addAll(reroll);
             }
         }
 
@@ -469,9 +527,21 @@ public class RollDiceEffect extends SpellAbilityEffect {
         }
         if (resultAbility != null) {
             AbilityUtils.resolve(resultAbility);
-
+            notifyResultMessage(sa, resultAbility);
         } else if (sa.hasAdditionalAbility("Else")) {
-            AbilityUtils.resolve(sa.getAdditionalAbility("Else"));
+            final SpellAbility elseAbility = sa.getAdditionalAbility("Else");
+            AbilityUtils.resolve(elseAbility);
+            notifyResultMessage(sa, elseAbility);
+        }
+    }
+
+    // Lets a specific roll-result branch (e.g. a failure outcome) pop up its own message,
+    // separate from the branch's SpellDescription (which only shows in the card's static
+    // reminder text, not as a live notification) - see Knight of the Hokey Pokey.
+    private static void notifyResultMessage(SpellAbility sa, SpellAbility resolved) {
+        if (resolved.hasParam("NotifyMessage")) {
+            final Player player = sa.getActivatingPlayer();
+            player.getGame().getAction().notifyOfValue(sa, player, resolved.getParam("NotifyMessage"), null);
         }
     }
 
@@ -520,11 +590,26 @@ public class RollDiceEffect extends SpellAbilityEffect {
 
         if (sa.hasParam("NoteDoubles")) {
             Set<Integer> unique = new HashSet<>();
+            boolean doubles = false;
             for (Integer roll : rolls) {
                 if (!unique.add(roll)) {
-                    sa.setSVar("Doubles", "1");
+                    doubles = true;
                 }
             }
+            // Set explicitly every roll (not just on a hit) so a later non-doubles roll this turn
+            // doesn't keep reading a stale "1" left over from an earlier doubles roll.
+            sa.setSVar("Doubles", doubles ? "1" : "0");
+        }
+
+        // Free-Range Chicken: "If the total... is equal to any other total you have rolled this
+        // turn for this ability, sacrifice it." Remembers every total rolled this turn on the host
+        // card (cleared each turn by a TurnBegin trigger on the card script) and flags whether the
+        // CURRENT total is a repeat of an earlier one - checked before adding the current total, so
+        // a total never counts as a repeat of itself. Set explicitly every roll, same reason as
+        // NoteDoubles above.
+        if (sa.hasParam("NoteRepeatTotal")) {
+            sa.setSVar("RepeatedTotal", Iterables.contains(host.getRemembered(), total) ? "1" : "0");
+            host.addRemembered(total);
         }
 
         return total;
@@ -540,6 +625,7 @@ public class RollDiceEffect extends SpellAbilityEffect {
         int amount = AbilityUtils.calculateAmount(host, sa.getParamOrDefault("Amount", "1"), sa);
         int sides = AbilityUtils.calculateAmount(host, sa.getParamOrDefault("Sides", "6"), sa);
         boolean rememberHighest = sa.hasParam("RememberHighestPlayer");
+        boolean rememberLowest = sa.hasParam("RememberLowestPlayer");
 
         final PlayerCollection playersToRoll = getTargetPlayers(sa);
         List<Integer> results = new ArrayList<>(playersToRoll.size());
@@ -565,6 +651,38 @@ public class RollDiceEffect extends SpellAbilityEffect {
             for (int i = 0; i < results.size(); ++i) {
                 if (highest == results.get(i)) {
                     host.addRemembered(playersToRoll.get(i));
+                }
+            }
+        }
+        if (rememberLowest) {
+            // Ricochet: "each player rolls a die... the player with the lowest result... Reroll to
+            // break ties, if necessary." Only the players still tied for lowest reroll each pass,
+            // not the whole field, until a single lowest player remains.
+            PlayerCollection remainingPlayers = playersToRoll;
+            List<Integer> remainingResults = results;
+            while (true) {
+                int lowest = Integer.MAX_VALUE;
+                for (Integer result : remainingResults) {
+                    if (result < lowest) {
+                        lowest = result;
+                    }
+                }
+                PlayerCollection tiedForLowest = new PlayerCollection();
+                for (int i = 0; i < remainingPlayers.size(); ++i) {
+                    if (remainingResults.get(i) == lowest) {
+                        tiedForLowest.add(remainingPlayers.get(i));
+                    }
+                }
+                if (tiedForLowest.size() <= 1) {
+                    if (!tiedForLowest.isEmpty()) {
+                        host.addRemembered(tiedForLowest.getFirst());
+                    }
+                    break;
+                }
+                remainingPlayers = tiedForLowest;
+                remainingResults = new ArrayList<>(remainingPlayers.size());
+                for (Player player : remainingPlayers) {
+                    remainingResults.add(rollDice(sa, player, amount, sides));
                 }
             }
         }

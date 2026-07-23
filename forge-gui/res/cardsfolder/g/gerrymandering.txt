@@ -1,0 +1,5 @@
+Name:Gerrymandering
+ManaCost:2 G
+Types:Sorcery
+A:SP$ Gerrymander | ValidCards$ Land | SpellDescription$ Exile all lands. Give each player a number of those cards chosen at random equal to the number of those cards the player controlled. Each player returns those cards to the battlefield under their control.
+Oracle:Exile all lands. Give each player a number of those cards chosen at random equal to the number of those cards the player controlled. Each player returns those cards to the battlefield under their control.

@@ -23,7 +23,7 @@ public class ControlExchangeVariantEffect extends SpellAbilityEffect {
     @Override
     public void resolve(SpellAbility sa) {
         final Player activator = sa.getActivatingPlayer();
-        final List<Player> players = getTargetPlayers(sa);
+        final List<Player> players = getDefinedPlayersOrTargeted(sa);
         if (players.size() != 2) {
             return;
         }
@@ -34,11 +34,20 @@ public class ControlExchangeVariantEffect extends SpellAbilityEffect {
         // get valid lists
         CardCollectionView list1 = AbilityUtils.filterListByType(player1.getCardsIn(zone), type, sa);
         CardCollectionView list2 = AbilityUtils.filterListByType(player2.getCardsIn(zone), type, sa);
-        int max = Math.min(list1.size(), list2.size());
-        // choose the same number of cards
-        CardCollectionView chosen1 = activator.getController().chooseCardsForEffect(list1, sa, Localizer.getInstance().getMessage("lblChooseCards") + ":" + player1, 0, max, true, null);
-        int num = chosen1.size();
-        CardCollectionView chosen2 = activator.getController().chooseCardsForEffect(list2, sa, Localizer.getInstance().getMessage("lblChooseCards") + ":" + player2, num, num, true, null);
+        CardCollectionView chosen1;
+        CardCollectionView chosen2;
+        if (sa.hasParam("All")) {
+            // Mirror Mirror: "exchange control of all permanents" - no choice involved, take both
+            // lists wholesale instead of prompting for equal-sized subsets.
+            chosen1 = list1;
+            chosen2 = list2;
+        } else {
+            int max = Math.min(list1.size(), list2.size());
+            // choose the same number of cards
+            chosen1 = activator.getController().chooseCardsForEffect(list1, sa, Localizer.getInstance().getMessage("lblChooseCards") + ":" + player1, 0, max, true, null);
+            int num = chosen1.size();
+            chosen2 = activator.getController().chooseCardsForEffect(list2, sa, Localizer.getInstance().getMessage("lblChooseCards") + ":" + player2, num, num, true, null);
+        }
         // check all cards can be controlled by the other player
         for (final Card c : chosen1) {
             if (!c.canBeControlledBy(player2)) {

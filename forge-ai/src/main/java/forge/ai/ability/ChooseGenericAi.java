@@ -13,6 +13,7 @@ import forge.game.spellability.AbilitySub;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 import forge.util.Aggregates;
+import forge.util.MyRandom;
 import forge.util.collect.FCollection;
 
 import java.util.List;
@@ -86,6 +87,15 @@ public class ChooseGenericAi extends SpellAbilityAi {
         final Game game = host.getGame();
         final String logic = sa.getParam("AILogic");
         if (logic == null) {
+            return spells.get(0);
+        } else if (logic.startsWith("Chance.")) {
+            // Honor-system choices (see the Sex Appeal/Bureaucracy/Common Courtesy/Sorry family of
+            // cards) where spells.get(0) is the safe/default answer - Chance.N is the percent chance
+            // of picking something else instead, uniformly among the other listed choices, so the
+            // AI isn't permanently locked into the same answer every time.
+            if (spells.size() > 1 && MyRandom.percentTrue(Integer.parseInt(logic.substring("Chance.".length())))) {
+                return Aggregates.random(spells.subList(1, spells.size()));
+            }
             return spells.get(0);
         } else if ("Random".equals(logic)) {
             return Aggregates.random(spells);

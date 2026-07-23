@@ -157,6 +157,12 @@ public abstract class SpellAbilityAi {
             return false;
         } else if ("Once".equals(aiLogic)) {
             return !sa.getHostCard().getAbilityActivatedThisTurn().getActivators(sa).contains(ai);
+        } else if (aiLogic.startsWith("Chance.")) {
+            // Honor-system abilities (see CostFlavorAction) the AI can't really "know" the outcome
+            // of - Chance.N lets it attempt them N% of the time instead of never or always, so a
+            // few flavor cards aren't just permanently AI-dead. The percentage is a per-card flavor
+            // tuning knob (see the card's own comment/precedent), not a general game-balance value.
+            return MyRandom.percentTrue(Integer.parseInt(aiLogic.substring("Chance.".length())));
         }
         return true;
     }
@@ -399,6 +405,11 @@ public abstract class SpellAbilityAi {
         boolean isMine = sa.getActivatingPlayer().equals(payer);
 
         if (payNever) { return false; }
+        if (aiLogic != null && aiLogic.startsWith("Chance.")) {
+            // Honor-system "unless" costs (see CostFlavorAction) - a real cost-affordability check
+            // doesn't apply, so roll a flat percentage instead of the normal cost-based logic below.
+            return MyRandom.percentTrue(Integer.parseInt(aiLogic.substring("Chance.".length())));
+        }
 
         // AI will only pay when it's not already paid and only opponents abilities
         if (alreadyPaid || (payers.size() > 1 && isMine)) {
