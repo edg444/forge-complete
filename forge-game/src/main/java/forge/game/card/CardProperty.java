@@ -751,10 +751,14 @@ public class CardProperty {
                 }
             } else {
                 final String restriction = property.split(" ", 2)[1];
-                // "Other" means another permanent of the same controller, which can't be written as
-                // a +YouCtrl inside the restriction - a valid string splits on +, so it would leak
-                // out and be applied to the card being tested instead
+                // "Other" means another permanent of the same controller that also matches the
+                // restriction, so two of them share an artist. It's spelled out this way because a
+                // valid string splits on + at every level - a nested +YouCtrl would leak out of the
+                // restriction and be applied to something else entirely
                 final boolean sameController = property.startsWith("sharesArtistWithOther");
+                if (sameController && !card.isValid(restriction, sourceController, source, spellAbility)) {
+                    return false;
+                }
                 boolean found = false;
                 for (final Card other : game.getCardsIn(ZoneType.Battlefield)) {
                     if (other.equals(card) || !other.isValid(restriction, sourceController, source, spellAbility)) {
