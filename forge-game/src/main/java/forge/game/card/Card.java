@@ -4295,12 +4295,19 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
 
     // printed power and toughness, so Look at Me, I'm R&D swaps them here - counters and pumps then
-    // stack on top of the swapped value exactly as they would on the printed one
+    // stack on top of the swapped value exactly as they would on the printed one. Printed halves
+    // take part: with a 1/2 -> 1 1/2 swap Little Girl really does become 1 1/2 by 1 1/2.
+    private int basePowerHalves() {
+        return getGame().changeHalves(currentState.getBasePower() * 2 + halfPower);
+    }
+    private int baseToughnessHalves() {
+        return getGame().changeHalves(currentState.getBaseToughness() * 2 + halfToughness);
+    }
     public final int getBasePower() {
-        return getGame().changeNumber(currentState.getBasePower());
+        return Math.floorDiv(basePowerHalves(), 2);
     }
     public final int getBaseToughness() {
-        return getGame().changeNumber(currentState.getBaseToughness());
+        return Math.floorDiv(baseToughnessHalves(), 2);
     }
     public final void setBasePower(final int n) {
         currentState.setBasePower(n);
@@ -4317,10 +4324,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return getAmountOfKeyword("CARDNAME's power and toughness are switched") % 2 != 0;
     }
     public final boolean hasHalfPower() {
-        return hasSwitchedPT() ? halfToughness > 0 : halfPower > 0;
+        return Math.floorMod(hasSwitchedPT() ? baseToughnessHalves() : basePowerHalves(), 2) != 0;
     }
     public final boolean hasHalfToughness() {
-        return hasSwitchedPT() ? halfPower > 0 : halfToughness > 0;
+        return Math.floorMod(hasSwitchedPT() ? basePowerHalves() : baseToughnessHalves(), 2) != 0;
     }
     public final void setHalfPower(final boolean h) {
         halfPower = h ? 1 : 0;

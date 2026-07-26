@@ -137,12 +137,14 @@ public class Game {
     // card text, the swap is applied wherever a number is read, which is a handful of places and
     // keeps every card's script untouched. Per the rulings this replaces whole numbers, not digits,
     // so 20 is unaffected by a 2 -> 3 swap.
+    // Both numbers are held in halves so a fraction can be chosen, as the rulings allow: 1 is 2,
+    // 1/2 is 1, -1/2 is -1. Whole and half numbers are then the same kind of thing to compare.
     private Integer numberChangeFrom = null;
     private int numberChangeTo = 0;
 
-    public void setNumberChange(final Integer from, final int to) {
-        numberChangeFrom = from;
-        numberChangeTo = to;
+    public void setNumberChange(final Integer fromHalves, final int toHalves) {
+        numberChangeFrom = fromHalves;
+        numberChangeTo = toHalves;
     }
     public boolean hasNumberChange() {
         return numberChangeFrom != null;
@@ -153,9 +155,18 @@ public class Game {
     public int getNumberChangeTo() {
         return numberChangeTo;
     }
-    /** Apply the active number change to a printed number. */
+
+    /** Apply the active number change to a printed number counted in halves. */
+    public int changeHalves(final int printedHalves) {
+        return numberChangeFrom != null && numberChangeFrom == printedHalves ? numberChangeTo : printedHalves;
+    }
+    /** Apply the active number change to a whole printed number, rounding a fractional result down. */
     public int changeNumber(final int printed) {
-        return numberChangeFrom != null && numberChangeFrom == printed ? numberChangeTo : printed;
+        return Math.floorDiv(changeHalves(printed * 2), 2);
+    }
+    /** True when swapping this whole printed number leaves a leftover half, e.g. 3 becoming 2 1/2. */
+    public boolean changeLeavesHalf(final int printed) {
+        return Math.floorMod(changeHalves(printed * 2), 2) != 0;
     }
 
     private long timestamp = 0;

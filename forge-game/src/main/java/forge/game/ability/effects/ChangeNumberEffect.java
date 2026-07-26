@@ -40,16 +40,36 @@ public class ChangeNumberEffect extends SpellAbilityEffect {
 
         final int min = AbilityUtils.calculateAmount(host, sa.getParamOrDefault("Min", "0"), sa);
         final int max = AbilityUtils.calculateAmount(host, sa.getParamOrDefault("Max", "20"), sa);
-        final int from = chooser.getController().chooseNumber(sa, "Choose a number to change", min, max);
+
+        // a number with a fraction may be chosen, so the whole list is offered in halves
+        final List<String> numbers = Lists.newArrayList();
+        for (int halves = min * 2; halves <= max * 2; halves++) {
+            numbers.add(label(halves));
+        }
+        final String pickedFrom = chooser.getController().chooseSomeType("Number", sa, numbers);
+        if (pickedFrom == null) {
+            return;
+        }
+        final int from = numbers.indexOf(pickedFrom) + min * 2;
 
         // the second number must be one either side, so it's offered as a choice between the two
-        // rather than a free pick that could be illegal. 0 may become -1, per the rulings.
-        final List<String> options = Lists.newArrayList(String.valueOf(from + 1), String.valueOf(from - 1));
+        // rather than a free pick that could be illegal. 0 may become -1, and 1/2 may become -1/2,
+        // per the rulings - one higher or lower means a whole number apart either way.
+        final List<String> options = Lists.newArrayList(label(from + 2), label(from - 2));
         final String picked = chooser.getController().chooseSomeType("Number", sa, options);
-        final int to = picked == null ? from + 1 : Integer.parseInt(picked);
+        final int to = picked == null ? from + 2 : (picked.equals(options.get(0)) ? from + 2 : from - 2);
 
         game.setNumberChange(from, to);
         game.getAction().notifyOfValue(sa, host,
-                "All printed " + from + "s are now " + to + "s.", chooser);
+                "All printed " + label(from) + "s are now " + label(to) + "s.", chooser);
+    }
+
+    /** Render a count of halves the way it's printed: 3, 2½, -½. */
+    private static String label(final int halves) {
+        final int whole = Math.floorDiv(halves, 2);
+        if (Math.floorMod(halves, 2) == 0) {
+            return String.valueOf(whole);
+        }
+        return whole == -1 ? "-½" : (whole == 0 ? "½" : whole + "½");
     }
 }

@@ -214,11 +214,18 @@ public class CostAdjustment {
         // it, so a {2} spell really is a {3} spell for reductions and increases alike
         if (game.hasNumberChange()) {
             final int printedGeneric = cost.getGenericManaAmount();
-            final int swapped = game.changeNumber(printedGeneric);
+            final int swappedHalves = game.changeHalves(printedGeneric * 2);
+            // a fractional result keeps its half rather than rounding away: {2} becoming {1 1/2} is
+            // set to {2} and then reduced by a half, leaving the same remainder Cheap Ass produces
+            final boolean leftoverHalf = Math.floorMod(swappedHalves, 2) != 0;
+            final int swapped = Math.floorDiv(swappedHalves, 2) + (leftoverHalf ? 1 : 0);
             if (swapped > printedGeneric) {
                 cost.increaseGenericMana(swapped - printedGeneric);
             } else if (swapped < printedGeneric) {
                 cost.decreaseGenericMana(printedGeneric - swapped);
+            }
+            if (leftoverHalf) {
+                cost.reduceByHalf();
             }
         }
 
