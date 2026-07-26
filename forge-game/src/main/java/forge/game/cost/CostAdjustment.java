@@ -227,11 +227,19 @@ public class CostAdjustment {
             cost.subtractManaCost(host.getManaCost());
         }
 
+        // Cheap Ass reduces by {1/2}. Half mana can't be produced or paid, so a leftover half is
+        // simply lost - one Cheap Ass changes nothing, a second one makes the pair worth {1}.
+        int sumHalves = 0;
         while (!reduceAbilities.isEmpty()) {
             StaticAbility choice = activator.getController().chooseSingleStaticAbility(reduceAbilities);
             reduceAbilities.remove(choice);
-            sumGeneric += applyReduceCostAbility(choice, sa, cost, sumGeneric);
+            if (choice.hasParam("Half")) {
+                sumHalves += applyReduceCostAbility(choice, sa, cost, sumGeneric);
+            } else {
+                sumGeneric += applyReduceCostAbility(choice, sa, cost, sumGeneric);
+            }
         }
+        sumGeneric += sumHalves / 2;
         // need to reduce generic extra because of 2 hybrid mana
         cost.decreaseGenericMana(sumGeneric);
 

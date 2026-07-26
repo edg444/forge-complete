@@ -87,6 +87,7 @@ Dinosaur:Dinosaurs
 Djinn:Djinns
 Doctor:Doctors
 Dog:Dogs
+Donkey:Donkeys
 Dragon:Dragons
 Drake:Drakes
 Dreadnought:Dreadnoughts
