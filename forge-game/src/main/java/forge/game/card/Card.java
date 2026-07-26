@@ -7628,6 +7628,25 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         renderForUi = value;
     }
 
+    // Brushstroke Paintermage repaints a permanent, so the artist can differ from the printed one.
+    // Everything that cares about artists reads this rather than the paper card directly.
+    private String changedArtist = null;
+
+    public String getArtist() {
+        if (changedArtist != null) {
+            return changedArtist;
+        }
+        final IPaperCard pc = getPaperCard();
+        return pc == null ? "" : pc.getArtist();
+    }
+    public String getChangedArtist() {
+        return changedArtist;
+    }
+    public void setChangedArtist(final String artist) {
+        changedArtist = artist;
+        updateAbilityTextForView();
+    }
+
     public IPaperCard getPaperCard() {
         IPaperCard cp = paperCard;
         if (cp != null) {

@@ -1,0 +1,7 @@
+Name:Brushstroke Paintermage
+ManaCost:3 U
+Types:Creature Human Wizard
+PT:2/3
+A:AB$ ChooseArtist | Cost$ T | Defined$ You | AILogic$ MostProminentYouCtrl | ValidTgts$ Permanent | TgtPrompt$ Select target permanent | SubAbility$ DBSetArtist | SpellDescription$ Target permanent's artist becomes the artist of your choice until end of turn.
+SVar:DBSetArtist:DB$ SetArtist | Defined$ Targeted
+Oracle:{T}: Target permanent's artist becomes the artist of your choice until end of turn.

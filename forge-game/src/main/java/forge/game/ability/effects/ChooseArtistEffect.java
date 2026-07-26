@@ -11,7 +11,6 @@ import forge.game.card.Card;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
-import forge.item.IPaperCard;
 import forge.util.Lang;
 
 // Circle of Protection: Art: "As this enchantment enters, choose an artist." The full list of every
@@ -22,6 +21,8 @@ public class ChooseArtistEffect extends SpellAbilityEffect {
 
     private static final List<ZoneType> VISIBLE_ZONES = ZoneType.listValueOf(
             "Battlefield,Graveyard,Exile,Stack,Command");
+    private static final List<ZoneType> HIDDEN_OWN_ZONES = ZoneType.listValueOf(
+            "Hand,Library,Sideboard");
 
     @Override
     protected String getStackDescription(SpellAbility sa) {
@@ -38,8 +39,9 @@ public class ChooseArtistEffect extends SpellAbilityEffect {
             for (final Card c : game.getCardsIn(VISIBLE_ZONES)) {
                 addArtist(artists, c);
             }
-            // a player always knows their own hidden cards, and the enchantment is theirs to aim
-            for (final Card c : p.getCardsIn(ZoneType.Hand)) {
+            // a player always knows their own cards, and naming an artist is theirs to aim, so the
+            // whole deck is offered rather than making them recall who painted what
+            for (final Card c : p.getCardsIn(HIDDEN_OWN_ZONES)) {
                 addArtist(artists, c);
             }
             if (artists.isEmpty()) {
@@ -56,9 +58,9 @@ public class ChooseArtistEffect extends SpellAbilityEffect {
     }
 
     private static void addArtist(final Set<String> artists, final Card c) {
-        final IPaperCard pc = c.getPaperCard();
-        if (pc != null && !pc.getArtist().isEmpty()) {
-            artists.add(pc.getArtist());
+        final String artist = c.getArtist();
+        if (!artist.isEmpty()) {
+            artists.add(artist);
         }
     }
 }

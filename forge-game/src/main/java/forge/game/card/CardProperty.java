@@ -173,9 +173,8 @@ public class CardProperty {
                 return false;
             }
         } else if (property.equals("ArtistIsChosen")) {
-            final IPaperCard artPc = card.getPaperCard();
-            if (artPc == null || !source.hasChosenArtist()
-                    || !artPc.getArtist().equalsIgnoreCase(source.getChosenArtist())) {
+            if (!source.hasChosenArtist()
+                    || !card.getArtist().equalsIgnoreCase(source.getChosenArtist())) {
                 return false;
             }
         } else if (property.equals("IsTriggerRemembered")) {
@@ -742,13 +741,12 @@ public class CardProperty {
             // Erase (Not the Urza's Legacy One): two white permanents "that share an artist". With
             // no restriction this compares against the source, otherwise against any other card
             // matching the restriction, which is how a card checks for a partner sharing its art.
-            final IPaperCard selfPc = card.getPaperCard();
-            if (selfPc == null || selfPc.getArtist().isEmpty()) {
+            final String selfArtist = card.getArtist();
+            if (selfArtist.isEmpty()) {
                 return false;
             }
             if (property.equals("sharesArtistWith")) {
-                final IPaperCard srcPc = source.getPaperCard();
-                if (srcPc == null || !selfPc.getArtist().equalsIgnoreCase(srcPc.getArtist())) {
+                if (!selfArtist.equalsIgnoreCase(source.getArtist())) {
                     return false;
                 }
             } else {
@@ -758,8 +756,7 @@ public class CardProperty {
                     if (other.equals(card) || !other.isValid(restriction, sourceController, source, spellAbility)) {
                         continue;
                     }
-                    final IPaperCard otherPc = other.getPaperCard();
-                    if (otherPc != null && selfPc.getArtist().equalsIgnoreCase(otherPc.getArtist())) {
+                    if (selfArtist.equalsIgnoreCase(other.getArtist())) {
                         found = true;
                         break;
                     }
