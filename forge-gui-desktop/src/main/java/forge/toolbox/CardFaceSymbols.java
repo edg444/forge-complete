@@ -47,6 +47,13 @@ public class CardFaceSymbols {
             MANA_IMAGES.put(e.getKey(), FSkin.getImage(e.getValue()));
         }
 
+        // Unhinged half mana has no art of its own, so it borrows its colour's symbol
+        for (final String c : new String[] { "W", "U", "B", "R", "G" }) {
+            if (MANA_IMAGES.containsKey(c)) {
+                MANA_IMAGES.put("H" + c, MANA_IMAGES.get(c));
+            }
+        }
+
         MANA_IMAGES.put("E", FSkin.getImage(FSkinProp.IMG_ENERGY, 40, 40));
         MANA_IMAGES.put("TK", FSkin.getImage(FSkinProp.IMG_TICKET, 40, 40));
         MANA_IMAGES.put("EXPERIENCE", FSkin.getImage(FSkinProp.IMG_EXPERIENCE, 40, 30));
@@ -218,7 +225,11 @@ public class CardFaceSymbols {
         float screenScale = GuiBase.getInterface().getScreenScale();
         int imageSize = Math.round(size * screenScale);
 
-        FSkin.drawImage(g, MANA_IMAGES.get(imageName).resize(imageSize, imageSize),
+        final FSkin.SkinImage symbol = MANA_IMAGES.get(imageName);
+        if (symbol == null) {
+            return; // an unknown symbol shouldn't take the whole window down with it
+        }
+        FSkin.drawImage(g, symbol.resize(imageSize, imageSize),
             x, y, x + size, y + size, 0, 0, imageSize, imageSize);
     }
     public static void drawWatermark(final FSkinProp skinProp, final Graphics g, final int x, final int y, final int size) {
