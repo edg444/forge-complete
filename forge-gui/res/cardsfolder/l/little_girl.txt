@@ -1,0 +1,5 @@
+Name:Little Girl
+ManaCost:HW
+Types:Creature Human Child
+PT:.5/.5
+Oracle:

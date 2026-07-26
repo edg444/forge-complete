@@ -24,6 +24,8 @@ public abstract class ManaAtom {
     public static final int OR_2_GENERIC = 1 << 9;
     public static final int OR_2_LIFE = 1 << 10;
     public static final int IS_SNOW = 1 << 11;
+    // Unhinged half mana, as printed on Little Girl's {HW}
+    public static final int IS_HALF = 1 << 12;
 
     public static byte fromName(final char c) {
         switch (Character.toLowerCase(c)) {

@@ -136,6 +136,8 @@ public class ManaCostBeingPaid {
         }
         sunburstMap = manaCostBeingPaid.sunburstMap;
         cntX = manaCostBeingPaid.cntX;
+        halfShards = manaCostBeingPaid.halfShards;
+        halfColorMask = manaCostBeingPaid.halfColorMask;
     }
 
     public ManaCostBeingPaid(ManaCost manaCost) {
@@ -143,6 +145,10 @@ public class ManaCostBeingPaid {
         for (ManaCostShard shard : manaCost) {
             if (shard == ManaCostShard.X) {
                 cntX++;
+            } else if (shard.isHalf()) {
+                // a printed half (Little Girl's {HW}) becomes the same half remainder a {1/2} cost
+                // reduction leaves behind, so both are paid and given change the same way
+                addHalfShard(shard.getPayableColorMask());
             } else {
                 increaseShard(shard, 1, false);
             }

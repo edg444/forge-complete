@@ -60,6 +60,14 @@ public enum ManaCostShard {
     CR(ManaAtom.RED | ManaAtom.COLORLESS, "C/R"),
     CG(ManaAtom.GREEN | ManaAtom.COLORLESS, "C/G"),
 
+    /* Unhinged half mana - only white was ever printed (Little Girl), but the whole cycle of
+     * colours is here so the shard doesn't have to be special-cased if another one turns up. */
+    HW(ManaAtom.WHITE | ManaAtom.IS_HALF, "HW"),
+    HU(ManaAtom.BLUE | ManaAtom.IS_HALF, "HU"),
+    HB(ManaAtom.BLACK | ManaAtom.IS_HALF, "HB"),
+    HR(ManaAtom.RED | ManaAtom.IS_HALF, "HR"),
+    HG(ManaAtom.GREEN | ManaAtom.IS_HALF, "HG"),
+
     // Snow and colorless
     S(ManaAtom.IS_SNOW, "S"),
     GENERIC(ManaAtom.GENERIC, "1"),
@@ -120,6 +128,10 @@ public enum ManaCostShard {
 
     private int getCMC() {
         if (0 != (this.shard & ManaAtom.IS_X)) {
+            return 0;
+        }
+        // a half rounds down to 0, mana value being an integer everywhere in the engine
+        if (0 != (this.shard & ManaAtom.IS_HALF)) {
             return 0;
         }
         if (0 != (this.shard & ManaAtom.OR_2_GENERIC)) {
@@ -209,6 +221,7 @@ public enum ManaCostShard {
                 case 'S': atoms |= ManaAtom.IS_SNOW;        break;
                 case 'X': atoms |= ManaAtom.IS_X;           break;
                 case 'C': atoms |= ManaAtom.COLORLESS;      break;
+                case 'H': atoms |= ManaAtom.IS_HALF;        break;
                 case '2': atoms |= ManaAtom.OR_2_GENERIC;   break;
                 default:
                     if (c <= '9' && c >= '0') {
@@ -296,6 +309,17 @@ public enum ManaCostShard {
      */
     public boolean isSnow() {
         return isOfKind(ManaAtom.IS_SNOW);
+    }
+
+    /** True for an Unhinged half shard such as Little Girl's {HW}. */
+    public boolean isHalf() {
+        return isOfKind(ManaAtom.IS_HALF);
+    }
+
+    /** The colours this shard may be paid with, 0xFF when it is colourless and accepts any. */
+    public byte getPayableColorMask() {
+        final byte colors = getColorMask();
+        return colors == 0 ? (byte) 0xFF : colors;
     }
 
     public boolean isMonoColor() {
