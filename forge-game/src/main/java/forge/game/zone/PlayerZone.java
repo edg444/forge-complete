@@ -18,6 +18,7 @@
 package forge.game.zone;
 
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import forge.game.card.Card;
 import forge.game.card.CardLists;
 import forge.game.keyword.Keyword;
@@ -25,6 +26,7 @@ import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.util.Lang;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 /**
@@ -65,13 +67,25 @@ public class PlayerZone extends Zone {
                 return true;
             }
 
-            for (final SpellAbility sa : c.getSpellAbilities()) {
-                if (PlayerZone.this.is(sa.getRestrictions().getZone())) {
-                    return true;
+            return PlayerZone.this.activatableFromHere(c);
+        }
+    }
+
+    /** Whether any of this card's abilities name this zone, as either their main or an extra one. */
+    private boolean activatableFromHere(final Card c) {
+        for (final SpellAbility sa : c.getSpellAbilities()) {
+            if (is(sa.getRestrictions().getZone())) {
+                return true;
+            }
+            if (sa.hasParam("AdditionalActivationZone")) {
+                for (final ZoneType zt : ZoneType.listValueOf(sa.getParam("AdditionalActivationZone"))) {
+                    if (is(zt)) {
+                        return true;
+                    }
                 }
             }
-            return false;
         }
+        return false;
     }
 
     private final Player player;
@@ -106,9 +120,16 @@ public class PlayerZone extends Zone {
             return cl;
         }
 
-        // Only check the top card of the library
+        // Only the top card of the library is normally reachable, but an ability that explicitly
+        // names Library as an extra activation zone works at any depth (Unhinged's _____)
         if (is(ZoneType.Library)) {
-            cl = Iterables.limit(cl, 1);
+            final List<Card> reachable = Lists.newArrayList(Iterables.limit(cl, 1));
+            for (final Card c : Iterables.skip(cl, 1)) {
+                if (activatableFromHere(c)) {
+                    reachable.add(c);
+                }
+            }
+            cl = reachable;
         }
 
         final Predicate<Card> filterPredicate = checkingForOwner ? new OwnCardsActivationFilter() : alienCardsActivationFilter(who);
