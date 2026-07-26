@@ -2748,7 +2748,10 @@ public class GameAction {
                         break;
                     }
                 }
-                if (halfTarget instanceof Card c) {
+                // a fractional prevention shield (Save Life) covers this leftover half
+                if (halfTarget != null && halfTarget.useHalfPreventShield()) {
+                    // prevented
+                } else if (halfTarget instanceof Card c) {
                     c.addHalfDamage();
                 } else if (halfTarget instanceof Player p) {
                     p.addHalfDamage();

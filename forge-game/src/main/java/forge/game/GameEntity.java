@@ -55,6 +55,26 @@ public abstract class GameEntity implements GameObject, IIdentifiable {
     protected Multiset<CounterType> counters = HashMultiset.create();
     protected List<Pair<Integer, Boolean>> damageReceivedThisTurn = Lists.newArrayList();
 
+    // The odd half of a fractional prevention shield (Save Life's 2 1/2). Whole damage is prevented
+    // by the ordinary shield replacement; this covers the leftover 1/2 an Unhinged fractional
+    // creature deals on top of it, which is applied outside the damage map. Cleared with damage at
+    // cleanup, since prevention shields last until end of turn.
+    private int halfPreventShield = 0;
+
+    public final void addHalfPreventShield() {
+        halfPreventShield++;
+    }
+    public final boolean useHalfPreventShield() {
+        if (halfPreventShield <= 0) {
+            return false;
+        }
+        halfPreventShield--;
+        return true;
+    }
+    public final void clearHalfPreventShield() {
+        halfPreventShield = 0;
+    }
+
     protected GameEntity(int id0) {
         id = id0;
     }

@@ -79,6 +79,14 @@ public class DamagePreventEffect extends SpellAbilityEffect {
         Card host = sa.getHostCard();
         int numDam = AbilityUtils.calculateAmount(host, sa.getParam("Amount"), sa);
 
+        // Halves$ True means Amount counts half damage, so 5 shields 2 1/2 (Save Life). The whole
+        // part becomes an ordinary shield and the leftover half is held on the target itself.
+        final boolean halves = sa.hasParam("Halves");
+        final boolean oddHalf = halves && numDam % 2 != 0;
+        if (halves) {
+            numDam = numDam / 2;
+        }
+
         List<GameEntity> tgts = Lists.newArrayList();
         if (sa.hasParam("CardChoices") || sa.hasParam("PlayerChoices")) { // choosing outside Defined/Targeted
             // only for Whimsy, for more robust version see DamageDealEffect
@@ -106,9 +114,15 @@ public class DamagePreventEffect extends SpellAbilityEffect {
             if (o instanceof Card c) {
                 if (c.isInPlay()) {
                     addPreventNextDamage(sa, o, numDam);
+                    if (oddHalf) {
+                        o.addHalfPreventShield();
+                    }
                 }
             } else if (o instanceof Player) {
                 addPreventNextDamage(sa, o, numDam);
+                if (oddHalf) {
+                    o.addHalfPreventShield();
+                }
             }
         }
 

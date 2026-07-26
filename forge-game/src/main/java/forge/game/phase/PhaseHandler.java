@@ -402,6 +402,10 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                             c.setDamage(0);
                         }
                         c.setHasBeenDealtDeathtouchDamage(false);
+                        c.clearHalfPreventShield();
+                    }
+                    for (final Player p : game.getPlayers()) {
+                        p.clearHalfPreventShield();
                     }
                     game.getEndOfTurn().executeUntil();
                     game.getEndOfTurn().executeUntilEndOfPhase(playerTurn);
