@@ -1096,14 +1096,14 @@ public class CardRenderer {
         //instead of using actual spaces which are too wide
         List<String> pieces = new ArrayList<>();
         if (details.isCreature()) {
-            pieces.add(String.valueOf(details.getPower()));
+            pieces.add(details.getPowerString());
             pieces.add("/");
-            pieces.add(String.valueOf(details.getToughness()));
+            pieces.add(details.getToughnessString());
         } else if (details.hasPrintedPT()) {
             pieces.add("[");
-            pieces.add(String.valueOf(details.getPower()));
+            pieces.add(details.getPowerString());
             pieces.add("/");
-            pieces.add(String.valueOf(details.getToughness()));
+            pieces.add(details.getToughnessString());
             pieces.add("]");
         }
         if (details.isPlaneswalker()) {

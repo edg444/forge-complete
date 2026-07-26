@@ -1453,7 +1453,8 @@ public class GameAction {
                 }
                 if (c.isCreature()) {
                     // Rule 704.5f - Put into grave (no regeneration) for toughness <= 0
-                    if (c.getNetToughness() <= 0) {
+                    // (1/2 toughness is above 0, so Little Girl doesn't die on arrival)
+                    if (c.getNetToughnessInHalves() <= 0) {
                         noRegCreats.add(c);
                         checkAgainCard = true;
                     } else if (c.hasKeyword(Keyword.INDESTRUCTIBLE)) {
@@ -1472,7 +1473,8 @@ public class GameAction {
                     }
                     // Rule 704.5g - Destroy due to lethal damage
                     // Rule 704.5h - Destroy due to deathtouch
-                    else if (c.hasBeenDealtDeathtouchDamage() || (c.getDamage() > 0 && c.getLethal() <= c.getDamage())) {
+                    else if (c.hasBeenDealtDeathtouchDamage()
+                            || (c.getDamageInHalves() > 0 && c.getLethalInHalves() <= c.getDamageInHalves())) {
                         if (desCreats == null) {
                             desCreats = new CardCollection();
                         }
@@ -2727,6 +2729,30 @@ public class GameAction {
                 sum += e.getValue();
 
                 sourceLKI.getDamageHistory().registerDamage(e.getValue(), isCombat, sourceLKI, e.getKey(), lkiCache);
+            }
+
+            // An Unhinged half-power creature deals its leftover 1/2 on top of the whole damage it
+            // just assigned. Only combat is handled: that's where a creature's stats become a
+            // damage amount implicitly, whereas a scripted amount is whatever the script computed.
+            // With several damaged targets the half rides with the first one, since damage
+            // assignment has no way to express splitting a half further.
+            if (isCombat && sourceLKI.dealsHalfCombatDamage()) {
+                GameEntity halfTarget = null;
+                for (Map.Entry<GameEntity, Integer> e : et.getValue().entrySet()) {
+                    // a 1/2 power creature assigns no whole damage at all, so fall back to any
+                    // entry rather than losing its only damage
+                    if (halfTarget == null || e.getValue() > 0) {
+                        halfTarget = e.getKey();
+                    }
+                    if (e.getValue() > 0) {
+                        break;
+                    }
+                }
+                if (halfTarget instanceof Card c) {
+                    c.addHalfDamage();
+                } else if (halfTarget instanceof Player p) {
+                    p.addHalfDamage();
+                }
             }
 
             // CR 702.15e

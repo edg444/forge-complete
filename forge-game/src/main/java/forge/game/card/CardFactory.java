@@ -381,10 +381,12 @@ public class CardFactory {
         if (face.getIntPower() != Integer.MAX_VALUE) {
             c.setBasePower(face.getIntPower());
             c.setBasePowerString(face.getPower());
+            c.setHalfPower(ICardFace.isHalfPT(face.getPower()));
         }
         if (face.getIntToughness() != Integer.MAX_VALUE) {
             c.setBaseToughness(face.getIntToughness());
             c.setBaseToughnessString(face.getToughness());
+            c.setHalfToughness(ICardFace.isHalfPT(face.getToughness()));
         }
 
         c.getCurrentState().setBaseLoyalty(face.getInitialLoyalty());

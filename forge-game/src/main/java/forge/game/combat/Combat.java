@@ -779,7 +779,8 @@ public class Combat {
 
             // If potential damage is 0, continue along
             final int damageDealt = attacker.getNetCombatDamage();
-            if (damageDealt <= 0) {
+            // a 1/2 power attacker deals 0 whole damage but is still dealing damage
+            if (damageDealt <= 0 && !attacker.dealsHalfCombatDamage()) {
                 attackers.remove(attacker);
                 continue;
             }

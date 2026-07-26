@@ -268,6 +268,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     private long prototypeTimestamp = -1;
     private long mutatedTimestamp = -1;
     private int timesMutated = 0;
+    private int halfPower = 0;
+    private int halfToughness = 0;
+    private int halfDamage = 0;
 
     private long gameTimestamp = -1; // permanents on the battlefield
     private long layerTimestamp = -1; // order for Static Abilities
@@ -4304,6 +4307,65 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         currentState.setBaseToughness(n);
     }
 
+    // Unhinged half power/toughness (11 cards, all in Unhinged). Same approach as half life: the
+    // stats stay whole ints for the ~1000 places that read them, and the printed half rides along
+    // as a 0-or-1 extra. For every other card in the game these are 0 and everything below reduces
+    // to exactly the old whole-number behaviour.
+    private boolean hasSwitchedPT() {
+        return getAmountOfKeyword("CARDNAME's power and toughness are switched") % 2 != 0;
+    }
+    public final boolean hasHalfPower() {
+        return hasSwitchedPT() ? halfToughness > 0 : halfPower > 0;
+    }
+    public final boolean hasHalfToughness() {
+        return hasSwitchedPT() ? halfPower > 0 : halfToughness > 0;
+    }
+    public final void setHalfPower(final boolean h) {
+        halfPower = h ? 1 : 0;
+    }
+    public final void setHalfToughness(final boolean h) {
+        halfToughness = h ? 1 : 0;
+    }
+
+    /** Power counted in halves, so a 1 1/2 power creature returns 3. */
+    public final int getNetPowerInHalves() {
+        return getNetPower() * 2 + (hasHalfPower() ? 1 : 0);
+    }
+    /** Toughness counted in halves, so a 1/2 toughness creature returns 1. */
+    public final int getNetToughnessInHalves() {
+        return getNetToughness() * 2 + (hasHalfToughness() ? 1 : 0);
+    }
+    /** Combat damage counted in halves. */
+    public final int getNetCombatDamageInHalves() {
+        if (assignNoCombatDamage()) {
+            return 0;
+        }
+        return toughnessAssignsDamage() ? getNetToughnessInHalves() : getNetPowerInHalves();
+    }
+    /** True when this creature's combat damage carries a leftover 1/2 beyond the whole number. */
+    public final boolean dealsHalfCombatDamage() {
+        return getNetCombatDamageInHalves() % 2 != 0;
+    }
+
+    /** Damage marked on this creature counted in halves. */
+    public final int getDamageInHalves() {
+        return getDamage() * 2 + halfDamage;
+    }
+    // deliberately not folded into the whole damage map once it reaches 2 - that map is keyed by
+    // source for effects that care which source dealt what, and a half has no source slot of its
+    // own. Two 1/2 hits simply leave halfDamage at 2, which getDamageInHalves reads as 1 damage.
+    public final void addHalfDamage() {
+        halfDamage++;
+        view.updateDamage(this);
+    }
+    /** Damage needed to destroy this creature, counted in halves. */
+    public final int getLethalInHalves() {
+        if (hasKeyword("Lethal damage dealt to CARDNAME is determined by its power rather than its toughness.")) {
+            return getNetPowerInHalves();
+        }
+        return getNetToughnessInHalves();
+    }
+
     // values that are printed on card
     public final String getBasePowerString() {
         return (null == currentState.getBasePowerString()) ? String.valueOf(getBasePower()) : currentState.getBasePowerString();
@@ -6103,6 +6165,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return sum;
     }
     public final void setDamage(int damage0) {
+        if (damage0 == 0) {
+            // damage wearing off at cleanup takes the half with it
+            halfDamage = 0;
+        }
         if (getDamage() == damage0) { return; }
         damage.clear();
         if (damage0 != 0) {

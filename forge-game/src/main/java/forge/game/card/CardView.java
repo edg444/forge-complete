@@ -1432,7 +1432,23 @@ public class CardView extends GameEntityView {
                 num = num - c.getBasePower() + c.getAlternateState().getBasePower();
             }
             set(TrackableProperty.Power, num);
+            set(TrackableProperty.HasHalfPower, c.hasHalfPower());
         }
+
+        public boolean hasHalfPower() {
+            return get(TrackableProperty.HasHalfPower);
+        }
+        public boolean hasHalfToughness() {
+            return get(TrackableProperty.HasHalfToughness);
+        }
+        /** P/T for display, carrying the Unhinged half: "1½". */
+        public String getPowerString() {
+            return hasHalfPower() ? getPower() + "½" : String.valueOf(getPower());
+        }
+        public String getToughnessString() {
+            return hasHalfToughness() ? getToughness() + "½" : String.valueOf(getToughness());
+        }
+
         void updatePower(CardState c) {
             Card card = c.getCard();
             if (card != null) {
@@ -1457,6 +1473,7 @@ public class CardView extends GameEntityView {
                 num = num - c.getBaseToughness() + c.getAlternateState().getBaseToughness();
             }
             set(TrackableProperty.Toughness, num);
+            set(TrackableProperty.HasHalfToughness, c.hasHalfToughness());
         }
         void updateToughness(CardState c) {
             Card card = c.getCard();

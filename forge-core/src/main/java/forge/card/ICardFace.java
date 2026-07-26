@@ -7,6 +7,11 @@ import java.util.Map;
  *
  */
 public interface ICardFace extends ICardCharacteristics, ICardRawAbilites, Comparable<ICardFace> {
+    /** True for a printed stat with a trailing half, e.g. Unhinged's "1.5" or ".5". */
+    static boolean isHalfPT(final String val) {
+        return val != null && val.endsWith(".5");
+    }
+
     String getFlavorName();
 
     /**

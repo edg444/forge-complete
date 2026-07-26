@@ -125,6 +125,7 @@ public class Player extends GameEntity implements Comparable<Player> {
     private List<Card> sacrificedThisTurn = new ArrayList<>();
 
     private int simultaneousDamage = 0;
+    private int simultaneousHalfDamage = 0;
 
     private int lastTurnNr = 0;
 
@@ -883,7 +884,19 @@ public class Player extends GameEntity implements Comparable<Player> {
     public final int processDamage() {
         int lost = loseLife(simultaneousDamage, true, false);
         simultaneousDamage = 0;
+        // an Unhinged half-power attacker's extra 1/2 lands as 1/2 life, resolved through the same
+        // half-life carry the life gain cards use
+        if (simultaneousHalfDamage > 0) {
+            final int before = life;
+            changeLifeByHalves(-simultaneousHalfDamage, null, null);
+            simultaneousHalfDamage = 0;
+            lost += before - life;
+        }
         return lost;
+    }
+
+    public final void addHalfDamage() {
+        simultaneousHalfDamage++;
     }
 
     /**

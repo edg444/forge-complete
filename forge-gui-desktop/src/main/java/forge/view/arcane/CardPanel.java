@@ -1048,14 +1048,14 @@ public class CardPanel extends SkinnedPanel implements CardContainer, IDisposabl
         final CardStateView state = card.getCurrentState();
         String sPt = "";
         if (state.isCreature() && state.isPlaneswalker()) {
-            sPt = state.getPower() + "/" + state.getToughness() +
+            sPt = state.getPowerString() + "/" + state.getToughnessString() +
                     " (" + state.getLoyalty() + ")";
         }
         else if (state.isCreature()) {
-            sPt = state.getPower() + "/" + state.getToughness();
+            sPt = state.getPowerString() + "/" + state.getToughnessString();
         }
         else if (state.isVehicle()) {
-            sPt = "[" + state.getPower() + "/" + state.getToughness() + "]";
+            sPt = "[" + state.getPowerString() + "/" + state.getToughnessString() + "]";
         }
         else if (state.isPlaneswalker()) {
             sPt = state.getLoyalty();

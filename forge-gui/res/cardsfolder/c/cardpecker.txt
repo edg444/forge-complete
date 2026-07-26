@@ -1,7 +1,7 @@
 Name:Cardpecker
 ManaCost:1 W
 Types:Creature Bird
-PT:1/1
+PT:1.5/1
 K:Flying
 A:AB$ ChangeZone | PrecostDesc$ Gotcha — | Cost$ FlavorAction<Confirm an opponent touched the table with their hand/Gotcha!> | Origin$ Graveyard | Destination$ Hand | ActivationZone$ Graveyard | AILogic$ Chance.25 | SpellDescription$ Return this card from your graveyard to your hand.
 AI:RemoveDeck:Random

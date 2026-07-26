@@ -125,6 +125,14 @@ final class CardFace implements ICardFace, Cloneable {
             val = val.replace("*+", "");
             val = val.replace("*", "0");
         }
+        // Unhinged half stats ("1.5/1", ".5/.5"). The whole part is what the engine stores; the
+        // leftover half is carried separately, see isHalfPT below and Card's half P/T handling.
+        if (ICardFace.isHalfPT(val)) {
+            val = val.substring(0, val.length() - 2);
+            if (val.isEmpty() || val.equals("-")) {
+                val += "0";
+            }
+        }
         return Integer.parseInt(val);
     }
 
