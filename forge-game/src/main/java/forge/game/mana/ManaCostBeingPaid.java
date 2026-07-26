@@ -219,7 +219,12 @@ public class ManaCostBeingPaid {
                 return true;
             }
         }
-        return false;
+        return halfNeedsColor(colorMask);
+    }
+
+    /** An outstanding half still wants a whole mana of a colour it accepts. */
+    private boolean halfNeedsColor(final byte colorMask) {
+        return halfShards > 0 && (halfColorMask == (byte) 0xFF || (halfColorMask & colorMask) != 0);
     }
 
     // isNeeded(String) still used by the Computer, might have problems activating Snow abilities
@@ -229,7 +234,7 @@ public class ManaCostBeingPaid {
                 return true;
             }
         }
-        return false;
+        return halfNeedsColor(colorMask);
     }
 
     public final boolean isNeeded(final Mana paid, final ManaPool pool) {
@@ -773,7 +778,23 @@ public class ManaCostBeingPaid {
         for (int i = cntX; i > 0; i--) {
             result.add(ManaCostShard.X);
         }
+        // an outstanding half has to be visible here, or a payment loop that works through the
+        // unpaid shards sees nothing left to pay while isPaid() is still false and never finishes
+        for (int i = halfShards; i > 0; i--) {
+            result.add(halfShardForColor());
+        }
         return result;
+    }
+
+    /** The shard used to represent an outstanding half, matching its colour restriction. */
+    private ManaCostShard halfShardForColor() {
+        for (final ManaCostShard shard : new ManaCostShard[] { ManaCostShard.HW, ManaCostShard.HU,
+                ManaCostShard.HB, ManaCostShard.HR, ManaCostShard.HG }) {
+            if (halfColorMask != (byte) 0xFF && (shard.getColorMask() & halfColorMask) != 0) {
+                return shard;
+            }
+        }
+        return ManaCostShard.HW;
     }
 
     public final void removeGenericMana() {

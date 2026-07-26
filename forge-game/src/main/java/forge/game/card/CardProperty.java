@@ -2232,7 +2232,8 @@ public class CardProperty {
         }
         try {
             // a collector number is printed on the card too, so it's subject to a number change
-            return card.getGame().changeNumber(Integer.parseInt(digits));
+            final int printed = Integer.parseInt(digits);
+            return card.getGame() == null ? printed : card.getGame().changeNumber(printed);
         } catch (final NumberFormatException e) {
             return Integer.MAX_VALUE;
         }

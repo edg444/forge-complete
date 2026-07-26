@@ -4297,11 +4297,15 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     // printed power and toughness, so Look at Me, I'm R&D swaps them here - counters and pumps then
     // stack on top of the swapped value exactly as they would on the printed one. Printed halves
     // take part: with a 1/2 -> 1 1/2 swap Little Girl really does become 1 1/2 by 1 1/2.
+    // cards built only to be displayed (see getCardForUi) have no game, so there's no number change
+    // to apply and the printed value stands
     private int basePowerHalves() {
-        return getGame().changeHalves(currentState.getBasePower() * 2 + halfPower);
+        final int printed = currentState.getBasePower() * 2 + halfPower;
+        return getGame() == null ? printed : getGame().changeHalves(printed);
     }
     private int baseToughnessHalves() {
-        return getGame().changeHalves(currentState.getBaseToughness() * 2 + halfToughness);
+        final int printed = currentState.getBaseToughness() * 2 + halfToughness;
+        return getGame() == null ? printed : getGame().changeHalves(printed);
     }
     public final int getBasePower() {
         return Math.floorDiv(basePowerHalves(), 2);
