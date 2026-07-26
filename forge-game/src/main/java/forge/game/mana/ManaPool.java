@@ -19,6 +19,7 @@ package forge.game.mana;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 import forge.card.MagicColor;
 import forge.card.mana.ManaAtom;
@@ -58,6 +59,45 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
     public final int getAmountOfColor(final byte color) {
         Collection<Mana> ofColor = floatingMana.get(color);
         return ofColor == null ? 0 : ofColor.size();
+    }
+
+    // Unhinged half mana. Half mana can't be produced by any effect - it only ever appears as the
+    // change from paying a whole mana into a half cost (Cheap Ass reducing {2} to {1 1/2}), and it
+    // stays in the pool so it can pay another half cost later, e.g. Little Girl's {HW}.
+    private final Map<Byte, Integer> floatingHalves = Maps.newHashMap();
+
+    public final int getHalfMana(final byte color) {
+        return floatingHalves.getOrDefault(color, 0);
+    }
+    public final boolean hasHalfMana() {
+        return floatingHalves.values().stream().anyMatch(i -> i > 0);
+    }
+    public final void addHalfMana(final byte color) {
+        floatingHalves.merge(color, 1, Integer::sum);
+        owner.updateManaForView();
+    }
+
+    /**
+     * Spend a floating half of a colour this cost accepts.
+     * @param colorMask colours that may pay, 0xFF for any
+     * @return true if a half was found and spent
+     */
+    public final boolean payHalfMana(final byte colorMask) {
+        for (Map.Entry<Byte, Integer> e : floatingHalves.entrySet()) {
+            if (e.getValue() > 0 && (e.getKey() == 0 || (e.getKey() & colorMask) != 0)) {
+                e.setValue(e.getValue() - 1);
+                owner.updateManaForView();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public final void clearHalfMana() {
+        if (!floatingHalves.isEmpty()) {
+            floatingHalves.clear();
+            owner.updateManaForView();
+        }
     }
 
     public void addManaNoEvent(final Mana mana) {
@@ -114,11 +154,15 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
     public final void resetPool() {
         // This should only be used to reset the pool to empty by things like restores.
         floatingMana.clear();
+        floatingHalves.clear();
     }
 
     public final List<Mana> clearPool(boolean isEndOfPhase) {
         // isEndOfPhase parameter: true = end of phase, false = mana drain effect
         List<Mana> cleared = Lists.newArrayList();
+        // a floating half empties with the rest of the pool, and does so before the early return
+        // below since it can outlive the last whole mana
+        clearHalfMana();
         if (floatingMana.isEmpty()) { return cleared; }
 
         Byte convertTo = null;

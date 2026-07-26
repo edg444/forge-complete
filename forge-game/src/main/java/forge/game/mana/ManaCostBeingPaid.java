@@ -120,6 +120,8 @@ public class ManaCostBeingPaid {
     private Map<String, Integer> xManaCostPaidByColor;
     private byte sunburstMap = 0;
     private int cntX = 0;
+    private int halfShards = 0;
+    private byte halfColorMask = (byte) 0xFF;
 
     /**
      * Copy constructor
@@ -230,11 +232,69 @@ public class ManaCostBeingPaid {
                 return true;
             }
         }
+        // an outstanding half still needs a whole mana of an accepted colour
+        if (halfShards > 0
+                && (halfColorMask == (byte) 0xFF || (paid.getColor() & halfColorMask) != 0)) {
+            return true;
+        }
         return false;
     }
 
     public final boolean isPaid() {
-        return unpaidShards.isEmpty();
+        return unpaidShards.isEmpty() && halfShards == 0;
+    }
+
+    // Unhinged half mana. A cost carries at most a leftover half beyond its whole shards, either
+    // printed (Little Girl's {HW}) or left behind by a {1/2} reduction such as Cheap Ass turning
+    // {2} into {1 1/2}. It's paid with a whole mana, and the unused half goes back to the pool as
+    // change so it can pay a later half - see ManaPool.addHalfMana.
+    public final int getHalfShards() {
+        return halfShards;
+    }
+    public final boolean hasHalfShard() {
+        return halfShards > 0;
+    }
+    public final byte getHalfColorMask() {
+        return halfColorMask;
+    }
+    public final void addHalfShard(final byte colorMask) {
+        halfShards++;
+        halfColorMask = colorMask;
+    }
+
+    /**
+     * Take {1/2} off this cost. Cancels an existing half if there is one, otherwise turns one
+     * generic mana into a half, which is what makes a single {1/2} reduction actually do something.
+     */
+    public final void reduceByHalf() {
+        if (halfShards > 0) {
+            halfShards--;
+            return;
+        }
+        if (getGenericManaAmount() > 0) {
+            decreaseGenericMana(1);
+            addHalfShard((byte) 0xFF);
+        }
+    }
+
+    /**
+     * Pay the outstanding half with a whole mana of the given colour, returning the other half to
+     * the pool as change.
+     * @return true if the half was paid
+     */
+    public final boolean payHalfShard(final byte color, final ManaPool pool) {
+        if (halfShards == 0) {
+            return false;
+        }
+        if (halfColorMask != (byte) 0xFF && (color & halfColorMask) == 0) {
+            return false;
+        }
+        // spend a half already floating before breaking a whole mana into change
+        if (!pool.payHalfMana(halfColorMask)) {
+            pool.addHalfMana(color);
+        }
+        halfShards--;
+        return true;
     }
 
     public final void setXManaCostPaid(final int xPaid, final String xColor) {
@@ -481,7 +541,12 @@ public class ManaCostBeingPaid {
 
         byte inColor = mana.getColor();
         byte outColor = pool.getPossibleColorUses(inColor);
-        return tryPayMana(inColor, IterableUtil.filter(unpaidShards.keySet(), predCanBePaid), outColor) != null;
+        ManaCostShard paidShard = tryPayMana(inColor, IterableUtil.filter(unpaidShards.keySet(), predCanBePaid), outColor);
+        if (paidShard != null) {
+            return true;
+        }
+        // nothing whole left to pay - this mana is buying the leftover half, with change
+        return payHalfShard(inColor, pool);
     }
     
     public final ManaCostShard payManaViaConvoke(final byte color) {
@@ -653,6 +718,10 @@ public class ManaCostBeingPaid {
             for (int i = 0; i < count; i++) {
                 sb.append(str);
             }
+        }
+
+        for (int i = 0; i < halfShards; i++) {
+            sb.append("{½}");
         }
 
         return sb.length() == 0 ? "0" : sb.toString();
