@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 
+import forge.StaticData;
 import forge.game.Game;
 import forge.game.ability.SpellAbilityEffect;
 import forge.game.card.Card;
@@ -13,10 +14,8 @@ import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 import forge.util.Lang;
 
-// Circle of Protection: Art: "As this enchantment enters, choose an artist." The full list of every
-// artist Magic has ever printed is far too long to pick from in a dialog, so the choices are the
-// artists actually represented among cards visible in this game - which is also the only set of
-// artists the choice can ever matter for, since the prevention only applies to damage sources here.
+// "Choose an artist" - the picker offers every artist in the card database so a name never has
+// to be recalled or spelled out.
 public class ChooseArtistEffect extends SpellAbilityEffect {
 
     private static final List<ZoneType> VISIBLE_ZONES = ZoneType.listValueOf(
@@ -35,14 +34,20 @@ public class ChooseArtistEffect extends SpellAbilityEffect {
         final Game game = host.getGame();
 
         for (final Player p : getDefinedPlayersOrTargeted(sa)) {
+            // every artist Magic has ever printed, the way dev mode's Add a Card offers every card.
+            // The cards actually in this game are the fallback if the card database isn't loaded.
             final Set<String> artists = Sets.newTreeSet();
-            for (final Card c : game.getCardsIn(VISIBLE_ZONES)) {
-                addArtist(artists, c);
+            final StaticData data = StaticData.instance();
+            if (data != null && data.getCommonCards() != null) {
+                data.getCommonCards().streamAllCards().forEach(pc -> addArtist(artists, pc.getArtist()));
             }
-            // a player always knows their own cards, and naming an artist is theirs to aim, so the
-            // whole deck is offered rather than making them recall who painted what
-            for (final Card c : p.getCardsIn(HIDDEN_OWN_ZONES)) {
-                addArtist(artists, c);
+            if (artists.isEmpty()) {
+                for (final Card c : game.getCardsIn(VISIBLE_ZONES)) {
+                    addArtist(artists, c.getArtist());
+                }
+                for (final Card c : p.getCardsIn(HIDDEN_OWN_ZONES)) {
+                    addArtist(artists, c.getArtist());
+                }
             }
             if (artists.isEmpty()) {
                 continue;
@@ -57,9 +62,8 @@ public class ChooseArtistEffect extends SpellAbilityEffect {
         }
     }
 
-    private static void addArtist(final Set<String> artists, final Card c) {
-        final String artist = c.getArtist();
-        if (!artist.isEmpty()) {
+    private static void addArtist(final Set<String> artists, final String artist) {
+        if (artist != null && !artist.isEmpty()) {
             artists.add(artist);
         }
     }
