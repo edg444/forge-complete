@@ -19,6 +19,7 @@ import forge.game.combat.AttackRequirement;
 import forge.game.combat.AttackingBand;
 import forge.game.combat.Combat;
 import forge.game.combat.CombatUtil;
+import forge.game.keyword.KeywordInterface;
 import forge.game.mana.Mana;
 import forge.game.player.Player;
 import forge.game.spellability.OptionalCost;
@@ -1546,6 +1547,20 @@ public class CardProperty {
             }
         } else if (property.equals("HasCounters")) {
             if (!card.hasCounters()) {
+                return false;
+            }
+        } else if (property.equals("entersWithCounters")) {
+            // known before the spell resolves, so Ambiguity can look at a spell still on the stack.
+            // etbCounter is the canonical way to script this; a card that instead grants itself
+            // counters through a bespoke ETB replacement won't be recognised here.
+            boolean etb = false;
+            for (final KeywordInterface inst : card.getKeywords()) {
+                if (inst.getOriginal().startsWith("etbCounter")) {
+                    etb = true;
+                    break;
+                }
+            }
+            if (!etb) {
                 return false;
             }
         }

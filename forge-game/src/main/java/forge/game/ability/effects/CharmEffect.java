@@ -9,6 +9,7 @@ import forge.game.trigger.TriggerType;
 import forge.util.Expressions;
 import org.apache.commons.lang3.StringUtils;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import forge.game.ability.AbilityUtils;
@@ -261,9 +262,15 @@ public class CharmEffect extends SpellAbilityEffect {
             // Three modal cards require you to choose a player to make the modal choice'
             // Two of these also reference the chosen player during the spell effect
 
-            //String choosers = sa.getParam("Chooser");
-            FCollection<Player> opponents = activator.getOpponents(); // all cards have Choser$ Opponent, so it's hardcoded here
-            chooser = activator.getController().chooseSingleEntityForEffect(opponents, sa, "Choose an opponent", null);
+            if ("Opponent".equals(sa.getParam("Chooser"))) {
+                FCollection<Player> opponents = activator.getOpponents();
+                chooser = activator.getController().chooseSingleEntityForEffect(opponents, sa, "Choose an opponent", null);
+            } else {
+                // anything else names the player directly, so a trigger can hand the choice to
+                // whoever caused it rather than to the card's controller
+                chooser = Iterables.getFirst(
+                        AbilityUtils.getDefinedPlayers(source, sa.getParam("Chooser"), sa), chooser);
+            }
             sa.setChoosingPlayer(chooser);
         }
 
