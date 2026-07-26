@@ -1102,6 +1102,8 @@ public class FSkin {
             return str;
         }
         // Unhinged half mana has no symbol art, so {HW} is shown as a half sign next to the colour
+        // a half generic has nothing to draw beside it, so it's just the fraction on its own
+        str = str.replaceAll("\\{H1\\}", "½");
         str = str.replaceAll("\\{H([WUBRG])\\}", "½{$1}");
 
         // format mana symbols to display as icons

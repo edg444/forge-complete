@@ -67,6 +67,8 @@ public enum ManaCostShard {
     HB(ManaAtom.BLACK | ManaAtom.IS_HALF, "HB"),
     HR(ManaAtom.RED | ManaAtom.IS_HALF, "HR"),
     HG(ManaAtom.GREEN | ManaAtom.IS_HALF, "HG"),
+    // Flaccify's {1/2} - half of a generic mana, payable with any colour
+    HGENERIC(ManaAtom.GENERIC | ManaAtom.IS_HALF, "H1"),
 
     // Snow and colorless
     S(ManaAtom.IS_SNOW, "S"),

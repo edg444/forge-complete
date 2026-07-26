@@ -1,0 +1,5 @@
+Name:Flaccify
+ManaCost:2 U
+Types:Instant
+A:SP$ Counter | TargetType$ Spell | TgtPrompt$ Select target spell | ValidTgts$ Card | UnlessCost$ 3 H1 | SpellDescription$ Counter target spell unless its controller pays {3}{½}.
+Oracle:Counter target spell unless its controller pays {3}{½}.
