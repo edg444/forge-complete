@@ -40,6 +40,7 @@ import forge.game.replacement.ReplacementType;
 
 import forge.game.spellability.SpellAbility;
 import forge.game.staticability.StaticAbilityNoCleanupDamage;
+import forge.game.staticability.StaticAbilityStayingPower;
 import forge.game.trigger.Trigger;
 import forge.game.trigger.TriggerType;
 import forge.game.zone.Zone;
@@ -407,8 +408,13 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     for (final Player p : game.getPlayers()) {
                         p.clearHalfPreventShield();
                     }
-                    game.getEndOfTurn().executeUntil();
-                    game.getEndOfTurn().executeUntilEndOfPhase(playerTurn);
+                    // Staying Power holds every "until end of turn" and "this turn" effect open by
+                    // leaving these commands registered - they run on the first cleanup after it's
+                    // gone, exactly as the effects would end in paper once it leaves
+                    if (!StaticAbilityStayingPower.anyStayingPower(game)) {
+                        game.getEndOfTurn().executeUntil();
+                        game.getEndOfTurn().executeUntilEndOfPhase(playerTurn);
+                    }
                     game.getEndOfTurn().registerUntilEndCommand(playerTurn);
                     game.getEndOfCombat().registerUntilEndCommand(playerTurn);
 

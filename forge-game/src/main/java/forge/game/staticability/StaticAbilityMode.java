@@ -181,6 +181,9 @@ public enum StaticAbilityMode {
     // StaticAbilityTapPowerValue
     TapPowerValue,
 
+    // StaticAbilityStayingPower
+    StayingPower,
+
     // StaticAbilityUnspentMana
     UnspentMana,
     ManaBurn,

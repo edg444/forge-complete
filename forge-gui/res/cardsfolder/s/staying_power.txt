@@ -1,0 +1,5 @@
+Name:Staying Power
+ManaCost:2 W
+Types:Enchantment
+S:Mode$ StayingPower | EffectZone$ Battlefield | Description$ "Until end of turn" and "this turn" effects don't end.
+Oracle:"Until end of turn" and "this turn" effects don't end.
