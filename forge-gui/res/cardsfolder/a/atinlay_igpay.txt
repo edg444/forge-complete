@@ -1,0 +1,8 @@
+Name:Atinlay Igpay
+ManaCost:5 W
+Types:Creature Igpay
+PT:3/3
+K:Double Strike
+A:AB$ Sacrifice | Cost$ FlavorAction<Onfirmcay ouyay okespay ay onnay-igpay-atinlay ordway (confirm you spoke a non-Pig-Latin word)/Oopsway!> | AILogic$ Never | SpellDescription$ Acrificesay isthay eaturecray.
+AI:RemoveDeck:All
+Oracle:Oubleday ikestray\nEnwhay ouyay eakspay ay onnay-igpay-atinlay ordway, acrificesay isthay eaturecray.

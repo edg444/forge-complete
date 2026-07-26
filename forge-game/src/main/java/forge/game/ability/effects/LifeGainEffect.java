@@ -60,11 +60,19 @@ public class LifeGainEffect extends SpellAbilityEffect {
             return;
         }
 
+        // Halves$ True means LifeAmount counts half-life, so 3 is "gain 1 1/2 life" (Bosom Buddy)
+        final boolean halves = sa.hasParam("Halves");
+
         for (final Player p : Sets.newHashSet(tgts)) {
             if (!p.isInGame()) {
                 continue;
             }
-            p.gainLife(lifeAmount * Collections.frequency(tgts, p), sa.getHostCard(), sa);
+            final int amount = lifeAmount * Collections.frequency(tgts, p);
+            if (halves) {
+                p.changeLifeByHalves(amount, sa.getHostCard(), sa);
+            } else {
+                p.gainLife(amount, sa.getHostCard(), sa);
+            }
         }
     }
 

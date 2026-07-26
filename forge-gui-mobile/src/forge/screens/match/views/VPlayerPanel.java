@@ -562,7 +562,8 @@ public class VPlayerPanel extends FContainer {
         private int ticketCounters = player.getCounters(CounterEnumType.TICKET);
         private int radCounters = player.getCounters(CounterEnumType.RAD);
         private int manaShards = player.getNumManaShards();
-        private String lifeStr = String.valueOf(life);
+        private boolean halfLife = player.hasHalfLife();
+        private String lifeStr = player.getLifeString();
 
         private LifeLabel() {
         }
@@ -570,9 +571,10 @@ public class VPlayerPanel extends FContainer {
         private void update() {
             int delta = player.getLife() - life;
             player.setAvatarLifeDifference(player.getAvatarLifeDifference() + delta);
-            if (delta != 0) {
+            if (delta != 0 || halfLife != player.hasHalfLife()) {
                 life = player.getLife();
-                lifeStr = String.valueOf(life);
+                halfLife = player.hasHalfLife();
+                lifeStr = player.getLifeString();
             }
 
             delta = player.getCounters(CounterEnumType.POISON) - poisonCounters;

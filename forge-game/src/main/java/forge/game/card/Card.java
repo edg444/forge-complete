@@ -304,6 +304,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     private String originalText = "", text = "";
     private String chosenType = "";
     private String chosenType2 = "";
+    private String chosenArtist = "";
     private List<String> notedTypes = new ArrayList<>();
     private List<String> chosenColors;
     private ColorSet markedColor;
@@ -2195,6 +2196,18 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
     public final void revealChosenType() {
         view.updateChosenType(this);
+    }
+
+    // Circle of Protection: Art. Not view-synced like chosenType - the choice is announced through
+    // the game log when it's made, and no UI surface displays a card's artist to compare against.
+    public final String getChosenArtist() {
+        return chosenArtist;
+    }
+    public final void setChosenArtist(final String s) {
+        chosenArtist = s;
+    }
+    public final boolean hasChosenArtist() {
+        return chosenArtist != null && !chosenArtist.isEmpty();
     }
 
     // used by card Illusionary Terrain

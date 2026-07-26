@@ -46,6 +46,7 @@ public enum ApiType {
     ChangeZoneAll (ChangeZoneAllEffect.class),
     ChaosEnsues (ChaosEnsuesEffect.class),
     Charm (CharmEffect.class),
+    ChooseArtist (ChooseArtistEffect.class),
     ChooseCard (ChooseCardEffect.class),
     ChooseColor (ChooseColorEffect.class),
     ChooseDirection (ChooseDirectionEffect.class),

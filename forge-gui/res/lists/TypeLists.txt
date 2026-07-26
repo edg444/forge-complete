@@ -150,6 +150,7 @@ Horse:Horses
 Human:Humans
 Hydra:Hydras
 Hyena:Hyenas
+Igpay:Igpays
 Illusion:Illusions
 Imp:Imps
 Incarnation:Incarnations
@@ -186,6 +187,7 @@ Masticore:Masticores
 Mercenary:Mercenaries
 Merfolk:Merfolk
 Metathran:Metathrans
+Mime:Mimes
 Minion:Minions
 Minotaur:Minotaurs
 Mite:Mites

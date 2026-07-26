@@ -195,6 +195,18 @@ public class PlayerView extends GameEntityView {
         set(TrackableProperty.Life, p.getLife());
     }
 
+    public boolean hasHalfLife() {
+        return get(TrackableProperty.HasHalfLife);
+    }
+    void updateHalfLife(Player p) {
+        set(TrackableProperty.HasHalfLife, p.hasHalfLife());
+    }
+
+    // "19 1/2" rather than "19" wherever a life total is shown to a player
+    public String getLifeString() {
+        return hasHalfLife() ? getLife() + "½" : String.valueOf(getLife());
+    }
+
     public boolean getIsExtraTurn() {
         return get(TrackableProperty.IsExtraTurn);
     }
@@ -508,7 +520,7 @@ public class PlayerView extends GameEntityView {
 
     private List<String> getDetailsList() {
         final List<String> details = Lists.newArrayListWithCapacity(8);
-        details.add(Localizer.getInstance().getMessage("lblLifeHas", getLife()));
+        details.add(Localizer.getInstance().getMessage("lblLifeHas", getLifeString()));
 
         Multiset<CounterType> counters = getCounters();
         if (counters != null) {

@@ -55,6 +55,7 @@ import forge.game.trigger.TriggerType;
 import forge.game.trigger.WrappedAbility;
 import forge.game.zone.Zone;
 import forge.game.zone.ZoneType;
+import forge.item.IPaperCard;
 import forge.util.Aggregates;
 import forge.util.MyRandom;
 import forge.util.StreamUtil;
@@ -2488,6 +2489,26 @@ public class ComputerUtil {
                 //chosen = "Sliver";
             }
 
+        } else if (kindOfType.equals("Artist")) {
+            // Circle of Protection: Art only ever prevents damage, so the useful pick is whichever
+            // artist drew the most opposing permanents that could actually be dealing it.
+            final Map<String, Integer> counts = Maps.newHashMap();
+            for (Card c : ai.getOpponents().getCardsIn(ZoneType.Battlefield)) {
+                final IPaperCard pc = c.getPaperCard();
+                if (pc == null || !validTypes.contains(pc.getArtist())) {
+                    continue;
+                }
+                final int weight = c.isCreature() ? Math.max(1, c.getNetPower()) : 1;
+                counts.merge(pc.getArtist(), weight, Integer::sum);
+            }
+            for (Map.Entry<String, Integer> e : counts.entrySet()) {
+                if (chosen.isEmpty() || e.getValue() > counts.get(chosen)) {
+                    chosen = e.getKey();
+                }
+            }
+            if (chosen.isEmpty() && !validTypes.isEmpty()) {
+                chosen = Aggregates.random(validTypes);
+            }
         } else if (kindOfType.equals("Basic Land")) {
             if (logic != null) {
                 if (logic.equals("MostProminentOppControls")) {

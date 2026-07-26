@@ -1,0 +1,8 @@
+Name:Granny's Payback
+ManaCost:7 G
+Types:Sorcery
+A:SP$ ChooseNumber | Defined$ You | Min$ 1 | Max$ 120 | ListTitle$ your age | AILogic$ Age | SubAbility$ DBGainLife | StackDescription$ SpellDescription | SpellDescription$ You gain life equal to your age.
+SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ X | StackDescription$ None
+SVar:X:Count$ChosenNumber
+AI:RemoveDeck:Random
+Oracle:You gain life equal to your age.

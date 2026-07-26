@@ -171,6 +171,12 @@ public class CardProperty {
             if (ed == null || ed.getType() != CardEdition.Type.FUNNY) {
                 return false;
             }
+        } else if (property.equals("ArtistIsChosen")) {
+            final IPaperCard artPc = card.getPaperCard();
+            if (artPc == null || !source.hasChosenArtist()
+                    || !artPc.getArtist().equalsIgnoreCase(source.getChosenArtist())) {
+                return false;
+            }
         } else if (property.equals("IsTriggerRemembered")) {
             boolean found = false;
             for (Object o : spellAbility.getTriggerRemembered()) {

@@ -338,7 +338,7 @@ public class VField implements IVDoc<CField> {
     public void updateDetails() {
         // Update life total
         final int life = player.getLife();
-        lblLife.setText(String.valueOf(life));
+        lblLife.setText(player.getLifeString());
         if (life > LIFE_CRITICAL) {
             lblLife.setForeground(FSkin.getColor(FSkin.Colors.CLR_TEXT));
         } else {

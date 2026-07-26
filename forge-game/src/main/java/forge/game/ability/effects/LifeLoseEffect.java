@@ -46,9 +46,16 @@ public class LifeLoseEffect extends SpellAbilityEffect {
 
         final int lifeAmount = AbilityUtils.calculateAmount(sa.getHostCard(), sa.getParam("LifeAmount"), sa);
 
+        // Halves$ True means LifeAmount counts half-life, so 1 is "lose 1/2 life" (see Player)
+        final boolean halves = sa.hasParam("Halves");
+
         final Map<Player, Integer> lossMap = Maps.newHashMap();
         for (final Player p : getTargetPlayers(sa)) {
             if (!p.isInGame()) {
+                continue;
+            }
+            if (halves) {
+                p.changeLifeByHalves(-lifeAmount, sa.getHostCard(), sa);
                 continue;
             }
             final int lost = p.loseLife(lifeAmount, false, false);

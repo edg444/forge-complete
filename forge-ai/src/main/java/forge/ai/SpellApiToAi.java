@@ -50,6 +50,7 @@ public enum SpellApiToAi {
             .put(ApiType.ChangeZoneAll, ChangeZoneAllAi.class)
             .put(ApiType.ChaosEnsues, AlwaysPlayAi.class)
             .put(ApiType.Charm, CharmAi.class)
+            .put(ApiType.ChooseArtist, ChooseTypeAi.class)
             .put(ApiType.ChooseCard, ChooseCardAi.class)
             .put(ApiType.ChooseColor, ChooseColorAi.class)
             .put(ApiType.ChooseDirection, ChooseDirectionAi.class)

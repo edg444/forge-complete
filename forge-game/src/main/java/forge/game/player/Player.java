@@ -79,6 +79,7 @@ public class Player extends GameEntity implements Comparable<Player> {
             ZoneType.Junkyard, ZoneType.Merged, ZoneType.Subgame, ZoneType.None));
 
     private int life = 20;
+    private int halfLife = 0;
     private int startingLife = 20;
     private int lifeStartedThisTurnWith = startingLife;
     private int lifeLostThisTurn;
@@ -447,8 +448,72 @@ public class Player extends GameEntity implements Comparable<Player> {
         return life;
     }
 
+    // Un-set half life (Bosom Buddy and friends). Life itself stays a whole number everywhere -
+    // getLife() feeds ~290 call sites, the network layer and every AI heuristic - so the fraction
+    // is kept as a separate 0-or-1 "extra half" riding alongside it. Nothing outside these methods
+    // and the 704.5a check needs to know it exists, because every non-Un effect moves life in whole
+    // numbers and therefore leaves the half untouched.
+    public final boolean hasHalfLife() {
+        return halfLife > 0;
+    }
+    public final int getHalfLife() {
+        return halfLife;
+    }
+    private void setHalfLife(final int h) {
+        if (halfLife == h) {
+            return;
+        }
+        halfLife = h;
+        view.updateHalfLife(this);
+    }
+
+    /**
+     * Change this player's life by a number of halves, e.g. 3 to gain 1 1/2 life, -1 to lose 1/2.
+     * Always routed through gainLife/loseLife so replacement effects and life triggers fire for a
+     * half-life change exactly as they do for a whole one - gaining 1/2 life is still gaining life.
+     * <p>
+     * Effects that key off "how much" (gain X life, then draw that many cards) can only be handed a
+     * whole number, so what they see is the whole life actually credited by this event, i.e. the
+     * fraction rounds down per rule 107.1b. That stays honest as halves accumulate: gaining 1/2
+     * twice reports 0 then 1, for a total of 1 - matching the 1 whole life the player really gained.
+     */
+    public final boolean changeLifeByHalves(final int halves, final Card source, final SpellAbility sa) {
+        if (halves == 0) {
+            return false;
+        }
+        final int total = halves + halfLife;
+        // floorDiv/floorMod so a loss that lands on a half borrows from the whole part correctly
+        final int whole = Math.floorDiv(total, 2);
+        final int remainder = Math.floorMod(total, 2);
+
+        // a blocked or replaced life change must not let the fraction sneak through either. On the
+        // loss side the return value can't tell "blocked" from "0 whole life lost", so ask first.
+        if (halves > 0) {
+            if (!gainLife(Math.max(whole, 0), source, sa, true)) {
+                return false;
+            }
+        } else {
+            if (!canLoseLife()) {
+                return false;
+            }
+            loseLife(Math.max(-whole, 0), false, false, true);
+        }
+        setHalfLife(remainder);
+        return true;
+    }
+
     public final boolean gainLife(int lifeGain, final Card source, final SpellAbility sa) {
-        if (!canGainLife() || lifeGain <= 0) {
+        return gainLife(lifeGain, source, sa, false);
+    }
+
+    /**
+     * @param fractional when true this is the whole-number part of a half-life change, so a gain of
+     * 0 still counts as a real life gain event (you gained 1/2) and fires triggers instead of being
+     * discarded as a no-op. The amount reported to triggers stays the whole number credited, which
+     * is what "you gain X life, then <do something> X times" effects have to work from.
+     */
+    private boolean gainLife(int lifeGain, final Card source, final SpellAbility sa, final boolean fractional) {
+        if (!canGainLife() || lifeGain < 0 || (lifeGain == 0 && !fractional)) {
             return false;
         }
 
@@ -471,7 +536,7 @@ public class Player extends GameEntity implements Comparable<Player> {
             return false;
         }
 
-        if (lifeGain <= 0) {
+        if (lifeGain < 0 || (lifeGain == 0 && !fractional)) {
             return false;
         }
 
@@ -503,10 +568,15 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
 
     public final int loseLife(int toLose, final boolean damage, final boolean manaBurn) {
+        return loseLife(toLose, damage, manaBurn, false);
+    }
+
+    // see gainLife's fractional parameter - a 1/2 life loss is still a life loss event
+    private int loseLife(int toLose, final boolean damage, final boolean manaBurn, final boolean fractional) {
         // Rule 118.4
         // this is for players being able to pay 0 life nothing to do
         // no trigger for lost no life
-        if (toLose <= 0 || !canLoseLife()) {
+        if (toLose < 0 || (toLose == 0 && !fractional) || !canLoseLife()) {
             return 0;
         }
         int oldLife = life;
@@ -523,7 +593,7 @@ public class Player extends GameEntity implements Comparable<Player> {
             if (this.equals(repParams.get(AbilityKey.Affected))) {
                 toLose = (int) repParams.get(AbilityKey.Amount);
                 // there is nothing that changes lifegain into lifeloss this way
-                if (toLose <= 0) {
+                if (toLose < 0 || (toLose == 0 && !fractional)) {
                     return 0;
                 }
             } else {
@@ -2050,7 +2120,8 @@ public class Player extends GameEntity implements Comparable<Player> {
         }
 
         // Rule 704.5a -  If a player has 0 or less life, he or she loses the game.
-        final boolean hasNoLife = getLife() <= 0;
+        // 1/2 life is still more than 0, so a player sitting on the fraction hasn't lost yet
+        final boolean hasNoLife = getLife() < 0 || (getLife() == 0 && !hasHalfLife());
         if (hasNoLife && loseConditionMet(GameLossReason.LifeReachedZero, null)) {
             return true;
         }

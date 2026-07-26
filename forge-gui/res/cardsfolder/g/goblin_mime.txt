@@ -1,0 +1,7 @@
+Name:Goblin Mime
+ManaCost:1 R
+Types:Creature Goblin Mime
+PT:2/2
+A:AB$ Sacrifice | Cost$ FlavorAction<Confirm you spoke/I spoke!> | AILogic$ Never | SpellDescription$ Sacrifice this creature.
+AI:RemoveDeck:All
+Oracle:When you speak, sacrifice this creature.
