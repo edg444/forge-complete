@@ -1,0 +1,9 @@
+Name:Look at Me, I'm R&D
+ManaCost:2 W
+Types:Enchantment
+K:ETBReplacement:Other:ChooseNums
+SVar:ChooseNums:DB$ ChangeNumber | Defined$ You | Min$ 0 | Max$ 20 | SpellDescription$ As CARDNAME enters, choose a number and a second number one higher or one lower than the first number.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigClear | Static$ True | TriggerDescription$ The number change ends when this enchantment leaves the battlefield.
+SVar:TrigClear:DB$ ChangeNumber | Clear$ True
+S:Mode$ Continuous | Affected$ Card.Self | Description$ All instances of the first chosen number in the full text of each permanent, spell, and card in any zone are changed to the second chosen number.
+Oracle:As Look at Me, I'm R&D enters, choose a number and a second number one higher or one lower than the first number.\nAll instances of the first chosen number in the full text of each permanent, spell, and card in any zone are changed to the second chosen number.

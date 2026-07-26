@@ -40,6 +40,7 @@ public enum ApiType {
     ChangeCombatants (ChangeCombatantsEffect.class),
     ChangeSpeed (ChangeSpeedEffect.class),
     ChangeTargets (ChangeTargetsEffect.class),
+    ChangeNumber (ChangeNumberEffect.class),
     ChangeText (ChangeTextEffect.class),
     ChangeX (ChangeXEffect.class),
     ChangeZone (ChangeZoneEffect.class),

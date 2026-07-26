@@ -4294,11 +4294,13 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         currentState.setAttractionLights(attractionLights);
     }
 
+    // printed power and toughness, so Look at Me, I'm R&D swaps them here - counters and pumps then
+    // stack on top of the swapped value exactly as they would on the printed one
     public final int getBasePower() {
-        return currentState.getBasePower();
+        return getGame().changeNumber(currentState.getBasePower());
     }
     public final int getBaseToughness() {
-        return currentState.getBaseToughness();
+        return getGame().changeNumber(currentState.getBaseToughness());
     }
     public final void setBasePower(final int n) {
         currentState.setBasePower(n);

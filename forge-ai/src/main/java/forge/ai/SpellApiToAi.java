@@ -44,6 +44,7 @@ public enum SpellApiToAi {
             .put(ApiType.Camouflage, ChooseCardAi.class)
             .put(ApiType.ChangeCombatants, ChangeCombatantsAi.class)
             .put(ApiType.ChangeSpeed, AlwaysPlayAi.class)
+            .put(ApiType.ChangeNumber, AlwaysPlayAi.class)
             .put(ApiType.ChangeTargets, ChangeTargetsAi.class)
             .put(ApiType.ChangeX, AlwaysPlayAi.class)
             .put(ApiType.ChangeZone, ChangeZoneAi.class)

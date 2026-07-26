@@ -132,6 +132,32 @@ public class Game {
 
     private int numPiledGuessedSA;
 
+    // Look at Me, I'm R&D: every instance of one number becomes another, everywhere a number is
+    // printed - rules text, mana cost, power, toughness, collector number. Rather than rewriting
+    // card text, the swap is applied wherever a number is read, which is a handful of places and
+    // keeps every card's script untouched. Per the rulings this replaces whole numbers, not digits,
+    // so 20 is unaffected by a 2 -> 3 swap.
+    private Integer numberChangeFrom = null;
+    private int numberChangeTo = 0;
+
+    public void setNumberChange(final Integer from, final int to) {
+        numberChangeFrom = from;
+        numberChangeTo = to;
+    }
+    public boolean hasNumberChange() {
+        return numberChangeFrom != null;
+    }
+    public Integer getNumberChangeFrom() {
+        return numberChangeFrom;
+    }
+    public int getNumberChangeTo() {
+        return numberChangeTo;
+    }
+    /** Apply the active number change to a printed number. */
+    public int changeNumber(final int printed) {
+        return numberChangeFrom != null && numberChangeFrom == printed ? numberChangeTo : printed;
+    }
+
     private long timestamp = 0;
     public final GameAction action;
     private final Match match;

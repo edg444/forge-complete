@@ -210,6 +210,18 @@ public class CostAdjustment {
             }
         }
 
+        // Look at Me, I'm R&D swaps the printed generic part of the cost before anything modifies
+        // it, so a {2} spell really is a {3} spell for reductions and increases alike
+        if (game.hasNumberChange()) {
+            final int printedGeneric = cost.getGenericManaAmount();
+            final int swapped = game.changeNumber(printedGeneric);
+            if (swapped > printedGeneric) {
+                cost.increaseGenericMana(swapped - printedGeneric);
+            } else if (swapped < printedGeneric) {
+                cost.decreaseGenericMana(printedGeneric - swapped);
+            }
+        }
+
         int sumGeneric = 0;
         if (sa.hasParam("ReduceCost")) {
             String cst = sa.getParam("ReduceCost");

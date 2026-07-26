@@ -388,7 +388,10 @@ public class AbilityUtils {
 
         // return result soon for plain numbers
         if (StringUtils.isNumeric(amount)) {
-            int val = Integer.parseInt(amount);
+            // a literal number in a card's text is a printed number, so Look at Me, I'm R&D can
+            // swap it. Calculated values (Count$...) are results, not printed numbers, and aren't
+            // touched - "damage equal to its power" follows the power that was already swapped.
+            int val = game.changeNumber(Integer.parseInt(amount));
             if (maxto) {
                 val = Math.max(val, 0);
             }
