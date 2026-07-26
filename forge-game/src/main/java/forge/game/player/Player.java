@@ -187,14 +187,29 @@ public class Player extends GameEntity implements Comparable<Player> {
     // while a cost is being paid, where a fresh prompt would interrupt.
     private final Map<String, Integer> personalFacts = Maps.newHashMap();
 
-    /** @param title what to ask for, already localized; min/max are in the same units as the answer */
-    public int getPersonalFact(final String key, final String title, final int min, final int max) {
-        Integer known = personalFacts.get(key);
-        if (known == null) {
-            known = getController().chooseNumber(null, title, min, max);
-            personalFacts.put(key, known);
+    /**
+     * Read only - never prompts. Continuous static abilities recalculate during state checks, where
+     * asking a question isn't possible, so the answer has to already be here (see AskFact).
+     */
+    public int getPersonalFact(final String key) {
+        return personalFacts.getOrDefault(key, 0);
+    }
+    public boolean hasPersonalFact(final String key) {
+        return personalFacts.containsKey(key);
+    }
+    public void setPersonalFact(final String key, final int value) {
+        personalFacts.put(key, value);
+    }
+
+    /**
+     * Asks if the answer isn't known yet. Only safe where a prompt is allowed - the cost of a spell
+     * being cast is, a continuous static ability recalculating is not.
+     */
+    public int askPersonalFact(final String key, final String title, final int min, final int max) {
+        if (!personalFacts.containsKey(key)) {
+            personalFacts.put(key, getController().chooseNumber(null, title, min, max));
         }
-        return known;
+        return personalFacts.get(key);
     }
     // The SA currently being paid for
     private Deque<SpellAbility> paidForStack = new ArrayDeque<>();

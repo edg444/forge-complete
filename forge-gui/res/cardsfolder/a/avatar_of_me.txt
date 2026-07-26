@@ -2,12 +2,11 @@ Name:Avatar of Me
 ManaCost:2 U U
 Types:Creature Avatar
 PT:*/*
-K:ETBReplacement:Other:ChooseEyes
-A:AB$ ChooseColor | Cost$ 0 | Defined$ You | UpTo$ True | TwoColors$ True | ChoiceTitle$ Choose the color your eyes appear to be | SubAbility$ ClearEyeName | ActivationZone$ Battlefield | AdditionalActivationZone$ Stack | SpellDescription$ Change the color of your eyes. (Add or remove colored contact lenses.)
-SVar:ChooseEyes:DB$ ChooseColor | Defined$ You | UpTo$ True | TwoColors$ True | ChoiceTitle$ Choose the color of your eyes (choose none if they aren't a Magic color) | SubAbility$ ClearEyeName | SpellDescription$ As CARDNAME enters, choose the color of your eyes.
-SVar:ClearEyeName:DB$ CleanUp | ClearChosenType$ True | SubAbility$ NameEyes
-SVar:NameEyes:DB$ ChooseType | Type$ eye color | Defined$ You | ValidTypes$ Brown,Hazel,Amber,Gray,Violet,Heterochromatic,Another color | ConditionCheckSVar$ EyeColorCount | ConditionSVarCompare$ EQ0
-SVar:EyeColorCount:Count$ChosenColorCount
+K:ETBReplacement:Other:AskHeight
+SVar:AskHeight:DB$ AskFact | Defined$ You | Fact$ HeightHalves | Min$ 0 | Max$ 16 | Title$ Choose your height in feet, counted in halves (11 = 5 1/2 feet) | SubAbility$ AskShoe
+SVar:AskShoe:DB$ AskFact | Defined$ You | Fact$ ShoeSizeHalves | Min$ 0 | Max$ 40 | Title$ Choose your American shoe size, counted in halves (21 = size 10 1/2) | SubAbility$ ChooseEyes
+SVar:ChooseEyes:DB$ ChooseEyeColor | Defined$ You | SpellDescription$ As CARDNAME enters, choose the color of your eyes.
+A:AB$ ChooseEyeColor | Cost$ 0 | Defined$ You | ActivationZone$ Battlefield | AdditionalActivationZone$ Stack | SpellDescription$ Change the color of your eyes. (Add or remove colored contact lenses.)
 S:Mode$ RaiseCost | ValidCard$ Card.Self | Type$ Spell | Amount$ AgeCost | EffectZone$ All | Description$ This spell costs {1} more to cast for each ten years you've been alive.
 S:Mode$ Continuous | Affected$ Card.Self | CharacteristicDefining$ True | SetPowerHalves$ HeightHalves | SetToughnessHalves$ ShoeHalves | EffectZone$ All | Description$ CARDNAME's power is equal to your height in feet and its toughness is equal to your American shoe size. Round to the nearest ½.
 S:Mode$ Continuous | Affected$ Card.Self | SetColor$ ChosenColorOrColorless | EffectZone$ All | Description$ CARDNAME is the color of your eyes.
