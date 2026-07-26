@@ -524,6 +524,15 @@ public class ManaCostBeingPaid {
      * @return a boolean.
      */
     public final boolean payMana(final Mana mana, final ManaPool pool) {
+        return payMana(mana, pool, false);
+    }
+
+    /**
+     * @param test true when this is a trial payment for a playability check, which must not change
+     * the pool - giving change during a trial deposited phantom half mana and made unaffordable
+     * cards look playable
+     */
+    public final boolean payMana(final Mana mana, final ManaPool pool, final boolean test) {
         if (!this.isNeeded(mana, pool)) {
             throw new RuntimeException("ManaCost : addMana() error, mana not needed - " + mana);
         }
@@ -537,7 +546,7 @@ public class ManaCostBeingPaid {
             return false;
         }
         // a whole mana spent on a half buys only half of itself; the rest is change
-        if (paidShard.isHalf()) {
+        if (paidShard.isHalf() && !test) {
             payHalfChange(paidShard, inColor, pool);
         }
         return true;

@@ -302,7 +302,7 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
         if (!removeMana(mana)) {
             return false;
         }
-        manaCost.payMana(mana, this);
+        manaCost.payMana(mana, this, test);
 
         return true;
     }
