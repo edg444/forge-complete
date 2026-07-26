@@ -2324,6 +2324,11 @@ public class AbilityUtils {
         if (sq[0].equals("YourLifeTotal")) {
             return doXMath(player.getLife(), expr, c, ctb);
         }
+        // lets a card tell "no colour was chosen" apart from a choice, which Avatar of Me needs to
+        // know whether the eyes were one of the five colours at all
+        if (sq[0].equals("ChosenColorCount")) {
+            return doXMath(Iterables.size(c.getChosenColors()), expr, c, ctb);
+        }
         // Avatar of Me. Height and shoe size are counted in halves so the card can round to the
         // nearest 1/2 as printed; age is plain years.
         if (sq[0].equals("YourAge")) {

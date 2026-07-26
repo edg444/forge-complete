@@ -3,7 +3,9 @@ ManaCost:2 U U
 Types:Creature Avatar
 PT:*/*
 K:ETBReplacement:Other:ChooseEyes
-SVar:ChooseEyes:DB$ ChooseColor | Defined$ You | UpTo$ True | TwoColors$ True | ChoiceTitle$ Choose the color of your eyes (choose none if they aren't a Magic color) | SpellDescription$ As CARDNAME enters, choose the color of your eyes.
+SVar:ChooseEyes:DB$ ChooseColor | Defined$ You | UpTo$ True | TwoColors$ True | ChoiceTitle$ Choose the color of your eyes (choose none if they aren't a Magic color) | SubAbility$ NameEyes | SpellDescription$ As CARDNAME enters, choose the color of your eyes.
+SVar:NameEyes:DB$ ChooseType | Type$ eye color | Defined$ You | ValidTypes$ Brown,Hazel,Amber,Gray,Violet,Heterochromatic,Another color | ConditionCheckSVar$ EyeColorCount | ConditionSVarCompare$ EQ0
+SVar:EyeColorCount:Count$ChosenColorCount
 S:Mode$ RaiseCost | ValidCard$ Card.Self | Type$ Spell | Amount$ AgeCost | EffectZone$ All | Description$ This spell costs {1} more to cast for each ten years you've been alive.
 S:Mode$ Continuous | Affected$ Card.Self | CharacteristicDefining$ True | SetPowerHalves$ HeightHalves | SetToughnessHalves$ ShoeHalves | EffectZone$ All | Description$ CARDNAME's power is equal to your height in feet and its toughness is equal to your American shoe size. Round to the nearest ½.
 S:Mode$ Continuous | Affected$ Card.Self | SetColor$ ChosenColorOrColorless | EffectZone$ All | Description$ CARDNAME is the color of your eyes.
