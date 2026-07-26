@@ -120,8 +120,6 @@ public class ManaCostBeingPaid {
     private Map<String, Integer> xManaCostPaidByColor;
     private byte sunburstMap = 0;
     private int cntX = 0;
-    private int halfShards = 0;
-    private byte halfColorMask = (byte) 0xFF;
 
     /**
      * Copy constructor
@@ -136,8 +134,6 @@ public class ManaCostBeingPaid {
         }
         sunburstMap = manaCostBeingPaid.sunburstMap;
         cntX = manaCostBeingPaid.cntX;
-        halfShards = manaCostBeingPaid.halfShards;
-        halfColorMask = manaCostBeingPaid.halfColorMask;
     }
 
     public ManaCostBeingPaid(ManaCost manaCost) {
@@ -145,11 +141,9 @@ public class ManaCostBeingPaid {
         for (ManaCostShard shard : manaCost) {
             if (shard == ManaCostShard.X) {
                 cntX++;
-            } else if (shard.isHalf()) {
-                // a printed half (Little Girl's {HW}) becomes the same half remainder a {1/2} cost
-                // reduction leaves behind, so both are paid and given change the same way
-                addHalfShard(shard.getPayableColorMask());
             } else {
+                // a printed half (Little Girl's {HW}) is just a shard, the same one a {1/2} cost
+                // reduction leaves behind, so both are paid and given change the same way
                 increaseShard(shard, 1, false);
             }
         }
@@ -219,12 +213,7 @@ public class ManaCostBeingPaid {
                 return true;
             }
         }
-        return halfNeedsColor(colorMask);
-    }
-
-    /** An outstanding half still wants a whole mana of a colour it accepts. */
-    private boolean halfNeedsColor(final byte colorMask) {
-        return halfShards > 0 && (halfColorMask == (byte) 0xFF || (halfColorMask & colorMask) != 0);
+        return false;
     }
 
     // isNeeded(String) still used by the Computer, might have problems activating Snow abilities
@@ -234,7 +223,7 @@ public class ManaCostBeingPaid {
                 return true;
             }
         }
-        return halfNeedsColor(colorMask);
+        return false;
     }
 
     public final boolean isNeeded(final Mana paid, final ManaPool pool) {
@@ -243,34 +232,36 @@ public class ManaCostBeingPaid {
                 return true;
             }
         }
-        // an outstanding half still needs a whole mana of an accepted colour
-        if (halfShards > 0
-                && (halfColorMask == (byte) 0xFF || (paid.getColor() & halfColorMask) != 0)) {
-            return true;
-        }
         return false;
     }
 
     public final boolean isPaid() {
-        return unpaidShards.isEmpty() && halfShards == 0;
+        return unpaidShards.isEmpty();
     }
 
-    // Unhinged half mana. A cost carries at most a leftover half beyond its whole shards, either
-    // printed (Little Girl's {HW}) or left behind by a {1/2} reduction such as Cheap Ass turning
-    // {2} into {1 1/2}. It's paid with a whole mana, and the unused half goes back to the pool as
-    // change so it can pay a later half - see ManaPool.addHalfMana.
-    public final int getHalfShards() {
-        return halfShards;
-    }
+    // Unhinged half mana. A half is held as an ordinary shard in unpaidShards - originally it was a
+    // counter alongside them, which hung the game, because every loop that works through the unpaid
+    // shards and expects decreaseShard to make progress could never see it. As a real shard it is
+    // paid, counted and displayed by the existing machinery; the only special part is that paying
+    // one gives the unused half back to the pool as change (see payHalfChange).
     public final boolean hasHalfShard() {
-        return halfShards > 0;
+        for (ManaCostShard shard : unpaidShards.keySet()) {
+            if (shard.isHalf()) {
+                return true;
+            }
+        }
+        return false;
     }
-    public final byte getHalfColorMask() {
-        return halfColorMask;
+    private ManaCostShard getHalfShard() {
+        for (ManaCostShard shard : unpaidShards.keySet()) {
+            if (shard.isHalf()) {
+                return shard;
+            }
+        }
+        return null;
     }
     public final void addHalfShard(final byte colorMask) {
-        halfShards++;
-        halfColorMask = colorMask;
+        increaseShard(halfShardForColor(colorMask), 1, false);
     }
 
     /**
@@ -278,8 +269,9 @@ public class ManaCostBeingPaid {
      * generic mana into a half, which is what makes a single {1/2} reduction actually do something.
      */
     public final void reduceByHalf() {
-        if (halfShards > 0) {
-            halfShards--;
+        final ManaCostShard half = getHalfShard();
+        if (half != null) {
+            decreaseShard(half, 1);
             return;
         }
         if (getGenericManaAmount() > 0) {
@@ -288,24 +280,12 @@ public class ManaCostBeingPaid {
         }
     }
 
-    /**
-     * Pay the outstanding half with a whole mana of the given colour, returning the other half to
-     * the pool as change.
-     * @return true if the half was paid
-     */
-    public final boolean payHalfShard(final byte color, final ManaPool pool) {
-        if (halfShards == 0) {
-            return false;
-        }
-        if (halfColorMask != (byte) 0xFF && (color & halfColorMask) == 0) {
-            return false;
-        }
+    /** Give back the unused half of the whole mana just spent on a half shard. */
+    private void payHalfChange(final ManaCostShard paid, final byte color, final ManaPool pool) {
         // spend a half already floating before breaking a whole mana into change
-        if (!pool.payHalfMana(halfColorMask)) {
+        if (!pool.payHalfMana(paid.getPayableColorMask())) {
             pool.addHalfMana(color);
         }
-        halfShards--;
-        return true;
     }
 
     public final void setXManaCostPaid(final int xPaid, final String xColor) {
@@ -553,11 +533,14 @@ public class ManaCostBeingPaid {
         byte inColor = mana.getColor();
         byte outColor = pool.getPossibleColorUses(inColor);
         ManaCostShard paidShard = tryPayMana(inColor, IterableUtil.filter(unpaidShards.keySet(), predCanBePaid), outColor);
-        if (paidShard != null) {
-            return true;
+        if (paidShard == null) {
+            return false;
         }
-        // nothing whole left to pay - this mana is buying the leftover half, with change
-        return payHalfShard(inColor, pool);
+        // a whole mana spent on a half buys only half of itself; the rest is change
+        if (paidShard.isHalf()) {
+            payHalfChange(paidShard, inColor, pool);
+        }
+        return true;
     }
     
     public final ManaCostShard payManaViaConvoke(final byte color) {
@@ -731,9 +714,6 @@ public class ManaCostBeingPaid {
             }
         }
 
-        for (int i = 0; i < halfShards; i++) {
-            sb.append("{½}");
-        }
 
         return sb.length() == 0 ? "0" : sb.toString();
     }
@@ -778,19 +758,14 @@ public class ManaCostBeingPaid {
         for (int i = cntX; i > 0; i--) {
             result.add(ManaCostShard.X);
         }
-        // an outstanding half has to be visible here, or a payment loop that works through the
-        // unpaid shards sees nothing left to pay while isPaid() is still false and never finishes
-        for (int i = halfShards; i > 0; i--) {
-            result.add(halfShardForColor());
-        }
         return result;
     }
 
-    /** The shard used to represent an outstanding half, matching its colour restriction. */
-    private ManaCostShard halfShardForColor() {
+    /** The half shard for a colour restriction, defaulting to white as the only printed one. */
+    private static ManaCostShard halfShardForColor(final byte colorMask) {
         for (final ManaCostShard shard : new ManaCostShard[] { ManaCostShard.HW, ManaCostShard.HU,
                 ManaCostShard.HB, ManaCostShard.HR, ManaCostShard.HG }) {
-            if (halfColorMask != (byte) 0xFF && (shard.getColorMask() & halfColorMask) != 0) {
+            if (colorMask != (byte) 0xFF && (shard.getColorMask() & colorMask) != 0) {
                 return shard;
             }
         }
