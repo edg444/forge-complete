@@ -1,0 +1,8 @@
+Name:Standing Army
+ManaCost:2 W W
+Types:Creature Human Soldier
+PT:2/4
+A:AB$ PutCounter | Cost$ FlavorAction<Stand up/I'm standing> | Defined$ Self | CounterType$ STANDING | CounterNum$ 1 | ConditionPresent$ Card.Self+counters_EQ0_STANDING | AILogic$ Chance.50 | SpellDescription$ You are standing. This creature has vigilance for as long as you remain standing.
+A:AB$ RemoveCounter | Cost$ FlavorAction<Sit back down/I'm sitting> | Defined$ Self | CounterType$ STANDING | CounterNum$ 1 | ConditionPresent$ Card.Self+counters_GE1_STANDING | AILogic$ Chance.50 | SpellDescription$ You sit back down. This creature loses vigilance.
+S:Mode$ Continuous | Affected$ Card.Self+counters_GE1_STANDING | AddKeyword$ Vigilance | Description$ As long as you're standing, this creature has vigilance.
+Oracle:As long as you're standing, Standing Army has vigilance.
