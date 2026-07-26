@@ -30,6 +30,7 @@ public class ChangeNumberEffect extends SpellAbilityEffect {
         if (sa.hasParam("Clear")) {
             game.setNumberChange(null, 0);
             host.setChosenType("");
+            refreshText(game);
             return;
         }
 
@@ -65,8 +66,16 @@ public class ChangeNumberEffect extends SpellAbilityEffect {
         // the card doing nothing. Nothing on this card consults the chosen type, so it's free to use
         // as the label slot the UI already displays.
         host.setChosenType(label(from) + " → " + label(to));
+        refreshText(game);
         game.getAction().notifyOfValue(sa, host,
                 "All printed " + label(from) + "s are now " + label(to) + "s.", chooser);
+    }
+
+    // rules text is cached on each card's view, so nothing would redisplay without being dirtied
+    private static void refreshText(final Game game) {
+        for (final Card c : game.getCardsInGame()) {
+            c.updateAbilityTextForView();
+        }
     }
 
     /** Render a count of halves the way it's printed: 3, 2½, -½. */

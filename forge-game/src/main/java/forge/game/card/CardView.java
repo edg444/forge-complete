@@ -1625,7 +1625,11 @@ public class CardView extends GameEntityView {
             return get(TrackableProperty.AbilityText);
         }
         void updateAbilityText(Card c, CardState state) {
-            set(TrackableProperty.AbilityText, c.getAbilityText(state));
+            String text = c.getAbilityText(state);
+            if (c.getGame() != null) {
+                text = c.getGame().applyNumberChangeToText(text);
+            }
+            set(TrackableProperty.AbilityText, text);
         }
         void updateKeywords(Card c, CardState state) {
             c.updateKeywordsCache(state);

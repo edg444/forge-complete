@@ -169,6 +169,23 @@ public class Game {
         return Math.floorMod(changeHalves(printed * 2), 2) != 0;
     }
 
+    /**
+     * Rewrite displayed rules text so the swap is visible, not just mechanical. A fractional printed
+     * number never appears in real card text, so only a whole one is worth substituting.
+     */
+    public String applyNumberChangeToText(final String text) {
+        if (numberChangeFrom == null || text == null || text.isEmpty()
+                || Math.floorMod(numberChangeFrom, 2) != 0) {
+            return text;
+        }
+        final int from = numberChangeFrom / 2;
+        final int whole = Math.floorDiv(numberChangeTo, 2);
+        final String to = Math.floorMod(numberChangeTo, 2) == 0 ? String.valueOf(whole)
+                : (whole == -1 ? "-½" : (whole == 0 ? "½" : whole + "½"));
+        // whole numbers only, so a 2 -> 3 swap leaves 20 and 12 alone
+        return text.replaceAll("(?<![\\w/½])" + from + "(?![\\w/½])", to);
+    }
+
     private long timestamp = 0;
     public final GameAction action;
     private final Match match;
