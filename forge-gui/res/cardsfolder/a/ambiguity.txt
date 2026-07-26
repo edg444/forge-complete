@@ -5,7 +5,7 @@ T:Mode$ Countered | ValidCard$ Card | TriggerZones$ Battlefield | Execute$ TrigC
 SVar:TrigCountererChoice:DB$ Charm | Chooser$ TriggeredCauseController | Choices$ DBCounterNext,DBAddCounter | CharmNum$ 1 | MinCharmNum$ 0
 T:Mode$ SpellCast | ValidCard$ Card.entersWithCounters | TriggerZones$ Battlefield | Execute$ TrigCasterChoice | TriggerDescription$ Whenever a player plays a spell that comes into play with counters, that player may counter the next spell played or put an additional counter on a permanent that has already been played, but not countered.
 SVar:TrigCasterChoice:DB$ Charm | Chooser$ TriggeredSpellAbilityController | Choices$ DBCounterNext,DBAddCounter | CharmNum$ 1 | MinCharmNum$ 0
-SVar:DBCounterNext:DB$ DelayedTrigger | Mode$ SpellCast | Execute$ TrigCounterIt | TriggerDescription$ Counter the next spell played.
+SVar:DBCounterNext:DB$ DelayedTrigger | Mode$ SpellCast | Execute$ TrigCounterIt | SpellDescription$ Counter the next spell played. | TriggerDescription$ Counter the next spell played.
 SVar:TrigCounterIt:DB$ Counter | Defined$ TriggeredSpellAbility
 SVar:DBAddCounter:DB$ PutCounter | ValidTgts$ Permanent.HasCounters | TgtPrompt$ Select a permanent that already has a counter | CounterType$ ExistingCounter | CounterNum$ 1 | SpellDescription$ Put an additional counter on a permanent that has already been played.
 Oracle:Whenever a player plays a spell that counters a spell that has been played or a player plays a spell that comes into play with counters, that player may counter the next spell played or put an additional counter on a permanent that has already been played, but not countered.
