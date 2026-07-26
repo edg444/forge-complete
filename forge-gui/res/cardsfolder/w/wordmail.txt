@@ -1,0 +1,8 @@
+Name:Wordmail
+ManaCost:W
+Types:Enchantment Aura
+K:Enchant:Creature
+SVar:AttachAILogic:Pump
+S:Mode$ Continuous | Affected$ Creature.EnchantedBy | AddPower$ X | AddToughness$ X | Description$ Enchanted creature gets +1/+1 for each word in its name.
+SVar:X:Count$WordsInName.Enchanted
+Oracle:Enchant creature\nEnchanted creature gets +1/+1 for each word in its name.
