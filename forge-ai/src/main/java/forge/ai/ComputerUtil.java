@@ -2490,10 +2490,15 @@ public class ComputerUtil {
             }
 
         } else if (kindOfType.equals("Artist")) {
-            // Circle of Protection: Art only ever prevents damage, so the useful pick is whichever
-            // artist drew the most opposing permanents that could actually be dealing it.
+            // Which side's art matters depends entirely on what the card does with the choice:
+            // Circle of Protection: Art prevents damage, so it wants the artist behind the most
+            // threatening opposing permanents, while Drawn Together hands out +2/+2 and wants the
+            // artist behind the AI's own creatures.
+            final boolean ownCards = "MostProminentYouCtrl".equals(logic);
+            final CardCollectionView artPool = ownCards ? ai.getCardsIn(ZoneType.Battlefield)
+                    : ai.getOpponents().getCardsIn(ZoneType.Battlefield);
             final Map<String, Integer> counts = Maps.newHashMap();
-            for (Card c : ai.getOpponents().getCardsIn(ZoneType.Battlefield)) {
+            for (Card c : artPool) {
                 final IPaperCard pc = c.getPaperCard();
                 if (pc == null || !validTypes.contains(pc.getArtist())) {
                     continue;

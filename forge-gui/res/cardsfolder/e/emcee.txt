@@ -1,0 +1,8 @@
+Name:Emcee
+ManaCost:2 W
+Types:Creature Human Rogue
+PT:0/1
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.Other | TriggerZones$ Battlefield | Execute$ TrigPresent | TriggerDescription$ Whenever another creature enters, you may stand up and say in a deep, booming voice, "Presenting . . ." and that creature's name. If you do, put a +1/+1 counter on that creature.
+SVar:TrigPresent:DB$ PutCounter | Defined$ TriggeredCardLKICopy | CounterType$ P1P1 | CounterNum$ 1 | UnlessCost$ FlavorAction<Stand up and announce that creature in a deep, booming voice/Presenting . . .> | UnlessPayer$ You | UnlessSwitched$ True | UnlessAI$ Chance.40
+DeckHas:Ability$Counters
+Oracle:Whenever another creature enters, you may stand up and say in a deep, booming voice, "Presenting . . ." and that creature's name. If you do, put a +1/+1 counter on that creature.

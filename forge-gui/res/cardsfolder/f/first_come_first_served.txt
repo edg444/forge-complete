@@ -1,0 +1,5 @@
+Name:First Come, First Served
+ManaCost:1 W
+Types:Enchantment
+S:Mode$ Continuous | Affected$ Creature.attackingOrBlocking+LowestCollectorNumberAmong Creature.attackingOrBlocking | AddKeyword$ First Strike | Description$ Each attacking or blocking creature with the lowest collector number among attacking or blocking creatures has first strike.
+Oracle:Each attacking or blocking creature with the lowest collector number among attacking or blocking creatures has first strike.

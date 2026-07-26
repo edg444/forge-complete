@@ -737,6 +737,36 @@ public class CardProperty {
                     return false;
                 }
             }
+        } else if (property.startsWith("sharesArtistWith")) {
+            // Erase (Not the Urza's Legacy One): two white permanents "that share an artist". With
+            // no restriction this compares against the source, otherwise against any other card
+            // matching the restriction, which is how a card checks for a partner sharing its art.
+            final IPaperCard selfPc = card.getPaperCard();
+            if (selfPc == null || selfPc.getArtist().isEmpty()) {
+                return false;
+            }
+            if (property.equals("sharesArtistWith")) {
+                final IPaperCard srcPc = source.getPaperCard();
+                if (srcPc == null || !selfPc.getArtist().equalsIgnoreCase(srcPc.getArtist())) {
+                    return false;
+                }
+            } else {
+                final String restriction = property.split(" ", 2)[1];
+                boolean found = false;
+                for (final Card other : game.getCardsIn(ZoneType.Battlefield)) {
+                    if (other.equals(card) || !other.isValid(restriction, sourceController, source, spellAbility)) {
+                        continue;
+                    }
+                    final IPaperCard otherPc = other.getPaperCard();
+                    if (otherPc != null && selfPc.getArtist().equalsIgnoreCase(otherPc.getArtist())) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    return false;
+                }
+            }
         } else if (property.startsWith("sharesCreatureTypeWith")) {
             if (property.equals("sharesCreatureTypeWith")) {
                 if (!card.sharesCreatureTypeWith(source)) {
@@ -1538,6 +1568,27 @@ public class CardProperty {
                 return false;
             }
         }
+        else if (property.equals("attackingOrBlocking")) {
+            if (null == combat || (!card.isAttacking() && !combat.isBlocking(card))) {
+                return false;
+            }
+        } else if (property.startsWith("LowestCollectorNumberAmong")) {
+            // First Come, First Served. A card with no printed collector number (a token) can never
+            // be the lowest, and never counts as competition for the cards that do have one.
+            final int own = collectorNumberValue(card);
+            if (own == Integer.MAX_VALUE) {
+                return false;
+            }
+            final String restriction = property.split(" ", 2)[1];
+            for (final Card other : game.getCardsIn(ZoneType.Battlefield)) {
+                if (other.equals(card) || !other.isValid(restriction, sourceController, source, spellAbility)) {
+                    continue;
+                }
+                if (collectorNumberValue(other) < own) {
+                    return false;
+                }
+            }
+        }
         // These predicated refer to ongoing combat. If no combat happens, they'll return false (meaning not attacking/blocking ATM)
         else if (property.startsWith("attacking")) {
             if (null == combat) return false;
@@ -2159,6 +2210,27 @@ public class CardProperty {
             return false;
         }
         return true;
+    }
+
+    /**
+     * A card's printed collector number as a number, for the Unhinged cards that care about it.
+     * Numbers can carry decoration ("12a", "F13", "117*"), so only the digits count, and anything
+     * without a printed number at all - a token, a copy - sorts as no number rather than as zero.
+     */
+    private static int collectorNumberValue(final Card card) {
+        final IPaperCard pc = card.getPaperCard();
+        if (pc == null) {
+            return Integer.MAX_VALUE;
+        }
+        final String digits = pc.getCollectorNumber().replaceAll("\\D", "");
+        if (digits.isEmpty()) {
+            return Integer.MAX_VALUE;
+        }
+        try {
+            return Integer.parseInt(digits);
+        } catch (final NumberFormatException e) {
+            return Integer.MAX_VALUE;
+        }
     }
 
     private static boolean hasTimestampMatch(final Card card, final CardCollectionView coll) {
