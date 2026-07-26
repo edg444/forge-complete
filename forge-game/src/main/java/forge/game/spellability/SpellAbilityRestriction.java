@@ -215,9 +215,12 @@ public class SpellAbilityRestriction extends SpellAbilityVariables {
 
         if (cardZone == null || this.getZone() == null || !cardZone.is(this.getZone())) {
             // If Card is not in the default activating zone, do some additional checks
-            if (sa.hasParam("AdditionalActivationZone")) {
-                if (cardZone != null && cardZone.is(ZoneType.valueOf(sa.getParam("AdditionalActivationZone")))) {
-                    return true;
+            if (sa.hasParam("AdditionalActivationZone") && cardZone != null) {
+                // a list, so an ability can be activated from anywhere at all (Unhinged's _____)
+                for (final ZoneType zt : ZoneType.listValueOf(sa.getParam("AdditionalActivationZone"))) {
+                    if (cardZone.is(zt)) {
+                        return true;
+                    }
                 }
             }
             // Not a Spell, or on Battlefield, return false

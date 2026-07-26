@@ -1,0 +1,7 @@
+Name:_____
+ManaCost:1 U
+Types:Creature Shapeshifter
+PT:1/1
+A:AB$ NameCard | Cost$ 1 | Defined$ You | ActivationZone$ Hand | AdditionalActivationZone$ Battlefield,Graveyard,Library,Exile,Command,Stack,Sideboard,Ante,Junkyard,Flashback | SubAbility$ DBBecome | StackDescription$ CARDNAME's name becomes the card name of your choice. | SpellDescription$ This card's name becomes the card name of your choice. Activate anywhere, anytime.
+SVar:DBBecome:DB$ Animate | Defined$ Self | Name$ ChosenName | Duration$ Permanent
+Oracle:{1}: This card's name becomes the card name of your choice. Activate anywhere, anytime.

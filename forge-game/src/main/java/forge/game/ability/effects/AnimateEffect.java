@@ -184,7 +184,12 @@ public class AnimateEffect extends AnimateEffectBase {
                     abilities, triggers, replacements, stAbs, timestamp, duration);
 
             if (sa.hasParam("Name")) {
-                gameCard.addChangedName(sa.getParam("Name"), false, timestamp, 0);
+                final String name = sa.getParam("Name");
+                // ChosenName defers to the name just picked by a NameCard ability, so the new name
+                // doesn't have to be known when the script is written
+                final List<String> named = source.getNamedCards();
+                gameCard.addChangedName("ChosenName".equals(name) && !named.isEmpty()
+                        ? named.get(named.size() - 1) : name, false, timestamp, 0);
             }
 
             // give sVars
