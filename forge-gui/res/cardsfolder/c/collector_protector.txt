@@ -1,0 +1,7 @@
+Name:Collector Protector
+ManaCost:3 W W
+Types:Creature Human Gamer
+PT:2/5
+A:AB$ PreventDamage | Cost$ W GiveFromCollection<1/Card.nonLand/nonland card> | ValidTgts$ Player.You,Card.Self | TgtPrompt$ Select yourself or this creature | Amount$ 1 | AILogic$ Chance.20 | SpellDescription$ Prevent the next 1 damage that would be dealt to you or CARDNAME this turn. (Give the chosen card to an opponent.)
+AI:RemoveDeck:All
+Oracle:{W}, Give an opponent a nonland card you own from outside the game: Prevent the next 1 damage that would be dealt to you or Collector Protector this turn.

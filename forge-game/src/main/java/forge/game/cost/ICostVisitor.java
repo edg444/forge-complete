@@ -25,6 +25,7 @@ public interface ICostVisitor<T> {
     T visit(CostPayLife cost);
     T visit(CostPayEnergy cost);
     T visit(CostGainLife cost);
+    T visit(CostGiveFromCollection cost);
     T visit(CostPartMana cost);
     T visit(CostPromiseGift cost);
     T visit(CostPutCardToLib cost);
@@ -46,6 +47,10 @@ public interface ICostVisitor<T> {
 
     class Base<T> implements ICostVisitor<T> {
 
+        @Override
+        public T visit(CostGiveFromCollection cost) {
+            return null;
+        }
         @Override
         public T visit(CostGainControl cost) {
             return null;

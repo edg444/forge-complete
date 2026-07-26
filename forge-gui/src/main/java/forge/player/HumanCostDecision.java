@@ -5,6 +5,8 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multiset;
 
+import forge.card.CardDb;
+
 import forge.card.CardType;
 import forge.card.ColorSet;
 import forge.card.MagicColor;
@@ -20,10 +22,13 @@ import forge.gamemodes.match.input.InputConfirm;
 import forge.gamemodes.match.input.InputSelectCardsFromList;
 import forge.gamemodes.match.input.InputSelectManyBase;
 import forge.gui.util.SGuiChoose;
+import forge.item.PaperCard;
+import forge.model.FModel;
 import forge.util.*;
 import forge.util.collect.FCollectionView;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class HumanCostDecision extends CostDecisionMakerBase {
     private final PlayerControllerHuman controller;
@@ -613,6 +618,40 @@ public class HumanCostDecision extends CostDecisionMakerBase {
         }
 
         return PaymentDecision.number(c);
+    }
+
+    @Override
+    public PaymentDecision visit(final CostGiveFromCollection cost) {
+        final List<Player> opps = player.getOpponents();
+        if (opps.isEmpty()) {
+            return null;
+        }
+        Player receiver = opps.get(0);
+        if (opps.size() > 1) {
+            GameEntityViewMap<Player, PlayerView> cache = GameEntityView.getMap(opps);
+            PlayerView pv = SGuiChoose.oneOrNone(Localizer.getInstance().getMessage("lblChoosePlayer"),
+                    cache.getTrackableKeys());
+            if (pv == null || !cache.containsKey(pv)) {
+                return null;
+            }
+            receiver = cache.get(pv);
+        }
+
+        // the whole card pool, as in the dev mode card picker - this cost is your real collection,
+        // not the cards registered for this match
+        final CardDb carddb = FModel.getMagicDb().getCommonCards();
+        final List<CardFaceView> choices = carddb.streamAllFaces()
+                .filter(f -> !f.getType().isLand())
+                .map(CardFaceView::new).sorted().collect(Collectors.toList());
+        final CardFaceView chosen = SGuiChoose.oneOrNone(cost.toString(), choices);
+        if (chosen == null) {
+            return null;
+        }
+
+        final PaperCard pc = carddb.getUniqueByName(chosen.displayName());
+        final Card given = Card.fromPaperCard(pc, receiver);
+        given.setGameTimestamp(player.getGame().getNextTimestamp());
+        return PaymentDecision.card(given);
     }
 
     @Override

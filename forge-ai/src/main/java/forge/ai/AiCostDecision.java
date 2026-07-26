@@ -299,6 +299,14 @@ public class AiCostDecision extends CostDecisionMakerBase {
     }
 
     @Override
+    public PaymentDecision visit(CostGiveFromCollection cost) {
+        // The AI's collection is off-screen, so there's nothing concrete for it to hand over.
+        // Whether it's willing to pay at all is the ability's own AI logic (see Collector Protector,
+        // which only tries it occasionally).
+        return PaymentDecision.number(1);
+    }
+
+    @Override
     public PaymentDecision visit(CostFlavorAction cost) {
         // Unenforceable real-world action - the AI can't perform it, but it can't be denied either.
         // Whether the AI actually wants to use the ability is decided by the ability's own AI logic.
