@@ -8,8 +8,8 @@ SVar:AskShoe:DB$ AskFact | Defined$ You | Fact$ ShoeSizeHalves | Min$ 0 | Max$ 4
 SVar:ChooseEyes:DB$ ChooseEyeColor | Defined$ You | SpellDescription$ As CARDNAME enters, choose the color of your eyes.
 A:AB$ ChooseEyeColor | Cost$ 0 | Defined$ You | ActivationZone$ Battlefield | AdditionalActivationZone$ Stack | SpellDescription$ Change the color of your eyes. (Add or remove colored contact lenses.)
 S:Mode$ RaiseCost | ValidCard$ Card.Self | Type$ Spell | Amount$ AgeCost | EffectZone$ All | Description$ This spell costs {1} more to cast for each ten years you've been alive.
-S:Mode$ Continuous | Affected$ Card.Self | CharacteristicDefining$ True | SetPowerHalves$ HeightHalves | SetToughnessHalves$ ShoeHalves | EffectZone$ All | Description$ CARDNAME's power is equal to your height in feet and its toughness is equal to your American shoe size. Round to the nearest ½.
-S:Mode$ Continuous | Affected$ Card.Self | SetColor$ ChosenColorOrColorless | EffectZone$ All | Description$ CARDNAME is the color of your eyes.
+S:Mode$ Continuous | CharacteristicDefining$ True | SetPowerHalves$ HeightHalves | SetToughnessHalves$ ShoeHalves | Description$ CARDNAME's power is equal to your height in feet and its toughness is equal to your American shoe size. Round to the nearest ½.
+S:Mode$ Continuous | Affected$ Card.Self | SetColor$ ChosenColorOrColorless | Description$ CARDNAME is the color of your eyes.
 SVar:AgeCost:Count$YourAge/DivideEvenlyDown.10
 SVar:HeightHalves:Count$YourHeightHalves
 SVar:ShoeHalves:Count$YourShoeSizeHalves
