@@ -65,6 +65,7 @@ Carrier:Carriers
 Cat:Cats
 Centaur:Centaurs
 Chimera:Chimeras
+Child:Children
 Citizen:Citizens
 Cleric:Clerics
 Clown:Clowns
