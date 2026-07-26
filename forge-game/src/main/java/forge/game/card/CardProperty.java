@@ -1553,6 +1553,17 @@ public class CardProperty {
             if (!card.getManaCost().hasHybrid()) {
                 return false;
             }
+        } else if (property.startsWith("nameWords")) {
+            // syntax: nameWords_EQ2 (Double Header). Counts whitespace-separated words of the
+            // current name, so a renamed permanent counts as whatever it's called now, and
+            // "Tovolar, Dire Overlord" is three rather than two
+            final String comparator = property.split("_")[1];
+            final String name = card.getName().trim();
+            final int words = name.isEmpty() ? 0 : name.split("\\s+").length;
+            if (!Expressions.compare(words, comparator.substring(0, 2),
+                    Integer.parseInt(comparator.substring(2)))) {
+                return false;
+            }
         } else if (property.equals("HasCounters")) {
             if (!card.hasCounters()) {
                 return false;
