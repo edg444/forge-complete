@@ -751,9 +751,14 @@ public class CardProperty {
                 }
             } else {
                 final String restriction = property.split(" ", 2)[1];
+                // "Other" measures the restriction from the card being tested rather than from the
+                // source, so YouCtrl means whoever controls it - Bursting Beebles asks about the
+                // defending player's own permanents, not its controller's
+                final Player relativeTo = property.startsWith("sharesArtistWithOther")
+                        ? card.getController() : sourceController;
                 boolean found = false;
                 for (final Card other : game.getCardsIn(ZoneType.Battlefield)) {
-                    if (other.equals(card) || !other.isValid(restriction, sourceController, source, spellAbility)) {
+                    if (other.equals(card) || !other.isValid(restriction, relativeTo, source, spellAbility)) {
                         continue;
                     }
                     if (selfArtist.equalsIgnoreCase(other.getArtist())) {
