@@ -512,10 +512,18 @@ public class PlayerView extends GameEntityView {
     }
     void updateMana(Player p) {
         Map<Byte, Integer> mana = new HashMap<>();
+        Map<Byte, Integer> halves = new HashMap<>();
         for (byte b : ManaAtom.MANATYPES) {
             mana.put(b, p.getManaPool().getAmountOfColor(b));
+            halves.put(b, p.getManaPool().getHalfMana(b));
         }
         set(TrackableProperty.Mana, mana);
+        set(TrackableProperty.HalfMana, halves);
+    }
+
+    public int getHalfMana(final byte color) {
+        Map<Byte, Integer> halves = get(TrackableProperty.HalfMana);
+        return halves == null ? 0 : halves.getOrDefault(color, 0);
     }
 
     private List<String> getDetailsList() {

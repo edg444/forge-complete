@@ -248,12 +248,17 @@ public class PlayerDetailsPanel extends JPanel {
 
         public void onContentUpdate() {
             int count = countFunction.apply(player);
-            this.setText(String.valueOf(count));
+            this.setText(displayText(count));
 
             if(this.tooltipExtraArg == null)
                 setToolTipText(String.format(tooltipFormat, count));
             else
                 setToolTipText(String.format(tooltipFormat, count, tooltipExtraArg.apply(player)));
+        }
+
+        /** The text shown for a count, so a subclass can render something other than a number. */
+        protected String displayText(final int count) {
+            return String.valueOf(count);
         }
     }
 
@@ -275,6 +280,16 @@ public class PlayerDetailsPanel extends JPanel {
         public DetailLabelMana(String color, String toolTipLabel) {
             super(FSkinProp.MANA_IMG.get(color), toolTipLabel, (PlayerView p) -> p.getMana(ManaAtom.fromName(color)));
             this.color = color;
+        }
+
+        // a floating half shows as "1½", or a bare "½" on its own (Unhinged half mana)
+        @Override
+        protected String displayText(final int count) {
+            final int halves = player.getHalfMana(ManaAtom.fromName(color));
+            if (halves <= 0) {
+                return String.valueOf(count);
+            }
+            return count == 0 ? "½" : count + "½";
         }
     }
 

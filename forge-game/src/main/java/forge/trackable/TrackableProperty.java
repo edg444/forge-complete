@@ -204,6 +204,7 @@ public enum TrackableProperty {
     Junkyard(TrackableTypes.CardViewCollectionType, FreezeMode.IgnoresFreeze),
 
     Mana(TrackableTypes.ManaMapType, FreezeMode.IgnoresFreeze),
+    HalfMana(TrackableTypes.ManaMapType, FreezeMode.IgnoresFreeze),
 
     IsExtraTurn(TrackableTypes.BooleanType),
     ExtraTurnCount(TrackableTypes.IntegerType),

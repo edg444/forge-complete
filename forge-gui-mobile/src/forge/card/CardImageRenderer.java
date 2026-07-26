@@ -703,16 +703,16 @@ public class CardImageRenderer {
     private static void drawPtBox(Graphics g, CardStateView state, Color[] colors, float x, float y, float w, float h, boolean noText) {
         List<String> pieces = new ArrayList<>();
         if (state.isCreature()) {
-            pieces.add(String.valueOf(state.getPower()));
+            pieces.add(state.getPowerString());
             pieces.add("/");
-            pieces.add(String.valueOf(state.getToughness()));
+            pieces.add(state.getToughnessString());
         } else if (state.isPlaneswalker()) {
             pieces.add(String.valueOf(state.getLoyalty()));
         } else if (state.hasPrintedPT()) {
             pieces.add("[");
-            pieces.add(String.valueOf(state.getPower()));
+            pieces.add(state.getPowerString());
             pieces.add("/");
-            pieces.add(String.valueOf(state.getToughness()));
+            pieces.add(state.getToughnessString());
             pieces.add("]");
         } else if (state.isBattle()) {
           pieces.add(String.valueOf(state.getDefense()));

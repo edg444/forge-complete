@@ -1441,12 +1441,18 @@ public class CardView extends GameEntityView {
         public boolean hasHalfToughness() {
             return get(TrackableProperty.HasHalfToughness);
         }
-        /** P/T for display, carrying the Unhinged half: "1½". */
+        /** P/T for display, carrying the Unhinged half: "1½", and a bare "½" rather than "0½". */
         public String getPowerString() {
-            return hasHalfPower() ? getPower() + "½" : String.valueOf(getPower());
+            return halfLabel(getPower(), hasHalfPower());
         }
         public String getToughnessString() {
-            return hasHalfToughness() ? getToughness() + "½" : String.valueOf(getToughness());
+            return halfLabel(getToughness(), hasHalfToughness());
+        }
+        private static String halfLabel(final int whole, final boolean half) {
+            if (!half) {
+                return String.valueOf(whole);
+            }
+            return whole == 0 ? "½" : (whole == -1 ? "-½" : whole + "½");
         }
 
         void updatePower(CardState c) {
