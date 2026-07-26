@@ -187,6 +187,7 @@ public enum ApiType {
     SacrificeAll (SacrificeAllEffect.class),
     Scry (ScryEffect.class),
     Seek (SeekEffect.class),
+    SevenQuestions (SevenQuestionsEffect.class),
     SetInMotion (SetInMotionEffect.class),
     SetLife (LifeSetEffect.class),
     SetState (SetStateEffect.class),

@@ -187,6 +187,7 @@ public enum SpellApiToAi {
             .put(ApiType.SacrificeAll, SacrificeAllAi.class)
             .put(ApiType.Scry, ScryAi.class)
             .put(ApiType.Seek, AlwaysPlayAi.class)
+            .put(ApiType.SevenQuestions, GuessArtistAi.class)
             .put(ApiType.SetInMotion, AlwaysPlayAi.class)
             .put(ApiType.SetLife, LifeSetAi.class)
             .put(ApiType.SetState, SetStateAi.class)

@@ -1,0 +1,41 @@
+Name:Frankie Peanuts
+ManaCost:2 W W
+Types:Legendary Creature Elephant Rogue
+PT:2/3
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigAsk | OptionalDecider$ You | TriggerDescription$ At the beginning of your upkeep, you may ask target player a yes-or-no question. If you do, that player answers the question truthfully and abides by that answer if able until end of turn.
+SVar:TrigAsk:DB$ Pump | ValidTgts$ Player | TgtPrompt$ Select the player to question | StackDescription$ None | SubAbility$ DBPickQuestion
+SVar:DBPickQuestion:DB$ RollDice | Defined$ You | Sides$ 30 | ResultSubAbilities$ 1:DBQ1,2:DBQ2,3:DBQ3,4:DBQ4,5:DBQ5,6:DBQ6,7:DBQ7,8:DBQ8,9:DBQ9,10:DBQ10,11:DBQ11,12:DBQ12,13:DBQ13,14:DBQ14,15:DBQ15,16:DBQ16,17:DBQ17,18:DBQ18,19:DBQ19,20:DBQ20,21:DBQ21,22:DBQ22,23:DBQ23,24:DBQ24,25:DBQ25,26:DBQ26,27:DBQ27,28:DBQ28,29:DBQ29,30:DBQ30 | StackDescription$ None
+SVar:DBQ1:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Have you ever read a rulebook cover to cover? | SubAbility$ DBAnswer
+SVar:DBQ2:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Do you sleeve your decks? | SubAbility$ DBAnswer
+SVar:DBQ3:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Have you ever kept a hand you knew you should have mulliganed? | SubAbility$ DBAnswer
+SVar:DBQ4:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Do you own a card you have never once cast? | SubAbility$ DBAnswer
+SVar:DBQ5:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Is there a deck you refuse to take apart? | SubAbility$ DBAnswer
+SVar:DBQ6:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Have you ever named a pet after a card? | SubAbility$ DBAnswer
+SVar:DBQ7:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Did you eat breakfast today? | SubAbility$ DBAnswer
+SVar:DBQ8:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Are you currently procrastinating on something? | SubAbility$ DBAnswer
+SVar:DBQ9:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Do you know where your first Magic card is right now? | SubAbility$ DBAnswer
+SVar:DBQ10:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Have you ever bought a booster box in one sitting? | SubAbility$ DBAnswer
+SVar:DBQ11:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Would you rather be lucky than good? | SubAbility$ DBAnswer
+SVar:DBQ12:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Have you ever won a game you deserved to lose? | SubAbility$ DBAnswer
+SVar:DBQ13:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Do you talk to yourself while shuffling? | SubAbility$ DBAnswer
+SVar:DBQ14:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Is your favorite color in Magic also your favorite color in life? | SubAbility$ DBAnswer
+SVar:DBQ15:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Have you ever fallen asleep thinking about a deck list? | SubAbility$ DBAnswer
+SVar:DBQ16:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Do you make your bed most mornings? | SubAbility$ DBAnswer
+SVar:DBQ17:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Have you ever given away a card you later wanted back? | SubAbility$ DBAnswer
+SVar:DBQ18:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Are you superstitious about how you shuffle? | SubAbility$ DBAnswer
+SVar:DBQ19:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Have you ever taught someone else to play? | SubAbility$ DBAnswer
+SVar:DBQ20:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Do you prefer winning slowly or losing quickly? Answer yes for slowly. | SubAbility$ DBAnswer
+SVar:DBQ21:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Have you ever gone to bed angry about a game? | SubAbility$ DBAnswer
+SVar:DBQ22:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Is there a card you would pay far too much for? | SubAbility$ DBAnswer
+SVar:DBQ23:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Do you remember the first game you ever won? | SubAbility$ DBAnswer
+SVar:DBQ24:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Have you ever played Magic somewhere you probably shouldn't have? | SubAbility$ DBAnswer
+SVar:DBQ25:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Do you own more dice than you will ever need? | SubAbility$ DBAnswer
+SVar:DBQ26:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Would your friends call you a good loser? | SubAbility$ DBAnswer
+SVar:DBQ27:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Have you ever built a deck around a card you knew was bad? | SubAbility$ DBAnswer
+SVar:DBQ28:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Do you plan to still be playing this game in ten years? | SubAbility$ DBAnswer
+SVar:DBQ29:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Have you ever lied to an elephant before? | SubAbility$ DBAnswer
+SVar:DBQ30:DB$ Cleanup | NotifyMessage$ Frankie Peanuts asks: Are you going to answer this one truthfully? | SubAbility$ DBAnswer
+SVar:DBAnswer:DB$ GenericChoice | Defined$ Targeted | Choices$ DBYes,DBNo | ChoiceTitle$ Answer truthfully - you must abide by your answer until end of turn
+SVar:DBYes:DB$ Cleanup | SpellDescription$ Yes | NotifyMessage$ Yes. (Abide by that answer until end of turn.)
+SVar:DBNo:DB$ Cleanup | SpellDescription$ No | NotifyMessage$ No. (Abide by that answer until end of turn.)
+Oracle:At the beginning of your upkeep, you may ask target player a yes-or-no question. If you do, that player answers the question truthfully and abides by that answer if able until end of turn.
