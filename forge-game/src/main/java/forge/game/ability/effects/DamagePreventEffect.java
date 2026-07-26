@@ -34,7 +34,14 @@ public class DamagePreventEffect extends SpellAbilityEffect {
         final List<GameEntity> tgts = getTargetEntities(sa);
 
         sb.append("Prevent the next ");
-        sb.append(sa.getParam("Amount"));
+        if (sa.hasParam("Halves")) {
+            // Amount counts halves here, so show it the way the card is printed
+            final int halves = AbilityUtils.calculateAmount(sa.getHostCard(), sa.getParam("Amount"), sa);
+            final int whole = halves / 2;
+            sb.append(halves % 2 != 0 ? (whole == 0 ? "½" : whole + "½") : String.valueOf(whole));
+        } else {
+            sb.append(sa.getParam("Amount"));
+        }
         sb.append(" damage that would be dealt ");
         if (sa.isDividedAsYouChoose()) {
             sb.append("between ");
@@ -113,13 +120,13 @@ public class DamagePreventEffect extends SpellAbilityEffect {
             numDam = sa.usesTargeting() && sa.isDividedAsYouChoose() ? sa.getDividedValue(o) : numDam;
             if (o instanceof Card c) {
                 if (c.isInPlay()) {
-                    addPreventNextDamage(sa, o, numDam);
+                    addPreventNextDamage(sa, o, numDam, oddHalf);
                     if (oddHalf) {
                         o.addHalfPreventShield();
                     }
                 }
             } else if (o instanceof Player) {
-                addPreventNextDamage(sa, o, numDam);
+                addPreventNextDamage(sa, o, numDam, oddHalf);
                 if (oddHalf) {
                     o.addHalfPreventShield();
                 }
@@ -128,12 +135,12 @@ public class DamagePreventEffect extends SpellAbilityEffect {
 
         for (final Card c : untargetedCards) {
             if (c.isInPlay()) {
-                addPreventNextDamage(sa, c, numDam);
+                addPreventNextDamage(sa, c, numDam, oddHalf);
             }
         }
     }
 
-    private static void addPreventNextDamage(SpellAbility sa, GameEntity o, int numDam) {
+    private static void addPreventNextDamage(SpellAbility sa, GameEntity o, int numDam, boolean oddHalf) {
         final Card hostCard = sa.getHostCard();
         final Game game = hostCard.getGame();
         final Player player = hostCard.getController();
@@ -141,7 +148,9 @@ public class DamagePreventEffect extends SpellAbilityEffect {
         final String image = hostCard.getImageKey();
         StringBuilder sb = new StringBuilder("Event$ DamageDone | ActiveZones$ Command | ValidTarget$ ");
         sb.append((o instanceof Card ? "Card.IsRemembered" : "Player.IsRemembered"));
-        sb.append(" | PreventionEffect$ NextN | Description$ Prevent the next ").append(numDam).append(" damage.");
+        sb.append(" | PreventionEffect$ NextN | Description$ Prevent the next ")
+                .append(oddHalf ? (numDam == 0 ? "½" : numDam + "½") : String.valueOf(numDam))
+                .append(" damage.");
         String effect = "DB$ ReplaceDamage | Amount$ ShieldAmount";
 
         final Card eff = createEffect(sa, player, name, image);

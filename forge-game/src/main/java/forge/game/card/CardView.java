@@ -1462,6 +1462,7 @@ public class CardView extends GameEntityView {
                 return;
             }
             set(TrackableProperty.Power, c.getBasePower());
+            set(TrackableProperty.HasHalfPower, c.getHalfPower() > 0);
         }
 
         public int getToughness() {
@@ -1488,6 +1489,7 @@ public class CardView extends GameEntityView {
                 return;
             }
             set(TrackableProperty.Toughness, c.getBaseToughness());
+            set(TrackableProperty.HasHalfToughness, c.getHalfToughness() > 0);
         }
 
         public String getLoyalty() {

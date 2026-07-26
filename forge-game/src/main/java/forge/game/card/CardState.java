@@ -73,6 +73,10 @@ public class CardState implements GameObject, IHasSVars, ITranslatable {
     private String flavorName = null;
     private int basePower = 0;
     private int baseToughness = 0;
+    // Unhinged half power and toughness live with the printed stats they belong to, so a copy or a
+    // state view without a card behind it carries them too
+    private int halfPower = 0;
+    private int halfToughness = 0;
     private String basePowerString = null;
     private String baseToughnessString = null;
     private String baseLoyalty = "";
@@ -315,6 +319,18 @@ public class CardState implements GameObject, IHasSVars, ITranslatable {
 
     public final int getBasePower() {
         return basePower;
+    }
+    public final int getHalfPower() {
+        return halfPower;
+    }
+    public final void setHalfPower(final int h) {
+        halfPower = h;
+    }
+    public final int getHalfToughness() {
+        return halfToughness;
+    }
+    public final void setHalfToughness(final int h) {
+        halfToughness = h;
     }
     public final void setBasePower(final int basePower0) {
         if (basePower == basePower0) { return; }

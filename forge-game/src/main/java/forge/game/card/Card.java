@@ -268,8 +268,6 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     private long prototypeTimestamp = -1;
     private long mutatedTimestamp = -1;
     private int timesMutated = 0;
-    private int halfPower = 0;
-    private int halfToughness = 0;
     private int halfDamage = 0;
 
     private long gameTimestamp = -1; // permanents on the battlefield
@@ -4300,11 +4298,11 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     // cards built only to be displayed (see getCardForUi) have no game, so there's no number change
     // to apply and the printed value stands
     private int basePowerHalves() {
-        final int printed = currentState.getBasePower() * 2 + halfPower;
+        final int printed = currentState.getBasePower() * 2 + currentState.getHalfPower();
         return getGame() == null ? printed : getGame().changeHalves(printed);
     }
     private int baseToughnessHalves() {
-        final int printed = currentState.getBaseToughness() * 2 + halfToughness;
+        final int printed = currentState.getBaseToughness() * 2 + currentState.getHalfToughness();
         return getGame() == null ? printed : getGame().changeHalves(printed);
     }
     public final int getBasePower() {
@@ -4334,10 +4332,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return Math.floorMod(hasSwitchedPT() ? basePowerHalves() : baseToughnessHalves(), 2) != 0;
     }
     public final void setHalfPower(final boolean h) {
-        halfPower = h ? 1 : 0;
+        currentState.setHalfPower(h ? 1 : 0);
     }
     public final void setHalfToughness(final boolean h) {
-        halfToughness = h ? 1 : 0;
+        currentState.setHalfToughness(h ? 1 : 0);
     }
 
     /** Power counted in halves, so a 1 1/2 power creature returns 3. */
