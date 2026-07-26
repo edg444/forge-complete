@@ -1,0 +1,8 @@
+Name:Carnivorous Death-Parrot
+ManaCost:1 U
+Types:Creature Bird
+PT:2/2
+K:Flying
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigSquawk | TriggerDescription$ At the beginning of your upkeep, sacrifice CARDNAME unless you say its flavor text.
+SVar:TrigSquawk:DB$ Sacrifice | Defined$ Self | UnlessPayer$ You | UnlessCost$ FlavorAction<Say "Save a kill spell to deal with this guy." out loud/Squawk!> | UnlessAI$ Chance.85
+Oracle:Flying\nAt the beginning of your upkeep, sacrifice this creature unless you say its flavor text.
