@@ -31,6 +31,7 @@ public class VManaPool extends VDisplayArea {
     private final PlayerView player;
     private final List<ManaLabel> manaLabels = new ArrayList<>();
     private int totalMana;
+    private boolean hasHalf;
 
     public VManaPool(PlayerView player0) {
         player = player0;
@@ -53,13 +54,25 @@ public class VManaPool extends VDisplayArea {
     }
 
     @Override
+    public String getCountText() {
+        if (!hasHalf) {
+            return String.valueOf(totalMana);
+        }
+        return totalMana == 0 ? "½" : totalMana + "½";
+    }
+
+    @Override
     public void update() {
         totalMana = 0;
+        hasHalf = false;
         for (ManaLabel label : manaLabels) {
             int colorCount = player.getMana(label.colorCode);
             totalMana += colorCount;
             // a floating half shows as "1½" or a bare "½" (Unhinged half mana)
             int halves = player.getHalfMana(label.colorCode);
+            if (halves > 0) {
+                hasHalf = true;
+            }
             label.text = halves > 0 ? (colorCount == 0 ? "½" : colorCount + "½") : Integer.toString(colorCount);
         }
     }

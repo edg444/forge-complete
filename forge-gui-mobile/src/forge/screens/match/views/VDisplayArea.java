@@ -14,6 +14,10 @@ public abstract class VDisplayArea extends FScrollPane {
         setVisible(false); //hide by default
     }
     public abstract int getCount();
+    /** Tab label for the count, overridable where a whole number can't express it (half mana). */
+    public String getCountText() {
+        return String.valueOf(getCount());
+    }
     public abstract void update();
     public void setNextSelected(int val) {
         if (getChildCount() < 1) {

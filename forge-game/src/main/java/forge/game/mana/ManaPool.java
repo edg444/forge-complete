@@ -127,13 +127,18 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
      * </p>
      */
     public final boolean willManaBeLostAtEndOfPhase() {
-        if (floatingMana.isEmpty()) {
+        if (floatingMana.isEmpty() && !hasHalfMana()) {
             return false;
         }
 
         final Map<AbilityKey, Object> runParams = AbilityKey.mapFromAffected(owner);
         if (!owner.getGame().getReplacementHandler().getReplacementList(ReplacementType.LoseMana, runParams, ReplacementLayer.Other).isEmpty()) {
             return false;
+        }
+
+        // no static ability keeps a half, so one floating is always about to be lost
+        if (hasHalfMana()) {
+            return true;
         }
 
         int safeMana = 0;
@@ -162,8 +167,16 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
         List<Mana> cleared = Lists.newArrayList();
         // a floating half empties with the rest of the pool, and does so before the early return
         // below since it can outlive the last whole mana
+        final boolean clearedAHalf = hasHalfMana();
         clearHalfMana();
-        if (floatingMana.isEmpty()) { return cleared; }
+        if (floatingMana.isEmpty()) {
+            // the pool event below is what actually repaints the UI, so a half that emptied on its
+            // own still has to fire it or the stale value lingers until the pool next changes
+            if (clearedAHalf) {
+                owner.getGame().fireEvent(new GameEventManaPool(owner, EventValueChangeType.Cleared, null));
+            }
+            return cleared;
+        }
 
         Byte convertTo = null;
 

@@ -868,7 +868,7 @@ public class VPlayerPanel extends FContainer {
 
         public void update() {
             displayArea.update();
-            value = String.valueOf(displayArea.getCount());
+            value = displayArea.getCountText();
         }
 
         @Override
@@ -986,7 +986,7 @@ public class VPlayerPanel extends FContainer {
             else if (!getDisplayArea().isVisible())
                 this.value = "+";
             else
-                this.value = String.valueOf(displayAreas.get(this.activeZone).getCount());
+                this.value = displayAreas.get(this.activeZone).getCountText();
             if (getDisplayArea().isVisible())
                 this.icon = iconFromZone(this.activeZone);
             else
