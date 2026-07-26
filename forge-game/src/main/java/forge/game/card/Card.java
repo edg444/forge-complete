@@ -4333,9 +4333,12 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
     public final void setHalfPower(final boolean h) {
         currentState.setHalfPower(h ? 1 : 0);
+        // the view is populated before this runs, and nothing else marks P/T dirty afterwards
+        currentState.getView().updatePower(currentState);
     }
     public final void setHalfToughness(final boolean h) {
         currentState.setHalfToughness(h ? 1 : 0);
+        currentState.getView().updateToughness(currentState);
     }
 
     /** Power counted in halves, so a 1 1/2 power creature returns 3. */

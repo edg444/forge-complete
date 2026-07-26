@@ -1101,6 +1101,9 @@ public class FSkin {
         if (FModel.getPreferences().getPrefBoolean(FPref.UI_SCREENREADER_OPTIMIZE)) {
             return str;
         }
+        // Unhinged half mana has no symbol art, so {HW} is shown as a half sign next to the colour
+        str = str.replaceAll("\\{H([WUBRG])\\}", "½{$1}");
+
         // format mana symbols to display as icons
         // fancy pattern needed so "/" can be omitted from replacement
         pattern = 

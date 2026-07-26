@@ -870,6 +870,9 @@ public class CardState implements GameObject, IHasSVars, ITranslatable {
         setBaseToughness(source.getBaseToughness());
         setBasePowerString(source.getBasePowerString());
         setBaseToughnessString(source.getBaseToughnessString());
+        // the halves travel with the printed stats they belong to, or a copied state loses them
+        setHalfPower(source.getHalfPower());
+        setHalfToughness(source.getHalfToughness());
         setBaseLoyalty(source.getBaseLoyalty());
         setBaseDefense(source.getBaseDefense());
         setAttractionLights(source.getAttractionLights());

@@ -29,6 +29,7 @@ public class ChangeNumberEffect extends SpellAbilityEffect {
 
         if (sa.hasParam("Clear")) {
             game.setNumberChange(null, 0);
+            host.setChosenType("");
             return;
         }
 
@@ -60,6 +61,10 @@ public class ChangeNumberEffect extends SpellAbilityEffect {
         final int to = picked == null ? from + 2 : (picked.equals(options.get(0)) ? from + 2 : from - 2);
 
         game.setNumberChange(from, to);
+        // show the choice on the enchantment itself - without it the swap is invisible and reads as
+        // the card doing nothing. Nothing on this card consults the chosen type, so it's free to use
+        // as the label slot the UI already displays.
+        host.setChosenType(label(from) + " → " + label(to));
         game.getAction().notifyOfValue(sa, host,
                 "All printed " + label(from) + "s are now " + label(to) + "s.", chooser);
     }
