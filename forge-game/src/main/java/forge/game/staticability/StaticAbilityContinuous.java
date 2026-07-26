@@ -109,6 +109,8 @@ public final class StaticAbilityContinuous {
         int powerBonus = 0;
         String addT = "";
         int toughnessBonus = 0;
+        Integer setPowerHalves = null;
+        Integer setToughnessHalves = null;
         String setP = "";
         Integer setPower = null;
         String setT = "";
@@ -153,6 +155,18 @@ public final class StaticAbilityContinuous {
             if (params.containsKey("SetToughness")) {
                 setT = params.get("SetToughness");
                 setToughness = AbilityUtils.calculateAmount(hostCard, setT, stAb);
+            }
+            // Avatar of Me measures the player in halves, so the whole part goes through the normal
+            // set-P/T layer and the leftover half is flagged on the card beside it
+            if (params.containsKey("SetPowerHalves")) {
+                setP = params.get("SetPowerHalves");
+                setPowerHalves = AbilityUtils.calculateAmount(hostCard, setP, stAb);
+                setPower = Math.floorDiv(setPowerHalves, 2);
+            }
+            if (params.containsKey("SetToughnessHalves")) {
+                setT = params.get("SetToughnessHalves");
+                setToughnessHalves = AbilityUtils.calculateAmount(hostCard, setT, stAb);
+                setToughness = Math.floorDiv(setToughnessHalves, 2);
             }
         }
 
@@ -693,6 +707,12 @@ public final class StaticAbilityContinuous {
                     }
                     affectedCard.addNewPT(setPower, setToughness,
                         se.getTimestamp(), stAb.getId(), layer == StaticAbilityLayer.CHARACTERISTIC, false);
+                    if (setPowerHalves != null) {
+                        affectedCard.setHalfPower(Math.floorMod(setPowerHalves, 2) != 0);
+                    }
+                    if (setToughnessHalves != null) {
+                        affectedCard.setHalfToughness(Math.floorMod(setToughnessHalves, 2) != 0);
+                    }
                 }
             }
 
@@ -947,6 +967,11 @@ public final class StaticAbilityContinuous {
             if (hostCard.hasChosenColor()) {
                 addColors = ColorSet.fromNames(hostCard.getChosenColors());
             }
+        } else if (colors.equals("ChosenColorOrColorless")) {
+            // Avatar of Me: eyes that aren't one of the five colors leave nothing chosen, and the
+            // card is then colorless rather than keeping the blue from its mana cost
+            addColors = hostCard.hasChosenColor()
+                    ? ColorSet.fromNames(hostCard.getChosenColors()) : ColorSet.fromMask(0);
         } else if (colors.equals("All")) {
             addColors = ColorSet.WUBRG;
         } else {

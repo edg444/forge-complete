@@ -181,6 +181,21 @@ public class Player extends GameEntity implements Comparable<Player> {
     private CardCollection gainedOwnership = new CardCollection();
 
     private ManaPool manaPool = new ManaPool(this);
+
+    // Un-set cards ask about the real person playing (Avatar of Me's height, shoe size and age).
+    // Asked once and kept for the game, both to avoid nagging and because the answer is needed
+    // while a cost is being paid, where a fresh prompt would interrupt.
+    private final Map<String, Integer> personalFacts = Maps.newHashMap();
+
+    /** @param title what to ask for, already localized; min/max are in the same units as the answer */
+    public int getPersonalFact(final String key, final String title, final int min, final int max) {
+        Integer known = personalFacts.get(key);
+        if (known == null) {
+            known = getController().chooseNumber(null, title, min, max);
+            personalFacts.put(key, known);
+        }
+        return known;
+    }
     // The SA currently being paid for
     private Deque<SpellAbility> paidForStack = new ArrayDeque<>();
 

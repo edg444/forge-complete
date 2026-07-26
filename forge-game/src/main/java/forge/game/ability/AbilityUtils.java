@@ -2324,6 +2324,19 @@ public class AbilityUtils {
         if (sq[0].equals("YourLifeTotal")) {
             return doXMath(player.getLife(), expr, c, ctb);
         }
+        // Avatar of Me. Height and shoe size are counted in halves so the card can round to the
+        // nearest 1/2 as printed; age is plain years.
+        if (sq[0].equals("YourAge")) {
+            return doXMath(player.getPersonalFact("Age", "Choose your age in years", 0, 120), expr, c, ctb);
+        }
+        if (sq[0].equals("YourHeightHalves")) {
+            return doXMath(player.getPersonalFact("HeightHalves",
+                    "Choose your height in feet, counted in halves (e.g. 11 = 5 1/2 feet)", 0, 16), expr, c, ctb);
+        }
+        if (sq[0].equals("YourShoeSizeHalves")) {
+            return doXMath(player.getPersonalFact("ShoeSizeHalves",
+                    "Choose your American shoe size, counted in halves (e.g. 21 = size 10 1/2)", 0, 40), expr, c, ctb);
+        }
         if (sq[0].equals("OppGreatestLifeTotal")) {
             return doXMath(player.getOpponentsGreatestLifeTotal(), expr, c, ctb);
         }
