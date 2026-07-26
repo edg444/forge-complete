@@ -162,11 +162,6 @@ public final class StaticAbilityContinuous {
                 setP = params.get("SetPowerHalves");
                 setPowerHalves = AbilityUtils.calculateAmount(hostCard, setP, stAb);
                 setPower = Math.floorDiv(setPowerHalves, 2);
-                if (setPowerHalves == 0) {
-                    System.out.println("[HALFPT-CDA] svar=" + setP + " resolved=" + hostCard.getSVar(setP)
-                            + " halves=0 controller=" + hostCard.getController()
-                            + " fact=" + hostCard.getController().getPersonalFact("HeightHalves"));
-                }
             }
             if (params.containsKey("SetToughnessHalves")) {
                 setT = params.get("SetToughnessHalves");
