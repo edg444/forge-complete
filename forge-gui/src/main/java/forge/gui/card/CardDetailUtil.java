@@ -175,7 +175,7 @@ public class CardDetailUtil {
         }
 
         if (card.isCreature() || card.hasPrintedPT()) {
-            ptText.append(card.getPower()).append(" / ").append(card.getToughness());
+            ptText.append(card.getPowerString()).append(" / ").append(card.getToughnessString());
         }
 
         if (card.hasPrintedPT() && !card.isCreature()) {
