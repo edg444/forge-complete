@@ -1,0 +1,13 @@
+Name:Ladies' Knight
+ManaCost:3 W
+Types:Creature Human Knight
+PT:2/2
+K:Flying
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDeclare | TriggerDescription$ Spells cast by players wearing at least one item of women's clothing cost {1} less to cast. (Each player declares as this creature enters.)
+SVar:TrigDeclare:DB$ RepeatEach | RepeatPlayers$ Player | RepeatSubAbility$ DBAsk | SubAbility$ DBCleanup
+SVar:DBAsk:DB$ GenericChoice | Defined$ Remembered | Choices$ DBWearing,DBNotWearing | ChoiceTitle$ Are you wearing at least one item of women's clothing? (Define that as you see fit. Be reasonable.)
+SVar:DBWearing:DB$ Effect | SpellDescription$ Yes | RememberObjects$ Player.IsRemembered,Self | StaticAbilities$ STReduce | ExileOnMoved$ Battlefield | Duration$ Permanent
+SVar:STReduce:Mode$ ReduceCost | ValidCard$ Card | Type$ Spell | Activator$ Player.IsRemembered | Amount$ 1 | EffectZone$ Command | Description$ Spells cast by players wearing at least one item of women's clothing cost {1} less to cast.
+SVar:DBNotWearing:DB$ Cleanup | SpellDescription$ No
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Flying\nSpells cast by players wearing at least one item of women's clothing cost {1} less to cast. (You can define women's clothing as you see fit. Be reasonable.)
