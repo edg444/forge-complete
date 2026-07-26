@@ -141,6 +141,7 @@ public class VField extends FContainer {
                         card.hasSameCounters(c) &&
                         card.hasSamePT(c) && //don't stack token with different PT
                         cardState.getKeywords().equals(cState.getKeywords()) &&
+                        cardState.getColors() == cState.getColors() && //don't stack differing colors
                         card.isTapped() == c.isTapped() && // don't stack tapped tokens on untapped tokens
                         card.isSick() == c.isSick() && //don't stack sick tokens on non sick
                         card.isToken() == c.isToken()) { //don't stack tokens on top of non-tokens
