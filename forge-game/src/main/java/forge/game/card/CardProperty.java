@@ -1573,8 +1573,8 @@ public class CardProperty {
                 return false;
             }
         } else if (property.startsWith("LowestCollectorNumberAmong")) {
-            // First Come, First Served. A card with no printed collector number (a token) can never
-            // be the lowest, and never counts as competition for the cards that do have one.
+            // First Come, First Served. Tokens have collector numbers of their own and take part
+            // normally; only something with no printed number is out of the running entirely.
             final int own = collectorNumberValue(card);
             if (own == Integer.MAX_VALUE) {
                 return false;
@@ -2214,8 +2214,12 @@ public class CardProperty {
 
     /**
      * A card's printed collector number as a number, for the Unhinged cards that care about it.
-     * Numbers can carry decoration ("12a", "F13", "117*"), so only the digits count, and anything
-     * without a printed number at all - a token, a copy - sorts as no number rather than as zero.
+     * Numbers can carry decoration ("12a", "F13", "117*"), so only the digits count.
+     * <p>
+     * Tokens count too: they're printed with collector numbers of their own and Forge records them
+     * (see the [tokens] section of an edition file), reached through the same getPaperCard call.
+     * Since token sets number from 1, a token will usually be the lowest number on the battlefield.
+     * Only something with no printed number at all sorts as no number rather than as zero.
      */
     private static int collectorNumberValue(final Card card) {
         final IPaperCard pc = card.getPaperCard();
