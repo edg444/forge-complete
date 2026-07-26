@@ -1,0 +1,13 @@
+Name:Man of Measure
+ManaCost:1 W W
+Types:Creature Human Knight
+PT:2/2
+K:ETBReplacement:Other:DBMeasure
+SVar:DBMeasure:DB$ GenericChoice | Defined$ You | Choices$ DBShorter,DBTaller,DBBoth,DBNeither | ChoiceTitle$ Compare your height to your opponents | SpellDescription$ As CARDNAME enters, compare your height to your opponents'.
+SVar:DBShorter:DB$ Effect | SpellDescription$ I am shorter than an opponent | RememberObjects$ Self | StaticAbilities$ STShorter | ExileOnMoved$ Battlefield | Duration$ Permanent
+SVar:DBTaller:DB$ Effect | SpellDescription$ I am taller than an opponent | RememberObjects$ Self | StaticAbilities$ STTaller | ExileOnMoved$ Battlefield | Duration$ Permanent
+SVar:DBBoth:DB$ Effect | SpellDescription$ Both - I am shorter than one opponent and taller than another | RememberObjects$ Self | StaticAbilities$ STShorter,STTaller | ExileOnMoved$ Battlefield | Duration$ Permanent
+SVar:DBNeither:DB$ Cleanup | SpellDescription$ Neither - we are the same height
+SVar:STShorter:Mode$ Continuous | Affected$ Card.IsRemembered | AddPower$ 0 | AddToughness$ 1 | AddKeyword$ First Strike | EffectZone$ Command | Description$ As long as you're shorter than an opponent, this creature gets +0/+1 and has first strike.
+SVar:STTaller:Mode$ Continuous | Affected$ Card.IsRemembered | AddPower$ 1 | AddToughness$ 0 | EffectZone$ Command | Description$ As long as you're taller than an opponent, this creature gets +1/+0.
+Oracle:As long as you're shorter than an opponent, Man of Measure gets +0/+1 and has first strike.\nAs long as you're taller than an opponent, Man of Measure gets +1/+0.
