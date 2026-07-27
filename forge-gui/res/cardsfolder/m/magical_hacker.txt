@@ -1,0 +1,6 @@
+Name:Magical Hacker
+ManaCost:1 U
+Types:Creature Human Gamer
+PT:1/2
+A:AB$ ChangeText | Cost$ U | ValidTgts$ Card | TgtZone$ Stack,Battlefield | TgtPrompt$ Choose target spell or permanent | SwapSigns$ True | SpellDescription$ Change the text of target spell or permanent by replacing all instances of + with -, and vice versa, until end of turn.
+Oracle:{U}: Change the text of target spell or permanent by replacing all instances of + with -, and vice versa, until end of turn.

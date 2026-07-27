@@ -106,6 +106,11 @@ public class ChangeTextEffect extends SpellAbilityEffect {
             if (changedTypeWordOriginal != null && changedTypeWordNew != null) {
                 c.addChangedTextTypeWord(changedTypeWordOriginal, changedTypeWordNew, timestamp, 0);
             }
+            // Magical Hacker swaps every + and - rather than one word for another
+            final boolean swapSigns = sa.hasParam("SwapSigns") && !c.isSignFlipped();
+            if (swapSigns) {
+                c.setSignFlipped(true);
+            }
 
             if (!permanent) {
                 final GameCommand revert = new GameCommand() {
@@ -117,6 +122,9 @@ public class ChangeTextEffect extends SpellAbilityEffect {
                         }
                         if (changedTypeWordNew != null) {
                             c.removeChangedTextTypeWord(timestamp, 0);
+                        }
+                        if (swapSigns) {
+                            c.setSignFlipped(false);
                         }
                     }
                 };

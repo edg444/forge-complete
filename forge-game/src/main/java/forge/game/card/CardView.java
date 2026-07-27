@@ -1633,6 +1633,9 @@ public class CardView extends GameEntityView {
             if (c.getGame() != null) {
                 text = c.getGame().applyNumberChangeToText(text);
             }
+            if (c.isSignFlipped()) {
+                text = Card.flipSignsInText(text);
+            }
             set(TrackableProperty.AbilityText, text);
         }
         void updateKeywords(Card c, CardState state) {

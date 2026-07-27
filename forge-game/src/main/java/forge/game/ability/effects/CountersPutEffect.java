@@ -628,6 +628,14 @@ public class CountersPutEffect extends SpellAbilityEffect {
                     System.out.println("Counter type doesn't match, nor does an SVar exist with the type name.");
                     return;
                 }
+                // Magical Hacker: a +1/+1 counter is written with plusses, so it flips to -1/-1
+                if (card.isSignFlipped()) {
+                    if (counterType == CounterEnumType.P1P1) {
+                        counterType = CounterEnumType.M1M1;
+                    } else if (counterType == CounterEnumType.M1M1) {
+                        counterType = CounterEnumType.P1P1;
+                    }
+                }
             }
             if (sa.hasParam("ForColor")) {
                 Iterable<String> oldColors = card.getChosenColors();

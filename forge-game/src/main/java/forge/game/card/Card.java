@@ -7628,6 +7628,31 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         renderForUi = value;
     }
 
+    // Magical Hacker swaps every + and - in one card's text. Held per card rather than per game
+    // (unlike Look at Me, I'm R&D's number change) since it only ever hits a single target.
+    private boolean signFlipped = false;
+
+    public boolean isSignFlipped() {
+        return signFlipped;
+    }
+    public void setSignFlipped(final boolean flipped) {
+        signFlipped = flipped;
+        updateAbilityTextForView();
+    }
+
+    /** Swap the signs in displayed text, so +1/+1 reads as -1/-1. */
+    public static String flipSignsInText(final String text) {
+        if (text == null || text.isEmpty()) {
+            return text;
+        }
+        final StringBuilder sb = new StringBuilder(text.length());
+        for (int i = 0; i < text.length(); i++) {
+            final char c = text.charAt(i);
+            sb.append(c == '+' ? '-' : c == '-' ? '+' : c);
+        }
+        return sb.toString();
+    }
+
     // Greater Morphling changes its expansion symbol without changing which printing it actually is,
     // so this is deliberately kept apart from getSetCode - the art must not move with it.
     private String changedSetCode = null;

@@ -309,6 +309,11 @@ public class PumpEffect extends SpellAbilityEffect {
         if (sa.hasParam("NumDef") && !sa.getParam("NumDef").equals("Double") && !sa.getParam("NumDef").equals("Triple")) {
             d = AbilityUtils.calculateAmount(host, sa.getParam("NumDef"), sa, true);
         }
+        // Magical Hacker: the + and - in this card's own text are swapped, so what it grants flips
+        if (host.isSignFlipped()) {
+            a = -a;
+            d = -d;
+        }
 
         if (sa.hasParam("SharedKeywordsZone")) {
             List<ZoneType> zones = ZoneType.listValueOf(sa.getParam("SharedKeywordsZone"));
