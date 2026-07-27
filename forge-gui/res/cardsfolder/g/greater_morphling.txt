@@ -22,7 +22,7 @@ A:AB$ ChooseColor | Cost$ 2 | Defined$ You | OrColors$ True | SubAbility$ DBBeco
 SVar:DBBecomeColors:DB$ Animate | Defined$ Self | Colors$ ChosenColor | OverwriteColors$ True | Duration$ UntilEndOfTurn | SubAbility$ DelTrigClear | StackDescription$ None
 A:AB$ ChooseType | Cost$ 2 | Type$ Creature | Defined$ You | SubAbility$ DBBecomeType | SpellDescription$ CARDNAME becomes the creature type of your choice until end of turn.
 SVar:DBBecomeType:DB$ Animate | Defined$ Self | Types$ ChosenType | RemoveCreatureTypes$ True | Duration$ UntilEndOfTurn | SubAbility$ DelTrigClear | StackDescription$ None
-SVar:DelTrigClear:DB$ DelayedTrigger | Mode$ Phase | Phase$ End of Turn | Execute$ DBClearChosen | TriggerDescription$ Forget the chosen type and color.
+SVar:DelTrigClear:DB$ DelayedTrigger | Mode$ Phase | Phase$ End of Turn | Execute$ DBClearChosen | Static$ True
 SVar:DBClearChosen:DB$ Cleanup | ClearChosenType$ True | ClearChosenColor$ True
 A:AB$ SetExpansion | Cost$ 2 | Defined$ You | SpellDescription$ CARDNAME's expansion symbol becomes the symbol of your choice until end of turn.
 A:AB$ ChooseArtist | Cost$ 2 | Defined$ You | SubAbility$ DBBecomeArt | SpellDescription$ CARDNAME's art becomes by the artist of your choice until end of turn.
