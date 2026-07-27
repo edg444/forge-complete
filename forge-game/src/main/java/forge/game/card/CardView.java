@@ -1568,8 +1568,11 @@ public class CardView extends GameEntityView {
             return get(TrackableProperty.SetCode);
         }
         void updateSetCode(CardState c) {
-            set(TrackableProperty.SetCode,
-                    c.getCard() == null ? c.getSetCode() : c.getCard().getDisplaySetCode());
+            // this runs while the card is still being constructed, so it reads the state's own set
+            // code rather than the card's - only the override is safe to ask the card for
+            final Card owner = c.getCard();
+            final String changed = owner == null ? null : owner.getChangedSetCode();
+            set(TrackableProperty.SetCode, changed != null ? changed : c.getSetCode());
         }
 
         public CardRarity getRarity() {

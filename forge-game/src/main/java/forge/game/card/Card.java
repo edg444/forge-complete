@@ -7633,7 +7633,11 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     private String changedSetCode = null;
 
     public String getDisplaySetCode() {
-        return changedSetCode != null ? changedSetCode : getSetCode();
+        if (changedSetCode != null) {
+            return changedSetCode;
+        }
+        // guarded because a card can be asked this while it's still being built
+        return currentState == null ? "" : getSetCode();
     }
     public String getChangedSetCode() {
         return changedSetCode;
