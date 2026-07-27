@@ -1,0 +1,7 @@
+Name:Question Elemental?
+ManaCost:2 U U
+Types:Creature Elemental?
+PT:3/4
+K:Flying
+A:AB$ GainControl | Cost$ FlavorAction<Confirm this creature's controller said something that wasn't a question/Gotcha!> | Activator$ Opponent | Defined$ Self | NewController$ You | AILogic$ Chance.35 | SpellDescription$ Gain control of CARDNAME. (Activate only if its controller said something that isn't a question.)
+Oracle:Did you know this creature has flying?\nAre you aware that any time you say something that isn't a question, when a player points out this fact first, they gain control of this creature?

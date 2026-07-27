@@ -103,6 +103,7 @@ Egg:Eggs
 Elder:Elders
 Eldrazi:Eldrazi
 Elemental:Elementals
+Elemental?:Elementals?
 Elephant:Elephants
 Elf:Elves
 Elk:Elks
