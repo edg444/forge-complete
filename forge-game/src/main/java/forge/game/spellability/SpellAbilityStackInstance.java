@@ -98,7 +98,12 @@ public class SpellAbilityStackInstance implements IIdentifiable, IHasCardView {
 
     // A bit of SA shared abilities to restrict conflicts
     public final String getStackDescription() {
-        return stackDescription.replaceAll("\\\\r\\\\n", "").replaceAll("\\.\u2022", ";").replaceAll("\u2022", "");
+        String desc = stackDescription.replaceAll("\\\\r\\\\n", "").replaceAll("\\.\u2022", ";").replaceAll("\u2022", "");
+        // Magical Hacker can hit a spell while it's on the stack, so the text shown there flips too
+        if (ability != null && ability.getHostCard() != null && ability.getHostCard().isSignFlipped()) {
+            desc = forge.game.card.Card.flipSignsInText(desc);
+        }
+        return desc;
     }
 
     public final Card getSourceCard() {
@@ -207,6 +212,11 @@ public class SpellAbilityStackInstance implements IIdentifiable, IHasCardView {
     @Override
     public String toString() {
         return TextUtil.concatNoSpace(getSourceCard().toString(), "->", getStackDescription());
+    }
+
+    /** Re-render the stack text, for when the spell's own text changed under it. */
+    public void updateViewText() {
+        view.updateText(this);
     }
 
     public StackItemView getView() {

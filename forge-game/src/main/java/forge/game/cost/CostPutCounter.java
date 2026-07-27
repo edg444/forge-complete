@@ -175,6 +175,13 @@ public class CostPutCounter extends CostPartWithList {
     @Override
     protected Card doPayment(Player payer, SpellAbility ability, Card targetCard, final boolean effect) {
         final int i = getAbilityAmount(ability);
+        // Magical Hacker: a loyalty ability's +1 is written with a plus, so a hacked planeswalker
+        // pays it the other way round
+        if (getCounter().is(CounterEnumType.LOYALTY) && ability.getHostCard() != null
+                && ability.getHostCard().isSignFlipped()) {
+            targetCard.subtractCounter(getCounter(), i, payer);
+            return targetCard;
+        }
         if (isETBReplacement(ability, effect)) {
             GameEntityCounterTable etbTable = (GameEntityCounterTable) ability.getReplacingObject(AbilityKey.CounterTable);
             etbTable.put(payer, targetCard, getCounter(), i);

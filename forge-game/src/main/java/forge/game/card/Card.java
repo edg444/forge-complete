@@ -7638,6 +7638,14 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public void setSignFlipped(final boolean flipped) {
         signFlipped = flipped;
         updateAbilityTextForView();
+        // a spell can be hacked while it's on the stack, and the stack text is cached on its view
+        if (getGame() != null) {
+            for (final SpellAbilityStackInstance si : getGame().getStack()) {
+                if (equals(si.getSpellAbility().getHostCard())) {
+                    si.updateViewText();
+                }
+            }
+        }
     }
 
     /** Swap the signs in displayed text, so +1/+1 reads as -1/-1. */
