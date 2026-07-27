@@ -189,16 +189,18 @@ public class CostRemoveCounter extends CostPart {
     @Override
     public boolean payAsDecided(Player ai, PaymentDecision decision, SpellAbility ability, final boolean effect) {
         int removed = 0;
-        // Magical Hacker: a hacked planeswalker's -1 is read as a +1, so loyalty goes up instead
-        final boolean flipped = ability.getHostCard() != null && ability.getHostCard().isSignFlipped();
+        // Magical Hacker: a hacked planeswalker's -N is read as a +N, so loyalty goes up instead.
+        // The decision carries a plain number here, since nothing was chosen to remove.
+        final Card host = ability.getHostCard();
+        if (this.counter != null && this.counter.is(CounterEnumType.LOYALTY)
+                && host != null && host.isSignFlipped()) {
+            host.addCounter(this.counter, decision.c, ai, null);
+            return true;
+        }
         for (Map.Entry<GameEntity, Multiset<CounterType>> e : decision.counterTable.row(Optional.empty()).entrySet()) {
             for (Multiset.Entry<CounterType> v : e.getValue().entrySet()) {
                 removed += v.getCount();
-                if (flipped && v.getElement().is(CounterEnumType.LOYALTY) && e.getKey() instanceof Card gc) {
-                    gc.addCounter(v.getElement(), v.getCount(), ai, null);
-                } else {
-                    e.getKey().subtractCounter(v.getElement(), v.getCount(), ai);
-                }
+                e.getKey().subtractCounter(v.getElement(), v.getCount(), ai);
             }
             if (e.getKey() instanceof Card c) {
                 e.getKey().getGame().updateLastStateForCard(c);

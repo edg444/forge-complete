@@ -1231,6 +1231,12 @@ public class HumanCostDecision extends CostDecisionMakerBase {
             cntRemoved = cost.getAbilityAmount(ability);
         }
 
+        // Magical Hacker: a hacked -N loyalty ability adds counters, so there are none to pick and
+        // none to have enough of - the checks below would refuse it on a small planeswalker
+        if (cntrs != null && cntrs.is(CounterEnumType.LOYALTY) && source.isSignFlipped()) {
+            return PaymentDecision.number(cntRemoved);
+        }
+
         if (cost.payCostFromSource()) {
             final int maxCounters = anyCounters ? source.getNumAllCounters() : source.getCounters(cntrs);
             if (amount.equals("All")) {
