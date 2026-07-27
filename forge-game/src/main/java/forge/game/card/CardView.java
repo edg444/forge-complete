@@ -1568,7 +1568,8 @@ public class CardView extends GameEntityView {
             return get(TrackableProperty.SetCode);
         }
         void updateSetCode(CardState c) {
-            set(TrackableProperty.SetCode, c.getSetCode());
+            set(TrackableProperty.SetCode,
+                    c.getCard() == null ? c.getSetCode() : c.getCard().getDisplaySetCode());
         }
 
         public CardRarity getRarity() {

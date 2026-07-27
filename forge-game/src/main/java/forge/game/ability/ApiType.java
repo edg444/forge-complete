@@ -49,6 +49,7 @@ public enum ApiType {
     Charm (CharmEffect.class),
     ChooseArtist (ChooseArtistEffect.class),
     SetArtist (SetArtistEffect.class),
+    SetExpansion (SetExpansionEffect.class),
     AskFact (AskFactEffect.class),
     ChooseEyeColor (ChooseEyeColorEffect.class),
     ChooseCard (ChooseCardEffect.class),

@@ -7628,6 +7628,21 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         renderForUi = value;
     }
 
+    // Greater Morphling changes its expansion symbol without changing which printing it actually is,
+    // so this is deliberately kept apart from getSetCode - the art must not move with it.
+    private String changedSetCode = null;
+
+    public String getDisplaySetCode() {
+        return changedSetCode != null ? changedSetCode : getSetCode();
+    }
+    public String getChangedSetCode() {
+        return changedSetCode;
+    }
+    public void setChangedSetCode(final String set) {
+        changedSetCode = set;
+        currentState.getView().updateSetCode(currentState);
+    }
+
     // Brushstroke Paintermage repaints a permanent, so the artist can differ from the printed one.
     // Everything that cares about artists reads this rather than the paper card directly.
     private String changedArtist = null;
