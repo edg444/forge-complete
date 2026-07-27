@@ -18,6 +18,8 @@
 package forge.game.cost;
 
 import com.google.common.collect.Lists;
+
+import forge.game.GameEntityCounterTable;
 import com.google.common.collect.Multiset;
 
 import forge.game.GameEntity;
@@ -194,7 +196,13 @@ public class CostRemoveCounter extends CostPart {
         final Card host = ability.getHostCard();
         if (this.counter != null && this.counter.is(CounterEnumType.LOYALTY)
                 && host != null && host.isSignFlipped()) {
-            host.addCounter(this.counter, decision.c, ai, null);
+            // the table batches the counters so replacement effects still get a look in, then has
+            // to be resolved - addCounter only stages them
+            final GameEntityCounterTable addTable = new GameEntityCounterTable();
+            host.addCounter(this.counter, decision.c, ai, addTable);
+            if (!addTable.isEmpty()) {
+                addTable.replaceCounterEffect(host.getGame(), ability, effect, false, null);
+            }
             return true;
         }
         for (Map.Entry<GameEntity, Multiset<CounterType>> e : decision.counterTable.row(Optional.empty()).entrySet()) {
