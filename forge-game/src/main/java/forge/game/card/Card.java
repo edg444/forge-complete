@@ -7638,7 +7638,11 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public void setSignFlipped(final boolean flipped) {
         signFlipped = flipped;
         updateAbilityTextForView();
-        // a spell can be hacked while it's on the stack, and the stack text is cached on its view
+        // both the loyalty menu and the stack cache their text on a view, so neither notices on its
+        // own that the card underneath now reads differently
+        for (final SpellAbility sa : getSpellAbilities()) {
+            sa.updateDescriptionForView();
+        }
         if (getGame() != null) {
             for (final SpellAbilityStackInstance si : getGame().getStack()) {
                 if (equals(si.getSpellAbility().getHostCard())) {

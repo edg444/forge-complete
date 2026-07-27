@@ -151,6 +151,11 @@ public class CostRemoveCounter extends CostPart {
     public final boolean canPay(final SpellAbility ability, final Player payer, final boolean effect) {
         final CounterType cntrs = this.counter;
         final Card source = ability.getHostCard();
+        // Magical Hacker: a hacked -N loyalty ability adds counters instead, so there's nothing to
+        // have enough of - otherwise a big ultimate stays unusable on a small planeswalker
+        if (cntrs != null && cntrs.is(CounterEnumType.LOYALTY) && source != null && source.isSignFlipped()) {
+            return true;
+        }
         final String type = this.getType();
         final boolean anyCounters = cntrs == null;
 

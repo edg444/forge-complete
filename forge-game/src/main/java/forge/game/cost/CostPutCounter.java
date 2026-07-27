@@ -126,6 +126,11 @@ public class CostPutCounter extends CostPartWithList {
     public final boolean canPay(final SpellAbility ability, final Player payer, final boolean effect) {
         final Card source = ability.getHostCard();
         final Game game = source.getGame();
+        // Magical Hacker: a hacked +N loyalty ability removes counters instead, so it needs enough
+        if (getCounter().is(CounterEnumType.LOYALTY) && source.isSignFlipped()) {
+            return source.isInPlay() && !source.isPhasedOut()
+                    && source.getCounters(getCounter()) >= getAbilityAmount(ability);
+        }
         if (this.payCostFromSource()) {
             if (isETBReplacement(ability, effect)) {
                 final Card copy = CardCopyService.getLKICopy(source);

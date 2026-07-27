@@ -54,7 +54,12 @@ public class SpellAbilityView extends TrackableObject implements IHasCardView {
         return get(TrackableProperty.Description);
     }
     void updateDescription(SpellAbility sa) {
-        set(TrackableProperty.Description, sa.toUnsuppressedString());
+        String desc = sa.toUnsuppressedString();
+        // Magical Hacker: the loyalty menu is built from this, so it has to read as flipped too
+        if (sa.getHostCard() != null && sa.getHostCard().isSignFlipped()) {
+            desc = forge.game.card.Card.flipSignsInText(desc);
+        }
+        set(TrackableProperty.Description, desc);
     }
 
     public boolean canPlay() {

@@ -255,6 +255,11 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
         view.updateDescription(this); //description can change if host card does
     }
 
+    /** Re-render the description, for when the host card's text changed under it. */
+    public void updateDescriptionForView() {
+        view.updateDescription(this);
+    }
+
     @Override
     public void setKeyword(final KeywordInterface kw) {
         super.setKeyword(kw);
