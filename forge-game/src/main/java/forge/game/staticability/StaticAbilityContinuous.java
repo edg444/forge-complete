@@ -725,6 +725,11 @@ public final class StaticAbilityContinuous {
                 if (addT.contains("Affected")) {
                     toughnessBonus = AbilityUtils.calculateAmount(affectedCard, addT, stAb, true);
                 }
+                // Magical Hacker: an anthem's +1/+1 is written with plusses, so it flips too
+                if (hostCard.isSignFlipped()) {
+                    powerBonus = -powerBonus;
+                    toughnessBonus = -toughnessBonus;
+                }
                 affectedCard.addPTBoost(powerBonus, toughnessBonus, se.getTimestamp(), stAb.getId());
             }
 
