@@ -1,0 +1,7 @@
+Name:Moniker Mage
+ManaCost:2 U
+Types:Creature Human Wizard
+PT:2/2
+A:AB$ Pump | Cost$ U FlavorAction<Say your middle name out loud/Said it!> | Defined$ Self | KW$ Shroud | AILogic$ Chance.60 | SpellDescription$ CARDNAME gains shroud until end of turn.
+A:AB$ Pump | Cost$ U FlavorAction<Say an opponent's middle name out loud/Said it!> | Defined$ Self | KW$ Flying | AILogic$ Chance.60 | SpellDescription$ CARDNAME gains flying until end of turn.
+Oracle:{U}, Say your middle name: This creature gains shroud until end of turn.\n{U}, Say an opponent's middle name: This creature gains flying until end of turn.
