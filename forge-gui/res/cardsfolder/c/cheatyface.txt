@@ -4,7 +4,7 @@ Types:Creature Efreet
 PT:2/2
 K:Flying
 A:AB$ ChangeZone | Cost$ 0 | Defined$ Self | Origin$ Hand | Destination$ Battlefield | ActivationZone$ Hand | AILogic$ Chance.40 | SubAbility$ DBCaught | StackDescription$ None | SpellDescription$ Sneak CARDNAME onto the battlefield. If an opponent catches you right away, that player may exile it.
-SVar:DBCaught:DB$ GenericChoice | Defined$ Opponent | Choices$ DBMissedIt,DBExile | ChoicePrompt$ Did you catch them sneaking Cheatyface onto the battlefield? | AILogic$ Chance.50 | StackDescription$ None
-SVar:DBMissedIt:DB$ Cleanup | SpellDescription$ Didn't notice a thing.
-SVar:DBExile:DB$ ChangeZone | Defined$ Self | Origin$ Battlefield | Destination$ Exile | SpellDescription$ Caught you! Exile CARDNAME.
+SVar:DBCaught:DB$ GenericChoice | Defined$ Opponent | Choices$ DBMissedIt,DBExile | ChoicePrompt$ Did you catch them sneaking Cheatyface onto the battlefield? | AILogic$ Chance.50
+SVar:DBMissedIt:DB$ Cleanup | StackDescription$ No one noticed CARDNAME sneak in. | SpellDescription$ Didn't notice a thing.
+SVar:DBExile:DB$ ChangeZone | Defined$ Self | Origin$ Battlefield | Destination$ Exile | StackDescription$ Caught you! CARDNAME is exiled. | SpellDescription$ Caught you! Exile CARDNAME.
 Oracle:If Cheatyface is in your hand, you may sneak Cheatyface onto the battlefield. If an opponent catches you right away, that player may exile Cheatyface.\nFlying

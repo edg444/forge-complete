@@ -1,0 +1,8 @@
+Name:Framed!
+ManaCost:1 U
+Types:Instant
+A:SP$ ChooseArtist | Defined$ You | AILogic$ MostProminentOppCtrl | SubAbility$ DBFrame | SpellDescription$ Choose an artist. Tap all untapped permanents with art by that artist or untap all tapped permanents with art by that artist.
+SVar:DBFrame:DB$ Charm | Defined$ You | Choices$ DBTap,DBUntap
+SVar:DBTap:DB$ TapAll | ValidCards$ Permanent.ArtistIsChosen+untapped | SpellDescription$ Tap all untapped permanents with art by that artist.
+SVar:DBUntap:DB$ UntapAll | ValidCards$ Permanent.ArtistIsChosen+tapped | SpellDescription$ Untap all tapped permanents with art by that artist.
+Oracle:Choose an artist. Tap all untapped permanents with art by that artist or untap all tapped permanents with art by that artist.
