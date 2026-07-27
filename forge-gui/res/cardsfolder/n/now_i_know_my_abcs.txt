@@ -1,0 +1,7 @@
+Name:Now I Know My ABC's
+ManaCost:1 U U
+Types:Enchantment
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigWin | CheckSVar$ X | SVarCompare$ GE26 | TriggerDescription$ At the beginning of your upkeep, if you control permanents with names that include all twenty-six letters of the English alphabet, you win the game.
+SVar:TrigWin:DB$ WinsGame | Defined$ You
+SVar:X:Count$AlphabetCoverage
+Oracle:At the beginning of your upkeep, if you control permanents with names that include all twenty-six letters of the English alphabet, you win the game.

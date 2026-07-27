@@ -2324,6 +2324,19 @@ public class AbilityUtils {
         if (sq[0].equals("YourLifeTotal")) {
             return doXMath(player.getLife(), expr, c, ctb);
         }
+        // Now I Know My ABC's. Counts distinct letters across the names of permanents this player
+        // controls, so a renamed permanent counts as whatever it's called now.
+        if (sq[0].equals("AlphabetCoverage")) {
+            final Set<Character> letters = Sets.newHashSet();
+            for (final Card p : player.getCardsIn(ZoneType.Battlefield)) {
+                for (final char ch : p.getName().toLowerCase().toCharArray()) {
+                    if (ch >= 'a' && ch <= 'z') {
+                        letters.add(ch);
+                    }
+                }
+            }
+            return doXMath(letters.size(), expr, c, ctb);
+        }
         // lets a card tell "no colour was chosen" apart from a choice, which Avatar of Me needs to
         // know whether the eyes were one of the five colours at all
         if (sq[0].equals("ChosenColorCount")) {
