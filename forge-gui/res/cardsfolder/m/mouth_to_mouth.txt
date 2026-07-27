@@ -1,0 +1,7 @@
+Name:Mouth to Mouth
+ManaCost:3 U
+Types:Sorcery
+A:SP$ GenericChoice | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls | Defined$ You | Choices$ DBHeldOut,DBWon | ChoicePrompt$ Hold your breath against that player. Did you outlast them? | AILogic$ Chance.50 | SpellDescription$ Choose target opponent and target creature they control. You and that player have a breath-holding contest. If you win, you gain control of that creature.
+SVar:DBHeldOut:DB$ Cleanup | StackDescription$ They outlasted you. | SpellDescription$ They outlasted you.
+SVar:DBWon:DB$ GainControl | Defined$ Targeted | StackDescription$ You outlasted them and take {c:Targeted}. | SpellDescription$ You outlasted them - gain control of that creature.
+Oracle:Choose target opponent and target creature they control. You and that player have a breath-holding contest. If you win, you gain control of that creature.
