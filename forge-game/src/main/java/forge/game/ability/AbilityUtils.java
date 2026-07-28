@@ -2330,6 +2330,25 @@ public class AbilityUtils {
         if (sq[0].equals("YourLifeTotal")) {
             return doXMath(player.getLife(), expr, c, ctb);
         }
+        // Bloodletter. The largest group of nonland permanents whose names share a first letter,
+        // across the whole battlefield - the card doesn't care who controls them.
+        if (sq[0].equals("MostSharedInitial")) {
+            final Map<Character, Integer> byInitial = Maps.newHashMap();
+            int most = 0;
+            for (final Card p : game.getCardsIn(ZoneType.Battlefield)) {
+                if (p.isLand()) {
+                    continue;
+                }
+                final String n = p.getName().trim();
+                if (n.isEmpty()) {
+                    continue;
+                }
+                final char initial = Character.toUpperCase(n.charAt(0));
+                final int seen = byInitial.merge(initial, 1, Integer::sum);
+                most = Math.max(most, seen);
+            }
+            return doXMath(most, expr, c, ctb);
+        }
         // Now I Know My ABC's. Counts distinct letters across the names of permanents this player
         // controls, so a renamed permanent counts as whatever it's called now.
         if (sq[0].equals("AlphabetCoverage")) {
