@@ -333,6 +333,16 @@ public class PumpEffect extends SpellAbilityEffect {
                     s = s.replaceAll(defined, replaced);
                     keywords.set(i, s);
                 }
+            } else if (defined.equals("ChosenArtist")) {
+                // so the granted keyword reads "protection from Rob Alexander" rather than
+                // "protection from the chosen artist", which doesn't say who was picked
+                if (!host.hasChosenArtist()) {
+                    return;
+                }
+                final String artist = host.getChosenArtist();
+                for (int i = 0; i < keywords.size(); i++) {
+                    keywords.set(i, keywords.get(i).replace(defined, artist));
+                }
             } else if (defined.equals("ChosenPlayer")) {
                 if (!host.hasChosenPlayer()) {
                     return;
