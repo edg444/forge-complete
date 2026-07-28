@@ -1554,15 +1554,25 @@ public class CardProperty {
                 return false;
             }
         } else if (property.equals("hasReminderText")) {
-            // Duh. Reminder text is the parenthesised italics on the printed card, which Forge keeps
-            // in the card's Oracle text. A token has no printing to read, so it doesn't qualify -
-            // matching the ruling that only the object representing it counts.
+            // Duh. On a real card the reminder text is the parenthesised italics, which Forge keeps
+            // in the Oracle text. Token scripts drop it (a Thopter token just says "Flying"), but a
+            // printed token does carry it, so for those the keyword's own reminder text is the test.
+            boolean hasReminder = false;
             final forge.card.CardRules reminderRules = card.getRules();
-            if (reminderRules == null) {
-                return false;
+            if (reminderRules != null) {
+                final String oracle = reminderRules.getOracleText();
+                hasReminder = oracle != null && oracle.contains("(") && oracle.contains(")");
+            } else {
+                // a token, whose script omits the reminder text its printed counterpart carries
+                for (final KeywordInterface inst : card.getKeywords()) {
+                    final String reminder = inst.getReminderText();
+                    if (reminder != null && !reminder.isEmpty()) {
+                        hasReminder = true;
+                        break;
+                    }
+                }
             }
-            final String oracle = reminderRules.getOracleText();
-            if (oracle == null || !oracle.contains("(") || !oracle.contains(")")) {
+            if (!hasReminder) {
                 return false;
             }
         } else if (property.startsWith("nameWords")) {
