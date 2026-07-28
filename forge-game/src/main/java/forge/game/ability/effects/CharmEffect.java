@@ -43,7 +43,10 @@ public class CharmEffect extends SpellAbilityEffect {
                 // 603.3c If one of the modes would be illegal, that mode can't be chosen.
                 if ((ch.usesTargeting() && ch.getMinTargets() > 0 &&
                         ch.getTargetRestrictions().getNumCandidates(ch) == 0) ||
-                        (restriction != null && restriction.contains(ch.getDescription()))) {
+                        (restriction != null && restriction.contains(ch.getDescription()))
+                        // a mode whose own condition can't be met is no more choosable than one
+                        // with no legal target - The Fallen Apart can't lose an arm it hasn't got
+                        || !ch.metConditions()) {
                     toRemove.add(ch);
                 }
             }
