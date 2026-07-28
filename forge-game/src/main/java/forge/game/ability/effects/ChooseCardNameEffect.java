@@ -108,8 +108,10 @@ public class ChooseCardNameEffect extends SpellAbilityEffect {
                             valid = valid.replace("=Imprinted", s);
                         } else if (valid.contains("ManaCost=Chosen")) {
                             // Richard Garfield, Ph.D. - the cost to match comes from the card just
-                            // chosen out of hand, and colour matters, so it's the full cost string
-                            if (host.getChosenCard() == null) {
+                            // chosen out of hand, and colour matters, so it's the full cost string.
+                            // Asked via hasChosenCard because getChosenCard throws on an empty
+                            // collection rather than returning null, which cancelling leaves behind
+                            if (!host.hasChosenCard()) {
                                 continue;
                             }
                             String s = host.getChosenCard().getManaCost().getShortString();
