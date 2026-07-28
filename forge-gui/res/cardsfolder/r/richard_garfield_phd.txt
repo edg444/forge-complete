@@ -1,0 +1,11 @@
+Name:Richard Garfield, Ph.D.
+ManaCost:3 U U
+Types:Legendary Creature Human Designer
+PT:2/2
+A:AB$ ChooseCard | Cost$ 0 | Defined$ You | Choices$ Card.YouOwn | ChoiceZone$ Hand | ChoiceTitle$ Choose a card in your hand to play as something else | Amount$ 1 | SubAbility$ DBName | SpellDescription$ Play a card in your hand as another card of your choice with the same mana cost. You can't choose the same card twice. (Mana cost includes color.)
+SVar:DBName:DB$ NameCard | Defined$ You | ValidCards$ Card.ManaCost=Chosen | ValidDescription$ card with the same mana cost | ExcludeChosen$ True | SubAbility$ DBExileOriginal
+SVar:DBExileOriginal:DB$ ChangeZone | Defined$ ChosenCard | Origin$ Hand | Destination$ Exile | StackDescription$ None | SubAbility$ DBMakeNamed
+SVar:DBMakeNamed:DB$ MakeCard | Defined$ You | Name$ LastNamedCard | Zone$ Exile | RememberMade$ True | StackDescription$ None | SubAbility$ DBPlayNamed
+SVar:DBPlayNamed:DB$ Play | Defined$ Remembered | Controller$ You | Optional$ True | Amount$ 1 | ForgetPlayed$ True | StackDescription$ None | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
+Oracle:You may play cards as though they were other cards of your choice with the same mana cost. You can't choose the same card twice. (Mana cost includes color.)

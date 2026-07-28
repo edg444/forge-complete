@@ -52,6 +52,13 @@ public class MakeCardEffect extends SpellAbilityEffect {
                     } else {
                         System.err.println("Malformed MakeCard entry! - " + source);
                     }
+                } else if (n.equals("LastNamedCard")) {
+                    // Richard Garfield, Ph.D. keeps every name it has used so it can't repeat one,
+                    // so only the name just chosen should be made
+                    final List<String> named = source.getNamedCards();
+                    if (!named.isEmpty()) {
+                        names.add(named.get(named.size() - 1));
+                    }
                 } else {
                     names.add(n);
                 }

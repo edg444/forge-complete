@@ -106,9 +106,22 @@ public class ChooseCardNameEffect extends SpellAbilityEffect {
                         } else if (valid.contains("ManaCost=Imprinted")) {
                             String s = host.getImprintedCards().getFirst().getManaCost().getShortString();
                             valid = valid.replace("=Imprinted", s);
+                        } else if (valid.contains("ManaCost=Chosen")) {
+                            // Richard Garfield, Ph.D. - the cost to match comes from the card just
+                            // chosen out of hand, and colour matters, so it's the full cost string
+                            if (host.getChosenCard() == null) {
+                                continue;
+                            }
+                            String s = host.getChosenCard().getManaCost().getShortString();
+                            valid = valid.replace("=Chosen", s);
                         }
                     }
                     cpp = CardFacePredicates.valid(valid);
+                }
+                if (sa.hasParam("ExcludeChosen")) {
+                    // each Richard tracks its own list, which is what the named cards already are
+                    final Predicate<ICardFace> notNamed = f -> !host.getNamedCards().contains(f.getName());
+                    cpp = cpp.and(notNamed);
                 }
                 if (randomChoice) {
                     chosen = StaticData.instance().getCommonCards().streamAllFaces()
