@@ -1553,6 +1553,18 @@ public class CardProperty {
             if (!card.getManaCost().hasHybrid()) {
                 return false;
             }
+        } else if (property.equals("hasReminderText")) {
+            // Duh. Reminder text is the parenthesised italics on the printed card, which Forge keeps
+            // in the card's Oracle text. A token has no printing to read, so it doesn't qualify -
+            // matching the ruling that only the object representing it counts.
+            final forge.card.CardRules reminderRules = card.getRules();
+            if (reminderRules == null) {
+                return false;
+            }
+            final String oracle = reminderRules.getOracleText();
+            if (oracle == null || !oracle.contains("(") || !oracle.contains(")")) {
+                return false;
+            }
         } else if (property.startsWith("nameWords")) {
             // syntax: nameWords_EQ2 (Double Header). Counts whitespace-separated words of the
             // current name, so a renamed permanent counts as whatever it's called now, and

@@ -1,0 +1,5 @@
+Name:Duh
+ManaCost:B
+Types:Instant
+A:SP$ Destroy | ValidTgts$ Creature.hasReminderText | TgtPrompt$ Select target creature with reminder text | SpellDescription$ Destroy target creature with reminder text. (Reminder text is any italicized text in parentheses that explains rules you already know.)
+Oracle:Destroy target creature with reminder text. (Reminder text is any italicized text in parentheses that explains rules you already know.)
