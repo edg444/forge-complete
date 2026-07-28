@@ -1,0 +1,15 @@
+Name:The Fallen Apart
+ManaCost:2 B B
+Types:Creature Zombie
+PT:4/4
+K:etbCounter:Arm:2:no Condition:CARDNAME enters with two arms.
+K:etbCounter:Leg:2:no Condition:CARDNAME enters with two legs.
+T:Mode$ DamageDone | ValidTarget$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigDismember | TriggerDescription$ Whenever damage is dealt to CARDNAME, remove an arm or a leg from it.
+SVar:TrigDismember:DB$ Charm | Defined$ You | Choices$ DBLoseArm,DBLoseLeg
+SVar:DBLoseArm:DB$ RemoveCounter | Defined$ Self | CounterType$ Arm | CounterNum$ 1 | ConditionCheckSVar$ Arms | ConditionSVarCompare$ GE1 | SpellDescription$ Remove an arm.
+SVar:DBLoseLeg:DB$ RemoveCounter | Defined$ Self | CounterType$ Leg | CounterNum$ 1 | ConditionCheckSVar$ Legs | ConditionSVarCompare$ GE1 | SpellDescription$ Remove a leg.
+S:Mode$ CantAttack | ValidCard$ Card.Self | CheckSVar$ Legs | SVarCompare$ EQ0 | Description$ CARDNAME can't attack if it has no legs.
+S:Mode$ CantBlock | ValidCard$ Card.Self | CheckSVar$ Arms | SVarCompare$ EQ0 | Description$ CARDNAME can't block if it has no arms.
+SVar:Arms:Count$CardCounters.Arm
+SVar:Legs:Count$CardCounters.Leg
+Oracle:The Fallen Apart enters with two arms and two legs.\nWhenever damage is dealt to The Fallen Apart, remove an arm or a leg from it.\nThe Fallen Apart can't attack if it has no legs and can't block if it has no arms.
