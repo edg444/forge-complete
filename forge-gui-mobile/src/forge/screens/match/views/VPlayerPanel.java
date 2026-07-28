@@ -569,7 +569,9 @@ public class VPlayerPanel extends FContainer {
         }
 
         private void update() {
-            int delta = player.getLife() - life;
+            // counted in halves so half damage shows as 2 1/2 rather than rounding to 2 or 3
+            int delta = (player.getLife() * 2 + (player.hasHalfLife() ? 1 : 0))
+                    - (life * 2 + (halfLife ? 1 : 0));
             player.setAvatarLifeDifference(player.getAvatarLifeDifference() + delta);
             if (delta != 0 || halfLife != player.hasHalfLife()) {
                 life = player.getLife();

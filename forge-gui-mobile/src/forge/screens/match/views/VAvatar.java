@@ -65,7 +65,7 @@ public class VAvatar extends FDisplayObject {
                 drawPlayerIndicator(g, w, h, percentage);
                 g.setAlphaComposite(fade);
                 g.drawRect(w / 12f, Color.WHITE, 0, 0, w, h);
-                g.drawOutlinedText("+"+amount, Forge.altZoneTabs ? LIFE_FONT_ALT : LIFE_FONT, Color.WHITE, Color.SKY, 0, (getHeight()/2)*fade, getWidth(), getHeight(), false, Align.center, true);
+                g.drawOutlinedText(halvesLabel(amount), Forge.altZoneTabs ? LIFE_FONT_ALT : LIFE_FONT, Color.WHITE, Color.SKY, 0, (getHeight()/2)*fade, getWidth(), getHeight(), false, Align.center, true);
                 g.setAlphaComposite(oldAlpha);
             } else if (amount < 0) {
                 if (splatter == null) {
@@ -80,9 +80,19 @@ public class VAvatar extends FDisplayObject {
                 }
                 drawPlayerIndicator(g, w, h, percentage);
                 g.setAlphaComposite(fade);
-                g.drawOutlinedText(String.valueOf(amount), Forge.altZoneTabs ? LIFE_FONT_ALT : LIFE_FONT, Color.RED, Color.ORANGE, 0, (getHeight()/2)*fade, getWidth(), getHeight(), false, Align.center, true);
+                g.drawOutlinedText(halvesLabel(amount), Forge.altZoneTabs ? LIFE_FONT_ALT : LIFE_FONT, Color.RED, Color.ORANGE, 0, (getHeight()/2)*fade, getWidth(), getHeight(), false, Align.center, true);
                 g.setAlphaComposite(oldAlpha);
             }
+        }
+
+        /** The life difference is counted in halves, so 5 reads as +2 1/2 and -5 as -2 1/2. */
+        private static String halvesLabel(final int halves) {
+            final String sign = halves < 0 ? "-" : "+";
+            final int whole = Math.abs(halves) / 2;
+            if (Math.abs(halves) % 2 == 0) {
+                return sign + whole;
+            }
+            return sign + (whole == 0 ? "½" : whole + "½");
         }
 
         @Override
