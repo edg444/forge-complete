@@ -729,20 +729,10 @@ public class CardState implements GameObject, IHasSVars, ITranslatable {
         return result;
     }
     public final boolean addStaticAbility(StaticAbility stab) {
-        final boolean added = staticAbilities.add(stab);
-        // the view caches the card's text, and it is first built before any static has been
-        // attached - without this the descriptions never reach the detail panel
-        if (added && getCard() != null) {
-            getCard().updateAbilityTextForView();
-        }
-        return added;
+        return staticAbilities.add(stab);
     }
     public final boolean removeStaticAbility(StaticAbility stab) {
-        final boolean removed = staticAbilities.remove(stab);
-        if (removed && getCard() != null) {
-            getCard().updateAbilityTextForView();
-        }
-        return removed;
+        return staticAbilities.remove(stab);
     }
 
     public FCollectionView<ReplacementEffect> getReplacementEffects() {
