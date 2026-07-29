@@ -3,6 +3,10 @@ ManaCost:1 W W
 Types:Creature Human Knight
 PT:2/2
 K:ETBReplacement:Other:DBMeasure
+# the boosts live on the effect the choice creates, so the card itself has no rules text of its own
+# to show - these carry no layer params, so they are inert and exist only to print the card's text
+S:Mode$ Continuous | Affected$ Card.Self | Description$ As long as you're shorter than an opponent, CARDNAME gets +0/+1 and has first strike.
+S:Mode$ Continuous | Affected$ Card.Self | Description$ As long as you're taller than an opponent, CARDNAME gets +1/+0.
 SVar:DBMeasure:DB$ GenericChoice | Defined$ You | Choices$ DBShorter,DBTaller,DBBoth,DBNeither | ChoiceTitle$ Compare your height to your opponents | SpellDescription$ As CARDNAME enters, compare your height to your opponents'.
 SVar:DBShorter:DB$ Effect | SpellDescription$ I am shorter than an opponent | RememberObjects$ Self | StaticAbilities$ STShorter | ExileOnMoved$ Battlefield | Duration$ Permanent
 SVar:DBTaller:DB$ Effect | SpellDescription$ I am taller than an opponent | RememberObjects$ Self | StaticAbilities$ STTaller | ExileOnMoved$ Battlefield | Duration$ Permanent
