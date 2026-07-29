@@ -114,7 +114,7 @@ public class CardRendererUtils {
             return false;
         if (isMagnify)
             return false;
-        return card.getDamage() > 0;
+        return card.getDamage() > 0 || card.hasHalfDamage();
     }
 
 }

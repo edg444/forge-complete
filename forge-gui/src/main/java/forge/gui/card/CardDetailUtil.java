@@ -375,10 +375,9 @@ public class CardDetailUtil {
         }
 
         if (state.isCreature()) {
-            final int damage = card.getDamage();
-            if (damage > 0) {
+            if (card.getDamage() > 0 || card.hasHalfDamage()) {
                 area.append("\n");
-                area.append("Damage: ").append(damage);
+                area.append("Damage: ").append(card.getDamageString());
             }
         }
         if (state.isCreature() || state.isPlaneswalker()) {

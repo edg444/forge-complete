@@ -1135,8 +1135,8 @@ public class CardRenderer {
         h = boxHeight;
 
         //draw card damage above P/T box if needed
-        if (card.getDamage() > 0) {
-            g.drawOutlinedText(">" + card.getDamage() + "<", font, Color.RED, Color.WHITE, x, y - h + padding, w, h, false, Align.center, true);
+        if (card.getDamage() > 0 || card.hasHalfDamage()) {
+            g.drawOutlinedText(">" + card.getDamageString() + "<", font, Color.RED, Color.WHITE, x, y - h + padding, w, h, false, Align.center, true);
         }
 
         g.fillRect(details.isVehicle() ?  CardImageRenderer.VEHICLE_PTBOX_COLOR[0] :

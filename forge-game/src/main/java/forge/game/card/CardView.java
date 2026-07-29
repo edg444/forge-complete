@@ -343,8 +343,21 @@ public class CardView extends GameEntityView {
     public int getDamage() {
         return get(TrackableProperty.Damage);
     }
+    public boolean hasHalfDamage() {
+        return get(TrackableProperty.HasHalfDamage);
+    }
+    /** Marked damage as the player sees it, so a half (Save Life, Smart Ass) isn't rounded away. */
+    public String getDamageString() {
+        final int whole = getDamage();
+        if (!hasHalfDamage()) {
+            return String.valueOf(whole);
+        }
+        return whole == 0 ? "½" : whole + "½";
+    }
     void updateDamage(Card c) {
-        set(TrackableProperty.Damage, c.getDamage());
+        // read through the halves so a half hit isn't silently dropped from the display
+        set(TrackableProperty.Damage, c.getDamageInHalves() / 2);
+        set(TrackableProperty.HasHalfDamage, c.getDamageInHalves() % 2 != 0);
         updateLethalDamage(c);
         //get crackoverlay by level of damage light 0, medium 1, heavy 2, max 3
         int randCrackLevel = 0;

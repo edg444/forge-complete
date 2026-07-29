@@ -169,6 +169,7 @@ public enum TrackableProperty {
     Opponents(TrackableTypes.PlayerViewCollectionType),
     Life(TrackableTypes.IntegerType),
     HasHalfLife(TrackableTypes.BooleanType),
+    HasHalfDamage(TrackableTypes.BooleanType),
     HasHalfPower(TrackableTypes.BooleanType),
     HasHalfToughness(TrackableTypes.BooleanType),
     MaxHandSize(TrackableTypes.IntegerType),

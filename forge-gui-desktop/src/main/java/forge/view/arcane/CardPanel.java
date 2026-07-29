@@ -1036,8 +1036,8 @@ public class CardPanel extends SkinnedPanel implements CardContainer, IDisposabl
                     titleText.getAccessibleContext().setAccessibleDescription("");
                 }
             }
-        final int damage = card.getDamage();
-        damageText.setText(damage > 0 ? "\u00BB " + damage + " \u00AB" : "");
+        final boolean anyDamage = card.getDamage() > 0 || card.hasHalfDamage();
+        damageText.setText(anyDamage ? "\u00BB " + card.getDamageString() + " \u00AB" : "");
 
         // Card Id overlay
         cardIdText.setText(card.getCurrentState().getDisplayId());
