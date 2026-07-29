@@ -3,6 +3,7 @@ ManaCost:W
 Types:Instant
 A:SP$ SevenQuestions | ValidTgts$ Opponent | TgtPrompt$ Select target opponent | Questions$ 6 | GuessCorrect$ DBChooseSource | SpellDescription$ You and target opponent play Seven Questions with the top card of that player's library. If you win, prevent all damage that would be dealt this turn by a source of your choice.
 SVar:DBChooseSource:DB$ ChooseSource | Choices$ Card,Emblem | AILogic$ NeedsPrevention | SubAbility$ DBEffect
-SVar:DBEffect:DB$ Effect | ReplacementEffects$ RPreventFromSource | ConditionDefined$ ChosenCard | ConditionPresent$ Card,Emblem
+SVar:DBEffect:DB$ Effect | Name$ Head to Head Effect | ReplacementEffects$ RPreventFromSource | SubAbility$ DBCleanup | ConditionDefined$ ChosenCard | ConditionPresent$ Card,Emblem
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 SVar:RPreventFromSource:Event$ DamageDone | ValidSource$ Card.ChosenCardStrict,Emblem.ChosenCard | Prevent$ True | Description$ Prevent all damage the chosen source would deal this turn.
 Oracle:You and target opponent play Seven Questions with the top card of that player's library. If you win, prevent all damage that would be dealt this turn by a source of your choice. (To play Seven Questions, that player looks at the card, then you ask up to six yes-or-no questions about the card that they answer truthfully. You guess the card's name—that's question seven—then the player reveals the card.)
