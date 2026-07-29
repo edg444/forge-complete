@@ -21,6 +21,8 @@ import forge.game.zone.ZoneType;
 // which makes the whole game playable against the AI rather than being an empty prompt.
 public class SevenQuestionsEffect extends SpellAbilityEffect {
 
+    private static final String GUESS_NOW = "Skip to the guess (question seven)";
+
     private static final Map<String, Predicate<Card>> QUESTIONS = Maps.newLinkedHashMap();
     static {
         QUESTIONS.put("Is it a land?", Card::isLand);
@@ -76,8 +78,12 @@ public class SevenQuestionsEffect extends SpellAbilityEffect {
         final int allowed = AbilityUtils.calculateAmount(host, sa.getParamOrDefault("Questions", "6"), sa);
         final List<String> remaining = Lists.newArrayList(QUESTIONS.keySet());
         for (int i = 0; i < allowed && !remaining.isEmpty(); i++) {
-            final String question = asker.getController().chooseSomeType("Question", sa, remaining, true);
-            if (question == null) {
+            // the card allows UP TO six questions, so guessing early has to be an offered choice -
+            // cancelling out of the prompt isn't reliably available
+            final List<String> choices = Lists.newArrayList(remaining);
+            choices.add(0, GUESS_NOW);
+            final String question = asker.getController().chooseSomeType("Question", sa, choices, true);
+            if (question == null || GUESS_NOW.equals(question)) {
                 break;
             }
             remaining.remove(question);
