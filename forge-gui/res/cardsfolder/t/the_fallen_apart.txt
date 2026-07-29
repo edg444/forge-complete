@@ -8,8 +8,8 @@ T:Mode$ DamageDone | ValidTarget$ Card.Self | TriggerZones$ Battlefield | IsPres
 SVar:TrigDismember:DB$ Charm | Defined$ You | Choices$ DBLoseArm,DBLoseLeg
 SVar:DBLoseArm:DB$ RemoveCounter | Defined$ Self | CounterType$ Arm | CounterNum$ 1 | ConditionCheckSVar$ Arms | ConditionSVarCompare$ GE1 | SpellDescription$ Remove an arm.
 SVar:DBLoseLeg:DB$ RemoveCounter | Defined$ Self | CounterType$ Leg | CounterNum$ 1 | ConditionCheckSVar$ Legs | ConditionSVarCompare$ GE1 | SpellDescription$ Remove a leg.
-S:Mode$ CantAttack | ValidCard$ Card.Self | CheckSVar$ Legs | SVarCompare$ EQ0 | Description$ CARDNAME can't attack if it has no legs.
-S:Mode$ CantBlock | ValidCard$ Card.Self | CheckSVar$ Arms | SVarCompare$ EQ0 | Description$ CARDNAME can't block if it has no arms.
+S:Mode$ CantAttack | ValidCard$ Card.Self | CheckSVar$ Legs | SVarCompare$ EQ0 | Description$ CARDNAME can't attack if it has no legs. | ActiveDescription$ This creature can't attack.
+S:Mode$ CantBlock | ValidCard$ Card.Self | CheckSVar$ Arms | SVarCompare$ EQ0 | Description$ CARDNAME can't block if it has no arms. | ActiveDescription$ This creature can't block.
 SVar:Arms:Count$CardCounters.Arm
 SVar:Legs:Count$CardCounters.Leg
 SVar:Limbs:Count$CardCounters.Arm/Plus.Legs

@@ -330,6 +330,9 @@ public class CardView extends GameEntityView {
         state.updateToughness(c);
         state.updateLoyalty(c);
         state.updateDefense(c);
+        // a static's description can depend on a counter count (The Fallen Apart's arms and legs),
+        // so the cached text has to be rebuilt whenever counters move
+        state.updateAbilityText(c, c.getCurrentState());
     }
 
     public int getCrackOverlayInt() {

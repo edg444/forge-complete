@@ -2988,22 +2988,6 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
             }
         }
 
-        // A basic land type carries its mana ability without printing one, so the ability is marked
-        // secondary and skipped above. A printed land shows the reminder in its own rules text, but
-        // a permanent that was TURNED into one (Yedora, Grave Gardener) has nothing to show - so
-        // spell out the reminder for land types the card wasn't printed with.
-        // the granted type lives on the card, not on the state the text is built from - a state that
-        // isn't the current one (Yedora, Grave Gardener turns creatures face down into Forests) never
-        // sees the change at all, so ask the card
-        for (final MagicColor.Color mc : MagicColor.Color.values()) {
-            final String basicType = mc.getBasicLandType();
-            if (basicType == null || !getType().hasSubtype(basicType)
-                    || state.getType().hasSubtype(basicType)) {
-                continue;
-            }
-            sb.append("({T}: Add ").append(mc.getSymbol()).append(".)").append(linebreak);
-        }
-
         final List<String> addedManaStrings = Lists.newArrayList();
 
         for (final SpellAbility sa : state.getSpellAbilities()) {

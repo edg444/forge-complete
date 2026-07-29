@@ -204,17 +204,27 @@ public class StaticAbility extends CardTraitBase implements IIdentifiable, Clone
      */
     @Override
     public final String toString() {
-        if (hasParam("Description") && !this.isSuppressed()) {
-            ITranslatable nameSource = getHostName(this);
-            String desc = CardTranslation.translateSingleDescriptionText(getParam("Description"), nameSource);
-            String translatedName = nameSource.getTranslatedName();
-            desc = TextUtil.fastReplace(desc, "CARDNAME", translatedName);
-            desc = TextUtil.fastReplace(desc, "NICKNAME", Lang.getInstance().getNickName(translatedName));
-
-            return desc;
-        } else {
+        if (this.isSuppressed()) {
             return "";
         }
+        // Description is printed rules text and always shows. ActiveDescription is an ADDITIONAL
+        // line the card picks up only while the restriction is actually biting, the way a granted
+        // "can't block" reads - so it stays hidden until the conditions hold.
+        String source = hasParam("Description") ? getParam("Description") : null;
+        if (hasParam("ActiveDescription") && checkConditions()) {
+            String active = getParam("ActiveDescription");
+            source = source == null ? active : source + "\r\n" + active;
+        }
+        if (source == null) {
+            return "";
+        }
+        ITranslatable nameSource = getHostName(this);
+        String desc = CardTranslation.translateSingleDescriptionText(source, nameSource);
+        String translatedName = nameSource.getTranslatedName();
+        desc = TextUtil.fastReplace(desc, "CARDNAME", translatedName);
+        desc = TextUtil.fastReplace(desc, "NICKNAME", Lang.getInstance().getNickName(translatedName));
+
+        return desc;
     }
 
     // main constructor
