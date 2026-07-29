@@ -2717,6 +2717,18 @@ public class GameAction {
             final Card sourceLKI = et.getKey();
             int sum = 0;
             for (Map.Entry<GameEntity, Integer> e : et.getValue().entrySet()) {
+                // A leftover half shield (Save Life's 2 1/2) still has to bite into ordinary whole
+                // damage: the whole part of the shield is an ordinary replacement, so 3 damage
+                // arrives here as 1, and shaving the half off it leaves half damage dealt.
+                if (e.getValue() > 0 && e.getKey().useHalfPreventShield()) {
+                    e.setValue(e.getValue() - 1);
+                    if (e.getKey() instanceof Card halfCard) {
+                        halfCard.addHalfDamage();
+                    } else if (e.getKey() instanceof Player halfPlayer) {
+                        halfPlayer.addHalfDamage();
+                    }
+                }
+
                 if (e.getValue() <= 0) {
                     continue;
                 }
