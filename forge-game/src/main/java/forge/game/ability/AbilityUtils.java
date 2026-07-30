@@ -1650,6 +1650,21 @@ public class AbilityUtils {
                 return doXMath(calculateAmount(c, sq[v ? 1 : 2], ctb), expr, c, ctb);
             }
 
+            // Count$WordsInName.<DefinedCards> - Bosom Buddy counts the words in a spell's name,
+            // Wordmail in a static ability. Kept outside the SpellAbility-only block below, which a
+            // static never enters. Split/double-faced names keep their "//" separator out of it.
+            if (sq[0].startsWith("WordsInName")) {
+                int words = 0;
+                for (Card card : getDefinedCards(c, sq[1], ctb)) {
+                    for (String word : card.getName().split("\\s+")) {
+                        if (!word.isEmpty() && !word.equals("//")) {
+                            words++;
+                        }
+                    }
+                }
+                return doXMath(words, expr, c, ctb);
+            }
+
             SpellAbility sa = null;
             if (ctb instanceof SpellAbility) {
                 sa = (SpellAbility) ctb;
@@ -1754,19 +1769,6 @@ public class AbilityUtils {
                         sum += card.getColor().getSharedColors(ColorSet.fromNames(c.getChosenColors())).countColors();
                     }
                     return sum;
-                }
-                // Count$WordsInName.<DefinedCards> - Bosom Buddy counts the words in a spell's name.
-                // Split/double-faced names keep their "//" separator out of the count.
-                if (sq[0].startsWith("WordsInName")) {
-                    int words = 0;
-                    for (Card card : getDefinedCards(c, sq[1], sa)) {
-                        for (String word : card.getName().split("\\s+")) {
-                            if (!word.isEmpty() && !word.equals("//")) {
-                                words++;
-                            }
-                        }
-                    }
-                    return words;
                 }
                 if (sq[0].startsWith("TriggerRememberAmount")) {
                     int count = 0;
