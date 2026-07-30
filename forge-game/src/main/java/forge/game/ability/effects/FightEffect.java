@@ -158,20 +158,33 @@ public class FightEffect extends DamageBaseEffect {
 
         // 701.12c If a creature fights itself, it deals damage to itself equal to twice its power.
 
-        final int dmg1 = fighterA.getNetPower();
+        // read power in halves so a 1/2 fighter deals its half instead of nothing
+        final int halvesA = fighterA.getNetPowerInHalves();
+        boolean oddA = false, oddB = false;
         if (fighterA.equals(fighterB)) {
-            damageMap.put(fighterA, fighterA, dmg1 * 2);
+            // twice a half power is a whole point, so this never leaves a leftover half
+            damageMap.put(fighterA, fighterA, halvesA);
         } else {
-            final int dmg2 = fighterB.getNetPower();
+            final int halvesB = fighterB.getNetPowerInHalves();
+            oddA = halvesA % 2 != 0;
+            oddB = halvesB % 2 != 0;
 
-            damageMap.put(fighterA, fighterB, dmg1);
-            damageMap.put(fighterB, fighterA, dmg2);
+            damageMap.put(fighterA, fighterB, halvesA / 2);
+            damageMap.put(fighterB, fighterA, halvesB / 2);
             fighterB.setFoughtThisTurn(true);
         }
         fighterA.setFoughtThisTurn(true);
 
         if (!usedDamageMap) {
             sa.getHostCard().getGame().getAction().dealDamage(false, damageMap, preventMap, counterTable, sa);
+        }
+
+        // after the whole damage, so a fractional prevention shield gets first claim on the half
+        if (oddA && !fighterB.useHalfPreventShield()) {
+            fighterB.addHalfDamage();
+        }
+        if (oddB && !fighterA.useHalfPreventShield()) {
+            fighterA.addHalfDamage();
         }
 
         replaceDying(sa);

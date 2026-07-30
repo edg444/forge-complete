@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
@@ -153,6 +155,19 @@ public class DamageDealEffect extends DamageBaseEffect {
 
         int dmg = AbilityUtils.calculateAmount(hostCard, sa.getParam("NumDmg"), sa);
 
+        // "Damage equal to its power" has to keep a 1/2 creature's half instead of rounding it away.
+        // Halves$ True says NumDmg already counts halves; otherwise a power-derived amount is
+        // re-read in halves automatically, so the hundreds of cards that word it that way need no
+        // script change. The whole part goes through the damage map as usual and the leftover half
+        // is marked afterwards, the same way combat damage handles it.
+        int dmgInHalves = sa.hasParam("Halves") ? dmg : powerDerivedHalves(hostCard, sa);
+        final boolean halves = dmgInHalves >= 0 && !sa.isDividedAsYouChoose();
+        final boolean oddHalf = halves && dmgInHalves % 2 != 0;
+        if (halves) {
+            dmg = dmgInHalves / 2;
+        }
+        final List<GameEntity> halfTargets = Lists.newArrayList();
+
         final boolean divideOnResolution = sa.hasParam("DividerOnResolution");
 
         List<GameEntity> tgts = Lists.newArrayList();
@@ -255,7 +270,7 @@ public class DamageDealEffect extends DamageBaseEffect {
 
             for (final GameEntity o : tgts) {
                 dmg = (sa.usesTargeting() && sa.isDividedAsYouChoose()) ? sa.getDividedValue(o) : dmg;
-                if (dmg <= 0) {
+                if (dmg <= 0 && !oddHalf) {
                     continue;
                 }
                 if (o instanceof Card c) {
@@ -264,9 +279,19 @@ public class DamageDealEffect extends DamageBaseEffect {
                         // timestamp different or not in play
                         continue;
                     }
-                    internalDamageDeal(sa, sourceLKI, gc, dmg, damageMap);
+                    if (dmg > 0) {
+                        internalDamageDeal(sa, sourceLKI, gc, dmg, damageMap);
+                    }
+                    if (oddHalf) {
+                        halfTargets.add(gc);
+                    }
                 } else if (o instanceof Player p) {
-                    damageMap.put(sourceLKI, p, dmg);
+                    if (dmg > 0) {
+                        damageMap.put(sourceLKI, p, dmg);
+                    }
+                    if (oddHalf) {
+                        halfTargets.add(p);
+                    }
                 }
             }
             for (final Card unTgtC : untargetedCards) {
@@ -278,7 +303,40 @@ public class DamageDealEffect extends DamageBaseEffect {
         if (!usedDamageMap) {
             game.getAction().dealDamage(false, damageMap, preventMap, counterTable, sa);
         }
+        // after the whole damage, so a fractional prevention shield gets first claim on the half
+        for (final GameEntity halfTarget : halfTargets) {
+            if (halfTarget.useHalfPreventShield()) {
+                continue;
+            }
+            if (halfTarget instanceof Card halfCard) {
+                halfCard.addHalfDamage();
+            } else if (halfTarget instanceof Player halfPlayer) {
+                halfPlayer.addHalfDamage();
+            }
+        }
         replaceDying(sa);
+    }
+
+    /**
+     * Re-reads a damage amount that came from a creature's power or toughness in halves, so a 1/2
+     * creature contributes 1 half rather than 0. Returns -1 when the amount isn't power-derived.
+     */
+    private static int powerDerivedHalves(Card hostCard, SpellAbility sa) {
+        final String amount = sa.getParam("NumDmg");
+        if (StringUtils.isBlank(amount)) {
+            return -1;
+        }
+        String svarval = amount.indexOf('$') > 0 ? amount : sa.getSVar(amount);
+        if (StringUtils.isBlank(svarval)) {
+            svarval = hostCard.getSVar(amount);
+        }
+        if (StringUtils.isBlank(svarval) || svarval.contains("Halves")
+                || (!svarval.contains("CardPower") && !svarval.contains("CardToughness"))) {
+            return -1;
+        }
+        final String inHalves = svarval.replace("CardPower", "CardPowerHalves")
+                .replace("CardToughness", "CardToughnessHalves");
+        return AbilityUtils.calculateAmount(hostCard, inHalves, sa);
     }
 
     protected void internalDamageDeal(SpellAbility sa, Card sourceLKI, Card c, int dmg, CardDamageTable damageMap) {
