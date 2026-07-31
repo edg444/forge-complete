@@ -2906,8 +2906,34 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
         return label + "|" + oracle;
     }
 
+    /**
+     * A single printing of a card, labelled by set and collector number so the dev mode chooser can
+     * tell printings apart - PaperCard's own toString is just the card name.
+     */
+    private record PrintingView(PaperCard card) implements Serializable, Comparable<PrintingView> {
+        @Override
+        public String toString() {
+            final StringBuilder sb = new StringBuilder(card.getEdition());
+            if (!StringUtils.isEmpty(card.getCollectorNumber())) {
+                sb.append(" #").append(card.getCollectorNumber());
+            }
+            if (card.getArtIndex() > 1) {
+                sb.append(" (art ").append(card.getArtIndex()).append(")");
+            }
+            return sb.toString();
+        }
+
+        @Override
+        public int compareTo(PrintingView o) {
+            final int bySet = card.getEdition().compareTo(o.card.getEdition());
+            return bySet != 0 ? bySet
+                    : card.getCollectorNumberSortingKey().compareTo(o.card.getCollectorNumberSortingKey());
+        }
+    }
+
     public class DevModeCheats implements IDevModeCheats {
         private CardFaceView lastAdded;
+        private PaperCard lastAddedPrinting;
         private ZoneType lastAddedZone;
         private Player lastAddedPlayer;
         private SpellAbility lastAddedSA;
@@ -3378,6 +3404,24 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
             addCardToZone(null, true, lastTrigs);
         }
 
+        /**
+         * Offers the printings of the chosen card so a specific set or art can be added. Cancelling
+         * keeps the database's default printing, so this never gets in the way of a quick add.
+         */
+        private PaperCard choosePrinting(final CardDb carddb, final CardFaceView f) {
+            if (f == null) {
+                return null;
+            }
+            final List<PaperCard> prints = carddb.getAllCards(f.getName());
+            if (prints == null || prints.size() < 2) {
+                return null;
+            }
+            final List<PrintingView> views = prints.stream().map(PrintingView::new).sorted()
+                    .collect(Collectors.toList());
+            final PrintingView chosen = getGui().oneOrNone("Choose a printing (cancel for default)", views);
+            return chosen == null ? null : chosen.card();
+        }
+
         private void addCardToZone(ZoneType zone, final boolean repeatLast, final boolean noTriggers) {
             final ZoneType targetZone = repeatLast ? lastAddedZone : zone;
             String message;
@@ -3408,13 +3452,16 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
 
             final CardFaceView f;
             final int quantity;
+            PaperCard printing;
             if (repeatLast) {
                 f = lastAdded;
+                printing = lastAddedPrinting;
                 quantity = 1;
             } else {
                 List<CardFaceView> choices = carddb.streamAllFaces().map(CardFaceView::new).collect(Collectors.toList());
                 Collections.sort(choices);
                 f = getGui().oneOrNone(localizer.getMessage("lblNameTheCard"), choices);
+                printing = choosePrinting(carddb, f);
                 if (f != null) {
                     Integer qty = getGui().getInteger(localizer.getMessage("lblHowMany"), 1, 99, 10);
                     quantity = qty != null ? qty : 1;
@@ -3425,11 +3472,12 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
             if (f == null) {
                 return;
             }
+            final PaperCard chosenPrinting = printing;
 
             getGame().getAction().invoke(() -> {
                 boolean askPrompts = !repeatLast;
                 for (int q = 0; q < quantity; q++) {
-                    PaperCard c = carddb.getUniqueByName(f.displayName());
+                    PaperCard c = chosenPrinting != null ? chosenPrinting : carddb.getUniqueByName(f.displayName());
                     final Card forgeCard = Card.fromPaperCard(c, p);
                     forgeCard.setGameTimestamp(getGame().getNextTimestamp());
 
@@ -3521,6 +3569,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
                     }
 
                     lastAdded = f;
+                    lastAddedPrinting = chosenPrinting;
                     lastAddedZone = targetZone;
                     lastAddedPlayer = p;
                     lastTrigs = noTriggers;
