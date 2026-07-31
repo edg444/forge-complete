@@ -42,10 +42,10 @@ public class SevenQuestionsEffect extends SpellAbilityEffect {
         QUESTIONS.put("Is its mana value 5 or greater?", c -> c.getCMC() >= 5);
         QUESTIONS.put("Is its mana value 1 or less?", c -> c.getCMC() <= 1);
         QUESTIONS.put("Does its name begin with a letter from A to M?", c -> {
-            final String n = c.getName().toUpperCase();
+            final String n = c.getDisplayName().toUpperCase();
             return !n.isEmpty() && n.charAt(0) >= 'A' && n.charAt(0) <= 'M';
         });
-        QUESTIONS.put("Is its name more than one word?", c -> c.getName().trim().contains(" "));
+        QUESTIONS.put("Is its name more than one word?", c -> c.getDisplayName().trim().contains(" "));
         QUESTIONS.put("Is its power 3 or greater?", c -> c.isCreature() && c.getNetPower() >= 3);
         QUESTIONS.put("Does it have flying?", c -> c.hasKeyword("Flying"));
     }
@@ -93,10 +93,13 @@ public class SevenQuestionsEffect extends SpellAbilityEffect {
         }
 
         final String guess = asker.getController().guessString(sa, "Question seven - name the card");
-        final boolean correct = guess != null && guess.trim().equalsIgnoreCase(top.getName().trim());
+        // a flavor name is what the guesser would have seen, so either name counts
+        final boolean correct = guess != null
+                && (guess.trim().equalsIgnoreCase(top.getName().trim())
+                        || guess.trim().equalsIgnoreCase(top.getDisplayName().trim()));
 
         host.getGame().getAction().notifyOfValue(sa, owner,
-                (correct ? "Correct! " : "Wrong. ") + "The card was " + top.getName() + ".", null);
+                (correct ? "Correct! " : "Wrong. ") + "The card was " + top.getDisplayName() + ".", null);
 
         if (correct && sa.hasParam("GuessCorrect")) {
             AbilityUtils.resolve(sa.getAdditionalAbility("GuessCorrect"));

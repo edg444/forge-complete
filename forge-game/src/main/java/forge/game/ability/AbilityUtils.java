@@ -1656,7 +1656,7 @@ public class AbilityUtils {
             if (sq[0].startsWith("WordsInName")) {
                 int words = 0;
                 for (Card card : getDefinedCards(c, sq[1], ctb)) {
-                    for (String word : card.getName().split("\\s+")) {
+                    for (String word : card.getDisplayName().split("\\s+")) {
                         if (!word.isEmpty() && !word.equals("//")) {
                             words++;
                         }
@@ -2348,7 +2348,7 @@ public class AbilityUtils {
                 if (p.isLand()) {
                     continue;
                 }
-                final String n = p.getName().trim();
+                final String n = p.getDisplayName().trim();
                 if (n.isEmpty()) {
                     continue;
                 }
@@ -2363,7 +2363,7 @@ public class AbilityUtils {
         if (sq[0].equals("AlphabetCoverage")) {
             final Set<Character> letters = Sets.newHashSet();
             for (final Card p : player.getCardsIn(ZoneType.Battlefield)) {
-                for (final char ch : p.getName().toLowerCase().toCharArray()) {
+                for (final char ch : p.getDisplayName().toLowerCase().toCharArray()) {
                     if (ch >= 'a' && ch <= 'z') {
                         letters.add(ch);
                     }
