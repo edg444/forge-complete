@@ -3,6 +3,7 @@ package forge.ai;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.function.Predicate;
 
 import com.google.common.collect.Iterables;
@@ -187,7 +188,18 @@ public abstract class SpellAbilityAi {
         if (sa.getApi() == ApiType.GenericChoice) {
             return true;
         }
-        return MyRandom.percentTrue(Integer.parseInt(aiLogic.substring("Chance.".length())));
+        final int pct = Integer.parseInt(aiLogic.substring("Chance.".length()));
+        final Card host = sa.getHostCard();
+        if (host == null || host.getGame() == null) {
+            return MyRandom.percentTrue(pct);
+        }
+        // The AI asks this at every single priority, so a fresh roll each time would fire almost
+        // immediately no matter how low the percentage - Question Elemental? at 35% was still being
+        // taken within a turn. Seeding by card and turn makes it one decision per turn instead.
+        final long seed = host.getId() * 2654435761L
+                + host.getGame().getPhaseHandler().getTurn() * 40503L
+                + sa.getDescription().hashCode();
+        return new Random(seed).nextInt(100) < pct;
     }
 
     /**
