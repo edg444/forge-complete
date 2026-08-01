@@ -11,6 +11,7 @@ import com.google.common.collect.Lists;
 import forge.card.ICardFace;
 import forge.card.mana.ManaCost;
 import forge.game.GameEntity;
+import forge.game.ability.ApiType;
 import forge.game.card.Card;
 import forge.game.card.CardCopyService;
 import forge.game.card.CardState;
@@ -52,6 +53,12 @@ public abstract class SpellAbilityAi {
     };
 
     public final AiAbilityDecision canPlayWithSubs(final Player aiPlayer, final SpellAbility sa) {
+        // Chance.N is checked here rather than in checkAiLogic because most API classes override
+        // canPlay outright and never reach it - Question Elemental? was grabbed back every single
+        // time despite asking for 35%.
+        if (!rollChanceLogic(sa)) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
         AiAbilityDecision decision = canPlay(aiPlayer, sa);
         if (!decision.willingToPlay() && !"PlayForSub".equals(sa.getParam("AILogic"))) {
             return decision;
@@ -157,14 +164,30 @@ public abstract class SpellAbilityAi {
             return false;
         } else if ("Once".equals(aiLogic)) {
             return !sa.getHostCard().getAbilityActivatedThisTurn().getActivators(sa).contains(ai);
-        } else if (aiLogic.startsWith("Chance.")) {
-            // Honor-system abilities (see CostFlavorAction) the AI can't really "know" the outcome
-            // of - Chance.N lets it attempt them N% of the time instead of never or always, so a
-            // few flavor cards aren't just permanently AI-dead. The percentage is a per-card flavor
-            // tuning knob (see the card's own comment/precedent), not a general game-balance value.
-            return MyRandom.percentTrue(Integer.parseInt(aiLogic.substring("Chance.".length())));
         }
+        // Chance. is deliberately not handled here - see rollChanceLogic, called from
+        // canPlayWithSubs so it applies even to APIs that override canPlay
         return true;
+    }
+
+    /**
+     * Honor-system abilities (see CostFlavorAction) have an outcome the AI can't really "know", so
+     * Chance.N lets it attempt them N% of the time instead of never or always, keeping a few flavor
+     * cards from being AI-dead. The percentage is a per-card flavor tuning knob, not a balance value.
+     *
+     * @return false only when the ability declares a Chance.N that this roll failed.
+     */
+    protected static boolean rollChanceLogic(final SpellAbility sa) {
+        final String aiLogic = sa.getParam("AILogic");
+        if (aiLogic == null || !aiLogic.startsWith("Chance.")) {
+            return true;
+        }
+        // GenericChoice reads Chance.N as "how often to pick something other than the default"
+        // when the choice is made, so gating the ability itself here would apply it twice
+        if (sa.getApi() == ApiType.GenericChoice) {
+            return true;
+        }
+        return MyRandom.percentTrue(Integer.parseInt(aiLogic.substring("Chance.".length())));
     }
 
     /**
