@@ -3,7 +3,6 @@ package forge.ai;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.function.Predicate;
 
 import com.google.common.collect.Iterables;
@@ -57,7 +56,7 @@ public abstract class SpellAbilityAi {
         // Chance.N is checked here rather than in checkAiLogic because most API classes override
         // canPlay outright and never reach it - Question Elemental? was grabbed back every single
         // time despite asking for 35%.
-        if (!rollChanceLogic(sa)) {
+        if (!rollChanceLogic(aiPlayer, sa)) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
         AiAbilityDecision decision = canPlay(aiPlayer, sa);
@@ -178,10 +177,16 @@ public abstract class SpellAbilityAi {
      *
      * @return false only when the ability declares a Chance.N that this roll failed.
      */
-    protected static boolean rollChanceLogic(final SpellAbility sa) {
+    protected static boolean rollChanceLogic(final Player ai, final SpellAbility sa) {
         final String aiLogic = sa.getParam("AILogic");
         if (aiLogic == null || !aiLogic.startsWith("Chance.")) {
             return true;
+        }
+        // one attempt per turn - the roll below is stable within a turn, so without this the AI
+        // re-takes Question Elemental? at every priority for the rest of the turn once it decides to
+        if (sa.getHostCard() != null
+                && sa.getHostCard().getAbilityActivatedThisTurn().getActivators(sa).contains(ai)) {
+            return false;
         }
         // GenericChoice reads Chance.N as "how often to pick something other than the default"
         // when the choice is made, so gating the ability itself here would apply it twice
@@ -196,10 +201,16 @@ public abstract class SpellAbilityAi {
         // The AI asks this at every single priority, so a fresh roll each time would fire almost
         // immediately no matter how low the percentage - Question Elemental? at 35% was still being
         // taken within a turn. Seeding by card and turn makes it one decision per turn instead.
-        final long seed = host.getId() * 2654435761L
+        // The seed must be avalanche-mixed: java.util.Random is an LCG whose first nextInt barely
+        // changes between nearby seeds, which made consecutive turns roll almost identically.
+        long z = host.getId() * 2654435761L
                 + host.getGame().getPhaseHandler().getTurn() * 40503L
-                + sa.getDescription().hashCode();
-        return new Random(seed).nextInt(100) < pct;
+                + sa.getDescription().hashCode()
+                + 0x9E3779B97F4A7C15L;
+        z = (z ^ (z >>> 30)) * 0xBF58476D1CE4E5B9L;
+        z = (z ^ (z >>> 27)) * 0x94D049BB133111EBL;
+        z = z ^ (z >>> 31);
+        return Math.floorMod(z, 100L) < pct;
     }
 
     /**
