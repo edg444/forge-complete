@@ -1,0 +1,8 @@
+Name:Farewell to Arms
+ManaCost:1 B B
+Types:Enchantment
+K:ETBReplacement:Other:DBChooseArm
+SVar:DBChooseArm:DB$ ChoosePlayer | Defined$ You | Choices$ Opponent | ChoiceTitle$ Choose a hand attached to an opponent's arm | SpellDescription$ As CARDNAME enters, choose a hand attached to an opponent's arm.
+A:AB$ Sacrifice | Cost$ FlavorAction<Confirm the chosen hand isn't behind its owner's back/Caught you!> | Activator$ Player | AILogic$ Chance.20 | SacValid$ Self | SubAbility$ DBDiscardHand | SpellDescription$ Any player may activate this ability: Sacrifice CARDNAME. If you do, the chosen player discards their hand.
+SVar:DBDiscardHand:DB$ Discard | Defined$ ChosenPlayer | Mode$ Hand
+Oracle:As this enchantment enters, choose a hand attached to an opponent's arm.\nWhen the chosen hand isn't behind its owner's back, sacrifice this enchantment. If you do, that player discards their hand … of cards. (The lawyers wouldn't let us do it the other way.)
