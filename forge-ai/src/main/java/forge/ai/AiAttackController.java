@@ -792,13 +792,19 @@ public class AiAttackController {
         if (!prefBattleList.isEmpty()) {
             // TODO try to be less predictable here, should really check if something would make the back uncastable
             final Card battle = Collections.min(prefBattleList, CardPredicates.compareByCounterType(CounterEnumType.DEFENSE));
-            // Only commit to the battle if something can actually attack it - otherwise the whole
-            // attack is aimed at a defender no creature can reach and the AI ends up attacking
-            // nobody at all, player included.
+            // Committing the whole attack to a battle is only worth it when the AI can strip the
+            // last defense counter this turn - chipping one off achieves little, and the aggression
+            // level is worked out against whichever defender is picked here, so a poor choice can
+            // suppress the attack entirely. Otherwise go at the player and let the leftover rotation
+            // put spare attackers on the battle anyway.
+            int availablePower = 0;
             for (final Card attacker : myList) {
                 if (canAttackWrapper(attacker, battle)) {
-                    return battle;
+                    availablePower += attacker.getNetPower();
                 }
+            }
+            if (availablePower > 0 && availablePower >= battle.getCounters(CounterEnumType.DEFENSE)) {
+                return battle;
             }
         }
 
