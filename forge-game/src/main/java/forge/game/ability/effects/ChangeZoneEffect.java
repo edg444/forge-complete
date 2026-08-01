@@ -4,6 +4,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import forge.GameCommand;
 import forge.card.CardStateName;
 import forge.game.*;
 import forge.game.ability.AbilityFactory;
@@ -1588,6 +1589,18 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
                         .getMessage("lblDoYouWantActivateAbilityOf", tgtCard.getTranslatedName()), null)) {
                     continue;
                 }
+                // The card never leaves the library, so the stack would show it face down. Paying
+                // the cost revealed it to everyone anyway, so keep it visible rather than putting a
+                // mystery card on the stack.
+                final long lookTs = decider.getGame().getNextTimestamp();
+                tgtCard.addMayLookAt(lookTs, decider.getGame().getPlayers());
+                decider.getGame().getEndOfTurn().addUntil(new GameCommand() {
+                    private static final long serialVersionUID = 1L;
+                    @Override
+                    public void run() {
+                        tgtCard.removeMayLookAt(lookTs);
+                    }
+                });
                 // unlike a cast, the card stays in the library and can still be found
                 decider.getController().playSaFromPlayEffect(sa);
             }
