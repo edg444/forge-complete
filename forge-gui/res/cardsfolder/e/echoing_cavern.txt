@@ -1,6 +1,6 @@
 Name:Echoing Cavern
 ManaCost:no cost
-Types:Land
+Types:Land Cave
 K:ETBReplacement:Other:ChooseCT
 SVar:ChooseCT:DB$ ChooseType | Defined$ You | Type$ Creature | SpellDescription$ As this land enters, choose a creature type. | AILogic$ MostProminentInComputerDeckNonToken
 A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.

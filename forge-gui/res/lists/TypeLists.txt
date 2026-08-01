@@ -490,6 +490,7 @@ Antausia
 Apalapucia
 Arcavios
 Arkhos
+Avishkar
 Azgol
 Belenon
 Bolas's Meditation Realm
@@ -513,7 +514,6 @@ Innistrad
 Iquatana
 Ir
 Ixalan
-Kaladesh
 Kaldheim
 Kamigawa
 Kandoka

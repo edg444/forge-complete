@@ -224,6 +224,7 @@ public class Player extends GameEntity implements Comparable<Player> {
     private Card monarchEffect;
     private Card initiativeEffect;
     private Card blessingEffect;
+    private Card enduringStoryEffect;
     private Card contraptionSprocketEffect;
     private Card radiationEffect;
     private Card keywordEffect;
@@ -2915,6 +2916,7 @@ public class Player extends GameEntity implements Comparable<Player> {
         toPlayer.monarchEffect = mapEffectCard(monarchEffect, mapper);
         toPlayer.initiativeEffect = mapEffectCard(initiativeEffect, mapper);
         toPlayer.blessingEffect = mapEffectCard(blessingEffect, mapper);
+        toPlayer.enduringStoryEffect = mapEffectCard(enduringStoryEffect, mapper);
         toPlayer.contraptionSprocketEffect = mapEffectCard(contraptionSprocketEffect, mapper);
         toPlayer.radiationEffect = mapEffectCard(radiationEffect, mapper);
         toPlayer.speedEffect = mapEffectCard(speedEffect, mapper);
@@ -3804,6 +3806,40 @@ public class Player extends GameEntity implements Comparable<Player> {
         } else {
             com.remove(blessingEffect);
             blessingEffect = null;
+        }
+
+        this.updateZoneForView(com);
+    }
+
+    public boolean hasEnduringStory() {
+        return enduringStoryEffect != null;
+    }
+    public void setEnduringStory(boolean story, String setCode) {
+        // no need to change
+        if ((enduringStoryEffect != null) == story) {
+            return;
+        }
+
+        final PlayerZone com = getZone(ZoneType.Command);
+
+        if (story) {
+            enduringStoryEffect = new Card(game.nextCardId(), null, game);
+            enduringStoryEffect.setOwner(this);
+            enduringStoryEffect.setName("An Enduring Story");
+            enduringStoryEffect.setGamePieceType(GamePieceType.EFFECT);
+            if (setCode != null) {
+                enduringStoryEffect.setSetCode(setCode);
+            }
+
+            enduringStoryEffect.updateStateForView();
+
+            com.add(enduringStoryEffect);
+
+            // as with the city's blessing, continuous effects are reapplied once it is gained
+            game.getAction().checkStaticAbilities();
+        } else {
+            com.remove(enduringStoryEffect);
+            enduringStoryEffect = null;
         }
 
         this.updateZoneForView(com);
