@@ -17,13 +17,19 @@ public class ChooseDirectionEffect extends SpellAbilityEffect {
     public void resolve(final SpellAbility sa) {
         final Card source = sa.getHostCard();
         final Game game = source.getGame();
-        final FCollection<Player> left = new FCollection<>(game.getPlayers());
-        // TODO: We'd better set up turn order UI here
-        final String info = Localizer.getInstance().getMessage("lblLeftClockwise") + ": " + left + "\r\n" + Localizer.getInstance().getMessage("lblRightAntiClockwise") + ":" + Lists.reverse(left);
-        sa.getActivatingPlayer().getController().notifyOfValue(sa, source, info);
+        // left/right isn't always about seating order - Farewell to Arms picks one of a player's
+        // hands, where a list of who sits clockwise would only confuse
+        if (!sa.hasParam("NoTurnOrderInfo")) {
+            final FCollection<Player> left = new FCollection<>(game.getPlayers());
+            // TODO: We'd better set up turn order UI here
+            final String info = Localizer.getInstance().getMessage("lblLeftClockwise") + ": " + left + "\r\n" + Localizer.getInstance().getMessage("lblRightAntiClockwise") + ":" + Lists.reverse(left);
+            sa.getActivatingPlayer().getController().notifyOfValue(sa, source, info);
+        }
 
+        final String prompt = sa.hasParam("ChoiceTitle") ? sa.getParam("ChoiceTitle")
+                : Localizer.getInstance().getMessage("lblChooseDirection");
         boolean chosen = sa.getActivatingPlayer().getController().chooseBinary(sa,
-                Localizer.getInstance().getMessage("lblChooseDirection"), BinaryChoiceType.LeftOrRight);
+                prompt, BinaryChoiceType.LeftOrRight);
         source.setChosenDirection(chosen ? Direction.Left : Direction.Right);
     }
 }
