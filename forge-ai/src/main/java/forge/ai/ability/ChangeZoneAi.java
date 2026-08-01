@@ -477,6 +477,22 @@ public class ChangeZoneAi extends SpellAbilityAi {
             ComputerUtilCost.setMaxXValue(sa, ai, sa.isTrigger());
         }
 
+        // Cards exiled with a permanent (Nautiloid Ship exiles an opponent's graveyard) are owned by
+        // that opponent, so the per-player scan below looks through the AI's own exile, finds
+        // nothing and declines every time. Judge these by the remembered cards themselves instead.
+        if (type != null && type.contains("IsRemembered")) {
+            final CardCollection remembered = new CardCollection();
+            for (final Object o : sa.getHostCard().getRemembered()) {
+                if (o instanceof Card c && (origin.isEmpty() || origin.contains(c.getZone().getZoneType()))) {
+                    remembered.add(c);
+                }
+            }
+            if (CardLists.getValidCards(remembered, type, ai, sa.getHostCard(), sa).isEmpty()) {
+                return new AiAbilityDecision(0, AiPlayDecision.MissingNeededCards);
+            }
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
+
         Iterable<Player> pDefined;
         final TargetRestrictions tgt = sa.getTargetRestrictions();
         if (tgt != null && tgt.canTgtPlayer()) {

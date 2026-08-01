@@ -1471,9 +1471,15 @@ public class AiAttackController {
                 for (SpellAbility sa : attacker.getSpellAbilities()) {
                     // Do not attack if we can afford using the ability.
                     if (sa.isActivatedAbility() && sa.getPayCosts().hasTapCost()) {
-                        if (ComputerUtilCost.canPayCost(sa, ai, false)) {
+                        // Affording it isn't enough - the AI has to actually want it this turn, or a
+                        // Sterling Keykeeper stays home every single turn guarding a tap ability it
+                        // has no use for (no enemy creature worth tapping, say) and never attacks.
+                        if (ComputerUtilCost.canPayCost(sa, ai, false)
+                                && SpellApiToAi.Converter.get(sa).canPlayWithSubs(ai, sa).willingToPlay()) {
+                            sa.resetTargets();
                             return false;
                         }
+                        sa.resetTargets();
                         // TODO Eventually The Ai will need to learn to predict if they have any use for the ability before next untap or not.
                         // TODO abilities that tap enemy creatures should probably only be saved if the enemy has nonzero creatures? Haste can be a threat though...
                     }

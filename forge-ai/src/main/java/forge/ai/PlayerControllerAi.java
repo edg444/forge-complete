@@ -1538,11 +1538,18 @@ public class PlayerControllerAi extends PlayerController {
         } else {
             CardCollectionView list = CardLists.filterControlledBy(getGame().getCardsInGame(), player.getOpponents());
             list = CardLists.filter(list, CardPredicates.NON_LANDS);
+            // the name still has to satisfy ValidCards - Psychic Paper asks for a creature card
+            // name, and without this the AI would happily answer with a sorcery it had just seen
+            if (!valid.isEmpty()) {
+                list = CardLists.getValidCards(list, valid, sa.getHostCard().getController(), sa.getHostCard(), sa);
+            }
             if (!list.isEmpty()) {
                 return list.get(0).getName();
             }
         }
-        return "Morphling";
+        // last resort still has to be a legal answer
+        return forge.StaticData.instance().getCommonCards().streamAllFaces().filter(cpp)
+                .map(ICardFace::getName).findFirst().orElse("Morphling");
     }
 
     @Override

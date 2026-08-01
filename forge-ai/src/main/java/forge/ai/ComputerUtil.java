@@ -1325,7 +1325,12 @@ public class ComputerUtil {
                     return true;
                 }
             }
-            if (ApiType.PermanentNoncreature.equals(sa.getApi()) && buffedCard.hasKeyword(Keyword.PROWESS)) {
+            // Prowess triggers on any noncreature spell, not just permanents - checking only
+            // PermanentNoncreature meant the AI held instants and sorceries, the usual way to pump a
+            // prowess creature, until after combat. Only worth it if the creature can actually
+            // attack, since a tapped one gains nothing from the boost.
+            if (buffedCard.hasKeyword(Keyword.PROWESS) && sa.isSpell() && source != null
+                    && !source.isCreature() && CombatUtil.canAttack(buffedCard)) {
                 return true;
             }
             //Fill the graveyard for Threshold
