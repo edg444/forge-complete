@@ -1559,6 +1559,40 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
             //some kind of reset here?
         }
         decider.getController().endTempShowCards();
+
+        // Infernal Spawn of Infernal Spawn of Evil activates an ability from the library mid-search
+        // rather than casting, but the window is the same one, so it hangs off this same hook.
+        final CardCollection canActivateWhileSearching = new CardCollection();
+        for (final Card c : fetchList) {
+            for (final SpellAbility sa : c.getSpellAbilities()) {
+                if (sa.isActivatedAbility() && sa.hasParam("ActivateWhileSearching")) {
+                    canActivateWhileSearching.add(c);
+                    break;
+                }
+            }
+        }
+        if (canActivateWhileSearching.isEmpty()) {
+            return;
+        }
+        decider.getController().tempShowCards(canActivateWhileSearching);
+        for (final Card tgtCard : canActivateWhileSearching) {
+            for (final SpellAbility sa : tgtCard.getSpellAbilities()) {
+                if (!sa.isActivatedAbility() || !sa.hasParam("ActivateWhileSearching")) {
+                    continue;
+                }
+                sa.setActivatingPlayer(decider);
+                if (!sa.canPlay()) {
+                    continue;
+                }
+                if (!decider.getController().confirmAction(sa, null, Localizer.getInstance()
+                        .getMessage("lblDoYouWantActivateAbilityOf", tgtCard.getTranslatedName()), null)) {
+                    continue;
+                }
+                // unlike a cast, the card stays in the library and can still be found
+                decider.getController().playSaFromPlayEffect(sa);
+            }
+        }
+        decider.getController().endTempShowCards();
     }
 
     private static class HiddenOriginChoices {

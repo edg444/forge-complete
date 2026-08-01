@@ -1,0 +1,9 @@
+Name:Infernal Spawn of Infernal Spawn of Evil
+ManaCost:8 B B
+Types:Creature Demon Child
+PT:8/8
+K:Flying
+K:First Strike
+K:Trample
+A:AB$ DealDamage | Cost$ 1 B RevealFromLibrary<1/CARDNAME> FlavorAction<Say "I'm coming, too"/I'm coming, too!> | ActivationZone$ Library | ActivateWhileSearching$ True | ActivationLimit$ 1 | ValidTgts$ Player | TgtPrompt$ Select a player | NumDmg$ 2 | AILogic$ Chance.40 | SpellDescription$ CARDNAME deals 2 damage to a player of your choice. Activate only once each turn and only while you're searching your library.
+Oracle:Flying, first strike, trample\nOnce each turn, while you're searching your library, you may pay {1}{B}, reveal this card from your library and say "I'm coming, too" If you do, this card deals 2 damage to a player of your choice.
