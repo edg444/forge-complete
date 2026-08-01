@@ -1296,6 +1296,13 @@ public class AiAttackController {
 
         FCollection<GameEntity> possibleDefenders = new FCollection<>(defendingOpponent);
         possibleDefenders.addAll(defendingOpponent.getPlaneswalkersInPlay());
+        // Battles the AI wants gone are legitimate secondary targets as well, so leftover attackers
+        // can chip a Siege instead of every creature piling onto whichever defender was picked first
+        for (final Card battle : combat.getDefendingBattles()) {
+            if (battle.getController().equals(ai) || ai.getAllies().contains(battle.getController())) {
+                possibleDefenders.add(battle);
+            }
+        }
 
         while (!left.isEmpty()) {
             CardCollection attackersAssigned = new CardCollection();
@@ -1340,14 +1347,19 @@ public class AiAttackController {
             if (left.isEmpty() || possibleDefenders.isEmpty()) {
                 break;
             }
-            CardCollection pwDefending = new CardCollection(IterableUtil.filter(possibleDefenders, Card.class));
-            if (pwDefending.isEmpty()) {
+            CardCollection cardDefending = new CardCollection(IterableUtil.filter(possibleDefenders, Card.class));
+            CardCollection pwDefending = CardLists.filter(cardDefending, Card::isPlaneswalker);
+            CardCollection battleDefending = CardLists.filter(cardDefending, Card::isBattle);
+            if (!pwDefending.isEmpty()) {
+                final Card pwNearUlti = ComputerUtilCard.getBestPlaneswalkerToDamage(pwDefending);
+                defender = pwNearUlti != null ? pwNearUlti : ComputerUtilCard.getBestPlaneswalkerAI(pwDefending);
+            } else if (!battleDefending.isEmpty()) {
+                // the one closest to flipping is worth the leftover damage first
+                defender = Collections.min(battleDefending, CardPredicates.compareByCounterType(CounterEnumType.DEFENSE));
+            } else {
                 // TODO for now only looks at same player as we'd have to check the others from start too
                 //defender = new PlayerCollection(Iterables.filter(possibleDefenders, Player.class)).min(PlayerPredicates.compareByLife());
                 defender = defendingOpponent;
-            } else {
-                final Card pwNearUlti = ComputerUtilCard.getBestPlaneswalkerToDamage(pwDefending);
-                defender = pwNearUlti != null ? pwNearUlti : ComputerUtilCard.getBestPlaneswalkerAI(pwDefending);
             }
         }
 
