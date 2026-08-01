@@ -1,7 +1,7 @@
 Name:Eye to Eye
 ManaCost:2 B
 Types:Instant
-A:SP$ GenericChoice | ValidTgts$ Creature | TgtPrompt$ Select target creature | Defined$ You | Choices$ DBBlinked,DBOutstared | ChoicePrompt$ Stare down that creature's controller. Did you outlast them? | AILogic$ Chance.50 | SpellDescription$ You and target creature's controller have a staring contest. If you win, destroy that creature.
+A:SP$ FlipCoin | ValidTgts$ Creature | TgtPrompt$ Select target creature | Flipper$ You | NoCall$ True | HeadsSubAbility$ DBOutstared | TailsSubAbility$ DBBlinked | SpellDescription$ You and target creature's controller have a staring contest. If you win, destroy that creature.
 SVar:DBBlinked:DB$ Cleanup | StackDescription$ You blinked first. | SpellDescription$ You blinked first.
 SVar:DBOutstared:DB$ Destroy | Defined$ Targeted | StackDescription$ You outstared them and {c:Targeted} is destroyed. | SpellDescription$ You won the staring contest - destroy that creature.
 Oracle:You and target creature's controller have a staring contest. If you win, destroy that creature.
