@@ -495,8 +495,12 @@ public class CardView extends GameEntityView {
     public Direction getChosenDirection() {
         return get(TrackableProperty.ChosenDirection);
     }
+    public String getChosenDirectionLabel() {
+        return get(TrackableProperty.ChosenDirectionLabel);
+    }
     void updateChosenDirection(Card c) {
         set(TrackableProperty.ChosenDirection, c.getChosenDirection());
+        set(TrackableProperty.ChosenDirectionLabel, c.getChosenDirectionLabel());
     }
     public EvenOdd getChosenEvenOdd() {
         return get(TrackableProperty.ChosenEvenOdd);
@@ -908,7 +912,9 @@ public class CardView extends GameEntityView {
 
         Direction chosenDirection = getChosenDirection();
         if (chosenDirection != null) {
-            sb.append("\r\n[Chosen direction: ");
+            // left/right isn't always seating order - Farewell to Arms picks one of a player's hands
+            final String label = getChosenDirectionLabel();
+            sb.append("\r\n[Chosen ").append(StringUtils.isEmpty(label) ? "direction" : label).append(": ");
             sb.append(chosenDirection);
             sb.append("]\r\n");
         }

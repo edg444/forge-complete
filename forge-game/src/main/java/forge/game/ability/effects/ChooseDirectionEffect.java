@@ -30,6 +30,7 @@ public class ChooseDirectionEffect extends SpellAbilityEffect {
                 : Localizer.getInstance().getMessage("lblChooseDirection");
         boolean chosen = sa.getActivatingPlayer().getController().chooseBinary(sa,
                 prompt, BinaryChoiceType.LeftOrRight);
+        source.setChosenDirectionLabel(sa.getParam("DirectionLabel"));
         source.setChosenDirection(chosen ? Direction.Left : Direction.Right);
     }
 }

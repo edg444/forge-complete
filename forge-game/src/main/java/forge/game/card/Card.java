@@ -316,6 +316,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     private Player protectingPlayer;
     private EvenOdd chosenEvenOdd = null;
     private Direction chosenDirection = null;
+    private String chosenDirectionLabel = null;
     private String chosenMode = "";
     private String currentRoom = null;
     private String sector = null;
@@ -2311,6 +2312,14 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public void setChosenDirection(Direction chosenDirection0) {
         if (chosenDirection == chosenDirection0) { return; }
         chosenDirection = chosenDirection0;
+        view.updateChosenDirection(this);
+    }
+    /** What the chosen left/right actually refers to, when it isn't seating order (a hand, say). */
+    public String getChosenDirectionLabel() {
+        return chosenDirectionLabel;
+    }
+    public void setChosenDirectionLabel(String label) {
+        chosenDirectionLabel = label;
         view.updateChosenDirection(this);
     }
 
