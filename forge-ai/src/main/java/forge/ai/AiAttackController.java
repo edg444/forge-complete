@@ -791,7 +791,15 @@ public class AiAttackController {
         List<Card> prefBattleList = ownBattleDefending.isEmpty() ? allyBattleDefending : ownBattleDefending;
         if (!prefBattleList.isEmpty()) {
             // TODO try to be less predictable here, should really check if something would make the back uncastable
-            return Collections.min(prefBattleList, CardPredicates.compareByCounterType(CounterEnumType.DEFENSE));
+            final Card battle = Collections.min(prefBattleList, CardPredicates.compareByCounterType(CounterEnumType.DEFENSE));
+            // Only commit to the battle if something can actually attack it - otherwise the whole
+            // attack is aimed at a defender no creature can reach and the AI ends up attacking
+            // nobody at all, player included.
+            for (final Card attacker : myList) {
+                if (canAttackWrapper(attacker, battle)) {
+                    return battle;
+                }
+            }
         }
 
         return prefDefender;
@@ -834,6 +842,13 @@ public class AiAttackController {
                     defendingOpponent = defCard.getController();
                 }
             }
+            refreshCombatants(defender);
+        }
+        // Aiming at a battle or planeswalker that nothing can attack would otherwise end the whole
+        // attack step - fall back to the protecting player rather than attacking nobody.
+        if (this.attackers.isEmpty() && !(defender instanceof Player) && defendingOpponent != null
+                && combat.getDefenders().contains(defendingOpponent)) {
+            defender = defendingOpponent;
             refreshCombatants(defender);
         }
         if (this.attackers.isEmpty()) {
