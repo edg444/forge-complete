@@ -1497,6 +1497,30 @@ public class AiAttackController {
      *            a {@link forge.game.combat.Combat} object.
      * @return a boolean.
      */
+    /**
+     * A blocker that eats this attacker without dying and without killing it makes the attack
+     * accomplish nothing at all. defPower == 0 reads as "attack for free", but a Sagrada Familiar
+     * (0/5 reach defender) absorbs a 1/1 flier for free on its side of the table too. Only counts as
+     * pointless when there are enough such absorbers to soak up everything the AI could send, since
+     * with more attackers than walls the surplus still gets through.
+     */
+    private boolean wouldJustBeAbsorbed(final Card attacker, final List<Card> defenders, final Combat combat) {
+        if (attacker.hasKeyword(Keyword.TRAMPLE)) {
+            return false;
+        }
+        int absorbers = 0;
+        for (final Card blocker : defenders) {
+            if (!CombatUtil.canBlock(attacker, blocker, combat)) {
+                continue;
+            }
+            if (!ComputerUtilCombat.canDestroyBlocker(ai, blocker, attacker, combat, true)
+                    && !ComputerUtilCombat.canDestroyAttacker(ai, attacker, blocker, combat, true)) {
+                absorbers++;
+            }
+        }
+        return absorbers > 0 && absorbers >= this.attackers.size();
+    }
+
     public final boolean shouldAttack(final Card attacker, final List<Card> defenders, final Combat combat, final GameEntity defender) {
         // Is it a creature that has a more valuable ability with a tap cost than what it can do by attacking?
         if (attacker.hasSVar("NonCombatPriority") && !attacker.hasKeyword(Keyword.VIGILANCE)) {
@@ -1562,7 +1586,7 @@ public class AiAttackController {
                 return true;
             case 4: // expecting to at least trade with something, or can attack "for free", expecting no counterattack
                 if (saf.canKillAll || (saf.dangerousBlockersPresent && saf.canKillAllDangerous && !saf.canBeKilledByOne) || !saf.canBeBlocked()
-                        || saf.defPower == 0) {
+                        || (saf.defPower == 0 && !wouldJustBeAbsorbed(attacker, defenders, combat))) {
                     if (LOG_AI_ATTACKS)
                         System.out.println(attacker.getName() + " = attacking expecting to at least trade with something");
                     return true;
