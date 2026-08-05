@@ -1,0 +1,12 @@
+Name:Phyrexian Librarian
+ManaCost:3 B
+Types:Creature Phyrexian Horror
+PT:3/3
+K:Flying
+K:Trample
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigBalance | TriggerDescription$ At the beginning of your upkeep, exile the top card of your library and balance it on your body.
+SVar:TrigBalance:DB$ ChangeZone | Defined$ TopOfLibrary | Origin$ Library | Destination$ Exile | RememberChanged$ True
+A:AB$ Sacrifice | Cost$ FlavorAction<Confirm a balanced card fell or touched another balanced card/It fell!> | Activator$ Player | AILogic$ Chance.25 | SacValid$ Self | SpellDescription$ Any player may activate this ability: Sacrifice CARDNAME.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | Static$ True | ValidCard$ Card.Self | Execute$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Flying, trample\nAt the beginning of your upkeep, exile the top card of your library and balance it on your body.\nWhen a balanced card falls or touches another balanced card, sacrifice this creature.
