@@ -172,6 +172,18 @@ public class CardProperty {
             if (ed == null || ed.getType() != CardEdition.Type.FUNNY) {
                 return false;
             }
+        } else if (property.equals("textHasChosenWord")) {
+            // Tainted Monkey - the chosen word rides in ChosenType, and only whole words count, so
+            // choosing "ape" doesn't hit "Shapeshifter"
+            if (!source.hasChosenType()) {
+                return false;
+            }
+            final String word = source.getChosenType().toLowerCase().trim();
+            final String text = card.getOracleText().toLowerCase();
+            if (word.isEmpty() || !java.util.regex.Pattern.compile("\\b" + java.util.regex.Pattern.quote(word) + "\\b")
+                    .matcher(text).find()) {
+                return false;
+            }
         } else if (property.equals("ArtistIsChosen")) {
             if (!source.hasChosenArtist()
                     || !card.getArtist().equalsIgnoreCase(source.getChosenArtist())) {
