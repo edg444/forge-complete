@@ -115,6 +115,13 @@ public class LifeLoseAi extends SpellAbilityAi {
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
 
+        // Honor-system abilities that cost the activator life (Vile Bile) are never "good" plays, so
+        // the checks below would always refuse. The Chance.N roll in canPlayWithSubs has already
+        // decided the AI is owning up this turn - just don't let it own up into losing the game.
+        if (aiLogic.startsWith("Chance.") && ai.getLife() - amount >= 5) {
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
+
         final PlayerCollection tgtPlayers = getPlayers(ai, sa);
          // TODO: check against the amount we could obtain when multiple activations are possible
         PlayerCollection filteredPlayer = tgtPlayers
