@@ -49,6 +49,12 @@ public class ChooseArtistEffect extends SpellAbilityEffect {
                     addArtist(artists, c.getArtist());
                 }
             }
+            // Persecute Artist won't let you name its own illustrator
+            if (sa.hasParam("ExcludeArtist")) {
+                for (final String excluded : sa.getParam("ExcludeArtist").split(",")) {
+                    artists.remove(excluded.trim());
+                }
+            }
             if (artists.isEmpty()) {
                 continue;
             }
