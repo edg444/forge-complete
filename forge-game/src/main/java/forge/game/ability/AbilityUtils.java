@@ -2103,6 +2103,24 @@ public class AbilityUtils {
             return doXMath(calculateAmount(c, sq[c.isOptionalCostPaid(OptionalCost.AltCost) ? 1 : 2], ctb), expr, c, ctb);
         }
 
+        // When Fluffy Bunnies Attack - how often the letter chosen on the ability's own card shows
+        // up in this card's name. Matched on the displayed name so a flavor name counts as printed.
+        if (sq[0].equals("ChosenLetterInName")) {
+            final Card chooser = ctb == null ? null : ctb.getHostCard();
+            if (chooser == null || !chooser.hasChosenType()) {
+                return doXMath(0, expr, c, ctb);
+            }
+            final String letter = chooser.getChosenType().toLowerCase();
+            final String name = c.getDisplayName().toLowerCase();
+            int count = 0;
+            if (!letter.isEmpty()) {
+                for (int i = name.indexOf(letter); i >= 0; i = name.indexOf(letter, i + letter.length())) {
+                    count++;
+                }
+            }
+            return doXMath(count, expr, c, ctb);
+        }
+
         if (sq[0].equals("CardPower")) {
             return doXMath(c.getNetPower(), expr, c, ctb);
         }

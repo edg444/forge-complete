@@ -1,0 +1,8 @@
+Name:When Fluffy Bunnies Attack
+ManaCost:3 B
+Types:Instant
+A:SP$ ChooseType | Type$ letter | Chooser$ You | ChoiceTitle$ Choose a letter | ValidTypes$ A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z | ValidTgts$ Creature | TgtPrompt$ Select target creature | SubAbility$ DBPump | SpellDescription$ Target creature gets -X/-X until end of turn, where X is the number of times the letter of your choice appears in that creature's name.
+SVar:DBPump:DB$ Pump | Defined$ Targeted | NumAtt$ -X | NumDef$ -X | IsCurse$ True | SubAbility$ DBCleanup
+SVar:X:Targeted$ChosenLetterInName
+SVar:DBCleanup:DB$ Cleanup | ClearChosenType$ True
+Oracle:Target creature gets -X/-X until end of turn, where X is the number of times the letter of your choice appears in that creature's name.
