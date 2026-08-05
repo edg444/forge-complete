@@ -2,7 +2,7 @@ Name:Swarmborn Giant
 ManaCost:2 G G
 Types:Creature Giant
 PT:6/6
-T:Mode$ DamageDoneOnce | CombatDamage$ True | ValidTarget$ You | TriggerZones$ Battlefield | Execute$ TrigSac | TriggerDescription$ Whenever you're dealt combat damage, sacrifice CARDNAME.
+T:Mode$ DamageDoneOnce | CombatDamage$ True | ValidTarget$ You | TriggerZones$ Battlefield | Execute$ TrigSac | TriggerDescription$ When you're dealt combat damage, sacrifice this creature.
 SVar:TrigSac:DB$ Sacrifice | SacValid$ Self
 A:AB$ PutCounter | Cost$ 4 G G | Monstrosity$ 2
 S:Mode$ Continuous | Affected$ Card.Self+IsMonstrous | AddKeyword$ Reach | Description$ As long as this creature is monstrous, it has reach.
