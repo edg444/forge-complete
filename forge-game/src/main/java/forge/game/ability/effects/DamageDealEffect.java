@@ -311,7 +311,10 @@ public class DamageDealEffect extends DamageBaseEffect {
             if (halfTarget instanceof Card halfCard) {
                 halfCard.addHalfDamage();
             } else if (halfTarget instanceof Player halfPlayer) {
+                // a player's half only queues up - dealDamage already flushed the queue on its way
+                // out, so without this the half would wait for some later damage to cash it in
                 halfPlayer.addHalfDamage();
+                halfPlayer.processDamage();
             }
         }
         replaceDying(sa);
