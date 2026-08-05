@@ -510,6 +510,11 @@ public class Player extends GameEntity implements Comparable<Player> {
         }
         halfLife = h;
         view.updateHalfLife(this);
+        // The life panel only repaints on a life event, so losing just the half - 19 1/2 down to 19,
+        // where the whole part never moves - would leave the old total on screen.
+        if (game != null) {
+            game.fireEvent(new GameEventPlayerStatsChanged(this));
+        }
     }
 
     /**
