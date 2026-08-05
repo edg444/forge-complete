@@ -2,7 +2,7 @@ Name:Tainted Monkey
 ManaCost:1 B
 Types:Creature Monkey
 PT:1/1
-A:AB$ ChooseType | Cost$ T | Type$ word | Defined$ You | FreeInput$ True | ChoiceTitle$ Choose a word | ValidTypes$ creature,land,card,target,player,draw,damage,destroy,counter,token,mana,attack,block,graveyard,library,hand,exile,sacrifice,discard,flying,trample,vigilance,haste,black,white,blue,red,green,artifact,enchantment,instant,sorcery,life,turn,combat,monkey | ValidTgts$ Player | TgtPrompt$ Select target player | SubAbility$ DBMill | SpellDescription$ Choose a word. Target player mills a card. If a card with the chosen word in its text box was milled this way, they lose 3 life.
+A:AB$ ChooseType | Cost$ T | Type$ word | Chooser$ You | FreeInput$ True | ChoiceTitle$ Choose a word | ValidTypes$ creature,land,card,target,player,draw,damage,destroy,counter,token,mana,attack,block,graveyard,library,hand,exile,sacrifice,discard,flying,trample,vigilance,haste,black,white,blue,red,green,artifact,enchantment,instant,sorcery,life,turn,combat,monkey | ValidTgts$ Player | TgtPrompt$ Select target player | SubAbility$ DBMill | SpellDescription$ Choose a word. Target player mills a card. If a card with the chosen word in its text box was milled this way, they lose 3 life.
 SVar:DBMill:DB$ Mill | Defined$ Targeted | NumCards$ 1 | RememberMilled$ True | SubAbility$ DBLoseLife
 SVar:DBLoseLife:DB$ LoseLife | Defined$ Targeted | LifeAmount$ 3 | ConditionDefined$ Remembered | ConditionPresent$ Card.textHasChosenWord | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenType$ True

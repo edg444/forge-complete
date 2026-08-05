@@ -38,7 +38,11 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
         final Card card = sa.getHostCard();
         final String type = sa.getParam("Type");
         final List<String> validTypes = new ArrayList<>();
-        final List<Player> tgtPlayers = getTargetPlayers(sa);
+        // the target is normally the one choosing, but Tainted Monkey targets the player being
+        // milled while its controller picks the word, so let a card say who chooses
+        final List<Player> tgtPlayers = sa.hasParam("Chooser")
+                ? AbilityUtils.getDefinedPlayers(sa.getHostCard(), sa.getParam("Chooser"), sa)
+                : getTargetPlayers(sa);
         final boolean secret = sa.hasParam("Secretly");
 
         if (sa.hasParam("ValidTypes")) {
