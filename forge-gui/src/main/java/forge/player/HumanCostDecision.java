@@ -769,15 +769,21 @@ public class HumanCostDecision extends CostDecisionMakerBase {
             return PaymentDecision.number(c);
         }
 
+        // a halves cost counts half-lives, so both the prompt and the affordability check have to be
+        // read that way - otherwise it asks to "Pay 1 life" and a player at 1/2 is told they can't
+        final String amountLabel = cost.isHalves() ? CostPayLife.halvesLabel(c) : String.valueOf(c);
+        final boolean affordable = cost.isHalves() ? cost.canPay(ability, player, isEffect())
+                : player.canPayLife(c, isEffect(), ability);
+
         String message = null;
         if (orString != null && !orString.isEmpty()) {
-            message = Localizer.getInstance().getMessage("lblDoYouWantPayNLife", c, orString);
+            message = Localizer.getInstance().getMessage("lblDoYouWantPayNLife", amountLabel, orString);
         } else {
-            message = Localizer.getInstance().getMessage("lblPayNLifeConfirm", c);
+            message = Localizer.getInstance().getMessage("lblPayNLifeConfirm", amountLabel);
         }
 
         // for costs declared mandatory, this is only reachable with a valid amount
-        if (player.canPayLife(c, isEffect(), ability) && confirmAction(cost, message)) {
+        if (affordable && confirmAction(cost, message)) {
             //force mandatory if paylife is paid.. todo add check if all can be paid
             if (!player.getGame().EXPERIMENTAL_RESTORE_SNAPSHOT) {
                 // If we can restore the game state, don't force the SA to be mandatory

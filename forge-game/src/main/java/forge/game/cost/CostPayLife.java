@@ -54,7 +54,8 @@ public class CostPayLife extends CostPart {
         return halves;
     }
 
-    private static String halvesLabel(final int amount) {
+    /** Renders an amount counted in halves the way the card prints it: 1 becomes "½", 3 becomes "1½". */
+    public static String halvesLabel(final int amount) {
         final int whole = amount / 2;
         if (amount % 2 == 0) {
             return String.valueOf(whole);

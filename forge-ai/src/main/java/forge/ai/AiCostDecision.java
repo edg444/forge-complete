@@ -391,7 +391,9 @@ public class AiCostDecision extends CostDecisionMakerBase {
     @Override
     public PaymentDecision visit(CostPayLife cost) {
         int c = cost.getAbilityAmount(ability);
-        if (!player.canPayLife(c, isEffect(), ability)) {
+        // a halves cost counts half-lives, so ask the cost rather than reading c as whole life
+        if (cost.isHalves() ? !cost.canPay(ability, player, isEffect())
+                : !player.canPayLife(c, isEffect(), ability)) {
             return null;
         }
         return PaymentDecision.number(c);
