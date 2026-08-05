@@ -3644,6 +3644,11 @@ public class AbilityUtils {
             return doXMath(player.getStartingLife(), m, source, ctb);
         }
 
+        // must precede LifeTotal, which would otherwise match this name too
+        if (value.contains("LifeTotalHalves")) {
+            return doXMath(player.getLife() * 2 + player.getHalfLife(), m, source, ctb);
+        }
+
         if (value.contains("LifeTotal")) {
             return doXMath(player.getLife(), m, source, ctb);
         }

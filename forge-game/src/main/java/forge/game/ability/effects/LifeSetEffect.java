@@ -1,5 +1,7 @@
 package forge.game.ability.effects;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import forge.game.ability.AbilityKey;
@@ -28,6 +30,9 @@ public class LifeSetEffect extends SpellAbilityEffect {
         final Card source = sa.getHostCard();
         final boolean redistribute = sa.hasParam("Redistribute");
         final int lifeAmount = redistribute ? 0 : AbilityUtils.calculateAmount(source, sa.getParam("LifeAmount"), sa);
+        // "life total becomes the lowest life total" has to see a half - reading whole life only
+        // made Repay in Kind set everyone to 19 when the lowest was really 19 1/2
+        final int halvesAmount = redistribute ? -1 : lifeTotalDerivedHalves(source, sa);
         final List<Integer> lifetotals = new ArrayList<>();
         final PlayerController pc = sa.getActivatingPlayer().getController();
 
@@ -74,7 +79,11 @@ public class LifeSetEffect extends SpellAbilityEffect {
             }
             final int preLife = p.getLife();
             if (!redistribute) {
-                p.setLife(lifeAmount, sa);
+                if (halvesAmount >= 0) {
+                    p.setLifeInHalves(halvesAmount, sa);
+                } else {
+                    p.setLife(lifeAmount, sa);
+                }
             } else {
                 List<Integer> validChoices = getDistribution(players, true, lifetotals);
                 int life = pc.chooseNumber(sa, Localizer.getInstance().getMessage("lblLifeTotal") + ": " + p, validChoices, p);
@@ -137,6 +146,25 @@ public class LifeSetEffect extends SpellAbilityEffect {
     /* (non-Javadoc)
      * @see forge.card.abilityfactory.AbilityFactoryAlterLife.SpellEffect#getStackDescription(java.util.Map, forge.card.spellability.SpellAbility)
      */
+    /**
+     * Re-reads a life amount that came from a player's life total in halves, so the lowest total
+     * among players keeps its half. Returns -1 when the amount isn't life-total derived.
+     */
+    private static int lifeTotalDerivedHalves(final Card source, final SpellAbility sa) {
+        final String amount = sa.getParam("LifeAmount");
+        if (StringUtils.isBlank(amount)) {
+            return -1;
+        }
+        String svarval = amount.indexOf('$') > 0 ? amount : sa.getSVar(amount);
+        if (StringUtils.isBlank(svarval)) {
+            svarval = source.getSVar(amount);
+        }
+        if (StringUtils.isBlank(svarval) || svarval.contains("Halves") || !svarval.contains("LifeTotal")) {
+            return -1;
+        }
+        return AbilityUtils.calculateAmount(source, svarval.replace("LifeTotal", "LifeTotalHalves"), sa);
+    }
+
     @Override
     protected String getStackDescription(SpellAbility sa) {
         if (sa.hasParam("Redistribute")) {

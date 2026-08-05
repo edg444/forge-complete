@@ -470,6 +470,15 @@ public class Player extends GameEntity implements Comparable<Player> {
         return change || hadHalf;
     }
 
+    /** Sets the life total from an amount counted in halves, so 39 lands the player on 19 1/2. */
+    public final boolean setLifeInHalves(final int halves, final SpellAbility sa) {
+        // setLife clears any leftover half first, so the remainder below is the whole story
+        final boolean change = setLife(Math.floorDiv(halves, 2), sa);
+        final int remainder = Math.floorMod(halves, 2);
+        setHalfLife(remainder);
+        return change || remainder > 0;
+    }
+
     public final int getStartingLife() {
         return startingLife;
     }
