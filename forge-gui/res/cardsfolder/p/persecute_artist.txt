@@ -1,6 +1,6 @@
 Name:Persecute Artist
 ManaCost:1 B B
 Types:Sorcery
-A:SP$ ChooseArtist | Defined$ You | ExcludeArtist$ Rebecca Guay | AILogic$ MostProminentOppCtrl | SubAbility$ DBRevealDiscard | SpellDescription$ Choose an artist other than Rebecca Guay. Target player reveals their hand and discards all nonland cards with art by the chosen artist.
+A:SP$ ChooseArtist | Defined$ You | ExcludeArtist$ Rebecca Guay,Rebecca "Don't Mess with Me" Guay | AILogic$ MostProminentOppCtrl | SubAbility$ DBRevealDiscard | SpellDescription$ Choose an artist other than Rebecca Guay. Target player reveals their hand and discards all nonland cards with art by the chosen artist.
 SVar:DBRevealDiscard:DB$ Discard | Mode$ RevealDiscardAll | DiscardValid$ Card.nonLand+ArtistIsChosen | ValidTgts$ Player | TgtPrompt$ Select target player
 Oracle:Choose an artist other than Rebecca Guay. Target player reveals their hand and discards all nonland cards with art by the chosen artist.
