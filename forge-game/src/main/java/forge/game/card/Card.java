@@ -3361,12 +3361,14 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     public final boolean canProduceColorMana(final Set<String> colors) {
         for (final SpellAbility mana : getManaAbilities()) {
+            if (mana.getApi() == ApiType.ManaReflected) {
+                if (!Collections.disjoint(CardUtil.getReflectableManaColors(mana), colors)) {
+                    return true;
+                }
+                continue;
+            }
             for (String s : colors) {
-                if (mana.getApi() == ApiType.ManaReflected) {
-                    if (CardUtil.getReflectableManaColors(mana).contains(s)) {
-                        return true;
-                    }
-                } else if (mana.canProduce(MagicColor.toShortString(s))) {
+                if (mana.canProduce(MagicColor.toShortString(s))) {
                     return true;
                 }
             }
@@ -7536,7 +7538,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return getAllPossibleAbilities(player, removeUnplayable, null);
     }
     public List<SpellAbility> getAllPossibleAbilities(final Player player, final boolean removeUnplayable, final Multimap<SpellAbility, SpellAbility> unhiddenAltCost) {
-        CardState oState = getState(CardStateName.Original);
+        CardState oState = getOriginalState(CardStateName.Original);
         final List<SpellAbility> abilities = Lists.newArrayList();
         for (SpellAbility sa : getSpellAbilities()) {
             if (sa.isAdventure() && isOnAdventure()) {

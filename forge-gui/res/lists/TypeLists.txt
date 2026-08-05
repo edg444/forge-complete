@@ -402,6 +402,7 @@ Ajani
 Aminatou
 Angrath
 Arlinn
+Arzakon
 Ashiok
 Bahamut
 Basri
@@ -417,13 +418,16 @@ Dellian
 Dihada
 Domri
 Dovin
+Dyfed
 Ellywick
 Elminster
 Elspeth
 Estrid
+Feroz
 Freyalise
 Garruk
 Gideon
+Greensleeves
 Grist
 Guff
 Huatli
@@ -462,6 +466,7 @@ Tasha
 Teferi
 Teyo
 Tezzeret
+Thomil
 Tibalt
 Tyvar
 Ugin
@@ -472,6 +477,7 @@ Vraska
 Vronos
 Will
 Windgrace
+Worzel
 Wrenn
 Xenagos
 Yanggu
