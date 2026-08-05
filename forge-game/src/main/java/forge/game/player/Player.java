@@ -453,6 +453,9 @@ public class Player extends GameEntity implements Comparable<Player> {
 
     public final boolean setLife(final int newLife, final SpellAbility sa) {
         boolean change = false;
+        // becoming exactly N leaves no leftover half - without this, setting the life of a player
+        // sitting at 19 1/2 lands them on 20 1/2
+        final boolean hadHalf = hasHalfLife();
         // rule 119.5
         if (life > newLife) {
             change = loseLife(life - newLife, false, false) > 0;
@@ -463,7 +466,8 @@ public class Player extends GameEntity implements Comparable<Player> {
         else { // life == newLife
             change = false;
         }
-        return change;
+        setHalfLife(0);
+        return change || hadHalf;
     }
 
     public final int getStartingLife() {
