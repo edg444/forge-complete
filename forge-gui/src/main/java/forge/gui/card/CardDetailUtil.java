@@ -424,6 +424,12 @@ public class CardDetailUtil {
             }
         }
 
+        // chosen artist
+        if (!card.getChosenArtist().isEmpty()) {
+            area.append("\n");
+            area.append("(chosen artist: ").append(card.getChosenArtist()).append(")");
+        }
+
         // chosen type
         if (!card.getChosenType().isEmpty()) {
             area.append("\n");

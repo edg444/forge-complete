@@ -444,6 +444,14 @@ public class CardView extends GameEntityView {
         set(TrackableProperty.StoredRolls, c.getStoredRollsForView());
     }
 
+    public String getChosenArtist() {
+        final String s = get(TrackableProperty.ChosenArtist);
+        return s == null ? "" : s;
+    }
+    void updateChosenArtist(Card c) {
+        set(TrackableProperty.ChosenArtist, c.getChosenArtist());
+    }
+
     public List<String> getChosenColors() {
         return get(TrackableProperty.ChosenColors);
     }

@@ -2200,13 +2200,14 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         view.updateChosenType(this);
     }
 
-    // Circle of Protection: Art. Not view-synced like chosenType - the choice is announced through
-    // the game log when it's made, and no UI surface displays a card's artist to compare against.
+    // Circle of Protection: Art, Zombie Fanboy and friends. View-synced so the detail panel can name
+    // the artist - a choice announced once in the log is easy to lose track of over a long game.
     public final String getChosenArtist() {
         return chosenArtist;
     }
     public final void setChosenArtist(final String s) {
         chosenArtist = s;
+        view.updateChosenArtist(this);
     }
     public final boolean hasChosenArtist() {
         return chosenArtist != null && !chosenArtist.isEmpty();

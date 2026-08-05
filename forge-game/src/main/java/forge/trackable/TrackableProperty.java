@@ -74,6 +74,7 @@ public enum TrackableProperty {
     ProtectingPlayer(TrackableTypes.PlayerViewType),
     ChosenDirection(TrackableTypes.EnumType(Direction.class)),
     ChosenDirectionLabel(TrackableTypes.StringType),
+    ChosenArtist(TrackableTypes.StringType),
     ChosenEvenOdd(TrackableTypes.EnumType(EvenOdd.class)),
     ChosenMode(TrackableTypes.StringType),
     Sector(TrackableTypes.StringType),
