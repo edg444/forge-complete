@@ -129,6 +129,15 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
                 if (sa.hasParam("AtRandom")) {
                     choice = Aggregates.random(validTypes);
                     noNotify = null;
+                } else if (sa.hasParam("FreeInput") && !p.getController().isAI()) {
+                    // Tainted Monkey lets a player name any word at all; ValidTypes stays as the
+                    // vocabulary the AI picks from, since it can't invent one
+                    choice = p.getController().guessString(sa, sa.hasParam("ChoiceTitle")
+                            ? sa.getParam("ChoiceTitle") : type);
+                    if (choice == null || choice.trim().isEmpty()) {
+                        continue;
+                    }
+                    choice = choice.trim();
                 } else {
                     choice = p.getController().chooseSomeType(type, sa, validTypes);
                 }
