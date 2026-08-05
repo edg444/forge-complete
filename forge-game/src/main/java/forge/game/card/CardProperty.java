@@ -172,6 +172,25 @@ public class CardProperty {
             if (ed == null || ed.getType() != CardEdition.Type.FUNNY) {
                 return false;
             }
+        } else if (property.equals("alphabeticallyFirstNonLand")) {
+            // Zzzyxas's Abyss. Ties are intentional - every permanent sharing that name qualifies.
+            // Compared on the displayed name so a flavor name sorts as printed.
+            String first = null;
+            for (final Card p : game.getCardsIn(ZoneType.Battlefield)) {
+                if (p.isLand()) {
+                    continue;
+                }
+                final String n = p.getDisplayName();
+                if (n == null || n.isEmpty()) {
+                    continue;
+                }
+                if (first == null || n.compareToIgnoreCase(first) < 0) {
+                    first = n;
+                }
+            }
+            if (first == null || !first.equalsIgnoreCase(card.getDisplayName())) {
+                return false;
+            }
         } else if (property.equals("textHasChosenWord")) {
             // Tainted Monkey - the chosen word rides in ChosenType, and only whole words count, so
             // choosing "ape" doesn't hit "Shapeshifter"

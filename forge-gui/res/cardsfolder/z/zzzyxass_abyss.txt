@@ -1,0 +1,6 @@
+Name:Zzzyxas's Abyss
+ManaCost:1 B B
+Types:Enchantment
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDestroy | TriggerDescription$ At the beginning of your upkeep, destroy all nonland permanents with the first name alphabetically among nonland permanents.
+SVar:TrigDestroy:DB$ DestroyAll | ValidCards$ Permanent.nonLand+alphabeticallyFirstNonLand
+Oracle:At the beginning of your upkeep, destroy all nonland permanents with the first name alphabetically among nonland permanents.
