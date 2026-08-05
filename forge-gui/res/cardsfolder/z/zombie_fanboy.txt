@@ -1,0 +1,9 @@
+Name:Zombie Fanboy
+ManaCost:2 B
+Types:Creature Zombie Gamer
+PT:1/1
+K:ETBReplacement:Other:DBChooseArtist
+SVar:DBChooseArtist:DB$ ChooseArtist | Defined$ You | AILogic$ MostProminentOppCtrl | SpellDescription$ As this creature enters, choose an artist.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Permanent.ArtistIsChosen | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ Whenever a permanent with art by the chosen artist is put into a graveyard, put two +1/+1 counters on this creature.
+SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 2
+Oracle:As this creature enters, choose an artist.\nWhenever a permanent with art by the chosen artist is put into a graveyard, put two +1/+1 counters on this creature.
