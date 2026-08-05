@@ -1,0 +1,6 @@
+Name:Vile Bile
+ManaCost:1 B
+Types:Creature Ooze
+PT:2.5/2.5
+A:AB$ LoseLife | Cost$ FlavorAction<Confirm your skin or fingernail touched this creature/Ew!> | Activator$ Player | Defined$ You | LifeAmount$ 2 | AILogic$ Chance.10 | SpellDescription$ Any player may activate this ability: That player loses 2 life.
+Oracle:Whenever a player's skin or fingernail touches this creature, that player loses 2 life.
