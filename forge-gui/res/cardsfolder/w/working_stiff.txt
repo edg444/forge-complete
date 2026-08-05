@@ -1,0 +1,7 @@
+Name:Working Stiff
+ManaCost:1 B
+Types:Creature Mummy
+PT:2/2
+Text:As this creature enters, straighten your arms.
+A:AB$ Sacrifice | Cost$ FlavorAction<Confirm this creature's controller bent an elbow/Bent it!> | Activator$ Player | AILogic$ Chance.25 | SacValid$ Self | SpellDescription$ Any player may activate this ability: Sacrifice this creature.
+Oracle:As this creature enters, straighten your arms.\nWhen you bend an elbow, sacrifice this creature.
