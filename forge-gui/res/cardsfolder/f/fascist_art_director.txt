@@ -2,6 +2,6 @@ Name:Fascist Art Director
 ManaCost:1 W W
 Types:Creature Human Horror
 PT:2/2
-A:AB$ ChooseArtist | Cost$ W W | Defined$ You | AILogic$ MostProminentOppCtrl | SubAbility$ DBPump | SpellDescription$ CARDNAME gains protection from the artist of your choice until end of turn.
+A:AB$ ChooseArtist | Cost$ W W | Defined$ You | AILogic$ MostProminentOppCtrl | SubAbility$ DBPump | SpellDescription$ This creature gains protection from the artist of your choice until end of turn.
 SVar:DBPump:DB$ Pump | Defined$ Self | KW$ Protection:Card.ArtistIsChosen:ChosenArtist | DefinedKW$ ChosenArtist
 Oracle:{W}{W}: Fascist Art Director gains protection from the artist of your choice until end of turn.

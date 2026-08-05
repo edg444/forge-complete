@@ -2,7 +2,7 @@ Name:Greater Morphling
 ManaCost:6 U U
 Types:Creature Shapeshifter
 PT:5/5
-A:AB$ Charm | Cost$ 2 | Defined$ You | Choices$ KWBanding,KWBushido,KWDoubleStrike,KWFear,KWFlying,KWFirstStrike,KWHaste,KWLandwalk,KWProtection,KWProvoke,KWRampage,KWShadow,KWTrample | SpellDescription$ CARDNAME gains your choice of banding, bushido 1, double strike, fear, flying, first strike, haste, landwalk of your choice, protection from a color of your choice, provoke, rampage 1, shadow, or trample until end of turn.
+A:AB$ Charm | Cost$ 2 | Defined$ You | Choices$ KWBanding,KWBushido,KWDoubleStrike,KWFear,KWFlying,KWFirstStrike,KWHaste,KWLandwalk,KWProtection,KWProvoke,KWRampage,KWShadow,KWTrample | SpellDescription$ This creature gains your choice of banding, bushido 1, double strike, fear, flying, first strike, haste, landwalk of your choice, protection from a color of your choice, provoke, rampage 1, shadow, or trample until end of turn.
 SVar:KWBanding:DB$ Pump | Defined$ Self | KW$ Banding | SpellDescription$ Banding
 SVar:KWBushido:DB$ Pump | Defined$ Self | KW$ Bushido:1 | SpellDescription$ Bushido 1
 SVar:KWDoubleStrike:DB$ Pump | Defined$ Self | KW$ Double Strike | SpellDescription$ Double strike
@@ -18,17 +18,17 @@ SVar:KWProvoke:DB$ Pump | Defined$ Self | KW$ Provoke | SpellDescription$ Provok
 SVar:KWRampage:DB$ Pump | Defined$ Self | KW$ Rampage:1 | SpellDescription$ Rampage 1
 SVar:KWShadow:DB$ Pump | Defined$ Self | KW$ Shadow | SpellDescription$ Shadow
 SVar:KWTrample:DB$ Pump | Defined$ Self | KW$ Trample | SpellDescription$ Trample
-A:AB$ ChooseColor | Cost$ 2 | Defined$ You | OrColors$ True | SubAbility$ DBBecomeColors | SpellDescription$ CARDNAME becomes the colors of your choice until end of turn.
+A:AB$ ChooseColor | Cost$ 2 | Defined$ You | OrColors$ True | SubAbility$ DBBecomeColors | SpellDescription$ This creature becomes the colors of your choice until end of turn.
 SVar:DBBecomeColors:DB$ Animate | Defined$ Self | Colors$ ChosenColor | OverwriteColors$ True | Duration$ UntilEndOfTurn | SubAbility$ DelTrigClear | StackDescription$ None
-A:AB$ ChooseType | Cost$ 2 | Type$ Creature | Defined$ You | SubAbility$ DBBecomeType | SpellDescription$ CARDNAME becomes the creature type of your choice until end of turn.
+A:AB$ ChooseType | Cost$ 2 | Type$ Creature | Defined$ You | SubAbility$ DBBecomeType | SpellDescription$ This creature becomes the creature type of your choice until end of turn.
 SVar:DBBecomeType:DB$ Animate | Defined$ Self | Types$ ChosenType | RemoveCreatureTypes$ True | Duration$ UntilEndOfTurn | SubAbility$ DelTrigClear | StackDescription$ None
 SVar:DelTrigClear:DB$ DelayedTrigger | Mode$ Phase | Phase$ End of Turn | Execute$ DBClearChosen | Static$ True
 SVar:DBClearChosen:DB$ Cleanup | ClearChosenType$ True | ClearChosenColor$ True
-A:AB$ SetExpansion | Cost$ 2 | Defined$ You | SpellDescription$ CARDNAME's expansion symbol becomes the symbol of your choice until end of turn.
-A:AB$ ChooseArtist | Cost$ 2 | Defined$ You | SubAbility$ DBBecomeArt | SpellDescription$ CARDNAME's art becomes by the artist of your choice until end of turn.
+A:AB$ SetExpansion | Cost$ 2 | Defined$ You | SpellDescription$ This creature's expansion symbol becomes the symbol of your choice until end of turn.
+A:AB$ ChooseArtist | Cost$ 2 | Defined$ You | SubAbility$ DBBecomeArt | SpellDescription$ This creature's art becomes by the artist of your choice until end of turn.
 SVar:DBBecomeArt:DB$ SetArtist | Defined$ Self | StackDescription$ None
-A:AB$ Charm | Cost$ 2 | Defined$ You | Choices$ DBPumpUp,DBPumpDown | SpellDescription$ CARDNAME gets +2/-2 or -2/+2 until end of turn.
+A:AB$ Charm | Cost$ 2 | Defined$ You | Choices$ DBPumpUp,DBPumpDown | SpellDescription$ This creature gets +2/-2 or -2/+2 until end of turn.
 SVar:DBPumpUp:DB$ Pump | Defined$ Self | NumAtt$ +2 | NumDef$ -2 | SpellDescription$ +2/-2
 SVar:DBPumpDown:DB$ Pump | Defined$ Self | NumAtt$ -2 | NumDef$ +2 | SpellDescription$ -2/+2
-A:AB$ Untap | Cost$ 2 | Defined$ Self | SpellDescription$ Untap CARDNAME.
+A:AB$ Untap | Cost$ 2 | Defined$ Self | SpellDescription$ Untap this creature.
 Oracle:{2}: This creature gains your choice of banding, bushido 1, double strike, fear, flying, first strike, haste, landwalk of your choice, protection from a color of your choice, provoke, rampage 1, shadow, or trample until end of turn.\n{2}: This creature becomes the colors of your choice until end of turn.\n{2}: This creature becomes the creature type of your choice until end of turn.\n{2}: This creature's expansion symbol becomes the symbol of your choice until end of turn.\n{2}: This creature's art becomes by the artist of your choice until end of turn.\n{2}: This creature gets +2/-2 or -2/+2 until end of turn.\n{2}: Untap this creature.

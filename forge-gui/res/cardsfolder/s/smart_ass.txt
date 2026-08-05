@@ -2,7 +2,7 @@ Name:Smart Ass
 ManaCost:2 U
 Types:Creature Donkey Wizard
 PT:2.5/1
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigNameCard | TriggerDescription$ Whenever CARDNAME attacks, choose a card name. If defending player has no cards with the chosen name in their hand, they may reveal their hand. If they don't reveal their hand, CARDNAME can't be blocked this turn.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigNameCard | TriggerDescription$ Whenever this creature attacks, choose a card name. If defending player has no cards with the chosen name in their hand, they may reveal their hand. If they don't reveal their hand, this creature can't be blocked this turn.
 SVar:TrigNameCard:DB$ NameCard | Defined$ You | SubAbility$ DBOffer
 SVar:DBOffer:DB$ GenericChoice | Defined$ TriggeredDefendingPlayer | Choices$ DBRevealHand,DBUnblockable | ChoicePrompt$ You have no card with the chosen name. Reveal your hand to prove it? | ConditionCheckSVar$ NamedInHand | ConditionSVarCompare$ EQ0 | AILogic$ Chance.25
 SVar:NamedInHand:Count$ValidHand Card.NamedCard+OwnedBy TriggeredDefendingPlayer

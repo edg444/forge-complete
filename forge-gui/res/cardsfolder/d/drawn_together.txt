@@ -2,6 +2,6 @@ Name:Drawn Together
 ManaCost:2 W W
 Types:Enchantment
 K:ETBReplacement:Other:ChooseArt
-SVar:ChooseArt:DB$ ChooseArtist | Defined$ You | AILogic$ MostProminentYouCtrl | SpellDescription$ As CARDNAME enters, choose an artist.
+SVar:ChooseArt:DB$ ChooseArtist | Defined$ You | AILogic$ MostProminentYouCtrl | SpellDescription$ As this enchantment enters, choose an artist.
 S:Mode$ Continuous | Affected$ Creature.ArtistIsChosen | AddPower$ 2 | AddToughness$ 2 | Description$ Creatures with art by the chosen artist get +2/+2.
 Oracle:As Drawn Together enters, choose an artist.\nCreatures with art by the chosen artist get +2/+2.

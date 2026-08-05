@@ -3,6 +3,6 @@ ManaCost:3 U U
 Types:Creature Drake
 PT:2/3
 K:Flying
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigReturn | OptionalDecider$ You | TriggerDescription$ When CARDNAME enters, you may return target permanent with a two-word name to its owner's hand.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigReturn | OptionalDecider$ You | TriggerDescription$ When this creature enters, you may return target permanent with a two-word name to its owner's hand.
 SVar:TrigReturn:DB$ ChangeZone | ValidTgts$ Permanent.nameWords_EQ2 | TgtPrompt$ Select target permanent with a two-word name | Origin$ Battlefield | Destination$ Hand
 Oracle:Flying\nWhen this creature enters, you may return target permanent with a two-word name to its owner's hand.

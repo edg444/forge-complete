@@ -4,7 +4,7 @@ Types:Creature Human Wizard
 PT:1/2
 A:AB$ Draw | Cost$ T | NumCards$ 1 | SpellDescription$ Draw a card, then discard a card. | SubAbility$ DBDiscard
 SVar:DBDiscard:DB$ Discard | Defined$ You | Mode$ TgtChoose | NumCards$ 1
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Permanent.sharesArtistWith Permanent.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigUntap | TriggerDescription$ Whenever a permanent that shares an artist with another permanent you control enters, untap CARDNAME.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Permanent.sharesArtistWith Permanent.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigUntap | TriggerDescription$ Whenever a permanent that shares an artist with another permanent you control enters, untap this creature.
 SVar:TrigUntap:DB$ Untap | Defined$ Self
 DeckHas:Ability$Discard
 Oracle:{T}: Draw a card, then discard a card.\nWhenever a permanent that shares an artist with another permanent you control enters, untap this creature.
