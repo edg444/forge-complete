@@ -117,8 +117,13 @@ public class LifeLoseAi extends SpellAbilityAi {
 
         // Honor-system abilities that cost the activator life (Vile Bile) are never "good" plays, so
         // the checks below would always refuse. The Chance.N roll in canPlayWithSubs has already
-        // decided the AI is owning up this turn - just don't let it own up into losing the game.
-        if (aiLogic.startsWith("Chance.") && ai.getLife() - amount >= 5) {
+        // decided the AI is owning up this turn - just don't let it own up into losing the game, and
+        // keep it to its own main phase so it doesn't fire at every enters/upkeep priority window
+        // and read like a trigger.
+        final forge.game.phase.PhaseHandler chancePhase = ai.getGame().getPhaseHandler();
+        if (aiLogic.startsWith("Chance.") && ai.getLife() - amount >= 5
+                && chancePhase.isPlayerTurn(ai)
+                && (chancePhase.is(PhaseType.MAIN1) || chancePhase.is(PhaseType.MAIN2))) {
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
 
