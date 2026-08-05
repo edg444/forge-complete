@@ -17,8 +17,11 @@
  */
 package forge.game.cost;
 
+import org.apache.commons.lang3.StringUtils;
+
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
+import forge.game.staticability.StaticAbilityCantGainLosePayLife;
 
 /**
  * The Class CostPayLife.
@@ -35,8 +38,28 @@ public class CostPayLife extends CostPart {
      * @param amount
      *            the amount
      */
+    /** When true the amount counts halves, so 1 means half a life (Necro-Impotence). */
+    private final boolean halves;
+
     public CostPayLife(final String amount, final String description) {
+        this(amount, description, false);
+    }
+
+    public CostPayLife(final String amount, final String description, final boolean halves) {
         super(amount, "card", description);
+        this.halves = halves;
+    }
+
+    public boolean isHalves() {
+        return halves;
+    }
+
+    private static String halvesLabel(final int amount) {
+        final int whole = amount / 2;
+        if (amount % 2 == 0) {
+            return String.valueOf(whole);
+        }
+        return whole == 0 ? "½" : whole + "½";
     }
 
     @Override
@@ -54,6 +77,8 @@ public class CostPayLife extends CostPart {
         String desc = this.getTypeDescription();
         if (desc != null) {
             sb.append(desc);
+        } else if (halves && StringUtils.isNumeric(this.getAmount())) {
+            sb.append(halvesLabel(Integer.parseInt(this.getAmount()))).append(" life");
         } else {
             sb.append(this.getAmount()).append(" life");
         }
@@ -65,11 +90,22 @@ public class CostPayLife extends CostPart {
         if (!payer.canPayLife(1, effect, ability)) {
             return 0;
         }
-        return payer.getLife();
+        return halves ? payer.getLife() * 2 + payer.getHalfLife() : payer.getLife();
     }
 
     @Override
     public final boolean canPay(final SpellAbility ability, final Player payer, final boolean effect) {
+        if (halves) {
+            final int need = this.getAbilityAmount(ability);
+            if (need <= 0) {
+                return true;
+            }
+            // half a life is still life, so a player at 1/2 can pay it and a player at 0 cannot
+            if (payer.getLife() * 2 + payer.getHalfLife() < need) {
+                return false;
+            }
+            return !StaticAbilityCantGainLosePayLife.anyCantPayLife(payer, effect, ability);
+        }
         if (!payer.canPayLife(this.getAbilityAmount(ability), effect, ability)) {
             return false;
         }
@@ -79,6 +115,9 @@ public class CostPayLife extends CostPart {
 
     @Override
     public boolean payAsDecided(Player ai, PaymentDecision decision, SpellAbility ability, final boolean effect) {
+        if (halves) {
+            return ai.changeLifeByHalves(-decision.c, ability.getHostCard(), ability);
+        }
         return ai.payLife(decision.c, ability, effect);
     }
 

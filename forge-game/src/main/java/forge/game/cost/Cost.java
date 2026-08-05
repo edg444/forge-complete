@@ -328,6 +328,13 @@ public class Cost implements Serializable {
 
         // While no card has "PayLife<2> PayLife<3> there might be a card that
         // Changes Cost by adding a Life Payment
+        if (parse.startsWith("PayLifeHalves<")) {
+            // amount counts halves, so 1 is half a life (Necro-Impotence)
+            final String[] splitStr = abCostParse(parse, 2);
+            final String description = splitStr.length > 1 ? splitStr[1] : null;
+            return new CostPayLife(splitStr[0], description, true);
+        }
+
         if (parse.startsWith("PayLife<")) {
             // PayLife<LifeCost>
             final String[] splitStr = abCostParse(parse, 2);

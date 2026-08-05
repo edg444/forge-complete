@@ -1,0 +1,16 @@
+Name:Necro-Impotence
+ManaCost:B B B
+Types:Enchantment
+R:Event$ BeginPhase | ActiveZones$ Battlefield | ValidPlayer$ You | Phase$ Untap | Skip$ True | Description$ Skip your untap step.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigChooseX | TriggerDescription$ At the beginning of your upkeep, you may pay X life. If you do, untap X permanents.
+SVar:TrigChooseX:DB$ ChooseNumber | Defined$ You | Max$ MaxLife | ListTitle$ amount of life to pay | SubAbility$ DBPayX | StackDescription$ None
+SVar:MaxLife:Count$YourLifeTotal
+SVar:DBPayX:DB$ LoseLife | Defined$ You | LifeAmount$ Count$ChosenNumber | SubAbility$ DBUntapX
+SVar:DBUntapX:DB$ Untap | Defined$ You | UntapType$ Permanent | Amount$ Count$ChosenNumber
+A:AB$ ChangeZone | Cost$ PayLifeHalves<1> | Defined$ TopOfLibrary | Origin$ Library | Destination$ Exile | ExileFaceDown$ True | RememberChanged$ True | SubAbility$ DelayedReturn | AILogic$ Necropotence | AILifeThreshold$ 1 | SpellDescription$ Exile the top card of your library face down. Put that card into your hand at the beginning of the next end step.
+SVar:DelayedReturn:DB$ DelayedTrigger | Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | Execute$ TrigReturn | RememberObjects$ RememberedLKI | TriggerDescription$ Put the exiled card into your hand. | SubAbility$ DBCleanup
+SVar:TrigReturn:DB$ ChangeZone | Origin$ Exile | Destination$ Hand | Defined$ DelayTriggerRememberedLKI
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:NonStackingEffect:True
+AI:RemoveDeck:Random
+Oracle:Skip your untap step.\nAt the beginning of your upkeep, you may pay X life. If you do, untap X permanents.\nPay ½ life: Exile the top card of your library face down. Put that card into your hand at the beginning of the next end step.
