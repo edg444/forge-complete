@@ -1,0 +1,6 @@
+Name:Laughing Hyena
+ManaCost:1 G
+Types:Creature Hyena
+PT:2/2
+A:AB$ ChangeZone | PrecostDesc$ Gotcha — | Cost$ FlavorAction<If an opponent laughs, say "Gotcha!"/Gotcha!> | Origin$ Graveyard | Destination$ Hand | ActivationZone$ Graveyard | AILogic$ Chance.25 | SpellDescription$ Return this card from your graveyard to your hand.
+Oracle:Gotcha — If an opponent laughs, you may say "Gotcha!" When you do, return this card from your graveyard to your hand.

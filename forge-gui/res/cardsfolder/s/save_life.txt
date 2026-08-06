@@ -4,6 +4,6 @@ Types:Instant
 A:SP$ Charm | Choices$ DBGainLife,DBPrevent
 SVar:DBGainLife:DB$ GainLife | ValidTgts$ Player | TgtPrompt$ Select target player | LifeAmount$ 5 | Halves$ True | SpellDescription$ Target player gains 2½ life.
 SVar:DBPrevent:DB$ PreventDamage | ValidTgts$ Creature | TgtPrompt$ Select target creature | Amount$ 5 | Halves$ True | SpellDescription$ Prevent the next 2½ damage that would be dealt to target creature this turn.
-A:AB$ ChangeZone | PrecostDesc$ Gotcha — | Cost$ FlavorAction<Confirm an opponent said "save" or "life"/Gotcha!> | Origin$ Graveyard | Destination$ Hand | ActivationZone$ Graveyard | AILogic$ Chance.25 | SpellDescription$ Return CARDNAME from your graveyard to your hand.
+A:AB$ ChangeZone | PrecostDesc$ Gotcha — | Cost$ FlavorAction<If an opponent says "save" or "life," say "Gotcha!"/Gotcha!> | Origin$ Graveyard | Destination$ Hand | ActivationZone$ Graveyard | AILogic$ Chance.25 | SpellDescription$ Return CARDNAME from your graveyard to your hand.
 AI:RemoveDeck:Random
 Oracle:Choose one —\n• Target player gains 2½ life.\n• Prevent the next 2½ damage that would be dealt to target creature this turn.\nGotcha — If an opponent says "save" or "life," you may say "Gotcha!" When you do, return Save Life from your graveyard to your hand.

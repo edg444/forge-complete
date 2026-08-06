@@ -1,0 +1,21 @@
+Name:Gluetius Maximus
+ManaCost:3 G G
+Types:Creature Beast
+PT:5/5
+K:ETBReplacement:Other:DBChooseOpp
+SVar:DBChooseOpp:DB$ ChoosePlayer | ChoiceTitle$ Choose an opponent | Choices$ Player.Opponent | SpellDescription$ As this creature enters, an opponent chooses one of your fingers. (Thumbs are fingers, too.) | SubAbility$ DBChooseFinger
+# the choice lands as a counter so the chosen finger stays readable on the card itself - a one-off
+# message scrolls away, and this has to be checked for as long as the creature is on the battlefield
+SVar:DBChooseFinger:DB$ GenericChoice | Defined$ Player.Chosen | ChoicePrompt$ Choose one of their fingers | ShowChoice$ True | Choices$ FLT,FLI,FLM,FLR,FLP,FRT,FRI,FRM,FRR,FRP
+SVar:FLT:DB$ PutCounter | Defined$ Self | CounterType$ LTHMB | CounterNum$ 1 | SpellDescription$ Left thumb
+SVar:FLI:DB$ PutCounter | Defined$ Self | CounterType$ LINDX | CounterNum$ 1 | SpellDescription$ Left index finger
+SVar:FLM:DB$ PutCounter | Defined$ Self | CounterType$ LMIDL | CounterNum$ 1 | SpellDescription$ Left middle finger
+SVar:FLR:DB$ PutCounter | Defined$ Self | CounterType$ LRING | CounterNum$ 1 | SpellDescription$ Left ring finger
+SVar:FLP:DB$ PutCounter | Defined$ Self | CounterType$ LPINK | CounterNum$ 1 | SpellDescription$ Left little finger
+SVar:FRT:DB$ PutCounter | Defined$ Self | CounterType$ RTHMB | CounterNum$ 1 | SpellDescription$ Right thumb
+SVar:FRI:DB$ PutCounter | Defined$ Self | CounterType$ RINDX | CounterNum$ 1 | SpellDescription$ Right index finger
+SVar:FRM:DB$ PutCounter | Defined$ Self | CounterType$ RMIDL | CounterNum$ 1 | SpellDescription$ Right middle finger
+SVar:FRR:DB$ PutCounter | Defined$ Self | CounterType$ RRING | CounterNum$ 1 | SpellDescription$ Right ring finger
+SVar:FRP:DB$ PutCounter | Defined$ Self | CounterType$ RPINK | CounterNum$ 1 | SpellDescription$ Right little finger
+A:AB$ Sacrifice | Cost$ FlavorAction<Admit the chosen finger stopped touching this creature/I let go> | Defined$ Self | SpellDescription$ When the chosen finger isn't touching this creature, sacrifice it.
+Oracle:As this creature enters, an opponent chooses one of your fingers. (Thumbs are fingers, too.)\nWhen the chosen finger isn't touching this creature, sacrifice this creature.

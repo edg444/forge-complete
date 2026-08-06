@@ -1,0 +1,15 @@
+Name:Stone-Cold Basilisk
+ManaCost:4 G
+Types:Creature Basilisk
+PT:2.5/5
+T:Mode$ AttackerBlockedByCreature | ValidCard$ Creature.fewerLettersInNameThanSource | ValidBlocker$ Card.Self | Execute$ DelTrigBlocked | TriggerDescription$ Whenever this creature blocks or becomes blocked by a creature with fewer letters in its name, destroy that creature at end of combat. (Punctuation and spaces aren't letters.)
+T:Mode$ AttackerBlockedByCreature | ValidCard$ Card.Self | ValidBlocker$ Creature.fewerLettersInNameThanSource | Execute$ DelTrigBlocker | Secondary$ True | TriggerDescription$ Whenever this creature blocks or becomes blocked by a creature with fewer letters in its name, destroy that creature at end of combat. (Punctuation and spaces aren't letters.)
+SVar:DelTrigBlocked:DB$ DelayedTrigger | Mode$ Phase | Phase$ EndCombat | ValidPlayer$ Player | Execute$ TrigDestroy | RememberObjects$ TriggeredAttackerLKICopy | TriggerDescription$ Destroy blocked creature at end of combat.
+SVar:DelTrigBlocker:DB$ DelayedTrigger | Mode$ Phase | Phase$ EndCombat | ValidPlayer$ Player | Execute$ TrigDestroy | RememberObjects$ TriggeredBlockerLKICopy | TriggerDescription$ Destroy blocking creature at end of combat.
+SVar:TrigDestroy:DB$ Destroy | Defined$ DelayTriggerRememberedLKI
+A:AB$ Effect | Cost$ FlavorAction<Confirm an opponent read this creature/Turned to stone!> | ValidTgts$ Opponent | TgtPrompt$ Select the opponent who read this creature | Name$ Turned to Stone | StaticAbilities$ STCantAttack,STCantBlock,STCantBeCast,STCantBeActivated | RememberObjects$ Targeted | AILogic$ Chance.25 | SpellDescription$ Whenever an opponent reads this creature, that player is turned to stone until end of turn. Stoned players can't attack, block, cast spells, or activate abilities.
+SVar:STCantAttack:Mode$ CantAttack | ValidCard$ Creature.RememberedPlayerCtrl | Description$ Stoned players can't attack, block, cast spells, or activate abilities.
+SVar:STCantBlock:Mode$ CantBlock | ValidCard$ Creature.RememberedPlayerCtrl
+SVar:STCantBeCast:Mode$ CantBeCast | ValidCard$ Card | Caster$ Player.IsRemembered
+SVar:STCantBeActivated:Mode$ CantBeActivated | ValidCard$ Card | Activator$ Player.IsRemembered
+Oracle:Whenever this creature blocks or becomes blocked by a creature with fewer letters in its name, destroy that creature at end of combat. (Punctuation and spaces aren't letters.)\nWhenever an opponent reads this creature, that player is turned to stone until end of turn. Stoned players can't attack, block, cast spells, or activate abilities.

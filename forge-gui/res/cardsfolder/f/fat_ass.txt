@@ -1,0 +1,8 @@
+Name:Fat Ass
+ManaCost:4 G
+Types:Creature Donkey Shaman
+PT:2/3.5
+A:AB$ PutCounter | Cost$ FlavorAction<Start eating - gum doesn't count/I'm eating> | Defined$ Self | CounterType$ EATING | CounterNum$ 1 | ConditionPresent$ Card.Self+counters_EQ0_EATING | AILogic$ Chance.50 | SpellDescription$ You are eating. This creature gets +2/+2 and has trample for as long as you keep eating.
+A:AB$ RemoveCounter | Cost$ FlavorAction<Stop eating/I'm done> | Defined$ Self | CounterType$ EATING | CounterNum$ 1 | ConditionPresent$ Card.Self+counters_GE1_EATING | AILogic$ Chance.50 | SpellDescription$ You stop eating. This creature loses that bonus.
+S:Mode$ Continuous | Affected$ Card.Self+counters_GE1_EATING | AddPower$ 2 | AddToughness$ 2 | AddKeyword$ Trample | Description$ This creature gets +2/+2 and has trample as long as you're eating. (Gum isn't food. We checked.)
+Oracle:This creature gets +2/+2 and has trample as long as you're eating. (Gum isn't food. We checked.)

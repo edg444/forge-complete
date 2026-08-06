@@ -1,0 +1,8 @@
+Name:Supersize
+ManaCost:1 G
+Types:Instant
+# Half boosts only exist on continuous statics (addPTBoostHalves), and PumpEffect has no halves
+# path, so the until-end-of-turn bonus is granted by an Effect rather than a plain pump.
+A:SP$ Effect | ValidTgts$ Creature | TgtPrompt$ Select target creature | Name$ Supersize Effect | StaticAbilities$ STSupersize | RememberObjects$ Targeted | SpellDescription$ Target creature gets +3½/+3½ until end of turn.
+SVar:STSupersize:Mode$ Continuous | Affected$ Creature.IsRemembered | AddPowerHalves$ 7 | AddToughnessHalves$ 7 | Description$ Target creature gets +3½/+3½ until end of turn.
+Oracle:Target creature gets +3½/+3½ until end of turn.

@@ -1,0 +1,5 @@
+Name:Expansion-Symbol Token
+ManaCost:no cost
+Types:Creature Expansion-Symbol
+PT:1/1
+Oracle:

@@ -1,0 +1,39 @@
+Name:Who
+ManaCost:X W
+Types:Instant
+A:SP$ GainLife | ValidTgts$ Player | TgtPrompt$ Select target player | LifeAmount$ X | SpellDescription$ Target player gains X life.
+SVar:X:Count$xPaid
+AlternateMode:Split
+Oracle:Target player gains X life.
+
+ALTERNATE
+
+Name:What
+ManaCost:2 R
+Types:Instant
+A:SP$ Destroy | ValidTgts$ Artifact | TgtPrompt$ Select target artifact | SpellDescription$ Destroy target artifact.
+Oracle:Destroy target artifact.
+
+ALTERNATE
+
+Name:When
+ManaCost:2 U
+Types:Instant
+A:SP$ Counter | TargetType$ Spell | ValidTgts$ Creature | TgtPrompt$ Select target creature spell | SpellDescription$ Counter target creature spell.
+Oracle:Counter target creature spell.
+
+ALTERNATE
+
+Name:Where
+ManaCost:3 B
+Types:Instant
+A:SP$ Destroy | ValidTgts$ Land | TgtPrompt$ Select target land | SpellDescription$ Destroy target land.
+Oracle:Destroy target land.
+
+ALTERNATE
+
+Name:Why
+ManaCost:1 G
+Types:Instant
+A:SP$ Destroy | ValidTgts$ Enchantment | TgtPrompt$ Select target enchantment | SpellDescription$ Destroy target enchantment.
+Oracle:Destroy target enchantment.

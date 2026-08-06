@@ -2,5 +2,5 @@ Name:Number Crunch
 ManaCost:2 U
 Types:Instant
 A:SP$ ChangeZone | ValidTgts$ Permanent | TgtPrompt$ Select target permanent | Origin$ Battlefield | Destination$ Hand | SpellDescription$ Return target permanent to its owner's hand.
-A:AB$ ChangeZone | PrecostDesc$ Gotcha — | Cost$ FlavorAction<Confirm an opponent said a number/Gotcha!> | Origin$ Graveyard | Destination$ Hand | ActivationZone$ Graveyard | AILogic$ Chance.25 | SpellDescription$ Return this card from your graveyard to your hand.
+A:AB$ ChangeZone | PrecostDesc$ Gotcha — | Cost$ FlavorAction<If an opponent says a number, say "Gotcha!"/Gotcha!> | Origin$ Graveyard | Destination$ Hand | ActivationZone$ Graveyard | AILogic$ Chance.25 | SpellDescription$ Return this card from your graveyard to your hand.
 Oracle:Return target permanent to its owner's hand.\nGotcha — If an opponent says a number, you may say "Gotcha!" When you do, return this card from your graveyard to your hand.

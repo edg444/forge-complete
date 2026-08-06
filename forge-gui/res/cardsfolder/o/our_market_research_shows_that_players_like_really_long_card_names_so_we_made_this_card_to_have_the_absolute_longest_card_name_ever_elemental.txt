@@ -1,0 +1,12 @@
+Name:Our Market Research Shows That Players Like Really Long Card Names So We Made this Card to Have the Absolute Longest Card Name Ever Elemental
+ManaCost:1 G G
+Types:Creature Elemental
+PT:2/2
+# No card database records what is depicted in an illustration, so the count is asked for the way
+# Avatar of Me asks for eye colour. Asked as "beyond the first" rather than as a total, so art with
+# no creatures in it needs no clamping and can never produce a negative pump.
+T:Mode$ AttackerBlockedByCreature | ValidCard$ Card.Self | ValidBlocker$ Creature | TriggerZones$ Battlefield | Execute$ TrigArtRampage | TriggerDescription$ Art rampage 2 (Whenever this creature becomes blocked by a creature, it gets +2/+2 for each creature in the blocker's art beyond the first.)
+SVar:TrigArtRampage:DB$ ChooseNumber | Defined$ You | Min$ 0 | Max$ 20 | ListTitle$ Creatures in the blocker's art beyond the first | SubAbility$ DBArtPump
+SVar:DBArtPump:DB$ Pump | Defined$ Self | NumAtt$ ArtRampage2 | NumDef$ ArtRampage2
+SVar:ArtRampage2:Count$ChosenNumber/Times.2
+Oracle:Art rampage 2 (Whenever this creature becomes blocked by a creature, it gets +2/+2 for each creature in the blocker's art beyond the first.)

@@ -1,0 +1,6 @@
+Name:Symbol Status
+ManaCost:2 G G
+Types:Sorcery
+A:SP$ Token | TokenAmount$ X | TokenScript$ c_1_1_expansion_symbol | TokenOwner$ You | SpellDescription$ Create a 1/1 colorless Expansion-Symbol creature token for each different expansion symbol among permanents you control.
+SVar:X:Count$DifferentExpansionSymbols
+Oracle:Create a 1/1 colorless Expansion-Symbol creature token for each different expansion symbol among permanents you control.

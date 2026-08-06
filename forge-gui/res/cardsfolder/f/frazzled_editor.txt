@@ -3,4 +3,6 @@ ManaCost:1 R
 Types:Creature Human Bureaucrat
 PT:2/2
 K:Protection:Card.wordy:wordy
+# the generic protection reminder doesn't explain "wordy", which is the part that actually needs it
+Text:(Something is wordy if it has four or more lines of rules text.)
 Oracle:Protection from wordy (Something is wordy if it has four or more lines of rules text.)

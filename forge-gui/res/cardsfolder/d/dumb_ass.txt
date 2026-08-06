@@ -6,7 +6,8 @@ T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | E
 SVar:TrigFlip:DB$ FlipCoin | ValidTgts$ Opponent | TgtPrompt$ Select target opponent | LoseSubAbility$ DBChoose
 # the choice is binding either way, so it resolves here as must-attack or can't-attack rather
 # than waiting to ask again at declare attackers
-SVar:DBChoose:DB$ GenericChoice | Defined$ Targeted | Choices$ ChoiceAttacks,ChoiceDoesNot
+# choice order matters: HinderAttacker treats the first as "attacks" and the second as "doesn't"
+SVar:DBChoose:DB$ GenericChoice | Defined$ Targeted | AILogic$ HinderAttacker | Choices$ ChoiceAttacks,ChoiceDoesNot
 SVar:ChoiceAttacks:DB$ Effect | RememberObjects$ Self | ForgetOnMoved$ Battlefield | StaticAbilities$ STMustAttack | SpellDescription$ Dumb Ass attacks this turn if able.
 SVar:ChoiceDoesNot:DB$ Effect | RememberObjects$ Self | ForgetOnMoved$ Battlefield | StaticAbilities$ STCantAttack | SpellDescription$ Dumb Ass doesn't attack this turn.
 SVar:STMustAttack:Mode$ MustAttack | ValidCreature$ Card.IsRemembered | Description$ This creature attacks this turn if able.

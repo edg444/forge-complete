@@ -1,0 +1,7 @@
+Name:Side to Side
+ManaCost:2 G
+Types:Instant
+A:SP$ FlipCoin | ValidTgts$ Opponent | TgtPrompt$ Select target opponent | Flipper$ You | NoCall$ True | HeadsSubAbility$ DBPinned | TailsSubAbility$ DBBeaten | SpellDescription$ You and target opponent arm-wrestle. If you win, create a 3/3 green Ape creature token.
+SVar:DBPinned:DB$ Token | TokenAmount$ 1 | TokenScript$ g_3_3_ape | TokenOwner$ You | StackDescription$ You win the arm-wrestle and create a 3/3 green Ape. | SpellDescription$ You won - create a 3/3 green Ape creature token.
+SVar:DBBeaten:DB$ Cleanup | StackDescription$ They pinned your arm - no Ape. | SpellDescription$ You lost the arm-wrestle.
+Oracle:You and target opponent arm-wrestle. If you win, create a 3/3 green Ape creature token.

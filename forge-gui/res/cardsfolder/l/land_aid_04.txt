@@ -1,0 +1,9 @@
+Name:Land Aid '04
+ManaCost:G G
+Types:Sorcery
+A:SP$ ChangeZone | Origin$ Library | Destination$ Battlefield | ChangeType$ Land.Basic | ChangeTypeDesc$ basic land | Tapped$ True | ChangeNum$ 1 | RememberChanged$ True | SubAbility$ DBSang | StackDescription$ Search your library for a basic land card, put that card onto the battlefield tapped, then shuffle. | SpellDescription$ Search your library for a basic land card, put that card onto the battlefield tapped, then shuffle. If you sang a song the whole time you were searching and shuffling, you may untap that land.
+SVar:DBSang:DB$ GenericChoice | Defined$ You | ChoicePrompt$ Did you sing a song the whole time you were searching and shuffling? | Choices$ Sang,NoSang | SubAbility$ DBCleanup
+SVar:Sang:DB$ Untap | Defined$ Remembered | SpellDescription$ I sang the whole time - untap it
+SVar:NoSang:DB$ Cleanup | SpellDescription$ I didn't sing - leave it tapped
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Search your library for a basic land card, put that card onto the battlefield tapped, then shuffle. If you sang a song the whole time you were searching and shuffling, you may untap that land.

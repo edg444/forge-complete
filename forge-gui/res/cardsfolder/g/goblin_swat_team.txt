@@ -2,5 +2,8 @@ Name:Goblin S.W.A.T. Team
 ManaCost:3 R
 Types:Creature Goblin Warrior
 PT:2/2
-A:AB$ PutCounter | Cost$ FlavorAction<Say "Goblin S.W.A.T. Team" out loud/Say it!> | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1 | UnlessPayer$ Opponent | UnlessCost$ FlavorAction<Swat the table within five seconds/Swat!> | UnlessAI$ Chance.50 | ActivationLimit$ 1 | SpellDescription$ Put a +1/+1 counter on this creature unless an opponent swats the table within five seconds. Activate only once each turn.
+A:AB$ PutCounter | Cost$ FlavorAction<Say "Goblin S.W.A.T. Team" out loud/Say it!> | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1 | UnlessPayer$ Opponent | UnlessCost$ FlavorAction<Swat the table within five seconds/Swat!> | UnlessAI$ Chance.50 | UnlessResolveSubs$ WhenNotPaid | SubAbility$ DBNoSwat | UnlessPaidSubAbility$ DBSwatted | ActivationLimit$ 1 | SpellDescription$ Put a +1/+1 counter on this creature unless an opponent swats the table within five seconds. Activate only once each turn.
+# WhenNotPaid means this fires exactly when nobody swatted, i.e. alongside the counter going on
+SVar:DBNoSwat:DB$ Cleanup | NotifyMessage$ Too slow! Nobody swatted the table - CARDNAME gets a +1/+1 counter.
+SVar:DBSwatted:DB$ Cleanup | NotifyMessage$ Swatted in time! CARDNAME gets no counter.
 Oracle:Say "Goblin S.W.A.T. Team": Put a +1/+1 counter on this creature unless an opponent swats the table within five seconds. Activate only once each turn.

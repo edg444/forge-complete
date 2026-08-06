@@ -1,0 +1,10 @@
+Name:Meddling Kids
+ManaCost:2 W U
+Types:Creature Human Child
+PT:2/3
+K:ETBReplacement:Other:DBChooseWord
+# every suggestion the AI can fall back on is itself four or more letters, since the AI can't invent
+# a word and must not be able to pick an illegal one
+SVar:DBChooseWord:DB$ ChooseType | Type$ word | Chooser$ You | FreeInput$ True | MinLetters$ 4 | ChoiceTitle$ Choose a word with four or more letters | ValidTypes$ creature,land,card,target,player,draw,damage,destroy,counter,token,mana,attack,block,graveyard,library,hand,exile,sacrifice,discard,flying,trample,vigilance,haste,black,white,blue,green,artifact,enchantment,instant,sorcery,life,turn,combat | SpellDescription$ As this creature enters, choose a word with four or more letters.
+S:Mode$ CantBeCast | ValidCard$ Card.textHasChosenWord | Description$ Spells with the chosen word in their text box can't be cast.
+Oracle:As this creature enters, choose a word with four or more letters.\nSpells with the chosen word in their text box can't be cast.

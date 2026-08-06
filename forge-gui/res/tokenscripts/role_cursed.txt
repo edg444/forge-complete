@@ -5,4 +5,6 @@ K:Enchant:Creature
 SVar:AttachAILogic:Curse
 S:Mode$ Continuous | Affected$ Creature.EnchantedBy | SetPower$ 1 | SetToughness$ 1 | Description$ Enchanted creature is 1/1.
 SVar:SacMe:2
+# printed inverted on the shared WOE Role token card, so its art needs rotating
+Rotate180:True
 Oracle:Enchant creature\nEnchanted creature is 1/1.

@@ -3,8 +3,6 @@ ManaCost:3 R R
 Types:Enchantment
 S:Mode$ Continuous | Affected$ Creature | AddKeyword$ Haste | Description$ All creatures have haste.
 S:Mode$ Continuous | Affected$ Card.TopLibrary | AffectedZone$ Library | MayLookAt$ Player | Description$ Players play with the top card of their libraries revealed.
-# The third clause - top-of-library permanents being on the battlefield AND in the library at the
-# same time - is not implemented. Forge gives every Card exactly one Zone, and dual residency would
-# have to be honoured by ~1000 call sites. See the notes in the session log before attempting it.
+S:Mode$ TopLibraryPermanentsOnBattlefield | Description$ Noninstant, nonsorcery cards on top of a library are on the battlefield under their owner's control in addition to being in that library.
 AI:RemoveDeck:All
 Oracle:All creatures have haste.\nPlayers play with the top card of their libraries revealed.\nNoninstant, nonsorcery cards on top of a library are on the battlefield under their owner's control in addition to being in that library.

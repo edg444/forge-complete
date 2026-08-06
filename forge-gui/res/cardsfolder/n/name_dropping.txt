@@ -1,0 +1,5 @@
+Name:Name Dropping
+ManaCost:1 G
+Types:Enchantment
+A:AB$ ChangeZone | PrecostDesc$ Gotcha — | Cost$ FlavorAction<If an opponent says a word that's in the name of a card in your graveyard, say "Gotcha!"/Gotcha!> | Origin$ Graveyard | Destination$ Hand | ValidTgts$ Card.YouOwn | TgtZone$ Graveyard | TgtPrompt$ Select the card in your graveyard whose name contains the word | AILogic$ Chance.25 | SpellDescription$ Return that card to your hand.
+Oracle:Gotcha — If an opponent says a word that's in the name of a card in your graveyard, you may say "Gotcha!" When you do, return that card to your hand.

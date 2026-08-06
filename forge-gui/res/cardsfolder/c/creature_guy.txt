@@ -1,0 +1,6 @@
+Name:Creature Guy
+ManaCost:3 G
+Types:Creature Beast
+PT:3/3
+A:AB$ ChangeZone | PrecostDesc$ Gotcha — | Cost$ FlavorAction<If an opponent says "creature" or "guy," say "Gotcha!"/Gotcha!> | Origin$ Graveyard | Destination$ Hand | ActivationZone$ Graveyard | AILogic$ Chance.25 | SpellDescription$ Return Creature Guy from your graveyard to your hand.
+Oracle:Gotcha — If an opponent says "creature" or "guy," you may say "Gotcha!" When you do, return Creature Guy from your graveyard to your hand.

@@ -2,5 +2,5 @@ Name:Deal Damage
 ManaCost:2 R R
 Types:Instant
 A:SP$ DealDamage | ValidTgts$ Any | NumDmg$ 4 | SpellDescription$ CARDNAME deals 4 damage to any target.
-A:AB$ ChangeZone | PrecostDesc$ Gotcha — | Cost$ FlavorAction<Confirm an opponent said "deal" or "damage"/Gotcha!> | Origin$ Graveyard | Destination$ Hand | ActivationZone$ Graveyard | AILogic$ Chance.25 | SpellDescription$ Return CARDNAME from your graveyard to your hand.
+A:AB$ ChangeZone | PrecostDesc$ Gotcha — | Cost$ FlavorAction<If an opponent says "deal" or "damage," say "Gotcha!"/Gotcha!> | Origin$ Graveyard | Destination$ Hand | ActivationZone$ Graveyard | AILogic$ Chance.25 | SpellDescription$ Return CARDNAME from your graveyard to your hand.
 Oracle:Deal Damage deals 4 damage to any target.\nGotcha — If an opponent says "deal" or "damage," you may say "Gotcha!" When you do, return Deal Damage from your graveyard to your hand.

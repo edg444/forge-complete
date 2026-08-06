@@ -2,5 +2,5 @@ Name:Spell Counter
 ManaCost:2 U U
 Types:Instant
 A:SP$ Counter | TargetType$ Spell | TgtPrompt$ Select target spell | ValidTgts$ Card | SpellDescription$ Counter target spell.
-A:AB$ ChangeZone | PrecostDesc$ Gotcha — | Cost$ FlavorAction<Confirm an opponent said "spell" or "counter"/Gotcha!> | Origin$ Graveyard | Destination$ Hand | ActivationZone$ Graveyard | AILogic$ Chance.25 | SpellDescription$ Return this card from your graveyard to your hand.
+A:AB$ ChangeZone | PrecostDesc$ Gotcha — | Cost$ FlavorAction<If an opponent says "spell" or "counter," say "Gotcha!"/Gotcha!> | Origin$ Graveyard | Destination$ Hand | ActivationZone$ Graveyard | AILogic$ Chance.25 | SpellDescription$ Return CARDNAME from your graveyard to your hand.
 Oracle:Counter target spell.\nGotcha — If an opponent says "spell" or "counter," you may say "Gotcha!" When you do, return Spell Counter from your graveyard to your hand.

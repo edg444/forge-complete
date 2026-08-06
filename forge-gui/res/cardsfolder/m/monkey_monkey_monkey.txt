@@ -1,0 +1,9 @@
+Name:Monkey Monkey Monkey
+ManaCost:3 G
+Types:Creature Monkey
+PT:1/1
+K:ETBReplacement:Other:DBChooseLetter
+SVar:DBChooseLetter:DB$ ChooseType | Type$ letter | Chooser$ You | ChoiceTitle$ Choose a letter | ValidTypes$ A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z | AILogic$ MostCommonInitial | SpellDescription$ As this creature enters, choose a letter.
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | AddToughness$ X | Description$ CARDNAME gets +1/+1 for each nonland permanent whose name begins with the chosen letter.
+SVar:X:Count$Valid Permanent.nonLand+nameStartsWithChosenLetter
+Oracle:As this creature enters, choose a letter.\nThis creature gets +1/+1 for each nonland permanent whose name begins with the chosen letter.

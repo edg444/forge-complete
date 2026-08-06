@@ -1,0 +1,6 @@
+Name:Fraction Jackson
+ManaCost:2 G
+Types:Creature Human Hero
+PT:1/1.5
+A:AB$ ChangeZone | Cost$ G T | Origin$ Graveyard | Destination$ Hand | ValidTgts$ Card.HasHalfSymbol+YouOwn | TgtZone$ Graveyard | TgtPrompt$ Select target card with a ½ on it in your graveyard | SpellDescription$ Return target card with a ½ on it from your graveyard to your hand.
+Oracle:{G}, {T}: Return target card with a ½ on it from your graveyard to your hand.

@@ -1,0 +1,11 @@
+Name:S.N.O.T.
+ManaCost:G
+Types:Creature Ooze
+PT:*/*
+# Reuses the mutate machinery, which already models several physical cards forming one creature.
+# Targeted with sharesNameWith rather than named<name> because a valid string splits on "." at every
+# level, and this card's name is nothing but periods.
+A:SP$ Mutate | Cost$ G | ValidTgts$ Creature.sharesNameWith+YouOwn | TgtPrompt$ Select another creature named S.N.O.T. you own | SpellDescription$ You may have this creature enter stuck to another creature named S.N.O.T. If you do, all those creatures form a single creature.
+S:Mode$ Continuous | CharacteristicDefining$ True | SetPower$ X | SetToughness$ X | Description$ CARDNAME's power and toughness are each equal to the square of the number of cards named S.N.O.T. stuck together to form it. (One is a 1/1, two are a 4/4, three are a 9/9, and four are a 16/16. If you manage to get -1 S.N.O.T.s stuck together, it's a 1/1.)
+SVar:X:Count$MergedCount/Pow.2
+Oracle:You may have S.N.O.T. enter stuck to another creature named S.N.O.T. If you do, all those creatures form a single creature.\nS.N.O.T.'s power and toughness are each equal to the square of the number of cards named S.N.O.T. stuck together to form it. (One is a 1/1, two are a 4/4, three are a 9/9, and four are a 16/16. If you manage to get -1 S.N.O.T.s stuck together, it's a 1/1.)

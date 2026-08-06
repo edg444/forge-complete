@@ -1,0 +1,13 @@
+Name:B-I-N-G-O
+ManaCost:1 G
+Types:Creature Dog
+PT:1/1
+K:Trample
+T:Mode$ SpellCast | ValidCard$ Card | ValidActivatingPlayer$ Player | TriggerZones$ Battlefield | Execute$ TrigChip | TriggerDescription$ Whenever a player casts a spell, put a chip counter on its mana value.
+# marks live in the remembered set, not as counters - the chips are on the printed tracker, so
+# proliferate can't add to them and nothing can remove them. A Set also drops repeat mana values.
+SVar:TrigChip:DB$ RememberNumber | Defined$ Self | Number$ X
+SVar:X:TriggeredSpellAbility$CardManaCostLKI
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ Y | AddToughness$ Y | Description$ CARDNAME gets +9/+9 for each set of three numbers in a row with chip counters on them.
+SVar:Y:Count$CardBingoLines/Times.9
+Oracle:Trample\nWhenever a player casts a spell, put a chip counter on its mana value.\nThis creature gets +9/+9 for each set of three numbers in a row with chip counters on them.

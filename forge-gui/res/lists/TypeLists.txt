@@ -110,6 +110,7 @@ Elf:Elves
 Elk:Elks
 Employee:Employees
 Eternal:Eternals
+Expansion-Symbol:Expansion-Symbols
 Eye:Eyes
 Faerie:Faeries
 Ferret:Ferrets

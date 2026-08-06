@@ -1,0 +1,8 @@
+Name:Keeper of the Sacred Word
+ManaCost:2 G
+Types:Creature Human Druid
+PT:2/3
+K:ETBReplacement:Other:DBChooseWord
+SVar:DBChooseWord:DB$ ChooseType | Type$ word | Chooser$ You | FreeInput$ True | ChoiceTitle$ Choose a word | ValidTypes$ creature,land,card,target,player,draw,damage,destroy,counter,token,mana,attack,block,graveyard,library,hand,exile,sacrifice,discard,flying,trample,vigilance,haste,black,white,blue,red,green,artifact,enchantment,instant,sorcery,life,turn,combat | SpellDescription$ As this creature enters, choose a word.
+A:AB$ Pump | Cost$ FlavorAction<Confirm an opponent said the chosen word/They said it!> | Defined$ Self | NumAtt$ +3 | NumDef$ +3 | AILogic$ Chance.35 | SpellDescription$ Whenever an opponent says the chosen word, this creature gets +3/+3 until end of turn.
+Oracle:As this creature enters, choose a word.\nWhenever an opponent says the chosen word, this creature gets +3/+3 until end of turn.

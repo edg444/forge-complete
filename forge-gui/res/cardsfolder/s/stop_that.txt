@@ -2,5 +2,5 @@ Name:Stop That
 ManaCost:B
 Types:Instant
 A:SP$ Discard | ValidTgts$ Player | TgtPrompt$ Select target player | NumCards$ 1 | Mode$ TgtChoose | SpellDescription$ Target player discards a card.
-A:AB$ ChangeZone | PrecostDesc$ Gotcha — | Cost$ FlavorAction<Confirm an opponent audibly flicked the cards in their hand/Gotcha!> | Origin$ Graveyard | Destination$ Hand | ActivationZone$ Graveyard | AILogic$ Chance.25 | SpellDescription$ Return this card from your graveyard to your hand.
+A:AB$ ChangeZone | PrecostDesc$ Gotcha — | Cost$ FlavorAction<If an opponent audibly flicks the cards in their hand, say "Gotcha!"/Gotcha!> | Origin$ Graveyard | Destination$ Hand | ActivationZone$ Graveyard | AILogic$ Chance.25 | SpellDescription$ Return this card from your graveyard to your hand.
 Oracle:Target player discards a card.\nGotcha — If an opponent audibly flicks the cards in their hand, you may say "Gotcha!" When you do, return this card from your graveyard to your hand.

@@ -1,0 +1,8 @@
+Name:Elvish House Party
+ManaCost:4 G G
+Types:Creature Elf Rogue
+PT:*/*
+S:Mode$ Continuous | CharacteristicDefining$ True | SetPower$ X | SetToughness$ X | Description$ CARDNAME's power and toughness are each equal to the current hour, using the twelve-hour system.
+SVar:X:Count$CurrentHour
+AI:RemoveDeck:Random
+Oracle:Elvish House Party's power and toughness are each equal to the current hour, using the twelve-hour system.

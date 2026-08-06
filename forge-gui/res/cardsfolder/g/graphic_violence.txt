@@ -1,0 +1,6 @@
+Name:Graphic Violence
+ManaCost:2 G
+Types:Instant
+A:SP$ ChooseArtist | Defined$ You | AILogic$ MostProminentYouCtrl | SubAbility$ DBPump | SpellDescription$ All creatures with art by the artist of your choice get +2/+2 and gain trample until end of turn.
+SVar:DBPump:DB$ PumpAll | ValidCards$ Creature.ArtistIsChosen | NumAtt$ +2 | NumDef$ +2 | KW$ Trample
+Oracle:All creatures with art by the artist of your choice get +2/+2 and gain trample until end of turn.
