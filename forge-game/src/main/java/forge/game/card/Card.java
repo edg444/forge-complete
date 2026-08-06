@@ -279,6 +279,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     private Table<Long, Long, Pair<Integer,Integer>> newPTCharacterDefining = TreeBasedTable.create(); // Layer 7a
     private Table<Long, Long, Pair<Integer,Integer>> newPT = TreeBasedTable.create(); // Layer 7b
     private Table<Long, Long, Pair<Integer,Integer>> boostPT = TreeBasedTable.create(); // Layer 7c
+    // leftover halves of a Layer 7c boost (Assquatch's +1 1/2/+1 1/2), keyed the same as boostPT so
+    // they come and go with it. Only ever 0 or 1 per entry - the whole part rides in boostPT itself.
+    private final Table<Long, Long, Pair<Integer,Integer>> boostPTHalves = TreeBasedTable.create();
 
     private CardDamageHistory damageHistory = new CardDamageHistory();
     private final Map<Card, Integer> assignedDamageMap = Maps.newTreeMap();
@@ -4361,11 +4364,18 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     /** Power counted in halves, so a 1 1/2 power creature returns 3. */
     public final int getNetPowerInHalves() {
-        return getNetPower() * 2 + (hasHalfPower() ? 1 : 0);
+        return hasSwitchedPT() ? unswitchedToughnessHalves() : unswitchedPowerHalves();
     }
     /** Toughness counted in halves, so a 1/2 toughness creature returns 1. */
     public final int getNetToughnessInHalves() {
-        return getNetToughness() * 2 + (hasHalfToughness() ? 1 : 0);
+        return hasSwitchedPT() ? unswitchedPowerHalves() : unswitchedToughnessHalves();
+    }
+    /** True when net power carries a leftover 1/2 - printed, set, or boosted. */
+    public final boolean hasHalfNetPower() {
+        return Math.floorMod(getNetPowerInHalves(), 2) != 0;
+    }
+    public final boolean hasHalfNetToughness() {
+        return Math.floorMod(getNetToughnessInHalves(), 2) != 0;
     }
     /** Combat damage counted in halves. */
     public final int getNetCombatDamageInHalves() {
@@ -4595,8 +4605,16 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         }
         return new StatBreakdown(getCurrentPower(), getTempPowerBoost(), getPowerBonusFromCounters());
     }
+    /** Unswitched power in halves, folding in both the printed half and any half-sized boost. */
+    public final int unswitchedPowerHalves() {
+        if (isInPlay() && !isCreature()) {
+            return 0;
+        }
+        return getUnswitchedPowerBreakdown().getTotal() * 2
+                + Math.floorMod(basePowerHalves(), 2) + getTempPowerBoostHalves();
+    }
     public final int getUnswitchedPower() {
-        return getUnswitchedPowerBreakdown().getTotal();
+        return Math.floorDiv(unswitchedPowerHalves(), 2);
     }
 
     public final int getPowerBonusFromCounters() {
@@ -4661,8 +4679,16 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         }
         return new StatBreakdown(getCurrentToughness(), getTempToughnessBoost(), getToughnessBonusFromCounters());
     }
+    /** Unswitched toughness in halves, folding in both the printed half and any half-sized boost. */
+    public final int unswitchedToughnessHalves() {
+        if (isInPlay() && !isCreature()) {
+            return 0;
+        }
+        return getUnswitchedToughnessBreakdown().getTotal() * 2
+                + Math.floorMod(baseToughnessHalves(), 2) + getTempToughnessBoostHalves();
+    }
     public final int getUnswitchedToughness() {
-        return getUnswitchedToughnessBreakdown().getTotal();
+        return Math.floorDiv(unswitchedToughnessHalves(), 2);
     }
 
     public final int getToughnessBonusFromCounters() {
@@ -4681,8 +4707,12 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         }
         return getUnswitchedToughnessBreakdown();
     }
+    // must go through getUnswitchedToughness rather than the breakdown's raw total, or half-sized
+    // boosts are dropped: the breakdown holds whole numbers only, so two +1 1/2 boosts on a 3 1/2
+    // toughness read as 3+1+1 = 5 instead of carrying the two halves into 6. getNetPower already
+    // routes this way, which is why power looked right while toughness didn't.
     public final int getNetToughness() {
-        return getNetToughnessBreakdown().getTotal();
+        return hasSwitchedPT() ? getUnswitchedPower() : getUnswitchedToughness();
     }
 
     public final boolean toughnessAssignsDamage() {
@@ -4695,7 +4725,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     // How much combat damage does the card deal
     public final int getNetCombatDamage() {
-        return assignNoCombatDamage() ? 0 : (toughnessAssignsDamage() ? getNetToughnessBreakdown() : getNetPowerBreakdown()).getTotal();
+        return Math.floorDiv(getNetCombatDamageInHalves(), 2);
     }
 
     // for cards like Giant Growth, etc.
@@ -4711,7 +4741,23 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         boostPT.put(timestamp, staticId, Pair.of(power, toughness));
     }
 
+    /** Boost measured in halves, so +1 1/2/+1 1/2 comes in as (3, 3). */
+    public void addPTBoostHalves(final int powerHalves, final int toughnessHalves, final long timestamp, final long staticId) {
+        addPTBoost(Math.floorDiv(powerHalves, 2), Math.floorDiv(toughnessHalves, 2), timestamp, staticId);
+        boostPTHalves.put(timestamp, staticId,
+                Pair.of(Math.floorMod(powerHalves, 2), Math.floorMod(toughnessHalves, 2)));
+    }
+
+    public final int getTempPowerBoostHalves() {
+        return boostPTHalves.values().stream().mapToInt(Pair::getLeft).sum();
+    }
+
+    public final int getTempToughnessBoostHalves() {
+        return boostPTHalves.values().stream().mapToInt(Pair::getRight).sum();
+    }
+
     public boolean removePTBoost(final long timestamp, final long staticId) {
+        boostPTHalves.remove(timestamp, staticId);
         return boostPT.remove(timestamp, staticId) != null;
     }
 
@@ -7772,6 +7818,23 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     public String getOracleText() {
         return currentState.getOracleText();
+    }
+
+    /**
+     * Flavor text of this card's printing, or an empty string. Forge carries no flavor text of its
+     * own, so this comes from the generated table - see {@link CardFlavorText}. Tokens and other
+     * cards with no paper printing have none.
+     */
+    public String getFlavorText() {
+        final IPaperCard pc = getPaperCard();
+        return pc == null ? "" : CardFlavorText.get(pc.getEdition(), pc.getCollectorNumber());
+    }
+
+    /** Everything printed in this card's text box: rules text and flavor text together. */
+    public String getTextBoxContents() {
+        final String flavor = getFlavorText();
+        final String oracle = StringUtils.defaultString(getOracleText());
+        return flavor.isEmpty() ? oracle : oracle + "\n" + flavor;
     }
     public void setOracleText(final String oracleText) {
         currentState.setOracleText(oracleText);

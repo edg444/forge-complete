@@ -6,7 +6,7 @@ R:Event$ Counter | ValidCard$ Card.Self | ValidSA$ Spell | Layer$ CantHappen | D
 K:Flying
 K:Protection:Spell.nonColorless:colored spells
 K:Annihilator:6
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigShuffle | TriggerDescription$ When CARDNAME is put into a graveyard from anywhere, its owner shuffles their graveyard into their library.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigShuffle | TriggerDescription$ When NICKNAME is put into a graveyard from anywhere, its owner shuffles their graveyard into their library.
 SVar:TrigShuffle:DB$ ChangeZoneAll | Defined$ TriggeredCardOwner | ChangeType$ Card | Origin$ Graveyard | Destination$ Library | Shuffle$ True
 T:Mode$ SpellCast | ValidCard$ Card.Self | Execute$ TrigAddTurn | TriggerDescription$ When you cast this spell, take an extra turn after this one.
 SVar:TrigAddTurn:DB$ AddTurn | Defined$ You | NumTurns$ 1

@@ -2499,8 +2499,13 @@ public class ComputerUtil {
             // Circle of Protection: Art prevents damage, so it wants the artist behind the most
             // threatening opposing permanents, while Drawn Together hands out +2/+2 and wants the
             // artist behind the AI's own creatures.
+            // Mana Flair counts nonland permanents on both sides and pays exactly one mana each, so
+            // it wants a flat headcount across the whole battlefield rather than either side's
+            // threats weighted by power.
+            final boolean nonLandPool = "MostProminentNonLand".equals(logic);
             final boolean ownCards = "MostProminentYouCtrl".equals(logic);
-            final CardCollectionView artPool = ownCards ? ai.getCardsIn(ZoneType.Battlefield)
+            final CardCollectionView artPool = nonLandPool ? ai.getGame().getCardsIn(ZoneType.Battlefield)
+                    : ownCards ? ai.getCardsIn(ZoneType.Battlefield)
                     : ai.getOpponents().getCardsIn(ZoneType.Battlefield);
             final Map<String, Integer> counts = Maps.newHashMap();
             for (Card c : artPool) {
@@ -2508,7 +2513,10 @@ public class ComputerUtil {
                 if (pc == null || !validTypes.contains(pc.getArtist())) {
                     continue;
                 }
-                final int weight = c.isCreature() ? Math.max(1, c.getNetPower()) : 1;
+                if (nonLandPool && c.isLand()) {
+                    continue;
+                }
+                final int weight = nonLandPool ? 1 : (c.isCreature() ? Math.max(1, c.getNetPower()) : 1);
                 counts.merge(pc.getArtist(), weight, Integer::sum);
             }
             for (Map.Entry<String, Integer> e : counts.entrySet()) {

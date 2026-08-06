@@ -56,6 +56,7 @@ Boar:Boars
 Borg:Borg
 Bringer:Bringers
 Brushwagg:Brushwaggs
+Bureaucrat:Bureaucrats
 Camarid:Camarids
 C'tan:C'tan
 Camel:Camels
@@ -228,8 +229,10 @@ Ouphe:Ouphes
 Ox:Oxen
 Oyster:Oysters
 Pangolin:Pangolins
+Paratrooper:Paratroopers
 Peasant:Peasants
 Pegasus:Pegasi
+Penguin:Penguins
 Pentavite:Pentavites
 Performer:Performers
 Pest:Pests
@@ -336,6 +339,7 @@ Vedalken:Vedalkens
 Villain:Villains
 Volver:Volvers
 Vulcan:Vulcans
+Waiter:Waiters
 Wall:Walls
 Warlock:Warlocks
 Warrior:Warriors

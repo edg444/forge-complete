@@ -2058,6 +2058,15 @@ public class AbilityUtils {
             return doXMath(maxNum, expr, c, ctb);
         }
 
+        // A chosen number lives on the real card, not on a zone-change snapshot, so it has to be
+        // read before the LKI swap below. Pygmy Giant sacrifices itself to pay for its own ability,
+        // so by resolution the LKI copy is what xCount would otherwise see - and that copy never had
+        // the number set on it (or worse, carries a stale one from an earlier activation).
+        if (sq[0].contains("ChosenNumber")) {
+            Integer chosen = c.getChosenNumber();
+            return doXMath(chosen == null ? 0 : chosen, expr, c, ctb);
+        }
+
         // might get called from editor
         if (game != null) {
             // CR 608.2h
@@ -2130,6 +2139,10 @@ public class AbilityUtils {
         }
         if (sq[0].equals("CardToughnessHalves")) {
             return doXMath(c.getNetToughnessInHalves(), expr, c, ctb);
+        }
+        // Punctuate halves this, so the raw count is what the halves-aware damage wants
+        if (sq[0].equals("CardPunctuationMarks")) {
+            return doXMath(CardFactoryUtil.getPunctuationMarkCount(c), expr, c, ctb);
         }
         if (sq[0].equals("CardBasePower")) {
             return doXMath(c.getCurrentPower(), expr, c, ctb);
@@ -2253,11 +2266,6 @@ public class AbilityUtils {
             final String validDevoured = sq[0].split(" ")[1];
             CardCollection cl = CardLists.getValidCards(c.getDevouredCards(), validDevoured, player, c, ctb);
             return doXMath(cl.size(), expr, c, ctb);
-        }
-
-        if (sq[0].contains("ChosenNumber")) {
-            Integer i = c.getChosenNumber();
-            return doXMath(i == null ? 0 : i, expr, c, ctb);
         }
 
         // Count$IfCastInOwnMainPhase.<numMain>.<numNotMain>

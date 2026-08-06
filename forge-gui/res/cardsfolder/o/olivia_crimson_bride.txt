@@ -4,7 +4,7 @@ Types:Legendary Creature Vampire Noble
 PT:3/4
 K:Flying
 K:Haste
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigChange | TriggerZones$ Battlefield | TriggerDescription$ Whenever CARDNAME attacks, return target creature card from your graveyard to the battlefield tapped and attacking. It gains "When you don't control a legendary Vampire, exile this creature."
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigChange | TriggerZones$ Battlefield | TriggerDescription$ Whenever NICKNAME attacks, return target creature card from your graveyard to the battlefield tapped and attacking. It gains "When you don't control a legendary Vampire, exile this creature."
 SVar:TrigChange:DB$ ChangeZone | Origin$ Graveyard | Destination$ Battlefield | ValidTgts$ Creature.YouOwn | Tapped$ True | Attacking$ True | RememberChanged$ True | SubAbility$ DBAnimate
 SVar:DBAnimate:DB$ Animate | Defined$ Remembered | Duration$ Permanent | Triggers$ TrigOlivia | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True

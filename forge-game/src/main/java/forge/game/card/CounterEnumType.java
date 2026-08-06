@@ -447,6 +447,10 @@ public enum CounterEnumType implements CounterType {
 
     THEFT("THEFT", 255, 176, 125, CounterAiCategory.Positive),
 
+    // Red-Hot Hottie. A custom counter would display its full name and overflow the counter badge,
+    // so this is a real type with the usual short all-caps label.
+    THIRDDEGREEBURN("third-degree-burn", "BURN", 255, 94, 33, CounterAiCategory.Negative),
+
     TIDE("TIDE", 0, 212, 187, CounterAiCategory.Positive),
 
     TIME("TIME", 255, 121, 255, CounterAiCategory.Positive),

@@ -1047,6 +1047,21 @@ public class ComputerUtilMana {
         PhaseType curPhase = ai.getGame().getPhaseHandler().getPhase();
         AiController aic = ((PlayerControllerAi)ai.getController()).getAi();
 
+        // Mana held for a debt due on a later turn (super haste). Released once the AI reaches the
+        // end step of a turn AFTER the one the reservation was made on - that is the turn the
+        // payment is actually demanded, and the payment itself needs these sources.
+        if (!AiCardMemory.isMemorySetEmpty(ai, AiCardMemory.MemorySet.HELD_MANA_SOURCES_FOR_OBLIGATION)) {
+            final boolean debtDue = ai.getGame().getPhaseHandler().isPlayerTurn(ai)
+                    && (curPhase == PhaseType.END_OF_TURN || curPhase == PhaseType.CLEANUP)
+                    && aic.hasObligationReservedBefore(ai.getGame().getPhaseHandler().getTurn());
+            if (debtDue) {
+                aic.clearObligationReservation();
+            } else if (AiCardMemory.isRememberedCard(ai, sourceCard,
+                    AiCardMemory.MemorySet.HELD_MANA_SOURCES_FOR_OBLIGATION)) {
+                return true;
+            }
+        }
+
         // For combat tricks, always obey mana reservation
         if (curPhase == PhaseType.COMBAT_DECLARE_BLOCKERS || curPhase == PhaseType.CLEANUP) {
             if (ai.getGame().getPhaseHandler().isPlayerTurn(ai)) {

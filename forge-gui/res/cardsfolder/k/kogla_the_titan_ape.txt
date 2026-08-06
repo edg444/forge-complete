@@ -2,7 +2,7 @@ Name:Kogla, the Titan Ape
 ManaCost:3 G G G
 Types:Legendary Creature Ape
 PT:7/6
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigFight | TriggerDescription$ When CARDNAME enters, it fights up to one target creature you don't control.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigFight | TriggerDescription$ When NICKNAME enters, it fights up to one target creature you don't control.
 SVar:TrigFight:DB$ Fight | Defined$ TriggeredCardLKICopy | ValidTgts$ Creature.YouDontCtrl | TgtPrompt$ Choose target creature you don't control | TargetMin$ 0 | TargetMax$ 1
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigDestroy | TriggerDescription$ Whenever NICKNAME attacks, destroy target artifact or enchantment defending player controls.
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Artifact.ControlledBy TriggeredDefendingPlayer,Enchantment.ControlledBy TriggeredDefendingPlayer | TgtPrompt$ Select target artifact or enchantment defending player controls

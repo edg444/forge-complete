@@ -7,6 +7,8 @@ import com.google.common.collect.Multiset;
 import forge.ai.*;
 import forge.card.CardType;
 import forge.card.MagicColor;
+import forge.card.mana.ManaCost;
+import forge.card.mana.ManaCostShard;
 import forge.game.Game;
 import forge.game.GameEntity;
 import forge.game.GameObject;
@@ -15,12 +17,14 @@ import forge.game.ability.AbilityUtils;
 import forge.game.ability.ApiType;
 import forge.game.card.*;
 import forge.game.combat.Combat;
+import forge.game.combat.CombatUtil;
 import forge.game.cost.*;
 import forge.game.keyword.Keyword;
 import forge.game.phase.PhaseHandler;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
 import forge.game.player.PlayerActionConfirmMode;
+import forge.game.spellability.AbilityManaPart;
 import forge.game.spellability.AbilitySub;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.TargetRestrictions;
@@ -129,9 +133,148 @@ public class ChangeZoneAi extends SpellAbilityAi {
             return true;
         } else if (aiLogic.equals("Pongify")) {
             return SpecialAiLogic.doPongifyLogic(ai, sa);
+        } else if (aiLogic.equals("SuperHaste")) {
+            return doSuperHasteLogic(ai, sa);
         }
 
         return super.checkAiLogic(ai, sa, aiLogic);
+    }
+
+    /**
+     * Whether the AI could pay this cost on its next turn, when everything it controls has untapped.
+     * <p>
+     * Checking each coloured requirement on its own is not enough - one Mountain would "cover" both
+     * pips of {@code {R}{R}}. Each pip has to get a source of its own, which is a bipartite matching
+     * between pips and sources, solved here with Kuhn's augmenting-path algorithm. Both sides are
+     * tiny (a few pips against a dozen or so permanents), so the simple version is plenty.
+     * <p>
+     * Deliberately conservative: every source counts for exactly one mana even if it makes more, and
+     * the land drop still to come isn't counted. Erring towards "can't pay" only costs an attack,
+     * while erring the other way costs the game.
+     */
+    private static CardCollection coverNextTurn(final Player ai, final ManaCost cost) {
+        final List<Byte> sources = Lists.newArrayList();
+        final CardCollection sourceCards = new CardCollection();
+        for (final Card c : ai.getCardsIn(ZoneType.Battlefield)) {
+            byte produces = 0;
+            boolean isSource = false;
+            for (final SpellAbility am : c.getManaAbilities()) {
+                am.setActivatingPlayer(ai);
+                final AbilityManaPart mp = am.getManaPart();
+                if (mp == null) {
+                    continue;
+                }
+                isSource = true;
+                for (final byte color : MagicColor.WUBRG) {
+                    if (mp.canProduce(MagicColor.toShortString(color), am)) {
+                        produces |= color;
+                    }
+                }
+            }
+            if (isSource) {
+                sources.add(produces);
+                sourceCards.add(c);
+            }
+        }
+        if (sources.size() < cost.getCMC()) {
+            return null;
+        }
+
+        // one entry per coloured pip - ManaCost keeps its shards as a list, so {R}{R} really is two
+        final List<Byte> pips = Lists.newArrayList();
+        for (final ManaCostShard shard : cost) {
+            if (shard.getColorMask() != 0) {
+                pips.add(shard.getColorMask());
+            }
+        }
+
+        final int[] assignedTo = new int[sources.size()];
+        Arrays.fill(assignedTo, -1);
+        for (int pip = 0; pip < pips.size(); pip++) {
+            if (!assignPip(pip, pips, sources, assignedTo, new boolean[sources.size()])) {
+                return null;
+            }
+        }
+
+        // the matched sources, plus any others to make up the generic part of the cost
+        final CardCollection needed = new CardCollection();
+        for (int s = 0; s < sources.size(); s++) {
+            if (assignedTo[s] != -1) {
+                needed.add(sourceCards.get(s));
+            }
+        }
+        for (int s = 0; s < sources.size() && needed.size() < cost.getCMC(); s++) {
+            if (assignedTo[s] == -1) {
+                needed.add(sourceCards.get(s));
+            }
+        }
+        return needed;
+    }
+
+    private static boolean assignPip(final int pip, final List<Byte> pips, final List<Byte> sources,
+            final int[] assignedTo, final boolean[] tried) {
+        for (int s = 0; s < sources.size(); s++) {
+            if (tried[s] || (sources.get(s) & pips.get(pip)) == 0) {
+                continue;
+            }
+            tried[s] = true;
+            // either this source is free, or whoever holds it can be rehoused somewhere else
+            if (assignedTo[s] == -1 || assignPip(assignedTo[s], pips, sources, assignedTo, tried)) {
+                assignedTo[s] = pip;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Super haste (Rocket-Powered Turbo Slug). Attacking a turn early is free value, but the bill
+     * is losing the game outright, so the AI only takes the deal when it can actually expect to
+     * cover the mana cost on its next turn - and only when the attack is worth something.
+     */
+    private static boolean doSuperHasteLogic(final Player ai, final SpellAbility sa) {
+        final Game game = ai.getGame();
+        final PhaseHandler ph = game.getPhaseHandler();
+        if (!ph.isPlayerTurn(ai) || !ph.is(PhaseType.COMBAT_DECLARE_ATTACKERS)) {
+            return false;
+        }
+
+        // Sources are counted ignoring whether they can be activated right now, because everything
+        // untaps before the payment is due next turn. The land drop to come is deliberately not
+        // counted - it may never arrive. A bare count isn't enough either: four off-colour lands
+        // would pass a total-mana check and still never produce the coloured half of the cost, so
+        // every coloured shard has to have a source that can actually make it.
+        final Card host = sa.getHostCard();
+        final CardCollection needed = coverNextTurn(ai, host.getManaCost());
+        if (needed == null) {
+            return false;
+        }
+
+        // dying to a blocker means paying the cost next turn for nothing, so only swing when the
+        // creature survives the best block available or gets through unopposed
+        final Combat combat = game.getCombat();
+        if (combat == null) {
+            return false;
+        }
+        for (final Player defender : ai.getOpponents()) {
+            for (final Card blocker : defender.getCreaturesInPlay()) {
+                if (CombatUtil.canBlock(host, blocker, combat)
+                        && ComputerUtilCombat.canDestroyAttacker(ai, host, blocker, combat, false)) {
+                    return false;
+                }
+            }
+        }
+
+        // being ABLE to pay next turn isn't enough - the AI will happily spend that mana on its
+        // main phase and then lose the game at its end step, so the sources are held aside now
+        if (ai.getController() instanceof PlayerControllerAi pc) {
+            final AiController aic = pc.getAi();
+            for (final Card c : needed) {
+                AiCardMemory.rememberCard(ai, c, AiCardMemory.MemorySet.HELD_MANA_SOURCES_FOR_OBLIGATION);
+            }
+            aic.setObligationReservedOnTurn(game.getPhaseHandler().getTurn());
+        }
+        return true;
     }
 
     @Override

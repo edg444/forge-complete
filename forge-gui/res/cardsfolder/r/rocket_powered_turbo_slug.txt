@@ -1,0 +1,10 @@
+Name:Rocket-Powered Turbo Slug
+ManaCost:3 R
+Types:Creature Slug
+PT:3/1
+A:AB$ ChangeZone | Cost$ 0 | CostDesc$ | PrecostDesc$ Super haste — | Defined$ Self | Origin$ Hand | Destination$ Battlefield | Tapped$ True | Attacking$ True | ActivationZone$ Hand | PlayerTurn$ True | ActivationPhases$ Declare Attackers | AILogic$ SuperHaste | SubAbility$ DBDelay | SpellDescription$ Put this card from your hand onto the battlefield tapped and attacking. If you do, you lose the game at the beginning of your next turn's end step unless you pay this card's mana cost during that turn.
+# DelayedTriggerDefinedPlayer registers for that player's NEXT turn, so this deliberately skips the
+# end step of the turn it attacked on
+SVar:DBDelay:DB$ DelayedTrigger | DelayedTriggerDefinedPlayer$ You | Mode$ Phase | Phase$ End of Turn | Execute$ TrigLose | TriggerDescription$ At the beginning of your next turn's end step, you lose the game unless you pay this card's mana cost during that turn.
+SVar:TrigLose:DB$ LosesGame | Defined$ You | UnlessCost$ 3 R | UnlessPayer$ You
+Oracle:Super haste (This may attack the turn before you cast it. (You may put this card from your hand onto the battlefield tapped and attacking during your declare attackers step. If you do, you lose the game at the beginning of your next turn's end step unless you pay this card's mana cost during that turn.))

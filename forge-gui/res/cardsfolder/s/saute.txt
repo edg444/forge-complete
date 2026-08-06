@@ -1,0 +1,5 @@
+Name:Sauté
+ManaCost:1 R R
+Types:Instant
+A:SP$ DealDamage | ValidTgts$ Any | TgtPrompt$ Select any target | NumDmg$ 7 | Halves$ True | SpellDescription$ CARDNAME deals 3½ damage to any target.
+Oracle:Sauté deals 3½ damage to any target.

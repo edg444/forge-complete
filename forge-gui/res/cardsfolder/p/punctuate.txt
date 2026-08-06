@@ -1,0 +1,6 @@
+Name:Punctuate
+ManaCost:3 R
+Types:Instant
+A:SP$ DealDamage | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumDmg$ X | Halves$ True | SpellDescription$ CARDNAME deals damage to target creature equal to half the number of punctuation marks in that creature's text box.
+SVar:X:Targeted$CardPunctuationMarks
+Oracle:Punctuate deals damage to target creature equal to half the number of punctuation marks in that creature's text box. (The punctuation marks are ! ? , ; : - — ( ) / " " ' ' & .)

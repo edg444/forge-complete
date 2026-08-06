@@ -56,6 +56,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -4160,6 +4162,81 @@ public class CardFactoryUtil {
     // word wrap at a fixed width calibrated to a typical modern card frame. Not pixel-accurate
     // to any one printing, but deterministic and consistent across every card for comparison.
     private static final int TEXT_BOX_CHARS_PER_LINE = 40;
+
+    // Punctuate names the marks that count in its own reminder text, and the Unhinged FAQ confirms
+    // nothing outside that list does. Both straight and curly quotes are here because stored Oracle
+    // text uses either depending on the card.
+    private static final String PUNCTUATION_MARKS = "!?,;:-—()/\"“”'‘’&.";
+
+    /**
+     * Punctuation marks in a card's text box (Punctuate). The Unhinged FAQ is explicit that this
+     * counts flavor text as well as rules text, so it reads the whole text box.
+     */
+    public static int getPunctuationMarkCount(final Card card) {
+        final String text = card.getTextBoxContents();
+        if (StringUtils.isBlank(text)) {
+            return 0;
+        }
+        int count = 0;
+        for (int i = 0; i < text.length(); i++) {
+            if (PUNCTUATION_MARKS.indexOf(text.charAt(i)) >= 0) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    // Pygmy Giant. The Unhinged FAQ says both numerals and spelled-out words count ("Do both
+    // numerals and words, such as 1 and 'one,' count? Yes."), so the words are listed here. Only
+    // single words - nothing in a text box is written "twenty-seven".
+    private static final Map<String, Integer> NUMBER_WORDS = Maps.newLinkedHashMap();
+    static {
+        final String[] units = {"zero", "one", "two", "three", "four", "five", "six", "seven",
+                "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+                "sixteen", "seventeen", "eighteen", "nineteen", "twenty"};
+        for (int i = 0; i < units.length; i++) {
+            NUMBER_WORDS.put(units[i], i);
+        }
+        NUMBER_WORDS.put("thirty", 30);
+        NUMBER_WORDS.put("forty", 40);
+        NUMBER_WORDS.put("fifty", 50);
+        NUMBER_WORDS.put("sixty", 60);
+        NUMBER_WORDS.put("seventy", 70);
+        NUMBER_WORDS.put("eighty", 80);
+        NUMBER_WORDS.put("ninety", 90);
+        NUMBER_WORDS.put("hundred", 100);
+        NUMBER_WORDS.put("thousand", 1000);
+    }
+    private static final Pattern TEXT_BOX_NUMERAL = Pattern.compile("\\d+");
+    private static final Pattern TEXT_BOX_WORD = Pattern.compile("[a-z]+");
+
+    /**
+     * Every distinct number appearing in a card's text box, ascending (Pygmy Giant). Covers rules
+     * text and flavor text, since the FAQ counts both - Pygmy Giant's own 487 lives in its flavor.
+     */
+    public static List<Integer> getTextBoxNumbers(final Card card) {
+        final Set<Integer> found = Sets.newTreeSet();
+        final String text = card.getTextBoxContents();
+        if (StringUtils.isBlank(text)) {
+            return Lists.newArrayList();
+        }
+        final Matcher numerals = TEXT_BOX_NUMERAL.matcher(text);
+        while (numerals.find()) {
+            try {
+                found.add(Integer.parseInt(numerals.group()));
+            } catch (NumberFormatException e) {
+                // a run of digits too long to be a real number isn't one worth offering
+            }
+        }
+        final Matcher words = TEXT_BOX_WORD.matcher(text.toLowerCase());
+        while (words.find()) {
+            final Integer value = NUMBER_WORDS.get(words.group());
+            if (value != null) {
+                found.add(value);
+            }
+        }
+        return Lists.newArrayList(found);
+    }
 
     public static int getTextBoxLineCount(final Card card) {
         final String oracleText = card.getOracleText();

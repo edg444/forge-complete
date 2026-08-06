@@ -468,10 +468,15 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
         final Map<Player, Integer> lossMap = Maps.newHashMap();
         for (Player p : game.getPlayers()) {
+            // an unspent Unhinged half burns for 1/2 a life, so halves have to be counted before
+            // clearPool empties them (they are never part of the cleared whole-mana list)
+            final int halves = p.getManaPool().totalHalfMana();
             int burn = p.getManaPool().clearPool(true).size();
 
             if (p.getManaPool().hasBurn()) {
-                final int lost = p.loseLife(burn, false, true);
+                final int oldLife = p.getLife();
+                p.changeLifeByHalves(-(burn * 2 + halves), null, null, true);
+                final int lost = oldLife - p.getLife();
                 if (lost > 0) {
                     lossMap.put(p, lost);
                 }

@@ -5,7 +5,7 @@ PT:10/10
 T:Mode$ SpellCast | ValidCard$ Card.Self | Execute$ TrigChange | TriggerDescription$ When you cast this spell, exile two target permanents.
 SVar:TrigChange:DB$ ChangeZone | ValidTgts$ Permanent | TargetMin$ 2 | TargetMax$ 2 | Origin$ Battlefield | Destination$ Exile
 K:Indestructible
-T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigExile | TriggerDescription$ Whenever CARDNAME attacks, defending player exiles the top twenty cards of their library.
+T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigExile | TriggerDescription$ Whenever NICKNAME attacks, defending player exiles the top twenty cards of their library.
 SVar:TrigExile:DB$ Dig | Defined$ TriggeredDefendingPlayer | DestinationZone$ Exile | DigNum$ 20 | ChangeNum$ All
 SVar:PlayMain1:TRUE
 SVar:HasAttackEffect:TRUE

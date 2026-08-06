@@ -1,0 +1,7 @@
+Name:Mana Flair
+ManaCost:1 R
+Types:Instant
+A:SP$ ChooseArtist | Defined$ You | AILogic$ MostProminentNonLand | SubAbility$ DBMana | SpellDescription$ Add {R} for each nonland permanent with art by the artist of your choice.
+SVar:DBMana:DB$ Mana | Produced$ R | Amount$ X | AILogic$ ManaRitual | AINoRecursiveCheck$ True
+SVar:X:Count$Valid Permanent.nonLand+ArtistIsChosen
+Oracle:Add {R} for each nonland permanent with art by the artist of your choice.

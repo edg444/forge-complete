@@ -2,7 +2,7 @@ Name:Omnath, Locus of Creation
 ManaCost:R G W U
 Types:Legendary Creature Elemental
 PT:4/4
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When CARDNAME enters, draw a card.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When NICKNAME enters, draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Land.YouCtrl | TriggerZones$ Battlefield | Execute$ DBGainLife | TriggerDescription$ Landfall — Whenever a land you control enters, you gain 4 life if this is the first time this ability has resolved this turn. If it's the second time, add {R}{G}{W}{U}. If it's the third time, NICKNAME deals 4 damage to each opponent and each planeswalker you don't control.
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 4 | ConditionCheckSVar$ LandfallAmount | ConditionSVarCompare$ EQ1 | SubAbility$ DBMana

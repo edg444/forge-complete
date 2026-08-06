@@ -313,9 +313,17 @@ public enum CardZoomer {
         try { //prevent NPE trying to view card without alternate
             isInAltState = !isInAltState;
             thisCard = thisCard.getCard().getState(isInAltState);
-            imagePanel.setRotation(thisCard.getCard().isFlipCard() && isInAltState ? 180 : 0);
+            // setImage() builds a WHOLE NEW FImagePanel, so rotating before it threw the rotation
+            // away with the old panel - getInitialRotation only returns 180 for a card that really
+            // flipped in play, which a zoom-only preview never has. Rotate the new panel instead.
             setImage();
-        } catch (Exception e){}
+            imagePanel.setRotation(thisCard.getCard().isFlipCard() && isInAltState ? 180 : 0);
+        } catch (Exception e) {
+            // was swallowed silently, which makes a card that refuses to flip impossible to diagnose
+            System.out.println("[ZOOMFLIP] toggle failed for "
+                    + (thisCard == null ? "null" : thisCard.getName()) + ": " + e);
+            e.printStackTrace(System.out);
+        }
     }
 
     /**

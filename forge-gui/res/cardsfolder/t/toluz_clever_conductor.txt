@@ -2,7 +2,7 @@ Name:Toluz, Clever Conductor
 ManaCost:WU U UB
 Types:Legendary Creature Human Rogue
 PT:3/1
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigConnive | TriggerDescription$ When CARDNAME enters, it connives. (Draw a card, then discard a card. If you discarded a nonland card, put a +1/+1 counter on this creature.)
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigConnive | TriggerDescription$ When NICKNAME enters, it connives. (Draw a card, then discard a card. If you discarded a nonland card, put a +1/+1 counter on this creature.)
 SVar:TrigConnive:DB$ Connive
 T:Mode$ DiscardedAll | ValidPlayer$ You | ValidCard$ Card | TriggerZones$ Battlefield | Execute$ TrigExile | TriggerDescription$ Whenever you discard one or more cards, exile them from your graveyard.
 SVar:TrigExile:DB$ ChangeZoneAll | Origin$ Graveyard | Destination$ Exile | ChangeType$ Card.TriggeredCards

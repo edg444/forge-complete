@@ -7,7 +7,7 @@ A:AB$ Discard | Cost$ AddCounter<0/LOYALTY> | Planeswalker$ True | Defined$ You 
 SVar:DBDraw:DB$ Draw | NumCards$ Y | Defined$ You | SubAbility$ DBCleanup
 SVar:Y:Remembered$Amount/Plus.1
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-A:AB$ DamageAll | Cost$ SubCounter<X/LOYALTY> | NumDmg$ X | ValidCards$ Creature | Planeswalker$ True | Ultimate$ True | ValidDescription$ each creature. | SpellDescription$ CARDNAME deals X damage to each creature.
+A:AB$ DamageAll | Cost$ SubCounter<X/LOYALTY> | NumDmg$ X | ValidCards$ Creature | Planeswalker$ True | Ultimate$ True | ValidDescription$ each creature. | SpellDescription$ NICKNAME deals X damage to each creature.
 SVar:X:Count$xPaid
 SVar:PlayMain1:ALWAYS
 DeckHas:Ability$Token

@@ -138,6 +138,21 @@ public class AiController {
         return memory;
     }
 
+    // Turn on which mana was reserved for a debt due on a LATER turn (super haste). The reservation
+    // must not be released at the end of the turn it was made on - that is still the turn the debt
+    // was incurred, not the turn it comes due.
+    private int obligationReservedOnTurn = -1;
+    public void setObligationReservedOnTurn(final int turn) {
+        obligationReservedOnTurn = turn;
+    }
+    public boolean hasObligationReservedBefore(final int turn) {
+        return obligationReservedOnTurn >= 0 && obligationReservedOnTurn != turn;
+    }
+    public void clearObligationReservation() {
+        obligationReservedOnTurn = -1;
+        memory.clearMemorySet(AiCardMemory.MemorySet.HELD_MANA_SOURCES_FOR_OBLIGATION);
+    }
+
     public Combat getPredictedCombat() {
         if (predictedCombat == null) {
             AiAttackController aiAtk = new AiAttackController(player);
@@ -1938,6 +1953,11 @@ public class AiController {
                     return options.get(0);
                 }
             case ChooseNumber:
+                // Pygmy Giant picks from the numbers printed on the creature it just sacrificed,
+                // and every one of them is damage, so there's nothing to weigh - take the biggest
+                if ("Max".equals(sa.getParam("AILogic"))) {
+                    return Collections.max(options);
+                }
                 if (sa.getHostCard().getName().equals("Emissary's Ploy")) {
                     // Count the amount of creatures in each CMC of 1,2,3 and choose that number
                     // If you have multiple ploys, technically AI should choose different numbers

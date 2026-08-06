@@ -1,0 +1,42 @@
+Name:Curse of the Fire Penguin
+ManaCost:4 R R
+Types:Enchantment Aura
+K:Enchant:Creature
+# Not Curse, despite the name: this makes the creature a 6/5 trampler, which is an upgrade on
+# anything small or vanilla. Treating it as a curse had the AI hanging it on the opponent's
+# creatures, handing them a 6/5. The downside is losing abilities, so Pump's own evaluation of
+# what's worth enchanting is the right basis.
+SVar:AttachAILogic:Pump
+# "Consumes and confuses" is defined by the Unhinged FAQ (2004/11/15): the enchanted creature
+# becomes a 6/5 Creature - Penguin with the flip side's text, keeping its own name, mana cost
+# and color. The Aura itself never actually flips - the second state below exists so the card
+# reads and rotates in the zoom view the way the printed flip card does.
+S:Mode$ Continuous | Affected$ Creature.EnchantedBy | SetPower$ 6 | SetToughness$ 5 | RemoveCardTypes$ True | RemoveCreatureTypes$ True | AddType$ Creature & Penguin | RemoveAllAbilities$ True | AddKeyword$ Trample | Description$ Enchanted creature loses all abilities and is a 6/5 Penguin creature with trample and "When this creature dies, return Curse of the Fire Penguin to the battlefield." It keeps its name, mana cost, and color.
+# The printed ability sits on the creature, but granting a LEAVES-the-battlefield trigger through
+# the Aura's own continuous effect is unreliable - the static stops applying at the very moment the
+# trigger needs to exist, because the Aura falls off with the creature. So the Aura watches for the
+# death itself and TriggerController hands the trigger to the creature's controller, which is who
+# the printed card puts in charge of the choices.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.AttachedBy | TriggerController$ TriggeredCardController | Execute$ TrigReturnCurse | TriggerDescription$ When this creature dies, return CARDNAME to the battlefield.
+# Fetched by name rather than Defined$ Self: Self still points at the battlefield copy of this Aura,
+# and changeKnownOriginResolve drops any card whose game timestamp no longer matches, so it silently
+# moved nothing. Hidden$ True is also required - without it a public-zone Origin takes the
+# known-origin path and ChangeType is never consulted.
+# AILogic goes on this ability, not just the card's AttachAILogic: the attach choice on the way back
+# is made by ChangeZoneAi, which hands sa.getParam("AILogic") straight to AttachAi.attachGeneralAI.
+# Without it the returning Aura had no preference at all.
+SVar:TrigReturnCurse:DB$ ChangeZone | Hidden$ True | Origin$ Graveyard | Destination$ Battlefield | ChangeType$ Card.namedCurse of the Fire Penguin | ChangeNum$ 1 | DefinedPlayer$ Player | Chooser$ You | AttachedTo$ Creature | Mandatory$ True | AILogic$ Pump
+Text:This enchantment consumes and confuses enchanted creature.
+DeckHas:Type$Penguin
+AlternateMode:Flip
+Oracle:Enchant creature\nThis enchantment consumes and confuses enchanted creature.
+
+ALTERNATE
+
+Name:Curse of the Fire Penguin Creature
+ManaCost:no cost
+Colors:red
+Types:Creature Penguin
+PT:6/5
+K:Trample
+Oracle:Trample\nWhen this creature dies, return Curse of the Fire Penguin to the battlefield.

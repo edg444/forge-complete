@@ -7,7 +7,7 @@ SVar:TrigCharm:DB$ Charm | Choices$ DrawPact,DrainPact,DamagePact,BetrayPact | C
 SVar:DrawPact:DB$ Draw | SpellDescription$ Draw a card.
 SVar:DrainPact:DB$ LoseLife | Defined$ Opponent | LifeAmount$ 2 | SubAbility$ DBGainLife | SpellDescription$ Each opponent loses 2 life and you gain 2 life.
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 2
-SVar:DamagePact:DB$ DealDamage | NumDmg$ 3 | TargetMin$ 0 | TargetMax$ 1 | ValidTgts$ Creature.Other,Planeswalker.Other | TgtPrompt$ Select up to one other target creature or planeswalker | SpellDescription$ CARDNAME deals 3 damage to up to one other target creature or planeswalker.
+SVar:DamagePact:DB$ DealDamage | NumDmg$ 3 | TargetMin$ 0 | TargetMax$ 1 | ValidTgts$ Creature.Other,Planeswalker.Other | TgtPrompt$ Select up to one other target creature or planeswalker | SpellDescription$ NICKNAME deals 3 damage to up to one other target creature or planeswalker.
 SVar:BetrayPact:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | SubAbility$ DBChooseOpp | RememberChanged$ True | SpellDescription$ Exile NICKNAME, then return it to the battlefield under an opponent's control.
 SVar:DBChooseOpp:DB$ ChoosePlayer | Defined$ You | Choices$ Opponent | ChoiceTitle$ Choose an opponent | SubAbility$ MoveToPlay
 SVar:MoveToPlay:DB$ ChangeZone | Hidden$ True | Origin$ All | Destination$ Battlefield | Defined$ Remembered | GainControl$ ChosenPlayer | SubAbility$ DBCleanup

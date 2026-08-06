@@ -528,6 +528,10 @@ public class Player extends GameEntity implements Comparable<Player> {
      * twice reports 0 then 1, for a total of 1 - matching the 1 whole life the player really gained.
      */
     public final boolean changeLifeByHalves(final int halves, final Card source, final SpellAbility sa) {
+        return changeLifeByHalves(halves, source, sa, false);
+    }
+    public final boolean changeLifeByHalves(final int halves, final Card source, final SpellAbility sa,
+            final boolean manaBurn) {
         if (halves == 0) {
             return false;
         }
@@ -546,7 +550,7 @@ public class Player extends GameEntity implements Comparable<Player> {
             if (!canLoseLife()) {
                 return false;
             }
-            loseLife(Math.max(-whole, 0), false, false, true);
+            loseLife(Math.max(-whole, 0), false, manaBurn, true);
         }
         setHalfLife(remainder);
         return true;

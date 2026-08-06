@@ -1,0 +1,8 @@
+Name:Pygmy Giant
+ManaCost:1 R R
+Types:Creature Giant
+PT:0/2
+A:AB$ ChooseNumber | Cost$ R T Sac<1/Creature> | Defined$ You | TextBoxNumbersOf$ Sacrificed | AILogic$ Max | ListTitle$ Choose a number from the sacrificed creature's text box | SubAbility$ DBDamage | SpellDescription$ This creature deals X damage to target creature, where X is a number in the sacrificed creature's text box.
+SVar:DBDamage:DB$ DealDamage | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumDmg$ X | StackDescription$ {c:Self} deals damage to {c:Targeted} equal to a number in the sacrificed creature's text box.
+SVar:X:Count$ChosenNumber
+Oracle:{R}, {T}, Sacrifice a creature: This creature deals X damage to target creature, where X is a number in the sacrificed creature's text box.

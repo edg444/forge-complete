@@ -1,0 +1,13 @@
+Name:Red-Hot Hottie
+ManaCost:2 R R
+Types:Creature Elemental
+PT:2/5
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Creature | TriggerZones$ Battlefield | Execute$ TrigBurn | TriggerDescription$ Whenever this creature deals damage to a creature, put a third-degree-burn counter on that creature. It gains "At the beginning of each end step, sacrifice this creature unless you scream 'Aaah!' at the top of your lungs."
+SVar:TrigBurn:DB$ PutCounter | Defined$ TriggeredTarget | CounterType$ ThirdDegreeBurn | CounterNum$ 1 | SubAbility$ DBGrant
+# the grant has no duration on the card, so it outlives the Hottie and any later counter removal
+SVar:DBGrant:DB$ Animate | Defined$ TriggeredTarget | Triggers$ TrigScream | sVars$ TrigSacUnless | Duration$ Permanent
+SVar:TrigScream:Mode$ Phase | Phase$ End of Turn | TriggerZones$ Battlefield | Execute$ TrigSacUnless | TriggerDescription$ At the beginning of each end step, sacrifice this creature unless you scream "Aaah!" at the top of your lungs.
+# Screaming costs nothing, so a rational player always does it - the only reason to ever fail is
+# forgetting. Chance.85 meant the AI torched its own creature roughly one end step in seven.
+SVar:TrigSacUnless:DB$ Sacrifice | Defined$ Self | UnlessPayer$ You | UnlessCost$ FlavorAction<Scream "Aaah!" at the top of your lungs/Aaah!> | UnlessAI$ Chance.97
+Oracle:Whenever this creature deals damage to a creature, put a third-degree-burn counter on that creature. It gains "At the beginning of each end step, sacrifice this creature unless you scream 'Aaah!' at the top of your lungs."

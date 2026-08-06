@@ -3,7 +3,7 @@ ManaCost:6 B R
 Types:Legendary Creature Demon
 PT:5/5
 K:Affinity:Artifact
-T:Mode$ ChangesZone | ValidCard$ Card.Self | Destination$ Battlefield | Execute$ TrigDraw | TriggerDescription$ When CARDNAME enters, you draw X cards and you lose X life, where X is half the number of artifacts you control, rounded down.
+T:Mode$ ChangesZone | ValidCard$ Card.Self | Destination$ Battlefield | Execute$ TrigDraw | TriggerDescription$ When NICKNAME enters, you draw X cards and you lose X life, where X is half the number of artifacts you control, rounded down.
 SVar:TrigDraw:DB$ Draw | NumCards$ Y | SubAbility$ DBLoseLife
 SVar:DBLoseLife:DB$ LoseLife | LifeAmount$ Y
 SVar:Y:Count$Valid Artifact.YouCtrl/HalfDown

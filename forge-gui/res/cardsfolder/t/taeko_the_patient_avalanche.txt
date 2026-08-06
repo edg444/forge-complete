@@ -2,7 +2,7 @@ Name:Taeko, the Patient Avalanche
 ManaCost:3 U
 Types:Legendary Creature Turtle Ninja
 PT:4/5
-R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ CARDNAME enters tapped.
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ NICKNAME enters tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Ante,Command,Exile,Hand,Library | ValidCard$ Creature.Other+YouCtrl | TriggerZones$ Battlefield | Execute$ TrigScry | TriggerDescription$ Whenever another creature you control leaves the battlefield, if it didn't die, scry 1 and put a +1/+1 counter on NICKNAME.
 SVar:TrigScry:DB$ Scry | ScryNum$ 1 | SubAbility$ DBPutCounter

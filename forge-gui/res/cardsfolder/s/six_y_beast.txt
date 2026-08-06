@@ -1,0 +1,13 @@
+Name:Six-y Beast
+ManaCost:3 R
+Types:Creature Beast
+PT:0/0
+K:ETBReplacement:Other:DBSecret
+SVar:DBSecret:DB$ ChooseNumber | Defined$ You | Secretly$ True | Min$ 0 | Max$ 6 | Guesser$ Opponent | ChooseNumberSubAbility$ DBCounters | GuessCorrect$ DBSac | SpellDescription$ As this creature enters, you secretly put six or fewer +1/+1 counters on it, then an opponent guesses the number of counters. If that player guesses right, sacrifice this creature after it enters.
+# counters have to land as part of the replacement, or a 0/0 would hit state-based actions first
+SVar:DBCounters:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ Count$ChosenNumber | ETB$ True
+# "after it enters" - an immediate trigger goes on the stack once the card is actually on the
+# battlefield, rather than trying to sacrifice it mid-move
+SVar:DBSac:DB$ ImmediateTrigger | Execute$ DBSacNow | TriggerDescription$ They guessed right - sacrifice this creature.
+SVar:DBSacNow:DB$ Sacrifice | Defined$ Self
+Oracle:As this creature enters, you secretly put six or fewer +1/+1 counters on it, then an opponent guesses the number of counters. If that player guesses right, sacrifice this creature after it enters.

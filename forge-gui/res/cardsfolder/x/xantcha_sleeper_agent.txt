@@ -3,7 +3,7 @@ ManaCost:1 B R
 Types:Legendary Creature Phyrexian Minion
 PT:5/5
 S:Mode$ MustAttack | ValidCreature$ Card.Self | Description$ NICKNAME attacks each combat if able.
-R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplaceWith$ DBChooseOpp | Layer$ Control | Description$ CARDNAME enters under the control of an opponent of your choice.
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplaceWith$ DBChooseOpp | Layer$ Control | Description$ NICKNAME enters under the control of an opponent of your choice.
 SVar:DBChooseOpp:DB$ ChoosePlayer | Defined$ You | Choices$ Player.Opponent | ChoiceTitle$ Choose an opponent to give control to | AILogic$ Curse | SubAbility$ MoveToPlay
 SVar:MoveToPlay:DB$ ChangeZone | Hidden$ True | Origin$ All | Destination$ Battlefield | Defined$ ReplacedCard | GainControl$ ChosenPlayer | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearChosenPlayer$ True

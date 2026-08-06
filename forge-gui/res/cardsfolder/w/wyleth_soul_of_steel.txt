@@ -3,7 +3,7 @@ ManaCost:1 R W
 Types:Legendary Creature Human Warrior
 PT:2/2
 K:Trample
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ Whenever CARDNAME attacks, draw a card for each Aura and Equipment attached to it.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ Whenever NICKNAME attacks, draw a card for each Aura and Equipment attached to it.
 SVar:TrigDraw:DB$ Draw | NumCards$ X
 SVar:X:Count$Valid Equipment.Attached,Aura.Attached
 SVar:HasAttackEffect:TRUE

@@ -2,7 +2,7 @@ Name:Ral, Crackling Wit
 ManaCost:2 U R
 Types:Legendary Planeswalker Ral
 Loyalty:4
-T:Mode$ SpellCast | ValidCard$ Card.nonCreature+YouCtrl | Execute$ TrigLoyalty | TriggerZones$ Battlefield | TriggerDescription$ Whenever you cast a noncreature spell, put a loyalty counter on CARDNAME.
+T:Mode$ SpellCast | ValidCard$ Card.nonCreature+YouCtrl | Execute$ TrigLoyalty | TriggerZones$ Battlefield | TriggerDescription$ Whenever you cast a noncreature spell, put a loyalty counter on NICKNAME.
 SVar:TrigLoyalty:DB$ PutCounter | Defined$ Self | CounterType$ LOYALTY | CounterNum$ 1
 A:AB$ Token | Cost$ AddCounter<1/LOYALTY> | Planeswalker$ True | TokenScript$ ur_1_1_otter_prowess | TokenOwner$ You | SpellDescription$ Create a 1/1 blue and red Otter creature token with prowess.
 A:AB$ Draw | Cost$ SubCounter<3/LOYALTY> | Planeswalker$ True | NumCards$ 3 | SubAbility$ DiscardTwo | SpellDescription$ Draw three cards, then discard two cards.

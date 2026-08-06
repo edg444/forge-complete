@@ -2,7 +2,7 @@ Name:Neerdiv, Devious Diver
 ManaCost:2 U
 Types:Legendary Creature Merfolk Rogue
 PT:2/2
-T:Mode$ Taps | ValidCard$ Card.Self | Execute$ TrigMill | TriggerDescription$ Whenever CARDNAME becomes tapped, target player mills cards equal to its power.
+T:Mode$ Taps | ValidCard$ Card.Self | Execute$ TrigMill | TriggerDescription$ Whenever NICKNAME becomes tapped, target player mills cards equal to its power.
 SVar:TrigMill:DB$ Mill | NumCards$ X | ValidTgts$ Player
 T:Mode$ SpellCast | ValidCard$ Card.wasCastFromYourGraveyard | ValidActivatingPlayer$ You | Execute$ TrigDraw | TriggerZones$ Battlefield | TriggerDescription$ Whenever you cast a spell from your graveyard or activate an ability of a card in your graveyard, draw a card and put a +1/+1 counter on NICKNAME.
 T:Mode$ AbilityCast | ValidCard$ Card.inZoneGraveyard | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDraw | Secondary$ True | TriggerDescription$ Whenever you cast a spell from your graveyard or activate an ability of a card in your graveyard, draw a card and put a +1/+1 counter on NICKNAME.

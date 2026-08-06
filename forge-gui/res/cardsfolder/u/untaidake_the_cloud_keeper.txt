@@ -1,7 +1,7 @@
 Name:Untaidake, the Cloud Keeper
 ManaCost:no cost
 Types:Legendary Land
-R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ CARDNAME enters tapped.
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ NICKNAME enters tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ Mana | Cost$ T PayLife<2> | Produced$ C | Amount$ 2 | RestrictValid$ Spell.Legendary | SpellDescription$ Add {C}{C}. Spend this mana only to cast legendary spells.
 AI:RemoveDeck:Random

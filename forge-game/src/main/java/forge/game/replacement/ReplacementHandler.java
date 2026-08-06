@@ -294,14 +294,11 @@ public class ReplacementHandler {
         // TODO: the source of replacement effect should be the source of the original effect
         SpellAbility effectSA = replacementEffect.ensureAbility();
         if (effectSA != null) {
-            SpellAbility tailend = effectSA;
-            do {
-                replacementEffect.setReplacingObjects(runParams, tailend);
-                //set original Params to update them later
-                tailend.setReplacingObject(AbilityKey.OriginalParams, runParams);
-                tailend.setReplacingObjectsFrom(runParams, AbilityKey.InternalTriggerTable, AbilityKey.SimultaneousETB);
-                tailend = tailend.getSubAbility();
-            } while (tailend != null);
+            // walks additional abilities as well as the SubAbility chain: things like
+            // ChooseNumberSubAbility$ are resolved through getAdditionalAbility, and if they never
+            // receive the replacing objects then an ETB$ True inside one has no CounterTable to put
+            // its counters in and dies with an NPE (Six-y Beast)
+            spreadReplacingObjects(replacementEffect, effectSA, runParams, Sets.newIdentityHashSet());
 
             effectSA.setLastStateBattlefield((CardCollectionView) Objects.requireNonNullElse(runParams.get(AbilityKey.LastStateBattlefield), game.getLastStateBattlefield()));
             effectSA.setLastStateGraveyard((CardCollectionView) Objects.requireNonNullElse(runParams.get(AbilityKey.LastStateGraveyard), game.getLastStateGraveyard()));
@@ -381,6 +378,27 @@ public class ReplacementHandler {
         }
 
         return ReplacementResult.Replaced;
+    }
+
+    /**
+     * Hands the replacing objects to a replacement's ability and everything it can go on to resolve
+     * - its SubAbility chain and its additional abilities alike. The identity set guards against an
+     * ability that appears in both chains being visited twice, or referencing itself.
+     */
+    private static void spreadReplacingObjects(final ReplacementEffect re, final SpellAbility sa,
+            final Map<AbilityKey, Object> runParams, final Set<SpellAbility> seen) {
+        if (sa == null || !seen.add(sa)) {
+            return;
+        }
+        re.setReplacingObjects(runParams, sa);
+        //set original Params to update them later
+        sa.setReplacingObject(AbilityKey.OriginalParams, runParams);
+        sa.setReplacingObjectsFrom(runParams, AbilityKey.InternalTriggerTable, AbilityKey.SimultaneousETB);
+
+        spreadReplacingObjects(re, sa.getSubAbility(), runParams, seen);
+        for (final SpellAbility additional : sa.getAdditionalAbilities().values()) {
+            spreadReplacingObjects(re, additional, runParams, seen);
+        }
     }
 
     private void getPossibleReplaceDamageList(PlayerCollection players, final boolean isCombat, final CardDamageTable damageMap, final SpellAbility cause) {

@@ -76,17 +76,23 @@ public abstract class CardPanelContainer extends SkinnedPanel {
         return matchUI;
     }
 
+    // mayFlip was hardcoded false here, so zooming a card on the battlefield could never turn it
+    // over - unlike the sidebar detail panel, which asks mayFlip() properly. Flip and transform
+    // cards are exactly the ones worth zooming in on, so ask the same question the sidebar does.
     private void mouseWheelZoom(final CardView card) {
         if (canZoom(card)) {
-            CardZoomer.SINGLETON_INSTANCE.setCard(card.getCurrentState(), false);
+            CardZoomer.SINGLETON_INSTANCE.setCard(card.getCurrentState(), canFlip(card));
             CardZoomer.SINGLETON_INSTANCE.doMouseWheelZoom();
         }
     }
     private void mouseButtonZoom(final CardView card) {
         if (canZoom(card)) {
-            CardZoomer.SINGLETON_INSTANCE.setCard(card.getCurrentState(), false);
+            CardZoomer.SINGLETON_INSTANCE.setCard(card.getCurrentState(), canFlip(card));
             CardZoomer.SINGLETON_INSTANCE.doMouseButtonZoom();
         }
+    }
+    private boolean canFlip(final CardView card) {
+        return getMatchUI().mayFlip(card);
     }
     private boolean canZoom(final CardView card) {
         return getMatchUI().mayView(card);

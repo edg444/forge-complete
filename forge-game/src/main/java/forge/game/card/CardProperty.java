@@ -199,8 +199,9 @@ public class CardProperty {
             }
             final String word = source.getChosenType().toLowerCase().trim();
             // read the text box as printed, not the stored Oracle field - that field lags behind
-            // retemplating ("this creature" vs the card's own name) on plenty of cards
-            final String text = (card.getAbilityText() + " " + card.getOracleText()).toLowerCase();
+            // retemplating ("this creature" vs the card's own name) on plenty of cards. Flavor text
+            // is part of the text box too, so a word printed only there still counts.
+            final String text = (card.getAbilityText() + " " + card.getTextBoxContents()).toLowerCase();
             if (word.isEmpty() || !java.util.regex.Pattern.compile("\\b" + java.util.regex.Pattern.quote(word) + "\\b")
                     .matcher(text).find()) {
                 return false;
@@ -1386,6 +1387,12 @@ public class CardProperty {
             CardCollection cards = new CardCollection(game.getCardsIn(ZoneType.Battlefield));
             cards.remove(source);
             if (!CardLists.getCardsWithMostTextBoxLines(cards).contains(card)) {
+                return false;
+            }
+        } else if (property.equals("wordy")) {
+            // Frazzled Editor defines wordy as four or more lines of rules text, measured the same
+            // way Lexivore measures "most lines of text" so the two never disagree
+            if (CardFactoryUtil.getTextBoxLineCount(card) < 4) {
                 return false;
             }
         } else if (property.startsWith("greatestRememberedCMC")) {

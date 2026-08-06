@@ -1452,17 +1452,20 @@ public class CardView extends GameEntityView {
         }
         void updatePower(Card c) {
             int num;
+            boolean half;
             if (hasPrintedPT() && !isCreature()) {
                 // use printed value so user can still see it
                 num = c.getCurrentPower();
+                half = c.hasHalfPower();
             } else {
                 num = c.getNetPower();
+                half = c.hasHalfNetPower();
             }
             if (c.getCurrentState().getView() != this && c.getAlternateState() != null) {
                 num = num - c.getBasePower() + c.getAlternateState().getBasePower();
             }
             set(TrackableProperty.Power, num);
-            set(TrackableProperty.HasHalfPower, c.hasHalfPower());
+            set(TrackableProperty.HasHalfPower, half);
         }
 
         public boolean hasHalfPower() {
@@ -1500,17 +1503,20 @@ public class CardView extends GameEntityView {
         }
         void updateToughness(Card c) {
             int num;
+            boolean half;
             if (hasPrintedPT() && !isCreature()) {
                 // use printed value so user can still see it
                 num = c.getCurrentToughness();
+                half = c.hasHalfToughness();
             } else {
                 num = c.getNetToughness();
+                half = c.hasHalfNetToughness();
             }
             if (c.getCurrentState().getView() != this && c.getAlternateState() != null) {
                 num = num - c.getBaseToughness() + c.getAlternateState().getBaseToughness();
             }
             set(TrackableProperty.Toughness, num);
-            set(TrackableProperty.HasHalfToughness, c.hasHalfToughness());
+            set(TrackableProperty.HasHalfToughness, half);
         }
         void updateToughness(CardState c) {
             Card card = c.getCard();

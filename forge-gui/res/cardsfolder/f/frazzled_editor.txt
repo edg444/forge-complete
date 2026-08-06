@@ -1,0 +1,6 @@
+Name:Frazzled Editor
+ManaCost:1 R
+Types:Creature Human Bureaucrat
+PT:2/2
+K:Protection:Card.wordy:wordy
+Oracle:Protection from wordy (Something is wordy if it has four or more lines of rules text.)

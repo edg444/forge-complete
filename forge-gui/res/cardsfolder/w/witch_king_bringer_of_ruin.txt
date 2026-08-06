@@ -3,7 +3,7 @@ ManaCost:4 B B
 Types:Legendary Creature Wraith Noble
 PT:5/3
 K:Flying
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ Whenever CARDNAME attacks, defending player sacrifices a creature with the least power among creatures they control.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ Whenever NICKNAME attacks, defending player sacrifices a creature with the least power among creatures they control.
 SVar:TrigSac:DB$ Sacrifice | Defined$ TriggeredDefendingPlayer | SacValid$ Creature.leastPowerControlledByTriggeredDefendingPlayer
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Sacrifice

@@ -173,7 +173,8 @@ public class StaticAbility extends CardTraitBase implements IIdentifiable, Clone
             layers.add(isCharacteristicDefining() ? StaticAbilityLayer.CHARACTERISTIC :
                 StaticAbilityLayer.SETPT);
         }
-        if (hasParam("AddPower") || hasParam("AddToughness")) {
+        if (hasParam("AddPower") || hasParam("AddToughness")
+                || hasParam("AddPowerHalves") || hasParam("AddToughnessHalves")) {
             layers.add(StaticAbilityLayer.MODIFYPT);
         }
 

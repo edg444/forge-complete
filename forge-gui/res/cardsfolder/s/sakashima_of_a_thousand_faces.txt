@@ -3,7 +3,7 @@ ManaCost:3 U
 Types:Legendary Creature Human Rogue
 PT:3/1
 K:ETBReplacement:Copy:DBCopy:Optional
-SVar:DBCopy:DB$ Clone | Choices$ Creature.YouCtrl+Other | AddKeywords$ Partner | AddStaticAbilities$ NoLegendRule | SpellDescription$ You may have CARDNAME enter as a copy of another creature you control, except it has CARDNAME's other abilities.
+SVar:DBCopy:DB$ Clone | Choices$ Creature.YouCtrl+Other | AddKeywords$ Partner | AddStaticAbilities$ NoLegendRule | SpellDescription$ You may have NICKNAME enter as a copy of another creature you control, except it has NICKNAME's other abilities.
 SVar:NoLegendRule:Mode$ IgnoreLegendRule | ValidCard$ Permanent.YouCtrl | Description$ The "legend rule" doesn't apply to permanents you control.
 S:Mode$ IgnoreLegendRule | ValidCard$ Permanent.YouCtrl | Description$ The "legend rule" doesn't apply to permanents you control.
 K:Partner

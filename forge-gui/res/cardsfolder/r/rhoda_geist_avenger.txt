@@ -4,7 +4,7 @@ Types:Legendary Creature Human Soldier
 PT:3/3
 K:Partner with:Timin, Youthful Geist
 K:Vigilance
-T:Mode$ Taps | ValidCard$ Creature.OppCtrl | Attacker$ False | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ Whenever a creature an opponent controls becomes tapped, if it isn't being declared as an attacker, put a +1/+1 counter on CARDNAME.
+T:Mode$ Taps | ValidCard$ Creature.OppCtrl | Attacker$ False | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ Whenever a creature an opponent controls becomes tapped, if it isn't being declared as an attacker, put a +1/+1 counter on NICKNAME.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1
 DeckHints:Name$Timin, Youthful Geist
 DeckHas:Ability$Counters

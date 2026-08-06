@@ -23,6 +23,7 @@ import com.google.common.collect.Maps;
 import forge.*;
 import forge.CardStorageReader.ProgressObserver;
 import forge.ai.AiProfileUtil;
+import forge.card.CardFlavorText;
 import forge.card.CardRulesPredicates;
 import forge.card.CardType;
 import forge.deck.CardArchetypeLDAGenerator;
@@ -344,6 +345,10 @@ public final class FModel {
 
             CardType.Constant.LOADED.set();
         }
+
+        // handed over as a supplier rather than parsed here - only a few Unhinged cards ever read
+        // flavor text, so the 55k-entry table stays unbuilt unless one of them is actually played
+        CardFlavorText.setSource(() -> FileUtil.readFile(ForgeConstants.FLAVOR_TEXT_FILE));
 
         if (!keywordsLoaded) {
             final List<String> nskwListFile = FileUtil.readFile(ForgeConstants.KEYWORD_LIST_FILE);

@@ -11,6 +11,7 @@ import com.google.common.collect.Maps;
 import forge.game.ability.AbilityUtils;
 import forge.game.ability.SpellAbilityEffect;
 import forge.game.card.Card;
+import forge.game.card.CardFactoryUtil;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.util.Lang;
@@ -71,6 +72,19 @@ public class ChooseNumberEffect extends SpellAbilityEffect {
                 if (anyNumber) {
                     Integer value = p.getController().announceRequirements(sa, min, max, title);
                     chosen = value == null ? 0 : value;
+                } else if (sa.hasParam("TextBoxNumbersOf")) {
+                    // Pygmy Giant - X is a number in the sacrificed creature's text box, so the
+                    // choice is restricted to the numbers actually printed there
+                    for (final Card c : AbilityUtils.getDefinedCards(source, sa.getParam("TextBoxNumbersOf"), sa)) {
+                        for (final Integer n : CardFactoryUtil.getTextBoxNumbers(c)) {
+                            if (!choices.contains(n)) {
+                                choices.add(n);
+                            }
+                        }
+                    }
+                    // a text box with no number in it is worth nothing rather than being a no-op,
+                    // otherwise the previously chosen number would silently carry over
+                    chosen = choices.isEmpty() ? 0 : p.getController().chooseNumber(sa, title, choices, null);
                 } else if (sa.hasParam("RemoveChoices")) {
                     // currently we always remove remembered numbers, so the value is not really used yet
                     for (int i = min; i <= max; i++) {
@@ -96,6 +110,14 @@ public class ChooseNumberEffect extends SpellAbilityEffect {
             if (sa.hasParam("Notify")) {
                 p.getGame().getAction().notifyOfValue(sa, source, Localizer.getInstance().
                 getMessage("lblPlayerPickedChosen", p.getName(), chosen), p);
+            }
+            // the guesser picks from the same range the chooser had. Until now this list was only
+            // ever filled by the RemoveChoices branch above, so a Guesser without RemoveChoices
+            // silently never got to guess at all (Six-y Beast).
+            if (sa.hasParam("Guesser") && choices.isEmpty()) {
+                for (int i = min; i <= max; i++) {
+                    choices.add(i);
+                }
             }
             if (sa.hasParam("Guesser") && chosen != null) { // if nothing was chosen, there is nothing to guess
                 final FCollectionView<Player> gChoices = 

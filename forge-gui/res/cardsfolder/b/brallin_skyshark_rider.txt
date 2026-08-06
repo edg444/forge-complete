@@ -3,7 +3,7 @@ ManaCost:3 R
 Types:Legendary Creature Human Shaman
 PT:3/3
 K:Partner with:Shabraz, the Skyshark:Shabraz
-T:Mode$ Discarded | ValidCard$ Card.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ Whenever you discard a card, put a +1/+1 counter on CARDNAME and it deals 1 damage to each opponent.
+T:Mode$ Discarded | ValidCard$ Card.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ Whenever you discard a card, put a +1/+1 counter on NICKNAME and it deals 1 damage to each opponent.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1 | SubAbility$ DBDealDamage
 SVar:DBDealDamage:DB$ DealDamage | Defined$ Player.Opponent | NumDmg$ 1
 A:AB$ Pump | Cost$ R | ValidTgts$ Shark | TgtPrompt$ Select target Shark | KW$ Trample | SpellDescription$ Target Shark gains trample until end of turn.

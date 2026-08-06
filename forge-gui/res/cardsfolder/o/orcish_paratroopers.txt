@@ -1,0 +1,9 @@
+Name:Orcish Paratroopers
+ManaCost:2 R
+Types:Creature Orc Paratrooper
+PT:4/4
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDrop | TriggerDescription$ When this creature enters, flip it from a height of at least one foot. Sacrifice this creature unless it turns over completely at least once during the flip and lands face up.
+SVar:TrigDrop:DB$ RollDice | Defined$ You | Sides$ 2 | ResultSubAbilities$ 1:DBCrash,Else:DBLanded
+SVar:DBCrash:DB$ Sacrifice | Defined$ Self | NotifyMessage$ The drop went badly - Orcish Paratroopers is sacrificed.
+SVar:DBLanded:DB$ Cleanup | NotifyMessage$ A clean landing, face up - Orcish Paratroopers survives the drop.
+Oracle:When this creature enters, flip it from a height of at least one foot. Sacrifice this creature unless it turns over completely at least once during the flip and lands face up.

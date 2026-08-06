@@ -2,7 +2,7 @@ Name:Varchild, Betrayer of Kjeldor
 ManaCost:2 R
 Types:Legendary Creature Human Knight
 PT:3/3
-T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigToken | TriggerDescription$ Whenever CARDNAME deals combat damage to a player, that player creates that many 1/1 red Survivor creature tokens.
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigToken | TriggerDescription$ Whenever NICKNAME deals combat damage to a player, that player creates that many 1/1 red Survivor creature tokens.
 SVar:TrigToken:DB$ Token | TokenOwner$ TriggeredTarget | TokenAmount$ X | TokenScript$ r_1_1_survivor
 SVar:X:TriggerCount$DamageAmount
 S:Mode$ CantBlock | ValidCard$ Survivor.OppCtrl | Description$ Survivors your opponents control can't block.

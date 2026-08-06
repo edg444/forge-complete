@@ -152,6 +152,14 @@ public class AbilityManaPart implements java.io.Serializable {
      * @param sa
      *
      */
+    /** The colour of a produced half-mana token such as "HR", or 0 when this isn't one. */
+    private static byte halfColorProduced(final String token) {
+        if (token.length() != 2 || Character.toUpperCase(token.charAt(0)) != 'H') {
+            return 0;
+        }
+        return MagicColor.fromName(token.charAt(1));
+    }
+
     public final String produceMana(final String produced, final Player player, SpellAbility sa) {
         final Card source = this.getSourceCard();
         final ManaPool manaPool = player.getManaPool();
@@ -188,6 +196,17 @@ public class AbilityManaPart implements java.io.Serializable {
         for (final String c : afterReplace.split(" ")) {
             if (StringUtils.isNumeric(c)) {
                 this.lastManaProduced.add(manaHolder.computeIfAbsent((byte) ManaAtom.COLORLESS, b -> new Mana(b, source, this, player)), Integer.parseInt(c));
+            } else if (halfColorProduced(c) != 0) {
+                // Unhinged half mana (Mons's Goblin Waiters' {HR}). This has to be caught before the
+                // colour lookup below, which reads a two-character token as a pair of colours and so
+                // would quietly turn "HR" into a whole red. Two halves of a colour make a whole, so
+                // they are folded together on arrival rather than left stranded in the pool.
+                final byte half = halfColorProduced(c);
+                if (manaPool.payHalfManaExact(half)) {
+                    this.lastManaProduced.add(manaHolder.computeIfAbsent(half, b -> new Mana(b, source, this, player)));
+                } else {
+                    manaPool.addHalfMana(half);
+                }
             } else {
                 byte attemptedMana = MagicColor.fromName(c);
                 if (attemptedMana == 0) {

@@ -2,7 +2,7 @@ Name:Arixmethes, Slumbering Isle
 ManaCost:2 G U
 Types:Legendary Creature Kraken
 PT:12/12
-R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplaceWith$ LandTapped | ReplacementResult$ Updated | Description$ CARDNAME enters tapped with five slumber counters on it.
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplaceWith$ LandTapped | ReplacementResult$ Updated | Description$ NICKNAME enters tapped with five slumber counters on it.
 SVar:LandTapped:DB$ Tap | Defined$ Self | ETB$ True | SubAbility$ DBAddCounter
 SVar:DBAddCounter:DB$ PutCounter | Defined$ Self | ETB$ True | CounterType$ SLUMBER | CounterNum$ 5
 S:Mode$ Continuous | Affected$ Card.Self+counters_GE1_SLUMBER | AddType$ Land | RemoveCardTypes$ True | Description$ As long as NICKNAME has a slumber counter on it, it's a land. (It's not a creature.)

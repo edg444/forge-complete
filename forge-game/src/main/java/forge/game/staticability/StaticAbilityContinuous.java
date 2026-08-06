@@ -109,6 +109,7 @@ public final class StaticAbilityContinuous {
         int powerBonus = 0;
         String addT = "";
         int toughnessBonus = 0;
+        boolean halves = false;
         Integer setPowerHalves = null;
         Integer setToughnessHalves = null;
         String setP = "";
@@ -179,6 +180,18 @@ public final class StaticAbilityContinuous {
             if (params.containsKey("AddToughness")) {
                 addT = params.get("AddToughness");
                 toughnessBonus = AbilityUtils.calculateAmount(hostCard, addT, stAb, true);
+            }
+            // Assquatch's +1 1/2/+1 1/2 - the bonus is counted in halves and the card keeps the
+            // leftover half alongside the whole part, same split as SetPowerHalves above
+            if (params.containsKey("AddPowerHalves")) {
+                addP = params.get("AddPowerHalves");
+                powerBonus = AbilityUtils.calculateAmount(hostCard, addP, stAb, true);
+                halves = true;
+            }
+            if (params.containsKey("AddToughnessHalves")) {
+                addT = params.get("AddToughnessHalves");
+                toughnessBonus = AbilityUtils.calculateAmount(hostCard, addT, stAb, true);
+                halves = true;
             }
         }
 
@@ -730,7 +743,11 @@ public final class StaticAbilityContinuous {
                     powerBonus = -powerBonus;
                     toughnessBonus = -toughnessBonus;
                 }
-                affectedCard.addPTBoost(powerBonus, toughnessBonus, se.getTimestamp(), stAb.getId());
+                if (halves) {
+                    affectedCard.addPTBoostHalves(powerBonus, toughnessBonus, se.getTimestamp(), stAb.getId());
+                } else {
+                    affectedCard.addPTBoost(powerBonus, toughnessBonus, se.getTimestamp(), stAb.getId());
+                }
             }
 
             // add keywords

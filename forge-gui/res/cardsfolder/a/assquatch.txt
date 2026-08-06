@@ -1,0 +1,8 @@
+Name:Assquatch
+ManaCost:4 R
+Types:Creature Donkey
+PT:3.5/3.5
+S:Mode$ Continuous | Affected$ Donkey.Other | AddPowerHalves$ 3 | AddToughnessHalves$ 3 | Description$ Each other Donkey gets +1½/+1½.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Donkey.Other | TriggerZones$ Battlefield | Execute$ TrigControl | TriggerDescription$ Whenever another Donkey enters, untap target creature and gain control of it until end of turn. That creature gains haste until end of turn.
+SVar:TrigControl:DB$ GainControl | ValidTgts$ Creature | LoseControl$ EOT | Untap$ True | AddKWs$ Haste
+Oracle:Each other Donkey gets +1½/+1½.\nWhenever another Donkey enters, untap target creature and gain control of it until end of turn. That creature gains haste until end of turn.

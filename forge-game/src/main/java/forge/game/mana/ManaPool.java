@@ -61,9 +61,11 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
         return ofColor == null ? 0 : ofColor.size();
     }
 
-    // Unhinged half mana. Half mana can't be produced by any effect - it only ever appears as the
-    // change from paying a whole mana into a half cost (Cheap Ass reducing {2} to {1 1/2}), and it
-    // stays in the pool so it can pay another half cost later, e.g. Little Girl's {HW}.
+    // Unhinged half mana. A half reaches the pool either as change from paying a whole mana into a
+    // half cost (Cheap Ass reducing {2} to {1 1/2}) or produced outright by Mons's Goblin Waiters,
+    // and it stays there so it can pay a half cost later, e.g. Little Girl's {HW}. Two halves of a
+    // colour are folded into a whole mana as they meet, so they aren't stranded - see
+    // AbilityManaPart.produceMana.
     private final Map<Byte, Integer> floatingHalves = Maps.newHashMap();
 
     public final int getHalfMana(final byte color) {
@@ -72,9 +74,22 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
     public final boolean hasHalfMana() {
         return floatingHalves.values().stream().anyMatch(i -> i > 0);
     }
+    /** Total floating halves across all colours, for mana burn. */
+    public final int totalHalfMana() {
+        return floatingHalves.values().stream().mapToInt(Integer::intValue).sum();
+    }
     public final void addHalfMana(final byte color) {
         floatingHalves.merge(color, 1, Integer::sum);
+        halfManaChanged(color, EventValueChangeType.Added);
+    }
+
+    // updateManaForView alone only refreshes the tracked value - the pool display repaints on the
+    // GameEventManaPool event, so without this a lone floating half stayed invisible until a second
+    // one merged into a whole mana and addMana fired the event for it
+    private void halfManaChanged(final byte color, final EventValueChangeType change) {
         owner.updateManaForView();
+        owner.getGame().fireEvent(new GameEventManaPool(owner, change,
+                EnumSet.of(MagicColor.Color.fromByte(color))));
     }
 
     /**
@@ -86,11 +101,25 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
         for (Map.Entry<Byte, Integer> e : floatingHalves.entrySet()) {
             if (e.getValue() > 0 && (e.getKey() == 0 || (e.getKey() & colorMask) != 0)) {
                 e.setValue(e.getValue() - 1);
-                owner.updateManaForView();
+                halfManaChanged(e.getKey(), EventValueChangeType.Removed);
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Spend a floating half of exactly this colour, unlike {@link #payHalfMana} which also accepts a
+     * colourless half against any mask.
+     */
+    public final boolean payHalfManaExact(final byte color) {
+        final int n = floatingHalves.getOrDefault(color, 0);
+        if (n <= 0) {
+            return false;
+        }
+        floatingHalves.put(color, n - 1);
+        halfManaChanged(color, EventValueChangeType.Removed);
+        return true;
     }
 
     public final void clearHalfMana() {

@@ -1,0 +1,6 @@
+Name:Mons's Goblin Waiters
+ManaCost:R
+Types:Creature Goblin Waiter
+PT:1/1
+A:AB$ Mana | Cost$ Sac<1/Creature;Land/a creature or land> | Produced$ HR | SpellDescription$ Add {HR}.
+Oracle:Sacrifice a creature or land: Add {HR}.

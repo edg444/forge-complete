@@ -3,7 +3,7 @@ ManaCost:3 B
 Types:Legendary Creature Vampire Warlock
 PT:3/3
 K:Menace
-T:Mode$ LifeGained | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ Whenever you gain life, put a feeding counter on CARDNAME.
+T:Mode$ LifeGained | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ Whenever you gain life, put a feeding counter on NICKNAME.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ FEEDING | CounterNum$ 1
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ Whenever NICKNAME attacks, you may remove three feeding counters from it. If you do, you draw three cards and you lose 3 life.
 SVar:TrigDraw:AB$ Draw | Cost$ SubCounter<3/FEEDING> | Defined$ You | NumCards$ 3 | SubAbility$ DBLoseLife

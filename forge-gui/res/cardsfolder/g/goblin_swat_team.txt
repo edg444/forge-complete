@@ -1,0 +1,6 @@
+Name:Goblin S.W.A.T. Team
+ManaCost:3 R
+Types:Creature Goblin Warrior
+PT:2/2
+A:AB$ PutCounter | Cost$ FlavorAction<Say "Goblin S.W.A.T. Team" out loud/Say it!> | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1 | UnlessPayer$ Opponent | UnlessCost$ FlavorAction<Swat the table within five seconds/Swat!> | UnlessAI$ Chance.50 | ActivationLimit$ 1 | SpellDescription$ Put a +1/+1 counter on this creature unless an opponent swats the table within five seconds. Activate only once each turn.
+Oracle:Say "Goblin S.W.A.T. Team": Put a +1/+1 counter on this creature unless an opponent swats the table within five seconds. Activate only once each turn.
