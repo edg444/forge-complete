@@ -68,12 +68,19 @@ public class CPicture implements ICDoc {
      *
      */
     void showCard(final CardView c, final boolean isInAltState, final boolean mayView, final boolean mayFlip) {
-        final CardStateView toShow = c != null && mayView ? c.getState(isInAltState) : null;
+        // a rotate-only card has no alternate state to ask for - the toggle only spins the art
+        final boolean rotateOnly = c != null && c.isRotate180();
+        final boolean altState = isInAltState && !rotateOnly;
+        final CardStateView toShow = c != null && mayView ? c.getState(altState) : null;
         // even when the face is hidden, the picture panel still needs the card to show the owner's sleeve
-        final CardStateView forPicture = c != null ? c.getState(isInAltState) : null;
+        final CardStateView forPicture = c != null ? c.getState(altState) : null;
         boolean displayFlipped = c != null && c.isFlipped();
         if (c != null && c.isFlipCard() && isInAltState) {
             displayFlipped = !displayFlipped;
+        }
+        if (rotateOnly) {
+            // upright for these IS 180; toggling shows the art as physically printed
+            displayFlipped = !isInAltState;
         }
         flipIndicator.setVisible(toShow != null && mayFlip);
         picturePanel.setCard(forPicture, mayView, displayFlipped);

@@ -54,6 +54,7 @@ public final class CardRules implements ICardCharacteristics {
     private int setColorID;
     private boolean custom;
     private boolean unsupported;
+    private boolean rotate180;
     private Map<Integer, String> placeholderFaces;
     private String path;
 
@@ -94,6 +95,7 @@ public final class CardRules implements ICardCharacteristics {
         aiHints = newRules.aiHints;
         colorIdentity = newRules.colorIdentity;
         meldWith = newRules.meldWith;
+        rotate180 = newRules.rotate180;
         partnerWith = newRules.partnerWith;
         setColorID = newRules.setColorID;
         tokens = newRules.tokens;
@@ -104,6 +106,9 @@ public final class CardRules implements ICardCharacteristics {
 
         if (rules.otherPart != null) {
             colMask |= calculateColorIdentity(rules.otherPart);
+        }
+        for (final ICardFace extra : rules.getExtraSplitFaces()) {
+            colMask |= calculateColorIdentity(extra);
         }
         return ColorSet.fromMask(colMask);
     }
@@ -177,6 +182,17 @@ public final class CardRules implements ICardCharacteristics {
         return allFaces;
     }
 
+    /**
+     * Split faces past the usual two (Who // What // When // Where // Why). Empty for every other
+     * card, so the ordinary two-face path is untouched.
+     */
+    public List<ICardFace> getExtraSplitFaces() {
+        if (splitType != CardSplitType.Split || allFaces.size() <= 2) {
+            return java.util.Collections.emptyList();
+        }
+        return allFaces.subList(2, allFaces.size());
+    }
+
     public boolean isTransformable() {
         return CardSplitType.Transform == getSplitType() || CardSplitType.Modal == getSplitType();
     }
@@ -200,7 +216,11 @@ public final class CardRules implements ICardCharacteristics {
     public String getName() {
         switch (splitType.getAggregationMethod()) {
             case COMBINE:
-                return mainPart.getName() + " // " + otherPart.getName();
+                final StringBuilder combinedName = new StringBuilder(mainPart.getName()).append(" // ").append(otherPart.getName());
+                for (final ICardFace extra : getExtraSplitFaces()) {
+                    combinedName.append(" // ").append(extra.getName());
+                }
+                return combinedName.toString();
             default:
                 return mainPart.getName();
         }
@@ -246,7 +266,11 @@ public final class CardRules implements ICardCharacteristics {
                 if (otherPart == null) {
                     return mainPart.getType();
                 }
-                return CardType.combine(mainPart.getType(), otherPart.getType());
+                CardType combinedType = CardType.combine(mainPart.getType(), otherPart.getType());
+                for (final ICardFace extra : getExtraSplitFaces()) {
+                    combinedType = CardType.combine(combinedType, extra.getType());
+                }
+                return combinedType;
             default:
                 return mainPart.getType();
         }
@@ -256,7 +280,11 @@ public final class CardRules implements ICardCharacteristics {
     public ManaCost getManaCost() {
         switch (splitType.getAggregationMethod()) {
             case COMBINE:
-                return ManaCost.combine(mainPart.getManaCost(), otherPart.getManaCost());
+                ManaCost combinedCost = ManaCost.combine(mainPart.getManaCost(), otherPart.getManaCost());
+                for (final ICardFace extra : getExtraSplitFaces()) {
+                    combinedCost = ManaCost.combine(combinedCost, extra.getManaCost());
+                }
+                return combinedCost;
             default:
                 return mainPart.getManaCost();
         }
@@ -266,7 +294,11 @@ public final class CardRules implements ICardCharacteristics {
     public ColorSet getColor() {
         switch (splitType.getAggregationMethod()) {
             case COMBINE:
-                return ColorSet.combine(mainPart.getColor(), otherPart.getColor());
+                ColorSet combinedColor = ColorSet.combine(mainPart.getColor(), otherPart.getColor());
+                for (final ICardFace extra : getExtraSplitFaces()) {
+                    combinedColor = ColorSet.combine(combinedColor, extra.getColor());
+                }
+                return combinedColor;
             default:
                 return mainPart.getColor();
         }
@@ -437,6 +469,14 @@ public final class CardRules implements ICardCharacteristics {
         return meldWith;
     }
 
+    /**
+     * Printed upside down relative to the card it shares a face with, so its art has to be drawn
+     * rotated to be readable (the WOE Role tokens share one physical token card, two Roles per face).
+     */
+    public boolean isRotate180() {
+        return rotate180;
+    }
+
     public String getPartnerWith() {
         return partnerWith;
     }
@@ -576,6 +616,7 @@ public final class CardRules implements ICardCharacteristics {
         private int curFace = 0;
         private CardSplitType altMode = CardSplitType.None;
         private String meldWith = "";
+        private boolean rotate180 = false;
         private String partnerWith = "";
         private String partnerType = "";
         private int setColorID = 0;
@@ -618,6 +659,7 @@ public final class CardRules implements ICardCharacteristics {
             this.hints = null;
             this.has = null;
             this.meldWith = "";
+            this.rotate180 = false;
             this.partnerWith = "";
             this.partnerType = "";
             this.normalizedName = "";
@@ -645,6 +687,7 @@ public final class CardRules implements ICardCharacteristics {
 
             result.normalizedName = this.normalizedName;
             result.meldWith = this.meldWith;
+            result.rotate180 = this.rotate180;
             result.partnerWith = this.partnerWith;
             result.partnerType = this.partnerType;
             result.setColorID = this.setColorID;
@@ -717,7 +760,12 @@ public final class CardRules implements ICardCharacteristics {
                     } else if ("AlternateMode".equals(key)) {
                         this.altMode = CardSplitType.smartValueOf(value);
                     } else if ("ALTERNATE".equals(key)) {
-                        this.curFace = 1;
+                        // advance rather than always land on face 1, so a card can declare more than
+                        // two faces (Who // What // When // Where // Why). Every other card in the
+                        // pool has exactly one ALTERNATE, which still goes 0 -> 1 as before.
+                        if (this.curFace + 1 < this.faces.length) {
+                            this.curFace++;
+                        }
                     }
                     break;
 
@@ -809,6 +857,8 @@ public final class CardRules implements ICardCharacteristics {
                 case 'R':
                     if ("R".equals(key)) {
                         face.addReplacementEffect(value);
+                    } else if ("Rotate180".equals(key)) {
+                        this.rotate180 = "True".equalsIgnoreCase(value);
                     }
                     break;
 

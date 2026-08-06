@@ -290,6 +290,12 @@ public abstract class AbstractGuiGame implements IGuiGame, IMayViewCards {
             return false;
         }
 
+        // display-only rotation (WOE Role tokens): no alternate state exists, but the art still needs
+        // a control to turn it the other way up
+        if (cv.isRotate180()) {
+            return true;
+        }
+
         final CardStateView altState = cv.getAlternateState();
         if (altState == null) {
             return false;

@@ -25,6 +25,7 @@ import forge.game.GameEntity;
 import forge.game.ability.AbilityKey;
 import forge.game.ability.AbilityUtils;
 import forge.game.ability.ApiType;
+import org.apache.commons.lang3.StringUtils;
 import forge.game.card.*;
 import forge.game.combat.AttackingBand;
 import forge.game.combat.Combat;
@@ -1215,11 +1216,16 @@ public class ComputerUtilCombat {
                 continue; // targeted pumping not supported
             }
 
-            if (!ApiType.Pump.equals(sa.getApi()) && !ApiType.PumpAll.equals(sa.getApi())) {
+            // Animate counts too: an attack trigger that turns the attacker into a 4/4 (Shadow
+            // Puppeteers) raises its damage exactly like a pump would, but SETS base power instead of
+            // adding to it, so a NumAtt-only check never saw it and a 1/1 flier was still predicted
+            // to hit for 1.
+            final boolean isAnimate = ApiType.Animate.equals(sa.getApi());
+            if (!isAnimate && !ApiType.Pump.equals(sa.getApi()) && !ApiType.PumpAll.equals(sa.getApi())) {
                 continue;
             }
 
-            if (!sa.hasParam("NumAtt")) {
+            if (isAnimate ? !sa.hasParam("Power") : !sa.hasParam("NumAtt")) {
                 continue;
             }
 
@@ -1245,6 +1251,19 @@ public class ComputerUtilCombat {
                 list.add(attacker);
             }
             if (!list.contains(attacker)) {
+                continue;
+            }
+
+            if (isAnimate) {
+                final String setPower = sa.getParam("Power");
+                if (StringUtils.isNumeric(setPower)) {
+                    final int delta = Integer.parseInt(setPower) - attacker.getNetPower();
+                    // an optional animate is only taken when it helps the attacker, so a drop in
+                    // power is one the opponent would simply decline
+                    if (delta > 0 || !sa.hasParam("Optional")) {
+                        power += delta;
+                    }
+                }
                 continue;
             }
 

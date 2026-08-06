@@ -42,6 +42,7 @@ import org.apache.commons.lang3.Range;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.time.LocalTime;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.Predicate;
@@ -1424,12 +1425,26 @@ public class AbilityUtils {
         if (sa.metConditions()) {
             if (sa.isWrapper() || StringUtils.isBlank(sa.getParam("UnlessCost"))) {
                 sa.resolve();
+                notifyMessage(sa, game);
             } else {
                 handleUnlessCost(sa, game);
                 return;
             }
         }
         resolveSubAbilities(sa, game);
+    }
+
+    /**
+     * Pops up an ability's NotifyMessage once it has resolved. This used to live inside RollDiceEffect
+     * and so only worked for a roll's result branches - anywhere else (a plain DB$ Cleanup, say) the
+     * parameter was silently ignored.
+     */
+    private static void notifyMessage(final SpellAbility sa, final Game game) {
+        if (!sa.hasParam("NotifyMessage")) {
+            return;
+        }
+        final Player p = sa.getActivatingPlayer();
+        game.getAction().notifyOfValue(sa, p, sa.getParam("NotifyMessage"), null);
     }
 
     private static void handleUnlessCost(final SpellAbility sa, final Game game) {
@@ -1466,6 +1481,13 @@ public class AbilityUtils {
 
         if (alreadyPaid == isSwitched) {
             sa.resolve();
+        }
+
+        // UnlessResolveSubs gates the one SubAbility chain, so a card that wants something to happen
+        // in BOTH branches has no way to say so. This gives the paid branch its own ability, which
+        // is what lets Goblin S.W.A.T. Team report the swat as well as the failure to swat.
+        if (alreadyPaid && sa.hasAdditionalAbility("UnlessPaidSubAbility")) {
+            resolve(sa.getAdditionalAbility("UnlessPaidSubAbility"));
         }
 
         if (alreadyPaid && execSubsWhenPaid || !alreadyPaid && execSubsWhenNotPaid) { // switched refers only to main ability!
@@ -2143,6 +2165,23 @@ public class AbilityUtils {
         // Punctuate halves this, so the raw count is what the halves-aware damage wants
         if (sq[0].equals("CardPunctuationMarks")) {
             return doXMath(CardFactoryUtil.getPunctuationMarkCount(c), expr, c, ctb);
+        }
+        // Elvish House Party reads the real-world clock. Twelve-hour system, so midnight and noon
+        // are 12 rather than 0 - the card is never a 0/0 and never dies to the clock alone.
+        if (sq[0].equals("CurrentHour")) {
+            final int hour = LocalTime.now().getHour() % 12;
+            return doXMath(hour == 0 ? 12 : hour, expr, c, ctb);
+        }
+        if (sq[0].equals("DifferentExpansionSymbols")) {
+            return doXMath(CardFactoryUtil.getDifferentExpansionSymbols(c.getController()), expr, c, ctb);
+        }
+        // S.N.O.T. - how many physical cards are stuck together to make this one creature. A card
+        // that has never merged counts as the one card it is, so a lone S.N.O.T. is a 1/1.
+        if (sq[0].equals("MergedCount")) {
+            return doXMath(c.hasMergedCard() ? c.getMergedCards().size() : 1, expr, c, ctb);
+        }
+        if (sq[0].equals("CardBingoLines")) {
+            return doXMath(CardFactoryUtil.getBingoLineCount(c), expr, c, ctb);
         }
         if (sq[0].equals("CardBasePower")) {
             return doXMath(c.getCurrentPower(), expr, c, ctb);

@@ -21,6 +21,23 @@ import java.util.Map;
 public class ChooseCardAi extends SpellAbilityAi {
 
     /**
+     * Whether a prevention effect from this same source is already waiting on that attacker. The
+     * effect sits in the command zone naming the source it came from and carrying the creature it
+     * was pointed at as its chosen card.
+     */
+    private static boolean alreadyShielded(final Player ai, final Card source, final Card attacker) {
+        for (final Card eff : ai.getCardsIn(ZoneType.Command)) {
+            if (eff.getEffectSource() == null || !eff.getEffectSource().equals(source)) {
+                continue;
+            }
+            if (eff.hasChosenCard() && eff.getChosenCards().contains(attacker)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * The rest of the logic not covered by the canPlayAI template is defined here
      */
     @Override
@@ -78,6 +95,12 @@ public class ChooseCardAi extends SpellAbilityAi {
             final Combat combat = game.getCombat();
             choices = CardLists.filter(choices, c -> {
                 if (!combat.isAttacking(c, ai) || !combat.isUnblocked(c)) {
+                    return false;
+                }
+                // One shield already covers this attacker - Forcefield prevents all but 1 damage, and
+                // its effect is NonStacking anyway - so re-activating for the same creature does
+                // nothing. Without this the AI kept paying until it ran out of mana.
+                if (alreadyShielded(ai, host, c)) {
                     return false;
                 }
                 int ref = ComputerUtilAbility.getAbilitySourceName(sa).equals("Forcefield") ? 1 : 0;

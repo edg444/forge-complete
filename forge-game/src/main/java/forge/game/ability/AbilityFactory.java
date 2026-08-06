@@ -57,6 +57,7 @@ public final class AbilityFactory {
             "RepeatSubAbility", // Repeat & RepeatEach
             "Execute", // DelayedTrigger
             "FallbackAbility", // Complex Unless costs which can be unpayable
+            "UnlessPaidSubAbility", // runs when an Unless cost WAS paid, alongside UnlessResolveSubs
             "ChooseSubAbility", // Can choose a player via ChoosePlayer
             "CantChooseSubAbility", // Can't choose a player via ChoosePlayer
             "RegenerationAbility", // for Regeneration Effect

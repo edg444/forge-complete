@@ -263,10 +263,13 @@ public class CardCopyService {
             newCopy.getState(CardStateName.PreparedSpell).copyFrom(copyFrom.getState(CardStateName.PreparedSpell), true);
         } else if (copyFrom.isSplitCard()) {
             newCopy.getState(CardStateName.Original).copyFrom(copyFrom.getState(CardStateName.Original), true);
-            newCopy.addAlternateState(CardStateName.LeftSplit, false);
-            newCopy.getState(CardStateName.LeftSplit).copyFrom(copyFrom.getState(CardStateName.LeftSplit), true);
-            newCopy.addAlternateState(CardStateName.RightSplit, false);
-            newCopy.getState(CardStateName.RightSplit).copyFrom(copyFrom.getState(CardStateName.RightSplit), true);
+            for (final CardStateName splitName : CardStateName.SPLIT_STATES) {
+                if (!copyFrom.hasState(splitName)) {
+                    continue;
+                }
+                newCopy.addAlternateState(splitName, false);
+                newCopy.getState(splitName).copyFrom(copyFrom.getState(splitName), true);
+            }
         } else {
             newCopy.getCurrentState().copyFrom(copyFrom.getState(copyFrom.getFaceupCardStateName()), true);
         }

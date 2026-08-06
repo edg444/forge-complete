@@ -203,6 +203,9 @@ public enum StaticAbilityMode {
 
     // StaticAbilityCountersRemain
     CountersRemain,
+
+    // StaticAbilityTopLibraryOnBattlefield
+    TopLibraryPermanentsOnBattlefield,
     ;
 
     public static StaticAbilityMode smartValueOf(final String value) {

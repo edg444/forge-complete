@@ -307,6 +307,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     private String originalText = "", text = "";
     private String chosenType = "";
+    private String chosenTypeKind = "";
     private String chosenType2 = "";
     private String chosenArtist = "";
     private List<String> notedTypes = new ArrayList<>();
@@ -346,6 +347,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     // Zone-changing spells should store card's zone here
     private Zone currentZone;
+    private Zone shadowZone;
 
     // LKI copies of cards are allowed to store the LKI about the zone the card was known to be in last.
     // For all cards except LKI copies this should always be null.
@@ -1113,6 +1115,16 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         }
         // in case or clones or copies
         return hasState(CardStateName.LeftSplit);
+    }
+
+    /** True if any split face exists. Only Who // What // When // Where // Why has more than two. */
+    public final boolean hasAnySplitState() {
+        for (final CardStateName splitName : CardStateName.SPLIT_STATES) {
+            if (hasState(splitName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public final boolean isAdventureCard() {
@@ -2074,11 +2086,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public void calculatePerpetualAdjustedManaCost() {
         currentState.calculatePerpetualAdjustedManaCost();
         if (isSplitCard()) {
-            if (currentState.getCard().getState(CardStateName.LeftSplit) != null) {
-                currentState.getCard().getState(CardStateName.LeftSplit).calculatePerpetualAdjustedManaCost();
-            }
-            if (currentState.getCard().getState(CardStateName.RightSplit) != null) {
-                currentState.getCard().getState(CardStateName.RightSplit).calculatePerpetualAdjustedManaCost();
+            for (final CardStateName splitName : CardStateName.SPLIT_STATES) {
+                if (currentState.getCard().getState(splitName) != null) {
+                    currentState.getCard().getState(splitName).calculatePerpetualAdjustedManaCost();
+                }
             }
         }
     }
@@ -2187,6 +2198,14 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     public final String getChosenType() {
         return chosenType;
+    }
+    /** What kind of thing was chosen ("word", "letter", "Creature", ...), so the detail panel can name it. */
+    public final String getChosenTypeKind() {
+        return chosenTypeKind;
+    }
+    public final void setChosenTypeKind(final String s) {
+        chosenTypeKind = s;
+        view.updateChosenType(this);
     }
     public final void setChosenType(final String s) {
         chosenType = s;
@@ -5390,11 +5409,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         // Layer 1
         keywords.insertAll(state.getIntrinsicKeywords());
         if (state.getStateName().equals(CardStateName.Original)) {
-            if (hasState(CardStateName.LeftSplit)) {
-                keywords.insertAll(getState(CardStateName.LeftSplit).getIntrinsicKeywords());
-            }
-            if (hasState(CardStateName.RightSplit)) {
-                keywords.insertAll(getState(CardStateName.RightSplit).getIntrinsicKeywords());
+            for (final CardStateName splitName : CardStateName.SPLIT_STATES) {
+                if (hasState(splitName)) {
+                    keywords.insertAll(getState(splitName).getIntrinsicKeywords());
+                }
             }
         }
 
@@ -6072,11 +6090,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                    shares |= name.equals(door);
                }
             } else { // not on the battlefield
-                if (hasState(CardStateName.LeftSplit)) {
-                    shares |= name.equals(getState(CardStateName.LeftSplit).getName());
-                }
-                if (hasState(CardStateName.RightSplit)) {
-                    shares |= name.equals(getState(CardStateName.RightSplit).getName());
+                for (final CardStateName splitName : CardStateName.SPLIT_STATES) {
+                    if (hasState(splitName)) {
+                        shares |= name.equals(getState(splitName).getName());
+                    }
                 }
             }
             // TODO does it need extra check for stack?
@@ -7014,6 +7031,17 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public Zone getZone() {
         return currentZone;
     }
+
+    // Yet Another Aether Vortex: while this is set the card occupies its owner's library as well as
+    // the battlefield. The battlefield stays the primary zone, so everything that asks getZone()
+    // keeps seeing a permanent; the library merely still lists it so its size and top card are right.
+    public Zone getShadowZone() {
+        return shadowZone;
+    }
+    public void setShadowZone(Zone zone) {
+        shadowZone = zone;
+    }
+
     public void setZone(Zone zone) {
         if (currentZone == zone) { return; }
         currentZone = zone;

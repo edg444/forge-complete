@@ -166,6 +166,7 @@ public enum ApiType {
     RearrangeTopOfLibrary (RearrangeTopOfLibraryEffect.class),
     Regenerate (RegenerateEffect.class),
     Regeneration (RegenerationEffect.class),
+    RememberNumber (RememberNumberEffect.class),
     RemoveCounter (CountersRemoveEffect.class),
     RemoveCounterAll (CountersRemoveAllEffect.class),
     RemoveFromCombat (RemoveFromCombatEffect.class),

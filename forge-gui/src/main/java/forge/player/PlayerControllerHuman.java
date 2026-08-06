@@ -3455,6 +3455,22 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
                 boolean askPrompts = !repeatLast;
                 for (int q = 0; q < quantity; q++) {
                     PaperCard c = chosenPrinting != null ? chosenPrinting : carddb.getUniqueByName(f.displayName());
+                    if (c == null) {
+                        // getUniqueByName resolves through flavor names and unique-by-rules, and
+                        // returns null when neither hits; fall back to the face's real name and then
+                        // to any printing at all rather than NPEing on fromPaperCard below.
+                        c = carddb.getUniqueByName(f.getName());
+                    }
+                    if (c == null) {
+                        final List<PaperCard> anyPrint = carddb.getAllCards(f.getName());
+                        c = anyPrint == null || anyPrint.isEmpty() ? null : anyPrint.get(0);
+                    }
+                    if (c == null) {
+                        System.out.println("[DEVADD] could not resolve a printing for name='" + f.getName()
+                                + "' displayName='" + f.displayName() + "'");
+                        getGui().message("Dev mode could not find a printing for " + f.getName() + ".");
+                        return;
+                    }
                     final Card forgeCard = Card.fromPaperCard(c, p);
                     forgeCard.setGameTimestamp(getGame().getNextTimestamp());
 

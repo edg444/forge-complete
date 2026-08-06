@@ -229,6 +229,10 @@ public enum CardZoomer {
         if (thisCard == null) {
             return 0;
         }
+        // printed inverted on a shared token card, so upright IS 180; toggling shows it as printed
+        if (thisCard.getCard().isRotate180()) {
+            return isInAltState ? 0 : 180;
+        }
         if (thisCard.getCard().isSplitCard()) {
             String cardName = thisCard.getCard().getOracleName();
             if (cardName.isEmpty()) { cardName = thisCard.getCard().getAlternateState().getOracleName(); }
@@ -310,6 +314,12 @@ public enum CardZoomer {
      * Can simply rotate current card image in situ to get same effect.
      */
     private void toggleFlipCard() {
+        // a rotate-only card has no alternate state to switch to - just spin the panel
+        if (thisCard != null && thisCard.getCard().isRotate180()) {
+            isInAltState = !isInAltState;
+            imagePanel.setRotation(isInAltState ? 0 : 180);
+            return;
+        }
         try { //prevent NPE trying to view card without alternate
             isInAltState = !isInAltState;
             thisCard = thisCard.getCard().getState(isInAltState);

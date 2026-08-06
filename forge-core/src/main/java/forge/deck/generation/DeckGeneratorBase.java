@@ -26,6 +26,7 @@ import forge.deck.DeckFormat;
 import forge.item.PaperCard;
 import forge.item.PaperCardPredicates;
 import forge.util.*;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.util.*;
@@ -99,6 +100,127 @@ public abstract class DeckGeneratorBase {
         addCmcAdjusted(spells, spellCnt, cmcLevels);
 
         trace.append(String.format("Current deck size: %d... should be %f%n", tDeck.countAll(), size * (getCreaturePercentage() + getSpellPercentage())));
+
+        reinforceTypalPayoffs(size, forAi);
+    }
+
+    /**
+     * A random pile is fine, a random pile with a Zombie lord and no other Zombies is not. Find the
+     * creature type this deck's card text actually cares about and, if the deck is short on bodies of
+     * that type, trade some filler for them. Only the single strongest theme is reinforced, so a
+     * multicolour pile stays a pile rather than turning into three half-tribes.
+     */
+    protected void reinforceTypalPayoffs(int size, boolean forAi) {
+        final Map<String, Integer> payoffWeight = new HashMap<>();
+        final Set<String> payoffNames = new HashSet<>();
+        for (Entry<PaperCard, Integer> e : tDeck) {
+            for (String type : referencedCreatureTypes(e.getKey())) {
+                increment(payoffWeight, type, e.getValue());
+                payoffNames.add(e.getKey().getName());
+            }
+        }
+        if (payoffWeight.isEmpty()) {
+            return;
+        }
+
+        String theme = null;
+        int best = 0;
+        for (Entry<String, Integer> e : payoffWeight.entrySet()) {
+            if (e.getValue() > best) {
+                best = e.getValue();
+                theme = e.getKey();
+            }
+        }
+
+        int have = 0;
+        for (Entry<PaperCard, Integer> e : tDeck) {
+            if (e.getKey().getRules().getType().hasCreatureType(theme)) {
+                have += e.getValue();
+            }
+        }
+
+        // roughly a tenth of the deck, so 60-card decks aim for six bodies
+        final int want = Math.max(4, size / 10);
+        if (have >= want) {
+            return;
+        }
+
+        final String wanted = theme;
+        final List<PaperCard> candidates = Lists.newArrayList(IterableUtil.filter(
+                selectCardsOfMatchingColorForPlayer(forAi),
+                c -> c.getRules().getType().isCreature() && c.getRules().getType().hasCreatureType(wanted)
+                        && !c.getRules().getType().hasAllCreatureTypes()));
+        if (candidates.isEmpty()) {
+            return;
+        }
+
+        trace.append("Reinforcing ").append(wanted).append(": have ").append(have)
+                .append(", want ").append(want).append("\n");
+
+        int added = 0;
+        for (int attempt = 0; added < want - have && attempt < candidates.size() * 4; attempt++) {
+            final PaperCard cp = candidates.get(MyRandom.getRandom().nextInt(candidates.size()));
+            if (!addOneCopy(cp) || !removeOneFiller(payoffNames, wanted)) {
+                continue;
+            }
+            added++;
+        }
+        trace.append("Reinforced with ").append(added).append(" ").append(wanted).append("(s)\n");
+    }
+
+    /** Creature types this card's rules text singles out, ignoring its own type line and name. */
+    private static Set<String> referencedCreatureTypes(PaperCard card) {
+        final CardRules rules = card.getRules();
+        String text = rules.getOracleText();
+        if (StringUtils.isBlank(text)) {
+            return Collections.emptySet();
+        }
+        // the card's own name would otherwise read as a reference ("Zombie Master" mentioning Zombie)
+        text = text.replace(card.getName(), "");
+
+        final Set<String> found = new HashSet<>();
+        final Matcher m = TYPE_WORD.matcher(text);
+        while (m.find()) {
+            String word = m.group(1);
+            if (!CardType.isACreatureType(word) && word.endsWith("s")) {
+                word = word.substring(0, word.length() - 1);
+            }
+            if (CardType.isACreatureType(word) && !rules.getType().hasAllCreatureTypes()) {
+                found.add(word);
+            }
+        }
+        return found;
+    }
+
+    private static final Pattern TYPE_WORD = Pattern.compile("\\b([A-Z][a-z]+)\\b");
+
+    private boolean addOneCopy(PaperCard cp) {
+        final int newCount = cardCounts.getOrDefault(cp.getName(), 0) + 1;
+        if (newCount > maxDuplicates) {
+            return false;
+        }
+        tDeck.add(pool.getCard(cp.getName(), cp.getEdition()));
+        cardCounts.put(cp.getName(), newCount);
+        return true;
+    }
+
+    /** Drop one random card that is neither a land, a payoff, nor part of the theme we're building. */
+    private boolean removeOneFiller(Set<String> payoffNames, String theme) {
+        final List<PaperCard> candidates = Lists.newArrayList();
+        for (PaperCard c : tDeck.toFlatList()) {
+            if (c.getRules().getType().isLand() || payoffNames.contains(c.getName())
+                    || c.getRules().getType().hasCreatureType(theme)) {
+                continue;
+            }
+            candidates.add(c);
+        }
+        if (candidates.isEmpty()) {
+            return false;
+        }
+        final PaperCard victim = candidates.get(MyRandom.getRandom().nextInt(candidates.size()));
+        tDeck.remove(victim);
+        cardCounts.computeIfPresent(victim.getName(), (k, v) -> v - 1);
+        return true;
     }
 
     public CardPool getDeck(final int size, final boolean forAi) {

@@ -136,12 +136,24 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
                 } else if (sa.hasParam("FreeInput") && !p.getController().isAI()) {
                     // Tainted Monkey lets a player name any word at all; ValidTypes stays as the
                     // vocabulary the AI picks from, since it can't invent one
-                    choice = p.getController().guessString(sa, sa.hasParam("ChoiceTitle")
-                            ? sa.getParam("ChoiceTitle") : type);
-                    if (choice == null || choice.trim().isEmpty()) {
+                    final String title = sa.hasParam("ChoiceTitle") ? sa.getParam("ChoiceTitle") : type;
+                    // Meddling Kids needs "four or more letters", so a short word is re-asked rather
+                    // than silently accepted. Bounded so a stubborn answer can't hang the game.
+                    final int minLetters = Integer.parseInt(sa.getParamOrDefault("MinLetters", "0"));
+                    choice = null;
+                    for (int attempt = 0; attempt < 10; attempt++) {
+                        final String entered = p.getController().guessString(sa, title);
+                        if (entered == null || entered.trim().isEmpty()) {
+                            break;
+                        }
+                        if (countLetters(entered) >= minLetters) {
+                            choice = entered.trim();
+                            break;
+                        }
+                    }
+                    if (choice == null) {
                         continue;
                     }
-                    choice = choice.trim();
                 } else {
                     choice = p.getController().chooseSomeType(type, sa, validTypes);
                 }
@@ -157,6 +169,9 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
                 if (sa.hasParam("ChooseType2")) {
                     card.setChosenType2(choice);
                 } else {
+                    // remember what kind of thing this was, so the detail panel says "chosen word"
+                    // or "chosen letter" rather than always "chosen type"
+                    card.setChosenTypeKind(type);
                     if (secret) card.setSecretChosenType(choice);
                     else card.setChosenType(choice);
                 }
@@ -166,4 +181,13 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
         }
     }
 
+    private static int countLetters(final String word) {
+        int letters = 0;
+        for (int i = 0; i < word.length(); i++) {
+            if (Character.isLetter(word.charAt(i))) {
+                letters++;
+            }
+        }
+        return letters;
+    }
 }

@@ -9,6 +9,11 @@ public enum CardStateName {
     Meld,
     LeftSplit,
     RightSplit,
+    // Who // What // When // Where // Why is the only card ever printed with more than two split
+    // faces. Two-face splits never see these, so they take exactly the path they always did.
+    Split3,
+    Split4,
+    Split5,
     Secondary,
     PreparedSpell,
     EmptyRoom,
@@ -19,6 +24,11 @@ public enum CardStateName {
     SpecializeG
 
     ;
+
+    /** Split faces in printed order. A normal split card only ever occupies the first two. */
+    public static final java.util.List<CardStateName> SPLIT_STATES =
+            java.util.Collections.unmodifiableList(java.util.Arrays.asList(
+                    LeftSplit, RightSplit, Split3, Split4, Split5));
 
     /**
      * TODO: Write javadoc for this method.

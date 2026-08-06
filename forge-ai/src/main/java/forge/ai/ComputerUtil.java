@@ -2584,6 +2584,37 @@ public class ComputerUtil {
                 chosen = "Island";
             }
         }
+        else if (kindOfType.equals("letter")) {
+            // Monkey Monkey Monkey pays off names that START with the letter, so it wants the most
+            // common initial. When Fluffy Bunnies Attack cares about occurrences anywhere instead,
+            // so it asks for no logic and just takes a letter rather than none at all.
+            if ("MostCommonInitial".equals(logic)) {
+                final Map<String, Integer> initials = Maps.newHashMap();
+                for (final Card c : game.getCardsIn(ZoneType.Battlefield)) {
+                    if (c.isLand()) {
+                        continue;
+                    }
+                    final String name = c.getDisplayName();
+                    if (name.isEmpty()) {
+                        continue;
+                    }
+                    final String initial = name.substring(0, 1).toUpperCase();
+                    if (validTypes.contains(initial)) {
+                        initials.merge(initial, 1, Integer::sum);
+                    }
+                }
+                int best = 0;
+                for (final Map.Entry<String, Integer> e : initials.entrySet()) {
+                    if (e.getValue() > best) {
+                        best = e.getValue();
+                        chosen = e.getKey();
+                    }
+                }
+            }
+            if (StringUtils.isEmpty(chosen) && !validTypes.isEmpty()) {
+                chosen = Aggregates.random(validTypes);
+            }
+        }
         return chosen;
     }
 

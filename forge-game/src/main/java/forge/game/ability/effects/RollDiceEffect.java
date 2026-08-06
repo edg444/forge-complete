@@ -525,23 +525,12 @@ public class RollDiceEffect extends SpellAbilityEffect {
                 break;
             }
         }
+        // NotifyMessage on these branches is handled centrally now (AbilityUtils.resolveApiAbility),
+        // so it works for any ability rather than only a roll result
         if (resultAbility != null) {
             AbilityUtils.resolve(resultAbility);
-            notifyResultMessage(sa, resultAbility);
         } else if (sa.hasAdditionalAbility("Else")) {
-            final SpellAbility elseAbility = sa.getAdditionalAbility("Else");
-            AbilityUtils.resolve(elseAbility);
-            notifyResultMessage(sa, elseAbility);
-        }
-    }
-
-    // Lets a specific roll-result branch (e.g. a failure outcome) pop up its own message,
-    // separate from the branch's SpellDescription (which only shows in the card's static
-    // reminder text, not as a live notification) - see Knight of the Hokey Pokey.
-    private static void notifyResultMessage(SpellAbility sa, SpellAbility resolved) {
-        if (resolved.hasParam("NotifyMessage")) {
-            final Player player = sa.getActivatingPlayer();
-            player.getGame().getAction().notifyOfValue(sa, player, resolved.getParam("NotifyMessage"), null);
+            AbilityUtils.resolve(sa.getAdditionalAbility("Else"));
         }
     }
 

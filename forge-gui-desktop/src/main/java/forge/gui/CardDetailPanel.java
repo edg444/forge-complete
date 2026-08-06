@@ -199,7 +199,16 @@ public class CardDetailPanel extends SkinnedPanel {
         } else {
             final String manaCost;
             if (card.isSplitCard() && card.hasAlternateState() && !card.isFaceDown() && card.getZone() != ZoneType.Stack && card.getZone() != ZoneType.Battlefield) { //only display current state's mana cost when on stack
-                manaCost = card.getLeftSplitState().getOriginalManaCost() + " // " + card.getAlternateState().getOriginalManaCost();
+                // every face, so a five-way split shows all five costs rather than the first two
+                final StringBuilder costs = new StringBuilder();
+                for (final forge.game.card.CardView.CardStateView splitView : card.getSplitStates()) {
+                    if (costs.length() > 0) {
+                        costs.append(" // ");
+                    }
+                    costs.append(splitView.getOriginalManaCost());
+                }
+                manaCost = costs.length() > 0 ? costs.toString()
+                        : card.getLeftSplitState().getOriginalManaCost() + " // " + card.getAlternateState().getOriginalManaCost();
             } else {
                 manaCost = state.getOriginalManaCost().toString();
             }

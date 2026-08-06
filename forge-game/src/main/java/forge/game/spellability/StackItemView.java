@@ -2,6 +2,7 @@ package forge.game.spellability;
 
 import forge.game.card.CardView;
 import forge.game.card.IHasCardView;
+import forge.game.keyword.Keyword;
 import forge.game.player.PlayerView;
 import forge.trackable.TrackableCollection;
 import forge.trackable.TrackableObject;
@@ -71,6 +72,11 @@ public class StackItemView extends TrackableObject implements IHasCardView {
         boolean alternate = false;
         boolean generic = false;
 
+        // Multikicker doesn't go through OptionalCost.Kicker1/Kicker2 at all - its count lives as an
+        // optional keyword amount on the root ability - so the loop below never saw it and the stack
+        // showed nothing. isKicked() already knows this; the display didn't.
+        final int multikicked = si.getSpellAbility().getRootAbility().getOptionalKeywordAmount(Keyword.MULTIKICKER);
+
         for (OptionalCost cost : si.getSpellAbility().getOptionalCosts()) {
             if (cost == OptionalCost.Kicker1 || cost == OptionalCost.Kicker2)
                 kicked = true;
@@ -90,7 +96,9 @@ public class StackItemView extends TrackableObject implements IHasCardView {
                 alternate = true;
         }
         if (!alternate) {
-            if (kicked && !generic)
+            if (multikicked > 0)
+                OptionalCostString += multikicked > 1 ? "Kicked x" + multikicked : "Kicked";
+            else if (kicked && !generic)
                 OptionalCostString += "Kicked";
             if (entwined)
                 OptionalCostString += OptionalCostString.isEmpty() ? "Entwined" : ", Entwined";

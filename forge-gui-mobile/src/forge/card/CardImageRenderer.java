@@ -793,25 +793,34 @@ public class CardImageRenderer {
             if (card.isFlipCard() && altState) {
                 displayFlipped = !displayFlipped;
             }
+            if (card.isRotate180()) {
+                // printed inverted on a shared token card, so upright IS 180
+                displayFlipped = !altState;
+            }
 
             if (card.getCurrentState().getSetCode().equals("LEA") || card.getCurrentState().getSetCode().equals("LEB")) {
                 croppedArea = 0.975f;
                 minusxy = 0.135f * radius;
             }
             if (canshow && displayFlipped) {
+                // A 180 flip occupies exactly the same footprint as the upright card, so it must NOT
+                // take the wh_Adj enlargement above - that exists so a card turned 90 degrees can use
+                // the space it gains in landscape-port mode. Sharing it made a flipped card render
+                // 38% larger than its own front face.
+                final float f_x = x, f_y = y, f_w = w, f_h = h;
                 if (Forge.enableUIMask.equals("Full")) {
                     if (ImageCache.getInstance().isFullBorder(image))
-                        g.drawCardRoundRect(image, new_x, new_y, new_w, new_h, new_x + new_w / 2, new_y + new_h / 2, 180);
+                        g.drawCardRoundRect(image, f_x, f_y, f_w, f_h, f_x + f_w / 2, f_y + f_h / 2, 180);
                     else {
-                        g.drawRotatedImage(FSkin.getBorders().get(0), new_x, new_y, new_w, new_h, new_x + new_w / 2, new_y + new_h / 2, 180);
-                        g.drawRotatedImage(ImageCache.getInstance().croppedBorderImage(image), new_x + radius / 2 - minusxy, new_y + radius / 2 - minusxy, new_w * croppedArea, new_h * croppedArea, (new_x + radius / 2 - minusxy) + (new_w * croppedArea) / 2, (new_y + radius / 2 - minusxy) + (new_h * croppedArea) / 2, 180);
+                        g.drawRotatedImage(FSkin.getBorders().get(0), f_x, f_y, f_w, f_h, f_x + f_w / 2, f_y + f_h / 2, 180);
+                        g.drawRotatedImage(ImageCache.getInstance().croppedBorderImage(image), f_x + radius / 2 - minusxy, f_y + radius / 2 - minusxy, f_w * croppedArea, f_h * croppedArea, (f_x + radius / 2 - minusxy) + (f_w * croppedArea) / 2, (f_y + radius / 2 - minusxy) + (f_h * croppedArea) / 2, 180);
                         if (CardRendererUtils.drawFoil(card))
-                            g.drawFoil(new_x, new_y, new_w, new_h, modR, false);
+                            g.drawFoil(f_x, f_y, f_w, f_h, modR, false);
                     }
                 } else if (Forge.enableUIMask.equals("Crop")) {
-                    g.drawRotatedImage(ImageCache.getInstance().croppedBorderImage(image), new_x, new_y, new_w, new_h, new_x + new_w / 2, new_y + new_h / 2, 180);
+                    g.drawRotatedImage(ImageCache.getInstance().croppedBorderImage(image), f_x, f_y, f_w, f_h, f_x + f_w / 2, f_y + f_h / 2, 180);
                 } else {
-                    g.drawRotatedImage(image, new_x, new_y, new_w, new_h, new_x + new_w / 2, new_y + new_h / 2, 180);
+                    g.drawRotatedImage(image, f_x, f_y, f_w, f_h, f_x + f_w / 2, f_y + f_h / 2, 180);
                 }
             } else if (canshow && CardRendererUtils.needsRotation(ForgePreferences.FPref.UI_ROTATE_PLANE_OR_PHENOMENON, card, altState)) {
                 if (Forge.enableUIMask.equals("Full")) {

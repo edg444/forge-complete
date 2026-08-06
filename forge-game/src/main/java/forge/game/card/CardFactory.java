@@ -198,12 +198,15 @@ public class CardFactory {
                 c.setImageKey(cp.getImageKey(true));
             }
             else if (c.isSplitCard()) {
-                c.setState(CardStateName.LeftSplit, false);
-                c.setImageKey(originalPicture);
-                c.setSetCode(cp.getEdition());
-                c.setRarity(cp.getRarity());
-                c.setState(CardStateName.RightSplit, false);
-                c.setImageKey(originalPicture);
+                for (final CardStateName splitState : CardStateName.SPLIT_STATES) {
+                    if (!c.hasState(splitState)) {
+                        continue;
+                    }
+                    c.setState(splitState, false);
+                    c.setImageKey(originalPicture);
+                    c.setSetCode(cp.getEdition());
+                    c.setRarity(cp.getRarity());
+                }
             } else if (c.hasState(CardStateName.Secondary)) {
                 c.setState(CardStateName.Secondary, false);
                 c.setImageKey(originalPicture);
@@ -317,6 +320,14 @@ public class CardFactory {
             card.setState(st.getChangedStateName(), false);
             if (rules.getOtherPart() != null) {
                 readCardFace(card, rules.getOtherPart());
+                // split faces past the usual two (empty for every card but one)
+                int extraIdx = 2;
+                for (final ICardFace extra : rules.getExtraSplitFaces()) {
+                    final CardStateName extraState = CardStateName.SPLIT_STATES.get(extraIdx++);
+                    card.addAlternateState(extraState, false);
+                    card.setState(extraState, false);
+                    readCardFace(card, extra);
+                }
             } else if (!rules.getMeldWith().isEmpty()) {
                 readCardFace(card, StaticData.instance().getCommonCards().getRulesOrElseUnsupported(rules.getMeldWith()).getOtherPart());
             }
@@ -337,8 +348,15 @@ public class CardFactory {
             card.setType(new CardType(rules.getType()));
 
             // Combined text based on Oracle text -  might not be necessary
-            String combinedText = String.format("(%s) %s\r\n\r\n(%s) %s", rules.getMainPart().getName(), rules.getMainPart().getOracleText(), rules.getOtherPart().getName(), rules.getOtherPart().getOracleText());
-            card.getState(CardStateName.Original).setOracleText(combinedText);
+            // every face, not just the first two, so a five-way split reads in full
+            final StringBuilder combinedText = new StringBuilder();
+            for (final ICardFace face : rules.getAllFaces()) {
+                if (combinedText.length() > 0) {
+                    combinedText.append("\r\n\r\n");
+                }
+                combinedText.append("(").append(face.getName()).append(") ").append(face.getOracleText());
+            }
+            card.getState(CardStateName.Original).setOracleText(combinedText.toString());
         }
         return card;
     }
@@ -538,8 +556,11 @@ public class CardFactory {
             // for split cards, copy all three states
 
             result.add(in.getState(CardStateName.Original).copy(out, cause));
-            result.add(in.getState(CardStateName.LeftSplit).copy(out, cause));
-            result.add(in.getState(CardStateName.RightSplit).copy(out, cause));
+            for (final CardStateName splitState : CardStateName.SPLIT_STATES) {
+                if (in.hasState(splitState)) {
+                    result.add(in.getState(splitState).copy(out, cause));
+                }
+            }
             if (in.isPermanent()) {
                 result.add(in.getState(CardStateName.EmptyRoom).copy(out, cause));
             }

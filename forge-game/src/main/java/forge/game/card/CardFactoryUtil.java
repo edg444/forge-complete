@@ -4186,6 +4186,62 @@ public class CardFactoryUtil {
         return count;
     }
 
+    /**
+     * Symbol Status - how many different expansion symbols are on permanents this player controls.
+     * Tokens are skipped: a token isn't printed with an expansion symbol, so it can't add one (which
+     * also stops the Expansion-Symbol tokens this makes from inflating the next casting).
+     */
+    public static int getDifferentExpansionSymbols(final Player player) {
+        final Set<String> symbols = Sets.newHashSet();
+        for (final Card c : player.getCardsIn(ZoneType.Battlefield)) {
+            if (c.isToken()) {
+                continue;
+            }
+            final String set = c.getSetCode();
+            if (!StringUtils.isBlank(set)) {
+                symbols.add(set);
+            }
+        }
+        return symbols.size();
+    }
+
+    // B-I-N-G-O's printed tracker, read off the card art:
+    //     1 4 7
+    //     8 5 3
+    //     2 0 6
+    // Note it runs 0-8, not 1-9, so a mana value of 0 marks a square and 9 marks nothing.
+    private static final int[][] BINGO_LINES = {
+            {1, 4, 7}, {8, 5, 3}, {2, 0, 6}, // rows
+            {1, 8, 2}, {4, 5, 0}, {7, 3, 6}, // columns
+            {1, 5, 6}, {7, 5, 2},            // diagonals
+    };
+
+    /**
+     * Completed sets of three in a row on B-I-N-G-O's tracker. Marks live in the card's remembered
+     * set as Integers rather than as counters, per the ruling that the chip counters sit on the
+     * printed tracker and so can't be proliferated onto or removed.
+     * <p>
+     * Eight lines at +9/+9 each is the +72/+72 for a full card that the ruling quotes.
+     */
+    public static int getBingoLineCount(final Card card) {
+        final Set<Integer> marked = Sets.newHashSet();
+        for (final Object o : card.getRemembered()) {
+            if (o instanceof Integer i) {
+                marked.add(i);
+            }
+        }
+        if (marked.isEmpty()) {
+            return 0;
+        }
+        int lines = 0;
+        for (final int[] line : BINGO_LINES) {
+            if (marked.contains(line[0]) && marked.contains(line[1]) && marked.contains(line[2])) {
+                lines++;
+            }
+        }
+        return lines;
+    }
+
     // Pygmy Giant. The Unhinged FAQ says both numerals and spelled-out words count ("Do both
     // numerals and words, such as 1 and 'one,' count? Yes."), so the words are listed here. Only
     // single words - nothing in a text box is written "twenty-seven".

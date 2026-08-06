@@ -159,6 +159,11 @@ public class CardView extends GameEntityView {
         return get(TrackableProperty.FlipCard);
     }
 
+    /** Art printed upside down on a shared token card (WOE Roles), so it must be drawn rotated. */
+    public boolean isRotate180() {
+        return get(TrackableProperty.Rotate180);
+    }
+
     public boolean isFlipped() {
         return get(TrackableProperty.Flipped);
     }
@@ -408,7 +413,11 @@ public class CardView extends GameEntityView {
     public String getChosenType() {
         return get(TrackableProperty.ChosenType);
     }
+    public String getChosenTypeKind() {
+        return get(TrackableProperty.ChosenTypeKind);
+    }
     void updateChosenType(Card c) {
+        set(TrackableProperty.ChosenTypeKind, c.getChosenTypeKind());
         set(TrackableProperty.ChosenType, c.getChosenType());
     }
 
@@ -860,11 +869,14 @@ public class CardView extends GameEntityView {
         }
 
         if (isSplitCard()) {
-            tname = tname.isEmpty() ? getLeftSplitState().getName() : tname;
-            taltname = taltname.isEmpty() ? getRightSplitState().getName() : taltname;
+            // views can still be settling while a card is being built, so never assume a sibling face
+            final CardStateView leftView = getLeftSplitState();
+            final CardStateView rightView = getRightSplitState();
+            tname = tname.isEmpty() && leftView != null ? leftView.getName() : tname;
+            taltname = taltname.isEmpty() && rightView != null ? rightView.getName() : taltname;
             if (getId() < 0) {
-                toracle = toracle.isEmpty() ? getLeftSplitState().getOracleText() : toracle;
-                taltoracle = taltoracle.isEmpty() ? getRightSplitState().getOracleText() : taltoracle;
+                toracle = toracle.isEmpty() && leftView != null ? leftView.getOracleText() : toracle;
+                taltoracle = taltoracle.isEmpty() && rightView != null ? rightView.getOracleText() : taltoracle;
             }
         } else {
             tname = tname.isEmpty() ? state.getName() : tname;
@@ -875,11 +887,24 @@ public class CardView extends GameEntityView {
 
         if (getId() < 0) {
             if (isSplitCard() && !toracle.isEmpty()) {
-                sb.append("(").append(tname).append(") ");
-                sb.append(toracle);
-                sb.append("\r\n\r\n");
-                sb.append("(").append(taltname).append(") ");
-                sb.append(taltoracle);
+                final java.util.List<CardStateView> splitViews = getSplitStates();
+                if (splitViews.size() > 2) {
+                    // translations only carry two faces, so read them straight off the extra faces
+                    boolean firstFace = true;
+                    for (final CardStateView splitView : splitViews) {
+                        if (!firstFace) {
+                            sb.append("\r\n\r\n");
+                        }
+                        firstFace = false;
+                        sb.append("(").append(splitView.getName()).append(") ").append(splitView.getOracleText());
+                    }
+                } else {
+                    sb.append("(").append(tname).append(") ");
+                    sb.append(toracle);
+                    sb.append("\r\n\r\n");
+                    sb.append("(").append(taltname).append(") ");
+                    sb.append(taltoracle);
+                }
             } else {
                 sb.append(toracle);
             }
@@ -896,10 +921,22 @@ public class CardView extends GameEntityView {
         }
 
         if (isSplitCard() && !isFaceDown() && getZone() != ZoneType.Stack && getZone() != ZoneType.Battlefield) {
-            sb.append("(").append(getLeftSplitState().getName()).append(") ");
-            sb.append(getLeftSplitState().getAbilityText());
-            sb.append("\r\n\r\n").append("(").append(getRightSplitState().getName()).append(") ");
-            sb.append(getRightSplitState().getAbilityText());
+            final java.util.List<CardStateView> splitViews = getSplitStates();
+            if (splitViews.size() > 2) {
+                boolean firstFace = true;
+                for (final CardStateView splitView : splitViews) {
+                    if (!firstFace) {
+                        sb.append("\r\n\r\n");
+                    }
+                    firstFace = false;
+                    sb.append("(").append(splitView.getName()).append(") ").append(splitView.getAbilityText());
+                }
+            } else {
+                sb.append("(").append(getLeftSplitState().getName()).append(") ");
+                sb.append(getLeftSplitState().getAbilityText());
+                sb.append("\r\n\r\n").append("(").append(getRightSplitState().getName()).append(") ");
+                sb.append(getRightSplitState().getAbilityText());
+            }
         } else {
             sb.append(state.getAbilityText());
         }
@@ -1006,6 +1043,23 @@ public class CardView extends GameEntityView {
         return get(TrackableProperty.RightSplitState);
     }
 
+    private static final TrackableProperty[] SPLIT_STATE_PROPS = {
+        TrackableProperty.LeftSplitState, TrackableProperty.RightSplitState,
+        TrackableProperty.Split3State, TrackableProperty.Split4State, TrackableProperty.Split5State
+    };
+
+    /** Every split face this card actually has, in printed order. Two for all but one card. */
+    public java.util.List<CardStateView> getSplitStates() {
+        final java.util.List<CardStateView> states = new java.util.ArrayList<>();
+        for (final TrackableProperty prop : SPLIT_STATE_PROPS) {
+            final CardStateView view = get(prop);
+            if (view != null) {
+                states.add(view);
+            }
+        }
+        return states;
+    }
+
     public boolean hasBackSide() {
         return get(TrackableProperty.HasBackSide);
     }
@@ -1068,6 +1122,7 @@ public class CardView extends GameEntityView {
         set(TrackableProperty.Cloned, c.isCloned());
         set(TrackableProperty.SplitCard, isSplitCard);
         set(TrackableProperty.FlipCard, c.isFlipCard());
+        set(TrackableProperty.Rotate180, c.getRules() != null && c.getRules().isRotate180());
         set(TrackableProperty.Flipped, c.getCurrentStateName() == CardStateName.Flipped);
         set(TrackableProperty.Facedown, c.isFaceDown());
         set(TrackableProperty.Foretold, c.isForetold());
@@ -1112,12 +1167,20 @@ public class CardView extends GameEntityView {
         updateMergeCollections(mergedCollection);
 
         if (isSplitCard) {
-            set(TrackableProperty.LeftSplitState, c.getState(CardStateName.LeftSplit).getView());
-            set(TrackableProperty.RightSplitState, c.getState(CardStateName.RightSplit).getView());
-
-            // need to update ability text
-            getLeftSplitState().updateAbilityText(c, c.getState(CardStateName.LeftSplit));
-            getRightSplitState().updateAbilityText(c, c.getState(CardStateName.RightSplit));
+            for (int i = 0; i < SPLIT_STATE_PROPS.length; i++) {
+                final CardStateName splitName = CardStateName.SPLIT_STATES.get(i);
+                set(SPLIT_STATE_PROPS[i], c.hasState(splitName) ? c.getState(splitName).getView() : null);
+            }
+            // second pass on purpose: rendering one face's ability text can ask for a sibling face
+            // (a permanent builds a SpellPermanent, whose stack description reads the whole card),
+            // so every face has to be in place before any of them is asked to render
+            for (int i = 0; i < SPLIT_STATE_PROPS.length; i++) {
+                final CardStateName splitName = CardStateName.SPLIT_STATES.get(i);
+                if (c.hasState(splitName)) {
+                    final CardState splitState = c.getState(splitName);
+                    splitState.getView().updateAbilityText(c, splitState);
+                }
+            }
         }
 
         CardState currentState = c.getCurrentState();

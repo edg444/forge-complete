@@ -1374,7 +1374,81 @@ public class AiAttackController {
             }
         }
 
+        pruneLostAloneEvasion(combat);
+
         return aiAggression;
+    }
+
+    /**
+     * Some creatures are only evasive while attacking alone (Gutter Skulker: "can't be blocked as
+     * long as it's attacking alone"). The static that grants that is evaluated against live combat
+     * state, so bringing friends along silently switches it off - and the AI, having decided to
+     * attack while the creature still looked unblockable, walks it into a blocker that kills it.
+     * <p>
+     * Once the attack is settled, drop any such creature that has lost its evasion and would die for
+     * it. The rest of the attack stands; only the creature that was relying on being alone stays
+     * home.
+     */
+    private void pruneLostAloneEvasion(final Combat combat) {
+        final CardCollection attacking = new CardCollection(combat.getAttackers());
+        if (attacking.size() < 2) {
+            return;
+        }
+        for (final Card attacker : attacking) {
+            if (!attacker.getController().equals(ai) || !hasAttacksAloneEvasion(attacker)) {
+                continue;
+            }
+            boolean wouldDie = false;
+            for (final Card blocker : ai.getOpponents().getCreaturesInPlay()) {
+                if (CombatUtil.canBlock(attacker, blocker, combat)
+                        && ComputerUtilCombat.canDestroyAttacker(ai, attacker, blocker, combat, false)) {
+                    wouldDie = true;
+                    break;
+                }
+            }
+            if (!wouldDie) {
+                continue;
+            }
+            // Going alone keeps the evasion, so it connects for certain. If that alone is lethal,
+            // send everyone else home instead - the unblockable hit wins the game outright.
+            if (isLethalAttackingAlone(attacker, combat)) {
+                for (final Card other : attacking) {
+                    if (other != attacker) {
+                        combat.removeFromCombat(other);
+                    }
+                }
+                return;
+            }
+            combat.removeFromCombat(attacker);
+        }
+    }
+
+    /** Whether this creature's damage would finish off its defender if it attacked by itself. */
+    private static boolean isLethalAttackingAlone(final Card attacker, final Combat combat) {
+        final GameEntity defender = combat.getDefenderByAttacker(attacker);
+        if (!(defender instanceof Player defendingPlayer)) {
+            return false;
+        }
+        if (defendingPlayer.cantLoseForZeroOrLessLife()) {
+            return false;
+        }
+        return ComputerUtilCombat.damageIfUnblocked(attacker, defendingPlayer, combat, true)
+                >= defendingPlayer.getLife();
+    }
+
+    /** True when this creature's evasion is conditional on nothing else attacking alongside it. */
+    private static boolean hasAttacksAloneEvasion(final Card c) {
+        for (final StaticAbility stAb : c.getStaticAbilities()) {
+            if (!stAb.checkConditions(StaticAbilityMode.CantBlockBy) || !stAb.hasParam("IsPresent")) {
+                continue;
+            }
+            // "no OTHER creature is attacking" is what attacking alone amounts to
+            if (stAb.getParam("IsPresent").contains("attacking")
+                    && "EQ0".equals(stAb.getParamOrDefault("PresentCompare", ""))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private class SpellAbilityFactors {

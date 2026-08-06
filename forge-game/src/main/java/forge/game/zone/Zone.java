@@ -159,7 +159,23 @@ public class Zone implements java.io.Serializable, Iterable<Card> {
         return cardList.anyMatch(condition);
     }
 
+    /** Give a card a second, non-primary residency here without disturbing the zone it really lives in. */
+    public final void addShadow(final Card c, final int index) {
+        cardList.add(index, c);
+        c.setShadowZone(this);
+        onChanged();
+        game.fireEvent(new GameEventZone(zoneType, getPlayer(), EventValueChangeType.Added, c));
+    }
+
     public void remove(final Card c) {
+        // Dual residency (Yet Another Aether Vortex) has to end here rather than on the receiving
+        // side: leaving the battlefield hands a *copy* to the destination zone, so the original card
+        // would otherwise stay listed in the library and get pulled straight back into play.
+        if (c.getShadowZone() == this) {
+            c.setShadowZone(null);
+        } else if (c.getShadowZone() != null) {
+            c.getShadowZone().remove(c);
+        }
         if (cardList.remove(c)) {
             onChanged();
             game.fireEvent(new GameEventZone(zoneType, getPlayer(), EventValueChangeType.Removed, c));
@@ -169,7 +185,10 @@ public class Zone implements java.io.Serializable, Iterable<Card> {
     public final void setCards(final Iterable<Card> cards) {
         cardList.clear();
         for (Card c : cards) {
-            c.setZone(this);
+            // a shadow resident (shuffled library) keeps the battlefield as its primary zone
+            if (c.getShadowZone() != this) {
+                c.setZone(this);
+            }
             cardList.add(c);
         }
         onChanged();

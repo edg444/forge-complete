@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import forge.StaticData;
 import forge.card.CardDb;
 import forge.card.CardEdition;
+import forge.card.CardRarity;
 import forge.card.ColorSet;
 import forge.card.MagicColor;
 import forge.card.mana.ManaCost;
@@ -91,6 +92,35 @@ public class CardProperty {
             }
         } else if (property.equals("Permanent")) {
             if (!card.isPermanent()) {
+                return false;
+            }
+        } else if (property.startsWith("Rarity")) {
+            // Rare-B-Gone. One rarity per property (RarityRare, RarityMythicRare, ...); "rare or
+            // mythic" is expressed as two comma-separated alternatives in the valid string itself.
+            final CardRarity rarity = card.getRarity();
+            if (rarity == null || !rarity.name().equalsIgnoreCase(property.substring(6))) {
+                return false;
+            }
+        } else if (property.equals("fewerLettersInNameThanSource")) {
+            // Stone-Cold Basilisk: "(Punctuation and spaces aren't letters.)" - isLetter also drops
+            // digits, which is right, and counts accented letters, which the Un-set FAQ agrees with.
+            if (countLetters(card.getDisplayName()) >= countLetters(source.getDisplayName())) {
+                return false;
+            }
+        } else if (property.equals("nameStartsWithChosenLetter")) {
+            // Monkey Monkey Monkey. Matched on the displayed name so a flavor name counts as printed,
+            // the same way ChosenLetterInName does.
+            final String letter = source.hasChosenType() ? source.getChosenType() : "";
+            final String cardName = card.getDisplayName();
+            if (letter.isEmpty() || cardName.isEmpty()
+                    || Character.toUpperCase(cardName.charAt(0)) != Character.toUpperCase(letter.charAt(0))) {
+                return false;
+            }
+        } else if (property.equals("HasHalfSymbol")) {
+            // Fraction Jackson: "a card with a 1/2 on it". In this pool that is one of three things -
+            // a half in the printed power/toughness, a half shard in the mana cost, or a 1/2 written
+            // into the rules text (Assquatch, Cheap Ass, Flaccify and friends).
+            if (!hasHalfSymbol(card)) {
                 return false;
             }
         } else if (property.equals("Historic")) {
@@ -2334,6 +2364,32 @@ public class CardProperty {
         } catch (final NumberFormatException e) {
             return Integer.MAX_VALUE;
         }
+    }
+
+    private static int countLetters(final String name) {
+        int letters = 0;
+        for (int i = 0; i < name.length(); i++) {
+            if (Character.isLetter(name.charAt(i))) {
+                letters++;
+            }
+        }
+        return letters;
+    }
+
+    private static boolean hasHalfSymbol(final Card card) {
+        if (card.hasHalfPower() || card.hasHalfToughness()) {
+            return true;
+        }
+        final ManaCost cost = card.getManaCost();
+        if (cost != null) {
+            for (final ManaCostShard shard : cost) {
+                if (shard.isHalf()) {
+                    return true;
+                }
+            }
+        }
+        final String text = card.getOracleText();
+        return text != null && text.indexOf('½') >= 0;
     }
 
     private static boolean hasTimestampMatch(final Card card, final CardCollectionView coll) {

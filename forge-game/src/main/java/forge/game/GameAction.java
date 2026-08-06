@@ -48,6 +48,7 @@ import forge.game.staticability.StaticAbilityCountersRemain;
 import forge.game.staticability.StaticAbilityContinuous;
 import forge.game.staticability.StaticAbilityLayer;
 import forge.game.staticability.StaticAbilityMode;
+import forge.game.staticability.StaticAbilityTopLibraryOnBattlefield;
 import forge.game.trigger.TriggerType;
 import forge.game.zone.PlayerZone;
 import forge.game.zone.PlayerZoneBattlefield;
@@ -129,6 +130,18 @@ public class GameAction {
         // Rules 304.4, 307.4: instants, sorceries can't enter the battlefield and remain
         // in their previous zone
         if (toBattlefield && (c.isInstant() || c.isSorcery())) {
+            return c;
+        }
+
+        // Yet Another Aether Vortex: a permanent put from the battlefield onto the top of its owner's
+        // library never leaves the battlefield - it just becomes that library's top card as well, so
+        // neither leave-the-battlefield nor enters-the-battlefield abilities trigger
+        if (fromBattlefield && zoneTo.is(ZoneType.Library) && Integer.valueOf(0).equals(position)
+                && c.getShadowZone() == null && !c.isToken()
+                && c.getOwner().equals(zoneTo.getPlayer())
+                && StaticAbilityTopLibraryOnBattlefield.qualifies(c)
+                && StaticAbilityTopLibraryOnBattlefield.appliesTo(c.getOwner())) {
+            zoneTo.addShadow(c, 0);
             return c;
         }
 
@@ -1397,6 +1410,63 @@ public class GameAction {
     public final boolean checkStateEffects(final boolean runEvents) {
         return checkStateEffects(runEvents, Sets.newHashSet());
     }
+    /**
+     * Yet Another Aether Vortex: reconcile each library's top card with the battlefield. The card is
+     * really moved onto the battlefield and then re-listed in the library as a shadow resident, so
+     * the library keeps its size and its top card while the permanent is genuinely in play.
+     */
+    private boolean checkTopLibraryPermanents(Map<AbilityKey, Object> params) {
+        if (game.getAge() != GameStage.Play) {
+            return false;
+        }
+
+        boolean changed = false;
+        for (final Player p : game.getPlayers()) {
+            final Zone library = p.getZone(ZoneType.Library);
+
+            Card wanted = null;
+            if (StaticAbilityTopLibraryOnBattlefield.appliesTo(p) && !library.isEmpty()) {
+                final Card top = library.get(0);
+                if (StaticAbilityTopLibraryOnBattlefield.qualifies(top)) {
+                    wanted = top;
+                }
+            }
+
+            // scan every battlefield, not just this player's: another player may have taken control.
+            // More than one card can be shadowed here in passing, so collect them all rather than
+            // trusting the first hit - anything that isn't the current top card has to go home.
+            final CardCollection stale = new CardCollection();
+            for (final Card c : game.getCardsIn(ZoneType.Battlefield)) {
+                if (c.getShadowZone() == library && c != wanted) {
+                    stale.add(c);
+                }
+            }
+
+            if (!stale.isEmpty()) {
+                for (final Card c : stale) {
+                    // put it back where the library already lists it, then let it leave the
+                    // battlefield properly; the new top card is picked up on the next pass
+                    final int index = Math.max(0, library.getCards().indexOf(c));
+                    library.remove(c);
+                    moveToLibrary(c, index, null, params);
+                }
+                changed = true;
+                continue;
+            }
+
+            if (wanted == null || wanted.getShadowZone() == library) {
+                continue;
+            }
+
+            final Card inPlay = moveToPlay(wanted, wanted.getOwner(), null, params);
+            if (inPlay != null && inPlay.isInPlay()) {
+                library.addShadow(inPlay, 0);
+                changed = true;
+            }
+        }
+        return changed;
+    }
+
     public boolean checkStateEffects(final boolean runEvents, final Set<Card> affectedCards) {
         // check game over early for win conditions such as Platinum Angel + Hurricane lethal for both players
         checkGameOverCondition();
@@ -1423,6 +1493,8 @@ public class GameAction {
             CardZoneTable table = new CardZoneTable(game.getLastStateBattlefield(), game.getLastStateGraveyard());
             Map<AbilityKey, Object> mapParams = AbilityKey.newMap();
             AbilityKey.addCardZoneTableParams(mapParams, table);
+
+            checkAgain |= checkTopLibraryPermanents(mapParams);
 
             for (final Player p : game.getPlayers()) {
                 p.checkKeywordCard();

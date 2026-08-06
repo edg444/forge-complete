@@ -6,6 +6,7 @@ import forge.card.MagicColor;
 import forge.game.Game;
 import forge.game.card.Card;
 import forge.game.card.CardCollectionView;
+import forge.game.combat.CombatUtil;
 import forge.game.cost.Cost;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
@@ -97,6 +98,24 @@ public class ChooseGenericAi extends SpellAbilityAi {
                 return Aggregates.random(spells.subList(1, spells.size()));
             }
             return spells.get(0);
+        } else if ("HinderAttacker".equals(logic)) {
+            // Dumb Ass: the creature's own controller doesn't decide whether it attacks - an
+            // opponent does, and wants whichever answer hurts that controller more. Forcing the
+            // attack is only good when the AI can eat the creature for free; otherwise the attack
+            // is simply denied. Choice order is fixed by the card: [0] attacks, [1] doesn't.
+            if (spells.size() < 2) {
+                return spells.get(0);
+            }
+            for (final Card blocker : player.getCreaturesInPlay()) {
+                if (!CombatUtil.canBlock(host, blocker)) {
+                    continue;
+                }
+                if (ComputerUtilCombat.canDestroyAttacker(player, host, blocker, null, false)
+                        && !ComputerUtilCombat.canDestroyBlocker(player, blocker, host, null, false)) {
+                    return spells.get(0); // walk it into a blocker that kills it for nothing
+                }
+            }
+            return spells.get(1);
         } else if ("Random".equals(logic)) {
             return Aggregates.random(spells);
         } else if ("Phasing".equals(logic)) { // Teferi's Realm : keep aggressive

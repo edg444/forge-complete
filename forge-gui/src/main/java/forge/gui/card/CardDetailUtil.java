@@ -433,7 +433,10 @@ public class CardDetailUtil {
         // chosen type
         if (!card.getChosenType().isEmpty()) {
             area.append("\n");
-            area.append("(chosen type: ");
+            // a word or a letter isn't a "type" - name it for what the card actually asked for
+            final String kind = card.getChosenTypeKind();
+            final boolean namedKind = "word".equalsIgnoreCase(kind) || "letter".equalsIgnoreCase(kind);
+            area.append("(chosen ").append(namedKind ? kind.toLowerCase() : "type").append(": ");
             area.append(card.getChosenType());
             if (!card.getChosenType2().isEmpty()) {
                 area.append(", ").append(card.getChosenType2());

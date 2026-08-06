@@ -496,15 +496,13 @@ public class CardState implements GameObject, IHasSVars, ITranslatable {
     protected final void updateSpellAbilities(FCollection<SpellAbility> newCol) {
         // add Split to Original
         if (getStateName().equals(CardStateName.Original)) {
-            if (getCard().hasState(CardStateName.LeftSplit)) {
-                CardState leftState = getCard().getState(CardStateName.LeftSplit);
-                newCol.addAll(leftState.abilities);
-                leftState.updateSpellAbilities(newCol);
-            }
-            if (getCard().hasState(CardStateName.RightSplit)) {
-                CardState rightState = getCard().getState(CardStateName.RightSplit);
-                newCol.addAll(rightState.abilities);
-                rightState.updateSpellAbilities(newCol);
+            for (final CardStateName splitName : CardStateName.SPLIT_STATES) {
+                if (!getCard().hasState(splitName)) {
+                    continue;
+                }
+                CardState splitState = getCard().getState(splitName);
+                newCol.addAll(splitState.abilities);
+                splitState.updateSpellAbilities(newCol);
             }
         }
 
@@ -518,6 +516,9 @@ public class CardState implements GameObject, IHasSVars, ITranslatable {
         case Original:
         case LeftSplit:
         case RightSplit:
+        case Split3:
+        case Split4:
+        case Split5:
         case SpecializeB:
         case SpecializeG:
         case SpecializeR:
@@ -528,7 +529,7 @@ public class CardState implements GameObject, IHasSVars, ITranslatable {
             return;
         }
         // if card has left or right split, disable intrinsic Spell for original
-        if (getStateName().equals(CardStateName.Original) && (getCard().hasState(CardStateName.LeftSplit) || getCard().hasState(CardStateName.RightSplit))) {
+        if (getStateName().equals(CardStateName.Original) && getCard().hasAnySplitState()) {
             return;
         }
 
@@ -691,10 +692,11 @@ public class CardState implements GameObject, IHasSVars, ITranslatable {
     public final FCollectionView<Trigger> getTriggers() {
         FCollection<Trigger> result = new FCollection<>(triggers);
         if (getStateName().equals(CardStateName.Original)) {
-            if (getCard().hasState(CardStateName.LeftSplit))
-                result.addAll(getCard().getState(CardStateName.LeftSplit).triggers);
-            if (getCard().hasState(CardStateName.RightSplit))
-                result.addAll(getCard().getState(CardStateName.RightSplit).triggers);
+            for (final CardStateName splitName : CardStateName.SPLIT_STATES) {
+                if (getCard().hasState(splitName)) {
+                    result.addAll(getCard().getState(splitName).triggers);
+                }
+            }
         }
         card.updateTriggers(result, this);
         return result;
@@ -720,10 +722,11 @@ public class CardState implements GameObject, IHasSVars, ITranslatable {
     public final FCollectionView<StaticAbility> getStaticAbilities() {
         FCollection<StaticAbility> result = new FCollection<>(staticAbilities);
         if (getStateName().equals(CardStateName.Original)) {
-            if (getCard().hasState(CardStateName.LeftSplit))
-                result.addAll(getCard().getState(CardStateName.LeftSplit).staticAbilities);
-            if (getCard().hasState(CardStateName.RightSplit))
-                result.addAll(getCard().getState(CardStateName.RightSplit).staticAbilities);
+            for (final CardStateName splitName : CardStateName.SPLIT_STATES) {
+                if (getCard().hasState(splitName)) {
+                    result.addAll(getCard().getState(splitName).staticAbilities);
+                }
+            }
         }
         card.updateStaticAbilities(result, this);
         return result;
@@ -742,10 +745,11 @@ public class CardState implements GameObject, IHasSVars, ITranslatable {
         FCollection<ReplacementEffect> result = new FCollection<>(replacementEffects);
         // add Split to Original
         if (getStateName().equals(CardStateName.Original)) {
-            if (getCard().hasState(CardStateName.LeftSplit))
-                result.addAll(getCard().getState(CardStateName.LeftSplit).replacementEffects);
-            if (getCard().hasState(CardStateName.RightSplit))
-                result.addAll(getCard().getState(CardStateName.RightSplit).replacementEffects);
+            for (final CardStateName splitName : CardStateName.SPLIT_STATES) {
+                if (getCard().hasState(splitName)) {
+                    result.addAll(getCard().getState(splitName).replacementEffects);
+                }
+            }
         }
         CardTypeView type = getTypeWithChanges();
         if (type.isPlaneswalker()) {
