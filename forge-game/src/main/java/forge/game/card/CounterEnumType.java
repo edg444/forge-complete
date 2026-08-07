@@ -497,6 +497,8 @@ public enum CounterEnumType implements CounterType {
 
     POISON("POISN", CounterAiCategory.Negative),
 
+    POP("POP", CounterAiCategory.Neutral),
+
     RAD("RAD", CounterAiCategory.Neutral),
 
     TICKET("TICKET", CounterAiCategory.Positive),

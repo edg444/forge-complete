@@ -4,7 +4,12 @@ Types:Enchantment
 S:Mode$ Continuous | Affected$ Land.YouCtrl | AddType$ Plains | RemoveLandTypes$ True | Description$ Lands you control are Plains.
 S:Mode$ Continuous | Affected$ Card.YouOwn+nonLand | SetColor$ White | AffectedZone$ Hand,Library,Graveyard,Exile,Command | Description$ Nonland permanents you control are white. The same is true for spells you control and nonland cards you own that aren't on the battlefield.
 S:Mode$ Continuous | Affected$ Card.YouCtrl+nonLand | SetColor$ White | AffectedZone$ Battlefield,Stack
-S:Mode$ ManaConvert | ValidPlayer$ You | ManaConversion$ White->AnyColor nonWhite<-C | Description$ You may spend white mana as though it were mana of any color. You may spend other mana only as though it were colorless mana.
+S:Mode$ ManaConvert | ValidPlayer$ You | ManaConversion$ White->AnyColor nonWhite<-C | IsPresent$ Card.Self+!PrintedTextActive | Description$ You may spend white mana as though it were mana of any color. You may spend other mana only as though it were colorless mana.
+# As printed the costs themselves change rather than what mana may be spent on them, so the pips are
+# really white - devotion, colored-pip counting and color identity all see {W}, and there is no
+# "other mana only as colorless" restriction at all.
+S:Mode$ Continuous | Affected$ Card.YouOwn+nonLand | SetColoredSymbolsTo$ W | AffectedZone$ Hand,Library,Graveyard,Exile,Command,Stack | IsPresent$ Card.Self+PrintedTextActive | Description$ (As printed) All colored mana symbols in all costs on all of these cards and permanents are {W}.
+S:Mode$ Continuous | Affected$ Card.YouCtrl+nonLand | SetColoredSymbolsTo$ W | AffectedZone$ Battlefield | IsPresent$ Card.Self+PrintedTextActive
 SVar:NonStackingEffect:True
 AI:RemoveDeck:Random
 Oracle:Lands you control are Plains.\nNonland permanents you control are white. The same is true for spells you control and nonland cards you own that aren't on the battlefield.\nYou may spend white mana as though it were mana of any color. You may spend other mana only as though it were colorless mana.

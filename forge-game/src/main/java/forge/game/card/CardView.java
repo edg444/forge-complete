@@ -164,6 +164,24 @@ public class CardView extends GameEntityView {
         return get(TrackableProperty.Rotate180);
     }
 
+    public boolean hasOnOffSwitch() {
+        return get(TrackableProperty.HasOnOffSwitch);
+    }
+    public boolean isSwitchedOn() {
+        return get(TrackableProperty.SwitchedOn);
+    }
+    void updateSwitchedOn(Card c) {
+        set(TrackableProperty.HasOnOffSwitch, c.hasOnOffSwitch());
+        set(TrackableProperty.SwitchedOn, c.isSwitchedOn());
+    }
+
+    public boolean isSigned() {
+        return get(TrackableProperty.Signed);
+    }
+    void updateSigned(Card c) {
+        set(TrackableProperty.Signed, c.isSigned());
+    }
+
     public boolean isFlipped() {
         return get(TrackableProperty.Flipped);
     }
@@ -853,6 +871,18 @@ public class CardView extends GameEntityView {
         set(TrackableProperty.NonAbilityText, c.getNonAbilityText());
     }
 
+    /**
+     * Counter types this card keeps on the players rather than on itself (Water Gun Balloon Game's
+     * pop! counters), named by the card's InfoPlayerCounters SVar. They show on each player's own
+     * panel already, but a card that is only about tracking them needs the whole board in one place.
+     */
+    public String getInfoPlayerCounters() {
+        return get(TrackableProperty.InfoPlayerCounters);
+    }
+    void updateInfoPlayerCounters(Card c) {
+        set(TrackableProperty.InfoPlayerCounters, c.getSVar("InfoPlayerCounters"));
+    }
+
     public String getText() {
         return getText(getCurrentState(), null);
     }
@@ -1109,6 +1139,7 @@ public class CardView extends GameEntityView {
         updateSpecialize(c);
         updateRingLevel(c);
         updateMarkerText(c);
+        updateInfoPlayerCounters(c);
 
         if (c.getIntensity(false) > 0) {
             updateIntensity(c);
@@ -1474,8 +1505,17 @@ public class CardView extends GameEntityView {
             set(TrackableProperty.OriginalManaCost, c.getManaCost());
         }
         void updateManaCost(Card c) {
-            set(TrackableProperty.ManaCost, c.getCurrentState().getPerpetualAdjustedManaCost());
-            set(TrackableProperty.OriginalManaCost, c.getManaCost());
+            // Perpetual (Alchemy) adjustments and continuous changed-cost effects (Celestial Dawn as
+            // printed) are separate mechanisms and neither one sees the other, so take whichever
+            // actually differs from the printed cost. These two were also the wrong way round: the
+            // *changed* cost was being stored as the Original, which is invisible until some card
+            // finally has one.
+            final ManaCost printed = c.getCurrentState().getManaCost();
+            final ManaCost changed = c.getManaCost();
+            final ManaCost shown = changed.getShortString().equals(printed.getShortString())
+                    ? c.getCurrentState().getPerpetualAdjustedManaCost() : changed;
+            set(TrackableProperty.ManaCost, shown);
+            set(TrackableProperty.OriginalManaCost, printed);
         }
 
         public String getOracleText() {

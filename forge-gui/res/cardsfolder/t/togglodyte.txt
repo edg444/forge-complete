@@ -1,0 +1,14 @@
+Name:Togglodyte
+ManaCost:3
+Types:Artifact Creature Golem
+PT:4/4
+K:ETBReplacement:Other:DBTurnOn
+# a flag rather than a counter, so the detail panel can show OFF as well as ON
+SVar:DBTurnOn:DB$ ToggleSwitch | Defined$ Self | On$ True | SpellDescription$ This creature enters turned on.
+T:Mode$ SpellCast | ValidActivatingPlayer$ Player | TriggerZones$ Battlefield | Execute$ TrigToggle | TriggerDescription$ Whenever a player casts a spell, toggle this creature's ON/OFF switch.
+SVar:TrigToggle:DB$ ToggleSwitch | Defined$ Self
+S:Mode$ Continuous | Affected$ Card.Self+turnedOff | AddHiddenKeyword$ CARDNAME can't attack. & CARDNAME can't block. | Description$ As long as this creature is turned off, it can't attack or block, and prevent all damage it would deal.
+S:Mode$ CantPreventDamage | ValidSource$ Card.Self+turnedOff | Description$ Prevent all damage this creature would deal while it's turned off.
+R:Event$ DamageDone | ActiveZones$ Battlefield | ValidSource$ Card.Self+turnedOff | ReplaceWith$ DBPrevent | Prevent$ True | Description$ Prevent all damage this creature would deal while it's turned off.
+SVar:DBPrevent:DB$ ReplaceDamage | Amount$ All
+Oracle:This creature enters turned on.\nWhenever a player casts a spell, toggle this creature's ON/OFF switch.\nAs long as this creature is turned off, it can't attack or block, and prevent all damage it would deal.

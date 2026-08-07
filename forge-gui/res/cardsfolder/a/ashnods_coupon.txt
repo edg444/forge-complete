@@ -1,5 +1,6 @@
 Name:Ashnod's Coupon
-ManaCost:no cost
+ManaCost:0
 Types:Artifact
-A:AB$ Effect | Cost$ T Sac<1/CARDNAME> | ValidTgts$ Player | TgtPrompt$ Select target player | SpellDescription$ Target player gets you target drink. You pay any costs for the drink.
+A:AB$ Effect | Cost$ T Sac<1/CARDNAME> | ValidTgts$ Player | TgtPrompt$ Select target player | IsPresent$ Card.Self+!PrintedTextActive | PresentZone$ Battlefield | SpellDescription$ Target player gets you target drink. You pay any costs for the drink.
+A:AB$ Effect | Cost$ T Sac<1/CARDNAME> | ValidTgts$ Player | TgtPrompt$ Select target player | IsPresent$ Card.Self+PrintedTextActive | PresentZone$ Battlefield | SpellDescription$ (As printed) Target player gets you target drink. They pay any costs for the drink.
 Oracle:{T}, Sacrifice this artifact: Target player gets you target drink. You pay any costs for the drink.

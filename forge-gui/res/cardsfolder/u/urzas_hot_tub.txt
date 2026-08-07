@@ -1,0 +1,5 @@
+Name:Urza's Hot Tub
+ManaCost:2
+Types:Artifact
+A:AB$ ChangeZone | Cost$ 2 Discard<1/Card/card> | Origin$ Library | Destination$ Hand | ChangeType$ Card.sharesWordInNameWith Discarded | ChangeTypeDesc$ card that shares a complete word in its name with the discarded card | ChangeNum$ 1 | Reveal$ True | SpellDescription$ Search your library for a card that shares a complete word in its name with the discarded card, reveal it, put it into your hand, then shuffle.
+Oracle:{2}, Discard a card: Search your library for a card that shares a complete word in its name with the discarded card, reveal it, put it into your hand, then shuffle.

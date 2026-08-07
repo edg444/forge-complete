@@ -48,7 +48,9 @@ import forge.game.spellability.AbilitySub;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.SpellAbilityStackInstance;
 import forge.game.spellability.TargetRestrictions;
+import forge.game.spellability.TargetChoices;
 import forge.game.staticability.StaticAbility;
+import forge.game.staticability.StaticAbilityChoosesTargets;
 import forge.game.staticability.StaticAbilityMode;
 import forge.game.trigger.Trigger;
 import forge.game.trigger.TriggerType;
@@ -116,6 +118,19 @@ public class ComputerUtil {
             chooseTargets.accept(sa);
             if (!sa.isTargetNumberValid()) {
                 return false;
+            }
+        }
+        // Gleemax hands targeting to someone else. The AI picks its own targets while deciding
+        // whether to cast at all and then goes straight to the stack - it never calls setupTargets
+        // except for copies - so its choices have to be replaced here, once it has committed. It
+        // still chooses *whether* to cast; it just doesn't choose what the spell hits. If the new
+        // chooser can't pick legally, keep the AI's targets rather than voiding the spell, which is
+        // what copied spells already do.
+        final Player targetChooser = StaticAbilityChoosesTargets.getChooser(ai, sa);
+        if (targetChooser != null && !targetChooser.equals(ai)) {
+            final TargetChoices aiPicked = sa.getTargets();
+            if (!sa.setupTargets()) {
+                sa.setTargets(aiPicked);
             }
         }
         // Spell Permanents inherit their cost from Mana Cost

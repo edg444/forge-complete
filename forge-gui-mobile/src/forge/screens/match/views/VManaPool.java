@@ -73,7 +73,11 @@ public class VManaPool extends VDisplayArea {
             if (halves > 0) {
                 hasHalf = true;
             }
-            label.text = halves > 0 ? (colorCount == 0 ? "½" : colorCount + "½") : Integer.toString(colorCount);
+            if (label.colorCode == ManaAtom.COLORLESS && player.hasInfiniteColorless()) {
+                label.text = "∞"; // Mox Lotus
+            } else {
+                label.text = halves > 0 ? (colorCount == 0 ? "½" : colorCount + "½") : Integer.toString(colorCount);
+            }
         }
     }
 

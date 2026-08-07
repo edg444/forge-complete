@@ -1,0 +1,16 @@
+Name:Water Gun Balloon Game
+ManaCost:2
+Types:Artifact
+# pop! counters live on the players, so each player's position shows on their own panel. A counter
+# "on 0" is just zero counters here, so the enters clause has nothing to do but say so.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigStart | TriggerDescription$ As CARDNAME enters, each player puts a pop! counter on "0."
+SVar:TrigStart:DB$ Pump
+T:Mode$ SpellCast | ValidActivatingPlayer$ Player | TriggerZones$ Battlefield | Execute$ TrigPop | TriggerDescription$ Whenever a player casts a spell, move that player's pop! counter up one. Whenever a player's pop! counter hits "5," that player creates a 5/5 pink Giant Teddy Bear creature token and resets all pop! counters to "0."
+SVar:TrigPop:DB$ PutCounter | Defined$ TriggeredActivator | CounterType$ POP | CounterNum$ 1 | SubAbility$ DBBurst
+# the balloon bursts at five - token first, then every player is reset to zero
+SVar:DBBurst:DB$ Token | TokenAmount$ 1 | TokenScript$ p_5_5_giant_teddy_bear | TokenOwner$ TriggeredActivator | ConditionCheckSVar$ PopCount | ConditionSVarCompare$ GE5 | SubAbility$ DBResetAll | StackDescription$ Their pop! counter hits 5 - they create a 5/5 pink Giant Teddy Bear and all pop! counters reset.
+SVar:DBResetAll:DB$ RemoveCounter | Defined$ Player | CounterType$ POP | CounterNum$ All | ConditionCheckSVar$ PopCount | ConditionSVarCompare$ GE5
+SVar:PopCount:TriggeredActivator$CardCounters.POP
+SVar:InfoPlayerCounters:POP
+AI:RemoveDeck:Random
+Oracle:As this artifact enters, each player puts a pop! counter on "0."\nWhenever a player casts a spell, move that player's pop! counter up one.\nWhenever a player's pop! counter hits "5," that player creates a 5/5 pink Giant Teddy Bear creature token and resets all pop! counters to "0."

@@ -10,7 +10,7 @@ Reconstructed 2026-08-06 from git history (`git log --no-merges HEAD --not upstr
 which remains the authoritative record if this file and the commits ever disagree.
 
 **Keeping this current:** add to *Unreleased* as work lands, and date a section when it's built and
-deployed. The one-line rule: if it changed behaviour, it belongs here.
+deployed. The one-line rule: if it changed behavior, it belongs here.
 
 ---
 
@@ -33,12 +33,12 @@ A complete half-integer layer running parallel to the whole-number one.
   and life panel.
 - **Damage** — half damage marked on creatures, half-aware prevention shields.
 
-### Honour-system mechanics
+### Honor-system mechanics
 
 - `CostFlavorAction<description/ButtonLabel>` — a cost paid by asserting you did something physical.
-- `AILogic$ Chance.N` — rolled once per turn (not at every priority), one attempt per turn, honoured
+- `AILogic$ Chance.N` — rolled once per turn (not at every priority), one attempt per turn, honored
   by every API rather than only ones using the base `canPlay`.
-- Persistent honour states modelled as custom counters toggled by two zero-cost abilities
+- Persistent honor states modelled as custom counters toggled by two zero-cost abilities
   (Standing Army's `STANDING`, Fat Ass's `EATING`).
 
 ### Choices the rules can't derive
@@ -68,7 +68,7 @@ Only Who // What // When // Where // Why has ever needed this.
 - `CardStateName.Split3/4/5` and a shared `SPLIT_STATES` list; every hardcoded LeftSplit+RightSplit
   pair iterates the states a card actually has, so **two-face splits take an identical path**.
 - `ALTERNATE` advances to the next face instead of always landing on face 1.
-- Combined name, mana cost, colour, colour identity, type and oracle text fold in every face.
+- Combined name, mana cost, color, color identity, type and oracle text fold in every face.
 - Fuse, Aftermath and Rooms are deliberately left two-face.
 - Split-state views are populated in a **separate pass** from ability-text rendering, because
   rendering one face can read a sibling.
@@ -79,6 +79,27 @@ Only Who // What // When // Where // Why has ever needed this.
   on the battlefield *and* in the library. Battlefield is the primary zone; the library keeps a
   shadow entry. Residency must end in `Zone.remove`, never `Zone.add`: leaving the battlefield hands
   a *copy* to the destination zone, so an add-side hook never sees the original.
+
+### Pink, a sixth color
+
+`MagicColor.PINK` (`1 << 5`) is a real color bit, deliberately left out of `ALL_COLORS` so nothing
+that iterates the five touches it — but a pink permanent is **not** colorless. `ColorSet` gained 32
+constants at indices 32–63 to preserve its ordinal-equals-mask invariant. Only Water Gun Balloon
+Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly five.
+
+### Printed text vs. errata (R&D's Secret Lair)
+
+- `StaticAbilityMode.IgnoreErrata` + `StaticAbilityIgnoreErrata` — is the Lair out, and does *this
+  printing* predate a given errata date.
+- Properties `PrintedTextActive`, `PrintedBefore <yyyyMMdd>`, `SourcePrintedBefore <yyyyMMdd>`
+  (the last asks about the card doing the checking, for an Aura's Enchant restriction).
+- The one broad rule is templating: a card printed before Dominaria reads "target creature or
+  player" and can't hit planeswalkers or battles. Everything else is per card, on the card.
+
+### Infinite mana
+
+`ManaPool.addInfiniteColorless()` — a genuine flag, not a large number. Spending colorless refills
+it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ### Other
 
@@ -94,9 +115,53 @@ Only Who // What // When // Where // Why has ever needed this.
 
 ## Log
 
-### Unreleased
+### Unreleased — Unhinged colorless; pink; errata reversal
 
-_(nothing pending)_
+- **All remaining Unhinged colorless cards** (unh/121–135): Gleemax, Letter Bomb, Mox Lotus,
+  My First Tome, Pointy Finger of Doom, Rod of Spanking, Time Machine, Togglodyte, Toy Boat,
+  Urza's Hot Tub, Water Gun Balloon Game, World-Bottling Kit, City of Ass, R&D's Secret Lair.
+- **Pink** as a sixth color, for the Giant Teddy Bear token.
+- **Mox Lotus** produces genuinely infinite colorless mana, shown as ∞.
+- **Time Machine** returns cards in a *later game*, queued on the `Match` by card name (a card
+  object doesn't survive into the next game) and rebuilt as a Command-zone trigger keyed on the
+  turn number.
+- Card flags that survive the copy every zone change makes: `signed` (Letter Bomb),
+  `switchedOn` (Togglodyte), `chosenExpansion` (World-Bottling Kit).
+- **Errata reversal under R&D's Secret Lair**, printing-specific:
+  - *Every pre-Dominaria printing* — "target creature or player" can't hit planeswalkers or battles.
+  - *Debt of Loyalty* — control is gained unconditionally, not only on a successful regeneration.
+  - *Bloodvial Purveyor* — the attack buff is permanent, with no "until end of turn".
+  - *Marath, Will of the Wild* — a second ability with no `XMin1`, so X may be 0.
+  - *Goblin King* (printed before Ninth Edition) — **all** Goblins get +1/+1 and mountainwalk,
+    including itself; "Other" was added in 9ED.
+  - *Relic Bind* (Legends printing only) — enchants **any** artifact, including your own; the
+    opponent-only restriction was power-level errata applied in Fourth Edition.
+  - *Lotus Vale* — a triggered ability rather than a replacement effect, so the land is already in
+    play when it resolves and can be tapped for mana in response, then buried.
+  - *Ashnod's Coupon* — the target player pays for the drink, not you.
+  - *Celestial Dawn* — the printed card changes the **costs themselves** ("All colored mana symbols
+    in all costs on all of these cards and permanents are {W}") rather than what mana may be spent
+    on them. So the pips really are white — devotion, colored-pip counting and color identity all
+    see {W} — and the Oracle version's "other mana only as colorless" restriction doesn't exist.
+    Needed a new `SetColoredSymbolsTo$` continuous static (a *transform* of whatever the card
+    happens to cost, unlike `ManaCost$`, which sets a fixed one).
+
+- **Misprints under the Lair**, via a new `PrintingIs <SET>[:<collectorNumber>]` property. A misprint
+  is printing-specific in a way errata isn't: only the physical copy carrying the mistake plays as
+  written, so identity is the whole problem. All three are expressed as *boosts and cost reductions*
+  gated on the printing, never as `SetPower`/`SetToughness`/`ManaCost$`, so they layer cleanly and
+  the card is untouched without the Lair.
+  - *Gríma Wormtongue* — the Secret Lair bonus card (SLD #734) was printed 2/4. Every SLD copy is
+    misprinted, and Forge already had that printing.
+  - *Orcish Oriflamme* — Alpha (LEA #166) printed the cost as {1}{R}; Beta corrected it to {3}{R}.
+    Every Alpha copy is misprinted.
+  - *Corpse Knight* — only **some** M20 #206 copies are 2/3, and they share a set and collector
+    number with the correct ones, so this one needed a printing of its own: a new
+    `206a … ${"variant": "Misprint"}` edition entry (following the existing `F203a`/`F203b`
+    precedent) plus a `Variant:Misprint:` block to mark it. The toughness stays Lair-gated — the
+    variant marks *which copy you own*, not what it does.
+
+- Known cosmetic gap: the split-card *image* renderer still draws two halves for the five-face card.
 
 ### 2026-08-06 — Unhinged green and multicolor; five-face splits
 
@@ -115,7 +180,7 @@ _(nothing pending)_
 - **AI:** takes a lethal solo attack rather than benching a creature whose evasion needs it to attack
   alone; picks a letter for letter-choosing cards instead of choosing nothing.
 - **Deck generation:** random decks reinforce orphaned typal payoffs with some enablers (a Zombie
-  lord no longer arrives with no Zombies). Random-colour piles are preserved by design.
+  lord no longer arrives with no Zombies). Random-color piles are preserved by design.
 
 ### 2026-08-05 — Unhinged red; half mana production
 
@@ -138,7 +203,7 @@ _(nothing pending)_
 
 - **Cards:** Mother of Goons, Kill! Destroy!, Infernal Spawn of Infernal Spawn of Evil, Farewell to
   Arms, Eye to Eye, Mouth to Mouth, Loose Lips.
-- `Chance.N` reworked: rolled once per turn, one attempt per turn, honoured by every API.
+- `Chance.N` reworked: rolled once per turn, one attempt per turn, honored by every API.
 - AI battle handling: don't let a battle swallow the whole attack step; send leftover attackers;
   only commit the whole attack to a battle it can finish.
 - Four AI fixes: prowess timing, vehicle reanimation, named card legality, tap-ability hoarding.

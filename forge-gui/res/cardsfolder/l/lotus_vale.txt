@@ -2,7 +2,16 @@ Name:Lotus Vale
 ManaCost:no cost
 Types:Land
 A:AB$ Mana | Cost$ T | Produced$ Any | Amount$ 3 | SpellDescription$ Add three mana of any one color.
-R:Event$ Moved | Destination$ Battlefield | ValidCard$ Card.Self | ReplaceWith$ PayBeforeETB | Description$ If this land would enter, sacrifice two untapped lands instead. If you do, put this land onto the battlefield. If you don't, put it into its owner's graveyard.
+R:Event$ Moved | Destination$ Battlefield | ValidCard$ Card.Self | ReplaceWith$ PayBeforeETB | IsPresent$ Card.PrintedTextActive | PresentCompare$ EQ0 | Description$ If this land would enter, sacrifice two untapped lands instead. If you do, put this land onto the battlefield. If you don't, put it into its owner's graveyard.
+# The errata turned a triggered ability into a replacement effect. As printed the land is already
+# in play when the trigger resolves, so it can be tapped for mana in response and then buried.
+# Card.Self can't be used to gate the replacement - it isn't on the battlefield yet when that runs -
+# so the presence check rides on the Lair itself, which is always a battlefield card when active.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive | Execute$ TrigPrintedSac | TriggerDescription$ (As printed) When CARDNAME comes into play, sacrifice two untapped lands or bury CARDNAME.
+SVar:TrigPrintedSac:DB$ Sacrifice | Defined$ You | SacValid$ Land.untapped | SacMessage$ two untapped lands | Amount$ 2 | StrictAmount$ True | Optional$ True | RememberSacrificed$ True | SubAbility$ DBPrintedBury
+SVar:DBPrintedBury:DB$ Destroy | Defined$ Self | NoRegen$ True | ConditionCheckSVar$ Y | ConditionSVarCompare$ LT2 | SubAbility$ DBPrintedCleanup
+SVar:DBPrintedCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:Y:Remembered$Amount
 SVar:PayBeforeETB:DB$ Sacrifice | SacValid$ Land.untapped | Defined$ You | RememberSacrificed$ True | Amount$ 2 | StrictAmount$ True | SubAbility$ MoveToGraveyard
 SVar:MoveToGraveyard:DB$ ChangeZone | Origin$ All | Destination$ Graveyard | Defined$ ReplacedCard | ConditionCheckSVar$ X | ConditionSVarCompare$ LT2 | SubAbility$ MoveToBattlefield
 SVar:MoveToBattlefield:DB$ ChangeZone | Origin$ All | Destination$ Battlefield | Defined$ ReplacedCard | ConditionCheckSVar$ X | ConditionSVarCompare$ GE2 | SubAbility$ DBCleanup

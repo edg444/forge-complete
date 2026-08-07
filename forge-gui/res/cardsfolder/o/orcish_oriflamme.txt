@@ -2,5 +2,9 @@ Name:Orcish Oriflamme
 ManaCost:3 R
 Types:Enchantment
 S:Mode$ Continuous | Affected$ Creature.attacking+YouCtrl | AddPower$ 1 | Description$ Attacking creatures you control get +1/+0.
+# Alpha printed the cost as {1}{R}; Beta corrected it to {3}{R}. This rewrites the cost rather than
+# reducing it: as printed the card really does cost {1}{R}, so its mana value is 2 and the overlay
+# should say so. EffectZone$ All is what lets the static run while the card is still in hand.
+S:Mode$ Continuous | Affected$ Card.Self | ManaCost$ 1 R | AffectedZone$ Hand,Stack,Graveyard,Exile,Library,Command,Battlefield | EffectZone$ All | IsPresent$ Card.Self+PrintingIs LEA:166+PrintedTextActive | PresentZone$ Hand,Stack,Graveyard,Exile,Library,Command,Battlefield | Description$ (As printed) This spell costs {1}{R}. (Alpha misprinted its cost.)
 SVar:PlayMain1:TRUE
 Oracle:Attacking creatures you control get +1/+0.

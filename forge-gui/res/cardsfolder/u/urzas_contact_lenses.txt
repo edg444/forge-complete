@@ -1,5 +1,5 @@
 Name:Urza's Contact Lenses
-ManaCost:no cost
+ManaCost:0
 Types:Artifact
 R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This artifact enters tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True

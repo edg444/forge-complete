@@ -45,6 +45,7 @@ public class CardDetailUtil {
         RED(253, 66, 40),
         GREEN(22, 115, 69),
         MULTICOLOR(248, 219, 85),
+        PINK(255, 133, 192),
         COLORLESS(160, 166, 164),
         LAND(190, 153, 112),
         FACE_DOWN(83, 61, 40),
@@ -120,6 +121,7 @@ public class CardDetailUtil {
             case BLACK -> DetailColors.BLACK;
             case RED -> DetailColors.RED;
             case GREEN -> DetailColors.GREEN;
+            case PINK -> DetailColors.PINK;
             default -> null;
         };
     }
@@ -422,6 +424,37 @@ public class CardDetailUtil {
                     area.append("Draft Notes: ").append(note);
                 }
             }
+        }
+
+        // counters this card keeps on the players rather than on itself (Water Gun Balloon Game)
+        final String infoCounters = card.getInfoPlayerCounters();
+        if (infoCounters != null && !infoCounters.isEmpty() && card.getController() != null) {
+            for (final String counterName : infoCounters.split(",")) {
+                final CounterType ct = CounterType.getType(counterName.trim());
+                if (ct == null) {
+                    continue;
+                }
+                final List<PlayerView> seats = new ArrayList<>();
+                seats.add(card.getController());
+                seats.addAll(card.getController().getOpponents());
+                for (final PlayerView seat : seats) {
+                    area.append("\n");
+                    area.append(seat.getName()).append(" - ").append(ct.getName()).append(": ");
+                    area.append(seat.getCounters() == null ? 0 : seat.getCounters().count(ct));
+                }
+            }
+        }
+
+        // ON/OFF switch (Togglodyte)
+        if (card.hasOnOffSwitch()) {
+            area.append("\n");
+            area.append(card.isSwitchedOn() ? "(turned ON)" : "(turned OFF)");
+        }
+
+        // signed (Letter Bomb)
+        if (card.isSigned()) {
+            area.append("\n");
+            area.append("(signed)");
         }
 
         // chosen artist

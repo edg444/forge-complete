@@ -1,0 +1,18 @@
+Name:Letter Bomb
+ManaCost:6
+Types:Artifact
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSign | TriggerDescription$ When this artifact enters, sign it and shuffle it into target player's library. That player reveals each card they draw until they draw this card. When that player draws this card, it deals 19½ damage to them.
+# ownership moves with it, so it really is in that player's library and they are the one who draws it
+SVar:TrigSign:DB$ SignCard | Defined$ Self | ValidTgts$ Player | TgtPrompt$ Select target player | SubAbility$ DBGiveAway
+SVar:DBGiveAway:DB$ GainOwnership | Defined$ Self | DefinedPlayer$ Targeted | SubAbility$ DBShuffleIn
+SVar:DBShuffleIn:DB$ ChangeZone | Defined$ Self | Origin$ Battlefield | Destination$ Library | Shuffle$ True
+# both of these function while this card sits in the library - forEachCardInGame covers libraries,
+# so the handlers see them without any extra registration
+R:Event$ Draw | ActiveZones$ Library | ValidPlayer$ You | ReplaceWith$ RevealedDraw | Description$ That player reveals each card they draw until they draw this card.
+SVar:RevealedDraw:DB$ Draw | Defined$ You | NumCards$ 1 | RememberDrawn$ True | SubAbility$ DBRevealIt
+SVar:DBRevealIt:DB$ Reveal | Defined$ You | RevealValid$ Card.IsRemembered | SubAbility$ DBRevealCleanup
+SVar:DBRevealCleanup:DB$ Cleanup | ClearRemembered$ True
+T:Mode$ Drawn | ValidCard$ Card.Self | TriggerZones$ Hand | Execute$ TrigBoom | TriggerDescription$ When that player draws this card, it deals 19½ damage to them.
+SVar:TrigBoom:DB$ DealDamage | Defined$ You | NumDmg$ 39 | Halves$ True
+AI:RemoveDeck:Random
+Oracle:When this artifact enters, sign it and shuffle it into target player's library. That player reveals each card they draw until they draw this card. When that player draws this card, it deals 19½ damage to them.

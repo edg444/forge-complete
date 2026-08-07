@@ -196,6 +196,9 @@ public class AbilityManaPart implements java.io.Serializable {
         for (final String c : afterReplace.split(" ")) {
             if (StringUtils.isNumeric(c)) {
                 this.lastManaProduced.add(manaHolder.computeIfAbsent((byte) ManaAtom.COLORLESS, b -> new Mana(b, source, this, player)), Integer.parseInt(c));
+            } else if ("Infinity".equals(c)) {
+                // Mox Lotus. Unbounded rather than a big pile, so it can't be spent dry.
+                manaPool.addInfiniteColorless(source, this);
             } else if (halfColorProduced(c) != 0) {
                 // Unhinged half mana (Mons's Goblin Waiters' {HR}). This has to be caught before the
                 // colour lookup below, which reads a two-character token as a pair of colours and so

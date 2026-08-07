@@ -61,6 +61,8 @@ public class CardCopyService {
         out.setGamePieceType(copyFrom.getGamePieceType());
         out.setTokenCard(copyFrom.isTokenCard());
         out.setStartingDeckCard(copyFrom.isStartingDeckCard());
+        // a signature is on the physical card, so it follows it into every zone
+        out.setSigned(copyFrom.isSigned());
 
         if (toGame == copyFrom.getGame()) {
             // Only copy these things if we're not copying them into a new game

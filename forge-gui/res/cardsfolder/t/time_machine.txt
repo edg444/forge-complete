@@ -1,0 +1,10 @@
+Name:Time Machine
+ManaCost:5
+Types:Artifact
+# the return is queued on the Match, since this game ends before it happens
+A:AB$ ChangeZone | Cost$ T | Defined$ Self,Targeted | Origin$ Battlefield | Destination$ Exile | ValidTgts$ Creature.YouOwn+nonToken | TgtPrompt$ Select target nontoken creature you own | RememberChanged$ True | SubAbility$ DBQueue | SpellDescription$ Exile this artifact and target nontoken creature you own. Return them to the battlefield at the beginning of your upkeep on your turn X in the next game you play with one of your opponents in this game, where X is the mana value of the exiled creature.
+SVar:DBQueue:DB$ QueueNextGameReturn | Defined$ Remembered | Turn$ X | SubAbility$ DBTimeCleanup
+SVar:X:Targeted$CardManaCost
+SVar:DBTimeCleanup:DB$ Cleanup | ClearRemembered$ True
+AI:RemoveDeck:Random
+Oracle:{T}: Exile this artifact and target nontoken creature you own. Return them to the battlefield at the beginning of your upkeep on your turn X in the next game you play with one of your opponents in this game, where X is the mana value of the exiled creature.

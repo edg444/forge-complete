@@ -549,6 +549,12 @@ public class ManaCostBeingPaid {
         if (paidShard.isHalf() && !test) {
             payHalfChange(paidShard, inColor, pool);
         }
+        // An unbounded pool settles the rest of the generic portion at once. Every payment path
+        // decrements generic a point at a time, so Gleemax's {1000000} would otherwise take a million
+        // round trips through the payment machinery - which reads as a hang, not as slowness.
+        if (paidShard == ManaCostShard.GENERIC && pool.hasInfiniteColorless() && getGenericManaAmount() > 0) {
+            decreaseGenericMana(getGenericManaAmount());
+        }
         return true;
     }
     

@@ -94,6 +94,82 @@ public class CardProperty {
             if (!card.isPermanent()) {
                 return false;
             }
+        } else if (property.equals("PrintedTextActive")) {
+            // R&D's Secret Lair is out, so this card plays as printed rather than as errata'd
+            if (!forge.game.staticability.StaticAbilityIgnoreErrata.isActive(game)) {
+                return false;
+            }
+        } else if (property.startsWith("PrintedBefore ")) {
+            // for cards whose later printings carry the corrected text - the old copy plays as
+            // printed, a modern copy does not
+            if (!forge.game.staticability.StaticAbilityIgnoreErrata.printedBefore(card,
+                    property.split("PrintedBefore ", 2)[1])) {
+                return false;
+            }
+        } else if (property.equals("hasFlavorText")) {
+            // My First Tome asks you to say a card's flavor text, so a card without any isn't a
+            // legal choice - the guess it sets up would be impossible rather than merely hard.
+            final forge.item.IPaperCard fpc = card.getPaperCard();
+            if (fpc == null) {
+                return false;
+            }
+            final String flavor = forge.card.CardFlavorText.get(fpc.getEdition(), fpc.getCollectorNumber());
+            if (flavor == null || flavor.isEmpty()) {
+                return false;
+            }
+        } else if (property.startsWith("PrintingIs ")) {
+            // a specific printing, as "SET" or "SET:collectorNumber". Misprints are printing
+            // specific in a way errata isn't - only the physical copy that carries the mistake plays
+            // as written, so set alone isn't always enough to pick it out.
+            final String wanted = property.split("PrintingIs ", 2)[1];
+            final forge.item.IPaperCard pc = card.getPaperCard();
+            if (pc == null) {
+                return false;
+            }
+            final int colon = wanted.indexOf(':');
+            if (colon < 0) {
+                if (!wanted.equalsIgnoreCase(pc.getEdition())) {
+                    return false;
+                }
+            } else if (!wanted.substring(0, colon).equalsIgnoreCase(pc.getEdition())
+                    || !wanted.substring(colon + 1).equalsIgnoreCase(pc.getCollectorNumber())) {
+                return false;
+            }
+        } else if (property.startsWith("SourcePrintedBefore ")) {
+            // same question asked about the card doing the checking rather than the card being
+            // checked - an Aura's Enchant restriction runs against the prospective target, but it is
+            // the Aura's own printing that decides whether the printed restriction applies
+            if (!forge.game.staticability.StaticAbilityIgnoreErrata.printedBefore(source,
+                    property.split("SourcePrintedBefore ", 2)[1])) {
+                return false;
+            }
+        } else if (property.equals("turnedOn")) {
+            if (!card.isSwitchedOn()) {
+                return false;
+            }
+        } else if (property.equals("turnedOff")) {
+            // a card with no switch is not "turned off" - only one that has one and is set to off
+            if (!card.hasOnOffSwitch() || card.isSwitchedOn()) {
+                return false;
+            }
+        } else if (property.equals("ExpansionIsChosen")) {
+            if (source.getChosenExpansion().isEmpty()
+                    || !source.getChosenExpansion().equalsIgnoreCase(card.getSetCode())) {
+                return false;
+            }
+        } else if (property.startsWith("sharesWordInNameWith ")) {
+            // Urza's Hot Tub: "a complete word in its name", so whole words, case-insensitively
+            final String restriction = property.split("sharesWordInNameWith ", 2)[1];
+            boolean found = false;
+            for (final Card other : AbilityUtils.getDefinedCards(source, restriction, spellAbility)) {
+                if (sharesCompleteWord(card, other)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                return false;
+            }
         } else if (property.startsWith("Rarity")) {
             // Rare-B-Gone. One rarity per property (RarityRare, RarityMythicRare, ...); "rare or
             // mythic" is expressed as two comma-separated alternatives in the valid string itself.
@@ -2364,6 +2440,21 @@ public class CardProperty {
         } catch (final NumberFormatException e) {
             return Integer.MAX_VALUE;
         }
+    }
+
+    private static boolean sharesCompleteWord(final Card a, final Card b) {
+        final Set<String> words = new java.util.HashSet<>();
+        for (final String w : a.getDisplayName().toLowerCase().split("[^\\p{L}\\p{N}]+")) {
+            if (!w.isEmpty()) {
+                words.add(w);
+            }
+        }
+        for (final String w : b.getDisplayName().toLowerCase().split("[^\\p{L}\\p{N}]+")) {
+            if (!w.isEmpty() && words.contains(w)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static int countLetters(final String name) {

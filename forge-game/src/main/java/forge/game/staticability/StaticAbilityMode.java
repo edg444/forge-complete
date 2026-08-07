@@ -206,6 +206,12 @@ public enum StaticAbilityMode {
 
     // StaticAbilityTopLibraryOnBattlefield
     TopLibraryPermanentsOnBattlefield,
+
+    // StaticAbilityChoosesTargets
+    ChoosesTargets,
+
+    // StaticAbilityIgnoreErrata
+    IgnoreErrata,
     ;
 
     public static StaticAbilityMode smartValueOf(final String value) {

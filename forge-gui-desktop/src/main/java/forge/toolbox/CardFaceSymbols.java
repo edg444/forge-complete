@@ -30,6 +30,56 @@ public class CardFaceSymbols {
 
     private static final int manaImageSize = 13;
 
+    private static final int DRAWN_SYMBOL_SIZE = 40;
+
+    /**
+     * Generic mana symbols only exist as art up to {20}, so anything past that has to be drawn.
+     * These are the only two the card pool actually uses - Mox Lotus and Gleemax.
+     */
+    static final int[] OVERSIZED_GENERIC = { 100, 1000000 };
+
+    private static Graphics2D startSymbol(final java.awt.image.BufferedImage img,
+            final Color fill, final Color rim) {
+        final Graphics2D g = img.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g.setColor(fill);
+        g.fillOval(1, 1, DRAWN_SYMBOL_SIZE - 2, DRAWN_SYMBOL_SIZE - 2);
+        g.setColor(rim);
+        g.setStroke(new BasicStroke(2f));
+        g.drawOval(1, 1, DRAWN_SYMBOL_SIZE - 2, DRAWN_SYMBOL_SIZE - 2);
+        return g;
+    }
+
+    static SkinImage pinkPlaceholder() {
+        final java.awt.image.BufferedImage img = new java.awt.image.BufferedImage(
+                DRAWN_SYMBOL_SIZE, DRAWN_SYMBOL_SIZE, java.awt.image.BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = startSymbol(img, new Color(255, 133, 192), new Color(158, 62, 110));
+        g.dispose();
+        return SkinImage.fromImage(img);
+    }
+
+    static SkinImage genericNumberSymbol(final int n) {
+        final java.awt.image.BufferedImage img = new java.awt.image.BufferedImage(
+                DRAWN_SYMBOL_SIZE, DRAWN_SYMBOL_SIZE, java.awt.image.BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = startSymbol(img, new Color(203, 198, 193), new Color(120, 112, 106));
+
+        // shrink to fit rather than clip - {1000000} is seven digits in a 40px circle
+        final String text = String.valueOf(n);
+        Font font = new Font(Font.SANS_SERIF, Font.BOLD, 26);
+        while (font.getSize() > 4
+                && g.getFontMetrics(font).stringWidth(text) > DRAWN_SYMBOL_SIZE - 8) {
+            font = font.deriveFont((float) font.getSize() - 1);
+        }
+        g.setFont(font);
+        g.setColor(Color.BLACK);
+        final FontMetrics fm = g.getFontMetrics();
+        g.drawString(text, (DRAWN_SYMBOL_SIZE - fm.stringWidth(text)) / 2,
+                (DRAWN_SYMBOL_SIZE - fm.getHeight()) / 2 + fm.getAscent());
+        g.dispose();
+        return SkinImage.fromImage(img);
+    }
+
     /**
      * <p>
      * loadImages.
@@ -52,6 +102,14 @@ public class CardFaceSymbols {
             if (MANA_IMAGES.containsKey(c)) {
                 MANA_IMAGES.put("H" + c, MANA_IMAGES.get(c));
             }
+        }
+
+        // Pink is only ever a card's color, never a real mana symbol, so there is no art to cut out
+        // of the skin sprite. Borrowing the colorless one would read as "colorless", which is the one
+        // thing pink is not - so it gets a drawn placeholder instead.
+        MANA_IMAGES.put("K", pinkPlaceholder());
+        for (final int n : OVERSIZED_GENERIC) {
+            MANA_IMAGES.put(String.valueOf(n), genericNumberSymbol(n));
         }
 
         MANA_IMAGES.put("E", FSkin.getImage(FSkinProp.IMG_ENERGY, 40, 40));

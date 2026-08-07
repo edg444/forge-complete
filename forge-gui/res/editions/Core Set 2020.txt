@@ -216,6 +216,7 @@ ScryfallCode=M20
 204 U Wolfrider's Saddle @Raoul Vitale
 205 U Woodland Champion @Randy Vargas
 206 U Corpse Knight @Karl Kopinski
+206a U Corpse Knight @Karl Kopinski ${"variant": "Misprint"}
 207 U Creeping Trailblazer @Johan Grenier
 208 U Empyrean Eagle @Jason A. Engle
 209 U Ironroot Warlord @Filip Burburan

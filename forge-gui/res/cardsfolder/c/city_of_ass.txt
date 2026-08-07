@@ -1,0 +1,12 @@
+Name:City of Ass
+ManaCost:no cost
+Types:Land
+K:ETBTapped
+# one ability per colour rather than Produced$ Any, because the half has to match the whole and the
+# express choice for "Any" resolves to a single token. This keeps it a real mana ability.
+A:AB$ Mana | Cost$ T | Produced$ W HW | SpellDescription$ Add one and one-half white mana.
+A:AB$ Mana | Cost$ T | Produced$ U HU | SpellDescription$ Add one and one-half blue mana.
+A:AB$ Mana | Cost$ T | Produced$ B HB | SpellDescription$ Add one and one-half black mana.
+A:AB$ Mana | Cost$ T | Produced$ R HR | SpellDescription$ Add one and one-half red mana.
+A:AB$ Mana | Cost$ T | Produced$ G HG | SpellDescription$ Add one and one-half green mana.
+Oracle:This land enters tapped.\n{T}: Add one and one-half mana of any one color.

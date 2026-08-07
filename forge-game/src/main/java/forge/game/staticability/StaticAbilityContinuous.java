@@ -31,6 +31,7 @@ import forge.game.ability.ApiType;
 import forge.game.card.*;
 import forge.game.cost.Cost;
 import forge.card.mana.ManaCost;
+import forge.card.mana.ManaCostShard;
 import forge.game.keyword.Keyword;
 import forge.game.keyword.KeywordInterface;
 import forge.game.player.Player;
@@ -672,6 +673,37 @@ public final class StaticAbilityContinuous {
                 if (stAb.hasParam("ManaCost")) {
                     final ManaCost manaCost = new ManaCost(stAb.getParam("ManaCost"));
                     affectedCard.addChangedManaCost(manaCost, false, se.getTimestamp(), stAb.getId());
+                }
+                if (stAb.hasParam("SetColoredSymbolsTo")) {
+                    // Celestial Dawn as printed. Unlike ManaCost$ this is a transform rather than a
+                    // fixed cost, since it has to work on whatever the affected card happens to cost:
+                    // generic and {C} stay put, every colored shard becomes the given symbol. Running
+                    // it over an already-converted cost is a no-op, so repeated application can't drift.
+                    final ManaCost old = affectedCard.getManaCost();
+                    if (!old.isNoCost()) {
+                        final String symbol = stAb.getParam("SetColoredSymbolsTo");
+                        final StringBuilder sb = new StringBuilder();
+                        final int generic = old.getGenericCost();
+                        if (old.isZero()) {
+                            sb.append('0');
+                        }
+                        if (generic > 0) {
+                            sb.append(generic);
+                        }
+                        for (final ManaCostShard s : old) {
+                            sb.append(' ');
+                            if (s.getColorMask() == 0) {
+                                sb.append(s);
+                            } else if (s.isOr2Generic()) {
+                                // one symbol still, so it keeps its "or two generic" half
+                                sb.append("2/").append(symbol);
+                            } else {
+                                sb.append(symbol);
+                            }
+                        }
+                        affectedCard.addChangedManaCost(new ManaCost(sb.toString().trim()), false,
+                                se.getTimestamp(), stAb.getId());
+                    }
                 }
 
                 if (stAb.hasParam("AddNames")) { // currently only for AllNonLegendaryCreatureNames

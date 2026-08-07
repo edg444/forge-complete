@@ -3,6 +3,9 @@ ManaCost:2 B
 Types:Legendary Creature Human Advisor
 PT:1/4
 S:Mode$ CantGainLife | ValidPlayer$ Player.Opponent | Description$ Your opponents can't gain life.
+# The Secret Lair bonus card was printed 2/4. A boost rather than SetPower, so it layers cleanly
+# with counters and with anything else setting power.
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ 1 | IsPresent$ Card.Self+PrintingIs SLD:734+PrintedTextActive | Description$ (As printed) This creature's power is 2. (The Secret Lair printing misprinted it.)
 A:AB$ LoseLife | Cost$ T Sac<1/Creature.Other/another creature> | ValidTgts$ Player | LifeAmount$ 1 | SubAbility$ DBAmass | SpellDescription$ Target player loses 1 life. If the sacrificed creature was legendary, amass Orcs 2.
 SVar:DBAmass:DB$ Amass | Type$ Orc | Num$ 2 | ConditionDefined$ Sacrificed | ConditionPresent$ Creature.Legendary
 DeckHas:Ability$Token|Counters|Sacrifice & Type$Orc|Army

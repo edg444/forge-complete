@@ -20,6 +20,7 @@ package forge.card;
 import com.badlogic.gdx.graphics.Color;
 import forge.Forge;
 import forge.Graphics;
+import forge.assets.FDrawnSymbol;
 import forge.assets.FSkinImage;
 import forge.assets.FSkinImageInterface;
 import forge.card.mana.ManaCost;
@@ -45,6 +46,17 @@ public class CardFaceSymbols {
             if (Forge.getAssets().manaImages().containsKey(c)) {
                 Forge.getAssets().manaImages().put("H" + c, Forge.getAssets().manaImages().get(c));
             }
+        }
+
+        // Pink has no symbol in any sprite, and generic mana art stops at {20}. Without these the
+        // lookup below finds nothing and raises a bug report on the phone, which is worse than the
+        // blank image the desktop showed. Drawn rather than borrowed - reusing the colorless symbol
+        // for pink would read as "colorless", the one thing pink is not.
+        Forge.getAssets().manaImages().put("K",
+                new FDrawnSymbol(new Color(1f, 0.522f, 0.753f, 1f), new Color(0.62f, 0.243f, 0.431f, 1f)));
+        for (final int n : new int[] { 100, 1000000 }) {
+            Forge.getAssets().manaImages().put(String.valueOf(n),
+                    new FDrawnSymbol(new Color(0.796f, 0.776f, 0.757f, 1f), new Color(0.47f, 0.439f, 0.416f, 1f)));
         }
 
         Forge.getAssets().manaImages().put("E", FSkinImage.ENERGY);

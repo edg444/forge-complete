@@ -26,6 +26,7 @@ import forge.card.mana.ManaAtom;
 import forge.card.mana.ManaCostShard;
 import forge.game.Game;
 import forge.game.ability.AbilityKey;
+import forge.game.card.Card;
 import forge.game.cost.CostPayment;
 import forge.game.event.EventValueChangeType;
 import forge.game.event.GameEventManaPool;
@@ -67,6 +68,14 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
     // colour are folded into a whole mana as they meet, so they aren't stranded - see
     // AbilityManaPart.produceMana.
     private final Map<Byte, Integer> floatingHalves = Maps.newHashMap();
+
+    // Mox Lotus adds {inf}. Rather than a very large number that can still be exhausted, the pool
+    // remembers that its colourless is unbounded: spending some puts it straight back. It empties
+    // with everything else at end of step or phase.
+    private boolean infiniteColorless;
+    private Card infiniteSource;
+    private AbilityManaPart infiniteManaAbility;
+    private Mana cachedInfiniteMana;
 
     public final int getHalfMana(final byte color) {
         return floatingHalves.getOrDefault(color, 0);
@@ -198,6 +207,10 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
         // below since it can outlive the last whole mana
         final boolean clearedAHalf = hasHalfMana();
         clearHalfMana();
+        infiniteColorless = false;
+        infiniteSource = null;
+        infiniteManaAbility = null;
+        cachedInfiniteMana = null;
         if (floatingMana.isEmpty()) {
             // the pool event below is what actually repaints the UI, so a half that emptied on its
             // own still has to fire it or the stale value lingers until the pool next changes
@@ -271,8 +284,43 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
         owner.updateManaForView();
     }
 
+    public final boolean hasInfiniteColorless() {
+        return infiniteColorless;
+    }
+    public final void addInfiniteColorless(final Card source, final AbilityManaPart manaAbility) {
+        // Mana insists on a real producer - it takes an LKI copy of the source card in its
+        // constructor, and isSnow() reads it later - so the refills have to remember one too.
+        infiniteColorless = true;
+        infiniteSource = source;
+        infiniteManaAbility = manaAbility;
+        // one real mana so the pool is non-empty and the usual "can you pay" checks find something
+        addMana(newInfiniteMana());
+    }
+    private Mana newInfiniteMana() {
+        // Mana's constructor takes an LKI copy of the source card, so building these one at a time in
+        // a payment loop is ruinously expensive - one shared instance is enough, since every mana
+        // this pool hands back is identical by construction.
+        if (cachedInfiniteMana == null) {
+            cachedInfiniteMana = new Mana((byte) ManaAtom.COLORLESS, infiniteSource, infiniteManaAbility, owner);
+        }
+        return cachedInfiniteMana;
+    }
+    /** Puts back colorless spent while the pool is unbounded, so it never actually runs down. */
+    private void refillInfinite(final Iterable<Mana> spent) {
+        if (!infiniteColorless || infiniteSource == null) {
+            return;
+        }
+        for (final Mana m : spent) {
+            if (m.getColor() == (byte) ManaAtom.COLORLESS) {
+                floatingMana.put(m.getColor(), newInfiniteMana());
+            }
+        }
+    }
+
     public boolean removeManaNoEvent(final Mana mana) {
-        return floatingMana.remove(mana.getColor(), mana);
+        final boolean removed = floatingMana.remove(mana.getColor(), mana);
+        refillInfinite(Lists.newArrayList(mana));
+        return removed;
     }
 
     public boolean removeMana(Mana... manaList) {
@@ -285,6 +333,7 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
                 colors.add(MagicColor.Color.fromByte(m.getColor()));
             }
         }
+        refillInfinite(manaList);
         if (!colors.isEmpty()) {
             owner.updateManaForView();
             owner.getGame().fireEvent(new GameEventManaPool(owner, EventValueChangeType.Removed, colors));
@@ -422,6 +471,18 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
      */
     public boolean payManaCostFromPool(final ManaCostBeingPaid cost, final SpellAbility sa, final boolean test, List<Mana> manaSpentToPay) {
         final boolean hasConverge = sa.getHostCard().hasConverge();
+
+        // An unbounded pool settles the whole generic portion at once. getUnpaidShards() below
+        // expands generic into one list entry per point, so Gleemax's {1000000} would otherwise build
+        // and sort a million-element list and take a million trips through the payment loop.
+        // must run on the test pass too - that is the affordability check, and it walks the same list
+        if (infiniteColorless && cost.getGenericManaAmount() > 0) {
+            cost.decreaseGenericMana(cost.getGenericManaAmount());
+            if (!test) {
+                manaSpentToPay.add(newInfiniteMana());
+            }
+        }
+
         List<ManaCostShard> unpaidShards = cost.getUnpaidShards();
         Collections.sort(unpaidShards); // most difficult shards must come first
         for (ManaCostShard part : unpaidShards) {

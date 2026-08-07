@@ -30,6 +30,7 @@ import forge.game.player.*;
 import forge.game.replacement.ReplacementEffect;
 import forge.game.spellability.*;
 import forge.game.staticability.StaticAbility;
+import forge.game.staticability.StaticAbilityChoosesTargets;
 import forge.game.trigger.Trigger;
 import forge.game.trigger.TriggerType;
 import forge.game.trigger.WrappedAbility;
@@ -1329,6 +1330,19 @@ public class PlayerControllerAi extends PlayerController {
             sa.setTargetingPlayer(targetingPlayer);
             return targetingPlayer.getController().chooseTargetsFor(sa);
         }
+        // Gleemax - the same handover as TargetingPlayer above, but game-wide rather than declared by
+        // the ability. Triggers never reach SpellAbility.setupTargets, so without this the AI's own
+        // targets stand. It still decides whether it wants an optional trigger; it just doesn't
+        // decide what that trigger hits.
+        final Player chooser = StaticAbilityChoosesTargets.getChooser(player, sa);
+        if (chooser != null && !chooser.equals(player) && sa.usesTargeting()) {
+            if (!brains.doTrigger(sa, isMandatory)) {
+                return false;
+            }
+            sa.clearTargets();
+            sa.setTargetingPlayer(chooser);
+            return chooser.getController().chooseTargetsFor(sa);
+        }
         return brains.doTrigger(sa, isMandatory);
     }
 
@@ -1465,17 +1479,28 @@ public class PlayerControllerAi extends PlayerController {
 
     @Override
     public String guessString(SpellAbility sa, String message) {
-        // No way for the AI to meaningfully reason about a real-world artist name (or similar free-
-        // text fact) - pick a genuine one at random from cards it can currently see, giving it an
-        // honest small chance to guess right instead of being guaranteed wrong.
+        // No way for the AI to meaningfully reason about a real-world fact (an artist's name, whose
+        // flavor text it just heard), so it picks a genuine answer at random from cards it can
+        // currently see - an honest small chance of being right rather than guaranteed wrong.
+        // What KIND of answer differs per card, though: guessing an artist when asked for a card
+        // name is wrong every single time, which is no guess at all.
+        final boolean wantsArtist = sa != null && sa.getApi() == ApiType.GuessArtist;
+
         final CardCollection seen = new CardCollection();
         seen.addAll(player.getCardsIn(ZoneType.Battlefield));
         seen.addAll(player.getCardsIn(ZoneType.Hand));
         seen.addAll(player.getCardsIn(ZoneType.Graveyard));
         final List<String> candidates = new ArrayList<>();
         for (final Card c : seen) {
-            if (c.getPaperCard() != null && !c.getPaperCard().getArtist().isEmpty()) {
-                candidates.add(c.getPaperCard().getArtist());
+            if (c.getPaperCard() == null) {
+                continue;
+            }
+            if (wantsArtist) {
+                if (!c.getPaperCard().getArtist().isEmpty()) {
+                    candidates.add(c.getPaperCard().getArtist());
+                }
+            } else if (!c.getPaperCard().getName().isEmpty()) {
+                candidates.add(c.getPaperCard().getName());
             }
         }
         return candidates.isEmpty() ? "" : Aggregates.random(candidates);

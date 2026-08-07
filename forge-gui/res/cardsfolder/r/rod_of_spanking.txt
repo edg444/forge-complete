@@ -1,0 +1,6 @@
+Name:Rod of Spanking
+ManaCost:1
+Types:Artifact
+A:AB$ DealDamage | Cost$ 2 T | ValidTgts$ Player | TgtPrompt$ Select target player | NumDmg$ 1 | SubAbility$ DBThankYou | SpellDescription$ This artifact deals 1 damage to target player. Then untap this artifact unless that player says "Thank you, sir. May I have another?"
+SVar:DBThankYou:DB$ Untap | Defined$ Self | UnlessPayer$ Targeted | UnlessCost$ FlavorAction<Say "Thank you, sir. May I have another?"/Thank you, sir!> | UnlessAI$ Chance.50
+Oracle:{2}, {T}: This artifact deals 1 damage to target player. Then untap this artifact unless that player says "Thank you, sir. May I have another?"

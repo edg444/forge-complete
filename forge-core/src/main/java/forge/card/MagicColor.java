@@ -18,6 +18,9 @@ public final class MagicColor {
     public static final byte BLACK     = 1 << 2;
     public static final byte RED       = 1 << 3;
     public static final byte GREEN     = 1 << 4;
+    // Water Gun Balloon Game's Giant Teddy Bear. A real sixth colour bit, deliberately left out of
+    // ALL_COLORS so nothing that deals with the five touches it - but it is not colourless either.
+    public static final byte PINK      = 1 << 5;
     // Colorless values for MagicColor needs to be the absence of any color
     // Any comparison between colorless cards and colorless mana need to be adjusted appropriately.
     public static final byte COLORLESS = 0;
@@ -65,6 +68,7 @@ public final class MagicColor {
                 case Constant.RED: return MagicColor.RED;
                 case Constant.GREEN: return MagicColor.GREEN;
                 case Constant.COLORLESS: return MagicColor.COLORLESS;
+                case Constant.PINK: return MagicColor.PINK;
             }
         }
         return 0; // colorless
@@ -127,6 +131,9 @@ public final class MagicColor {
         /** The Colorless. */
         public static final String COLORLESS = "colorless";
 
+        /** The Pink. */
+        public static final String PINK = "pink";
+
         /** The only colors. */
         public static final ImmutableList<String> ONLY_COLORS = ImmutableList.of(WHITE, BLUE, BLACK, RED, GREEN);
         public static final ImmutableList<String> COLORS_AND_COLORLESS = ImmutableList.of(WHITE, BLUE, BLACK, RED, GREEN, COLORLESS);
@@ -153,7 +160,8 @@ public final class MagicColor {
         BLACK(Constant.BLACK, MagicColor.BLACK, "B", "Swamp", "lblBlack"),
         RED(Constant.RED, MagicColor.RED, "R", "Mountain", "lblRed"),
         GREEN(Constant.GREEN, MagicColor.GREEN, "G", "Forest", "lblGreen"),
-        COLORLESS(Constant.COLORLESS, MagicColor.COLORLESS, "C", null, "lblColorless");
+        COLORLESS(Constant.COLORLESS, MagicColor.COLORLESS, "C", null, "lblColorless"),
+        PINK(Constant.PINK, MagicColor.PINK, "K", null, "lblPink");
 
         private final String name, shortName, symbol;
         private final String basicLandType;
@@ -176,6 +184,7 @@ public final class MagicColor {
                 case MagicColor.BLACK -> BLACK;
                 case MagicColor.RED -> RED;
                 case MagicColor.GREEN -> GREEN;
+                case MagicColor.PINK -> PINK;
                 default -> COLORLESS;
             };
         }

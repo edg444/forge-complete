@@ -68,7 +68,41 @@ public enum ColorSet implements Iterable<Color>, Serializable {
     BRG(Color.BLACK, Color.RED, Color.GREEN),
     BRGW(Color.BLACK, Color.RED, Color.GREEN, Color.WHITE),
     UBRG(Color.BLUE, Color.BLACK, Color.RED, Color.GREEN),
-    WUBRG(Color.WHITE, Color.BLUE, Color.BLACK, Color.RED, Color.GREEN)
+    WUBRG(Color.WHITE, Color.BLUE, Color.BLACK, Color.RED, Color.GREEN),
+
+    // pink combinations (mask bit 6) - indices 32-63, so the ordinal stays equal to the mask
+    P(Color.PINK),
+    PW(Color.WHITE, Color.PINK),
+    PU(Color.BLUE, Color.PINK),
+    PWU(Color.WHITE, Color.BLUE, Color.PINK),
+    PB(Color.BLACK, Color.PINK),
+    PWB(Color.WHITE, Color.BLACK, Color.PINK),
+    PUB(Color.BLUE, Color.BLACK, Color.PINK),
+    PWUB(Color.WHITE, Color.BLUE, Color.BLACK, Color.PINK),
+    PR(Color.RED, Color.PINK),
+    PRW(Color.RED, Color.WHITE, Color.PINK),
+    PUR(Color.BLUE, Color.RED, Color.PINK),
+    PURW(Color.BLUE, Color.RED, Color.WHITE, Color.PINK),
+    PBR(Color.BLACK, Color.RED, Color.PINK),
+    PRWB(Color.RED, Color.WHITE, Color.BLACK, Color.PINK),
+    PUBR(Color.BLUE, Color.BLACK, Color.RED, Color.PINK),
+    PWUBR(Color.WHITE, Color.BLUE, Color.BLACK, Color.RED, Color.PINK),
+    PG(Color.GREEN, Color.PINK),
+    PGW(Color.GREEN, Color.WHITE, Color.PINK),
+    PGU(Color.GREEN, Color.BLUE, Color.PINK),
+    PGWU(Color.GREEN, Color.WHITE, Color.BLUE, Color.PINK),
+    PBG(Color.BLACK, Color.GREEN, Color.PINK),
+    PWBG(Color.WHITE, Color.BLACK, Color.GREEN, Color.PINK),
+    PBGU(Color.BLACK, Color.GREEN, Color.BLUE, Color.PINK),
+    PGWUB(Color.GREEN, Color.WHITE, Color.BLUE, Color.BLACK, Color.PINK),
+    PRG(Color.RED, Color.GREEN, Color.PINK),
+    PRGW(Color.RED, Color.GREEN, Color.WHITE, Color.PINK),
+    PGUR(Color.GREEN, Color.BLUE, Color.RED, Color.PINK),
+    PRGWU(Color.RED, Color.GREEN, Color.WHITE, Color.BLUE, Color.PINK),
+    PBRG(Color.BLACK, Color.RED, Color.GREEN, Color.PINK),
+    PBRGW(Color.BLACK, Color.RED, Color.GREEN, Color.WHITE, Color.PINK),
+    PUBRG(Color.BLUE, Color.BLACK, Color.RED, Color.GREEN, Color.PINK),
+    PWUBRG(Color.WHITE, Color.BLUE, Color.BLACK, Color.RED, Color.GREEN, Color.PINK)
     ;
 
     private static final long serialVersionUID = 794691267379929080L;
@@ -83,7 +117,7 @@ public enum ColorSet implements Iterable<Color>, Serializable {
     }
 
     public static ColorSet fromMask(final int mask) {
-        final int mask32 = mask & MagicColor.ALL_COLORS;
+        final int mask32 = mask & (MagicColor.ALL_COLORS | MagicColor.PINK);
         return values()[mask32];
     }
 

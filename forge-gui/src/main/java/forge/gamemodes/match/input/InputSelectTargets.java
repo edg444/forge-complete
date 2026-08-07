@@ -299,7 +299,11 @@ public final class InputSelectTargets extends InputSyncronizedBase {
         }
 
         if (!choices.contains(card)) {
-            showMessage(sa.getHostCard() + " - The selected card is not " + Lang.nounWithAmount(1, tgt.getValidDesc()) + ".");
+            // the card's own wording is what R&D's Secret Lair is overriding, so quoting it back
+            // ("not a player or planeswalker" at a planeswalker) would be actively misleading
+            final String errata = forge.game.staticability.StaticAbilityIgnoreErrata.targetBlockedReason(sa, card);
+            showMessage(sa.getHostCard() + " - " + (errata != null ? errata
+                    : "The selected card is not " + Lang.nounWithAmount(1, tgt.getValidDesc()) + "."));
             return false;
         }
 

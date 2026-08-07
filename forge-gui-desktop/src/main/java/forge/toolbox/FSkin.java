@@ -589,6 +589,11 @@ public class FSkin {
             this.image = image0;
         }
 
+        /** For symbols drawn at runtime rather than cut out of a skin sprite (the pink mana placeholder). */
+        public static SkinImage fromImage(final Image image0) {
+            return new SkinImage(image0);
+        }
+
         protected void changeImage(final Image image0, final ImageIcon imageIcon0) {
             this.image = image0;
             this.imageIcon = imageIcon0;
@@ -1477,6 +1482,16 @@ public class FSkin {
         addEncodingSymbol("TK", FSkinProp.IMG_TICKET);
         addEncodingSymbol("EXPERIENCE", FSkinProp.IMG_EXPERIENCE);
         addEncodingSymbol("A-", FSkinProp.IMG_ALCHEMY);
+
+        // Pink has no symbol in any skin sprite, so there is nothing to cut out - {K} has to be
+        // drawn and written into the symbol cache by hand or the <img> tag resolves to a missing file.
+        CardFaceSymbols.pinkPlaceholder().save(
+                ForgeConstants.CACHE_SYMBOLS_DIR + "/K.png", SYMBOL_WIDTH, SYMBOL_HEIGHT);
+        // likewise generic mana past {20}, which the skin sprites stop at
+        for (final int n : CardFaceSymbols.OVERSIZED_GENERIC) {
+            CardFaceSymbols.genericNumberSymbol(n).save(
+                    ForgeConstants.CACHE_SYMBOLS_DIR + "/" + n + ".png", SYMBOL_WIDTH, SYMBOL_HEIGHT);
+        }
 
         // Set look and feel after skin loaded
         FView.SINGLETON_INSTANCE.setSplashProgessBarMessage("Setting look and feel...");

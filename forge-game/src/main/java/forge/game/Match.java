@@ -62,6 +62,11 @@ public class Match {
     // battlefield" - see ChangeZoneEffect's NextGameFirstUpkeep handling.
     private final Map<RegisteredPlayer, Integer> pendingFirstUpkeepBasicLand = Maps.newHashMap();
 
+    // Time Machine. Unlike the Double Dip family this carries specific cards and a specific turn of
+    // the next game, so it is a list of entries rather than a running total.
+    public record TimeMachineReturn(int turn, List<String> cardNames) { }
+    private final Map<RegisteredPlayer, List<TimeMachineReturn>> pendingTimeMachine = Maps.newHashMap();
+
     public Match(final GameRules rules0, final List<RegisteredPlayer> players0, final String title) {
         players = Collections.unmodifiableList(Lists.newArrayList(players0));
         rules = rules0;
@@ -253,12 +258,46 @@ public class Match {
         pendingFirstUpkeepBasicLand.merge(player, count, Integer::sum);
     }
 
+    public void queueTimeMachineReturn(RegisteredPlayer player, List<String> cardNames, int turn) {
+        if (cardNames.isEmpty()) {
+            return;
+        }
+        pendingTimeMachine.computeIfAbsent(player, p -> Lists.newArrayList())
+                .add(new TimeMachineReturn(Math.max(1, turn), cardNames));
+    }
+
     // Called once per new game in this match, right after zones are prepared. Rather than
     // applying the gain directly (which would silently happen with no trigger/stack presence),
     // build a real Command-zone Effect carrying a genuine "first upkeep of the game" trigger -
     // same mechanism DB$ Effect uses (see EffectEffect.java) - so it announces and resolves on
     // the stack exactly like any other "at the beginning of the first upkeep" ability.
     private void createPendingFirstUpkeepEffects(Game game) {
+        if (!pendingTimeMachine.isEmpty()) {
+            for (Player p : game.getPlayers()) {
+                List<TimeMachineReturn> pending = pendingTimeMachine.remove(p.getRegisteredPlayer());
+                if (pending == null) {
+                    continue;
+                }
+                for (TimeMachineReturn entry : pending) {
+                    Card hostCard = Card.fromPaperCard(StaticData.instance().getCommonCards().getCard("Time Machine"), p);
+                    Card eff = SpellAbilityEffect.createEffect(null, hostCard, p, "Time Machine", hostCard.getImageKey(), game.getNextTimestamp());
+                    String names = String.join(",", entry.cardNames());
+                    eff.setSVar("TrigReturn", "DB$ MakeCard | Defined$ You | Names$ " + names + " | Zone$ Battlefield | SubAbility$ DBExile");
+                    eff.setSVar("DBExile", "DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile");
+                    eff.setSVar("YourTurn", "Count$YourTurns");
+                    // CheckSVar/SVarCompare, NOT ConditionCheckSVar - the Condition* forms are
+                    // SpellAbility restrictions and are silently ignored on a trigger, which fires it
+                    // on every one of your upkeeps instead of only turn X
+                    Trigger trigger = TriggerHandler.parseTrigger("Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You"
+                            + " | CheckSVar$ YourTurn | SVarCompare$ EQ" + entry.turn()
+                            + " | Execute$ TrigReturn | TriggerDescription$ At the beginning of your upkeep on your turn "
+                            + entry.turn() + ", return " + names + " to the battlefield.", eff, true);
+                    trigger.setActiveZone(EnumSet.of(ZoneType.Command));
+                    eff.addTrigger(trigger);
+                    game.getAction().moveTo(ZoneType.Command, eff, null, AbilityKey.newMap());
+                }
+            }
+        }
         if (!pendingFirstUpkeepLifeGain.isEmpty()) {
             for (Player p : game.getPlayers()) {
                 Integer life = pendingFirstUpkeepLifeGain.remove(p.getRegisteredPlayer());

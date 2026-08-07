@@ -1389,6 +1389,12 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
             return false;
         }
 
+        // R&D's Secret Lair - see StaticAbilityIgnoreErrata for which errata this reverses
+        if (entity instanceof Card targetCard
+                && forge.game.staticability.StaticAbilityIgnoreErrata.targetBlockedReason(this, targetCard) != null) {
+            return false;
+        }
+
         // Restriction related to this ability
         if (usesTargeting()) {
             final TargetRestrictions tr = getTargetRestrictions();
@@ -2148,7 +2154,9 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
                     targetingPlayer = getActivatingPlayer().getController().chooseSingleEntityForEffect(
                             candidates, currentAbility, "Choose the targeting player", null);
                 } else {
-                    targetingPlayer = getActivatingPlayer();
+                    // Gleemax hands every spell's and ability's targeting to its controller
+                    targetingPlayer = forge.game.staticability.StaticAbilityChoosesTargets.getChooser(
+                            getActivatingPlayer(), currentAbility);
                 }
                 // don't set targeting player when forceful target,
                 // "targeting player controls" should not be reset when the spell is copied

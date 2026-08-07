@@ -1,0 +1,8 @@
+Name:Pointy Finger of Doom
+ManaCost:4
+Types:Artifact
+# where a spun finger stops is chance, so the target is picked at random rather than chosen
+A:AB$ ChooseCard | Cost$ 3 T | Defined$ You | Choices$ Permanent | ChoiceZone$ Battlefield | AtRandom$ True | Amount$ 1 | Mandatory$ True | Reveal$ True | RevealTitle$ The finger points to | SubAbility$ DBDestroy | SpellDescription$ Spin this artifact in the middle of the table so that it rotates completely at least once, then destroy the closest permanent the finger points to.
+SVar:DBDestroy:DB$ Destroy | Defined$ ChosenCard | SubAbility$ DBFingerCleanup
+SVar:DBFingerCleanup:DB$ Cleanup | ClearChosenCard$ True
+Oracle:{3}, {T}: Spin this artifact in the middle of the table so that it rotates completely at least once, then destroy the closest permanent the finger points to.

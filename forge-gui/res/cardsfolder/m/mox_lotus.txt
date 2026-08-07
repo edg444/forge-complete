@@ -1,0 +1,8 @@
+Name:Mox Lotus
+ManaCost:15
+Types:Artifact
+# genuinely unbounded, not a large number - see ManaPool.addInfiniteColorless
+A:AB$ Mana | Cost$ T | Produced$ Infinity | SpellDescription$ Add {∞}.
+A:AB$ Mana | Cost$ 100 | Produced$ Any | Amount$ 1 | SpellDescription$ Add one mana of any color.
+AI:RemoveDeck:All
+Oracle:{T}: Add {∞}.\n{100}: Add one mana of any color.

@@ -1,0 +1,6 @@
+Name:Giant Teddy Bear
+ManaCost:no cost
+Colors:pink
+Types:Creature Giant Teddy Bear
+PT:5/5
+Oracle:

@@ -1,0 +1,7 @@
+Name:World-Bottling Kit
+ManaCost:5
+Types:Artifact
+A:AB$ ChooseExpansion | Cost$ 5 Sac<1/CARDNAME> | Defined$ You | SubAbility$ DBBottle | SpellDescription$ Choose a Magic set. Exile all permanents with that set's expansion symbol except for basic lands.
+SVar:DBBottle:DB$ ChangeZoneAll | ChangeType$ Permanent.ExpansionIsChosen+nonBasicLand | Origin$ Battlefield | Destination$ Exile
+AI:RemoveDeck:All
+Oracle:{5}, Sacrifice this artifact: Choose a Magic set. Exile all permanents with that set's expansion symbol except for basic lands.

@@ -1,0 +1,10 @@
+Name:My First Tome
+ManaCost:3
+Types:Artifact Book
+A:AB$ ChooseCard | Cost$ 1 T | Defined$ You | Choices$ Card.YouOwn+hasFlavorText | ChoiceZone$ Hand | Amount$ 1 | Mandatory$ True | ChoiceTitle$ Choose the card whose flavor text you'll say | ValidTgts$ Opponent | TgtPrompt$ Select target opponent | IsPresent$ Card.YouOwn+hasFlavorText | PresentZone$ Hand | SubAbility$ DBGuess | SpellDescription$ Say the flavor text on a card in your hand. Target opponent guesses that card's name. You may reveal that card. If you do and they guessed wrong, you draw a card.
+SVar:DBGuess:DB$ GuessName | DefinedCard$ ChosenCard | Defined$ Targeted | GuessWrong$ DBReveal | SubAbility$ DBTomeCleanup
+SVar:DBReveal:DB$ Reveal | Defined$ You | RevealValid$ Card.ChosenCard | Optional$ True | RememberRevealed$ True | SubAbility$ DBDraw
+SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1 | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ GE1
+SVar:DBTomeCleanup:DB$ Cleanup | ClearChosenCard$ True | ClearRemembered$ True
+AI:RemoveDeck:Random
+Oracle:{1}, {T}: Say the flavor text on a card in your hand. Target opponent guesses that card's name. You may reveal that card. If you do and they guessed wrong, you draw a card.

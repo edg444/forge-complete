@@ -316,6 +316,7 @@ Surrakar:Surrakars
 Symbiote:Symbiotes
 Synth:Synths
 Survivor:Survivors
+Teddy Bear:Teddy Bears
 Tentacle:Tentacles
 Tetravite:Tetravites
 The Biggest, Baddest, Nastiest, Scariest Creature You'll Ever See

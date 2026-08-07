@@ -348,6 +348,13 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     // Zone-changing spells should store card's zone here
     private Zone currentZone;
     private Zone shadowZone;
+    // Letter Bomb is physically signed, so it stays identifiable after being shuffled into somebody
+    // else's library - which means it has to survive the copy every zone change makes.
+    private boolean signed;
+    // Togglodyte. null means the card has no ON/OFF switch at all, so nothing is shown for it.
+    private Boolean switchedOn;
+    // World-Bottling Kit's bottled set
+    private String chosenExpansion = "";
 
     // LKI copies of cards are allowed to store the LKI about the zone the card was known to be in last.
     // For all cards except LKI copies this should always be null.
@@ -7037,6 +7044,32 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     // keeps seeing a permanent; the library merely still lists it so its size and top card are right.
     public Zone getShadowZone() {
         return shadowZone;
+    }
+
+    public boolean hasOnOffSwitch() {
+        return switchedOn != null;
+    }
+    public boolean isSwitchedOn() {
+        return switchedOn != null && switchedOn;
+    }
+    public void setSwitchedOn(final boolean on) {
+        switchedOn = on;
+        view.updateSwitchedOn(this);
+    }
+
+    public String getChosenExpansion() {
+        return chosenExpansion;
+    }
+    public void setChosenExpansion(final String set) {
+        chosenExpansion = set;
+    }
+
+    public boolean isSigned() {
+        return signed;
+    }
+    public void setSigned(final boolean s) {
+        signed = s;
+        view.updateSigned(this);
     }
     public void setShadowZone(Zone zone) {
         shadowZone = zone;

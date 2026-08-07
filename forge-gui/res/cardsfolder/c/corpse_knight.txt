@@ -1,7 +1,13 @@
 Name:Corpse Knight
+# Only some M20 copies carry the 2/3 misprint, so unlike Gríma and Orcish Oriflamme it can't be
+# picked out by set and collector number - it needs a printing of its own (M20 206a) to be pickable.
+# The variant exists to mark that printing; the toughness itself is Lair-gated below, because
+# without the Lair every copy is 2/2 no matter which one you own.
+Variant:Misprint:Oracle:Whenever another creature you control enters, each opponent loses 1 life.\n(This printing was misprinted with toughness 3.)
 ManaCost:W B
 Types:Creature Zombie Knight
 PT:2/2
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.Other+YouCtrl | TriggerZones$ Battlefield | Execute$ TrigDrain | TriggerDescription$ Whenever another creature you control enters, each opponent loses 1 life.
 SVar:TrigDrain:DB$ LoseLife | Defined$ Player.Opponent | LifeAmount$ 1
+S:Mode$ Continuous | Affected$ Card.Self | AddToughness$ 1 | IsPresent$ Card.Self+PrintingIs M20:206a+PrintedTextActive | Description$ (As printed) This creature's toughness is 3. (Some Core Set 2020 copies were misprinted.)
 Oracle:Whenever another creature you control enters, each opponent loses 1 life.

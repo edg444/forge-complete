@@ -1,0 +1,6 @@
+Name:Gleemax
+ManaCost:1000000
+Types:Legendary Artifact
+S:Mode$ ChoosesTargets | Description$ You choose all targets for all spells and abilities.
+AI:RemoveDeck:All
+Oracle:You choose all targets for all spells and abilities.

@@ -504,6 +504,13 @@ public class PlayerView extends GameEntityView {
         set(TrackableProperty.Flashback, CardView.getCollection(p.getCardsIn(ZoneType.Flashback)));
     }
 
+    public boolean hasInfiniteColorless() {
+        return get(TrackableProperty.InfiniteColorless);
+    }
+    void updateInfiniteColorless(Player p) {
+        set(TrackableProperty.InfiniteColorless, p.getManaPool().hasInfiniteColorless());
+    }
+
     public int getMana(final byte color) {
         return getMana().getOrDefault(color, 0);
     }
@@ -511,6 +518,7 @@ public class PlayerView extends GameEntityView {
         return get(TrackableProperty.Mana);
     }
     void updateMana(Player p) {
+        updateInfiniteColorless(p);
         Map<Byte, Integer> mana = new HashMap<>();
         Map<Byte, Integer> halves = new HashMap<>();
         for (byte b : ManaAtom.MANATYPES) {
