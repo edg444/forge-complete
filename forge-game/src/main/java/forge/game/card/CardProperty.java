@@ -1740,7 +1740,7 @@ public class CardProperty {
         } else if (property.equals("entersWithCounters")) {
             // known before the spell resolves, so Ambiguity can look at a spell still on the stack.
             // etbCounter is the canonical way to script this; a card that instead grants itself
-            // counters through a bespoke ETB replacement won't be recognised here.
+            // counters through a bespoke ETB replacement won't be recognized here.
             boolean etb = false;
             for (final KeywordInterface inst : card.getKeywords()) {
                 if (inst.getOriginal().startsWith("etbCounter")) {
@@ -1751,8 +1751,7 @@ public class CardProperty {
             if (!etb) {
                 return false;
             }
-        }
-        else if (property.startsWith("counters")) {
+        } else if (property.startsWith("counters")) {
             // syntax example: counters_GE9_P1P1 or counters_LT12_TIME
             final String[] splitProperty = property.split("_");
             final String strNum = splitProperty[1].substring(2);

@@ -58,7 +58,7 @@ public class LifeLoseEffect extends SpellAbilityEffect {
                 p.changeLifeByHalves(-lifeAmount, sa.getHostCard(), sa);
                 continue;
             }
-            final int lost = p.loseLife(lifeAmount, false, false);
+            final int lost = p.loseLife(lifeAmount, false, false, sa);
             if (lost > 0) {
                 lossMap.put(p, lost);
             }

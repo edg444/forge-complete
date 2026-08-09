@@ -474,6 +474,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
             int burn = p.getManaPool().clearPool(true).size();
 
             if (p.getManaPool().hasBurn()) {
+                // half mana burns too, so this goes through the halves path rather than loseLife
                 final int oldLife = p.getLife();
                 p.changeLifeByHalves(-(burn * 2 + halves), null, null, true);
                 final int lost = oldLife - p.getLife();

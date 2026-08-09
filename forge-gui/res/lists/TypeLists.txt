@@ -59,6 +59,7 @@ Brushwagg:Brushwaggs
 Bureaucrat:Bureaucrats
 Camarid:Camarids
 C'tan:C'tan
+Caitian:Caitians
 Camel:Camels
 Capybara:Capybaras
 Caribou:Caribous
@@ -135,6 +136,7 @@ Goblin:Goblins
 God:Gods
 Golem:Golems
 Gorgon:Gorgons
+Gorn:Gorns
 Graveborn:Graveborn
 Gremlin:Gremlins
 Griffin:Griffins
@@ -179,6 +181,7 @@ Kree:Kree
 Lady of Proper Etiquette:Ladies of Proper Etiquette
 Lamia:Lamias
 Lammasu:Lammasus
+Lanthanite:Lanthanites
 Leech:Leeches
 Lemur:Lemurs
 Leviathan:Leviathans
@@ -316,7 +319,9 @@ Surrakar:Surrakars
 Symbiote:Symbiotes
 Synth:Synths
 Survivor:Survivors
+Talosian:Talosians
 Teddy Bear:Teddy Bears
+Tellarite:Tellarites
 Tentacle:Tentacles
 Tetravite:Tetravites
 The Biggest, Baddest, Nastiest, Scariest Creature You'll Ever See

@@ -452,15 +452,15 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
 
     public final boolean setLife(final int newLife, final SpellAbility sa) {
+        // CR 119.5
         boolean change = false;
         // becoming exactly N leaves no leftover half - without this, setting the life of a player
         // sitting at 19 1/2 lands them on 20 1/2
         final boolean hadHalf = hasHalfLife();
         // rule 119.5
         if (life > newLife) {
-            change = loseLife(life - newLife, false, false) > 0;
-        }
-        else if (newLife > life) {
+            change = loseLife(life - newLife, false, false, sa) > 0;
+        } else if (newLife > life) {
             change = gainLife(newLife - life, sa == null ? null : sa.getHostCard(), sa);
         }
         else { // life == newLife
@@ -550,7 +550,7 @@ public class Player extends GameEntity implements Comparable<Player> {
             if (!canLoseLife()) {
                 return false;
             }
-            loseLife(Math.max(-whole, 0), false, manaBurn, true);
+            loseLife(Math.max(-whole, 0), false, manaBurn, sa, true);
         }
         setHalfLife(remainder);
         return true;
@@ -621,12 +621,13 @@ public class Player extends GameEntity implements Comparable<Player> {
         return isInGame() && !StaticAbilityCantGainLosePayLife.anyCantGainLife(this);
     }
 
-    public final int loseLife(int toLose, final boolean damage, final boolean manaBurn) {
-        return loseLife(toLose, damage, manaBurn, false);
+    public final int loseLife(int toLose, final boolean damage, final boolean manaBurn, final SpellAbility cause) {
+        return loseLife(toLose, damage, manaBurn, cause, false);
     }
 
     // see gainLife's fractional parameter - a 1/2 life loss is still a life loss event
-    private int loseLife(int toLose, final boolean damage, final boolean manaBurn, final boolean fractional) {
+    private int loseLife(int toLose, final boolean damage, final boolean manaBurn, final SpellAbility cause,
+            final boolean fractional) {
         // Rule 118.4
         // this is for players being able to pay 0 life nothing to do
         // no trigger for lost no life
@@ -672,6 +673,7 @@ public class Player extends GameEntity implements Comparable<Player> {
         final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(this);
         runParams.put(AbilityKey.LifeAmount, toLose);
         runParams.put(AbilityKey.FirstTime, firstLost);
+        runParams.put(AbilityKey.SpellAbility, cause);
         game.getTriggerHandler().runTrigger(TriggerType.LifeLost, runParams, false);
 
         return toLose;
@@ -718,7 +720,7 @@ public class Player extends GameEntity implements Comparable<Player> {
             break;
         }
 
-        final int lost = loseLife(lifePayment, false, false);
+        final int lost = loseLife(lifePayment, false, false, cause);
         cause.setPaidLife(lifePayment);
 
         final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(this);
@@ -935,7 +937,7 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
 
     public final int processDamage() {
-        int lost = loseLife(simultaneousDamage, true, false);
+        int lost = loseLife(simultaneousDamage, true, false, null);
         simultaneousDamage = 0;
         // an Unhinged half-power attacker's extra 1/2 lands as 1/2 life, resolved through the same
         // half-life carry the life gain cards use
