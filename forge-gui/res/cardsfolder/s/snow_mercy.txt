@@ -1,0 +1,10 @@
+Name:Snow Mercy
+ManaCost:2 W W
+Types:Snow Enchantment
+T:Mode$ DamageDone | ValidSource$ Creature | ValidTarget$ You | TriggerZones$ Battlefield | Execute$ TrigGlobe | TriggerDescription$ Whenever a creature deals damage to you, put a globe counter on it.
+SVar:TrigGlobe:DB$ PutCounter | Defined$ TriggeredSource | CounterType$ GLOBE | CounterNum$ 1
+# Shaking the globe: the symbols are paid in the printed order, not sorted the way separate cost
+# parts would be. See CostTapSequence.
+A:AB$ TapAll | Cost$ TapSequence<TQTQT> | ValidCards$ Creature.counters_GE1_GLOBE | SpellDescription$ Tap all creatures with globe counters on them.
+AI:RemoveDeck:Random
+Oracle:Whenever a creature deals damage to you, put a globe counter on it.\n{T}, {Q}, {T}, {Q}, {T}: Tap all creatures with globe counters on them.

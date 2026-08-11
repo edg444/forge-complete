@@ -9,4 +9,4 @@ SVar:DBAnimate:DB$ Animate | Duration$ Perpetual | Defined$ ChosenCard | Replace
 SVar:ReplaceETB:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplaceWith$ ETBTapped | ReplacementResult$ Updated | Description$ This permanent enters tapped.
 SVar:ETBTapped:DB$ Tap | ETB$ True | Defined$ ReplacedCard
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
-Oracle:When Boareskyr Tollkeeper enters, target opponent reveals all creature and land cards in their hand. Choose one of them. That card perpetually gains "This permanent enters tapped."
+Oracle:When this creature enters, target opponent reveals all creature and land cards in their hand. Choose one of them. That card perpetually gains "This permanent enters tapped."

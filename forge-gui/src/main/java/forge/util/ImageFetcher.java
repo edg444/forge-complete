@@ -77,6 +77,17 @@ public abstract class ImageFetcher {
 
         String setCode = edition.getScryfallCode();
         String langCode = edition.getCardsLangCode();
+
+        // Prefer the image CDN, which needs no API call. Only English printings: the id index is
+        // per printing, not per language, so a localized card still has to go through the API.
+        if (langCode == null || langCode.isEmpty() || "en".equals(langCode)) {
+            String cdnUrl = ScryfallImageIndex.placeholderUrl(
+                    ImageUtil.getScryfallCardRef(card, face, setCode), useArtCrop);
+            if (!downloadUrls.contains(cdnUrl)) {
+                downloadUrls.add(cdnUrl);
+            }
+        }
+
         String primaryUrl = ForgeConstants.URL_PIC_SCRYFALL_DOWNLOAD + ImageUtil.getScryfallDownloadUrl(card, face, setCode, langCode, useArtCrop);
         if (!downloadUrls.contains(primaryUrl)) {
             downloadUrls.add(primaryUrl);
@@ -327,6 +338,7 @@ public abstract class ImageFetcher {
                 String tokenCode = edition.getTokensCode();
                 String langCode = edition.getCardsLangCode();
                 // Just assume the CNr from the token image is valid
+                downloadUrls.add(ScryfallImageIndex.placeholderTokenUrl(tokenCode, tempdata[2], face));
                 downloadUrls.add(ForgeConstants.URL_PIC_SCRYFALL_DOWNLOAD + ImageUtil.getScryfallTokenDownloadUrl(tempdata[2], tokenCode, langCode, face));
             } else if (!allTokens.isEmpty()) {
                 // This loop is going to try to download all the arts until it finds one
@@ -345,6 +357,7 @@ public abstract class ImageFetcher {
                         continue;
                     }
 
+                    downloadUrls.add(ScryfallImageIndex.placeholderTokenUrl(tokenCode, tis.collectorNumber(), face));
                     downloadUrls.add(ForgeConstants.URL_PIC_SCRYFALL_DOWNLOAD + ImageUtil.getScryfallTokenDownloadUrl(tis.collectorNumber(), tokenCode, langCode, face));
                 }
             }

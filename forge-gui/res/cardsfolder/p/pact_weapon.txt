@@ -12,4 +12,4 @@ SVar:X:Remembered$CardManaCost
 SVar:AIPreference:DiscardCost$Card
 DeckHas:Ability$Discard
 DeckHints:Keyword$Madness & Ability$Delirium
-Oracle:As long as Pact Weapon is attached to a creature, you don't lose the game for having 0 or less life.\nWhenever equipped creature attacks, draw a card and reveal it. The creature gets +X/+X until end of turn and you lose X life, where X is that card's mana value.\nEquip—Discard a card.
+Oracle:As long as this Equipment is attached to a creature, you don't lose the game for having 0 or less life.\nWhenever equipped creature attacks, draw a card and reveal it. The creature gets +X/+X until end of turn and you lose X life, where X is that card's mana value.\nEquip—Discard a card.

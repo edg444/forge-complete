@@ -4,4 +4,4 @@ Types:Sorcery
 K:Casualty:1
 A:SP$ Pump | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls | IsCurse$ True | NumDef$ -3 | Duration$ Perpetual | StackDescription$ {c:Targeted} perpetually gets -0/-3. | SpellDescription$ Target creature an opponent controls perpetually gets -0/-3.
 DeckHas:Ability$Sacrifice
-Oracle:Casualty 1\nTarget creature an opponent controls perpetually gets -0/-3.
+Oracle:Casualty 1 (As you cast this spell, you may sacrifice a creature with power 1 or greater. When you do, copy this spell and you may choose a new target for the copy.)\nTarget creature an opponent controls perpetually gets -0/-3.

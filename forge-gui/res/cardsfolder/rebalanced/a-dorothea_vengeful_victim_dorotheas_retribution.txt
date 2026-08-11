@@ -11,7 +11,7 @@ SVar:SacrificeEndCombat:True
 K:Disturb:W U
 DeckHas:Ability$Sacrifice|Graveyard|Token
 AlternateMode:DoubleFaced
-Oracle:Flying\nWhen Dorothea, Vengeful Victim attacks or blocks, sacrifice it at end of combat.\nDisturb {W}{U}
+Oracle:Flying\nWhen Dorothea, Vengeful Victim attacks or blocks, sacrifice it at end of combat.\nDisturb {W}{U} (You may cast this card from your graveyard transformed for its disturb cost.)
 
 ALTERNATE
 

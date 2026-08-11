@@ -1,0 +1,10 @@
+Name:Mishra's Toy Workshop
+ManaCost:no cost
+Types:Land
+# Unlike the real Mishra's Workshop, the restriction is about what the spell or ability DOES, not
+# what type it is - so it needs a SpellAbility property (MakesToken) rather than a card type.
+# Abilities count too, hence both Spell and Activated.
+A:AB$ Mana | Cost$ T | Produced$ C | Amount$ 3 | RestrictValid$ Spell.MakesToken,Activated.MakesToken | SpellDescription$ Add {C}{C}{C}. Spend this mana only on spells and abilities that put tokens onto the battlefield. (Use toys to represent the tokens.)
+AI:RemoveDeck:Random
+DeckHints:Ability$Token
+Oracle:{T}: Add {C}{C}{C}. Spend this mana only on spells and abilities that put tokens onto the battlefield. Use toys to represent the tokens.

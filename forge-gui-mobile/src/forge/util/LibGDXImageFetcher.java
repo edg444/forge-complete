@@ -56,6 +56,15 @@ public class LibGDXImageFetcher extends ImageFetcher {
                 return false;
             }
 
+            if (ScryfallImageIndex.isPlaceholder(urlToDownload)) {
+                // resolved here rather than when the URL list is built, since looking up the id may
+                // have to download a set index and that must not happen on the UI thread
+                urlToDownload = ScryfallImageIndex.resolve(urlToDownload);
+                if (urlToDownload == null) {
+                    return false;
+                }
+            }
+
             if (scryfallCooldownTime != null && urlToDownload.startsWith(ForgeConstants.URL_PIC_SCRYFALL_DOWNLOAD)) {
                 // Don't try to download card images from scryfall if we've been rate limited
                 if (scryfallCooldownTime.after(new Date())) {
@@ -67,9 +76,13 @@ public class LibGDXImageFetcher extends ImageFetcher {
                 }
             }
 
-            String newdespath = urlToDownload.contains(".fullborder.") || urlToDownload.startsWith(ForgeConstants.URL_PIC_SCRYFALL_DOWNLOAD) ?
+            // both Scryfall hosts serve the same full-border art, so they get the same naming
+            final boolean fromScryfall = urlToDownload.startsWith(ForgeConstants.URL_PIC_SCRYFALL_DOWNLOAD)
+                    || urlToDownload.startsWith(ForgeConstants.URL_PIC_SCRYFALL_CDN);
+
+            String newdespath = urlToDownload.contains(".fullborder.") || fromScryfall ?
                     TextUtil.fastReplace(destPath, ".full.", ".fullborder.") : destPath;
-            if (!newdespath.contains(".full") && urlToDownload.startsWith(ForgeConstants.URL_PIC_SCRYFALL_DOWNLOAD) &&
+            if (!newdespath.contains(".full") && fromScryfall &&
                     !destPath.startsWith(ForgeConstants.CACHE_TOKEN_PICS_DIR) && !destPath.startsWith(ForgeConstants.CACHE_PLANECHASE_PICS_DIR))
                 newdespath = newdespath.replace(".jpg", ".fullborder.jpg"); //fix planes/phenomenon for round border options
             URL url = new URL(urlToDownload);

@@ -451,6 +451,15 @@ public class CardDetailUtil {
             area.append(card.isSwitchedOn() ? "(turned ON)" : "(turned OFF)");
         }
 
+        // chosen set - the bottled set (World-Bottling Kit) or the sealed pack (Stocking Tiger)
+        final String chosenSet = card.getChosenExpansion();
+        if (chosenSet != null && !chosenSet.isEmpty()) {
+            area.append("\n");
+            final forge.card.CardEdition ed = forge.model.FModel.getMagicDb().getEditions().get(chosenSet);
+            area.append("(chosen set: ").append(ed == null ? chosenSet
+                    : ed.getName() + " (" + chosenSet + ")").append(")");
+        }
+
         // signed (Letter Bomb)
         if (card.isSigned()) {
             area.append("\n");

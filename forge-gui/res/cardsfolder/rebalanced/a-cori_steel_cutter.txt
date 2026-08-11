@@ -8,4 +8,4 @@ SVar:DBAttach:DB$ Attach | Defined$ Remembered | Optional$ True | SubAbility$ DB
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 K:Equip:1 R
 DeckHas:Ability$Token
-Oracle:Equipped creature has haste.\nFlurry — Whenever you cast your second spell each turn, create a 1/1 white Monk creature token with prowess. You may attach this Equipment to it. (Whenever you cast a noncreature spell, the token gets +1/+1 until end of turn.)\nEquip {1}{R}
+Oracle:Equipped creature has haste.\nFlurry — Whenever you cast your second spell each turn, create a 1/1 white Monk creature token with prowess. You may attach this Equipment to it.\nEquip {1}{R}

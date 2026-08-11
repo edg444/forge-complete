@@ -876,6 +876,13 @@ public class CardView extends GameEntityView {
      * pop! counters), named by the card's InfoPlayerCounters SVar. They show on each player's own
      * panel already, but a card that is only about tracking them needs the whole board in one place.
      */
+    public String getChosenExpansion() {
+        return get(TrackableProperty.ChosenExpansion);
+    }
+    void updateChosenExpansion(Card c) {
+        set(TrackableProperty.ChosenExpansion, c.getChosenExpansion());
+    }
+
     public String getInfoPlayerCounters() {
         return get(TrackableProperty.InfoPlayerCounters);
     }

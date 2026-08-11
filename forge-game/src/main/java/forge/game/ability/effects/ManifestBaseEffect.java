@@ -62,6 +62,11 @@ public abstract class ManifestBaseEffect extends SpellAbilityEffect {
             }
         }
 
+        if (sa.hasParam("Optional") && !tgtCards.isEmpty() && !p.getController().confirmAction(sa, null,
+                sa.getParamOrDefault("OptionalPrompt", getDefaultMessage()), null)) {
+            return;
+        }
+
         if (sa.hasParam("Shuffle")) {
             CardLists.shuffle(tgtCards);
         }

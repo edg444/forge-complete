@@ -94,6 +94,39 @@ public class CardProperty {
             if (!card.isPermanent()) {
                 return false;
             }
+        } else if (property.equals("DisplacedFromLibrary")) {
+            // Present Arms pushed this out of the library; a card that was always in the sideboard
+            // was never part of "your original deck" and Decorated Knight can't reach it.
+            if (!card.isDisplacedFromLibrary()) {
+                return false;
+            }
+        } else if (property.equals("Decorated")) {
+            // Topdeck the Halls: "premiums, promos, and cards with alternate frames or art". Foil and
+            // art index come straight off the printing; promo is the edition's own type. Forge has no
+            // per-printing notion of frame, so an alternate frame only counts when it also came with
+            // alternate art - which in practice is nearly always true.
+            final forge.item.IPaperCard dpc = card.getPaperCard();
+            if (dpc == null) {
+                return false;
+            }
+            boolean decorated = card.hasPaperFoil() || dpc.getArtIndex() > 1;
+            if (!decorated) {
+                final StaticData sd = StaticData.instance();
+                if (sd != null && sd.getEditions() != null) {
+                    final CardEdition ed = sd.getEditions().get(dpc.getEdition());
+                    decorated = ed != null && ed.getType() == CardEdition.Type.PROMO;
+                }
+            }
+            if (!decorated) {
+                return false;
+            }
+        } else if (property.equals("Premium")) {
+            // Super Secret Tech. "Premium" is the card being physically foil, which Forge already
+            // tracks per printing - a deck can hold the foil version of a card and the flag rides
+            // along into the game.
+            if (!card.hasPaperFoil()) {
+                return false;
+            }
         } else if (property.equals("PrintedTextActive")) {
             // R&D's Secret Lair is out, so this card plays as printed rather than as errata'd
             if (!forge.game.staticability.StaticAbilityIgnoreErrata.isActive(game)) {

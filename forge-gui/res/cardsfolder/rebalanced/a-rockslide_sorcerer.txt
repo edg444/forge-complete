@@ -6,4 +6,4 @@ T:Mode$ SpellCast | ValidCard$ Instant,Sorcery,Wizard | ValidActivatingPlayer$ Y
 SVar:TrigDealDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 1
 SVar:BuffedBy:Instant,Sorcery,Wizard
 DeckNeeds:Type$Instant|Sorcery|Wizard
-Oracle:Whenever you cast an instant, sorcery, or Wizard spell, Rockslide Sorcerer deals 1 damage to any target.
+Oracle:Whenever you cast an instant, sorcery, or Wizard spell, this creature deals 1 damage to any target.

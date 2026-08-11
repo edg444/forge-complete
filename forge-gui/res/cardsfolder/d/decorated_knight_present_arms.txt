@@ -1,0 +1,18 @@
+Name:Decorated Knight
+ManaCost:3 U
+Types:Creature Human Knight
+PT:3/3
+# "Your original deck, if it's outside the game" is the library Present Arms displaced into the
+# sideboard - Forge's standing representation of outside the game, the same place wishes reach into.
+T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigDrawOutside | TriggerDescription$ Whenever CARDNAME attacks, draw a card from your original deck if it's outside the game.
+SVar:TrigDrawOutside:DB$ DrawFromOutsideGame | Defined$ You | NumCards$ 1
+AlternateMode:Adventure
+Oracle:Whenever Decorated Knight attacks, draw a card from your original deck if it's outside the game.
+
+ALTERNATE
+
+Name:Present Arms
+ManaCost:2 U
+Types:Sorcery Adventure
+A:SP$ SwapLibraryWithDeck | Defined$ You | SpellDescription$ Exchange your library with another deck you own from outside the game. Shuffle your library.
+Oracle:Exchange your library with another deck you own from outside the game. Shuffle your library.

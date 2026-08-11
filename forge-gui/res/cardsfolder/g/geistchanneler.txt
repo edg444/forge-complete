@@ -10,4 +10,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 SVar:NeedsToPlayVar:X GE1
 SVar:X:Count$ValidHand Instant.YouOwn+cmcGE3,Sorcery.YouOwn+cmcGE3
 DeckNeeds:Type$Instant|Sorcery
-Oracle:When Geistchanneler enters, choose an instant or sorcery card in your hand with mana value 3 or greater. It perpetually gains "This spell costs {2} less to cast."
+Oracle:When this creature enters, choose an instant or sorcery card in your hand with mana value 3 or greater. It perpetually gains "This spell costs {2} less to cast."

@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefi
 SVar:DBToken:DB$ Token | TokenScript$ c_a_treasure_sac | TokenOwner$ You
 A:AB$ Draw | Cost$ 1 B Sac<1/Creature.Other;Artifact.Treasure/another creature or a Treasure> | NumCards$ 1 | SpellDescription$ Draw a card.
 DeckHas:Ability$Token
-Oracle:When Skullport Merchant enters, create a Treasure token. (It's an artifact with "{T}, Sacrifice this token: Add one mana of any color.")\n{1}{B}, Sacrifice another creature or a Treasure: Draw a card.
+Oracle:When this creature enters, create a Treasure token. (It's an artifact with "{T}, Sacrifice this token: Add one mana of any color.")\n{1}{B}, Sacrifice another creature or a Treasure: Draw a card.

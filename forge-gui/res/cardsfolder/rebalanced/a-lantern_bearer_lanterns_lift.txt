@@ -6,7 +6,7 @@ K:Flying
 K:Disturb:1 U
 DeckHas:Ability$Graveyard
 AlternateMode:DoubleFaced
-Oracle:Flying\nDisturb {1}{U}
+Oracle:Flying\nDisturb {1}{U} (You may cast this card from your graveyard transformed for its disturb cost.)
 
 ALTERNATE
 

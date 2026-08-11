@@ -201,6 +201,19 @@ public class CopySpellAbilityEffect extends SpellAbilityEffect {
                 }
             }
 
+            if (sa.hasParam("NameEachCopy") && !controller.getController().isAI()) {
+                // Seasonal Sequels: "except the copy has that name". The titles are invented at the
+                // table, so each copy is named with whatever was actually pitched out loud.
+                final long nameTimestamp = game.getNextTimestamp();
+                for (final SpellAbility copy : copies) {
+                    final String title = controller.getController().guessString(sa,
+                            sa.getParamOrDefault("NameEachCopy", "Name this copy"));
+                    if (title != null && !title.trim().isEmpty()) {
+                        copy.getHostCard().addChangedName(title.trim(), false, nameTimestamp, 0);
+                    }
+                }
+            }
+
             controller.getController().orderAndPlaySimultaneousSa(copies);
 
             if (sa.hasParam("RememberCopies")) {

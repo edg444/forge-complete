@@ -8,4 +8,4 @@ SVar:WasKicked:Count$Kicked.1.0
 S:Mode$ Continuous | Affected$ Creature.YouCtrl+counters_GE1_P1P1 | AddKeyword$ Trample | Description$ Each creature you control with a +1/+1 counter on it has trample.
 DeckHints:Ability$Counters
 DeckHas:Ability$Counters
-Oracle:Kicker {2}{G}\nIf Gnarlid Colony was kicked, it enters with four +1/+1 counters on it.\nEach creature you control with a +1/+1 counter on it has trample.
+Oracle:Kicker {2}{G} (You may pay an additional {2}{G} as you cast this spell.)\nIf Gnarlid Colony was kicked, it enters with four +1/+1 counters on it.\nEach creature you control with a +1/+1 counter on it has trample.

@@ -7,4 +7,4 @@ T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage
 SVar:TrigRoll:DB$ RollDice | ResultSVar$ Result | Sides$ 20 | SubAbility$ DBToken
 SVar:DBToken:DB$ Token | TokenScript$ c_a_treasure_sac | TokenAmount$ Result
 DeckHas:Ability$Sacrifice|Token
-Oracle:Flying\nWhenever Ancient Copper Dragon deals combat damage to a player, roll a d20. You create a number of Treasure tokens equal to the result.
+Oracle:Flying\nWhenever this creature deals combat damage to a player, roll a d20. You create a number of Treasure tokens equal to the result.

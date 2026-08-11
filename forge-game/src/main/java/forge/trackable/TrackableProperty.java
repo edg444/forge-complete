@@ -49,6 +49,7 @@ public enum TrackableProperty {
     SwitchedOn(TrackableTypes.BooleanType),
     ChosenTypeKind(TrackableTypes.StringType),
     InfoPlayerCounters(TrackableTypes.StringType),
+    ChosenExpansion(TrackableTypes.StringType),
     SplitCard(TrackableTypes.BooleanType),
     MergedCards(TrackableTypes.StringType),
     MergedCardsCollection(TrackableTypes.CardViewCollectionType, FreezeMode.IgnoresFreeze),

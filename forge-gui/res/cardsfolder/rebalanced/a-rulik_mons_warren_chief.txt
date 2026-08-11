@@ -10,4 +10,4 @@ SVar:DBToken:DB$ Token | ConditionDefined$ Remembered | ConditionPresent$ Card.i
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Token
-Oracle:Menace\nWhenever Rulik Mons, Warren Chief enters or attacks, look at the top card of your library. If it's a land card, you may put it onto the battlefield tapped. If you didn't put a card onto the battlefield this way, create a 1/1 red Goblin creature token.
+Oracle:Menace (This creature can't be blocked except by two or more creatures.)\nWhenever Rulik Mons, Warren Chief enters or attacks, look at the top card of your library. If it's a land card, you may put it onto the battlefield tapped. If you didn't put a card onto the battlefield this way, create a 1/1 red Goblin creature token.

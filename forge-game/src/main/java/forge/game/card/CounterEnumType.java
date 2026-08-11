@@ -497,6 +497,11 @@ public enum CounterEnumType implements CounterType {
 
     EXPERIENCE("EXP", CounterAiCategory.Positive),
 
+    GLOBE("GLOBE", CounterAiCategory.Negative),
+
+    // Chaos Wrap. Behaves like a shield counter but is its own thing - a sleeve, not a shield.
+    SLEEVE("SLV", 236, 138, 156, CounterAiCategory.Positive),
+
     POISON("POISN", CounterAiCategory.Negative),
 
     POP("POP", CounterAiCategory.Neutral),

@@ -7,4 +7,4 @@ K:Flying
 T:Mode$ ChangesZone | ValidCard$ Card.Self+attacking | Origin$ Hand | Destination$ Battlefield | Execute$ TrigCopy | TriggerDescription$ When CARDNAME enters from your hand, if it's attacking, create a token that's a copy of another target attacking creature. The token enters tapped and attacking.
 SVar:TrigCopy:DB$ CopyPermanent | ValidTgts$ Creature.Other+attacking | TgtPrompt$ Select another target attacking creature | TokenTapped$ True | TokenAttacking$ True
 DeckHas:Ability$Token
-Oracle:Ninjutsu {2}{U}\nFlying\nWhen Thousand-Faced Shadow enters from your hand, if it's attacking, create a token that's a copy of another target attacking creature. The token enters tapped and attacking.
+Oracle:Ninjutsu {2}{U} ({2}{U}, Return an unblocked attacker you control to hand: Put this card onto the battlefield from your hand tapped and attacking.)\nFlying\nWhen Thousand-Faced Shadow enters from your hand, if it's attacking, create a token that's a copy of another target attacking creature. The token enters tapped and attacking.

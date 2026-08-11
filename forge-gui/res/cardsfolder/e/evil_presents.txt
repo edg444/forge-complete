@@ -1,0 +1,14 @@
+Name:Evil Presents
+ManaCost:2 B B
+Types:Sorcery
+A:SP$ ChangeZone | ValidTgts$ Opponent | TgtPrompt$ Select target opponent | Origin$ Hand | Destination$ Battlefield | DefinedPlayer$ You | Chooser$ You | ChangeType$ Creature | ChangeNum$ 1 | Mandatory$ True | GainControl$ Targeted | RememberChanged$ True | SubAbility$ DBGift | SpellDescription$ Put a creature card from your hand into play under target opponent's control. That creature attacks each turn if able . . . and always attacks its controller.
+# The two halves outlive this spell, so they ride on a permanent Effect rather than the sorcery.
+# AttacksItsController is a fork mode - CR 506.2 blocks attacking your own controller in two
+# separate places, and it takes an exception in both. See StaticAbilityAttacksItsController.
+SVar:DBGift:DB$ Effect | RememberObjects$ Remembered | StaticAbilities$ STMustAttack,STOwnController | Duration$ Permanent | ForgetOnMoved$ Battlefield | SubAbility$ DBEvilCleanup
+SVar:STMustAttack:Mode$ MustAttack | ValidCreature$ Card.IsRemembered | Description$ That creature attacks each turn if able.
+SVar:STOwnController:Mode$ AttacksItsController | ValidCreature$ Card.IsRemembered | Description$ That creature always attacks its controller.
+SVar:DBEvilCleanup:DB$ Cleanup | ClearRemembered$ True
+AI:RemoveDeck:All
+DeckHints:Type$Creature
+Oracle:Put a creature card from your hand into play under target opponent's control. That creature attacks each turn if able . . . and always attacks its controller.

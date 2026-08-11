@@ -326,6 +326,12 @@ public abstract class PlayerController {
     public CardCollectionView cheatShuffle(CardCollectionView list) { return list; }
     public Map<DeckSection, List<? extends PaperCard>> complainCardsCantPlayWell(Deck myDeck) { return null; }
 
+    /**
+     * Present Arms - pick one of your saved decks, which only a real human collection can offer.
+     * Null means no deck was available or chosen, and the effect simply does nothing.
+     */
+    public Deck chooseDeckFromCollection(String message) { return null; }
+
     public void resetAtEndOfTurn() {
         // currently used by the AI to perform card memory cleanup
     }

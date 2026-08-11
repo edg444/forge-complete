@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefi
 SVar:TrigDay:DB$ DayTime | Value$ Day
 S:Mode$ CantChangeDayTime | NewTime$ Night | Description$ It can't become night.
 S:Mode$ CantBeCast | ValidCard$ Card | cmcGT$ Turns | Caster$ Opponent | Description$ Your opponents can't cast spells with mana value greater than the number of turns they have begun.
-Oracle:Flying\nWhen Angel of Eternal Dawn enters, it becomes day.\nIt can't become night.\nYour opponents can't cast spells with mana value greater than the number of turns they have begun.
+Oracle:Flying\nWhen this creature enters, it becomes day.\nIt can't become night.\nYour opponents can't cast spells with mana value greater than the number of turns they have begun.

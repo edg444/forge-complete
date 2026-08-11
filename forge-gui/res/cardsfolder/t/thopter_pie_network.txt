@@ -1,0 +1,15 @@
+Name:Thopter Pie Network
+ManaCost:2 U U
+Types:Enchantment
+# "If you're eating" and "eat it" are both physical, so both go through the honor-system prompt.
+# UnlessSwitched means the effect happens only when you confirm, rather than the usual other way up.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigThopter | TriggerDescription$ At the beginning of your upkeep, if you're eating, create a 1/1 colorless Thopter artifact creature token with flying. Use food to represent the token.
+# the tokens this makes are the ones food stands in for, so they are remembered to give the second
+# trigger's "if it's represented by food" an actual condition to check
+SVar:TrigThopter:DB$ Token | TokenAmount$ 1 | TokenScript$ c_1_1_a_thopter_flying | TokenOwner$ You | RememberTokens$ True | UnlessCost$ FlavorAction<Confirm that you are eating right now/I'm eating!> | UnlessPayer$ You | UnlessSwitched$ True | UnlessAI$ Chance.50
+# purely physical - there is no game consequence to eating the food, only the instruction to do it
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Creature.token+YouCtrl+IsRemembered | TriggerZones$ Battlefield | Execute$ TrigEat | TriggerDescription$ Whenever a creature token you control dies, if it's represented by food, eat it.
+SVar:TrigEat:DB$ Pump | StackDescription$ Eat the food representing that token. | UnlessCost$ FlavorAction<Eat the food representing that token/Nom!> | UnlessPayer$ You | UnlessSwitched$ True | UnlessAI$ Chance.90
+AI:RemoveDeck:Random
+DeckHas:Ability$Token
+Oracle:At the beginning of your upkeep, if you're eating, create a 1/1 colorless Thopter artifact creature token with flying. Use food to represent the token.\nWhenever a creature token you control dies, if it's represented by food, eat it.

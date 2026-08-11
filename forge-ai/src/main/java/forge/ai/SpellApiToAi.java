@@ -112,6 +112,7 @@ public enum SpellApiToAi {
             .put(ApiType.Fight, FightAi.class)
             .put(ApiType.FlipCoin, FlipCoinAi.class)
             .put(ApiType.FlipOntoBattlefield, FlipOntoBattlefieldAi.class)
+            .put(ApiType.SlideOntoBattlefield, CannotPlayAi.class)
             .put(ApiType.Fog, FogAi.class)
             .put(ApiType.GainControl, ControlGainAi.class)
             .put(ApiType.GainControlVariant, ControlGainVariantAi.class)

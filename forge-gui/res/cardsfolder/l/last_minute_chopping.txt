@@ -1,0 +1,15 @@
+Name:Last-Minute Chopping
+ManaCost:1 U B
+Types:Sorcery
+# The question is asked of the OPPONENT, so they pay the flavor cost. Saying yes (paying) diverts to
+# the present via UnlessPaidSubAbility; saying nothing lets the GainControl happen, which is exactly
+# the card's "otherwise". The permanent is targeted on cast either way.
+A:SP$ Pump | ValidTgts$ Opponent | TgtPrompt$ Select target opponent | SubAbility$ DBAsk | StackDescription$ SpellDescription | SpellDescription$ Ask target opponent if they remembered to get you a present. If they say yes, they put a card they own from outside the game into your hand. Otherwise, you gain control of target permanent they control.
+SVar:DBAsk:DB$ GainControl | ValidTgts$ Permanent | TgtPrompt$ Select target permanent that player controls | TargetsWithDefinedController$ ParentTarget | NewController$ You | UnlessCost$ FlavorAction<Did you remember to get them a present?/I remembered!> | UnlessPayer$ ParentTarget | UnlessAI$ Chance.50 | UnlessPaidSubAbility$ DBPresent
+# their card, but it ends up in YOUR hand - so ownership moves first, as with Gifts Given
+SVar:DBPresent:DB$ ChangeZone | DefinedPlayer$ ParentTarget | Chooser$ ParentTarget | Origin$ Sideboard | Destination$ Sideboard | ChangeType$ Card | ChangeNum$ 1 | Mandatory$ True | Hidden$ True | RememberChanged$ True | SubAbility$ DBGiveOwnership
+SVar:DBGiveOwnership:DB$ GainOwnership | Defined$ Remembered | DefinedPlayer$ You | SubAbility$ DBPresentToHand
+SVar:DBPresentToHand:DB$ ChangeZoneAll | Origin$ Sideboard | Destination$ Hand | ChangeType$ Card.IsRemembered | SubAbility$ DBChopCleanup
+SVar:DBChopCleanup:DB$ Cleanup | ClearRemembered$ True
+AI:RemoveDeck:All
+Oracle:Ask target opponent if they remembered to get you a present. If they say yes, they put a card they own from outside the game into your hand. Otherwise, you gain control of target permanent they control.

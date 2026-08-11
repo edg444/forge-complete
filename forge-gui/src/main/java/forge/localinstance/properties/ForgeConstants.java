@@ -311,6 +311,7 @@ public final class ForgeConstants {
     public static final String CACHE_PLANECHASE_PICS_DIR     = PICS_DIR + "planechase" + PATH_SEPARATOR;
     public static final String CACHE_ACHIEVEMENTS_DIR        = PICS_DIR + "achievements" + PATH_SEPARATOR;
     public static final String QUEST_CARD_PRICE_FILE         = DB_DIR + "all-prices.txt";
+    public static final String CACHE_SCRYFALL_ID_DIR         = DB_DIR + "scryfall-ids" + PATH_SEPARATOR;
 
     public static final String[] PROFILE_DIRS = {
             USER_DIR,
@@ -347,6 +348,12 @@ public final class ForgeConstants {
     public static final String URL_PRICE_DOWNLOAD = GITHUB_ASSETS_BASE + "all-prices.txt";
     private static final String URL_SCRYFALL = "https://api.scryfall.com";
     public static final String URL_PIC_SCRYFALL_DOWNLOAD = URL_SCRYFALL + "/cards/";
+    // Scryfall's image CDN, which serves images directly by card id and is a separate host from the
+    // API - it stays up (and unauthenticated) through API maintenance windows and rate limiting.
+    public static final String URL_PIC_SCRYFALL_CDN = "https://cards.scryfall.io/";
+    // MTGJSON's per-set files carry each printing's Scryfall id, which is what the CDN needs. Using
+    // them means the image path never depends on the Scryfall API being reachable.
+    public static final String URL_MTGJSON_SET = "https://mtgjson.com/api/v5/";
 
     // Constants for Display Card Identity game setting
     public static final String DISP_CURRENT_COLORS_ALWAYS = "Always";

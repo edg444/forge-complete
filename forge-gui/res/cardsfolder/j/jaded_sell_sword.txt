@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigPump:DB$ Pump | Defined$ Self | KW$ First Strike & Haste
 SVar:TreasureCheck:Count$CastTotalManaSpent Treasure
 SVar:AIPreference:ManaFrom$Treasure
-Oracle:When Jaded Sell-Sword enters, if mana from a Treasure was spent to cast it, it gains first strike and haste until end of turn.
+Oracle:When this creature enters, if mana from a Treasure was spent to cast it, it gains first strike and haste until end of turn.

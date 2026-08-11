@@ -25,6 +25,12 @@ public class StaticAbilityMustAttack {
                     continue;
                 }
                 if (stAb.matchesValidParam("ValidCreature", attacker)) {
+                    if (StaticAbilityAttacksItsController.qualifies(attacker)) {
+                        // the CR 506.2 skip below would drop the controller for being the active
+                        // player, which is exactly the entity this creature has to attack
+                        entityList.add(attacker.getController());
+                        continue;
+                    }
                     if (stAb.hasParam("MustAttack")) {
                         List<GameEntity> def = AbilityUtils.getDefinedEntities(stAb.getHostCard(), stAb.getParam("MustAttack"), stAb);
                         for (GameEntity e : def) {

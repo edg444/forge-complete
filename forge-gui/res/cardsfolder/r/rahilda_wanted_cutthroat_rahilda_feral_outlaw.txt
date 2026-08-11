@@ -12,7 +12,7 @@ SVar:X:Count$CreaturesAttackedThisTurn Creature.Wolf+YouCtrl,Creature.Werewolf+Y
 K:Daybound
 DeckHints:Type$Wolf|Werewolf
 AlternateMode:DoubleFaced
-Oracle:First strike\nWhen Rahilda, Wanted Cutthroat deals combat damage to a player, exile a nonland card from their library at random. During any turn you attacked with a Wolf or Werewolf, you may cast that card and you may spend mana as though it were mana of any color to cast that spell.\nDaybound
+Oracle:First strike\nWhen Rahilda, Wanted Cutthroat deals combat damage to a player, exile a nonland card from their library at random. During any turn you attacked with a Wolf or Werewolf, you may cast that card and you may spend mana as though it were mana of any color to cast that spell.\nDaybound (If a player casts no spells during their own turn, it becomes night next turn.)
 
 ALTERNATE
 
@@ -29,4 +29,4 @@ SVar:STPlay:Mode$ Continuous | MayPlay$ True | MayPlayIgnoreColor$ True | Affect
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Count$CreaturesAttackedThisTurn Creature.Wolf+YouCtrl,Creature.Werewolf+YouCtrl
 K:Nightbound
-Oracle:Double strike\nWhen Rahilda, Feral Outlaw deals combat damage to a player, exile a nonland card from their library at random. During any turn you attacked with a Wolf or Werewolf, you may cast that card and you may spend mana as though it were mana of any color to cast that spell.\nNightbound
+Oracle:Double strike\nWhen Rahilda, Feral Outlaw deals combat damage to a player, exile a nonland card from their library at random. During any turn you attacked with a Wolf or Werewolf, you may cast that card and you may spend mana as though it were mana of any color to cast that spell.\nNightbound (If a player casts at least two spells during their own turn, it becomes day next turn.)

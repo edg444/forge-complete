@@ -1,0 +1,11 @@
+Name:Seasonal Sequels
+ManaCost:X U U U
+Types:Instant
+# How many titles you actually pitched is something only the table knows, so it asks - capped at X -
+# and then each copy takes the title you actually said, typed in free.
+A:SP$ ChooseNumber | Defined$ You | Min$ 0 | Max$ X | ListTitle$ How many holiday-themed sequel titles did you pitch out loud? | SubAbility$ DBSequels | SpellDescription$ Pitch the titles of up to X holiday-themed sequels to target spell. Copy that spell for each title pitched, except the copy has that name. You may choose new targets for the copies. (Simply adding numbers isn't festive enough.)
+SVar:DBSequels:DB$ CopySpellAbility | ValidTgts$ Instant,Sorcery | TargetType$ Spell | TgtPrompt$ Select target spell | Amount$ Pitched | MayChooseTarget$ True | NameEachCopy$ Name the sequel you pitched for this copy
+SVar:X:Count$xPaid
+SVar:Pitched:Count$ChosenNumber
+AI:RemoveDeck:All
+Oracle:Pitch the titles of up to X holiday-themed sequels to target spell. Copy that spell for each title pitched, except the copy has that name. You may choose new targets for the copies. (Simply adding numbers isn't festive enough.)

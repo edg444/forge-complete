@@ -1,0 +1,24 @@
+Name:Naughty
+ManaCost:1 B B
+Types:Sorcery
+# Their card ends up in YOUR hand, and a card only ever moves to its owner's hand - so it is found
+# and left in place first, handed over, and only then moved. Same shape as Gifts Given.
+A:SP$ ChangeZone | ValidTgts$ Player.Other | TgtPrompt$ Select another target player | DefinedPlayer$ Targeted | Chooser$ You | Origin$ Library | Destination$ Library | ChangeType$ Card | ChangeNum$ 1 | Mandatory$ True | RememberChanged$ True | Shuffle$ False | SubAbility$ DBTake | SpellDescription$ Search another target player's library for a card and put that card into your hand. Then shuffle that player's library.
+SVar:DBTake:DB$ GainOwnership | Defined$ Remembered | DefinedPlayer$ You | SubAbility$ DBToMyHand
+SVar:DBToMyHand:DB$ ChangeZoneAll | Origin$ Library | Destination$ Hand | ChangeType$ Card.IsRemembered | Shuffle$ False | SubAbility$ DBShuffleThem
+SVar:DBShuffleThem:DB$ Shuffle | Defined$ Targeted | SubAbility$ DBNaughtyCleanup
+SVar:DBNaughtyCleanup:DB$ Cleanup | ClearRemembered$ True
+AlternateMode:Split
+Oracle:Search another target player's library for a card and put that card into your hand. Then shuffle that player's library.
+
+ALTERNATE
+
+Name:Nice
+ManaCost:1 W W
+Types:Sorcery
+A:SP$ ChangeZone | ValidTgts$ Player.Other | TgtPrompt$ Select another target player | DefinedPlayer$ You | Chooser$ You | Origin$ Library | Destination$ Library | ChangeType$ Card | ChangeNum$ 1 | Mandatory$ True | RememberChanged$ True | Shuffle$ False | SubAbility$ DBGive | SpellDescription$ Search your library for a card and put it into another target player's hand. Then shuffle your library.
+SVar:DBGive:DB$ GainOwnership | Defined$ Remembered | DefinedPlayer$ Targeted | SubAbility$ DBToTheirHand
+SVar:DBToTheirHand:DB$ ChangeZoneAll | Origin$ Library | Destination$ Hand | ChangeType$ Card.IsRemembered | Shuffle$ False | SubAbility$ DBShuffleMe
+SVar:DBShuffleMe:DB$ Shuffle | Defined$ You | SubAbility$ DBNiceCleanup
+SVar:DBNiceCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Search your library for a card and put it into another target player's hand. Then shuffle your library.

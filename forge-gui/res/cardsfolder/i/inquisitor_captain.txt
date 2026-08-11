@@ -10,4 +10,4 @@ SVar:DBChangeZone2:DB$ ChangeZone | Origin$ Hand | Destination$ Library | Change
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Count$ValidGraveyard,Library,Hand Creature.YouOwn+cmcLE3
 DeckNeeds:Type$Creature
-Oracle:Vigilance\nWhen Inquisitor Captain enters, if you cast it and there are twenty or more creature cards with mana value 3 or less among cards in your graveyard, hand, and library, seek two creature cards with mana value 3 or less. Put one of them onto the battlefield and shuffle the other into your library.
+Oracle:Vigilance\nWhen this creature enters, if you cast it and there are twenty or more creature cards with mana value 3 or less among cards in your graveyard, hand, and library, seek two creature cards with mana value 3 or less. Put one of them onto the battlefield and shuffle the other into your library.

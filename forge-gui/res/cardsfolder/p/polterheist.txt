@@ -5,4 +5,4 @@ PT:3/3
 K:Ward:PayLife<3>
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigHeist | TriggerDescription$ Whenever this creature attacks, heist target opponent's library.
 SVar:TrigHeist:DB$ Heist | ValidTgts$ Opponent
-Oracle:Ward—Pay 3 life.\nWhenever Polterheist attacks, heist target opponent's library.
+Oracle:Ward—Pay 3 life.\nWhenever this creature attacks, heist target opponent's library.

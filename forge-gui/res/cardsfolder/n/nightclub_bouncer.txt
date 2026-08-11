@@ -8,4 +8,4 @@ SVar:TrigReturn:DB$ ChangeZone | ValidTgts$ Permanent.nonLand+OppCtrl | Origin$ 
 SVar:DBAnimate:DB$ Animate | Defined$ Remembered | staticAbilities$ RaiseCost | Duration$ Perpetual | SubAbility$ DBCleanup
 SVar:RaiseCost:Mode$ RaiseCost | ValidCard$ Card.Self | Type$ Spell | Amount$ 2 | EffectZone$ All | Description$ This spell costs {2} more to cast.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:Flash\nWhen Nightclub Bouncer enters, return target nonland permanent an opponent controls to its owner's hand. It perpetually gains "This spell costs {2} more to cast."
+Oracle:Flash\nWhen this creature enters, return target nonland permanent an opponent controls to its owner's hand. It perpetually gains "This spell costs {2} more to cast."

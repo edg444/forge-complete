@@ -5,4 +5,4 @@ PT:4/4
 K:Trample
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ Keen Senses — When this creature enters, draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
-Oracle:Trample\nKeen Senses — When Owlbear enters, draw a card.
+Oracle:Trample\nKeen Senses — When this creature enters, draw a card.

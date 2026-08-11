@@ -1,0 +1,14 @@
+Name:Some Disassembly Required
+ManaCost:B
+Types:Enchantment
+# Distribute, not copy - each keyword goes to one creature, so this needs its own effect rather
+# than a Pump granting the whole set to every target. CurrentMonth is a real-world calendar check,
+# the same idea as Ashnod's Battle Gear's clock (Count$CurrentHour).
+A:AB$ DistributeKeywords | Cost$ B Sac<1/Creature> | Source$ Sacrificed | ValidTgts$ Creature.Other | TgtPrompt$ Select any number of other target creatures | TargetMin$ 0 | TargetMax$ MaxTgts | RememberDistributed$ True | SubAbility$ DBDecember | SpellDescription$ Distribute the sacrificed creature's keyword abilities among any number of other target creatures until end of turn. If it's December, you gain 1 life for each of those keywords.
+SVar:MaxTgts:Count$Valid Creature.Other
+SVar:DBDecember:DB$ GainLife | Defined$ You | LifeAmount$ X | ConditionCheckSVar$ Month | ConditionSVarCompare$ EQ12 | SubAbility$ DBDisassemblyCleanup
+SVar:X:Count$RememberedNumber
+SVar:Month:Count$CurrentMonth
+SVar:DBDisassemblyCleanup:DB$ Cleanup | ClearRemembered$ True
+AI:RemoveDeck:Random
+Oracle:{B}, Sacrifice a creature: Distribute the sacrificed creature's keyword abilities among any number of other target creatures until end of turn. If it's December, you gain 1 life for each of those keywords.

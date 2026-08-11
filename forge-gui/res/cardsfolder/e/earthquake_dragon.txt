@@ -10,4 +10,4 @@ SVar:DiscardMe:1
 SVar:PlayMain1:TRUE
 SVar:X:Count$Valid Creature.Dragon+YouCtrl$CardManaCost
 DeckHints:Type$Dragon
-Oracle:This spell costs {X} less to cast, where X is the total mana value of Dragons you control.\nFlying, trample\n{2}{G}, Sacrifice a land: Return Earthquake Dragon from your graveyard to your hand.
+Oracle:This spell costs {X} less to cast, where X is the total mana value of Dragons you control.\nFlying, trample\n{2}{G}, Sacrifice a land: Return this card from your graveyard to your hand.

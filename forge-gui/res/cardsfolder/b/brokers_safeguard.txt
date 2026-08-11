@@ -8,4 +8,4 @@ SVar:ETBAddExtraCounter:DB$ PutCounter | ETB$ True | Defined$ ReplacedCard | Cou
 SVar:DBReturn:DB$ ChangeZone | Defined$ Remembered | Origin$ All | Destination$ Battlefield | SubAbility$ DBCleanup | StackDescription$ SpellDescription | SpellDescription$ Then return that card to the battlefield under its owner's control.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHas:Ability$Counters
-Oracle:Exile target nonartifact creature you control. It perpetually gains "This creature enters with an additional shield counter on it." Then return that card to the battlefield under its owner's control.
+Oracle:Exile target nonartifact creature you control. It perpetually gains "This creature enters with an additional shield counter on it." Then return that card to the battlefield under its owner's control. (If it would be dealt damage or destroyed, remove a shield counter from it instead.)

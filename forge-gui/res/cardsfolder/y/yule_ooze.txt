@@ -1,0 +1,15 @@
+Name:Yule Ooze
+ManaCost:2 R G
+Types:Creature Ooze
+PT:1/1
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPick | TriggerDescription$ At the beginning of your upkeep, destroy another nonland permanent chosen at random, then put a number of +1/+1 counters on CARDNAME equal to that permanent's converted mana cost.
+SVar:TrigPick:DB$ ChooseCard | Defined$ You | Choices$ Permanent.nonLand+Other | ChoiceZone$ Battlefield | AtRandom$ True | Amount$ 1 | Mandatory$ True | Reveal$ True | RevealTitle$ Chosen at random | SubAbility$ DBDestroy
+SVar:DBDestroy:DB$ Destroy | Defined$ ChosenCard | SubAbility$ DBGrow
+# counted off the chosen card rather than the destroyed one - the count is owed even when the
+# permanent survives (indestructible, regeneration), and mana value doesn't change when it dies
+SVar:DBGrow:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ X | SubAbility$ DBOozeCleanup
+SVar:X:ChosenCard$CardManaCost
+SVar:DBOozeCleanup:DB$ Cleanup | ClearChosenCard$ True
+A:AB$ Regenerate | Cost$ R G FlavorAction<Eat some food/Nom!> | Defined$ Self | SpellDescription$ Regenerate CARDNAME.
+AI:RemoveDeck:Random
+Oracle:At the beginning of your upkeep, destroy another nonland permanent chosen at random, then put a number of +1/+1 counters on Yule Ooze equal to that permanent's converted mana cost.\n{R}{G}, Eat some food: Regenerate Yule Ooze.

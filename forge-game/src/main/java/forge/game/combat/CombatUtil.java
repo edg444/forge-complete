@@ -64,6 +64,12 @@ public class CombatUtil {
             defenders.addAll(defender.getPlaneswalkersInPlay());
         }
 
+        // Evil Presents: a creature that attacks its own controller needs that controller offered as
+        // a defender, which CR 506.2 otherwise never does
+        if (forge.game.staticability.StaticAbilityAttacksItsController.anyControlledBy(playerWhoAttacks)) {
+            defenders.add(playerWhoAttacks);
+        }
+
         // Relevant battles (protected by the attacking player's opponents)
         final Game game = playerWhoAttacks.getGame();
         final CardCollection battles = CardLists.filter(game.getCardsIn(ZoneType.Battlefield), CardPredicates.BATTLES);

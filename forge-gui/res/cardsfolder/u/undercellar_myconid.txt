@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigToken:DB$ Token | TokenScript$ g_1_1_saproling | TokenOwner$ TriggeredCardController
 DeckHas:Ability$Token & Type$Saproling
 A:AB$ Mana | Cost$ T | Produced$ Any | SpellDescription$ Add one mana of any color.
-Oracle:Whenever Undercellar Myconid enters or dies, create a 1/1 green Saproling creature token.\n{T}: Add one mana of any color.
+Oracle:Whenever this creature enters or dies, create a 1/1 green Saproling creature token.\n{T}: Add one mana of any color.

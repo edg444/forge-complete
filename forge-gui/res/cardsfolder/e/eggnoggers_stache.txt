@@ -1,0 +1,12 @@
+Name:Eggnogger's 'Stache
+ManaCost:5 G
+Types:Artifact
+# The granted ability is purely physical - it refills a real mug - so it is a no-op tap ability.
+S:Mode$ Continuous | Affected$ Land.YouCtrl | AddAbility$ ABRefill | Description$ Lands you control have "{T}: Refill your mug with a festive drink." (If you don't have a mug, go grab a mug! It's the holidays!)
+SVar:ABRefill:AB$ Pump | Cost$ T | Defined$ Self | StackDescription$ SpellDescription | SpellDescription$ Refill your mug with a festive drink.
+# whether you actually have a drink 'stache is something only you can see
+T:Mode$ Phase | Phase$ BeginCombat | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigStache | TriggerDescription$ At the beginning of combat on your turn, if you have a drink 'stache, put two +1/+1 counters on each creature you control.
+SVar:TrigStache:DB$ PutCounterAll | ValidCards$ Creature.YouCtrl | CounterType$ P1P1 | CounterNum$ 2 | UnlessCost$ FlavorAction<Check your upper lip - do you have a drink 'stache?/I do!> | UnlessPayer$ You | UnlessSwitched$ True | UnlessAI$ Chance.50
+AI:RemoveDeck:Random
+DeckHas:Ability$Counters
+Oracle:Lands you control have "{T}: Refill your mug with a festive drink." (If you don't have a mug, go grab a mug! It's the holidays!)\nAt the beginning of combat on your turn, if you have a drink 'stache, put two +1/+1 counters on each creature you control.

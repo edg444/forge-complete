@@ -351,6 +351,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     // Letter Bomb is physically signed, so it stays identifiable after being shuffled into somebody
     // else's library - which means it has to survive the copy every zone change makes.
     private boolean signed;
+    // Present Arms pushed this out of the library into the sideboard. Deliberately NOT propagated by
+    // CardCopyService: every zone change makes a copy, so the flag dies the moment Decorated Knight
+    // draws the card back into the game, which is exactly when it should stop counting.
+    private boolean displacedFromLibrary;
     // Togglodyte. null means the card has no ON/OFF switch at all, so nothing is shown for it.
     private Boolean switchedOn;
     // World-Bottling Kit's bottled set
@@ -389,6 +393,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     private ReplacementEffect shieldCounterReplaceDamage = null;
     private ReplacementEffect shieldCounterReplaceDestroy = null;
+    // Chaos Wrap's sleeves - same protection as a shield counter, kept as its own counter type
+    private ReplacementEffect sleeveCounterReplaceDamage = null;
+    private ReplacementEffect sleeveCounterReplaceDestroy = null;
     private ReplacementEffect stunCounterReplaceUntap = null;
     private ReplacementEffect finalityCounterReplaceDying = null;
 
@@ -7062,6 +7069,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
     public void setChosenExpansion(final String set) {
         chosenExpansion = set;
+        view.updateChosenExpansion(this);
     }
 
     public boolean isSigned() {
@@ -7070,6 +7078,13 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public void setSigned(final boolean s) {
         signed = s;
         view.updateSigned(this);
+    }
+
+    public boolean isDisplacedFromLibrary() {
+        return displacedFromLibrary;
+    }
+    public void setDisplacedFromLibrary(final boolean d) {
+        displacedFromLibrary = d;
     }
     public void setShadowZone(Zone zone) {
         shadowZone = zone;
@@ -7318,6 +7333,24 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
             list.add(shieldCounterReplaceDamage);
             list.add(shieldCounterReplaceDestroy);
+        }
+        // Chaos Wrap: a sleeve comes off instead, exactly as a shield counter would
+        if (getCounters(CounterEnumType.SLEEVE) > 0) {
+            String sa = "DB$ RemoveCounter | Defined$ Self | CounterType$ Sleeve | CounterNum$ 1";
+            if (sleeveCounterReplaceDamage == null) {
+                String reStr = "Event$ DamageDone | ActiveZones$ Battlefield | ValidTarget$ Card.Self | PreventionEffect$ True | AlwaysReplace$ True | Secondary$ True "
+            + "| Description$ If damage would be dealt to this permanent, prevent that damage and remove a sleeve counter from it.";
+                sleeveCounterReplaceDamage = ReplacementHandler.parseReplacement(reStr, this, false, null);
+                sleeveCounterReplaceDamage.setOverridingAbility(AbilityFactory.getAbility(sa, this));
+            }
+            if (sleeveCounterReplaceDestroy == null) {
+                String reStr = "Event$ Destroy | ActiveZones$ Battlefield | ValidCard$ Card.Self | ValidCause$ SpellAbility | Secondary$ True "
+            + "| Description$ If this permanent would be destroyed as the result of an effect, instead remove a sleeve counter from it.";
+                sleeveCounterReplaceDestroy = ReplacementHandler.parseReplacement(reStr, this, false, null);
+                sleeveCounterReplaceDestroy.setOverridingAbility(AbilityFactory.getAbility(sa, this));
+            }
+            list.add(sleeveCounterReplaceDamage);
+            list.add(sleeveCounterReplaceDestroy);
         }
         if (getCounters(CounterEnumType.STUN) > 0) {
             String sa = "DB$ RemoveCounter | Defined$ Self | CounterType$ Stun | CounterNum$ 1";

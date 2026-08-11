@@ -206,7 +206,30 @@ public class ImageUtil {
         return getImageRelativePath(cp, face, true, true);
     }
 
-    public static String getScryfallDownloadUrl(PaperCard cp, String face, String setCode, String langCode, boolean useArtCrop) {
+    /**
+     * The set code, collector number and face that identify a card's printing on Scryfall, after all
+     * the collector-number rewriting Forge has to do to match them. Both the API URL and the direct
+     * image-CDN URL are built from this, so they can't drift apart.
+     */
+    public static final class ScryfallCardRef {
+        public final String editionCode;
+        public final String collectorNumber;
+        // kept verbatim rather than derived from backFace: the API distinguishes an explicit
+        // "&face=front" from no face param at all, and single-faced cards send neither
+        public final String faceParam;
+
+        private ScryfallCardRef(String editionCode, String collectorNumber, String faceParam) {
+            this.editionCode = editionCode;
+            this.collectorNumber = collectorNumber;
+            this.faceParam = faceParam;
+        }
+
+        public boolean isBackFace() {
+            return "&face=back".equals(faceParam);
+        }
+    }
+
+    public static ScryfallCardRef getScryfallCardRef(PaperCard cp, String face, String setCode) {
         final Pattern funnyCardCollectorNumberPattern = Pattern.compile("^F\\d+");
         String editionCode;
         if (setCode != null && !setCode.isEmpty())
@@ -225,19 +248,17 @@ public class ImageUtil {
             editionCode = "opc2";
             cardCollectorNumber = cardCollectorNumber.substring("OPC2".length());
         }
-        
+
         if (funnyCardCollectorNumberPattern.matcher(cardCollectorNumber).matches()) {
             cardCollectorNumber = cardCollectorNumber.substring(1);
         }
 
-        String versionParam = useArtCrop ? "art_crop" : "normal";
         String faceParam = "";
 
         if (cp.getRules().getSplitType() == CardSplitType.Meld) {
             if (face.equals("back")) {
                 cardCollectorNumber = cp.getMeldBaseCard().getCollectorNumber().replaceAll("(\\d+)([sp]?)", "$1b$2");
             }
-
             faceParam = "&face=front";
         } else if (cp.getRules().getOtherPart() != null) {
             faceParam = (face.equals("back") && cp.getRules().getSplitType() != CardSplitType.Flip
@@ -257,8 +278,14 @@ public class ImageUtil {
             cardCollectorNumber = cardCollectorNumber.substring(0, cardCollectorNumber.length() - 1);
         }
 
-        return String.format("%s/%s/%s?format=image&version=%s%s", editionCode, encodeUtf8(cardCollectorNumber),
-                langCode, versionParam, faceParam);
+        return new ScryfallCardRef(editionCode, cardCollectorNumber, faceParam);
+    }
+
+    public static String getScryfallDownloadUrl(PaperCard cp, String face, String setCode, String langCode, boolean useArtCrop) {
+        ScryfallCardRef ref = getScryfallCardRef(cp, face, setCode);
+        String versionParam = useArtCrop ? "art_crop" : "normal";
+        return String.format("%s/%s/%s?format=image&version=%s%s", ref.editionCode, encodeUtf8(ref.collectorNumber),
+                langCode, versionParam, ref.faceParam);
     }
 
     public static String getScryfallTokenDownloadUrl(String collectorNumber, String setCode, String langCode, String faceParam) {

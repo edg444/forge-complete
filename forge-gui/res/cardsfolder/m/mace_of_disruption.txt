@@ -7,4 +7,4 @@ SVar:TrigEffect:DB$ Pump | ConditionCheckSVar$ X | Defined$ Equipped | NumAtt$ +
 K:Equip:1
 SVar:X:Count$Valid Creature.!EquippedBy+YouCtrl+sharesNameWith Equipped/Plus.Y
 SVar:Y:Count$ValidGraveyard Creature.YouOwn+sharesNameWith Equipped
-Oracle:Equipped creature gets +0/+2 and has protection from Demons and from Devils. Whenever equipped creature attacks, it perpetually gets +1/+0 if it has the same name as another creature you control or a creature card in your graveyard.\nEquip {1}
+Oracle:Equipped creature gets +0/+2 and has protection from Demons and from Devils.\nWhenever equipped creature attacks, it perpetually gets +1/+0 if it has the same name as another creature you control or a creature card in your graveyard.\nEquip {1}

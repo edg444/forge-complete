@@ -8,4 +8,4 @@ SVar:TrigTap:DB$ Tap | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Choose one targe
 SVar:DBPump:DB$ Pump | Defined$ Targeted | KW$ HIDDEN This card doesn't untap during your next untap step. | Duration$ Permanent
 SVar:OneEach:PlayerCountOpponents$Amount
 SVar:PlayMain1:TRUE
-Oracle:Flying\nConfounding Clouds — When Juvenile Mist Dragon enters, for each opponent, tap up to one target creature that player controls. Each of those creatures doesn't untap during its controller's next untap step.
+Oracle:Flying\nConfounding Clouds — When this creature enters, for each opponent, tap up to one target creature that player controls. Each of those creatures doesn't untap during its controller's next untap step.

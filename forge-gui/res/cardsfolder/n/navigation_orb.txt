@@ -6,4 +6,4 @@ SVar:DBChangeZone1:DB$ ChangeZone | Origin$ Library | Destination$ Battlefield |
 SVar:DBChangeZone2:DB$ ChangeZone | Origin$ Library | Destination$ Hand | Defined$ Remembered | ConditionDefined$ Remembered | ConditionPresent$ Card | ForgetChanged$ True | StackDescription$ None | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHints:Type$Gate
-Oracle:{2}, {T}, Sacrifice Navigation Orb: Search your library for up to two basic land cards and/or Gate cards, reveal those cards, put one onto the battlefield tapped and the other into your hand, then shuffle.
+Oracle:{2}, {T}, Sacrifice this artifact: Search your library for up to two basic land cards and/or Gate cards, reveal those cards, put one onto the battlefield tapped and the other into your hand, then shuffle.

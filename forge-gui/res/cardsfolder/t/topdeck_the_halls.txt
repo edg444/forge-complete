@@ -1,0 +1,11 @@
+Name:Topdeck the Halls
+ManaCost:3 R W
+Types:Enchantment
+# Miracle {S} really is snow mana - Forge takes S in a cost like any other symbol.
+S:Mode$ Continuous | Affected$ Card.YouOwn+Decorated | AffectedZone$ Hand | AddKeyword$ Miracle:S | Description$ Decorated cards in your hand have miracle {S}. (Decorated cards include premiums, promos, and cards with alternate frames or art.)
+# CheckSVar, not ConditionCheckSVar - the Condition* forms are silently ignored on a trigger
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | CheckSVar$ DecoratedCount | SVarCompare$ GE12 | Execute$ TrigWin | TriggerDescription$ At the beginning of your upkeep, if you control twelve or more decorated permanents, you win the game.
+SVar:DecoratedCount:Count$Valid Permanent.YouCtrl+Decorated
+SVar:TrigWin:DB$ WinsGame | Defined$ You
+AI:RemoveDeck:Random
+Oracle:Decorated cards in your hand have miracle {S}. (Decorated cards include premiums, promos, and cards with alternate frames or art.)\nAt the beginning of your upkeep, if you control twelve or more decorated permanents, you win the game.

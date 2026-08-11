@@ -10,4 +10,4 @@ SVar:DBPump:DB$ Pump | Defined$ ChosenCard | PumpZone$ Hand | KW$ Lifelink | Dur
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$LifeGain
-Oracle:Lifelink\nWhenever Ethereal Escort enters or attacks, choose a card in your hand. It perpetually gains lifelink.
+Oracle:Lifelink\nWhenever this creature enters or attacks, choose a card in your hand. It perpetually gains lifelink.

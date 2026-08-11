@@ -3,4 +3,4 @@ ManaCost:1 W
 Types:Creature Human Soldier
 PT:2/1
 K:Double team
-Oracle:Double team
+Oracle:Double team (When this creature attacks, conjure a duplicate into your hand, then both of them perpetually lose double team.)

@@ -8,4 +8,4 @@ SVar:TrigDiscard:DB$ Discard | ValidTgts$ Opponent | NumCards$ 1 | DiscardValid$
 SVar:DBToken:DB$ Token | TokenScript$ c_a_blood_draw
 SVar:X:Count$ValidHand Card.TargetedPlayerOwn$GreatestCardManaCost
 DeckHas:Ability$Token|Sacrifice & Type$Artifact|Blood
-Oracle:Deathtouch\nWhen Citystalker Connoisseur enters, target opponent discards a nonland card with the greatest mana value among cards in their hand. Create a Blood token.
+Oracle:Deathtouch\nWhen this creature enters, target opponent discards a nonland card with the greatest mana value among cards in their hand. Create a Blood token.

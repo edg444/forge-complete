@@ -4,6 +4,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import forge.ai.*;
 import forge.game.Game;
+import forge.game.ability.AbilityUtils;
 import forge.game.card.*;
 import forge.game.combat.Combat;
 import forge.game.keyword.Keyword;
@@ -37,11 +38,63 @@ public class ChooseCardAi extends SpellAbilityAi {
         return false;
     }
 
+    /** The cards this ability could be made to choose from, before any AiLogic-specific narrowing. */
+    private static CardCollectionView getChoices(final Player ai, final SpellAbility sa) {
+        final Card host = sa.getHostCard();
+        final List<ZoneType> choiceZone = sa.hasParam("ChoiceZone")
+                ? ZoneType.listValueOf(sa.getParam("ChoiceZone"))
+                : Lists.newArrayList(ZoneType.Battlefield);
+
+        CardCollectionView choices = ai.getGame().getCardsIn(choiceZone);
+        if (sa.hasParam("Choices")) {
+            choices = CardLists.getValidCards(choices, sa.getParam("Choices"), host.getController(), host, sa);
+        }
+        if (sa.hasParam("TargetControls")) {
+            choices = CardLists.filterControlledBy(choices, ai.getOpponents());
+        }
+        return choices;
+    }
+
+    private static Card mostPowerful(final Iterable<Card> options) {
+        Card best = null;
+        for (final Card c : options) {
+            if (best == null || c.getNetPower() > best.getNetPower()) {
+                best = c;
+            }
+        }
+        return best;
+    }
+
+    private static Card leastPowerful(final Iterable<Card> options) {
+        Card worst = null;
+        for (final Card c : options) {
+            if (worst == null || c.getNetPower() < worst.getNetPower()) {
+                worst = c;
+            }
+        }
+        return worst;
+    }
+
+    /**
+     * How many cards have to be chosen for the effect to do anything. MinAmount defaults to Amount,
+     * matching ChooseCardEffect - "choose exactly two" really does need two.
+     */
+    private static int requiredChoices(final SpellAbility sa) {
+        final String amount = sa.getParamOrDefault("MinAmount", sa.getParamOrDefault("Amount", "1"));
+        return Math.max(0, AbilityUtils.calculateAmount(sa.getHostCard(), amount, sa));
+    }
+
     /**
      * The rest of the logic not covered by the canPlayAI template is defined here
      */
     @Override
     protected AiAbilityDecision checkApiLogic(final Player ai, final SpellAbility sa) {
+        // Without an AiLogic nothing else checks that the choice can actually be made, so an
+        // effect reading "choose two creatures you control" was cast with none on the battlefield.
+        if (getChoices(ai, sa).size() < requiredChoices(sa)) {
+            return new AiAbilityDecision(0, AiPlayDecision.MissingNeededCards);
+        }
+
         if (sa.usesTargeting()) {
             sa.resetTargets();
             // search targetable Opponents
@@ -64,20 +117,7 @@ public class ChooseCardAi extends SpellAbilityAi {
         final Card host = sa.getHostCard();
         final Game game = ai.getGame();
 
-        List<ZoneType> choiceZone;
-        if (sa.hasParam("ChoiceZone")) {
-            choiceZone = ZoneType.listValueOf(sa.getParam("ChoiceZone"));
-        } else {
-            choiceZone = Lists.newArrayList(ZoneType.Battlefield);
-        }
-        CardCollectionView choices = game.getCardsIn(choiceZone);
-
-        if (sa.hasParam("Choices")) {
-            choices = CardLists.getValidCards(choices, sa.getParam("Choices"), host.getController(), host, sa);
-        }
-        if (sa.hasParam("TargetControls")) {
-            choices = CardLists.filterControlledBy(choices, ai.getOpponents());
-        }
+        CardCollectionView choices = getChoices(ai, sa);
         if (aiLogic.equals("AtLeast1") || aiLogic.equals("OppPreferred")) {
             return !choices.isEmpty();
         } else if (aiLogic.equals("AtLeast2") || aiLogic.equals("BestBlocker")) {
@@ -86,6 +126,16 @@ public class ChooseCardAi extends SpellAbilityAi {
             final String filter = "Permanent.YouDontCtrl,Permanent.nonLegendary";
             choices = CardLists.getValidCards(choices, filter, host.getController(), host, sa);
             return !choices.isEmpty();
+        } else if (aiLogic.equals("PowerDifference")) {
+            // Everything the card gives scales with the gap, so two equal-power creatures - or only
+            // one creature, or none - make it a wasted card rather than a small gain.
+            if (choices.size() < requiredChoices(sa)) {
+                return false;
+            }
+            final Card strongest = mostPowerful(choices);
+            final Card weakest = leastPowerful(choices);
+            return strongest != null && weakest != null
+                    && strongest.getNetPower() > weakest.getNetPower();
         } else if (aiLogic.equals("Never")) {
             return false;
         } else if (aiLogic.equals("NeedsPrevention")) {
@@ -111,8 +161,7 @@ public class ChooseCardAi extends SpellAbilityAi {
             final int loyalty = host.getCounters(CounterEnumType.LOYALTY) - 1;
             for (int i = loyalty; i >= 0; i--) {
                 sa.setXManaCostPaid(i);
-                choices = game.getCardsIn(choiceZone);
-                choices = CardLists.getValidCards(choices, sa.getParam("Choices"), host.getController(), host, sa);
+                choices = getChoices(ai, sa);
                 if (!choices.isEmpty()) {
                     return true;
                 }
@@ -184,6 +233,11 @@ public class ChooseCardAi extends SpellAbilityAi {
         if (logic.isEmpty()) {
             // Base Logic is choose "best"
             choice = ComputerUtilCard.getBestAI(options);
+        } else if ("PowerDifference".equals(logic)) {
+            // Payoff scales with the gap between the two chosen creatures, so take the extremes:
+            // the strongest first, then the weakest of whatever is left.
+            final boolean nothingChosenYet = Iterables.size(options) >= getChoices(ai, sa).size();
+            choice = nothingChosenYet ? mostPowerful(options) : leastPowerful(options);
         } else if ("WorstCard".equals(logic)) {
             choice = ComputerUtilCard.getWorstAI(options);
         } else if ("OwnCard".equals(logic)) {

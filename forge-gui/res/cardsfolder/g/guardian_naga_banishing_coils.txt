@@ -5,7 +5,7 @@ PT:5/6
 K:Vigilance
 R:Event$ DamageDone | Prevent$ True | ValidTarget$ Card.Self | PlayerTurn$ True | Description$ During your turn, prevent all damage that would be dealt to this creature.
 AlternateMode:Adventure
-Oracle:Vigilance\nDuring your turn, prevent all damage that would be dealt to Guardian Naga.
+Oracle:Vigilance\nDuring your turn, prevent all damage that would be dealt to this creature.
 
 ALTERNATE
 

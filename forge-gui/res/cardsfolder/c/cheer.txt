@@ -1,0 +1,14 @@
+Name:Cheer
+ManaCost:3 R W
+Types:Creature Elemental Incarnation
+PT:4/4
+K:Lifelink
+K:Haste
+# Evoke takes a general Cost, not just mana, so the honor-system action slots straight in - and a
+# non-mana evoke cost even renders as "Evoke-<action>", which is how the card prints it.
+K:Evoke:FlavorAction<Celebrate an opponent - give them a gift, toast to them, or just tell them you're grateful to be playing Magic together/Cheers!>
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCopy | TriggerDescription$ When this creature enters, create two tokens that are copies of target token.
+SVar:TrigCopy:DB$ CopyPermanent | ValidTgts$ Card.token | TgtPrompt$ Select target token | NumCopies$ 2
+AI:RemoveDeck:Random
+DeckHints:Ability$Token
+Oracle:Lifelink, haste\nWhen this creature enters, create two tokens that are copies of target token.\nEvoke—Celebrate an opponent. (To celebrate an opponent, give them a gift, toast to them, or even just tell them you're grateful to be playing Magic together.)

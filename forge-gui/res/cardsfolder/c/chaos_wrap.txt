@@ -1,0 +1,21 @@
+Name:Chaos Wrap
+ManaCost:2 R
+Types:Instant
+# Sleeve counters are their own type, behaving like shield counters (see Card.getReplacementEffects):
+# damage or destruction takes a sleeve off instead. How many you used is a physical fact, so it asks.
+A:SP$ ChangeZone | ValidTgts$ Permanent | TgtPrompt$ Select target permanent | Origin$ Battlefield | Destination$ Library | Shuffle$ True | SubAbility$ DBPermanent | SpellDescription$ The owner of target permanent shuffles it into their library. Then they may look at the top card of their library and may wrap it. If it's a permanent card, they may put it onto the battlefield. Otherwise, they may put it onto the battlefield face down as a 4/4 red Present creature. (To wrap a card, put it inside lots of sleeves. If it would be dealt damage or destroyed, remove a sleeve from it instead.)
+SVar:DBPermanent:DB$ Dig | Defined$ TargetedOwner | DigNum$ 1 | Optional$ True | ChangeNum$ 1 | ChangeValid$ Permanent | ChangeValidDesc$ permanent card | DestinationZone$ Battlefield | LibraryPosition2$ 0 | RememberChanged$ True | SubAbility$ DBPresent
+# "Otherwise" means the top card wasn't a permanent card - declining to put a permanent onto the
+# battlefield does not then offer it as a Present, so both conditions have to hold: nothing went to
+# the battlefield above, AND the card still sitting on top isn't a permanent card
+SVar:DBPresent:DB$ Manifest | DefinedPlayer$ TargetedOwner | Amount$ 1 | Optional$ True | OptionalPrompt$ Put the top card of your library onto the battlefield face down as a 4/4 red Present creature? | RememberManifested$ True | ConditionDefined$ Remembered | ConditionPresent$ Card.inZoneBattlefield | ConditionCompare$ EQ0 | ConditionZone$ Library | ConditionPresent2$ Card.nonPermanent+TopLibrary+OwnedBy TargetedOwner | ConditionCompare2$ GE1 | SubAbility$ DBAsPresent
+SVar:DBAsPresent:DB$ Animate | Defined$ Remembered | Power$ 4 | Toughness$ 4 | Colors$ Red | OverwriteColors$ True | Types$ Creature,Present | RemoveCreatureTypes$ True | Duration$ Permanent | SubAbility$ DBWrap
+# asking how many sleeves IS the "may wrap it" question - nought sleeves is not wrapping it.
+# Only ask when the card actually reached the battlefield - checking the zone rather than merely
+# "is something remembered", since Dig can leave a remembered card behind that never moved.
+SVar:DBWrap:DB$ ChooseNumber | Defined$ TargetedOwner | Min$ 0 | Max$ 5 | ListTitle$ How many sleeves did you wrap it in? (0 for not wrapping it) | ConditionDefined$ Remembered | ConditionPresent$ Card.inZoneBattlefield | ConditionCompare$ GE1 | SubAbility$ DBSleeves
+SVar:DBSleeves:DB$ PutCounter | Defined$ Remembered | CounterType$ SLEEVE | CounterNum$ Sleeves | ConditionCheckSVar$ Sleeves | ConditionSVarCompare$ GE1 | SubAbility$ DBWrapCleanup
+SVar:Sleeves:Count$ChosenNumber
+SVar:DBWrapCleanup:DB$ Cleanup | ClearRemembered$ True
+AI:RemoveDeck:All
+Oracle:The owner of target permanent shuffles it into their library. Then they may look at the top card of their library and may wrap it. If it's a permanent card, they may put it onto the battlefield. Otherwise, they may put it onto the battlefield face down as a 4/4 red Present creature. (To wrap a card, put it inside lots of sleeves. If it would be dealt damage or destroyed, remove a sleeve from it instead.)

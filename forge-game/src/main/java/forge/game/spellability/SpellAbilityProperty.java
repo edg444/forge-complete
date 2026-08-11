@@ -19,12 +19,15 @@ import forge.game.zone.ZoneType;
 import forge.util.Expressions;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 public class SpellAbilityProperty {
     public static boolean hasProperty(SpellAbility sa, Player sourceController, Card source, String property, CardTraitBase spellAbility) {
-        if (property.equals("ManaAbility")) {
+        if (property.equals("MakesToken")) {
+            return makesToken(sa);
+        } else if (property.equals("ManaAbility")) {
             return sa.isManaAbility();
         } else if (property.equals("withoutXCost")) {
             return !sa.costHasManaX();
@@ -300,5 +303,49 @@ public class SpellAbilityProperty {
         }
 
         return true;
+    }
+
+    /**
+     * Mishra's Toy Workshop - "spells and abilities that put tokens onto the battlefield".
+     * <p>
+     * Walks the whole sub-ability chain, since the token-making step is usually not the first one.
+     * Recognizes the APIs that put a token onto the battlefield directly; a spell that makes tokens
+     * only through a keyword or a later triggered ability isn't caught, which errs toward refusing
+     * the mana rather than letting it pay for something it shouldn't.
+     */
+    private static boolean makesToken(SpellAbility sa) {
+        return makesToken(sa, new HashSet<>());
+    }
+
+    /**
+     * Walks the whole ability tree, not just the sub-ability chain: a mode of a Charm, or anything
+     * else hanging off additionalAbilities, makes tokens just as much as a straight sub-ability
+     * does, and "choose one - create a token; or draw a card" would otherwise not count as a
+     * token-maker at all.
+     */
+    private static boolean makesToken(SpellAbility sa, Set<SpellAbility> visited) {
+        for (SpellAbility step = sa; step != null; step = step.getSubAbility()) {
+            if (!visited.add(step)) {
+                return false;
+            }
+            final ApiType api = step.getApi();
+            if (api == ApiType.Token || api == ApiType.CopyPermanent || api == ApiType.Amass
+                    || api == ApiType.Investigate || api == ApiType.Incubate) {
+                return true;
+            }
+            for (SpellAbility extra : step.getAdditionalAbilities().values()) {
+                if (makesToken(extra, visited)) {
+                    return true;
+                }
+            }
+            for (List<AbilitySub> list : step.getAdditionalAbilityLists().values()) {
+                for (AbilitySub extra : list) {
+                    if (makesToken(extra, visited)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

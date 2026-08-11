@@ -9,4 +9,4 @@ SVar:DBAnimate:DB$ Animate | Defined$ Remembered | Power$ X | Duration$ Perpetua
 SVar:X:Count$CardPower
 DeckHints:Ability$Graveyard|Discard|Mill & Color$Black
 DeckHas:Ability$Graveyard
-Oracle:Prototype {2}{B} — 3/2\nAt the beginning of your upkeep, return target creature card with power less than Forgefire Automaton's power from your graveyard to the battlefield. Its base power perpetually becomes equal to Forgefire Automaton's power.
+Oracle:Prototype {2}{B} — 3/2\nAt the beginning of your upkeep, return target creature card with power less than this creature's power from your graveyard to the battlefield. Its base power perpetually becomes equal to this creature's power.

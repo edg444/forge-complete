@@ -6,7 +6,7 @@ K:Disturb:2 U
 S:Mode$ CantBlockBy | ValidAttacker$ Card.Self+attacking | IsPresent$ Card.Other+attacking | PresentCompare$ EQ0 | Description$ CARDNAME can't be blocked as long as it's attacking alone.
 DeckHas:Ability$Graveyard
 AlternateMode:DoubleFaced
-Oracle:Gutter Skulker can't be blocked as long as it's attacking alone.\nDisturb {2}{U}
+Oracle:Gutter Skulker can't be blocked as long as it's attacking alone.\nDisturb {2}{U} (You may cast this card from your graveyard transformed for its disturb cost.)
 
 ALTERNATE
 

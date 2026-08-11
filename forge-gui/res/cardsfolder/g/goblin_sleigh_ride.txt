@@ -1,0 +1,14 @@
+Name:Goblin Sleigh Ride
+ManaCost:1 R
+Types:Sorcery
+# The slide is a dexterity trick, handled the way Chaos Orb and Falling Star are: you say where you
+# were aiming and chance decides whether the rider stayed on and what the sleigh actually touched.
+# Only the rider is targeted - what gets hit is an outcome, not a target.
+A:SP$ Pump | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | SubAbility$ DBSlide | StackDescription$ SpellDescription | SpellDescription$ Target creature you control climbs into CARDNAME. You slide them on their merry way. If the creature stayed on, it deals damage equal to its toughness to each other creature touched during the slide.
+SVar:DBSlide:DB$ SlideOntoBattlefield | Rider$ Targeted | ValidTouched$ Creature | StayPercent$ 70 | SubAbility$ DBSleighDamage | StackDescription$ None
+# nothing is remembered when the rider fell off, so this quietly does nothing in that case
+SVar:DBSleighDamage:DB$ DamageAll | ValidCards$ Creature.IsRemembered | ValidDescription$ each other creature touched during the slide. | NumDmg$ X | DamageSource$ Targeted | SubAbility$ DBSleighCleanup | StackDescription$ None
+SVar:X:Targeted$CardToughness
+SVar:DBSleighCleanup:DB$ Cleanup | ClearRemembered$ True
+AI:RemoveDeck:All
+Oracle:Target creature you control climbs into Goblin Sleigh Ride. You slide them on their merry way. If the creature stayed on, it deals damage equal to its toughness to each other creature touched during the slide.

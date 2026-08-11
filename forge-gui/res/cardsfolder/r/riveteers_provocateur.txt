@@ -9,4 +9,4 @@ SVar:DBPump:DB$ Pump | PumpZone$ Hand | Defined$ ChosenCard | KW$ Blitz:CardMana
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 K:Blitz:B R
 DeckHas:Ability$Sacrifice
-Oracle:Menace\nWhen Riveteers Provocateur enters, choose a creature card in your hand without blitz. It perpetually gains blitz. The blitz cost is equal to its mana cost.\nBlitz {B}{R}
+Oracle:Menace\nWhen this creature enters, choose a creature card in your hand without blitz. It perpetually gains blitz. The blitz cost is equal to its mana cost.\nBlitz {B}{R} (If you cast this spell for its blitz cost, it gains haste and "When this creature dies, draw a card." Sacrifice it at the beginning of the next end step.)

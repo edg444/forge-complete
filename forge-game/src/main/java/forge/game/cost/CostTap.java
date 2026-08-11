@@ -54,17 +54,17 @@ public class CostTap extends CostPart {
     public boolean isRenewable() { return true; }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return "{T}";
     }
 
     @Override
-    public final void refund(final Card source) {
+    public void refund(final Card source) {
         source.setTapped(false);
     }
 
     @Override
-    public final boolean canPay(final SpellAbility ability, final Player payer, final boolean effect) {
+    public boolean canPay(final SpellAbility ability, final Player payer, final boolean effect) {
         final Card source = ability.getHostCard();
         return source.canTap() && !source.isAbilitySick();
     }

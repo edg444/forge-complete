@@ -1,0 +1,12 @@
+Name:Bog Humbugs
+ManaCost:1 B
+Types:Creature Insect
+PT:1/1
+K:Flying
+# No ValidTarget - the card says "deals combat damage", not "to a player", so blocking counts too.
+# The humming is physical, so the counter is gated on confirming you managed it.
+T:Mode$ DamageDone | ValidSource$ Card.Self | CombatDamage$ True | TriggerZones$ Battlefield | Execute$ TrigHum | TriggerDescription$ Whenever CARDNAME deals combat damage, hum that many notes of a festive song. If you can, put a +1/+1 counter on CARDNAME.
+SVar:TrigHum:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1 | UnlessCost$ FlavorAction<Hum one note of a festive song for each damage that creature just dealt/Hmmmm!> | UnlessPayer$ You | UnlessSwitched$ True | UnlessAI$ Chance.70
+AI:RemoveDeck:Random
+DeckHas:Ability$Counters
+Oracle:Flying\nWhenever Bog Humbugs deals combat damage, hum that many notes of a festive song. If you can, put a +1/+1 counter on Bog Humbugs.

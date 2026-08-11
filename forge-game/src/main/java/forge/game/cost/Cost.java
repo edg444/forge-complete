@@ -638,6 +638,11 @@ public class Cost implements Serializable {
             return new CostForage();
         }
 
+        if (parse.startsWith("TapSequence<")) {
+            final String[] splitStr = abCostParse(parse, 1);
+            return new CostTapSequence(splitStr[0]);
+        }
+
         // These won't show up with multiples
         if (parse.equals("Untap") || parse.equals("Q")) {
             return new CostUntap();

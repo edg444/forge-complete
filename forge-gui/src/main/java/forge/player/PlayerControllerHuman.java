@@ -685,6 +685,35 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
     }
 
     @Override
+    public forge.deck.Deck chooseDeckFromCollection(final String message) {
+        // Present Arms: "another deck you own from outside the game" is literally the player's saved
+        // constructed decks, which only this side of the app can see.
+        final List<forge.deck.Deck> decks = new ArrayList<>();
+        collectDecks(forge.model.FModel.getDecks().getConstructed(), decks);
+        if (decks.isEmpty()) {
+            return null;
+        }
+        decks.sort(java.util.Comparator.comparing(forge.deck.Deck::getName, String.CASE_INSENSITIVE_ORDER));
+        return getGui().oneOrNone(message, decks);
+    }
+
+    /** Deck storage is a folder tree - iterating one level finds only the decks not filed away. */
+    private static void collectDecks(final forge.util.storage.IStorage<forge.deck.Deck> storage,
+            final List<forge.deck.Deck> out) {
+        if (storage == null) {
+            return;
+        }
+        for (final forge.deck.Deck d : storage) {
+            if (d != null && d.getMain() != null && !d.getMain().isEmpty()) {
+                out.add(d);
+            }
+        }
+        for (final forge.util.storage.IStorage<forge.deck.Deck> folder : storage.getFolders()) {
+            collectDecks(folder, out);
+        }
+    }
+
+    @Override
     public int chooseNumber(final SpellAbility sa, final String title, final List<Integer> choices,
                             final Player relatedPlayer) {
         return getGui().one(title, choices);
@@ -3483,6 +3512,14 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
                                         break;
                                     }
                                 }
+                            } else if (forgeCard.getRules().getSplitType().equals(CardSplitType.Split)) {
+                                // A split card's default state is named "Left // Right", which matches
+                                // neither half - so the generic "name differs, switch state" rule below
+                                // fired even for the left half and always cast the right one. Pick the
+                                // state by which face was actually asked for.
+                                final ICardFace other = forgeCard.getRules().getOtherPart();
+                                forgeCard.changeToState(other != null && f.getName().equals(other.getName())
+                                        ? CardStateName.RightSplit : CardStateName.LeftSplit);
                             } else {
                                 forgeCard.changeToState(forgeCard.getRules().getSplitType().getChangedStateName());
                                 if (forgeCard.getCurrentStateName().equals(CardStateName.Backside)) {

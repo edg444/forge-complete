@@ -14,4 +14,4 @@ A:SP$ Mill | NumCards$ 5 | RememberMilled$ True | SubAbility$ DBChangeZone | Spe
 SVar:DBChangeZone:DB$ ChangeZone | Origin$ Graveyard,Exile | Destination$ Hand | Hidden$ True | Mandatory$ True | ChangeType$ Creature.IsRemembered | ChangeTypeDesc$ creature cards milled this way | ChangeNum$ 1 | SelectPrompt$ Choose a creature card milled this way | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHas:Ability$Mill|Graveyard
-Oracle:Mill five cards, then return a creature card milled this way to your hand.
+Oracle:Mill five cards, then return a creature card milled this way to your hand. (Then exile this card. You may cast the artifact later from exile.)

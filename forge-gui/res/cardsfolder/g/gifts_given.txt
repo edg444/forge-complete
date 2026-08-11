@@ -1,0 +1,15 @@
+Name:Gifts Given
+ManaCost:3 U
+Types:Instant
+A:SP$ ChangeZone | ValidTgts$ Opponent | TgtPrompt$ Select target opponent | DefinedPlayer$ Targeted | Chooser$ You | Origin$ Library | Destination$ Library | ChangeType$ Card | ChangeNum$ 4 | RememberChanged$ True | Reveal$ True | Shuffle$ False | DifferentNames$ True | SubAbility$ DBToGraveyard | SpellDescription$ Search target opponent's library for four cards with different names and reveal them.
+SVar:DBToGraveyard:DB$ ChangeZone | DefinedPlayer$ Targeted | Chooser$ Targeted | SelectPrompt$ Select two cards for the graveyard | NoLooking$ True | Hidden$ True | Origin$ Library | Destination$ Graveyard | ChangeType$ Card.IsRemembered | ChangeNum$ 2 | Mandatory$ True | Shuffle$ False | SubAbility$ DBTakeOwnership | SpellDescription$ That player chooses two of those cards. Put the chosen cards into the player's graveyard and the rest into your hand.
+# A card only ever moves to its OWNER's hand, so the survivors have to change hands first - the same
+# problem Letter Bomb has putting itself into somebody else's library, solved the same way. Filtering
+# on inZoneLibrary is what separates the survivors from the two just sent to the graveyard.
+SVar:DBTakeOwnership:DB$ GainOwnership | Defined$ Remembered.inZoneLibrary | DefinedPlayer$ You | SubAbility$ DBToHand
+SVar:DBToHand:DB$ ChangeZoneAll | Origin$ Library | Destination$ Hand | ChangeType$ Card.IsRemembered | Shuffle$ False | SubAbility$ DBShuffle
+SVar:DBShuffle:DB$ Shuffle | Defined$ Targeted | SubAbility$ DBGiftsCleanup | SpellDescription$ Then that player shuffles their library.
+SVar:DBGiftsCleanup:DB$ Cleanup | ClearRemembered$ True
+AI:RemoveDeck:Random
+DeckHints:Ability$Graveyard
+Oracle:Search target opponent's library for four cards with different names and reveal them. That player chooses two of those cards. Put the chosen cards into the player's graveyard and the rest into your hand. Then that player shuffles their library.

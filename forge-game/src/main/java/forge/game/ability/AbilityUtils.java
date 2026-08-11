@@ -2172,6 +2172,10 @@ public class AbilityUtils {
             final int hour = LocalTime.now().getHour() % 12;
             return doXMath(hour == 0 ? 12 : hour, expr, c, ctb);
         }
+        // Some Disassembly Required asks whether it is December. 1-12, like the calendar.
+        if (sq[0].equals("CurrentMonth")) {
+            return doXMath(java.time.LocalDate.now().getMonthValue(), expr, c, ctb);
+        }
         if (sq[0].equals("DifferentExpansionSymbols")) {
             return doXMath(CardFactoryUtil.getDifferentExpansionSymbols(c.getController()), expr, c, ctb);
         }

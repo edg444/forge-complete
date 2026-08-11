@@ -6,7 +6,7 @@ S:Mode$ Continuous | Affected$ Card.Self | AddKeyword$ Menace & Deathtouch | IsP
 DeckHints:Ability$Sacrifice|Discard|Mill
 DeckHas:Ability$Graveyard
 AlternateMode:Adventure
-Oracle:As long as there are four or more creature cards in your graveyard, Gray Slaad has menace and deathtouch.
+Oracle:As long as there are four or more creature cards in your graveyard, this creature has menace and deathtouch.
 
 ALTERNATE
 

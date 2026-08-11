@@ -225,27 +225,41 @@ public class PlayAi extends SpellAbilityAi {
     }
 
     private static List<Card> getPlayableCards(SpellAbility sa, Player ai) {
-        List<Card> cards = null;
+        List<Card> cards;
         final Card source = sa.getHostCard();
 
-        if (sa.usesTargeting()) {
+        // ValidZone comes first: it defines the pool, and every later filter has to narrow that
+        // same pool. Applying them in the other order let the pool be rebuilt afterwards, throwing
+        // away the ValidSA filter entirely - the AI would cast "cast an instant or sorcery from
+        // your graveyard" effects while owning no instants or sorceries at all.
+        if (sa.hasParam("ValidZone")) {
+            cards = new CardCollection(AbilityUtils.filterListByType(
+                    ai.getGame().getCardsIn(ZoneType.listValueOf(sa.getParam("ValidZone"))),
+                    sa.getParamOrDefault("Valid", "Card"), sa));
+        } else if (sa.usesTargeting()) {
             cards = CardUtil.getValidCardsToTarget(sa);
         } else if (!sa.hasParam("Valid")) {
             cards = AbilityUtils.getDefinedCards(source, sa.getParam("Defined"), sa);
+        } else {
+            cards = new CardCollection();
         }
 
-        if (cards != null & sa.hasParam("ValidSA")) {
+        if (sa.hasParam("ValidSA")) {
             final String valid[] = sa.getParam("ValidSA").split(",");
             final List<Card> invalid = cards.stream().filter(c -> !IterableUtil.any(AbilityUtils.getBasicSpellsFromPlayEffect(c, ai), SpellAbilityPredicates.isValid(valid, ai, source, sa))).collect(Collectors.toList());
             if (!invalid.isEmpty())
                 cards.removeAll(invalid);
         }
 
-        // Ensure that if a ValidZone is specified, there's at least something to choose from in that zone.
-        if (sa.hasParam("ValidZone")) {
-            cards = new CardCollection(AbilityUtils.filterListByType(ai.getGame().getCardsIn(ZoneType.listValueOf(sa.getParam("ValidZone"))),
-                    sa.getParam("Valid"), sa));
+        // A card costing more than the whole allowance can never be one of the spells cast, so it
+        // must not be what makes the effect look worth casting.
+        if (sa.hasParam("WithTotalCMC")) {
+            final int budget = AbilityUtils.calculateAmount(source, sa.getParam("WithTotalCMC"), sa);
+            if (budget >= 0) {
+                cards = cards.stream().filter(c -> c.getCMC() <= budget).collect(Collectors.toList());
+            }
         }
+
         // exclude own card
         cards.remove(source);
         return cards;

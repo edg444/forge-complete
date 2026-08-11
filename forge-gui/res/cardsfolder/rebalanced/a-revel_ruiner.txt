@@ -6,4 +6,4 @@ K:Menace
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigConnive | TriggerDescription$ When CARDNAME enters, it connives.
 SVar:TrigConnive:DB$ Connive
 DeckHas:Ability$Discard|Counters
-Oracle:Menace\nWhen Revel Ruiner enters, it connives.
+Oracle:Menace (This creature can't be blocked except by two or more creatures.)\nWhen Revel Ruiner enters, it connives. (Draw a card, then discard a card. If you discarded a nonland card, put a +1/+1 counter on this creature.)

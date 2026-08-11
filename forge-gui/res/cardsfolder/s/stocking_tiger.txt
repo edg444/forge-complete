@@ -1,0 +1,13 @@
+Name:Stocking Tiger
+ManaCost:5
+Types:Artifact Creature Cat Construct
+PT:3/3
+# The printed card has you choose a real sealed booster from outside the game. Here the set is the
+# pack, and opening it runs the same generator draft and sealed use - so it really is a random
+# booster of that set, not a handful of invented cards. Only sets that can produce one are offered.
+K:ETBReplacement:Other:DBChoosePack
+SVar:DBChoosePack:DB$ ChooseExpansion | Defined$ You | WithBoosters$ True | SpellDescription$ CARDNAME enters with a sealed Magic booster pack under it.
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | Execute$ TrigOpen | TriggerDescription$ When CARDNAME deals combat damage to a player, unwrap the booster pack and put it into your hand.
+SVar:TrigOpen:DB$ OpenBooster | Defined$ You | Reveal$ True
+AI:RemoveDeck:Random
+Oracle:Stocking Tiger enters with a sealed Magic booster pack under it.\nWhen Stocking Tiger deals combat damage to a player, unwrap the booster pack and put it into your hand.

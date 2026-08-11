@@ -8,4 +8,4 @@ SVar:TrigChange:DB$ ChangeZone | Origin$ Battlefield | Destination$ Hand | Hidde
 SVar:DBPump:DB$ Pump | ConditionDefined$ Remembered | ConditionPresent$ Creature.nonAngel | PumpZone$ Hand | Defined$ Remembered | NumAtt$ +1 | NumDef$ +1 | KW$ Flying | Duration$ Perpetual | SubAbility$ DBAnimate
 SVar:DBAnimate:DB$ Animate | Defined$ Remembered | Duration$ Perpetual | ConditionDefined$ Remembered | ConditionPresent$ Creature.nonAngel | Types$ Angel | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:Flying\nWhen Skyline Savior enters, return a permanent you control to its owner's hand. If it's a non-Angel creature card, it perpetually gets +1/+1, gains flying, and becomes an Angel in addition to its other types.
+Oracle:Flying\nWhen this creature enters, return a permanent you control to its owner's hand. If it's a non-Angel creature card, it perpetually gets +1/+1, gains flying, and becomes an Angel in addition to its other types.

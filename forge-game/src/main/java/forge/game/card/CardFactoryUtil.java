@@ -1474,7 +1474,10 @@ public class CardFactoryUtil {
 
             String revealed = "DB$ ImmediateTrigger | TriggerDescription$ CARDNAME - Miracle";
 
-            final String trigStrDrawn = "Mode$ Drawn | ValidCard$ Card.Self | Number$ 1 | Secondary$ True"
+            // CR 702.94a - miracle lets you CAST the card, and a land can never be cast, so a land
+            // that has been granted miracle (Topdeck the Halls) must not offer the reveal at all.
+            // Never comes up for printed miracle cards; only for effects that grant it.
+            final String trigStrDrawn = "Mode$ Drawn | ValidCard$ Card.Self+nonLand | Number$ 1 | Secondary$ True"
                 + " | OptionalDecider$ You | Static$ True | TriggerDescription$ CARDNAME - Miracle";
 
             final Trigger triggerDrawn = TriggerHandler.parseTrigger(trigStrDrawn, card, intrinsic);
