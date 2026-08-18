@@ -215,7 +215,7 @@ final class CardFace implements ICardFace, Cloneable {
                 variant.oracleText = this.oracleText;
         }
         if(variant.manaCost == null) variant.manaCost = this.manaCost;
-        if(variant.color == null) variant.color = ColorSet.fromManaCost(variant.manaCost);
+        if(variant.color == null) variant.color = this.color;
 
         if(variant.type == null) variant.type = this.type;
 

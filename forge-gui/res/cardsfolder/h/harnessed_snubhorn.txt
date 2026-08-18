@@ -7,4 +7,4 @@ T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | Execute$ Tri
 SVar:TrigReturn:DB$ ChangeZone | ValidTgts$ Artifact.YouOwn,Enchantment.YouOwn | TgtPrompt$ Select target artifact or enchantment card from your graveyard | Origin$ Graveyard | Destination$ Battlefield
 DeckHas:Ability$Graveyard
 DeckHints:Type$Artifact|Enchantment
-Oracle:Whenever Harnessed Snubhorn deals combat damage to a player, return target artifact or enchantment card from your graveyard to the battlefield.
+Oracle:Vigilance\nWhenever this creature deals combat damage to a player, return target artifact or enchantment card from your graveyard to the battlefield.

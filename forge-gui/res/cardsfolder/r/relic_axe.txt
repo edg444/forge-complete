@@ -9,4 +9,4 @@ SVar:Y:Count$Valid Warrior.AttachedBy
 K:Equip:2
 SVar:NeedsToPlay:Creature.YouCtrl
 DeckHints:Type$Warrior
-Oracle:When Relic Axe enters, attach it to target creature you control.\nEquipped creature gets +1/+1. If it's a Warrior, it gets +2/+1 instead.\nEquip {2}
+Oracle:When this Equipment enters, attach it to target creature you control.\nEquipped creature gets +1/+1. If it's a Warrior, it gets +2/+1 instead.\nEquip {2} ({2}: Attach to target creature you control. Equip only as a sorcery.)
