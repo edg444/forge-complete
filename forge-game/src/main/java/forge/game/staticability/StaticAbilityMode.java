@@ -91,6 +91,9 @@ public enum StaticAbilityMode {
     // StaticAbilityCantBeCopied
     CantBeCopied,
 
+    // StaticAbilityCantBeBeamedUp
+    CantBeBeamedUp,
+
     // StaticAbilityCantBeSuspected
     CantBeSuspected,
 
