@@ -350,7 +350,7 @@ public enum ManaCostShard {
     }
 
     public boolean isGeneric() {
-    	return isOfKind(ManaAtom.GENERIC)|| isOfKind(ManaAtom.IS_X) || this.isSnow() || this.isOr2Generic();
+    	return isOfKind(ManaAtom.GENERIC) || isOfKind(ManaAtom.IS_X) || this.isSnow() || this.isOr2Generic();
     }
     public boolean isOr2Generic() {
         return isOfKind(ManaAtom.OR_2_GENERIC);
