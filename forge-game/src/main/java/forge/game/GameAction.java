@@ -2518,6 +2518,14 @@ public class GameAction {
     private void runPreOpeningHandActions(final Player first) {
         Player takesAction = first;
         do {
+            // Sovereign's Realm - your starting hand size is five
+            for (Card c : takesAction.getCardsIn(ZoneType.Command)) {
+                if (c.getName().equals("Sovereign's Realm")) {
+                    takesAction.setStartingHandSize(5);
+                    break;
+                }
+            }
+
             List<Card> ploys = CardLists.filter(takesAction.getCardsIn(ZoneType.Command), input -> input.getName().equals("Emissary's Ploy"));
             CardCollectionView all = CardLists.filterControlledBy(game.getCardsInGame(), takesAction);
             List<Card> spires = CardLists.filter(all, input -> input.getName().equals("Cryptic Spires"));

@@ -131,7 +131,7 @@ public enum DeckFormat {
     private final Predicate<CardRules> cardPoolFilter;
     private final Predicate<PaperCard> paperCardPoolFilter;
     private final static String ADVPROCLAMATION = "Advantageous Proclamation";
-    // private final static String SOVREALM = "Sovereign's Realm";
+    private final static String SOVREALM = "Sovereign's Realm";
 
     DeckFormat(Range<Integer> mainRange0, Range<Integer> sideRange0, int maxCardCopies0, Predicate<CardRules> cardPoolFilter0, Predicate<PaperCard> paperCardPoolFilter0) {
         mainRange = mainRange0;
@@ -262,14 +262,21 @@ public enum DeckFormat {
 
         int min = getMainRange().getMinimum();
         int max = getMainRange().getMaximum();
-        // boolean noBasicLands = false;
 
         // Adjust minimum base on number of Advantageous Proclamation or similar cards
         CardPool conspiracies = deck.get(DeckSection.Conspiracy);
+        boolean noBasicLands = false;
         if (conspiracies != null) {
             min -= (5 * conspiracies.countByName(ADVPROCLAMATION));
-            // Commented out to remove warnings from the code.
-            // noBasicLands = conspiracies.countByName(SOVREALM) > 0;
+            noBasicLands = conspiracies.countByName(SOVREALM) > 0;
+        }
+
+        if (noBasicLands) {
+            for (final Entry<PaperCard, Integer> cp : deck.get(DeckSection.Main)) {
+                if (cp.getKey().getRules().getType().isBasicLand()) {
+                    return "can't include basic land cards while Sovereign's Realm is in the command zone";
+                }
+            }
         }
 
         if (hasCommander()) {

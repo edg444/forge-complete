@@ -46,8 +46,7 @@ Magic 2011, 3/6/M11, M11
 Scars of Mirrodin, 3/6/SOM, SOM MBS NPH
 Magic 2012, 3/6/M12, M12  
 Masters Edition IV, 3/6/ME3, ME4
-Innistrad, 3/6/ISD, ISD DKA 
-Avacyn Restored, 3/6/AVR, AVR  
+Innistrad, 3/6/ISD, ISD DKA AVR
 Magic 2013, 3/6/M13, M13  
 Return to Ravnica, 3/6/RTR, RTR GTC DGM
 Return to Ravnica Guild Sealed, -/6/RTR, RTR RTR RTR Meta-Choose(S(RTR Prerelease Azorius Guild)Azorius guild;S(RTR Prerelease Selesnya Guild)Selesnya guild;S(RTR Prerelease Izzet Guild)Izzet guild;S(RTR Prerelease Rakdos Guild)Rakdos guild;S(RTR Prerelease Golgari Guild)Golgari guild)Guild
@@ -69,6 +68,7 @@ Battle for Zendikar, 3/6/BFZ, BFZ OGW
 Shadows over Innistrad, 3/6/SOI, SOI EMN
 Eternal Masters, 3/6/SOI, EMA
 Conspiracy Take the Crown, 3/6/ORI, CN2
+Conspiracy Draft, 3/6/M14, CNS CN2
 Kaladesh, 3/6/KLD, KLD AER
 Modern Masters 2017, 3/6/M15, MM3
 Amonkhet, 3/6/AKH, AKH HOU
