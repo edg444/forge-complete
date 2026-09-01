@@ -217,6 +217,9 @@ public enum StaticAbilityMode {
 
     // StaticAbilityIgnoreErrata
     IgnoreErrata,
+
+    // StaticAbilityManaRestriction
+    ManaRestriction,
     ;
 
     public static StaticAbilityMode smartValueOf(final String value) {
