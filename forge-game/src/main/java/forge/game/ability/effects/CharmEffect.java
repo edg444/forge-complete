@@ -28,6 +28,16 @@ import forge.util.collect.FCollection;
 public class CharmEffect extends SpellAbilityEffect {
 
     public static List<AbilitySub> makePossibleOptions(final SpellAbility sa) {
+        return makePossibleOptions(sa, true);
+    }
+
+    /**
+     * @param checkLegality whether to drop modes that are currently uncastable (CR 603.3c) - true
+     * for an actual choice (resolving the ability, or the AI deciding what to pick), false for
+     * describing the card's printed text. A mode needing an opponent's permanent shouldn't vanish
+     * from a card's rules text just because no opponent happens to control one right now.
+     */
+    public static List<AbilitySub> makePossibleOptions(final SpellAbility sa, final boolean checkLegality) {
         final Card source = sa.getHostCard();
         List<String> restriction = null;
 
@@ -37,7 +47,7 @@ public class CharmEffect extends SpellAbilityEffect {
 
         List<AbilitySub> choices = Lists.newArrayList(sa.getAdditionalAbilityList("Choices"));
 
-        if (source.getZone() != null) {
+        if (checkLegality && source.getZone() != null) {
             List<AbilitySub> toRemove = Lists.newArrayList();
             for (AbilitySub ch : choices) {
                 // 603.3c If one of the modes would be illegal, that mode can't be chosen.
@@ -68,7 +78,9 @@ public class CharmEffect extends SpellAbilityEffect {
     public static String makeFormatedDescription(SpellAbility sa, boolean includeChosen) {
         Card source = sa.getHostCard();
 
-        List<AbilitySub> list = CharmEffect.makePossibleOptions(sa);
+        // this builds descriptive text (stack description or a card's printed rules text), never
+        // the actual choice - real choice-legality is enforced separately in makeChoices below
+        List<AbilitySub> list = CharmEffect.makePossibleOptions(sa, false);
         String numParam = sa.getParamOrDefault("CharmNum", "1");
         boolean isX = numParam.equals("X");
         boolean repeat = sa.hasParam("CanRepeatModes");

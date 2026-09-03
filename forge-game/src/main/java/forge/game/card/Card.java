@@ -6960,6 +6960,13 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                 false, EnumSet.of(RemoveType.EnchantmentTypes), bestowTimestamp, 0, updateView, false);
         addChangedCardKeywords(Collections.singletonList("Enchant:Creature"), Lists.newArrayList(),
                 false, bestowTimestamp, null, updateView);
+        // Creature <-> Aura is exactly when P/T does or doesn't apply, but a type change alone
+        // doesn't refresh the view's cached Power/Toughness - without this it keeps showing
+        // whatever it last displayed (0/0 while it was an Aura) until something unrelated forces
+        // a refresh, even though the real, computed P/T was correct the whole time.
+        if (updateView) {
+            updatePTforView();
+        }
     }
 
     public final void unanimateBestow() {
@@ -6973,6 +6980,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         removeChangedCardKeywords(bestowTimestamp, 0, updateView);
         removeChangedCardTypes(bestowTimestamp, 0, updateView);
         bestowTimestamp = -1;
+        if (updateView) {
+            updatePTforView();
+        }
     }
 
     public final boolean isBestowed() {

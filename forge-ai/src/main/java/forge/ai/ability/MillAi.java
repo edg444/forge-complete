@@ -8,6 +8,7 @@ import forge.game.card.Card;
 import forge.game.card.CardCollectionView;
 import forge.game.card.CardLists;
 import forge.game.card.CardPredicates;
+import forge.game.keyword.Keyword;
 import forge.game.phase.PhaseHandler;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
@@ -16,11 +17,36 @@ import forge.game.player.PlayerPredicates;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class MillAi extends SpellAbilityAi {
+
+    // Cards whose presence is a real signal this AI's build cares about a stocked graveyard - as
+    // opposed to a mill just being incidental card loss with no upside for this particular deck.
+    private static final Set<Keyword> GRAVEYARD_PAYOFF_KEYWORDS = EnumSet.of(
+            Keyword.FLASHBACK, Keyword.AFTERMATH, Keyword.ESCAPE, Keyword.DISTURB, Keyword.UNEARTH,
+            Keyword.DELVE, Keyword.DREDGE, Keyword.EMBALM, Keyword.ETERNALIZE);
+
+    private static boolean caresAboutOwnGraveyard(final Player ai) {
+        if (ai.hasDelirium() || ai.hasThreshold()) {
+            return true;
+        }
+        final CardCollectionView seen = ai.getCardsIn(Arrays.asList(
+                ZoneType.Hand, ZoneType.Battlefield, ZoneType.Graveyard));
+        for (final Card c : seen) {
+            for (final Keyword kw : GRAVEYARD_PAYOFF_KEYWORDS) {
+                if (c.hasKeyword(kw)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     @Override
     protected boolean checkAiLogic(final Player ai, final SpellAbility sa, final String aiLogic) {
@@ -181,6 +207,12 @@ public class MillAi extends SpellAbilityAi {
     public boolean confirmAction(Player player, SpellAbility sa, PlayerActionConfirmMode mode, String message, Map<String, Object> params) {
         if ("TimmerianFiends".equals(sa.getParam("AILogic"))) {
             return SpecialCardAi.TimmerianFiends.consider(player, sa);
+        }
+        if ("SelfMillIfGraveyardMatters".equals(sa.getParam("AILogic"))) {
+            // A small, no-payoff-of-its-own self-mill (e.g. Shard of Broken Glass) is only worth
+            // taking when something in this game already suggests the graveyard is wanted -
+            // otherwise it's pure card disadvantage the AI shouldn't volunteer for.
+            return caresAboutOwnGraveyard(player);
         }
 
         return true;
