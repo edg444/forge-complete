@@ -234,7 +234,6 @@ public enum TrackableProperty {
     SA_IsSpell(TrackableTypes.BooleanType),
 
     //HasBackSide
-    BackSideName(TrackableTypes.StringType),
     HasBackSide(TrackableTypes.BooleanType),
 
     //StackItem
