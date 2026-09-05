@@ -1704,6 +1704,7 @@ public class AiController {
         });
 
         Thread t = new Thread(future, "Game AI Eval");
+        t.setDaemon(true);
         t.start();
         try {
             return future.get(game.getAITimeout(), TimeUnit.SECONDS);

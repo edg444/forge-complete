@@ -2406,6 +2406,9 @@ public class AbilityUtils {
         if (sq[0].equals("YourStartingLife")) {
             return doXMath(player.getStartingLife(), expr, c, ctb);
         }
+        if (sq[0].equals("YourStartingLibrarySize")) {
+            return doXMath(player.getStartingLibrarySize(), expr, c, ctb);
+        }
 
         if (sq[0].equals("YourLifeTotal")) {
             return doXMath(player.getLife(), expr, c, ctb);
@@ -3713,6 +3716,9 @@ public class AbilityUtils {
 
         if (value.contains("StartingLife")) {
             return doXMath(player.getStartingLife(), m, source, ctb);
+        }
+        if (value.contains("StartingLibrarySize")) {
+            return doXMath(player.getStartingLibrarySize(), m, source, ctb);
         }
 
         // must precede LifeTotal, which would otherwise match this name too
