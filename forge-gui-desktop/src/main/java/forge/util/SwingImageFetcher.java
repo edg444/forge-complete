@@ -36,30 +36,19 @@ public class SwingImageFetcher extends ImageFetcher {
                 return false;
             }
 
-            if (ScryfallImageIndex.isPlaceholder(urlToDownload)) {
-                // resolved here rather than when the URL list is built, since looking up the id may
-                // have to download a set index and that must not happen on the EDT
-                urlToDownload = ScryfallImageIndex.resolve(urlToDownload);
-                if (urlToDownload == null) {
-                    return false;
-                }
-            }
-
-            if (inScryfallCooldown(urlToDownload)) {
+            if (ScryfallRateLimiter.shouldSkip(urlToDownload)) {
                 return false;
             }
 
-            // both Scryfall hosts serve the same full-border art, so they get the same naming
-            final boolean fromScryfall = urlToDownload.startsWith(ForgeConstants.URL_PIC_SCRYFALL_DOWNLOAD)
-                    || urlToDownload.startsWith(ForgeConstants.URL_PIC_SCRYFALL_CDN);
-
-            String newdespath = urlToDownload.contains(".fullborder.jpg") || fromScryfall ?
+            boolean isScryfallUrl = urlToDownload.startsWith(ForgeConstants.URL_PIC_SCRYFALL_DOWNLOAD)
+                    || urlToDownload.startsWith(ForgeConstants.URL_SCRYFALL_CDN);
+            String newdespath = urlToDownload.contains(".fullborder.jpg") || isScryfallUrl ?
                     TextUtil.fastReplace(destPath, ".full.jpg", ".fullborder.jpg") : destPath;
-            if (!newdespath.contains(".full") && !newdespath.contains(".artcrop") && fromScryfall && !destPath.startsWith(ForgeConstants.CACHE_TOKEN_PICS_DIR))
+            if (!newdespath.contains(".full") && !newdespath.contains(".artcrop") && isScryfallUrl && !destPath.startsWith(ForgeConstants.CACHE_TOKEN_PICS_DIR))
                 newdespath = newdespath.replace(".jpg", ".fullborder.jpg"); //fix planes/phenomenon for round border options
             URL url = new URL(urlToDownload);
             System.out.println("Attempting to fetch: " + url);
-            paceScryfall(urlToDownload);
+            ScryfallRateLimiter.acquire(urlToDownload);
 
             // Read through a connection rather than ImageIO.read(URL), which discards the response
             // code - without it a 429 is indistinguishable from any other failure and we keep asking.
@@ -71,10 +60,7 @@ public class SwingImageFetcher extends ImageFetcher {
                 if (responseCode != HttpURLConnection.HTTP_OK) {
                     System.err.println("Failed to fetch image. HTTP code: " + responseCode
                             + " (" + httpConnection.getResponseMessage() + ") for URL: " + urlToDownload);
-                    if (responseCode == 429 && isScryfall(urlToDownload)) {
-                        System.err.println("Rate limited by scryfall. Pausing image downloads.");
-                        noteScryfallRateLimited();
-                    }
+                    ScryfallRateLimiter.noteIfRateLimited(responseCode, urlToDownload, httpConnection.getHeaderField("Retry-After"));
                     httpConnection.disconnect();
                     return false;
                 }

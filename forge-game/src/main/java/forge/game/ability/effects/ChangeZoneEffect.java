@@ -38,6 +38,11 @@ import java.util.Set;
 public class ChangeZoneEffect extends SpellAbilityEffect {
 
     @Override
+    public boolean movesCardToOrFromLibrary(final SpellAbility sa) {
+        return zoneParamIsLibrary(sa, "Origin") || zoneParamIsLibrary(sa, "Destination");
+    }
+
+    @Override
     public void buildSpellAbility(SpellAbility sa) {
         super.buildSpellAbility(sa);
         AbilityFactory.adjustChangeZoneTarget(sa.getMapParams(), sa);
@@ -1753,4 +1758,5 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
         }
         return Pair.of(dest1, libPos1);
     }
+
 }

@@ -126,6 +126,7 @@ public class ChooseCardNameEffect extends SpellAbilityEffect {
                     cpp = cpp.and(notNamed);
                 }
                 if (randomChoice) {
+                    StaticData.instance().ensureAllCardsLoaded();
                     chosen = StaticData.instance().getCommonCards().streamAllFaces()
                             .filter(cpp).collect(StreamUtil.random()).map(ICardFace::getName).orElse("");
                 } else {
