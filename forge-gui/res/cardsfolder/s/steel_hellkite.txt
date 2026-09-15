@@ -4,6 +4,10 @@ Types:Artifact Creature Dragon
 PT:5/5
 K:Flying
 A:AB$ Pump | Cost$ 2 | NumAtt$ +1 | SpellDescription$ This creature gets +1/+0 until end of turn.
-A:AB$ DestroyAll | Cost$ X | ValidCards$ Permanent.nonLand+cmcEQX+controllerWasDealtCombatDamageByThisTurn | ActivationLimit$ 1 | Hidden$ True | SpellDescription$ Destroy each nonland permanent with mana value X whose controller was dealt combat damage by this creature this turn. Activate only once each turn.
+# Neither side's ValidCards property actually existed (silent no-op either way) - the real, already-
+# implemented one lives on PlayerProperty and is scoped to "this combat", not "this turn"; Forge has
+# no per-turn damage tracking to do better with, and this is the same precision Glen Elendra's own
+# card script already accepts for the identical wording.
+A:AB$ DestroyAll | Cost$ X | ValidCards$ Permanent.nonLand+cmcEQX+ControlledBy Player.wasDealtCombatDamageThisCombatBy Self | ActivationLimit$ 1 | Hidden$ True | SpellDescription$ Destroy each nonland permanent with mana value X whose controller was dealt combat damage by this creature this turn. Activate only once each turn.
 SVar:X:Count$xPaid
-Oracle:Flying\n{2}: Steel Hellkite gets +1/+0 until end of turn.\n{X}: Destroy each nonland permanent with mana value X whose controller was dealt combat damage by Steel Hellkite this turn. Activate only once each turn.
+Oracle:Flying\n{2}: This creature gets +1/+0 until end of turn.\n{X}: Destroy each nonland permanent with mana value X whose controller was dealt combat damage by this creature this turn. Activate only once each turn.
