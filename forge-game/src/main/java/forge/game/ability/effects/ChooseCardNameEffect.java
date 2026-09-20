@@ -52,6 +52,7 @@ public class ChooseCardNameEffect extends SpellAbilityEffect {
             }
         }
 
+        nextPlayer:
         for (final Player p : getTargetPlayers(sa)) {
             if (!p.isInGame()) {
                 continue;
@@ -93,32 +94,42 @@ public class ChooseCardNameEffect extends SpellAbilityEffect {
             } else {
                 // use CardFace because you might name a alternate names
                 Predicate<ICardFace> cpp = x -> true;
+                List<Predicate<ICardFace>> conditions = new ArrayList<>();
                 if (sa.hasParam("ValidCards")) {
-                    //Calculating/replacing this must happen before running valid in CardFacePredicates
-                    if (valid.contains("cmcEQ") && !StringUtils.isNumeric(valid.split("cmcEQ")[1])) {
-                        String s = valid.split("cmcEQ")[1];
-                        valid = valid.replace(s, String.valueOf(AbilityUtils.calculateAmount(host, s, sa)));
-                    }
-                    if (valid.contains("ManaCost=")) {
-                        if (valid.contains("ManaCost=Equipped")) {
-                            String s = host.getEquipping().getManaCost().getShortString();
-                            valid = valid.replace("=Equipped", s);
-                        } else if (valid.contains("ManaCost=Imprinted")) {
-                            String s = host.getImprintedCards().getFirst().getManaCost().getShortString();
-                            valid = valid.replace("=Imprinted", s);
-                        } else if (valid.contains("ManaCost=Chosen")) {
-                            // Richard Garfield, Ph.D. - the cost to match comes from the card just
-                            // chosen out of hand, and colour matters, so it's the full cost string.
-                            // Asked via hasChosenCard because getChosenCard throws on an empty
-                            // collection rather than returning null, which cancelling leaves behind
-                            if (!host.hasChosenCard()) {
-                                continue;
-                            }
-                            String s = host.getChosenCard().getManaCost().getShortString();
-                            valid = valid.replace("=Chosen", s);
+                    for(String v: valid.split(",")) {
+                        //Calculating/replacing this must happen before running valid in CardFacePredicates
+                        if (v.contains("cmcEQ") && !StringUtils.isNumeric(v.split("cmcEQ")[1])) {
+                            String s = v.split("cmcEQ")[1];
+                            v = v.replace(s, String.valueOf(AbilityUtils.calculateAmount(host, s, sa)));
                         }
+                        if (v.contains("ManaCost=")) {
+                            if (v.contains("ManaCost=Equipped")) {
+                                String s = host.getEquipping().getManaCost().getShortString();
+                                v = v.replace("=Equipped", s);
+                            } else if (v.contains("ManaCost=Imprinted")) {
+                                String s = host.getImprintedCards().getFirst().getManaCost().getShortString();
+                                v = v.replace("=Imprinted", s);
+                            } else if (v.contains("ManaCost=Chosen")) {
+                                // Richard Garfield, Ph.D. - the cost to match comes from the card just
+                                // chosen out of hand, and colour matters, so it's the full cost string.
+                                // Asked via hasChosenCard because getChosenCard throws on an empty
+                                // collection rather than returning null, which cancelling leaves behind.
+                                // Nothing chosen means nothing to name, so skip this player outright -
+                                // labeled because a plain continue would only skip this one alternative.
+                                if (!host.hasChosenCard()) {
+                                    continue nextPlayer;
+                                }
+                                String s = host.getChosenCard().getManaCost().getShortString();
+                                v = v.replace("=Chosen", s);
+                            }
+                        }
+                        conditions.add(CardFacePredicates.valid(v));
                     }
-                    cpp = CardFacePredicates.valid(valid);
+                    cpp = IterableUtil.or(conditions);
+                    if (sa.hasParam("ExcludeChosen")) {
+                        final Predicate<ICardFace> innerCpp = cpp;
+                        cpp = face -> innerCpp.test(face) && !host.getNamedCards().contains(face.getName());
+                    }
                 }
                 if (sa.hasParam("ExcludeChosen")) {
                     // each Richard tracks its own list, which is what the named cards already are

@@ -3,7 +3,7 @@ ManaCost:2 B
 Types:Creature Ogre Warrior
 PT:3/2
 S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't block.
-S:Mode$ Continuous | Affected$ Card.Self | AddAbility$ Regen | IsPresent$ Demon.YouCtrl | Description$ As long as you control a Demon, this creature has "{B}: Regenerate this creature."
+S:Mode$ Continuous | AffectedDefined$ Self | AddAbility$ Regen | IsPresent$ Demon.YouCtrl | Description$ As long as you control a Demon, this creature has "{B}: Regenerate this creature."
 SVar:Regen:AB$ Regenerate | Cost$ B | SpellDescription$ Regenerate this creature.
 SVar:BuffedBy:Demon
 DeckNeeds:Type$Demon

@@ -25,6 +25,8 @@ import forge.card.CardStateName;
 import forge.card.CardType;
 import forge.card.ColorSet;
 import forge.card.MagicColor;
+import forge.card.ICardFace;
+import forge.card.CardSplitType;
 import forge.game.CardTraitBase;
 import forge.game.Game;
 import forge.game.ability.AbilityKey;
@@ -40,6 +42,7 @@ import forge.util.TextUtil;
 import forge.util.collect.FCollection;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -388,5 +391,30 @@ public final class CardUtil {
         choices.removeAll(targeted);
 
         return choices;
+    }
+
+    public static void turnToRightFace(String faceName, Card forgeCard) {
+        if (!forgeCard.getName().equals(faceName)) {
+            if (forgeCard.getRules().getSplitType().equals(CardSplitType.Specialize)) {
+                for (Map.Entry<CardStateName, ICardFace> e : forgeCard.getRules().getSpecializeParts().entrySet()) {
+                    if (faceName.equals(e.getValue().getName())) {
+                        forgeCard.changeToState(e.getKey());
+                        return;
+                    }
+                }
+            } else if (forgeCard.getRules().getSplitType().equals(CardSplitType.Split)) {
+                // A split card's default state is named "Left // Right", which matches neither half, so
+                // the generic "name differs, switch to the changed state" rule below fired even for the
+                // left half and always produced the right one. Pick the state by which face was asked for.
+                final ICardFace other = forgeCard.getRules().getOtherPart();
+                forgeCard.changeToState(other != null && faceName.equals(other.getName())
+                        ? CardStateName.RightSplit : CardStateName.LeftSplit);
+            } else {
+                forgeCard.changeToState(forgeCard.getRules().getSplitType().getChangedStateName());
+                if (forgeCard.getCurrentStateName().equals(CardStateName.Backside)) {
+                    forgeCard.setBackSide(true);
+                }
+            }
+        }
     }
 }
