@@ -230,7 +230,7 @@ public class ImageUtil {
     }
 
     public static ScryfallCardRef getScryfallCardRef(PaperCard cp, String face, String setCode) {
-        final Pattern funnyCardCollectorNumberPattern = Pattern.compile("^F\\d+");
+        final Pattern funnyCardCollectorNumberPattern = Pattern.compile("^F\\d+[a-z]?");
         String editionCode;
         if (setCode != null && !setCode.isEmpty())
             editionCode = setCode;
