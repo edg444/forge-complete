@@ -232,9 +232,6 @@ public enum TrackableProperty {
     PromptIfOnlyPossibleAbility(TrackableTypes.BooleanType),
     SA_IsSpell(TrackableTypes.BooleanType),
 
-    //HasBackSide
-    HasBackSide(TrackableTypes.BooleanType),
-
     //StackItem
     Key(TrackableTypes.StringType),
     SourceTrigger(TrackableTypes.IntegerType),
