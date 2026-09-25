@@ -6456,6 +6456,19 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return pc == null ? edition.getBorderColor() : edition.getBorderColor(pc.getCollectorNumber());
     }
 
+    /**
+     * Silver-bordered, or acorn-stamped - acorn is what replaced the silver border from Unfinity on,
+     * for the same kind of card, so both count wherever an Un rule or card cares about silver borders.
+     */
+    public boolean isSilverBorderedOrAcorn() {
+        if (borderColor() == CardEdition.BorderColor.SILVER) {
+            return true;
+        }
+        final CardEdition edition = StaticData.instance().getEditions().get(getSetCode());
+        final IPaperCard pc = getPaperCard();
+        return edition != null && pc != null && edition.isAcorn(pc.getCollectorNumber());
+    }
+
     public final String getMostRecentSet() {
         return StaticData.instance().getCommonCards().getCard(getPaperCard().getName()).getEdition();
     }

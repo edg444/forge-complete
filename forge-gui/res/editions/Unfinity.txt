@@ -6,285 +6,285 @@ Type=Funny
 ScryfallCode=UNF
 
 [cards]
-F1 M Standard Procedure @Igor Grechanyi
-F3 U Assembled Ensemble @Jakub Kasper
-F4 C Bar Entry @Leonardo Santanna
-F8 M Far Out @Bram Sels
-F9 R Form of the Approach of the Second Sun @Aaron J. Riley
-F10 U Get Your Head in the Game @Vincent Christiaens
-F11 C Gobsmacked @Marco Bucci
-F13 C Hat Trick @Sebastian Giacobino
-F14 C Impounding Lot-Bot @Ralph Horsley
-F15 C Jetpack Janitor @Tyler Walpole
-F16 R Katerina of Myra's Marvels @Gaboleps
-F17 U Knight in _____ Armor @Sam Hogg
-F18 C Leading Performance @Tomek Larek
-F19 R Main Event Horizon @Mike Burns
-F20 C Now You See Me . . . @Sam Hogg
-F22 U Park Re-Entry @Ernanda Souza
-F27 R Solaflora, Intergalactic Icon @Aaron J. Riley
-F29 R Surprise Party @Sean Murray
-F31 C T.A.P.P.E.R. @David Sladek
-F32 U Trapeze Artist @Ernanda Souza
-F33 U Animate Object @Greg Staples
-F34 U Astroquarium @Tyler Walpole
-F36 C Bag Check @Tyler Walpole
-F39 C Blufferfish @Christopher Burdett
-F41 U Busted! @Igor Grechanyi
-F44 C Decisions, Decisions @Setor Fiadzigbey
-F46 R Fluros of Myra's Marvels @Gaboleps
-F47 C Focused Funambulist @Setor Fiadzigbey
-F49 R How Is This a Par Three?! @Mike Burns
-F51 R Mobile Clone @Setor Fiadzigbey
-F54 U Octo Opus @Tomek Larek
-F55 M Phone a Friend @Ben Wootten
-F56 M Plate Spinning @Raluca Marinescu
-F59 C Super-Duper Lost @Vincent Christiaens
-F60 R Treacherous Trapezist @Dave Greco
-F65 R Animate Graveyard @Mike Burns
-F71 C Disemvowel @Ralph Horsley
-F74 M Exit Through the Grift Shop @Chris Seaman
-F75 U Gray Merchant of Alphabet @Yangtian Li
-F76 U Haberthrasher @April Prime
-F77 R Knife and Death @Caio Monteiro
-F82 R Nocturno of Myra's Marvels @Gaboleps
-F83 M Photo Op @Setor Fiadzigbey
-F84 C Questionable Cuisine @Chuck Lukacs
-F86 C Rat in the Hat @Filipe Pagliuso
-F87 U A Real Handful @Tomek Larek
-F91 C Scooch @Filipe Pagliuso
-F97 C Aardwolf's Advantage @Tomek Larek
-F98 C Amped Up @Jamroz Gary
-F99 C Art Appreciation @April Prime
-F102 R Carnival Barker @Dave Greco
-F104 R Devil K. Nevil @Paolo Parente
-F105 R Don't Try This at Home @Tyler Walpole
-F109 U Goblin Blastronauts @Dave Allsop
-F110 R Goblin Cruciverbalist @Mike Burns
-F111 U Goblin Girder Gang @Tyler Walpole
-F112 R Ignacio of Myra's Marvels @Gaboleps
-F113 U Juggletron @Matt Dixon
-F116 R Omniclown Colossus @Ralph Horsley
-F118 M Opening Ceremony @Greg Bobrowski
-F122 C Rock Star @Dave Allsop
-F124 U Ticking Mime Bomb @Greg Bobrowski
-F125 U Trigger Happy @Jamroz Gary
-F126 M Vorthos, Steward of Myth @Caroline Gariba
-F128 C Well Done @Gaboleps
-F129 C Alpha Guard @Caroline Gariba
-F141 R Hardy of Myra's Marvels @Gaboleps
-F142 U Icing Manipulator @Raluca Marinescu
-F143 C An Incident Has Occurred @Greg Bobrowski
-F144 R Jermane, Pride of the Circus @Alexander Mokhov
-F145 M Killer Cosplay @Leonardo Santanna
-F147 C Mistakes Were Made @Ralph Horsley
-F151 U Pie-Eating Contest @Simon Dominic
-F152 C Plot Armor @Gaboleps
-F154 R Sole Performer @Anna Christenson
-F155 R Spelling Bee @Caroline Gariba
-F158 R Tchotchke Elemental @Sean Murray
-F159 M Tug of War @Gaboleps
-F162 U Angelic Harold @Aaron J. Riley
-F163 U "Brims" Barone, Midway Mobster @Sebastian Giacobino
-F165 R Claire D'Loon, Joy Sculptor @Igor Grechanyi
-F168 M Grand Marshal Macie @Marco Bucci
-F169 M It Came from Planet Glurg @Marco Bucci
-F170 M Lila, Hospitality Hostess @Yangtian Li
-F172 R Meet and Greet "Sisay" @Setor Fiadzigbey
-F176 U Pietra, Crafter of Clowns @Armand Baltazar
-F181 R Truss, Chief Engineer @Aaron J. Riley
-F183 U Autograph Book @Ben Maier
-F184 R Blue Ribbon @Chuck Lukacs
-F187 R D00-DL, Caricaturist @Ralph Horsley
-F189 M Greatest Show in the Multiverse @Alix Branwyn
-F190 C Park Map @Kirsten Zirngibl
-F192 R Souvenir T-Shirt @Michael Phillippi
-F197 U The Big Top @Kirsten Zirngibl
-F198 C Nearby Planet @Bruce Brenneise
-F199 R Urza's Fun House @Dmitry Burmak
-F203a R Centrifuge @Greg Staples ${"variant": "A"}
-F203b R Centrifuge @Greg Staples ${"variant": "B"}
-F207a C Cover the Spot @Jeff Miracola ${"variant": "A"}
-F207b C Cover the Spot @Jeff Miracola ${"variant": "B"}
-F207c C Cover the Spot @Jeff Miracola ${"variant": "C"}
-F207d C Cover the Spot @Jeff Miracola ${"variant": "D"}
-F208a C Dart Throw @Gaboleps ${"variant": "A"}
-F208b C Dart Throw @Gaboleps ${"variant": "B"}
-F208c C Dart Throw @Gaboleps ${"variant": "C"}
-F208d C Dart Throw @Gaboleps ${"variant": "D"}
-F213a R Gallery of Legends @Jakub Kasper ${"variant": "A"}
-F213b R Gallery of Legends @Jakub Kasper ${"variant": "B"}
-F214a R Gift Shop @Matt Gaser ${"variant": "A"}
-F214b R Gift Shop @Matt Gaser ${"variant": "B"}
-F215a U Guess Your Fate @Bruce Brenneise ${"variant": "A"}
-F215b U Guess Your Fate @Bruce Brenneise ${"variant": "B"}
-F215c U Guess Your Fate @Bruce Brenneise ${"variant": "C"}
-F215d U Guess Your Fate @Bruce Brenneise ${"variant": "D"}
-F220a R Log Flume @Marco Bucci ${"variant": "A"}
-F220b R Log Flume @Marco Bucci ${"variant": "B"}
-F221a R Memory Test @Setor Fiadzigbey ${"variant": "A"}
-F221b R Memory Test @Setor Fiadzigbey ${"variant": "B"}
-F224a R Push Your Luck @Sebastian Giacobino ${"variant": "A"}
-F224b R Push Your Luck @Sebastian Giacobino ${"variant": "B"}
-F226a U Scavenger Hunt @Jamroz Gary ${"variant": "A"}
-F226b U Scavenger Hunt @Jamroz Gary ${"variant": "B"}
-F226c U Scavenger Hunt @Jamroz Gary ${"variant": "C"}
-F226d U Scavenger Hunt @Jamroz Gary ${"variant": "D"}
-F226e U Scavenger Hunt @Jamroz Gary ${"variant": "E"}
-F226f U Scavenger Hunt @Jamroz Gary ${"variant": "F"}
-F228a U Squirrel Stack @Andrea Radeck ${"variant": "A"}
-F228b U Squirrel Stack @Andrea Radeck ${"variant": "B"}
-F228c U Squirrel Stack @Andrea Radeck ${"variant": "C"}
-F228d U Squirrel Stack @Andrea Radeck ${"variant": "D"}
-F228e U Squirrel Stack @Andrea Radeck ${"variant": "E"}
-F228f U Squirrel Stack @Andrea Radeck ${"variant": "F"}
-F230a U The Superlatorium @Simon Dominic ${"variant": "A"}
-F230b U The Superlatorium @Simon Dominic ${"variant": "B"}
-F230c U The Superlatorium @Simon Dominic ${"variant": "C"}
-F230d U The Superlatorium @Simon Dominic ${"variant": "D"}
-F230e U The Superlatorium @Simon Dominic ${"variant": "E"}
-F230f U The Superlatorium @Simon Dominic ${"variant": "F"}
-F233a U Trivia Contest @Caroline Gariba ${"variant": "A"}
-F233b U Trivia Contest @Caroline Gariba ${"variant": "B"}
-F233c U Trivia Contest @Caroline Gariba ${"variant": "C"}
-F233d U Trivia Contest @Caroline Gariba ${"variant": "D"}
-F233e U Trivia Contest @Caroline Gariba ${"variant": "E"}
-F233f U Trivia Contest @Caroline Gariba ${"variant": "F"}
-F245 R Katerina of Myra's Marvels @David Semple
-F246 R Solaflora, Intergalactic Icon @Scooter
-F247 R Fluros of Myra's Marvels @David Semple
-F248 R Nocturno of Myra's Marvels @David Semple
-F249 R Devil K. Nevil @David Semple
-F250 R Ignacio of Myra's Marvels @David Semple
-F251 M Vorthos, Steward of Myth @Stephanie Buscema
-F252 R Hardy of Myra's Marvels @David Semple
-F253 R Jermane, Pride of the Circus @Scooter
-F255 U Angelic Harold @Stephanie Buscema
-F256 U "Brims" Barone, Midway Mobster @Stephanie Buscema
-F258 R Claire D'Loon, Joy Sculptor @Scooter
-F260 M Grand Marshal Macie @Scooter
-F261 M It Came from Planet Glurg @Scooter
-F262 M Lila, Hospitality Hostess @Scooter
-F264 R Meet and Greet "Sisay" @Scooter
-F268 U Pietra, Crafter of Clowns @Stephanie Buscema
-F272 R Truss, Chief Engineer @Scooter
-F274 R D00-DL, Caricaturist @Scooter
-F287 M Standard Procedure @Igor Grechanyi
-F289 U Assembled Ensemble @Jakub Kasper
-F290 C Bar Entry @Leonardo Santanna
-F294 M Far Out @Bram Sels
-F295 R Form of the Approach of the Second Sun @Aaron J. Riley
-F296 U Get Your Head in the Game @Vincent Christiaens
-F297 C Gobsmacked @Marco Bucci
-F299 C Hat Trick @Sebastian Giacobino
-F300 C Impounding Lot-Bot @Ralph Horsley
-F301 C Jetpack Janitor @Tyler Walpole
-F302 R Katerina of Myra's Marvels @Gaboleps
-F303 U Knight in _____ Armor @Sam Hogg
-F304 C Leading Performance @Tomek Larek
-F305 R Main Event Horizon @Mike Burns
-F306 C Now You See Me . . . @Sam Hogg
-F308 U Park Re-Entry @Ernanda Souza
-F313 R Solaflora, Intergalactic Icon @Aaron J. Riley
-F315 R Surprise Party @Sean Murray
-F317 C T.A.P.P.E.R. @David Sladek
-F318 U Trapeze Artist @Ernanda Souza
-F319 U Animate Object @Greg Staples
-F320 U Astroquarium @Tyler Walpole
-F322 C Bag Check @Tyler Walpole
-F325 C Blufferfish @Christopher Burdett
-F327 U Busted! @Igor Grechanyi
-F330 C Decisions, Decisions @Setor Fiadzigbey
-F332 R Fluros of Myra's Marvels @Gaboleps
-F333 C Focused Funambulist @Setor Fiadzigbey
-F335 R How Is This a Par Three?! @Mike Burns
-F337 R Mobile Clone @Setor Fiadzigbey
-F340 U Octo Opus @Tomek Larek
-F341 M Phone a Friend @Ben Wootten
-F342 M Plate Spinning @Raluca Marinescu
-F345 C Super-Duper Lost @Vincent Christiaens
-F346 R Treacherous Trapezist @Dave Greco
-F351 R Animate Graveyard @Mike Burns
-F357 C Disemvowel @Ralph Horsley
-F360 M Exit Through the Grift Shop @Chris Seaman
-F361 U Gray Merchant of Alphabet @Yangtian Li
-F362 U Haberthrasher @April Prime
-F363 R Knife and Death @Caio Monteiro
-F368 R Nocturno of Myra's Marvels @Gaboleps
-F369 M Photo Op @Setor Fiadzigbey
-F370 C Questionable Cuisine @Chuck Lukacs
-F372 C Rat in the Hat @Filipe Pagliuso
-F373 U A Real Handful @Tomek Larek
-F377 C Scooch @Filipe Pagliuso
-F383 C Aardwolf's Advantage @Tomek Larek
-F384 C Amped Up @Jamroz Gary
-F385 C Art Appreciation @April Prime
-F388 R Carnival Barker @Dave Greco
-F390 R Devil K. Nevil @Paolo Parente
-F391 R Don't Try This at Home @Tyler Walpole
-F395 U Goblin Blastronauts @Dave Allsop
-F396 R Goblin Cruciverbalist @Mike Burns
-F397 U Goblin Girder Gang @Tyler Walpole
-F398 R Ignacio of Myra's Marvels @Gaboleps
-F399 U Juggletron @Matt Dixon
-F402 R Omniclown Colossus @Ralph Horsley
-F404 M Opening Ceremony @Greg Bobrowski
-F408 C Rock Star @Dave Allsop
-F410 U Ticking Mime Bomb @Greg Bobrowski
-F411 U Trigger Happy @Jamroz Gary
-F412 M Vorthos, Steward of Myth @Caroline Gariba
-F414 C Well Done @Gaboleps
-F415 C Alpha Guard @Caroline Gariba
-F427 R Hardy of Myra's Marvels @Gaboleps
-F428 U Icing Manipulator @Raluca Marinescu
-F429 C An Incident Has Occurred @Greg Bobrowski
-F430 R Jermane, Pride of the Circus @Alexander Mokhov
-F431 M Killer Cosplay @Leonardo Santanna
-F433 C Mistakes Were Made @Ralph Horsley
-F437 U Pie-Eating Contest @Simon Dominic
-F438 C Plot Armor @Gaboleps
-F440 R Sole Performer @Anna Christenson
-F441 R Spelling Bee @Caroline Gariba
-F444 R Tchotchke Elemental @Sean Murray
-F445 M Tug of War @Gaboleps
-F448 U Angelic Harold @Aaron J. Riley
-F449 U "Brims" Barone, Midway Mobster @Sebastian Giacobino
-F451 R Claire D'Loon, Joy Sculptor @Igor Grechanyi
-F454 M Grand Marshal Macie @Marco Bucci
-F455 M It Came from Planet Glurg @Marco Bucci
-F456 M Lila, Hospitality Hostess @Yangtian Li
-F458 R Meet and Greet "Sisay" @Setor Fiadzigbey
-F462 U Pietra, Crafter of Clowns @Armand Baltazar
-F467 R Truss, Chief Engineer @Aaron J. Riley
-F469 U Autograph Book @Ben Maier
-F470 R Blue Ribbon @Chuck Lukacs
-F473 R D00-DL, Caricaturist @Ralph Horsley
-F475 M Greatest Show in the Multiverse @Alix Branwyn
-F476 C Park Map @Kirsten Zirngibl
-F478 R Souvenir T-Shirt @Michael Phillippi
-F483 U The Big Top @Kirsten Zirngibl
-F484 C Nearby Planet @Bruce Brenneise
-F485 R Urza's Fun House @Dmitry Burmak
-F496 R Katerina of Myra's Marvels @David Semple
-F497 R Solaflora, Intergalactic Icon @Scooter
-F498 R Fluros of Myra's Marvels @David Semple
-F499 R Nocturno of Myra's Marvels @David Semple
-F500 R Devil K. Nevil @David Semple
-F501 R Ignacio of Myra's Marvels @David Semple
-F502 M Vorthos, Steward of Myth @Stephanie Buscema
-F503 R Hardy of Myra's Marvels @David Semple
-F504 R Jermane, Pride of the Circus @Scooter
-F506 U Angelic Harold @Stephanie Buscema
-F507 U "Brims" Barone, Midway Mobster @Stephanie Buscema
-F509 R Claire D'Loon, Joy Sculptor @Scooter
-F511 M Grand Marshal Macie @Scooter
-F512 M It Came from Planet Glurg @Scooter
-F513 M Lila, Hospitality Hostess @Scooter
-F515 R Meet and Greet "Sisay" @Scooter
-F519 U Pietra, Crafter of Clowns @Stephanie Buscema
-F523 R Truss, Chief Engineer @Scooter
-F525 R D00-DL, Caricaturist @Scooter
-F538 R Water Gun Balloon Game @Ralph Horsley
+F1 M Standard Procedure @Igor Grechanyi ${"stamp": "acorn"}
+F3 U Assembled Ensemble @Jakub Kasper ${"stamp": "acorn"}
+F4 C Bar Entry @Leonardo Santanna ${"stamp": "acorn"}
+F8 M Far Out @Bram Sels ${"stamp": "acorn"}
+F9 R Form of the Approach of the Second Sun @Aaron J. Riley ${"stamp": "acorn"}
+F10 U Get Your Head in the Game @Vincent Christiaens ${"stamp": "acorn"}
+F11 C Gobsmacked @Marco Bucci ${"stamp": "acorn"}
+F13 C Hat Trick @Sebastian Giacobino ${"stamp": "acorn"}
+F14 C Impounding Lot-Bot @Ralph Horsley ${"stamp": "acorn"}
+F15 C Jetpack Janitor @Tyler Walpole ${"stamp": "acorn"}
+F16 R Katerina of Myra's Marvels @Gaboleps ${"stamp": "acorn"}
+F17 U Knight in _____ Armor @Sam Hogg ${"stamp": "acorn"}
+F18 C Leading Performance @Tomek Larek ${"stamp": "acorn"}
+F19 R Main Event Horizon @Mike Burns ${"stamp": "acorn"}
+F20 C Now You See Me . . . @Sam Hogg ${"stamp": "acorn"}
+F22 U Park Re-Entry @Ernanda Souza ${"stamp": "acorn"}
+F27 R Solaflora, Intergalactic Icon @Aaron J. Riley ${"stamp": "acorn"}
+F29 R Surprise Party @Sean Murray ${"stamp": "acorn"}
+F31 C T.A.P.P.E.R. @David Sladek ${"stamp": "acorn"}
+F32 U Trapeze Artist @Ernanda Souza ${"stamp": "acorn"}
+F33 U Animate Object @Greg Staples ${"stamp": "acorn"}
+F34 U Astroquarium @Tyler Walpole ${"stamp": "acorn"}
+F36 C Bag Check @Tyler Walpole ${"stamp": "acorn"}
+F39 C Blufferfish @Christopher Burdett ${"stamp": "acorn"}
+F41 U Busted! @Igor Grechanyi ${"stamp": "acorn"}
+F44 C Decisions, Decisions @Setor Fiadzigbey ${"stamp": "acorn"}
+F46 R Fluros of Myra's Marvels @Gaboleps ${"stamp": "acorn"}
+F47 C Focused Funambulist @Setor Fiadzigbey ${"stamp": "acorn"}
+F49 R How Is This a Par Three?! @Mike Burns ${"stamp": "acorn"}
+F51 R Mobile Clone @Setor Fiadzigbey ${"stamp": "acorn"}
+F54 U Octo Opus @Tomek Larek ${"stamp": "acorn"}
+F55 M Phone a Friend @Ben Wootten ${"stamp": "acorn"}
+F56 M Plate Spinning @Raluca Marinescu ${"stamp": "acorn"}
+F59 C Super-Duper Lost @Vincent Christiaens ${"stamp": "acorn"}
+F60 R Treacherous Trapezist @Dave Greco ${"stamp": "acorn"}
+F65 R Animate Graveyard @Mike Burns ${"stamp": "acorn"}
+F71 C Disemvowel @Ralph Horsley ${"stamp": "acorn"}
+F74 M Exit Through the Grift Shop @Chris Seaman ${"stamp": "acorn"}
+F75 U Gray Merchant of Alphabet @Yangtian Li ${"stamp": "acorn"}
+F76 U Haberthrasher @April Prime ${"stamp": "acorn"}
+F77 R Knife and Death @Caio Monteiro ${"stamp": "acorn"}
+F82 R Nocturno of Myra's Marvels @Gaboleps ${"stamp": "acorn"}
+F83 M Photo Op @Setor Fiadzigbey ${"stamp": "acorn"}
+F84 C Questionable Cuisine @Chuck Lukacs ${"stamp": "acorn"}
+F86 C Rat in the Hat @Filipe Pagliuso ${"stamp": "acorn"}
+F87 U A Real Handful @Tomek Larek ${"stamp": "acorn"}
+F91 C Scooch @Filipe Pagliuso ${"stamp": "acorn"}
+F97 C Aardwolf's Advantage @Tomek Larek ${"stamp": "acorn"}
+F98 C Amped Up @Jamroz Gary ${"stamp": "acorn"}
+F99 C Art Appreciation @April Prime ${"stamp": "acorn"}
+F102 R Carnival Barker @Dave Greco ${"stamp": "acorn"}
+F104 R Devil K. Nevil @Paolo Parente ${"stamp": "acorn"}
+F105 R Don't Try This at Home @Tyler Walpole ${"stamp": "acorn"}
+F109 U Goblin Blastronauts @Dave Allsop ${"stamp": "acorn"}
+F110 R Goblin Cruciverbalist @Mike Burns ${"stamp": "acorn"}
+F111 U Goblin Girder Gang @Tyler Walpole ${"stamp": "acorn"}
+F112 R Ignacio of Myra's Marvels @Gaboleps ${"stamp": "acorn"}
+F113 U Juggletron @Matt Dixon ${"stamp": "acorn"}
+F116 R Omniclown Colossus @Ralph Horsley ${"stamp": "acorn"}
+F118 M Opening Ceremony @Greg Bobrowski ${"stamp": "acorn"}
+F122 C Rock Star @Dave Allsop ${"stamp": "acorn"}
+F124 U Ticking Mime Bomb @Greg Bobrowski ${"stamp": "acorn"}
+F125 U Trigger Happy @Jamroz Gary ${"stamp": "acorn"}
+F126 M Vorthos, Steward of Myth @Caroline Gariba ${"stamp": "acorn"}
+F128 C Well Done @Gaboleps ${"stamp": "acorn"}
+F129 C Alpha Guard @Caroline Gariba ${"stamp": "acorn"}
+F141 R Hardy of Myra's Marvels @Gaboleps ${"stamp": "acorn"}
+F142 U Icing Manipulator @Raluca Marinescu ${"stamp": "acorn"}
+F143 C An Incident Has Occurred @Greg Bobrowski ${"stamp": "acorn"}
+F144 R Jermane, Pride of the Circus @Alexander Mokhov ${"stamp": "acorn"}
+F145 M Killer Cosplay @Leonardo Santanna ${"stamp": "acorn"}
+F147 C Mistakes Were Made @Ralph Horsley ${"stamp": "acorn"}
+F151 U Pie-Eating Contest @Simon Dominic ${"stamp": "acorn"}
+F152 C Plot Armor @Gaboleps ${"stamp": "acorn"}
+F154 R Sole Performer @Anna Christenson ${"stamp": "acorn"}
+F155 R Spelling Bee @Caroline Gariba ${"stamp": "acorn"}
+F158 R Tchotchke Elemental @Sean Murray ${"stamp": "acorn"}
+F159 M Tug of War @Gaboleps ${"stamp": "acorn"}
+F162 U Angelic Harold @Aaron J. Riley ${"stamp": "acorn"}
+F163 U "Brims" Barone, Midway Mobster @Sebastian Giacobino ${"stamp": "acorn"}
+F165 R Claire D'Loon, Joy Sculptor @Igor Grechanyi ${"stamp": "acorn"}
+F168 M Grand Marshal Macie @Marco Bucci ${"stamp": "acorn"}
+F169 M It Came from Planet Glurg @Marco Bucci ${"stamp": "acorn"}
+F170 M Lila, Hospitality Hostess @Yangtian Li ${"stamp": "acorn"}
+F172 R Meet and Greet "Sisay" @Setor Fiadzigbey ${"stamp": "acorn"}
+F176 U Pietra, Crafter of Clowns @Armand Baltazar ${"stamp": "acorn"}
+F181 R Truss, Chief Engineer @Aaron J. Riley ${"stamp": "acorn"}
+F183 U Autograph Book @Ben Maier ${"stamp": "acorn"}
+F184 R Blue Ribbon @Chuck Lukacs ${"stamp": "acorn"}
+F187 R D00-DL, Caricaturist @Ralph Horsley ${"stamp": "acorn"}
+F189 M Greatest Show in the Multiverse @Alix Branwyn ${"stamp": "acorn"}
+F190 C Park Map @Kirsten Zirngibl ${"stamp": "acorn"}
+F192 R Souvenir T-Shirt @Michael Phillippi ${"stamp": "acorn"}
+F197 U The Big Top @Kirsten Zirngibl ${"stamp": "acorn"}
+F198 C Nearby Planet @Bruce Brenneise ${"stamp": "acorn"}
+F199 R Urza's Fun House @Dmitry Burmak ${"stamp": "acorn"}
+F203a R Centrifuge @Greg Staples ${"variant": "A", "stamp": "acorn"}
+F203b R Centrifuge @Greg Staples ${"variant": "B", "stamp": "acorn"}
+F207a C Cover the Spot @Jeff Miracola ${"variant": "A", "stamp": "acorn"}
+F207b C Cover the Spot @Jeff Miracola ${"variant": "B", "stamp": "acorn"}
+F207c C Cover the Spot @Jeff Miracola ${"variant": "C", "stamp": "acorn"}
+F207d C Cover the Spot @Jeff Miracola ${"variant": "D", "stamp": "acorn"}
+F208a C Dart Throw @Gaboleps ${"variant": "A", "stamp": "acorn"}
+F208b C Dart Throw @Gaboleps ${"variant": "B", "stamp": "acorn"}
+F208c C Dart Throw @Gaboleps ${"variant": "C", "stamp": "acorn"}
+F208d C Dart Throw @Gaboleps ${"variant": "D", "stamp": "acorn"}
+F213a R Gallery of Legends @Jakub Kasper ${"variant": "A", "stamp": "acorn"}
+F213b R Gallery of Legends @Jakub Kasper ${"variant": "B", "stamp": "acorn"}
+F214a R Gift Shop @Matt Gaser ${"variant": "A", "stamp": "acorn"}
+F214b R Gift Shop @Matt Gaser ${"variant": "B", "stamp": "acorn"}
+F215a U Guess Your Fate @Bruce Brenneise ${"variant": "A", "stamp": "acorn"}
+F215b U Guess Your Fate @Bruce Brenneise ${"variant": "B", "stamp": "acorn"}
+F215c U Guess Your Fate @Bruce Brenneise ${"variant": "C", "stamp": "acorn"}
+F215d U Guess Your Fate @Bruce Brenneise ${"variant": "D", "stamp": "acorn"}
+F220a R Log Flume @Marco Bucci ${"variant": "A", "stamp": "acorn"}
+F220b R Log Flume @Marco Bucci ${"variant": "B", "stamp": "acorn"}
+F221a R Memory Test @Setor Fiadzigbey ${"variant": "A", "stamp": "acorn"}
+F221b R Memory Test @Setor Fiadzigbey ${"variant": "B", "stamp": "acorn"}
+F224a R Push Your Luck @Sebastian Giacobino ${"variant": "A", "stamp": "acorn"}
+F224b R Push Your Luck @Sebastian Giacobino ${"variant": "B", "stamp": "acorn"}
+F226a U Scavenger Hunt @Jamroz Gary ${"variant": "A", "stamp": "acorn"}
+F226b U Scavenger Hunt @Jamroz Gary ${"variant": "B", "stamp": "acorn"}
+F226c U Scavenger Hunt @Jamroz Gary ${"variant": "C", "stamp": "acorn"}
+F226d U Scavenger Hunt @Jamroz Gary ${"variant": "D", "stamp": "acorn"}
+F226e U Scavenger Hunt @Jamroz Gary ${"variant": "E", "stamp": "acorn"}
+F226f U Scavenger Hunt @Jamroz Gary ${"variant": "F", "stamp": "acorn"}
+F228a U Squirrel Stack @Andrea Radeck ${"variant": "A", "stamp": "acorn"}
+F228b U Squirrel Stack @Andrea Radeck ${"variant": "B", "stamp": "acorn"}
+F228c U Squirrel Stack @Andrea Radeck ${"variant": "C", "stamp": "acorn"}
+F228d U Squirrel Stack @Andrea Radeck ${"variant": "D", "stamp": "acorn"}
+F228e U Squirrel Stack @Andrea Radeck ${"variant": "E", "stamp": "acorn"}
+F228f U Squirrel Stack @Andrea Radeck ${"variant": "F", "stamp": "acorn"}
+F230a U The Superlatorium @Simon Dominic ${"variant": "A", "stamp": "acorn"}
+F230b U The Superlatorium @Simon Dominic ${"variant": "B", "stamp": "acorn"}
+F230c U The Superlatorium @Simon Dominic ${"variant": "C", "stamp": "acorn"}
+F230d U The Superlatorium @Simon Dominic ${"variant": "D", "stamp": "acorn"}
+F230e U The Superlatorium @Simon Dominic ${"variant": "E", "stamp": "acorn"}
+F230f U The Superlatorium @Simon Dominic ${"variant": "F", "stamp": "acorn"}
+F233a U Trivia Contest @Caroline Gariba ${"variant": "A", "stamp": "acorn"}
+F233b U Trivia Contest @Caroline Gariba ${"variant": "B", "stamp": "acorn"}
+F233c U Trivia Contest @Caroline Gariba ${"variant": "C", "stamp": "acorn"}
+F233d U Trivia Contest @Caroline Gariba ${"variant": "D", "stamp": "acorn"}
+F233e U Trivia Contest @Caroline Gariba ${"variant": "E", "stamp": "acorn"}
+F233f U Trivia Contest @Caroline Gariba ${"variant": "F", "stamp": "acorn"}
+F245 R Katerina of Myra's Marvels @David Semple ${"stamp": "acorn"}
+F246 R Solaflora, Intergalactic Icon @Scooter ${"stamp": "acorn"}
+F247 R Fluros of Myra's Marvels @David Semple ${"stamp": "acorn"}
+F248 R Nocturno of Myra's Marvels @David Semple ${"stamp": "acorn"}
+F249 R Devil K. Nevil @David Semple ${"stamp": "acorn"}
+F250 R Ignacio of Myra's Marvels @David Semple ${"stamp": "acorn"}
+F251 M Vorthos, Steward of Myth @Stephanie Buscema ${"stamp": "acorn"}
+F252 R Hardy of Myra's Marvels @David Semple ${"stamp": "acorn"}
+F253 R Jermane, Pride of the Circus @Scooter ${"stamp": "acorn"}
+F255 U Angelic Harold @Stephanie Buscema ${"stamp": "acorn"}
+F256 U "Brims" Barone, Midway Mobster @Stephanie Buscema ${"stamp": "acorn"}
+F258 R Claire D'Loon, Joy Sculptor @Scooter ${"stamp": "acorn"}
+F260 M Grand Marshal Macie @Scooter ${"stamp": "acorn"}
+F261 M It Came from Planet Glurg @Scooter ${"stamp": "acorn"}
+F262 M Lila, Hospitality Hostess @Scooter ${"stamp": "acorn"}
+F264 R Meet and Greet "Sisay" @Scooter ${"stamp": "acorn"}
+F268 U Pietra, Crafter of Clowns @Stephanie Buscema ${"stamp": "acorn"}
+F272 R Truss, Chief Engineer @Scooter ${"stamp": "acorn"}
+F274 R D00-DL, Caricaturist @Scooter ${"stamp": "acorn"}
+F287 M Standard Procedure @Igor Grechanyi ${"stamp": "acorn"}
+F289 U Assembled Ensemble @Jakub Kasper ${"stamp": "acorn"}
+F290 C Bar Entry @Leonardo Santanna ${"stamp": "acorn"}
+F294 M Far Out @Bram Sels ${"stamp": "acorn"}
+F295 R Form of the Approach of the Second Sun @Aaron J. Riley ${"stamp": "acorn"}
+F296 U Get Your Head in the Game @Vincent Christiaens ${"stamp": "acorn"}
+F297 C Gobsmacked @Marco Bucci ${"stamp": "acorn"}
+F299 C Hat Trick @Sebastian Giacobino ${"stamp": "acorn"}
+F300 C Impounding Lot-Bot @Ralph Horsley ${"stamp": "acorn"}
+F301 C Jetpack Janitor @Tyler Walpole ${"stamp": "acorn"}
+F302 R Katerina of Myra's Marvels @Gaboleps ${"stamp": "acorn"}
+F303 U Knight in _____ Armor @Sam Hogg ${"stamp": "acorn"}
+F304 C Leading Performance @Tomek Larek ${"stamp": "acorn"}
+F305 R Main Event Horizon @Mike Burns ${"stamp": "acorn"}
+F306 C Now You See Me . . . @Sam Hogg ${"stamp": "acorn"}
+F308 U Park Re-Entry @Ernanda Souza ${"stamp": "acorn"}
+F313 R Solaflora, Intergalactic Icon @Aaron J. Riley ${"stamp": "acorn"}
+F315 R Surprise Party @Sean Murray ${"stamp": "acorn"}
+F317 C T.A.P.P.E.R. @David Sladek ${"stamp": "acorn"}
+F318 U Trapeze Artist @Ernanda Souza ${"stamp": "acorn"}
+F319 U Animate Object @Greg Staples ${"stamp": "acorn"}
+F320 U Astroquarium @Tyler Walpole ${"stamp": "acorn"}
+F322 C Bag Check @Tyler Walpole ${"stamp": "acorn"}
+F325 C Blufferfish @Christopher Burdett ${"stamp": "acorn"}
+F327 U Busted! @Igor Grechanyi ${"stamp": "acorn"}
+F330 C Decisions, Decisions @Setor Fiadzigbey ${"stamp": "acorn"}
+F332 R Fluros of Myra's Marvels @Gaboleps ${"stamp": "acorn"}
+F333 C Focused Funambulist @Setor Fiadzigbey ${"stamp": "acorn"}
+F335 R How Is This a Par Three?! @Mike Burns ${"stamp": "acorn"}
+F337 R Mobile Clone @Setor Fiadzigbey ${"stamp": "acorn"}
+F340 U Octo Opus @Tomek Larek ${"stamp": "acorn"}
+F341 M Phone a Friend @Ben Wootten ${"stamp": "acorn"}
+F342 M Plate Spinning @Raluca Marinescu ${"stamp": "acorn"}
+F345 C Super-Duper Lost @Vincent Christiaens ${"stamp": "acorn"}
+F346 R Treacherous Trapezist @Dave Greco ${"stamp": "acorn"}
+F351 R Animate Graveyard @Mike Burns ${"stamp": "acorn"}
+F357 C Disemvowel @Ralph Horsley ${"stamp": "acorn"}
+F360 M Exit Through the Grift Shop @Chris Seaman ${"stamp": "acorn"}
+F361 U Gray Merchant of Alphabet @Yangtian Li ${"stamp": "acorn"}
+F362 U Haberthrasher @April Prime ${"stamp": "acorn"}
+F363 R Knife and Death @Caio Monteiro ${"stamp": "acorn"}
+F368 R Nocturno of Myra's Marvels @Gaboleps ${"stamp": "acorn"}
+F369 M Photo Op @Setor Fiadzigbey ${"stamp": "acorn"}
+F370 C Questionable Cuisine @Chuck Lukacs ${"stamp": "acorn"}
+F372 C Rat in the Hat @Filipe Pagliuso ${"stamp": "acorn"}
+F373 U A Real Handful @Tomek Larek ${"stamp": "acorn"}
+F377 C Scooch @Filipe Pagliuso ${"stamp": "acorn"}
+F383 C Aardwolf's Advantage @Tomek Larek ${"stamp": "acorn"}
+F384 C Amped Up @Jamroz Gary ${"stamp": "acorn"}
+F385 C Art Appreciation @April Prime ${"stamp": "acorn"}
+F388 R Carnival Barker @Dave Greco ${"stamp": "acorn"}
+F390 R Devil K. Nevil @Paolo Parente ${"stamp": "acorn"}
+F391 R Don't Try This at Home @Tyler Walpole ${"stamp": "acorn"}
+F395 U Goblin Blastronauts @Dave Allsop ${"stamp": "acorn"}
+F396 R Goblin Cruciverbalist @Mike Burns ${"stamp": "acorn"}
+F397 U Goblin Girder Gang @Tyler Walpole ${"stamp": "acorn"}
+F398 R Ignacio of Myra's Marvels @Gaboleps ${"stamp": "acorn"}
+F399 U Juggletron @Matt Dixon ${"stamp": "acorn"}
+F402 R Omniclown Colossus @Ralph Horsley ${"stamp": "acorn"}
+F404 M Opening Ceremony @Greg Bobrowski ${"stamp": "acorn"}
+F408 C Rock Star @Dave Allsop ${"stamp": "acorn"}
+F410 U Ticking Mime Bomb @Greg Bobrowski ${"stamp": "acorn"}
+F411 U Trigger Happy @Jamroz Gary ${"stamp": "acorn"}
+F412 M Vorthos, Steward of Myth @Caroline Gariba ${"stamp": "acorn"}
+F414 C Well Done @Gaboleps ${"stamp": "acorn"}
+F415 C Alpha Guard @Caroline Gariba ${"stamp": "acorn"}
+F427 R Hardy of Myra's Marvels @Gaboleps ${"stamp": "acorn"}
+F428 U Icing Manipulator @Raluca Marinescu ${"stamp": "acorn"}
+F429 C An Incident Has Occurred @Greg Bobrowski ${"stamp": "acorn"}
+F430 R Jermane, Pride of the Circus @Alexander Mokhov ${"stamp": "acorn"}
+F431 M Killer Cosplay @Leonardo Santanna ${"stamp": "acorn"}
+F433 C Mistakes Were Made @Ralph Horsley ${"stamp": "acorn"}
+F437 U Pie-Eating Contest @Simon Dominic ${"stamp": "acorn"}
+F438 C Plot Armor @Gaboleps ${"stamp": "acorn"}
+F440 R Sole Performer @Anna Christenson ${"stamp": "acorn"}
+F441 R Spelling Bee @Caroline Gariba ${"stamp": "acorn"}
+F444 R Tchotchke Elemental @Sean Murray ${"stamp": "acorn"}
+F445 M Tug of War @Gaboleps ${"stamp": "acorn"}
+F448 U Angelic Harold @Aaron J. Riley ${"stamp": "acorn"}
+F449 U "Brims" Barone, Midway Mobster @Sebastian Giacobino ${"stamp": "acorn"}
+F451 R Claire D'Loon, Joy Sculptor @Igor Grechanyi ${"stamp": "acorn"}
+F454 M Grand Marshal Macie @Marco Bucci ${"stamp": "acorn"}
+F455 M It Came from Planet Glurg @Marco Bucci ${"stamp": "acorn"}
+F456 M Lila, Hospitality Hostess @Yangtian Li ${"stamp": "acorn"}
+F458 R Meet and Greet "Sisay" @Setor Fiadzigbey ${"stamp": "acorn"}
+F462 U Pietra, Crafter of Clowns @Armand Baltazar ${"stamp": "acorn"}
+F467 R Truss, Chief Engineer @Aaron J. Riley ${"stamp": "acorn"}
+F469 U Autograph Book @Ben Maier ${"stamp": "acorn"}
+F470 R Blue Ribbon @Chuck Lukacs ${"stamp": "acorn"}
+F473 R D00-DL, Caricaturist @Ralph Horsley ${"stamp": "acorn"}
+F475 M Greatest Show in the Multiverse @Alix Branwyn ${"stamp": "acorn"}
+F476 C Park Map @Kirsten Zirngibl ${"stamp": "acorn"}
+F478 R Souvenir T-Shirt @Michael Phillippi ${"stamp": "acorn"}
+F483 U The Big Top @Kirsten Zirngibl ${"stamp": "acorn"}
+F484 C Nearby Planet @Bruce Brenneise ${"stamp": "acorn"}
+F485 R Urza's Fun House @Dmitry Burmak ${"stamp": "acorn"}
+F496 R Katerina of Myra's Marvels @David Semple ${"stamp": "acorn"}
+F497 R Solaflora, Intergalactic Icon @Scooter ${"stamp": "acorn"}
+F498 R Fluros of Myra's Marvels @David Semple ${"stamp": "acorn"}
+F499 R Nocturno of Myra's Marvels @David Semple ${"stamp": "acorn"}
+F500 R Devil K. Nevil @David Semple ${"stamp": "acorn"}
+F501 R Ignacio of Myra's Marvels @David Semple ${"stamp": "acorn"}
+F502 M Vorthos, Steward of Myth @Stephanie Buscema ${"stamp": "acorn"}
+F503 R Hardy of Myra's Marvels @David Semple ${"stamp": "acorn"}
+F504 R Jermane, Pride of the Circus @Scooter ${"stamp": "acorn"}
+F506 U Angelic Harold @Stephanie Buscema ${"stamp": "acorn"}
+F507 U "Brims" Barone, Midway Mobster @Stephanie Buscema ${"stamp": "acorn"}
+F509 R Claire D'Loon, Joy Sculptor @Scooter ${"stamp": "acorn"}
+F511 M Grand Marshal Macie @Scooter ${"stamp": "acorn"}
+F512 M It Came from Planet Glurg @Scooter ${"stamp": "acorn"}
+F513 M Lila, Hospitality Hostess @Scooter ${"stamp": "acorn"}
+F515 R Meet and Greet "Sisay" @Scooter ${"stamp": "acorn"}
+F519 U Pietra, Crafter of Clowns @Stephanie Buscema ${"stamp": "acorn"}
+F523 R Truss, Chief Engineer @Scooter ${"stamp": "acorn"}
+F525 R D00-DL, Caricaturist @Scooter ${"stamp": "acorn"}
+F538 R Water Gun Balloon Game @Ralph Horsley ${"stamp": "acorn"}
 
 [eternal]
 2 C Aerialephant @Yangtian Li

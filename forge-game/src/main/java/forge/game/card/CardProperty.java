@@ -303,13 +303,10 @@ public class CardProperty {
                 return false;
             }
         } else if (property.equals("SilverBordered")) {
-            // Spatula of the Ages: "a silver-bordered or acorn permanent card". Forge has no
-            // separate "acorn" flag - both border styles are silver-border-equivalent Type.FUNNY
-            // editions (see forge-gui/res/editions/Unglued.txt's Type=Funny/Border=Silver), so
-            // checking edition type alone covers both without needing a second, redundant check.
-            final IPaperCard pc = card.getPaperCard();
-            final CardEdition ed = pc == null ? null : StaticData.instance().getEditions().get(pc.getEdition());
-            if (ed == null || ed.getType() != CardEdition.Type.FUNNY) {
+            // "silver-bordered or acorn" (Spatula of the Ages, Ass Whuppin'). Edition type isn't enough:
+            // Heroes of the Realm and the playtest cards are Type=Funny but black-bordered, and every
+            // acorn set also prints tournament-legal cards, so this goes by the printing.
+            if (!card.isSilverBorderedOrAcorn()) {
                 return false;
             }
         } else if (property.equals("alphabeticallyFirstNonLand")) {

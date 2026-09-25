@@ -263,13 +263,13 @@ ScryfallCode=MB2
 255 M Karn, Legacy Reforged @Anthony S. Waters
 256 C Command Tower @Adam Paquette
 257 R Reflecting Pool @Fred Fields
-258 U Sigardian Evangel @Monztre
-259 U Oracle of the Alpha @Nino Vecia
-260 U Sanguine Brushstroke @Wayne Wu
-261 U Toralf's Disciple @Olivier Bernard
-262 U Tenacious Pup @Brian Valeza
-263 U Rusko, Clockmaker @Samuel Perin
-264 U Forsaken Crossroads @Kasia 'Kafis' Zielińska
+258 U Sigardian Evangel @Monztre ${"stamp": "acorn"}
+259 U Oracle of the Alpha @Nino Vecia ${"stamp": "acorn"}
+260 U Sanguine Brushstroke @Wayne Wu ${"stamp": "acorn"}
+261 U Toralf's Disciple @Olivier Bernard ${"stamp": "acorn"}
+262 U Tenacious Pup @Brian Valeza ${"stamp": "acorn"}
+263 U Rusko, Clockmaker @Samuel Perin ${"stamp": "acorn"}
+264 U Forsaken Crossroads @Kasia 'Kafis' Zielińska ${"stamp": "acorn"}
 
 [cards]
 F501 R Indicate @Drew Moss

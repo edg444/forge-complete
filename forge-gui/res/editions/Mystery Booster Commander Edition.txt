@@ -66,16 +66,16 @@ ScryfallCode=MBC
 58 R Zagorka, Mother of Sanctum @Daren Bader
 59 R The Everforger @Chris Seaman
 60 R Valko Indorian @Paolo Parente
-61 U Ruby Collector @Cristi Balanescu
-62 U Case of the Lost Witness @Yeong-Hao Han
-63 U Emerald Collector @Andreas Zafiratos
-64 U Oracle of the Alpha @Nino Vecia
-65 U Pearl Collector @Andreas Zafiratos
-66 U Perforator Crocodile @Loïc Canavaggia
-67 U Overcooked @David Szabo
-68 U Sapphire Collector @Francis Tneh
-69 U Jet Collector @Francis Tneh
-70 U Euru, Acorn Scrounger @Dave Kendall
+61 U Ruby Collector @Cristi Balanescu ${"stamp": "acorn"}
+62 U Case of the Lost Witness @Yeong-Hao Han ${"stamp": "acorn"}
+63 U Emerald Collector @Andreas Zafiratos ${"stamp": "acorn"}
+64 U Oracle of the Alpha @Nino Vecia ${"stamp": "acorn"}
+65 U Pearl Collector @Andreas Zafiratos ${"stamp": "acorn"}
+66 U Perforator Crocodile @Loïc Canavaggia ${"stamp": "acorn"}
+67 U Overcooked @David Szabo ${"stamp": "acorn"}
+68 U Sapphire Collector @Francis Tneh ${"stamp": "acorn"}
+69 U Jet Collector @Francis Tneh ${"stamp": "acorn"}
+70 U Euru, Acorn Scrounger @Dave Kendall ${"stamp": "acorn"}
 71 U Dust to Dust @Doug Keith
 72 R Chaos Warp @Trevor Claxton
 73 R Chromatic Lantern @Jung Park

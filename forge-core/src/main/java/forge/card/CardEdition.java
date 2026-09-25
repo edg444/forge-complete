@@ -255,6 +255,11 @@ public final class CardEdition implements Comparable<CardEdition> {
             return extraParams.get("variant");
         }
 
+        /** Unfinity-style acorn security stamp. Always per printing: every acorn set also has tournament-legal cards. */
+        public boolean isAcorn() {
+            return extraParams != null && "acorn".equalsIgnoreCase(extraParams.get("stamp"));
+        }
+
         /** Per-printing border, for editions that mix borders (J17's Rules Lawyer is silver in a black set). */
         public BorderColor getBorderOverride() {
             if (extraParams == null || !extraParams.containsKey("border"))
@@ -543,6 +548,11 @@ public final class CardEdition implements Comparable<CardEdition> {
 
     public BorderColor getBorderColor() {
         return borderColor;
+    }
+
+    public boolean isAcorn(String collectorNumber) {
+        final EditionEntry entry = getCardFromCollectorNumber(collectorNumber);
+        return entry != null && entry.isAcorn();
     }
 
     public BorderColor getBorderColor(String collectorNumber) {
