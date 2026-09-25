@@ -208,6 +208,19 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
   - The remaining 3,341 differing `Oracle:` fields have other wording drift and were left alone.
   - Merges: an upstream edit to one of these lines will now conflict. Take upstream's side of the
     line, then re-run `_tools/oracle-audit/sync-oracle-field.js <oracle-cards.jsonl.gz> --apply`.
+- **Text-box readers now see paragraphs.** Stored Oracle text separates paragraphs with the script's
+  literal two-character `\n`, not a real newline, but the text-box readers assumed real newlines:
+  - *Lexivore / Frazzled Editor* (`CardFactoryUtil.getTextBoxLineCount`) split on `\r?\n`, so every
+    card was measured as one long paragraph with the `\n`s counted as text, and short paragraphs lost
+    their one-line minimum ("Flying\nVigilance\nTrample\nHaste" was 1 line, not 4; Shivan Dragon 4,
+    not 5). "Wordy" (4+ lines) and "most lines of text" were undercounted on nearly every
+    multi-paragraph card. Now splits on the literal separator and real newlines both.
+  - *Pygmy Giant and Tainted Monkey* (`Card.getTextBoxContents`) — the separator glued an `n` onto
+    each paragraph's first word, so a number word opening a paragraph was missed ("Two target
+    creatures…" on Ruthless Disposal read as "ntwo") and a chosen word opening one never matched as a
+    whole word. `getTextBoxContents` now turns the separator into a real newline. Punctuate was
+    unaffected (backslash isn't one of its marks).
+  - New `TextBoxTest` (5 tests). Test suite: 727 run, 0 failed, 6 skipped.
 
 ### 2026-08-06 — Unhinged green and multicolor; five-face splits
 

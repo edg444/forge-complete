@@ -7942,7 +7942,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     /** Everything printed in this card's text box: rules text and flavor text together. */
     public String getTextBoxContents() {
         final String flavor = getFlavorText();
-        final String oracle = StringUtils.defaultString(getOracleText());
+        // Oracle paragraphs are split by a literal backslash-n; left in, it glues an "n" onto each
+        // paragraph's first word ("Two" reads as "ntwo")
+        final String oracle = StringUtils.defaultString(getOracleText()).replace("\\n", "\n");
         return flavor.isEmpty() ? oracle : oracle + "\n" + flavor;
     }
     public void setOracleText(final String oracleText) {

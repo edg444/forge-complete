@@ -4309,13 +4309,16 @@ public class CardFactoryUtil {
         return Lists.newArrayList(found);
     }
 
+    // Stored Oracle text separates paragraphs with the script's literal backslash-n, not a real newline
+    private static final Pattern ORACLE_PARAGRAPH_BREAK = Pattern.compile("\\\\n|\r?\n");
+
     public static int getTextBoxLineCount(final Card card) {
         final String oracleText = card.getOracleText();
         if (StringUtils.isBlank(oracleText)) {
             return 0;
         }
         int totalLines = 0;
-        for (final String paragraph : oracleText.split("\r?\n")) {
+        for (final String paragraph : ORACLE_PARAGRAPH_BREAK.split(oracleText)) {
             final String trimmed = paragraph.trim();
             if (trimmed.isEmpty()) {
                 continue;
