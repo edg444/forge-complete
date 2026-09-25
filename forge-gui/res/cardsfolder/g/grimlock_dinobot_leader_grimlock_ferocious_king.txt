@@ -1,0 +1,19 @@
+Name:Grimlock, Dinobot Leader
+ManaCost:1 R G W
+Types:Legendary Artifact Creature Autobot
+PT:4/4
+S:Mode$ Continuous | Affected$ Creature.Dinosaur+YouCtrl,Creature.Vehicle+YouCtrl,Creature.Autobot+YouCtrl,Creature.YouCtrl+withMore Than Meets the Eye | AddPower$ 2 | Description$ Dinosaurs, Vehicles, and other Transformers® creatures you control get +2/+0.
+A:AB$ SetState | Cost$ 2 FlavorAction<Convert a Transformers toy you own to its other mode/Converted!> | Defined$ Self | Mode$ Transform | AILogic$ Chance.50 | SpellDescription$ CARDNAME becomes Grimlock, Ferocious King.
+AlternateMode:DoubleFaced
+Oracle:Dinosaurs, Vehicles, and other Transformers® creatures you control get +2/+0.\n{2}, Convert a Transformers toy you own to its other mode: Grimlock, Dinobot Leader becomes Grimlock, Ferocious King.
+
+ALTERNATE
+
+Name:Grimlock, Ferocious King
+ManaCost:no cost
+Colors:red,green,white
+Types:Legendary Artifact Creature Dinosaur
+PT:8/8
+K:Trample
+A:AB$ SetState | Cost$ 2 FlavorAction<Convert a Transformers toy you own to its other mode/Converted!> | Defined$ Self | Mode$ Transform | AILogic$ Chance.50 | SpellDescription$ CARDNAME becomes Grimlock, Dinobot Leader.
+Oracle:Trample\n{2}, Convert a Transformers toy you own to its other mode: Grimlock, Ferocious King becomes Grimlock, Dinobot Leader.

@@ -36,6 +36,7 @@ Assembly-Worker:Assembly-Workers
 Astartes:Astartes
 Atog:Atogs
 Aurochs:Aurochs
+Autobot:Autobots
 Avatar:Avatars
 Azra:Azra
 Badger:Badgers
@@ -79,6 +80,7 @@ Coyote:Coyotes
 Crab:Crabs
 Crocodile:Crocodiles
 Cyberman:Cybermen
+Cyborg:Cyborgs
 Cyclops:Cyclopes
 Dalek:Daleks
 Detective:Detectives
