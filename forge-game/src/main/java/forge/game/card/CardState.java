@@ -731,6 +731,9 @@ public class CardState implements GameObject, IHasSVars, ITranslatable {
     public final boolean addTrigger(final Trigger t) {
         return triggers.add(t);
     }
+    public final boolean removeTrigger(final Trigger t) {
+        return triggers.remove(t);
+    }
 
     public final FCollectionView<StaticAbility> getStaticAbilities() {
         FCollection<StaticAbility> result = new FCollection<>(staticAbilities);

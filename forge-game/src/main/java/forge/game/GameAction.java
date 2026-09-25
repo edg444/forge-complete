@@ -1571,6 +1571,13 @@ public class GameAction {
                     checkAgainCard |= stateBasedAction704_5q(c); // annihilate +1/+1 counters with -1/-1 ones
 
                     checkAgainCard |= stateBasedAction704_5r(c);
+
+                    // Unstable: cards with augment "can't exist by themselves on the battlefield" - one that isn't
+                    // combined with a host goes to the graveyard (with its partner, if it was combined with a non-host)
+                    if (c.isCreature() && c.hasKeyword(Keyword.AUGMENT) && !c.isAugmentedOntoHost()) {
+                        noRegCreats.add(c);
+                        checkAgainCard = true;
+                    }
                 }
                 // these two run for every host: the Roles/attachments being judged may belong to someone else
                 checkAgainCard |= stateBasedAction_Role(c, unAttachList);

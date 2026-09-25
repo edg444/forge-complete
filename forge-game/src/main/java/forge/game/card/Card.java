@@ -1472,6 +1472,37 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public final Card getTopMergedCard() {
         return mergedCards.get(0);
     }
+
+    /** A card whose printed text has augment - judged by the card itself, not by anything granted to it. */
+    public final boolean isAugmentCard() {
+        for (final KeywordInterface k : getOriginalState(CardStateName.Original).getIntrinsicKeywords()) {
+            if (k.getKeyword() == Keyword.AUGMENT) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** Unstable: an augment combined with this creature - mutate's merge plumbing, augment's characteristics. */
+    public final boolean isAugmentCombined() {
+        return hasMergedCard() && getTopMergedCard() != this && getTopMergedCard().isAugmentCard();
+    }
+
+    /**
+     * Whether a creature with augment on the battlefield is where it belongs: combined with a host. Grusilda can
+     * combine an augment with a non-host, and per the FAQ that creature goes to the graveyard, both cards and all.
+     */
+    public final boolean isAugmentedOntoHost() {
+        if (!isAugmentCombined()) {
+            return false;
+        }
+        for (final Card c : getMergedCards()) {
+            if (c != getTopMergedCard() && c.getOriginalState(CardStateName.Original).getType().hasSupertype(CardType.Supertype.Host)) {
+                return true;
+            }
+        }
+        return false;
+    }
     public final boolean hasMergedCard() {
         return FCollection.hasElements(mergedCards);
     }

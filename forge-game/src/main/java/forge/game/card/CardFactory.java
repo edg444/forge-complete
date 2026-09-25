@@ -406,6 +406,12 @@ public class CardFactory {
             c.setBaseToughnessString(face.getToughness());
             c.setHalfToughness(ICardFace.isHalfPT(face.getToughness()));
         }
+        // An augment card's printed "+1/+2" only adjusts its host (see getAugmentedCloneStates). On its own the
+        // card is 0/0 - the Rules Lawyer ruling says so of one surviving without a host - so only the text stays.
+        if (isAugmentFace(face)) {
+            c.setBasePower(0);
+            c.setBaseToughness(0);
+        }
 
         c.getCurrentState().setBaseLoyalty(face.getInitialLoyalty());
         c.getCurrentState().setBaseDefense(face.getDefense());
@@ -773,6 +779,9 @@ public class CardFactory {
     }
 
     public static CardCloneStates getMutatedCloneStates(final Card card, final CardTraitBase sa) {
+        if (card.isAugmentCombined()) {
+            return getAugmentedCloneStates(card, sa);
+        }
         final Card top = card.getTopMergedCard();
         final CardStateName state = top.getCurrentStateName();
         CardState ret;
@@ -800,6 +809,143 @@ public class CardFactory {
         }
 
         return result;
+    }
+
+    static boolean isAugmentFace(final ICardFace face) {
+        for (final String k : face.getKeywords()) {
+            if (k.startsWith("Augment:")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Unstable's augment: the augment card lies over the left of the host, up to the metal bar in the host's art,
+     * and everything it covers stops counting. What's left (per the "Monkey- Kitten" example in the Unstable
+     * mechanics article, and the FAQ) is:
+     * <ul>
+     * <li>name: the augment's, then the host's name right of the bar - always the host's last word;</li>
+     * <li>mana cost: the host's (the augment has none); colors: both;</li>
+     * <li>types: the augment's type line, the host's subtypes, and "Artifact" if the host has its Artifact tag -
+     * "Host" and the host's own "Creature" are covered;</li>
+     * <li>power/toughness: the host's, adjusted by the augment's signed values;</li>
+     * <li>abilities: everything of both, except the host's "When this creature enters" condition, which is covered
+     * - the host's effect instead completes each of the augment's unfinished conditions.</li>
+     * </ul>
+     */
+    public static CardCloneStates getAugmentedCloneStates(final Card card, final CardTraitBase sa) {
+        final Card augment = card.getTopMergedCard();
+        Card hostPart = card;
+        for (final Card c : card.getMergedCards()) {
+            if (c != augment) {
+                hostPart = c;
+                break;
+            }
+        }
+        final CardStateName state = hostPart.getCurrentStateName();
+        final CardState hostState = hostPart.isCloned() ? hostPart.getState(state) : hostPart.getOriginalState(state);
+        final CardState augState = augment.getOriginalState(CardStateName.Original);
+        final CardState ret = hostState.copy(card, sa);
+
+        Trigger hostTrigger = null;
+        for (final Trigger t : hostState.getTriggers()) {
+            if (t.hasParam("Host")) {
+                hostTrigger = t;
+                break;
+            }
+        }
+        for (final Trigger t : Lists.newArrayList(ret.getTriggers())) {
+            if (t.hasParam("Host")) {
+                ret.removeTrigger(t);
+            }
+        }
+
+        final String hostName = hostState.getName();
+        final String augName = augState.getName();
+        ret.setName(augName + (augName.endsWith("-") ? "" : " ") + hostName.substring(hostName.lastIndexOf(' ') + 1));
+
+        final CardType type = new CardType(augState.getType());
+        if (hostState.getType().isArtifact()) {
+            type.add("Artifact");
+        }
+        type.addAll(hostState.getType().getSubtypes());
+        type.remove(CardType.Supertype.Host);
+        ret.setType(type);
+
+        ret.setColor(ColorSet.combine(hostState.getColor(), augState.getColor()));
+
+        final int power = hostState.getBasePower() + augmentAdjustment(augState.getBasePowerString());
+        final int toughness = hostState.getBaseToughness() + augmentAdjustment(augState.getBaseToughnessString());
+        ret.setBasePower(power);
+        ret.setBasePowerString(String.valueOf(power));
+        ret.setBaseToughness(toughness);
+        ret.setBaseToughnessString(String.valueOf(toughness));
+
+        // the augment's unfinished conditions are triggers with nothing to execute; they only mean something here
+        ret.addAbilitiesFrom(augState, false);
+        for (final Trigger t : Lists.newArrayList(ret.getTriggers())) {
+            if (!t.hasParam("Execute")) {
+                ret.removeTrigger(t);
+            }
+        }
+        for (final Map.Entry<String, String> e : augState.getSVars().entrySet()) {
+            if (!ret.getSVars().containsKey(e.getKey())) {
+                ret.setSVar(e.getKey(), e.getValue());
+            }
+        }
+
+        String effectText = "";
+        if (hostTrigger != null) {
+            final String hostDesc = hostTrigger.getParam("TriggerDescription");
+            final int comma = hostDesc.indexOf(", ");
+            effectText = comma >= 0 ? hostDesc.substring(comma + 2) : hostDesc;
+            for (final Trigger cond : augState.getTriggers()) {
+                if (cond.hasParam("Execute")) {
+                    continue;
+                }
+                final Map<String, String> params = new java.util.HashMap<>(cond.getMapParams());
+                params.put("Execute", hostTrigger.getParam("Execute"));
+                if (hostTrigger.hasParam("OptionalDecider")) {
+                    params.put("OptionalDecider", hostTrigger.getParam("OptionalDecider"));
+                }
+                params.put("TriggerDescription", cond.getParam("TriggerDescription") + " " + effectText);
+                final Trigger combined = TriggerHandler.parseTrigger(params, card, true, null);
+                // built against the combined state itself: the card's current state is still the bare host's at
+                // this point, and a sub-ability only sees its parent's runtime SVars (a die roll's result) when
+                // both belong to the same state
+                combined.setOverridingAbility(AbilityFactory.getAbility(ret, hostTrigger.getParam("Execute"), ret));
+                combined.setCardState(ret);
+                ret.addTrigger(combined);
+            }
+        }
+
+        final List<String> oracle = Lists.newArrayList();
+        for (final String line : hostState.getOracleText().split("\\\\n")) {
+            if (!line.isEmpty() && !line.startsWith("When this creature enters")) {
+                oracle.add(line);
+            }
+        }
+        for (final String line : augState.getOracleText().split("\\\\n")) {
+            oracle.add(line.endsWith(",") && !effectText.isEmpty() ? line + " " + effectText : line);
+        }
+        ret.setOracleText(String.join("\\n", oracle));
+
+        final CardCloneStates result = new CardCloneStates(hostPart, sa);
+        result.put(state, ret);
+        if (state != CardStateName.Original) {
+            result.add(hostPart.getState(CardStateName.Original).copy(card, sa));
+        }
+        return result;
+    }
+
+    /** An augment's printed "+1", "-1" or "-0" - the amount it adjusts its host by. */
+    private static int augmentAdjustment(final String printed) {
+        try {
+            return Integer.parseInt(printed.trim());
+        } catch (final NumberFormatException e) {
+            return 0;
+        }
     }
 
 }

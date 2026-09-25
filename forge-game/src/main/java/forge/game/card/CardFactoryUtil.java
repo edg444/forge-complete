@@ -3162,6 +3162,18 @@ public class CardFactoryUtil {
             sa.setAlternativeCost(AlternativeCost.Mutate);
             sa.setIntrinsic(intrinsic);
             inst.addSpellAbility(sa);
+        } else if (keyword.startsWith("Augment")) {
+            // Unstable: the card never goes on the stack - the ability resolves by combining the card, still
+            // in hand, with the host (see AugmentEffect)
+            final String manacost = keyword.split(":")[1];
+            String effect = "AB$ Augment | Cost$ " + manacost + " Reveal<1/CARDNAME>" +
+                    " | ActivationZone$ Hand | SorcerySpeed$ True | ValidTgts$ Creature.Host" +
+                    " | TgtPrompt$ Select target host | PrecostDesc$ Augment | CostDesc$ " + ManaCostParser.parse(manacost) +
+                    " | SpellDescription$ (" + inst.getReminderText() + ")";
+
+            SpellAbility sa = AbilityFactory.getAbility(effect, card);
+            sa.setIntrinsic(intrinsic);
+            inst.addSpellAbility(sa);
         } else if (keyword.startsWith("Ninjutsu")) {
             final String[] k = keyword.split(":");
             final String manacost = k[1];
