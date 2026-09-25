@@ -448,7 +448,7 @@ public class CountersPutEffect extends SpellAbilityEffect {
                     continue;
                 }
 
-                if (sa.hasParam("CounterTypePerDefined") || sa.hasParam("UniqueType")) {
+                if (sa.hasParam("CounterTypePerDefined") || sa.hasParam("UniqueType") || sa.hasParam("CounterTypeChoices")) {
                     counterType = chooseTypeFromList(sa, sa.getParam("CounterType"), obj, pc);
                     if (counterType == null) continue;
                 }
@@ -620,6 +620,7 @@ public class CountersPutEffect extends SpellAbilityEffect {
             CounterType counterType = null;
             if (!sa.hasParam("EachExistingCounter") && !sa.hasParam("EachFromSource")
                     && !sa.hasParam("UniqueType") && !sa.hasParam("CounterTypePerDefined")
+                    && !sa.hasParam("CounterTypeChoices")
                     && !sa.hasParam("CounterTypes") && !sa.hasParam("ChooseDifferent")
                     && !sa.hasParam("PutOnEachOther") && !sa.hasParam("PutOnDefined")) {
                 try {
@@ -702,11 +703,17 @@ public class CountersPutEffect extends SpellAbilityEffect {
 
     protected CounterType chooseTypeFromList(SpellAbility sa, String list, GameEntity obj, PlayerController pc) {
         List<CounterType> choices = Lists.newArrayList();
-        for (String s : list.split(",")) {
-            if (!s.isEmpty() && (!sa.hasParam("UniqueType") || obj.getCounters(CounterType.getType(s)) == 0)) {
-                CounterType type = CounterType.getType(s);
-                if (!choices.contains(type)) {
-                    choices.add(type);
+        // By Gnome Means: "any kind of counter a printed card refers to". CounterType$ stays a real type
+        // (the AI and the stack text read it); this only widens what's offered once the target is known.
+        if ("AnyPrinted".equals(sa.getParam("CounterTypeChoices"))) {
+            choices.addAll(CounterType.getValues());
+        } else {
+            for (String s : list.split(",")) {
+                if (!s.isEmpty() && (!sa.hasParam("UniqueType") || obj.getCounters(CounterType.getType(s)) == 0)) {
+                    CounterType type = CounterType.getType(s);
+                    if (!choices.contains(type)) {
+                        choices.add(type);
+                    }
                 }
             }
         }
