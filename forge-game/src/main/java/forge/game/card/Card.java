@@ -6452,7 +6452,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         if (edition == null || isBasicLand()) {
             return CardEdition.BorderColor.BLACK;
         }
-        return edition.getBorderColor();
+        final IPaperCard pc = getPaperCard();
+        return pc == null ? edition.getBorderColor() : edition.getBorderColor(pc.getCollectorNumber());
     }
 
     public final String getMostRecentSet() {

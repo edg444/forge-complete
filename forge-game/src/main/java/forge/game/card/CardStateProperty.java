@@ -27,7 +27,8 @@ public class CardStateProperty {
 
         final CardTypeView type = cardState.getTypeWithChanges();
         if (property.contains("White") || property.contains("Blue") || property.contains("Black")
-                || property.contains("Red") || property.contains("Green")) {
+                || property.contains("Red") || property.contains("Green")
+                || property.contains("Pink") || property.contains("Gold")) {
             boolean mustHave = !property.startsWith("non");
             final String colorName = property.substring(mustHave ? 0 : 3, property.length() - (withSource ? 6 : 0));
 

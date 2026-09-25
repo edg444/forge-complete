@@ -187,6 +187,10 @@ public class ProtectEffect extends SpellAbilityEffect {
             // Replace AnyColor with the 5 colors
             if (choices.contains("AnyColor")) {
                 gains.addAll(MagicColor.Constant.ONLY_COLORS);
+                // a color of your choice - pink and gold join in a silver-bordered game
+                if (sa.getHostCard().getGame().isSilverBorderedGame()) {
+                    gains.addAll(MagicColor.Constant.SILVER_BORDER_COLORS);
+                }
                 choices = choices.replaceAll("AnyColor,?", "");
             } else if (choices.contains("CardType")) {
                 choices = StringUtils.join(CardType.getAllCardTypes(), ",");

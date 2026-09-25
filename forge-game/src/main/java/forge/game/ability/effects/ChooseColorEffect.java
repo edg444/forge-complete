@@ -39,6 +39,11 @@ public class ChooseColorEffect extends SpellAbilityEffect {
         final Card card = sa.getHostCard();
 
         List<String> colorChoices = new ArrayList<>(MagicColor.Constant.ONLY_COLORS);
+        // Sword of Dungeons & Dragons ruling: "If asked to choose a color in a silver-bordered game, you
+        // can choose gold." Only for an open choice - Choices$ and ColorsFrom$ below replace the list.
+        if (card.getGame().isSilverBorderedGame()) {
+            colorChoices.addAll(MagicColor.Constant.SILVER_BORDER_COLORS);
+        }
         if (sa.hasParam("Choices")) {
             String[] restrictedChoices = sa.getParam("Choices").split(",");
             colorChoices = Arrays.asList(restrictedChoices);

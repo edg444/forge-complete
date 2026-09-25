@@ -254,6 +254,13 @@ public final class CardEdition implements Comparable<CardEdition> {
                 return null;
             return extraParams.get("variant");
         }
+
+        /** Per-printing border, for editions that mix borders (J17's Rules Lawyer is silver in a black set). */
+        public BorderColor getBorderOverride() {
+            if (extraParams == null || !extraParams.containsKey("border"))
+                return null;
+            return BorderColor.valueOf(extraParams.get("border").toUpperCase(Locale.ENGLISH));
+        }
     }
 
     private final static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -536,6 +543,12 @@ public final class CardEdition implements Comparable<CardEdition> {
 
     public BorderColor getBorderColor() {
         return borderColor;
+    }
+
+    public BorderColor getBorderColor(String collectorNumber) {
+        final EditionEntry entry = getCardFromCollectorNumber(collectorNumber);
+        final BorderColor override = entry == null ? null : entry.getBorderOverride();
+        return override != null ? override : borderColor;
     }
 
     public boolean isLargeSet() {

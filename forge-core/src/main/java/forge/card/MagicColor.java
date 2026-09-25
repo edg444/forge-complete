@@ -144,6 +144,8 @@ public final class MagicColor {
         /** The only colors. */
         public static final ImmutableList<String> ONLY_COLORS = ImmutableList.of(WHITE, BLUE, BLACK, RED, GREEN);
         public static final ImmutableList<String> COLORS_AND_COLORLESS = ImmutableList.of(WHITE, BLUE, BLACK, RED, GREEN, COLORLESS);
+        /** Only choosable in a silver-bordered game (see Game.isSilverBorderedGame). */
+        public static final ImmutableList<String> SILVER_BORDER_COLORS = ImmutableList.of(PINK, GOLD);
 
         /** The Snow. */
         public static final String SNOW = "snow";
@@ -208,6 +210,8 @@ public final class MagicColor {
                 case MagicColor.Constant.RED -> RED;
                 case MagicColor.Constant.GREEN -> GREEN;
                 case MagicColor.Constant.COLORLESS -> COLORLESS;
+                case MagicColor.Constant.PINK -> PINK;
+                case MagicColor.Constant.GOLD -> GOLD;
                 default -> null;
             };
         }

@@ -26,6 +26,7 @@ import com.google.common.collect.Sets;
 import com.google.common.collect.Table;
 import com.google.common.eventbus.EventBus;
 import forge.GameCommand;
+import forge.card.CardEdition;
 import forge.card.CardRarity;
 import forge.card.CardStateName;
 import forge.game.ability.AbilityKey;
@@ -841,6 +842,19 @@ public class Game {
         }
         visitor.visitAll(getStackZone().getCards());
     }
+    /**
+     * Un-set rulings that apply "in a silver-bordered game" (e.g. choosing pink or gold when asked to
+     * choose a color) apply when any silver-bordered card is in the game. Acorn cards don't count.
+     */
+    public boolean isSilverBorderedGame() {
+        for (final Card c : getCardsInGame()) {
+            if (c.borderColor() == CardEdition.BorderColor.SILVER) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public CardCollectionView getCardsInGame() {
         final CardCollection all = new CardCollection();
         Visitor<Card> visitor = new Visitor<Card>() {
