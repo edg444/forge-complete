@@ -40,6 +40,7 @@ import forge.game.replacement.ReplacementType;
 import forge.game.spellability.SpellAbility;
 import forge.game.staticability.StaticAbility;
 import forge.game.staticability.StaticAbilityAssignCombatDamageAsUnblocked;
+import forge.game.staticability.StaticAbilityIgnoreStateBasedActions;
 import forge.game.staticability.StaticAbilityMode;
 import forge.game.staticability.StaticAbilityMustAttack;
 import forge.game.trigger.Trigger;
@@ -1677,6 +1678,10 @@ public class ComputerUtilCombat {
     	if (canDestroyAttackerBeforeFirstStrike(attacker, blocker, combat, withoutAbilities)) {
     		return true;
     	}
+        // damage, deathtouch and -1/-1 counters all kill through state-based actions
+        if (StaticAbilityIgnoreStateBasedActions.ignoresStateBasedActions(attacker)) {
+            return false;
+        }
 
     	if (canDestroyBlockerBeforeFirstStrike(blocker, attacker, withoutAbilities)) {
     		return false;
@@ -1907,6 +1912,9 @@ public class ComputerUtilCombat {
     	if (canDestroyBlockerBeforeFirstStrike(blocker, attacker, withoutAbilities)) {
     		return true;
     	}
+        if (StaticAbilityIgnoreStateBasedActions.ignoresStateBasedActions(blocker)) {
+            return false;
+        }
 
         if (((blocker.hasKeyword(Keyword.INDESTRUCTIBLE) || (!withoutAbilities && ComputerUtil.canRegenerate(ai, blocker)))
                 && !attacker.isWitherDamage())
@@ -2172,6 +2180,10 @@ public class ComputerUtilCombat {
      */
     public static final int getEnoughDamageToKill(final Card c, final int maxDamage, final Card source, final boolean isCombat, final boolean noPrevention) {
         int killDamage = getDamageToKill(c, false);
+
+        if (StaticAbilityIgnoreStateBasedActions.ignoresStateBasedActions(c)) {
+            return maxDamage + 1;
+        }
 
         if (c.hasKeyword(Keyword.INDESTRUCTIBLE) || c.getCounters(CounterEnumType.SHIELD) > 0 || (c.getShieldCount() > 0 && c.canBeShielded())) {
             if (!source.isWitherDamage()) {

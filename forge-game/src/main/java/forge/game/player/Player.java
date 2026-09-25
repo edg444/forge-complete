@@ -2158,6 +2158,11 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
 
     public final boolean cantLoseCheck(final GameLossReason state) {
+        if ((state == GameLossReason.LifeReachedZero || state == GameLossReason.Milled
+                || state == GameLossReason.Poisoned || state == GameLossReason.CommanderDamage)
+                && StaticAbilityIgnoreStateBasedActions.ignoresStateBasedActions(this)) {
+            return true;
+        }
         Map<AbilityKey, Object> repParams = AbilityKey.mapFromAffected(this);
         repParams.put(AbilityKey.LoseReason, state);
         return game.getReplacementHandler().cantHappenCheck(ReplacementType.GameLoss, repParams);
@@ -2176,6 +2181,13 @@ public class Player extends GameEntity implements Comparable<Player> {
         // check this first because of Lich's Mirror (704.7)
         // Rule 704.5b - If a player attempted to draw a card from a library with no cards in it
         //               since the last time state-based actions were checked, he or she loses the game.
+        // Rules Lawyer: every check below is a state-based action. The empty-library flag still has to clear,
+        // since 704.5b only covers draws "since the last time state-based actions were checked"
+        if (StaticAbilityIgnoreStateBasedActions.ignoresStateBasedActions(this)) {
+            triedToDrawFromEmptyLibrary = false;
+            return false;
+        }
+
         if (triedToDrawFromEmptyLibrary) {
             triedToDrawFromEmptyLibrary = false; // one-shot check
             // Mine, Mine, Mine! prevents decking

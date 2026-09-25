@@ -158,6 +158,8 @@ public enum StaticAbilityMode {
     // StaticAbilityIgnoreLegendRule
     IgnoreLegendRule,
     IgnorePlaneswalkerZeroLoyaltyRule,
+    // StaticAbilityIgnoreStateBasedActions
+    IgnoreStateBasedActions,
 
     // StaticAbilityMaxCounter
     MaxCounter,

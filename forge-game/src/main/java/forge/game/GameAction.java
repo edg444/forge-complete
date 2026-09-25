@@ -46,6 +46,7 @@ import forge.game.spellability.SpellPermanent;
 import forge.game.staticability.StaticAbility;
 import forge.game.staticability.StaticAbilityCountersRemain;
 import forge.game.staticability.StaticAbilityContinuous;
+import forge.game.staticability.StaticAbilityIgnoreStateBasedActions;
 import forge.game.staticability.StaticAbilityLayer;
 import forge.game.staticability.StaticAbilityMode;
 import forge.game.staticability.StaticAbilityTopLibraryOnBattlefield;
@@ -1523,7 +1524,13 @@ public class GameAction {
                 if (c.hasKeyword(Keyword.SPACE_SCULPTOR)) {
                     spaceSculptors.add(c.getController());
                 }
-                if (c.isCreature()) {
+                final boolean ignoresSBA = StaticAbilityIgnoreStateBasedActions.ignoresStateBasedActions(c);
+                if (ignoresSBA) {
+                    // 704.5h only looks at deathtouch damage dealt "since the last time state-based actions were
+                    // checked", so it has to lapse now or the creature would die the moment the protection ends
+                    c.setHasBeenDealtDeathtouchDamage(false);
+                }
+                if (c.isCreature() && !ignoresSBA) {
                     // Rule 704.5f - Put into grave (no regeneration) for toughness <= 0
                     // (1/2 toughness is above 0, so Little Girl doesn't die on arrival)
                     if (c.getNetToughnessInHalves() <= 0) {
@@ -1556,15 +1563,18 @@ public class GameAction {
                     }
                 }
 
-                checkAgainCard |= stateBasedAction_Saga(c, sacrificeList);
-                checkAgainCard |= stateBasedAction_Battle(c, noRegCreats);
+                if (!ignoresSBA) {
+                    checkAgainCard |= stateBasedAction_Saga(c, sacrificeList);
+                    checkAgainCard |= stateBasedAction_Battle(c, noRegCreats);
+                    checkAgainCard |= stateBasedAction_Contraption(c, noRegCreats);
+
+                    checkAgainCard |= stateBasedAction704_5q(c); // annihilate +1/+1 counters with -1/-1 ones
+
+                    checkAgainCard |= stateBasedAction704_5r(c);
+                }
+                // these two run for every host: the Roles/attachments being judged may belong to someone else
                 checkAgainCard |= stateBasedAction_Role(c, unAttachList);
-                checkAgainCard |= stateBasedAction704_attach(c, unAttachList);
-                checkAgainCard |= stateBasedAction_Contraption(c, noRegCreats);
-
-                checkAgainCard |= stateBasedAction704_5q(c); // annihilate +1/+1 counters with -1/-1 ones
-
-                checkAgainCard |= stateBasedAction704_5r(c);
+                checkAgainCard |= stateBasedAction704_attach(c, unAttachList, ignoresSBA);
 
                 if (c.hasKeyword("The number of loyalty counters on CARDNAME is equal to the number of Beebles you control.")) {
                     int beeble = CardLists.getValidCardCount(game.getCardsIn(ZoneType.Battlefield), "Beeble.YouCtrl", c.getController(), c, null);
@@ -1583,7 +1593,7 @@ public class GameAction {
                 }
 
                 // cleanup aura
-                if (c.isAura() && c.isInPlay() && !c.isEnchanting()) {
+                if (!ignoresSBA && c.isAura() && c.isInPlay() && !c.isEnchanting()) {
                     noRegCreats.add(c);
                     checkAgainCard = true;
                 }
@@ -1596,7 +1606,8 @@ public class GameAction {
                 u.unattachFromEntity(u.getEntityAttachedTo());
 
                 // cleanup aura
-                if (u.isAura() && u.isInPlay() && !u.isEnchanting()) {
+                if (u.isAura() && u.isInPlay() && !u.isEnchanting()
+                        && !StaticAbilityIgnoreStateBasedActions.ignoresStateBasedActions(u)) {
                     noRegCreats.add(u);
                     checkAgain = true;
                 }
@@ -1620,7 +1631,7 @@ public class GameAction {
                 }
 
                 // 704.5z If a player controls a permanent with start your engines! and that player has no speed, that player’s speed becomes 1.
-                if (p.getSpeed() == 0 && p.getCardsIn(ZoneType.Battlefield).anyMatch(c -> c.hasKeyword(Keyword.START_YOUR_ENGINES))) {
+                if (p.getSpeed() == 0 && !StaticAbilityIgnoreStateBasedActions.ignoresStateBasedActions(p) && p.getCardsIn(ZoneType.Battlefield).anyMatch(c -> c.hasKeyword(Keyword.START_YOUR_ENGINES))) {
                     p.increaseSpeed();
                     checkAgain = true;
                 }
@@ -1797,6 +1808,7 @@ public class GameAction {
 
         for (Player p : game.getPlayers()) {
             CardCollection rolesByPlayer = CardLists.filterControlledBy(roles, p);
+            rolesByPlayer = CardLists.filter(rolesByPlayer, r -> !StaticAbilityIgnoreStateBasedActions.ignoresStateBasedActions(r));
             if (rolesByPlayer.size() <= 1) {
                 continue;
             }
@@ -1825,10 +1837,10 @@ public class GameAction {
         }
     }
 
-    private boolean stateBasedAction704_attach(Card c, CardCollection unAttachList) {
+    private boolean stateBasedAction704_attach(Card c, CardCollection unAttachList, boolean ignoresSBA) {
         boolean checkAgain = false;
 
-        if (c.isAttachedToEntity()) {
+        if (!ignoresSBA && c.isAttachedToEntity()) {
             final GameEntity ge = c.getEntityAttachedTo();
             // Rule 704.5q - Creature attached to an object or player, becomes unattached
             if (c.isCreature() || c.isBattle() || !ge.canBeAttached(c, null, true)) {
@@ -1878,7 +1890,7 @@ public class GameAction {
         CardCollection toAssign = new CardCollection();
 
         for (final Card c : p.getCreaturesInPlay().threadSafeIterable()) {
-            if (!c.hasSector()) {
+            if (!c.hasSector() && !StaticAbilityIgnoreStateBasedActions.ignoresStateBasedActions(c)) {
                 toAssign.add(c);
                 checkAgain = true;
             }
@@ -2068,7 +2080,8 @@ public class GameAction {
         boolean recheck = false;
 
         for (Card c : list) {
-            if (c.getCounters(CounterEnumType.LOYALTY) <= 0 && !c.ignorePlaneswalkerZeroLoyaltyRule()) {
+            if (c.getCounters(CounterEnumType.LOYALTY) <= 0 && !c.ignorePlaneswalkerZeroLoyaltyRule()
+                    && !StaticAbilityIgnoreStateBasedActions.ignoresStateBasedActions(c)) {
                 noRegCreats.add(c);
                 recheck = true;
             }
@@ -2082,7 +2095,7 @@ public class GameAction {
 
         // check for ignore legend rule
         for (Card c : CardLists.getType(p.getCardsIn(ZoneType.Battlefield), "Legendary")) {
-            if (!c.ignoreLegendRule()) {
+            if (!c.ignoreLegendRule() && !StaticAbilityIgnoreStateBasedActions.ignoresStateBasedActions(c)) {
                 a.add(c);
             }
         }
@@ -2161,6 +2174,11 @@ public class GameAction {
 
         if (toKeep.size() == 1) {
             worlds.removeAll(toKeep);
+        }
+        // protected worlds still count when deciding which one is newest; they just don't leave
+        worlds.removeIf(StaticAbilityIgnoreStateBasedActions::ignoresStateBasedActions);
+        if (worlds.isEmpty()) {
+            return false;
         }
 
         noRegCreats.addAll(worlds);
