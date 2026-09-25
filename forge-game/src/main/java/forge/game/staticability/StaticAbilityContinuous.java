@@ -936,7 +936,12 @@ public final class StaticAbilityContinuous {
                             addedReplacementEffects.add(affectedCard.getReplacementEffectForStaticAbilityByText(re, stAb));
                         }
                         for (final StaticAbility st : state.getStaticAbilities()) {
-                            addedStaticAbility.add(affectedCard.getStaticAbilityForStaticAbilityByText(st, stAb));
+                            final StaticAbility gained = affectedCard.getStaticAbilityForStaticAbilityByText(st, stAb);
+                            // Seraph ruling: when gained abilities contradict, the most recently added text box
+                            // wins. Each card got a fresh timestamp as it was exiled, so that orders them - set
+                            // every pass, since the cached copy can be rebuilt from its original params.
+                            gained.putParam("Timestamp", String.valueOf(c.getGameTimestamp()));
+                            addedStaticAbility.add(gained);
                         }
                     }
                 }
