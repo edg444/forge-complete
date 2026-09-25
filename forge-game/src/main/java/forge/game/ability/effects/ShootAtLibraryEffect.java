@@ -73,6 +73,6 @@ public class ShootAtLibraryEffect extends SpellAbilityEffect {
 
     @Override
     protected String getStackDescription(SpellAbility sa) {
-        return "Fire a Nerf00AE blaster until empty at " + Lang.joinHomogenous(getTargetPlayers(sa)) + "'s library.";
+        return "Fire a Nerf® blaster until empty at " + Lang.joinHomogenous(getTargetPlayers(sa)) + "'s library.";
     }
 }
