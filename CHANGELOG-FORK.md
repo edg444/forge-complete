@@ -121,7 +121,7 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ## Log
 
-### Unreleased — Unhinged colorless; pink; errata reversal
+### 2026-09-25 — Unhinged colorless; more Un-cards; pink and gold; errata reversal; Oracle retemplate
 
 - **All remaining Unhinged colorless cards** (unh/121–135): Gleemax, Letter Bomb, Mox Lotus,
   My First Tome, Pointy Finger of Doom, Rod of Spanking, Time Machine, Togglodyte, Toy Boat,
@@ -168,6 +168,34 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     variant marks *which copy you own*, not what it does.
 
 - Known cosmetic gap: the split-card *image* renderer still draws two halves for the five-face card.
+
+- **More Un-cards**: Rules Lawyer, Grimlock (Dinobot Leader), Nerf War, By Gnome Means,
+  Chivalrous Chevalier, Do-It-Yourself Seraph, Gimme Five, GO TO JAIL, and the Unstable augments
+  Half-Kitten, Half- and Humming-.
+  - *Rules Lawyer* — new `IgnoreStateBasedActions` static mode; every 704 check skips protected
+    players and permanents, and the AI's combat/burn/lose predictions know they won't die to SBAs.
+  - *Augment* — from-hand, sorcery-speed ability that merges the card onto a host through mutate's
+    merge plumbing. The combined card's name, cost, colors, types, P/T and completed ETB triggers
+    follow the Unstable mechanics article and FAQ. A hostless augment on the battlefield goes to the
+    graveyard (Rules Lawyer exempts it).
+  - *Nerf War* — new `ShootAtLibrary` effect simulating the blaster volley (6 darts, 40% hit,
+    1–3 cards per hit, tunable per script).
+  - *Do-It-Yourself Seraph* — new `GainsTextBoxOf` continuous param that *adds* each matching
+    card's traits (unlike `GainTextOf`, which replaces); contradicting gained statics apply in exile
+    order, pinned by `DoItYourselfSeraphTest`.
+  - *By Gnome Means* — `PutCounter` `CounterTypeChoices$ AnyPrinted` offers every counter kind Forge
+    knows.
+  - AI: `GameChance.N.Key` rolls once per AI player per game for honor-system facts; `HighFives`
+    number logic for Gimme Five.
+- **Gold as a seventh color**, for the 4/4 gold Dragon token (Sword of Dungeons & Dragons, Urza
+  Academy Headmaster), on the same terms as pink. In a game with any silver-bordered card, "choose a
+  color" prompts and protection from a color of your choice also offer pink and gold.
+- **Border is now per printing**: edition lines take `${"border": "Silver"}` (13 silver-bordered
+  cards in black-bordered sets) and `${"stamp": "acorn"}` (all 296 acorn printings), and
+  `SilverBordered` checks the printing instead of any `Type=Funny` edition.
+- **13 missing creature types** added to `TypeLists` (Autobot, Cyborg, Automaton, Brainiac, Chicken,
+  Custodes, Head, Naga, Reveler, Rukh, Teddy, Urzan, Walrus); type checks against them silently
+  failed before.
 
 - **Test suite back to green** (`mvn -pl forge-gui-desktop -am test`: 721 run, 0 failed). Of the 18
   failures, 8 were the fork's and 10 were environmental, reproducing identically on upstream:
