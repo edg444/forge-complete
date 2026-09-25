@@ -10,6 +10,7 @@ import com.google.common.collect.Lists;
 
 import forge.card.ICardFace;
 import forge.card.mana.ManaCost;
+import forge.game.Game;
 import forge.game.GameEntity;
 import forge.game.ability.ApiType;
 import forge.game.ability.SpellAbilityEffect;
@@ -183,6 +184,9 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
      */
     protected static boolean rollChanceLogic(final Player ai, final SpellAbility sa) {
         final String aiLogic = sa.getParam("AILogic");
+        if (aiLogic != null && aiLogic.startsWith("GameChance.")) {
+            return rollGameChanceLogic(ai, sa, aiLogic);
+        }
         if (aiLogic == null || !aiLogic.startsWith("Chance.")) {
             return true;
         }
@@ -210,6 +214,35 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         long z = host.getId() * 2654435761L
                 + host.getGame().getPhaseHandler().getTurn() * 40503L
                 + sa.getDescription().hashCode()
+                + 0x9E3779B97F4A7C15L;
+        z = (z ^ (z >>> 30)) * 0xBF58476D1CE4E5B9L;
+        z = (z ^ (z >>> 27)) * 0x94D049BB133111EBL;
+        z = z ^ (z >>> 31);
+        return Math.floorMod(z, 100L) < pct;
+    }
+
+    /**
+     * GameChance.N.Key - an honor-system fact about the AI's real-world situation (e.g. "owns a
+     * Transformers toy") that holds for a whole game: rolled once per AI player per game, and shared
+     * by every ability naming the same Key. Unlike Chance.N there's no per-turn cap - once the fact
+     * is true, the API's own logic decides when the ability is worth using.
+     */
+    private static boolean rollGameChanceLogic(final Player ai, final SpellAbility sa, final String aiLogic) {
+        final String[] parts = aiLogic.split("\\.", 3);
+        final int pct = Integer.parseInt(parts[1]);
+        final String key = parts.length > 2 ? parts[2] : sa.getDescription();
+        final Card host = sa.getHostCard();
+        if (host == null || host.getGame() == null || host.getGame().getMatch() == null) {
+            return MyRandom.percentTrue(pct);
+        }
+        final Game game = host.getGame();
+        // The match object's identity hash makes the roll differ between matches (plain ids restart
+        // at 1 every launch, so every first game would roll the same), and the finished-game count
+        // makes each game of a match its own roll. Both survive the AI's simulated game copies.
+        long z = System.identityHashCode(game.getMatch()) * 2654435761L
+                + game.getMatch().getOutcomes().size() * 40503L
+                + ai.getName().hashCode() * 0x632BE59BD9B4E019L
+                + key.hashCode()
                 + 0x9E3779B97F4A7C15L;
         z = (z ^ (z >>> 30)) * 0xBF58476D1CE4E5B9L;
         z = (z ^ (z >>> 27)) * 0x94D049BB133111EBL;

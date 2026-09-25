@@ -37,6 +37,7 @@ Astartes:Astartes
 Atog:Atogs
 Aurochs:Aurochs
 Autobot:Autobots
+Automaton:Automatons
 Avatar:Avatars
 Azra:Azra
 Badger:Badgers
@@ -56,6 +57,7 @@ Bison:Bisons
 Blinkmoth:Blinkmoths
 Boar:Boars
 Borg:Borg
+Brainiac:Brainiacs
 Bringer:Bringers
 Brushwagg:Brushwaggs
 Bureaucrat:Bureaucrats
@@ -68,6 +70,7 @@ Caribou:Caribous
 Carrier:Carriers
 Cat:Cats
 Centaur:Centaurs
+Chicken:Chickens
 Chimera:Chimeras
 Child:Children
 Citizen:Citizens
@@ -79,6 +82,7 @@ Coward:Cowards
 Coyote:Coyotes
 Crab:Crabs
 Crocodile:Crocodiles
+Custodes:Custodes
 Cyberman:Cybermen
 Cyborg:Cyborgs
 Cyclops:Cyclopes
@@ -148,6 +152,7 @@ Hag:Hags
 Halfling:Halflings
 Hamster:Hamsters
 Harpy:Harpies
+Head:Heads
 Hedgehog:Hedgehogs
 Hellion:Hellions
 Hero:Heroes
@@ -215,6 +220,7 @@ Mouse:Mice
 Mutant:Mutants
 Myr:Myrs
 Mystic:Mystics
+Naga:Nagas
 Nautilus:Nautili
 Necron:Necrons
 Nephilim:Nephilims
@@ -268,11 +274,13 @@ Ranger:Rangers
 Rat:Rats
 Rebel:Rebels
 Reflection:Reflections
+Reveler:Revelers
 Rhino:Rhinos
 Rigger:Riggers
 Robot:Robots
 Rogue:Rogues
 Romulan:Romulans
+Rukh:Rukhs
 Sable:Sables
 Salamander:Salamanders
 Samurai:Samurais
@@ -326,6 +334,7 @@ Symbiote:Symbiotes
 Synth:Synths
 Survivor:Survivors
 Talosian:Talosians
+Teddy:Teddies
 Teddy Bear:Teddy Bears
 Tellarite:Tellarites
 Tentacle:Tentacles
@@ -346,6 +355,7 @@ Troll:Trolls
 Turtle:Turtles
 Tyranid:Tyranids
 Unicorn:Unicorns
+Urzan:Urzans
 Utrom:Utroms
 Vampire:Vampires
 Varmint:Varmints
@@ -356,6 +366,7 @@ Vorta:Vorta
 Vulcan:Vulcans
 Waiter:Waiters
 Wall:Walls
+Walrus:Walruses
 Warlock:Warlocks
 Warrior:Warriors
 Weasel:Weasels
