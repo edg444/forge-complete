@@ -1925,6 +1925,9 @@ public class AiController {
             // Granny's Payback: the honest answer for a human, so the AI needs an answer of its own
             // rather than the default "pick the maximum" - a plausible adult age, not 120.
             return Math.min(max, Math.max(min, MyRandom.getRandom().nextInt(58) + 18));
+        } else if ("HighFives".equals(logic)) {
+            // Gimme Five: nobody high-fives a computer by the dozen - a few people near the screen at most
+            return Math.min(max, Math.max(min, MyRandom.getRandom().nextInt(4)));
         } else if ("Random".equals(logic)) {
             return MyRandom.getRandom().nextInt((max - min) + 1) + min;
         }

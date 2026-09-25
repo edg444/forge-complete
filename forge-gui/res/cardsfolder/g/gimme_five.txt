@@ -1,0 +1,12 @@
+Name:Gimme Five
+ManaCost:W
+Types:Instant
+# How many people high-fived you is something only the room knows, so it asks. Players in this game who
+# high-fived you confirm it themselves; a computer opponent can't high-five anyone, so the AI never does.
+A:SP$ ChooseNumber | Defined$ You | Min$ 0 | Max$ 99 | ListTitle$ How many people high-fived you in the next thirty seconds? | AILogic$ HighFives | SubAbility$ DBGainLife | StackDescription$ SpellDescription | SpellDescription$ You gain 1 life for each person who high-fives you in the next thirty seconds. Each player in an Un-game who high-fives you gains 1 life. (Offer high fives. Don't hit people.)
+SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ HighFives | SubAbility$ DBPlayers | StackDescription$ None
+SVar:DBPlayers:DB$ RepeatEach | RepeatPlayers$ Player.Other | RepeatSubAbility$ DBHighFived | StackDescription$ None
+SVar:DBHighFived:DB$ GainLife | Defined$ Remembered | LifeAmount$ 1 | UnlessCost$ FlavorAction<Confirm you high-fived the player who cast Gimme Five/Up top!> | UnlessPayer$ Remembered | UnlessSwitched$ True | UnlessAI$ Never | StackDescription$ None
+SVar:HighFives:Count$ChosenNumber
+DeckHas:Ability$LifeGain
+Oracle:You gain 1 life for each person who high-fives you in the next thirty seconds. Each player in an Un-game who high-fives you gains 1 life. (Offer high fives. Don't hit people.)
