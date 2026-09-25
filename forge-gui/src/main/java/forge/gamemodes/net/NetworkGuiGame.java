@@ -25,6 +25,7 @@ import forge.trackable.TrackableTypes.TrackableType;
 import forge.util.IHasForgeLog;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This class handles all network-specific deserialization and state management,
@@ -515,30 +516,34 @@ public abstract class NetworkGuiGame extends AbstractGuiGame implements IHasForg
         }
     }
 
+    /**
+     * Every CardStateView slot on a CardView, in declaration order (CurrentState first). Derived from
+     * the property type rather than listed, because the server's toNetworkValue sends every
+     * CardStateViewType property as an ordinal, including this fork's Split3State-Split5State.
+     */
+    private static final List<TrackableProperty> CSV_SLOT_PROPS = Arrays.stream(TrackableProperty.values())
+            .filter(p -> p.getType() == TrackableTypes.CardStateViewType)
+            .collect(Collectors.toUnmodifiableList());
+
+    private static CardStateView getCsvInSlot(CardView cardView, TrackableProperty slot) {
+        Map<TrackableProperty, Object> props = cardView.getProps();
+        return props.get(slot) instanceof CardStateView csv ? csv : null;
+    }
+
     private static Map<CardStateName, CardStateView> snapshotExistingCsvs(CardView cardView) {
         Map<CardStateName, CardStateView> map = new HashMap<>();
-        CardStateView csv;
-        csv = cardView.getCurrentState();
-        if (csv != null) map.put(csv.getState(), csv);
-        csv = cardView.getAlternateState();
-        if (csv != null) map.put(csv.getState(), csv);
-        csv = cardView.getLeftSplitState();
-        if (csv != null) map.put(csv.getState(), csv);
-        csv = cardView.getRightSplitState();
-        if (csv != null) map.put(csv.getState(), csv);
+        for (TrackableProperty slot : CSV_SLOT_PROPS) {
+            CardStateView csv = getCsvInSlot(cardView, slot);
+            if (csv != null) map.put(csv.getState(), csv);
+        }
         return map;
     }
 
     private static CardStateView findCsvByState(CardView parent, CardStateName state) {
-        CardStateView csv;
-        csv = parent.getCurrentState();
-        if (csv != null && csv.getState() == state) return csv;
-        csv = parent.getAlternateState();
-        if (csv != null && csv.getState() == state) return csv;
-        csv = parent.getLeftSplitState();
-        if (csv != null && csv.getState() == state) return csv;
-        csv = parent.getRightSplitState();
-        if (csv != null && csv.getState() == state) return csv;
+        for (TrackableProperty slot : CSV_SLOT_PROPS) {
+            CardStateView csv = getCsvInSlot(parent, slot);
+            if (csv != null && csv.getState() == state) return csv;
+        }
         return null;
     }
 
@@ -550,10 +555,7 @@ public abstract class NetworkGuiGame extends AbstractGuiGame implements IHasForg
     }
 
     private static boolean isCsvSlotProperty(TrackableProperty prop) {
-        return prop == TrackableProperty.CurrentState
-                || prop == TrackableProperty.AlternateState
-                || prop == TrackableProperty.LeftSplitState
-                || prop == TrackableProperty.RightSplitState;
+        return prop.getType() == TrackableTypes.CardStateViewType;
     }
 
     private static ZoneType getZoneTypeForProperty(TrackableProperty prop) {

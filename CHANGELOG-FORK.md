@@ -75,7 +75,9 @@ Only Who // What // When // Where // Why has ever needed this.
 - Network delta sync encodes a card-state key as `cardId * CSV_STATE_SLOTS + ordinal`; the fork
   widens `CSV_STATE_SLOTS` from upstream's 16 to 32 (`DeltaPacket`), since the three extra states
   push `CardStateName` to 18 values. Upstream's 16-slot guard otherwise fails `DeltaPacket`'s
-  class init and breaks all network play.
+  class init and breaks all network play. The client (`NetworkGuiGame`) decodes **every**
+  `CardStateViewType` property as a slot reference, not just upstream's four named ones, so
+  `Split3State`–`Split5State` arrive as real state views. Covered by `FiveFaceSplitNetworkTest`.
 
 ### Zones
 
@@ -179,6 +181,11 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     custom sets there (a Pro Tour Collector Set with eight Hymn to Tourach prints, CEI, WC01)
     changed which printing the CardDb and DeckRecognizer art-preference tests picked. The test
     `CardDatabaseHelper` now uses no custom cards and an empty custom-editions folder.
+- **Five-face split cards over the network.** The client only decoded upstream's four card-state
+  slots, so Who // What // When // Where // Why's third to fifth faces arrived as raw state numbers:
+  every copy logged `Error setting property Split3State` (and 4, 5), and reading its faces on the
+  remote client threw `ClassCastException`. Now decoded like the others; new
+  `FiveFaceSplitNetworkTest` plays a real networked game with the card and checks all five faces.
 
 ### 2026-08-06 — Unhinged green and multicolor; five-face splits
 
