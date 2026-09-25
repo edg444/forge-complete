@@ -1,0 +1,9 @@
+Name:Nerf War
+ManaCost:3 U R
+Types:Sorcery
+A:SP$ ShootAtLibrary | ValidTgts$ Player | TgtPrompt$ Select the player whose library you're firing at | Shots$ 6 | HitPercent$ 40 | KnockMin$ 1 | KnockMax$ 3 | SubAbility$ DBKnockOff | SpellDescription$ Fire a Nerf® blaster until empty at target library from at least two meters away. For each card knocked off that library, put it into its owner's graveyard and CARDNAME deals ½ damage to that player. (Foam darts only.)
+SVar:DBKnockOff:DB$ ChangeZone | Defined$ Remembered | Origin$ Library | Destination$ Graveyard | StackDescription$ None | SubAbility$ DBDamage
+SVar:DBDamage:DB$ DealDamage | Defined$ TargetedPlayer | NumDmg$ X | Halves$ True | StackDescription$ None | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:X:Remembered$Amount
+Oracle:Fire a Nerf® blaster until empty at target library from at least two meters away. For each card knocked off that library, put it into its owner's graveyard and Nerf War deals ½ damage to that player. (Foam darts only.)

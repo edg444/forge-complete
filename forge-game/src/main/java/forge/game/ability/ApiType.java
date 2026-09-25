@@ -109,6 +109,7 @@ public enum ApiType {
     FlipCoin(FlipCoinEffect.class),
     FlipOntoBattlefield (FlipOntoBattlefieldEffect.class),
     SlideOntoBattlefield (SlideOntoBattlefieldEffect.class),
+    ShootAtLibrary (ShootAtLibraryEffect.class),
     Fog (FogEffect.class),
     GainControl (ControlGainEffect.class),
     GainControlVariant (ControlGainVariantEffect.class),
