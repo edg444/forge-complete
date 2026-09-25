@@ -53,23 +53,31 @@ public class CardDatabaseHelper {
         return isolatedInstances.computeIfAbsent(key, k -> createStaticData(loadCardsLazily));
     }
 
+    private static final String EMPTY_CUSTOM_EDITIONS_DIR = createEmptyDir();
+
+    private static String createEmptyDir() {
+        try {
+            java.io.File dir = java.nio.file.Files.createTempDirectory("forge-test-custom-editions").toFile();
+            dir.deleteOnExit();
+            return dir.getPath();
+        } catch (java.io.IOException e) {
+            throw new java.io.UncheckedIOException(e);
+        }
+    }
+
     public static StaticData createStaticData(boolean loadCardsLazily) {
         final CardStorageReader reader = new CardStorageReader(ForgeConstants.CARD_DATA_DIR,
                 null, loadCardsLazily);
-        CardStorageReader customReader;
-        try {
-            customReader  = new CardStorageReader(ForgeConstants.USER_CUSTOM_CARDS_DIR,
-                    null, loadCardsLazily);
-        } catch (Exception e) {
-            customReader = null;
-        }
         // The constructor without a token reader leaves StaticData.getAllTokens() null, and it
         // also sets the process-wide StaticData.instance(): any test that resolves a token after
         // one of these is built dies on a null TokenDb.
         final CardStorageReader tokenReader = new CardStorageReader(ForgeConstants.TOKEN_DATA_DIR,
                 null, false);
-        return new StaticData(reader, tokenReader, customReader, null, ForgeConstants.EDITIONS_DIR,
-                ForgeConstants.USER_CUSTOM_EDITIONS_DIR, ForgeConstants.BLOCK_DATA_DIR, "",
+        // No custom cards, and an empty folder for custom editions: the real USER_CUSTOM_* dirs
+        // live in the developer's own Forge profile, so whatever is there (e.g. a custom set with
+        // eight Hymn to Tourach prints) changes which printing the art-preference tests pick.
+        return new StaticData(reader, tokenReader, null, null, ForgeConstants.EDITIONS_DIR,
+                EMPTY_CUSTOM_EDITIONS_DIR, ForgeConstants.BLOCK_DATA_DIR, "",
                 "Latest Art All Editions",
                 true,
                 false, false, false);

@@ -37,10 +37,17 @@ public final class DeltaPacket implements NetEvent {
     public static final int TYPE_GAME_VIEW = 3;
     public static final int TYPE_CSV = 4;
 
+    /**
+     * CardStateView IDs are encoded as cardId * CSV_STATE_SLOTS + state ordinal. 32 rather than
+     * upstream's 16 because this fork's extra split faces (Split3-5) push CardStateName past 16
+     * values. Card IDs still get 22 of the key's 28 bits, far beyond any real game.
+     */
+    public static final int CSV_STATE_SLOTS = 32;
+
     static {
-        if (CardStateName.values().length > 16) {
+        if (CardStateName.values().length > CSV_STATE_SLOTS) {
             throw new AssertionError("CardStateName has " + CardStateName.values().length
-                    + " values; CSV delta key encoding supports at most 16");
+                    + " values; CSV delta key encoding supports at most " + CSV_STATE_SLOTS);
         }
     }
 
@@ -62,7 +69,7 @@ public final class DeltaPacket implements NetEvent {
         int type = typeTagFor(obj);
         int id = obj.getId();
         if (obj instanceof CardStateView csv) {
-            id = id * 16 + csv.getState().ordinal();
+            id = id * CSV_STATE_SLOTS + csv.getState().ordinal();
         }
         return makeDeltaKey(type, id);
     }

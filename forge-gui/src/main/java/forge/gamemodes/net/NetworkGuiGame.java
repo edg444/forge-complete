@@ -231,7 +231,7 @@ public abstract class NetworkGuiGame extends AbstractGuiGame implements IHasForg
                     } else {
                         int ordinal = (Integer) value;
                         CardStateName state = CardStateName.values()[ordinal];
-                        int csvKey = DeltaPacket.makeDeltaKey(DeltaPacket.TYPE_CSV, cardView.getId() * 16 + ordinal);
+                        int csvKey = DeltaPacket.makeDeltaKey(DeltaPacket.TYPE_CSV, cardView.getId() * DeltaPacket.CSV_STATE_SLOTS + ordinal);
                         CardStateView csv = csvRegistry.get(csvKey);
                         if (csv == null) csv = findCsvByState(cardView, state);
                         if (csv == null && existingCsvs != null) csv = existingCsvs.get(state);
@@ -543,10 +543,10 @@ public abstract class NetworkGuiGame extends AbstractGuiGame implements IHasForg
     }
 
     private static int getCardIdFromCsvEncodedId(int encodedId) {
-        return encodedId / 16;
+        return encodedId / DeltaPacket.CSV_STATE_SLOTS;
     }
     private static CardStateName getStateFromCsvEncodedId(int encodedId) {
-        return CardStateName.values()[encodedId % 16];
+        return CardStateName.values()[encodedId % DeltaPacket.CSV_STATE_SLOTS];
     }
 
     private static boolean isCsvSlotProperty(TrackableProperty prop) {

@@ -539,7 +539,7 @@ public class GameSimulationTest extends SimulationTest {
         AssertJUnit.assertTrue(depths.hasCounters());
 
         SpellAbility sa = findSAWithPrefix(thespian,
-                "{2}, {T}: CARDNAME becomes a copy of target land, except it has this ability.");
+                "{2}, {T}: This land becomes a copy of target land, except it has this ability.");
         AssertJUnit.assertNotNull(sa);
         sa.getTargets().add(depths);
 
@@ -565,7 +565,7 @@ public class GameSimulationTest extends SimulationTest {
         game.getAction().checkStateEffects(true);
 
         SpellAbility sa = findSAWithPrefix(thespian,
-                "{2}, {T}: CARDNAME becomes a copy of target land, except it has this ability.");
+                "{2}, {T}: This land becomes a copy of target land, except it has this ability.");
         AssertJUnit.assertNotNull(sa);
         sa.getTargets().add(thespian);
 
@@ -604,7 +604,7 @@ public class GameSimulationTest extends SimulationTest {
         AssertJUnit.assertEquals(1, berserker.getNetToughness());
         AssertJUnit.assertFalse(berserker.isSick());
 
-        SpellAbility pumpSA = findSAWithPrefix(berserker, "{R}: CARDNAME gets +1/+0 until end of turn.");
+        SpellAbility pumpSA = findSAWithPrefix(berserker, "{R}: This creature gets +1/+0 until end of turn.");
         AssertJUnit.assertNotNull(pumpSA);
         GameSimulator sim2 = createSimulator((Player) sim.getGameCopier().find(p));
         sim2.simulateSpellAbility(pumpSA);

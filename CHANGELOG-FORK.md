@@ -72,6 +72,10 @@ Only Who // What // When // Where // Why has ever needed this.
 - Fuse, Aftermath and Rooms are deliberately left two-face.
 - Split-state views are populated in a **separate pass** from ability-text rendering, because
   rendering one face can read a sibling.
+- Network delta sync encodes a card-state key as `cardId * CSV_STATE_SLOTS + ordinal`; the fork
+  widens `CSV_STATE_SLOTS` from upstream's 16 to 32 (`DeltaPacket`), since the three extra states
+  push `CardStateName` to 18 values. Upstream's 16-slot guard otherwise fails `DeltaPacket`'s
+  class init and breaks all network play.
 
 ### Zones
 
@@ -162,6 +166,19 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     variant marks *which copy you own*, not what it does.
 
 - Known cosmetic gap: the split-card *image* renderer still draws two halves for the five-face card.
+
+- **Test suite back to green** (`mvn -pl forge-gui-desktop -am test`: 721 run, 0 failed). Of the 18
+  failures, 8 were the fork's and 10 were environmental, reproducing identically on upstream:
+  - *Network play was broken* — the five-face split states pushed `CardStateName` past the 16 that
+    `DeltaPacket`'s key encoding allowed, so its static guard threw on class load. That was
+    `DeltaSyncUnitTest` ×3 and `NetworkPlayIntegrationTest`'s 60s timeout. Fixed by widening the slot.
+  - *Stale after the Oracle sync* — `GameSimulationTest` (Thespian's Stage ×2, Lightning
+    Berserker) and `SpellAbilityPickerSimulationTest.testLandSearchForCombo` expected the old
+    `CARDNAME`/card-name wording; now "This land …" / "This creature …", matching Scryfall.
+  - *Profile-dependent* — the test card database loaded `%APPDATA%\Forge\custom\editions`, so
+    custom sets there (a Pro Tour Collector Set with eight Hymn to Tourach prints, CEI, WC01)
+    changed which printing the CardDb and DeckRecognizer art-preference tests picked. The test
+    `CardDatabaseHelper` now uses no custom cards and an empty custom-editions folder.
 
 ### 2026-08-06 — Unhinged green and multicolor; five-face splits
 
