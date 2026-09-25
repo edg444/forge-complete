@@ -4,4 +4,4 @@ Types:Artifact Creature Soldier
 PT:2/2
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Protection from each color | Condition$ Metalcraft | Description$ Metalcraft — This creature has protection from each color as long as you control three or more artifacts.
 SVar:BuffedBy:Artifact
-Oracle:Metalcraft — Etched Champion has protection from each color as long as you control three or more artifacts.
+Oracle:Metalcraft — This creature has protection from each color as long as you control three or more artifacts.

@@ -6,4 +6,4 @@ K:Defender
 S:Mode$ CanAttackDefender | ValidCard$ Card.Self+powerGE5 | Description$ As long as this creature's power is 5 or greater, it can attack as though it didn't have defender.
 AI:RemoveDeck:Random
 DeckHints:Ability$Counters
-Oracle:Defender\nAs long as Karsus Depthguard's power is 5 or greater, it can attack as though it didn't have defender.
+Oracle:Defender\nAs long as this creature's power is 5 or greater, it can attack as though it didn't have defender.

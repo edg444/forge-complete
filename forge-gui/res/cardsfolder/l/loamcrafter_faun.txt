@@ -10,4 +10,4 @@ SVar:X:TriggerRemembered$Amount
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHas:Ability$Discard|Graveyard
 DeckHints:Ability$Mill
-Oracle:When Loamcrafter Faun enters, you may discard one or more land cards. When you do, return up to that many target nonland permanent cards from your graveyard to your hand.
+Oracle:When this creature enters, you may discard one or more land cards. When you do, return up to that many target nonland permanent cards from your graveyard to your hand.

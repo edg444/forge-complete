@@ -9,4 +9,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigChangeZone:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand | Defined$ Self
 DeckHas:Type$Dragon & Keyword$Flying|Haste
 DeckHints:Type$Dragon
-Oracle:Enchant creature\nEnchanted creature gets +1/+1 and has flying, haste, and "{1}: This creature gets +1/+0 until end of turn." It's a Dragon in addition to its other types.\nWhen enchanted creature dies, return Draconic Destiny to its owner's hand.
+Oracle:Enchant creature\nEnchanted creature gets +1/+1 and has flying, haste, and "{1}: This creature gets +1/+0 until end of turn." It's a Dragon in addition to its other types.\nWhen enchanted creature dies, return this card to its owner's hand.

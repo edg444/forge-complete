@@ -4,4 +4,4 @@ Types:Creature Kavu
 PT:1/1
 T:Mode$ Attacks | ValidCard$ Card.Self | Alone$ True | Execute$ TrigPump | TriggerDescription$ Whenever this creature attacks alone, it gets +2/+0 until end of turn.
 SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +2
-Oracle:Whenever Rogue Kavu attacks alone, it gets +2/+0 until end of turn.
+Oracle:Whenever this creature attacks alone, it gets +2/+0 until end of turn.

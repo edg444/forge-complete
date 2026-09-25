@@ -9,4 +9,4 @@ SVar:AirMold:DB$ Clone | Defined$ Self | SetPower$ 2 | SetToughness$ 2 | AddKeyw
 SVar:WallMold:DB$ Clone | Defined$ Self | SetPower$ 1 | SetToughness$ 6 | AddTypes$ Wall | AddKeywords$ Defender | SpellDescription$ CARDNAME is 1/6 with defender and is a Wall in addition to its other types.
 AI:RemoveDeck:Random
 DeckHas:Keyword$Defender|Flying & Type$Wall
-Oracle:As Primal Clay enters, it becomes your choice of a 3/3 artifact creature, a 2/2 artifact creature with flying, or a 1/6 Wall artifact creature with defender in addition to its other types. (A creature with defender can't attack.)
+Oracle:As this creature enters, it becomes your choice of a 3/3 artifact creature, a 2/2 artifact creature with flying, or a 1/6 Wall artifact creature with defender in addition to its other types. (A creature with defender can't attack.)

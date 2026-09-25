@@ -10,4 +10,4 @@ SVar:NonStackingEffect:True
 AI:RemoveDeck:All
 AI:RemoveDeck:Random
 DeckHas:Ability$Sacrifice
-Oracle:When Limited Resources enters, each player chooses five lands they control and sacrifices the rest.\nPlayers can't play lands as long as ten or more lands are on the battlefield.
+Oracle:When this enchantment enters, each player chooses five lands they control and sacrifices the rest.\nPlayers can't play lands as long as ten or more lands are on the battlefield.

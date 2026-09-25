@@ -6,4 +6,4 @@ SVar:TrigExile:DB$ ChangeZone | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select 
 SVar:DBFood:DB$ Token | TokenScript$ c_a_food_sac
 SVar:PlayMain1:TRUE
 DeckHas:Ability$Token|LifeGain|Sacrifice & Type$Food
-Oracle:When Food Coma enters, exile target creature an opponent controls until Food Coma leaves the battlefield. Create a Food token. (It's an artifact with "{2}, {T}, Sacrifice this token: You gain 3 life.")
+Oracle:When this enchantment enters, exile target creature an opponent controls until this enchantment leaves the battlefield. Create a Food token. (It's an artifact with "{2}, {T}, Sacrifice this token: You gain 3 life.")

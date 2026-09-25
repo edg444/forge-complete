@@ -5,4 +5,4 @@ PT:4/4
 K:Haste
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDealDamage | TriggerDescription$ When this creature enters, it deals 4 damage to you.
 SVar:TrigDealDamage:DB$ DealDamage | Defined$ You | NumDmg$ 4
-Oracle:Haste\nWhen Lava Hounds enters, it deals 4 damage to you.
+Oracle:Haste\nWhen this creature enters, it deals 4 damage to you.

@@ -12,4 +12,4 @@ SVar:TrigExile:DB$ ChangeZone | Origin$ Graveyard | Destination$ Exile | Defined
 SVar:X:Count$ValidGraveyard Creature.YouOwn
 DeckHints:Ability$Graveyard|Mill|Dredge|Sacrifice
 DeckHas:Ability$Sacrifice|LifeGain|Graveyard
-Oracle:Reach\nWhen Skyfisher Spider enters, you may sacrifice another creature. When you do, destroy target nonland permanent.\nWhen Skyfisher Spider dies, you may gain 1 life for each creature card in your graveyard. If you do, exile Skyfisher Spider from your graveyard.
+Oracle:Reach\nWhen this creature enters, you may sacrifice another creature. When you do, destroy target nonland permanent.\nWhen this creature dies, you may gain 1 life for each creature card in your graveyard. If you do, exile this card from your graveyard.

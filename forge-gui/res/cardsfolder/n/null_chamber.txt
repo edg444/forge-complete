@@ -8,4 +8,4 @@ SVar:NameOpp:DB$ NameCard | Defined$ ChosenPlayer | ValidCards$ Card.nonBasic | 
 S:Mode$ CantBeCast | ValidCard$ Card.NamedCard | Description$ Spells with the chosen names can't be cast and lands with the chosen names can't be played.
 S:Mode$ CantPlayLand | ValidCard$ Land.NamedCard
 AI:RemoveDeck:Random
-Oracle:As Null Chamber enters, you and an opponent each choose a card name other than a basic land card name.\nSpells with the chosen names can't be cast and lands with the chosen names can't be played.
+Oracle:As this enchantment enters, you and an opponent each choose a card name other than a basic land card name.\nSpells with the chosen names can't be cast and lands with the chosen names can't be played.

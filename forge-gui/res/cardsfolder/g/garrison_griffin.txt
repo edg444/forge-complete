@@ -6,4 +6,4 @@ K:Flying
 T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigPump | TriggerDescription$ Whenever this creature attacks, target Knight you control gains flying until end of turn.
 SVar:TrigPump:DB$ Pump | ValidTgts$ Knight.YouCtrl | TgtPrompt$ Select target Knight you control | KW$ Flying
 DeckNeeds:Type$Knight
-Oracle:Flying\nWhenever Garrison Griffin attacks, target Knight you control gains flying until end of turn.
+Oracle:Flying\nWhenever this creature attacks, target Knight you control gains flying until end of turn.

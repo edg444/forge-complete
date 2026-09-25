@@ -6,4 +6,4 @@ A:AB$ ChangeZone | Cost$ 3 B | Origin$ Graveyard | Destination$ Battlefield | Ta
 SVar:DiscardMe:2
 SVar:SacMe:1
 DeckHints:Ability$Discard
-Oracle:{3}{B}: Return Retrofitted Transmogrant from your graveyard to the battlefield tapped with two +1/+1 counters on it.
+Oracle:{3}{B}: Return this card from your graveyard to the battlefield tapped with two +1/+1 counters on it.

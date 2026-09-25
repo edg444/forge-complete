@@ -9,4 +9,4 @@ SVar:NamedInHand:Count$ValidHand Card.NamedCard+OwnedBy TriggeredDefendingPlayer
 SVar:DBRevealHand:DB$ RevealHand | Defined$ TriggeredDefendingPlayer | SpellDescription$ Reveal your hand.
 SVar:DBUnblockable:DB$ Effect | RememberObjects$ Self | StaticAbilities$ STUnblockable | ExileOnMoved$ Battlefield | SpellDescription$ Don't reveal - CARDNAME can't be blocked this turn.
 SVar:STUnblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | Description$ This creature can't be blocked this turn.
-Oracle:Whenever Smart Ass attacks, choose a card name. If defending player has no cards with the chosen name in their hand, they may reveal their hand. If they don't reveal their hand, Smart Ass can't be blocked this turn.
+Oracle:Whenever this creature attacks, choose a card name. If defending player has no cards with the chosen name in their hand, they may reveal their hand. If they don't reveal their hand, this creature can't be blocked this turn.

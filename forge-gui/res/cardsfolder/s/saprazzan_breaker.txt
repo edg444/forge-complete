@@ -7,4 +7,4 @@ SVar:DBUnblockable:DB$ Effect | ConditionDefined$ Remembered | ConditionPresent$
 SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | Description$ EFFECTSOURCE can't be blocked this turn.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHas:Ability$Mill
-Oracle:{U}: Mill a card. If a land card was milled this way, Saprazzan Breaker can't be blocked this turn.
+Oracle:{U}: Mill a card. If a land card was milled this way, this creature can't be blocked this turn.

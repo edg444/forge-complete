@@ -5,4 +5,4 @@ PT:4/3
 S:Mode$ CantAttack,CantBlock | ValidCard$ Card.Self | IsPresent$ Giant.Other+YouCtrl | PresentCompare$ EQ0 | Description$ This creature can't attack or block unless you control another Giant.
 SVar:BuffedBy:Giant
 AI:RemoveDeck:Random
-Oracle:Blind-Spot Giant can't attack or block unless you control another Giant.
+Oracle:This creature can't attack or block unless you control another Giant.

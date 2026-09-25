@@ -7,4 +7,4 @@ SVar:TrigPumpAll:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Vigilance
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Ally
 DeckHints:Type$Ally
-Oracle:Rally — Whenever Makindi Patrol or another Ally you control enters, creatures you control gain vigilance until end of turn.
+Oracle:Rally — Whenever this creature or another Ally you control enters, creatures you control gain vigilance until end of turn.

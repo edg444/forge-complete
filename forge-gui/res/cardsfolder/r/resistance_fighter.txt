@@ -5,4 +5,4 @@ PT:1/1
 A:AB$ Effect | Cost$ Sac<1/CARDNAME> | ReplacementEffects$ RPrevent | RememberObjects$ Targeted | ExileOnMoved$ Battlefield | ValidTgts$ Creature | SpellDescription$ Prevent all combat damage target creature would deal this turn.
 SVar:RPrevent:Event$ DamageDone | Prevent$ True | IsCombat$ True | ValidSource$ Card.IsRemembered | Description$ Prevent all combat damage target creature would deal this turn.
 AI:RemoveDeck:All
-Oracle:Sacrifice Resistance Fighter: Prevent all combat damage target creature would deal this turn.
+Oracle:Sacrifice this creature: Prevent all combat damage target creature would deal this turn.

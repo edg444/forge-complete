@@ -9,4 +9,4 @@ SVar:TrigExile:DB$ ChangeZone | ValidTgts$ Permanent.Other+nonLand | TgtPrompt$ 
 SVar:TrigReturn:DB$ ChangeZone | Defined$ Remembered | Origin$ Exile | SubAbility$ DBCleanup | Destination$ Battlefield
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:BuffedBy:Land
-Oracle:Flying\nLandfall — Whenever a land you control enters, you may exile target nonland permanent other than Admonition Angel.\nWhen Admonition Angel leaves the battlefield, return all cards exiled with it to the battlefield under their owners' control.
+Oracle:Flying\nLandfall — Whenever a land you control enters, you may exile target nonland permanent other than this creature.\nWhen this creature leaves the battlefield, return all cards exiled with it to the battlefield under their owners' control.

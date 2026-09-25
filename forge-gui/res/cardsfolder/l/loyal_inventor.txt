@@ -10,4 +10,4 @@ SVar:DBChangeZone2:DB$ ChangeZone | Defined$ Remembered | Origin$ Library | Cond
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Count$Valid Card.Assassin+YouCtrl
 DeckHints:Type$Assassin|Artifact
-Oracle:Vigilance\nWhen Loyal Inventor enters, you may search your library for an artifact card, reveal it, then shuffle. Put that card into your hand if you control an Assassin. Otherwise, put that card on top of your library.
+Oracle:Vigilance\nWhen this creature enters, you may search your library for an artifact card, reveal it, then shuffle. Put that card into your hand if you control an Assassin. Otherwise, put that card on top of your library.

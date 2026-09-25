@@ -7,4 +7,4 @@ T:Mode$ DamageDoneOnce | CombatDamage$ True | ValidTarget$ Card.Self | TriggerZo
 SVar:TrigGain:DB$ GainLife | Defined$ You | LifeAmount$ X
 SVar:X:TriggerCount$DamageAmount
 SVar:HasCombatEffect:TRUE
-Oracle:Defender (This creature can't attack.)\nWhenever Wall of Essence is dealt combat damage, you gain that much life.
+Oracle:Defender (This creature can't attack.)\nWhenever this creature is dealt combat damage, you gain that much life.

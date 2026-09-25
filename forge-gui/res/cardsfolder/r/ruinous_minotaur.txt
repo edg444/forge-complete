@@ -4,4 +4,4 @@ Types:Creature Minotaur Warrior
 PT:5/2
 T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Opponent | TriggerZones$ Battlefield | Execute$ TrigSacrifice | TriggerDescription$ Whenever this creature deals damage to an opponent, sacrifice a land.
 SVar:TrigSacrifice:DB$ Sacrifice | SacValid$ Land | Defined$ You
-Oracle:Whenever Ruinous Minotaur deals damage to an opponent, sacrifice a land.
+Oracle:Whenever this creature deals damage to an opponent, sacrifice a land.

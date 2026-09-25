@@ -5,4 +5,4 @@ PT:2/2
 T:Mode$ Taps | ValidCard$ Card.Self | OptionalDecider$ You | Execute$ TrigDraw | TriggerDescription$ Whenever this creature becomes tapped, you may discard a card. If you do, draw a card.
 SVar:TrigDraw:AB$ Draw | Cost$ Discard<1/Card>
 DeckHas:Ability$Discard
-Oracle:Whenever Volatile Wanderglyph becomes tapped, you may discard a card. If you do, draw a card.
+Oracle:Whenever this creature becomes tapped, you may discard a card. If you do, draw a card.

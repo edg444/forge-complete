@@ -9,4 +9,4 @@ T:Mode$ Phase | Phase$ End of Turn | TriggerZones$ Battlefield | Execute$ TrigRe
 SVar:TrigRemoveCounter:DB$ RemoveCounter | CounterType$ DEPLETION | CounterNum$ All
 SVar:X:ReplaceCount$DamageAmount
 SVar:All:Count$CardCounters.DEPLETION
-Oracle:If damage would be dealt to you, put that many depletion counters on Force Bubble instead.\nWhen there are four or more depletion counters on Force Bubble, sacrifice it.\nAt the beginning of each end step, remove all depletion counters from Force Bubble.
+Oracle:If damage would be dealt to you, put that many depletion counters on this enchantment instead.\nWhen there are four or more depletion counters on this enchantment, sacrifice it.\nAt the beginning of each end step, remove all depletion counters from this enchantment.

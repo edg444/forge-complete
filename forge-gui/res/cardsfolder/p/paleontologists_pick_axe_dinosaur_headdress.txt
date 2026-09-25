@@ -25,4 +25,4 @@ SVar:ChooseCard:DB$ ChooseCard | Mandatory$ True | DefinedCards$ ExiledWith | Ch
 T:Mode$ Attached | ValidSource$ Card.Self | Static$ True | Execute$ DBClone | TriggerDescription$ Equipped creature is a copy of the last chosen card.
 SVar:DBClone:DB$ Clone | Defined$ ChosenCard | CloneTarget$ Equipped | Duration$ UntilUnattached
 K:Equip:2
-Oracle:When Dinosaur Headdress enters, attach it to target creature you control.\nAs Dinosaur Headdress becomes attached to a creature, choose an exiled creature card used to craft Dinosaur Headdress.\nEquipped creature is a copy of the last chosen card.\nEquip {2}
+Oracle:When this Equipment enters, attach it to target creature you control.\nAs this Equipment becomes attached to a creature, choose an exiled creature card used to craft this Equipment.\nEquipped creature is a copy of the last chosen card.\nEquip {2}

@@ -4,4 +4,4 @@ Types:Creature Orc Berserker
 PT:3/2
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigTempt | TriggerDescription$ When this creature enters, the Ring tempts you.
 SVar:TrigTempt:DB$ RingTemptsYou
-Oracle:When Uruk-hai Berserker enters, the Ring tempts you.
+Oracle:When this creature enters, the Ring tempts you.

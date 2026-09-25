@@ -7,4 +7,4 @@ SVar:TrigChange:DB$ ChangeZone | Origin$ Library | OriginAlternative$ Graveyard 
 S:Mode$ AlternativeCost | ValidSA$ Spell | ValidCard$ Card.Rune | ValidPlayer$ You | Cost$ 1 | Description$ You may pay {1} rather than pay the mana cost for Rune spells you cast.
 AI:RemoveDeck:Random
 DeckNeeds:Type$Rune
-Oracle:When Runeforge Champion enters, you may search your library and/or graveyard for a Rune card, reveal it, and put it into your hand. If you search your library this way, shuffle.\nYou may pay {1} rather than pay the mana cost for Rune spells you cast.
+Oracle:When this creature enters, you may search your library and/or graveyard for a Rune card, reveal it, and put it into your hand. If you search your library this way, shuffle.\nYou may pay {1} rather than pay the mana cost for Rune spells you cast.

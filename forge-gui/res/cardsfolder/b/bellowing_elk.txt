@@ -4,4 +4,4 @@ Types:Creature Elk
 PT:4/2
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Trample & Indestructible | CheckSVar$ X | Description$ As long as you had another creature enter the battlefield under your control this turn, this creature has trample and indestructible.
 SVar:X:Count$ThisTurnEntered_Battlefield_Creature.YouCtrl+StrictlyOther
-Oracle:As long as you had another creature enter the battlefield under your control this turn, Bellowing Elk has trample and indestructible.
+Oracle:As long as you had another creature enter the battlefield under your control this turn, this creature has trample and indestructible.

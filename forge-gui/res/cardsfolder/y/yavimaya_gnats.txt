@@ -4,4 +4,4 @@ Types:Creature Insect
 PT:0/1
 K:Flying
 A:AB$ Regenerate | Cost$ G | SpellDescription$ Regenerate this creature.
-Oracle:Flying\n{G}: Regenerate Yavimaya Gnats.
+Oracle:Flying\n{G}: Regenerate this creature.

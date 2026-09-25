@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigChangeZone:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand | ValidTgts$ Card.YouCtrl
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Battlefield | Destination$ Graveyard | Execute$ TrigExile | TriggerDescription$ When this creature dies, you may exile it. If you do, return target card from your graveyard to your hand.
 SVar:TrigExile:AB$ ChangeZone | Cost$ ExileAnyGrave<1/Card.TriggeredNewCard> | Origin$ Graveyard | Destination$ Hand | ValidTgts$ Card.YouCtrl
-Oracle:When Greenwarden of Murasa enters, you may return target card from your graveyard to your hand.\nWhen Greenwarden of Murasa dies, you may exile it. If you do, return target card from your graveyard to your hand.
+Oracle:When this creature enters, you may return target card from your graveyard to your hand.\nWhen this creature dies, you may exile it. If you do, return target card from your graveyard to your hand.

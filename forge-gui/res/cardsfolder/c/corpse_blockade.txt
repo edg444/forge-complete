@@ -5,4 +5,4 @@ PT:1/4
 K:Defender
 A:AB$ Pump | Cost$ Sac<1/Creature.Other/another creature> | Defined$ Self | KW$ Deathtouch | SpellDescription$ This creature gains deathtouch until end of turn.
 AI:RemoveDeck:All
-Oracle:Defender\nSacrifice another creature: Corpse Blockade gains deathtouch until end of turn.
+Oracle:Defender\nSacrifice another creature: This creature gains deathtouch until end of turn.

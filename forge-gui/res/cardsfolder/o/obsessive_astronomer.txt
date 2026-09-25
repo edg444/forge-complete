@@ -10,4 +10,4 @@ SVar:DBDraw:DB$ Draw | NumCards$ Y | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:Y:Remembered$Amount
 DeckHas:Ability$Discard
-Oracle:If it's neither day nor night, it becomes day as Obsessive Astronomer enters.\nWhenever day becomes night or night becomes day, discard up to two cards, then draw that many cards.
+Oracle:If it's neither day nor night, it becomes day as this creature enters.\nWhenever day becomes night or night becomes day, discard up to two cards, then draw that many cards.

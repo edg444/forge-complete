@@ -7,4 +7,4 @@ SVar:DBPing:DB$ DealDamage | Defined$ Opponent | NumDmg$ 1
 SVar:AIPreference:SacCost$Artifact.token
 DeckHas:Ability$Sacrifice
 DeckHints:Type$Artifact
-Oracle:{1}, Sacrifice an artifact: Penregon Strongbull gets +1/+1 until end of turn and deals 1 damage to each opponent.
+Oracle:{1}, Sacrifice an artifact: This creature gets +1/+1 until end of turn and deals 1 damage to each opponent.

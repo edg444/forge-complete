@@ -8,4 +8,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | SetPower$ 6 | SetToughness$ 6 | Add
 SVar:TriggerDamage:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigDamage | TriggerZones$ Battlefield | Secondary$ True | TriggerDescription$ Whenever this creature attacks, it deals 6 damage to each creature defending player controls.
 SVar:TrigDamage:DB$ DamageAll | ValidCards$ Creature.ControlledBy TriggeredDefendingPlayer | NumDmg$ 6
 SVar:AE:SVar:HasAttackEffect:TRUE
-Oracle:Level up {1}{R} ({1}{R}: Put a level counter on this. Level up only as a sorcery.)\nLEVEL 1-5\n6/6\nLEVEL 6+\n6/6\nWhenever Lord of Shatterskull Pass attacks, it deals 6 damage to each creature defending player controls.
+Oracle:Level up {1}{R} ({1}{R}: Put a level counter on this. Level up only as a sorcery.)\nLEVEL 1-5\n6/6\nLEVEL 6+\n6/6\nWhenever this creature attacks, it deals 6 damage to each creature defending player controls.

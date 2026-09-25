@@ -5,4 +5,4 @@ PT:3/3
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigDraw | IsPresent$ Planeswalker.Teferi+YouCtrl | TriggerDescription$ Whenever this creature attacks, if you control a Teferi planeswalker, draw a card.
 SVar:TrigDraw:DB$ Draw
 DeckNeeds:Type$Teferi
-Oracle:Whenever Historian of Zhalfir attacks, if you control a Teferi planeswalker, draw a card.
+Oracle:Whenever this creature attacks, if you control a Teferi planeswalker, draw a card.

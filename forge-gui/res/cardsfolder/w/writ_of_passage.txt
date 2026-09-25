@@ -12,4 +12,4 @@ SVar:NonStackingAttachEffect:True
 S:Mode$ Continuous | AffectedDefined$ AttachedBy Self | Affected$ Creature | AddSVar$ AE
 SVar:AE:SVar:HasAttackEffect:TRUE
 AI:RemoveDeck:Random
-Oracle:Enchant creature\nWhenever enchanted creature attacks, if its power is 2 or less, it can't be blocked this turn.\nForecast — {1}{U}, Reveal Writ of Passage from your hand: Target creature with power 2 or less can't be blocked this turn. (Activate only during your upkeep and only once each turn.)
+Oracle:Enchant creature\nWhenever enchanted creature attacks, if its power is 2 or less, it can't be blocked this turn.\nForecast — {1}{U}, Reveal this card from your hand: Target creature with power 2 or less can't be blocked this turn. (Activate only during your upkeep and only once each turn.)

@@ -7,4 +7,4 @@ K:ETBReplacement:Other:AddExtraCounter:Mandatory:Battlefield:Creature.faceDown+Y
 SVar:AddExtraCounter:DB$ PutCounter | ETB$ True | Defined$ ReplacedCard | CounterType$ Flying | CounterNum$ 1 | SpellDescription$ Face-down creatures you control enter with a flying counter on them.
 T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCloak | OptionalDecider$ You | TriggerDescription$ At the beginning of your upkeep, you may cloak the top card of your library.
 SVar:TrigCloak:DB$ Cloak | Amount$ 1 | Defined$ TopOfLibrary
-Oracle:When Veiled Ascension enters, put a flying counter on each face-down creature you control.\nFace-down creatures you control enter with a flying counter on them.\nAt the beginning of your upkeep, you may cloak the top card of your library.
+Oracle:When this enchantment enters, put a flying counter on each face-down creature you control.\nFace-down creatures you control enter with a flying counter on them.\nAt the beginning of your upkeep, you may cloak the top card of your library.

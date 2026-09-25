@@ -5,4 +5,4 @@ PT:3/3
 K:Double Strike
 T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigPump | TriggerDescription$ Whenever this creature attacks, other creatures you control gain double strike until end of turn.
 SVar:TrigPump:DB$ PumpAll | ValidCards$ Creature.YouCtrl+StrictlyOther | KW$ Double Strike
-Oracle:Double strike\nWhenever Goring Ceratops attacks, other creatures you control gain double strike until end of turn.
+Oracle:Double strike\nWhenever this creature attacks, other creatures you control gain double strike until end of turn.

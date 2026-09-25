@@ -5,4 +5,4 @@ PT:2/2
 K:Flying
 S:Mode$ Continuous | Affected$ Creature.YouCtrl | EffectZone$ Graveyard | AddKeyword$ Flying | IsPresent$ Island.YouCtrl | Description$ As long as this card is in your graveyard and you control an Island, creatures you control have flying.
 SVar:DiscardMe:2
-Oracle:Flying\nAs long as Wonder is in your graveyard and you control an Island, creatures you control have flying.
+Oracle:Flying\nAs long as this card is in your graveyard and you control an Island, creatures you control have flying.

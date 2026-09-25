@@ -8,4 +8,4 @@ SVar:TemptingChange:DB$ ChangeZone | Origin$ Hand | Destination$ Battlefield | C
 SVar:X:Count$ValidHand Artifact.RememberedPlayerCtrl,Creature.RememberedPlayerCtrl,Enchantment.RememberedPlayerCtrl,Land.RememberedPlayerCtrl
 SVar:NeedsToPlayVar:Y LE2
 SVar:Y:Count$ValidHand Card.OppOwn
-Oracle:When Tempting Wurm enters, each opponent may put any number of artifact, creature, enchantment, and/or land cards from their hand onto the battlefield.
+Oracle:When this creature enters, each opponent may put any number of artifact, creature, enchantment, and/or land cards from their hand onto the battlefield.

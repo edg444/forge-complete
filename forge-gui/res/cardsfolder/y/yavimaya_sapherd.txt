@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigToken:DB$ Token | TokenScript$ g_1_1_saproling | TokenOwner$ You
 DeckHas:Ability$Token
 DeckHints:Type$Saproling|Fungus
-Oracle:When Yavimaya Sapherd enters, create a 1/1 green Saproling creature token.
+Oracle:When this creature enters, create a 1/1 green Saproling creature token.

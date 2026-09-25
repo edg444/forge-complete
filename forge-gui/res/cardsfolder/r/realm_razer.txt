@@ -7,4 +7,4 @@ SVar:TrigExile:DB$ ChangeZoneAll | ChangeType$ Land | Origin$ Battlefield | Dest
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Battlefield | Destination$ Any | Execute$ TrigRecall | TriggerDescription$ When this creature leaves the battlefield, return the exiled cards to the battlefield tapped under their owners' control.
 SVar:TrigRecall:DB$ ChangeZoneAll | ChangeType$ Card.ExiledWithSource | Origin$ Exile | Destination$ Battlefield | Tapped$ True
 AI:RemoveDeck:All
-Oracle:When Realm Razer enters, exile all lands.\nWhen Realm Razer leaves the battlefield, return the exiled cards to the battlefield tapped under their owners' control.
+Oracle:When this creature enters, exile all lands.\nWhen this creature leaves the battlefield, return the exiled cards to the battlefield tapped under their owners' control.

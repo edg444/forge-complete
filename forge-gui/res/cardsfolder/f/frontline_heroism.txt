@@ -7,4 +7,4 @@ T:Mode$ SpellCast | ValidCard$ Card | Execute$ TrigToken2 | ValidActivatingPlaye
 SVar:TrigToken2:DB$ Token | TokenScript$ r_1_1_soldier_haste | TokenOwner$ You | RememberTokens$ True | SubAbility$ DBCopy
 SVar:DBCopy:DB$ CopySpellAbility | Defined$ TriggeredSpellAbility | Controller$ You | CopyForEachCanTarget$ Permanent.IsRemembered | ChooseOnlyOne$ True | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:When Frontline Heroism enters, create a 1/1 red Soldier creature token with haste.\nWhenever you cast a spell that targets only a single creature you control, create a 1/1 red Soldier creature token with haste, then copy that spell. The copy targets that token.
+Oracle:When this enchantment enters, create a 1/1 red Soldier creature token with haste.\nWhenever you cast a spell that targets only a single creature you control, create a 1/1 red Soldier creature token with haste, then copy that spell. The copy targets that token.

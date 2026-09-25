@@ -7,4 +7,4 @@ SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 3 | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | ConditionPresent$ Permanent.YouCtrl+counters_GE1_OIL | SpellDescription$ Then if you control a permanent with an oil counter on it, draw a card.
 DeckHas:Ability$LifeGain
 DeckHints:Ability$Counters
-Oracle:When Oil-Gorger Troll enters, you gain 3 life. Then if you control a permanent with an oil counter on it, draw a card.
+Oracle:When this creature enters, you gain 3 life. Then if you control a permanent with an oil counter on it, draw a card.

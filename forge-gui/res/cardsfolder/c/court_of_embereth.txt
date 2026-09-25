@@ -9,4 +9,4 @@ SVar:TrigDealDamage:DB$ DealDamage | Defined$ Opponent | NumDmg$ X | ConditionCh
 SVar:X:Count$Valid Creature.YouCtrl
 SVar:Y:Count$Monarch.1.0
 DeckHas:Ability$Token & Type$Knight
-Oracle:When Court of Embereth enters, you become the monarch.\nAt the beginning of your upkeep, create a 3/1 red Knight creature token. Then if you're the monarch, Court of Embereth deals X damage to each opponent, where X is the number of creatures you control.
+Oracle:When this enchantment enters, you become the monarch.\nAt the beginning of your upkeep, create a 3/1 red Knight creature token. Then if you're the monarch, this enchantment deals X damage to each opponent, where X is the number of creatures you control.

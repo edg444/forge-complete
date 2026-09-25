@@ -5,4 +5,4 @@ PT:2/1
 T:Mode$ SpellCast | ValidCard$ Instant,Sorcery | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDamage | TriggerDescription$ Whenever you cast an instant or sorcery spell, this creature deals 1 damage to each opponent.
 SVar:TrigDamage:DB$ DealDamage | Defined$ Player.Opponent | NumDmg$ 1
 DeckHints:Type$Instant|Sorcery
-Oracle:Whenever you cast an instant or sorcery spell, Erebor Flamesmith deals 1 damage to each opponent.
+Oracle:Whenever you cast an instant or sorcery spell, this creature deals 1 damage to each opponent.

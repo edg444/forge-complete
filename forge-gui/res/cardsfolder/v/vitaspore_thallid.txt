@@ -7,4 +7,4 @@ SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ SPORE | Counte
 A:AB$ Token | Cost$ SubCounter<3/SPORE> | TokenScript$ g_1_1_saproling | TokenOwner$ You | SpellDescription$ Create a 1/1 green Saproling creature token.
 A:AB$ Pump | Cost$ Sac<1/Saproling> | ValidTgts$ Creature | KW$ Haste | SpellDescription$ Target creature gains haste until end of turn.
 DeckHas:Ability$Counters|Token
-Oracle:At the beginning of your upkeep, put a spore counter on Vitaspore Thallid.\nRemove three spore counters from Vitaspore Thallid: Create a 1/1 green Saproling creature token.\nSacrifice a Saproling: Target creature gains haste until end of turn.
+Oracle:At the beginning of your upkeep, put a spore counter on this creature.\nRemove three spore counters from this creature: Create a 1/1 green Saproling creature token.\nSacrifice a Saproling: Target creature gains haste until end of turn.

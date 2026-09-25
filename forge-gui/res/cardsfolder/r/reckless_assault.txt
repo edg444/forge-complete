@@ -4,4 +4,4 @@ Types:Enchantment
 A:AB$ DealDamage | Cost$ 1 PayLife<2> | ValidTgts$ Any | NumDmg$ 1 | SpellDescription$ This enchantment deals 1 damage to any target.
 AI:RemoveDeck:All
 SVar:NonStackingEffect:True
-Oracle:{1}, Pay 2 life: Reckless Assault deals 1 damage to any target.
+Oracle:{1}, Pay 2 life: This enchantment deals 1 damage to any target.

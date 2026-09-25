@@ -6,7 +6,7 @@ K:Haste
 T:Mode$ Phase | Phase$ Upkeep | WerewolfTransformCondition$ True | TriggerZones$ Battlefield | Execute$ TrigTransform | TriggerDescription$ At the beginning of each upkeep, if no spells were cast last turn, transform this creature.
 SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform
 AlternateMode:DoubleFaced
-Oracle:Haste\nAt the beginning of each upkeep, if no spells were cast last turn, transform Geier Reach Bandit.
+Oracle:Haste\nAt the beginning of each upkeep, if no spells were cast last turn, transform this creature.
 
 ALTERNATE
 
@@ -19,4 +19,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Werewo
 SVar:TrigTransform1:DB$ SetState | Defined$ TriggeredCard | Mode$ Transform
 T:Mode$ Phase | Phase$ Upkeep | WerewolfUntransformCondition$ True | TriggerZones$ Battlefield | Execute$ TrigTransform2 | TriggerDescription$ At the beginning of each upkeep, if a player cast two or more spells last turn, transform this creature.
 SVar:TrigTransform2:DB$ SetState | Defined$ Self | Mode$ Transform
-Oracle:Whenever a Werewolf you control enters, you may transform it.\nAt the beginning of each upkeep, if a player cast two or more spells last turn, transform Vildin-Pack Alpha.
+Oracle:Whenever a Werewolf you control enters, you may transform it.\nAt the beginning of each upkeep, if a player cast two or more spells last turn, transform this creature.

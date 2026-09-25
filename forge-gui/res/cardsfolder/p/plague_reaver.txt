@@ -9,4 +9,4 @@ SVar:DBChange:DB$ ChangeZone | Defined$ DelayTriggerRememberedLKI | Origin$ Grav
 SVar:DonateMe:3
 AI:RemoveDeck:All
 DeckHas:Ability$Discard|Sacrifice
-Oracle:At the beginning of your end step, sacrifice each other creature you control.\nDiscard two cards, Sacrifice Plague Reaver: Choose target opponent. Return Plague Reaver to the battlefield under that player's control at the beginning of their next upkeep.
+Oracle:At the beginning of your end step, sacrifice each other creature you control.\nDiscard two cards, Sacrifice this creature: Choose target opponent. Return this creature to the battlefield under that player's control at the beginning of their next upkeep.

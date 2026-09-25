@@ -8,4 +8,4 @@ SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Creature.Other | TgtPrompt$ Sele
 S:Mode$ Continuous | Affected$ Creature.nonHorror+counters_GE1_SLIME | RemoveAllAbilities$ True | SetPower$ 2 | SetToughness$ 2 | Description$ Non-Horror creatures with slime counters on them lose all abilities and have base power and toughness 2/2.
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Counters
-Oracle:Whenever Sludge Monster enters or attacks, put a slime counter on up to one other target creature.\nNon-Horror creatures with slime counters on them lose all abilities and have base power and toughness 2/2.
+Oracle:Whenever this creature enters or attacks, put a slime counter on up to one other target creature.\nNon-Horror creatures with slime counters on them lose all abilities and have base power and toughness 2/2.

@@ -6,4 +6,4 @@ SVar:TrigExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | Valid
 SVar:OneEach:PlayerCountOpponents$Amount
 SVar:PlayMain1:TRUE
 SVar:OblivionRing:TRUE
-Oracle:When Grasp of Fate enters, for each opponent, exile up to one target nonland permanent that player controls until Grasp of Fate leaves the battlefield. (Those permanents return under their owners' control.)
+Oracle:When this enchantment enters, for each opponent, exile up to one target nonland permanent that player controls until this enchantment leaves the battlefield. (Those permanents return under their owners' control.)

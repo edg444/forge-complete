@@ -4,4 +4,4 @@ Types:Creature Shapeshifter
 PT:0/0
 K:ETBReplacement:Copy:DBCopy:Optional
 SVar:DBCopy:DB$ Clone | Choices$ Creature.Other | ChoiceZone$ Graveyard | SpellDescription$ You may have this creature enter as a copy of any creature card in a graveyard.
-Oracle:You may have Body Double enter as a copy of any creature card in a graveyard.
+Oracle:You may have this creature enter as a copy of any creature card in a graveyard.

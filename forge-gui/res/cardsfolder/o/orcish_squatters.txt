@@ -6,4 +6,4 @@ T:Mode$ AttackerUnblocked | ValidCard$ Card.Self | Execute$ TrigGainControl | Tr
 SVar:TrigGainControl:DB$ GainControl | ValidTgts$ Land.DefenderCtrl | TgtPrompt$ Select target land defending player controls | LoseControl$ LoseControl,LeavesPlay | SubAbility$ DBNoCombatDamage
 SVar:DBNoCombatDamage:DB$ Effect | StaticAbilities$ SNoCombatDamage | Duration$ UntilHostLeavesPlayOrEOT
 SVar:SNoCombatDamage:Mode$ AssignNoCombatDamage | ValidCard$ Card.EffectSource | Description$ EFFECTSOURCE assigns no combat damage this turn.
-Oracle:Whenever Orcish Squatters attacks and isn't blocked, you may gain control of target land defending player controls for as long as you control Orcish Squatters. If you do, Orcish Squatters assigns no combat damage this turn.
+Oracle:Whenever this creature attacks and isn't blocked, you may gain control of target land defending player controls for as long as you control this creature. If you do, this creature assigns no combat damage this turn.

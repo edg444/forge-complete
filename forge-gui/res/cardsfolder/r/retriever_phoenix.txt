@@ -9,4 +9,4 @@ SVar:TrigLearn:DB$ Learn
 R:Event$ Learn | ActiveZones$ Graveyard | ValidPlayer$ You | Optional$ True | ReplaceWith$ Return | IsPresent$ Card.Self | PresentZone$ Graveyard | Description$ As long as this card is in your graveyard, if you would learn, you may instead return this card to the battlefield.
 SVar:Return:DB$ ChangeZone | Defined$ Self | Origin$ Graveyard | Destination$ Battlefield
 DeckHas:Ability$Graveyard
-Oracle:Flying, haste\nWhen Retriever Phoenix enters, if you cast it, learn. (You may reveal a Lesson card you own from outside the game and put it into your hand, or discard a card to draw a card.)\nAs long as Retriever Phoenix is in your graveyard, if you would learn, you may instead return Retriever Phoenix to the battlefield.
+Oracle:Flying, haste\nWhen this creature enters, if you cast it, learn. (You may reveal a Lesson card you own from outside the game and put it into your hand, or discard a card to draw a card.)\nAs long as this card is in your graveyard, if you would learn, you may instead return this card to the battlefield.

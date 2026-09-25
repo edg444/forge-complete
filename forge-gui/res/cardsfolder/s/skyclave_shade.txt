@@ -10,4 +10,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Land.Y
 SVar:TrigEffect:DB$ Effect | StaticAbilities$ MayPlay | RememberObjects$ Self | ForgetOnMoved$ Exile
 SVar:MayPlay:Mode$ Continuous | Affected$ Card.IsRemembered | MayPlay$ True | AffectedZone$ Graveyard | Description$ You may cast EFFECTSOURCE from your graveyard this turn.
 DeckHas:Ability$Counters
-Oracle:Kicker {2}{B}\nSkyclave Shade can't block.\nIf Skyclave Shade was kicked, it enters with two +1/+1 counters on it.\nLandfall — Whenever a land you control enters, if Skyclave Shade is in your graveyard and it's your turn, you may cast it from your graveyard this turn.
+Oracle:Kicker {2}{B}\nThis creature can't block.\nIf this creature was kicked, it enters with two +1/+1 counters on it.\nLandfall — Whenever a land you control enters, if this card is in your graveyard and it's your turn, you may cast it from your graveyard this turn.

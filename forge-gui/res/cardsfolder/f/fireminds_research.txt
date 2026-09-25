@@ -10,4 +10,4 @@ AI:RemoveDeck:Random
 DeckHas:Ability$Counters
 DeckHints:Ability$Proliferate & Type$Instant|Sorcery
 DeckNeeds:Type$Instant|Sorcery
-Oracle:Whenever you cast an instant or sorcery spell, put a charge counter on Firemind's Research.\n{1}{U}, Remove two charge counters from Firemind's Research: Draw a card.\n{1}{R}, Remove five charge counters from Firemind's Research: It deals 5 damage to any target.
+Oracle:Whenever you cast an instant or sorcery spell, put a charge counter on this enchantment.\n{1}{U}, Remove two charge counters from this enchantment: Draw a card.\n{1}{R}, Remove five charge counters from this enchantment: It deals 5 damage to any target.

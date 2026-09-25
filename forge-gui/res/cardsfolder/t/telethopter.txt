@@ -3,4 +3,4 @@ ManaCost:4
 Types:Artifact Creature Thopter
 PT:3/1
 A:AB$ Pump | Cost$ tapXType<1/Creature> | Defined$ Self | KW$ Flying | SpellDescription$ This creature gains flying until end of turn.
-Oracle:Tap an untapped creature you control: Telethopter gains flying until end of turn.
+Oracle:Tap an untapped creature you control: This creature gains flying until end of turn.

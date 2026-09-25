@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Land.Y
 SVar:TrigEffect:DB$ Effect | StaticAbilities$ CanAttack | Duration$ UntilHostLeavesPlayOrEOT
 SVar:CanAttack:Mode$ CanAttackDefender | ValidCard$ Card.EffectSource | Description$ EFFECTSOURCE can attack this turn as though it didn't have defender.
 SVar:BuffedBy:Land
-Oracle:Defender\nLandfall — Whenever a land you control enters, Skyclave Squid can attack this turn as though it didn't have defender.
+Oracle:Defender\nLandfall — Whenever a land you control enters, this creature can attack this turn as though it didn't have defender.

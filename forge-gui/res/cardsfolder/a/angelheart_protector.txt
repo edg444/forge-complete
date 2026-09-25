@@ -5,4 +5,4 @@ PT:3/2
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ When this creature enters, target creature you control gains indestructible until end of turn.
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | KW$ Indestructible
 SVar:PlayMain1:TRUE
-Oracle:When Angelheart Protector enters, target creature you control gains indestructible until end of turn. (Damage and effects that say "destroy" don't destroy it.)
+Oracle:When this creature enters, target creature you control gains indestructible until end of turn. (Damage and effects that say "destroy" don't destroy it.)

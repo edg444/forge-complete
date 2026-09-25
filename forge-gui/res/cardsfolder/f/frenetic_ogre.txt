@@ -4,4 +4,4 @@ Types:Creature Ogre
 PT:2/3
 A:AB$ Pump | Cost$ R Discard<1/Random> | Defined$ Self | NumAtt$ +3 | SpellDescription$ This creature gets +3/+0 until end of turn.
 AI:RemoveDeck:All
-Oracle:{R}, Discard a card at random: Frenetic Ogre gets +3/+0 until end of turn.
+Oracle:{R}, Discard a card at random: This creature gets +3/+0 until end of turn.

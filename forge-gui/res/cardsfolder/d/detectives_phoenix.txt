@@ -9,4 +9,4 @@ S:Mode$ Continuous | AffectedDefined$ Enchanted | Affected$ Creature | AddPower$
 S:Mode$ Continuous | Affected$ Card.Self | MayPlay$ True | ValidSA$ Spell.Bestow | AffectedZone$ Graveyard | EffectZone$ Graveyard | Description$ You may cast this card from your graveyard using its bestow ability.
 DeckHas:Ability$Graveyard
 DeckHints:Ability$Discard|Sacrifice
-Oracle:Bestow—{R}, Collect evidence 6. (To pay this bestow cost, pay {R} and exile cards with total mana value 6 or greater from your graveyard.)\nFlying, haste\nEnchanted creature gets +2/+2 and has flying and haste.\nYou may cast Detective's Phoenix from your graveyard using its bestow ability.
+Oracle:Bestow—{R}, Collect evidence 6. (To pay this bestow cost, pay {R} and exile cards with total mana value 6 or greater from your graveyard.)\nFlying, haste\nEnchanted creature gets +2/+2 and has flying and haste.\nYou may cast this card from your graveyard using its bestow ability.

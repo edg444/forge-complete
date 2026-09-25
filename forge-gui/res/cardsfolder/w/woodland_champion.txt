@@ -7,4 +7,4 @@ SVar:TrigPutCounter:DB$ PutCounter | CounterType$ P1P1 | Defined$ Self | Counter
 SVar:X:TriggerCount$Amount
 DeckHints:Ability$Token
 DeckHas:Ability$Counters
-Oracle:Whenever one or more tokens you control enter, put that many +1/+1 counters on Woodland Champion.
+Oracle:Whenever one or more tokens you control enter, put that many +1/+1 counters on this creature.

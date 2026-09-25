@@ -5,4 +5,4 @@ PT:2/3
 A:AB$ Pump | Cost$ Sac<1/Land> | Defined$ Self | NumDef$ +3 | SpellDescription$ This creature gets +0/+3 until end of turn.
 AI:RemoveDeck:All
 DeckHas:Ability$Sacrifice
-Oracle:Sacrifice a land: Trenching Steed gets +0/+3 until end of turn.
+Oracle:Sacrifice a land: This creature gets +0/+3 until end of turn.

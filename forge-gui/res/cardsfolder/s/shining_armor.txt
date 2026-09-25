@@ -8,4 +8,4 @@ S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddToughne
 K:Equip:3
 SVar:BuffedBy:Knight
 DeckHints:Type$Knight
-Oracle:Flash\nWhen Shining Armor enters, attach it to target Knight you control.\nEquipped creature gets +0/+2 and has vigilance.\nEquip {3} ({3}: Attach to target creature you control. Equip only as a sorcery.)
+Oracle:Flash\nWhen this Equipment enters, attach it to target Knight you control.\nEquipped creature gets +0/+2 and has vigilance.\nEquip {3} ({3}: Attach to target creature you control. Equip only as a sorcery.)

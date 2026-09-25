@@ -6,4 +6,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Haste | IsPresent$ Perm
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Lifelink | IsPresent$ Permanent.White+YouCtrl | Description$ This creature has lifelink as long as you control a white permanent.
 SVar:BuffedBy:Creature.White,Creature.Red
 DeckHints:Color$White|Red
-Oracle:Cliffrunner Behemoth has haste as long as you control a red permanent.\nCliffrunner Behemoth has lifelink as long as you control a white permanent.
+Oracle:This creature has haste as long as you control a red permanent.\nThis creature has lifelink as long as you control a white permanent.

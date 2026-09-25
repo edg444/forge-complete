@@ -8,4 +8,4 @@ SVar:AIPreference:SacCost$Artifact.token,Creature.Other+cmcLE2+withoutFlying,Art
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Sacrifice
 DeckHints:Type$Artifact
-Oracle:Whenever Kill-Zone Acrobat attacks, you may sacrifice another creature or artifact. If you do, Kill-Zone Acrobat gains flying until end of turn.
+Oracle:Whenever this creature attacks, you may sacrifice another creature or artifact. If you do, this creature gains flying until end of turn.

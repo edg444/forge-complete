@@ -10,4 +10,4 @@ SVar:DBEffect:DB$ Effect | RememberObjects$ Self | ExileOnMoved$ Battlefield | S
 SVar:AttackChosen:Mode$ MustAttack | ValidCreature$ Card.IsRemembered | MustAttack$ ChosenPlayer | Description$ EFFECTSOURCE attacks that player this combat if able.
 SVar:DBPump:DB$ Pump | Defined$ Self | NumAtt$ +X | NumDef$ +X | KW$ Indestructible
 SVar:X:Count$ValidGraveyard Card.YouOwn$CardTypes
-Oracle:Trample\nAt the beginning of combat on your turn, mill a card and choose an opponent at random. Ursine Monstrosity attacks that player this combat if able. Until end of turn, Ursine Monstrosity gains indestructible and gets +1/+1 for each card type among cards in your graveyard.
+Oracle:Trample\nAt the beginning of combat on your turn, mill a card and choose an opponent at random. This creature attacks that player this combat if able. Until end of turn, this creature gains indestructible and gets +1/+1 for each card type among cards in your graveyard.

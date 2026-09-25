@@ -6,4 +6,4 @@ SVar:TrigDraw:DB$ Draw | Defined$ TriggeredPlayer
 T:Mode$ Drawn | ValidCard$ Card | TriggerZones$ Battlefield | Execute$ TrigDamage | TriggerDescription$ Whenever a player draws a card, this enchantment deals 1 damage to that player.
 SVar:TrigDamage:DB$ DealDamage | Defined$ TriggeredCardOwner | NumDmg$ 1
 AI:RemoveDeck:Random
-Oracle:At the beginning of each player's draw step, that player draws an additional card.\nWhenever a player draws a card, Spiteful Visions deals 1 damage to that player.
+Oracle:At the beginning of each player's draw step, that player draws an additional card.\nWhenever a player draws a card, this enchantment deals 1 damage to that player.

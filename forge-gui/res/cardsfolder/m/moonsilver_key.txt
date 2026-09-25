@@ -5,4 +5,4 @@ A:AB$ ChangeZone | Cost$ 1 T Sac<1/CARDNAME> | Origin$ Library | Destination$ Ha
 AI:RemoveDeck:Random
 DeckHas:Ability$Sacrifice
 DeckHints:Type$Artifact
-Oracle:{1}, {T}, Sacrifice Moonsilver Key: Search your library for an artifact card with a mana ability or a basic land card, reveal it, put it into your hand, then shuffle.
+Oracle:{1}, {T}, Sacrifice this artifact: Search your library for an artifact card with a mana ability or a basic land card, reveal it, put it into your hand, then shuffle.

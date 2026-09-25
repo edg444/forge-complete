@@ -5,4 +5,4 @@ PT:3/3
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self,Zombie.Other | Execute$ TrigPumpAll | TriggerDescription$ Whenever this creature or another Zombie enters, all non-Zombie creatures get -1/-1 until end of turn.
 SVar:TrigPumpAll:DB$ PumpAll | ValidCards$ Creature.nonZombie | NumAtt$ -1 | NumDef$ -1 | IsCurse$ True
 SVar:PlayMain1:TRUE
-Oracle:Whenever Noxious Ghoul or another Zombie enters, all non-Zombie creatures get -1/-1 until end of turn.
+Oracle:Whenever this creature or another Zombie enters, all non-Zombie creatures get -1/-1 until end of turn.

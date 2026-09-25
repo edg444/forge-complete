@@ -9,7 +9,7 @@ DeckHints:Name$Hanweir Garrison & Type$Eldrazi|Horror
 DeckHas:Ability$Mana.Colorless|Token
 MeldPair:Hanweir Garrison
 AlternateMode:Meld
-Oracle:{T}: Add {C}.\n{R}, {T}: Target creature gains haste until end of turn.\n{3}{R}{R}, {T}: If you both own and control Hanweir Battlements and a creature named Hanweir Garrison, exile them, then meld them into Hanweir, the Writhing Township.
+Oracle:{T}: Add {C}.\n{R}, {T}: Target creature gains haste until end of turn.\n{3}{R}{R}, {T}: If you both own and control this land and a creature named Hanweir Garrison, exile them, then meld them into Hanweir, the Writhing Township.
 
 ALTERNATE
 

@@ -8,4 +8,4 @@ SVar:TrigPut:DB$ PutCounter | ValidTgts$ Creature | CounterType$ P1P1 | CounterN
 SVar:PlayMain1:TRUE
 DeckHints:Ability$Graveyard|Discard
 DeckHas:Ability$Delirium
-Oracle:When Obsessive Skinner enters, put a +1/+1 counter on target creature.\nDelirium — At the beginning of each opponent's upkeep, if there are four or more card types among cards in your graveyard, put a +1/+1 counter on target creature.
+Oracle:When this creature enters, put a +1/+1 counter on target creature.\nDelirium — At the beginning of each opponent's upkeep, if there are four or more card types among cards in your graveyard, put a +1/+1 counter on target creature.

@@ -7,4 +7,4 @@ SVar:TrigExile:DB$ Dig | ValidTgts$ Player | DigNum$ 3 | ChangeNum$ All | Destin
 A:AB$ Counter | Cost$ U U Sac<1/CARDNAME> | TargetType$ Spell | TgtPrompt$ Select target spell with the same name as a card exiled | ValidTgts$ Card.sharesNameWith ValidExile Card.ExiledWithSource | SpellDescription$ Counter target spell with the same name as a card exiled with this creature.
 AI:RemoveDeck:All
 AI:RemoveDeck:Random
-Oracle:Heroic — Whenever you cast a spell that targets Mindreaver, exile the top three cards of target player's library.\n{U}{U}, Sacrifice Mindreaver: Counter target spell with the same name as a card exiled with Mindreaver.
+Oracle:Heroic — Whenever you cast a spell that targets this creature, exile the top three cards of target player's library.\n{U}{U}, Sacrifice this creature: Counter target spell with the same name as a card exiled with this creature.

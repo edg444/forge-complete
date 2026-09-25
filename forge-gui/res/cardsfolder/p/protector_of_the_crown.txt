@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigMonarch:DB$ BecomeMonarch
 R:Event$ DamageDone | ActiveZones$ Battlefield | ValidTarget$ You | ReplaceWith$ DmgSelf | DamageTarget$ Self | Description$ All damage that would be dealt to you is dealt to this creature instead.
 SVar:DmgSelf:DB$ ReplaceEffect | VarName$ Affected | VarValue$ Self | VarType$ Card
-Oracle:When Protector of the Crown enters, you become the monarch.\nAll damage that would be dealt to you is dealt to Protector of the Crown instead.
+Oracle:When this creature enters, you become the monarch.\nAll damage that would be dealt to you is dealt to this creature instead.

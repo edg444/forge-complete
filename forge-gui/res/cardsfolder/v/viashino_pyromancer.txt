@@ -4,4 +4,4 @@ Types:Creature Lizard Wizard
 PT:2/1
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigDealDamage | TriggerDescription$ When this creature enters, it deals 2 damage to target player or planeswalker.
 SVar:TrigDealDamage:DB$ DealDamage | NumDmg$ 2 | ValidTgts$ Player,Planeswalker | TgtPrompt$ Select target player or planeswalker
-Oracle:When Viashino Pyromancer enters, it deals 2 damage to target player or planeswalker.
+Oracle:When this creature enters, it deals 2 damage to target player or planeswalker.

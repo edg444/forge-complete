@@ -6,4 +6,4 @@ T:Mode$ AttackerBlockedByCreature | ValidCard$ Creature | ValidBlocker$ Card.Sel
 T:Mode$ AttackerBlockedByCreature | ValidCard$ Card.Self | ValidBlocker$ Creature | Execute$ TrigAnimateBlocker | Secondary$ True | TriggerDescription$ Whenever this creature blocks or becomes blocked by a creature, that creature becomes green. (This effect lasts indefinitely.)
 SVar:TrigAnimateAttacker:DB$ Animate | Defined$ TriggeredAttackerLKICopy | Colors$ Green | OverwriteColors$ True | Duration$ Permanent
 SVar:TrigAnimateBlocker:DB$ Animate | Defined$ TriggeredBlockerLKICopy | Colors$ Green | OverwriteColors$ True | Duration$ Permanent
-Oracle:Whenever Aisling Leprechaun blocks or becomes blocked by a creature, that creature becomes green. (This effect lasts indefinitely.)
+Oracle:Whenever this creature blocks or becomes blocked by a creature, that creature becomes green. (This effect lasts indefinitely.)

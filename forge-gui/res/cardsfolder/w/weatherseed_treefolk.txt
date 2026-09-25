@@ -5,4 +5,4 @@ PT:5/3
 K:Trample
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigChangeZone | TriggerDescription$ When this creature dies, return it to its owner's hand.
 SVar:TrigChangeZone:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand | Defined$ TriggeredNewCardLKICopy
-Oracle:Trample\nWhen Weatherseed Treefolk dies, return it to its owner's hand.
+Oracle:Trample\nWhen this creature dies, return it to its owner's hand.

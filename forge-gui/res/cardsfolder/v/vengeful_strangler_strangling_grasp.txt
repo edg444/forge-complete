@@ -8,7 +8,7 @@ SVar:TrigChoose:DB$ Pump | ValidTgts$ Creature.OppCtrl,Planeswalker.OppCtrl | Tg
 SVar:DBChange:DB$ ChangeZone | Defined$ TriggeredNewCardLKICopy | Origin$ Graveyard | Destination$ Battlefield | AttachedTo$ ParentTarget | Transformed$ True | GainControl$ True | AILogic$ Curse
 SVar:SacMe:1
 AlternateMode:DoubleFaced
-Oracle:Vengeful Strangler can't block.\nWhen Vengeful Strangler dies, return it to the battlefield transformed under your control attached to target creature or planeswalker an opponent controls.
+Oracle:This creature can't block.\nWhen this creature dies, return it to the battlefield transformed under your control attached to target creature or planeswalker an opponent controls.
 
 ALTERNATE
 

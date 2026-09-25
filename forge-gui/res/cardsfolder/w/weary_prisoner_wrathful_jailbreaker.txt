@@ -16,4 +16,4 @@ Types:Creature Werewolf
 PT:6/6
 S:Mode$ MustAttack | ValidCreature$ Card.Self | Description$ This creature attacks each combat if able.
 K:Nightbound
-Oracle:Wrathful Jailbreaker attacks each combat if able.\nNightbound (If a player casts at least two spells during their own turn, it becomes day next turn.)
+Oracle:This creature attacks each combat if able.\nNightbound (If a player casts at least two spells during their own turn, it becomes day next turn.)

@@ -6,4 +6,4 @@ K:Flying
 T:Mode$ AttackerBlocked | ValidCard$ Card.Self | OptionalDecider$ You | Execute$ TrigUntap | TriggerDescription$ Whenever this creature becomes blocked, you may untap it and remove it from combat.
 SVar:TrigUntap:DB$ Untap | Defined$ Self | SubAbility$ RemCombat
 SVar:RemCombat:DB$ RemoveFromCombat | Defined$ Self
-Oracle:Flying\nWhenever Gustcloak Skirmisher becomes blocked, you may untap it and remove it from combat.
+Oracle:Flying\nWhenever this creature becomes blocked, you may untap it and remove it from combat.

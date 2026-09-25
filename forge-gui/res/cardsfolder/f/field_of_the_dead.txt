@@ -9,4 +9,4 @@ SVar:TrigToken:DB$ Token | TokenScript$ b_2_2_zombie | TokenOwner$ You
 SVar:X:Count$Valid Land.YouCtrl$DifferentCardNames
 SVar:AILandRemovalMinScore:170
 DeckHas:Ability$Token
-Oracle:Field of the Dead enters tapped.\n{T}: Add {C}.\nWhenever Field of the Dead or another land you control enters, if you control seven or more lands with different names, create a 2/2 black Zombie creature token.
+Oracle:This land enters tapped.\n{T}: Add {C}.\nWhenever this land or another land you control enters, if you control seven or more lands with different names, create a 2/2 black Zombie creature token.

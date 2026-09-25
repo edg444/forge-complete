@@ -4,4 +4,4 @@ Types:Creature Beast
 PT:6/6
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChange | TriggerDescription$ When this creature enters, each other player may put a creature card from their hand onto the battlefield.
 SVar:TrigChange:DB$ ChangeZone | Origin$ Hand | Destination$ Battlefield | ChangeType$ Creature | DefinedPlayer$ Player.Other | ChangeNum$ 1
-Oracle:When Hunted Wumpus enters, each other player may put a creature card from their hand onto the battlefield.
+Oracle:When this creature enters, each other player may put a creature card from their hand onto the battlefield.

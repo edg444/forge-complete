@@ -6,4 +6,4 @@ S:Mode$ ReduceCost | ValidCard$ Card.Self | Type$ Spell | Amount$ 6 | EffectZone
 K:Flying
 S:Mode$ Continuous | AffectedDefined$ Self | CanBlockAny$ True | Description$ This creature can block any number of creatures.
 SVar:NeedHope:Count$YourLifeTotal
-Oracle:If you have 3 or less life, this spell costs {6} less to cast.\nFlying\nAvatar of Hope can block any number of creatures.
+Oracle:If you have 3 or less life, this spell costs {6} less to cast.\nFlying\nThis creature can block any number of creatures.

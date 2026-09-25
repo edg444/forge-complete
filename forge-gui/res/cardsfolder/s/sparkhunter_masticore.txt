@@ -7,4 +7,4 @@ DeckHas:Ability$Discard
 K:Protection:Planeswalker:planeswalkers
 A:AB$ DealDamage | Cost$ 1 | ValidTgts$ Planeswalker | TgtPrompt$ Select target planeswalker | NumDmg$ 1 | SpellDescription$ This creature deals 1 damage to target planeswalker.
 A:AB$ Pump | Cost$ 3 | KW$ Indestructible | Defined$ Self | SpellDescription$ This creature gains indestructible until end of turn.
-Oracle:As an additional cost to cast this spell, discard a card.\nProtection from planeswalkers\n{1}: Sparkhunter Masticore deals 1 damage to target planeswalker.\n{3}: Sparkhunter Masticore gains indestructible until end of turn.
+Oracle:As an additional cost to cast this spell, discard a card.\nProtection from planeswalkers\n{1}: This creature deals 1 damage to target planeswalker.\n{3}: This creature gains indestructible until end of turn.

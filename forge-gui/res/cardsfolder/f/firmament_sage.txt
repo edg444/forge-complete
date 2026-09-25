@@ -6,4 +6,4 @@ R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | DayTime$ Neit
 SVar:DoDay:DB$ DayTime | Value$ Day
 T:Mode$ DayTimeChanges | Execute$ DBDraw | TriggerZones$ Battlefield | TriggerDescription$ Whenever day becomes night or night becomes day, draw a card.
 SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1
-Oracle:If it's neither day nor night, it becomes day as Firmament Sage enters.\nWhenever day becomes night or night becomes day, draw a card.
+Oracle:If it's neither day nor night, it becomes day as this creature enters.\nWhenever day becomes night or night becomes day, draw a card.

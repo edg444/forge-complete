@@ -3,4 +3,4 @@ ManaCost:3 G
 Types:Creature Yeti
 PT:3/4
 S:Mode$ CantTarget | ValidTarget$ Card.Self | ValidSA$ Spell | ValidSource$ Card.Blue,Card.Black | Description$ This creature can't be the target of blue or black spells.
-Oracle:Karplusan Strider can't be the target of blue or black spells.
+Oracle:This creature can't be the target of blue or black spells.

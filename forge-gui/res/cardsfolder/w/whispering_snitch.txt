@@ -7,4 +7,4 @@ SVar:TrigDamageAll:DB$ DamageAll | ValidPlayers$ Player.Opponent | NumDmg$ 1 | S
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 1
 DeckHas:Ability$LifeGain
 DeckNeeds:Ability$Surveil
-Oracle:Whenever you surveil for the first time each turn, Whispering Snitch deals 1 damage to each opponent and you gain 1 life.
+Oracle:Whenever you surveil for the first time each turn, this creature deals 1 damage to each opponent and you gain 1 life.

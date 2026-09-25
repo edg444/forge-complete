@@ -9,4 +9,4 @@ SVar:X:Count$xPaid
 AI:RemoveDeck:All
 DeckHas:Ability$Counters
 DeckHints:Ability$Proliferate
-Oracle:Whenever a source you control other than Talon of Pain deals damage to an opponent, put a charge counter on Talon of Pain.\n{X}, {T}, Remove X charge counters from Talon of Pain: It deals X damage to any target.
+Oracle:Whenever a source you control other than this artifact deals damage to an opponent, put a charge counter on this artifact.\n{X}, {T}, Remove X charge counters from this artifact: It deals X damage to any target.

@@ -9,4 +9,4 @@ SVar:RPreventNextFromSource:Event$ DamageDone | ValidSource$ Card.ChosenCard+Bla
 SVar:ExileEffect:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 AI:RemoveDeck:Random
-Oracle:Protection from black\n{W}, Sacrifice Pilgrim of Virtue: The next time a black source of your choice would deal damage this turn, prevent that damage.
+Oracle:Protection from black\n{W}, Sacrifice this creature: The next time a black source of your choice would deal damage this turn, prevent that damage.

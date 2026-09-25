@@ -3,4 +3,4 @@ ManaCost:2 G
 Types:Creature Troll
 PT:2/2
 A:AB$ Regenerate | Cost$ G | SpellDescription$ Regenerate this creature.
-Oracle:{G}: Regenerate Horned Troll.
+Oracle:{G}: Regenerate this creature.

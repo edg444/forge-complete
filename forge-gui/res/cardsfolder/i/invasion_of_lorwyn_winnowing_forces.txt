@@ -6,7 +6,7 @@ T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefi
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Creature.nonElf+OppCtrl+powerLEX | TgtPrompt$ Select target non-Elf creature an opponent controls with power X or less, where X is the number of lands you control
 SVar:X:Count$Valid Land.YouCtrl
 AlternateMode:DoubleFaced
-Oracle:(As a Siege enters, choose an opponent to protect it. You and others can attack it. When it's defeated, exile it, then cast it transformed.)\nWhen Invasion of Lorwyn enters, destroy target non-Elf creature an opponent controls with power X or less, where X is the number of lands you control.
+Oracle:(As a Siege enters, choose an opponent to protect it. You and others can attack it. When it's defeated, exile it, then cast it transformed.)\nWhen this Siege enters, destroy target non-Elf creature an opponent controls with power X or less, where X is the number of lands you control.
 
 ALTERNATE
 

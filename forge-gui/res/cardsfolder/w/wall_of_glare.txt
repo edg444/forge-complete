@@ -4,4 +4,4 @@ Types:Creature Wall
 PT:0/5
 K:Defender
 S:Mode$ Continuous | AffectedDefined$ Self | CanBlockAny$ True | Description$ This creature can block any number of creatures.
-Oracle:Defender (This creature can't attack.)\nWall of Glare can block any number of creatures.
+Oracle:Defender (This creature can't attack.)\nThis creature can block any number of creatures.

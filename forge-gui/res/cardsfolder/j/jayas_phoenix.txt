@@ -13,4 +13,4 @@ SVar:SacMe:2
 SVar:DiscardMe:3
 DeckHas:Ability$Graveyard
 DeckHints:Type$Planeswalker
-Oracle:Flying, haste\nWhenever Jaya's Phoenix deals combat damage to a player or planeswalker, copy the next loyalty ability you activate this turn when you activate it. You may choose new targets for the copy.\nWhenever you cast a planeswalker spell, you may return Jaya's Phoenix from your graveyard to the battlefield.
+Oracle:Flying, haste\nWhenever this creature deals combat damage to a player or planeswalker, copy the next loyalty ability you activate this turn when you activate it. You may choose new targets for the copy.\nWhenever you cast a planeswalker spell, you may return this card from your graveyard to the battlefield.

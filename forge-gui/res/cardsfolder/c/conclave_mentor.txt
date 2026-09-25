@@ -9,4 +9,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigSac:DB$ GainLife | Defined$ TriggeredCardController | LifeAmount$ XPower
 SVar:XPower:TriggeredCard$CardPower
 DeckNeeds:Ability$Counters
-Oracle:If one or more +1/+1 counters would be put on a creature you control, that many plus one +1/+1 counters are put on that creature instead.\nWhen Conclave Mentor dies, you gain life equal to its power.
+Oracle:If one or more +1/+1 counters would be put on a creature you control, that many plus one +1/+1 counters are put on that creature instead.\nWhen this creature dies, you gain life equal to its power.

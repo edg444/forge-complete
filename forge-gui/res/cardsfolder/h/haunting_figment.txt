@@ -7,4 +7,4 @@ S:Mode$ CantBlockBy | ValidAttacker$ Card.Self | CheckSVar$ X | Description$ Thi
 SVar:X:Count$ThisTurnCast_Instant.YouCtrl,Sorcery.YouCtrl
 SVar:BuffedBy:Instant,Sorcery
 DeckHints:Type$Instant|Sorcery
-Oracle:Vigilance\nHaunting Figment can't be blocked as long as you've cast an instant or sorcery spell this turn.
+Oracle:Vigilance\nThis creature can't be blocked as long as you've cast an instant or sorcery spell this turn.

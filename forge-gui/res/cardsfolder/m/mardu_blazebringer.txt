@@ -8,4 +8,4 @@ SVar:DelTrig:DB$ DelayedTrigger | Mode$ Phase | Phase$ EndCombat | ValidPlayer$ 
 SVar:TrigSacrifice:DB$ SacrificeAll | Defined$ Self | Controller$ You
 SVar:SacrificeEndCombat:True
 AI:RemoveDeck:All
-Oracle:When Mardu Blazebringer attacks or blocks, sacrifice it at end of combat.
+Oracle:When this creature attacks or blocks, sacrifice it at end of combat.

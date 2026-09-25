@@ -10,4 +10,4 @@ SVar:X:Count$Party
 SVar:PlayMain1:TRUE
 DeckHas:Ability$Party
 DeckHints:Type$Cleric|Rogue|Wizard
-Oracle:When Squad Commander enters, create a 1/1 white Kor Warrior creature token for each creature in your party. (Your party consists of up to one each of Cleric, Rogue, Warrior, and Wizard.)\nAt the beginning of combat on your turn, if you have a full party, creatures you control get +1/+0 and gain indestructible until end of turn.
+Oracle:When this creature enters, create a 1/1 white Kor Warrior creature token for each creature in your party. (Your party consists of up to one each of Cleric, Rogue, Warrior, and Wizard.)\nAt the beginning of combat on your turn, if you have a full party, creatures you control get +1/+0 and gain indestructible until end of turn.

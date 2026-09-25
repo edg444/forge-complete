@@ -5,4 +5,4 @@ S:Mode$ Continuous | Affected$ Creature.attackingYou | AddPower$ -1 | Descriptio
 T:Mode$ Phase | Phase$ End of Turn | TriggerZones$ Battlefield | CheckSVar$ X | SVarCompare$ GE4 | Execute$ TrigExile | TriggerDescription$ At the beginning of each end step, if you were dealt 4 or more damage this turn, exile this artifact.
 SVar:TrigExile:DB$ ChangeZone | Defined$ Self | Origin$ Battlefield | Destination$ Exile
 SVar:X:Count$LifeYouLostThisTurn
-Oracle:Creatures attacking you get -1/-0.\nAt the beginning of each end step, if you were dealt 4 or more damage this turn, exile Boarded Window.
+Oracle:Creatures attacking you get -1/-0.\nAt the beginning of each end step, if you were dealt 4 or more damage this turn, exile this artifact.

@@ -5,4 +5,4 @@ PT:1/1
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When this creature enters, create a 4/4 white Angel creature token with flying.
 SVar:TrigToken:DB$ Token | TokenScript$ w_4_4_angel_flying | TokenOwner$ You
 DeckHas:Ability$Token
-Oracle:When Urbis Protector enters, create a 4/4 white Angel creature token with flying.
+Oracle:When this creature enters, create a 4/4 white Angel creature token with flying.

@@ -5,4 +5,4 @@ PT:2/2
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self,Ally.Other+YouCtrl | OptionalDecider$ You | Execute$ TrigPutCounter | TriggerDescription$ Whenever this creature or another Ally you control enters, you may put a +1/+1 counter on this creature.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1
 SVar:BuffedBy:Ally
-Oracle:Whenever Nimana Sell-Sword or another Ally you control enters, you may put a +1/+1 counter on Nimana Sell-Sword.
+Oracle:Whenever this creature or another Ally you control enters, you may put a +1/+1 counter on this creature.

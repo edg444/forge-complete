@@ -10,4 +10,4 @@ SVar:TripTapOpp:DB$ Tap | ValidTgts$ Creature.ActivePlayerCtrl | TgtPrompt$ Choo
 SVar:PlayMain1:TRUE
 DeckHints:Ability$Graveyard|Discard
 DeckHas:Ability$Delirium
-Oracle:Flying\nWhen Topplegeist enters, tap target creature an opponent controls.\nDelirium — At the beginning of each opponent's upkeep, if there are four or more card types among cards in your graveyard, tap target creature that player controls.
+Oracle:Flying\nWhen this creature enters, tap target creature an opponent controls.\nDelirium — At the beginning of each opponent's upkeep, if there are four or more card types among cards in your graveyard, tap target creature that player controls.

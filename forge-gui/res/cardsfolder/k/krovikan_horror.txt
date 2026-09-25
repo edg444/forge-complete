@@ -8,4 +8,4 @@ A:AB$ DealDamage | Cost$ 1 Sac<1/Creature> | ValidTgts$ Any | NumDmg$ 1 | SpellD
 SVar:DiscardMe:3
 SVar:SacMe:1
 SVar:NeedsOrderedGraveyard:TRUE
-Oracle:At the beginning of the end step, if Krovikan Horror is in your graveyard with a creature card directly above it, you may return Krovikan Horror to your hand.\n{1}, Sacrifice a creature: Krovikan Horror deals 1 damage to any target.
+Oracle:At the beginning of the end step, if this card is in your graveyard with a creature card directly above it, you may return this card to your hand.\n{1}, Sacrifice a creature: This creature deals 1 damage to any target.

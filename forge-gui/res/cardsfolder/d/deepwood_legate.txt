@@ -6,4 +6,4 @@ S:Mode$ AlternativeCost | ValidSA$ Spell | ValidCard$ Card.Self | ValidPlayer$ Y
 A:AB$ Pump | Cost$ B | Defined$ Self | NumAtt$ +1 | NumDef$ +1 | SpellDescription$ This creature gets +1/+1 until end of turn.
 SVar:X:Count$Valid Forest.OppCtrl
 SVar:Y:Count$Valid Swamp.YouCtrl
-Oracle:If an opponent controls a Forest and you control a Swamp, you may cast this spell without paying its mana cost.\n{B}: Deepwood Legate gets +1/+1 until end of turn.
+Oracle:If an opponent controls a Forest and you control a Swamp, you may cast this spell without paying its mana cost.\n{B}: This creature gets +1/+1 until end of turn.

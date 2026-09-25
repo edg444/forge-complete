@@ -8,4 +8,4 @@ SVar:DBPump:DB$ PutCounter | CounterType$ P1P1 | CounterNum$ 2 | SpellDescriptio
 SVar:DBDestroy:DB$ Destroy | ValidTgts$ Artifact,Enchantment | TgtPrompt$ Select target artifact or enchantment | SpellDescription$ Destroy target artifact or enchantment.
 SVar:DBGainLife:DB$ GainLife | LifeAmount$ 4 | SpellDescription$ You gain 4 life.
 DeckHas:Ability$Counters
-Oracle:When Knight of Autumn enters, choose one —\n• Put two +1/+1 counters on Knight of Autumn.\n• Destroy target artifact or enchantment.\n• You gain 4 life.
+Oracle:When this creature enters, choose one —\n• Put two +1/+1 counters on this creature.\n• Destroy target artifact or enchantment.\n• You gain 4 life.

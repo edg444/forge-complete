@@ -6,4 +6,4 @@ S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't bloc
 A:AB$ PutCounter | Cost$ Sac<1/Creature> | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1 | AILogic$ AristocratCounters | SpellDescription$ Put a +1/+1 counter on this creature.
 SVar:AIPreference:SacCost$Creature.Other
 DeckHas:Ability$Counters
-Oracle:Carrion Feeder can't block.\nSacrifice a creature: Put a +1/+1 counter on Carrion Feeder.
+Oracle:This creature can't block.\nSacrifice a creature: Put a +1/+1 counter on this creature.

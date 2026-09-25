@@ -16,4 +16,4 @@ SVar:SNoCombatDamage:Mode$ AssignNoCombatDamage | ValidCard$ Card.EffectSource |
 SVar:DBLoseLife:DB$ LoseLife | Defined$ TriggeredDefendingPlayer | LifeAmount$ 4
 SVar:X:Remembered$Amount
 AI:RemoveDeck:All
-Oracle:Trample\nAt the beginning of your upkeep, you may discard a card. If you don't, sacrifice Lim-Dûl's Paladin and draw a card.\nWhenever Lim-Dûl's Paladin becomes blocked, it gets +6/+3 until end of turn.\nWhenever Lim-Dûl's Paladin attacks and isn't blocked, it assigns no combat damage this turn and defending player loses 4 life.
+Oracle:Trample\nAt the beginning of your upkeep, you may discard a card. If you don't, sacrifice this creature and draw a card.\nWhenever this creature becomes blocked, it gets +6/+3 until end of turn.\nWhenever this creature attacks and isn't blocked, it assigns no combat damage this turn and defending player loses 4 life.

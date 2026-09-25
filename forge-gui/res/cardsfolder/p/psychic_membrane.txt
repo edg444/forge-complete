@@ -6,4 +6,4 @@ K:Defender
 T:Mode$ Blocks | ValidCard$ Card.Self | OptionalDecider$ You | Execute$ TrigDraw | TriggerDescription$ Whenever this creature blocks, you may draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
 SVar:HasBlockEffect:TRUE
-Oracle:Defender (This creature can't attack.)\nWhenever Psychic Membrane blocks, you may draw a card.
+Oracle:Defender (This creature can't attack.)\nWhenever this creature blocks, you may draw a card.

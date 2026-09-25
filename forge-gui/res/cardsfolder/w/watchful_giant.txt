@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigToken:DB$ Token | TokenScript$ w_1_1_human | TokenOwner$ You
 DeckHints:Type$Human
 DeckHas:Ability$Token
-Oracle:When Watchful Giant enters, create a 1/1 white Human creature token.
+Oracle:When this creature enters, create a 1/1 white Human creature token.

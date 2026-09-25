@@ -7,4 +7,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | OptionalDecider$ Yo
 SVar:TrigPump:AB$ Pump | Cost$ Sac<1/Creature.Other/another creature> | Defined$ Self | KW$ Double Strike
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Sacrifice
-Oracle:Flying\nWhenever Ragefire Hellkite attacks, you may sacrifice another creature. If you do, Ragefire Hellkite gains double strike until end of turn.
+Oracle:Flying\nWhenever this creature attacks, you may sacrifice another creature. If you do, this creature gains double strike until end of turn.

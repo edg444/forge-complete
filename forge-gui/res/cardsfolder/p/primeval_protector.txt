@@ -8,4 +8,4 @@ SVar:TrigPutCounters:DB$ PutCounterAll | ValidCards$ Creature.YouCtrl+StrictlyOt
 SVar:X:Count$Valid Creature.OppCtrl
 SVar:PlayMain1:TRUE
 DeckHas:Ability$Counters
-Oracle:This spell costs {1} less to cast for each creature your opponents control.\nWhen Primeval Protector enters, put a +1/+1 counter on each other creature you control.
+Oracle:This spell costs {1} less to cast for each creature your opponents control.\nWhen this creature enters, put a +1/+1 counter on each other creature you control.

@@ -6,4 +6,4 @@ K:Flying
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | OptionalDecider$ You | Execute$ TrigTap | TriggerDescription$ When this creature enters, you may tap target creature.
 SVar:TrigTap:DB$ Tap | ValidTgts$ Creature | TgtPrompt$ Select target creature
 SVar:PlayMain1:TRUE
-Oracle:Flying\nWhen Niblis of the Mist enters, you may tap target creature.
+Oracle:Flying\nWhen this creature enters, you may tap target creature.

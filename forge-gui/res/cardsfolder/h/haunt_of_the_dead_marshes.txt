@@ -9,4 +9,4 @@ SVar:DiscardMe:2
 SVar:SacMe:1
 DeckHints:Ability$Discard & Type$Creature & Type$Legendary
 DeckHas:Ability$Graveyard
-Oracle:When Haunt of the Dead Marshes enters, scry 1.\n{2}{B}: Return Haunt of the Dead Marshes from your graveyard to the battlefield tapped. Activate only if you control a legendary creature.
+Oracle:When this creature enters, scry 1.\n{2}{B}: Return this card from your graveyard to the battlefield tapped. Activate only if you control a legendary creature.

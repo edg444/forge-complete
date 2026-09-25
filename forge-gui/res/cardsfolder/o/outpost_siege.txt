@@ -14,4 +14,4 @@ SVar:Play:Mode$ Continuous | MayPlay$ True | Affected$ Card.IsRemembered | Affec
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:DragonsTrigger:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Creature.YouCtrl | TriggerZones$ Battlefield | Execute$ SmallBurnination | Secondary$ True | TriggerDescription$ Whenever a creature you control leaves the battlefield, this enchantment deals 1 damage to any target.
 SVar:SmallBurnination:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 1
-Oracle:As Outpost Siege enters, choose Khans or Dragons.\n• Khans — At the beginning of your upkeep, exile the top card of your library. Until end of turn, you may play that card.\n• Dragons — Whenever a creature you control leaves the battlefield, Outpost Siege deals 1 damage to any target.
+Oracle:As this enchantment enters, choose Khans or Dragons.\n• Khans — At the beginning of your upkeep, exile the top card of your library. Until end of turn, you may play that card.\n• Dragons — Whenever a creature you control leaves the battlefield, this enchantment deals 1 damage to any target.

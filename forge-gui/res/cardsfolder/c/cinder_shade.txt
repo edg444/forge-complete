@@ -6,4 +6,4 @@ A:AB$ Pump | Cost$ B | Defined$ Self | NumAtt$ +1 | NumDef$ +1 | SpellDescriptio
 A:AB$ DealDamage | Cost$ R Sac<1/CARDNAME> | ValidTgts$ Creature | NumDmg$ X | SpellDescription$ It deals damage equal to its power to target creature.
 SVar:X:Sacrificed$CardPower
 DeckHas:Ability$Sacrifice
-Oracle:{B}: Cinder Shade gets +1/+1 until end of turn.\n{R}, Sacrifice Cinder Shade: It deals damage equal to its power to target creature.
+Oracle:{B}: This creature gets +1/+1 until end of turn.\n{R}, Sacrifice this creature: It deals damage equal to its power to target creature.

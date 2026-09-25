@@ -12,4 +12,4 @@ S:Mode$ Continuous | AffectedDefined$ AttachedBy Self | Affected$ Creature | Add
 SVar:AE:SVar:HasAttackEffect:TRUE
 SVar:SacMe:4
 DeckHas:Ability$Counters|Discard
-Oracle:Enchant creature\nWhenever enchanted creature attacks, put a +1/+1 counter on it. Then if it has three or more +1/+1 counters on it, sacrifice Ordeal of Erebos.\nWhen you sacrifice Ordeal of Erebos, target player discards two cards.
+Oracle:Enchant creature\nWhenever enchanted creature attacks, put a +1/+1 counter on it. Then if it has three or more +1/+1 counters on it, sacrifice this Aura.\nWhen you sacrifice this Aura, target player discards two cards.

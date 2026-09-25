@@ -9,4 +9,4 @@ SVar:TrigReturn:DB$ ChangeZone | ValidTgts$ Permanent.YouCtrl+cmcLE3 | Condition
 SVar:DBReturn:DB$ ChangeZone | Defined$ Targeted | ConditionCheckSVar$ X | Origin$ Graveyard | Destination$ Battlefield
 SVar:X:Count$Valid Permanent.Mount+YouCtrl
 DeckHints:Type$Mount
-Oracle:Flying, vigilance\nWhen Shepherd of the Clouds enters, return target permanent card with mana value 3 or less from your graveyard to your hand. Return that card to the battlefield instead if you control a Mount.
+Oracle:Flying, vigilance\nWhen this creature enters, return target permanent card with mana value 3 or less from your graveyard to your hand. Return that card to the battlefield instead if you control a Mount.

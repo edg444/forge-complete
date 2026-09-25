@@ -9,4 +9,4 @@ K:Trample
 K:Ward:4
 SVar:X:Count$xPaid
 DeckHas:Ability$Counters
-Oracle:As Neverwinter Hydra enters, roll X d6. It enters with a number of +1/+1 counters on it equal to the total of those results.\nTrample\nWard {4} (Whenever this creature becomes the target of a spell or ability an opponent controls, counter it unless that player pays {4}.)
+Oracle:As this creature enters, roll X d6. It enters with a number of +1/+1 counters on it equal to the total of those results.\nTrample\nWard {4} (Whenever this creature becomes the target of a spell or ability an opponent controls, counter it unless that player pays {4}.)

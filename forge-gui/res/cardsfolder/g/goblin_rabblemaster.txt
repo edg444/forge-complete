@@ -10,4 +10,4 @@ SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +X
 SVar:X:Count$Valid Goblin.attacking+Other
 SVar:PlayMain1:TRUE
 DeckHas:Ability$Token
-Oracle:Other Goblin creatures you control attack each combat if able.\nAt the beginning of combat on your turn, create a 1/1 red Goblin creature token with haste.\nWhenever Goblin Rabblemaster attacks, it gets +1/+0 until end of turn for each other attacking Goblin.
+Oracle:Other Goblin creatures you control attack each combat if able.\nAt the beginning of combat on your turn, create a 1/1 red Goblin creature token with haste.\nWhenever this creature attacks, it gets +1/+0 until end of turn for each other attacking Goblin.

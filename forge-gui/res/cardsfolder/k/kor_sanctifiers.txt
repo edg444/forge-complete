@@ -8,4 +8,4 @@ SVar:TrigKicker:DB$ Destroy | ValidTgts$ Artifact,Enchantment | TgtPrompt$ Selec
 SVar:NeedsToPlayKickedVar:Z GE1
 SVar:Z:Count$Valid Artifact.OppCtrl/Plus.Z1
 SVar:Z1:Count$Valid Enchantment.OppCtrl
-Oracle:Kicker {W} (You may pay an additional {W} as you cast this spell.)\nWhen Kor Sanctifiers enters, if it was kicked, destroy target artifact or enchantment.
+Oracle:Kicker {W} (You may pay an additional {W} as you cast this spell.)\nWhen this creature enters, if it was kicked, destroy target artifact or enchantment.

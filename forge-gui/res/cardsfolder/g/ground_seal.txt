@@ -6,4 +6,4 @@ SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
 S:Mode$ CantTarget | AffectedZone$ Graveyard | Description$ Cards in graveyards can't be the targets of spells or abilities.
 SVar:NonStackingEffect:True
 AI:RemoveDeck:Random
-Oracle:When Ground Seal enters, draw a card.\nCards in graveyards can't be the targets of spells or abilities.
+Oracle:When this enchantment enters, draw a card.\nCards in graveyards can't be the targets of spells or abilities.

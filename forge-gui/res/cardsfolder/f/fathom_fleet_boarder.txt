@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigLoseLife:DB$ LoseLife | Defined$ You | LifeAmount$ 2 | ConditionPresent$ Pirate.StrictlyOther+YouCtrl | ConditionCompare$ EQ0
 SVar:NeedsToPlay:Pirate.YouCtrl
 DeckHints:Type$Pirate
-Oracle:When Fathom Fleet Boarder enters, you lose 2 life unless you control another Pirate.
+Oracle:When this creature enters, you lose 2 life unless you control another Pirate.

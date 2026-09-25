@@ -6,7 +6,7 @@ T:Mode$ SpellCast | ValidCard$ Instant,Sorcery,Wizard | ValidActivatingPlayer$ Y
 SVar:TrigFlying:DB$ Pump | Defined$ Self | KW$ Flying
 DeckNeeds:Type$Instant|Sorcery|Wizard
 AlternateMode:Modal
-Oracle:Whenever you cast an instant, sorcery, or Wizard spell, Umara Wizard gains flying until end of turn.
+Oracle:Whenever you cast an instant, sorcery, or Wizard spell, this creature gains flying until end of turn.
 
 ALTERNATE
 
@@ -16,4 +16,4 @@ Types:Land
 R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This land enters tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ Mana | Cost$ T | Produced$ U | SpellDescription$ Add {U}.
-Oracle:Umara Skyfalls enters tapped.\n{T}: Add {U}.
+Oracle:This land enters tapped.\n{T}: Add {U}.

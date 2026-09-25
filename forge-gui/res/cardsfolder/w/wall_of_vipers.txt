@@ -7,4 +7,4 @@ A:AB$ Pump | Cost$ 3 | Defined$ Self | Activator$ Player | AILogic$ Destroy | Is
 SVar:SnakeBite:DB$ Pump | ValidTgts$ Creature.blockedBySource | AILogic$ Destroy | IsCurse$ True | SubAbility$ DBDestroy
 SVar:DBDestroy:DB$ Destroy | Defined$ Targeted
 AI:RemoveDeck:All
-Oracle:Defender (This creature can't attack.)\n{3}: Destroy Wall of Vipers and target creature it's blocking. Any player may activate this ability.
+Oracle:Defender (This creature can't attack.)\n{3}: Destroy this creature and target creature it's blocking. Any player may activate this ability.

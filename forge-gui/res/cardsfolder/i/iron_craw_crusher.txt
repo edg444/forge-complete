@@ -8,4 +8,4 @@ SVar:TrigPump:DB$ Pump | ValidTgts$ Creature.attacking | TgtPrompt$ Select targe
 SVar:HasAttackEffect:TRUE
 SVar:X:Count$CardPower
 DeckHints:Color$Green
-Oracle:Prototype {2}{G}{G} — 2/5 (You may cast this spell with different mana cost, color, and size. It keeps its abilities and types.)\nWhenever Iron-Craw Crusher attacks, target attacking creature gets +X/+0 until end of turn, where X is Iron-Craw Crusher's power.
+Oracle:Prototype {2}{G}{G} — 2/5 (You may cast this spell with different mana cost, color, and size. It keeps its abilities and types.)\nWhenever this creature attacks, target attacking creature gets +X/+0 until end of turn, where X is this creature's power.

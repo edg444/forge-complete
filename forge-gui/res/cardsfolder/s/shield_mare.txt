@@ -6,4 +6,4 @@ S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.Red 
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ DBGainLife | TriggerDescription$ When this creature enters or becomes the target of a spell or ability an opponent controls, you gain 3 life.
 T:Mode$ BecomesTarget | ValidTarget$ Card.Self | ValidSource$ SpellAbility.OppCtrl | TriggerZones$ Battlefield | Execute$ DBGainLife | Secondary$ True | TriggerDescription$ When this creature enters or becomes the target of a spell or ability an opponent controls, you gain 3 life.
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 3
-Oracle:Shield Mare can't be blocked by red creatures.\nWhen Shield Mare enters or becomes the target of a spell or ability an opponent controls, you gain 3 life.
+Oracle:This creature can't be blocked by red creatures.\nWhen this creature enters or becomes the target of a spell or ability an opponent controls, you gain 3 life.

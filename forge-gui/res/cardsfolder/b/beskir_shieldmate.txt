@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigToken:DB$ Token | TokenScript$ w_1_1_human_warrior | TokenOwner$ You
 SVar:SacMe:2
 DeckHas:Ability$Token
-Oracle:When Beskir Shieldmate dies, create a 1/1 white Human Warrior creature token.
+Oracle:When this creature dies, create a 1/1 white Human Warrior creature token.

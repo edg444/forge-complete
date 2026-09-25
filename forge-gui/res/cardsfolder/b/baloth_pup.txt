@@ -3,4 +3,4 @@ ManaCost:1 G
 Types:Creature Beast
 PT:3/1
 S:Mode$ Continuous | AffectedDefined$ Self | Affected$ Card.counters_GE1_P1P1 | AddKeyword$ Trample | Description$ This creature has trample as long as it has a +1/+1 counter on it.
-Oracle:Baloth Pup has trample as long as it has a +1/+1 counter on it.
+Oracle:This creature has trample as long as it has a +1/+1 counter on it.

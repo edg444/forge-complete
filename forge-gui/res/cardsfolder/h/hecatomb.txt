@@ -8,4 +8,4 @@ AI:RemoveDeck:All
 SVar:NonStackingEffect:True
 SVar:NeedsToPlayVar:Creats GE4
 SVar:Creats:Count$Valid Creature.YouCtrl
-Oracle:When Hecatomb enters, sacrifice Hecatomb unless you sacrifice four creatures.\nTap an untapped Swamp you control: Hecatomb deals 1 damage to any target.
+Oracle:When this enchantment enters, sacrifice this enchantment unless you sacrifice four creatures.\nTap an untapped Swamp you control: This enchantment deals 1 damage to any target.

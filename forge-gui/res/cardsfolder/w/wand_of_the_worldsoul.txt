@@ -6,4 +6,4 @@ SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ Mana | Cost$ T | Produced$ W | SpellDescription$ Add {W}.
 A:AB$ Effect | Cost$ T | StaticAbilities$ GrantConvoke | ForgetOnCast$ Card.YouCtrl | SpellDescription$ The next spell you cast this turn has convoke.
 SVar:GrantConvoke:Mode$ Continuous | Affected$ Card.YouCtrl | AffectedZone$ Stack | AddKeyword$ Convoke | Description$ The next spell you cast this turn has convoke.
-Oracle:Wand of the Worldsoul enters tapped.\n{T}: Add {W}.\n{T}: The next spell you cast this turn has convoke.
+Oracle:This artifact enters tapped.\n{T}: Add {W}.\n{T}: The next spell you cast this turn has convoke.

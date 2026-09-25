@@ -9,4 +9,4 @@ SVar:DBCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 
 SVar:Resolved:Count$ResolvedThisTurn
 DeckHints:Type$Artifact
 DeckHas:Ability$LifeGain|Counters & Keyword$Deathtouch
-Oracle:Teething Wurmlet has deathtouch as long as you control three or more artifacts.\nWhenever an artifact you control enters, you gain 1 life. If this is the first time this ability has resolved this turn, put a +1/+1 counter on Teething Wurmlet.
+Oracle:This creature has deathtouch as long as you control three or more artifacts.\nWhenever an artifact you control enters, you gain 1 life. If this is the first time this ability has resolved this turn, put a +1/+1 counter on this creature.

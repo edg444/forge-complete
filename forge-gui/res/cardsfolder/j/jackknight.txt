@@ -8,4 +8,4 @@ SVar:DBPump:DB$ Pump | ConditionDefined$ TriggeredCard | ConditionPresent$ Contr
 AI:RemoveDeck:Random
 DeckHas:Ability$Counters
 DeckHints:Type$Contraption
-Oracle:Whenever another artifact you control enters, put a +1/+1 counter on Jackknight. If that artifact is a Contraption, Jackknight gains lifelink until end of turn.
+Oracle:Whenever another artifact you control enters, put a +1/+1 counter on this creature. If that artifact is a Contraption, this creature gains lifelink until end of turn.

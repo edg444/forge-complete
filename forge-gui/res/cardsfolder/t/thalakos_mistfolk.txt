@@ -5,4 +5,4 @@ PT:2/1
 K:Shadow
 A:AB$ ChangeZone | Cost$ U | Origin$ Battlefield | Destination$ Library | LibraryPosition$ 0 | SpellDescription$ Put this creature on top of its owner's library.
 AI:RemoveDeck:All
-Oracle:Shadow (This creature can block or be blocked by only creatures with shadow.)\n{U}: Put Thalakos Mistfolk on top of its owner's library.
+Oracle:Shadow (This creature can block or be blocked by only creatures with shadow.)\n{U}: Put this creature on top of its owner's library.

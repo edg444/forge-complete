@@ -5,7 +5,7 @@ PT:2/2
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDestroy | TriggerDescription$ When this creature enters, destroy target artifact or enchantment an opponent controls.
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Artifact.OppCtrl,Enchantment.OppCtrl | TgtPrompt$ Select target artifact or enchantment an opponent controls.
 AlternateMode:Modal
-Oracle:When Witch Enchanter enters, destroy target artifact or enchantment an opponent controls.
+Oracle:When this creature enters, destroy target artifact or enchantment an opponent controls.
 
 ALTERNATE
 
@@ -15,4 +15,4 @@ Types:Land
 R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplaceWith$ DBTap | ReplacementResult$ Updated | Description$ As this land enters, you may pay 3 life. If you don't, it enters tapped.
 SVar:DBTap:DB$ Tap | ETB$ True | Defined$ Self | UnlessCost$ PayLife<3> | UnlessPayer$ You | StackDescription$ enters tapped.
 A:AB$ Mana | Cost$ T | Produced$ W | SpellDescription$ Add {W}.
-Oracle:As Witch-Blessed Meadow enters, you may pay 3 life. If you don't, it enters tapped.\n{T}: Add {W}.
+Oracle:As this land enters, you may pay 3 life. If you don't, it enters tapped.\n{T}: Add {W}.

@@ -9,4 +9,4 @@ SVar:DBGainLife:DB$ GainLife | LifeAmount$ X | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:RememberedLKI$CardToughness
 DeckHas:Ability$LifeGain
-Oracle:Menace\nWhen Noxious Gearhulk enters, you may destroy another target creature. If a creature is destroyed this way, you gain life equal to its toughness.
+Oracle:Menace\nWhen this creature enters, you may destroy another target creature. If a creature is destroyed this way, you gain life equal to its toughness.

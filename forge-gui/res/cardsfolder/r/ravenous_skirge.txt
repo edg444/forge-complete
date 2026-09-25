@@ -5,4 +5,4 @@ PT:1/1
 K:Flying
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ Whenever this creature attacks, it gets +2/+0 until end of turn.
 SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +2
-Oracle:Flying\nWhenever Ravenous Skirge attacks, it gets +2/+0 until end of turn.
+Oracle:Flying\nWhenever this creature attacks, it gets +2/+0 until end of turn.

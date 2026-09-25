@@ -7,4 +7,4 @@ SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ SPORE | Counte
 A:AB$ Token | Cost$ SubCounter<3/SPORE> | TokenScript$ g_1_1_saproling | TokenOwner$ You | SpellDescription$ Create a 1/1 green Saproling creature token.
 A:AB$ GainLife | Cost$ Sac<1/Saproling> | LifeAmount$ 2 | SpellDescription$ You gain 2 life.
 DeckHas:Ability$Counters|Token|LifeGain
-Oracle:At the beginning of your upkeep, put a spore counter on Elvish Farmer.\nRemove three spore counters from Elvish Farmer: Create a 1/1 green Saproling creature token.\nSacrifice a Saproling: You gain 2 life.
+Oracle:At the beginning of your upkeep, put a spore counter on this creature.\nRemove three spore counters from this creature: Create a 1/1 green Saproling creature token.\nSacrifice a Saproling: You gain 2 life.

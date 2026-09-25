@@ -4,4 +4,4 @@ Types:Artifact
 K:ETBReplacement:Other:ChooseColor
 SVar:ChooseColor:DB$ ChooseColor | Defined$ You | AILogic$ MostProminentInComputerDeck | SpellDescription$ As this artifact enters, choose a color.
 A:AB$ Mana | Cost$ T | Produced$ Chosen | SpellDescription$ Add one mana of the chosen color.
-Oracle:As Sol Grail enters, choose a color.\n{T}: Add one mana of the chosen color.
+Oracle:As this artifact enters, choose a color.\n{T}: Add one mana of the chosen color.

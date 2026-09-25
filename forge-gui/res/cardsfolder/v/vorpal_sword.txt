@@ -8,4 +8,4 @@ SVar:DBAddSVar:DB$ Animate | Defined$ Equipped | sVars$ MustBeBlocked
 SVar:MustBeBlocked:True
 SVar:TrigDamageDone:Mode$ DamageDone | ValidSource$ Creature.EquippedBy | ValidTarget$ Player | CombatDamage$ True | Execute$ DBLose | TriggerDescription$ Whenever equipped creature deals combat damage to a player, that player loses the game.
 SVar:DBLose:DB$ LosesGame | Defined$ TriggeredTarget
-Oracle:Equipped creature gets +2/+0 and has deathtouch.\n{5}{B}{B}{B}: Until end of turn, Vorpal Sword gains "Whenever equipped creature deals combat damage to a player, that player loses the game."\nEquip {B}{B}
+Oracle:Equipped creature gets +2/+0 and has deathtouch.\n{5}{B}{B}{B}: Until end of turn, this Equipment gains "Whenever equipped creature deals combat damage to a player, that player loses the game."\nEquip {B}{B}

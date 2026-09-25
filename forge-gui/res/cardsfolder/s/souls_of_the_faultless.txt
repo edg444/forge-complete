@@ -8,4 +8,4 @@ SVar:TrigGain:DB$ GainLife | Defined$ You | LifeAmount$ X | SubAbility$ DBDrain
 SVar:DBDrain:DB$ LoseLife | Defined$ AttackingPlayer | LifeAmount$ X
 SVar:X:TriggerCount$DamageAmount
 SVar:HasCombatEffect:TRUE
-Oracle:Defender (This creature can't attack.)\nWhenever Souls of the Faultless is dealt combat damage, you gain that much life and attacking player loses that much life.
+Oracle:Defender (This creature can't attack.)\nWhenever this creature is dealt combat damage, you gain that much life and attacking player loses that much life.

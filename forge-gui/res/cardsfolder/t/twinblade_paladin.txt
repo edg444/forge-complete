@@ -8,4 +8,4 @@ DeckHints:Ability$LifeGain
 DeckHas:Ability$Counters
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Double Strike | CheckSVar$ X | SVarCompare$ GE25 | Description$ As long as you have 25 or more life, this creature has double strike. (It deals both first-strike and regular combat damage.)
 SVar:X:Count$YourLifeTotal
-Oracle:Whenever you gain life, put a +1/+1 counter on Twinblade Paladin.\nAs long as you have 25 or more life, Twinblade Paladin has double strike. (It deals both first-strike and regular combat damage.)
+Oracle:Whenever you gain life, put a +1/+1 counter on this creature.\nAs long as you have 25 or more life, this creature has double strike. (It deals both first-strike and regular combat damage.)

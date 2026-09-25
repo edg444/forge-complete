@@ -9,4 +9,4 @@ SVar:HasAttackEffect:TRUE
 AI:RemoveDeck:NonCommander
 DeckHas:Ability$Counters
 A:AB$ Draw | Cost$ 1 T SubCounter<1/PAGE> | NumCards$ 1 | SpellDescription$ Draw a card.
-Oracle:Tome of Legends enters with a page counter on it.\nWhenever your commander enters or attacks, put a page counter on Tome of Legends.\n{1}, {T}, Remove a page counter from Tome of Legends: Draw a card.
+Oracle:This artifact enters with a page counter on it.\nWhenever your commander enters or attacks, put a page counter on this artifact.\n{1}, {T}, Remove a page counter from this artifact: Draw a card.

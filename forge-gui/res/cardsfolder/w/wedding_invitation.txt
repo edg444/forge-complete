@@ -8,4 +8,4 @@ SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | Descript
 SVar:DBPump:DB$ Pump | Defined$ Targeted.Vampire | KW$ Lifelink | StackDescription$ SpellDescription | SpellDescription$ If it's a Vampire, it also gains lifelink until end of turn.
 DeckHints:Type$Vampire
 DeckHas:Ability$LifeGain|Sacrifice
-Oracle:When Wedding Invitation enters, draw a card.\n{T}, Sacrifice Wedding Invitation: Target creature can't be blocked this turn. If it's a Vampire, it also gains lifelink until end of turn.
+Oracle:When this artifact enters, draw a card.\n{T}, Sacrifice this artifact: Target creature can't be blocked this turn. If it's a Vampire, it also gains lifelink until end of turn.

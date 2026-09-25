@@ -7,4 +7,4 @@ SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | Counter
 A:AB$ PutCounter | Cost$ 3 W | ValidTgts$ Planeswalker.Gideon | TgtPrompt$ Select target Gideon planeswalker. | CounterType$ LOYALTY | CounterNum$ 1 | SpellDescription$ Put a loyalty counter on target Gideon planeswalker.
 DeckHints:Ability$LifeGain & Type$Gideon
 DeckHas:Ability$Counters
-Oracle:Whenever you gain life, put two +1/+1 counters on Gideon's Company.\n{3}{W}: Put a loyalty counter on target Gideon planeswalker.
+Oracle:Whenever you gain life, put two +1/+1 counters on this creature.\n{3}{W}: Put a loyalty counter on target Gideon planeswalker.

@@ -8,4 +8,4 @@ SVar:BiggerDies:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard
 SVar:TrigReturn:DB$ ChangeZone | Origin$ Graveyard | Destination$ Battlefield | Tapped$ True
 SVar:X:Count$CardManaCost
 DeckHas:Ability$Graveyard
-Oracle:Whenever Kami of Mourning enters, target creature you control or creature card in your graveyard perpetually gains "Whenever a creature you control with greater mana value than this card dies, return this card from your graveyard to the battlefield tapped."
+Oracle:Whenever this creature enters, target creature you control or creature card in your graveyard perpetually gains "Whenever a creature you control with greater mana value than this card dies, return this card from your graveyard to the battlefield tapped."

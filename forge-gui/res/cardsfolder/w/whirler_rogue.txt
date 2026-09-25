@@ -8,4 +8,4 @@ A:AB$ Effect | Cost$ tapXType<2/Artifact> | ValidTgts$ Creature | RememberObject
 SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | Description$ This creature can't be blocked this turn.
 DeckHas:Ability$Token & Type$Artifact|Thopter
 DeckHints:Type$Artifact
-Oracle:When Whirler Rogue enters, create two 1/1 colorless Thopter artifact creature tokens with flying.\nTap two untapped artifacts you control: Target creature can't be blocked this turn.
+Oracle:When this creature enters, create two 1/1 colorless Thopter artifact creature tokens with flying.\nTap two untapped artifacts you control: Target creature can't be blocked this turn.

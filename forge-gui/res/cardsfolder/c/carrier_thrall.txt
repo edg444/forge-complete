@@ -7,4 +7,4 @@ SVar:TrigToken:DB$ Token | TokenScript$ c_1_1_eldrazi_scion_sac | TokenOwner$ Yo
 SVar:SacMe:1
 DeckHints:Type$Eldrazi
 DeckHas:Ability$Mana.Colorless|Token
-Oracle:When Carrier Thrall dies, create a 1/1 colorless Eldrazi Scion creature token. It has "Sacrifice this token: Add {C}."
+Oracle:When this creature dies, create a 1/1 colorless Eldrazi Scion creature token. It has "Sacrifice this token: Add {C}."

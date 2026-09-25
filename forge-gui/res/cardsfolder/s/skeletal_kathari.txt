@@ -5,4 +5,4 @@ PT:3/2
 K:Flying
 A:AB$ Regenerate | Cost$ B Sac<1/Creature> | SpellDescription$ Regenerate this creature.
 SVar:AIPreference:SacCost$Creature.token+powerLE2
-Oracle:Flying\n{B}, Sacrifice a creature: Regenerate Skeletal Kathari.
+Oracle:Flying\n{B}, Sacrifice a creature: Regenerate this creature.

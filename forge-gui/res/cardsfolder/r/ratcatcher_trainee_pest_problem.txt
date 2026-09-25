@@ -5,7 +5,7 @@ PT:2/1
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ First Strike | Condition$ PlayerTurn | Description$ During your turn, this creature has first strike.
 DeckHas:Ability$Token & Type$Rat
 AlternateMode:Adventure
-Oracle:During your turn, Ratcatcher Trainee has first strike.
+Oracle:During your turn, this creature has first strike.
 
 ALTERNATE
 

@@ -7,4 +7,4 @@ SVar:TrigToken:DB$ Token | TokenAmount$ 2 | TokenScript$ b_2_2_zombie | TokenOwn
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Zombie
 DeckHints:Type$Zombie
-Oracle:Zombies you control get +1/+1.\nWhen Liliana's Mastery enters, create two 2/2 black Zombie creature tokens.
+Oracle:Zombies you control get +1/+1.\nWhen this enchantment enters, create two 2/2 black Zombie creature tokens.

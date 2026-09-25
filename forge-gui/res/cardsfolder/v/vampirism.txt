@@ -10,4 +10,4 @@ S:Mode$ Continuous | AffectedDefined$ Enchanted | Affected$ Creature | AddPower$
 S:Mode$ Continuous | Affected$ Creature.YouCtrl+!EnchantedBy | AddPower$ -1 | AddToughness$ -1 | Description$ Other creatures you control get -1/-1.
 SVar:X:Count$Valid Creature.YouCtrl+!EnchantedBy
 AI:RemoveDeck:All
-Oracle:Enchant creature\nWhen Vampirism enters, draw a card at the beginning of the next turn's upkeep.\nEnchanted creature gets +1/+1 for each other creature you control.\nOther creatures you control get -1/-1.
+Oracle:Enchant creature\nWhen this Aura enters, draw a card at the beginning of the next turn's upkeep.\nEnchanted creature gets +1/+1 for each other creature you control.\nOther creatures you control get -1/-1.

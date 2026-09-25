@@ -11,4 +11,4 @@ S:Mode$ Continuous | AffectedDefined$ Enchanted | Affected$ Creature | AddPower$
 SVar:X:Count$ThisTurnEntered_Graveyard_from_Battlefield_Creature
 SVar:PlayMain1:TRUE
 DeckHints:Ability$Sacrifice
-Oracle:Morbid — This spell costs {3} less to cast if a creature died this turn.\nEnchant creature\nWhen Grim Reaper's Sprint enters, untap each creature you control. If it's your main phase, there is an additional combat phase after this phase.\nEnchanted creature gets +2/+2 and has haste.
+Oracle:Morbid — This spell costs {3} less to cast if a creature died this turn.\nEnchant creature\nWhen this Aura enters, untap each creature you control. If it's your main phase, there is an additional combat phase after this phase.\nEnchanted creature gets +2/+2 and has haste.

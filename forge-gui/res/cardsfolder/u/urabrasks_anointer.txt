@@ -7,4 +7,4 @@ SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ X
 SVar:X:Count$Valid Permanent.YouCtrl+counters_GE1_OIL
 AI:RemoveDeck:Random
 DeckNeeds:Ability$Counters
-Oracle:When Urabrask's Anointer enters, it deals X damage to any target, where X is the number of permanents you control with oil counters on them.
+Oracle:When this creature enters, it deals X damage to any target, where X is the number of permanents you control with oil counters on them.

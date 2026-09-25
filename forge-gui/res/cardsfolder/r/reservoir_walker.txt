@@ -5,4 +5,4 @@ PT:3/3
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ When this creature enters, you gain 3 life and get {E}{E}{E} (three energy counters).
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 3 | SubAbility$ DBEnergy
 SVar:DBEnergy:DB$ PutCounter | Defined$ You | CounterType$ ENERGY | CounterNum$ 3
-Oracle:When Reservoir Walker enters, you gain 3 life and get {E}{E}{E} (three energy counters).
+Oracle:When this creature enters, you gain 3 life and get {E}{E}{E} (three energy counters).

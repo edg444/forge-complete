@@ -3,4 +3,4 @@ ManaCost:U
 Types:Creature Merfolk
 PT:1/1
 A:AB$ Pump | Cost$ U | Defined$ Self | KW$ Flying | SpellDescription$ This creature gains flying until end of turn.
-Oracle:{U}: Manta Riders gains flying until end of turn.
+Oracle:{U}: This creature gains flying until end of turn.

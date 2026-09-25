@@ -6,4 +6,4 @@ T:Mode$ Attacks | ValidCard$ Creature.Self | CheckSVar$ X | Execute$ TrigPump | 
 SVar:TrigPump:DB$ Pump | Defined$ Self | KW$ Flying
 SVar:X:Count$ThisTurnEntered_Battlefield_Creature.YouCtrl+StrictlyOther
 SVar:HasAttackEffect:TRUE
-Oracle:Whenever Waterspout Warden attacks, if another creature entered the battlefield under your control this turn, Waterspout Warden gains flying until end of turn.
+Oracle:Whenever this creature attacks, if another creature entered the battlefield under your control this turn, this creature gains flying until end of turn.

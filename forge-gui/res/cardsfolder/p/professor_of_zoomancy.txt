@@ -5,4 +5,4 @@ PT:4/3
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When this creature enters, create a 1/1 black and green Pest creature token with "When this token dies, you gain 1 life."
 SVar:TrigToken:DB$ Token | TokenScript$ bg_1_1_pest_lifegain | TokenOwner$ You
 DeckHas:Ability$Token|LifeGain
-Oracle:When Professor of Zoomancy enters, create a 1/1 black and green Pest creature token with "When this token dies, you gain 1 life."
+Oracle:When this creature enters, create a 1/1 black and green Pest creature token with "When this token dies, you gain 1 life."

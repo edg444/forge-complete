@@ -9,4 +9,4 @@ SVar:DBLoseLife:DB$ LoseLife | LifeAmount$ 1
 SVar:X:Count$ValidGraveyard Permanent.YouOwn
 SVar:HasAttackEffect:TRUE
 DeckHints:Ability$Sacrifice|Discard|Mill|Dredge|Graveyard
-Oracle:Deathtouch\nDescend 4 — Whenever Stinging Cave Crawler attacks, if there are four or more permanent cards in your graveyard, you draw a card and you lose 1 life.
+Oracle:Deathtouch\nDescend 4 — Whenever this creature attacks, if there are four or more permanent cards in your graveyard, you draw a card and you lose 1 life.

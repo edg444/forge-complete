@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigEnergy:DB$ PutCounter | Defined$ You | CounterType$ ENERGY | CounterNum$ 3
 A:AB$ Pump | Cost$ PayEnergy<3> | Defined$ Self | NumAtt$ +X | NumDef$ +X | AILogic$ Pummeler | SpellDescription$ This creature gets +X/+X until end of turn, where X is its power.
 SVar:X:Count$CardPower
-Oracle:When Electrostatic Pummeler enters, you get {E}{E}{E} (three energy counters).\nPay {E}{E}{E}: Electrostatic Pummeler gets +X/+X until end of turn, where X is its power.
+Oracle:When this creature enters, you get {E}{E}{E} (three energy counters).\nPay {E}{E}{E}: This creature gets +X/+X until end of turn, where X is its power.

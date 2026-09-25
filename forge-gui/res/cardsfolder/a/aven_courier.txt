@@ -7,4 +7,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPutCounter | TriggerDescri
 SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Permanent.YouCtrl | TgtPrompt$ Select target permanent you control | CounterType$ ExistingCounter | Choices$ Permanent.YouCtrl+HasCounters | PutOnDefined$ Targeted | OnlyNewKind$ True
 SVar:HasAttackEffect:TRUE
 DeckNeeds:Ability$Counters
-Oracle:Flying\nWhenever Aven Courier attacks, choose a counter on a permanent you control. Put a counter of that kind on target permanent you control if it doesn't have a counter of that kind on it.
+Oracle:Flying\nWhenever this creature attacks, choose a counter on a permanent you control. Put a counter of that kind on target permanent you control if it doesn't have a counter of that kind on it.

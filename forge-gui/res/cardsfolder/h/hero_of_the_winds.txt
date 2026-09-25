@@ -6,4 +6,4 @@ K:Flying
 T:Mode$ SpellCast | ValidActivatingPlayer$ You | TargetsValid$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigPumpAll | TriggerDescription$ Whenever you cast a spell that targets this creature, creatures you control get +1/+0 until end of turn.
 SVar:TrigPumpAll:DB$ PumpAll | ValidCards$ Creature.YouCtrl | NumAtt$ +1
 SVar:BuffedBy:Card
-Oracle:Flying\nWhenever you cast a spell that targets Hero of the Winds, creatures you control get +1/+0 until end of turn.
+Oracle:Flying\nWhenever you cast a spell that targets this creature, creatures you control get +1/+0 until end of turn.

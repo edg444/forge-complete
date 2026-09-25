@@ -7,4 +7,4 @@ SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Artifact
 SVar:ManaNeededToAvoidNegativeEffect:green
 AI:RemoveDeck:Random
 DeckNeeds:Color$Green
-Oracle:When Tin Street Hooligan enters, if {G} was spent to cast it, destroy target artifact.
+Oracle:When this creature enters, if {G} was spent to cast it, destroy target artifact.

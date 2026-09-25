@@ -7,4 +7,4 @@ SVar:DontUntap:Event$ Untap | ValidCard$ Card.IsRemembered | ValidStepTurnToCont
 AI:RemoveDeck:All
 AI:RemoveDeck:Random
 SVar:NonStackingEffect:True
-Oracle:{2}, {T}: Tap all other artifacts. They don't untap during their controllers' untap steps for as long as Kill Switch remains tapped.
+Oracle:{2}, {T}: Tap all other artifacts. They don't untap during their controllers' untap steps for as long as this artifact remains tapped.

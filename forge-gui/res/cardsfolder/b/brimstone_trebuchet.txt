@@ -9,4 +9,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.K
 SVar:TrigUntap:DB$ Untap | Defined$ Self
 SVar:BuffedBy:Knight
 DeckHints:Type$Knight
-Oracle:Defender, reach\n{T}: Brimstone Trebuchet deals 1 damage to each opponent.\nWhenever a Knight you control enters, untap Brimstone Trebuchet.
+Oracle:Defender, reach\n{T}: This creature deals 1 damage to each opponent.\nWhenever a Knight you control enters, untap this creature.

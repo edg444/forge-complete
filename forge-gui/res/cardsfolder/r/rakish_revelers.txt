@@ -11,4 +11,4 @@ SVar:MayPlay:Mode$ Continuous | MayPlay$ True | Affected$ Card.IsImprinted+IsRem
 SVar:Cast:Mode$ SpellCast | ValidCard$ Card.IsImprinted+IsRemembered+wasCastFromExile | Execute$ ExileSelf | Static$ True
 SVar:ExileSelf:DB$ ChangeZone | Origin$ Command | Destination$ Exile | Defined$ Self
 DeckHas:Ability$Token & Type$Citizen
-Oracle:When Rakish Revelers enters, create a 1/1 green and white Citizen creature token.\n{2}, Exile Rakish Revelers from your hand: Target land gains "{T}: Add {R}, {G}, or {W}" until Rakish Revelers is cast from exile. You may cast Rakish Revelers for as long as it remains exiled.
+Oracle:When this creature enters, create a 1/1 green and white Citizen creature token.\n{2}, Exile this card from your hand: Target land gains "{T}: Add {R}, {G}, or {W}" until this card is cast from exile. You may cast this card for as long as it remains exiled.

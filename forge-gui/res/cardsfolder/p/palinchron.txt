@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefi
 SVar:TrigUntap:DB$ Untap | UntapUpTo$ True | UntapType$ Land | Amount$ 7
 A:AB$ ChangeZone | Cost$ 2 U U | Origin$ Battlefield | Destination$ Hand | SpellDescription$ Return this creature to its owner's hand.
 SVar:FreeSpellAI:True
-Oracle:Flying\nWhen Palinchron enters, untap up to seven lands.\n{2}{U}{U}: Return Palinchron to its owner's hand.
+Oracle:Flying\nWhen this creature enters, untap up to seven lands.\n{2}{U}{U}: Return this creature to its owner's hand.

@@ -7,4 +7,4 @@ SVar:TrigDiscard:DB$ Discard | Defined$ Player | NumCards$ 1 | Mode$ TgtChoose |
 SVar:DBDraw:DB$ Draw | Defined$ You | ConditionDefined$ Remembered | ConditionPresent$ Card.YouOwn | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:AIPreference:DiscardCost$Card.cmcLE1
-Oracle:When Fanatic of the Harrowing enters, each player discards a card. If you discarded a card this way, draw a card.
+Oracle:When this creature enters, each player discards a card. If you discarded a card this way, draw a card.

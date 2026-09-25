@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.S
 SVar:TrigAdd:DB$ AddTurn | NumTurns$ 1 | Defined$ You
 SVar:TrigSkip:DB$ SkipTurn | NumTurns$ 1 | Defined$ You
 AI:RemoveDeck:Random
-Oracle:Flying\nWhen Wormfang Manta enters, you skip your next turn.\nWhen Wormfang Manta leaves the battlefield, you take an extra turn after this one.
+Oracle:Flying\nWhen this creature enters, you skip your next turn.\nWhen this creature leaves the battlefield, you take an extra turn after this one.

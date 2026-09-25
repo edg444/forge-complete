@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 1
 A:AB$ Mana | Cost$ T | Produced$ Combo R W | SpellDescription$ Add {R} or {W}.
 DeckHas:Ability$LifeGain
-Oracle:Wind-Scarred Crag enters tapped.\nWhen Wind-Scarred Crag enters, you gain 1 life.\n{T}: Add {R} or {W}.
+Oracle:This land enters tapped.\nWhen this land enters, you gain 1 life.\n{T}: Add {R} or {W}.

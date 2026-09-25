@@ -10,4 +10,4 @@ SVar:CantGainLife:Mode$ CantGainLife | ValidPlayer$ Player.IsRemembered | Descri
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:TriggerCount$DamageAmount
 SVar:HasCombatEffect:TRUE
-Oracle:Haste\nWhenever Screaming Nemesis is dealt damage, it deals that much damage to any other target. If a player is dealt damage this way, they can't gain life for the rest of the game.
+Oracle:Haste\nWhenever this creature is dealt damage, it deals that much damage to any other target. If a player is dealt damage this way, they can't gain life for the rest of the game.

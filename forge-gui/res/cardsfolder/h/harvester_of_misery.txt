@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigPumpAll:DB$ PumpAll | NumAtt$ -2 | NumDef$ -2 | ValidCards$ Creature.StrictlyOther | IsCurse$ True
 A:AB$ Pump | Cost$ 1 B Discard<1/CARDNAME> | ActivationZone$ Hand | ValidTgts$ Creature | NumAtt$ -2 | NumDef$ -2 | IsCurse$ True | AILogic$ AlwaysOnDiscard | SpellDescription$ Target creature gets -2/-2 until end of turn.
 DeckHas:Ability$Discard
-Oracle:Menace\nWhen Harvester of Misery enters, other creatures get -2/-2 until end of turn.\n{1}{B}, Discard Harvester of Misery: Target creature gets -2/-2 until end of turn.
+Oracle:Menace\nWhen this creature enters, other creatures get -2/-2 until end of turn.\n{1}{B}, Discard this card: Target creature gets -2/-2 until end of turn.

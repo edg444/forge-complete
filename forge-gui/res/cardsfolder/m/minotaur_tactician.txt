@@ -8,4 +8,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 1 | AddToughness$ 1 | IsP
 SVar:BuffedBy:Creature.White,Creature.Blue
 AI:RemoveDeck:Random
 DeckHints:Color$White|Blue
-Oracle:Haste\nMinotaur Tactician gets +1/+1 as long as you control a white creature.\nMinotaur Tactician gets +1/+1 as long as you control a blue creature.
+Oracle:Haste\nThis creature gets +1/+1 as long as you control a white creature.\nThis creature gets +1/+1 as long as you control a blue creature.

@@ -5,4 +5,4 @@ PT:3/2
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | CheckSVar$ RaidTest | Execute$ TrigDealDamage | TriggerDescription$ Raid — When this creature enters, if you attacked this turn, this creature deals 2 damage to any target.
 SVar:TrigDealDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 2
 SVar:RaidTest:Count$AttackersDeclared
-Oracle:Raid — When Storm Fleet Pyromancer enters, if you attacked this turn, Storm Fleet Pyromancer deals 2 damage to any target.
+Oracle:Raid — When this creature enters, if you attacked this turn, this creature deals 2 damage to any target.

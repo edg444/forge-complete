@@ -9,4 +9,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | NoResolvingCheck$ True | CheckDefinedPl
 SVar:TrigDraw:DB$ Draw | SubAbility$ DBLoseLife
 SVar:DBLoseLife:DB$ LoseLife | LifeAmount$ 1
 SVar:HasAttackEffect:TRUE
-Oracle:Deathtouch\nWhenever Preacher of the Schism attacks the player with the most life or tied for most life, create a 1/1 white Vampire creature token with lifelink.\nWhenever Preacher of the Schism attacks while you have the most life or are tied for most life, you draw a card and you lose 1 life.
+Oracle:Deathtouch\nWhenever this creature attacks the player with the most life or tied for most life, create a 1/1 white Vampire creature token with lifelink.\nWhenever this creature attacks while you have the most life or are tied for most life, you draw a card and you lose 1 life.

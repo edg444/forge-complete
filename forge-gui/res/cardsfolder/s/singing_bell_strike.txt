@@ -7,4 +7,4 @@ SVar:TrigTap:DB$ Tap | Defined$ Enchanted
 R:Event$ Untap | ActiveZones$ Battlefield | ValidCard$ Creature.AttachedBy | ValidStepTurnToController$ You | Layer$ CantHappen | Description$ Enchanted creature doesn't untap during its controller's untap step.
 S:Mode$ Continuous | AffectedDefined$ Enchanted | Affected$ Creature | AddAbility$ Untap | Description$ Enchanted creature has "{6}: Untap this creature."
 SVar:Untap:AB$ Untap | Cost$ 6 | Defined$ Self | SpellDescription$ Untap this creature.
-Oracle:Enchant creature\nWhen Singing Bell Strike enters, tap enchanted creature.\nEnchanted creature doesn't untap during its controller's untap step.\nEnchanted creature has "{6}: Untap this creature."
+Oracle:Enchant creature\nWhen this Aura enters, tap enchanted creature.\nEnchanted creature doesn't untap during its controller's untap step.\nEnchanted creature has "{6}: Untap this creature."

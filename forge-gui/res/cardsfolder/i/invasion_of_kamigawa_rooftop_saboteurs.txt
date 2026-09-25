@@ -7,7 +7,7 @@ SVar:TrigTap:DB$ Tap | ValidTgts$ Artifact.OppCtrl,Creature.OppCtrl | SubAbility
 SVar:DBCounter:DB$ PutCounter | Defined$ Targeted | CounterType$ Stun | CounterNum$ 1
 DeckHas:Ability$Counters
 AlternateMode:DoubleFaced
-Oracle:(As a Siege enters, choose an opponent to protect it. You and others can attack it. When it's defeated, exile it, then cast it transformed.)\nWhen Invasion of Kamigawa enters, tap target artifact or creature an opponent controls and put a stun counter on it. (If a permanent with a stun counter would become untapped, remove one from it instead.)
+Oracle:(As a Siege enters, choose an opponent to protect it. You and others can attack it. When it's defeated, exile it, then cast it transformed.)\nWhen this Siege enters, tap target artifact or creature an opponent controls and put a stun counter on it. (If a permanent with a stun counter would become untapped, remove one from it instead.)
 
 ALTERNATE
 
@@ -19,4 +19,4 @@ PT:2/3
 K:Flying
 T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player,Battle | CombatDamage$ True | Execute$ TrigDraw | TriggerDescription$ Whenever this creature deals combat damage to a player or battle, draw a card.
 SVar:TrigDraw:DB$ Draw
-Oracle:Flying\nWhenever Rooftop Saboteurs deals combat damage to a player or battle, draw a card.
+Oracle:Flying\nWhenever this creature deals combat damage to a player or battle, draw a card.

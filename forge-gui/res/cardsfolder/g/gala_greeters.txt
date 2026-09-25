@@ -9,4 +9,4 @@ SVar:DBToken:DB$ Token | TokenScript$ c_a_treasure_sac | TokenTapped$ True | Spe
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 2 | SpellDescription$ You gain 2 life.
 SVar:BuffedBy:Creature
 DeckHas:Ability$Counters|Token|LifeGain|Sacrifice & Type$Treasure|Artifact
-Oracle:Alliance — Whenever another creature you control enters, choose one that hasn't been chosen this turn —\n• Put a +1/+1 counter on Gala Greeters.\n• Create a tapped Treasure token.\n• You gain 2 life.
+Oracle:Alliance — Whenever another creature you control enters, choose one that hasn't been chosen this turn —\n• Put a +1/+1 counter on this creature.\n• Create a tapped Treasure token.\n• You gain 2 life.

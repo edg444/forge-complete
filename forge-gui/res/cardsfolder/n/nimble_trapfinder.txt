@@ -11,4 +11,4 @@ SVar:TrigDraw:DB$ Draw
 SVar:X:Count$Party
 DeckHas:Ability$Party
 DeckHints:Type$Cleric|Warrior|Wizard
-Oracle:Nimble Trapfinder can't be blocked if you had another Cleric, Rogue, Warrior, or Wizard enter the battlefield under your control this turn.\nAt the beginning of combat on your turn, if you have a full party, creatures you control gain "Whenever this creature deals combat damage to a player, draw a card" until end of turn.
+Oracle:This creature can't be blocked if you had another Cleric, Rogue, Warrior, or Wizard enter the battlefield under your control this turn.\nAt the beginning of combat on your turn, if you have a full party, creatures you control gain "Whenever this creature deals combat damage to a player, draw a card" until end of turn.

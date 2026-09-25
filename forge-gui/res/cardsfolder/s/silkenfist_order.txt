@@ -4,4 +4,4 @@ Types:Creature Kor Soldier
 PT:3/5
 T:Mode$ AttackerBlocked | ValidCard$ Card.Self | Execute$ TrigUntap | TriggerDescription$ Whenever this creature becomes blocked, untap it.
 SVar:TrigUntap:DB$ Untap | Defined$ Self
-Oracle:Whenever Silkenfist Order becomes blocked, untap it.
+Oracle:Whenever this creature becomes blocked, untap it.

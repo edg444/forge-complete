@@ -7,4 +7,4 @@ SVar:DBDealDamage:DB$ DealDamage | Defined$ You | NumDmg$ 3 | SubAbility$ DBDama
 SVar:DBDamageResolve:DB$ DamageResolve
 SVar:SelfDamageAmount:3
 AI:RemoveDeck:Random
-Oracle:{T}: Orcish Cannoneers deals 2 damage to any target and 3 damage to you.
+Oracle:{T}: This creature deals 2 damage to any target and 3 damage to you.

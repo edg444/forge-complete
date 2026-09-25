@@ -9,7 +9,7 @@ SVar:DBTransform:DB$ SetState | Defined$ Self | ConditionPresent$ Card.Wizard+Yo
 SVar:BuffedBy:Instant,Sorcery
 DeckHints:Type$Wizard
 AlternateMode:DoubleFaced
-Oracle:Flying\nWhenever you cast an instant or sorcery spell, create a 1/1 blue Human Wizard creature token. Then if you control three or more Wizards, transform Docent of Perfection.
+Oracle:Flying\nWhenever you cast an instant or sorcery spell, create a 1/1 blue Human Wizard creature token. Then if you control three or more Wizards, transform this creature.
 
 ALTERNATE
 

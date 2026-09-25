@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 1
 A:AB$ Mana | Cost$ T | Produced$ Combo R G | SpellDescription$ Add {R} or {G}.
 DeckHas:Ability$LifeGain
-Oracle:Kazandu Refuge enters tapped.\nWhen Kazandu Refuge enters, you gain 1 life.\n{T}: Add {R} or {G}.
+Oracle:This land enters tapped.\nWhen this land enters, you gain 1 life.\n{T}: Add {R} or {G}.

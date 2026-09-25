@@ -6,4 +6,4 @@ K:Reach
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When this creature enters, create a 1/2 green Spider creature token with reach.
 SVar:TrigToken:DB$ Token | TokenScript$ g_1_2_spider_reach | TokenOwner$ You
 DeckHas:Ability$Token
-Oracle:Reach\nWhen Twin-Silk Spider enters, create a 1/2 green Spider creature token with reach.
+Oracle:Reach\nWhen this creature enters, create a 1/2 green Spider creature token with reach.

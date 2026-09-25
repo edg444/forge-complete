@@ -6,4 +6,4 @@ SVar:AttachAILogic:ChangeType
 S:Mode$ Continuous | AffectedDefined$ Enchanted | AddType$ Swamp | RemoveLandTypes$ True | Description$ Enchanted land is a Swamp.
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When this Aura enters, draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
-Oracle:Enchant land\nWhen Tainted Well enters, draw a card.\nEnchanted land is a Swamp.
+Oracle:Enchant land\nWhen this Aura enters, draw a card.\nEnchanted land is a Swamp.

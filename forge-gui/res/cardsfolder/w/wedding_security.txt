@@ -8,4 +8,4 @@ SVar:DBDraw:DB$ Draw
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Counters|Sacrifice
 DeckNeeds:Type$Blood
-Oracle:Whenever Wedding Security attacks, you may sacrifice a Blood token. If you do, put a +1/+1 counter on Wedding Security and draw a card.
+Oracle:Whenever this creature attacks, you may sacrifice a Blood token. If you do, put a +1/+1 counter on this creature and draw a card.

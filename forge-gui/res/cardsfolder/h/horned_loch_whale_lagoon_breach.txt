@@ -7,7 +7,7 @@ K:Ward:2
 R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplaceWith$ LandTapped | ReplacementResult$ Updated | Description$ This creature enters tapped unless it's your turn.
 SVar:LandTapped:DB$ Tap | Defined$ Self | ETB$ True | ConditionPlayerTurn$ False
 AlternateMode:Adventure
-Oracle:Flash\nWard {2}\nHorned Loch-Whale enters tapped unless it's your turn.
+Oracle:Flash\nWard {2}\nThis creature enters tapped unless it's your turn.
 
 ALTERNATE
 

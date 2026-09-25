@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Hamste
 SVar:TrigAttach:DB$ Attach | Defined$ TriggeredCardLKICopy
 K:Equip:2
 SVar:X:Count$Valid Creature.basePowerEQ1+YouCtrl,Creature.baseToughnessEQ1+YouCtrl
-Oracle:Equipped creature gets +1/+1 for each creature you control with base power or toughness 1.\nWhenever a Hamster, Mouse, Rat, or Squirrel you control enters, you may attach Sword of the Squeak to that creature.\nEquip {2}
+Oracle:Equipped creature gets +1/+1 for each creature you control with base power or toughness 1.\nWhenever a Hamster, Mouse, Rat, or Squirrel you control enters, you may attach this Equipment to that creature.\nEquip {2}

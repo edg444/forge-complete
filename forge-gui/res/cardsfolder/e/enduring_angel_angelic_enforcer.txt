@@ -11,7 +11,7 @@ SVar:DBSetLife:DB$ SetLife | Defined$ You | LifeAmount$ 3 | SubAbility$ DBLoseGa
 SVar:DBLoseGame:DB$ LosesGame | Defined$ You | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ NE1 | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 AlternateMode:DoubleFaced
-Oracle:Flying, double strike\nYou have hexproof.\nIf your life total would be reduced to 0 or less, instead transform Enduring Angel and your life total becomes 3. Then if Enduring Angel didn't transform this way, you lose the game.
+Oracle:Flying, double strike\nYou have hexproof.\nIf your life total would be reduced to 0 or less, instead transform this creature and your life total becomes 3. Then if this creature didn't transform this way, you lose the game.
 
 ALTERNATE
 

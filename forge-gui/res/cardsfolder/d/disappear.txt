@@ -5,4 +5,4 @@ K:Enchant:Creature
 SVar:AttachAILogic:Curse
 A:AB$ ChangeZone | Cost$ U | Defined$ Enchanted & Self | Origin$ Battlefield | Destination$ Hand | SpellDescription$ Return enchanted creature and this Aura to their owners' hands.
 SVar:NonStackingAttachEffect:True
-Oracle:Enchant creature\n{U}: Return enchanted creature and Disappear to their owners' hands.
+Oracle:Enchant creature\n{U}: Return enchanted creature and this Aura to their owners' hands.

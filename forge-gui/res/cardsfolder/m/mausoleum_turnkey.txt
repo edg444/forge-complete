@@ -4,4 +4,4 @@ Types:Creature Ogre Rogue
 PT:3/2
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChangeZone | TriggerDescription$ When this creature enters, return target creature card of an opponent's choice from your graveyard to your hand.
 SVar:TrigChangeZone:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand | ValidTgts$ Creature.YouOwn | TargetingPlayer$ Opponent
-Oracle:When Mausoleum Turnkey enters, return target creature card of an opponent's choice from your graveyard to your hand.
+Oracle:When this creature enters, return target creature card of an opponent's choice from your graveyard to your hand.

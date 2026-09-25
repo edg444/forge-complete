@@ -8,7 +8,7 @@ SVar:DBDig:DB$ Dig | DigNum$ 1 | Reveal$ True | ChangeNum$ All | ChangeValid$ Ca
 SVar:DBDraw:DB$ Draw | ConditionDefined$ Remembered | ConditionPresent$ Land,Card.DoubleFaced | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 AlternateMode:DoubleFaced
-Oracle:(As a Siege enters, choose an opponent to protect it. You and others can attack it. When it's defeated, exile it, then cast it transformed.)\nWhen Invasion of Pyrulea enters, scry 3, then reveal the top card of your library. If it's a land or double-faced card, draw a card.
+Oracle:(As a Siege enters, choose an opponent to protect it. You and others can attack it. When it's defeated, exile it, then cast it transformed.)\nWhen this Siege enters, scry 3, then reveal the top card of your library. If it's a land or double-faced card, draw a card.
 
 ALTERNATE
 

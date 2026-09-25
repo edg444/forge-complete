@@ -8,4 +8,4 @@ S:Mode$ Continuous | Affected$ Card.Self | MayPlay$ True | AffectedZone$ Graveya
 SVar:DiscardMe:1
 DeckHas:Ability$Discard|Graveyard
 DeckNeeds:Type$Instant|Sorcery
-Oracle:Whenever you cast an instant or sorcery spell, each opponent loses 1 life.\nYou may cast Rona, Sheoldred's Faithful from your graveyard by discarding two cards in addition to paying its other costs.
+Oracle:Whenever you cast an instant or sorcery spell, each opponent loses 1 life.\nYou may cast this card from your graveyard by discarding two cards in addition to paying its other costs.

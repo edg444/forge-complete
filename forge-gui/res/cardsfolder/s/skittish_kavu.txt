@@ -7,4 +7,4 @@ SVar:X:Count$Valid Creature.White+OppCtrl/Plus.Y
 SVar:Y:Count$Valid Creature.Blue+OppCtrl
 SVar:AntiBuffedBy:Creature.White,Creature.Blue
 AI:RemoveDeck:Random
-Oracle:Skittish Kavu gets +1/+1 as long as no opponent controls a white or blue creature.
+Oracle:This creature gets +1/+1 as long as no opponent controls a white or blue creature.

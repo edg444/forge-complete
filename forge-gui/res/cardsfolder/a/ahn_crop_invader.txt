@@ -6,4 +6,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ First Strike | Conditio
 A:AB$ Pump | Cost$ 1 Sac<1/Creature.Other/another creature> | Defined$ Self | NumAtt$ +2 | AILogic$ Aristocrat | SpellDescription$ This creature gets +2/+0 until end of turn.
 SVar:AIPreference:SacCost$Creature.Other
 DeckHas:Ability$Sacrifice
-Oracle:During your turn, Ahn-Crop Invader has first strike.\n{1}, Sacrifice another creature: Ahn-Crop Invader gets +2/+0 until end of turn.
+Oracle:During your turn, this creature has first strike.\n{1}, Sacrifice another creature: This creature gets +2/+0 until end of turn.

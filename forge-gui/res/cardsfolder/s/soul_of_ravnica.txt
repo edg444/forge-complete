@@ -7,4 +7,4 @@ A:AB$ Draw | Cost$ 5 U U | NumCards$ X | SpellDescription$ Draw a card for each 
 A:AB$ Draw | Cost$ 5 U U ExileFromGrave<1/CARDNAME> | ActivationZone$ Graveyard | NumCards$ X | SpellDescription$ Draw a card for each color among permanents you control.
 SVar:X:Count$Valid Permanent.YouCtrl$Colors
 DeckNeeds:Color$White|Red|Green|Black
-Oracle:Flying\n{5}{U}{U}: Draw a card for each color among permanents you control.\n{5}{U}{U}, Exile Soul of Ravnica from your graveyard: Draw a card for each color among permanents you control.
+Oracle:Flying\n{5}{U}{U}: Draw a card for each color among permanents you control.\n{5}{U}{U}, Exile this card from your graveyard: Draw a card for each color among permanents you control.

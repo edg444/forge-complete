@@ -10,7 +10,7 @@ DeckHas:Ability$Discard|Graveyard
 DeckHints:Ability$Discard|Mill|Sacrifice
 DeckNeeds:Type$Dinosaur
 AlternateMode:DoubleFaced
-Oracle:When Saheeli's Lattice enters, you may discard a card. If you do, draw two cards.\nCraft with one or more Dinosaurs {4}{R} ({4}{R}, Exile this artifact, Exile one or more Dinosaurs you control and/or Dinosaur cards from your graveyard: Return this card transformed under its owner's control. Craft only as a sorcery.)
+Oracle:When this artifact enters, you may discard a card. If you do, draw two cards.\nCraft with one or more Dinosaurs {4}{R} ({4}{R}, Exile this artifact, Exile one or more Dinosaurs you control and/or Dinosaur cards from your graveyard: Return this card transformed under its owner's control. Craft only as a sorcery.)
 
 ALTERNATE
 

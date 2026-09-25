@@ -7,4 +7,4 @@ T:Mode$ SpellCast | ValidCard$ Instant,Sorcery,Wizard | ValidActivatingPlayer$ Y
 SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +2
 SVar:BuffedBy:Instant,Sorcery,Wizard
 DeckHints:Type$Instant|Sorcery|Wizard
-Oracle:Flying\nWhenever you cast an instant, sorcery, or Wizard spell, Umara Mystic gets +2/+0 until end of turn.
+Oracle:Flying\nWhenever you cast an instant, sorcery, or Wizard spell, this creature gets +2/+0 until end of turn.

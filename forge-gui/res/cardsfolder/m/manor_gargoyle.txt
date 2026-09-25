@@ -7,4 +7,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | Affected$ Card.withDefender | AddKe
 A:AB$ Debuff | Cost$ 1 | Keywords$ Defender | Defined$ Self | SubAbility$ DBFlight | SpellDescription$ Until end of turn, this creature loses defender and gains flying.
 SVar:DBFlight:DB$ Pump | Defined$ Self | KW$ Flying
 AI:RemoveDeck:All
-Oracle:Defender\nManor Gargoyle has indestructible as long as it has defender.\n{1}: Until end of turn, Manor Gargoyle loses defender and gains flying.
+Oracle:Defender\nThis creature has indestructible as long as it has defender.\n{1}: Until end of turn, this creature loses defender and gains flying.

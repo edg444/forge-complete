@@ -8,4 +8,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPumpAll | TriggerDescripti
 SVar:TrigPumpAll:AB$ PumpAll | Cost$ Sac<1/Food> | ValidCards$ Creature.attacking | NumAtt$ +1 | NumDef$ +1 | KW$ Trample
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$LifeGain|Token|Counters & Type$Food
-Oracle:When Provisions Merchant enters, create a Food token. (It's an artifact with "{2}, {T}, Sacrifice this token: You gain 3 life.")\nWhenever Provisions Merchant attacks, you may sacrifice a Food. If you do, attacking creatures get +1/+1 and gain trample until end of turn.
+Oracle:When this creature enters, create a Food token. (It's an artifact with "{2}, {T}, Sacrifice this token: You gain 3 life.")\nWhenever this creature attacks, you may sacrifice a Food. If you do, attacking creatures get +1/+1 and gain trample until end of turn.

@@ -7,4 +7,4 @@ SVar:TrigToken:DB$ Token | TokenScript$ r_3_1_dinosaur | ConditionPresent$ Creat
 SVar:BuffedBy:Creature.powerGE4
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Token & Type$Dinosaur
-Oracle:Whenever Scalestorm Summoner attacks, create a 3/1 red Dinosaur creature token if you control a creature with power 4 or greater.
+Oracle:Whenever this creature attacks, create a 3/1 red Dinosaur creature token if you control a creature with power 4 or greater.

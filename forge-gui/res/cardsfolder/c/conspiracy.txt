@@ -7,4 +7,4 @@ S:Mode$ Continuous | Affected$ Creature.YouCtrl | AffectedZone$ All | AddType$ C
 AI:RemoveDeck:All
 AI:RemoveDeck:Random
 SVar:NonStackingEffect:True
-Oracle:As Conspiracy enters, choose a creature type.\nCreatures you control are the chosen type. The same is true for creature spells you control and creature cards you own that aren't on the battlefield.
+Oracle:As this enchantment enters, choose a creature type.\nCreatures you control are the chosen type. The same is true for creature spells you control and creature cards you own that aren't on the battlefield.

@@ -8,4 +8,4 @@ A:AB$ Token | Cost$ SubCounter<3/SPORE> | TokenScript$ g_1_1_saproling | TokenOw
 A:AB$ Regenerate | Cost$ Sac<1/Saproling> | ValidTgts$ Fungus | TgtPrompt$ Select target Fungus. | SpellDescription$ Regenerate target Fungus.
 DeckHints:Type$Fungus
 DeckHas:Ability$Counters|Token
-Oracle:At the beginning of your upkeep, put a spore counter on Savage Thallid.\nRemove three spore counters from Savage Thallid: Create a 1/1 green Saproling creature token.\nSacrifice a Saproling: Regenerate target Fungus.
+Oracle:At the beginning of your upkeep, put a spore counter on this creature.\nRemove three spore counters from this creature: Create a 1/1 green Saproling creature token.\nSacrifice a Saproling: Regenerate target Fungus.

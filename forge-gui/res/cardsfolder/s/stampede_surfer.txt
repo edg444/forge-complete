@@ -8,4 +8,4 @@ SVar:DBRepeat:DB$ RepeatEach | RepeatPlayers$ Opponent | ChangeZoneTable$ True |
 SVar:DBToken:DB$ Token | TokenScript$ g_2_2_boar | TokenTapped$ True | TokenAttacking$ Remembered | TokenOwner$ You
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Token
-Oracle:Haste\nWhenever Stampede Surfer attacks, for each opponent, you create a 2/2 green Boar creature token that's tapped and attacking that opponent.
+Oracle:Haste\nWhenever this creature attacks, for each opponent, you create a 2/2 green Boar creature token that's tapped and attacking that opponent.

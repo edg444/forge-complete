@@ -11,4 +11,4 @@ SVar:AFLifeLost:Number$0
 # AFLifeLost will be set by LoseLife
 SVar:X:Count$Valid Vampire.YouCtrl
 AI:RemoveDeck:Random
-Oracle:Flying, protection from white\nWhen Malakir Bloodwitch enters, each opponent loses life equal to the number of Vampires you control. You gain life equal to the life lost this way.
+Oracle:Flying, protection from white\nWhen this creature enters, each opponent loses life equal to the number of Vampires you control. You gain life equal to the life lost this way.

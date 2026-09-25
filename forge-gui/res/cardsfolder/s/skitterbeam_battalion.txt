@@ -9,4 +9,4 @@ T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self+wasCastByY
 SVar:TrigToken:DB$ CopyPermanent | Defined$ TriggeredCardLKICopy | NumCopies$ 2
 DeckHas:Ability$Token
 DeckHints:Color$Red
-Oracle:Prototype {3}{R}{R} — 2/2 (You may cast this spell with different mana cost, color, and size. It keeps its abilities and types.)\nTrample, haste\nWhen Skitterbeam Battalion enters, if you cast it, create two tokens that are copies of it.
+Oracle:Prototype {3}{R}{R} — 2/2 (You may cast this spell with different mana cost, color, and size. It keeps its abilities and types.)\nTrample, haste\nWhen this creature enters, if you cast it, create two tokens that are copies of it.

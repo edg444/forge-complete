@@ -21,4 +21,4 @@ Colors:red
 Types:Creature Human Berserker
 PT:4/3
 S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't block.
-Oracle:Volt-Charged Berserker can't block.
+Oracle:This creature can't block.

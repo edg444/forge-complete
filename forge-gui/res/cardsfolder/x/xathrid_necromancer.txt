@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigToken:DB$ Token | TokenScript$ b_2_2_zombie | TokenOwner$ You | TokenTapped$ True
 DeckHints:Type$Human
 DeckHas:Ability$Token
-Oracle:Whenever Xathrid Necromancer or another Human creature you control dies, create a tapped 2/2 black Zombie creature token.
+Oracle:Whenever this creature or another Human creature you control dies, create a tapped 2/2 black Zombie creature token.

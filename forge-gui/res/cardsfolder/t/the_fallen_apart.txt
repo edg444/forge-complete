@@ -13,4 +13,4 @@ S:Mode$ CantBlock | ValidCard$ Card.Self | CheckSVar$ Arms | SVarCompare$ EQ0 | 
 SVar:Arms:Count$CardCounters.Arm
 SVar:Legs:Count$CardCounters.Leg
 SVar:Limbs:Count$CardCounters.Arm/Plus.Legs
-Oracle:The Fallen Apart enters with two arms and two legs.\nWhenever damage is dealt to The Fallen Apart, remove an arm or a leg from it.\nThe Fallen Apart can't attack if it has no legs and can't block if it has no arms.
+Oracle:This creature enters with two arms and two legs.\nWhenever damage is dealt to this creature, remove an arm or a leg from it.\nThis creature can't attack if it has no legs and can't block if it has no arms.

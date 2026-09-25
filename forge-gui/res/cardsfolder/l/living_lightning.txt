@@ -5,4 +5,4 @@ PT:3/2
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigChangeZone | TriggerDescription$ When this creature dies, return target instant or sorcery card from your graveyard to your hand.
 SVar:TrigChangeZone:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand | ValidTgts$ Instant.YouOwn,Sorcery.YouOwn | TgtPrompt$ Select target instant or sorcery
 DeckHints:Type$Instant|Sorcery
-Oracle:When Living Lightning dies, return target instant or sorcery card from your graveyard to your hand.
+Oracle:When this creature dies, return target instant or sorcery card from your graveyard to your hand.

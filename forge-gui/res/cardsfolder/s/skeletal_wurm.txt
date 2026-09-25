@@ -3,4 +3,4 @@ ManaCost:7 B
 Types:Creature Skeleton Wurm
 PT:7/6
 A:AB$ Regenerate | Cost$ B | SpellDescription$ Regenerate this creature.
-Oracle:{B}: Regenerate Skeletal Wurm.
+Oracle:{B}: Regenerate this creature.

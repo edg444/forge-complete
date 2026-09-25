@@ -10,4 +10,4 @@ S:Mode$ ReduceCost | ValidCard$ Land.YouCtrl | Type$ Ability | Amount$ 1 | Affec
 S:Mode$ Continuous | Affected$ Creature.Land+YouCtrl | AddPower$ 1 | AddToughness$ 1 | Description$ Land creatures you control get +1/+1.
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Mill
-Oracle:Whenever Blossoming Tortoise enters or attacks, mill three cards, then return a land card from your graveyard to the battlefield tapped.\nActivated abilities of lands you control cost {1} less to activate.\nLand creatures you control get +1/+1.
+Oracle:Whenever this creature enters or attacks, mill three cards, then return a land card from your graveyard to the battlefield tapped.\nActivated abilities of lands you control cost {1} less to activate.\nLand creatures you control get +1/+1.

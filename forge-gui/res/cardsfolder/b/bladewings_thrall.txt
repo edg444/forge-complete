@@ -6,4 +6,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Flying | IsPresent$ Dra
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Dragon | TriggerZones$ Graveyard | OptionalDecider$ You | Execute$ TrigReturn | TriggerDescription$ When a Dragon enters, you may return this card from your graveyard to the battlefield.
 SVar:TrigReturn:DB$ ChangeZone | Defined$ Self | Origin$ Graveyard | Destination$ Battlefield
 SVar:BuffedBy:Dragon
-Oracle:Bladewing's Thrall has flying as long as you control a Dragon.\nWhen a Dragon enters, you may return Bladewing's Thrall from your graveyard to the battlefield.
+Oracle:This creature has flying as long as you control a Dragon.\nWhen a Dragon enters, you may return this card from your graveyard to the battlefield.

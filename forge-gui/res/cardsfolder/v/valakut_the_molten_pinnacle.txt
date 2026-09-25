@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | ValidCard$ Mountain.YouCtrl | Origin$ Any | Destination$ B
 SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 3 | ConditionPresent$ Mountain.YouCtrl+!TriggeredCard | ConditionCompare$ GE5 | OptionalDecider$ You
 A:AB$ Mana | Cost$ T | Produced$ R | SpellDescription$ Add {R}.
 SVar:AILandRemovalMinScore:170
-Oracle:Valakut, the Molten Pinnacle enters tapped.\nWhenever a Mountain you control enters, if you control at least five other Mountains, you may have Valakut, the Molten Pinnacle deal 3 damage to any target.\n{T}: Add {R}.
+Oracle:This land enters tapped.\nWhenever a Mountain you control enters, if you control at least five other Mountains, you may have this land deal 3 damage to any target.\n{T}: Add {R}.

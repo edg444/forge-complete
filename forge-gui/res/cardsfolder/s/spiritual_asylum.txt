@@ -6,4 +6,4 @@ T:Mode$ Attacks | ValidCard$ Creature.YouCtrl | TriggerZones$ Battlefield | Exec
 SVar:TrigSacrifice:DB$ Sacrifice
 SVar:NonStackingEffect:True
 AI:RemoveDeck:All
-Oracle:Creatures and lands you control have shroud. (They can't be the targets of spells or abilities.)\nWhen a creature you control attacks, sacrifice Spiritual Asylum.
+Oracle:Creatures and lands you control have shroud. (They can't be the targets of spells or abilities.)\nWhen a creature you control attacks, sacrifice this enchantment.

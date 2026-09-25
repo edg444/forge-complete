@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigGainLife:DB$ GainLife | Defined$ You | LifeAmount$ X
 SVar:X:TriggeredCard$CardPower
 DeckNeeds:Type$Vraska
-Oracle:When Attendant of Vraska dies, if you control a Vraska planeswalker, you gain life equal to Attendant of Vraska's power.
+Oracle:When this creature dies, if you control a Vraska planeswalker, you gain life equal to this creature's power.

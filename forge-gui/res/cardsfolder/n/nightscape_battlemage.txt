@@ -8,4 +8,4 @@ SVar:TrigKicker:DB$ ChangeZone | ValidTgts$ Creature.nonBlack | TgtPrompt$ Selec
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self+kicked 2 | Execute$ TrigKicker2 | TriggerDescription$ When this creature enters, if it was kicked with its {2}{R} kicker, destroy target land.
 SVar:TrigKicker2:DB$ Destroy | ValidTgts$ Land | TgtPrompt$ Select target land
 SVar:PlayMain1:TRUE
-Oracle:Kicker {2}{U} and/or {2}{R} (You may pay an additional {2}{U} and/or {2}{R} as you cast this spell.)\nWhen Nightscape Battlemage enters, if it was kicked with its {2}{U} kicker, return up to two target nonblack creatures to their owners' hands.\nWhen Nightscape Battlemage enters, if it was kicked with its {2}{R} kicker, destroy target land.
+Oracle:Kicker {2}{U} and/or {2}{R} (You may pay an additional {2}{U} and/or {2}{R} as you cast this spell.)\nWhen this creature enters, if it was kicked with its {2}{U} kicker, return up to two target nonblack creatures to their owners' hands.\nWhen this creature enters, if it was kicked with its {2}{R} kicker, destroy target land.

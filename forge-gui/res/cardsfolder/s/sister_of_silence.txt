@@ -5,4 +5,4 @@ PT:3/3
 K:Flash
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCounter | TriggerDescription$ Psychic Abomination — When this creature enters, counter target instant spell, sorcery spell, activated ability, or triggered ability.
 SVar:TrigCounter:DB$ Counter | TargetType$ Spell.Instant,Spell.Sorcery,Activated,Triggered | TgtPrompt$ Select target instant spell, sorcery spell, activated ability, or triggered ability | ValidTgts$ Card,Emblem
-Oracle:Flash\nPsychic Abomination — When Sister of Silence enters, counter target instant spell, sorcery spell, activated ability, or triggered ability.
+Oracle:Flash\nPsychic Abomination — When this creature enters, counter target instant spell, sorcery spell, activated ability, or triggered ability.

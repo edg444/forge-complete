@@ -10,4 +10,4 @@ SVar:DBCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Valid Creature
 DeckHas:Ability$Counters
-Oracle:Flying, ward {3}\nWhen Grey Host Reinforcements enters, exile target player's graveyard. Put a number of +1/+1 counters on Grey Host Reinforcements equal to the number of creature cards exiled this way.
+Oracle:Flying, ward {3}\nWhen this creature enters, exile target player's graveyard. Put a number of +1/+1 counters on this creature equal to the number of creature cards exiled this way.

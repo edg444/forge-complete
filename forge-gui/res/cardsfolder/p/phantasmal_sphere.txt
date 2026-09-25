@@ -11,4 +11,4 @@ SVar:OrbToken:DB$ Token | ValidTgts$ Opponent | TokenOwner$ Targeted | TokenScri
 SVar:Y:Count$CardCounters.P1P1
 SVar:XLKI:TriggeredCard$CardCounters.P1P1
 AI:RemoveDeck:All
-Oracle:Flying\nAt the beginning of your upkeep, put a +1/+1 counter on Phantasmal Sphere, then sacrifice Phantasmal Sphere unless you pay {1} for each +1/+1 counter on it.\nWhen Phantasmal Sphere leaves the battlefield, target opponent creates an X/X blue Orb creature token with flying, where X is the number of +1/+1 counters on Phantasmal Sphere.
+Oracle:Flying\nAt the beginning of your upkeep, put a +1/+1 counter on this creature, then sacrifice this creature unless you pay {1} for each +1/+1 counter on it.\nWhen this creature leaves the battlefield, target opponent creates an X/X blue Orb creature token with flying, where X is the number of +1/+1 counters on this creature.

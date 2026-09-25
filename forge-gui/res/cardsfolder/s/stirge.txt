@@ -6,4 +6,4 @@ A:AB$ Draw | Cost$ 1 B PayLife<1> Sac<1/CARDNAME> | SpellDescription$ Draw a car
 K:Flying
 S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't block.
 DeckHas:Ability$Sacrifice
-Oracle:Flying\nStirge can't block.\nBlood Drain — {1}{B}, Pay 1 life, Sacrifice Stirge: Draw a card.
+Oracle:Flying\nThis creature can't block.\nBlood Drain — {1}{B}, Pay 1 life, Sacrifice this creature: Draw a card.

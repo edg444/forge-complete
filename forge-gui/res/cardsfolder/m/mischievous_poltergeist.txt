@@ -4,4 +4,4 @@ Types:Creature Spirit
 PT:1/1
 K:Flying
 A:AB$ Regenerate | Cost$ PayLife<1> | SpellDescription$ Regenerate this creature.
-Oracle:Flying\nPay 1 life: Regenerate Mischievous Poltergeist.
+Oracle:Flying\nPay 1 life: Regenerate this creature.

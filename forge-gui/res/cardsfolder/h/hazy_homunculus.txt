@@ -3,4 +3,4 @@ ManaCost:1 U
 Types:Creature Homunculus Illusion
 PT:1/1
 S:Mode$ CantBlockBy | ValidAttacker$ Card.Self | IsPresent$ Land.DefenderCtrl+untapped | Description$ This creature can't be blocked as long as defending player controls an untapped land.
-Oracle:Hazy Homunculus can't be blocked as long as defending player controls an untapped land.
+Oracle:This creature can't be blocked as long as defending player controls an untapped land.

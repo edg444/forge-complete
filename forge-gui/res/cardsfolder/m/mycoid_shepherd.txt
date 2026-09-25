@@ -4,4 +4,4 @@ Types:Creature Fungus
 PT:5/4
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self,Creature.Other+powerGE5+YouCtrl | OptionalDecider$ You | Execute$ TrigGainLife | TriggerDescription$ Whenever this creature or another creature you control with power 5 or greater dies, you may gain 5 life.
 SVar:TrigGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 5
-Oracle:Whenever Mycoid Shepherd or another creature you control with power 5 or greater dies, you may gain 5 life.
+Oracle:Whenever this creature or another creature you control with power 5 or greater dies, you may gain 5 life.

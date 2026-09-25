@@ -7,4 +7,4 @@ K:Vigilance
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 1 | AddToughness$ 1 | IsPresent$ Artifact.YouCtrl | Description$ This creature gets +1/+1 as long as you control an artifact.
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 1 | AddToughness$ 1 | IsPresent$ Enchantment.YouCtrl | Description$ This creature gets +1/+1 as long as you control an enchantment.
 SVar:BuffedBy:Enchantment,Artifact
-Oracle:Flying, vigilance\nShinechaser gets +1/+1 as long as you control an artifact.\nShinechaser gets +1/+1 as long as you control an enchantment.
+Oracle:Flying, vigilance\nThis creature gets +1/+1 as long as you control an artifact.\nThis creature gets +1/+1 as long as you control an enchantment.

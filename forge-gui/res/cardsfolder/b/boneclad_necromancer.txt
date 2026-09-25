@@ -7,4 +7,4 @@ SVar:TrigExile:DB$ ChangeZone | Origin$ Graveyard | Destination$ Exile | ValidTg
 SVar:DBToken:DB$ Token | TokenScript$ b_2_2_zombie | TokenOwner$ You | ConditionDefined$ Remembered | ConditionPresent$ Card.Creature | ConditionCompare$ EQ1 | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHas:Ability$Token
-Oracle:When Boneclad Necromancer enters, you may exile target creature card from a graveyard. If you do, create a 2/2 black Zombie creature token.
+Oracle:When this creature enters, you may exile target creature card from a graveyard. If you do, create a 2/2 black Zombie creature token.

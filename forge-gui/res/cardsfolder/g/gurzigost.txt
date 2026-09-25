@@ -8,4 +8,4 @@ A:AB$ Effect | Cost$ G G Discard<1/Card> | StaticAbilities$ Static | Duration$ U
 SVar:Static:Mode$ AssignCombatDamageAsUnblocked | ValidCard$ Card.EffectSource | Optional$ True | Description$ You may have EFFECTSOURCE assign its combat damage this turn as though it weren't blocked.
 AI:RemoveDeck:All
 DeckHas:Ability$Discard
-Oracle:At the beginning of your upkeep, sacrifice Gurzigost unless you put two cards from your graveyard on the bottom of your library.\n{G}{G}, Discard a card: You may have Gurzigost assign its combat damage this turn as though it weren't blocked.
+Oracle:At the beginning of your upkeep, sacrifice this creature unless you put two cards from your graveyard on the bottom of your library.\n{G}{G}, Discard a card: You may have this creature assign its combat damage this turn as though it weren't blocked.

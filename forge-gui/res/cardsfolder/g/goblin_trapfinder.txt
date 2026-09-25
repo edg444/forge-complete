@@ -10,4 +10,4 @@ SVar:SacTrig:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | Execute$ Trig
 SVar:TrigSacrifice:DB$ Sacrifice
 DeckHas:Ability$Sacrifice
 DeckHints:Ability$Sacrifice
-Oracle:When Goblin Trapfinder dies, seek a creature card with mana value 3 or less. That card perpetually gains haste, "This spell costs {1} less to cast," and "At the beginning of your end step, sacrifice this creature."
+Oracle:When this creature dies, seek a creature card with mana value 3 or less. That card perpetually gains haste, "This spell costs {1} less to cast," and "At the beginning of your end step, sacrifice this creature."

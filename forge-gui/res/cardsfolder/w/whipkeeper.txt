@@ -5,4 +5,4 @@ PT:1/1
 A:AB$ DealDamage | Cost$ T | ValidTgts$ Creature | NumDmg$ X | SpellDescription$ This creature deals damage to target creature equal to the damage already dealt to it this turn.
 SVar:X:Targeted$TotalDamageReceivedThisTurn
 AI:RemoveDeck:All
-Oracle:{T}: Whipkeeper deals damage to target creature equal to the damage already dealt to it this turn.
+Oracle:{T}: This creature deals damage to target creature equal to the damage already dealt to it this turn.

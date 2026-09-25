@@ -3,4 +3,4 @@ ManaCost:3 G
 Types:Creature Elephant
 PT:3/3
 A:AB$ MustBlock | Cost$ 1 G | ValidTgts$ Creature | SpellDescription$ Target creature blocks this creature this turn if able.
-Oracle:{1}{G}: Target creature blocks Trumpeting Armodon this turn if able.
+Oracle:{1}{G}: Target creature blocks this creature this turn if able.

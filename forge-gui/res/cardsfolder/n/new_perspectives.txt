@@ -5,4 +5,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 3
 S:Mode$ AlternativeCost | ValidSA$ Activated.Cycling | ValidPlayer$ You | Cost$ Discard<1/CARDNAME> | CostDesc$ 0 | CheckSVar$ X | SVarCompare$ GE7 | Description$ As long as you have seven or more cards in hand, you may pay {0} rather than pay cycling costs.
 SVar:X:Count$ValidHand Card.YouOwn
-Oracle:When New Perspectives enters, draw three cards.\nAs long as you have seven or more cards in hand, you may pay {0} rather than pay cycling costs.
+Oracle:When this enchantment enters, draw three cards.\nAs long as you have seven or more cards in hand, you may pay {0} rather than pay cycling costs.

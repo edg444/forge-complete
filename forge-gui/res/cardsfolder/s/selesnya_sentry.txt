@@ -3,4 +3,4 @@ ManaCost:2 W
 Types:Creature Elephant Soldier
 PT:3/2
 A:AB$ Regenerate | Cost$ 5 G | SpellDescription$ Regenerate this creature.
-Oracle:{5}{G}: Regenerate Selesnya Sentry.
+Oracle:{5}{G}: Regenerate this creature.

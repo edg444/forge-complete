@@ -8,4 +8,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ X | Description$ This cre
 SVar:X:Count$Valid Permanent.Snow+Other+YouCtrl
 SVar:BuffedBy:Permanent.Snow
 DeckNeeds:Type$Snow
-Oracle:When Spirit of the Aldergard enters, search your library for a snow land card, reveal it, put it into your hand, then shuffle.\nSpirit of the Aldergard gets +1/+0 for each other snow permanent you control.
+Oracle:When this creature enters, search your library for a snow land card, reveal it, put it into your hand, then shuffle.\nThis creature gets +1/+0 for each other snow permanent you control.

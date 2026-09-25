@@ -8,4 +8,4 @@ SVar:TrigDraw:DB$ Draw
 K:Crew:3
 S:Mode$ Continuous | Affected$ Card.Self | AffectedZone$ Graveyard | EffectZone$ Graveyard | MayPlay$ True | IsPresent$ Pirate.YouCtrl+tapped,Vehicle.YouCtrl+tapped | PresentCompare$ GE3 | Description$ You may cast this card from your graveyard as long as you control three or more tapped Pirates and/or Vehicles.
 DeckHints:Ability$Graveyard|Mill
-Oracle:Trample\nWhenever a creature you control deals combat damage to a player, draw a card.\nCrew 3\nYou may cast The Indomitable from your graveyard as long as you control three or more tapped Pirates and/or Vehicles.
+Oracle:Trample\nWhenever a creature you control deals combat damage to a player, draw a card.\nCrew 3\nYou may cast this card from your graveyard as long as you control three or more tapped Pirates and/or Vehicles.

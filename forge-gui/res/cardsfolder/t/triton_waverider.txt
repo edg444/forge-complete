@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Enchan
 SVar:TrigPump:DB$ Pump | Defined$ Self | KW$ Flying
 SVar:BuffedBy:Enchantment
 DeckNeeds:Type$Enchantment
-Oracle:Constellation — Whenever an enchantment you control enters, Triton Waverider gains flying until end of turn.
+Oracle:Constellation — Whenever an enchantment you control enters, this creature gains flying until end of turn.

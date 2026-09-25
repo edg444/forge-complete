@@ -5,4 +5,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigDraw:DB$ Draw | NumCards$ 3
 SVar:SacMe:5
 AI:RemoveDeck:Random
-Oracle:When Hatching Plans is put into a graveyard from the battlefield, draw three cards.
+Oracle:When this enchantment is put into a graveyard from the battlefield, draw three cards.

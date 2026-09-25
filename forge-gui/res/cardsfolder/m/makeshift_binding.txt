@@ -5,4 +5,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls | Duration$ UntilHostLeavesPlay | SubAbility$ DBGainLife
 SVar:DBGainLife:DB$ GainLife | LifeAmount$ 2
 DeckHas:Ability$LifeGain
-Oracle:When Makeshift Binding enters, exile target creature an opponent controls until Makeshift Binding leaves the battlefield. You gain 2 life.
+Oracle:When this enchantment enters, exile target creature an opponent controls until this enchantment leaves the battlefield. You gain 2 life.

@@ -9,4 +9,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Land.Y
 SVar:TrigUntap:DB$ Untap | Defined$ Self
 SVar:BuffedBy:Land
 DeckHas:Ability$LifeGain
-Oracle:{T}: Exile the top card of target player's library. If it's a land card, you gain 1 life.\nLandfall — Whenever a land you control enters, you may untap Scrib Nibblers.
+Oracle:{T}: Exile the top card of target player's library. If it's a land card, you gain 1 life.\nLandfall — Whenever a land you control enters, you may untap this creature.

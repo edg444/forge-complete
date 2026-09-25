@@ -9,4 +9,4 @@ SVar:DBLoseLife:DB$ LoseLife | LifeAmount$ 1
 A:AB$ ChangeZone | Cost$ 2 B B | ActivationZone$ Graveyard | Origin$ Graveyard | Destination$ Hand | SpellDescription$ Return this card from your graveyard to your hand.
 SVar:SacMe:2
 SVar:DiscardMe:2
-Oracle:Clattering Augur can't block.\nWhen Clattering Augur enters, you draw a card and you lose 1 life.\n{2}{B}{B}: Return Clattering Augur from your graveyard to your hand.
+Oracle:This creature can't block.\nWhen this creature enters, you draw a card and you lose 1 life.\n{2}{B}{B}: Return this card from your graveyard to your hand.

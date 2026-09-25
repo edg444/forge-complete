@@ -8,4 +8,4 @@ SVar:TrigPutCounter:DB$ PutCounter | Defined$ TriggeredCardLKICopy & Self | Coun
 AI:RemoveDeck:Random
 DeckHas:Ability$Counters
 DeckHints:Keyword$Morph|Megamorph|Disguise
-Oracle:Reach\nWhenever a face-down permanent you control is turned face up, put a +1/+1 counter on it and a +1/+1 counter on Sumala Sentry.
+Oracle:Reach\nWhenever a face-down permanent you control is turned face up, put a +1/+1 counter on it and a +1/+1 counter on this creature.

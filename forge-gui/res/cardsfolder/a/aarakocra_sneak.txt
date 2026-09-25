@@ -5,4 +5,4 @@ PT:1/4
 K:Flying
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigInitiative | TriggerDescription$ When this creature enters, you take the initiative.
 SVar:TrigInitiative:DB$ TakeInitiative
-Oracle:Flying\nWhen Aarakocra Sneak enters, you take the initiative.
+Oracle:Flying\nWhen this creature enters, you take the initiative.

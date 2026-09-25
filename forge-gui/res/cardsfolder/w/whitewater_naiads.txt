@@ -7,4 +7,4 @@ SVar:TrigUnblockable:DB$ Effect | ValidTgts$ Creature | RememberObjects$ Targete
 SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | Description$ This creature can't be blocked this turn.
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Enchantment
-Oracle:Constellation — Whenever Whitewater Naiads or another enchantment you control enters, target creature can't be blocked this turn.
+Oracle:Constellation — Whenever this creature or another enchantment you control enters, target creature can't be blocked this turn.

@@ -8,4 +8,4 @@ SVar:TrigPumpAttack:DB$ PumpAll | ValidCards$ Creature.YouCtrl | NumAtt$ +1 | Nu
 SVar:X:PlayerCountOpponents$HighestCounters.Poison
 SVar:HasAttackEffect:TRUE
 DeckHints:Keyword$Infect|Toxic & Ability$Proliferate
-Oracle:Flying\nCorrupted — Whenever Incisor Glider attacks, if an opponent has three or more poison counters, creatures you control get +1/+1 until end of turn.
+Oracle:Flying\nCorrupted — Whenever this creature attacks, if an opponent has three or more poison counters, creatures you control get +1/+1 until end of turn.

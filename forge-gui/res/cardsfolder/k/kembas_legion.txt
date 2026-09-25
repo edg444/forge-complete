@@ -6,4 +6,4 @@ K:Vigilance
 S:Mode$ Continuous | AffectedDefined$ Self | CanBlockAmount$ X | Description$ This creature can block an additional creature each combat for each Equipment attached to this creature.
 SVar:X:Count$Valid Equipment.Attached
 SVar:EquipMe:Multiple
-Oracle:Vigilance\nKemba's Legion can block an additional creature each combat for each Equipment attached to Kemba's Legion.
+Oracle:Vigilance\nThis creature can block an additional creature each combat for each Equipment attached to this creature.

@@ -6,4 +6,4 @@ K:Trample
 T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | IsPresent$ Permanent.YouCtrl+Blue | Execute$ TrigCopyPermanent | OptionalDecider$ You | TriggerDescription$ At the beginning of your upkeep, if you control a blue permanent, you may create a token that's a copy of this creature.
 SVar:TrigCopyPermanent:DB$ CopyPermanent | Defined$ Self
 DeckHints:Color$Blue
-Oracle:Trample\nAt the beginning of your upkeep, if you control a blue permanent, you may create a token that's a copy of Mirror-Sigil Sergeant.
+Oracle:Trample\nAt the beginning of your upkeep, if you control a blue permanent, you may create a token that's a copy of this creature.

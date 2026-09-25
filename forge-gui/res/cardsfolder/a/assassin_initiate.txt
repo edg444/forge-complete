@@ -3,4 +3,4 @@ ManaCost:B
 Types:Creature Human Assassin
 PT:1/1
 A:AB$ Pump | Cost$ 1 | KWChoice$ Flying,Deathtouch,Lifelink | SpellDescription$ This creature gains your choice of flying, deathtouch, or lifelink until end of turn.
-Oracle:{1}: Assassin Initiate gains your choice of flying, deathtouch, or lifelink until end of turn.
+Oracle:{1}: This creature gains your choice of flying, deathtouch, or lifelink until end of turn.

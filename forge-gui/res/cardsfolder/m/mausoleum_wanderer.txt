@@ -10,4 +10,4 @@ SVar:X:Sacrificed$CardPower
 SVar:BuffedBy:Spirit
 AI:RemoveDeck:Random
 DeckHints:Type$Spirit
-Oracle:Flying\nWhenever another Spirit you control enters, Mausoleum Wanderer gets +1/+1 until end of turn.\nSacrifice Mausoleum Wanderer: Counter target instant or sorcery spell unless its controller pays {X}, where X is Mausoleum Wanderer's power.
+Oracle:Flying\nWhenever another Spirit you control enters, this creature gets +1/+1 until end of turn.\nSacrifice this creature: Counter target instant or sorcery spell unless its controller pays {X}, where X is this creature's power.

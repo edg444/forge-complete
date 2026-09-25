@@ -4,4 +4,4 @@ Types:Creature Insect
 PT:5/5
 K:Trample
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 10 | AddToughness$ 10 | IsPresent$ Land.YouCtrl | PresentCompare$ GE10 | Description$ This creature gets +10/+10 as long as you control ten or more lands.
-Oracle:Trample\nCrash of Rhino Beetles gets +10/+10 as long as you control ten or more lands.
+Oracle:Trample\nThis creature gets +10/+10 as long as you control ten or more lands.

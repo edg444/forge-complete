@@ -10,4 +10,4 @@ SVar:DBPump:DB$ Pump | Defined$ Self | NumAtt$ +2
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Sacrifice|Graveyard|Discard
 DeckHints:Type$Artifact|Clue|Treasure
-Oracle:Whenever Reckless Detective attacks, you may sacrifice an artifact or discard a card. If you do, draw a card and Reckless Detective gets +2/+0 until end of turn.
+Oracle:Whenever this creature attacks, you may sacrifice an artifact or discard a card. If you do, draw a card and this creature gets +2/+0 until end of turn.

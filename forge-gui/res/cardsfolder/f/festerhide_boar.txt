@@ -5,4 +5,4 @@ PT:3/3
 K:Trample
 K:etbCounter:P1P1:2:CheckSVar$ Morbid:Morbid — CARDNAME enters with two +1/+1 counters on it if a creature died this turn.
 SVar:Morbid:Count$Morbid.1.0
-Oracle:Trample\nMorbid — Festerhide Boar enters with two +1/+1 counters on it if a creature died this turn.
+Oracle:Trample\nMorbid — This creature enters with two +1/+1 counters on it if a creature died this turn.

@@ -6,4 +6,4 @@ T:Mode$ DamageDealtOnce | ValidSource$ Card.Self | TriggerZones$ Battlefield | E
 SVar:TrigMill:DB$ Mill | ValidTgts$ Player | NumCards$ X
 SVar:X:TriggerCount$DamageAmount
 DeckHas:Ability$Graveyard
-Oracle:Whenever Towering-Wave Mystic deals damage, target player mills that many cards.
+Oracle:Whenever this creature deals damage, target player mills that many cards.

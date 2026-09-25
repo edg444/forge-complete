@@ -7,4 +7,4 @@ SVar:ChooseCT:DB$ ChooseType | Type$ Creature | AILogic$ MostProminentInComputer
 S:Mode$ Continuous | AffectedDefined$ Self | AddType$ ChosenType | Description$ This creature is the chosen type in addition to its other types.
 S:Mode$ Continuous | Affected$ Creature.ChosenType+Other+YouCtrl | AddPower$ 1 | AddToughness$ 1 | Description$ Other creatures you control of the chosen type get +1/+1.
 SVar:PlayMain1:TRUE
-Oracle:As Adaptive Automaton enters, choose a creature type.\nAdaptive Automaton is the chosen type in addition to its other types.\nOther creatures you control of the chosen type get +1/+1.
+Oracle:As this creature enters, choose a creature type.\nThis creature is the chosen type in addition to its other types.\nOther creatures you control of the chosen type get +1/+1.

@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1
 SVar:BuffedBy:Ally
 AI:RemoveDeck:Random
-Oracle:Defender\nWhenever Makindi Shieldmate or another Ally you control enters, you may put a +1/+1 counter on Makindi Shieldmate.
+Oracle:Defender\nWhenever this creature or another Ally you control enters, you may put a +1/+1 counter on this creature.

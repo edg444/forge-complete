@@ -4,4 +4,4 @@ Types:Creature Human Knight
 PT:2/5
 K:Vigilance
 S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | Description$ This creature can't be blocked.
-Oracle:Vigilance\nAzorius Knight-Arbiter can't be blocked.
+Oracle:Vigilance\nThis creature can't be blocked.

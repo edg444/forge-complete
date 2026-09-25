@@ -6,4 +6,4 @@ S:Mode$ Continuous | Affected$ Soldier.Other+YouCtrl | AddPower$ 1 | AddToughnes
 A:AB$ PutCounterAll | Cost$ 3 W W ExileFromGrave<1/CARDNAME> | ActivationZone$ Graveyard | ValidCards$ Soldier.YouCtrl | CounterType$ P1P1 | CounterNum$ 1 | SpellDescription$ Put a +1/+1 counter on each Soldier you control.
 DeckHas:Ability$Counters|Graveyard
 DeckHints:Type$Soldier
-Oracle:Other Soldiers you control get +1/+1.\n{3}{W}{W}, Exile Valiant Veteran from your graveyard: Put a +1/+1 counter on each Soldier you control.
+Oracle:Other Soldiers you control get +1/+1.\n{3}{W}{W}, Exile this card from your graveyard: Put a +1/+1 counter on each Soldier you control.

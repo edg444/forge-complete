@@ -5,4 +5,4 @@ PT:6/4
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ Whenever this creature attacks or blocks, sacrifice a land.
 T:Mode$ Blocks | ValidCard$ Card.Self | Execute$ TrigSac | Secondary$ True | TriggerDescription$ Whenever this creature attacks or blocks, sacrifice a land.
 SVar:TrigSac:DB$ Sacrifice | SacValid$ Land
-Oracle:Whenever Lesser Gargadon attacks or blocks, sacrifice a land.
+Oracle:Whenever this creature attacks or blocks, sacrifice a land.

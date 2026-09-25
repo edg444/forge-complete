@@ -7,4 +7,4 @@ SVar:X:PlayerCountPlayers$HighestCardsInGraveyard
 S:Mode$ CantBlockBy | ValidAttacker$ Card.Self | IsPresent$ Planeswalker.Ashiok+YouCtrl | Description$ This creature can't be blocked as long as you control an Ashiok planeswalker.
 SVar:BuffedBy:Ashiok
 DeckHints:Type$Ashiok
-Oracle:Swimmer in Nightmares gets +3/+0 as long as there are ten or more cards in a single graveyard.\nSwimmer in Nightmares can't be blocked as long as you control an Ashiok planeswalker.
+Oracle:This creature gets +3/+0 as long as there are ten or more cards in a single graveyard.\nThis creature can't be blocked as long as you control an Ashiok planeswalker.

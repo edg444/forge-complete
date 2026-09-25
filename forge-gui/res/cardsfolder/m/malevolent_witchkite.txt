@@ -11,4 +11,4 @@ SVar:SacX:Count$Valid Enchantment.YouCtrl,Artifact.YouCtrl,Card.token+YouCtrl
 SVar:DrawX:Remembered$Amount
 DeckHas:Ability$Sacrifice
 DeckHints:Ability$Token & Type$Enchantment|Artifact
-Oracle:Flying\nWhen Malevolent Witchkite enters, sacrifice any number of artifacts, enchantments, and/or tokens, then draw that many cards.
+Oracle:Flying\nWhen this creature enters, sacrifice any number of artifacts, enchantments, and/or tokens, then draw that many cards.

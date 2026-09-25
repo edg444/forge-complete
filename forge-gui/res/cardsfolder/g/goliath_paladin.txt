@@ -5,4 +5,4 @@ PT:3/6
 K:Vigilance
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigInitiative | TriggerDescription$ When this creature enters, you take the initiative.
 SVar:TrigInitiative:DB$ TakeInitiative
-Oracle:Vigilance\nWhen Goliath Paladin enters, you take the initiative.
+Oracle:Vigilance\nWhen this creature enters, you take the initiative.

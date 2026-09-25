@@ -7,4 +7,4 @@ SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ ChangeZone | Cost$ 1 B | Origin$ Graveyard | Destination$ Hand | ActivationZone$ Graveyard | CheckSVar$ X | SpellDescription$ Return this card from your graveyard to your hand. Activate only if you gained life this turn.
 SVar:X:Count$LifeYouGainedThisTurn
 DeckHints:Ability$LifeGain
-Oracle:Brackish Trudge enters tapped.\n{1}{B}: Return Brackish Trudge from your graveyard to your hand. Activate only if you gained life this turn.
+Oracle:This creature enters tapped.\n{1}{B}: Return this card from your graveyard to your hand. Activate only if you gained life this turn.

@@ -6,4 +6,4 @@ K:Flying
 A:AB$ Pump | Cost$ S | KW$ First Strike | Defined$ Self | SpellDescription$ This creature gains first strike until end of turn.
 # AI can now use snow mana to pay for activated abilities.
 AI:RemoveDeck:Random
-Oracle:Flying\n{S}: Boreal Griffin gains first strike until end of turn. ({S} can be paid with one mana from a snow source.)
+Oracle:Flying\n{S}: This creature gains first strike until end of turn. ({S} can be paid with one mana from a snow source.)

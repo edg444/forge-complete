@@ -9,4 +9,4 @@ SVar:DrawSlowtrip:DB$ Draw | Defined$ You
 A:AB$ DealDamage | Cost$ tapXType<1/Creature.EnchantedBy/Enchanted Creature> | ValidTgts$ Any | NumDmg$ 1 | SubAbility$ DBPutCounter | CostDesc$ Tap enchanted creature: | SpellDescription$ CARDNAME deals 1 damage to any target. Put a -0/-1 counter on enchanted creature. Activate only if enchanted creature is untapped.
 SVar:DBPutCounter:DB$ PutCounter | Defined$ Enchanted | CounterType$ M0M1 | CounterNum$ 1
 AI:RemoveDeck:All
-Oracle:Enchant non-Wall creature you control\nWhen Krovikan Plague enters, draw a card at the beginning of the next turn's upkeep.\nTap enchanted creature: Krovikan Plague deals 1 damage to any target. Put a -0/-1 counter on enchanted creature. Activate only if enchanted creature is untapped.
+Oracle:Enchant non-Wall creature you control\nWhen this Aura enters, draw a card at the beginning of the next turn's upkeep.\nTap enchanted creature: This Aura deals 1 damage to any target. Put a -0/-1 counter on enchanted creature. Activate only if enchanted creature is untapped.

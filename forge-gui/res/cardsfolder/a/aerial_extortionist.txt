@@ -10,4 +10,4 @@ SVar:DBEffect:DB$ Effect | RememberObjects$ Targeted | StaticAbilities$ Play | F
 SVar:Play:Mode$ Continuous | MayPlay$ True | Affected$ Card.IsRemembered | AffectedZone$ Exile | Description$ For as long as that card remains exiled, its owner may cast it.
 T:Mode$ SpellCast | ValidCard$ Card.!wasCastFromTheirHand | ValidActivatingPlayer$ Player.Other | TriggerZones$ Battlefield | Execute$ TrigDraw | TriggerDescription$ Whenever another player casts a spell from anywhere other than their hand, draw a card.
 SVar:TrigDraw:DB$ Draw
-Oracle:Flying\nWhenever Aerial Extortionist enters or deals combat damage to a player, exile up to one target nonland permanent. For as long as that card remains exiled, its owner may cast it.\nWhenever another player casts a spell from anywhere other than their hand, draw a card.
+Oracle:Flying\nWhenever this creature enters or deals combat damage to a player, exile up to one target nonland permanent. For as long as that card remains exiled, its owner may cast it.\nWhenever another player casts a spell from anywhere other than their hand, draw a card.

@@ -9,4 +9,4 @@ SVar:TrigExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | Defin
 SVar:DBToken:DB$ Token | TokenScript$ b_5_5_demon_flying | TokenOwner$ You | ConditionDefined$ Remembered | ConditionPresent$ Card.Self | ConditionCompare$ GE1
 DeckHas:Ability$Token
 DeckHints:Ability$Graveyard
-Oracle:Lifelink (Damage dealt by this creature also causes you to gain that much life.)\nWhen Archfiend's Vessel enters, if it entered from your graveyard or you cast it from your graveyard, exile it. If you do, create a 5/5 black Demon creature token with flying.
+Oracle:Lifelink (Damage dealt by this creature also causes you to gain that much life.)\nWhen this creature enters, if it entered from your graveyard or you cast it from your graveyard, exile it. If you do, create a 5/5 black Demon creature token with flying.

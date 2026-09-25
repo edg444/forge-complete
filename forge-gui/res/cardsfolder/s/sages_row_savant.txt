@@ -4,4 +4,4 @@ Types:Creature Vedalken Wizard
 PT:2/1
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigScry | TriggerDescription$ When this creature enters, scry 2.
 SVar:TrigScry:DB$ Scry | ScryNum$ 2
-Oracle:When Sage's Row Savant enters, scry 2.
+Oracle:When this creature enters, scry 2.

@@ -7,7 +7,7 @@ SVar:TrigImmediateTrig:AB$ ImmediateTrigger | Cost$ Sac<1/Artifact;Creature/arti
 SVar:TrigExile:DB$ ChangeZone | ValidTgts$ Artifact.OppCtrl,Creature.OppCtrl | TgtPrompt$ Select target artifact or creature an opponent controls | Origin$ Battlefield | Destination$ Exile
 DeckHas:Ability$Sacrifice
 AlternateMode:DoubleFaced
-Oracle:(As a Siege enters, choose an opponent to protect it. You and others can attack it. When it's defeated, exile it, then cast it transformed.)\nWhen Invasion of New Capenna enters, you may sacrifice an artifact or creature. When you do, exile target artifact or creature an opponent controls.
+Oracle:(As a Siege enters, choose an opponent to protect it. You and others can attack it. When it's defeated, exile it, then cast it transformed.)\nWhen this Siege enters, you may sacrifice an artifact or creature. When you do, exile target artifact or creature an opponent controls.
 
 ALTERNATE
 

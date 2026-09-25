@@ -6,4 +6,4 @@ K:ETBReplacement:Other:DBNameCard
 SVar:DBNameCard:DB$ NameCard | Defined$ You | ValidCards$ Card.nonLand | ValidDescription$ nonland | SpellDescription$ As this creature enters, choose a nonland card name.
 S:Mode$ CantBeCast | ValidCard$ Card.NamedCard | Description$ Spells with the chosen name can't be cast.
 AI:RemoveDeck:Random
-Oracle:As Meddling Mage enters, choose a nonland card name.\nSpells with the chosen name can't be cast.
+Oracle:As this creature enters, choose a nonland card name.\nSpells with the chosen name can't be cast.

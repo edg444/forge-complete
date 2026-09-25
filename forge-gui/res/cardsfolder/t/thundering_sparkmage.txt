@@ -7,4 +7,4 @@ SVar:TrigDealDamage:DB$ DealDamage | ValidTgts$ Creature,Planeswalker | TgtPromp
 SVar:X:Count$Party
 DeckHas:Ability$Party
 DeckHints:Type$Cleric|Rogue|Warrior
-Oracle:When Thundering Sparkmage enters, it deals X damage to target creature or planeswalker, where X is the number of creatures in your party. (Your party consists of up to one each of Cleric, Rogue, Warrior, and Wizard.)
+Oracle:When this creature enters, it deals X damage to target creature or planeswalker, where X is the number of creatures in your party. (Your party consists of up to one each of Cleric, Rogue, Warrior, and Wizard.)

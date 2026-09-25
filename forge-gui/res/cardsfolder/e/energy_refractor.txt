@@ -4,4 +4,4 @@ Types:Artifact
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When this artifact enters, draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
 A:AB$ Mana | Cost$ 2 | Produced$ Any | SpellDescription$ Add one mana of any color.
-Oracle:When Energy Refractor enters, draw a card.\n{2}: Add one mana of any color.
+Oracle:When this artifact enters, draw a card.\n{2}: Add one mana of any color.

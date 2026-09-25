@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigPump:DB$ Pump | ValidTgts$ Player | SubAbility$ DBChangeZone | IsCurse$ True
 SVar:DBChangeZone:DB$ ChangeZone | TargetMin$ 0 | TargetMax$ X | TargetsWithDefinedController$ ParentTarget | Origin$ Graveyard | Destination$ Library | Shuffle$ True | ValidTgts$ Card
 SVar:X:Count$ValidGraveyard Card.OwnedBy TargetedPlayer
-Oracle:When Loaming Shaman enters, target player shuffles any number of target cards from their graveyard into their library.
+Oracle:When this creature enters, target player shuffles any number of target cards from their graveyard into their library.

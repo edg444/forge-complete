@@ -10,4 +10,4 @@ SVar:X:Count$xPaid
 DeckHas:Ability$Discard|Sacrifice|Investigate|Token & Type$Clue|Artifact
 DeckHints:Type$Instant|Sorcery
 DeckNeeds:Type$Artifact
-Oracle:Flying\nWhen Resonance Technician enters, you may discard a card. If you do, investigate twice.\n{T}, Tap X untapped artifacts you control: Copy target instant or sorcery spell you control with mana value X. You may choose new targets for the copy.
+Oracle:Flying\nWhen this creature enters, you may discard a card. If you do, investigate twice.\n{T}, Tap X untapped artifacts you control: Copy target instant or sorcery spell you control with mana value X. You may choose new targets for the copy.

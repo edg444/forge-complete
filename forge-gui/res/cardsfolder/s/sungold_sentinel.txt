@@ -11,4 +11,4 @@ SVar:DBEffect:DB$ Effect | RememberObjects$ Self | StaticAbilities$ CantBlockBy 
 SVar:DBCleanup:DB$ Cleanup | ClearChosenColor$ True
 SVar:CantBlockBy:Mode$ CantBlockBy | ValidAttacker$ Creature.IsRemembered | ValidBlocker$ Creature.ChosenColor | Description$ EFFECTSOURCE can't be blocked by creatures of the chosen color this turn.
 SVar:X:Count$Valid Creature.YouCtrl$DifferentCardPower
-Oracle:Whenever Sungold Sentinel enters or attacks, exile up to one target card from a graveyard.\nCoven — {1}{W}: Choose a color. Sungold Sentinel gains hexproof from that color until end of turn and can't be blocked by creatures of that color this turn. Activate only if you control three or more creatures with different powers.
+Oracle:Whenever this creature enters or attacks, exile up to one target card from a graveyard.\nCoven — {1}{W}: Choose a color. This creature gains hexproof from that color until end of turn and can't be blocked by creatures of that color this turn. Activate only if you control three or more creatures with different powers.

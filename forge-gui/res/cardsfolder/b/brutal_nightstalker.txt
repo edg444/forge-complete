@@ -4,4 +4,4 @@ Types:Creature Nightstalker
 PT:3/2
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | OptionalDecider$ You | Execute$ TrigDiscard | TriggerDescription$ When this creature enters, you may have target opponent discard a card.
 SVar:TrigDiscard:DB$ Discard | ValidTgts$ Opponent | NumCards$ 1 | Mode$ TgtChoose
-Oracle:When Brutal Nightstalker enters, you may have target opponent discard a card.
+Oracle:When this creature enters, you may have target opponent discard a card.

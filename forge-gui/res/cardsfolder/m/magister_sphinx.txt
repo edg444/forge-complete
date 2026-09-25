@@ -5,4 +5,4 @@ PT:5/5
 K:Flying
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigLife | TriggerDescription$ When this creature enters, target player's life total becomes 10.
 SVar:TrigLife:DB$ SetLife | ValidTgts$ Player | LifeAmount$ 10
-Oracle:Flying\nWhen Magister Sphinx enters, target player's life total becomes 10.
+Oracle:Flying\nWhen this creature enters, target player's life total becomes 10.

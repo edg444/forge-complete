@@ -8,4 +8,4 @@ SVar:TrigEffect:DB$ Effect | RememberObjects$ TriggeredDefendingPlayer | StaticA
 SVar:CantBeCast:Mode$ CantBeCast | ValidCard$ Card | Caster$ Player.IsRemembered | Description$ Defending player can't cast spells.
 AI:RemoveDeck:Random
 SVar:HasAttackEffect:TRUE
-Oracle:Flying\nWhenever Xantid Swarm attacks, defending player can't cast spells this turn.
+Oracle:Flying\nWhenever this creature attacks, defending player can't cast spells this turn.

@@ -10,4 +10,4 @@ SVar:DBPlay:DB$ Play | Valid$ Card.ChosenCard | ValidSA$ Spell | ValidZone$ Exil
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
 SVar:OneEach:PlayerCountPlayers$HasPropertyHasCardsInGraveyard_Instant,Sorcery_GE1
 SVar:CountExiled:Count$ValidExile Card.IsRemembered
-Oracle:Flash\nWhen Mysterious Stranger enters, for each graveyard with an instant or sorcery card in it, exile target instant or sorcery card from that graveyard. If two or more cards are exiled this way, choose one of them at random and copy it. You may cast the copy without paying its mana cost.
+Oracle:Flash\nWhen this creature enters, for each graveyard with an instant or sorcery card in it, exile target instant or sorcery card from that graveyard. If two or more cards are exiled this way, choose one of them at random and copy it. You may cast the copy without paying its mana cost.

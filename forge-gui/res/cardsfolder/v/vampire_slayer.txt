@@ -4,4 +4,4 @@ Types:Creature Human Soldier
 PT:2/2
 T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Vampire | TriggerZones$ Battlefield | Execute$ TrigDestroy | TriggerDescription$ Whenever this creature deals damage to a Vampire, destroy that creature.
 SVar:TrigDestroy:DB$ Destroy | Defined$ TriggeredTargetLKICopy
-Oracle:Whenever Vampire Slayer deals damage to a Vampire, destroy that creature.
+Oracle:Whenever this creature deals damage to a Vampire, destroy that creature.

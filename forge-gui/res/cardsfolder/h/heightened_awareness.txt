@@ -7,4 +7,4 @@ T:Mode$ Phase | Phase$ Draw | ValidPlayer$ You | TriggerZones$ Battlefield | Exe
 SVar:TrigDraw:DB$ Draw
 SVar:NeedsToPlayVar:Y LE2
 SVar:Y:Count$ValidHand Card.YouOwn
-Oracle:As Heightened Awareness enters, discard your hand.\nAt the beginning of your draw step, draw an additional card.
+Oracle:As this enchantment enters, discard your hand.\nAt the beginning of your draw step, draw an additional card.

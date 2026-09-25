@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigChooseColor:DB$ ChooseColor | Defined$ You | OrColors$ True | SubAbility$ Animate
 SVar:Animate:DB$ Animate | ValidTgts$ Permanent | Colors$ ChosenColor | OverwriteColors$ True
 AI:RemoveDeck:All
-Oracle:Flash\nWhen Prismwake Merrow enters, target permanent becomes the color or colors of your choice until end of turn.
+Oracle:Flash\nWhen this creature enters, target permanent becomes the color or colors of your choice until end of turn.

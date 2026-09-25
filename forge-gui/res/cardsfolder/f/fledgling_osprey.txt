@@ -4,4 +4,4 @@ Types:Creature Bird
 PT:1/1
 S:Mode$ Continuous | AffectedDefined$ Self | Affected$ Card.enchanted | AddKeyword$ Flying | Description$ This creature has flying as long as it's enchanted.
 SVar:EnchantMe:Once
-Oracle:Fledgling Osprey has flying as long as it's enchanted.
+Oracle:This creature has flying as long as it's enchanted.

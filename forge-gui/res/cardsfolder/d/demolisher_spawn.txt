@@ -9,4 +9,4 @@ SVar:TrigPumpAll:DB$ PumpAll | ValidCards$ Creature.attacking+Other | NumAtt$ +4
 SVar:HasAttackEffect:TRUE
 DeckHints:Ability$Graveyard|Discard
 DeckHas:Ability$Delirium
-Oracle:Trample, haste\nDelirium — Whenever Demolisher Spawn attacks, if there are four or more card types among cards in your graveyard, other attacking creatures get +4/+4 until end of turn.
+Oracle:Trample, haste\nDelirium — Whenever this creature attacks, if there are four or more card types among cards in your graveyard, other attacking creatures get +4/+4 until end of turn.

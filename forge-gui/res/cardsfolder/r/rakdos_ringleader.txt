@@ -6,4 +6,4 @@ K:First Strike
 T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | Execute$ TrigDiscard | CombatDamage$ True | TriggerDescription$ Whenever this creature deals combat damage to a player, that player discards a card at random.
 SVar:TrigDiscard:DB$ Discard | Defined$ TriggeredTarget | NumCards$ 1 | Mode$ Random
 A:AB$ Regenerate | Cost$ B | SpellDescription$ Regenerate this creature.
-Oracle:First strike\nWhenever Rakdos Ringleader deals combat damage to a player, that player discards a card at random.\n{B}: Regenerate Rakdos Ringleader.
+Oracle:First strike\nWhenever this creature deals combat damage to a player, that player discards a card at random.\n{B}: Regenerate this creature.

@@ -8,7 +8,7 @@ T:Mode$ Phase | Phase$ End of Turn | TriggerZones$ Battlefield | CheckSVar$ YouL
 SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform
 SVar:YouLifeGained:Count$LifeYouGainedThisTurn
 AlternateMode:DoubleFaced
-Oracle:First strike, lifelink\nAt the beginning of the end step, if you gained 3 or more life this turn, transform Lone Rider.
+Oracle:First strike, lifelink\nAt the beginning of the end step, if you gained 3 or more life this turn, transform this creature.
 
 ALTERNATE
 

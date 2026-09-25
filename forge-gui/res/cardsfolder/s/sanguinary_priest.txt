@@ -6,4 +6,4 @@ K:Lifelink
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Creature.YouCtrl+Other | TriggerZones$ Battlefield | Execute$ TrigDamage | TriggerDescription$ Blood Chalice — Whenever another creature you control dies, this creature deals 1 damage to any target.
 SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 1
 DeckHints:Ability$Sacrifice
-Oracle:Lifelink\nBlood Chalice — Whenever another creature you control dies, Sanguinary Priest deals 1 damage to any target.
+Oracle:Lifelink\nBlood Chalice — Whenever another creature you control dies, this creature deals 1 damage to any target.

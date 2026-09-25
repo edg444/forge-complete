@@ -5,4 +5,4 @@ PT:4/2
 K:Haste
 S:Mode$ Continuous | AffectedDefined$ Self | Affected$ Card.ThisTurnEntered | AddKeyword$ Indestructible | Description$ This creature has indestructible as long as it entered this turn.
 SVar:PlayMain1:TRUE
-Oracle:Haste\nCrew Captain has indestructible as long as it entered this turn.
+Oracle:Haste\nThis creature has indestructible as long as it entered this turn.

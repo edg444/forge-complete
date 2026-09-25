@@ -5,4 +5,4 @@ PT:2/3
 K:Menace
 T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigAssemble | TriggerDescription$ Whenever this creature deals combat damage to a player, it assembles a Contraption.
 SVar:TrigAssemble:DB$ AssembleContraption
-Oracle:Menace\nWhenever Overt Operative deals combat damage to a player, it assembles a Contraption. (Put the top card of your Contraption deck face up onto one of your sprockets.)
+Oracle:Menace\nWhenever this creature deals combat damage to a player, it assembles a Contraption. (Put the top card of your Contraption deck face up onto one of your sprockets.)

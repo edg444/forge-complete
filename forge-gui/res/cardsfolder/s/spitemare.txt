@@ -6,4 +6,4 @@ T:Mode$ DamageDoneOnce | Execute$ TrigDamage | ValidTarget$ Card.Self | TriggerZ
 SVar:TrigDamage:DB$ DealDamage | NumDmg$ X | ValidTgts$ Any
 SVar:X:TriggerCount$DamageAmount
 SVar:HasCombatEffect:TRUE
-Oracle:Whenever Spitemare is dealt damage, it deals that much damage to any target.
+Oracle:Whenever this creature is dealt damage, it deals that much damage to any target.

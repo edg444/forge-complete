@@ -7,4 +7,4 @@ S:Mode$ CanAttackDefender | ValidCard$ Card.Self+enchanted,Card.Self+equipped | 
 SVar:EnchantMe:Once
 SVar:EquipMe:Once
 DeckHints:Type$Enchantment|Equipment
-Oracle:Defender (This creature can't attack.)\nAs long as Novice Knight is enchanted or equipped, it can attack as though it didn't have defender.
+Oracle:Defender (This creature can't attack.)\nAs long as this creature is enchanted or equipped, it can attack as though it didn't have defender.

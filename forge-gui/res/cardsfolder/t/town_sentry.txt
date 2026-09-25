@@ -4,4 +4,4 @@ Types:Creature Human Soldier
 PT:2/2
 T:Mode$ Blocks | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ Whenever this creature blocks, it gets +0/+2 until end of turn.
 SVar:TrigPump:DB$ Pump | Defined$ Self | NumDef$ +2
-Oracle:Whenever Town Sentry blocks, it gets +0/+2 until end of turn.
+Oracle:Whenever this creature blocks, it gets +0/+2 until end of turn.

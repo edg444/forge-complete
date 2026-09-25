@@ -7,4 +7,4 @@ SVar:TrigPumpAll:DB$ Pump | Defined$ Valid Ally.YouCtrl | KW$ Lifelink | Optiona
 SVar:DBCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1 | Optional$ True
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Ally
-Oracle:Whenever Talus Paladin or another Ally you control enters, you may have Allies you control gain lifelink until end of turn, and you may put a +1/+1 counter on Talus Paladin.
+Oracle:Whenever this creature or another Ally you control enters, you may have Allies you control gain lifelink until end of turn, and you may put a +1/+1 counter on this creature.

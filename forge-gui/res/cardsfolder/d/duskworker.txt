@@ -5,4 +5,4 @@ PT:2/2
 T:Mode$ AttackerBlocked | ValidCard$ Card.Self | Execute$ TrigRegen | TriggerDescription$ Whenever this creature becomes blocked, regenerate it.
 A:AB$ Pump | Cost$ 3 | Defined$ Self | NumAtt$ +1 | SpellDescription$ This creature gets +1/+0 until end of turn.
 SVar:TrigRegen:DB$ Regenerate | Defined$ Self
-Oracle:Whenever Duskworker becomes blocked, regenerate it.\n{3}: Duskworker gets +1/+0 until end of turn.
+Oracle:Whenever this creature becomes blocked, regenerate it.\n{3}: This creature gets +1/+0 until end of turn.

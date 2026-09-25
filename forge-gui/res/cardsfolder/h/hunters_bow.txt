@@ -7,4 +7,4 @@ SVar:DBDamage:DB$ DealDamage | ValidTgts$ Creature.YouDontCtrl | TargetMin$ 0 | 
 S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddKeyword$ Reach & Ward:2 | Description$ Equipped creature has reach and ward {2}.
 K:Equip:1
 SVar:X:ParentTargeted$CardPower
-Oracle:When Hunter's Bow enters, attach it to target creature you control. That creature deals damage equal to its power to up to one target creature you don't control.\nEquipped creature has reach and ward {2}.\nEquip {1}
+Oracle:When this Equipment enters, attach it to target creature you control. That creature deals damage equal to its power to up to one target creature you don't control.\nEquipped creature has reach and ward {2}.\nEquip {1}

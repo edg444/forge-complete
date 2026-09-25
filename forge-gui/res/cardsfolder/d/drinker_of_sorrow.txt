@@ -5,4 +5,4 @@ PT:5/3
 S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't block.
 T:Mode$ DamageDealtOnce | CombatDamage$ True | ValidSource$ Card.Self | Execute$ TrigSac | TriggerDescription$ Whenever this creature deals combat damage, sacrifice a permanent.
 SVar:TrigSac:DB$ Sacrifice | Defined$ You | SacValid$ Permanent
-Oracle:Drinker of Sorrow can't block.\nWhenever Drinker of Sorrow deals combat damage, sacrifice a permanent.
+Oracle:This creature can't block.\nWhenever this creature deals combat damage, sacrifice a permanent.

@@ -6,4 +6,4 @@ K:Flying
 A:AB$ Pump | Cost$ 1 WB | Defined$ Self | KW$ Lifelink | SpellDescription$ This creature gains lifelink until end of turn.
 DeckHas:Ability$LifeGain
 DeckHints:Color$White|Black
-Oracle:Flying\n{1}{W/B}: Obscura Initiate gains lifelink until end of turn.
+Oracle:Flying\n{1}{W/B}: This creature gains lifelink until end of turn.

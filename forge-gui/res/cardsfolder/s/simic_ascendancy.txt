@@ -9,4 +9,4 @@ SVar:TrigWinGame:DB$ WinsGame | Defined$ You
 SVar:X:TriggerCount$Amount
 DeckHints:Ability$Counters
 DeckHas:Ability$Counters
-Oracle:{1}{G}{U}: Put a +1/+1 counter on target creature you control.\nWhenever one or more +1/+1 counters are put on a creature you control, put that many growth counters on Simic Ascendancy.\nAt the beginning of your upkeep, if Simic Ascendancy has twenty or more growth counters on it, you win the game.
+Oracle:{1}{G}{U}: Put a +1/+1 counter on target creature you control.\nWhenever one or more +1/+1 counters are put on a creature you control, put that many growth counters on this enchantment.\nAt the beginning of your upkeep, if this enchantment has twenty or more growth counters on it, you win the game.

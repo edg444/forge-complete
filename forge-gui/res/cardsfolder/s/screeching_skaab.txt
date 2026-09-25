@@ -5,4 +5,4 @@ PT:2/1
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigMill | TriggerDescription$ When this creature enters, mill two cards.
 SVar:TrigMill:DB$ Mill | NumCards$ 2 | Defined$ You
 DeckHas:Ability$Graveyard
-Oracle:When Screeching Skaab enters, mill two cards.
+Oracle:When this creature enters, mill two cards.

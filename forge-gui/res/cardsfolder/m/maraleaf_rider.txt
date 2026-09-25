@@ -6,4 +6,4 @@ A:AB$ MustBlock | Cost$ Sac<1/Food> | ValidTgts$ Creature | SpellDescription$ Ta
 SVar:AIPreference:SacCost$Card.Food
 AI:RemoveDeck:All
 DeckHints:Ability$Food
-Oracle:Sacrifice a Food: Target creature blocks Maraleaf Rider this turn if able.
+Oracle:Sacrifice a Food: Target creature blocks this creature this turn if able.

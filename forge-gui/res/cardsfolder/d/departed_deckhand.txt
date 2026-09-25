@@ -8,4 +8,4 @@ S:Mode$ CantBlockBy | ValidAttacker$ Card.Self | ValidBlocker$ Creature.nonSpiri
 A:AB$ Effect | Cost$ 3 U | ValidTgts$ Creature.YouCtrl+Other | TgtPrompt$ Select another target creature you control | RememberObjects$ Targeted | StaticAbilities$ EffModeCantBlockBy | AILogic$ MakeUnblockable | SpellDescription$ Another target creature you control can't be blocked this turn except by Spirits.
 SVar:EffModeCantBlockBy:Mode$ CantBlockBy | ValidAttacker$ Creature.IsRemembered | ValidBlocker$ Creature.nonSpirit | Description$ This creature can't be blocked except by Spirits.
 SVar:Targeting:Dies
-Oracle:When Departed Deckhand becomes the target of a spell, sacrifice it.\nDeparted Deckhand can't be blocked except by Spirits.\n{3}{U}: Another target creature you control can't be blocked this turn except by Spirits.
+Oracle:When this creature becomes the target of a spell, sacrifice it.\nThis creature can't be blocked except by Spirits.\n{3}{U}: Another target creature you control can't be blocked this turn except by Spirits.

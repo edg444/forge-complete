@@ -11,7 +11,7 @@ SVar:TrigReturn:DB$ ChangeZone | Defined$ DelayTriggerRemembered | Origin$ Grave
 SVar:SacMe:5
 DeckNeeds:Ability$Sacrifice
 AlternateMode:DoubleFaced
-Oracle:Defender\nWhen Biolume Egg enters, scry 2.\nWhen you sacrifice Biolume Egg, return it to the battlefield transformed under its owner's control at the beginning of the next end step.
+Oracle:Defender\nWhen this creature enters, scry 2.\nWhen you sacrifice this creature, return it to the battlefield transformed under its owner's control at the beginning of the next end step.
 
 ALTERNATE
 
@@ -23,4 +23,4 @@ PT:4/4
 A:AB$ Effect | Cost$ Sac<2/Island> | RememberObjects$ Self | ExileOnMoved$ Battlefield | StaticAbilities$ Unblockable | SpellDescription$ This creature can't be blocked this turn.
 SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | Description$ EFFECTSOURCE can't be blocked this turn.
 DeckHas:Ability$Sacrifice
-Oracle:Sacrifice two Islands: Biolume Serpent can't be blocked this turn.
+Oracle:Sacrifice two Islands: This creature can't be blocked this turn.

@@ -7,4 +7,4 @@ SVar:SelflessDamage:Event$ DamageDone | ValidTarget$ Creature.EffectSource | Rep
 SVar:SelflessDmg:DB$ ReplaceEffect | VarName$ Affected | VarValue$ Remembered | VarType$ GameEntity | SubAbility$ ExileEffect
 SVar:ExileEffect:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
 AI:RemoveDeck:All
-Oracle:{2}{R}{W}: The next time damage would be dealt to Mirrorwood Treefolk this turn, that damage is dealt to any target instead.
+Oracle:{2}{R}{W}: The next time damage would be dealt to this creature this turn, that damage is dealt to any target instead.

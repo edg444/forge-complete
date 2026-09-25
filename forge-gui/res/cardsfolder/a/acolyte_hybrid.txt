@@ -7,4 +7,4 @@ SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Artifact | TgtPrompt$ Select up to one
 SVar:DBDraw:DB$ Draw | Defined$ RememberedController | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:HasAttackEffect:TRUE
-Oracle:Heavy Rock Cutter — Whenever Acolyte Hybrid attacks, destroy up to one target artifact. If an artifact is destroyed this way, its controller draws a card.
+Oracle:Heavy Rock Cutter — Whenever this creature attacks, destroy up to one target artifact. If an artifact is destroyed this way, its controller draws a card.

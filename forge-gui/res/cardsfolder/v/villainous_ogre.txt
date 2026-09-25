@@ -7,4 +7,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddAbility$ Regen | IsPresent$ Demo
 SVar:Regen:AB$ Regenerate | Cost$ B | SpellDescription$ Regenerate this creature.
 SVar:BuffedBy:Demon
 DeckNeeds:Type$Demon
-Oracle:Villainous Ogre can't block.\nAs long as you control a Demon, Villainous Ogre has "{B}: Regenerate Villainous Ogre."
+Oracle:This creature can't block.\nAs long as you control a Demon, this creature has "{B}: Regenerate this creature."

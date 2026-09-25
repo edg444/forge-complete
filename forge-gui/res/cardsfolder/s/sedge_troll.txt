@@ -6,4 +6,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 1 | AddToughness$ 1 | IsP
 A:AB$ Regenerate | Cost$ B | SpellDescription$ Regenerate this creature.
 SVar:BuffedBy:Swamp
 DeckNeeds:Color$Black
-Oracle:Sedge Troll gets +1/+1 as long as you control a Swamp.\n{B}: Regenerate Sedge Troll.
+Oracle:This creature gets +1/+1 as long as you control a Swamp.\n{B}: Regenerate this creature.

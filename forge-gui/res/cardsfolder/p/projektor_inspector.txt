@@ -7,4 +7,4 @@ T:Mode$ TurnFaceUp | ValidCard$ Detective.YouCtrl | Execute$ TrigDraw | TriggerZ
 SVar:TrigDraw:AB$ Discard | Mode$ TgtChoose | Cost$ Draw<1/You> | NumCards$ 1
 DeckHas:Ability$Discard
 DeckHints:Type$Detective
-Oracle:Whenever Projektor Inspector or another Detective you control enters and whenever a Detective you control is turned face up, you may draw a card. If you do, discard a card.
+Oracle:Whenever this creature or another Detective you control enters and whenever a Detective you control is turned face up, you may draw a card. If you do, discard a card.

@@ -5,4 +5,4 @@ PT:4/1
 S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't block.
 A:AB$ ChangeZone | Cost$ 2 B G Mill<4> | Origin$ Graveyard | Destination$ Battlefield | ActivationZone$ Graveyard | SorcerySpeed$ True | SpellDescription$ Return this card from your graveyard to the battlefield. Activate only as a sorcery.
 DeckHas:Ability$Graveyard
-Oracle:Rot Farm Skeleton can't block.\n{2}{B}{G}, Mill four cards: Return Rot Farm Skeleton from your graveyard to the battlefield. Activate only as a sorcery.
+Oracle:This creature can't block.\n{2}{B}{G}, Mill four cards: Return this card from your graveyard to the battlefield. Activate only as a sorcery.

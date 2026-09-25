@@ -7,7 +7,7 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDraw:DB$ Draw | NumCards$ X
 SVar:X:PlayerCountOpponents$HasPropertywasDealtCombatDamageThisTurn
 AlternateMode:Adventure
-Oracle:Flying\nWhen Moonshae Pixie enters, draw cards equal to the number of opponents who were dealt combat damage this turn.
+Oracle:Flying\nWhen this creature enters, draw cards equal to the number of opponents who were dealt combat damage this turn.
 
 ALTERNATE
 

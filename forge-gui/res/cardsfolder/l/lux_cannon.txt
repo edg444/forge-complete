@@ -3,4 +3,4 @@ ManaCost:4
 Types:Artifact
 A:AB$ PutCounter | Cost$ T | CounterType$ CHARGE | CounterNum$ 1 | SpellDescription$ Put a charge counter on this artifact.
 A:AB$ Destroy | Cost$ T SubCounter<3/CHARGE> | ValidTgts$ Permanent | SpellDescription$ Destroy target permanent.
-Oracle:{T}: Put a charge counter on Lux Cannon.\n{T}, Remove three charge counters from Lux Cannon: Destroy target permanent.
+Oracle:{T}: Put a charge counter on this artifact.\n{T}, Remove three charge counters from this artifact: Destroy target permanent.

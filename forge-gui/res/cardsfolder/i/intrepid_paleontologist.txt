@@ -13,4 +13,4 @@ SVar:RemoveSelf:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ 
 DeckNeeds:Type$Dinosaur
 DeckHints:Ability$Mill
 DeckHas:Ability$Graveyard|Counters
-Oracle:{T}: Add one mana of any color.\n{2}: Exile target card from a graveyard.\nYou may cast Dinosaur creature spells from among cards you own exiled with Intrepid Paleontologist. If you cast a spell this way, that creature enters with a finality counter on it. (If a creature with a finality counter on it would die, exile it instead.)
+Oracle:{T}: Add one mana of any color.\n{2}: Exile target card from a graveyard.\nYou may cast Dinosaur creature spells from among cards you own exiled with this creature. If you cast a spell this way, that creature enters with a finality counter on it. (If a creature with a finality counter on it would die, exile it instead.)

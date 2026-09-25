@@ -4,4 +4,4 @@ Types:Creature Goblin Scout
 PT:1/2
 K:Flying
 S:Mode$ MustAttack | ValidCreature$ Card.Self | Description$ This creature attacks each combat if able.
-Oracle:Flying\nUtvara Scalper attacks each combat if able.
+Oracle:Flying\nThis creature attacks each combat if able.

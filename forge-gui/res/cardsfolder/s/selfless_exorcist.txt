@@ -6,4 +6,4 @@ A:AB$ ChangeZone | Cost$ T | ValidTgts$ Creature | Origin$ Graveyard | Destinati
 SVar:DBDealDamage:DB$ DealDamage | Defined$ Self | NumDmg$ X | DamageSource$ Targeted
 SVar:X:Targeted$CardPower
 AI:RemoveDeck:All
-Oracle:{T}: Exile target creature card from a graveyard. That card deals damage equal to its power to Selfless Exorcist.
+Oracle:{T}: Exile target creature card from a graveyard. That card deals damage equal to its power to this creature.

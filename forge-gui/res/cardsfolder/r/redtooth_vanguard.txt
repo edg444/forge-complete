@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Enchan
 SVar:TrigReturn:AB$ ChangeZone | Cost$ 2 | Defined$ Self | Origin$ Graveyard | Destination$ Hand
 DeckHas:Ability$Graveyard
 DeckHints:Type$Enchantment
-Oracle:Trample\nWhenever an enchantment you control enters, you may pay {2}. If you do, return Redtooth Vanguard from your graveyard to your hand.
+Oracle:Trample\nWhenever an enchantment you control enters, you may pay {2}. If you do, return this card from your graveyard to your hand.

@@ -8,4 +8,4 @@ S:Mode$ Continuous | Affected$ Zombie.YouCtrl | AddKeyword$ Lifelink | Descripti
 SVar:DBClearRemember:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Amount
 SVar:PlayMain1:TRUE
-Oracle:When Necromancer's Covenant enters, exile all creature cards from target player's graveyard, then create a 2/2 black Zombie creature token for each card exiled this way.\nZombies you control have lifelink.
+Oracle:When this enchantment enters, exile all creature cards from target player's graveyard, then create a 2/2 black Zombie creature token for each card exiled this way.\nZombies you control have lifelink.

@@ -6,4 +6,4 @@ SVar:ABTap:AB$ Tap | Cost$ 3 T | ValidTgts$ Creature | SpellDescription$ Tap tar
 A:AB$ Draw | Cost$ 2 Sac<1/CARDNAME> | NumCards$ 1 | SpellDescription$ Draw a card.
 K:Equip:2
 DeckHas:Ability$Sacrifice
-Oracle:Equipped creature gets +1/+1 and has vigilance and "{3}, {T}: Tap target creature."\n{2}, Sacrifice Wrench: Draw a card.\nEquip {2}
+Oracle:Equipped creature gets +1/+1 and has vigilance and "{3}, {T}: Tap target creature."\n{2}, Sacrifice this Equipment: Draw a card.\nEquip {2}

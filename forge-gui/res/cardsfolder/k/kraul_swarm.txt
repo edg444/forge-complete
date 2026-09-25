@@ -6,4 +6,4 @@ K:Flying
 A:AB$ ChangeZone | Cost$ 2 B Discard<1/Creature> | Origin$ Graveyard | Destination$ Hand | ActivationZone$ Graveyard | SpellDescription$ Return this card from your graveyard to your hand.
 SVar:DiscardMe:2
 SVar:AIPreference:DiscardCost$Card
-Oracle:Flying\n{2}{B}, Discard a creature card: Return Kraul Swarm from your graveyard to your hand.
+Oracle:Flying\n{2}{B}, Discard a creature card: Return this card from your graveyard to your hand.

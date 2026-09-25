@@ -5,4 +5,4 @@ PT:1/1
 T:Mode$ AttackerBlocked | ValidCard$ Card.Self | Execute$ TrigGain | TriggerDescription$ Whenever this creature becomes blocked, you gain 1 life.
 SVar:TrigGain:DB$ GainLife | Defined$ You | LifeAmount$ 1
 SVar:HasAttackEffect:Blocked
-Oracle:Whenever Sacred Prey becomes blocked, you gain 1 life.
+Oracle:Whenever this creature becomes blocked, you gain 1 life.

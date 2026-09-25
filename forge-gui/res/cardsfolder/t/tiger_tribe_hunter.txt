@@ -9,4 +9,4 @@ SVar:TrigDamage:DB$ DealDamage | ConditionDefined$ DelayTriggerRememberedLKI | V
 SVar:X:TriggerRemembered$CardPower
 SVar:PackTactics:Count$Valid Creature.attacking$CardPower
 DeckHas:Ability$Sacrifice
-Oracle:Trample\nPack tactics — Whenever Tiger-Tribe Hunter attacks, if you attacked with creatures with total power 6 or greater this combat, you may sacrifice another creature. When you do, Tiger-Tribe Hunter deals damage equal to the sacrificed creature's power to target creature.
+Oracle:Trample\nPack tactics — Whenever this creature attacks, if you attacked with creatures with total power 6 or greater this combat, you may sacrifice another creature. When you do, this creature deals damage equal to the sacrificed creature's power to target creature.

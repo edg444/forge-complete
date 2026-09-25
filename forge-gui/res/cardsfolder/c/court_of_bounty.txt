@@ -8,4 +8,4 @@ SVar:TrigBranch:DB$ Branch | BranchConditionSVar$ X | BranchConditionSVarCompare
 SVar:PutLand:DB$ ChangeZone | Origin$ Hand | Destination$ Battlefield | ChangeType$ Land.YouOwn
 SVar:PutCreatureLand:DB$ ChangeZone | Origin$ Hand | Destination$ Battlefield | ChangeType$ Creature.YouOwn,Land.YouOwn
 SVar:X:Count$Monarch.1.0
-Oracle:When Court of Bounty enters, you become the monarch.\nAt the beginning of your upkeep, you may put a land card from your hand onto the battlefield. If you're the monarch, instead you may put a creature or land card from your hand onto the battlefield.
+Oracle:When this enchantment enters, you become the monarch.\nAt the beginning of your upkeep, you may put a land card from your hand onto the battlefield. If you're the monarch, instead you may put a creature or land card from your hand onto the battlefield.

@@ -10,4 +10,4 @@ SVar:TrigSac:DB$ Sacrifice
 SVar:ManaNeededToAvoidNegativeEffect:white
 AI:RemoveDeck:Random
 DeckNeeds:Color$White
-Oracle:Vigilance\nWhen Court Hussar enters, look at the top three cards of your library, then put one of them into your hand and the rest on the bottom of your library in any order.\nWhen Court Hussar enters, sacrifice it unless {W} was spent to cast it.
+Oracle:Vigilance\nWhen this creature enters, look at the top three cards of your library, then put one of them into your hand and the rest on the bottom of your library in any order.\nWhen this creature enters, sacrifice it unless {W} was spent to cast it.

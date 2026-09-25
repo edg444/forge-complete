@@ -8,4 +8,4 @@ SVar:DBExile:DB$ ChangeZone | Origin$ Hand | Destination$ Exile | DefinedPlayer$
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When this creature leaves the battlefield, target opponent draws a card.
 SVar:TrigDraw:DB$ Draw | ValidTgts$ Opponent
 DeckNeeds:Ability$Mana.Colorless
-Oracle:({C} represents colorless mana.)\nWhen Thought-Knot Seer enters, target opponent reveals their hand. You choose a nonland card from it and exile that card.\nWhen Thought-Knot Seer leaves the battlefield, target opponent draws a card.
+Oracle:({C} represents colorless mana.)\nWhen this creature enters, target opponent reveals their hand. You choose a nonland card from it and exile that card.\nWhen this creature leaves the battlefield, target opponent draws a card.

@@ -7,4 +7,4 @@ SVar:DBExile:DB$ ChangeZone | DefinedPlayer$ Player | ChangeNum$ X | Hidden$ Tru
 SVar:X:Count$CardCounters.DESPAIR
 AI:RemoveDeck:All
 AI:RemoveDeck:Random
-Oracle:At the beginning of your upkeep, put a despair counter on Descent into Madness, then each player exiles X permanents they control and/or cards from their hand, where X is the number of despair counters on Descent into Madness.
+Oracle:At the beginning of your upkeep, put a despair counter on this enchantment, then each player exiles X permanents they control and/or cards from their hand, where X is the number of despair counters on this enchantment.

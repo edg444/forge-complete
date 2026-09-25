@@ -9,4 +9,4 @@ SVar:DBDraw:DB$ Draw | Defined$ Player | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Valid Card.nonLand
 DeckHas:Ability$Token & Type$Treasure|Artifact
-Oracle:Parley — Whenever Cutthroat Negotiator attacks, each player reveals the top card of their library. For each nonland card revealed this way, you create a tapped Treasure token. Then each player draws a card.
+Oracle:Parley — Whenever this creature attacks, each player reveals the top card of their library. For each nonland card revealed this way, you create a tapped Treasure token. Then each player draws a card.

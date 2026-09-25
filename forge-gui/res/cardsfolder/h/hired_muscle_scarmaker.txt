@@ -8,7 +8,7 @@ SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ KI | CounterNu
 SVar:TrigFlip:DB$ SetState | Defined$ Self | Mode$ Flip
 DeckHints:Type$Spirit|Arcane
 AlternateMode:Flip
-Oracle:Whenever you cast a Spirit or Arcane spell, you may put a ki counter on Hired Muscle.\nAt the beginning of the end step, if there are two or more ki counters on Hired Muscle, you may flip it.
+Oracle:Whenever you cast a Spirit or Arcane spell, you may put a ki counter on this creature.\nAt the beginning of the end step, if there are two or more ki counters on this creature, you may flip it.
 
 ALTERNATE
 

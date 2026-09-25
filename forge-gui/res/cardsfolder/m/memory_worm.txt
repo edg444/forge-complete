@@ -8,4 +8,4 @@ SVar:DBDiscard:DB$ Discard | Defined$ TargetedPlayer | Mode$ TgtChoose | SubAbil
 SVar:DBDraw:DB$ Draw | Defined$ TargetedPlayer | SubAbility$ DBPutCounter
 SVar:DBPutCounter:DB$ PutCounter | CounterType$ P1P1 | CounterNum$ 1
 DeckHas:Ability$Counters|Discard
-Oracle:Paradox — Whenever you cast a spell from anywhere other than your hand, Memory Worm deals 2 damage to target player. That player discards a card, then draws a card. Put a +1/+1 counter on Memory Worm.
+Oracle:Paradox — Whenever you cast a spell from anywhere other than your hand, this creature deals 2 damage to target player. That player discards a card, then draws a card. Put a +1/+1 counter on this creature.

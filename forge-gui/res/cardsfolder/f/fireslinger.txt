@@ -6,4 +6,4 @@ A:AB$ DealDamage | Cost$ T | ValidTgts$ Any | NumDmg$ 1 | SubAbility$ DBDealDama
 SVar:DBDealDamage:DB$ DealDamage | Defined$ You | NumDmg$ 1 | SubAbility$ DBDamageResolve
 SVar:DBDamageResolve:DB$ DamageResolve
 SVar:SelfDamageAmount:1
-Oracle:{T}: Fireslinger deals 1 damage to any target and 1 damage to you.
+Oracle:{T}: This creature deals 1 damage to any target and 1 damage to you.

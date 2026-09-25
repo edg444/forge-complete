@@ -8,4 +8,4 @@ SVar:EnchantMe:Once
 SVar:EquipMe:Once
 DeckHas:Ability$Token
 DeckNeeds:Type$Enchantment|Equipment
-Oracle:Whenever Warchanter Skald becomes tapped, if it's enchanted or equipped, create a 2/1 red Dwarf Berserker creature token.
+Oracle:Whenever this creature becomes tapped, if it's enchanted or equipped, create a 2/1 red Dwarf Berserker creature token.

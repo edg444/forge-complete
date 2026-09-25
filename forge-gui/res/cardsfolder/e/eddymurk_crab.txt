@@ -10,4 +10,4 @@ T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefi
 SVar:TrigTap:DB$ Tap | TargetMin$ 0 | TargetMax$ 2 | TgtPrompt$ Select up to two target creatures | ValidTgts$ Creature
 SVar:X:Count$ValidGraveyard Instant.YouOwn,Sorcery.YouOwn
 DeckHints:Ability$Graveyard
-Oracle:Flash\nThis spell costs {1} less to cast for each instant and sorcery card in your graveyard.\nEddymurk Crab enters tapped if it's not your turn.\nWhen Eddymurk Crab enters, tap up to two target creatures.
+Oracle:Flash\nThis spell costs {1} less to cast for each instant and sorcery card in your graveyard.\nThis creature enters tapped if it's not your turn.\nWhen this creature enters, tap up to two target creatures.

@@ -8,4 +8,4 @@ SVar:X:Count$xPaid
 AI:RemoveDeck:All
 DeckHas:Ability$Counters
 DeckHints:Ability$Proliferate
-Oracle:{B}, {T}, Pay 1 life: Put a +1/+1 counter on Cruel Sadist.\n{2}{B}, {T}, Remove X +1/+1 counters from Cruel Sadist: It deals X damage to target creature.
+Oracle:{B}, {T}, Pay 1 life: Put a +1/+1 counter on this creature.\n{2}{B}, {T}, Remove X +1/+1 counters from this creature: It deals X damage to target creature.

@@ -8,4 +8,4 @@ A:AB$ FlipCoin | Cost$ PayEnergy<2> | ValidTgts$ Creature.blockingEquipped | Win
 SVar:ExileIt:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | Defined$ Targeted
 SVar:DamageIt:DB$ DealDamage | NumDmg$ 1 | Defined$ Targeted
 K:Equip:2
-Oracle:Equipped creature gets +1/+1.\nWhenever equipped creature attacks, you get {E}{E} (two energy counters).\nPay {E}{E}: Choose target creature that's blocking equipped creature. Flip a coin. If you win the flip, exile the chosen creature. Otherwise, Plasma Caster deals 1 damage to it.\nEquip {2}
+Oracle:Equipped creature gets +1/+1.\nWhenever equipped creature attacks, you get {E}{E} (two energy counters).\nPay {E}{E}: Choose target creature that's blocking equipped creature. Flip a coin. If you win the flip, exile the chosen creature. Otherwise, this Equipment deals 1 damage to it.\nEquip {2}

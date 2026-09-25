@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigSac:DB$ GainLife | Defined$ TriggeredCardController | LifeAmount$ XPower
 SVar:XPower:TriggeredCard$CardPower
 DeckHas:Ability$LifeGain
-Oracle:Trample\nWhen Bottle Golems dies, you gain life equal to its power.
+Oracle:Trample\nWhen this creature dies, you gain life equal to its power.

@@ -8,4 +8,4 @@ SVar:TrigDamageAll:DB$ DamageAll | ValidCards$ Creature.DefenderCtrl | NumDmg$ 1
 SVar:HasAttackEffect:TRUE
 DeckHints:Ability$Graveyard|Discard
 DeckHas:Ability$Delirium
-Oracle:Reach\nDelirium — Whenever Gouged Zealot attacks, if there are four or more card types among cards in your graveyard, Gouged Zealot deals 1 damage to each creature defending player controls.
+Oracle:Reach\nDelirium — Whenever this creature attacks, if there are four or more card types among cards in your graveyard, this creature deals 1 damage to each creature defending player controls.

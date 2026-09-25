@@ -5,4 +5,4 @@ PT:1/1
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigDiscard | TriggerDescription$ When this creature dies, each opponent discards a card.
 SVar:TrigDiscard:DB$ Discard | Defined$ Player.Opponent | NumCards$ 1 | Mode$ TgtChoose
 SVar:SacMe:1
-Oracle:When Noxious Toad dies, each opponent discards a card.
+Oracle:When this creature dies, each opponent discards a card.

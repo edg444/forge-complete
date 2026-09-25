@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | CheckSVar$ X | SVarCompare$ GE4 | Destinatio
 SVar:X:Count$ValidGraveyard Permanent.YouOwn
 SVar:TrigReturn:DB$ ChangeZone | ValidTgts$ Permanent.nonLand+Other | TargetMin$ 0 | TargetMax$ 1 | Origin$ Battlefield | Destination$ Hand | TgtPrompt$ Choose up to one other target nonland permanent
 DeckHints:Ability$Graveyard|Mill
-Oracle:Flying\nDescend 4 — When Council of Echoes enters, if there are four or more permanent cards in your graveyard, return up to one target nonland permanent other than Council of Echoes to its owner's hand.
+Oracle:Flying\nDescend 4 — When this creature enters, if there are four or more permanent cards in your graveyard, return up to one target nonland permanent other than this creature to its owner's hand.

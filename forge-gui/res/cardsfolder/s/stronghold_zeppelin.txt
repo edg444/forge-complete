@@ -4,4 +4,4 @@ Types:Creature Human
 PT:3/3
 K:Flying
 S:Mode$ CantBlockBy | ValidAttacker$ Creature.withoutFlying | ValidBlocker$ Creature.Self | Description$ This creature can block only creatures with flying.
-Oracle:Flying\nStronghold Zeppelin can block only creatures with flying.
+Oracle:Flying\nThis creature can block only creatures with flying.

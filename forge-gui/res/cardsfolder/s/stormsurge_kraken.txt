@@ -8,4 +8,4 @@ SVar:TrigBlocked:Mode$ AttackerBlocked | ValidCard$ Card.Self | Execute$ Stormsu
 SVar:StormsurgeKrakenDraw:DB$ Draw | NumCards$ 2 | OptionalDecider$ You
 SVar:BuffedBy:Card.IsCommander
 AI:RemoveDeck:Random
-Oracle:Hexproof\nLieutenant — As long as you control your commander, Stormsurge Kraken gets +2/+2 and has "Whenever Stormsurge Kraken becomes blocked, you may draw two cards."
+Oracle:Hexproof\nLieutenant — As long as you control your commander, this creature gets +2/+2 and has "Whenever this creature becomes blocked, you may draw two cards."

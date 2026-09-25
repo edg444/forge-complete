@@ -9,4 +9,4 @@ SVar:PlayMain1:TRUE
 SVar:NeedsToPlayVar:X GE2
 SVar:X:Count$Valid Creature.YouCtrl
 DeckHints:Type$Cartouche
-Oracle:When Trial of Solidarity enters, creatures you control get +2/+1 and gain vigilance until end of turn.\nWhen a Cartouche you control enters, return Trial of Solidarity to its owner's hand.
+Oracle:When this enchantment enters, creatures you control get +2/+1 and gain vigilance until end of turn.\nWhen a Cartouche you control enters, return this enchantment to its owner's hand.

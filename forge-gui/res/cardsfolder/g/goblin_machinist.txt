@@ -7,4 +7,4 @@ SVar:DBPump:DB$ Pump | Defined$ Self | NumAtt$ +RCX | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:RCX:Remembered$CardManaCost
 AI:RemoveDeck:All
-Oracle:{2}{R}: Reveal cards from the top of your library until you reveal a nonland card. Goblin Machinist gets +X/+0 until end of turn, where X is that card's mana value. Put the revealed cards on the bottom of your library in any order.
+Oracle:{2}{R}: Reveal cards from the top of your library until you reveal a nonland card. This creature gets +X/+0 until end of turn, where X is that card's mana value. Put the revealed cards on the bottom of your library in any order.

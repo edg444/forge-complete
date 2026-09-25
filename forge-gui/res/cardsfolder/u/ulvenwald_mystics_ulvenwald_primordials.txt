@@ -5,7 +5,7 @@ PT:3/3
 T:Mode$ Phase | Phase$ Upkeep | WerewolfTransformCondition$ True | TriggerZones$ Battlefield | Execute$ TrigTransform | TriggerDescription$ At the beginning of each upkeep, if no spells were cast last turn, transform this creature.
 SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform
 AlternateMode:DoubleFaced
-Oracle:At the beginning of each upkeep, if no spells were cast last turn, transform Ulvenwald Mystics.
+Oracle:At the beginning of each upkeep, if no spells were cast last turn, transform this creature.
 
 ALTERNATE
 
@@ -17,4 +17,4 @@ PT:5/5
 A:AB$ Regenerate | Cost$ G | SpellDescription$ Regenerate this creature.
 T:Mode$ Phase | Phase$ Upkeep | WerewolfUntransformCondition$ True | TriggerZones$ Battlefield | Execute$ TrigTransform | TriggerDescription$ At the beginning of each upkeep, if a player cast two or more spells last turn, transform this creature.
 SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform
-Oracle:{G}: Regenerate Ulvenwald Primordials.\nAt the beginning of each upkeep, if a player cast two or more spells last turn, transform Ulvenwald Primordials.
+Oracle:{G}: Regenerate this creature.\nAt the beginning of each upkeep, if a player cast two or more spells last turn, transform this creature.

@@ -6,7 +6,7 @@ T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage
 SVar:TrigTrig:AB$ ImmediateTrigger | Cost$ Sac<1/CARDNAME> | Execute$ TrigDestroy | TriggerDescription$ When you do, destroy target artifact or enchantment.
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Artifact,Enchantment | TgtPrompt$ Select target artifact or enchantment
 AlternateMode:Adventure
-Oracle:Whenever Flaxen Intruder deals combat damage to a player, you may sacrifice it. When you do, destroy target artifact or enchantment.
+Oracle:Whenever this creature deals combat damage to a player, you may sacrifice it. When you do, destroy target artifact or enchantment.
 
 ALTERNATE
 

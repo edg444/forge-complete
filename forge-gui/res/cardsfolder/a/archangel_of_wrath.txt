@@ -10,4 +10,4 @@ T:Mode$ ChangesZone | ValidCard$ Card.Self+kicked | Origin$ Any | Destination$ B
 SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 2
 SVar:X:Count$TimesKicked
 DeckHints:Color$Black|Red
-Oracle:Kicker {B} and/or {R} (You may pay an additional {B} and/or {R} as you cast this spell.)\nFlying, lifelink\nWhen Archangel of Wrath enters, if it was kicked, it deals 2 damage to any target.\nWhen Archangel of Wrath enters, if it was kicked twice, it deals 2 damage to any target.
+Oracle:Kicker {B} and/or {R} (You may pay an additional {B} and/or {R} as you cast this spell.)\nFlying, lifelink\nWhen this creature enters, if it was kicked, it deals 2 damage to any target.\nWhen this creature enters, if it was kicked twice, it deals 2 damage to any target.

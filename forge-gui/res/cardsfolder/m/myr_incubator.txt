@@ -8,4 +8,4 @@ SVar:X:Count$ValidLibrary Artifact.YouOwn
 SVar:Y:Remembered$Amount
 DeckHints:Type$Myr
 DeckHas:Ability$Token
-Oracle:{6}, {T}, Sacrifice Myr Incubator: Search your library for any number of artifact cards, exile them, then create that many 1/1 colorless Myr artifact creature tokens. Then shuffle.
+Oracle:{6}, {T}, Sacrifice this artifact: Search your library for any number of artifact cards, exile them, then create that many 1/1 colorless Myr artifact creature tokens. Then shuffle.

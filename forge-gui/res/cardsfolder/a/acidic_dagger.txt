@@ -7,4 +7,4 @@ SVar:TrigLeave:Mode$ ChangesZone | ValidCard$ Creature.IsRemembered | Origin$ Ba
 SVar:TrigDestroy:DB$ Destroy | Defined$ TriggeredTargetLKICopy
 SVar:TrigSac:DB$ SacrificeAll | Defined$ EffectSource
 AI:RemoveDeck:All
-Oracle:{4}, {T}: Whenever target creature deals combat damage to a non-Wall creature this turn, destroy that non-Wall creature. When the targeted creature leaves the battlefield this turn, sacrifice Acidic Dagger. Activate only before blockers are declared.
+Oracle:{4}, {T}: Whenever target creature deals combat damage to a non-Wall creature this turn, destroy that non-Wall creature. When the targeted creature leaves the battlefield this turn, sacrifice this artifact. Activate only before blockers are declared.

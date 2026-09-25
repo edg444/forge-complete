@@ -6,4 +6,4 @@ SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 K:ETBReplacement:Other:ChooseColor
 SVar:ChooseColor:DB$ ChooseColor | Defined$ You | Exclude$ red | AILogic$ MostProminentInComputerDeck | SpellDescription$ As this land enters, choose a color other than red.
 A:AB$ Mana | Cost$ T | Produced$ Combo R Chosen | SpellDescription$ Add {R} or one mana of the chosen color.
-Oracle:Cliffgate enters tapped.\nAs Cliffgate enters, choose a color other than red.\n{T}: Add {R} or one mana of the chosen color.
+Oracle:This land enters tapped.\nAs this land enters, choose a color other than red.\n{T}: Add {R} or one mana of the chosen color.

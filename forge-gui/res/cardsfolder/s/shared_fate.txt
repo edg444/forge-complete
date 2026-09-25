@@ -7,4 +7,4 @@ SVar:DBExile:DB$ Dig | DigNum$ 1 | ChangeNum$ All | DestinationZone$ Exile | Exi
 S:Mode$ Continuous | MayPlayPlayer$ Exiler | MayLookAt$ True | MayPlay$ True | Affected$ Card.ExiledWithSource | AffectedZone$ Exile | Description$ Each player may look at cards they exiled with this enchantment, and they may play lands and cast spells from among those cards.
 AI:RemoveDeck:All
 AI:RemoveDeck:Random
-Oracle:If a player would draw a card, that player exiles the top card of one of their opponents' libraries face down instead.\nEach player may look at cards they exiled with Shared Fate, and they may play lands and cast spells from among those cards.
+Oracle:If a player would draw a card, that player exiles the top card of one of their opponents' libraries face down instead.\nEach player may look at cards they exiled with this enchantment, and they may play lands and cast spells from among those cards.

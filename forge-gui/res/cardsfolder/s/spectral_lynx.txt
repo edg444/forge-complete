@@ -4,4 +4,4 @@ Types:Creature Cat Spirit
 PT:2/1
 K:Protection from green
 A:AB$ Regenerate | Cost$ B | SpellDescription$ Regenerate this creature.
-Oracle:Protection from green\n{B}: Regenerate Spectral Lynx.
+Oracle:Protection from green\n{B}: Regenerate this creature.

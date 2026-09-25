@@ -8,4 +8,4 @@ SVar:PumpU:DB$ Pump | KW$ Protection from blue | Duration$ Permanent | Defined$ 
 SVar:PumpB:DB$ Pump | KW$ Protection from black | Duration$ Permanent | Defined$ Self | SpellDescription$ Black
 SVar:PumpR:DB$ Pump | KW$ Protection from red | Duration$ Permanent | Defined$ Self | SpellDescription$ Red
 SVar:PumpG:DB$ Pump | KW$ Protection from green | Duration$ Permanent | Defined$ Self | SpellDescription$ Green
-Oracle:Will of the council — When Council Guardian enters, starting with you, each player votes for blue, black, red, or green. Council Guardian gains protection from each color with the most votes or tied for most votes.
+Oracle:Will of the council — When this creature enters, starting with you, each player votes for blue, black, red, or green. This creature gains protection from each color with the most votes or tied for most votes.

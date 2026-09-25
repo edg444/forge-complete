@@ -8,4 +8,4 @@ SVar:TrigChange:DB$ GainControl | ValidTgts$ Creature | LoseControl$ EOT | Untap
 SVar:X:Count$Valid Creature.targetedBy+powerLE2/Plus.Y
 SVar:Y:Count$Valid Lizard.Other+YouCtrl
 SVar:PlayMain1:OPPONENTCREATURES
-Oracle:Trample\nWhen Reptilian Recruiter enters, choose target creature. If that creature's power is 2 or less or if you control another Lizard, gain control of that creature until end of turn, untap it, and it gains haste until end of turn.
+Oracle:Trample\nWhen this creature enters, choose target creature. If that creature's power is 2 or less or if you control another Lizard, gain control of that creature until end of turn, untap it, and it gains haste until end of turn.

@@ -8,4 +8,4 @@ SVar:DBDamageAll:DB$ DamageAll | NumDmg$ Y | ValidCards$ Creature | ValidPlayers
 SVar:Y:Count$CardCounters.WIND
 AI:RemoveDeck:All
 DeckHas:Ability$Counters
-Oracle:At the beginning of your upkeep, put a wind counter on Cyclone, then sacrifice Cyclone unless you pay {G} for each wind counter on it. If you pay, Cyclone deals damage equal to the number of wind counters on it to each creature and each player.
+Oracle:At the beginning of your upkeep, put a wind counter on this enchantment, then sacrifice this enchantment unless you pay {G} for each wind counter on it. If you pay, this enchantment deals damage equal to the number of wind counters on it to each creature and each player.

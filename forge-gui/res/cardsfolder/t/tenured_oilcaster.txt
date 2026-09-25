@@ -9,4 +9,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigMill | TriggerZones$ Battl
 T:Mode$ Blocks | ValidCard$ Card.Self | Execute$ TrigMill | TriggerZones$ Battlefield | Secondary$ True | TriggerDescription$ Whenever this creature attacks or blocks, each player mills a card.
 SVar:TrigMill:DB$ Mill | Defined$ Player | NumCards$ 1
 DeckHas:Ability$Mill
-Oracle:Menace (This creature can't be blocked except by two or more creatures.)\nTenured Oilcaster gets +3/+0 as long as an opponent has eight or more cards in their graveyard.\nWhenever Tenured Oilcaster attacks or blocks, each player mills a card.
+Oracle:Menace (This creature can't be blocked except by two or more creatures.)\nThis creature gets +3/+0 as long as an opponent has eight or more cards in their graveyard.\nWhenever this creature attacks or blocks, each player mills a card.

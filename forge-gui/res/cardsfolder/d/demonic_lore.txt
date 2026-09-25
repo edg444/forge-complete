@@ -7,5 +7,5 @@ T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | TriggerZones$ Battlefiel
 SVar:TrigLoseLife:DB$ LoseLife | LifeAmount$ X
 SVar:X:Count$ValidHand Card.YouOwn/Times.2
 SVar:DonateMe:5
-Oracle:When Demonic Lore enters, draw three cards.\nAt the beginning of your end step, you lose 2 life for each card in your hand.
+Oracle:When this enchantment enters, draw three cards.\nAt the beginning of your end step, you lose 2 life for each card in your hand.
 AI:Remove:Random

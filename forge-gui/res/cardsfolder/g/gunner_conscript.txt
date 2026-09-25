@@ -12,4 +12,4 @@ SVar:EnchantMe:Multiple
 SVar:EquipMe:Multiple
 DeckHas:Ability$Token & Type$Artifact|Junk
 DeckNeeds:Type$Aura|Equipment
-Oracle:Trample\nGunner Conscript gets +1/+1 for each Aura and Equipment attached to it.\nWhen Gunner Conscript dies, if it was enchanted, create a Junk token.\nWhen Gunner Conscript dies, if it was equipped, create a Junk token.
+Oracle:Trample\nThis creature gets +1/+1 for each Aura and Equipment attached to it.\nWhen this creature dies, if it was enchanted, create a Junk token.\nWhen this creature dies, if it was equipped, create a Junk token.

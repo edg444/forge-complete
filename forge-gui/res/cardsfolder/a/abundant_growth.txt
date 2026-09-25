@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:FreeCard:DB$ Draw
 S:Mode$ Continuous | AffectedDefined$ Enchanted | AddAbility$ AbundantGrowthTap | Description$ Enchanted land has "{T}: Add one mana of any color."
 SVar:AbundantGrowthTap:AB$ Mana | Cost$ T | Produced$ Any | SpellDescription$ Add one mana of any color.
-Oracle:Enchant land\nWhen Abundant Growth enters, draw a card.\nEnchanted land has "{T}: Add one mana of any color."
+Oracle:Enchant land\nWhen this Aura enters, draw a card.\nEnchanted land has "{T}: Add one mana of any color."

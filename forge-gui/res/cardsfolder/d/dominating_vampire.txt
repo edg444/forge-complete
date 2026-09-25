@@ -7,4 +7,4 @@ SVar:TrigGainControl:DB$ GainControl | TgtPrompt$ Select target creature with ma
 SVar:X:Count$Valid Vampire.YouCtrl
 SVar:PlayMain1:OPPONENTCREATURES
 DeckHints:Type$Vampire
-Oracle:When Dominating Vampire enters, gain control of target creature with mana value less than or equal to the number of Vampires you control until end of turn. Untap that creature. It gains haste until end of turn.
+Oracle:When this creature enters, gain control of target creature with mana value less than or equal to the number of Vampires you control until end of turn. Untap that creature. It gains haste until end of turn.

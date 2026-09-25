@@ -11,4 +11,4 @@ SVar:Z:SVar$X/Plus.Y
 SVar:NeedsToPlayVar:Z EQ2
 DeckHas:Ability$Sacrifice|Graveyard
 DeckHints:Type$Instant|Sorcery
-Oracle:Exploit (When this creature enters, you may sacrifice a creature.)\nWhen Repository Skaab exploits a creature, return target instant or sorcery card from your graveyard to your hand.
+Oracle:Exploit (When this creature enters, you may sacrifice a creature.)\nWhen this creature exploits a creature, return target instant or sorcery card from your graveyard to your hand.

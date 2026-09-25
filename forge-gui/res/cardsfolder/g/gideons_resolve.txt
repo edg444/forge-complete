@@ -6,4 +6,4 @@ SVar:TrigSearch:DB$ ChangeZone | Origin$ Library | OriginAlternative$ Graveyard 
 S:Mode$ Continuous | Affected$ Creature.YouCtrl | AddPower$ 1 | AddToughness$ 1 | Description$ Creatures you control get +1/+1.
 SVar:PlayMain1:TRUE
 DeckHints:Name$Gideon, Martial Paragon
-Oracle:When Gideon's Resolve enters, you may search your library and/or graveyard for a card named Gideon, Martial Paragon, reveal it, and put it into your hand. If you search your library this way, shuffle.\nCreatures you control get +1/+1.
+Oracle:When this enchantment enters, you may search your library and/or graveyard for a card named Gideon, Martial Paragon, reveal it, and put it into your hand. If you search your library this way, shuffle.\nCreatures you control get +1/+1.

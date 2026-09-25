@@ -7,4 +7,4 @@ SVar:TrigToken:DB$ Token | TokenScript$ twin | TokenOwner$ You | TokenPower$ X |
 SVar:X:Count$CardPower
 SVar:Y:Count$CardToughness
 SVar:HasAttackEffect:TRUE
-Oracle:Whenever Gemini Engine attacks, create a colorless Construct artifact creature token named Twin that's attacking. Its power is equal to Gemini Engine's power and its toughness is equal to Gemini Engine's toughness. Sacrifice the token at end of combat.
+Oracle:Whenever this creature attacks, create a colorless Construct artifact creature token named Twin that's attacking. Its power is equal to this creature's power and its toughness is equal to this creature's toughness. Sacrifice the token at end of combat.

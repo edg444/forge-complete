@@ -8,7 +8,7 @@ SVar:X:Count$xPaid
 DeckHints:Ability$Discard|Mill|Sacrifice
 DeckHas:Ability$Graveyard|Mill
 AlternateMode:DoubleFaced
-Oracle:When Visage of Dread enters, target opponent reveals their hand. You choose an artifact or creature card from it. That player discards that card.\nCraft with two creatures {5}{B} ({5}{B}, Exile this artifact, Exile the two from among creatures you control and/or creature cards in your graveyard: Return this card transformed under its owner's control. Craft only as a sorcery.)
+Oracle:When this artifact enters, target opponent reveals their hand. You choose an artifact or creature card from it. That player discards that card.\nCraft with two creatures {5}{B} ({5}{B}, Exile this artifact, Exile the two from among creatures you control and/or creature cards in your graveyard: Return this card transformed under its owner's control. Craft only as a sorcery.)
 
 ALTERNATE
 
@@ -22,4 +22,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigMill | Secondary$ True | TriggerDescription$ Whenever this creature enters or attacks, you may mill two cards.
 SVar:TrigMill:DB$ Mill | NumCards$ 2 | Optional$ True
 SVar:HasAttackEffect:TRUE
-Oracle:Menace\nWhenever Dread Osseosaur enters or attacks, you may mill two cards. (You may put the top two cards of your library into your graveyard.)
+Oracle:Menace\nWhenever this creature enters or attacks, you may mill two cards. (You may put the top two cards of your library into your graveyard.)

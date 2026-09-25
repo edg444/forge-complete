@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDamage:DB$ DealDamage | Defined$ Opponent | NumDmg$ X
 SVar:X:Count$Domain
 AI:RemoveDeck:Random
-Oracle:Reach\nDomain — When Meria's Outrider enters, it deals damage to each opponent equal to the number of basic land types among lands you control.
+Oracle:Reach\nDomain — When this creature enters, it deals damage to each opponent equal to the number of basic land types among lands you control.

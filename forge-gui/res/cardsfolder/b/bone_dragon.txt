@@ -7,4 +7,4 @@ A:AB$ ChangeZone | Cost$ 3 B B ExileFromGrave<7/Card.Other> | Origin$ Graveyard 
 SVar:DiscardMe:5
 DeckHas:Ability$Graveyard
 DeckHints:Ability$Mill
-Oracle:Flying\n{3}{B}{B}, Exile seven other cards from your graveyard: Return Bone Dragon from your graveyard to the battlefield tapped.
+Oracle:Flying\n{3}{B}{B}, Exile seven other cards from your graveyard: Return this card from your graveyard to the battlefield tapped.

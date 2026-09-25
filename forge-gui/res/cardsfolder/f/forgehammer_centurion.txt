@@ -9,4 +9,4 @@ SVar:TrigImmediateTrig:AB$ ImmediateTrigger | Cost$ SubCounter<2/OIL> | Execute$
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature | IsCurse$ True | KW$ HIDDEN CARDNAME can't block.
 SVar:HasAttackEffect:TRUE
 DeckHints:Ability$Counters
-Oracle:Whenever another creature or artifact you control is put into a graveyard from the battlefield, put an oil counter on Forgehammer Centurion.\nWhenever Forgehammer Centurion attacks, you may remove two oil counters from it. When you do, target creature can't block this turn.
+Oracle:Whenever another creature or artifact you control is put into a graveyard from the battlefield, put an oil counter on this creature.\nWhenever this creature attacks, you may remove two oil counters from it. When you do, target creature can't block this turn.

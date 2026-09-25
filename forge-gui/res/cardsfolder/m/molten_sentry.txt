@@ -6,4 +6,4 @@ R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | Layer$ Copy |
 SVar:TrigFlip:DB$ FlipCoin | NoCall$ True | HeadsSubAbility$ DBAttacker | TailsSubAbility$ DBDefender
 SVar:DBAttacker:DB$ Clone | Defined$ Self | SetPower$ 5 | SetToughness$ 2 | AddTypes$ Creature | AddKeywords$ Haste
 SVar:DBDefender:DB$ Clone | Defined$ Self | SetPower$ 2 | SetToughness$ 5 | AddTypes$ Creature | AddKeywords$ Defender
-Oracle:As Molten Sentry enters, flip a coin. If the coin comes up heads, Molten Sentry enters as a 5/2 creature with haste. If it comes up tails, Molten Sentry enters as a 2/5 creature with defender.
+Oracle:As this creature enters, flip a coin. If the coin comes up heads, this creature enters as a 5/2 creature with haste. If it comes up tails, this creature enters as a 2/5 creature with defender.

@@ -6,4 +6,4 @@ T:Mode$ SpellCastOrCopy | ValidCard$ Instant,Sorcery | ValidActivatingPlayer$ Yo
 SVar:TrigChoice:DB$ Pump | KWChoice$ Flying,Lifelink
 DeckHas:Ability$LifeGain
 DeckNeeds:Type$Instant|Sorcery
-Oracle:Magecraft — Whenever you cast or copy an instant or sorcery spell, Silverquill Pledgemage gains your choice of flying or lifelink until end of turn.
+Oracle:Magecraft — Whenever you cast or copy an instant or sorcery spell, this creature gains your choice of flying or lifelink until end of turn.

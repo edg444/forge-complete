@@ -3,4 +3,4 @@ ManaCost:W
 Types:Creature Human Soldier
 PT:1/1
 A:AB$ Regenerate | Cost$ 2 G | SpellDescription$ Regenerate this creature.
-Oracle:{2}{G}: Regenerate Votary of the Conclave.
+Oracle:{2}{G}: Regenerate this creature.

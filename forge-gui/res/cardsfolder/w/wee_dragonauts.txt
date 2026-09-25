@@ -7,4 +7,4 @@ T:Mode$ SpellCast | ValidCard$ Instant,Sorcery | ValidActivatingPlayer$ You | Tr
 SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +2
 SVar:BuffedBy:Instant,Sorcery
 DeckHints:Type$Instant|Sorcery
-Oracle:Flying\nWhenever you cast an instant or sorcery spell, Wee Dragonauts gets +2/+0 until end of turn.
+Oracle:Flying\nWhenever you cast an instant or sorcery spell, this creature gets +2/+0 until end of turn.

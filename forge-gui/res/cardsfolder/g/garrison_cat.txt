@@ -7,4 +7,4 @@ SVar:TrigToken:DB$ Token | TokenScript$ w_1_1_human_soldier | TokenOwner$ Trigge
 SVar:SacMe:1
 DeckHints:Type$Human
 DeckHas:Ability$Token
-Oracle:When Garrison Cat dies, create a 1/1 white Human Soldier creature token.
+Oracle:When this creature dies, create a 1/1 white Human Soldier creature token.

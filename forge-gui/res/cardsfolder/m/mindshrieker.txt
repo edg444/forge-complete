@@ -7,4 +7,4 @@ A:AB$ Mill | Cost$ 2 | ValidTgts$ Player | NumCards$ 1 | SubAbility$ DBPump | Re
 SVar:DBPump:DB$ Pump | Defined$ Self | NumAtt$ +X | NumDef$ +X | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$CardManaCost
-Oracle:Flying\n{2}: Target player mills a card. Mindshrieker gets +X/+X until end of turn, where X is the milled card's mana value.
+Oracle:Flying\n{2}: Target player mills a card. This creature gets +X/+X until end of turn, where X is the milled card's mana value.

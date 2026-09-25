@@ -6,4 +6,4 @@ K:Trample
 T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigUpkeep | TriggerDescription$ At the beginning of your upkeep, sacrifice this creature unless you sacrifice two lands.
 SVar:TrigUpkeep:DB$ Sacrifice | UnlessPayer$ You | UnlessCost$ Sac<2/Land>
 AI:RemoveDeck:All
-Oracle:Trample\nAt the beginning of your upkeep, sacrifice Cosmic Larva unless you sacrifice two lands.
+Oracle:Trample\nAt the beginning of your upkeep, sacrifice this creature unless you sacrifice two lands.

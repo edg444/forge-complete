@@ -5,4 +5,4 @@ PT:3/3
 K:Reach
 S:Mode$ Continuous | AffectedDefined$ Self | Affected$ Card.attackedBattleThisTurn | AddKeyword$ Indestructible | Description$ This creature has indestructible as long as it attacked a battle this turn.
 AI:RemoveDeck:Random
-Oracle:Reach\nWar Historian has indestructible as long as it attacked a battle this turn.
+Oracle:Reach\nThis creature has indestructible as long as it attacked a battle this turn.

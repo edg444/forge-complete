@@ -21,4 +21,4 @@ Types:Enchantment Creature Human Noble
 PT:0/0
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ X | AddToughness$ X | Description$ This creature gets +1/+1 for each artifact and/or enchantment you control.
 SVar:X:Count$Valid Artifact.YouCtrl,Enchantment.YouCtrl
-Oracle:Portrait of Michiko gets +1/+1 for each artifact and/or enchantment you control.
+Oracle:This creature gets +1/+1 for each artifact and/or enchantment you control.

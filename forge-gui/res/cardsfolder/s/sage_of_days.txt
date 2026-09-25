@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDig:DB$ Dig | DigNum$ 3 | ChangeNum$ 1 | ChangeValid$ Card | DestinationZone2$ Graveyard | DestinationZone$ Library | LibraryPosition$ 0 | Optional$ True | NoReveal$ True
 DeckHas:Ability$Graveyard
 DeckHints:Ability$Graveyard
-Oracle:When Sage of Days enters, look at the top three cards of your library. You may put one of those cards back on top of your library. Put the rest into your graveyard.
+Oracle:When this creature enters, look at the top three cards of your library. You may put one of those cards back on top of your library. Put the rest into your graveyard.

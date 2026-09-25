@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:DelTrig:DB$ DelayedTrigger | ValidPlayer$ Player.IsTriggerRemembered | Mode$ Phase | Phase$ Upkeep | Execute$ TrigChange | RememberObjects$ TriggeredNewCardLKICopy & TriggeredCardOwner | TriggerDescription$ Return CARDNAME to the battlefield tapped under its owner's control at the beginning of their next upkeep.
 SVar:TrigChange:DB$ ChangeZone | Origin$ Graveyard | Destination$ Battlefield | Defined$ DelayTriggerRememberedLKI | Tapped$ True
 SVar:SacMe:1
-Oracle:When Phytotitan dies, return it to the battlefield tapped under its owner's control at the beginning of their next upkeep.
+Oracle:When this creature dies, return it to the battlefield tapped under its owner's control at the beginning of their next upkeep.

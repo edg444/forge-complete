@@ -10,4 +10,4 @@ R:Event$ DamageDone | ActiveZones$ Battlefield | Prevent$ True | ValidTarget$ Cr
 A:AB$ PutCounter | Cost$ X | Defined$ Self | CounterType$ SLEIGHT | CounterNum$ 1 | SubAbility$ ChooseColor | SpellDescription$ Put a sleight counter on this Aura and choose a color. X is the number of sleight counters on this Aura.
 SVar:X:Count$CardCounters.SLEIGHT
 AI:RemoveDeck:All
-Oracle:Enchant creature\nAs Chromatic Armor enters, choose a color.\nChromatic Armor enters with a sleight counter on it.\nPrevent all damage that would be dealt to enchanted creature by sources of the last chosen color.\n{X}: Put a sleight counter on Chromatic Armor and choose a color. X is the number of sleight counters on Chromatic Armor.
+Oracle:Enchant creature\nAs this Aura enters, choose a color.\nThis Aura enters with a sleight counter on it.\nPrevent all damage that would be dealt to enchanted creature by sources of the last chosen color.\n{X}: Put a sleight counter on this Aura and choose a color. X is the number of sleight counters on this Aura.

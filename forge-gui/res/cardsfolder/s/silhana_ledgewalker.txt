@@ -4,4 +4,4 @@ Types:Creature Elf Rogue
 PT:1/1
 K:Hexproof
 S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.withoutFlying | Description$ This creature can't be blocked except by creatures with flying.
-Oracle:Hexproof (This creature can't be the target of spells or abilities your opponents control.)\nSilhana Ledgewalker can't be blocked except by creatures with flying.
+Oracle:Hexproof (This creature can't be the target of spells or abilities your opponents control.)\nThis creature can't be blocked except by creatures with flying.

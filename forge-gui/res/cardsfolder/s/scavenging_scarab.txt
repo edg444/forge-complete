@@ -3,4 +3,4 @@ ManaCost:3 B
 Types:Creature Insect
 PT:3/3
 S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't block.
-Oracle:Scavenging Scarab can't block.
+Oracle:This creature can't block.

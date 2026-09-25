@@ -6,4 +6,4 @@ A:AB$ DealDamage | Cost$ T | ValidTgts$ Opponent | NumDmg$ 1 | SpellDescription$
 T:Mode$ SpellCast | ValidCard$ Card.nonCreature | ValidActivatingPlayer$ You | Execute$ TrigUntap | TriggerZones$ Battlefield | TriggerDescription$ Whenever you cast a noncreature spell, untap this creature.
 SVar:TrigUntap:DB$ Untap | Defined$ Self
 SVar:BuffedBy:Card.nonLand+nonCreature
-Oracle:{T}: Kindlespark Duo deals 1 damage to target opponent.\nWhenever you cast a noncreature spell, untap Kindlespark Duo.
+Oracle:{T}: This creature deals 1 damage to target opponent.\nWhenever you cast a noncreature spell, untap this creature.

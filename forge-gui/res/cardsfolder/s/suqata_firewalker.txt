@@ -4,4 +4,4 @@ Types:Creature Human Wizard
 PT:0/1
 S:Mode$ CantTarget | ValidTarget$ Card.Self | ValidSource$ Card.Red | Description$ This creature can't be the target of red spells or abilities from red sources.
 A:AB$ DealDamage | Cost$ T | ValidTgts$ Any | NumDmg$ 1 | SpellDescription$ This creature deals 1 damage to any target.
-Oracle:Suq'Ata Firewalker can't be the target of red spells or abilities from red sources.\n{T}: Suq'Ata Firewalker deals 1 damage to any target.
+Oracle:This creature can't be the target of red spells or abilities from red sources.\n{T}: This creature deals 1 damage to any target.

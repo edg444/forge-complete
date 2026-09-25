@@ -8,4 +8,4 @@ SVar:TrigLoseLife:DB$ LoseLife | Defined$ Player.Opponent | LifeAmount$ X | SubA
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ X
 SVar:X:Count$Valid Squirrel.YouCtrl+StrictlyOther,Bat.YouCtrl+StrictlyOther,Lizard.YouCtrl+StrictlyOther,Rat.YouCtrl+StrictlyOther
 SVar:HasAttackEffect:TRUE
-Oracle:Menace\nWhenever Valley Rotcaller attacks, each opponent loses X life and you gain X life, where X is the number of other Squirrels, Bats, Lizards, and Rats you control.
+Oracle:Menace\nWhenever this creature attacks, each opponent loses X life and you gain X life, where X is the number of other Squirrels, Bats, Lizards, and Rats you control.

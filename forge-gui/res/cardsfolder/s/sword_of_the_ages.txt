@@ -8,4 +8,4 @@ SVar:DBExile:DB$ ChangeZone | Defined$ SacrificedCards | Origin$ Graveyard | Des
 SVar:X:Count$xPaid
 SVar:Y:Sacrificed$CardPower
 AI:RemoveDeck:All
-Oracle:Sword of the Ages enters tapped.\n{T}, Sacrifice Sword of the Ages and any number of creatures you control: Sword of the Ages deals X damage to any target, where X is the total power of the creatures sacrificed this way, then exile Sword of the Ages and those creature cards.
+Oracle:This artifact enters tapped.\n{T}, Sacrifice this artifact and any number of creatures you control: This artifact deals X damage to any target, where X is the total power of the creatures sacrificed this way, then exile this artifact and those creature cards.

@@ -8,4 +8,4 @@ SVar:TrigAnimate:DB$ Animate | Defined$ Self | Types$ Creature,Artifact | SubAbi
 SVar:DBPump:DB$ Pump | NumAtt$ +1 | NumDef$ +1 | Defined$ Self
 SVar:BuffedBy:Card.nonCreature+nonLand
 K:Crew:1
-Oracle:Trample\nWhenever you cast a noncreature spell, Mizzium Tank becomes an artifact creature and gets +1/+1 until end of turn.\nCrew 1 (Tap any number of creatures you control with total power 1 or more: This Vehicle becomes an artifact creature until end of turn.)
+Oracle:Trample\nWhenever you cast a noncreature spell, this Vehicle becomes an artifact creature and gets +1/+1 until end of turn.\nCrew 1 (Tap any number of creatures you control with total power 1 or more: This Vehicle becomes an artifact creature until end of turn.)

@@ -4,4 +4,4 @@ Types:Enchantment
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Human.YouCtrl | TriggerZones$ Battlefield | Execute$ AndJusticeForAll | TriggerDescription$ Whenever a Human you control enters, this enchantment deals 1 damage to any target.
 SVar:AndJusticeForAll:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 1
 AI:RemoveDeck:Random
-Oracle:Whenever a Human you control enters, Vigilante Justice deals 1 damage to any target.
+Oracle:Whenever a Human you control enters, this enchantment deals 1 damage to any target.

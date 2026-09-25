@@ -7,4 +7,4 @@ A:AB$ PutCounter | Cost$ 1 Sac<1/Creature.Other;Artifact/another creature or an 
 SVar:AIPreference:SacCost$Artifact.token,Creature.Other+cmcLE2,Artifact.cmcEQ1
 DeckHints:Type$Artifact
 DeckHas:Ability$Counters|Sacrifice
-Oracle:Lifelink\nMold Harvest — {1}, Sacrifice another creature or an artifact: Put a +1/+1 counter on Mold Folk.
+Oracle:Lifelink\nMold Harvest — {1}, Sacrifice another creature or an artifact: Put a +1/+1 counter on this creature.

@@ -8,4 +8,4 @@ SVar:TrigMill:DB$ Mill | Defined$ You | NumCards$ 1 | RememberMilled$ True | Sub
 SVar:DBPump:DB$ Effect | ReplacementEffects$ RPrevent | RememberObjects$ Self | ExileOnMoved$ Battlefield | ConditionDefined$ Remembered | ConditionPresent$ Land | ConditionCompare$ EQ1 | SubAbility$ DBCleanup
 SVar:RPrevent:Event$ DamageDone | Prevent$ True | IsCombat$ True | ValidSource$ Card.IsRemembered | Description$ Prevent all combat damage EFFECTSOURCE would deal this turn.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:Whenever Loafing Giant attacks or blocks, mill a card. If a land card was milled this way, prevent all combat damage Loafing Giant would deal this turn.
+Oracle:Whenever this creature attacks or blocks, mill a card. If a land card was milled this way, prevent all combat damage this creature would deal this turn.

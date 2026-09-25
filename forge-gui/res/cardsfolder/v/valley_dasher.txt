@@ -4,4 +4,4 @@ Types:Creature Human Berserker
 PT:2/2
 K:Haste
 S:Mode$ MustAttack | ValidCreature$ Card.Self | Description$ This creature attacks each combat if able.
-Oracle:Haste\nValley Dasher attacks each combat if able.
+Oracle:Haste\nThis creature attacks each combat if able.

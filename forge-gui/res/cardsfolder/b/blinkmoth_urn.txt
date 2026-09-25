@@ -5,4 +5,4 @@ T:Mode$ Phase | Phase$ Main1 | ValidPlayer$ Player | TriggerZones$ Battlefield |
 SVar:TrigGetMana:DB$ Mana | Produced$ C | Amount$ X | Defined$ TriggeredPlayer
 SVar:X:Count$Valid Artifact.ActivePlayerCtrl
 AI:RemoveDeck:Random
-Oracle:At the beginning of each player's first main phase, if Blinkmoth Urn is untapped, that player adds {C} for each artifact they control.
+Oracle:At the beginning of each player's first main phase, if this artifact is untapped, that player adds {C} for each artifact they control.

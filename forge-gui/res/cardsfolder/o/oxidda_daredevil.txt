@@ -7,4 +7,4 @@ SVar:PlayMain1:TRUE
 AI:RemoveDeck:All
 DeckHas:Ability$Sacrifice
 DeckNeeds:Type$Artifact
-Oracle:Sacrifice an artifact: Oxidda Daredevil gains haste until end of turn.
+Oracle:Sacrifice an artifact: This creature gains haste until end of turn.

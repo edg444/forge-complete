@@ -13,7 +13,7 @@ SVar:Ember:Count$Valid Card.Self+counters_GE7_EMBER
 DeckHas:Ability$Counters
 DeckNeeds:Type$Instant|Sorcery
 AlternateMode:DoubleFaced
-Oracle:Defender\nWhenever you cast an instant or sorcery spell, put a number of ember counters on Smoldering Egg equal to the amount of mana spent to cast that spell. Then if Smoldering Egg has seven or more ember counters on it, remove them and transform Smoldering Egg.
+Oracle:Defender\nWhenever you cast an instant or sorcery spell, put a number of ember counters on this creature equal to the amount of mana spent to cast that spell. Then if this creature has seven or more ember counters on it, remove them and transform this creature.
 
 ALTERNATE
 
@@ -26,4 +26,4 @@ K:Flying
 T:Mode$ SpellCast | ValidCard$ Instant,Sorcery | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDamage | TriggerDescription$ Whenever you cast an instant or sorcery spell, this creature deals 2 damage to any target.
 SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 2
 DeckHints:Type$Instant|Sorcery
-Oracle:Flying\nWhenever you cast an instant or sorcery spell, Ashmouth Dragon deals 2 damage to any target.
+Oracle:Flying\nWhenever you cast an instant or sorcery spell, this creature deals 2 damage to any target.

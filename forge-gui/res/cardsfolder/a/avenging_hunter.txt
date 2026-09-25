@@ -5,4 +5,4 @@ PT:5/4
 K:Trample
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigInitiative | TriggerDescription$ When this creature enters, you take the initiative.
 SVar:TrigInitiative:DB$ TakeInitiative
-Oracle:Trample\nWhen Avenging Hunter enters, you take the initiative.
+Oracle:Trample\nWhen this creature enters, you take the initiative.

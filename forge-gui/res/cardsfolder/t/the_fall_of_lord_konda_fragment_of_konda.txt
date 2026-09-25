@@ -21,4 +21,4 @@ K:Defender
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When this creature dies, draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ TriggeredCardController
 SVar:SacMe:1
-Oracle:Defender\nWhen Fragment of Konda dies, draw a card.
+Oracle:Defender\nWhen this creature dies, draw a card.

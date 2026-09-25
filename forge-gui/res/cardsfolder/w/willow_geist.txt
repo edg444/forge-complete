@@ -10,4 +10,4 @@ SVar:TrigGainLife:DB$ GainLife | Defined$ TriggeredCardController | LifeAmount$ 
 SVar:X:TriggeredCard$CardPower
 DeckHas:Ability$Counters|LifeGain
 DeckNeeds:Ability$Graveyard
-Oracle:Trample\nWhenever one or more cards leave your graveyard, put a +1/+1 counter on Willow Geist.\nWhen Willow Geist dies, you gain life equal to its power.
+Oracle:Trample\nWhenever one or more cards leave your graveyard, put a +1/+1 counter on this creature.\nWhen this creature dies, you gain life equal to its power.

@@ -7,4 +7,4 @@ SVar:TrigLoseLife:DB$ LoseLife | Defined$ TriggeredDefendingPlayer | LifeAmount$
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 1
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$LifeGain
-Oracle:Whenever Agate-Blade Assassin attacks, defending player loses 1 life and you gain 1 life.
+Oracle:Whenever this creature attacks, defending player loses 1 life and you gain 1 life.

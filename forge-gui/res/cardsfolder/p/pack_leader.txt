@@ -8,4 +8,4 @@ SVar:TrigEffect:DB$ Effect | ReplacementEffects$ PreventDogDamage | Description$
 SVar:PreventDogDamage:Event$ DamageDone | Prevent$ True | IsCombat$ True | ActiveZones$ Command | ValidTarget$ Dog.YouCtrl | Description$ Prevent all combat damage that would be dealt this turn to Dogs you control.
 SVar:PlayMain1:TRUE
 DeckHints:Type$Dog
-Oracle:Other Dogs you control get +1/+1.\nWhenever Pack Leader attacks, prevent all combat damage that would be dealt this turn to Dogs you control.
+Oracle:Other Dogs you control get +1/+1.\nWhenever this creature attacks, prevent all combat damage that would be dealt this turn to Dogs you control.

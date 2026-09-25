@@ -7,4 +7,4 @@ SVar:TrigDrain:DB$ LoseLife | Defined$ Player.Opponent | LifeAmount$ 2 | SubAbil
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 2
 SVar:X:Count$LifeOppsLostThisTurn
 DeckHas:Ability$LifeGain
-Oracle:When Arrogant Outlaw enters, if an opponent lost life this turn, each opponent loses 2 life and you gain 2 life.
+Oracle:When this creature enters, if an opponent lost life this turn, each opponent loses 2 life and you gain 2 life.

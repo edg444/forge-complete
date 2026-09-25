@@ -8,7 +8,7 @@ SVar:DBDiscard:DB$ Discard | Defined$ You | NumCards$ 1 | Mode$ TgtChoose
 K:Disturb:3 U
 DeckHas:Ability$Graveyard
 AlternateMode:DoubleFaced
-Oracle:When Overwhelmed Archivist enters, draw a card, then discard a card.\nDisturb {3}{U} (You may cast this card from your graveyard transformed for its disturb cost.)
+Oracle:When this creature enters, draw a card, then discard a card.\nDisturb {3}{U} (You may cast this card from your graveyard transformed for its disturb cost.)
 
 ALTERNATE
 

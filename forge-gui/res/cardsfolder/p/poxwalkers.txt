@@ -8,4 +8,4 @@ SVar:TrigChange:DB$ ChangeZone | Origin$ Graveyard | Destination$ Battlefield | 
 SVar:SacMe:3
 SVar:DiscardMe:3
 DeckHas:Ability$Graveyard
-Oracle:Deathtouch\nCurse of the Walking Pox — Whenever you cast a spell from anywhere other than your hand, return Poxwalkers from your graveyard to the battlefield tapped.
+Oracle:Deathtouch\nCurse of the Walking Pox — Whenever you cast a spell from anywhere other than your hand, return this card from your graveyard to the battlefield tapped.

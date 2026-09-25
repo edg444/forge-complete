@@ -6,4 +6,4 @@ A:AB$ DealDamage | Cost$ G G T | ValidTgts$ Creature | NumDmg$ X | SubAbility$ D
 SVar:DamageThis:DB$ DealDamage | Defined$ Self | DamageSource$ Targeted | NumDmg$ Y
 SVar:X:Count$CardPower
 SVar:Y:Targeted$CardPower
-Oracle:{G}{G}, {T}: Tracker deals damage equal to its power to target creature. That creature deals damage equal to its power to Tracker.
+Oracle:{G}{G}, {T}: This creature deals damage equal to its power to target creature. That creature deals damage equal to its power to this creature.

@@ -4,4 +4,4 @@ Types:Creature Ogre
 PT:3/3
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDestroy | TriggerDescription$ When this creature enters, destroy target land.
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Land
-Oracle:When Ogre Arsonist enters, destroy target land.
+Oracle:When this creature enters, destroy target land.

@@ -6,7 +6,7 @@ T:Mode$ Phase | Phase$ BeginCombat | ValidPlayer$ You | TriggerZones$ Battlefiel
 SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform
 SVar:PlayMain1:TRUE
 AlternateMode:DoubleFaced
-Oracle:At the beginning of combat on your turn, if you control three or more creatures that each have toughness greater than their power, transform Catapult Fodder.
+Oracle:At the beginning of combat on your turn, if you control three or more creatures that each have toughness greater than their power, transform this creature.
 
 ALTERNATE
 

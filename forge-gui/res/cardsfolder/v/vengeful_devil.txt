@@ -5,4 +5,4 @@ PT:1/1
 K:Haste
 A:AB$ DealDamage | Cost$ T | ValidTgts$ Any | NumDmg$ 1 | CheckSVar$ Morbid | SpellDescription$ This creature deals 1 damage to any target. Activate only if a creature died this turn.
 SVar:Morbid:Count$Morbid.1.0
-Oracle:Haste\nMorbid — {T}: Vengeful Devil deals 1 damage to any target. Activate only if a creature died this turn.
+Oracle:Haste\nMorbid — {T}: This creature deals 1 damage to any target. Activate only if a creature died this turn.

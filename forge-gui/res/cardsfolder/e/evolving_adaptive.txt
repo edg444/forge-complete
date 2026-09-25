@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creatu
 SVar:TrigPutCounter:DB$ PutCounter | CounterType$ OIL
 SVar:X:Count$CardCounters.OIL
 DeckHas:Ability$Counters
-Oracle:Evolving Adaptive enters with an oil counter on it.\nEvolving Adaptive gets +1/+1 for each oil counter on it.\nWhenever another creature you control enters, if that creature has greater power or toughness than Evolving Adaptive, put an oil counter on Evolving Adaptive.
+Oracle:This creature enters with an oil counter on it.\nThis creature gets +1/+1 for each oil counter on it.\nWhenever another creature you control enters, if that creature has greater power or toughness than this creature, put an oil counter on this creature.

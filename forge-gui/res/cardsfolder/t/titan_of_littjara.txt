@@ -10,4 +10,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigDraw | Secondary$ True | T
 SVar:TrigDraw:AB$ Discard | Cost$ Draw<X/You> | Defined$ You | NumCards$ 1 | Mode$ TgtChoose
 SVar:X:Count$Valid Creature.YouCtrl+Other+sharesCreatureTypeWith
 SVar:HasAttackEffect:TRUE
-Oracle:As Titan of Littjara enters, choose a creature type.\nTitan of Littjara is the chosen type in addition to its other types.\nWhenever Titan of Littjara enters or attacks, you may draw a card for each other creature you control that shares a creature type with it. If you do, discard a card.
+Oracle:As this creature enters, choose a creature type.\nThis creature is the chosen type in addition to its other types.\nWhenever this creature enters or attacks, you may draw a card for each other creature you control that shares a creature type with it. If you do, discard a card.

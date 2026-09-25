@@ -8,4 +8,4 @@ K:etbCounter:P1P1:X:no Condition:CARDNAME enters with a +1/+1 counter on it for 
 SVar:X:Count$ExactManaCostGraveyard Card.nonLand+YouOwn
 SVar:NeedsToPlayVar:X GT2
 DeckHas:Ability$Counters
-Oracle:Flying, deathtouch\nEmbodiment of Agonies enters with a +1/+1 counter on it for each different mana cost among nonland cards in your graveyard. (For example, {2}{B} and {1}{B}{B} are different mana costs.)
+Oracle:Flying, deathtouch\nThis creature enters with a +1/+1 counter on it for each different mana cost among nonland cards in your graveyard. (For example, {2}{B} and {1}{B}{B} are different mana costs.)

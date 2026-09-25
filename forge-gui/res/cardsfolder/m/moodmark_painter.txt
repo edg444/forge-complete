@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature | NumAtt$ +X | KW$ Menace
 SVar:X:Count$ValidGraveyard Creature.YouOwn
 SVar:PlayMain1:TRUE
-Oracle:Undergrowth — When Moodmark Painter enters, target creature gains menace and gets +X/+0 until end of turn, where X is the number of creature cards in your graveyard. (It can't be blocked except by two or more creatures.)
+Oracle:Undergrowth — When this creature enters, target creature gains menace and gets +X/+0 until end of turn, where X is the number of creature cards in your graveyard. (It can't be blocked except by two or more creatures.)

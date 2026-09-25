@@ -9,4 +9,4 @@ A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
 A:AB$ ManaReflected | Cost$ T | Valid$ Defined.ExiledWith | ColorOrType$ Color | ReflectProperty$ Is | SpellDescription$ Add one mana of any of the exiled cards' colors.
 DeckHas:Ability$Graveyard
 DeckHints:Ability$Discard|Mill|Sacrifice
-Oracle:Pit of Offerings enters tapped.\nWhen Pit of Offerings enters, exile up to three target cards from graveyards.\n{T}: Add {C}.\n{T}: Add one mana of any of the exiled cards' colors.
+Oracle:This land enters tapped.\nWhen this land enters, exile up to three target cards from graveyards.\n{T}: Add {C}.\n{T}: Add one mana of any of the exiled cards' colors.

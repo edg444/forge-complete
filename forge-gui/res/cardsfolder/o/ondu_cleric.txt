@@ -7,4 +7,4 @@ SVar:TrigGainLife:DB$ GainLife | Defined$ You | LifeAmount$ X
 SVar:X:Count$Valid Ally.YouCtrl
 SVar:BuffedBy:Ally
 AI:RemoveDeck:Random
-Oracle:Whenever Ondu Cleric or another Ally you control enters, you may gain life equal to the number of Allies you control.
+Oracle:Whenever this creature or another Ally you control enters, you may gain life equal to the number of Allies you control.

@@ -10,4 +10,4 @@ SVar:TrigReturn:AB$ ChangeZone | Cost$ R R | Defined$ Self | Origin$ Graveyard |
 SVar:DiscardMe:1
 SVar:SacMe:1
 DeckHas:Ability$Counters|Graveyard
-Oracle:Flying, haste\nPhoenix Chick can't block.\nWhenever you attack with three or more creatures, you may pay {R}{R}. If you do, return Phoenix Chick from your graveyard to the battlefield tapped and attacking with a +1/+1 counter on it.
+Oracle:Flying, haste\nThis creature can't block.\nWhenever you attack with three or more creatures, you may pay {R}{R}. If you do, return this card from your graveyard to the battlefield tapped and attacking with a +1/+1 counter on it.

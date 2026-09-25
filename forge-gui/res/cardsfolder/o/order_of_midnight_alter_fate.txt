@@ -5,7 +5,7 @@ PT:2/2
 K:Flying
 S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't block.
 AlternateMode:Adventure
-Oracle:Flying\nOrder of Midnight can't block.
+Oracle:Flying\nThis creature can't block.
 
 ALTERNATE
 

@@ -6,4 +6,4 @@ A:AB$ ChangeZone | Cost$ 2 U Sac<1/CARDNAME> | Origin$ Battlefield | Destination
 SVar:DBDraw:DB$ Draw
 DeckHas:Ability$Sacrifice
 DeckNeeds:Color$Blue
-Oracle:{1}, Sacrifice Surgical Skullbomb: Draw a card.\n{2}{U}, Sacrifice Surgical Skullbomb: Return target creature to its owner's hand. Draw a card. Activate only as a sorcery.
+Oracle:{1}, Sacrifice this artifact: Draw a card.\n{2}{U}, Sacrifice this artifact: Return target creature to its owner's hand. Draw a card. Activate only as a sorcery.

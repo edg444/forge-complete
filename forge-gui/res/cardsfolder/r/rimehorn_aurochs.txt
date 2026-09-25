@@ -12,4 +12,4 @@ AI:RemoveDeck:All
 AI:RemoveDeck:Random
 SVar:HasAttackEffect:TRUE
 DeckHints:Type$Aurochs
-Oracle:Trample\nWhenever Rimehorn Aurochs attacks, it gets +1/+0 until end of turn for each other attacking Aurochs.\n{2}{S}: Target creature blocks target creature this turn if able. ({S} can be paid with one mana from a snow source.)
+Oracle:Trample\nWhenever this creature attacks, it gets +1/+0 until end of turn for each other attacking Aurochs.\n{2}{S}: Target creature blocks target creature this turn if able. ({S} can be paid with one mana from a snow source.)

@@ -10,4 +10,4 @@ T:Mode$ Phase | Phase$ BeginCombat | ValidPlayer$ You | TriggerZones$ Battlefiel
 SVar:PutCounterAll:AB$ PutCounterAll | Cost$ PayEnergy<3> | ValidCards$ Creature.YouCtrl | CounterType$ P1P1 | CounterNum$ 1
 SVar:X:Count$Valid Creature.attackingYou
 DeckHas:Ability$Counters
-Oracle:Flash\nThis spell costs {1} less to cast for each creature attacking you.\nWhen Sentry Bot enters, you get {E} for each creature attacking you.\nAt the beginning of combat on your turn, you may pay {E}{E}{E}. If you do, put a +1/+1 counter on each creature you control.
+Oracle:Flash\nThis spell costs {1} less to cast for each creature attacking you.\nWhen this creature enters, you get {E} for each creature attacking you.\nAt the beginning of combat on your turn, you may pay {E}{E}{E}. If you do, put a +1/+1 counter on each creature you control.

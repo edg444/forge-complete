@@ -6,4 +6,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ -X | AddToughness$ -X | D
 SVar:X:Count$Valid Creature.Other
 SVar:AntiBuffedBy:Creature
 AI:RemoveDeck:All
-Oracle:Mogg Squad gets -1/-1 for each other creature on the battlefield.
+Oracle:This creature gets -1/-1 for each other creature on the battlefield.

@@ -11,4 +11,4 @@ A:AB$ PutCounter | Cost$ X | CounterType$ VORTEX | CounterNum$ X | PlayerTurn$ T
 SVar:X:Count$xPaid
 SVar:Y:Count$CardCounters.VORTEX
 AI:RemoveDeck:All
-Oracle:As Energy Vortex enters, choose an opponent.\nAt the beginning of your upkeep, remove all vortex counters from Energy Vortex.\nAt the beginning of the chosen player's upkeep, Energy Vortex deals 3 damage to that player unless they pay {1} for each vortex counter on Energy Vortex.\n{X}: Put X vortex counters on Energy Vortex. Activate only during your upkeep.
+Oracle:As this enchantment enters, choose an opponent.\nAt the beginning of your upkeep, remove all vortex counters from this enchantment.\nAt the beginning of the chosen player's upkeep, this enchantment deals 3 damage to that player unless they pay {1} for each vortex counter on this enchantment.\n{X}: Put X vortex counters on this enchantment. Activate only during your upkeep.

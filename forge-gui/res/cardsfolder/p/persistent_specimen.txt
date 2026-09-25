@@ -6,4 +6,4 @@ A:AB$ ChangeZone | Cost$ 2 B | Origin$ Graveyard | Destination$ Battlefield | Ac
 SVar:SacMe:2
 SVar:DiscardMe:2
 DeckHas:Ability$Graveyard
-Oracle:{2}{B}: Return Persistent Specimen from your graveyard to the battlefield tapped.
+Oracle:{2}{B}: Return this card from your graveyard to the battlefield tapped.

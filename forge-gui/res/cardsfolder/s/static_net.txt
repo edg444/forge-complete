@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 2 | SubAbility$ DBToken
 SVar:DBToken:DB$ Token | TokenTapped$ True | TokenScript$ c_a_powerstone
 DeckHas:Ability$LifeGain|Token & Type$Artifact
-Oracle:When Static Net enters, exile target nonland permanent an opponent controls until Static Net leaves the battlefield.\nWhen Static Net enters, you gain 2 life and create a tapped Powerstone token. (It's an artifact with "{T}: Add {C}. This mana can't be spent to cast a nonartifact spell.")
+Oracle:When this enchantment enters, exile target nonland permanent an opponent controls until this enchantment leaves the battlefield.\nWhen this enchantment enters, you gain 2 life and create a tapped Powerstone token. (It's an artifact with "{T}: Add {C}. This mana can't be spent to cast a nonartifact spell.")

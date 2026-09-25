@@ -5,4 +5,4 @@ PT:1/2
 K:Flying
 T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Metalcraft$ True | Execute$ TrigMill | TriggerZones$ Battlefield | TriggerDescription$ Metalcraft — Whenever this creature deals combat damage to a player, if you control three or more artifacts, that player mills four cards.
 SVar:TrigMill:DB$ Mill | Defined$ TriggeredTarget | NumCards$ 4
-Oracle:Flying\nMetalcraft — Whenever Screeching Silcaw deals combat damage to a player, if you control three or more artifacts, that player mills four cards.
+Oracle:Flying\nMetalcraft — Whenever this creature deals combat damage to a player, if you control three or more artifacts, that player mills four cards.

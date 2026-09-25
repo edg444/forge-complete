@@ -9,7 +9,7 @@ SVar:DBRemoveCtrs:DB$ RemoveCounter | Defined$ Self | CounterType$ HATCHLING | C
 SVar:DBTransform:DB$ SetState | Defined$ Self | Mode$ Transform
 SVar:HatchTimer:Count$Valid Card.Self+counters_GE5_HATCHLING
 AlternateMode:DoubleFaced
-Oracle:Defender\n{1}{U}: Put a hatchling counter on Ludevic's Test Subject. Then if there are five or more hatchling counters on it, remove all of them and transform it.
+Oracle:Defender\n{1}{U}: Put a hatchling counter on this creature. Then if there are five or more hatchling counters on it, remove all of them and transform it.
 
 ALTERNATE
 

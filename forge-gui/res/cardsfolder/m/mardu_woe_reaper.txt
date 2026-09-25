@@ -8,4 +8,4 @@ SVar:DBGainLife:DB$ GainLife | LifeAmount$ 1 | ConditionDefined$ Remembered | Co
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:BuffedBy:Warrior
 DeckHints:Ability$Graveyard & Type$Warrior
-Oracle:Whenever Mardu Woe-Reaper or another Warrior you control enters, you may exile target creature card from a graveyard. If you do, you gain 1 life.
+Oracle:Whenever this creature or another Warrior you control enters, you may exile target creature card from a graveyard. If you do, you gain 1 life.

@@ -5,4 +5,4 @@ PT:3/1
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigMill | TriggerDescription$ When this creature enters, mill three cards.
 SVar:TrigMill:DB$ Mill | NumCards$ 3 | Defined$ You
 DeckHints:Ability$Graveyard
-Oracle:When Necromancer's Assistant enters, mill three cards.
+Oracle:When this creature enters, mill three cards.

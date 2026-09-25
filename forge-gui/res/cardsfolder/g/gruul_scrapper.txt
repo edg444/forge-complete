@@ -8,4 +8,4 @@ SVar:ManaNeededToAvoidNegativeEffect:red
 SVar:PlayMain1:ALWAYS
 AI:RemoveDeck:Random
 DeckNeeds:Color$Red
-Oracle:When Gruul Scrapper enters, if {R} was spent to cast it, it gains haste until end of turn.
+Oracle:When this creature enters, if {R} was spent to cast it, it gains haste until end of turn.

@@ -9,4 +9,4 @@ SVar:TrigStore:DB$ PutCounter | Defined$ Self | CounterType$ STORAGE | CounterNu
 A:AB$ Mana | Cost$ T SubCounter<X/STORAGE> | Produced$ B | Amount$ X | AILogic$ ManaRitualBattery | AINoRecursiveCheck$ True | SpellDescription$ Add {B} for each storage counter removed this way.
 SVar:X:Count$xPaid
 SVar:AIUntapPreference:StorageLand
-Oracle:Bottomless Vault enters tapped.\nYou may choose not to untap Bottomless Vault during your untap step.\nAt the beginning of your upkeep, if Bottomless Vault is tapped, put a storage counter on it.\n{T}, Remove any number of storage counters from Bottomless Vault: Add {B} for each storage counter removed this way.
+Oracle:This land enters tapped.\nYou may choose not to untap this land during your untap step.\nAt the beginning of your upkeep, if this land is tapped, put a storage counter on it.\n{T}, Remove any number of storage counters from this land: Add {B} for each storage counter removed this way.

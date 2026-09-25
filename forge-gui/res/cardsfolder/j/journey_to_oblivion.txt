@@ -9,4 +9,4 @@ SVar:OblivionRing:TRUE
 SVar:X:Count$Party
 DeckHas:Ability$Party
 DeckHints:Type$Cleric|Rogue|Warrior|Wizard
-Oracle:This spell costs {1} less to cast for each creature in your party. (Your party consists of up to one each of Cleric, Rogue, Warrior, and Wizard.)\nWhen Journey to Oblivion enters, exile target nonland permanent an opponent controls until Journey to Oblivion leaves the battlefield.
+Oracle:This spell costs {1} less to cast for each creature in your party. (Your party consists of up to one each of Cleric, Rogue, Warrior, and Wizard.)\nWhen this enchantment enters, exile target nonland permanent an opponent controls until this enchantment leaves the battlefield.

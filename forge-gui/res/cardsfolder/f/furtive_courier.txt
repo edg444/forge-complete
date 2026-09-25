@@ -10,4 +10,4 @@ SVar:DBDiscard:DB$ Discard | Defined$ You | NumCards$ 1 | Mode$ TgtChoose
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Sacrifice|Discard
 DeckHints:Type$Artifact|Clue|Map|Treasure|Food
-Oracle:Furtive Courier can't be blocked as long as you've sacrificed an artifact this turn.\nWhenever Furtive Courier attacks, draw a card, then discard a card.
+Oracle:This creature can't be blocked as long as you've sacrificed an artifact this turn.\nWhenever this creature attacks, draw a card, then discard a card.

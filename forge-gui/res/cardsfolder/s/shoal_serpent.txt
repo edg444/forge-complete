@@ -6,4 +6,4 @@ K:Defender
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | TriggerZones$ Battlefield | ValidCard$ Land.YouCtrl | Execute$ TrigDebuff | TriggerDescription$ Landfall — Whenever a land you control enters, this creature loses defender until end of turn.
 SVar:TrigDebuff:DB$ Debuff | Defined$ Self | Keywords$ Defender
 SVar:BuffedBy:Land
-Oracle:Defender\nLandfall — Whenever a land you control enters, Shoal Serpent loses defender until end of turn.
+Oracle:Defender\nLandfall — Whenever a land you control enters, this creature loses defender until end of turn.

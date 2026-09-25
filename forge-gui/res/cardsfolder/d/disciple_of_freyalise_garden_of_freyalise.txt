@@ -8,7 +8,7 @@ SVar:DBDraw:DB$ Draw | NumCards$ X
 SVar:X:Sacrificed$CardPower
 DeckHas:Ability$Sacrifice|LifeGain
 AlternateMode:Modal
-Oracle:When Disciple of Freyalise enters, you may sacrifice another creature. If you do, you gain X life and draw X cards, where X is that creature's power.
+Oracle:When this creature enters, you may sacrifice another creature. If you do, you gain X life and draw X cards, where X is that creature's power.
 
 ALTERNATE
 
@@ -18,4 +18,4 @@ Types:Land
 R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplaceWith$ DBTap | ReplacementResult$ Updated | Description$ As this land enters, you may pay 3 life. If you don't, it enters tapped.
 SVar:DBTap:DB$ Tap | ETB$ True | Defined$ Self | UnlessCost$ PayLife<3> | UnlessPayer$ You | StackDescription$ enters tapped.
 A:AB$ Mana | Cost$ T | Produced$ G | SpellDescription$ Add {G}.
-Oracle:As Garden of Freyalise enters, you may pay 3 life. If you don't, it enters tapped.\n{T}: Add {G}.
+Oracle:As this land enters, you may pay 3 life. If you don't, it enters tapped.\n{T}: Add {G}.

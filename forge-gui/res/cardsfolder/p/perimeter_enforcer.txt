@@ -9,4 +9,4 @@ T:Mode$ TurnFaceUp | ValidCard$ Detective.YouCtrl | Execute$ TrigPump | TriggerZ
 SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +1 | NumDef$ +1
 DeckHas:Ability$LifeGain
 DeckHints:Type$Detective
-Oracle:Flying, lifelink\nWhenever another Detective you control enters and whenever a Detective you control is turned face up, Perimeter Enforcer gets +1/+1 until end of turn.
+Oracle:Flying, lifelink\nWhenever another Detective you control enters and whenever a Detective you control is turned face up, this creature gets +1/+1 until end of turn.

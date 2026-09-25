@@ -6,4 +6,4 @@ K:Flying
 T:Mode$ SpellCast | ValidCard$ Creature | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigSacrifice | TriggerDescription$ When you cast a creature spell, sacrifice this creature.
 SVar:TrigSacrifice:DB$ Sacrifice
 AI:RemoveDeck:All
-Oracle:Flying\nWhen you cast a creature spell, sacrifice Skittering Skirge.
+Oracle:Flying\nWhen you cast a creature spell, sacrifice this creature.

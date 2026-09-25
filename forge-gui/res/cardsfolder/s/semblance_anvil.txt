@@ -11,4 +11,4 @@ SVar:DBForget:DB$ Pump | ForgetImprinted$ TriggeredCard
 SVar:NeedsToPlayVar:Y GE1
 SVar:Y:Count$ValidHand Permanent.nonLand+YouOwn
 AI:RemoveDeck:Random
-Oracle:Imprint — When Semblance Anvil enters, you may exile a nonland card from your hand.\nSpells you cast that share a card type with the exiled card cost {2} less to cast.
+Oracle:Imprint — When this artifact enters, you may exile a nonland card from your hand.\nSpells you cast that share a card type with the exiled card cost {2} less to cast.

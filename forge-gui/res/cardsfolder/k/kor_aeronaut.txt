@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigKicker:DB$ Pump | ValidTgts$ Creature | KW$ Flying
 SVar:PlayMain1:True
 SVar:NeedsToPlayKicked:Creature.YouCtrl
-Oracle:Kicker {1}{W} (You may pay an additional {1}{W} as you cast this spell.)\nFlying\nWhen Kor Aeronaut enters, if it was kicked, target creature gains flying until end of turn.
+Oracle:Kicker {1}{W} (You may pay an additional {1}{W} as you cast this spell.)\nFlying\nWhen this creature enters, if it was kicked, target creature gains flying until end of turn.

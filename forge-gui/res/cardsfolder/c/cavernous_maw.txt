@@ -6,4 +6,4 @@ A:AB$ Animate | Cost$ 2 | CheckSVar$ X | SVarCompare$ GE3 | Defined$ Self | Powe
 SVar:X:Count$ValidGraveyard,Battlefield Cave.YouOwn+Other
 DeckHas:Type$Elemental
 DeckHints:Type$Cave & Ability$Graveyard|Mill
-Oracle:{T}: Add {C}.\n{2}: Cavernous Maw becomes a 3/3 Elemental creature until end of turn. It's still a Cave land. Activate only if the number of other Caves you control plus the number of Cave cards in your graveyard is three or greater.
+Oracle:{T}: Add {C}.\n{2}: This land becomes a 3/3 Elemental creature until end of turn. It's still a Cave land. Activate only if the number of other Caves you control plus the number of Cave cards in your graveyard is three or greater.

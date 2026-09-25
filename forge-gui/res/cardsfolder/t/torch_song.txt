@@ -7,4 +7,4 @@ SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ VERSE | Counte
 SVar:X:Count$CardCounters.VERSE
 DeckHas:Ability$Counters|Sacrifice
 DeckHints:Ability$Proliferate
-Oracle:At the beginning of your upkeep, you may put a verse counter on Torch Song.\n{2}{R}, Sacrifice Torch Song: It deals X damage to any target, where X is the number of verse counters on Torch Song.
+Oracle:At the beginning of your upkeep, you may put a verse counter on this enchantment.\n{2}{R}, Sacrifice this enchantment: It deals X damage to any target, where X is the number of verse counters on this enchantment.

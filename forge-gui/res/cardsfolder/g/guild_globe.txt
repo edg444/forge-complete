@@ -5,4 +5,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
 A:AB$ Mana | Cost$ 2 T Sac<1/CARDNAME> | Produced$ Combo AnyDifferent | Amount$ 2 | SpellDescription$ Add two mana of different colors.
 AI:RemoveDeck:All
-Oracle:When Guild Globe enters, draw a card.\n{2}, {T}, Sacrifice Guild Globe: Add two mana of different colors.
+Oracle:When this artifact enters, draw a card.\n{2}, {T}, Sacrifice this artifact: Add two mana of different colors.

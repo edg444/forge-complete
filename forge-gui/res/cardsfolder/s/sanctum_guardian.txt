@@ -8,4 +8,4 @@ SVar:RPreventNextFromSource:Event$ DamageDone | ValidSource$ Card.ChosenCardStri
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 SVar:ExileEffect:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
 AI:RemoveDeck:All
-Oracle:Sacrifice Sanctum Guardian: The next time a source of your choice would deal damage to any target this turn, prevent that damage.
+Oracle:Sacrifice this creature: The next time a source of your choice would deal damage to any target this turn, prevent that damage.

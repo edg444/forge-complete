@@ -6,4 +6,4 @@ SVar:DBReveal:DB$ Reveal | Random$ True | RememberRevealed$ True | Defined$ You 
 SVar:DBDamage:DB$ DealDamage | NumDmg$ 2 | ValidTgts$ Any | ConditionDefined$ Remembered | ConditionPresent$ Card.NamedCard | ConditionCompare$ EQ1 | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearNamedCard$ True
 SVar:PreferredHandSize:1
-Oracle:{3}, {T}: Choose a card name, then reveal a card at random from your hand. If that card has the chosen name, Cursed Scroll deals 2 damage to any target.
+Oracle:{3}, {T}: Choose a card name, then reveal a card at random from your hand. If that card has the chosen name, this artifact deals 2 damage to any target.

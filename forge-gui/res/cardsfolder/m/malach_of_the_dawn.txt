@@ -4,4 +4,4 @@ Types:Creature Angel
 PT:2/4
 K:Flying
 A:AB$ Regenerate | Cost$ W W W | SpellDescription$ Regenerate this creature.
-Oracle:Flying\n{W}{W}{W}: Regenerate Malach of the Dawn.
+Oracle:Flying\n{W}{W}{W}: Regenerate this creature.

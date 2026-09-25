@@ -6,7 +6,7 @@ T:Mode$ AbilityCast | ValidActivatingPlayer$ Opponent | ValidSA$ SpellAbility.!M
 SVar:TrigDmg:DB$ DealDamage | NumDmg$ 1 | Defined$ TriggeredActivator
 A:AB$ Pump | Cost$ 1 R | Defined$ Self | NumAtt$ +2 | SpellDescription$ This creature gets +2/+0 until end of turn.
 AlternateMode:Modal
-Oracle:Whenever an opponent activates an ability that isn't a mana ability, Flamescroll Celebrant deals 1 damage to that player.\n{1}{R}: Flamescroll Celebrant gets +2/+0 until end of turn.
+Oracle:Whenever an opponent activates an ability that isn't a mana ability, this creature deals 1 damage to that player.\n{1}{R}: This creature gets +2/+0 until end of turn.
 
 ALTERNATE
 

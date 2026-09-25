@@ -9,4 +9,4 @@ T:Mode$ Cycled | ValidCard$ Card.Self | Execute$ TrigToken2 | TriggerDescription
 SVar:TrigToken2:DB$ Token | TokenScript$ u_x_x_shark_flying | TokenOwner$ You | TokenPower$ X | TokenToughness$ X
 SVar:X:Count$xPaid
 DeckHas:Ability$Token
-Oracle:Whenever you cast a noncreature spell, create an X/X blue Shark creature token with flying, where X is that spell's mana value.\nCycling {X}{1}{U} ({X}{1}{U}, Discard this card: Draw a card.)\nWhen you cycle Shark Typhoon, create an X/X blue Shark creature token with flying.
+Oracle:Whenever you cast a noncreature spell, create an X/X blue Shark creature token with flying, where X is that spell's mana value.\nCycling {X}{1}{U} ({X}{1}{U}, Discard this card: Draw a card.)\nWhen you cycle this card, create an X/X blue Shark creature token with flying.

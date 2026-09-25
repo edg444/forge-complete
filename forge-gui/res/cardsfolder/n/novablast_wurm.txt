@@ -4,4 +4,4 @@ Types:Creature Wurm
 PT:7/7
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigDestroyAll | TriggerDescription$ Whenever this creature attacks, destroy all other creatures.
 SVar:TrigDestroyAll:DB$ DestroyAll | ValidCards$ Creature.StrictlyOther
-Oracle:Whenever Novablast Wurm attacks, destroy all other creatures.
+Oracle:Whenever this creature attacks, destroy all other creatures.

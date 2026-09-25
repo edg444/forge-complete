@@ -6,4 +6,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | IsPresent$ Dinosaur.YouCtrl | NoResolvi
 T:Mode$ Blocks | ValidCard$ Card.Self | IsPresent$ Dinosaur.YouCtrl | NoResolvingCheck$ True | Execute$ TrigPump | Secondary$ True | TriggerZones$ Battlefield | TriggerDescription$ Whenever this creature attacks or blocks while you control a Dinosaur, this creature gets +1/+1 until end of turn.
 SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +1 | NumDef$ +1
 DeckHints:Type$Dinosaur
-Oracle:Whenever Burning Sun Cavalry attacks or blocks while you control a Dinosaur, Burning Sun Cavalry gets +1/+1 until end of turn.
+Oracle:Whenever this creature attacks or blocks while you control a Dinosaur, this creature gets +1/+1 until end of turn.

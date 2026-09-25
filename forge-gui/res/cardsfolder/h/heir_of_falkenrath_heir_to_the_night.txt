@@ -7,7 +7,7 @@ DeckHas:Ability$Discard
 DeckHints:Keyword$Madness & Ability$Delirium
 SVar:AIPreference:DiscardCost$Card.cmcLE2
 AlternateMode:DoubleFaced
-Oracle:Discard a card: Transform Heir of Falkenrath. Activate only once each turn.
+Oracle:Discard a card: Transform this creature. Activate only once each turn.
 
 ALTERNATE
 

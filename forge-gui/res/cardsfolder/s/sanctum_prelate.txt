@@ -6,4 +6,4 @@ K:ETBReplacement:Other:ChooseNumber
 SVar:ChooseNumber:DB$ ChooseNumber | Defined$ You | SpellDescription$ As this creature enters, choose a number.
 S:Mode$ CantBeCast | ValidCard$ Card.nonCreature+cmcEQChosen | Description$ Noncreature spells with mana value equal to the chosen number can't be cast.
 AI:RemoveDeck:All
-Oracle:As Sanctum Prelate enters, choose a number.\nNoncreature spells with mana value equal to the chosen number can't be cast.
+Oracle:As this creature enters, choose a number.\nNoncreature spells with mana value equal to the chosen number can't be cast.

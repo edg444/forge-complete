@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigScry:DB$ Scry | ScryNum$ 2
 A:AB$ Sacrifice | Cost$ 2 W | SpellDescription$ Sacrifice this enchantment.
 DeckHas:Ability$Sacrifice|Token & Type$Knight
-Oracle:When Hopeful Vigil enters, create a 2/2 white Knight creature token with vigilance.\nWhen Hopeful Vigil is put into a graveyard from the battlefield, scry 2.\n{2}{W}: Sacrifice Hopeful Vigil.
+Oracle:When this enchantment enters, create a 2/2 white Knight creature token with vigilance.\nWhen this enchantment is put into a graveyard from the battlefield, scry 2.\n{2}{W}: Sacrifice this enchantment.

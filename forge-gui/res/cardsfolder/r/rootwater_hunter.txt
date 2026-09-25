@@ -4,4 +4,4 @@ Types:Creature Merfolk
 PT:1/1
 A:AB$ DealDamage | Cost$ T | ValidTgts$ Any | NumDmg$ 1 | SpellDescription$ This creature deals 1 damage to any target.
 SVar:NonCombatPriority:1
-Oracle:{T}: Rootwater Hunter deals 1 damage to any target.
+Oracle:{T}: This creature deals 1 damage to any target.

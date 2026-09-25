@@ -8,7 +8,7 @@ SVar:TrigEffect:DB$ Effect | StaticAbilities$ STPlay | ForgetOnMoved$ Graveyard 
 SVar:STPlay:Mode$ Continuous | MayPlay$ True | Affected$ Card.IsRemembered+Adventure | AffectedZone$ Graveyard | Description$ Until the end of your next turn, you may play EFFECTSOURCE as an adventure.
 DeckHas:Ability$Graveyard
 AlternateMode:Adventure
-Oracle:Trample\nWhen Mosswood Dreadknight dies, you may cast it from your graveyard as an Adventure until the end of your next turn.
+Oracle:Trample\nWhen this creature dies, you may cast it from your graveyard as an Adventure until the end of your next turn.
 
 ALTERNATE
 

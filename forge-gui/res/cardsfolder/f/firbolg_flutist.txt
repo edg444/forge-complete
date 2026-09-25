@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigChange:DB$ GainControl | TgtPrompt$ Choose target creature you don't control | ValidTgts$ Creature.YouDontCtrl | LoseControl$ EOT | Untap$ True | AddKWs$ Haste & Myriad
 SVar:PlayMain1:OPPONENTCREATURES
 DeckHas:Ability$Token
-Oracle:Enthralling Performance — When Firbolg Flutist enters, gain control of target creature you don't control until end of turn. Untap it. It gains haste and myriad until end of turn. (Whenever it attacks, for each opponent other than defending player, you may create a token copy that's tapped and attacking that player or a planeswalker they control. Exile the tokens at end of combat.)
+Oracle:Enthralling Performance — When this creature enters, gain control of target creature you don't control until end of turn. Untap it. It gains haste and myriad until end of turn. (Whenever it attacks, for each opponent other than defending player, you may create a token copy that's tapped and attacking that player or a planeswalker they control. Exile the tokens at end of combat.)

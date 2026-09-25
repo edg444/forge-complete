@@ -11,4 +11,4 @@ SVar:Play:Mode$ Continuous | MayPlay$ True | Affected$ Card.IsRemembered | Affec
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHas:Ability$Counters
 DeckHints:Type$Instant|Sorcery
-Oracle:Whenever you cast an instant or sorcery spell, put a charge counter on Geistflame Reservoir.\n{1}{R}, {T}, Remove any number of charge counters from Geistflame Reservoir: It deals that much damage to any target.\n{1}{R}, {T}: Exile the top card of your library. You may play that card this turn.
+Oracle:Whenever you cast an instant or sorcery spell, put a charge counter on this artifact.\n{1}{R}, {T}, Remove any number of charge counters from this artifact: It deals that much damage to any target.\n{1}{R}, {T}: Exile the top card of your library. You may play that card this turn.

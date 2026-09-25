@@ -5,4 +5,4 @@ PT:4/2
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDealDamage | TriggerDescription$ When this creature enters, it deals 4 damage to target creature.
 SVar:TrigDealDamage:DB$ DealDamage | ValidTgts$ Creature | NumDmg$ 4
 SVar:PlayMain1:TRUE
-Oracle:When Flametongue Kavu enters, it deals 4 damage to target creature.
+Oracle:When this creature enters, it deals 4 damage to target creature.

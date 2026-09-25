@@ -7,4 +7,4 @@ SVar:DBLoseLife:DB$ LoseLife | LifeAmount$ 1
 SVar:X:PlayerCountOpponents$HighestCounters.Poison
 DeckHas:Ability$Graveyard
 DeckHints:Keyword$Toxic|Infect
-Oracle:Corrupted — {2}{B}: Return Fleshless Gladiator from your graveyard to the battlefield tapped. You lose 1 life. Activate only if an opponent has three or more poison counters.
+Oracle:Corrupted — {2}{B}: Return this card from your graveyard to the battlefield tapped. You lose 1 life. Activate only if an opponent has three or more poison counters.

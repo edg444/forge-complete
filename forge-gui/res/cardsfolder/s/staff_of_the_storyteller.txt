@@ -7,4 +7,4 @@ T:Mode$ TokenCreatedOnce | ValidToken$ Creature.YouOwn | TriggerZones$ Battlefie
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ STORY | CounterNum$ 1
 A:AB$ Draw | Cost$ W T SubCounter<1/STORY> | SpellDescription$ Draw a card.
 DeckHas:Ability$Counters|Token & Type$Spirit
-Oracle:When Staff of the Storyteller enters, create a 1/1 white Spirit creature token with flying.\nWhenever you create one or more creature tokens, put a story counter on Staff of the Storyteller.\n{W}, {T}, Remove a story counter from Staff of the Storyteller: Draw a card.
+Oracle:When this artifact enters, create a 1/1 white Spirit creature token with flying.\nWhenever you create one or more creature tokens, put a story counter on this artifact.\n{W}, {T}, Remove a story counter from this artifact: Draw a card.

@@ -6,4 +6,4 @@ K:Vigilance
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigLife | TriggerDescription$ When this creature enters, each player's life total becomes the highest life total among all players.
 SVar:TrigLife:DB$ SetLife | Defined$ Player | LifeAmount$ X
 SVar:X:PlayerCountPlayers$HighestLifeTotal
-Oracle:Vigilance\nWhen Arbiter of Knollridge enters, each player's life total becomes the highest life total among all players.
+Oracle:Vigilance\nWhen this creature enters, each player's life total becomes the highest life total among all players.

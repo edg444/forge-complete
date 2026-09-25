@@ -8,4 +8,4 @@ SVar:TrigLoseLife:DB$ LoseLife | Defined$ Player.Opponent | LifeAmount$ 1 | SubA
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 1
 DeckHas:Ability$Sacrifice|LifeGain
 DeckNeeds:Type$Cleric
-Oracle:{2}, {T}, Sacrifice a creature: Draw a card.\nAs long as you control a Cleric, Relic Vial has "Whenever a creature you control dies, each opponent loses 1 life and you gain 1 life."
+Oracle:{2}, {T}, Sacrifice a creature: Draw a card.\nAs long as you control a Cleric, this artifact has "Whenever a creature you control dies, each opponent loses 1 life and you gain 1 life."

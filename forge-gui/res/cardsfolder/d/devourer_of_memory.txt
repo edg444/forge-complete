@@ -9,4 +9,4 @@ SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | Descript
 A:AB$ Mill | Cost$ 1 U B | SpellDescription$ Mill a card.
 DeckHas:Ability$Mill
 DeckHints:Ability$Mill
-Oracle:Whenever one or more cards are put into your graveyard from your library, Devourer of Memory gets +1/+1 until end of turn and can't be blocked this turn.\n{1}{U}{B}: Mill a card.
+Oracle:Whenever one or more cards are put into your graveyard from your library, this creature gets +1/+1 until end of turn and can't be blocked this turn.\n{1}{U}{B}: Mill a card.

@@ -9,4 +9,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigMill:DB$ Mill | NumCards$ 2 | Defined$ You | SubAbility$ TrigDraw
 SVar:TrigDraw:DB$ Draw | Defined$ You
 DeckHas:Ability$Graveyard|Mill
-Oracle:Flying\nAs long as there are five or more mana values among cards in your graveyard, Aven Heartstabber gets +2/+2 and has deathtouch.\nWhen Aven Heartstabber dies, mill two cards, then draw a card.
+Oracle:Flying\nAs long as there are five or more mana values among cards in your graveyard, this creature gets +2/+2 and has deathtouch.\nWhen this creature dies, mill two cards, then draw a card.

@@ -8,4 +8,4 @@ T:Mode$ AttackersDeclared | ValidAttackers$ Creature.IsSuspected+YouCtrl | Execu
 SVar:TrigSurveil:DB$ Surveil | Amount$ 1
 SVar:PlayMain1:TRUE
 DeckHas:Ability$Graveyard
-Oracle:When Clandestine Meddler enters, suspect up to one other target creature you control. (A suspected creature has menace and can't block.)\nWhenever one or more suspected creatures you control attack, surveil 1. (Look at the top card of your library. You may put it into your graveyard.)
+Oracle:When this creature enters, suspect up to one other target creature you control. (A suspected creature has menace and can't block.)\nWhenever one or more suspected creatures you control attack, surveil 1. (Look at the top card of your library. You may put it into your graveyard.)

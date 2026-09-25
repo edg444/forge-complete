@@ -5,4 +5,4 @@ K:ETBReplacement:Other:ChooseCT
 SVar:ChooseCT:DB$ ChooseType | Defined$ You | Type$ Creature | AILogic$ MostProminentInComputerDeckNonToken | SpellDescription$ As this artifact enters, choose a creature type.
 S:Mode$ ReduceCost | ValidCard$ Creature.ChosenType | Type$ Spell | Amount$ 2 | Description$ Creature spells of the chosen type cost {2} less to cast.
 AI:RemoveDeck:Random
-Oracle:As Urza's Incubator enters, choose a creature type.\nCreature spells of the chosen type cost {2} less to cast.
+Oracle:As this artifact enters, choose a creature type.\nCreature spells of the chosen type cost {2} less to cast.

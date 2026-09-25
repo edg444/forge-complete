@@ -7,4 +7,4 @@ SVar:TrigExile:AB$ ChangeZone | Cost$ ExileAnyGrave<1/Card.TriggeredNewCard> | O
 SVar:SacMe:4
 AI:RemoveDeck:Random
 DeckNeeds:Type$Enchantment
-Oracle:When Academy Rector dies, you may exile it. If you do, search your library for an enchantment card, put that card onto the battlefield, then shuffle.
+Oracle:When this creature dies, you may exile it. If you do, search your library for an enchantment card, put that card onto the battlefield, then shuffle.

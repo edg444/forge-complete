@@ -8,4 +8,4 @@ SVar:P1P1:DB$ PutCounter | ValidTgts$ Artifact.YouCtrl,Creature.YouCtrl | TgtPro
 SVar:Transform:DB$ SetState | ValidTgts$ Incubator.token+YouCtrl | TgtPrompt$ Select target Incubator token you control | Mode$ Transform | SpellDescription$ Transform target Incubator token you control.
 DeckHas:Ability$Counters
 DeckHints:Ability$Token & Type$Artifact
-Oracle:When Seedpod Caretaker enters, choose one —\n• Put a +1/+1 counter on target artifact or creature you control.\n• Transform target Incubator token you control.
+Oracle:When this creature enters, choose one —\n• Put a +1/+1 counter on target artifact or creature you control.\n• Transform target Incubator token you control.

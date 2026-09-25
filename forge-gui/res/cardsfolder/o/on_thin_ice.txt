@@ -8,4 +8,4 @@ SVar:TrigExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | Valid
 SVar:PlayMain1:TRUE
 SVar:NeedsToPlay:Creature.OppCtrl
 DeckHints:Type$Snow
-Oracle:Enchant snow land you control\nWhen On Thin Ice enters, exile target creature an opponent controls until On Thin Ice leaves the battlefield.
+Oracle:Enchant snow land you control\nWhen this Aura enters, exile target creature an opponent controls until this Aura leaves the battlefield.

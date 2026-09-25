@@ -5,4 +5,4 @@ PT:1/1
 A:AB$ Regenerate | Cost$ B | SpellDescription$ Regenerate this creature.
 AI:RemoveDeck:Random
 DeckNeeds:Color$Black
-Oracle:{B}: Regenerate Metathran Zombie.
+Oracle:{B}: Regenerate this creature.

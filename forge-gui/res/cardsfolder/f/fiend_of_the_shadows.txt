@@ -14,4 +14,4 @@ A:AB$ Regenerate | Cost$ Sac<1/Human> | SpellDescription$ Regenerate this creatu
 SVar:AIPreference:SacCost$Creature.token,Creature.cmcLE1
 AI:RemoveDeck:Random
 DeckNeeds:Type$Human
-Oracle:Flying\nWhenever Fiend of the Shadows deals combat damage to a player, that player exiles a card from their hand. You may play that card for as long as it remains exiled.\nSacrifice a Human: Regenerate Fiend of the Shadows.
+Oracle:Flying\nWhenever this creature deals combat damage to a player, that player exiles a card from their hand. You may play that card for as long as it remains exiled.\nSacrifice a Human: Regenerate this creature.

@@ -3,4 +3,4 @@ ManaCost:U
 Types:Enchantment
 A:AB$ ChangeZone | Cost$ Sac<1/CARDNAME> | ValidTgts$ Creature | Origin$ Battlefield | Destination$ Hand | SpellDescription$ Return target creature to its owner's hand.
 SVar:PlayMain1:TRUE
-Oracle:Sacrifice Seal of Removal: Return target creature to its owner's hand.
+Oracle:Sacrifice this enchantment: Return target creature to its owner's hand.

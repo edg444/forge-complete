@@ -10,4 +10,4 @@ SVar:DBLoseLife:DB$ LoseLife | LifeAmount$ CntLife | Defined$ Player.IsRemembere
 SVar:CntLife:PlayerCountRemembered$LifeTotal/ThirdUp
 SVar:NeedsToPlayVar:MyLife GT1
 SVar:MyLife:Count$YourLifeTotal
-Oracle:Menace, deathtouch\nWhen Dire Fleet Ravager enters, each player loses a third of their life, rounded up.
+Oracle:Menace, deathtouch\nWhen this creature enters, each player loses a third of their life, rounded up.

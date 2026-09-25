@@ -5,7 +5,7 @@ PT:2/2
 K:Defender
 A:AB$ SetState | Cost$ 6 | Defined$ Self | Mode$ Transform | SpellDescription$ Transform this creature.
 AlternateMode:DoubleFaced
-Oracle:Defender\n{6}: Transform Thraben Gargoyle.
+Oracle:Defender\n{6}: Transform this creature.
 
 ALTERNATE
 

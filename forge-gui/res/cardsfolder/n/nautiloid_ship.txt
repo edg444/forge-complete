@@ -14,4 +14,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 K:Crew:3
 SVar:NeedsToPlayVar:X GE2
 SVar:X:PlayerCountOpponents$HighestValidGraveyard Creature.YouOwn
-Oracle:Flying\nWhen Nautiloid Ship enters, exile target player's graveyard.\nWhenever Nautiloid Ship deals combat damage to a player, you may put a creature card exiled with Nautiloid Ship onto the battlefield under your control.\nCrew 3
+Oracle:Flying\nWhen this Vehicle enters, exile target player's graveyard.\nWhenever this Vehicle deals combat damage to a player, you may put a creature card exiled with this Vehicle onto the battlefield under your control.\nCrew 3

@@ -7,4 +7,4 @@ SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Permanent
 SVar:TrigChangeZone:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand | Defined$ TriggeredNewCardLKICopy
 SVar:SacMe:4
 SVar:PlayMain1:TRUE
-Oracle:When Spine of Ish Sah enters, destroy target permanent.\nWhen Spine of Ish Sah is put into a graveyard from the battlefield, return Spine of Ish Sah to its owner's hand.
+Oracle:When this artifact enters, destroy target permanent.\nWhen this artifact is put into a graveyard from the battlefield, return it to its owner's hand.

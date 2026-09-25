@@ -8,4 +8,4 @@ SVar:TrigToken:DB$ Token | TokenTapped$ True | TokenScript$ c_a_powerstone
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ When this creature leaves the battlefield, sacrifice a Powerstone.
 SVar:TrigSac:DB$ Sacrifice | SacValid$ Powerstone
 DeckHas:Ability$Token|Sacrifice & Type$Artifact
-Oracle:Menace\nWhen Horned Stoneseeker enters, create a tapped Powerstone token. (It's an artifact with "{T}: Add {C}. This mana can't be spent to cast a nonartifact spell.")\nWhen Horned Stoneseeker leaves the battlefield, sacrifice a Powerstone.
+Oracle:Menace\nWhen this creature enters, create a tapped Powerstone token. (It's an artifact with "{T}: Add {C}. This mana can't be spent to cast a nonartifact spell.")\nWhen this creature leaves the battlefield, sacrifice a Powerstone.

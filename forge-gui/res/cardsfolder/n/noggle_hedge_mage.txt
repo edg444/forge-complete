@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Mountain.YouCtrl | PresentCompare$ GE2 | Execute$ TrigDamage | OptionalDecider$ You | TriggerDescription$ When this creature enters, if you control two or more Mountains, you may have this creature deal 2 damage to target player or planeswalker.
 SVar:TrigTap:DB$ Tap | TargetMin$ 2 | TargetMax$ 2 | ValidTgts$ Permanent
 SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Player,Planeswalker | TgtPrompt$ Select target player or planeswalker | NumDmg$ 2
-Oracle:When Noggle Hedge-Mage enters, if you control two or more Islands, you may tap two target permanents.\nWhen Noggle Hedge-Mage enters, if you control two or more Mountains, you may have Noggle Hedge-Mage deal 2 damage to target player or planeswalker.
+Oracle:When this creature enters, if you control two or more Islands, you may tap two target permanents.\nWhen this creature enters, if you control two or more Mountains, you may have this creature deal 2 damage to target player or planeswalker.

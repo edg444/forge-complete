@@ -9,4 +9,4 @@ SVar:TrigToken:DB$ Token | TokenAmount$ 3 | TokenScript$ c_0_1_eldrazi_spawn_sac
 SVar:AIPreference:SacCost$Creature.Eldrazi+token,Creature.Eldrazi+cmcLE1
 DeckHas:Ability$Mana.Colorless|Token
 DeckHints:Type$Eldrazi
-Oracle:Devoid (This card has no color.)\nWhen you cast this spell, create three 0/1 colorless Eldrazi Spawn creature tokens with "Sacrifice this token: Add {C}."\n{1}{C}, Sacrifice an Eldrazi: Spawn-Gang Commander deals 2 damage to any target.
+Oracle:Devoid (This card has no color.)\nWhen you cast this spell, create three 0/1 colorless Eldrazi Spawn creature tokens with "Sacrifice this token: Add {C}."\n{1}{C}, Sacrifice an Eldrazi: This creature deals 2 damage to any target.

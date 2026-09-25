@@ -3,4 +3,4 @@ ManaCost:2 B
 Types:Creature Imp
 PT:2/2
 A:AB$ Pump | Cost$ B Discard<1/Card> | Defined$ Self | KW$ Flying | SpellDescription$ This creature gains flying until end of turn.
-Oracle:{B}, Discard a card: Fledgling Imp gains flying until end of turn.
+Oracle:{B}, Discard a card: This creature gains flying until end of turn.

@@ -6,4 +6,4 @@ K:Haste
 K:Protection:Coyote
 A:AB$ Effect | Cost$ 3 | StaticAbilities$ KWPump | Duration$ UntilHostLeavesPlayOrEOT | SpellDescription$ This creature can't be blocked this turn except by creatures with haste.
 SVar:KWPump:Mode$ CantBlockBy | ValidAttacker$ Creature.EffectSource | ValidBlocker$ Creature.withoutHaste | Description$ EFFECTSOURCE can't be blocked this turn except by creatures with haste.
-Oracle:Haste, protection from Coyotes\n{3}: Resilient Roadrunner can't be blocked this turn except by creatures with haste.
+Oracle:Haste, protection from Coyotes\n{3}: This creature can't be blocked this turn except by creatures with haste.

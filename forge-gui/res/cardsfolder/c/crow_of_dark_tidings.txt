@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigMill:DB$ Mill | NumCards$ 2 | Defined$ You
 DeckHints:Ability$Delirium
 DeckHas:Ability$Graveyard
-Oracle:Flying\nWhen Crow of Dark Tidings enters or dies, mill two cards. (Put the top two cards of your library into your graveyard.)
+Oracle:Flying\nWhen this creature enters or dies, mill two cards. (Put the top two cards of your library into your graveyard.)

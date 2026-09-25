@@ -6,4 +6,4 @@ SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ SOUL | Counter
 A:AB$ Mana | Cost$ T | Produced$ Any | Amount$ Y | RestrictValid$ Spell.Instant,Spell.Sorcery,Spell.Demon,Spell.Spirit | SpellDescription$ Add X mana of any one color, where X is the number of soul counters on this artifact. Spend this mana only to cast instant, sorcery, Demon, and Spirit spells.
 SVar:X:Count$ThisTurnEntered_Graveyard_from_Battlefield_Creature
 SVar:Y:Count$CardCounters.SOUL
-Oracle:Morbid — At the beginning of each end step, if a creature died this turn, put a soul counter on Séance Board.\n{T}: Add X mana of any one color, where X is the number of soul counters on Séance Board. Spend this mana only to cast instant, sorcery, Demon, and Spirit spells.
+Oracle:Morbid — At the beginning of each end step, if a creature died this turn, put a soul counter on this artifact.\n{T}: Add X mana of any one color, where X is the number of soul counters on this artifact. Spend this mana only to cast instant, sorcery, Demon, and Spirit spells.

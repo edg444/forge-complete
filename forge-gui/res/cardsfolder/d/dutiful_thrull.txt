@@ -3,4 +3,4 @@ ManaCost:W
 Types:Creature Thrull
 PT:1/1
 A:AB$ Regenerate | Cost$ B | SpellDescription$ Regenerate this creature.
-Oracle:{B}: Regenerate Dutiful Thrull.
+Oracle:{B}: Regenerate this creature.

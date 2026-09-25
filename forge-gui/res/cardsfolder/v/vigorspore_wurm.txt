@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature | NumAtt$ +X | NumDef$ +X | KW$ Vigilance
 SVar:X:Count$ValidGraveyard Creature.YouOwn
 SVar:PlayMain1:TRUE
-Oracle:Undergrowth — When Vigorspore Wurm enters, target creature gains vigilance and gets +X/+X until end of turn, where X is the number of creature cards in your graveyard.\nVigorspore Wurm can't be blocked by more than one creature.
+Oracle:Undergrowth — When this creature enters, target creature gains vigilance and gets +X/+X until end of turn, where X is the number of creature cards in your graveyard.\nThis creature can't be blocked by more than one creature.

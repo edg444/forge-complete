@@ -5,4 +5,4 @@ PT:2/2
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigMana | TriggerDescription$ When this creature enters, add {R}{G}.
 SVar:TrigMana:DB$ Mana | Produced$ R G
 SVar:FreeSpellAI:True
-Oracle:When Burning-Tree Emissary enters, add {R}{G}.
+Oracle:When this creature enters, add {R}{G}.

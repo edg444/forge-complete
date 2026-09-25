@@ -4,4 +4,4 @@ Types:Creature Minotaur Berserker
 PT:2/3
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Double Strike | CheckSVar$ X | SVarCompare$ GE2 | Description$ As long as you've drawn two or more cards this turn, this creature has double strike.
 SVar:X:Count$YouDrewThisTurn
-Oracle:As long as you've drawn two or more cards this turn, Spinehorn Minotaur has double strike.
+Oracle:As long as you've drawn two or more cards this turn, this creature has double strike.

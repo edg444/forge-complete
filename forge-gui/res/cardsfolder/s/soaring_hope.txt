@@ -7,4 +7,4 @@ S:Mode$ Continuous | AffectedDefined$ Enchanted | Affected$ Creature | AddKeywor
 A:AB$ ChangeZone | Cost$ W | Origin$ Battlefield | Destination$ Library | LibraryPosition$ 0 | SpellDescription$ Put this Aura on top of its owner's library.
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ When this Aura enters, you gain 3 life.
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 3
-Oracle:Enchant creature\nWhen Soaring Hope enters, you gain 3 life.\nEnchanted creature has flying.\n{W}: Put Soaring Hope on top of its owner's library.
+Oracle:Enchant creature\nWhen this Aura enters, you gain 3 life.\nEnchanted creature has flying.\n{W}: Put this Aura on top of its owner's library.

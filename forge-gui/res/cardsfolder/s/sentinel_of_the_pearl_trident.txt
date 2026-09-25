@@ -8,4 +8,4 @@ SVar:TrigExile:DB$ ChangeZone | ValidTgts$ Permanent.Historic+YouCtrl | TgtPromp
 SVar:DelTrigEffect:DB$ DelayedTrigger | Mode$ Phase | Phase$ End Of Turn | Execute$ TrigReturn | RememberObjects$ RememberedLKI | TriggerDescription$ Return the exiled card to the battlefield under its owner's control at the beginning of the next end step. | SubAbility$ DBCleanup | AILogic$ Always
 SVar:TrigReturn:DB$ ChangeZone | Defined$ DelayTriggerRememberedLKI | Origin$ Exile | Destination$ Battlefield
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:Flash\nWhen Sentinel of the Pearl Trident enters, you may exile target historic permanent you control. If you do, return that card to the battlefield under its owner's control at the beginning of the next end step. (Artifacts, legendaries, and Sagas are historic.)
+Oracle:Flash\nWhen this creature enters, you may exile target historic permanent you control. If you do, return that card to the battlefield under its owner's control at the beginning of the next end step. (Artifacts, legendaries, and Sagas are historic.)

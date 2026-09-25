@@ -6,4 +6,4 @@ T:Mode$ Sacrificed | ValidCard$ Permanent.Other | Execute$ TrigCopy | TriggerZon
 SVar:TrigCopy:AB$ CopyPermanent | Cost$ 3 | Defined$ Self
 AI:RemoveDeck:All
 DeckHas:Ability$Token
-Oracle:Whenever you sacrifice another permanent, you may pay {3}. If you do, create a token that's a copy of Sorcerer's Broom.
+Oracle:Whenever you sacrifice another permanent, you may pay {3}. If you do, create a token that's a copy of this creature.

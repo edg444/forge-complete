@@ -7,4 +7,4 @@ SVar:TrigGain:DB$ GainLife | Defined$ You | LifeAmount$ X
 SVar:X:TriggerCount$DamageAmount
 SVar:HasCombatEffect:TRUE
 DeckHas:Ability$LifeGain
-Oracle:Whenever El-Hajjâj deals damage, you gain that much life.
+Oracle:Whenever this creature deals damage, you gain that much life.

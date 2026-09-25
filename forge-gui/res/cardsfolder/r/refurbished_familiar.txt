@@ -10,4 +10,4 @@ SVar:DBDraw:DB$ Draw | NumCards$ X | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:PlayerCountOpponents$Amount/Minus.Remembered$Amount
 DeckHas:Ability$Discard
-Oracle:Affinity for artifacts (This spell costs {1} less to cast for each artifact you control.)\nFlying\nWhen Refurbished Familiar enters, each opponent discards a card. For each opponent who can't, you draw a card.
+Oracle:Affinity for artifacts (This spell costs {1} less to cast for each artifact you control.)\nFlying\nWhen this creature enters, each opponent discards a card. For each opponent who can't, you draw a card.

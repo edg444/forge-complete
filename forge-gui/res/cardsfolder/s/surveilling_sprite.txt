@@ -6,4 +6,4 @@ K:Flying
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | OptionalDecider$ TriggeredCardController | Execute$ TrigDraw | TriggerDescription$ When this creature dies, you may draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
 SVar:SacMe:1
-Oracle:Flying\nWhen Surveilling Sprite dies, you may draw a card.
+Oracle:Flying\nWhen this creature dies, you may draw a card.

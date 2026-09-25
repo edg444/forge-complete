@@ -8,4 +8,4 @@ SVar:ManaGG:AB$ Mana | Cost$ T | Produced$ G | Amount$ 2 | SpellDescription$ Add
 SVar:EquipMe:Once
 SVar:EnchantMe:Once
 DeckHints:Type$Equipment|Aura & Ability$Counters
-Oracle:{T}: Add {G}.\nAs long as Orochi Merge-Keeper is modified, it has "{T}: Add {G}{G}." (Equipment, Auras you control, and counters are modifications.)
+Oracle:{T}: Add {G}.\nAs long as this creature is modified, it has "{T}: Add {G}{G}." (Equipment, Auras you control, and counters are modifications.)

@@ -5,4 +5,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Angel.YouCtrl | TriggerZones$ Battlefield | Execute$ HavenLife | TriggerDescription$ Whenever an Angel you control enters, you gain 1 life.
 A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
 SVar:HavenLife:DB$ GainLife | Defined$ You | LifeAmount$ 1
-Oracle:When Seraph Sanctuary enters, you gain 1 life.\nWhenever an Angel you control enters, you gain 1 life.\n{T}: Add {C}.
+Oracle:When this land enters, you gain 1 life.\nWhenever an Angel you control enters, you gain 1 life.\n{T}: Add {C}.

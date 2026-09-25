@@ -8,4 +8,4 @@ SVar:X:TriggeredCard$CardPower
 SVar:EquipMe:Once
 DeckHas:Ability$Token
 DeckHints:Type$Equipment
-Oracle:When Nested Shambler dies, create X tapped 1/1 green Squirrel creature tokens, where X is Nested Shambler's power.
+Oracle:When this creature dies, create X tapped 1/1 green Squirrel creature tokens, where X is this creature's power.

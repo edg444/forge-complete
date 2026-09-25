@@ -8,4 +8,4 @@ SVar:DBEffect:DB$ Effect | ReplacementEffects$ RPreventNextFromSource | Remember
 SVar:RPreventNextFromSource:Event$ DamageDone | IsCombat$ True | ValidSource$ Card.IsRemembered | Prevent$ True | Description$ Prevent all combat damage a creature of your choice would deal this turn.
 DeckHas:Ability$Sacrifice
 DeckHints:Name$Ajani, Valiant Protector
-Oracle:When Ajani's Aid enters, you may search your library and/or graveyard for a card named Ajani, Valiant Protector, reveal it, and put it into your hand. If you search your library this way, shuffle.\nSacrifice Ajani's Aid: Prevent all combat damage a creature of your choice would deal this turn.
+Oracle:When this enchantment enters, you may search your library and/or graveyard for a card named Ajani, Valiant Protector, reveal it, and put it into your hand. If you search your library this way, shuffle.\nSacrifice this enchantment: Prevent all combat damage a creature of your choice would deal this turn.

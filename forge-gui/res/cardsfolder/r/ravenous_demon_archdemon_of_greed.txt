@@ -4,7 +4,7 @@ Types:Creature Demon
 PT:4/4
 A:AB$ SetState | Cost$ Sac<1/Human> | Defined$ Self | SorcerySpeed$ True | Mode$ Transform | SpellDescription$ Transform CARDNAME. Activate this only any time you could cast a sorcery.
 AlternateMode:DoubleFaced
-Oracle:Sacrifice a Human: Transform Ravenous Demon. Activate only as a sorcery.
+Oracle:Sacrifice a Human: Transform this creature. Activate only as a sorcery.
 
 ALTERNATE
 
@@ -21,4 +21,4 @@ SVar:DBTap:DB$ Tap | Defined$ Self | ConditionCheckSVar$ X | ConditionSVarCompar
 SVar:DBDamage:DB$ DealDamage | Defined$ You | NumDmg$ 9 | ConditionCheckSVar$ X | ConditionSVarCompare$ LT1 | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Amount
-Oracle:Flying, trample\nAt the beginning of your upkeep, sacrifice a Human. If you can't, tap Archdemon of Greed and it deals 9 damage to you.
+Oracle:Flying, trample\nAt the beginning of your upkeep, sacrifice a Human. If you can't, tap this creature and it deals 9 damage to you.

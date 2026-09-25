@@ -4,7 +4,7 @@ Types:Creature Human Cleric
 PT:2/3
 A:AB$ PumpAll | Cost$ Exile<1/CARDNAME> | ValidCards$ Creature.YouCtrl | KW$ Indestructible | SpellDescription$ Creatures you control gain indestructible until end of turn.
 AlternateMode:Modal
-Oracle:Exile Selfless Glyphweaver: Creatures you control gain indestructible until end of turn.
+Oracle:Exile this creature: Creatures you control gain indestructible until end of turn.
 
 ALTERNATE
 

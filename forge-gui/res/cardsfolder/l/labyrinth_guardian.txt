@@ -7,4 +7,4 @@ SVar:TrigSac:DB$ Sacrifice
 K:Embalm:3 U
 SVar:Targeting:Dies
 DeckHas:Ability$Token
-Oracle:When Labyrinth Guardian becomes the target of a spell, sacrifice it.\nEmbalm {3}{U} ({3}{U}, Exile this card from your graveyard: Create a token that's a copy of it, except it's a white Zombie Illusion Warrior with no mana cost. Embalm only as a sorcery.)
+Oracle:When this creature becomes the target of a spell, sacrifice it.\nEmbalm {3}{U} ({3}{U}, Exile this card from your graveyard: Create a token that's a copy of it, except it's a white Zombie Illusion Warrior with no mana cost. Embalm only as a sorcery.)

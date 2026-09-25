@@ -10,4 +10,4 @@ SVar:TrigPutCounter2:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | Counte
 SVar:X:Count$Valid Squirrel.Other+YouCtrl,Food.Other+YouCtrl
 DeckHas:Ability$Counters
 DeckHints:Type$Squirrel|Food
-Oracle:Trample\nWhen Honored Dreyleader enters, put a +1/+1 counter on it for each other Squirrel and/or Food you control.\nWhenever another Squirrel or Food you control enters, put a +1/+1 counter on Honored Dreyleader.
+Oracle:Trample\nWhen this creature enters, put a +1/+1 counter on it for each other Squirrel and/or Food you control.\nWhenever another Squirrel or Food you control enters, put a +1/+1 counter on this creature.

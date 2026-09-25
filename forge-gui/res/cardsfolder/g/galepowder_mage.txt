@@ -10,4 +10,4 @@ SVar:TrigBounce:DB$ ChangeZone | Origin$ Exile | Destination$ Battlefield | Defi
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:HasAttackEffect:TRUE
 AI:RemoveDeck:All
-Oracle:Flying\nWhenever Galepowder Mage attacks, exile another target creature. Return that card to the battlefield under its owner's control at the beginning of the next end step.
+Oracle:Flying\nWhenever this creature attacks, exile another target creature. Return that card to the battlefield under its owner's control at the beginning of the next end step.

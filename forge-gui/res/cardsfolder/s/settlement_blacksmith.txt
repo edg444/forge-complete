@@ -4,4 +4,4 @@ Types:Creature Human Artificer
 PT:3/3
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Equipment.YouCtrl | Execute$ TrigDraw | TriggerDescription$ When this creature enters, if you control an Equipment, draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ You
-Oracle:When Settlement Blacksmith enters, if you control an Equipment, draw a card.
+Oracle:When this creature enters, if you control an Equipment, draw a card.

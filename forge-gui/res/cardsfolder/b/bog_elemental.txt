@@ -6,4 +6,4 @@ K:Protection from white
 T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigUpkeep | TriggerDescription$ At the beginning of your upkeep, sacrifice this creature unless you sacrifice a land.
 SVar:TrigUpkeep:DB$ Sacrifice | UnlessPayer$ You | UnlessCost$ Sac<1/Land>
 AI:RemoveDeck:All
-Oracle:Protection from white\nAt the beginning of your upkeep, sacrifice Bog Elemental unless you sacrifice a land.
+Oracle:Protection from white\nAt the beginning of your upkeep, sacrifice this creature unless you sacrifice a land.

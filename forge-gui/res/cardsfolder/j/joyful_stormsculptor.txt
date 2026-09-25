@@ -8,4 +8,4 @@ T:Mode$ SpellCast | ValidCard$ Card.withConvoke | ValidActivatingPlayer$ You | E
 SVar:TrigDamage:DB$ DamageAll | ValidPlayers$ Player.Opponent | ValidCards$ Battle.OppProtect | NumDmg$ 1
 DeckHas:Ability$Token & Type$Elemental
 DeckHints:Keyword$Convoke
-Oracle:When Joyful Stormsculptor enters, create two 1/1 blue and red Elemental creature tokens.\nWhenever you cast a spell that has convoke, Joyful Stormsculptor deals 1 damage to each opponent and each battle they protect.
+Oracle:When this creature enters, create two 1/1 blue and red Elemental creature tokens.\nWhenever you cast a spell that has convoke, this creature deals 1 damage to each opponent and each battle they protect.

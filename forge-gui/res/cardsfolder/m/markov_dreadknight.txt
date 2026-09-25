@@ -6,4 +6,4 @@ K:Flying
 A:AB$ PutCounter | Cost$ 2 B Discard<1/Card> | CounterType$ P1P1 | CounterNum$ 2 | SpellDescription$ Put two +1/+1 counters on this creature.
 DeckHas:Ability$Discard
 DeckHints:Keyword$Madness & Ability$Delirium
-Oracle:Flying\n{2}{B}, Discard a card: Put two +1/+1 counters on Markov Dreadknight.
+Oracle:Flying\n{2}{B}, Discard a card: Put two +1/+1 counters on this creature.

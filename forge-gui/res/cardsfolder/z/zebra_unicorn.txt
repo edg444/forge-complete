@@ -6,4 +6,4 @@ T:Mode$ DamageDealtOnce | ValidSource$ Card.Self | Execute$ TrigGain | TriggerZo
 SVar:TrigGain:DB$ GainLife | Defined$ You | LifeAmount$ X
 SVar:X:TriggerCount$DamageAmount
 SVar:HasCombatEffect:TRUE
-Oracle:Whenever Zebra Unicorn deals damage, you gain that much life.
+Oracle:Whenever this creature deals damage, you gain that much life.

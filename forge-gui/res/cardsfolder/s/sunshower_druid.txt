@@ -7,4 +7,4 @@ SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Creature | CounterType$ P1P1 | S
 SVar:DBGainLife:DB$ GainLife | LifeAmount$ 1
 SVar:PlayMain1:TRUE
 DeckHas:Ability$Counters
-Oracle:When Sunshower Druid enters, put a +1/+1 counter on target creature and you gain 1 life.
+Oracle:When this creature enters, put a +1/+1 counter on target creature and you gain 1 life.

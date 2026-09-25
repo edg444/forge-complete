@@ -5,4 +5,4 @@ PT:2/1
 K:AlternateAdditionalCost:Reveal<1/Merfolk>:3
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When this creature enters, draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
-Oracle:As an additional cost to cast this spell, reveal a Merfolk card from your hand or pay {3}.\nWhen Silvergill Adept enters, draw a card.
+Oracle:As an additional cost to cast this spell, reveal a Merfolk card from your hand or pay {3}.\nWhen this creature enters, draw a card.

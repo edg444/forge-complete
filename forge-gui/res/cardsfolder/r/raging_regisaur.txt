@@ -4,4 +4,4 @@ Types:Creature Dinosaur
 PT:4/4
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigDealDamage | TriggerDescription$ Whenever this creature attacks, it deals 1 damage to any target.
 SVar:TrigDealDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 1
-Oracle:Whenever Raging Regisaur attacks, it deals 1 damage to any target.
+Oracle:Whenever this creature attacks, it deals 1 damage to any target.

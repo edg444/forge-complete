@@ -11,4 +11,4 @@ SVar:BuffedBy:Creature
 SVar:PlayMain1:TRUE
 DeckHints:Type$Human
 DeckHas:Ability$Token
-Oracle:First strike\nWhenever Lossarnach Captain or another Human you control enters, tap target creature an opponent controls.\nAt the beginning of your upkeep, create a 1/1 white Human Soldier creature token.
+Oracle:First strike\nWhenever this creature or another Human you control enters, tap target creature an opponent controls.\nAt the beginning of your upkeep, create a 1/1 white Human Soldier creature token.

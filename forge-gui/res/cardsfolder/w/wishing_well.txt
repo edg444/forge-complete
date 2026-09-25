@@ -7,4 +7,4 @@ SVar:TrigPlay:DB$ Play | TgtZone$ Graveyard | ValidTgts$ Instant.YouCtrl+cmcEQX,
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Count$CardCounters.COIN
 DeckHints:Ability$Counters
-Oracle:{T}: Put a coin counter on Wishing Well. When you do, you may cast target instant or sorcery card with mana value equal to the number of coin counters on Wishing Well from your graveyard without paying its mana cost. If that spell would be put into your graveyard, exile it instead. Activate only as a sorcery.
+Oracle:{T}: Put a coin counter on this artifact. When you do, you may cast target instant or sorcery card with mana value equal to the number of coin counters on this artifact from your graveyard without paying its mana cost. If that spell would be put into your graveyard, exile it instead. Activate only as a sorcery.

@@ -5,4 +5,4 @@ A:AB$ PutCounter | Cost$ T | CounterType$ CHARGE | CounterNum$ 1 | SpellDescript
 A:AB$ Draw | Cost$ T | Defined$ Player | NumCards$ X | SpellDescription$ Each player draws a card for each charge counter on this artifact.
 SVar:X:Count$CardCounters.CHARGE
 AI:RemoveDeck:All
-Oracle:{T}: Put a charge counter on Otherworld Atlas.\n{T}: Each player draws a card for each charge counter on Otherworld Atlas.
+Oracle:{T}: Put a charge counter on this artifact.\n{T}: Each player draws a card for each charge counter on this artifact.

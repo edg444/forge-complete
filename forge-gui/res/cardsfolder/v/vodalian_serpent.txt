@@ -6,4 +6,4 @@ S:Mode$ CantAttack | ValidCard$ Card.Self | UnlessDefender$ controlsIsland | Des
 K:Kicker:2
 K:etbCounter:P1P1:4:CheckSVar$ WasKicked:If CARDNAME was kicked, it enters with four +1/+1 counters on it.
 SVar:WasKicked:Count$Kicked.1.0
-Oracle:Kicker {2} (You may pay an additional {2} as you cast this spell.)\nVodalian Serpent can't attack unless defending player controls an Island.\nIf Vodalian Serpent was kicked, it enters with four +1/+1 counters on it.
+Oracle:Kicker {2} (You may pay an additional {2} as you cast this spell.)\nThis creature can't attack unless defending player controls an Island.\nIf this creature was kicked, it enters with four +1/+1 counters on it.

@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigAttach:DB$ Attach | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control
 S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddPower$ 2 | Description$ Equipped creature gets +2/+0.
 K:Equip:PayEnergy<2>
-Oracle:Flash\nWhen Inventor's Axe enters, you get {E}{E} (two energy counters).\nWhen Inventor's Axe enters, attach it to target creature you control.\nEquipped creature gets +2/+0.\nEquip—Pay {E}{E}.
+Oracle:Flash\nWhen this Equipment enters, you get {E}{E} (two energy counters).\nWhen this Equipment enters, attach it to target creature you control.\nEquipped creature gets +2/+0.\nEquip—Pay {E}{E}.

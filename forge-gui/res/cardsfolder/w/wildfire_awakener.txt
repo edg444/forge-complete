@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigToken:DB$ Token | TokenAmount$ X | TokenScript$ r_1_1_elemental_ping | TokenOwner$ You
 SVar:X:Count$xPaid
 DeckHas:Ability$Token & Type$Elemental
-Oracle:Convoke (Your creatures can help cast this spell. Each creature you tap while casting this spell pays for {1} or one mana of that creature's color.)\nWhen Wildfire Awakener enters, create X 1/1 red Elemental creature tokens with "Whenever this token becomes tapped, it deals 1 damage to target player."
+Oracle:Convoke (Your creatures can help cast this spell. Each creature you tap while casting this spell pays for {1} or one mana of that creature's color.)\nWhen this creature enters, create X 1/1 red Elemental creature tokens with "Whenever this token becomes tapped, it deals 1 damage to target player."

@@ -9,4 +9,4 @@ SVar:PhantasmalImageTgtTrig:Mode$ BecomesTarget | ValidTarget$ Card.Self | Execu
 SVar:PhantasmalImageSac:DB$ Sacrifice
 SVar:Targeting:Dies
 SVar:NeedsToPlay:Creature
-Oracle:You may have Phantasmal Image enter as a copy of any creature on the battlefield, except it's an Illusion in addition to its other types and it has "When this creature becomes the target of a spell or ability, sacrifice it."
+Oracle:You may have this creature enter as a copy of any creature on the battlefield, except it's an Illusion in addition to its other types and it has "When this creature becomes the target of a spell or ability, sacrifice it."

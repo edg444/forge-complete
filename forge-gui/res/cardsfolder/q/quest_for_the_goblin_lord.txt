@@ -7,4 +7,4 @@ SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ QUEST | Counte
 SVar:MaxQuestEffect:5
 DeckHas:Ability$Counters
 DeckNeeds:Type$Goblin
-Oracle:Whenever a Goblin you control enters, you may put a quest counter on Quest for the Goblin Lord.\nAs long as Quest for the Goblin Lord has five or more quest counters on it, creatures you control get +2/+0.
+Oracle:Whenever a Goblin you control enters, you may put a quest counter on this enchantment.\nAs long as this enchantment has five or more quest counters on it, creatures you control get +2/+0.

@@ -7,4 +7,4 @@ SVar:TrigMonarch:DB$ BecomeMonarch
 T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | CheckDefinedPlayer$ You.isMonarch | Execute$ TrigUnblockable | TriggerDescription$ At the beginning of your upkeep, if you're the monarch, creatures you control can't be blocked this turn.
 SVar:TrigUnblockable:DB$ Effect | StaticAbilities$ Unblockable
 SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Creature.YouCtrl | Description$ Creatures you control can't be blocked this turn.
-Oracle:When Keeper of Keys enters, you become the monarch.\nAt the beginning of your upkeep, if you're the monarch, creatures you control can't be blocked this turn.
+Oracle:When this creature enters, you become the monarch.\nAt the beginning of your upkeep, if you're the monarch, creatures you control can't be blocked this turn.

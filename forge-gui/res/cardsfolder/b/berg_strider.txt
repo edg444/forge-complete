@@ -8,4 +8,4 @@ SVar:DBPump:DB$ Pump | Defined$ Targeted | ConditionCheckSVar$ S | KW$ HIDDEN Th
 SVar:S:Count$CastTotalManaSpent Snow
 SVar:AIPreference:ManaFrom$Snow
 DeckNeeds:Type$Snow
-Oracle:When Berg Strider enters, tap target artifact or creature an opponent controls. If {S} was spent to cast this spell, that permanent doesn't untap during its controller's next untap step. ({S} is mana from a snow source.)
+Oracle:When this creature enters, tap target artifact or creature an opponent controls. If {S} was spent to cast this spell, that permanent doesn't untap during its controller's next untap step. ({S} is mana from a snow source.)

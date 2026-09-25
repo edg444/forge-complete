@@ -3,4 +3,4 @@ ManaCost:BG
 Types:Creature Troll
 PT:1/1
 A:AB$ Regenerate | Cost$ 1 BG | SpellDescription$ Regenerate this creature.
-Oracle:{1}{B/G}: Regenerate Odious Trow.
+Oracle:{1}{B/G}: Regenerate this creature.

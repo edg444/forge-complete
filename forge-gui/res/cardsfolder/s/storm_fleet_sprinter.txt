@@ -4,4 +4,4 @@ Types:Creature Human Pirate
 PT:2/2
 K:Haste
 S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | Description$ This creature can't be blocked.
-Oracle:Haste\nStorm Fleet Sprinter can't be blocked.
+Oracle:Haste\nThis creature can't be blocked.

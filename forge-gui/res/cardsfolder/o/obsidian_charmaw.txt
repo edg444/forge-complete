@@ -7,4 +7,4 @@ S:Mode$ ReduceCost | ValidCard$ Card.Self | Type$ Spell | Amount$ X | EffectZone
 SVar:X:Count$Valid Land.OppCtrl+canProduceManaColor Colorless
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Destination$ Battlefield | Execute$ TrigDestroy | TriggerDescription$ When this creature enters, destroy target nonbasic land an opponent controls.
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Land.nonBasic+OppCtrl | TgtPrompt$ Select target nonbasic land an opponent controls
-Oracle:This spell costs {1} less to cast for each land your opponents control that could produce {C}.\nFlying\nWhen Obsidian Charmaw enters, destroy target nonbasic land an opponent controls.
+Oracle:This spell costs {1} less to cast for each land your opponents control that could produce {C}.\nFlying\nWhen this creature enters, destroy target nonbasic land an opponent controls.

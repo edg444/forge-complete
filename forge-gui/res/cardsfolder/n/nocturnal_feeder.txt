@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigLoseLife:DB$ LoseLife | Defined$ Player.Opponent | LifeAmount$ 2 | SubAbility$ DBGainLife
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 2
 DeckHas:Ability$LifeGain
-Oracle:Flying\nWhen Nocturnal Feeder dies, each opponent loses 2 life and you gain 2 life.
+Oracle:Flying\nWhen this creature dies, each opponent loses 2 life and you gain 2 life.

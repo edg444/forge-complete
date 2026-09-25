@@ -7,4 +7,4 @@ SVar:X:Count$Valid Creature.YouCtrl+modified
 K:Trample
 S:Mode$ Continuous | AffectedDefined$ Self | Affected$ Card.untapped | AddKeyword$ Hexproof | Description$ This creature has hexproof as long as it's untapped. (It can't be the target of spells or abilities your opponents control.)
 DeckHints:Type$Aura|Equipment & Ability$Counters
-Oracle:This spell costs {1} less to cast for each modified creature you control. (Equipment, Auras you control, and counters are modifications.)\nTrample\nWalking Skyscraper has hexproof as long as it's untapped. (It can't be the target of spells or abilities your opponents control.)
+Oracle:This spell costs {1} less to cast for each modified creature you control. (Equipment, Auras you control, and counters are modifications.)\nTrample\nThis creature has hexproof as long as it's untapped. (It can't be the target of spells or abilities your opponents control.)

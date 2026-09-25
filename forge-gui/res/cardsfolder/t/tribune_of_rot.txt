@@ -9,4 +9,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Valid Creature
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Mill|Token & Type$Saproling
-Oracle:Whenever Tribune of Rot attacks, mill two cards. For each creature card milled this way, create a 1/1 green Saproling creature token.
+Oracle:Whenever this creature attacks, mill two cards. For each creature card milled this way, create a 1/1 green Saproling creature token.

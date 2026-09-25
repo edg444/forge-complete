@@ -7,7 +7,7 @@ SVar:TrigToken:DB$ Token | TokenAmount$ X | TokenScript$ wu_2_2_knight_vigilance
 SVar:X:Count$xPaid
 DeckHas:Ability$Token & Type$Knight
 AlternateMode:DoubleFaced
-Oracle:(As a Siege enters, choose an opponent to protect it. You and others can attack it. When it's defeated, exile it, then cast it transformed.)\nWhen Invasion of New Phyrexia enters, create X 2/2 white and blue Knight creature tokens with vigilance.
+Oracle:(As a Siege enters, choose an opponent to protect it. You and others can attack it. When it's defeated, exile it, then cast it transformed.)\nWhen this Siege enters, create X 2/2 white and blue Knight creature tokens with vigilance.
 
 ALTERNATE
 

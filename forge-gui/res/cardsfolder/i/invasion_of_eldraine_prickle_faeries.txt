@@ -7,7 +7,7 @@ SVar:TrigDiscard:DB$ Discard | ValidTgts$ Opponent | NumCards$ 2 | Mode$ TgtChoo
 DeckHas:Ability$Discard
 DeckHints:Ability$Discard
 AlternateMode:DoubleFaced
-Oracle:(As a Siege enters, choose an opponent to protect it. You and others can attack it. When it's defeated, exile it, then cast it transformed.)\nWhen Invasion of Eldraine enters, target opponent discards two cards.
+Oracle:(As a Siege enters, choose an opponent to protect it. You and others can attack it. When it's defeated, exile it, then cast it transformed.)\nWhen this Siege enters, target opponent discards two cards.
 
 ALTERNATE
 
@@ -20,4 +20,4 @@ K:Flying
 T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ Opponent | CheckSVar$ TrigCount | SVarCompare$ LE2 | TriggerZones$ Battlefield | Execute$ TrigDmg | TriggerDescription$ At the beginning of each opponent's upkeep, if that player has two or fewer cards in hand, this creature deals 2 damage to them.
 SVar:TrigDmg:DB$ DealDamage | NumDmg$ 2 | Defined$ TriggeredPlayer
 SVar:TrigCount:Count$ValidHand Card.ActivePlayerCtrl
-Oracle:Flying\nAt the beginning of each opponent's upkeep, if that player has two or fewer cards in hand, Prickle Faeries deals 2 damage to them.
+Oracle:Flying\nAt the beginning of each opponent's upkeep, if that player has two or fewer cards in hand, this creature deals 2 damage to them.

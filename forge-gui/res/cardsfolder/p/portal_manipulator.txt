@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Phase$ Declare Attackers | Origin$ Any | Destination$ Batt
 SVar:TrigChoosePlayer:DB$ Pump | ValidTgts$ Player | SubAbility$ DBChooseAttackers
 SVar:DBChooseAttackers:DB$ ChangeCombatants | ValidTgts$ Creature.attacking | TargetsWithDefinedController$ Player.OpponentOf ParentTarget | TargetMin$ 0 | TargetMax$ MaxTargets | TgtPrompt$ Select any number of target attacking creatures controlled by target player's opponents | Attacking$ TargetedPlayer
 SVar:MaxTargets:Count$Valid Creature.attacking+ControlledBy Player.OpponentOf ParentTarget
-Oracle:Flash\nWhen Portal Manipulator enters during the declare attackers step, choose target player and any number of target attacking creatures their opponents control. Those creatures are now attacking that player.
+Oracle:Flash\nWhen this creature enters during the declare attackers step, choose target player and any number of target attacking creatures their opponents control. Those creatures are now attacking that player.

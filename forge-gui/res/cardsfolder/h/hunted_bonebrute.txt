@@ -9,4 +9,4 @@ SVar:TrigToken:DB$ Token | TokenAmount$ 2 | TokenScript$ w_1_1_dog | ValidTgts$ 
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigLoseLife | TriggerDescription$ When this creature dies, each opponent loses 3 life.
 SVar:TrigLoseLife:DB$ LoseLife | Defined$ Opponent | LifeAmount$ 3
 DeckHas:Ability$Token & Type$Dog
-Oracle:Menace\nWhen Hunted Bonebrute enters, target opponent creates two 1/1 white Dog creature tokens.\nWhen Hunted Bonebrute dies, each opponent loses 3 life.\nDisguise {1}{B}
+Oracle:Menace\nWhen this creature enters, target opponent creates two 1/1 white Dog creature tokens.\nWhen this creature dies, each opponent loses 3 life.\nDisguise {1}{B}

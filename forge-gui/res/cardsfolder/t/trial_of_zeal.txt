@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | TriggerZones$ Bat
 SVar:TrigReturn:DB$ ChangeZone | Origin$ Battlefield | Destination$ Hand | Defined$ Self
 SVar:PlayMain1:TRUE
 DeckHints:Type$Cartouche
-Oracle:When Trial of Zeal enters, it deals 3 damage to any target.\nWhen a Cartouche you control enters, return Trial of Zeal to its owner's hand.
+Oracle:When this enchantment enters, it deals 3 damage to any target.\nWhen a Cartouche you control enters, return this enchantment to its owner's hand.

@@ -6,4 +6,4 @@ A:AB$ DealDamage | Cost$ T | ValidTgts$ Any | NumDmg$ 2 | DamageMap$ True | AILo
 SVar:DBDealDamage:DB$ DealDamage | Defined$ You | NumDmg$ 3 | SubAbility$ DBDamageResolve
 SVar:DBDamageResolve:DB$ DamageResolve
 SVar:SelfDamageAmount:3
-Oracle:{T}: Orcish Artillery deals 2 damage to any target and 3 damage to you.
+Oracle:{T}: This creature deals 2 damage to any target and 3 damage to you.

@@ -6,7 +6,7 @@ SVar:DBTransform:DB$ SetState | Defined$ Self | Mode$ Transform | ConditionCheck
 SVar:X:Count$YourLifeTotal
 SVar:Y:Count$YourStartingLife/Plus.10
 AlternateMode:DoubleFaced
-Oracle:{T}: You gain 1 life. Then if you have at least 10 life more than your starting life total, transform Chalice of Life.
+Oracle:{T}: You gain 1 life. Then if you have at least 10 life more than your starting life total, transform this artifact.
 
 ALTERNATE
 

@@ -8,4 +8,4 @@ SVar:TrigChange:DB$ ChangeZone | Origin$ Graveyard | Destination$ Battlefield | 
 SVar:SacMe:3
 SVar:DiscardMe:3
 DeckHas:Ability$Graveyard
-Oracle:Flying\nWhen you draw your third card in a turn, return Sneaky Snacker from your graveyard to the battlefield tapped.
+Oracle:Flying\nWhen you draw your third card in a turn, return this card from your graveyard to the battlefield tapped.

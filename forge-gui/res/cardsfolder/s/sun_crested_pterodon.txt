@@ -5,4 +5,4 @@ PT:2/5
 K:Flying
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Vigilance | IsPresent$ Permanent.Dinosaur+YouCtrl+Other | Description$ This creature has vigilance as long as you control another Dinosaur.
 DeckHints:Type$Dinosaur
-Oracle:Flying\nSun-Crested Pterodon has vigilance as long as you control another Dinosaur.
+Oracle:Flying\nThis creature has vigilance as long as you control another Dinosaur.

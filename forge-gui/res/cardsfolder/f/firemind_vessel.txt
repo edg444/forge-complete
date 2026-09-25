@@ -5,4 +5,4 @@ R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementRe
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ Mana | Cost$ T | Amount$ 2 | Produced$ Combo AnyDifferent | SpellDescription$ Add two mana of different colors.
 AI:RemoveDeck:All
-Oracle:Firemind Vessel enters tapped.\n{T}: Add two mana of different colors.
+Oracle:This artifact enters tapped.\n{T}: Add two mana of different colors.

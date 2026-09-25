@@ -8,4 +8,4 @@ SVar:TrigExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | Valid
 SVar:Y:Count$CardCounters.ISOLATION
 SVar:PlayMain1:TRUE
 SVar:OblivionRing:TRUE
-Oracle:Quarantine Field enters with X isolation counters on it.\nWhen Quarantine Field enters, for each isolation counter on it, exile up to one target nonland permanent an opponent controls until Quarantine Field leaves the battlefield.
+Oracle:This enchantment enters with X isolation counters on it.\nWhen this enchantment enters, for each isolation counter on it, exile up to one target nonland permanent an opponent controls until this enchantment leaves the battlefield.

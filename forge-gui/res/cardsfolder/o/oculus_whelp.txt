@@ -7,4 +7,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | IsPresent$ Permanent.Transformed+Yo
 SVar:DiesTrig:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When this creature dies, draw a card.
 SVar:TrigDraw:DB$ Draw
 AI:RemoveDeck:Random
-Oracle:Flying\nAs long as you control a transformed permanent, Oculus Whelp has "When Oculus Whelp dies, draw a card."
+Oracle:Flying\nAs long as you control a transformed permanent, this creature has "When this creature dies, draw a card."

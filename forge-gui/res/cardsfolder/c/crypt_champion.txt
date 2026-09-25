@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigChangeZone:DB$ ChangeZone | Origin$ Graveyard | Destination$ Battlefield | ChangeType$ Creature.cmcLE3 | ChangeNum$ 1 | Hidden$ True | DefinedPlayer$ Player | Mandatory$ True
 SVar:TrigSac:DB$ Sacrifice
 SVar:ManaNeededToAvoidNegativeEffect:red
-Oracle:Double strike\nWhen Crypt Champion enters, each player puts a creature card with mana value 3 or less from their graveyard onto the battlefield.\nWhen Crypt Champion enters, sacrifice it unless {R} was spent to cast it.
+Oracle:Double strike\nWhen this creature enters, each player puts a creature card with mana value 3 or less from their graveyard onto the battlefield.\nWhen this creature enters, sacrifice it unless {R} was spent to cast it.

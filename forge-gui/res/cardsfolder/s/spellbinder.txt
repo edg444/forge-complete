@@ -14,4 +14,4 @@ SVar:DBForget:DB$ Pump | ForgetImprinted$ TriggeredCard
 SVar:NeedsToPlayVar:Z GE1
 SVar:Z:Count$ValidHand Card.Instant+YouOwn
 AI:RemoveDeck:All
-Oracle:Imprint — When Spellbinder enters, you may exile an instant card from your hand.\nWhenever equipped creature deals combat damage to a player, you may copy the exiled card. If you do, you may cast the copy without paying its mana cost.\nEquip {4}
+Oracle:Imprint — When this Equipment enters, you may exile an instant card from your hand.\nWhenever equipped creature deals combat damage to a player, you may copy the exiled card. If you do, you may cast the copy without paying its mana cost.\nEquip {4}

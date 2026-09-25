@@ -7,4 +7,4 @@ SVar:TrigToken:DB$ Token | TokenScript$ w_1_1_human | TokenOwner$ You
 A:AB$ Pump | PrecostDesc$ Coven — | Cost$ 5 G | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | NumAtt$ +3 | NumDef$ +3 | KW$ Trample | CheckSVar$ X | SVarCompare$ GE3 | SpellDescription$ Target creature you control gets +3/+3 and gains trample until end of turn. Activate only if you control three or more creatures with different powers.
 SVar:X:Count$Valid Creature.YouCtrl$DifferentCardPower
 DeckHas:Ability$Token
-Oracle:When Dawnhart Mentor enters, create a 1/1 white Human creature token.\nCoven — {5}{G}: Target creature you control gets +3/+3 and gains trample until end of turn. Activate only if you control three or more creatures with different powers.
+Oracle:When this creature enters, create a 1/1 white Human creature token.\nCoven — {5}{G}: Target creature you control gets +3/+3 and gains trample until end of turn. Activate only if you control three or more creatures with different powers.

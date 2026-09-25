@@ -11,4 +11,4 @@ SVar:TrigPump:DB$ Animate | Defined$ Remembered | staticAbilities$ MustAttack | 
 SVar:MustAttack:Mode$ MustAttack | ValidCreature$ Card.Self | Description$ This creature attacks during its controller's next combat phase if able.
 SVar:ExileSelf:DB$ ChangeZone | Origin$ Command | Destination$ Exile | Defined$ Self
 SVar:BuffedBy:Land
-Oracle:Return a land you control to its owner's hand: Untap Trench Behemoth. It gains hexproof until end of turn.\nLandfall — Whenever a land you control enters, target creature an opponent controls attacks during its controller's next combat phase if able.
+Oracle:Return a land you control to its owner's hand: Untap this creature. It gains hexproof until end of turn.\nLandfall — Whenever a land you control enters, target creature an opponent controls attacks during its controller's next combat phase if able.

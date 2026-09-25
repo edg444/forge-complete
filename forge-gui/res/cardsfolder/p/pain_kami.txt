@@ -6,4 +6,4 @@ A:AB$ DealDamage | Cost$ X R Sac<1/CARDNAME> | ValidTgts$ Creature | NumDmg$ X |
 SVar:X:Count$xPaid
 AI:RemoveDeck:Random
 DeckHas:Ability$Sacrifice
-Oracle:{X}{R}, Sacrifice Pain Kami: It deals X damage to target creature.
+Oracle:{X}{R}, Sacrifice this creature: It deals X damage to target creature.

@@ -6,7 +6,7 @@ T:Mode$ Always | IsPresent$ Card.Self+withFlying | TriggerZones$ Battlefield | E
 SVar:TrigFlip:DB$ SetState | Defined$ Self | Mode$ Flip
 AI:RemoveDeck:Random
 AlternateMode:Flip
-Oracle:When Student of Elements has flying, flip it.
+Oracle:When this creature has flying, flip it.
 
 ALTERNATE
 

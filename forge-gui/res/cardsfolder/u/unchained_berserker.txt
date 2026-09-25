@@ -4,4 +4,4 @@ Types:Creature Human Berserker
 PT:1/1
 K:Protection from white
 S:Mode$ Continuous | AffectedDefined$ Self | Affected$ Card.attacking | AddPower$ 2 | Description$ This creature gets +2/+0 as long as it's attacking.
-Oracle:Protection from white (This creature can't be blocked, targeted, dealt damage, enchanted, or equipped by anything white.)\nUnchained Berserker gets +2/+0 as long as it's attacking.
+Oracle:Protection from white (This creature can't be blocked, targeted, dealt damage, enchanted, or equipped by anything white.)\nThis creature gets +2/+0 as long as it's attacking.

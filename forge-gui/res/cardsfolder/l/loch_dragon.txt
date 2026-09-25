@@ -6,4 +6,4 @@ K:Flying
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ Whenever this creature enters or attacks, you may discard a card. If you do, draw a card.
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigDraw | Secondary$ True | TriggerDescription$ Whenever this creature enters or attacks, you may discard a card. If you do, draw a card.
 SVar:TrigDraw:AB$ Draw | Cost$ Discard<1/Card> | NumCards$ 1
-Oracle:Flying\nWhenever Loch Dragon enters or attacks, you may discard a card. If you do, draw a card.
+Oracle:Flying\nWhenever this creature enters or attacks, you may discard a card. If you do, draw a card.

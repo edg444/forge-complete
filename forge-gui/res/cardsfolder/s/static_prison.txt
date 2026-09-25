@@ -8,4 +8,4 @@ T:Mode$ Phase | Phase$ Main1 | ValidPlayer$ You | TriggerZones$ Battlefield | Ex
 SVar:TrigSac:DB$ Sacrifice | UnlessCost$ PayEnergy<1> | UnlessPayer$ You
 SVar:PlayMain1:TRUE
 SVar:OblivionRing:TRUE
-Oracle:When Static Prison enters, exile target nonland permanent an opponent controls until Static Prison leaves the battlefield. You get {E}{E} (two energy counters).\nAt the beginning of your first main phase, sacrifice Static Prison unless you pay {E}.
+Oracle:When this enchantment enters, exile target nonland permanent an opponent controls until this enchantment leaves the battlefield. You get {E}{E} (two energy counters).\nAt the beginning of your first main phase, sacrifice this enchantment unless you pay {E}.

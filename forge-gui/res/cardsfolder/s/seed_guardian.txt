@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigToken:DB$ Token | TokenScript$ g_x_x_elemental | TokenOwner$ TriggeredCardController | TokenPower$ X | TokenToughness$ X
 SVar:X:Count$ValidGraveyard Creature.YouOwn
 SVar:SacMe:1
-Oracle:Reach\nWhen Seed Guardian dies, create an X/X green Elemental creature token, where X is the number of creature cards in your graveyard.
+Oracle:Reach\nWhen this creature dies, create an X/X green Elemental creature token, where X is the number of creature cards in your graveyard.

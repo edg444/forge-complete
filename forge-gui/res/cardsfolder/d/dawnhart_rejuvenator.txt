@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 3
 A:AB$ Mana | Cost$ T | Produced$ Any | SpellDescription$ Add one mana of any color.
 DeckHas:Ability$LifeGain
-Oracle:When Dawnhart Rejuvenator enters, you gain 3 life.\n{T}: Add one mana of any color.
+Oracle:When this creature enters, you gain 3 life.\n{T}: Add one mana of any color.

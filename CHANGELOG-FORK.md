@@ -186,6 +186,28 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
   every copy logged `Error setting property Split3State` (and 4, 5), and reading its faces on the
   remote client threw `ClassCastException`. Now decoded like the others; new
   `FiveFaceSplitNetworkTest` plays a real networked game with the card and checks all five faces.
+- **`Oracle:` fields retemplated to match Scryfall** — 10,927 lines in 10,826 card scripts where the
+  *only* difference from current Oracle (Scryfall bulk data of 2026-09-24) was WotC's self-reference
+  change: the card's own name → "this creature" / "this land" / "it" (Thespian's Stage, Lightning
+  Berserker…). The earlier Oracle sync only covered the in-game ability text, so the deck editor and
+  card search still showed the old wording. Only the `Oracle:` line changed; the ability, cost and
+  keyword lines didn't.
+  - *Verified to keep every card's function*: each script was parsed with the real `CardRules`
+    reader before and after, and every public getter on the rules and on each face (abilities,
+    keywords, colors, color identity, deckbuilding colors, commander eligibility, AI deck hints)
+    compared — 0 differences across all 10,927; a control run that includes the Oracle getters
+    flags all 10,927, so the comparison does see the edits. Counter-type detection
+    (`CountersMoveEffect`), the AI and deck-generator text regexes and the mana-spent checks are
+    also unchanged. Test suite: 722 run, 0 failed.
+  - *Intentional side effects on features that measure the text itself*: Punctuate counts on 988
+    cards and Lexivore line counts on 1,403 now follow current Oracle; Pygmy Giant loses numbers
+    that only came from a card's own name on 18 (e.g. Wall of One Thousand Cuts). Adventure-mode
+    reward filters (`cardText` regexes) gain or lose some matches on 2,959 cards — mostly
+    accidental own-name substring hits dropping out ("Rat" in "Wrath", "Cat" in "Catapult") and
+    "this Enchantment"/"this Equipment" newly matching.
+  - The remaining 3,341 differing `Oracle:` fields have other wording drift and were left alone.
+  - Merges: an upstream edit to one of these lines will now conflict. Take upstream's side of the
+    line, then re-run `_tools/oracle-audit/sync-oracle-field.js <oracle-cards.jsonl.gz> --apply`.
 
 ### 2026-08-06 — Unhinged green and multicolor; five-face splits
 

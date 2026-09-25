@@ -12,7 +12,7 @@ AI:RemoveDeck:All
 DeckHas:Ability$Graveyard|Sacrifice|Mill
 DeckHints:Ability$Discard|Mill|Sacrifice
 AlternateMode:DoubleFaced
-Oracle:When Altar of the Wretched enters, you may sacrifice a nontoken creature. If you do, draw X cards, then mill X cards, where X is that creature's power.\nCraft with one or more creatures {2}{B}{B}\n{2}{B}: Return Altar of the Wretched from your graveyard to your hand.
+Oracle:When this artifact enters, you may sacrifice a nontoken creature. If you do, draw X cards, then mill X cards, where X is that creature's power.\nCraft with one or more creatures {2}{B}{B}\n{2}{B}: Return this card from your graveyard to your hand.
 
 ALTERNATE
 

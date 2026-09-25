@@ -4,7 +4,7 @@ Types:Creature Werewolf Horror
 PT:2/1
 A:AB$ SetState | Cost$ 4 G | Defined$ Self | Mode$ Transform | SpellDescription$ Transform this creature.
 AlternateMode:DoubleFaced
-Oracle:{4}{G}: Transform Kessig Prowler.
+Oracle:{4}{G}: Transform this creature.
 
 ALTERNATE
 
@@ -13,4 +13,4 @@ ManaCost:no cost
 Types:Creature Eldrazi Werewolf
 PT:4/4
 S:Mode$ MinMaxBlocker | ValidCard$ Card.Self | Max$ 1 | Description$ This creature can't be blocked by more than one creature.
-Oracle:Sinuous Predator can't be blocked by more than one creature.
+Oracle:This creature can't be blocked by more than one creature.

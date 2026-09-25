@@ -7,4 +7,4 @@ SVar:TrigChange:DB$ ChangeZone | Origin$ Library | Destination$ Battlefield | Ta
 S:Mode$ MustAttack | ValidCreature$ Card.Self | Description$ This creature attacks each combat if able.
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ When this creature leaves the battlefield, sacrifice a Mountain.
 SVar:TrigSac:DB$ Sacrifice | SacValid$ Mountain | Defined$ You
-Oracle:When Alpine Guide enters, you may search your library for a Mountain card, put that card onto the battlefield tapped, then shuffle.\nAlpine Guide attacks each combat if able.\nWhen Alpine Guide leaves the battlefield, sacrifice a Mountain.
+Oracle:When this creature enters, you may search your library for a Mountain card, put that card onto the battlefield tapped, then shuffle.\nThis creature attacks each combat if able.\nWhen this creature leaves the battlefield, sacrifice a Mountain.

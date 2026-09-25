@@ -10,4 +10,4 @@ SVar:X:Count$CardPower
 SVar:Y:Count$CardToughness
 DeckHas:Type$Treefolk
 DeckHints:Color$Green
-Oracle:Prototype {2}{G}{G} — 3/3 (You may cast this spell with different mana cost, color, and size. It keeps its abilities and types.)\nWhen Woodcaller Automaton enters, if you cast it, untap target land you control. It becomes a Treefolk creature with haste and base power and toughness equal to Woodcaller Automaton's power and toughness. It's still a land.
+Oracle:Prototype {2}{G}{G} — 3/3 (You may cast this spell with different mana cost, color, and size. It keeps its abilities and types.)\nWhen this creature enters, if you cast it, untap target land you control. It becomes a Treefolk creature with haste and base power and toughness equal to this creature's power and toughness. It's still a land.

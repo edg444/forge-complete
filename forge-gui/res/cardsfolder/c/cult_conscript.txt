@@ -8,4 +8,4 @@ A:AB$ ChangeZone | Cost$ 1 B | Origin$ Graveyard | Destination$ Battlefield | Ac
 SVar:X:Count$ThisTurnEntered_Graveyard_from_Battlefield_Creature.YouCtrl+nonSkeleton
 SVar:DiscardMe:1
 SVar:SacMe:1
-Oracle:Cult Conscript enters tapped.\n{1}{B}: Return Cult Conscript from your graveyard to the battlefield. Activate only if a non-Skeleton creature died under your control this turn.
+Oracle:This creature enters tapped.\n{1}{B}: Return this card from your graveyard to the battlefield. Activate only if a non-Skeleton creature died under your control this turn.

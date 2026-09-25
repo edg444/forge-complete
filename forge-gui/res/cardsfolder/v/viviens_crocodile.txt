@@ -4,4 +4,4 @@ Types:Creature Crocodile Spirit
 PT:3/3
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 1 | AddToughness$ 1 | IsPresent$ Planeswalker.Vivien+YouCtrl | Description$ This creature gets +1/+1 as long as you control a Vivien planeswalker.
 DeckHints:Type$Vivien
-Oracle:Vivien's Crocodile gets +1/+1 as long as you control a Vivien planeswalker.
+Oracle:This creature gets +1/+1 as long as you control a Vivien planeswalker.

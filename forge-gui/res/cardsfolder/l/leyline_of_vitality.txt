@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creatu
 SVar:TrigGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 1
 SVar:PlayMain1:TRUE
 AI:RemoveDeck:Random
-Oracle:If Leyline of Vitality is in your opening hand, you may begin the game with it on the battlefield.\nCreatures you control get +0/+1.\nWhenever a creature you control enters, you may gain 1 life.
+Oracle:If this card is in your opening hand, you may begin the game with it on the battlefield.\nCreatures you control get +0/+1.\nWhenever a creature you control enters, you may gain 1 life.

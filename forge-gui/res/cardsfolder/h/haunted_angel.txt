@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigChange:DB$ ChangeZone | Origin$ Graveyard | Destination$ Exile | Defined$ TriggeredNewCardLKICopy | SubAbility$ DBToken
 SVar:DBToken:DB$ Token | TokenScript$ b_3_3_angel_flying | TokenOwner$ Player.Other
 AI:RemoveDeck:Random
-Oracle:Flying\nWhen Haunted Angel dies, exile Haunted Angel and each other player creates a 3/3 black Angel creature token with flying.
+Oracle:Flying\nWhen this creature dies, exile it and each other player creates a 3/3 black Angel creature token with flying.

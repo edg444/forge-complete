@@ -8,4 +8,4 @@ T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You.descended | TriggerZones$ 
 SVar:TrigReturn:AB$ ChangeZone | Cost$ PayLife<1> | Defined$ Self | Origin$ Battlefield | Destination$ Hand | Hidden$ True
 DeckHints:Type$Skeleton
 DeckHas:Ability$Token & Type$Skeleton|Pirate
-Oracle:Skeletons you control get +1/+0 and have haste.\nWhen Corpses of the Lost enters, create a 2/2 black Skeleton Pirate creature token.\nAt the beginning of your end step, if you descended this turn, you may pay 1 life. If you do, return Corpses of the Lost to its owner's hand. (You descended if a permanent card was put into your graveyard from anywhere.)
+Oracle:Skeletons you control get +1/+0 and have haste.\nWhen this enchantment enters, create a 2/2 black Skeleton Pirate creature token.\nAt the beginning of your end step, if you descended this turn, you may pay 1 life. If you do, return this enchantment to its owner's hand. (You descended if a permanent card was put into your graveyard from anywhere.)

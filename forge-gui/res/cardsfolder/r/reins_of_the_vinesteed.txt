@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | ValidCard$ Card.EnchantedBy | Origin$ Battlefield | Destin
 SVar:DBReturn:DB$ ChangeZone | Defined$ Self | Origin$ Graveyard | Destination$ Battlefield | AttachedTo$ Creature.sharesCreatureTypeWith TriggeredCardLKICopy | AILogic$ Pump
 AI:RemoveDeck:All
 AI:RemoveDeck:Random
-Oracle:Enchant creature\nEnchanted creature gets +2/+2.\nWhen enchanted creature dies, you may return Reins of the Vinesteed from your graveyard to the battlefield attached to a creature that shares a creature type with that creature.
+Oracle:Enchant creature\nEnchanted creature gets +2/+2.\nWhen enchanted creature dies, you may return this card from your graveyard to the battlefield attached to a creature that shares a creature type with that creature.

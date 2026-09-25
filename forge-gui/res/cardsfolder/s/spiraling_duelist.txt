@@ -4,4 +4,4 @@ Types:Creature Human Berserker
 PT:3/1
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Double Strike | Condition$ Metalcraft | Description$ Metalcraft — This creature has double strike as long as you control three or more artifacts.
 SVar:BuffedBy:Artifact
-Oracle:Metalcraft — Spiraling Duelist has double strike as long as you control three or more artifacts.
+Oracle:Metalcraft — This creature has double strike as long as you control three or more artifacts.

@@ -5,4 +5,4 @@ PT:0/3
 S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | Description$ This creature can't be blocked.
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 2 | IsPresent$ Creature.IsCommander+YouCtrl,Planeswalker.IsCommander+YouCtrl | Description$ This creature gets +2/+0 as long as you control a commander that's a creature or planeswalker.
 AI:RemoveDeck:NonCommander
-Oracle:Gray Harbor Merfolk can't be blocked.\nGray Harbor Merfolk gets +2/+0 as long as you control a commander that's a creature or planeswalker.
+Oracle:This creature can't be blocked.\nThis creature gets +2/+0 as long as you control a commander that's a creature or planeswalker.

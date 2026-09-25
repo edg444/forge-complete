@@ -10,4 +10,4 @@ SVar:PlayMain1:TRUE
 SVar:NeedsToPlay:Demon.YouCtrl
 AI:RemoveDeck:Random
 DeckHints:Type$Demon
-Oracle:Enchant creature\nYou control enchanted creature.\nAt the beginning of the end step, if you control no Demons, sacrifice Mark of the Oni.
+Oracle:Enchant creature\nYou control enchanted creature.\nAt the beginning of the end step, if you control no Demons, sacrifice this Aura.

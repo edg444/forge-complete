@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigPutCounter:DB$ PutCounter | CounterTypes$ EachType_Permanent.YouCtrl | AltChoiceForEach$ P1P1
 DeckHas:Ability$Counters
 DeckNeeds:Ability$Counters
-Oracle:Trample\nWhen Bribe Taker enters, for each kind of counter on permanents you control, you may put your choice of a +1/+1 counter or a counter of that kind on Bribe Taker.
+Oracle:Trample\nWhen this creature enters, for each kind of counter on permanents you control, you may put your choice of a +1/+1 counter or a counter of that kind on this creature.

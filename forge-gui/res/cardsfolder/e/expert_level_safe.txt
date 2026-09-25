@@ -8,4 +8,4 @@ SVar:ChooseNumber:DB$ ChooseNumber | Defined$ TargetedAndYou | Min$ 1 | Max$ 3 |
 SVar:DBSacrifice:DB$ Sacrifice | Defined$ You | ValidCard$ Card.Self | SubAbility$ DBOpenSafe
 SVar:DBOpenSafe:DB$ ChangeZoneAll | ChangeNum$ All | Origin$ Exile | Destination$ Hand | ChangeType$ Card.ExiledWithSource
 SVar:DBFillSafe:DB$ Dig | Defined$ You | DigNum$ 1 | ChangeNum$ All | DestinationZone$ Exile | ExileFaceDown$ True | NoReveal$ True
-Oracle:When Expert-Level Safe enters, exile the top two cards of your library face down.\n{1}, {T}: You and target opponent each secretly choose 1, 2, or 3. Then those choices are revealed. If they match, sacrifice Expert-Level Safe and put all cards exiled with it into their owners' hands. Otherwise, exile the top card of your library face down.
+Oracle:When this artifact enters, exile the top two cards of your library face down.\n{1}, {T}: You and target opponent each secretly choose 1, 2, or 3. Then those choices are revealed. If they match, sacrifice this artifact and put all cards exiled with it into their owners' hands. Otherwise, exile the top card of your library face down.

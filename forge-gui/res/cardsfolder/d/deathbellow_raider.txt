@@ -4,4 +4,4 @@ Types:Creature Minotaur Berserker
 PT:2/3
 S:Mode$ MustAttack | ValidCreature$ Card.Self | Description$ This creature attacks each combat if able.
 A:AB$ Regenerate | Cost$ 2 B | SpellDescription$ Regenerate this creature.
-Oracle:Deathbellow Raider attacks each combat if able.\n{2}{B}: Regenerate Deathbellow Raider.
+Oracle:This creature attacks each combat if able.\n{2}{B}: Regenerate this creature.

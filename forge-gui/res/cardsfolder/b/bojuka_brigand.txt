@@ -6,4 +6,4 @@ S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't bloc
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self,Ally.Other+YouCtrl | OptionalDecider$ You | Execute$ TrigPutCounter | TriggerDescription$ Whenever this creature or another Ally you control enters, you may put a +1/+1 counter on this creature.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1
 SVar:BuffedBy:Ally
-Oracle:Bojuka Brigand can't block.\nWhenever Bojuka Brigand or another Ally you control enters, you may put a +1/+1 counter on Bojuka Brigand.
+Oracle:This creature can't block.\nWhenever this creature or another Ally you control enters, you may put a +1/+1 counter on this creature.

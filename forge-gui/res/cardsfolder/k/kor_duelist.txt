@@ -4,4 +4,4 @@ Types:Creature Kor Soldier
 PT:1/1
 S:Mode$ Continuous | AffectedDefined$ Self | Affected$ Card.equipped | AddKeyword$ Double Strike | Description$ As long as this creature is equipped, it has double strike. (It deals both first-strike and regular combat damage.)
 SVar:EquipMe:Once
-Oracle:As long as Kor Duelist is equipped, it has double strike. (It deals both first-strike and regular combat damage.)
+Oracle:As long as this creature is equipped, it has double strike. (It deals both first-strike and regular combat damage.)

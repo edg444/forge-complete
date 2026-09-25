@@ -9,4 +9,4 @@ SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Se
 SVar:BuffedBy:Cave
 DeckHas:Ability$Token|Counters & Type$Bat
 DeckHints:Type$Cave
-Oracle:When Bat Colony enters, create a 1/1 black Bat creature token with flying for each mana from a Cave spent to cast it.\nWhenever a Cave you control enters, put a +1/+1 counter on target creature you control.
+Oracle:When this enchantment enters, create a 1/1 black Bat creature token with flying for each mana from a Cave spent to cast it.\nWhenever a Cave you control enters, put a +1/+1 counter on target creature you control.

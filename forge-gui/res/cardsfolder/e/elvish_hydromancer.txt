@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigCopy:DB$ CopyPermanent | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control
 DeckHas:Ability$Token
 DeckHints:Color$Blue
-Oracle:Kicker {3}{U} (You may pay an additional {3}{U} as you cast this spell.)\nWhen Elvish Hydromancer enters, if it was kicked, create a token that's a copy of target creature you control.
+Oracle:Kicker {3}{U} (You may pay an additional {3}{U} as you cast this spell.)\nWhen this creature enters, if it was kicked, create a token that's a copy of target creature you control.

@@ -4,4 +4,4 @@ Types:Creature Dauthi Soldier
 PT:2/2
 K:Shadow
 S:Mode$ MustAttack | ValidCreature$ Card.Self | Description$ This creature attacks each combat if able.
-Oracle:Shadow (This creature can block or be blocked by only creatures with shadow.)\nDauthi Slayer attacks each combat if able.
+Oracle:Shadow (This creature can block or be blocked by only creatures with shadow.)\nThis creature attacks each combat if able.

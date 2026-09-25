@@ -4,4 +4,4 @@ Types:Creature Minotaur Warrior
 PT:4/3
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDiscard | TriggerDescription$ When this creature enters, discard a card.
 SVar:TrigDiscard:DB$ Discard | Defined$ You | NumCards$ 1 | Mode$ TgtChoose
-Oracle:When Bloodrage Brawler enters, discard a card.
+Oracle:When this creature enters, discard a card.

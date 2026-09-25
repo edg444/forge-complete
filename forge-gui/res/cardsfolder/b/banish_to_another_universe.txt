@@ -7,4 +7,4 @@ SVar:TrigExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | Valid
 SVar:PlayMain1:TRUE
 SVar:OblivionRing:TRUE
 DeckHints:Type$Artifact|Legendary|Saga
-Oracle:Affinity for historic permanents (This spell costs {1} less to cast for each artifact, legendary, and/or Saga permanent you control.)\nWhen Banish to Another Universe enters, exile target nonland permanent an opponent controls until Banish to Another Universe leaves the battlefield.
+Oracle:Affinity for historic permanents (This spell costs {1} less to cast for each artifact, legendary, and/or Saga permanent you control.)\nWhen this enchantment enters, exile target nonland permanent an opponent controls until this enchantment leaves the battlefield.

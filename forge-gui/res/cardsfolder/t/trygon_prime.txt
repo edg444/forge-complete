@@ -9,4 +9,4 @@ SVar:DBUnblockable:DB$ Effect | RememberObjects$ ParentTarget | ExileOnMoved$ Ba
 SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | Description$ This creature can't be blocked this turn.
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Counters
-Oracle:Subterranean Assault — Whenever Trygon Prime attacks, put a +1/+1 counter on it and a +1/+1 counter on up to one other target attacking creature. That creature can't be blocked this turn.
+Oracle:Subterranean Assault — Whenever this creature attacks, put a +1/+1 counter on it and a +1/+1 counter on up to one other target attacking creature. That creature can't be blocked this turn.

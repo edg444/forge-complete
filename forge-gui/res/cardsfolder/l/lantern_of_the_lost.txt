@@ -5,4 +5,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigChangeZone:DB$ ChangeZone | Origin$ Graveyard | Destination$ Exile | TgtPrompt$ Select target card in a graveyard | ValidTgts$ Card
 A:AB$ ChangeZoneAll | Cost$ 1 T Exile<1/CARDNAME> | Origin$ Graveyard | Destination$ Exile | ChangeType$ Card | AILogic$ ExileGraveyards | SubAbility$ DBDraw | SpellDescription$ Exile all cards from all graveyards, then draw a card.
 SVar:DBDraw:DB$ Draw | StackDescription$ None
-Oracle:When Lantern of the Lost enters, exile target card from a graveyard.\n{1}, {T}, Exile Lantern of the Lost: Exile all cards from all graveyards, then draw a card.
+Oracle:When this artifact enters, exile target card from a graveyard.\n{1}, {T}, Exile this artifact: Exile all cards from all graveyards, then draw a card.

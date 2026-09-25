@@ -6,4 +6,4 @@ SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ Mana | Cost$ T | Produced$ Combo U B | SpellDescription$ Add {U} or {B}.
 A:AB$ Draw | Cost$ 2 U B T Sac<1/CARDNAME> | SpellDescription$ Draw a card.
 DeckHas:Ability$Sacrifice
-Oracle:Waterfront District enters tapped.\n{T}: Add {U} or {B}.\n{2}{U}{B}, {T}, Sacrifice Waterfront District: Draw a card.
+Oracle:This land enters tapped.\n{T}: Add {U} or {B}.\n{2}{U}{B}, {T}, Sacrifice this land: Draw a card.

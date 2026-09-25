@@ -5,4 +5,4 @@ PT:1/1
 K:Haste
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 1 | AddToughness$ 1 | IsPresent$ Creature.YouCtrl+Red+Other | Description$ This creature gets +1/+1 as long as you control another red creature.
 SVar:BuffedBy:Creature.Red
-Oracle:Haste\nMudbrawler Cohort gets +1/+1 as long as you control another red creature.
+Oracle:Haste\nThis creature gets +1/+1 as long as you control another red creature.

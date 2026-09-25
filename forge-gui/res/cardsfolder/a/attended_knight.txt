@@ -5,4 +5,4 @@ PT:2/2
 K:First Strike
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When this creature enters, create a 1/1 white Soldier creature token.
 SVar:TrigToken:DB$ Token | TokenScript$ w_1_1_soldier | TokenOwner$ You
-Oracle:First strike\nWhen Attended Knight enters, create a 1/1 white Soldier creature token.
+Oracle:First strike\nWhen this creature enters, create a 1/1 white Soldier creature token.

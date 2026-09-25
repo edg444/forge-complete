@@ -6,4 +6,4 @@ S:Mode$ Continuous | Affected$ Creature.OppCtrl | AddPower$ -1 | Description$ Cr
 SVar:PlayMain1:TRUE
 A:AB$ Dig | Cost$ 1 U Discard<1/CARDNAME> | ActivationZone$ Hand | DigNum$ 2 | ChangeNum$ 1 | DestinationZone2$ Graveyard | NoReveal$ True | SpellDescription$ Look at the top two cards of your library. Put one of them into your hand and the other into your graveyard.
 AI:RemoveDeck:All
-Oracle:Creatures your opponents control get -1/-0.\n{1}{U}, Discard Waker of Waves: Look at the top two cards of your library. Put one of them into your hand and the other into your graveyard.
+Oracle:Creatures your opponents control get -1/-0.\n{1}{U}, Discard this card: Look at the top two cards of your library. Put one of them into your hand and the other into your graveyard.

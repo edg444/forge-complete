@@ -10,4 +10,4 @@ T:Mode$ Sacrificed | ValidCard$ Eldrazi.Other | Execute$ TrigPutCounter | Trigge
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1
 DeckHas:Ability$Token|Sacrifice & Type$Spawn
 DeckHints:Ability$Sacrifice & Type$Eldrazi
-Oracle:Devoid (This card has no color.)\nWhen you cast this spell, create two 0/1 colorless Eldrazi Spawn creature tokens with "Sacrifice this token: Add {C}."\nReach\nWhenever you sacrifice another Eldrazi, put a +1/+1 counter on Writhing Chrysalis.
+Oracle:Devoid (This card has no color.)\nWhen you cast this spell, create two 0/1 colorless Eldrazi Spawn creature tokens with "Sacrifice this token: Add {C}."\nReach\nWhenever you sacrifice another Eldrazi, put a +1/+1 counter on this creature.

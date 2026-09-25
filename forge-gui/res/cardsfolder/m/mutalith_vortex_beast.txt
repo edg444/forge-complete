@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigFlipCoin:DB$ FlipCoin | ForEachPlayer$ Opponent | WinSubAbility$ DBDraw | LoseSubAbility$ DBDealDamage
 SVar:DBDraw:DB$ Draw | NumCards$ Wins
 SVar:DBDealDamage:DB$ DealDamage | NumDmg$ 3 | Defined$ Remembered
-Oracle:Trample\nWarp Vortex — When Mutalith Vortex Beast enters, flip a coin for each opponent you have. For each flip you win, draw a card. For each flip you lose, Mutalith Vortex Beast deals 3 damage to that player.
+Oracle:Trample\nWarp Vortex — When this creature enters, flip a coin for each opponent you have. For each flip you win, draw a card. For each flip you lose, this creature deals 3 damage to that player.

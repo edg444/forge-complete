@@ -7,4 +7,4 @@ A:AB$ Destroy | Cost$ Return<1/CARDNAME> T | ValidTgts$ Creature | NoRegen$ True
 SVar:DBToken:DB$ Token | TokenScript$ g_0_1_sheep | TokenOwner$ TargetedController
 SVar:TrigBounce:DB$ Sacrifice | UnlessCost$ Return<3/Land.Basic> | UnlessPayer$ You
 AI:RemoveDeck:All
-Oracle:When Ovinomancer enters, sacrifice it unless you return three basic lands you control to their owner's hand.\n{T}, Return Ovinomancer to its owner's hand: Destroy target creature. It can't be regenerated. That creature's controller creates a 0/1 green Sheep creature token.
+Oracle:When this creature enters, sacrifice it unless you return three basic lands you control to their owner's hand.\n{T}, Return this creature to its owner's hand: Destroy target creature. It can't be regenerated. That creature's controller creates a 0/1 green Sheep creature token.

@@ -7,4 +7,4 @@ SVar:ChooseColor:DB$ ChooseColor | Defined$ You | SpellDescription$ As this crea
 T:Mode$ Always | IsPresent$ Permanent.YouCtrl+ChosenColor | PresentCompare$ EQ0 | TriggerZones$ Battlefield | Execute$ TrigSacrifice | TriggerDescription$ When you control no permanents of the chosen color, sacrifice this creature.
 SVar:TrigSacrifice:DB$ Sacrifice
 SVar:NeedsToPlay:Permanent.nonColorless+YouCtrl
-Oracle:As Lurebound Scarecrow enters, choose a color.\nWhen you control no permanents of the chosen color, sacrifice Lurebound Scarecrow.
+Oracle:As this creature enters, choose a color.\nWhen you control no permanents of the chosen color, sacrifice this creature.

@@ -7,7 +7,7 @@ SVar:TrigPump:DB$ Pump | KW$ Double Strike
 DeckHas:Ability$Counters
 SVar:HasAttackEffect:TRUE
 AlternateMode:Adventure
-Oracle:Whenever Picnic Ruiner attacks while you control a creature with power 4 or greater, Picnic Ruiner gains double strike until end of turn.
+Oracle:Whenever this creature attacks while you control a creature with power 4 or greater, this creature gains double strike until end of turn.
 
 ALTERNATE
 

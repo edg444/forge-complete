@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigToken:DB$ Token | TokenScript$ b_1_1_bat_flying | TokenOwner$ You
 SVar:X:Count$LifeOppsLostThisTurn
 DeckHas:Ability$Token
-Oracle:When Bat Whisperer enters, if an opponent lost life this turn, create a 1/1 black Bat creature token with flying.
+Oracle:When this creature enters, if an opponent lost life this turn, create a 1/1 black Bat creature token with flying.

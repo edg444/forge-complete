@@ -8,4 +8,4 @@ SVar:TrigIncubate:DB$ Incubate | Amount$ X
 SVar:X:TriggeredCard$CardPower
 DeckHas:Ability$Sacrifice|Counters|Token & Type$Incubator|Artifact
 DeckNeeds:Type$Phyrexian
-Oracle:Sacrifice another Phyrexian: Put a +1/+1 counter on Bloated Processor.\nWhen Bloated Processor dies, incubate X, where X is its power. (Create an Incubator token with X +1/+1 counters on it and "{2}: Transform this token." It transforms into a 0/0 Phyrexian artifact creature.)
+Oracle:Sacrifice another Phyrexian: Put a +1/+1 counter on this creature.\nWhen this creature dies, incubate X, where X is its power. (Create an Incubator token with X +1/+1 counters on it and "{2}: Transform this token." It transforms into a 0/0 Phyrexian artifact creature.)

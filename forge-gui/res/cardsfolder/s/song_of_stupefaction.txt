@@ -10,4 +10,4 @@ S:Mode$ Continuous | AffectedDefined$ Enchanted | Affected$ Permanent | AddPower
 SVar:X:Count$ValidGraveyard Permanent.YouOwn
 DeckHints:Ability$Graveyard|Mill|Discard
 DeckHas:Ability$Mill
-Oracle:Enchant creature or Vehicle\nWhen Song of Stupefaction enters, you may mill two cards. (You may put the top two cards of your library into your graveyard.)\nFathomless descent — Enchanted permanent gets -X/-0, where X is the number of permanent cards in your graveyard.
+Oracle:Enchant creature or Vehicle\nWhen this Aura enters, you may mill two cards. (You may put the top two cards of your library into your graveyard.)\nFathomless descent — Enchanted permanent gets -X/-0, where X is the number of permanent cards in your graveyard.

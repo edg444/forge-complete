@@ -7,4 +7,4 @@ T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | I
 SVar:TrigChange:DB$ ChangeZone | Origin$ Battlefield | Destination$ Hand | Defined$ Self | SubAbility$ DBToken
 SVar:DBToken:DB$ Token | TokenAmount$ 5 | TokenScript$ c_1_1_a_thopter_flying | TokenOwner$ You
 DeckHas:Ability$Token
-Oracle:Flying\nAt the beginning of your upkeep, if you control no Thopters other than Thopter Assembly, return Thopter Assembly to its owner's hand and create five 1/1 colorless Thopter artifact creature tokens with flying.
+Oracle:Flying\nAt the beginning of your upkeep, if you control no Thopters other than this creature, return this creature to its owner's hand and create five 1/1 colorless Thopter artifact creature tokens with flying.

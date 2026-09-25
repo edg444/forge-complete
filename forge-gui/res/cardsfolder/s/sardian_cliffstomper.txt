@@ -5,4 +5,4 @@ PT:0/4
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ X | IsPresent$ Mountain.YouCtrl | PresentCompare$ GE4 | Condition$ PlayerTurn | Description$ As long as it's your turn and you control four or more Mountains, this creature gets +X/+0, where X is the number of Mountains you control.
 SVar:X:Count$Valid Mountain.YouCtrl
 SVar:BuffedBy:Mountain
-Oracle:As long as it's your turn and you control four or more Mountains, Sardian Cliffstomper gets +X/+0, where X is the number of Mountains you control.
+Oracle:As long as it's your turn and you control four or more Mountains, this creature gets +X/+0, where X is the number of Mountains you control.

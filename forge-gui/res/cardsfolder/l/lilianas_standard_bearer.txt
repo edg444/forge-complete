@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ X
 SVar:X:Count$ThisTurnEntered_Graveyard_from_Battlefield_Creature.YouCtrl
 DeckHints:Ability$Sacrifice
-Oracle:Flash\nWhen Liliana's Standard Bearer enters, draw X cards, where X is the number of creatures that died under your control this turn.
+Oracle:Flash\nWhen this creature enters, draw X cards, where X is the number of creatures that died under your control this turn.

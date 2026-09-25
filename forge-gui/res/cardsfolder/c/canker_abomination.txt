@@ -8,4 +8,4 @@ SVar:DBCounters:DB$ PutCounter | ETB$ True | Defined$ Self | CounterType$ M1M1 |
 SVar:X:Count$Valid Creature.ChosenCtrl
 SVar:Y:PlayerCountOpponents$LowestValid Creature.YouCtrl
 SVar:NeedsToPlayVar:Y LE4
-Oracle:As Canker Abomination enters, choose an opponent. Canker Abomination enters with a -1/-1 counter on it for each creature that player controls.
+Oracle:As this creature enters, choose an opponent. This creature enters with a -1/-1 counter on it for each creature that player controls.

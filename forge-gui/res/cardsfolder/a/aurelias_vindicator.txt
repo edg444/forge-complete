@@ -12,4 +12,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.S
 SVar:TrigReturn:DB$ ChangeZoneAll | ChangeType$ Card.ExiledWithSource | Origin$ Exile | Destination$ Hand
 SVar:X:Count$xPaid
 DeckHas:Ability$Graveyard
-Oracle:Flying, lifelink, ward {2}\nDisguise {X}{3}{W}\nWhen Aurelia's Vindicator is turned face up, exile up to X other target creatures from the battlefield and/or creature cards from graveyards.\nWhen Aurelia's Vindicator leaves the battlefield, return the exiled cards to their owners' hands.
+Oracle:Flying, lifelink, ward {2}\nDisguise {X}{3}{W}\nWhen this creature is turned face up, exile up to X other target creatures from the battlefield and/or creature cards from graveyards.\nWhen this creature leaves the battlefield, return the exiled cards to their owners' hands.

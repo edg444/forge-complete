@@ -9,4 +9,4 @@ SVar:STPlay:Mode$ Continuous | Affected$ Card.IsRemembered | MayPlay$ True | Aff
 SVar:DBCleanup:DB$ Cleanup | ClearImprinted$ True
 S:Mode$ ReduceCost | ValidCard$ Card.!wasCastFromYourHand | Activator$ You | Type$ Spell | Amount$ 1 | Description$ Spells you cast from anywhere other than your hand cost {1} less to cast.
 DeckHas:Ability$Graveyard
-Oracle:When Savvy Trader enters, exile target permanent card from your graveyard. You may play that card for as long as it remains exiled.\nSpells you cast from anywhere other than your hand cost {1} less to cast.
+Oracle:When this creature enters, exile target permanent card from your graveyard. You may play that card for as long as it remains exiled.\nSpells you cast from anywhere other than your hand cost {1} less to cast.

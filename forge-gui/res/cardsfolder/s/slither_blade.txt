@@ -3,4 +3,4 @@ ManaCost:U
 Types:Creature Snake Rogue
 PT:1/2
 S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | Description$ This creature can't be blocked.
-Oracle:Slither Blade can't be blocked.
+Oracle:This creature can't be blocked.

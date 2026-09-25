@@ -9,4 +9,4 @@ SVar:DBSac:DB$ Sacrifice | Defined$ Self | SubAbility$ DBCleanup | ConditionChec
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Amount
 SVar:NeedsToPlay:Enchantment
-Oracle:Flying\nWhen Drake Familiar enters, sacrifice it unless you return an enchantment to its owner's hand.
+Oracle:Flying\nWhen this creature enters, sacrifice it unless you return an enchantment to its owner's hand.

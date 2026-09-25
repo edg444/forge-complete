@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigInitiative:DB$ TakeInitiative
 T:Mode$ AttackerBlockedByCreature | ValidCard$ Card.Self | ValidBlocker$ Creature | TriggerZones$ Battlefield | Execute$ TrigLoseLife | TriggerDescription$ Spiked Retribution — Whenever this creature becomes blocked by a creature, that creature's controller loses 5 life.
 SVar:TrigLoseLife:DB$ LoseLife | Defined$ TriggeredBlockerController | LifeAmount$ 5
-Oracle:When Vicious Battlerager enters, you take the initiative.\nSpiked Retribution — Whenever Vicious Battlerager becomes blocked by a creature, that creature's controller loses 5 life.
+Oracle:When this creature enters, you take the initiative.\nSpiked Retribution — Whenever this creature becomes blocked by a creature, that creature's controller loses 5 life.

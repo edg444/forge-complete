@@ -5,4 +5,4 @@ PT:4/5
 K:Flying
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDestroyAll | TriggerDescription$ When this creature enters, destroy all tapped creatures.
 SVar:TrigDestroyAll:DB$ DestroyAll | ValidCards$ Creature.tapped
-Oracle:Flying\nWhen Sunblast Angel enters, destroy all tapped creatures.
+Oracle:Flying\nWhen this creature enters, destroy all tapped creatures.

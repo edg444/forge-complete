@@ -11,4 +11,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 T:Mode$ Drawn | ValidCard$ Card.NamedCard+OwnedBy Player.Chosen | TriggerZones$ Battlefield | Execute$ TrapTriggered | TriggerDescription$ When the chosen player draws a card with the chosen name, sacrifice this artifact. If you do, this artifact deals 10 damage to that player.
 SVar:TrapTriggered:AB$ DealDamage | Cost$ Mandatory Sac<1/CARDNAME> | NumDmg$ 10 | Defined$ Player.Chosen
 AI:RemoveDeck:Random
-Oracle:As Booby Trap enters, choose an opponent and a card name other than a basic land card name.\nThe chosen player reveals each card they draw.\nWhen the chosen player draws a card with the chosen name, sacrifice Booby Trap. If you do, Booby Trap deals 10 damage to that player.
+Oracle:As this artifact enters, choose an opponent and a card name other than a basic land card name.\nThe chosen player reveals each card they draw.\nWhen the chosen player draws a card with the chosen name, sacrifice this artifact. If you do, this artifact deals 10 damage to that player.

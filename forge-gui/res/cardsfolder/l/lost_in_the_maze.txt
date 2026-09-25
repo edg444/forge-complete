@@ -8,4 +8,4 @@ SVar:DBCounter:DB$ PutCounter | Defined$ Targeted.YouDontCtrl | CounterType$ Stu
 S:Mode$ Continuous | Affected$ Creature.YouCtrl+tapped | AddKeyword$ Hexproof | Description$ Tapped creatures you control have hexproof.
 SVar:X:Count$xPaid
 DeckHas:Ability$Counters
-Oracle:Flash\nWhen Lost in the Maze enters, tap X target creatures. Put a stun counter on each of those creatures you don't control. (If a permanent with a stun counter would become untapped, remove one from it instead.)\nTapped creatures you control have hexproof.
+Oracle:Flash\nWhen this enchantment enters, tap X target creatures. Put a stun counter on each of those creatures you don't control. (If a permanent with a stun counter would become untapped, remove one from it instead.)\nTapped creatures you control have hexproof.

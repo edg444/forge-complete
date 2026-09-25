@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefi
 SVar:TrigLoseLife:DB$ LoseLife | ValidTgts$ Opponent | LifeAmount$ X
 SVar:X:Count$Valid Creature.Vampire+YouCtrl
 DeckHints:Type$Vampire
-Oracle:When Bishop of the Bloodstained enters, target opponent loses 1 life for each Vampire you control.
+Oracle:When this creature enters, target opponent loses 1 life for each Vampire you control.

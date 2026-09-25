@@ -5,4 +5,4 @@ S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddPower$ 
 T:Mode$ DamageDone | ValidSource$ Creature.EquippedBy | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigCopy | TriggerZones$ Battlefield | TriggerDescription$ Whenever equipped creature deals combat damage to a player, create a token that's a copy of this Equipment.
 SVar:TrigCopy:DB$ CopyPermanent | Defined$ Self
 K:Equip:2
-Oracle:Equipped creature gets +2/+0.\nWhenever equipped creature deals combat damage to a player, create a token that's a copy of Bloodforged Battle-Axe.\nEquip {2}
+Oracle:Equipped creature gets +2/+0.\nWhenever equipped creature deals combat damage to a player, create a token that's a copy of this Equipment.\nEquip {2}

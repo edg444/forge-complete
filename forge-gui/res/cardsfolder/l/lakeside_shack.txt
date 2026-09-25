@@ -5,4 +5,4 @@ R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplaceWith$ 
 SVar:LandTapped:DB$ Tap | Defined$ Self | ETB$ True | ConditionCheckSVar$ X | ConditionSVarCompare$ GT13
 SVar:X:PlayerCountPlayers$LowestLifeTotal
 A:AB$ Mana | Cost$ T | Produced$ Combo G U | SpellDescription$ Add {G} or {U}.
-Oracle:Lakeside Shack enters tapped unless a player has 13 or less life.\n{T}: Add {G} or {U}.
+Oracle:This land enters tapped unless a player has 13 or less life.\n{T}: Add {G} or {U}.

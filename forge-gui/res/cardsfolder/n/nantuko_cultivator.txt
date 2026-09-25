@@ -11,4 +11,4 @@ SVar:NantukoX:Count$ValidHand Land.YouOwn
 SVar:NantukoY:Remembered$Amount
 AI:RemoveDeck:All
 DeckHas:Ability$Counters
-Oracle:When Nantuko Cultivator enters, you may discard any number of land cards. Put that many +1/+1 counters on Nantuko Cultivator and draw that many cards.
+Oracle:When this creature enters, you may discard any number of land cards. Put that many +1/+1 counters on this creature and draw that many cards.

@@ -10,4 +10,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigReturn:DB$ ChangeZone | ValidTgts$ Creature.YouOwn+cmcLEX+Other | TgtPrompt$ Choose another target creature card with mana value less than or equal to CARDNAME's power | Origin$ Graveyard | Destination$ Battlefield
 SVar:X:TriggeredCard$CardPower
 DeckHas:Ability$Counters|Graveyard
-Oracle:Flying\nWhenever you draw your second card each turn, put a +1/+1 counter on Gurgling Anointer.\nWhen Gurgling Anointer dies, return another target creature card with mana value less than or equal to Gurgling Anointer's power from your graveyard to the battlefield.
+Oracle:Flying\nWhenever you draw your second card each turn, put a +1/+1 counter on this creature.\nWhen this creature dies, return another target creature card with mana value less than or equal to this creature's power from your graveyard to the battlefield.

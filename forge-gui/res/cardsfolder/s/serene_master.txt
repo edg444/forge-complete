@@ -5,4 +5,4 @@ PT:0/2
 T:Mode$ Blocks | ValidCard$ Card.Self | Execute$ TrigExchangePower | TriggerDescription$ Whenever this creature blocks, exchange its power and the power of target creature it's blocking until end of combat.
 SVar:TrigExchangePower:DB$ ExchangePower | ValidTgts$ Creature.blockedBySource | TgtPrompt$ Select target creature it's blocking | Defined$ Self | Duration$ UntilEndOfCombat
 AI:RemoveDeck:All
-Oracle:Whenever Serene Master blocks, exchange its power and the power of target creature it's blocking until end of combat.
+Oracle:Whenever this creature blocks, exchange its power and the power of target creature it's blocking until end of combat.

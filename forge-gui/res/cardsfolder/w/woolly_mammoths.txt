@@ -4,4 +4,4 @@ Types:Creature Elephant
 PT:3/2
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Trample | IsPresent$ Land.Snow+YouCtrl | Description$ This creature has trample as long as you control a snow land.
 SVar:BuffedBy:Land.Snow
-Oracle:Woolly Mammoths has trample as long as you control a snow land.
+Oracle:This creature has trample as long as you control a snow land.

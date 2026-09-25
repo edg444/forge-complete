@@ -8,4 +8,4 @@ A:AB$ Mana | Cost$ T SubCounter<1/DEPLETION> | Produced$ B | SubAbility$ DBSac |
 SVar:DBSac:DB$ Sacrifice | SacValid$ Self | ConditionPresent$ Card.Self+counters_EQ0_DEPLETION
 AI:RemoveDeck:All
 AI:RemoveDeck:Random
-Oracle:Peat Bog enters tapped with two depletion counters on it.\n{T}, Remove a depletion counter from Peat Bog: Add {B}{B}. If there are no depletion counters on Peat Bog, sacrifice it.
+Oracle:This land enters tapped with two depletion counters on it.\n{T}, Remove a depletion counter from this land: Add {B}{B}. If there are no depletion counters on this land, sacrifice it.

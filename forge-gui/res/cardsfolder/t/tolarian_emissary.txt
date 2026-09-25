@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigKicker:DB$ Destroy | ValidTgts$ Enchantment | TgtPrompt$ Select target enchantment
 SVar:NeedsToPlayKicked:Enchantment.OppCtrl
 DeckHints:Color$White
-Oracle:Kicker {1}{W} (You may pay an additional {1}{W} as you cast this spell.)\nFlying\nWhen Tolarian Emissary enters, if it was kicked, destroy target enchantment.
+Oracle:Kicker {1}{W} (You may pay an additional {1}{W} as you cast this spell.)\nFlying\nWhen this creature enters, if it was kicked, destroy target enchantment.

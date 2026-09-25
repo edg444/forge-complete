@@ -6,4 +6,4 @@ K:Flash
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ When this creature enters, target Merfolk you control gains hexproof until end of turn. (It can't be the target of spells or abilities your opponents control.)
 SVar:TrigPump:DB$ Pump | ValidTgts$ Merfolk.YouCtrl | TgtPrompt$ Select target Merfolk | KW$ Hexproof
 DeckHints:Type$Merfolk
-Oracle:Flash\nWhen Swift Warden enters, target Merfolk you control gains hexproof until end of turn. (It can't be the target of spells or abilities your opponents control.)
+Oracle:Flash\nWhen this creature enters, target Merfolk you control gains hexproof until end of turn. (It can't be the target of spells or abilities your opponents control.)

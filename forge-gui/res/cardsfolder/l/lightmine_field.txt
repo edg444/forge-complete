@@ -4,4 +4,4 @@ Types:Enchantment
 T:Mode$ AttackersDeclared | Execute$ TrigDamage | TriggerZones$ Battlefield | TriggerDescription$ Whenever one or more creatures attack, this enchantment deals damage to each of those creatures equal to the number of attacking creatures.
 SVar:TrigDamage:DB$ DealDamage | Defined$ TriggeredAttackers | NumDmg$ X
 SVar:X:Count$Valid Creature.attacking
-Oracle:Whenever one or more creatures attack, Lightmine Field deals damage to each of those creatures equal to the number of attacking creatures.
+Oracle:Whenever one or more creatures attack, this enchantment deals damage to each of those creatures equal to the number of attacking creatures.

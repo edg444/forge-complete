@@ -9,4 +9,4 @@ T:Mode$ SpellCast | ValidCard$ Instant,Sorcery | ValidActivatingPlayer$ You | Tr
 SVar:DBPump:DB$ Pump | Defined$ Self | NumAtt$ +2
 SVar:BuffedBy:Instant,Sorcery
 DeckHints:Type$Instant|Sorcery & Color$Blue
-Oracle:Kicker {2}{U} (You may pay an additional {2}{U} as you cast this spell.)\nWhen Ghitu Amplifier enters, if it was kicked, return target creature an opponent controls to its owner's hand.\nWhenever you cast an instant or sorcery spell, Ghitu Amplifier gets +2/+0 until end of turn.
+Oracle:Kicker {2}{U} (You may pay an additional {2}{U} as you cast this spell.)\nWhen this creature enters, if it was kicked, return target creature an opponent controls to its owner's hand.\nWhenever you cast an instant or sorcery spell, this creature gets +2/+0 until end of turn.

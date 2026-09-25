@@ -5,4 +5,4 @@ PT:2/2
 T:Mode$ AttackerBlocked | ValidCard$ Card.Self | OptionalDecider$ You | Execute$ TrigDraw | TriggerDescription$ Whenever this creature becomes blocked, you may draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
 SVar:HasAttackEffect:Blocked
-Oracle:Whenever Chambered Nautilus becomes blocked, you may draw a card.
+Oracle:Whenever this creature becomes blocked, you may draw a card.

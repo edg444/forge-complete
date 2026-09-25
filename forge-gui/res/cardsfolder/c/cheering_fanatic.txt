@@ -8,4 +8,4 @@ SVar:DBEffect:DB$ Effect | SubAbility$ DBCleanup | StaticAbilities$ CFReduceCost
 SVar:CFReduceCost:Mode$ ReduceCost | ValidCard$ Card.NamedCard | Type$ Spell | Amount$ 1 | Description$ Spells with the chosen name cost {1} less to cast this turn.
 SVar:DBCleanup:DB$ Cleanup | ClearNamedCard$ True
 AI:RemoveDeck:All
-Oracle:Whenever Cheering Fanatic attacks, choose a card name. Spells with the chosen name cost {1} less to cast this turn.
+Oracle:Whenever this creature attacks, choose a card name. Spells with the chosen name cost {1} less to cast this turn.

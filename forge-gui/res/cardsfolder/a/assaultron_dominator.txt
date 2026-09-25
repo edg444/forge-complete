@@ -8,4 +8,4 @@ T:Mode$ Attacks | ValidCard$ Creature.Artifact+YouCtrl | TriggerZones$ Battlefie
 SVar:TrigPutCounter:AB$ PutCounter | Cost$ PayEnergy<1> | CounterType$ P1P1,First Strike,Trample | CounterNum$ 1 | Defined$ TriggeredAttackerLKICopy
 DeckHas:Ability$Counters
 DeckHints:Type$Artifact
-Oracle:When Assaultron Dominator enters, you get {E}{E} (two energy counters).\nWhenever an artifact creature you control attacks, you may pay {E}. If you do, put your choice of a +1/+1, first strike, or trample counter on that creature.
+Oracle:When this creature enters, you get {E}{E} (two energy counters).\nWhenever an artifact creature you control attacks, you may pay {E}. If you do, put your choice of a +1/+1, first strike, or trample counter on that creature.

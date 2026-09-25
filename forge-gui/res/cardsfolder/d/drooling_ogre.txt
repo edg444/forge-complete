@@ -6,4 +6,4 @@ T:Mode$ SpellCast | ValidCard$ Artifact | Execute$ TrigControl | TriggerZones$ B
 SVar:TrigControl:DB$ GainControl | Defined$ Self | NewController$ TriggeredActivator
 AI:RemoveDeck:Random
 SVar:AntiBuffedBy:Artifact
-Oracle:Whenever a player casts an artifact spell, that player gains control of Drooling Ogre. (This effect lasts indefinitely.)
+Oracle:Whenever a player casts an artifact spell, that player gains control of this creature. (This effect lasts indefinitely.)

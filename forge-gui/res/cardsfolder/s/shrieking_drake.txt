@@ -6,4 +6,4 @@ K:Flying
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChange | TriggerDescription$ When this creature enters, return a creature you control to its owner's hand.
 SVar:TrigChange:DB$ ChangeZone | Origin$ Battlefield | Destination$ Hand | Hidden$ True | Mandatory$ True | ChangeType$ Creature.YouCtrl | AILogic$ NeverBounceItself
 SVar:NeedsToPlay:Creature.YouCtrl
-Oracle:Flying\nWhen Shrieking Drake enters, return a creature you control to its owner's hand.
+Oracle:Flying\nWhen this creature enters, return a creature you control to its owner's hand.

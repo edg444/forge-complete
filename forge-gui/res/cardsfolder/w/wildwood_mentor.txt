@@ -10,4 +10,4 @@ SVar:X:Count$CardPower
 SVar:HasAttackEffect:TRUE
 DeckHints:Ability$Token
 DeckHas:Ability$Counters
-Oracle:Whenever a token you control enters, put a +1/+1 counter on Wildwood Mentor.\nWhenever Wildwood Mentor attacks, another target attacking creature gets +X/+X until end of turn, where X is Wildwood Mentor's power.
+Oracle:Whenever a token you control enters, put a +1/+1 counter on this creature.\nWhenever this creature attacks, another target attacking creature gets +X/+X until end of turn, where X is this creature's power.

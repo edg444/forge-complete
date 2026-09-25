@@ -8,4 +8,4 @@ SVar:X:Count$Valid Vampire.YouCtrl
 SVar:BuffedBy:Vampire
 AI:RemoveDeck:Random
 DeckHints:Type$Vampire
-Oracle:When Midnight Arsonist enters, destroy up to X target artifacts without mana abilities, where X is the number of Vampires you control.
+Oracle:When this creature enters, destroy up to X target artifacts without mana abilities, where X is the number of Vampires you control.

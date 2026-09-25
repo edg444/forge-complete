@@ -10,4 +10,4 @@ SVar:TrigGain:DB$ GainLife | Defined$ You | LifeAmount$ X
 SVar:X:TriggerCount$DamageAmount
 AI:RemoveDeck:Random
 DeckHas:Ability$LifeGain
-Oracle:Flying, vigilance\nYou have hexproof.\nWhenever Metropolis Reformer is dealt damage, you gain that much life.
+Oracle:Flying, vigilance\nYou have hexproof.\nWhenever this creature is dealt damage, you gain that much life.

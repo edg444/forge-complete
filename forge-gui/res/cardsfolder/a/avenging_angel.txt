@@ -5,4 +5,4 @@ PT:3/3
 K:Flying
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | OptionalDecider$ TriggeredCardController | Execute$ TrigChange | TriggerDescription$ When this creature dies, you may put it on top of its owner's library.
 SVar:TrigChange:DB$ ChangeZone | Defined$ TriggeredNewCardLKICopy | Origin$ Graveyard | Destination$ Library | LibraryPosition$ 0
-Oracle:Flying\nWhen Avenging Angel dies, you may put it on top of its owner's library.
+Oracle:Flying\nWhen this creature dies, you may put it on top of its owner's library.

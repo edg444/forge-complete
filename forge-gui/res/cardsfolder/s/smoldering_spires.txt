@@ -7,4 +7,4 @@ A:AB$ Mana | Cost$ T | Produced$ R | SpellDescription$ Add {R}.
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ When this land enters, target creature can't block this turn.
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature | IsCurse$ True | KW$ HIDDEN CARDNAME can't block.
 SVar:PlayMain1:TRUE
-Oracle:Smoldering Spires enters tapped.\nWhen Smoldering Spires enters, target creature can't block this turn.\n{T}: Add {R}.
+Oracle:This land enters tapped.\nWhen this land enters, target creature can't block this turn.\n{T}: Add {R}.

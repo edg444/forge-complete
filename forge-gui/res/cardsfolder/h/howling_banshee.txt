@@ -5,4 +5,4 @@ PT:3/3
 K:Flying
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigLoseLife | TriggerDescription$ When this creature enters, each player loses 3 life.
 SVar:TrigLoseLife:DB$ LoseLife | Defined$ Player | LifeAmount$ 3
-Oracle:Flying\nWhen Howling Banshee enters, each player loses 3 life.
+Oracle:Flying\nWhen this creature enters, each player loses 3 life.

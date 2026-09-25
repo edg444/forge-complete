@@ -8,4 +8,4 @@ SVar:MorphChoice:DB$ GenericChoice | Defined$ You | Choices$ Flyer,VigilancePump
 SVar:Flyer:DB$ Clone | Defined$ Self | SetPower$ 3 | SetToughness$ 3 | AddKeywords$ Flying | SpellDescription$ CARDNAME is a 3/3 creature with flying.
 SVar:VigilancePump:DB$ Clone | Defined$ Self | SetPower$ 2 | SetToughness$ 5 | AddKeywords$ Vigilance | SpellDescription$ CARDNAME is a 2/5 creature with vigilance.
 SVar:Wall:DB$ Clone | Defined$ Self | SetPower$ 0 | SetToughness$ 12 | AddKeywords$ Defender | SpellDescription$ CARDNAME is a 0/12 creature with defender.
-Oracle:Devoid (This card has no color.)\nAs Corrupted Shapeshifter enters, it becomes your choice of a 3/3 creature with flying, a 2/5 creature with vigilance, or a 0/12 creature with defender.
+Oracle:Devoid (This card has no color.)\nAs this creature enters, it becomes your choice of a 3/3 creature with flying, a 2/5 creature with vigilance, or a 0/12 creature with defender.

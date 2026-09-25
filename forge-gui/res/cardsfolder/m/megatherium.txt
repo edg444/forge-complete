@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigSac:DB$ Sacrifice | UnlessCost$ Y | UnlessPayer$ You
 SVar:Y:Count$ValidHand Card.YouOwn
 AI:RemoveDeck:All
-Oracle:Trample\nWhen Megatherium enters, sacrifice it unless you pay {1} for each card in your hand.
+Oracle:Trample\nWhen this creature enters, sacrifice it unless you pay {1} for each card in your hand.

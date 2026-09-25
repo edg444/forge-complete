@@ -8,4 +8,4 @@ SVar:TrigDiscard:DB$ Discard | ValidTgts$ Player | Mode$ TgtChoose | NumCards$ 1
 SVar:DBDamage:DB$ DealDamage | Defined$ Targeted | NumDmg$ X | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$CardManaCost
-Oracle:Haste\nWhen Hellhole Rats enters, target player discards a card. Hellhole Rats deals damage to that player equal to that card's mana value.
+Oracle:Haste\nWhen this creature enters, target player discards a card. This creature deals damage to that player equal to that card's mana value.

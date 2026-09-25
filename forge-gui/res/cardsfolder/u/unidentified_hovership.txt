@@ -9,4 +9,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.S
 SVar:TrigDread:DB$ ManifestDread | DefinedPlayer$ RememberedOwner | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 K:Crew:1
-Oracle:Flying\nWhen Unidentified Hovership enters, exile up to one target creature with toughness 5 or less.\nWhen Unidentified Hovership leaves the battlefield, the exiled card's owner manifests dread.\nCrew 1
+Oracle:Flying\nWhen this Vehicle enters, exile up to one target creature with toughness 5 or less.\nWhen this Vehicle leaves the battlefield, the exiled card's owner manifests dread.\nCrew 1

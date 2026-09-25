@@ -3,4 +3,4 @@ ManaCost:4 G
 Types:Creature Snake
 PT:3/3
 A:AB$ Pump | Cost$ T | Defined$ Self | NumAtt$ +3 | NumDef$ +3 | SpellDescription$ This creature gets +3/+3 until end of turn.
-Oracle:{T}: Boa Constrictor gets +3/+3 until end of turn.
+Oracle:{T}: This creature gets +3/+3 until end of turn.

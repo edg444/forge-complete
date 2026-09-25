@@ -4,4 +4,4 @@ Types:Creature Human Warrior
 PT:1/1
 T:Mode$ AttackerBlockedByCreature | ValidCard$ Card.Self | ValidBlocker$ Creature | TriggerZones$ Battlefield | Execute$ RogueDamage | TriggerDescription$ Whenever this creature becomes blocked by a creature, this creature deals 1 damage to that creature.
 SVar:RogueDamage:DB$ DealDamage | Defined$ TriggeredBlockerLKICopy | NumDmg$ 1
-Oracle:Whenever Somberwald Vigilante becomes blocked by a creature, Somberwald Vigilante deals 1 damage to that creature.
+Oracle:Whenever this creature becomes blocked by a creature, this creature deals 1 damage to that creature.

@@ -8,4 +8,4 @@ SVar:DBPrevent:Event$ DamageDone | ActiveZones$ Command | ValidSource$ Card.IsRe
 SVar:DBReplace:DB$ ReplaceDamage | Amount$ ShieldAmount
 SVar:ShieldAmount:Number$1
 AI:RemoveDeck:Random
-Oracle:At the beginning of each player's upkeep, Barbed Wire deals 1 damage to that player.\n{2}: Prevent the next 1 damage that would be dealt by Barbed Wire this turn.
+Oracle:At the beginning of each player's upkeep, this artifact deals 1 damage to that player.\n{2}: Prevent the next 1 damage that would be dealt by this artifact this turn.

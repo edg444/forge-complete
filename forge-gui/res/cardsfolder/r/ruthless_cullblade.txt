@@ -4,4 +4,4 @@ Types:Creature Vampire Warrior
 PT:2/1
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 2 | AddToughness$ 1 | CheckSVar$ X | SVarCompare$ LE10 | Description$ This creature gets +2/+1 as long as an opponent has 10 or less life.
 SVar:X:PlayerCountOpponents$LowestLifeTotal
-Oracle:Ruthless Cullblade gets +2/+1 as long as an opponent has 10 or less life.
+Oracle:This creature gets +2/+1 as long as an opponent has 10 or less life.

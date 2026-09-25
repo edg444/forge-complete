@@ -6,4 +6,4 @@ A:AB$ Mana | Cost$ T SubCounter<X/CHARGE> | Produced$ C | Amount$ Y | AILogic$ M
 SVar:Y:SVar$X/Plus.1
 SVar:X:Count$xPaid
 AI:RemoveDeck:Random
-Oracle:{1}, {T}: Put a charge counter on Kyren Toy.\n{T}, Remove X charge counters from Kyren Toy: Add an amount of {C} equal to X plus one.
+Oracle:{1}, {T}: Put a charge counter on this artifact.\n{T}, Remove X charge counters from this artifact: Add an amount of {C} equal to X plus one.

@@ -5,4 +5,4 @@ PT:1/1
 T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Opponent | Execute$ TrigChange | TriggerDescription$ Whenever this creature deals damage to an opponent, you may put a Goblin creature card from your hand onto the battlefield.
 SVar:TrigChange:DB$ ChangeZone | Origin$ Hand | Destination$ Battlefield | ChangeType$ Creature.Goblin | ChangeNum$ 1
 K:Double Strike
-Oracle:Double strike\nWhenever Warren Instigator deals damage to an opponent, you may put a Goblin creature card from your hand onto the battlefield.
+Oracle:Double strike\nWhenever this creature deals damage to an opponent, you may put a Goblin creature card from your hand onto the battlefield.

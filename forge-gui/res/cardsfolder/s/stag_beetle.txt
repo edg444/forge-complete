@@ -5,4 +5,4 @@ PT:0/0
 K:etbCounter:P1P1:X:no Condition:CARDNAME enters with X +1/+1 counters on it, where X is the number of other creatures on the battlefield.
 SVar:X:Count$Valid Creature.Other
 SVar:NeedsToPlay:Creature
-Oracle:Stag Beetle enters with X +1/+1 counters on it, where X is the number of other creatures on the battlefield.
+Oracle:This creature enters with X +1/+1 counters on it, where X is the number of other creatures on the battlefield.

@@ -6,4 +6,4 @@ K:Flying
 A:AB$ Pump | Cost$ Discard<1/Card> | NumAtt$ +4 | NumDef$ +4 | ActivationLimit$ 1 | SpellDescription$ This creature gets +4/+4 until end of turn. Activate only once each turn.
 SVar:AIPreference:DiscardCost$Card
 AI:RemoveDeck:Random
-Oracle:Flying\nDiscard a card: Pulsating Illusion gets +4/+4 until end of turn. Activate only once each turn.
+Oracle:Flying\nDiscard a card: This creature gets +4/+4 until end of turn. Activate only once each turn.

@@ -6,4 +6,4 @@ K:Flying
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 1 | AddKeyword$ Lifelink | CheckSVar$ Celebration | SVarCompare$ GE2 | Description$ Celebration — This creature gets +1/+0 and has lifelink as long as two or more nonland permanents entered the battlefield under your control this turn.
 SVar:Celebration:Count$ThisTurnEntered_Battlefield_Permanent.nonLand+YouCtrl
 DeckHas:Ability$LifeGain
-Oracle:Flying\nCelebration — Tuinvale Guide gets +1/+0 and has lifelink as long as two or more nonland permanents entered the battlefield under your control this turn.
+Oracle:Flying\nCelebration — This creature gets +1/+0 and has lifelink as long as two or more nonland permanents entered the battlefield under your control this turn.

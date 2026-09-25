@@ -8,4 +8,4 @@ SVar:TrigSac:DB$ Sacrifice
 SVar:NeedsToPlayVar:DwarfsYouCtrl EQ0
 SVar:DwarfsYouCtrl:Count$Valid Dwarf.YouCtrl
 DeckHas:Ability$Sacrifice
-Oracle:Mountainwalk (This creature can't be blocked as long as defending player controls a Mountain.)\nWhen you control a Dwarf, sacrifice Goblins of the Flarg.
+Oracle:Mountainwalk (This creature can't be blocked as long as defending player controls a Mountain.)\nWhen you control a Dwarf, sacrifice this creature.

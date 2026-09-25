@@ -8,4 +8,4 @@ A:AB$ Discard | Cost$ 1 R Sac<1/CARDNAME> | Defined$ You | Mode$ Hand | SubAbili
 SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ X
 SVar:X:Count$CardCounters.STASH
 DeckHas:Ability$Counters
-Oracle:When Hoarder's Overflow enters and whenever you expend 4, put a stash counter on it. (You expend 4 as you spend your fourth total mana to cast spells during a turn.)\n{1}{R}, Sacrifice Hoarder's Overflow: Discard your hand, then draw cards equal to the number of stash counters on Hoarder's Overflow.
+Oracle:When this enchantment enters and whenever you expend 4, put a stash counter on it. (You expend 4 as you spend your fourth total mana to cast spells during a turn.)\n{1}{R}, Sacrifice this enchantment: Discard your hand, then draw cards equal to the number of stash counters on this enchantment.

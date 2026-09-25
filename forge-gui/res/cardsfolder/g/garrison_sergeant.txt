@@ -5,4 +5,4 @@ PT:3/3
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Double Strike | IsPresent$ Gate.YouCtrl | Description$ This creature has double strike as long as you control a Gate.
 SVar:BuffedBy:Gate
 DeckNeeds:Type$Gate
-Oracle:Garrison Sergeant has double strike as long as you control a Gate.
+Oracle:This creature has double strike as long as you control a Gate.

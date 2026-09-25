@@ -9,4 +9,4 @@ SVar:DBCounters:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$
 K:Reach
 K:Trample
 DeckHas:Ability$Counters
-Oracle:As Hydradoodle enters, roll X six-sided dice. Hydradoodle enters with a number of +1/+1 counters on it equal to the total of those results.\nReach, trample
+Oracle:As this creature enters, roll X six-sided dice. This creature enters with a number of +1/+1 counters on it equal to the total of those results.\nReach, trample

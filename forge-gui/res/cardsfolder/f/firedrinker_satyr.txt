@@ -8,4 +8,4 @@ SVar:X:TriggerCount$DamageAmount
 A:AB$ Pump | Cost$ 1 R | Defined$ Self | NumAtt$ +1 | SubAbility$ DBDmg | SpellDescription$ This creature gets +1/+0 until end of turn and deals 1 damage to you.
 SVar:DBDmg:DB$ DealDamage | NumDmg$ 1 | Defined$ You
 AI:RemoveDeck:All
-Oracle:Whenever Firedrinker Satyr is dealt damage, it deals that much damage to you.\n{1}{R}: Firedrinker Satyr gets +1/+0 until end of turn and deals 1 damage to you.
+Oracle:Whenever this creature is dealt damage, it deals that much damage to you.\n{1}{R}: This creature gets +1/+0 until end of turn and deals 1 damage to you.

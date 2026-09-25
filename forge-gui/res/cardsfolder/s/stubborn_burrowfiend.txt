@@ -8,4 +8,4 @@ SVar:DBPump:DB$ Pump | NumAtt$ +Count$ValidGraveyard Creature.YouOwn | NumDef$ +
 K:Saddle:2
 DeckHas:Ability$Mill
 DeckHints:Ability$Sacrifice|Mill|Dredge|Discard
-Oracle:Whenever Stubborn Burrowfiend becomes saddled for the first time each turn, mill two cards, then Stubborn Burrowfiend gets +X/+X until end of turn, where X is the number of creature cards in your graveyard.\nSaddle 2 (Tap any number of other creatures you control with total power 2 or more: This Mount becomes saddled until end of turn. Saddle only as a sorcery.)
+Oracle:Whenever this creature becomes saddled for the first time each turn, mill two cards, then this creature gets +X/+X until end of turn, where X is the number of creature cards in your graveyard.\nSaddle 2 (Tap any number of other creatures you control with total power 2 or more: This Mount becomes saddled until end of turn. Saddle only as a sorcery.)

@@ -7,7 +7,7 @@ A:AB$ SetState | Cost$ 5 T Sac<5/Creature> | Defined$ Self | Mode$ Transform | S
 SVar:DBUntap:DB$ Untap | Defined$ Self
 SVar:AIPreference:SacCost$Creature.token,Creature.cmcLE2
 AlternateMode:DoubleFaced
-Oracle:{T}: Add {C}.\n{5}, {T}, Pay 1 life: Create a 1/1 white and black Human Cleric creature token.\n{5}, {T}, Sacrifice five creatures: Transform Westvale Abbey, then untap it.
+Oracle:{T}: Add {C}.\n{5}, {T}, Pay 1 life: Create a 1/1 white and black Human Cleric creature token.\n{5}, {T}, Sacrifice five creatures: Transform this land, then untap it.
 
 ALTERNATE
 

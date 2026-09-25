@@ -7,4 +7,4 @@ A:AB$ GainControl | Cost$ T | ValidTgts$ Creature.powerLEX | TgtPrompt$ Select t
 SVar:X:Count$CardPower
 # The hostcard of SVar Y is the controlled card
 SVar:Y:Count$CardPower
-Oracle:You may choose not to untap Old Man of the Sea during your untap step.\n{T}: Gain control of target creature with power less than or equal to Old Man of the Sea's power for as long as Old Man of the Sea remains tapped and that creature's power remains less than or equal to Old Man of the Sea's power.
+Oracle:You may choose not to untap this creature during your untap step.\n{T}: Gain control of target creature with power less than or equal to this creature's power for as long as this creature remains tapped and that creature's power remains less than or equal to this creature's power.

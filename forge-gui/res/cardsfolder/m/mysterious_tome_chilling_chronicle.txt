@@ -4,7 +4,7 @@ Types:Artifact Book
 A:AB$ Draw | Cost$ 2 T | NumCards$ 1 | SubAbility$ DBTransform | SpellDescription$ Draw a card. Transform this artifact.
 SVar:DBTransform:DB$ SetState | Defined$ Self | Mode$ Transform
 AlternateMode:DoubleFaced
-Oracle:{2}, {T}: Draw a card. Transform Mysterious Tome.
+Oracle:{2}, {T}: Draw a card. Transform this artifact.
 
 ALTERNATE
 
@@ -14,4 +14,4 @@ Colors:blue
 Types:Artifact Book
 A:AB$ Tap | Cost$ 1 T | ValidTgts$ Permanent.nonLand | TgtPrompt$ Select target nonland permanent | SubAbility$ DBTransform1 | SpellDescription$ Tap target nonland permanent. Transform this artifact.
 SVar:DBTransform1:DB$ SetState | Defined$ Self | Mode$ Transform
-Oracle:{1}, {T}: Tap target nonland permanent. Transform Chilling Chronicle.
+Oracle:{1}, {T}: Tap target nonland permanent. Transform this artifact.

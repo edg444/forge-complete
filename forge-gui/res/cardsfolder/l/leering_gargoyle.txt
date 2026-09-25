@@ -5,4 +5,4 @@ PT:2/2
 K:Flying
 A:AB$ Pump | Cost$ T | Defined$ Self | NumAtt$ -2 | NumDef$ +2 | SubAbility$ DBDebuff | SpellDescription$ This creature gets -2/+2 and loses flying until end of turn.
 SVar:DBDebuff:DB$ Debuff | Defined$ Self | Keywords$ Flying
-Oracle:Flying\n{T}: Leering Gargoyle gets -2/+2 and loses flying until end of turn.
+Oracle:Flying\n{T}: This creature gets -2/+2 and loses flying until end of turn.

@@ -9,7 +9,7 @@ SVar:TrigScry:DB$ Scry | ScryNum$ 2
 SVar:HasAttackEffect:TRUE
 SVar:HasBlockEffect:TRUE
 AlternateMode:Adventure
-Oracle:Flying\nWhenever Sapphire Dragon attacks or blocks, scry 2.
+Oracle:Flying\nWhenever this creature attacks or blocks, scry 2.
 
 ALTERNATE
 

@@ -5,4 +5,4 @@ PT:4/4
 K:Vigilance
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Haste | IsPresent$ Card.AdventureCard+YouOwn | PresentZone$ Exile | Description$ This creature has haste as long as you own a card in exile that has an Adventure.
 DeckHints:Type$Adventure
-Oracle:Vigilance\nHowling Galefang has haste as long as you own a card in exile that has an Adventure.
+Oracle:Vigilance\nThis creature has haste as long as you own a card in exile that has an Adventure.

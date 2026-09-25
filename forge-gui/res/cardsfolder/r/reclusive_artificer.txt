@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Creature | NumDmg$ X
 SVar:X:Count$Valid Artifact.YouCtrl
 SVar:PlayMain1:TRUE
-Oracle:Haste (This creature can attack and {T} as soon as it comes under your control.)\nWhen Reclusive Artificer enters, you may have it deal damage to target creature equal to the number of artifacts you control.
+Oracle:Haste (This creature can attack and {T} as soon as it comes under your control.)\nWhen this creature enters, you may have it deal damage to target creature equal to the number of artifacts you control.

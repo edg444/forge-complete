@@ -4,4 +4,4 @@ Types:Creature Elf Druid
 PT:2/1
 S:Mode$ Continuous | AffectedDefined$ Self | Affected$ Card.untapped | AddKeyword$ Hexproof | Description$ This creature has hexproof as long as it's untapped. (It can't be the target of spells or abilities your opponents control.)
 A:AB$ Mana | Cost$ T | Produced$ Any | SpellDescription$ Add one mana of any color.
-Oracle:Paradise Druid has hexproof as long as it's untapped. (It can't be the target of spells or abilities your opponents control.)\n{T}: Add one mana of any color.
+Oracle:This creature has hexproof as long as it's untapped. (It can't be the target of spells or abilities your opponents control.)\n{T}: Add one mana of any color.

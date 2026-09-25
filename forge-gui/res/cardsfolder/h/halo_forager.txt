@@ -9,4 +9,4 @@ SVar:TrigCast:DB$ Play | TgtZone$ Graveyard | WithoutManaCost$ True | ValidSA$ S
 SVar:X:Count$xPaid
 AI:RemoveDeck:Random
 DeckHints:Type$Instant|Sorcery
-Oracle:Flying\nWhen Halo Forager enters, you may pay {X}. When you do, you may cast target instant or sorcery card with mana value X from a graveyard without paying its mana cost. If that spell would be put into a graveyard, exile it instead.
+Oracle:Flying\nWhen this creature enters, you may pay {X}. When you do, you may cast target instant or sorcery card with mana value X from a graveyard without paying its mana cost. If that spell would be put into a graveyard, exile it instead.

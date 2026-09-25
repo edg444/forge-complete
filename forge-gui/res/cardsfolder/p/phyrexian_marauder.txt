@@ -7,4 +7,4 @@ S:Mode$ CantAttackUnless | ValidCard$ Card.Self | Cost$ Y | Description$ This cr
 K:etbCounter:P1P1:X
 SVar:X:Count$xPaid
 SVar:Y:Count$CardCounters.P1P1
-Oracle:Phyrexian Marauder enters with X +1/+1 counters on it.\nPhyrexian Marauder can't block.\nPhyrexian Marauder can't attack unless you pay {1} for each +1/+1 counter on it.
+Oracle:This creature enters with X +1/+1 counters on it.\nThis creature can't block.\nThis creature can't attack unless you pay {1} for each +1/+1 counter on it.

@@ -5,4 +5,4 @@ A:AB$ PutCounter | Cost$ T | CounterType$ OIL | CounterNum$ 1 | SpellDescription
 A:AB$ Mana | Cost$ T | Produced$ C | IsPresent$ Card.Self+counters_GE2_OIL | SpellDescription$ Add {C}. Activate only if this artifact has two or more oil counters on it.
 A:AB$ Draw | Cost$ 1 T | IsPresent$ Card.Self+counters_GE5_OIL | SpellDescription$ Draw a card. Activate only if this artifact has five or more oil counters on it.
 DeckHas:Ability$Counters
-Oracle:{T}: Put an oil counter on Tablet of Compleation.\n{T}: Add {C}. Activate only if Tablet of Compleation has two or more oil counters on it.\n{1}, {T}: Draw a card. Activate only if Tablet of Compleation has five or more oil counters on it.
+Oracle:{T}: Put an oil counter on this artifact.\n{T}: Add {C}. Activate only if this artifact has two or more oil counters on it.\n{1}, {T}: Draw a card. Activate only if this artifact has five or more oil counters on it.

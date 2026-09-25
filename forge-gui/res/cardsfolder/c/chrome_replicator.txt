@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigToken:DB$ Token | TokenScript$ c_4_4_a_construct | TokenOwner$ You
 SVar:X:Count$MostCardName Permanent.nonLand+!token+YouCtrl
 DeckHas:Ability$Token
-Oracle:When Chrome Replicator enters, if you control two or more nonland, nontoken permanents with the same name as one another, create a 4/4 colorless Construct artifact creature token.
+Oracle:When this creature enters, if you control two or more nonland, nontoken permanents with the same name as one another, create a 4/4 colorless Construct artifact creature token.

@@ -6,4 +6,4 @@ K:Protection from white
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ X | AddToughness$ X | Description$ This creature gets +1/+1 for each Plains your opponents control.
 SVar:X:Count$Valid Plains.OppCtrl
 AI:RemoveDeck:Random
-Oracle:Protection from white\nMarauding Knight gets +1/+1 for each Plains your opponents control.
+Oracle:Protection from white\nThis creature gets +1/+1 for each Plains your opponents control.

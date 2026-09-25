@@ -13,4 +13,4 @@ SVar:UntapMe:True
 SVar:NeedsToPlayVar:Z GE2
 SVar:Z:Count$ValidHand Artifact.YouCtrl
 AI:RemoveDeck:Random
-Oracle:Imprint — When Prototype Portal enters, you may exile an artifact card from your hand.\n{X}, {T}: Create a token that's a copy of the exiled card. X is the mana value of that card.
+Oracle:Imprint — When this artifact enters, you may exile an artifact card from your hand.\n{X}, {T}: Create a token that's a copy of the exiled card. X is the mana value of that card.

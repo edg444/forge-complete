@@ -11,4 +11,4 @@ SVar:X:Remembered$Amount
 SVar:NeedsToPlayVar:Y GE1
 SVar:Y:Count$ValidHand Land.YouCtrl
 SVar:PlayBeforeLandDrop:TRUE
-Oracle:If Mox Diamond would enter, you may discard a land card instead. If you do, put Mox Diamond onto the battlefield. If you don't, put it into its owner's graveyard.\n{T}: Add one mana of any color.
+Oracle:If this artifact would enter, you may discard a land card instead. If you do, put this artifact onto the battlefield. If you don't, put it into its owner's graveyard.\n{T}: Add one mana of any color.

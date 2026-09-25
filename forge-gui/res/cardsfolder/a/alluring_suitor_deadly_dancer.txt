@@ -5,7 +5,7 @@ PT:2/3
 T:Mode$ AttackersDeclared | Execute$ TrigTransform | ValidAttackers$ Creature | ValidAttackersAmount$ EQ2 | TriggerZones$ Battlefield | AttackingPlayer$ You | TriggerDescription$ When you attack with exactly two creatures, transform this creature.
 SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform
 AlternateMode:DoubleFaced
-Oracle:When you attack with exactly two creatures, transform Alluring Suitor.
+Oracle:When you attack with exactly two creatures, transform this creature.
 
 ALTERNATE
 

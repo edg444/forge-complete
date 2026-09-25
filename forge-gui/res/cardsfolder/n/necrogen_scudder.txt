@@ -5,4 +5,4 @@ PT:3/3
 K:Flying
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigLoseLife | TriggerDescription$ When this creature enters, you lose 3 life.
 SVar:TrigLoseLife:DB$ LoseLife | Defined$ You | LifeAmount$ 3
-Oracle:Flying\nWhen Necrogen Scudder enters, you lose 3 life.
+Oracle:Flying\nWhen this creature enters, you lose 3 life.

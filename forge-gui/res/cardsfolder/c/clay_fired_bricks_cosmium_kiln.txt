@@ -8,7 +8,7 @@ K:Craft:5 W W ExileCtrlOrGrave<1/Artifact.Other>
 DeckHints:Ability$Discard|Mill|Sacrifice
 DeckHas:Ability$Graveyard|Token|LifeGain & Type$Gnome|Artifact
 AlternateMode:DoubleFaced
-Oracle:When Clay-Fired Bricks enters, search your library for a basic Plains card, reveal it, put it into your hand, then shuffle. You gain 2 life.\nCraft with artifact {5}{W}{W} ({5}{W}{W}, Exile this artifact, Exile another artifact you control or an artifact card from your graveyard: Return this card transformed under its owner's control. Craft only as a sorcery.)
+Oracle:When this artifact enters, search your library for a basic Plains card, reveal it, put it into your hand, then shuffle. You gain 2 life.\nCraft with artifact {5}{W}{W} ({5}{W}{W}, Exile this artifact, Exile another artifact you control or an artifact card from your graveyard: Return this card transformed under its owner's control. Craft only as a sorcery.)
 
 ALTERNATE
 
@@ -19,4 +19,4 @@ Types:Artifact
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When this artifact enters, create two 1/1 colorless Gnome artifact creature tokens.
 SVar:TrigToken:DB$ Token | TokenAmount$ 2 | TokenScript$ c_1_1_a_gnome
 S:Mode$ Continuous | Affected$ Creature.YouCtrl | AddPower$ 1 | AddToughness$ 1 | Description$ Creatures you control get +1/+1.
-Oracle:When Cosmium Kiln enters, create two 1/1 colorless Gnome artifact creature tokens.\nCreatures you control get +1/+1.
+Oracle:When this artifact enters, create two 1/1 colorless Gnome artifact creature tokens.\nCreatures you control get +1/+1.

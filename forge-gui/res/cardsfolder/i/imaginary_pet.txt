@@ -6,4 +6,4 @@ T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | IsPresent$ Card | PresentZone
 SVar:TrigBounce:DB$ ChangeZone | Origin$ Battlefield | Destination$ Hand
 SVar:NeedsToPlayVar:Y LE1
 SVar:Y:Count$CardsInYourHand
-Oracle:At the beginning of your upkeep, if you have a card in hand, return Imaginary Pet to its owner's hand.
+Oracle:At the beginning of your upkeep, if you have a card in hand, return this creature to its owner's hand.

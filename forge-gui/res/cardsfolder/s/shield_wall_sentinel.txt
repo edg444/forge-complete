@@ -6,4 +6,4 @@ K:Defender
 T:Mode$ ChangesZone | Origin$ Any | OptionalDecider$ You | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ DBSearch | TriggerDescription$ When this creature enters, you may search your library for a creature card with defender, reveal it, put it into your hand, then shuffle.
 SVar:DBSearch:DB$ ChangeZone | Origin$ Library | Destination$ Hand | ChangeType$ Creature.withDefender | ChangeNum$ 1
 DeckNeeds:Keyword$Defender
-Oracle:Defender\nWhen Shield-Wall Sentinel enters, you may search your library for a creature card with defender, reveal it, put it into your hand, then shuffle.
+Oracle:Defender\nWhen this creature enters, you may search your library for a creature card with defender, reveal it, put it into your hand, then shuffle.

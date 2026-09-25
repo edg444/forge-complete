@@ -9,4 +9,4 @@ SVar:TrigBodySnatcherExileMe:DB$ ChangeZone | Defined$ TriggeredNewCardLKICopy |
 SVar:DBBodySnatcherReturnCreature:DB$ ChangeZone | ValidTgts$ Creature | TargetsWithDefinedController$ TriggeredCardController | TgtPrompt$ Select target creature from your graveyard | Origin$ Graveyard | Destination$ Battlefield
 SVar:NeedsToPlayVar:Y GE2
 SVar:Y:Count$ValidHand Creature.YouOwn
-Oracle:When Body Snatcher enters, exile it unless you discard a creature card.\nWhen Body Snatcher dies, exile Body Snatcher and return target creature card from your graveyard to the battlefield.
+Oracle:When this creature enters, exile it unless you discard a creature card.\nWhen this creature dies, exile it and return target creature card from your graveyard to the battlefield.

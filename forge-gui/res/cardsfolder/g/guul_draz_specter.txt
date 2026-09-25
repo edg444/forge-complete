@@ -7,4 +7,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 3 | AddToughness$ 3 | Che
 T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | Execute$ TrigDiscard | CombatDamage$ True | TriggerDescription$ Whenever this creature deals combat damage to a player, that player discards a card.
 SVar:TrigDiscard:DB$ Discard | Defined$ TriggeredTarget | NumCards$ 1 | Mode$ TgtChoose
 SVar:X:PlayerCountOpponents$LowestCardsInHand
-Oracle:Flying\nGuul Draz Specter gets +3/+3 as long as an opponent has no cards in hand.\nWhenever Guul Draz Specter deals combat damage to a player, that player discards a card.
+Oracle:Flying\nThis creature gets +3/+3 as long as an opponent has no cards in hand.\nWhenever this creature deals combat damage to a player, that player discards a card.

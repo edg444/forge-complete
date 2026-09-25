@@ -4,4 +4,4 @@ Types:Enchantment
 K:ETBReplacement:Copy:DBCopy:Optional
 SVar:DBCopy:DB$ Clone | Choices$ Enchantment.Other | SpellDescription$ You may have this enchantment enter as a copy of any enchantment on the battlefield.
 AI:RemoveDeck:All
-Oracle:You may have Copy Enchantment enter as a copy of any enchantment on the battlefield.
+Oracle:You may have this enchantment enter as a copy of any enchantment on the battlefield.

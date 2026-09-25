@@ -5,4 +5,4 @@ PT:2/1
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ Whenever this creature attacks, target creature defending player controls gets -3/-0 until end of turn.
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature.ControlledBy TriggeredDefendingPlayer | TgtPrompt$ Select target creature defending player controls | NumAtt$ -3 | IsCurse$ True
 SVar:HasAttackEffect:TRUE
-Oracle:Whenever Spring Splasher attacks, target creature defending player controls gets -3/-0 until end of turn.
+Oracle:Whenever this creature attacks, target creature defending player controls gets -3/-0 until end of turn.

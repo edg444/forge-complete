@@ -5,4 +5,4 @@ A:SP$ Token | TokenAmount$ 2 | TokenScript$ g_1_1_snake | TokenOwner$ You | Spel
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Snake+!token+YouCtrl | TriggerZones$ Graveyard | OptionalDecider$ You | Execute$ TrigChange | TriggerDescription$ Whenever a nontoken Snake you control enters, you may return this card from your graveyard to your hand.
 SVar:TrigChange:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand
 DeckHints:Type$Snake
-Oracle:Create two 1/1 green Snake creature tokens.\nWhenever a nontoken Snake you control enters, you may return Sosuke's Summons from your graveyard to your hand.
+Oracle:Create two 1/1 green Snake creature tokens.\nWhenever a nontoken Snake you control enters, you may return this card from your graveyard to your hand.

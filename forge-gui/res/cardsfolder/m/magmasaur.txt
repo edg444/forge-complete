@@ -8,4 +8,4 @@ SVar:SelfDestruct:DB$ Sacrifice | UnlessCost$ SubCounter<1/P1P1> | UnlessPayer$ 
 SVar:LetEmHaveIt:DB$ DamageAll | ValidCards$ Creature.withoutFlying | ValidPlayers$ Player | NumDmg$ X
 SVar:X:Count$CardCounters.P1P1
 AI:RemoveDeck:All
-Oracle:Magmasaur enters with five +1/+1 counters on it.\nAt the beginning of your upkeep, you may remove a +1/+1 counter from Magmasaur. If you don't, sacrifice Magmasaur and it deals damage equal to the number of +1/+1 counters on it to each creature without flying and each player.
+Oracle:This creature enters with five +1/+1 counters on it.\nAt the beginning of your upkeep, you may remove a +1/+1 counter from this creature. If you don't, sacrifice this creature and it deals damage equal to the number of +1/+1 counters on it to each creature without flying and each player.

@@ -8,4 +8,4 @@ A:AB$ Draw | Cost$ 4 T | NumCards$ 1 | ReduceCost$ X | SpellDescription$ Draw a 
 SVar:X:Count$Valid Creature.modified+YouCtrl
 DeckHas:Ability$Counters
 DeckHints:Type$Aura|Equipment & Ability$Counters
-Oracle:When Towashi Guide-Bot enters, put a +1/+1 counter on target creature you control.\n{4}, {T}: Draw a card. This ability costs {1} less to activate for each modified creature you control. (Equipment, Auras you control, and counters are modifications.)
+Oracle:When this creature enters, put a +1/+1 counter on target creature you control.\n{4}, {T}: Draw a card. This ability costs {1} less to activate for each modified creature you control. (Equipment, Auras you control, and counters are modifications.)

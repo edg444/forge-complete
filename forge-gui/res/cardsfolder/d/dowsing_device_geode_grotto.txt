@@ -6,7 +6,7 @@ SVar:TrigPump:DB$ Pump | ValidTgts$ Creature.YouCtrl | TargetMin$ 0 | TargetMax$
 SVar:DBTransform:DB$ SetState | Defined$ Self | ConditionPresent$ Artifact.YouCtrl | ConditionCompare$ GE4 | Mode$ Transform
 DeckHints:Type$Artifact
 AlternateMode:DoubleFaced
-Oracle:Whenever Dowsing Device or another artifact you control enters, up to one target creature you control gets +1/+0 and gains haste until end of turn. Then transform Dowsing Device if you control four or more artifacts.
+Oracle:Whenever this artifact or another artifact you control enters, up to one target creature you control gets +1/+0 and gains haste until end of turn. Then transform this artifact if you control four or more artifacts.
 
 ALTERNATE
 

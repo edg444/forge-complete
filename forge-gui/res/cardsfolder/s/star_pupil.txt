@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | CounterType$ EachFromSource | EachFromSource$ TriggeredCardLKICopy
 SVar:SacMe:2
 DeckHas:Ability$Counters
-Oracle:Star Pupil enters with a +1/+1 counter on it.\nWhen Star Pupil dies, put its counters on target creature you control.
+Oracle:This creature enters with a +1/+1 counter on it.\nWhen this creature dies, put its counters on target creature you control.

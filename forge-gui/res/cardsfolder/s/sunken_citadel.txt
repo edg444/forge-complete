@@ -8,4 +8,4 @@ SVar:ChooseColor:DB$ ChooseColor | Defined$ You | AILogic$ MostProminentInComput
 A:AB$ Mana | Cost$ T | Produced$ Chosen | SpellDescription$ Add one mana of the chosen color.
 A:AB$ Mana | Cost$ T | Produced$ Chosen | RestrictValid$ Activated.Land | Amount$ 2 | SpellDescription$ Add two mana of the chosen color. Spend this mana only to activate abilities of land sources.
 DeckHints:Type$Cave|Desert|Sphere
-Oracle:Sunken Citadel enters tapped. As it enters, choose a color.\n{T}: Add one mana of the chosen color.\n{T}: Add two mana of the chosen color. Spend this mana only to activate abilities of land sources.
+Oracle:This land enters tapped. As it enters, choose a color.\n{T}: Add one mana of the chosen color.\n{T}: Add two mana of the chosen color. Spend this mana only to activate abilities of land sources.

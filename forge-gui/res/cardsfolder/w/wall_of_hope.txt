@@ -7,4 +7,4 @@ T:Mode$ DamageDoneOnce | DamageSource$ Any | ValidTarget$ Card.Self | TriggerZon
 SVar:TrigGainLife:DB$ GainLife | Defined$ You | LifeAmount$ X
 SVar:X:TriggerCount$DamageAmount
 SVar:HasCombatEffect:TRUE
-Oracle:Defender (This creature can't attack.)\nWhenever Wall of Hope is dealt damage, you gain that much life.
+Oracle:Defender (This creature can't attack.)\nWhenever this creature is dealt damage, you gain that much life.

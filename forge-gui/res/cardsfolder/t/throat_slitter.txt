@@ -6,4 +6,4 @@ K:Ninjutsu:2 B
 T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | Execute$ TrigDestroy | CombatDamage$ True | TriggerDescription$ Whenever this creature deals combat damage to a player, destroy target nonblack creature that player controls.
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Creature.nonBlack+ControlledBy TriggeredTarget | TgtPrompt$ Select target nonblack creature damaged player controls
 SVar:MustBeBlocked:True
-Oracle:Ninjutsu {2}{B} ({2}{B}, Return an unblocked attacker you control to hand: Put this card onto the battlefield from your hand tapped and attacking.)\nWhenever Throat Slitter deals combat damage to a player, destroy target nonblack creature that player controls.
+Oracle:Ninjutsu {2}{B} ({2}{B}, Return an unblocked attacker you control to hand: Put this card onto the battlefield from your hand tapped and attacking.)\nWhenever this creature deals combat damage to a player, destroy target nonblack creature that player controls.

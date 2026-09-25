@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigDealDamage:DB$ DamageAll | ValidPlayers$ Player.Opponent | NumDmg$ 1 | SubAbility$ DBGainLife
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 1
 DeckHas:Ability$LifeGain
-Oracle:Whenever another creature you control dies, Vindictive Vampire deals 1 damage to each opponent and you gain 1 life.
+Oracle:Whenever another creature you control dies, this creature deals 1 damage to each opponent and you gain 1 life.

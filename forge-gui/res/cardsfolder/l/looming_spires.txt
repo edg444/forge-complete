@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature | NumAtt$ +1 | NumDef$ +1 | KW$ First Strike
 SVar:PlayMain1:TRUE
 A:AB$ Mana | Cost$ T | Produced$ R | SpellDescription$ Add {R}.
-Oracle:Looming Spires enters tapped.\nWhen Looming Spires enters, target creature gets +1/+1 and gains first strike until end of turn.\n{T}: Add {R}.
+Oracle:This land enters tapped.\nWhen this land enters, target creature gets +1/+1 and gains first strike until end of turn.\n{T}: Add {R}.

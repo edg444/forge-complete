@@ -9,4 +9,4 @@ SVar:TrigReturn:DB$ ChangeZone | ValidTgts$ Creature.CrewedThisTurn | TargetMin$
 K:Crew:1
 SVar:HasAttackEffect:TRUE
 SVar:HasBlockEffect:TRUE
-Oracle:Haste\nWhenever Getaway Car attacks or blocks, return up to one target creature that crewed it this turn to its owner's hand.\nCrew 1
+Oracle:Haste\nWhenever this Vehicle attacks or blocks, return up to one target creature that crewed it this turn to its owner's hand.\nCrew 1

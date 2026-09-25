@@ -11,7 +11,7 @@ S:Mode$ CanAttackDefender | ValidCard$ Card.Self+counters_GE3_JUDGMENT | Descrip
 K:Disturb:5 W W
 DeckHas:Ability$Graveyard|Counters
 AlternateMode:DoubleFaced
-Oracle:Defender, flying, vigilance\nAt the beginning of your upkeep, if Faithbound Judge has two or fewer judgment counters on it, put a judgment counter on it.\nAs long as Faithbound Judge has three or more judgment counters on it, it can attack as though it didn't have defender.\nDisturb {5}{W}{W}
+Oracle:Defender, flying, vigilance\nAt the beginning of your upkeep, if this creature has two or fewer judgment counters on it, put a judgment counter on it.\nAs long as this creature has three or more judgment counters on it, it can attack as though it didn't have defender.\nDisturb {5}{W}{W}
 
 ALTERNATE
 

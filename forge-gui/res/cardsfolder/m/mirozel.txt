@@ -6,4 +6,4 @@ K:Flying
 T:Mode$ BecomesTarget | ValidTarget$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigChange | TriggerDescription$ When this creature becomes the target of a spell or ability, return this creature to its owner's hand.
 SVar:TrigChange:DB$ ChangeZone | Origin$ Battlefield | Destination$ Hand
 AI:RemoveDeck:All
-Oracle:Flying\nWhen Mirozel becomes the target of a spell or ability, return Mirozel to its owner's hand.
+Oracle:Flying\nWhen this creature becomes the target of a spell or ability, return this creature to its owner's hand.

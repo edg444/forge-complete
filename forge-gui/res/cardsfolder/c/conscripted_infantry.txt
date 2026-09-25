@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigToken:DB$ Token | TokenScript$ c_1_1_a_soldier
 SVar:SacMe:3
 DeckHas:Ability$Token & Type$Artifact
-Oracle:When Conscripted Infantry dies, create a 1/1 colorless Soldier artifact creature token.
+Oracle:When this creature dies, create a 1/1 colorless Soldier artifact creature token.

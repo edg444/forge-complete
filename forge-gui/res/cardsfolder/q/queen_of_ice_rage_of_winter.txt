@@ -7,7 +7,7 @@ SVar:TrigTap:DB$ Tap | Defined$ TriggeredTargetLKICopy | SubAbility$ DBPump
 SVar:DBPump:DB$ Pump | Defined$ TriggeredTargetLKICopy | KW$ HIDDEN This card doesn't untap during your next untap step. | Duration$ Permanent | IsCurse$ True
 SVar:HasCombatEffect:TRUE
 AlternateMode:Adventure
-Oracle:Whenever Queen of Ice deals combat damage to a creature, tap that creature. It doesn't untap during its controller's next untap step.
+Oracle:Whenever this creature deals combat damage to a creature, tap that creature. It doesn't untap during its controller's next untap step.
 
 ALTERNATE
 

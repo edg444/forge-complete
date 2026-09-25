@@ -6,4 +6,4 @@ SVar:AttachAILogic:Pump
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When this Aura enters, draw a card.
 SVar:TrigDraw:DB$ Draw
 S:Mode$ Continuous | AffectedDefined$ Enchanted | Affected$ Land | AddType$ AllBasicLandType | Description$ Enchanted land is every basic land type in addition to its other types.
-Oracle:Enchant land\nWhen Nylea's Presence enters, draw a card.\nEnchanted land is every basic land type in addition to its other types.
+Oracle:Enchant land\nWhen this Aura enters, draw a card.\nEnchanted land is every basic land type in addition to its other types.

@@ -10,4 +10,4 @@ SVar:PlayMain1:True
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 2 | AddToughness$ 1 | CheckSVar$ Y | SVarCompare$ GE25 | Description$ This creature gets +2/+1 as long as you have 25 or more life.
 SVar:Y:Count$YourLifeTotal
 DeckHints:Ability$LifeGain
-Oracle:Vigilance\nIf you would gain life, you gain that much life plus 1 instead.\nHonor Troll gets +2/+1 as long as you have 25 or more life.
+Oracle:Vigilance\nIf you would gain life, you gain that much life plus 1 instead.\nThis creature gets +2/+1 as long as you have 25 or more life.

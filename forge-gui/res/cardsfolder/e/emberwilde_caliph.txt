@@ -9,4 +9,4 @@ T:Mode$ DamageDealtOnce | ValidSource$ Card.Self | TriggerZones$ Battlefield | E
 SVar:TrigLoseLife:DB$ LoseLife | Defined$ You | LifeAmount$ X
 SVar:X:TriggerCount$DamageAmount
 AI:RemoveDeck:All
-Oracle:Flying, trample\nEmberwilde Caliph attacks each combat if able.\nWhenever Emberwilde Caliph deals damage, you lose that much life.
+Oracle:Flying, trample\nThis creature attacks each combat if able.\nWhenever this creature deals damage, you lose that much life.

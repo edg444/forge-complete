@@ -3,4 +3,4 @@ ManaCost:2 R
 Types:Creature Cyclops
 PT:3/3
 S:Mode$ MustAttack | ValidCreature$ Card.Self | Description$ This creature attacks each combat if able.
-Oracle:Bloodrock Cyclops attacks each combat if able.
+Oracle:This creature attacks each combat if able.

@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Creature.YouCtrl | NumDmg$ 3 | TgtPrompt$ Select target creature you control
 SVar:NeedsToPlay:Creature.YouCtrl
 AI:RemoveDeck:Random
-Oracle:When Whiptail Moloch enters, it deals 3 damage to target creature you control.
+Oracle:When this creature enters, it deals 3 damage to target creature you control.

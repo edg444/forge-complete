@@ -5,4 +5,4 @@ PT:3/3
 K:First Strike
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDamageAll | TriggerDescription$ When this creature enters, it deals 1 damage to each opponent and each creature and planeswalker they control.
 SVar:TrigDamageAll:DB$ DamageAll | ValidPlayers$ Player.Opponent | ValidCards$ Creature.OppCtrl,Planeswalker.OppCtrl | NumDmg$ 1 | ValidDescription$ each opponent and each creature and planeswalker they control.
-Oracle:First strike\nWhen Goblin Chainwhirler enters, it deals 1 damage to each opponent and each creature and planeswalker they control.
+Oracle:First strike\nWhen this creature enters, it deals 1 damage to each opponent and each creature and planeswalker they control.

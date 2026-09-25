@@ -5,4 +5,4 @@ PT:3/3
 K:Flying
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChangeZone | TriggerDescription$ When this creature enters, put target artifact on top of its owner's library.
 SVar:TrigChangeZone:DB$ ChangeZone | ValidTgts$ Artifact | Origin$ Battlefield | Destination$ Library | LibraryPosition$ 0
-Oracle:Flying\nWhen Looming Hoverguard enters, put target artifact on top of its owner's library.
+Oracle:Flying\nWhen this creature enters, put target artifact on top of its owner's library.

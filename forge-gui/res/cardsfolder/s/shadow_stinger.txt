@@ -7,4 +7,4 @@ T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage
 SVar:TrigMill:DB$ Mill | Defined$ TriggeredTarget | NumCards$ 3
 DeckHas:Ability$Mill
 DeckHints:Type$Rogue
-Oracle:Tap another untapped Rogue you control: Shadow Stinger gains deathtouch until end of turn.\nWhenever Shadow Stinger deals combat damage to a player, that player mills three cards. (They put the top three cards of their library into their graveyard.)
+Oracle:Tap another untapped Rogue you control: This creature gains deathtouch until end of turn.\nWhenever this creature deals combat damage to a player, that player mills three cards. (They put the top three cards of their library into their graveyard.)

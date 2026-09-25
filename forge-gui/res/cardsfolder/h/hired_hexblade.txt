@@ -7,4 +7,4 @@ SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1 | SubAbility$ DBLoseLife
 SVar:DBLoseLife:DB$ LoseLife | LifeAmount$ 1
 SVar:TreasureCheck:Count$CastTotalManaSpent Treasure
 SVar:AIPreference:ManaFrom$Treasure
-Oracle:When Hired Hexblade enters, if mana from a Treasure was spent to cast it, you draw a card and you lose 1 life.
+Oracle:When this creature enters, if mana from a Treasure was spent to cast it, you draw a card and you lose 1 life.

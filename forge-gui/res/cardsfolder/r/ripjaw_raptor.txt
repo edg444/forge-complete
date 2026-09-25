@@ -5,4 +5,4 @@ PT:4/5
 T:Mode$ DamageDoneOnce | Execute$ TrigDraw | ValidTarget$ Card.Self | TriggerZones$ Battlefield | TriggerDescription$ Enrage — Whenever this creature is dealt damage, draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
 SVar:HasCombatEffect:TRUE
-Oracle:Enrage — Whenever Ripjaw Raptor is dealt damage, draw a card.
+Oracle:Enrage — Whenever this creature is dealt damage, draw a card.

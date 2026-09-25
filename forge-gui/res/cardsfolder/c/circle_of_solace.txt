@@ -7,4 +7,4 @@ A:AB$ Effect | Cost$ 1 W | ReplacementEffects$ RPreventNextFromCreature | SpellD
 SVar:RPreventNextFromCreature:Event$ DamageDone | ValidSource$ Card.ChosenType+inZoneBattlefield | ValidTarget$ You | ReplaceWith$ ExileEffect | PreventionEffect$ True | Description$ The next time a creature of the chosen type would deal damage to you this turn, prevent that damage.
 SVar:ExileEffect:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
 SVar:NonStackingEffect:True
-Oracle:As Circle of Solace enters, choose a creature type.\n{1}{W}: The next time a creature of the chosen type would deal damage to you this turn, prevent that damage.
+Oracle:As this enchantment enters, choose a creature type.\n{1}{W}: The next time a creature of the chosen type would deal damage to you this turn, prevent that damage.

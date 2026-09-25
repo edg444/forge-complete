@@ -9,4 +9,4 @@ SVar:DBImmediateTrig:DB$ ImmediateTrigger | Execute$ TrigChangeZone | UnlessCost
 SVar:TrigChangeZone:DB$ ChangeZone | ValidTgts$ Creature.YouOwn,Battle.YouOwn | TgtPrompt$ Select target creature or battle card from your graveyard | Origin$ Graveyard | Destination$ Library | LibraryPosition$ 0
 DeckHas:Ability$Mill|Graveyard
 DeckHints:Type$Battle
-Oracle:Flying\nWhen Flitting Guerrilla dies, each player mills two cards. Then you may exile Flitting Guerrilla. When you do, put target creature or battle card from your graveyard on top of your library. (To mill two cards, a player puts the top two cards of their library into their graveyard.)
+Oracle:Flying\nWhen this creature dies, each player mills two cards. Then you may exile this card. When you do, put target creature or battle card from your graveyard on top of your library. (To mill two cards, a player puts the top two cards of their library into their graveyard.)

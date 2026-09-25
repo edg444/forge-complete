@@ -6,4 +6,4 @@ A:AB$ Draw | Cost$ 4 UR ExileFromGrave<1/CARDNAME> | ActivationZone$ Graveyard |
 SVar:DBDiscard:DB$ Discard | Mode$ TgtChoose
 DeckHas:Ability$Discard
 DeckHints:Color$Blue|Red
-Oracle:{4}{U/R}, Exile Maestros Initiate from your graveyard: Draw two cards, then discard a card.
+Oracle:{4}{U/R}, Exile this card from your graveyard: Draw two cards, then discard a card.

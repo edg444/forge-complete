@@ -6,4 +6,4 @@ K:Reach
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSeek | TriggerDescription$ When this creature enters, seek an Elf card.
 SVar:TrigSeek:DB$ Seek | Type$ Card.Elf
 DeckHints:Type$Elf
-Oracle:Reach\nWhen Skyshroud Lookout enters, seek an Elf card.
+Oracle:Reach\nWhen this creature enters, seek an Elf card.

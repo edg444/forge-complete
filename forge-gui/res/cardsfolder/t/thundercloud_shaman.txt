@@ -8,4 +8,4 @@ SVar:X:Count$Valid Giant.YouCtrl
 DeckNeeds:Type$Giant
 SVar:PlayMain1:TRUE
 AI:RemoveDeck:Random
-Oracle:When Thundercloud Shaman enters, it deals damage equal to the number of Giants you control to each non-Giant creature.
+Oracle:When this creature enters, it deals damage equal to the number of Giants you control to each non-Giant creature.

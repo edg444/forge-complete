@@ -11,4 +11,4 @@ SVar:ExileEffect:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 SVar:NeedsToPlayVar:Z GE5
 SVar:Z:Count$Valid Card.YouCtrl+inZoneBattlefield+canProduceManaColor White
-Oracle:At the beginning of your upkeep, sacrifice Haazda Shield Mate unless you pay {W}{W}.\n{W}: The next time a source of your choice would deal damage to you this turn, prevent that damage.
+Oracle:At the beginning of your upkeep, sacrifice this creature unless you pay {W}{W}.\n{W}: The next time a source of your choice would deal damage to you this turn, prevent that damage.

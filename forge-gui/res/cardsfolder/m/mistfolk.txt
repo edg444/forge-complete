@@ -3,4 +3,4 @@ ManaCost:U U
 Types:Creature Illusion
 PT:1/2
 A:AB$ Counter | Cost$ U | TargetType$ Spell | TgtPrompt$ Select target spell | ValidTgts$ Card | TargetValidTargeting$ Card.StrictlySelf | SpellDescription$ Counter target spell that targets this creature.
-Oracle:{U}: Counter target spell that targets Mistfolk.
+Oracle:{U}: Counter target spell that targets this creature.

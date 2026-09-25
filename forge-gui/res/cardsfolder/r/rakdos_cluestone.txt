@@ -5,4 +5,4 @@ A:AB$ Mana | Cost$ T | Produced$ Combo B R | SpellDescription$ Add {B} or {R}.
 A:AB$ Draw | Cost$ B R T Sac<1/CARDNAME> | NumCards$ 1 | SpellDescription$ Draw a card.
 AI:RemoveDeck:Random
 DeckNeeds:Color$Black|Red
-Oracle:{T}: Add {B} or {R}.\n{B}{R}, {T}, Sacrifice Rakdos Cluestone: Draw a card.
+Oracle:{T}: Add {B} or {R}.\n{B}{R}, {T}, Sacrifice this artifact: Draw a card.

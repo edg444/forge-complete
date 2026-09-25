@@ -4,4 +4,4 @@ Types:Creature Octopus
 PT:5/5
 S:Mode$ CantAttack | ValidCard$ Card.Self | UnlessDefender$ controlsEnchantment,Permanent.enchanted | Description$ This creature can't attack unless defending player controls an enchantment or an enchanted permanent.
 AI:RemoveDeck:Random
-Oracle:Godhunter Octopus can't attack unless defending player controls an enchantment or an enchanted permanent.
+Oracle:This creature can't attack unless defending player controls an enchantment or an enchanted permanent.

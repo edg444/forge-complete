@@ -5,4 +5,4 @@ PT:3/4
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigTap | TriggerDescription$ When this creature enters, tap target creature an opponent controls.
 SVar:TrigTap:DB$ Tap | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Choose target creature an opponent controls.
 SVar:PlayMain1:TRUE
-Oracle:When Heavy Infantry enters, tap target creature an opponent controls.
+Oracle:When this creature enters, tap target creature an opponent controls.

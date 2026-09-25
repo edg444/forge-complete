@@ -3,4 +3,4 @@ ManaCost:G G
 Types:Creature Turtle
 PT:2/2
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Shroud | IsPresent$ Land.YouCtrl+untapped | PresentCompare$ EQ0 | Description$ This creature has shroud as long as you control no untapped lands. (It can't be the target of spells or abilities.)
-Oracle:Vintara Snapper has shroud as long as you control no untapped lands. (It can't be the target of spells or abilities.)
+Oracle:This creature has shroud as long as you control no untapped lands. (It can't be the target of spells or abilities.)

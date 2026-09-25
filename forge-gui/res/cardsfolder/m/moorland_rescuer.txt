@@ -8,4 +8,4 @@ SVar:DBExile:DB$ ChangeZone | Defined$ TriggeredNewCardLKICopy | Origin$ Graveya
 SVar:X:Count$ValidGraveyard Creature.YouOwn+Other
 SVar:Y:TriggeredCard$CardPower
 DeckHas:Ability$Graveyard
-Oracle:When Moorland Rescuer dies, return any number of other creature cards with total power X or less from your graveyard to the battlefield, where X is Moorland Rescuer's power. Exile Moorland Rescuer.
+Oracle:When this creature dies, return any number of other creature cards with total power X or less from your graveyard to the battlefield, where X is this creature's power. Exile this card.

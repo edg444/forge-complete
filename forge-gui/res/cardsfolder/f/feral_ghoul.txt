@@ -9,4 +9,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigRadiation:DB$ Radiation | Defined$ Opponent | Num$ TriggeredCard$CardPower
 DeckHas:Ability$Counters
 DeckHints:Ability$Sacrifice
-Oracle:Menace\nWhenever another creature you control dies, put a +1/+1 counter on Feral Ghoul.\nWhen Feral Ghoul dies, each opponent gets a number of rad counters equal to its power.
+Oracle:Menace\nWhenever another creature you control dies, put a +1/+1 counter on this creature.\nWhen this creature dies, each opponent gets a number of rad counters equal to its power.

@@ -5,4 +5,4 @@ PT:4/3
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigExile | TriggerDescription$ When this creature dies, exile it, then shuffle all creature cards from your graveyard into your library.
 SVar:TrigExile:DB$ ChangeZone | Defined$ TriggeredNewCardLKICopy | Origin$ Graveyard | Destination$ Exile | SubAbility$ DBShuffle
 SVar:DBShuffle:DB$ ChangeZoneAll | ChangeType$ Creature.YouCtrl | Origin$ Graveyard | Destination$ Library | Shuffle$ True
-Oracle:When Barishi dies, exile Barishi, then shuffle all creature cards from your graveyard into your library.
+Oracle:When this creature dies, exile it, then shuffle all creature cards from your graveyard into your library.

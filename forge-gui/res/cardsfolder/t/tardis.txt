@@ -12,4 +12,4 @@ SVar:RemoveEffect:DB$ ChangeZone | Origin$ Command | Destination$ Exile | Define
 K:Crew:2
 SVar:HasAttackEffect:TRUE
 DeckNeeds:Type$Time Lord
-Oracle:Flying\nWhenever TARDIS attacks, if you control a Time Lord, the next spell you cast this turn has cascade and you may planeswalk.\nCrew 2 (Tap any number of creatures you control with total power 2 or more: This Vehicle becomes an artifact creature until end of turn.)
+Oracle:Flying\nWhenever this Vehicle attacks, if you control a Time Lord, the next spell you cast this turn has cascade and you may planeswalk.\nCrew 2 (Tap any number of creatures you control with total power 2 or more: This Vehicle becomes an artifact creature until end of turn.)

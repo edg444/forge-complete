@@ -6,4 +6,4 @@ K:Kicker:1 U
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self+kicked | Execute$ TrigKicker | TriggerDescription$ When this creature enters, if it was kicked, return target permanent to its owner's hand.
 SVar:TrigKicker:DB$ ChangeZone | ValidTgts$ Permanent | Origin$ Battlefield | Destination$ Hand
 SVar:NeedsToPlayKicked:Permanent.OppCtrl
-Oracle:Kicker {1}{U} (You may pay an additional {1}{U} as you cast this spell.)\nWhen Urborg Emissary enters, if it was kicked, return target permanent to its owner's hand.
+Oracle:Kicker {1}{U} (You may pay an additional {1}{U} as you cast this spell.)\nWhen this creature enters, if it was kicked, return target permanent to its owner's hand.

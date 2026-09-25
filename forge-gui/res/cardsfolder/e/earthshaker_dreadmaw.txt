@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ X
 SVar:X:Count$Valid Dinosaur.StrictlyOther+YouCtrl
 DeckNeeds:Type$Dinosaur
-Oracle:Trample\nWhen Earthshaker Dreadmaw enters, draw a card for each other Dinosaur you control.
+Oracle:Trample\nWhen this creature enters, draw a card for each other Dinosaur you control.

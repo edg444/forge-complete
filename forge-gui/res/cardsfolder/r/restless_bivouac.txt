@@ -9,4 +9,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ Tr
 SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | CounterType$ P1P1 | CounterNum$ 1
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Counters & Type$Ox & Color$Red|White
-Oracle:Restless Bivouac enters tapped.\n{T}: Add {R} or {W}.\n{1}{R}{W}: Restless Bivouac becomes a 2/2 red and white Ox creature until end of turn. It's still a land.\nWhenever Restless Bivouac attacks, put a +1/+1 counter on target creature you control.
+Oracle:This land enters tapped.\n{T}: Add {R} or {W}.\n{1}{R}{W}: This land becomes a 2/2 red and white Ox creature until end of turn. It's still a land.\nWhenever this land attacks, put a +1/+1 counter on target creature you control.

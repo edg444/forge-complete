@@ -8,4 +8,4 @@ SVar:Token1:DB$ Token | TokenScript$ r_1_1_goblin | TokenOwner$ You | SpellDescr
 SVar:Token2:DB$ Token | TokenAmount$ 2 | TokenScript$ r_1_1_goblin | TokenOwner$ You | SpellDescription$ 10—19 | Create two of those tokens.
 SVar:Token3:DB$ Token | TokenAmount$ 3 | TokenScript$ r_1_1_goblin | TokenOwner$ You | SpellDescription$ 20 | Create three of those tokens.
 DeckHas:Ability$Token
-Oracle:When Swarming Goblins enters, roll a d20.\n1—9 | Create a 1/1 red Goblin creature token.\n10—19 | Create two of those tokens.\n20 | Create three of those tokens.
+Oracle:When this creature enters, roll a d20.\n1—9 | Create a 1/1 red Goblin creature token.\n10—19 | Create two of those tokens.\n20 | Create three of those tokens.

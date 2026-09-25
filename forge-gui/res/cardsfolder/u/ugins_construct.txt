@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigSac:DB$ Sacrifice | Defined$ You | SacValid$ Permanent.nonColorless
 SVar:X:Count$Valid Permanent.nonColorless+YouCtrl
 SVar:NeedsToPlayVar:X LE0
-Oracle:When Ugin's Construct enters, sacrifice a permanent that's one or more colors.
+Oracle:When this creature enters, sacrifice a permanent that's one or more colors.

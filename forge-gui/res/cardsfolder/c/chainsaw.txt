@@ -9,4 +9,4 @@ S:Mode$ Continuous | AffectedDefined$ Equipped | AddPower$ X | Description$ Equi
 K:Equip:3
 SVar:X:Count$CardCounters.REV
 SVar:PlayMain1:TRUE
-Oracle:When Chainsaw enters, it deals 3 damage to up to one target creature.\nWhenever one or more creatures die, put a rev counter on Chainsaw.\nEquipped creature gets +X/+0, where X is the number of rev counters on Chainsaw.\nEquip {3}
+Oracle:When this Equipment enters, it deals 3 damage to up to one target creature.\nWhenever one or more creatures die, put a rev counter on this Equipment.\nEquipped creature gets +X/+0, where X is the number of rev counters on this Equipment.\nEquip {3}

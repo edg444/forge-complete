@@ -9,4 +9,4 @@ SVar:DBPump:DB$ Pump | Defined$ Self | KW$ Indestructible | SubAbility$ DBTap
 SVar:DBTap:DB$ Tap | Defined$ Self
 DeckHas:Ability$Counters
 DeckHints:Ability$Food
-Oracle:When Wicked Wolf enters, it fights up to one target creature you don't control.\nSacrifice a Food: Put a +1/+1 counter on Wicked Wolf. It gains indestructible until end of turn. Tap it.
+Oracle:When this creature enters, it fights up to one target creature you don't control.\nSacrifice a Food: Put a +1/+1 counter on this creature. It gains indestructible until end of turn. Tap it.

@@ -6,4 +6,4 @@ T:Mode$ Blocks | ValidCard$ Creature | TriggerZones$ Battlefield | Execute$ Trig
 SVar:TrigDamage:DB$ DealDamage | Defined$ TriggeredAttackerLKICopy | NumDmg$ 2
 SVar:TrigDamage2:DB$ DealDamage | Defined$ TriggeredBlockerLKICopy | NumDmg$ 2
 AI:RemoveDeck:Random
-Oracle:Whenever a creature attacks or blocks, Powerstone Minefield deals 2 damage to it.
+Oracle:Whenever a creature attacks or blocks, this enchantment deals 2 damage to it.

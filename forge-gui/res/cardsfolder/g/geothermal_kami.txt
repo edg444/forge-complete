@@ -8,4 +8,4 @@ SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 3 | ConditionDefined$ 
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHints:Type$Enchantment
 DeckHas:Ability$LifeGain
-Oracle:When Geothermal Kami enters, you may return an enchantment you control to its owner's hand. If you do, you gain 3 life.
+Oracle:When this creature enters, you may return an enchantment you control to its owner's hand. If you do, you gain 3 life.

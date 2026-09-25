@@ -7,4 +7,4 @@ S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.nonB
 T:Mode$ Always | TriggerZones$ Battlefield | IsPresent$ Island.YouCtrl | PresentCompare$ EQ0 | Execute$ TrigSac | TriggerDescription$ When you control no Islands, sacrifice this creature.
 SVar:TrigSac:DB$ Sacrifice
 SVar:NeedsToPlay:Island.YouCtrl
-Oracle:Manta Ray can't attack unless defending player controls an Island.\nManta Ray can't be blocked except by blue creatures.\nWhen you control no Islands, sacrifice Manta Ray.
+Oracle:This creature can't attack unless defending player controls an Island.\nThis creature can't be blocked except by blue creatures.\nWhen you control no Islands, sacrifice this creature.

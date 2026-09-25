@@ -26,4 +26,4 @@ SVar:CheckPlaneswalker:Imprinted$Valid Planeswalker
 SVar:CheckKindred:Imprinted$Valid Kindred
 SVar:CheckBattle:Imprinted$Valid Battle
 SVar:CheckLand:Imprinted$Valid Land
-Oracle:Imprint — When Mirror Golem enters, you may exile target card from a graveyard.\nMirror Golem has protection from each of the exiled card's card types. (Artifact, battle, creature, enchantment, instant, kindred, land, planeswalker, and sorcery are card types.)
+Oracle:Imprint — When this creature enters, you may exile target card from a graveyard.\nThis creature has protection from each of the exiled card's card types. (Artifact, battle, creature, enchantment, instant, kindred, land, planeswalker, and sorcery are card types.)

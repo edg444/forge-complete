@@ -11,4 +11,4 @@ SVar:X:RememberedLKI$CardPower
 SVar:NeedsToPlay:Creature.YouCtrl
 AI:RemoveDeck:All
 DeckHas:Ability$LifeGain
-Oracle:When Disciple of Bolas enters, sacrifice another creature. You gain X life and draw X cards, where X is that creature's power.
+Oracle:When this creature enters, sacrifice another creature. You gain X life and draw X cards, where X is that creature's power.

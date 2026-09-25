@@ -5,4 +5,4 @@ PT:3/2
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When this creature enters, create two 1/1 white Rabbit creature tokens.
 SVar:TrigToken:DB$ Token | TokenAmount$ 2 | TokenScript$ w_1_1_rabbit | TokenOwner$ You
 DeckHas:Ability$Token
-Oracle:When Head of the Homestead enters, create two 1/1 white Rabbit creature tokens.
+Oracle:When this creature enters, create two 1/1 white Rabbit creature tokens.

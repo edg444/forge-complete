@@ -7,7 +7,7 @@ SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Creature.YouDontCtrl+wasDealtDamageThi
 K:Disturb:4 B
 DeckHas:Ability$Graveyard
 AlternateMode:DoubleFaced
-Oracle:When Covert Cutpurse enters, destroy target creature you don't control that was dealt damage this turn.\nDisturb {4}{B} (You may cast this card from your graveyard transformed for its disturb cost.)
+Oracle:When this creature enters, destroy target creature you don't control that was dealt damage this turn.\nDisturb {4}{B} (You may cast this card from your graveyard transformed for its disturb cost.)
 
 ALTERNATE
 

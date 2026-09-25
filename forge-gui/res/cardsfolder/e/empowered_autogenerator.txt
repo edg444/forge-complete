@@ -6,4 +6,4 @@ SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ PutCounter | Cost$ T | CounterType$ CHARGE | CounterNum$ 1 | SubAbility$ DBMana | SpellDescription$ Put a charge counter on this artifact. Add X mana of any one color, where X is the number of charge counters on this artifact.
 SVar:DBMana:DB$ Mana | Produced$ Any | Amount$ X
 SVar:X:Count$CardCounters.CHARGE
-Oracle:Empowered Autogenerator enters tapped.\n{T}: Put a charge counter on Empowered Autogenerator. Add X mana of any one color, where X is the number of charge counters on Empowered Autogenerator.
+Oracle:This artifact enters tapped.\n{T}: Put a charge counter on this artifact. Add X mana of any one color, where X is the number of charge counters on this artifact.

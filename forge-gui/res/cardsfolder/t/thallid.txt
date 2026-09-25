@@ -7,4 +7,4 @@ SVar:TrigPutCounter:DB$ PutCounter | CounterType$ SPORE
 A:AB$ Token | Cost$ SubCounter<3/SPORE> | TokenScript$ g_1_1_saproling | SpellDescription$ Create a 1/1 green Saproling creature token.
 DeckHints:Type$Fungus
 DeckHas:Ability$Counters|Token & Type$Saproling
-Oracle:At the beginning of your upkeep, put a spore counter on Thallid.\nRemove three spore counters from Thallid: Create a 1/1 green Saproling creature token.
+Oracle:At the beginning of your upkeep, put a spore counter on this creature.\nRemove three spore counters from this creature: Create a 1/1 green Saproling creature token.

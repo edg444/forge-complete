@@ -7,7 +7,7 @@ AI:RemoveDeck:All
 DeckHas:Ability$Discard
 DeckHints:Keyword$Madness & Ability$Delirium
 AlternateMode:DoubleFaced
-Oracle:{1}, Discard a card: Transform Elusive Tormentor.
+Oracle:{1}, Discard a card: Transform this creature.
 
 ALTERNATE
 
@@ -22,4 +22,4 @@ S:Mode$ CantBlock | ValidCard$ Creature.Self | Description$ This creature can't 
 S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self
 T:Mode$ AttackerUnblocked | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigTransform | TriggerDescription$ Whenever this creature attacks and isn't blocked, you may pay {2}{B}. If you do, transform it.
 SVar:TrigTransform:AB$ SetState | Cost$ 2 B | Defined$ Self | Mode$ Transform
-Oracle:Hexproof, indestructible\nInsidious Mist can't block and can't be blocked.\nWhenever Insidious Mist attacks and isn't blocked, you may pay {2}{B}. If you do, transform it.
+Oracle:Hexproof, indestructible\nThis creature can't block and can't be blocked.\nWhenever this creature attacks and isn't blocked, you may pay {2}{B}. If you do, transform it.

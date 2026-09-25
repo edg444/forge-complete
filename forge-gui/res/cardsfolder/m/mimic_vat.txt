@@ -13,4 +13,4 @@ SVar:DBCleanImprinted:DB$ Cleanup | ClearImprinted$ True
 SVar:NonStackingEffect:True
 AI:RemoveDeck:Random
 DeckHas:Ability$Token
-Oracle:Imprint — Whenever a nontoken creature dies, you may exile that card. If you do, return each other card exiled with Mimic Vat to its owner's graveyard.\n{3}, {T}: Create a token that's a copy of a card exiled with Mimic Vat. It gains haste. Exile it at the beginning of the next end step.
+Oracle:Imprint — Whenever a nontoken creature dies, you may exile that card. If you do, return each other card exiled with this artifact to its owner's graveyard.\n{3}, {T}: Create a token that's a copy of a card exiled with this artifact. It gains haste. Exile it at the beginning of the next end step.

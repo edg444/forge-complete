@@ -7,4 +7,4 @@ T:Mode$ AttackersDeclared | AttackingPlayer$ You | Execute$ TrigToken | CheckSVa
 SVar:TrigToken:DB$ Token | TokenAmount$ 2 | TokenScript$ w_1_1_soldier | TokenTapped$ True | TokenAttacking$ True
 SVar:X:PlayerCountDefinedTriggeredAttackedTargetAndYou$HasPropertyhasInitiative
 DeckHas:Ability$Token & Type$Soldier
-Oracle:When Undercellar Sweep enters, you take the initiative.\nWhenever you attack, if you or a player you're attacking has the initiative, you create two 1/1 white Soldier creature tokens that are tapped and attacking.
+Oracle:When this enchantment enters, you take the initiative.\nWhenever you attack, if you or a player you're attacking has the initiative, you create two 1/1 white Soldier creature tokens that are tapped and attacking.

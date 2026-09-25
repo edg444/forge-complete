@@ -4,4 +4,4 @@ Types:Creature Goblin
 PT:1/1
 A:AB$ Protection | Cost$ R | Defined$ Self | Gains$ red | SpellDescription$ This creature gains protection from red until end of turn.
 DeckHints:Name$Kookus
-Oracle:{R}: Keeper of Kookus gains protection from red until end of turn.
+Oracle:{R}: This creature gains protection from red until end of turn.

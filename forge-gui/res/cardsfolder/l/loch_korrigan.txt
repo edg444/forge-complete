@@ -3,4 +3,4 @@ ManaCost:3 B
 Types:Creature Spirit
 PT:1/1
 A:AB$ Pump | Cost$ UB | NumAtt$ +1 | NumDef$ +1 | SpellDescription$ This creature gets +1/+1 until end of turn.
-Oracle:{U/B}: Loch Korrigan gets +1/+1 until end of turn.
+Oracle:{U/B}: This creature gets +1/+1 until end of turn.

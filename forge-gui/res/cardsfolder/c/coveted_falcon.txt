@@ -14,4 +14,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Count$Valid Permanent.YouCtrl
 SVar:Y:Remembered$Amount
 SVar:HasAttackEffect:TRUE
-Oracle:Flying\nWhenever Coveted Falcon attacks, gain control of target permanent you own but don't control.\nDisguise {1}{U}\nWhen Coveted Falcon is turned face up, target opponent gains control of any number of target permanents you control. Draw a card for each one they gained control of this way.
+Oracle:Flying\nWhenever this creature attacks, gain control of target permanent you own but don't control.\nDisguise {1}{U}\nWhen this creature is turned face up, target opponent gains control of any number of target permanents you control. Draw a card for each one they gained control of this way.

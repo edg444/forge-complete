@@ -3,4 +3,4 @@ ManaCost:4 R
 Types:Creature Elemental Spirit
 PT:4/3
 S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.withFlying | Description$ This creature can't be blocked by creatures with flying.
-Oracle:Stone Spirit can't be blocked by creatures with flying.
+Oracle:This creature can't be blocked by creatures with flying.

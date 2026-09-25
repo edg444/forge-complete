@@ -6,4 +6,4 @@ T:Mode$ DamageDoneOnce | Execute$ PutCounterAll | ValidTarget$ Card.Self | Trigg
 SVar:PutCounterAll:DB$ PutCounterAll | ValidCards$ Creature.StrictlyOther+YouCtrl | CounterType$ P1P1 | CounterNum$ 1 | SpellDescription$ Put a +1/+1 counter on each other creature you control.
 SVar:HasCombatEffect:TRUE
 DeckHas:Ability$Counters
-Oracle:Enrage — Whenever Bellowing Aegisaur is dealt damage, put a +1/+1 counter on each other creature you control.
+Oracle:Enrage — Whenever this creature is dealt damage, put a +1/+1 counter on each other creature you control.

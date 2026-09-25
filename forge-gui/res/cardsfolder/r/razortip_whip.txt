@@ -2,4 +2,4 @@ Name:Razortip Whip
 ManaCost:2
 Types:Artifact
 A:AB$ DealDamage | Cost$ 1 T | NumDmg$ 1 | ValidTgts$ Opponent,Planeswalker | SpellDescription$ This artifact deals 1 damage to target opponent or planeswalker.
-Oracle:{1}, {T}: Razortip Whip deals 1 damage to target opponent or planeswalker.
+Oracle:{1}, {T}: This artifact deals 1 damage to target opponent or planeswalker.

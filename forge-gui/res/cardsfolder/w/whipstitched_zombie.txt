@@ -4,4 +4,4 @@ Types:Creature Zombie
 PT:2/2
 T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigUpkeep | TriggerDescription$ At the beginning of your upkeep, sacrifice this creature unless you pay {B}.
 SVar:TrigUpkeep:DB$ Sacrifice | UnlessPayer$ You | UnlessCost$ B
-Oracle:At the beginning of your upkeep, sacrifice Whipstitched Zombie unless you pay {B}.
+Oracle:At the beginning of your upkeep, sacrifice this creature unless you pay {B}.

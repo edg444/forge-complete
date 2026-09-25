@@ -7,7 +7,7 @@ SVar:Meld:DB$ Meld | Name$ Chittering Host | Primary$ Graf Rats | Secondary$ Mid
 DeckHints:Name$Midnight Scavengers
 MeldPair:Midnight Scavengers
 AlternateMode:Meld
-Oracle:At the beginning of combat on your turn, if you both own and control Graf Rats and a creature named Midnight Scavengers, exile them, then meld them into Chittering Host.
+Oracle:At the beginning of combat on your turn, if you both own and control this creature and a creature named Midnight Scavengers, exile them, then meld them into Chittering Host.
 
 ALTERNATE
 
@@ -19,4 +19,4 @@ K:Haste
 K:Menace
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPumpAll | TriggerDescription$ When CARDNAME enters, other creatures you control get +1/+0 and menace until end of turn.
 SVar:TrigPumpAll:DB$ PumpAll | ValidCards$ Creature.YouCtrl+StrictlyOther | NumAtt$ +1 | KW$ Menace
-Oracle:Haste\nMenace (This creature can't be blocked except by two or more creatures.)\nWhen Chittering Host enters, other creatures you control get +1/+0 and gain menace until end of turn.
+Oracle:Haste\nMenace (This creature can't be blocked except by two or more creatures.)\nWhen this creature enters, other creatures you control get +1/+0 and gain menace until end of turn.

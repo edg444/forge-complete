@@ -10,4 +10,4 @@ SVar:ExileGrave:DB$ ChangeZoneAll | ValidTgts$ Player | Origin$ Graveyard | Dest
 SVar:GainLife:DB$ GainLife | LifeAmount$ 4 | SpellDescription$ You gain 4 life.
 AI:RemoveDeck:All
 DeckHas:Ability$LifeGain
-Oracle:When Tranquil Frillback enters, you may pay {G} up to three times. When you pay this cost one or more times, choose up to that many —\n• Destroy target artifact or enchantment.\n• Exile target player's graveyard.\n• You gain 4 life.
+Oracle:When this creature enters, you may pay {G} up to three times. When you pay this cost one or more times, choose up to that many —\n• Destroy target artifact or enchantment.\n• Exile target player's graveyard.\n• You gain 4 life.

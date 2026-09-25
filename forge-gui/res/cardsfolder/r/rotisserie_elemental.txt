@@ -12,4 +12,4 @@ SVar:Play:Mode$ Continuous | MayPlay$ True | Affected$ Card.IsRemembered | Affec
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearImprinted$ True
 SVar:X:Count$CardCounters.SKEWER
 DeckHas:Ability$Sacrifice|Counters
-Oracle:Menace\nWhenever Rotisserie Elemental deals combat damage to a player, put a skewer counter on Rotisserie Elemental. Then you may sacrifice it. If you do, exile the top X cards of your library, where X is the number of skewer counters on Rotisserie Elemental. You may play those cards this turn.
+Oracle:Menace\nWhenever this creature deals combat damage to a player, put a skewer counter on this creature. Then you may sacrifice it. If you do, exile the top X cards of your library, where X is the number of skewer counters on this creature. You may play those cards this turn.

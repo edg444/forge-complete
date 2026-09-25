@@ -9,4 +9,4 @@ SVar:TrigLoseLife:DB$ LoseLife | Defined$ Player.Opponent | LifeAmount$ 2 | SubA
 SVar:DBGainLife:DB$ GainLife | LifeAmount$ 2 | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw
 SVar:HasAttackEffect:TRUE
-Oracle:Deathtouch\nWhenever Shroudstomper enters or attacks, each opponent loses 2 life. You gain 2 life and draw a card.
+Oracle:Deathtouch\nWhenever this creature enters or attacks, each opponent loses 2 life. You gain 2 life and draw a card.

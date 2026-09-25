@@ -8,4 +8,4 @@ A:AB$ Token | Cost$ SubCounter<3/SPORE> | TokenScript$ g_1_1_saproling | TokenOw
 A:AB$ Pump | Cost$ Sac<1/Saproling> | Defined$ Self | NumAtt$ +1 | NumDef$ +2 | SpellDescription$ This creature gets +1/+2 until end of turn.
 DeckHints:Type$Fungus
 DeckHas:Ability$Counters|Token|Sacrifice
-Oracle:At the beginning of your upkeep, put a spore counter on Thallid Devourer.\nRemove three spore counters from Thallid Devourer: Create a 1/1 green Saproling creature token.\nSacrifice a Saproling: Thallid Devourer gets +1/+2 until end of turn.
+Oracle:At the beginning of your upkeep, put a spore counter on this creature.\nRemove three spore counters from this creature: Create a 1/1 green Saproling creature token.\nSacrifice a Saproling: This creature gets +1/+2 until end of turn.

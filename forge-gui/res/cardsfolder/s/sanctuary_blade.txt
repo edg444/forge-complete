@@ -5,4 +5,4 @@ R:Event$ Attached | ValidCard$ Card.Self | ValidTarget$ Creature | ReplaceWith$ 
 SVar:ChooseColor:DB$ ChooseColor | Defined$ You
 S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddPower$ 2 | AddKeyword$ Protection:Card.ChosenColor:chosenColor | Description$ Equipped creature gets +2/+0 and has protection from the last chosen color.
 K:Equip:3
-Oracle:As Sanctuary Blade becomes attached to a creature, choose a color.\nEquipped creature gets +2/+0 and has protection from the last chosen color.\nEquip {3}
+Oracle:As this Equipment becomes attached to a creature, choose a color.\nEquipped creature gets +2/+0 and has protection from the last chosen color.\nEquip {3}

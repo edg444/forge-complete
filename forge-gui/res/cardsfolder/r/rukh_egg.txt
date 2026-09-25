@@ -8,4 +8,4 @@ SVar:TrigToken:DB$ Token | TokenScript$ r_4_4_bird_flying
 SVar:SacMe:4
 DeckHas:Ability$Token
 DeckHints:Ability$Sacrifice
-Oracle:When Rukh Egg dies, create a 4/4 red Bird creature token with flying at the beginning of the next end step.
+Oracle:When this creature dies, create a 4/4 red Bird creature token with flying at the beginning of the next end step.

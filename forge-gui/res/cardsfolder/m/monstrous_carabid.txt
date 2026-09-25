@@ -5,4 +5,4 @@ PT:4/4
 S:Mode$ MustAttack | ValidCreature$ Card.Self | Description$ This creature attacks each combat if able.
 K:Cycling:BR
 DeckHas:Ability$Discard
-Oracle:Monstrous Carabid attacks each combat if able.\nCycling {B/R} ({B/R}, Discard this card: Draw a card.)
+Oracle:This creature attacks each combat if able.\nCycling {B/R} ({B/R}, Discard this card: Draw a card.)

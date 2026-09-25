@@ -13,4 +13,4 @@ SVar:DBPutP1P1:DB$ PutCounter | Defined$ ReplacedCard | CounterType$ P1P1 | ETB$
 SVar:X:Remembered$Amount
 SVar:Y:Count$CardCounters.INGREDIENT
 SVar:MaxTgt:PlayerCountOpponents$Amount
-Oracle:When Communal Brewing enters, any number of target opponents each draw a card. Put an ingredient counter on Communal Brewing, then put an ingredient counter on it for each card drawn this way.\nWhenever you cast a creature spell, that creature enters with X additional +1/+1 counters on it, where X is the number of ingredient counters on Communal Brewing.
+Oracle:When this enchantment enters, any number of target opponents each draw a card. Put an ingredient counter on this enchantment, then put an ingredient counter on it for each card drawn this way.\nWhenever you cast a creature spell, that creature enters with X additional +1/+1 counters on it, where X is the number of ingredient counters on this enchantment.

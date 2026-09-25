@@ -5,4 +5,4 @@ PT:3/3
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigMill | TriggerDescription$ When this creature enters, target player mills four cards.
 SVar:TrigMill:DB$ Mill | NumCards$ 4 | ValidTgts$ Player
 DeckHas:Ability$Graveyard
-Oracle:When Homarid Explorer enters, target player mills four cards.
+Oracle:When this creature enters, target player mills four cards.

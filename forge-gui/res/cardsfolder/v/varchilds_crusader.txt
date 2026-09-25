@@ -5,4 +5,4 @@ PT:3/2
 A:AB$ Effect | Cost$ 0 | AtEOT$ Sacrifice | StaticAbilities$ KWPump | SpellDescription$ This creature can't be blocked this turn except by Walls. Sacrifice this creature at the beginning of the next end step.
 SVar:KWPump:Mode$ CantBlockBy | ValidAttacker$ Creature.EffectSource | ValidBlocker$ Creature.nonWall | Description$ EFFECTSOURCE can't be blocked this turn except by Walls.
 AI:RemoveDeck:All
-Oracle:{0}: Varchild's Crusader can't be blocked this turn except by Walls. Sacrifice Varchild's Crusader at the beginning of the next end step.
+Oracle:{0}: This creature can't be blocked this turn except by Walls. Sacrifice this creature at the beginning of the next end step.

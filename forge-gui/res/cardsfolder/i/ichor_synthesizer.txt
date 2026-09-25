@@ -8,4 +8,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | Affected$ Card.counters_GE4_OIL | A
 S:Mode$ CantBlockBy | ValidAttacker$ Card.Self+counters_GE4_OIL | Secondary$ True | Description$ As long as this creature has four or more oil counters on it, it gets +2/+0 and can't be blocked.
 SVar:BuffedBy:Card.nonCreature
 DeckHas:Ability$Counters
-Oracle:Whenever you cast a noncreature spell, put an oil counter on Ichor Synthesizer.\nAs long as Ichor Synthesizer has four or more oil counters on it, it gets +2/+0 and can't be blocked.
+Oracle:Whenever you cast a noncreature spell, put an oil counter on this creature.\nAs long as this creature has four or more oil counters on it, it gets +2/+0 and can't be blocked.

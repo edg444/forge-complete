@@ -8,4 +8,4 @@ T:Mode$ Sacrificed | ValidPlayer$ You | ValidCard$ Clue | TriggerZones$ Battlefi
 SVar:TrigPoison:DB$ Poison | ValidTgts$ Opponent | Num$ 2
 DeckHas:Ability$Investigate|Token & Type$Artifact|Clue
 DeckHints:Ability$Sacrifice & Type$Clue
-Oracle:When Persuasive Interrogators enters, investigate. (Create a Clue token. It's an artifact with "{2}, Sacrifice this token: Draw a card.")\nWhenever you sacrifice a Clue, target opponent gets two poison counters. (A player with ten or more poison counters loses the game.)
+Oracle:When this creature enters, investigate. (Create a Clue token. It's an artifact with "{2}, Sacrifice this token: Draw a card.")\nWhenever you sacrifice a Clue, target opponent gets two poison counters. (A player with ten or more poison counters loses the game.)

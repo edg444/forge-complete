@@ -11,4 +11,4 @@ SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 4 | ConditionDefined$ 
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:CheckRemoved:Count$RememberedSize
 DeckHas:Ability$Counters|LifeGain|Sacrifice
-Oracle:Dawn of a New Age enters with a hope counter on it for each creature you control.\nAt the beginning of your end step, remove a hope counter from Dawn of a New Age. If you do, draw a card. Then if Dawn of a New Age has no hope counters on it, sacrifice it and you gain 4 life.
+Oracle:This enchantment enters with a hope counter on it for each creature you control.\nAt the beginning of your end step, remove a hope counter from this enchantment. If you do, draw a card. Then if this enchantment has no hope counters on it, sacrifice it and you gain 4 life.

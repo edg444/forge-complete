@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 1
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Enchantment
-Oracle:Constellation — Whenever Forgeborn Oreads or another enchantment you control enters, Forgeborn Oreads deals 1 damage to any target.
+Oracle:Constellation — Whenever this creature or another enchantment you control enters, this creature deals 1 damage to any target.

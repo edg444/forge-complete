@@ -4,4 +4,4 @@ Types:Creature Elf Warrior
 PT:4/4
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 4 | AddToughness$ 4 | AddKeyword$ Trample | Condition$ Metalcraft | Description$ Metalcraft — As long as you control three or more artifacts, this creature gets +4/+4 and has trample.
 SVar:BuffedBy:Artifact
-Oracle:Metalcraft — As long as you control three or more artifacts, Ezuri's Brigade gets +4/+4 and has trample.
+Oracle:Metalcraft — As long as you control three or more artifacts, this creature gets +4/+4 and has trample.

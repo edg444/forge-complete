@@ -7,4 +7,4 @@ SVar:TrigDebuff:DB$ Pump | NumAtt$ -X | ValidTgts$ Creature.OppCtrl
 SVar:X:Count$Valid Artifact.YouCtrl
 SVar:HasAttackEffect:TRUE
 DeckHints:Type$Artifact
-Oracle:Whenever Escaped Experiment attacks, target creature an opponent controls gets -X/-0 until end of turn, where X is the number of artifacts you control.
+Oracle:Whenever this creature attacks, target creature an opponent controls gets -X/-0 until end of turn, where X is the number of artifacts you control.

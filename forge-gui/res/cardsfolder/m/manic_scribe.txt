@@ -8,4 +8,4 @@ T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ Opponent | Delirium$ True | Execute
 SVar:TrigMill2:DB$ Mill | Defined$ TriggeredPlayer | NumCards$ 3
 DeckHints:Ability$Graveyard|Discard
 DeckHas:Ability$Delirium
-Oracle:When Manic Scribe enters, each opponent mills three cards.\nDelirium — At the beginning of each opponent's upkeep, if there are four or more card types among cards in your graveyard, that player mills three cards.
+Oracle:When this creature enters, each opponent mills three cards.\nDelirium — At the beginning of each opponent's upkeep, if there are four or more card types among cards in your graveyard, that player mills three cards.

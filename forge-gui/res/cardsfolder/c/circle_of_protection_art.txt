@@ -11,4 +11,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 SVar:NonStackingEffect:True
 A:AB$ ChangeZone | Cost$ 1 W | Defined$ Self | Origin$ Battlefield | Destination$ Hand | SpellDescription$ Return this enchantment to its owner's hand.
 AI:RemoveDeck:Random
-Oracle:As Circle of Protection: Art enters, choose an artist.\n{1}{W}: The next time a source of your choice with art by the chosen artist would deal damage to you this turn, prevent that damage.\n{1}{W}: Return Circle of Protection: Art to its owner's hand.
+Oracle:As this enchantment enters, choose an artist.\n{1}{W}: The next time a source of your choice with art by the chosen artist would deal damage to you this turn, prevent that damage.\n{1}{W}: Return this enchantment to its owner's hand.

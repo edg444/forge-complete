@@ -6,4 +6,4 @@ K:Trample
 T:Mode$ SpellCast | ValidCard$ Instant,Sorcery | ValidActivatingPlayer$ You | Execute$ DBPutCounter | TriggerZones$ Battlefield | TriggerDescription$ Whenever you cast an instant or sorcery spell, put a +1/+1 counter on this creature.
 SVar:DBPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1
 SVar:BuffedBy:Instant,Sorcery
-Oracle:Trample\nWhenever you cast an instant or sorcery spell, put a +1/+1 counter on Pyre Hound.
+Oracle:Trample\nWhenever you cast an instant or sorcery spell, put a +1/+1 counter on this creature.

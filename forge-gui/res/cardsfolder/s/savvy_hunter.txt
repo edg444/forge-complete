@@ -9,4 +9,4 @@ SVar:HasAttackEffect:TRUE
 A:AB$ Draw | Cost$ Sac<2/Food> | NumCards$ 1 | SpellDescription$ Draw a card.
 DeckHas:Ability$Token|LifeGain|Food
 DeckHints:Ability$Food
-Oracle:Whenever Savvy Hunter attacks or blocks, create a Food token. (It's an artifact with "{2}, {T}, Sacrifice this token: You gain 3 life.")\nSacrifice two Foods: Draw a card.
+Oracle:Whenever this creature attacks or blocks, create a Food token. (It's an artifact with "{2}, {T}, Sacrifice this token: You gain 3 life.")\nSacrifice two Foods: Draw a card.

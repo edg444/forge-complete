@@ -8,4 +8,4 @@ SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +X
 SVar:X:TriggeredSpellAbility$CardManaCostLKI
 SVar:BuffedBy:Instant,Sorcery
 DeckHints:Type$Instant|Sorcery
-Oracle:Trample\nWhenever you cast an instant or sorcery spell, Erratic Cyclops gets +X/+0 until end of turn, where X is that spell's mana value.
+Oracle:Trample\nWhenever you cast an instant or sorcery spell, this creature gets +X/+0 until end of turn, where X is that spell's mana value.

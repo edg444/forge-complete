@@ -5,4 +5,4 @@ PT:4/4
 T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | IsPresent$ Permanent.nonLand+YouCtrl | PresentCompare$ GE2 | Execute$ TrigSacrifice | TriggerZones$ Battlefield | TriggerDescription$ At the beginning of your upkeep, if you control another nonland permanent, sacrifice this creature.
 SVar:TrigSacrifice:DB$ Sacrifice
 AI:RemoveDeck:All
-Oracle:At the beginning of your upkeep, if you control another nonland permanent, sacrifice Reclusive Wight.
+Oracle:At the beginning of your upkeep, if you control another nonland permanent, sacrifice this creature.

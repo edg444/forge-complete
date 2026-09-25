@@ -6,4 +6,4 @@ A:AB$ Animate | Cost$ 2 T | ValidTgts$ Creature.Legendary | TgtPrompt$ Select ta
 A:AB$ PutCounter | Cost$ 4 T Sac<1/CARDNAME> | ValidTgts$ God | TgtPrompt$ Select target God | CounterType$ Indestructible | CounterNum$ 1 | SpellDescription$ Put an indestructible counter on target God.
 SVar:DBPutCounter:DB$ PutCounter | Defined$ Targeted | CounterType$ P1P1 | CounterNum$ 1
 DeckHas:Ability$Counters
-Oracle:{T}: Add {C}.\n{2}, {T}: Target legendary creature becomes a God in addition to its other types. Put a +1/+1 counter on it.\n{4}, {T}, Sacrifice Tyrite Sanctum: Put an indestructible counter on target God.
+Oracle:{T}: Add {C}.\n{2}, {T}: Target legendary creature becomes a God in addition to its other types. Put a +1/+1 counter on it.\n{4}, {T}, Sacrifice this land: Put an indestructible counter on target God.

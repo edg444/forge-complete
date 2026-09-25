@@ -9,7 +9,7 @@ SVar:TrigTap:DB$ Tap | UnlessCost$ Sac<1/Card.token;Artifact;Enchantment/artifac
 DeckHas:Ability$Sacrifice|Token & Type$Human|Artifact|Food
 DeckHints:Ability$Token & Type$Artifact|Enchantment
 AlternateMode:Adventure
-Oracle:Menace, trample\nAt the beginning of your upkeep, you may sacrifice an artifact, enchantment, or token. If you don't, tap Devouring Sugarmaw.
+Oracle:Menace, trample\nAt the beginning of your upkeep, you may sacrifice an artifact, enchantment, or token. If you don't, tap this creature.
 
 ALTERNATE
 

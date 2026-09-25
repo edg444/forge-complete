@@ -5,4 +5,4 @@ R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementRe
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 K:Indestructible
 A:AB$ Mana | Cost$ T | Produced$ Combo R G | SpellDescription$ Add {R} or {G}.
-Oracle:Slagwoods Bridge enters tapped.\nIndestructible\n{T}: Add {R} or {G}.
+Oracle:This land enters tapped.\nIndestructible\n{T}: Add {R} or {G}.

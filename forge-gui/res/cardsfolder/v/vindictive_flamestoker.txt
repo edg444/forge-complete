@@ -9,4 +9,4 @@ SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 4
 SVar:X:Count$CardCounters.OIL
 DeckHints:Type$Instant|Sorcery
 DeckHas:Ability$Counters|Sacrifice|Discard
-Oracle:Whenever you cast a noncreature spell, put an oil counter on Vindictive Flamestoker.\n{6}{R}, Sacrifice Vindictive Flamestoker: Discard your hand, then draw four cards. This ability costs {1} less to activate for each oil counter on Vindictive Flamestoker.
+Oracle:Whenever you cast a noncreature spell, put an oil counter on this creature.\n{6}{R}, Sacrifice this creature: Discard your hand, then draw four cards. This ability costs {1} less to activate for each oil counter on this creature.

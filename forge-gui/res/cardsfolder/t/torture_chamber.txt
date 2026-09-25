@@ -11,4 +11,4 @@ SVar:Y:SVar$CostCountersRemoved
 AI:RemoveDeck:All
 DeckHas:Ability$Counters
 DeckHints:Ability$Proliferate
-Oracle:At the beginning of your upkeep, put a pain counter on Torture Chamber.\nAt the beginning of your end step, Torture Chamber deals damage to you equal to the number of pain counters on it.\n{1}, {T}, Remove all pain counters from Torture Chamber: It deals damage to target creature equal to the number of pain counters removed this way.
+Oracle:At the beginning of your upkeep, put a pain counter on this artifact.\nAt the beginning of your end step, this artifact deals damage to you equal to the number of pain counters on it.\n{1}, {T}, Remove all pain counters from this artifact: It deals damage to target creature equal to the number of pain counters removed this way.

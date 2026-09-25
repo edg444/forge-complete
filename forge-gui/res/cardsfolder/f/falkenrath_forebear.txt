@@ -8,4 +8,4 @@ T:Mode$ DamageDone | ValidSource$ Card.Self | Execute$ TrigToken | CombatDamage$
 SVar:TrigToken:DB$ Token | TokenScript$ c_a_blood_draw
 A:AB$ ChangeZone | Cost$ B Sac<2/Blood.token/Blood token> | Origin$ Graveyard | Destination$ Battlefield | ActivationZone$ Graveyard | SpellDescription$ Return this card from your graveyard to the battlefield.
 DeckHas:Ability$Token|Sacrifice|Graveyard & Type$Blood
-Oracle:Flying\nFalkenrath Forebear can't block.\nWhenever Falkenrath Forebear deals combat damage to a player, create a Blood token.\n{B}, Sacrifice two Blood tokens: Return Falkenrath Forebear from your graveyard to the battlefield.
+Oracle:Flying\nThis creature can't block.\nWhenever this creature deals combat damage to a player, create a Blood token.\n{B}, Sacrifice two Blood tokens: Return this card from your graveyard to the battlefield.

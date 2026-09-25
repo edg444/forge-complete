@@ -7,7 +7,7 @@ SVar:TrigToken:DB$ Token | TokenOwner$ You | TokenScript$ c_1_1_a_thopter_flying
 DeckHas:Ability$Token & Type$Thopter
 DeckHints:Type$Artifact
 AlternateMode:DoubleFaced
-Oracle:(As a Siege enters, choose an opponent to protect it. You and others can attack it. When it's defeated, exile it, then cast it transformed.)\nWhen Invasion of Kaladesh enters, create a 1/1 colorless Thopter artifact creature token with flying.
+Oracle:(As a Siege enters, choose an opponent to protect it. You and others can attack it. When it's defeated, exile it, then cast it transformed.)\nWhen this Siege enters, create a 1/1 colorless Thopter artifact creature token with flying.
 
 ALTERNATE
 

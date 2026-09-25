@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigToken:DB$ Token | TokenAmount$ 3 | TokenScript$ g_1_1_elf_warrior | TokenOwner$ You | SubAbility$ DBMill
 SVar:DBMill:DB$ Mill | NumCards$ 3 | Defined$ You
 DeckHas:Ability$Graveyard|Token
-Oracle:When Eyeblight Cullers dies, create three 1/1 green Elf Warrior creature tokens, then mill three cards. (Put the top three cards of your library into your graveyard.)
+Oracle:When this creature dies, create three 1/1 green Elf Warrior creature tokens, then mill three cards. (Put the top three cards of your library into your graveyard.)

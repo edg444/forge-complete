@@ -3,4 +3,4 @@ ManaCost:G U
 Types:Creature Human Rogue
 PT:2/2
 S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | Description$ This creature can't be blocked.
-Oracle:Jhessian Infiltrator can't be blocked.
+Oracle:This creature can't be blocked.

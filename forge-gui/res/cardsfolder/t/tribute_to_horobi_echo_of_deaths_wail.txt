@@ -24,4 +24,4 @@ SVar:TrigGainControl:DB$ GainControl | AllValid$ Rat.token | NewController$ You
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ Whenever this creature attacks, you may sacrifice another creature. If you do, draw a card.
 SVar:TrigDraw:AB$ Draw | Cost$ Sac<1/Creature.Other/another creature> | NumCards$ 1
 DeckHas:Ability$Sacrifice
-Oracle:Flying, haste\nWhen Echo of Death's Wail enters, gain control of all Rat tokens.\nWhenever Echo of Death's Wail attacks, you may sacrifice another creature. If you do, draw a card.
+Oracle:Flying, haste\nWhen this creature enters, gain control of all Rat tokens.\nWhenever this creature attacks, you may sacrifice another creature. If you do, draw a card.

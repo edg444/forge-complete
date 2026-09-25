@@ -7,4 +7,4 @@ S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.powe
 SVar:X:Count$Converge
 SVar:Y:SVar$X/Twice
 DeckHints:Ability$Counters
-Oracle:Converge — Glinting Creeper enters with two +1/+1 counters on it for each color of mana spent to cast it.\nGlinting Creeper can't be blocked by creatures with power 2 or less.
+Oracle:Converge — This creature enters with two +1/+1 counters on it for each color of mana spent to cast it.\nThis creature can't be blocked by creatures with power 2 or less.

@@ -3,4 +3,4 @@ ManaCost:3 G
 Types:Creature Worm
 PT:3/3
 A:AB$ Untap | Cost$ U | SpellDescription$ Untap this creature.
-Oracle:{U}: Untap Simic Ragworm.
+Oracle:{U}: Untap this creature.

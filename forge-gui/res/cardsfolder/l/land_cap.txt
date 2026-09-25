@@ -7,4 +7,4 @@ SVar:TrigSubCounter:DB$ RemoveCounter | Defined$ Self | CounterType$ DEPLETION |
 A:AB$ Mana | Cost$ T | Produced$ Combo W U | Amount$ 1 | SubAbility$ AddCounter | SpellDescription$ Add {W} or {U}. Put a depletion counter on this land.
 SVar:AddCounter:DB$ PutCounter | Defined$ Self | CounterType$ DEPLETION | CounterNum$ 1
 SVar:AICounterOverrideDEPLETION:Negative
-Oracle:Land Cap doesn't untap during your untap step if it has a depletion counter on it.\nAt the beginning of your upkeep, remove a depletion counter from Land Cap.\n{T}: Add {W} or {U}. Put a depletion counter on Land Cap.
+Oracle:This land doesn't untap during your untap step if it has a depletion counter on it.\nAt the beginning of your upkeep, remove a depletion counter from this land.\n{T}: Add {W} or {U}. Put a depletion counter on this land.

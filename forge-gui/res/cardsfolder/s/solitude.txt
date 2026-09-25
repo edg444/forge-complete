@@ -10,4 +10,4 @@ SVar:TrigExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | Valid
 SVar:DBGainLife:DB$ GainLife | Defined$ TargetedController | LifeAmount$ X
 SVar:X:Targeted$CardPower
 DeckHas:Ability$LifeGain
-Oracle:Flash\nLifelink\nWhen Solitude enters, exile up to one other target creature. That creature's controller gains life equal to its power.\nEvoke—Exile a white card from your hand.
+Oracle:Flash\nLifelink\nWhen this creature enters, exile up to one other target creature. That creature's controller gains life equal to its power.\nEvoke—Exile a white card from your hand.

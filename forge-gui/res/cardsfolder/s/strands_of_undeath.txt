@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 A:AB$ Regenerate | Cost$ B | Defined$ Enchanted | SpellDescription$ Regenerate enchanted creature.
 SVar:TrigDiscard:DB$ Discard | ValidTgts$ Player | TgtPrompt$ Select a player | NumCards$ 2 | Mode$ TgtChoose
 SVar:NonStackingAttachEffect:True
-Oracle:Enchant creature\nWhen Strands of Undeath enters, target player discards two cards.\n{B}: Regenerate enchanted creature.
+Oracle:Enchant creature\nWhen this Aura enters, target player discards two cards.\n{B}: Regenerate enchanted creature.

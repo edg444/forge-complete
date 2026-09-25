@@ -3,4 +3,4 @@ ManaCost:UR
 Types:Creature Goblin
 PT:1/1
 A:AB$ Pump | Cost$ UR | Defined$ Self | KW$ Flying | SpellDescription$ This creature gains flying until end of turn.
-Oracle:{U/R}: Stream Hopper gains flying until end of turn.
+Oracle:{U/R}: This creature gains flying until end of turn.

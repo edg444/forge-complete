@@ -8,4 +8,4 @@ SVar:GroundPlasma:DB$ Clone | Defined$ Self | SetPower$ 3 | SetToughness$ 3 | Sp
 SVar:AirPlasma:DB$ Clone | Defined$ Self | SetPower$ 2 | SetToughness$ 2 | AddKeywords$ Flying | SpellDescription$ CARDNAME is 2/2 with flying.
 SVar:WallPlasma:DB$ Clone | Defined$ Self | SetPower$ 1 | SetToughness$ 6 | AddKeywords$ Defender | SpellDescription$ CARDNAME is 1/6 with defender.
 AI:RemoveDeck:All
-Oracle:As Primal Plasma enters, it becomes your choice of a 3/3 creature, a 2/2 creature with flying, or a 1/6 creature with defender.
+Oracle:As this creature enters, it becomes your choice of a 3/3 creature, a 2/2 creature with flying, or a 1/6 creature with defender.

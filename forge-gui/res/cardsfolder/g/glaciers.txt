@@ -5,4 +5,4 @@ T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | E
 SVar:TrigUpkeep:DB$ Sacrifice | UnlessPayer$ You | UnlessCost$ W U
 S:Mode$ Continuous | Affected$ Mountain | AddType$ Plains | RemoveLandTypes$ True | Description$ All Mountains are Plains.
 AI:RemoveDeck:Random
-Oracle:At the beginning of your upkeep, sacrifice Glaciers unless you pay {W}{U}.\nAll Mountains are Plains.
+Oracle:At the beginning of your upkeep, sacrifice this enchantment unless you pay {W}{U}.\nAll Mountains are Plains.

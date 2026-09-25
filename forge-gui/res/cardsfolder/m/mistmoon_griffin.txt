@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Battlefield | Destination$ 
 SVar:TrigExileMe:DB$ ChangeZone | Defined$ TriggeredNewCardLKICopy | Origin$ Graveyard | Destination$ Exile | SubAbility$ DBReturnCreature
 SVar:DBReturnCreature:DB$ ChangeZoneAll | ChangeType$ Creature.YouOwn+TopGraveyardCreature | Origin$ Graveyard | Destination$ Battlefield
 SVar:NeedsOrderedGraveyard:TRUE
-Oracle:Flying\nWhen Mistmoon Griffin dies, exile Mistmoon Griffin, then return the top creature card of your graveyard to the battlefield.
+Oracle:Flying\nWhen this creature dies, exile it, then return the top creature card of your graveyard to the battlefield.

@@ -7,4 +7,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | CanBlockAny$ True | Description$ Th
 T:Mode$ Blocks | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ Whenever this creature blocks, it gets +1/+1 until end of turn for each creature it's blocking.
 SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +X | NumDef$ +X
 SVar:X:Count$Valid Creature.blockedBySource
-Oracle:Flying\nGuardian of the Gateless can block any number of creatures.\nWhenever Guardian of the Gateless blocks, it gets +1/+1 until end of turn for each creature it's blocking.
+Oracle:Flying\nThis creature can block any number of creatures.\nWhenever this creature blocks, it gets +1/+1 until end of turn for each creature it's blocking.

@@ -7,4 +7,4 @@ A:AB$ PutCounter | Cost$ 3 | CounterType$ ICE | CounterNum$ 1 | SpellDescription
 A:AB$ Mana | Cost$ SubCounter<1/ICE> | Produced$ C | SpellDescription$ Add {C}.
 AI:RemoveDeck:All
 SVar:AICounterOverrideICE:Positive
-Oracle:Iceberg enters with X ice counters on it.\n{3}: Put an ice counter on Iceberg.\nRemove an ice counter from Iceberg: Add {C}.
+Oracle:This enchantment enters with X ice counters on it.\n{3}: Put an ice counter on this enchantment.\nRemove an ice counter from this enchantment: Add {C}.

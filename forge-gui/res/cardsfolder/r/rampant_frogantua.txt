@@ -12,4 +12,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:Y:TriggerCount$DamageAmount
 SVar:Z:Count$ValidGraveyard Land.YouOwn+IsRemembered
 DeckHas:Ability$Mill
-Oracle:Trample\nRampant Frogantua gets +10/+10 for each player who has lost the game.\nWhenever Rampant Frogantua deals combat damage to a player, you may mill that many cards. Put any number of land cards from among them onto the battlefield tapped.
+Oracle:Trample\nThis creature gets +10/+10 for each player who has lost the game.\nWhenever this creature deals combat damage to a player, you may mill that many cards. Put any number of land cards from among them onto the battlefield tapped.

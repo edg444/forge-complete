@@ -7,4 +7,4 @@ SVar:TrigDamage:DB$ DealDamage | NumDmg$ 2 | ValidTgts$ Any | ConditionManaSpent
 SVar:ManaNeededToAvoidNegativeEffect:red
 AI:RemoveDeck:Random
 DeckNeeds:Color$Red
-Oracle:When Steamcore Weird enters, if {R} was spent to cast it, it deals 2 damage to any target.
+Oracle:When this creature enters, if {R} was spent to cast it, it deals 2 damage to any target.

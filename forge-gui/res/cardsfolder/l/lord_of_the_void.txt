@@ -8,4 +8,4 @@ SVar:TrigExile:DB$ Dig | DigNum$ 7 | ChangeNum$ All | Defined$ TriggeredTarget |
 SVar:PickOne:DB$ ChooseCard | Defined$ You | Amount$ 1 | Mandatory$ True | ChoiceTitle$ Choose creature to put on the battlefield under your control | Choices$ Creature.IsRemembered | ChoiceZone$ Exile | SubAbility$ MoveChosen
 SVar:MoveChosen:DB$ ChangeZone | Origin$ Exile | Destination$ Battlefield | GainControl$ True | Defined$ ChosenCard | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:Flying\nWhenever Lord of the Void deals combat damage to a player, exile the top seven cards of that player's library, then put a creature card from among them onto the battlefield under your control.
+Oracle:Flying\nWhenever this creature deals combat damage to a player, exile the top seven cards of that player's library, then put a creature card from among them onto the battlefield under your control.

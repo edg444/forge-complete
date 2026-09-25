@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Forest
 T:Mode$ SpellCast | ValidCard$ Treefolk | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPump | TriggerDescription$ Whenever you cast a Treefolk spell, this creature gets +2/+2 until end of turn.
 SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +2 | NumDef$ +2
 SVar:BuffedBy:Forest,Treefolk
-Oracle:Whenever a Forest you control enters, Battlewand Oak gets +2/+2 until end of turn.\nWhenever you cast a Treefolk spell, Battlewand Oak gets +2/+2 until end of turn.
+Oracle:Whenever a Forest you control enters, this creature gets +2/+2 until end of turn.\nWhenever you cast a Treefolk spell, this creature gets +2/+2 until end of turn.

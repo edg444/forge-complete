@@ -6,4 +6,4 @@ T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player,Battle | Comba
 SVar:TrigSurveil:DB$ Surveil | Amount$ 1 | SubAbility$ DBChangeZone
 SVar:DBChangeZone:DB$ ChangeZone | Optional$ True | ChangeType$ Land.YouOwn | Origin$ Graveyard | Destination$ Battlefield | Hidden$ True | ChangeNum$ 1 | Tapped$ True
 DeckHas:Ability$Graveyard
-Oracle:Whenever Deeproot Wayfinder deals combat damage to a player or battle, surveil 1, then you may return a land card from your graveyard to the battlefield tapped. (To surveil 1, look at the top card of your library. You may put that card into your graveyard.)
+Oracle:Whenever this creature deals combat damage to a player or battle, surveil 1, then you may return a land card from your graveyard to the battlefield tapped. (To surveil 1, look at the top card of your library. You may put that card into your graveyard.)

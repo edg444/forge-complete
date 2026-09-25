@@ -9,4 +9,4 @@ SVar:TrigDiscard:DB$ Discard | Mode$ Hand | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | NumCards$ 2
 DeckHas:Ability$Discard
 DeckHints:Color$Red
-Oracle:Kicker {R} (You may pay an additional {R} as you cast this spell.)\nFlying\nWhen Battlewing Mystic enters, if it was kicked, discard your hand, then draw two cards.
+Oracle:Kicker {R} (You may pay an additional {R} as you cast this spell.)\nFlying\nWhen this creature enters, if it was kicked, discard your hand, then draw two cards.

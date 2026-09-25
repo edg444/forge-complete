@@ -5,4 +5,4 @@ PT:3/3
 K:Mentor
 K:CARDNAME can't attack or block alone.
 DeckHas:Ability$Counters
-Oracle:Mentor (Whenever this creature attacks, put a +1/+1 counter on target attacking creature with lesser power.)\nWojek Bodyguard can't attack or block alone.
+Oracle:Mentor (Whenever this creature attacks, put a +1/+1 counter on target attacking creature with lesser power.)\nThis creature can't attack or block alone.

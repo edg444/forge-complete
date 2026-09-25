@@ -4,4 +4,4 @@ Types:Land Forest
 R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This land enters tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ GainLife | Cost$ G T | LifeAmount$ 1 | IsPresent$ Permanent.Green+YouCtrl | PresentCompare$ GE2 | SpellDescription$ You gain 1 life. Activate only if you control two or more green permanents.
-Oracle:({T}: Add {G}.)\nSapseep Forest enters tapped.\n{G}, {T}: You gain 1 life. Activate only if you control two or more green permanents.
+Oracle:({T}: Add {G}.)\nThis land enters tapped.\n{G}, {T}: You gain 1 life. Activate only if you control two or more green permanents.

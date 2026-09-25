@@ -14,4 +14,4 @@ SVar:Z:Count$ValidGraveyard Creature.YouCtrl
 AI:RemoveDeck:Random
 DeckHints:Ability$Discard|Mill|Sacrifice
 DeckHas:Ability$Counters|Discard|Graveyard
-Oracle:Trample\nAt the beginning of your upkeep, exile a creature card from your graveyard. If you do, put a +1/+1 counter on Charnel Troll. Otherwise, sacrifice it.\n{B}{G}, Discard a creature card: Put a +1/+1 counter on Charnel Troll.
+Oracle:Trample\nAt the beginning of your upkeep, exile a creature card from your graveyard. If you do, put a +1/+1 counter on this creature. Otherwise, sacrifice it.\n{B}{G}, Discard a creature card: Put a +1/+1 counter on this creature.

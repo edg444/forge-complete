@@ -7,4 +7,4 @@ SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Creature.attacking+Other | TgtPr
 K:Crew:2
 SVar:HasAttackEffect:TRUE
 DeckHas:Type$Counters
-Oracle:Stowage — Whenever Goliath Truck attacks, put two +1/+1 counters on another target attacking creature.\nCrew 2 (Tap any number of creatures you control with total power 2 or more: This Vehicle becomes an artifact creature until end of turn.)
+Oracle:Stowage — Whenever this Vehicle attacks, put two +1/+1 counters on another target attacking creature.\nCrew 2 (Tap any number of creatures you control with total power 2 or more: This Vehicle becomes an artifact creature until end of turn.)

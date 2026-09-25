@@ -12,4 +12,4 @@ SVar:Y:TriggerCount$LifeAmount
 A:AB$ Mana | Cost$ T | Produced$ Any | SpellDescription$ Add one mana of any color.
 DeckHints:Ability$LifeGain
 DeckHas:Ability$Counters
-Oracle:Whenever you gain life, put that many ribbon counters on Prize Pig. Then if there are three or more ribbon counters on Prize Pig, remove those counters and untap it.\n{T}: Add one mana of any color.
+Oracle:Whenever you gain life, put that many ribbon counters on this creature. Then if there are three or more ribbon counters on this creature, remove those counters and untap it.\n{T}: Add one mana of any color.

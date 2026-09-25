@@ -8,4 +8,4 @@ SVar:TrigSac:DB$ Sacrifice | UnlessCost$ tapXType<1/Artifact;Land/artifact or la
 A:AB$ Mana | Cost$ T | Produced$ Any | SpellDescription$ Add one mana of any color.
 SVar:NeedsToPlay:Land.untapped+YouCtrl;Artifact.untapped+YouCtrl
 DeckHints:Type$Artifact
-Oracle:Public Thoroughfare enters tapped.\nWhen Public Thoroughfare enters, sacrifice it unless you tap an untapped artifact or land you control.\n{T}: Add one mana of any color.
+Oracle:This land enters tapped.\nWhen this land enters, sacrifice it unless you tap an untapped artifact or land you control.\n{T}: Add one mana of any color.

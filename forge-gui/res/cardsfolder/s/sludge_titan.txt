@@ -10,4 +10,4 @@ SVar:DBChangeZone:DB$ ChangeZone | Hidden$ True | Origin$ Graveyard,Exile | Dest
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Mill
-Oracle:Trample\nWhenever Sludge Titan enters or attacks, mill five cards. You may put a creature card and/or a land card from among them into your hand.
+Oracle:Trample\nWhenever this creature enters or attacks, mill five cards. You may put a creature card and/or a land card from among them into your hand.

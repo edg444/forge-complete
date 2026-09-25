@@ -5,4 +5,4 @@ PT:3/1
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Flying | CheckSVar$ X | Description$ This creature has flying as long as you've cast an instant or sorcery spell this turn.
 SVar:X:Count$ThisTurnCast_Instant.YouCtrl,Sorcery.YouCtrl
 DeckHints:Type$Instant|Sorcery
-Oracle:Leapfrog has flying as long as you've cast an instant or sorcery spell this turn.
+Oracle:This creature has flying as long as you've cast an instant or sorcery spell this turn.

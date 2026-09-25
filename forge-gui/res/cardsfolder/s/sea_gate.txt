@@ -6,4 +6,4 @@ SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 K:ETBReplacement:Other:ChooseColor
 SVar:ChooseColor:DB$ ChooseColor | Defined$ You | Exclude$ blue | AILogic$ MostProminentInComputerDeck | SpellDescription$ As this land enters, choose a color other than blue.
 A:AB$ Mana | Cost$ T | Produced$ Combo U Chosen | SpellDescription$ Add {U} or one mana of the chosen color.
-Oracle:Sea Gate enters tapped.\nAs Sea Gate enters, choose a color other than blue.\n{T}: Add {U} or one mana of the chosen color.
+Oracle:This land enters tapped.\nAs this land enters, choose a color other than blue.\n{T}: Add {U} or one mana of the chosen color.

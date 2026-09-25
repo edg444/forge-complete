@@ -7,4 +7,4 @@ SVar:TrigDraw:DB$ Draw
 AI:RemoveDeck:Random
 DeckNeeds:Color$Green
 DeckHints:Color$Green
-Oracle:When Rhox Meditant enters, if you control a green permanent, draw a card.
+Oracle:When this creature enters, if you control a green permanent, draw a card.

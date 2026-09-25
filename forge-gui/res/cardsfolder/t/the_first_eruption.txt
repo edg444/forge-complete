@@ -8,4 +8,4 @@ SVar:TrigSac:DB$ Sacrifice | SacValid$ Mountain | RememberSacrificed$ True | Sta
 SVar:DBDamageAll:DB$ DamageAll | NumDmg$ 3 | ValidCards$ Creature | ConditionCheckSVar$ X | StackDescription$ None | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Amount
-Oracle:(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)\nI — The First Eruption deals 1 damage to each creature without flying.\nII — Add {R}{R}.\nIII — Sacrifice a Mountain. If you do, The First Eruption deals 3 damage to each creature.
+Oracle:(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)\nI — This Saga deals 1 damage to each creature without flying.\nII — Add {R}{R}.\nIII — Sacrifice a Mountain. If you do, this Saga deals 3 damage to each creature.

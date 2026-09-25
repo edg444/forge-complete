@@ -6,4 +6,4 @@ A:AB$ ChangeZone | Cost$ 0 | Origin$ Graveyard | Destination$ Exile | ValidTgts$
 SVar:DBUntap:DB$ Untap | Defined$ Self
 DeckHas:Ability$Graveyard
 DeckHints:Ability$Mill & Keyword$Dredge
-Oracle:{0}: If Eater of the Dead is tapped, exile target creature card from a graveyard and untap Eater of the Dead.
+Oracle:{0}: If this creature is tapped, exile target creature card from a graveyard and untap this creature.

@@ -9,4 +9,4 @@ SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 2 | ConditionCheckSVar
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Amount
 DeckHas:Ability$LifeGain
-Oracle:Flying\nWhen Carrion Imp enters, you may exile target creature card from a graveyard. If you do, you gain 2 life.
+Oracle:Flying\nWhen this creature enters, you may exile target creature card from a graveyard. If you do, you gain 2 life.

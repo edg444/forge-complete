@@ -5,4 +5,4 @@ PT:1/1
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Battlefield | Destination$ Graveyard | Execute$ TrigDiscard | TriggerDescription$ When this creature dies, each opponent discards a card.
 SVar:TrigDiscard:DB$ Discard | Defined$ Opponent | Mode$ TgtChoose
 SVar:SacMe:1
-Oracle:When Elvish Doomsayer dies, each opponent discards a card.
+Oracle:When this creature dies, each opponent discards a card.

@@ -7,4 +7,4 @@ SVar:TrigExchangeControl:DB$ Pump | ValidTgts$ Permanent.YouCtrl+nonLand | TgtPr
 SVar:DBExchange:DB$ ExchangeControl | Defined$ ParentTarget | ValidTgts$ Permanent.OppCtrl | TgtPrompt$ Select target permanent an opponent controls that shares a card type with it | TargetsWithSharedCardType$ ParentTarget
 AI:RemoveDeck:All
 AI:RemoveDeck:Random
-Oracle:Inspired — Whenever Daring Thief becomes untapped, you may exchange control of target nonland permanent you control and target permanent an opponent controls that shares a card type with it.
+Oracle:Inspired — Whenever this creature becomes untapped, you may exchange control of target nonland permanent you control and target permanent an opponent controls that shares a card type with it.

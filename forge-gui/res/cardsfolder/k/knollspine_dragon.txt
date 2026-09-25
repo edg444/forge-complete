@@ -8,4 +8,4 @@ SVar:TrigDiscard:DB$ Discard | Mode$ Hand | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | NumCards$ X | Defined$ You | ValidTgts$ Opponent
 SVar:X:TargetedPlayer$DamageThisTurn
 AI:RemoveDeck:All
-Oracle:Flying\nWhen Knollspine Dragon enters, you may discard your hand and draw cards equal to the damage dealt to target opponent this turn.
+Oracle:Flying\nWhen this creature enters, you may discard your hand and draw cards equal to the damage dealt to target opponent this turn.

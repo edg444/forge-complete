@@ -5,7 +5,7 @@ PT:3/5
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPumpAll | TriggerDescription$ When this creature enters, creatures your opponents control get -4/-0 until end of turn.
 SVar:TrigPumpAll:DB$ PumpAll | ValidCards$ Creature.OppCtrl | NumAtt$ -4 | IsCurse$ True
 AlternateMode:Adventure
-Oracle:When Sea Hag enters, creatures your opponents control get -4/-0 until end of turn.
+Oracle:When this creature enters, creatures your opponents control get -4/-0 until end of turn.
 
 ALTERNATE
 

@@ -6,4 +6,4 @@ A:AB$ TapOrUntap | Cost$ U T | ValidTgts$ Creature.Other | TgtPrompt$ Select ano
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Land.YouCtrl | OptionalDecider$ You | TriggerZones$ Battlefield | Execute$ TrigUntap | TriggerDescription$ Landfall — Whenever a land you control enters, you may untap this creature.
 SVar:TrigUntap:DB$ Untap | Defined$ Self
 AI:RemoveDeck:All
-Oracle:{U}, {T}: You may tap or untap another target creature.\nLandfall — Whenever a land you control enters, you may untap Tideforce Elemental.
+Oracle:{U}, {T}: You may tap or untap another target creature.\nLandfall — Whenever a land you control enters, you may untap this creature.

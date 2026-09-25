@@ -6,4 +6,4 @@ SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ Mana | Cost$ T | Produced$ U | SpellDescription$ Add {U}.
 A:AB$ Mana | Cost$ T Sac<1/CARDNAME> | Produced$ U | Amount$ 2 | SpellDescription$ Add {U}{U}.
 AI:RemoveDeck:All
-Oracle:Svyelunite Temple enters tapped.\n{T}: Add {U}.\n{T}, Sacrifice Svyelunite Temple: Add {U}{U}.
+Oracle:This land enters tapped.\n{T}: Add {U}.\n{T}, Sacrifice this land: Add {U}{U}.

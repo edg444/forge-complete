@@ -9,4 +9,4 @@ SVar:TrigPumpAll:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Shroud
 SVar:TrigSac:DB$ Sacrifice
 SVar:ManaNeededToAvoidNegativeEffect:green
 AI:RemoveDeck:Random
-Oracle:Flash\nWhen Plaxmanta enters, creatures you control gain shroud until end of turn. (They can't be the targets of spells or abilities.)\nWhen Plaxmanta enters, sacrifice it unless {G} was spent to cast it.
+Oracle:Flash\nWhen this creature enters, creatures you control gain shroud until end of turn. (They can't be the targets of spells or abilities.)\nWhen this creature enters, sacrifice it unless {G} was spent to cast it.

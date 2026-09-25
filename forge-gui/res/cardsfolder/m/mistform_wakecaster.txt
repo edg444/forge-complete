@@ -8,4 +8,4 @@ SVar:DBAnimate:DB$ Animate | Types$ ChosenType | RemoveCreatureTypes$ True
 A:AB$ ChooseType | Cost$ 2 U U T | Type$ Creature | Defined$ You | SubAbility$ DBAnimateAll | SpellDescription$ Choose a creature type. Each creature you control becomes that type until end of turn.
 SVar:DBAnimateAll:DB$ AnimateAll | ValidCards$ Creature.YouCtrl | Types$ ChosenType | RemoveCreatureTypes$ True
 AI:RemoveDeck:All
-Oracle:Flying\n{1}: Mistform Wakecaster becomes the creature type of your choice until end of turn.\n{2}{U}{U}, {T}: Choose a creature type. Each creature you control becomes that type until end of turn.
+Oracle:Flying\n{1}: This creature becomes the creature type of your choice until end of turn.\n{2}{U}{U}, {T}: Choose a creature type. Each creature you control becomes that type until end of turn.

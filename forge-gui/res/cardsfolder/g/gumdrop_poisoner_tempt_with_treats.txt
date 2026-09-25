@@ -9,7 +9,7 @@ SVar:X:Count$LifeYouGainedThisTurn
 DeckHas:Ability$LifeGain|Token & Type$Food
 DeckHints:Ability$LifeGain
 AlternateMode:Adventure
-Oracle:Lifelink\nWhen Gumdrop Poisoner enters, up to one target creature gets -X/-X until end of turn, where X is the amount of life you gained this turn.
+Oracle:Lifelink\nWhen this creature enters, up to one target creature gets -X/-X until end of turn, where X is the amount of life you gained this turn.
 
 ALTERNATE
 

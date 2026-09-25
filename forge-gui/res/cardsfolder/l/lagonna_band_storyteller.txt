@@ -9,4 +9,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$CardManaCost
 DeckHas:Ability$LifeGain
 DeckNeeds:Type$Enchantment
-Oracle:When Lagonna-Band Storyteller enters, you may put target enchantment card from your graveyard on top of your library. If you do, you gain life equal to its mana value.
+Oracle:When this creature enters, you may put target enchantment card from your graveyard on top of your library. If you do, you gain life equal to its mana value.

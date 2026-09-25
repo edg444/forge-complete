@@ -6,4 +6,4 @@ K:Reach
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 1 | AddKeyword$ First Strike | IsPresent$ Permanent.Red+YouCtrl | Description$ As long as you control a red permanent, this creature gets +1/+0 and has first strike.
 SVar:BuffedBy:Permanent.Red
 DeckHints:Color$Red
-Oracle:Reach (This creature can block creatures with flying.)\nAs long as you control a red permanent, Ember Weaver gets +1/+0 and has first strike.
+Oracle:Reach (This creature can block creatures with flying.)\nAs long as you control a red permanent, this creature gets +1/+0 and has first strike.

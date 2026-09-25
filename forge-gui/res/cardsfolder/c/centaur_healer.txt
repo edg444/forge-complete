@@ -5,4 +5,4 @@ PT:3/3
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ When this creature enters, you gain 3 life.
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 3
 DeckHas:Ability$Token
-Oracle:When Centaur Healer enters, you gain 3 life.
+Oracle:When this creature enters, you gain 3 life.

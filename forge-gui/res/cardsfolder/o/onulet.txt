@@ -7,4 +7,4 @@ SVar:TrigSac:DB$ GainLife | Defined$ TriggeredCardController | LifeAmount$ 2
 SVar:SacMe:3
 DeckHas:Ability$LifeGain
 DeckHints:Ability$Sacrifice
-Oracle:When Onulet dies, you gain 2 life.
+Oracle:When this creature dies, you gain 2 life.

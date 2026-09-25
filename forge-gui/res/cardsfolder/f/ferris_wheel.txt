@@ -10,4 +10,4 @@ SVar:TrigPhaseIn:DB$ Phases | Defined$ Remembered | PhaseInOrOut$ True | SubAbil
 SVar:DBExileSelf:DB$ ChangeZone | Origin$ Command | Destination$ Exile | Defined$ Self
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigReset | Static$ True
 SVar:TrigReset:DB$ Cleanup | ClearRemembered$ True
-Oracle:Visit — Choose target creature that hasn't been phased out with Ferris Wheel. That creature phases out until you roll a 3 or less while rolling to visit your Attractions.
+Oracle:Visit — Choose target creature that hasn't been phased out with this Attraction. That creature phases out until you roll a 3 or less while rolling to visit your Attractions.

@@ -9,4 +9,4 @@ SVar:DBDig:DB$ Dig | DigNum$ 1 | Reveal$ True | ChangeNum$ All | ChangeValid$ Ca
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ X | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$CardManaCost
-Oracle:Trample\nWhen Sifter Wurm enters, scry 3, then reveal the top card of your library. You gain life equal to that card's mana value.
+Oracle:Trample\nWhen this creature enters, scry 3, then reveal the top card of your library. You gain life equal to that card's mana value.

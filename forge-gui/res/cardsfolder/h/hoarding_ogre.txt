@@ -8,4 +8,4 @@ SVar:Token1:DB$ Token | TokenScript$ c_a_treasure_sac | TokenOwner$ You | SpellD
 SVar:Token2:DB$ Token | TokenAmount$ 2 | TokenScript$ c_a_treasure_sac | TokenOwner$ You | SpellDescription$ 10—19 | Create two Treasure tokens.
 SVar:Token3:DB$ Token | TokenAmount$ 3 | TokenScript$ c_a_treasure_sac | TokenOwner$ You | SpellDescription$ 20 | Create three Treasure tokens.
 DeckHas:Ability$Token
-Oracle:Whenever Hoarding Ogre attacks, roll a d20.\n1—9 | Create a Treasure token. (It's an artifact with "{T}, Sacrifice this token: Add one mana of any color.")\n10—19 | Create two Treasure tokens.\n20 | Create three Treasure tokens.
+Oracle:Whenever this creature attacks, roll a d20.\n1—9 | Create a Treasure token. (It's an artifact with "{T}, Sacrifice this token: Add one mana of any color.")\n10—19 | Create two Treasure tokens.\n20 | Create three Treasure tokens.

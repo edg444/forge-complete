@@ -10,4 +10,4 @@ SVar:DBPlay:DB$ Effect | StaticAbilities$ STPlay | RememberObjects$ Imprinted | 
 SVar:STPlay:Mode$ Continuous | MayPlay$ True | Affected$ Card.IsRemembered | AffectedZone$ Exile | Description$ You may play this card this turn.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearImprinted$ True
 A:AB$ DealDamage | Cost$ T PayEnergy<3> | ValidTgts$ Any | NumDmg$ 3 | SpellDescription$ This creature deals 3 damage to any target.
-Oracle:Haste\nWhenever Synth Eradicator attacks, exile the top card of your library. You may get {E}{E} (two energy counters). If you don't, you may play that card this turn.\n{T}, Pay {E}{E}{E}: Synth Eradicator deals 3 damage to any target.
+Oracle:Haste\nWhenever this creature attacks, exile the top card of your library. You may get {E}{E} (two energy counters). If you don't, you may play that card this turn.\n{T}, Pay {E}{E}{E}: This creature deals 3 damage to any target.

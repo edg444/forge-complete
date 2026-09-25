@@ -7,4 +7,4 @@ T:Mode$ DamageDoneOnce | ValidTarget$ Creature.Self | Execute$ TrigSac | Trigger
 SVar:TrigSac:DB$ Sacrifice | SacValid$ Permanent | Amount$ X
 SVar:X:TriggerCount$DamageAmount
 AI:RemoveDeck:All
-Oracle:{T}: Add {B}.\n{2}{B}: Phyrexian Totem becomes a 5/5 black Phyrexian Horror artifact creature with trample until end of turn.\nWhenever Phyrexian Totem is dealt damage, if it's a creature, sacrifice that many permanents.
+Oracle:{T}: Add {B}.\n{2}{B}: This artifact becomes a 5/5 black Phyrexian Horror artifact creature with trample until end of turn.\nWhenever this permanent is dealt damage, if it's a creature, sacrifice that many permanents.

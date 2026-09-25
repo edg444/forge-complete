@@ -8,4 +8,4 @@ SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ OIL | CounterN
 A:AB$ Draw | Cost$ U SubCounter<1/OIL/NICKNAME> | SubAbility$ DBScry | SpellDescription$ Draw a card, then scry 2.
 SVar:DBScry:DB$ Scry | ScryNum$ 2
 DeckHas:Ability$Counters
-Oracle:Flying\nWhenever you cast a noncreature spell, put an oil counter on Serum Sovereign.\n{U}, Remove an oil counter from Serum Sovereign: Draw a card, then scry 2.
+Oracle:Flying\nWhenever you cast a noncreature spell, put an oil counter on this creature.\n{U}, Remove an oil counter from this creature: Draw a card, then scry 2.

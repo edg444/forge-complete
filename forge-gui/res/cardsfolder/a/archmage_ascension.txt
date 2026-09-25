@@ -9,4 +9,4 @@ SVar:X:Count$YouDrewThisTurn
 # TODO: improve AI tutoring logic
 AI:RemoveDeck:Random
 SVar:MaxQuestEffect:6
-Oracle:At the beginning of each end step, if you drew two or more cards this turn, you may put a quest counter on Archmage Ascension.\nAs long as Archmage Ascension has six or more quest counters on it, if you would draw a card, you may instead search your library for a card, put that card into your hand, then shuffle.
+Oracle:At the beginning of each end step, if you drew two or more cards this turn, you may put a quest counter on this enchantment.\nAs long as this enchantment has six or more quest counters on it, if you would draw a card, you may instead search your library for a card, put that card into your hand, then shuffle.

@@ -3,4 +3,4 @@ ManaCost:3 R R
 Types:Creature Cyclops
 PT:5/5
 S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't block.
-Oracle:Hulking Cyclops can't block.
+Oracle:This creature can't block.

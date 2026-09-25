@@ -5,4 +5,4 @@ PT:3/3
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigAssemble | TriggerDescription$ When this creature enters, it assembles a Contraption for each Contraption you control.
 SVar:TrigAssemble:DB$ AssembleContraption | Amount$ X
 SVar:X:Count$Valid Contraption.YouCtrl
-Oracle:When Steamflogger of the Month enters, it assembles a Contraption for each Contraption you control. (To assemble a Contraption, put the top card of your Contraption deck face up onto one of your sprockets.)
+Oracle:When this creature enters, it assembles a Contraption for each Contraption you control. (To assemble a Contraption, put the top card of your Contraption deck face up onto one of your sprockets.)

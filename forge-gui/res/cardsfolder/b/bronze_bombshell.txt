@@ -7,4 +7,4 @@ SVar:TrigSac:DB$ SacrificeAll | Defined$ Self | RememberSacrificed$ True | SubAb
 SVar:DBDmg:DB$ DealDamage | Defined$ RememberedController | NumDmg$ 7 | ConditionDefined$ Remembered | ConditionPresent$ Card | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:DonateMe:5
-Oracle:When a player other than Bronze Bombshell's owner controls it, that player sacrifices it. If the player does, Bronze Bombshell deals 7 damage to the player.
+Oracle:When a player other than this creature's owner controls it, that player sacrifices it. If the player does, this creature deals 7 damage to the player.

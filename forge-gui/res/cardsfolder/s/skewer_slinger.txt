@@ -7,4 +7,4 @@ T:Mode$ AttackerBlockedByCreature | ValidCard$ Creature | ValidBlocker$ Card.Sel
 T:Mode$ AttackerBlockedByCreature | ValidCard$ Card.Self | ValidBlocker$ Creature | Execute$ TrigDamageBlocker | Secondary$ True | TriggerDescription$ Whenever this creature blocks or becomes blocked by a creature, this creature deals 1 damage to that creature.
 SVar:TrigDamageAttacker:DB$ DealDamage | Defined$ TriggeredAttackerLKICopy | NumDmg$ 1
 SVar:TrigDamageBlocker:DB$ DealDamage | Defined$ TriggeredBlockerLKICopy | NumDmg$ 1
-Oracle:Reach\nWhenever Skewer Slinger blocks or becomes blocked by a creature, Skewer Slinger deals 1 damage to that creature.
+Oracle:Reach\nWhenever this creature blocks or becomes blocked by a creature, this creature deals 1 damage to that creature.

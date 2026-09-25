@@ -6,4 +6,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 3 | AddToughness$ 3 | Add
 SVar:BuffedBy:Griffin
 AI:RemoveDeck:Random
 DeckHints:Type$Griffin
-Oracle:As long as you control a Griffin creature, Griffin Rider gets +3/+3 and has flying.
+Oracle:As long as you control a Griffin creature, this creature gets +3/+3 and has flying.

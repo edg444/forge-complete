@@ -5,4 +5,4 @@ PT:5/5
 T:Mode$ SpellCast | ValidCard$ Creature | ValidActivatingPlayer$ You | Execute$ TrigSac | TriggerZones$ Battlefield | TriggerDescription$ When you cast a creature spell, sacrifice this creature.
 SVar:TrigSac:DB$ Sacrifice
 AI:RemoveDeck:All
-Oracle:When you cast a creature spell, sacrifice Skittering Monstrosity.
+Oracle:When you cast a creature spell, sacrifice this creature.

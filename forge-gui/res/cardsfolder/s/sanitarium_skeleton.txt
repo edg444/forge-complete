@@ -5,4 +5,4 @@ PT:1/2
 A:AB$ ChangeZone | Cost$ 2 B | Origin$ Graveyard | Destination$ Hand | ActivationZone$ Graveyard | SpellDescription$ Return this card from your graveyard to your hand.
 SVar:DiscardMe:2
 SVar:SacMe:1
-Oracle:{2}{B}: Return Sanitarium Skeleton from your graveyard to your hand.
+Oracle:{2}{B}: Return this card from your graveyard to your hand.

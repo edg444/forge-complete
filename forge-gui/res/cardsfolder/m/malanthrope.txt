@@ -9,4 +9,4 @@ SVar:DBCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Valid Creature
 DeckHas:Ability$Counters
-Oracle:Flying\nScavenge the Dead — When Malanthrope enters, exile target player's graveyard. Put a +1/+1 counter on Malanthrope for each creature card exiled this way.
+Oracle:Flying\nScavenge the Dead — When this creature enters, exile target player's graveyard. Put a +1/+1 counter on this creature for each creature card exiled this way.

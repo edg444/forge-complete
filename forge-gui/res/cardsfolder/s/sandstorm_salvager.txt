@@ -8,4 +8,4 @@ A:AB$ PutCounterAll | Cost$ 2 T | ValidCards$ Creature.token+YouCtrl | SubAbilit
 SVar:DBPumpAll:DB$ PumpAll | KW$ Trample | ValidCards$ Creature.token+YouCtrl | SpellDescription$ They gain trample until end of turn.
 DeckHas:Ability$Token|Counters & Type$Golem
 DeckHints:Ability$Token
-Oracle:When Sandstorm Salvager enters, create a 3/3 colorless Golem artifact creature token.\n{2}, {T}: Put a +1/+1 counter on each creature token you control. They gain trample until end of turn.
+Oracle:When this creature enters, create a 3/3 colorless Golem artifact creature token.\n{2}, {T}: Put a +1/+1 counter on each creature token you control. They gain trample until end of turn.

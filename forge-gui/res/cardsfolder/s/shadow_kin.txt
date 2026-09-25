@@ -9,4 +9,4 @@ SVar:DBExileSK:DB$ ChangeZone | Origin$ Graveyard | Destination$ Exile | Hidden$
 SVar:DBCloneSK:DB$ Clone | ConditionDefined$ Imprinted | ConditionZone$ Exile | ConditionPresent$ Card | Defined$ Imprinted | GainThisAbility$ True
 DeckHas:Ability$Mill
 DeckHints:Ability$Graveyard
-Oracle:Flash\nAt the beginning of your upkeep, each player mills three cards. You may exile a creature card from among the cards milled this way. If you do, Shadow Kin becomes a copy of that card, except it has this ability.
+Oracle:Flash\nAt the beginning of your upkeep, each player mills three cards. You may exile a creature card from among the cards milled this way. If you do, this creature becomes a copy of that card, except it has this ability.

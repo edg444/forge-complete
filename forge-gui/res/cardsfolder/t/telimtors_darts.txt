@@ -2,4 +2,4 @@ Name:Telim'Tor's Darts
 ManaCost:2
 Types:Artifact
 A:AB$ DealDamage | Cost$ 2 T | ValidTgts$ Player,Planeswalker | TgtPrompt$ Select target player or planeswalker | NumDmg$ 1 | SpellDescription$ This artifact deals 1 damage to target player or planeswalker.
-Oracle:{2}, {T}: Telim'Tor's Darts deals 1 damage to target player or planeswalker.
+Oracle:{2}, {T}: This artifact deals 1 damage to target player or planeswalker.

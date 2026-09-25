@@ -7,4 +7,4 @@ SVar:DBLook:DB$ RevealHand | Defined$ ChosenPlayer | Look$ True | SubAbility$ DB
 SVar:DBNameCard:DB$ NameCard | Defined$ You | AILogic$ SorcerousSpyglass | SubAbility$ DBClear
 SVar:DBClear:DB$ Cleanup | ClearChosenPlayer$ True
 S:Mode$ CantBeActivated | ValidCard$ Card.NamedCard | ValidSA$ Activated.!ManaAbility | Description$ Activated abilities of sources with the chosen name can't be activated unless they're mana abilities.
-Oracle:As Sorcerous Spyglass enters, look at an opponent's hand, then choose any card name.\nActivated abilities of sources with the chosen name can't be activated unless they're mana abilities.
+Oracle:As this artifact enters, look at an opponent's hand, then choose any card name.\nActivated abilities of sources with the chosen name can't be activated unless they're mana abilities.

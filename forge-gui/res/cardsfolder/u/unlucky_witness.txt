@@ -10,4 +10,4 @@ SVar:Play1:Mode$ SpellCast | ValidCard$ Card.IsRemembered | ValidActivatingPlaye
 SVar:Play2:Mode$ LandPlayed | ValidCard$ Land.IsRemembered | TriggerZones$ Command | Execute$ ExileSelf | Static$ True
 SVar:ExileSelf:DB$ ChangeZone | Origin$ Command | Destination$ Exile
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:When Unlucky Witness dies, exile the top two cards of your library. Until your next end step, you may play one of those cards.
+Oracle:When this creature dies, exile the top two cards of your library. Until your next end step, you may play one of those cards.

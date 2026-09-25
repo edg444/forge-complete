@@ -4,4 +4,4 @@ Types:Creature Dinosaur
 PT:3/3
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 2 | AddKeyword$ Trample | IsPresent$ Dinosaur.Other+YouCtrl | Description$ As long as you control another Dinosaur, this creature gets +2/+0 and has trample.
 SVar:BuffedBy:Dinosaur
-Oracle:As long as you control another Dinosaur, Thrash of Raptors gets +2/+0 and has trample.
+Oracle:As long as you control another Dinosaur, this creature gets +2/+0 and has trample.

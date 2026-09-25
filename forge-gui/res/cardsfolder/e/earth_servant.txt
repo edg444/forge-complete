@@ -5,4 +5,4 @@ PT:4/4
 S:Mode$ Continuous | AffectedDefined$ Self | AddToughness$ X | Description$ This creature gets +0/+1 for each Mountain you control.
 SVar:X:Count$Valid Mountain.YouCtrl
 SVar:BuffedBy:Mountain
-Oracle:Earth Servant gets +0/+1 for each Mountain you control.
+Oracle:This creature gets +0/+1 for each Mountain you control.

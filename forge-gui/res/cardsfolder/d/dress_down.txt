@@ -10,4 +10,4 @@ SVar:TrigSac:DB$ Sacrifice | SacValid$ Self
 SVar:EndOfTurnLeavePlay:True
 AI:RemoveDeck:Random
 DeckHas:Ability$Sacrifice
-Oracle:Flash\nWhen Dress Down enters, draw a card.\nCreatures lose all abilities.\nAt the beginning of the end step, sacrifice Dress Down.
+Oracle:Flash\nWhen this enchantment enters, draw a card.\nCreatures lose all abilities.\nAt the beginning of the end step, sacrifice this enchantment.

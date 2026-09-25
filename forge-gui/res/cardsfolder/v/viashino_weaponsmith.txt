@@ -4,4 +4,4 @@ Types:Creature Lizard
 PT:2/2
 T:Mode$ AttackerBlockedByCreature | ValidCard$ Card.Self | ValidBlocker$ Creature | TriggerZones$ Battlefield | Execute$ TrigBlockedPump | TriggerDescription$ Whenever this creature becomes blocked by a creature, this creature gets +2/+2 until end of turn.
 SVar:TrigBlockedPump:DB$ Pump | Defined$ Self | NumAtt$ +2 | NumDef$ +2
-Oracle:Whenever Viashino Weaponsmith becomes blocked by a creature, Viashino Weaponsmith gets +2/+2 until end of turn.
+Oracle:Whenever this creature becomes blocked by a creature, this creature gets +2/+2 until end of turn.

@@ -8,4 +8,4 @@ SVar:DBDraw:DB$ Draw
 SVar:BuffedBy:Enchantment
 DeckHas:Ability$Counters
 DeckNeeds:Type$Enchantment
-Oracle:Constellation — Whenever an enchantment you control enters, put a +1/+1 counter on Setessan Champion and draw a card.
+Oracle:Constellation — Whenever an enchantment you control enters, put a +1/+1 counter on this creature and draw a card.

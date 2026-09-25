@@ -8,4 +8,4 @@ S:Mode$ Continuous | Affected$ Treasure.YouCtrl | AddType$ Equipment | AddStatic
 SVar:TreasureEquip:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddPower$ 2 | Description$ Equipped creature gets +2/+0.
 DeckHas:Ability$Token|Sacrifice & Type$Treasure|Equipment
 DeckHints:Type$Treasure|Pirate
-Oracle:Whenever Gemcutter Buccaneer or another Pirate you control enters, create a tapped Treasure token.\nTreasures you control are Equipment in addition to their other types and have "Equipped creature gets +2/+0," equip Pirate {1}, and equip {3}.
+Oracle:Whenever this creature or another Pirate you control enters, create a tapped Treasure token.\nTreasures you control are Equipment in addition to their other types and have "Equipped creature gets +2/+0," equip Pirate {1}, and equip {3}.

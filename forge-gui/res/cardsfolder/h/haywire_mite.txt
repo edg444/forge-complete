@@ -8,4 +8,4 @@ A:AB$ ChangeZone | Cost$ G Sac<1/CARDNAME> | ValidTgts$ Enchantment.nonCreature,
 SVar:SacMe:1
 DeckHas:Ability$LifeGain|Sacrifice
 DeckHints:Color$Green
-Oracle:When Haywire Mite dies, you gain 2 life.\n{G}, Sacrifice Haywire Mite: Exile target noncreature artifact or noncreature enchantment.
+Oracle:When this creature dies, you gain 2 life.\n{G}, Sacrifice this creature: Exile target noncreature artifact or noncreature enchantment.

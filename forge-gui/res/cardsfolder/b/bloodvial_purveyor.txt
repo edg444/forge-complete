@@ -12,4 +12,4 @@ SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +X | ConditionDefined$ Self | C
 SVar:DBPrintedPump:DB$ Pump | Defined$ Self | NumAtt$ +X | Duration$ Permanent | ConditionDefined$ Self | ConditionPresent$ Card.Self+PrintedTextActive
 SVar:X:Count$Valid Blood.token+DefenderCtrl
 SVar:HasAttackEffect:TRUE
-Oracle:Flying, trample\nWhenever an opponent casts a spell, that player creates a Blood token. (It's an artifact with "{1}, {T}, Discard a card, Sacrifice this token: Draw a card.")\nWhenever Bloodvial Purveyor attacks, it gets +1/+0 until end of turn for each Blood token defending player controls.
+Oracle:Flying, trample\nWhenever an opponent casts a spell, that player creates a Blood token. (It's an artifact with "{1}, {T}, Discard a card, Sacrifice this token: Draw a card.")\nWhenever this creature attacks, it gets +1/+0 until end of turn for each Blood token defending player controls.

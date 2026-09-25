@@ -9,4 +9,4 @@ SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | Descript
 SVar:HasBlockEffect:TRUE
 AI:RemoveDeck:All
 DeckHas:Ability$Counters
-Oracle:Whenever Spincrusher blocks, put a +1/+1 counter on it.\nRemove a +1/+1 counter from Spincrusher: Spincrusher can't be blocked this turn.
+Oracle:Whenever this creature blocks, put a +1/+1 counter on it.\nRemove a +1/+1 counter from this creature: This creature can't be blocked this turn.

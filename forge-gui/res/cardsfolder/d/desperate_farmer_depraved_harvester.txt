@@ -7,7 +7,7 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform
 DeckHas:Ability$LifeGain
 AlternateMode:DoubleFaced
-Oracle:Lifelink\nWhen another creature you control dies, transform Desperate Farmer.
+Oracle:Lifelink\nWhen another creature you control dies, transform this creature.
 
 ALTERNATE
 

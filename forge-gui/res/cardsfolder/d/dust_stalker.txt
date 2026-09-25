@@ -9,4 +9,4 @@ SVar:TrigReturn:DB$ ChangeZone | Defined$ Self | Origin$ Battlefield | Destinati
 SVar:PlayMain1:TRUE
 SVar:NeedsToPlay:Creature.YouCtrl+Colorless
 DeckHints:Color$Colorless & Keyword$Devoid
-Oracle:Devoid (This card has no color.)\nHaste\nAt the beginning of each end step, if you control no other colorless creatures, return Dust Stalker to its owner's hand.
+Oracle:Devoid (This card has no color.)\nHaste\nAt the beginning of each end step, if you control no other colorless creatures, return this creature to its owner's hand.

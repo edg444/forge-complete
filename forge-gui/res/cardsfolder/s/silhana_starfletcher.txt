@@ -6,4 +6,4 @@ K:Reach
 K:ETBReplacement:Other:ChooseColor
 SVar:ChooseColor:DB$ ChooseColor | Defined$ You | SpellDescription$ As this creature enters, choose a color. | AILogic$ MostProminentInComputerDeck
 A:AB$ Mana | Cost$ T | Produced$ Chosen | SpellDescription$ Add one mana of the chosen color.
-Oracle:Reach (This creature can block creatures with flying.)\nAs Silhana Starfletcher enters, choose a color.\n{T}: Add one mana of the chosen color.
+Oracle:Reach (This creature can block creatures with flying.)\nAs this creature enters, choose a color.\n{T}: Add one mana of the chosen color.

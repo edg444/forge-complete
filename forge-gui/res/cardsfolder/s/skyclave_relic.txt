@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigCopyPermanent:DB$ CopyPermanent | Defined$ TriggeredCardLKICopy | NumCopies$ 2 | TokenTapped$ True
 A:AB$ Mana | Cost$ T | Produced$ Any | SpellDescription$ Add one mana of any color.
 DeckHas:Ability$Token
-Oracle:Kicker {3}\nIndestructible\nWhen Skyclave Relic enters, if it was kicked, create two tapped tokens that are copies of Skyclave Relic.\n{T}: Add one mana of any color.
+Oracle:Kicker {3}\nIndestructible\nWhen this artifact enters, if it was kicked, create two tapped tokens that are copies of this artifact.\n{T}: Add one mana of any color.

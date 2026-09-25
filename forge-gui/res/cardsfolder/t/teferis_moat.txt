@@ -4,4 +4,4 @@ Types:Enchantment
 K:ETBReplacement:Other:ChooseColor
 SVar:ChooseColor:DB$ ChooseColor | Defined$ You | SpellDescription$ As this enchantment enters, choose a color. | AILogic$ MostProminentHumanCreatures
 S:Mode$ CantAttack | ValidCard$ Creature.withoutFlying+ChosenColor | Target$ You | Description$ Creatures of the chosen color without flying can't attack you.
-Oracle:As Teferi's Moat enters, choose a color.\nCreatures of the chosen color without flying can't attack you.
+Oracle:As this enchantment enters, choose a color.\nCreatures of the chosen color without flying can't attack you.

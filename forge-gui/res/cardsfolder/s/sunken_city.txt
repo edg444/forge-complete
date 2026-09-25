@@ -6,4 +6,4 @@ SVar:TrigUpkeep:DB$ Sacrifice | UnlessPayer$ You | UnlessCost$ U U
 S:Mode$ Continuous | Affected$ Creature.Blue | AddPower$ 1 | AddToughness$ 1 | Description$ Blue creatures get +1/+1.
 SVar:PlayMain1:TRUE
 SVar:NeedsToPlay:Creature.Blue+YouCtrl
-Oracle:At the beginning of your upkeep, sacrifice Sunken City unless you pay {U}{U}.\nBlue creatures get +1/+1.
+Oracle:At the beginning of your upkeep, sacrifice this enchantment unless you pay {U}{U}.\nBlue creatures get +1/+1.

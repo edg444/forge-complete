@@ -6,4 +6,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ -X | AddToughness$ -X | D
 SVar:X:Count$ValidHand Card.YouOwn
 SVar:NeedsToPlayVar:X LE5
 SVar:BuffedBy:Card
-Oracle:Grim Strider gets -1/-1 for each card in your hand.
+Oracle:This creature gets -1/-1 for each card in your hand.

@@ -4,4 +4,4 @@ Types:Creature Troll
 PT:2/1
 A:AB$ Regenerate | Cost$ R | SpellDescription$ Regenerate CARDNAME.
 A:AB$ Regenerate | Cost$ G | SpellDescription$ Regenerate CARDNAME.
-Oracle:{R}: Regenerate Jungle Troll.\n{G}: Regenerate Jungle Troll.
+Oracle:{R}: Regenerate this creature.\n{G}: Regenerate this creature.

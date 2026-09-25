@@ -10,4 +10,4 @@ SVar:TrigToken:DB$ Token | TokenAmount$ X | TokenScript$ w_1_1_vampire_lifelink 
 SVar:X:TriggeredCard$CardPower
 DeckHints:Ability$LifeGain
 DeckHas:Ability$Token|LifeGain|Counters
-Oracle:Flying\nWhenever you gain life, put a +1/+1 counter on Elenda's Hierophant.\nWhen Elenda's Hierophant dies, create X 1/1 white Vampire creature tokens with lifelink, where X is its power.
+Oracle:Flying\nWhenever you gain life, put a +1/+1 counter on this creature.\nWhen this creature dies, create X 1/1 white Vampire creature tokens with lifelink, where X is its power.

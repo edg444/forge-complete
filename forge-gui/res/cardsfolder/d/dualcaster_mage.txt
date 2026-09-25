@@ -6,4 +6,4 @@ K:Flash
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCopy | TriggerDescription$ When this creature enters, copy target instant or sorcery spell. You may choose new targets for the copy.
 SVar:TrigCopy:DB$ CopySpellAbility | ValidTgts$ Instant,Sorcery | TargetType$ Spell | MayChooseTarget$ True
 AI:RemoveDeck:All
-Oracle:Flash\nWhen Dualcaster Mage enters, copy target instant or sorcery spell. You may choose new targets for the copy.
+Oracle:Flash\nWhen this creature enters, copy target instant or sorcery spell. You may choose new targets for the copy.

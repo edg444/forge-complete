@@ -5,4 +5,4 @@ PT:1/1
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ X | AddToughness$ X | Description$ This creature gets +1/+1 for each Equipment attached to it.
 SVar:X:Count$Valid Equipment.Attached
 SVar:EquipMe:Multiple
-Oracle:Myr Adapter gets +1/+1 for each Equipment attached to it.
+Oracle:This creature gets +1/+1 for each Equipment attached to it.

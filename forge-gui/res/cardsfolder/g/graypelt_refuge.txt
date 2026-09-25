@@ -7,4 +7,4 @@ SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ When this land enters, you gain 1 life.
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 1
 DeckHas:Ability$LifeGain
-Oracle:Graypelt Refuge enters tapped.\nWhen Graypelt Refuge enters, you gain 1 life.\n{T}: Add {G} or {W}.
+Oracle:This land enters tapped.\nWhen this land enters, you gain 1 life.\n{T}: Add {G} or {W}.

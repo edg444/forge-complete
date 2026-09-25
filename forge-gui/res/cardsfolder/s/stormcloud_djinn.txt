@@ -6,4 +6,4 @@ K:Flying
 S:Mode$ CantBlockBy | ValidAttacker$ Creature.withoutFlying | ValidBlocker$ Creature.Self | Description$ This creature can block only creatures with flying.
 A:AB$ Pump | Cost$ R R | NumAtt$ +2 | SubAbility$ DBDealDamage | SpellDescription$ This creature gets +2/+0 until end of turn and deals 1 damage to you.
 SVar:DBDealDamage:DB$ DealDamage | Defined$ You | NumDmg$ 1
-Oracle:Flying\nStormcloud Djinn can block only creatures with flying.\n{R}{R}: Stormcloud Djinn gets +2/+0 until end of turn and deals 1 damage to you.
+Oracle:Flying\nThis creature can block only creatures with flying.\n{R}{R}: This creature gets +2/+0 until end of turn and deals 1 damage to you.

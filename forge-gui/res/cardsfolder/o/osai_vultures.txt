@@ -9,4 +9,4 @@ A:AB$ Pump | Cost$ SubCounter<2/CARRION> | NumAtt$ +1 | NumDef$ +1 | Defined$ Se
 SVar:X:Count$ThisTurnEntered_Graveyard_from_Battlefield_Creature
 DeckHas:Ability$Counters
 DeckHints:Ability$Sacrifice
-Oracle:Flying\nAt the beginning of each end step, if a creature died this turn, put a carrion counter on Osai Vultures.\nRemove two carrion counters from Osai Vultures: Osai Vultures gets +1/+1 until end of turn.
+Oracle:Flying\nAt the beginning of each end step, if a creature died this turn, put a carrion counter on this creature.\nRemove two carrion counters from this creature: This creature gets +1/+1 until end of turn.

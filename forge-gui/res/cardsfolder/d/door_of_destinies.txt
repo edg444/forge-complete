@@ -9,4 +9,4 @@ S:Mode$ Continuous | Affected$ Creature.ChosenType+YouCtrl | AddPower$ X | AddTo
 SVar:X:Count$CardCounters.CHARGE
 SVar:BuffedBy:Creature
 AI:RemoveDeck:Random
-Oracle:As Door of Destinies enters, choose a creature type.\nWhenever you cast a spell of the chosen type, put a charge counter on Door of Destinies.\nCreatures you control of the chosen type get +1/+1 for each charge counter on Door of Destinies.
+Oracle:As this artifact enters, choose a creature type.\nWhenever you cast a spell of the chosen type, put a charge counter on this artifact.\nCreatures you control of the chosen type get +1/+1 for each charge counter on this artifact.

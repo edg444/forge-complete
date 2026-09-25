@@ -9,4 +9,4 @@ SVar:TrigDamageDone:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Pla
 SVar:TrigDraw:DB$ Draw | Defined$ You | SubAbility$ DBDiscard
 SVar:DBDiscard:DB$ Discard | Defined$ You | Mode$ TgtChoose | NumCards$ 1
 K:Equip:2
-Oracle:When Assassin Gauntlet enters, attach it to up to one target creature you control. Tap all creatures target opponent controls.\nEquipped creature gets +1/+1 and has "Whenever this creature deals combat damage to a player, draw a card, then discard a card."\nEquip {2}
+Oracle:When this Equipment enters, attach it to up to one target creature you control. Tap all creatures target opponent controls.\nEquipped creature gets +1/+1 and has "Whenever this creature deals combat damage to a player, draw a card, then discard a card."\nEquip {2}

@@ -7,4 +7,4 @@ A:AB$ ChangeZone | Cost$ Sac<2/Artifact> | Origin$ Graveyard | Destination$ Hand
 SVar:DiscardMe:1
 SVar:X:Count$Valid Artifact.nonCreature+YouCtrl$CardManaCost
 SVar:AIPreference:SacCost$Artifact.token,Artifact.cmcEQ1,Artifact.cmcEQ2
-Oracle:This spell costs {X} less to cast, where X is the total mana value of noncreature artifacts you control.\nSacrifice two artifacts: Return Metalwork Colossus from your graveyard to your hand.
+Oracle:This spell costs {X} less to cast, where X is the total mana value of noncreature artifacts you control.\nSacrifice two artifacts: Return this card from your graveyard to your hand.

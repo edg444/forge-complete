@@ -3,4 +3,4 @@ ManaCost:2 U
 Types:Creature Human Rogue
 PT:2/2
 S:Mode$ CantBlockBy | ValidAttacker$ Card.Self | IsPresent$ Artifact.DefenderCtrl | Description$ This creature can't be blocked as long as defending player controls an artifact.
-Oracle:Neurok Spy can't be blocked as long as defending player controls an artifact.
+Oracle:This creature can't be blocked as long as defending player controls an artifact.

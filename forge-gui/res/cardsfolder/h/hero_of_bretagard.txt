@@ -10,4 +10,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | CheckSVar$ Y | SVarCompare$ GT9 | A
 SVar:X:TriggerCount$Amount
 SVar:Y:Count$CardCounters.ALL
 DeckHas:Ability$Counters
-Oracle:Whenever one or more cards are put into exile from your hand or a spell or ability you control exiles one or more permanents from the battlefield, put that many +1/+1 counters on Hero of Bretagard.\nAs long as Hero of Bretagard has five or more counters on it, it has flying and is an Angel in addition to its other types.\nAs long as Hero of Bretagard has ten or more counters on it, it has indestructible and is a God in addition to its other types.
+Oracle:Whenever one or more cards are put into exile from your hand or a spell or ability you control exiles one or more permanents from the battlefield, put that many +1/+1 counters on this creature.\nAs long as this creature has five or more counters on it, it has flying and is an Angel in addition to its other types.\nAs long as this creature has ten or more counters on it, it has indestructible and is a God in addition to its other types.

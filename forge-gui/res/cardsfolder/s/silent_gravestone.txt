@@ -8,4 +8,4 @@ SVar:DBDraw:DB$ Draw
 # It probably doesn't matter whether graveyards are exiled simultaneously with Silent Gravestone, but nevertheless, is there a way to do it?
 SVar:NonStackingEffect:True
 AI:RemoveDeck:Random
-Oracle:Cards in graveyards can't be the targets of spells or abilities.\n{4}, {T}: Exile Silent Gravestone and all cards from all graveyards. Draw a card.
+Oracle:Cards in graveyards can't be the targets of spells or abilities.\n{4}, {T}: Exile this artifact and all cards from all graveyards. Draw a card.

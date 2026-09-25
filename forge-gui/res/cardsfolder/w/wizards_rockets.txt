@@ -10,4 +10,4 @@ SVar:X:Count$xPaid
 SVar:SacMe:1
 AI:RemoveDeck:All
 DeckHas:Ability$Sacrifice
-Oracle:Wizard's Rockets enters tapped.\n{X}, {T}, Sacrifice Wizard's Rockets: Add X mana in any combination of colors.\nWhen Wizard's Rockets is put into a graveyard from the battlefield, draw a card.
+Oracle:This artifact enters tapped.\n{X}, {T}, Sacrifice this artifact: Add X mana in any combination of colors.\nWhen this artifact is put into a graveyard from the battlefield, draw a card.

@@ -5,4 +5,4 @@ T:Mode$ Phase | Phase$ End of Turn | TriggerZones$ Battlefield | IsPresent$ Crea
 SVar:TrigSac:DB$ Sacrifice
 A:AB$ DamageAll | Cost$ R | NumDmg$ 1 | ValidCards$ Creature | ValidPlayers$ Player | ValidDescription$ each creature and each player. | AILogic$ DmgAllCreaturesAndPlayers | SpellDescription$ This enchantment deals 1 damage to each creature and each player.
 SVar:NeedsToPlay:Creature
-Oracle:At the beginning of the end step, if no creatures are on the battlefield, sacrifice Pyrohemia.\n{R}: Pyrohemia deals 1 damage to each creature and each player.
+Oracle:At the beginning of the end step, if no creatures are on the battlefield, sacrifice this enchantment.\n{R}: This enchantment deals 1 damage to each creature and each player.

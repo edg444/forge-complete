@@ -8,4 +8,4 @@ T:Mode$ AttackerBlocked | ValidCard$ Creature | ValidBlocker$ Card.Self | Trigge
 SVar:TrigDealDamage:DB$ DealDamage | Defined$ TriggeredAttackerController | NumDmg$ X
 SVar:X:Count$CardPower
 SVar:HasBlockEffect:TRUE
-Oracle:Vigilance, trample\nWhenever Meglonoth blocks a creature, Meglonoth deals damage to that creature's controller equal to Meglonoth's power.
+Oracle:Vigilance, trample\nWhenever this creature blocks a creature, this creature deals damage to that creature's controller equal to this creature's power.

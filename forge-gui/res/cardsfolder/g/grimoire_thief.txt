@@ -9,4 +9,4 @@ A:AB$ SetState | Cost$ U Sac<1/CARDNAME> | Defined$ ExiledWithSource | Mode$ Tur
 SVar:DBCounter:DB$ Counter | Defined$ ValidStack Spell.sharesNameWith ExiledWithSource
 AI:RemoveDeck:All
 AI:RemoveDeck:Random
-Oracle:Whenever Grimoire Thief becomes tapped, exile the top three cards of target opponent's library face down.\nYou may look at cards exiled with Grimoire Thief.\n{U}, Sacrifice Grimoire Thief: Turn all cards exiled with Grimoire Thief face up. Counter all spells with those names.
+Oracle:Whenever this creature becomes tapped, exile the top three cards of target opponent's library face down.\nYou may look at cards exiled with this creature.\n{U}, Sacrifice this creature: Turn all cards exiled with this creature face up. Counter all spells with those names.

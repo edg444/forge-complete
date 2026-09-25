@@ -7,4 +7,4 @@ SVar:TrigExile:AB$ ChangeZone | Cost$ ExileAnyGrave<1/Card.TriggeredNewCard> | O
 SVar:SacMe:4
 AI:RemoveDeck:Random
 DeckNeeds:Type$Planeswalker
-Oracle:When Arena Rector dies, you may exile it. If you do, search your library for a planeswalker card, put it onto the battlefield, then shuffle.
+Oracle:When this creature dies, you may exile it. If you do, search your library for a planeswalker card, put it onto the battlefield, then shuffle.

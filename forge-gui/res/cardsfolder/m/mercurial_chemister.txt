@@ -5,4 +5,4 @@ PT:2/3
 A:AB$ Draw | Cost$ U T | NumCards$ 2 | SpellDescription$ Draw two cards.
 A:AB$ DealDamage | Cost$ R T Discard<1/Card> | ValidTgts$ Creature | NumDmg$ X | SpellDescription$ This creature deals damage to target creature equal to the discarded card's mana value.
 SVar:X:Discarded$CardManaCost
-Oracle:{U}, {T}: Draw two cards.\n{R}, {T}, Discard a card: Mercurial Chemister deals damage to target creature equal to the discarded card's mana value.
+Oracle:{U}, {T}: Draw two cards.\n{R}, {T}, Discard a card: This creature deals damage to target creature equal to the discarded card's mana value.

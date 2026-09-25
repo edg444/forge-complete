@@ -6,4 +6,4 @@ T:Mode$ DamageDoneOnce | Execute$ TrigToken | ValidTarget$ Card.Self | TriggerZo
 SVar:TrigToken:DB$ Token | TokenOwner$ You | TokenScript$ g_3_3_dinosaur_trample
 SVar:HasCombatEffect:TRUE
 DeckHas:Ability$Token
-Oracle:Enrage — Whenever Raptor Hatchling is dealt damage, create a 3/3 green Dinosaur creature token with trample.
+Oracle:Enrage — Whenever this creature is dealt damage, create a 3/3 green Dinosaur creature token with trample.

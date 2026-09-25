@@ -5,4 +5,4 @@ PT:4/3
 K:Flying
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigBounce | TriggerDescription$ When this creature enters, return two target lands you control to their owner's hand.
 SVar:TrigBounce:DB$ ChangeZone | Origin$ Battlefield | Destination$ Hand | ValidTgts$ Land.YouCtrl | TgtPrompt$ Select target land you control | TargetMin$ 2 | TargetMax$ 2
-Oracle:Flying\nWhen Sea Drake enters, return two target lands you control to their owner's hand.
+Oracle:Flying\nWhen this creature enters, return two target lands you control to their owner's hand.

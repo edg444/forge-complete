@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ X
 SVar:X:Count$Valid Creature.YouCtrl
 DeckHas:Ability$LifeGain
-Oracle:Flying\nWhen Angel of Renewal enters, you gain 1 life for each creature you control.
+Oracle:Flying\nWhen this creature enters, you gain 1 life for each creature you control.

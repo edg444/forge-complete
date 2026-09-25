@@ -6,4 +6,4 @@ K:Flying
 T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Opponent | Execute$ TrigDiscard | TriggerZones$ Battlefield | TriggerDescription$ Whenever this creature deals damage to an opponent, that player discards a card at random.
 SVar:TrigDiscard:DB$ Discard | Defined$ TriggeredTarget | NumCards$ 1 | Mode$ Random
 DeckHas:Ability$Discard
-Oracle:Flying\nWhenever Hypnotic Specter deals damage to an opponent, that player discards a card at random.
+Oracle:Flying\nWhenever this creature deals damage to an opponent, that player discards a card at random.

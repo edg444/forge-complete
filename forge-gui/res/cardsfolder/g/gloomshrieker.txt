@@ -8,4 +8,4 @@ SVar:TrigChange:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand | ValidTg
 R:Event$ Moved | ActiveZones$ Battlefield | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | ReplaceWith$ Exile | Description$ If this creature would die, exile it instead.
 SVar:Exile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | Defined$ ReplacedCard
 DeckHas:Ability$Graveyard
-Oracle:Menace (This creature can't be blocked except by two or more creatures.)\nWhen Gloomshrieker enters, return target permanent card from your graveyard to your hand.\nIf Gloomshrieker would die, exile it instead.
+Oracle:Menace (This creature can't be blocked except by two or more creatures.)\nWhen this creature enters, return target permanent card from your graveyard to your hand.\nIf this creature would die, exile it instead.

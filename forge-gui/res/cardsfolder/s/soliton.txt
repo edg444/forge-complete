@@ -3,4 +3,4 @@ ManaCost:5
 Types:Artifact Creature Construct
 PT:3/4
 A:AB$ Untap | Cost$ U | SpellDescription$ Untap this creature.
-Oracle:{U}: Untap Soliton.
+Oracle:{U}: Untap this creature.

@@ -7,4 +7,4 @@ SVar:TrigPump:DB$ PumpAll | ValidCards$ Ally.YouCtrl | KW$ Vigilance
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Ally
 AI:RemoveDeck:Random
-Oracle:Whenever Joraga Bard or another Ally you control enters, you may have Ally creatures you control gain vigilance until end of turn.
+Oracle:Whenever this creature or another Ally you control enters, you may have Ally creatures you control gain vigilance until end of turn.

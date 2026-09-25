@@ -6,4 +6,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ X | Description$ This cre
 SVar:X:Count$Valid Artifact.YouCtrl
 SVar:BuffedBy:Artifact
 AI:RemoveDeck:Random
-Oracle:Nim Grotesque gets +1/+0 for each artifact you control.
+Oracle:This creature gets +1/+0 for each artifact you control.

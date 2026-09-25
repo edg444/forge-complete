@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigToken:DB$ Token | TokenScript$ c_3_3_a_phyrexian_golem | TokenOwner$ You
 S:Mode$ Continuous | Affected$ Creature.Golem+YouCtrl | AddPower$ 1 | AddToughness$ 1 | Description$ Golems you control get +1/+1.
 DeckHas:Ability$Token
-Oracle:When Master Splicer enters, create a 3/3 colorless Phyrexian Golem artifact creature token.\nGolems you control get +1/+1.
+Oracle:When this creature enters, create a 3/3 colorless Phyrexian Golem artifact creature token.\nGolems you control get +1/+1.

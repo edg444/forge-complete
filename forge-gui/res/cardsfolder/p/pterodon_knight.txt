@@ -5,4 +5,4 @@ PT:3/3
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Flying | IsPresent$ Dinosaur.YouCtrl | Description$ This creature has flying as long as you control a Dinosaur.
 SVar:BuffedBy:Dinosaur
 DeckHints:Type$Dinosaur
-Oracle:Pterodon Knight has flying as long as you control a Dinosaur.
+Oracle:This creature has flying as long as you control a Dinosaur.

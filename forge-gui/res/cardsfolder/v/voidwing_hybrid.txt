@@ -8,4 +8,4 @@ T:Mode$ Proliferate | ValidPlayer$ You | Execute$ TrigReturn | TriggerZones$ Gra
 SVar:TrigReturn:DB$ ChangeZone | Defined$ Self | Origin$ Graveyard | Destination$ Hand
 DeckHas:Ability$Graveyard
 DeckHints:Ability$Proliferate
-Oracle:Flying\nToxic 1 (Players dealt combat damage by this creature also get a poison counter.)\nWhen you proliferate, return Voidwing Hybrid from your graveyard to your hand.
+Oracle:Flying\nToxic 1 (Players dealt combat damage by this creature also get a poison counter.)\nWhen you proliferate, return this card from your graveyard to your hand.

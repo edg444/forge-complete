@@ -9,4 +9,4 @@ SVar:TrigCounters:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNu
 AI:RemoveDeck:Random
 DeckHas:Ability$Counters
 DeckHints:Type$Merfolk
-Oracle:When Forerunner of the Heralds enters, you may search your library for a Merfolk card, reveal it, then shuffle and put that card on top.\nWhenever another Merfolk you control enters, put a +1/+1 counter on Forerunner of the Heralds.
+Oracle:When this creature enters, you may search your library for a Merfolk card, reveal it, then shuffle and put that card on top.\nWhenever another Merfolk you control enters, put a +1/+1 counter on this creature.

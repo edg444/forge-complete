@@ -6,7 +6,7 @@ SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Se
 SVar:DBTransform:DB$ SetState | Defined$ Self | Mode$ Transform | ConditionDefined$ Targeted | ConditionPresent$ Creature.toughnessGE6
 DeckHas:Ability$Counters
 AlternateMode:DoubleFaced
-Oracle:At the beginning of combat on your turn, put a +1/+1 counter on target creature you control. Then if that creature has toughness 6 or greater, transform Dormant Grove.
+Oracle:At the beginning of combat on your turn, put a +1/+1 counter on target creature you control. Then if that creature has toughness 6 or greater, transform this enchantment.
 
 ALTERNATE
 

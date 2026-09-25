@@ -4,7 +4,7 @@ Types:Sorcery
 A:SP$ Mill | NumCards$ 13 | ValidTgts$ Opponent | SpellDescription$ Target opponent mills thirteen cards.
 A:AB$ ChangeZone | Cost$ 3 U U | Origin$ Graveyard | Destination$ Battlefield | Transformed$ True | ActivationZone$ Graveyard | SorcerySpeed$ True | SpellDescription$ Return CARDNAME from your graveyard onto the battlefield transformed. Activate only as a sorcery.
 AlternateMode:DoubleFaced
-Oracle:Target opponent mills thirteen cards.\n{3}{U}{U}: Put Startled Awake from your graveyard onto the battlefield transformed. Activate only as a sorcery.
+Oracle:Target opponent mills thirteen cards.\n{3}{U}{U}: Put this card from your graveyard onto the battlefield transformed. Activate only as a sorcery.
 
 ALTERNATE
 
@@ -16,4 +16,4 @@ PT:1/1
 K:Skulk
 T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigBounce | TriggerDescription$ When this creature deals combat damage to a player, return it to its owner's hand.
 SVar:TrigBounce:DB$ ChangeZone | Defined$ Self | Origin$ Battlefield | Destination$ Hand
-Oracle:Skulk (This creature can't be blocked by creatures with greater power.)\nWhen Persistent Nightmare deals combat damage to a player, return it to its owner's hand.
+Oracle:Skulk (This creature can't be blocked by creatures with greater power.)\nWhen this creature deals combat damage to a player, return it to its owner's hand.

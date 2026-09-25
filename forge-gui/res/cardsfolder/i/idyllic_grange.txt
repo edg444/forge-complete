@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | CounterType$ P1P1 | CounterNum$ 1
 DeckHas:Ability$Counters
 DeckNeeds:Color$White
-Oracle:({T}: Add {W}.)\nIdyllic Grange enters tapped unless you control three or more other Plains.\nWhen Idyllic Grange enters untapped, put a +1/+1 counter on target creature you control.
+Oracle:({T}: Add {W}.)\nThis land enters tapped unless you control three or more other Plains.\nWhen this land enters untapped, put a +1/+1 counter on target creature you control.

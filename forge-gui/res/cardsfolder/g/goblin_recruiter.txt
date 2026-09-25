@@ -10,4 +10,4 @@ DeckNeeds:Type$Goblin
 AI:RemoveDeck:All
 SVar:NeedsToPlayVar:Z GE4
 SVar:Z:Count$Valid Land.YouCtrl
-Oracle:When Goblin Recruiter enters, search your library for any number of Goblin cards, reveal them, then shuffle and put those cards on top in any order.
+Oracle:When this creature enters, search your library for any number of Goblin cards, reveal them, then shuffle and put those cards on top in any order.

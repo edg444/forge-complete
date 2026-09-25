@@ -9,4 +9,4 @@ S:Mode$ Continuous | AffectedDefined$ Enchanted | Affected$ Creature | AddPower$
 SVar:X:Count$CardCounters.PLAGUE
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.EnchantedBy | Execute$ DBChangeZone | TriggerDescription$ When enchanted creature leaves the battlefield, that creature's controller returns this Aura from its owner's graveyard to the battlefield.
 SVar:DBChangeZone:DB$ ChangeZone | Defined$ Self | Origin$ Graveyard | Destination$ Battlefield | GainControl$ TriggeredCardController
-Oracle:Enchant creature\nAt the beginning of each upkeep, put a plague counter on Traveling Plague.\nEnchanted creature gets -1/-1 for each plague counter on Traveling Plague.\nWhen enchanted creature leaves the battlefield, that creature's controller returns Traveling Plague from its owner's graveyard to the battlefield.
+Oracle:Enchant creature\nAt the beginning of each upkeep, put a plague counter on this Aura.\nEnchanted creature gets -1/-1 for each plague counter on this Aura.\nWhen enchanted creature leaves the battlefield, that creature's controller returns this Aura from its owner's graveyard to the battlefield.

@@ -5,4 +5,4 @@ PT:5/5
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSacUnless | TriggerDescription$ When this creature enters, sacrifice it unless you sacrifice an artifact.
 SVar:TrigSacUnless:DB$ Sacrifice | UnlessCost$ Sac<1/Artifact> | UnlessPayer$ You
 AI:RemoveDeck:Random
-Oracle:When Vulshok War Boar enters, sacrifice it unless you sacrifice an artifact.
+Oracle:When this creature enters, sacrifice it unless you sacrifice an artifact.

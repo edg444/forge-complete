@@ -7,7 +7,7 @@ SVar:TrigCharm:DB$ Charm | MinCharmNum$ 1 | CharmNum$ 2 | Choices$ DestroyLegend
 SVar:DestroyLegend:DB$ DestroyAll | ValidCards$ Creature.Legendary | SpellDescription$ Destroy all legendary creatures.
 SVar:DestroyNonLegend:DB$ DestroyAll | ValidCards$ Creature.nonLegendary | SpellDescription$ Destroy all nonlegendary creatures.
 AlternateMode:DoubleFaced
-Oracle:(As a Siege enters, choose an opponent to protect it. You and others can attack it. When it's defeated, exile it, then cast it transformed.)\nWhen Invasion of Fiora enters, choose one or both —\n• Destroy all legendary creatures.\n• Destroy all nonlegendary creatures.
+Oracle:(As a Siege enters, choose an opponent to protect it. You and others can attack it. When it's defeated, exile it, then cast it transformed.)\nWhen this Siege enters, choose one or both —\n• Destroy all legendary creatures.\n• Destroy all nonlegendary creatures.
 
 ALTERNATE
 

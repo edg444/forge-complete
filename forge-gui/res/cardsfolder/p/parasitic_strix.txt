@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigLoseLife:DB$ LoseLife | ValidTgts$ Player | LifeAmount$ 2 | SubAbility$ DBGainLife
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 2
 DeckHints:Color$Black
-Oracle:Flying\nWhen Parasitic Strix enters, if you control a black permanent, target player loses 2 life and you gain 2 life.
+Oracle:Flying\nWhen this creature enters, if you control a black permanent, target player loses 2 life and you gain 2 life.

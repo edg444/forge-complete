@@ -12,4 +12,4 @@ SVar:X:Remembered$Amount
 SVar:NeedsToPlay:Creature.YouCtrl
 DeckHas:Ability$Sacrifice
 DeckHints:Ability$Sacrifice|Token
-Oracle:Flying, trample\nAt the beginning of your upkeep, sacrifice a creature other than Lord of the Pit. If you can't, Lord of the Pit deals 7 damage to you.
+Oracle:Flying, trample\nAt the beginning of your upkeep, sacrifice a creature other than this creature. If you can't, this creature deals 7 damage to you.

@@ -4,4 +4,4 @@ Types:Creature Elemental
 PT:3/3
 T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.wasCastFromYourHandByYou+Self | Execute$ TrigMana | TriggerDescription$ When this creature enters, if you cast it from your hand, add {R}{R}{R}.
 SVar:TrigMana:DB$ Mana | Produced$ R | Amount$ 3
-Oracle:When Coal Stoker enters, if you cast it from your hand, add {R}{R}{R}.
+Oracle:When this creature enters, if you cast it from your hand, add {R}{R}{R}.

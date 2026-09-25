@@ -9,4 +9,4 @@ SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +X
 SVar:X:Count$Valid Creature.YouCtrl$GreatestCardPower
 SVar:HasAttackEffect:TRUE
 DeckHints:Type$Goblin|Orc
-Oracle:Trample\nOther Orcs and Goblins you control have trample.\nWhenever Orcish Siegemaster attacks, it gets +X/+0 until end of turn, where X is the greatest power among creatures you control.
+Oracle:Trample\nOther Orcs and Goblins you control have trample.\nWhenever this creature attacks, it gets +X/+0 until end of turn, where X is the greatest power among creatures you control.

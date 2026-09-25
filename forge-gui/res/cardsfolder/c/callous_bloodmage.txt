@@ -9,4 +9,4 @@ SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1 | SubAbility$ DBLoseLife | Spe
 SVar:DBLoseLife:DB$ LoseLife | LifeAmount$ 1
 SVar:DBExileYard:DB$ ChangeZoneAll | Origin$ Graveyard | Destination$ Exile | ValidTgts$ Player | ChangeType$ Card | SpellDescription$ Exile target player's graveyard.
 DeckHas:Ability$Token|LifeGain
-Oracle:When Callous Bloodmage enters, choose one —\n• Create a 1/1 black and green Pest creature token with "When this token dies, you gain 1 life."\n• You draw a card and you lose 1 life.\n• Exile target player's graveyard.
+Oracle:When this creature enters, choose one —\n• Create a 1/1 black and green Pest creature token with "When this token dies, you gain 1 life."\n• You draw a card and you lose 1 life.\n• Exile target player's graveyard.

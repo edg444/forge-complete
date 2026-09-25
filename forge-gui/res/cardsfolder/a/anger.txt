@@ -5,4 +5,4 @@ PT:2/2
 K:Haste
 S:Mode$ Continuous | Affected$ Creature.YouCtrl | EffectZone$ Graveyard | AddKeyword$ Haste | IsPresent$ Mountain.YouCtrl | Description$ As long as this card is in your graveyard and you control a Mountain, creatures you control have haste.
 SVar:DiscardMe:2
-Oracle:Haste\nAs long as Anger is in your graveyard and you control a Mountain, creatures you control have haste.
+Oracle:Haste\nAs long as this card is in your graveyard and you control a Mountain, creatures you control have haste.

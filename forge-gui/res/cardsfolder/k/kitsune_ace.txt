@@ -7,4 +7,4 @@ SVar:TrigCharm:DB$ Charm | Choices$ DBPump,DBUntap
 SVar:DBPump:DB$ Pump | Defined$ TriggeredAttackerLKICopy | KW$ First Strike | SpellDescription$ That Vehicle gains first strike until end of turn.
 SVar:DBUntap:DB$ Untap | Defined$ Self | SpellDescription$ Untap this creature.
 DeckNeeds:Type$Vehicle
-Oracle:Whenever a Vehicle you control attacks, choose one —\n• That Vehicle gains first strike until end of turn.\n• Untap Kitsune Ace.
+Oracle:Whenever a Vehicle you control attacks, choose one —\n• That Vehicle gains first strike until end of turn.\n• Untap this creature.

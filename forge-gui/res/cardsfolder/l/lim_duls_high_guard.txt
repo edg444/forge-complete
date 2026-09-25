@@ -4,4 +4,4 @@ Types:Creature Skeleton
 PT:2/1
 K:First Strike
 A:AB$ Regenerate | Cost$ 1 B | SpellDescription$ Regenerate this creature.
-Oracle:First strike\n{1}{B}: Regenerate Lim-Dûl's High Guard.
+Oracle:First strike\n{1}{B}: Regenerate this creature.

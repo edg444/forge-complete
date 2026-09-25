@@ -8,4 +8,4 @@ A:AB$ ChangeZone | Cost$ 2 B | Origin$ Graveyard | Destination$ Hand | Activatio
 SVar:SacMe:1
 DeckHas:Ability$Graveyard
 DeckHints:Color$Black
-Oracle:Clay Revenant enters tapped.\n{2}{B}: Return Clay Revenant from your graveyard to your hand.
+Oracle:This creature enters tapped.\n{2}{B}: Return this card from your graveyard to your hand.

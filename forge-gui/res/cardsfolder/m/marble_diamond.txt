@@ -4,4 +4,4 @@ Types:Artifact
 A:AB$ Mana | Cost$ T | Produced$ W | SpellDescription$ Add {W}.
 R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This artifact enters tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
-Oracle:Marble Diamond enters tapped.\n{T}: Add {W}.
+Oracle:This artifact enters tapped.\n{T}: Add {W}.

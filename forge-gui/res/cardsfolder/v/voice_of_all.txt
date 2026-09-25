@@ -6,4 +6,4 @@ K:Flying
 K:ETBReplacement:Other:ChooseColor
 SVar:ChooseColor:DB$ ChooseColor | Defined$ You | SpellDescription$ As this creature enters, choose a color. | AILogic$ MostProminentInHumanDeck
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Protection:Card.ChosenColor:chosenColor | Description$ This creature has protection from the chosen color.
-Oracle:Flying\nAs Voice of All enters, choose a color.\nVoice of All has protection from the chosen color.
+Oracle:Flying\nAs this creature enters, choose a color.\nThis creature has protection from the chosen color.

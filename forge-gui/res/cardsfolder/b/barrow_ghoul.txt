@@ -7,4 +7,4 @@ SVar:TrigUpkeep:DB$ Sacrifice | UnlessPayer$ You | UnlessCost$ ExileFromGrave<1/
 SVar:NeedsToPlayVar:Y GE2
 SVar:Y:Count$ValidGraveyard Creature.YouOwn
 SVar:NeedsOrderedGraveyard:TRUE
-Oracle:At the beginning of your upkeep, sacrifice Barrow Ghoul unless you exile the top creature card of your graveyard.
+Oracle:At the beginning of your upkeep, sacrifice this creature unless you exile the top creature card of your graveyard.

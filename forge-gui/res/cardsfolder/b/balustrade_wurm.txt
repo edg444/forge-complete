@@ -8,4 +8,4 @@ K:Haste
 A:AB$ ChangeZone | Cost$ 2 G G | PrecostDesc$ Delirium — | Activation$ Delirium | Origin$ Graveyard | Destination$ Battlefield | WithCountersType$ FINALITY | ActivationZone$ Graveyard | SorcerySpeed$ True | SpellDescription$ Return this card from your graveyard to the battlefield with a finality counter on it. Activate only if there are four or more card types among cards in your graveyard and only as a sorcery.
 DeckHints:Ability$Graveyard|Discard
 DeckHas:Ability$Delirium
-Oracle:This spell can't be countered.\nTrample, haste\nDelirium — {2}{G}{G}: Return Balustrade Wurm from your graveyard to the battlefield with a finality counter on it. Activate only if there are four or more card types among cards in your graveyard and only as a sorcery.
+Oracle:This spell can't be countered.\nTrample, haste\nDelirium — {2}{G}{G}: Return this card from your graveyard to the battlefield with a finality counter on it. Activate only if there are four or more card types among cards in your graveyard and only as a sorcery.

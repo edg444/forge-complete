@@ -6,4 +6,4 @@ A:SP$ ChangeZone | ValidTgts$ Creature.attacking | TgtPrompt$ Select target atta
 T:Mode$ Cycled | ValidCard$ Card.Self | Execute$ TrigExile | TriggerDescription$ When you cycle this card, exile up to two target attacking creatures.
 SVar:TrigExile:DB$ ChangeZone | ValidTgts$ Creature.attacking | TgtPrompt$ Select target attacking creature | TargetMin$ 0 | TargetMax$ 2 | Origin$ Battlefield | Destination$ Exile
 AI:RemoveDeck:All
-Oracle:Exile target attacking creature.\nCycling {5}{G}{W}{U} ({5}{G}{W}{U}, Discard this card: Draw a card.)\nWhen you cycle Resounding Silence, exile up to two target attacking creatures.
+Oracle:Exile target attacking creature.\nCycling {5}{G}{W}{U} ({5}{G}{W}{U}, Discard this card: Draw a card.)\nWhen you cycle this card, exile up to two target attacking creatures.

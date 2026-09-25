@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature | NumAtt$ +4
 K:Flash
 SVar:PlayMain1:TRUE
-Oracle:Flash (You may cast this spell any time you could cast an instant.)\nWhen Bogardan Rager enters, target creature gets +4/+0 until end of turn.
+Oracle:Flash (You may cast this spell any time you could cast an instant.)\nWhen this creature enters, target creature gets +4/+0 until end of turn.

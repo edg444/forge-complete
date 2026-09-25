@@ -5,4 +5,4 @@ PT:4/2
 K:Flying
 A:AB$ ChangeZone | Cost$ 1 R R R | Origin$ Graveyard | Destination$ Hand | ActivationZone$ Graveyard | SpellDescription$ Return this card from your graveyard to your hand.
 SVar:DiscardMe:1
-Oracle:Flying\n{1}{R}{R}{R}: Return Firewing Phoenix from your graveyard to your hand.
+Oracle:Flying\n{1}{R}{R}{R}: Return this card from your graveyard to your hand.

@@ -5,4 +5,4 @@ PT:2/2
 K:Vigilance
 T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Goblin,Orc | TriggerZones$ Battlefield | Execute$ TrigDestroy | TriggerDescription$ Whenever this creature deals damage to a Goblin or Orc, destroy that creature.
 SVar:TrigDestroy:DB$ Destroy | Defined$ TriggeredTargetLKICopy
-Oracle:Vigilance\nWhenever East-Mark Cavalier deals damage to a Goblin or Orc, destroy that creature.
+Oracle:Vigilance\nWhenever this creature deals damage to a Goblin or Orc, destroy that creature.

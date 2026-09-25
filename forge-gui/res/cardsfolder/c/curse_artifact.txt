@@ -9,4 +9,4 @@ SVar:DBCurseArtifactDamage:DB$ DealDamage | Defined$ TriggeredPlayer | NumDmg$ 2
 SVar:DBCurseArtifactCleanup:DB$ Cleanup | ClearRemembered$ True
 AI:RemoveDeck:Random
 DeckHas:Ability$Sacrifice
-Oracle:Enchant artifact\nAt the beginning of the upkeep of enchanted artifact's controller, Curse Artifact deals 2 damage to that player unless they sacrifice that artifact.
+Oracle:Enchant artifact\nAt the beginning of the upkeep of enchanted artifact's controller, this Aura deals 2 damage to that player unless they sacrifice that artifact.

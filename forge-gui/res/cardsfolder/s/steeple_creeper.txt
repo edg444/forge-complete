@@ -3,4 +3,4 @@ ManaCost:2 G
 Types:Creature Frog Snake
 PT:4/2
 A:AB$ Pump | Cost$ 3 U | Defined$ Self | KW$ Flying | SpellDescription$ This creature gains flying until end of turn.
-Oracle:{3}{U}: Steeple Creeper gains flying until end of turn.
+Oracle:{3}{U}: This creature gains flying until end of turn.

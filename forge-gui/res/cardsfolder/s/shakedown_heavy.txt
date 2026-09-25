@@ -7,4 +7,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$
 SVar:TrigDraw:DB$ Untap | Defined$ Self | UnlessCost$ Draw<1/Player.Activator> | UnlessPayer$ DefendingPlayer | UnlessSwitched$ True | UnlessResolveSubs$ WhenPaid | SubAbility$ RemCombat
 SVar:RemCombat:DB$ RemoveFromCombat | Defined$ Self
 SVar:HasAttackEffect:TRUE
-Oracle:Menace\nWhenever Shakedown Heavy attacks, defending player may have you draw a card. If they do, untap Shakedown Heavy and remove it from combat.
+Oracle:Menace\nWhenever this creature attacks, defending player may have you draw a card. If they do, untap this creature and remove it from combat.

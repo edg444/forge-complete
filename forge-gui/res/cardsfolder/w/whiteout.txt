@@ -5,4 +5,4 @@ A:SP$ AnimateAll | ValidCards$ Creature | RemoveKeywords$ Flying | SpellDescript
 A:AB$ ChangeZone | Cost$ Sac<1/Land.Snow/snow land> | ActivationZone$ Graveyard | Defined$ Self | Origin$ Graveyard | Destination$ Hand | SpellDescription$ Return this card from your graveyard to your hand.
 AI:RemoveDeck:All
 AI:RemoveDeck:Random
-Oracle:All creatures lose flying until end of turn.\nSacrifice a snow land: Return Whiteout from your graveyard to your hand.
+Oracle:All creatures lose flying until end of turn.\nSacrifice a snow land: Return this card from your graveyard to your hand.

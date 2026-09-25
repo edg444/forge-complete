@@ -13,4 +13,4 @@ SVar:DBLifelink:DB$ Pump | Defined$ Self | KW$ Lifelink | ConditionPresent$ Crea
 SVar:DBMenace:DB$ Pump | Defined$ Self | KW$ Menace | ConditionPresent$ Creature.YouCtrl+withMenace | SubAbility$ DBTrample
 SVar:DBTrample:DB$ Pump | Defined$ Self | KW$ Trample | ConditionPresent$ Creature.YouCtrl+withTrample
 DeckHints:Keyword$Flying|First Strike|Double Strike|Deathtouch|Indestructible|Lifelink|Menace|Trample
-Oracle:Vigilance\nWhenever Thunderous Orator attacks, it gains flying until end of turn if you control a creature with flying. The same is true for first strike, double strike, deathtouch, indestructible, lifelink, menace, and trample.
+Oracle:Vigilance\nWhenever this creature attacks, it gains flying until end of turn if you control a creature with flying. The same is true for first strike, double strike, deathtouch, indestructible, lifelink, menace, and trample.

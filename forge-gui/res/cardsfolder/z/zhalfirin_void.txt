@@ -5,4 +5,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigScry:DB$ Scry | ScryNum$ 1
 A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
 DeckHas:Ability$Mana.Colorless
-Oracle:When Zhalfirin Void enters, scry 1. (Look at the top card of your library. You may put that card on the bottom.)\n{T}: Add {C}.
+Oracle:When this land enters, scry 1. (Look at the top card of your library. You may put that card on the bottom.)\n{T}: Add {C}.

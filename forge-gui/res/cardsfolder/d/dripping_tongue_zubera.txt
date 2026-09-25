@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigToken:DB$ Token | TokenOwner$ You | TokenScript$ c_1_1_spirit | TokenAmount$ X
 SVar:X:Count$ThisTurnEntered_Graveyard_from_Battlefield_Card.Zubera
 DeckHints:Type$Zubera
-Oracle:When Dripping-Tongue Zubera dies, create a 1/1 colorless Spirit creature token for each Zubera that died this turn.
+Oracle:When this creature dies, create a 1/1 colorless Spirit creature token for each Zubera that died this turn.

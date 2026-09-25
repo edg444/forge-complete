@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigTap:DB$ Tap | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Choose target creature an opponent controls.
 SVar:BuffedBy:Creature
 SVar:PlayMain1:TRUE
-Oracle:Flying\nWhenever Kapsho Kitefins or another creature you control enters, tap target creature an opponent controls.
+Oracle:Flying\nWhenever this creature or another creature you control enters, tap target creature an opponent controls.

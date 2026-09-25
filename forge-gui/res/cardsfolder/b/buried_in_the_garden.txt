@@ -9,4 +9,4 @@ T:Mode$ TapsForMana | ValidCard$ Card.AttachedBy | Execute$ TrigMana | Static$ T
 SVar:TrigMana:DB$ Mana | Produced$ Any | Amount$ 1 | Defined$ TriggeredCardController
 SVar:PlayMain1:TRUE
 SVar:NeedsToPlay:Permanent.nonLand+YouDontCtrl
-Oracle:Enchant land\nWhen Buried in the Garden enters, exile target nonland permanent you don't control until Buried in the Garden leaves the battlefield.\nWhenever enchanted land is tapped for mana, its controller adds an additional one mana of any color.
+Oracle:Enchant land\nWhen this Aura enters, exile target nonland permanent you don't control until this Aura leaves the battlefield.\nWhenever enchanted land is tapped for mana, its controller adds an additional one mana of any color.

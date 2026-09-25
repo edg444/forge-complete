@@ -9,4 +9,4 @@ SVar:TrigExile:DB$ ChangeZone | Origin$ Graveyard | Destination$ Exile | ChangeT
 S:Mode$ ReduceCost | ValidCard$ Card | Type$ Spell | Amount$ AffectedX | Activator$ You | Description$ Spells you cast cost {1} less to cast for each card type they share with cards exiled with this creature.
 SVar:AffectedX:Count$TypesSharedWith ValidExile Card.ExiledWithSource
 DeckHints:Ability$Graveyard|Discard
-Oracle:Vigilance\nWhenever Cemetery Prowler enters or attacks, exile a card from a graveyard.\nSpells you cast cost {1} less to cast for each card type they share with cards exiled with Cemetery Prowler.
+Oracle:Vigilance\nWhenever this creature enters or attacks, exile a card from a graveyard.\nSpells you cast cost {1} less to cast for each card type they share with cards exiled with this creature.

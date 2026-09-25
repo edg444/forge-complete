@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Land.Y
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ QUEST | CounterNum$ 1
 SVar:MaxQuestEffect:3
 DeckHas:Ability$Counters|LifeGain
-Oracle:Landfall — Whenever a land you control enters, you may put a quest counter on Sunspring Expedition.\nRemove three quest counters from Sunspring Expedition and sacrifice it: You gain 8 life.
+Oracle:Landfall — Whenever a land you control enters, you may put a quest counter on this enchantment.\nRemove three quest counters from this enchantment and sacrifice it: You gain 8 life.

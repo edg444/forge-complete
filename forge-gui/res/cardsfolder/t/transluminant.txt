@@ -8,4 +8,4 @@ AI:RemoveDeck:Random
 AI:RemoveDeck:All
 DeckHints:Color$White
 DeckHas:Ability$Token
-Oracle:{W}, Sacrifice Transluminant: Create a 1/1 white Spirit creature token with flying at the beginning of the next end step.
+Oracle:{W}, Sacrifice this creature: Create a 1/1 white Spirit creature token with flying at the beginning of the next end step.

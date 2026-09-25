@@ -7,4 +7,4 @@ SVar:TrigPumpAll:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ First Strike
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Ally
 DeckHints:Type$Ally
-Oracle:Rally — Whenever Kor Bladewhirl or another Ally you control enters, creatures you control gain first strike until end of turn.
+Oracle:Rally — Whenever this creature or another Ally you control enters, creatures you control gain first strike until end of turn.

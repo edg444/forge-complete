@@ -8,4 +8,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigToken | TriggerZones$ Batt
 SVar:TrigToken:DB$ Token | TokenScript$ r_1_1_devil_burn | TokenTapped$ True | TokenAttacking$ True
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Token & Type$Devil
-Oracle:Deathtouch, haste\nWhenever Maestros Diabolist attacks, if you don't control a Devil token, create a tapped and attacking 1/1 red Devil creature token with "When this token dies, it deals 1 damage to any target."
+Oracle:Deathtouch, haste\nWhenever this creature attacks, if you don't control a Devil token, create a tapped and attacking 1/1 red Devil creature token with "When this token dies, it deals 1 damage to any target."

@@ -6,4 +6,4 @@ S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | Description$ This creature 
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ Detain | TriggerDescription$ When this creature enters, detain target creature an opponent controls. (Until your next turn, that creature can't attack or block and its activated abilities can't be activated.)
 SVar:Detain:DB$ Detain | ValidTgts$ Creature.OppCtrl | ValidTgtsDesc$ creature an opponent controls
 SVar:PlayMain1:TRUE
-Oracle:Soulsworn Spirit can't be blocked.\nWhen Soulsworn Spirit enters, detain target creature an opponent controls. (Until your next turn, that creature can't attack or block and its activated abilities can't be activated.)
+Oracle:This creature can't be blocked.\nWhen this creature enters, detain target creature an opponent controls. (Until your next turn, that creature can't attack or block and its activated abilities can't be activated.)

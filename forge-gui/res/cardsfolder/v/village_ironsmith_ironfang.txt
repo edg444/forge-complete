@@ -6,7 +6,7 @@ K:First Strike
 T:Mode$ Phase | Phase$ Upkeep | WerewolfTransformCondition$ True | TriggerZones$ Battlefield | Execute$ TrigTransform | TriggerDescription$ At the beginning of each upkeep, if no spells were cast last turn, transform this creature.
 SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform
 AlternateMode:DoubleFaced
-Oracle:First strike\nAt the beginning of each upkeep, if no spells were cast last turn, transform Village Ironsmith.
+Oracle:First strike\nAt the beginning of each upkeep, if no spells were cast last turn, transform this creature.
 
 ALTERNATE
 
@@ -18,4 +18,4 @@ PT:3/1
 K:First Strike
 T:Mode$ Phase | Phase$ Upkeep | WerewolfUntransformCondition$ True | TriggerZones$ Battlefield | Execute$ TrigTransform | TriggerDescription$ At the beginning of each upkeep, if a player cast two or more spells last turn, transform this creature.
 SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform
-Oracle:First strike\nAt the beginning of each upkeep, if a player cast two or more spells last turn, transform Ironfang.
+Oracle:First strike\nAt the beginning of each upkeep, if a player cast two or more spells last turn, transform this creature.

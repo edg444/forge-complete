@@ -7,7 +7,7 @@ T:Mode$ SpellCast | ValidCard$ Card.cmcGE5 | ValidActivatingPlayer$ You | Trigge
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1
 DeckHas:Ability$Counters|Discard
 AlternateMode:Adventure
-Oracle:Trample\nWhenever you cast a spell with mana value 5 or greater, put a +1/+1 counter on Tempest Hart.
+Oracle:Trample\nWhenever you cast a spell with mana value 5 or greater, put a +1/+1 counter on this creature.
 
 ALTERNATE
 

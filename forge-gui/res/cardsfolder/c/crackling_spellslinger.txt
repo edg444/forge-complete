@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.w
 SVar:TrigEffect:DB$ Effect | StaticAbilities$ GrantStorm | ForgetOnCast$ Instant.YouCtrl,Sorcery.YouCtrl
 SVar:GrantStorm:Mode$ Continuous | Affected$ Instant.YouCtrl,Sorcery.YouCtrl | AffectedZone$ Stack | AddKeyword$ Storm | Description$ The next instant or sorcery spell you cast this turn has storm. (When you cast that spell, copy it for each spell cast before it this turn. You may choose new targets for the copies.)
 DeckHints:Type$Instant|Sorcery
-Oracle:Flash\nWhen Crackling Spellslinger enters, if you cast it, the next instant or sorcery spell you cast this turn has storm. (When you cast that spell, copy it for each spell cast before it this turn. You may choose new targets for the copies.)
+Oracle:Flash\nWhen this creature enters, if you cast it, the next instant or sorcery spell you cast this turn has storm. (When you cast that spell, copy it for each spell cast before it this turn. You may choose new targets for the copies.)

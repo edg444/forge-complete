@@ -6,4 +6,4 @@ SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ Mana | Cost$ T | Produced$ U | SpellDescription$ Add {U}.
 A:AB$ Mana | Cost$ T Sac<1/CARDNAME> | Produced$ W B | SpellDescription$ Add {W}{B}.
 AI:RemoveDeck:All
-Oracle:Ancient Spring enters tapped.\n{T}: Add {U}.\n{T}, Sacrifice Ancient Spring: Add {W}{B}.
+Oracle:This land enters tapped.\n{T}: Add {U}.\n{T}, Sacrifice this land: Add {W}{B}.

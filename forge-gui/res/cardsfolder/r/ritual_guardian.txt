@@ -6,4 +6,4 @@ T:Mode$ Phase | Phase$ BeginCombat | ValidPlayer$ You | TriggerZones$ Battlefiel
 SVar:TrigPump:DB$ Pump | Defined$ Self | KW$ Lifelink
 SVar:X:Count$Valid Creature.YouCtrl$DifferentCardPower
 DeckHas:Ability$LifeGain
-Oracle:Coven — At the beginning of combat on your turn, if you control three or more creatures with different powers, Ritual Guardian gains lifelink until end of turn.
+Oracle:Coven — At the beginning of combat on your turn, if you control three or more creatures with different powers, this creature gains lifelink until end of turn.

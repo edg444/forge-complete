@@ -7,4 +7,4 @@ SVar:DBEffect:DB$ Effect | ReplacementEffects$ DontUntap | RememberObjects$ Targ
 SVar:DontUntap:Event$ Untap | ValidCard$ Card.IsRemembered | ValidStepTurnToController$ You | Layer$ CantHappen | Description$ That permanent doesn't untap during its controller's untap step for as long as EFFECTSOURCE remains tapped.
 SVar:X:Count$xPaid
 AI:RemoveDeck:All
-Oracle:You may choose not to untap Entrancing Lyre during your untap step.\n{X}, {T}: Tap target creature with power X or less. It doesn't untap during its controller's untap step for as long as Entrancing Lyre remains tapped.
+Oracle:You may choose not to untap this artifact during your untap step.\n{X}, {T}: Tap target creature with power X or less. It doesn't untap during its controller's untap step for as long as this artifact remains tapped.

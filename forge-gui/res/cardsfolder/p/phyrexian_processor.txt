@@ -7,4 +7,4 @@ A:AB$ Token | Cost$ 4 T | TokenScript$ b_x_x_phyrexian_minion | TokenOwner$ You 
 SVar:X:Count$xPaid
 SVar:LifePaidOnETB:Number$0
 AI:RemoveDeck:All
-Oracle:As Phyrexian Processor enters, pay any amount of life.\n{4}, {T}: Create an X/X black Phyrexian Minion creature token, where X is the life paid as Phyrexian Processor entered.
+Oracle:As this artifact enters, pay any amount of life.\n{4}, {T}: Create an X/X black Phyrexian Minion creature token, where X is the life paid as this artifact entered.

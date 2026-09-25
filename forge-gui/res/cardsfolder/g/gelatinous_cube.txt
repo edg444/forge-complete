@@ -8,4 +8,4 @@ A:AB$ ChangeZone | Cost$ X B | Origin$ Exile | Destination$ Graveyard | TgtPromp
 SVar:X:Count$xPaid
 SVar:PlayMain1:TRUE
 SVar:NeedsToPlay:Creature.nonOoze+OppCtrl
-Oracle:Engulf — When Gelatinous Cube enters, exile target non-Ooze creature an opponent controls until Gelatinous Cube leaves the battlefield.\nDissolve — {X}{B}: Put target creature card with mana value X exiled with Gelatinous Cube into its owner's graveyard.
+Oracle:Engulf — When this creature enters, exile target non-Ooze creature an opponent controls until this creature leaves the battlefield.\nDissolve — {X}{B}: Put target creature card with mana value X exiled with this creature into its owner's graveyard.

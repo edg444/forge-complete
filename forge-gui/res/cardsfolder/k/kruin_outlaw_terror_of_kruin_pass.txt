@@ -6,7 +6,7 @@ K:First Strike
 T:Mode$ Phase | Phase$ Upkeep | WerewolfTransformCondition$ True | TriggerZones$ Battlefield | Execute$ TrigTransform | TriggerDescription$ At the beginning of each upkeep, if no spells were cast last turn, transform this creature.
 SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform
 AlternateMode:DoubleFaced
-Oracle:First strike\nAt the beginning of each upkeep, if no spells were cast last turn, transform Kruin Outlaw.
+Oracle:First strike\nAt the beginning of each upkeep, if no spells were cast last turn, transform this creature.
 
 ALTERNATE
 

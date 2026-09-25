@@ -9,4 +9,4 @@ S:Mode$ Continuous | AffectedDefined$ Enchanted | AddPower$ X | AddToughness$ X 
 SVar:X:Count$CardCounters.P1P1
 SVar:BuffedBy:Land
 DeckHas:Ability$Counters
-Oracle:Bestow {1}{W} (If you cast this card for its bestow cost, it's an Aura spell with enchant creature. It becomes a creature again if it's not attached.)\nLandfall — Whenever a land you control enters, put a +1/+1 counter on Glyph Elemental.\nEnchanted creature gets +1/+1 for each +1/+1 counter on Glyph Elemental.
+Oracle:Bestow {1}{W} (If you cast this card for its bestow cost, it's an Aura spell with enchant creature. It becomes a creature again if it's not attached.)\nLandfall — Whenever a land you control enters, put a +1/+1 counter on this permanent.\nEnchanted creature gets +1/+1 for each +1/+1 counter on this Aura.

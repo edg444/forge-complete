@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature | KW$ HIDDEN CARDNAME must be blocked if able. | AILogic$ Pump
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Enchantment
-Oracle:Constellation — Whenever Goldenhide Ox or another enchantment you control enters, target creature must be blocked this turn if able.
+Oracle:Constellation — Whenever this creature or another enchantment you control enters, target creature must be blocked this turn if able.

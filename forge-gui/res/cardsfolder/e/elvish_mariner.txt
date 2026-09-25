@@ -8,4 +8,4 @@ T:Mode$ Scry | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigTap |
 SVar:TrigTap:DB$ Tap | TargetMin$ 0 | TargetMax$ X | TgtPrompt$ Select up to X target nonland permanents | ValidTgts$ Permanent.nonLand
 SVar:X:TriggerCount$ScryNum
 SVar:HasAttackEffect:TRUE
-Oracle:Whenever Elvish Mariner attacks, scry 1.\nWhenever you scry, tap up to X target nonland permanents, where X is the number of cards looked at while scrying this way.
+Oracle:Whenever this creature attacks, scry 1.\nWhenever you scry, tap up to X target nonland permanents, where X is the number of cards looked at while scrying this way.

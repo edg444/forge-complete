@@ -4,4 +4,4 @@ Types:Creature Human Soldier Archer Ranger
 PT:2/2
 K:First Strike
 A:AB$ Regenerate | Cost$ G | SpellDescription$ Regenerate this creature.
-Oracle:First strike\n{G}: Regenerate Ranger en-Vec.
+Oracle:First strike\n{G}: Regenerate this creature.

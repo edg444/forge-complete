@@ -8,4 +8,4 @@ SVar:TrigVote:DB$ Vote | Defined$ Player | Choices$ DBZombify,DBDestroy | VoteTi
 SVar:DBZombify:DB$ ChangeZoneAll | ChangeType$ Creature | Origin$ Graveyard | Destination$ Battlefield | SpellDescription$ Grace
 SVar:DBDestroy:DB$ DestroyAll | ValidCards$ Creature.Other | SpellDescription$ Condemnation
 AI:RemoveDeck:Random
-Oracle:Flying\nWill of the council — When Magister of Worth enters, starting with you, each player votes for grace or condemnation. If grace gets more votes, each player returns each creature card from their graveyard to the battlefield. If condemnation gets more votes or the vote is tied, destroy all creatures other than Magister of Worth.
+Oracle:Flying\nWill of the council — When this creature enters, starting with you, each player votes for grace or condemnation. If grace gets more votes, each player returns each creature card from their graveyard to the battlefield. If condemnation gets more votes or the vote is tied, destroy all creatures other than this creature.

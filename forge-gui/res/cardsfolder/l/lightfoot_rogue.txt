@@ -7,4 +7,4 @@ SVar:TrigRollDice:DB$ RollDice | Sides$ 20 | ResultSubAbilities$ 1-9:Pump1,10-19
 SVar:Pump1:DB$ Pump | Defined$ Self | KW$ Deathtouch | SpellDescription$ 1—9 | CARDNAME gains deathtouch until end of turn.
 SVar:Pump2:DB$ Pump | Defined$ Self | KW$ Deathtouch | NumAtt$ +1 | SpellDescription$ 10—19 | It gets +1/+0 and gains deathtouch until end of turn.
 SVar:Pump3:DB$ Pump | Defined$ Self | KW$ First Strike & Deathtouch | NumAtt$ +3 | SpellDescription$ 20 | It gets +3/+0 and gains first strike and deathtouch until end of turn.
-Oracle:Sneak Attack — Whenever Lightfoot Rogue attacks, roll a d20.\n1—9 | Lightfoot Rogue gains deathtouch until end of turn.\n10—19 | It gets +1/+0 and gains deathtouch until end of turn.\n20 | It gets +3/+0 and gains first strike and deathtouch until end of turn.
+Oracle:Sneak Attack — Whenever this creature attacks, roll a d20.\n1—9 | This creature gains deathtouch until end of turn.\n10—19 | It gets +1/+0 and gains deathtouch until end of turn.\n20 | It gets +3/+0 and gains first strike and deathtouch until end of turn.

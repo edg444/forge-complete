@@ -11,4 +11,4 @@ T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ Player.EnchantedController | Trigge
 SVar:TrigRemoveCounter:DB$ RemoveCounter | Defined$ Enchanted | CounterType$ SLEEP | CounterNum$ 1
 SVar:X:Count$xPaid
 DeckHas:Ability$Counters
-Oracle:Enchant creature\nWhen Venarian Gold enters, tap enchanted creature and put X sleep counters on it.\nEnchanted creature doesn't untap during its controller's untap step if it has a sleep counter on it.\nAt the beginning of the upkeep of enchanted creature's controller, remove a sleep counter from that creature.
+Oracle:Enchant creature\nWhen this Aura enters, tap enchanted creature and put X sleep counters on it.\nEnchanted creature doesn't untap during its controller's untap step if it has a sleep counter on it.\nAt the beginning of the upkeep of enchanted creature's controller, remove a sleep counter from that creature.

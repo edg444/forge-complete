@@ -6,4 +6,4 @@ S:Mode$ Continuous | Affected$ Creature.YouCtrl | AddKeyword$ Vigilance | IsPres
 SVar:EnchantMe:Once
 AI:RemoveDeck:Random
 DeckNeeds:Type$Enchantment
-Oracle:Creatures you control have vigilance as long as Gate Hound is enchanted.
+Oracle:Creatures you control have vigilance as long as this creature is enchanted.

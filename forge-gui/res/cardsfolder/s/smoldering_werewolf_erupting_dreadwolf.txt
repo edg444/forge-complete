@@ -7,7 +7,7 @@ SVar:TrigDealDamage:DB$ DealDamage | TargetMin$ 0 | TargetMax$ 2 | ValidTgts$ Cr
 A:AB$ SetState | Cost$ 4 R R | Defined$ Self | Mode$ Transform | SpellDescription$ Transform this creature.
 SVar:PlayMain1:TRUE
 AlternateMode:DoubleFaced
-Oracle:When Smoldering Werewolf enters, it deals 1 damage to each of up to two target creatures.\n{4}{R}{R}: Transform Smoldering Werewolf.
+Oracle:When this creature enters, it deals 1 damage to each of up to two target creatures.\n{4}{R}{R}: Transform this creature.
 
 ALTERNATE
 
@@ -17,4 +17,4 @@ Types:Creature Eldrazi Werewolf
 PT:6/4
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigDealDamage | TriggerDescription$ Whenever this creature attacks, it deals 2 damage to any target.
 SVar:TrigDealDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 2
-Oracle:Whenever Erupting Dreadwolf attacks, it deals 2 damage to any target.
+Oracle:Whenever this creature attacks, it deals 2 damage to any target.

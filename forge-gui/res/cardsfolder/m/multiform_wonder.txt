@@ -8,4 +8,4 @@ A:AB$ Pump | Cost$ PayEnergy<1> | KWChoice$ Flying,Vigilance,Lifelink | StackDes
 A:AB$ GenericChoice | Cost$ PayEnergy<1> | Defined$ You | Choices$ ABPump1,ABPump2 | StackDescription$ SpellDescription | SpellDescription$ This creature gets +2/-2 or -2/+2 until end of turn.
 SVar:ABPump1:DB$ Pump | Defined$ Self | NumAtt$ +2 | NumDef$ -2 | SpellDescription$ +2/-2
 SVar:ABPump2:DB$ Pump | Defined$ Self | NumAtt$ -2 | NumDef$ +2 | SpellDescription$ -2/+2
-Oracle:When Multiform Wonder enters, you get {E}{E}{E} (three energy counters).\nPay {E}: Multiform Wonder gains your choice of flying, vigilance, or lifelink until end of turn.\nPay {E}: Multiform Wonder gets +2/-2 or -2/+2 until end of turn.
+Oracle:When this creature enters, you get {E}{E}{E} (three energy counters).\nPay {E}: This creature gains your choice of flying, vigilance, or lifelink until end of turn.\nPay {E}: This creature gets +2/-2 or -2/+2 until end of turn.

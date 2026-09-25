@@ -6,4 +6,4 @@ S:Mode$ Continuous | AffectedZone$ Battlefield | Affected$ Goblin.Other+YouCtrl 
 A:AB$ DealDamage | Cost$ R T | ValidTgts$ Any | NumDmg$ X | SpellDescription$ This creature deals damage equal to the number of Goblins that entered the battlefield under your control this turn to any target.
 SVar:X:Count$ThisTurnEntered_Battlefield_Goblin.YouCtrl
 DeckNeeds:Type$Goblin
-Oracle:Other Goblins you control get +1/+1.\n{R}, {T}: Hobgoblin Bandit Lord deals damage equal to the number of Goblins that entered the battlefield under your control this turn to any target.
+Oracle:Other Goblins you control get +1/+1.\n{R}, {T}: This creature deals damage equal to the number of Goblins that entered the battlefield under your control this turn to any target.

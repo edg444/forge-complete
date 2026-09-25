@@ -7,4 +7,4 @@ SVar:TrigDraw:DB$ Draw | Defined$ TriggeredCardController
 AI:RemoveDeck:Random
 DeckHas:Ability$Sacrifice
 DeckNeeds:Color$Red
-Oracle:{R}, Sacrifice Implement of Combustion: It deals 1 damage to target player or planeswalker.\nWhen Implement of Combustion is put into a graveyard from the battlefield, draw a card.
+Oracle:{R}, Sacrifice this artifact: It deals 1 damage to target player or planeswalker.\nWhen this artifact is put into a graveyard from the battlefield, draw a card.

@@ -4,4 +4,4 @@ Types:Creature Lizard Citizen
 PT:2/2
 A:AB$ Pump | Cost$ 1 BG | Defined$ Self | KW$ Deathtouch | SpellDescription$ This creature gains deathtouch until end of turn.
 DeckHints:Color$Black|Green
-Oracle:{1}{B/G}: Riveteers Initiate gains deathtouch until end of turn.
+Oracle:{1}{B/G}: This creature gains deathtouch until end of turn.

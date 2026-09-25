@@ -5,4 +5,4 @@ PT:2/2
 K:Flying
 S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't block.
 K:Dash:1 B
-Oracle:Flying\nReckless Imp can't block.\nDash {1}{B} (You may cast this spell for its dash cost. If you do, it gains haste, and it's returned from the battlefield to its owner's hand at the beginning of the next end step.)
+Oracle:Flying\nThis creature can't block.\nDash {1}{B} (You may cast this spell for its dash cost. If you do, it gains haste, and it's returned from the battlefield to its owner's hand at the beginning of the next end step.)

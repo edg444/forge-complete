@@ -9,4 +9,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigImmediateTrig:DB$ ImmediateTrigger | RememberObjects$ Targeted | ValidTgts$ Permanent.nonLand | TgtPrompt$ Select target nonland permanent | UnlessCost$ PayEnergy<X> | UnlessPayer$ You | UnlessSwitched$ True | Execute$ TrigDestroy | TriggerDescription$ When you do, destroy that permanent.
 SVar:TrigDestroy:DB$ Destroy | Defined$ DelayTriggerRememberedLKI
 SVar:X:Targeted$CardManaCost
-Oracle:Trample\nWhen Behemoth of Vault 0 enters, you get {E}{E}{E}{E} (four energy counters).\nWhen Behemoth of Vault 0 dies, you may pay an amount of {E} equal to target nonland permanent's mana value. When you do, destroy that permanent.
+Oracle:Trample\nWhen this creature enters, you get {E}{E}{E}{E} (four energy counters).\nWhen this creature dies, you may pay an amount of {E} equal to target nonland permanent's mana value. When you do, destroy that permanent.

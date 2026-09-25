@@ -8,4 +8,4 @@ SVar:TrigBranch:DB$ Branch | ValidTgts$ Creature.attacking | TgtPrompt$ Select t
 SVar:DestroyAttacker:DB$ Destroy | Defined$ Targeted
 SVar:ExileDemon:DB$ ChangeZone | Defined$ Targeted | Origin$ Battlefield | Destination$ Exile
 SVar:X:Targeted$Valid Creature.Demon
-Oracle:Flash\nRites of Banishment — When Grey Knight Paragon enters, destroy target attacking creature. If that creature is a Demon, exile it instead.
+Oracle:Flash\nRites of Banishment — When this creature enters, destroy target attacking creature. If that creature is a Demon, exile it instead.

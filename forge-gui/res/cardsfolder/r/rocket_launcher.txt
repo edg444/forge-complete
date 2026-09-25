@@ -5,4 +5,4 @@ A:AB$ DealDamage | Cost$ 2 | ValidTgts$ Any | NumDmg$ 1 | SubAbility$ DBDelayTri
 SVar:DBDelayTrig:DB$ DelayedTrigger | Mode$ Phase | Phase$ End of Turn | Execute$ DestroySource | TriggerDescription$ Destroy this artifact at the beginning of the next end step.
 SVar:DestroySource:DB$ Destroy | Defined$ Self
 AI:RemoveDeck:All
-Oracle:{2}: Rocket Launcher deals 1 damage to any target. Destroy Rocket Launcher at the beginning of the next end step. Activate only if you've controlled Rocket Launcher continuously since the beginning of your most recent turn.
+Oracle:{2}: This artifact deals 1 damage to any target. Destroy this artifact at the beginning of the next end step. Activate only if you've controlled this artifact continuously since the beginning of your most recent turn.

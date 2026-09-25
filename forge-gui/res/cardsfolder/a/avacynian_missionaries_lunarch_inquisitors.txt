@@ -7,7 +7,7 @@ SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform
 SVar:EquipMe:Once
 DeckHints:Type$Equipment
 AlternateMode:DoubleFaced
-Oracle:At the beginning of your end step, if Avacynian Missionaries is equipped, transform it.
+Oracle:At the beginning of your end step, if this creature is equipped, transform it.
 
 ALTERNATE
 

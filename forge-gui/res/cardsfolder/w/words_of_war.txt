@@ -6,4 +6,4 @@ SVar:DrawReplace:Event$ Draw | ValidPlayer$ You | ReplaceWith$ WarDamage | Descr
 SVar:WarDamage:DB$ DealDamage | Defined$ Remembered | DamageSource$ Imprinted | NumDmg$ 2 | SubAbility$ ExileEffect
 SVar:ExileEffect:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
 AI:RemoveDeck:All
-Oracle:{1}: The next time you would draw a card this turn, Words of War deals 2 damage to any target instead.
+Oracle:{1}: The next time you would draw a card this turn, this enchantment deals 2 damage to any target instead.

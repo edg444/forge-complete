@@ -5,4 +5,4 @@ PT:3/1
 K:CARDNAME must be blocked if able.
 K:Blitz:3 G
 DeckHas:Ability$Sacrifice
-Oracle:Riveteers Decoy must be blocked if able.\nBlitz {3}{G} (If you cast this spell for its blitz cost, it gains haste and "When this creature dies, draw a card." Sacrifice it at the beginning of the next end step.)
+Oracle:This creature must be blocked if able.\nBlitz {3}{G} (If you cast this spell for its blitz cost, it gains haste and "When this creature dies, draw a card." Sacrifice it at the beginning of the next end step.)

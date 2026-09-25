@@ -10,4 +10,4 @@ SVar:DBAnimate:DB$ Animate | TargetMin$ 0 | TargetMax$ X | ValidTgts$ Land.YouCt
 SVar:X:Count$TriggerRememberAmount
 AI:RemoveDeck:All
 DeckHas:Ability$Counters
-Oracle:Trample\nWhen Primal Adversary enters, you may pay {1}{G} any number of times. When you pay this cost one or more times, put that many +1/+1 counters on Primal Adversary, then up to that many target lands you control become 3/3 Wolf creatures with haste that are still lands.
+Oracle:Trample\nWhen this creature enters, you may pay {1}{G} any number of times. When you pay this cost one or more times, put that many +1/+1 counters on this creature, then up to that many target lands you control become 3/3 Wolf creatures with haste that are still lands.

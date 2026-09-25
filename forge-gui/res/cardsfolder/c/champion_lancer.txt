@@ -3,4 +3,4 @@ ManaCost:4 W W
 Types:Creature Human Knight
 PT:3/3
 R:Event$ DamageDone | Prevent$ True | ValidSource$ Creature.inZoneBattlefield | ValidTarget$ Creature.Self | Description$ Prevent all damage that would be dealt to this creature by creatures.
-Oracle:Prevent all damage that would be dealt to Champion Lancer by creatures.
+Oracle:Prevent all damage that would be dealt to this creature by creatures.

@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 3 | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1
 DeckHas:Ability$LifeGain
-Oracle:Flying\nWhen Elite Guardmage enters, you gain 3 life and draw a card.
+Oracle:Flying\nWhen this creature enters, you gain 3 life and draw a card.

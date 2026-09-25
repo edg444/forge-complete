@@ -9,4 +9,4 @@ SVar:DBDealDamage:DB$ DealDamage | ConditionCheckSVar$ TriggeredSpellAbility$Car
 SVar:X:Count$CardCounters.ALL
 DeckHas:Ability$Counters
 DeckNeeds:Type$Creature
-Oracle:Trample\nWhenever you cast a creature spell, put two +1/+1 counters on Herald of Ilharg. If that spell has mana value 5 or greater, Herald of Ilharg deals damage equal to the number of counters on it to each opponent.
+Oracle:Trample\nWhenever you cast a creature spell, put two +1/+1 counters on this creature. If that spell has mana value 5 or greater, this creature deals damage equal to the number of counters on it to each opponent.

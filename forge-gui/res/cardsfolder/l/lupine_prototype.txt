@@ -5,4 +5,4 @@ PT:5/5
 S:Mode$ CantAttack,CantBlock | ValidCard$ Card.Self | CheckSVar$ X | Description$ This creature can't attack or block unless a player has no cards in hand.
 SVar:X:PlayerCountPlayers$LowestValidHand Card.YouOwn
 AI:RemoveDeck:Random
-Oracle:Lupine Prototype can't attack or block unless a player has no cards in hand.
+Oracle:This creature can't attack or block unless a player has no cards in hand.

@@ -8,4 +8,4 @@ SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | Descript
 SVar:X:Count$xPaid
 AI:RemoveDeck:Random
 DeckHas:Ability$Sacrifice
-Oracle:Runed Arch enters tapped.\n{X}, {T}, Sacrifice Runed Arch: X target creatures with power 2 or less can't be blocked this turn.
+Oracle:This artifact enters tapped.\n{X}, {T}, Sacrifice this artifact: X target creatures with power 2 or less can't be blocked this turn.

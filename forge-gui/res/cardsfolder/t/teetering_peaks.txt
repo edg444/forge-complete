@@ -7,4 +7,4 @@ A:AB$ Mana | Cost$ T | Produced$ R | SpellDescription$ Add {R}.
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ When this land enters, target creature gets +2/+0 until end of turn.
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature | NumAtt$ +2
 AI:RemoveDeck:Random
-Oracle:Teetering Peaks enters tapped.\nWhen Teetering Peaks enters, target creature gets +2/+0 until end of turn.\n{T}: Add {R}.
+Oracle:This land enters tapped.\nWhen this land enters, target creature gets +2/+0 until end of turn.\n{T}: Add {R}.

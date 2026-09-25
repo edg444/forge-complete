@@ -7,4 +7,4 @@ K:Ward:4
 T:Mode$ DamageDone | ValidSource$ Card.Self,Tyranid.YouCtrl | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | Execute$ TrigToken | TriggerDescription$ Shrieking Gargoyles — Whenever this creature or another Tyranid you control deals combat damage to a player, create a 1/1 blue Tyranid Gargoyle creature token with flying.
 SVar:TrigToken:DB$ Token | TokenScript$ u_1_1_tyranid_gargoyle_flying
 DeckHas:Type$Gargoyle & Ability$Token
-Oracle:Flying, ward {4}\nShrieking Gargoyles — Whenever Tyranid Harridan or another Tyranid you control deals combat damage to a player, create a 1/1 blue Tyranid Gargoyle creature token with flying.
+Oracle:Flying, ward {4}\nShrieking Gargoyles — Whenever this creature or another Tyranid you control deals combat damage to a player, create a 1/1 blue Tyranid Gargoyle creature token with flying.

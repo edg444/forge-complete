@@ -7,4 +7,4 @@ SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | Counter
 A:AB$ Animate | Cost$ 2 | Defined$ Self | Power$ 1 | Toughness$ 1 | Types$ Creature,Artifact,Construct | RemoveCreatureTypes$ True | SpellDescription$ This artifact becomes a 1/1 Construct artifact creature until end of turn.
 DeckHas:Ability$Counters & Type$Construct
 DeckHints:Type$Artifact|Instant|Sorcery|Enchantment
-Oracle:Flying\nWhenever you cast a noncreature spell, put a +1/+1 counter on Levitating Statue.\n{2}: Levitating Statue becomes a 1/1 Construct artifact creature until end of turn.
+Oracle:Flying\nWhenever you cast a noncreature spell, put a +1/+1 counter on this artifact.\n{2}: This artifact becomes a 1/1 Construct artifact creature until end of turn.

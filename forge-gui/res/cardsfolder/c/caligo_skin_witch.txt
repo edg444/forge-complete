@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | ValidCard$ Card.Self+kicked | Origin$ Any | Destination$ B
 SVar:TrigDiscard:DB$ Discard | Defined$ Player.Opponent | NumCards$ 2 | Mode$ TgtChoose
 SVar:NeedsToPlayKickedVar:Z GE1
 SVar:Z:Count$ValidHand Card.OppOwn
-Oracle:Kicker {3}{B} (You may pay an additional {3}{B} as you cast this spell.)\nWhen Caligo Skin-Witch enters, if it was kicked, each opponent discards two cards.
+Oracle:Kicker {3}{B} (You may pay an additional {3}{B} as you cast this spell.)\nWhen this creature enters, if it was kicked, each opponent discards two cards.

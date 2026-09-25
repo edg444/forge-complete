@@ -11,4 +11,4 @@ SVar:TrigToken:DB$ Token | TokenAmount$ Y | TokenScript$ gw_1_1_citizen
 SVar:Y:TriggeredCard$CardCounters.P1P1
 SVar:BuffedBy:Creature
 DeckHas:Ability$Counters|Token
-Oracle:Boss's Chauffeur enters with a number of +1/+1 counters on it equal to one plus the number of other creatures you control.\nAlliance — Whenever another creature you control enters, put a +1/+1 counter on Boss's Chauffeur.\nWhen Boss's Chauffeur dies, create a 1/1 green and white Citizen creature token for each +1/+1 counter on it.
+Oracle:This creature enters with a number of +1/+1 counters on it equal to one plus the number of other creatures you control.\nAlliance — Whenever another creature you control enters, put a +1/+1 counter on this creature.\nWhen this creature dies, create a 1/1 green and white Citizen creature token for each +1/+1 counter on it.

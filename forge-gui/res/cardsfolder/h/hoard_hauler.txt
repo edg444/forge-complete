@@ -9,4 +9,4 @@ SVar:X:Count$Valid Artifact.ControlledBy TriggeredTarget
 K:Crew:3
 AI:RemoveDeck:Random
 DeckHas:Ability$Token|Sacrifice & Type$Treasure|Artifact
-Oracle:Trample\nWhenever Hoard Hauler deals combat damage to a player, create a Treasure token for each artifact they control.\nCrew 3
+Oracle:Trample\nWhenever this Vehicle deals combat damage to a player, create a Treasure token for each artifact they control.\nCrew 3

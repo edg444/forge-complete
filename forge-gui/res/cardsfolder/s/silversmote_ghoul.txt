@@ -7,4 +7,4 @@ SVar:ReturnedBattlefield:DB$ ChangeZone | Origin$ Graveyard | Destination$ Battl
 SVar:LifeGained:Count$LifeYouGainedThisTurn
 A:AB$ Draw | Cost$ 1 B Sac<1/CARDNAME> | NumCards$ 1 | SpellDescription$ Draw a card.
 DeckHints:Ability$LifeGain
-Oracle:At the beginning of your end step, if you gained 3 or more life this turn, return Silversmote Ghoul from your graveyard to the battlefield tapped.\n{1}{B}, Sacrifice Silversmote Ghoul: Draw a card.
+Oracle:At the beginning of your end step, if you gained 3 or more life this turn, return this card from your graveyard to the battlefield tapped.\n{1}{B}, Sacrifice this creature: Draw a card.

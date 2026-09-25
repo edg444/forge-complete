@@ -8,4 +8,4 @@ SVar:TrigCharm:DB$ Charm | Choices$ DBCounter,DBToken
 SVar:DBCounter:DB$ PutCounter | CounterType$ P1P1 | CounterNum$ 1 | SpellDescription$ Put a +1/+1 counter on this creature.
 SVar:DBToken:DB$ Token | TokenScript$ g_1_1_saproling | TokenOwner$ You | SpellDescription$ Create a 1/1 green Saproling creature token.
 DeckHas:Ability$Counters|Token
-Oracle:Reach (This creature can block creatures with flying.)\nWhen Saurian Symbiote enters, choose one —\n• Put a +1/+1 counter on Saurian Symbiote.\n• Create a 1/1 green Saproling creature token.
+Oracle:Reach (This creature can block creatures with flying.)\nWhen this creature enters, choose one —\n• Put a +1/+1 counter on this creature.\n• Create a 1/1 green Saproling creature token.

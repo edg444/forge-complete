@@ -3,4 +3,4 @@ ManaCost:3 R R
 Types:Creature Elemental
 PT:5/4
 A:AB$ DealDamage | Cost$ 1 R R | ValidTgts$ Player | NumDmg$ 1 | SpellDescription$ This creature deals 1 damage to target player.
-Oracle:{1}{R}{R}: Pyroclastic Elemental deals 1 damage to target player.
+Oracle:{1}{R}{R}: This creature deals 1 damage to target player.

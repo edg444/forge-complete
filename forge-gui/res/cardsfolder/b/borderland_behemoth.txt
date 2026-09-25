@@ -7,4 +7,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ X | AddToughness$ X | Des
 SVar:X:Count$Valid Giant.Other+YouCtrl/Times.4
 AI:RemoveDeck:Random
 SVar:BuffedBy:Giant
-Oracle:Trample\nBorderland Behemoth gets +4/+4 for each other Giant you control.
+Oracle:Trample\nThis creature gets +4/+4 for each other Giant you control.

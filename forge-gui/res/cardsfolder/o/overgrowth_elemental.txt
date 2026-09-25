@@ -11,4 +11,4 @@ SVar:PlayMain1:TRUE
 AI:RemoveDeck:Random
 DeckHas:Ability$Counters
 DeckHints:Type$Elemental
-Oracle:When Overgrowth Elemental enters, put a +1/+1 counter on another target Elemental you control.\nWhenever another creature you control dies, you gain 1 life. If that creature was an Elemental, put a +1/+1 counter on Overgrowth Elemental.
+Oracle:When this creature enters, put a +1/+1 counter on another target Elemental you control.\nWhenever another creature you control dies, you gain 1 life. If that creature was an Elemental, put a +1/+1 counter on this creature.

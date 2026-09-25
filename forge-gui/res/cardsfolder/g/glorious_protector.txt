@@ -9,4 +9,4 @@ SVar:TrigExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | Hidde
 SVar:MaxTgts:Count$Valid Creature.nonAngel+YouCtrl
 AI:RemoveDeck:Random
 K:Foretell:2 W
-Oracle:Flash\nFlying\nWhen Glorious Protector enters, you may exile any number of non-Angel creatures you control until Glorious Protector leaves the battlefield.\nForetell {2}{W}
+Oracle:Flash\nFlying\nWhen this creature enters, you may exile any number of non-Angel creatures you control until this creature leaves the battlefield.\nForetell {2}{W}

@@ -8,4 +8,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigConnive | TriggerZones$ Ba
 SVar:TrigConnive:DB$ Connive
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Counters|Discard
-Oracle:Menace\nWhenever Scurrilous Sentry enters or attacks, it connives. (Draw a card, then discard a card. If you discarded a nonland card, put a +1/+1 counter on this creature.)
+Oracle:Menace\nWhenever this creature enters or attacks, it connives. (Draw a card, then discard a card. If you discarded a nonland card, put a +1/+1 counter on this creature.)

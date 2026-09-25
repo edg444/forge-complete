@@ -5,4 +5,4 @@ PT:10/6
 K:All creatures able to block CARDNAME do so.
 T:Mode$ AttackerBlockedByCreature | ValidCard$ Card.Self | ValidBlocker$ Creature | TriggerZones$ Battlefield | Execute$ TrigDraw | TriggerDescription$ Whenever this creature becomes blocked by a creature, that creature's controller draws a card.
 SVar:TrigDraw:DB$ Draw | Defined$ TriggeredBlockerController | NumCards$ 1
-Oracle:All creatures able to block Nessian Boar do so.\nWhenever Nessian Boar becomes blocked by a creature, that creature's controller draws a card.
+Oracle:All creatures able to block this creature do so.\nWhenever this creature becomes blocked by a creature, that creature's controller draws a card.

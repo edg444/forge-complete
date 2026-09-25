@@ -8,4 +8,4 @@ S:Mode$ CantBlock | ValidCard$ Card.Self | CheckSVar$ X | SVarCompare$ LT4 | Des
 SVar:X:Count$ValidHand Card.YouOwn
 A:AB$ Mill | Cost$ T | NumCards$ 1 | Defined$ Player | SpellDescription$ Each player mills a card.
 AI:RemoveDeck:Random
-Oracle:Flying\nVantress Gargoyle can't attack unless defending player has seven or more cards in their graveyard.\nVantress Gargoyle can't block unless you have four or more cards in hand.\n{T}: Each player mills a card.
+Oracle:Flying\nThis creature can't attack unless defending player has seven or more cards in their graveyard.\nThis creature can't block unless you have four or more cards in hand.\n{T}: Each player mills a card.

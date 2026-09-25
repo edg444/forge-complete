@@ -9,4 +9,4 @@ SVar:X:Count$Valid Permanent.YouCtrl+counters_GE1_OIL
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Counters
 DeckHints:Ability$Counters
-Oracle:Trample\nWhenever Kuldotha Cackler attacks, it gets +X/+0 until end of turn, where X is the number of permanents you control with oil counters on them.
+Oracle:Trample\nWhenever this creature attacks, it gets +X/+0 until end of turn, where X is the number of permanents you control with oil counters on them.

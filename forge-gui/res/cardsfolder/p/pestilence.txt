@@ -7,4 +7,4 @@ A:AB$ DamageAll | Cost$ B | NumDmg$ 1 | ValidCards$ Creature | ValidPlayers$ Pla
 SVar:NeedsToPlay:Creature
 SVar:NonStackingEffect:True
 DeckHas:Ability$Sacrifice
-Oracle:At the beginning of the end step, if no creatures are on the battlefield, sacrifice Pestilence.\n{B}: Pestilence deals 1 damage to each creature and each player.
+Oracle:At the beginning of the end step, if no creatures are on the battlefield, sacrifice this enchantment.\n{B}: This enchantment deals 1 damage to each creature and each player.

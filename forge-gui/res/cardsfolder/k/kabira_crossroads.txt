@@ -6,4 +6,4 @@ R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementRe
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ When this land enters, you gain 2 life.
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 2
-Oracle:Kabira Crossroads enters tapped.\nWhen Kabira Crossroads enters, you gain 2 life.\n{T}: Add {W}.
+Oracle:This land enters tapped.\nWhen this land enters, you gain 2 life.\n{T}: Add {W}.

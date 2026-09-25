@@ -6,4 +6,4 @@ A:AB$ Pump | Cost$ W | Defined$ Self | NumDef$ +1 | SpellDescription$ This creat
 A:AB$ Pump | Cost$ U | Defined$ Self | KW$ Flying | SpellDescription$ This creature gains flying until end of turn.
 AI:RemoveDeck:Random
 DeckNeeds:Color$White|Blue
-Oracle:{W}: Kavu Glider gets +0/+1 until end of turn.\n{U}: Kavu Glider gains flying until end of turn.
+Oracle:{W}: This creature gets +0/+1 until end of turn.\n{U}: This creature gains flying until end of turn.

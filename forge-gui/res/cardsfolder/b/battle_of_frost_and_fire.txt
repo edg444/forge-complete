@@ -9,4 +9,4 @@ SVar:CastSpell:Mode$ SpellCast | ValidCard$ Card.cmcGE5 | ValidActivatingPlayer$
 SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 2 | SubAbility$ DBDiscard
 SVar:DBDiscard:DB$ Discard | Defined$ You | NumCards$ 1 | Mode$ TgtChoose
 DeckHints:Type$Giant
-Oracle:(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)\nI — Battle of Frost and Fire deals 4 damage to each non-Giant creature and each planeswalker.\nII — Scry 3.\nIII — Whenever you cast a spell with mana value 5 or greater this turn, draw two cards, then discard a card.
+Oracle:(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)\nI — This Saga deals 4 damage to each non-Giant creature and each planeswalker.\nII — Scry 3.\nIII — Whenever you cast a spell with mana value 5 or greater this turn, draw two cards, then discard a card.

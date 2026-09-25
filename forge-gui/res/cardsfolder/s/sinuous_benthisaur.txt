@@ -7,4 +7,4 @@ SVar:TrigDig:DB$ Dig | DigNum$ X | ChangeNum$ 2 | RestRandomOrder$ True
 SVar:X:Count$ValidBattlefield,Graveyard Cave.YouCtrl
 SVar:NeedsToPlayVar:X GE2
 DeckNeeds:Type$Cave
-Oracle:When Sinuous Benthisaur enters, look at the top X cards of your library, where X is the number of Caves you control plus the number of Cave cards in your graveyard. Put two of those cards into your hand and the rest on the bottom of your library in a random order.
+Oracle:When this creature enters, look at the top X cards of your library, where X is the number of Caves you control plus the number of Cave cards in your graveyard. Put two of those cards into your hand and the rest on the bottom of your library in a random order.

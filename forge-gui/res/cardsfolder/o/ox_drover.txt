@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | ValidCard$ Card.Self | Destination$ Battlefield | Execute$
 T:Mode$ Attacks | ValidCard$ Card.Self | Secondary$ True | Execute$ TrigToken | TriggerDescription$ Whenever this creature enters or attacks, target opponent creates a 2/4 white Ox creature token and you draw a card.
 SVar:TrigToken:DB$ Token | ValidTgts$ Opponent | TokenOwner$ Targeted | TokenScript$ w_2_4_ox | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw
-Oracle:Vigilance\nOx Drover can't be blocked by Oxen.\nWhenever Ox Drover enters or attacks, target opponent creates a 2/4 white Ox creature token and you draw a card.
+Oracle:Vigilance\nThis creature can't be blocked by Oxen.\nWhenever this creature enters or attacks, target opponent creates a 2/4 white Ox creature token and you draw a card.

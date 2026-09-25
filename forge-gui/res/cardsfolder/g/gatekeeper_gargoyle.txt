@@ -7,4 +7,4 @@ K:etbCounter:P1P1:X:no Condition:CARDNAME enters with a +1/+1 counter on it for 
 SVar:X:Count$Valid Gate.YouCtrl
 SVar:NeedsToPlayVar:X GE1
 DeckHints:Type$Gate
-Oracle:Flying\nGatekeeper Gargoyle enters with a +1/+1 counter on it for each Gate you control.
+Oracle:Flying\nThis creature enters with a +1/+1 counter on it for each Gate you control.

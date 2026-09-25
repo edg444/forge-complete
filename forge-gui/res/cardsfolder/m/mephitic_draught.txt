@@ -7,4 +7,4 @@ SVar:TrigDraw:DB$ Draw | Defined$ TriggeredCardController | SubAbility$ DBLoseLi
 SVar:DBLoseLife:DB$ LoseLife | LifeAmount$ 1
 AI:RemoveDeck:Random
 SVar:SacMe:4
-Oracle:When Mephitic Draught enters or is put into a graveyard from the battlefield, you draw a card and you lose 1 life.
+Oracle:When this artifact enters or is put into a graveyard from the battlefield, you draw a card and you lose 1 life.

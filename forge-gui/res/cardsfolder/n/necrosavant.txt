@@ -5,4 +5,4 @@ PT:5/5
 A:AB$ ChangeZone | Cost$ 3 B B Sac<1/Creature> | Origin$ Graveyard | Destination$ Battlefield | ActivationZone$ Graveyard | PlayerTurn$ True | ActivationPhases$ Upkeep | SpellDescription$ Return this card from your graveyard to the battlefield. Activate only during your upkeep.
 SVar:AIPreference:SacCost$Creature.cmcLE4
 SVar:DiscardMe:1
-Oracle:{3}{B}{B}, Sacrifice a creature: Return Necrosavant from your graveyard to the battlefield. Activate only during your upkeep.
+Oracle:{3}{B}{B}, Sacrifice a creature: Return this card from your graveyard to the battlefield. Activate only during your upkeep.

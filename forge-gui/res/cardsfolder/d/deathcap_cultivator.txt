@@ -6,4 +6,4 @@ A:AB$ Mana | Cost$ T | Produced$ Combo B G | SpellDescription$ Add {B} or {G}.
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Deathtouch | Condition$ Delirium | Description$ Delirium — This creature has deathtouch as long as there are four or more card types among cards in your graveyard.
 DeckHints:Ability$Graveyard|Discard
 DeckHas:Ability$Delirium
-Oracle:{T}: Add {B} or {G}.\nDelirium — Deathcap Cultivator has deathtouch as long as there are four or more card types among cards in your graveyard.
+Oracle:{T}: Add {B} or {G}.\nDelirium — This creature has deathtouch as long as there are four or more card types among cards in your graveyard.

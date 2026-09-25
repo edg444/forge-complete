@@ -6,4 +6,4 @@ A:AB$ PutCounter | Cost$ 1 Sac<1/Creature.Other;Artifact.Other/another creature 
 SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1
 DeckHas:Ability$Counters|Sacrifice
 DeckHints:Type$Artifact
-Oracle:{1}, Sacrifice another creature or artifact: Put a +1/+1 counter on Stormclaw Rager and draw a card. Activate only as a sorcery.
+Oracle:{1}, Sacrifice another creature or artifact: Put a +1/+1 counter on this creature and draw a card. Activate only as a sorcery.

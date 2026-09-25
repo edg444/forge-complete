@@ -8,4 +8,4 @@ SVar:TrigCopyPermanent:DB$ CopyPermanent | Defined$ TriggeredAttackerLKICopy | N
 SVar:X:Count$Valid Creature.DefenderCtrl
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Token
-Oracle:Nacatl War-Pride must be blocked by exactly one creature if able.\nWhenever Nacatl War-Pride attacks, create X tokens that are copies of Nacatl War-Pride and that are tapped and attacking, where X is the number of creatures defending player controls. Exile the tokens at the beginning of the next end step.
+Oracle:This creature must be blocked by exactly one creature if able.\nWhenever this creature attacks, create X tokens that are copies of it and that are tapped and attacking, where X is the number of creatures defending player controls. Exile the tokens at the beginning of the next end step.

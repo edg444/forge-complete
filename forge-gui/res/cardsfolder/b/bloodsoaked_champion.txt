@@ -7,4 +7,4 @@ A:AB$ ChangeZone | Cost$ 1 B | PrecostDesc$ Raid — | Origin$ Graveyard | Desti
 SVar:RaidTest:Count$AttackersDeclared
 SVar:DiscardMe:1
 SVar:SacMe:1
-Oracle:Bloodsoaked Champion can't block.\nRaid — {1}{B}: Return Bloodsoaked Champion from your graveyard to the battlefield. Activate only if you attacked this turn.
+Oracle:This creature can't block.\nRaid — {1}{B}: Return this card from your graveyard to the battlefield. Activate only if you attacked this turn.

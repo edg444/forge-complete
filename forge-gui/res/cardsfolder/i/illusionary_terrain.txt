@@ -7,4 +7,4 @@ SVar:ChooseType1:DB$ ChooseType | Defined$ You | Type$ Basic Land | SubAbility$ 
 SVar:ChooseType2:DB$ ChooseType | Defined$ You | Type$ Basic Land | ChooseType2$ True
 S:Mode$ Continuous | Affected$ Land.Basic+ChosenType | AddType$ ChosenType2 | RemoveLandTypes$ True | Description$ Basic lands of the first chosen type are the second chosen type.
 AI:RemoveDeck:All
-Oracle:Cumulative upkeep {2} (At the beginning of your upkeep, put an age counter on this permanent, then sacrifice it unless you pay its upkeep cost for each age counter on it.)\nAs Illusionary Terrain enters, choose two basic land types.\nBasic lands of the first chosen type are the second chosen type.
+Oracle:Cumulative upkeep {2} (At the beginning of your upkeep, put an age counter on this permanent, then sacrifice it unless you pay its upkeep cost for each age counter on it.)\nAs this enchantment enters, choose two basic land types.\nBasic lands of the first chosen type are the second chosen type.

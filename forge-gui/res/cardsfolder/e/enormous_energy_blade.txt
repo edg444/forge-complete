@@ -5,4 +5,4 @@ S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddPower$ 
 T:Mode$ Attached | ValidSource$ Card.Self | ValidTarget$ Creature | TriggerZones$ Battlefield | Execute$ TrigTap | TriggerDescription$ Whenever this Equipment becomes attached to a creature, tap that creature.
 SVar:TrigTap:DB$ Tap | Defined$ TriggeredTargetLKICopy
 K:Equip:2
-Oracle:Equipped creature gets +4/+0.\nWhenever Enormous Energy Blade becomes attached to a creature, tap that creature.\nEquip {2} ({2}: Attach to target creature you control. Equip only as a sorcery.)
+Oracle:Equipped creature gets +4/+0.\nWhenever this Equipment becomes attached to a creature, tap that creature.\nEquip {2} ({2}: Attach to target creature you control. Equip only as a sorcery.)

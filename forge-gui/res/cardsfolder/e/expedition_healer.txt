@@ -6,4 +6,4 @@ K:Vigilance
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Lifelink | IsPresent$ Cleric.Other+YouCtrl | Description$ This creature has lifelink as long as you control another Cleric.
 DeckHints:Type$Cleric
 DeckHas:Ability$LifeGain
-Oracle:Vigilance\nExpedition Healer has lifelink as long as you control another Cleric.
+Oracle:Vigilance\nThis creature has lifelink as long as you control another Cleric.

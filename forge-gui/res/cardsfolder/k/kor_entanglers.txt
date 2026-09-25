@@ -7,4 +7,4 @@ SVar:TrigTap:DB$ Tap | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Choose target cr
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Ally
 DeckHints:Type$Ally
-Oracle:Rally — Whenever Kor Entanglers or another Ally you control enters, tap target creature an opponent controls.
+Oracle:Rally — Whenever this creature or another Ally you control enters, tap target creature an opponent controls.

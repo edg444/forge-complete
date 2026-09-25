@@ -5,4 +5,4 @@ PT:2/2
 K:Protection from black
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ X | AddToughness$ X | Condition$ Threshold | Description$ Threshold — This creature gets +1/+1 for each black permanent your opponents control as long as there are seven or more cards in your graveyard.
 SVar:X:Count$Valid Permanent.Black+OppCtrl
-Oracle:Protection from black\nThreshold — Nantuko Blightcutter gets +1/+1 for each black permanent your opponents control as long as there are seven or more cards in your graveyard.
+Oracle:Protection from black\nThreshold — This creature gets +1/+1 for each black permanent your opponents control as long as there are seven or more cards in your graveyard.

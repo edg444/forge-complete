@@ -6,4 +6,4 @@ T:Mode$ AttackerBlocked | ValidCard$ Card.Self | Execute$ TrigNoDamage | Trigger
 SVar:TrigNoDamage:DB$ Effect | ReplacementEffects$ RPrevent | RememberObjects$ TriggeredAttackerLKICopy | ExileOnMoved$ Battlefield
 SVar:RPrevent:Event$ DamageDone | Prevent$ True | IsCombat$ True | ValidSource$ Card.IsRemembered | Description$ Prevent all combat damage that would be dealt by it this turn.
 SVar:MustBeBlocked:True
-Oracle:Whenever Ignoble Soldier becomes blocked, prevent all combat damage that would be dealt by it this turn.
+Oracle:Whenever this creature becomes blocked, prevent all combat damage that would be dealt by it this turn.

@@ -8,4 +8,4 @@ SVar:NumAllies:Count$Valid Ally.YouCtrl
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Ally
 AI:RemoveDeck:Random
-Oracle:Whenever Murasa Pyromancer or another Ally you control enters, you may have Murasa Pyromancer deal damage to target creature equal to the number of Allies you control.
+Oracle:Whenever this creature or another Ally you control enters, you may have this creature deal damage to target creature equal to the number of Allies you control.

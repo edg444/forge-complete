@@ -4,4 +4,4 @@ Types:Enchantment
 A:AB$ DealDamage | Cost$ 1 R Sac<1/Creature> | ValidTgts$ Any | NumDmg$ 2 | SpellDescription$ This enchantment deals 2 damage to any target.
 SVar:NonStackingEffect:True
 AI:RemoveDeck:All
-Oracle:{1}{R}, Sacrifice a creature: Blood Rites deals 2 damage to any target.
+Oracle:{1}{R}, Sacrifice a creature: This enchantment deals 2 damage to any target.

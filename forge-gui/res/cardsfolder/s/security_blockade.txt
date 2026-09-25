@@ -9,4 +9,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigToken:DB$ Token | TokenScript$ w_2_2_knight_vigilance | TokenOwner$ You
 SVar:NonStackingAttachEffect:True
 DeckHas:Ability$Token
-Oracle:Enchant land\nWhen Security Blockade enters, create a 2/2 white Knight creature token with vigilance.\nEnchanted land has "{T}: Prevent the next 1 damage that would be dealt to you this turn."
+Oracle:Enchant land\nWhen this Aura enters, create a 2/2 white Knight creature token with vigilance.\nEnchanted land has "{T}: Prevent the next 1 damage that would be dealt to you this turn."

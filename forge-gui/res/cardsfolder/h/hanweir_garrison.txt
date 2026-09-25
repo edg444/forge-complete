@@ -8,4 +8,4 @@ SVar:HasAttackEffect:TRUE
 DeckHints:Name$Hanweir Battlements
 MeldPair:Hanweir Battlements
 AlternateMode:Meld
-Oracle:Whenever Hanweir Garrison attacks, create two 1/1 red Human creature tokens that are tapped and attacking.\n(Melds with Hanweir Battlements.)
+Oracle:Whenever this creature attacks, create two 1/1 red Human creature tokens that are tapped and attacking.\n(Melds with Hanweir Battlements.)

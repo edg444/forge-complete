@@ -4,4 +4,4 @@ Types:Creature Bird Soldier
 PT:2/1
 K:Flying
 A:AB$ ChangeZone | Cost$ Discard<1/Card> | Origin$ Battlefield | Destination$ Hand | SpellDescription$ Return this creature to its owner's hand.
-Oracle:Flying\nDiscard a card: Return Skywing Aven to its owner's hand.
+Oracle:Flying\nDiscard a card: Return this creature to its owner's hand.

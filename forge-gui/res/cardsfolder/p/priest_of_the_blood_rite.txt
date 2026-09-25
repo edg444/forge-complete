@@ -8,4 +8,4 @@ T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | E
 SVar:TrigLoseLife:DB$ LoseLife | Defined$ You | LifeAmount$ 2
 SVar:SacMe:4
 SVar:DonateMe:4
-Oracle:When Priest of the Blood Rite enters, create a 5/5 black Demon creature token with flying.\nAt the beginning of your upkeep, you lose 2 life.
+Oracle:When this creature enters, create a 5/5 black Demon creature token with flying.\nAt the beginning of your upkeep, you lose 2 life.

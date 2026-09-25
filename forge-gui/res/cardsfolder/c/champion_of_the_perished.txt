@@ -7,4 +7,4 @@ SVar:TrigPutCounter:DB$ PutCounter | CounterType$ P1P1 | CounterNum$ 1
 SVar:BuffedBy:Zombie
 DeckHints:Type$Zombie
 DeckHas:Ability$Counters
-Oracle:Whenever another Zombie you control enters, put a +1/+1 counter on Champion of the Perished.
+Oracle:Whenever another Zombie you control enters, put a +1/+1 counter on this creature.

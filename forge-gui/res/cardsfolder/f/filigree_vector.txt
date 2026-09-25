@@ -12,4 +12,4 @@ SVar:Y:Count$Valid Artifact
 A:AB$ Proliferate | Cost$ 1 T Sac<1/Artifact.Other/other artifact> | SpellDescription$ Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
 DeckHas:Ability$Counters|Proliferate|Sacrifice
 DeckHints:Type$Artifact
-Oracle:When Filigree Vector enters, put a +1/+1 counter on each of any number of target creatures and a charge counter on each of any number of target artifacts.\n{1}, {T}, Sacrifice another artifact: Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
+Oracle:When this creature enters, put a +1/+1 counter on each of any number of target creatures and a charge counter on each of any number of target artifacts.\n{1}, {T}, Sacrifice another artifact: Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)

@@ -6,4 +6,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ FlipCoin | TriggerDescription$
 SVar:FlipCoin:DB$ FlipCoin | LoseSubAbility$ DBRemoveFromCombat
 SVar:DBRemoveFromCombat:DB$ RemoveFromCombat | Defined$ Self | SubAbility$ DBTap
 SVar:DBTap:DB$ Tap | Defined$ Self
-Oracle:Whenever Mijae Djinn attacks, flip a coin. If you lose the flip, remove Mijae Djinn from combat and tap it.
+Oracle:Whenever this creature attacks, flip a coin. If you lose the flip, remove this creature from combat and tap it.

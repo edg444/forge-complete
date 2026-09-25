@@ -8,4 +8,4 @@ A:AB$ ChangeZone | Cost$ B B | Origin$ Graveyard | Destination$ Battlefield | Ac
 SVar:DBSac:DB$ Sacrifice | Defined$ You | SacValid$ Creature
 SVar:BuffedBy:Artifact
 AI:RemoveDeck:Random
-Oracle:Nim Devourer gets +1/+0 for each artifact you control.\n{B}{B}: Return Nim Devourer from your graveyard to the battlefield, then sacrifice a creature. Activate only during your upkeep.
+Oracle:This creature gets +1/+0 for each artifact you control.\n{B}{B}: Return this card from your graveyard to the battlefield, then sacrifice a creature. Activate only during your upkeep.

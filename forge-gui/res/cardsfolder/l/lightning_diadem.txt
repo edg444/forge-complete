@@ -7,4 +7,4 @@ SVar:AttachAILogic:Pump
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDealDamage | TriggerDescription$ When this Aura enters, it deals 2 damage to any target.
 SVar:TrigDealDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 2
 SVar:PlayMain1:TRUE
-Oracle:Enchant creature\nWhen Lightning Diadem enters, it deals 2 damage to any target.\nEnchanted creature gets +2/+2.
+Oracle:Enchant creature\nWhen this Aura enters, it deals 2 damage to any target.\nEnchanted creature gets +2/+2.

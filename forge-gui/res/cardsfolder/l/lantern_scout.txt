@@ -7,4 +7,4 @@ SVar:TrigPumpAll:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Lifelink
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Ally
 DeckHints:Type$Ally
-Oracle:Rally — Whenever Lantern Scout or another Ally you control enters, creatures you control gain lifelink until end of turn.
+Oracle:Rally — Whenever this creature or another Ally you control enters, creatures you control gain lifelink until end of turn.

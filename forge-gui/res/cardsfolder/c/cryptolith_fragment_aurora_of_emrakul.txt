@@ -9,7 +9,7 @@ T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | C
 SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform
 SVar:X:PlayerCountPlayers$HighestLifeTotal
 AlternateMode:DoubleFaced
-Oracle:Cryptolith Fragment enters tapped.\n{T}: Add one mana of any color. Each player loses 1 life.\nAt the beginning of your upkeep, if each player has 10 or less life, transform Cryptolith Fragment.
+Oracle:This artifact enters tapped.\n{T}: Add one mana of any color. Each player loses 1 life.\nAt the beginning of your upkeep, if each player has 10 or less life, transform this artifact.
 
 ALTERNATE
 
@@ -22,4 +22,4 @@ K:Deathtouch
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigDrain | TriggerDescription$ Whenever this creature attacks, each opponent loses 3 life.
 SVar:TrigDrain:DB$ LoseLife | Defined$ Player.Opponent | LifeAmount$ 3
 SVar:HasAttackEffect:TRUE
-Oracle:Flying, deathtouch\nWhenever Aurora of Emrakul attacks, each opponent loses 3 life.
+Oracle:Flying, deathtouch\nWhenever this creature attacks, each opponent loses 3 life.

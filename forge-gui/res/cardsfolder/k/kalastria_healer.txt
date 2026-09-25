@@ -8,4 +8,4 @@ SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 1
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Ally
 DeckHints:Type$Ally
-Oracle:Rally — Whenever Kalastria Healer or another Ally you control enters, each opponent loses 1 life and you gain 1 life.
+Oracle:Rally — Whenever this creature or another Ally you control enters, each opponent loses 1 life and you gain 1 life.

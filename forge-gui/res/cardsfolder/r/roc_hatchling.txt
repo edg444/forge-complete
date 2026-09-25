@@ -6,4 +6,4 @@ K:etbCounter:SHELL:4
 S:Mode$ Continuous | AffectedDefined$ Self | Affected$ Card.counters_EQ0_SHELL | AddPower$ 3 | AddToughness$ 2 | AddKeyword$ Flying | Description$ As long as this creature has no shell counters on it, it gets +3/+2 and has flying.
 T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigRemoveCounter | TriggerDescription$ At the beginning of your upkeep, remove a shell counter from this creature.
 SVar:TrigRemoveCounter:DB$ RemoveCounter | Defined$ Self | CounterType$ SHELL | CounterNum$ 1
-Oracle:Roc Hatchling enters with four shell counters on it.\nAt the beginning of your upkeep, remove a shell counter from Roc Hatchling.\nAs long as Roc Hatchling has no shell counters on it, it gets +3/+2 and has flying.
+Oracle:This creature enters with four shell counters on it.\nAt the beginning of your upkeep, remove a shell counter from this creature.\nAs long as this creature has no shell counters on it, it gets +3/+2 and has flying.

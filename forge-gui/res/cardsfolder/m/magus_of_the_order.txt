@@ -6,4 +6,4 @@ A:AB$ ChangeZone | Cost$ G T Sac<1/CARDNAME> Sac<1/Creature.Green+Other/another 
 SVar:AIPreference:SacCost$Creature.Green
 DeckHas:Ability$Sacrifice
 DeckNeeds:Type$Creature
-Oracle:{G}, {T}, Sacrifice Magus of the Order and another green creature: Search your library for a green creature card, put it onto the battlefield, then shuffle.
+Oracle:{G}, {T}, Sacrifice this creature and another green creature: Search your library for a green creature card, put it onto the battlefield, then shuffle.

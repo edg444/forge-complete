@@ -6,4 +6,4 @@ K:Reach
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self,Cat.Other+YouCtrl | Execute$ TrigDestroy | OptionalDecider$ You | TriggerDescription$ Whenever this creature or another Cat you control enters, you may destroy target artifact or enchantment.
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Artifact,Enchantment | TgtPrompt$ Select target artifact or enchantment
 DeckHints:Type$Cat
-Oracle:Reach\nWhenever Qasali Slingers or another Cat you control enters, you may destroy target artifact or enchantment.
+Oracle:Reach\nWhenever this creature or another Cat you control enters, you may destroy target artifact or enchantment.

@@ -4,4 +4,4 @@ Types:Creature Minotaur Monger
 PT:3/3
 A:AB$ DamageAll | Cost$ 2 | NumDmg$ 1 | ValidCards$ Creature.withoutFlying | ValidPlayers$ Player | Activator$ Player | ValidDescription$ each creature without flying and each player. | SpellDescription$ This creature deals 1 damage to each creature without flying and each player. Any player may activate this ability.
 AI:RemoveDeck:Random
-Oracle:{2}: Warmonger deals 1 damage to each creature without flying and each player. Any player may activate this ability.
+Oracle:{2}: This creature deals 1 damage to each creature without flying and each player. Any player may activate this ability.

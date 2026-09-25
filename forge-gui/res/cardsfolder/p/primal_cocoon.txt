@@ -9,4 +9,4 @@ T:Mode$ Attacks | ValidCard$ Card.AttachedBy | Execute$ TrigSac | TriggerDescrip
 T:Mode$ Blocks | ValidCard$ Card.AttachedBy | Execute$ TrigSac | Secondary$ True | TriggerDescription$ When enchanted creature attacks or blocks, sacrifice this Aura.
 SVar:TrigSac:DB$ Sacrifice
 AI:RemoveDeck:All
-Oracle:Enchant creature\nAt the beginning of your upkeep, put a +1/+1 counter on enchanted creature.\nWhen enchanted creature attacks or blocks, sacrifice Primal Cocoon.
+Oracle:Enchant creature\nAt the beginning of your upkeep, put a +1/+1 counter on enchanted creature.\nWhen enchanted creature attacks or blocks, sacrifice this Aura.

@@ -12,7 +12,7 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 K:Daybound
 DeckHas:Ability$Graveyard|LifeGain
 AlternateMode:DoubleFaced
-Oracle:Ward—Discard a card.\nWhenever Graveyard Trespasser enters or attacks, exile up to one target card from a graveyard. If a creature card was exiled this way, each opponent loses 1 life and you gain 1 life.\nDaybound (If a player casts no spells during their own turn, it becomes night next turn.)
+Oracle:Ward—Discard a card.\nWhenever this creature enters or attacks, exile up to one target card from a graveyard. If a creature card was exiled this way, each opponent loses 1 life and you gain 1 life.\nDaybound (If a player casts no spells during their own turn, it becomes night next turn.)
 
 ALTERNATE
 
@@ -30,4 +30,4 @@ SVar:DBGainLifeN:DB$ GainLife | ConditionDefined$ Remembered | ConditionPresent$
 SVar:X:Remembered$Valid Creature
 SVar:DBCleanupN:DB$ Cleanup | ClearRemembered$ True
 K:Nightbound
-Oracle:Ward—Discard a card.\nWhenever Graveyard Glutton enters or attacks, exile up to two target cards from graveyards. For each creature card exiled this way, each opponent loses 1 life and you gain 1 life.\nNightbound (If a player casts at least two spells during their own turn, it becomes day next turn.)
+Oracle:Ward—Discard a card.\nWhenever this creature enters or attacks, exile up to two target cards from graveyards. For each creature card exiled this way, each opponent loses 1 life and you gain 1 life.\nNightbound (If a player casts at least two spells during their own turn, it becomes day next turn.)

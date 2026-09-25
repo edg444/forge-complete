@@ -7,4 +7,4 @@ SVar:TrigSac:DB$ Sacrifice | SacValid$ Self | UnlessCost$ Discard<1/Random> | Un
 SVar:X:Remembered$Amount
 SVar:NeedsToPlayVar:Y GE2
 SVar:Y:Count$ValidHand Card.YouOwn
-Oracle:When Pillaging Horde enters, sacrifice it unless you discard a card at random.
+Oracle:When this creature enters, sacrifice it unless you discard a card at random.

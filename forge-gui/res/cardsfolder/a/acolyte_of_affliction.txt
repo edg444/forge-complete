@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigMill:DB$ Mill | NumCards$ 2 | Defined$ You | SubAbility$ DBChangeZone
 SVar:DBChangeZone:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand | ChangeType$ Permanent.YouOwn | Hidden$ True | Optional$ True
 DeckHas:Ability$Graveyard
-Oracle:When Acolyte of Affliction enters, mill two cards, then you may return a permanent card from your graveyard to your hand.
+Oracle:When this creature enters, mill two cards, then you may return a permanent card from your graveyard to your hand.

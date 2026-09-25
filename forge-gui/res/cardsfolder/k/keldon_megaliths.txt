@@ -5,4 +5,4 @@ R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementRe
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ Mana | Cost$ T | Produced$ R | SpellDescription$ Add {R}.
 A:AB$ DealDamage | Cost$ 1 R T | ValidTgts$ Any | NumDmg$ 1 | Activation$ Hellbent | PrecostDesc$ Hellbent — | SpellDescription$ This land deals 1 damage to any target. Activate only if you have no cards in hand.
-Oracle:Keldon Megaliths enters tapped.\n{T}: Add {R}.\nHellbent — {1}{R}, {T}: Keldon Megaliths deals 1 damage to any target. Activate only if you have no cards in hand.
+Oracle:This land enters tapped.\n{T}: Add {R}.\nHellbent — {1}{R}, {T}: This land deals 1 damage to any target. Activate only if you have no cards in hand.

@@ -5,4 +5,4 @@ PT:2/2
 A:AB$ DealDamage | Cost$ 1 T | NumDmg$ X | ValidTgts$ Any | SpellDescription$ This creature deals X damage to any target, where X is the number of permanents you've sacrificed this turn.
 SVar:X:PlayerCountPropertyYou$SacrificedThisTurn Permanent
 DeckNeeds:Ability$Sacrifice
-Oracle:{1}, {T}: Pyre-Sledge Arsonist deals X damage to any target, where X is the number of permanents you've sacrificed this turn.
+Oracle:{1}, {T}: This creature deals X damage to any target, where X is the number of permanents you've sacrificed this turn.

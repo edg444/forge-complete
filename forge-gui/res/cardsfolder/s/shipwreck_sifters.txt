@@ -9,4 +9,4 @@ T:Mode$ Discarded | ValidCard$ Spirit.YouOwn,Card.YouOwn+withDisturb | TriggerZo
 SVar:TrigPutCounter:DB$ PutCounter | CounterType$ P1P1 | CounterNum$ 1
 DeckHas:Ability$Discard|Counters
 DeckHints:Type$Spirit & Keyword$Disturb
-Oracle:When Shipwreck Sifters enters, draw a card, then discard a card.\nWhenever you discard a Spirit card or a card with disturb, put a +1/+1 counter on Shipwreck Sifters.
+Oracle:When this creature enters, draw a card, then discard a card.\nWhenever you discard a Spirit card or a card with disturb, put a +1/+1 counter on this creature.

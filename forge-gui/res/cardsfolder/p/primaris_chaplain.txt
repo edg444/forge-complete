@@ -7,4 +7,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$
 SVar:TrigPump:DB$ Pump | Defined$ Self | KW$ Indestructible
 SVar:HasAttackEffect:TRUE
 DeckHas:Keyword$Indestructible
-Oracle:Battle cry (Whenever this creature attacks, each other attacking creature gets +1/+0 until end of turn.)\nRosarius — Whenever Primaris Chaplain attacks, it gains indestructible until end of turn.
+Oracle:Battle cry (Whenever this creature attacks, each other attacking creature gets +1/+0 until end of turn.)\nRosarius — Whenever this creature attacks, it gains indestructible until end of turn.

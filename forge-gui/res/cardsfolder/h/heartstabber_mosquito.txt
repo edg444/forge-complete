@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigKicker:DB$ Destroy | ValidTgts$ Creature
 SVar:PlayMain1:TRUE
 SVar:NeedsToPlayKicked:Creature.OppCtrl
-Oracle:Kicker {2}{B} (You may pay an additional {2}{B} as you cast this spell.)\nFlying\nWhen Heartstabber Mosquito enters, if it was kicked, destroy target creature.
+Oracle:Kicker {2}{B} (You may pay an additional {2}{B} as you cast this spell.)\nFlying\nWhen this creature enters, if it was kicked, destroy target creature.

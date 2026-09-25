@@ -7,4 +7,4 @@ SVar:TrigChoice:DB$ ChooseCard | Defined$ Player | StartingWith$ You | Choices$ 
 SVar:DBDestroy:DB$ Destroy | Defined$ ChosenCard | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 AI:RemoveDeck:Random
-Oracle:When Druid of Purification enters, starting with you, each player may choose an artifact or enchantment you don't control. Destroy each permanent chosen this way.
+Oracle:When this creature enters, starting with you, each player may choose an artifact or enchantment you don't control. Destroy each permanent chosen this way.

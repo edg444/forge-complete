@@ -10,4 +10,4 @@ SVar:TrigSac:DB$ Sacrifice | UnlessCost$ 3 | UnlessPayer$ Player
 SVar:PlayMain1:TRUE
 SVar:NeedsToPlayVar:Y GE3
 SVar:Y:Count$Valid Land.YouCtrl
-Oracle:When Icy Prison enters, exile target creature.\nAt the beginning of your upkeep, sacrifice Icy Prison unless any player pays {3}.\nWhen Icy Prison leaves the battlefield, return the exiled card to the battlefield under its owner's control.
+Oracle:When this enchantment enters, exile target creature.\nAt the beginning of your upkeep, sacrifice this enchantment unless any player pays {3}.\nWhen this enchantment leaves the battlefield, return the exiled card to the battlefield under its owner's control.

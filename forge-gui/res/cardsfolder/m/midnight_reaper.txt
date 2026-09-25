@@ -5,4 +5,4 @@ PT:3/2
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Creature.YouCtrl+!token | TriggerZones$ Battlefield | Execute$ TrigDealDamage | TriggerDescription$ Whenever a nontoken creature you control dies, this creature deals 1 damage to you and you draw a card.
 SVar:TrigDealDamage:DB$ DealDamage | Defined$ You | NumDmg$ 1 | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1
-Oracle:Whenever a nontoken creature you control dies, Midnight Reaper deals 1 damage to you and you draw a card.
+Oracle:Whenever a nontoken creature you control dies, this creature deals 1 damage to you and you draw a card.

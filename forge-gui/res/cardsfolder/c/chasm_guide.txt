@@ -7,4 +7,4 @@ SVar:TrigPumpAll:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Haste
 SVar:PlayMain1:ALWAYS
 SVar:BuffedBy:Ally
 DeckHints:Type$Ally
-Oracle:Rally — Whenever Chasm Guide or another Ally you control enters, creatures you control gain haste until end of turn.
+Oracle:Rally — Whenever this creature or another Ally you control enters, creatures you control gain haste until end of turn.

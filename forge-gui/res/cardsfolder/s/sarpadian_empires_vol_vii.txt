@@ -9,4 +9,4 @@ SVar:ChoseBlue:DB$ Token | TokenScript$ u_1_1_camarid | TokenOwner$ You | Condit
 SVar:ChoseBlack:DB$ Token | TokenScript$ b_1_1_thrull | TokenOwner$ You | ConditionChosenColor$ black | SubAbility$ ChoseRed
 SVar:ChoseRed:DB$ Token | TokenScript$ r_1_1_goblin | TokenOwner$ You | ConditionChosenColor$ red | SubAbility$ ChoseGreen
 SVar:ChoseGreen:DB$ Token | TokenScript$ g_1_1_saproling | TokenOwner$ You | ConditionChosenColor$ green
-Oracle:As Sarpadian Empires, Vol. VII enters, choose white Citizen, blue Camarid, black Thrull, red Goblin, or green Saproling.\n{3}, {T}: Create a 1/1 creature token of the chosen color and type.
+Oracle:As this artifact enters, choose white Citizen, blue Camarid, black Thrull, red Goblin, or green Saproling.\n{3}, {T}: Create a 1/1 creature token of the chosen color and type.

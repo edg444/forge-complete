@@ -10,4 +10,4 @@ SVar:TrigPutCounter2:DB$ PutCounter | ValidTgts$ Creature.YouCtrl | TgtPrompt$ S
 SVar:X:PlayerCountPropertyYou$LifeLostThisTurn
 DeckHints:Ability$LifeGain
 DeckHas:Ability$Counters
-Oracle:As long as you've lost life this turn, Essence Channeler has flying and vigilance.\nWhenever you gain life, put a +1/+1 counter on Essence Channeler.\nWhen Essence Channeler dies, put its counters on target creature you control.
+Oracle:As long as you've lost life this turn, this creature has flying and vigilance.\nWhenever you gain life, put a +1/+1 counter on this creature.\nWhen this creature dies, put its counters on target creature you control.

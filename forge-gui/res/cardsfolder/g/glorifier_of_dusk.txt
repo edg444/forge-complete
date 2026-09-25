@@ -4,4 +4,4 @@ Types:Creature Vampire Soldier
 PT:4/4
 A:AB$ Pump | Cost$ PayLife<2> | Defined$ Self | KW$ Flying | SpellDescription$ This creature gains flying until end of turn.
 A:AB$ Pump | Cost$ PayLife<2> | Defined$ Self | KW$ Vigilance | SpellDescription$ This creature gains vigilance until end of turn.
-Oracle:Pay 2 life: Glorifier of Dusk gains flying until end of turn.\nPay 2 life: Glorifier of Dusk gains vigilance until end of turn.
+Oracle:Pay 2 life: This creature gains flying until end of turn.\nPay 2 life: This creature gains vigilance until end of turn.

@@ -2,4 +2,4 @@ Name:Seal of Cleansing
 ManaCost:1 W
 Types:Enchantment
 A:AB$ Destroy | Cost$ Sac<1/CARDNAME> | ValidTgts$ Artifact,Enchantment | TgtPrompt$ Select target artifact or enchantment | SpellDescription$ Destroy target artifact or enchantment.
-Oracle:Sacrifice Seal of Cleansing: Destroy target artifact or enchantment.
+Oracle:Sacrifice this enchantment: Destroy target artifact or enchantment.

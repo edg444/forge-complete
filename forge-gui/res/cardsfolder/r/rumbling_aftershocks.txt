@@ -5,4 +5,4 @@ T:Mode$ SpellCast | ValidCard$ Card.YouCtrl+kicked | TriggerZones$ Battlefield |
 SVar:DamageSomeone:DB$ DealDamage | ValidTgts$ Any | NumDmg$ X
 SVar:X:TriggeredSpellAbility$TimesKicked
 AI:RemoveDeck:Random
-Oracle:Whenever you cast a kicked spell, you may have Rumbling Aftershocks deal damage to any target equal to the number of times that spell was kicked.
+Oracle:Whenever you cast a kicked spell, you may have this enchantment deal damage to any target equal to the number of times that spell was kicked.

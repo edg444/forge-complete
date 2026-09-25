@@ -12,4 +12,4 @@ SVar:TrigSac:DB$ Sacrifice
 SVar:NeedsToPlay:Artifact.YouCtrl
 AI:RemoveDeck:Random
 DeckHints:Type$Artifact
-Oracle:Indestructible\nAs Phylactery Lich enters, put a phylactery counter on an artifact you control.\nWhen you control no permanents with phylactery counters on them, sacrifice Phylactery Lich.
+Oracle:Indestructible\nAs this creature enters, put a phylactery counter on an artifact you control.\nWhen you control no permanents with phylactery counters on them, sacrifice this creature.

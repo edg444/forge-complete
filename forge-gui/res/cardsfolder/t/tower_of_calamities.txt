@@ -2,4 +2,4 @@ Name:Tower of Calamities
 ManaCost:4
 Types:Artifact
 A:AB$ DealDamage | Cost$ 8 T | ValidTgts$ Creature | NumDmg$ 12 | SpellDescription$ This artifact deals 12 damage to target creature.
-Oracle:{8}, {T}: Tower of Calamities deals 12 damage to target creature.
+Oracle:{8}, {T}: This artifact deals 12 damage to target creature.

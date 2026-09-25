@@ -10,4 +10,4 @@ SVar:Mana:AB$ Mana | Cost$ T | Produced$ Combo B R G | Amount$ 1 | SpellDescript
 SVar:MayPlay:Mode$ Continuous | MayPlay$ True | Affected$ Card.IsImprinted+IsRemembered | AffectedZone$ Exile | Secondary$ True | Description$ You may cast EFFECTSOURCE for as long as it remains exiled.
 SVar:Cast:Mode$ SpellCast | ValidCard$ Card.IsImprinted+IsRemembered+wasCastFromExile | Execute$ ExileSelf | Static$ True
 SVar:ExileSelf:DB$ ChangeZone | Origin$ Command | Destination$ Exile | Defined$ Self
-Oracle:Vigilance\nMenace (This creature can't be blocked except by two or more creatures.)\n{2}, Exile Masked Bandits from your hand: Target land gains "{T}: Add {B}, {R}, or {G}" until Masked Bandits is cast from exile. You may cast Masked Bandits for as long as it remains exiled.
+Oracle:Vigilance\nMenace (This creature can't be blocked except by two or more creatures.)\n{2}, Exile this card from your hand: Target land gains "{T}: Add {B}, {R}, or {G}" until this card is cast from exile. You may cast this card for as long as it remains exiled.

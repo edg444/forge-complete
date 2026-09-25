@@ -8,4 +8,4 @@ SVar:TrigInitiative:DB$ TakeInitiative
 A:AB$ Mana | Cost$ T | Produced$ G | Amount$ Y | SpellDescription$ Add {G}{G}. If you've completed a dungeon, add six {G} instead.
 SVar:X:DungeonsCompleted$Amount
 SVar:Y:Count$Compare X GE1.6.2
-Oracle:Vigilance\nWhen Undermountain Adventurer enters, you take the initiative.\n{T}: Add {G}{G}. If you've completed a dungeon, add six {G} instead.
+Oracle:Vigilance\nWhen this creature enters, you take the initiative.\n{T}: Add {G}{G}. If you've completed a dungeon, add six {G} instead.

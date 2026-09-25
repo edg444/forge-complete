@@ -11,4 +11,4 @@ SVar:DBStoreSVarT:DB$ StoreSVar | SVar$ CheckNotPaid | Type$ Number | Expression
 A:AB$ PumpAll | Cost$ 3 B Sac<X/Food> | ValidCards$ Creature.YouCtrl | NumAtt$ +X | KW$ Menace | SpellDescription$ Creatures you control get +X/+0 and gain menace until end of turn.
 SVar:CheckNotPaid:Number$1
 SVar:X:Count$xPaid
-Oracle:When Insatiable Frugivore enters, create a Food token, then you may exile three cards from your graveyard. If you do, repeat this process.\n{3}{B}, Sacrifice X Foods: Creatures you control get +X/+0 and gain menace until end of turn.
+Oracle:When this creature enters, create a Food token, then you may exile three cards from your graveyard. If you do, repeat this process.\n{3}{B}, Sacrifice X Foods: Creatures you control get +X/+0 and gain menace until end of turn.

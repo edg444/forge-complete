@@ -7,7 +7,7 @@ SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform
 DeckHints:Ability$Graveyard|Discard
 DeckHas:Ability$Delirium
 AlternateMode:DoubleFaced
-Oracle:{B}: Mill a card.\nDelirium — At the beginning of your end step, if there are four or more card types among cards in your graveyard, transform Autumnal Gloom.
+Oracle:{B}: Mill a card.\nDelirium — At the beginning of your end step, if there are four or more card types among cards in your graveyard, transform this enchantment.
 
 ALTERNATE
 

@@ -14,4 +14,4 @@ SVar:RemoveSelf:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ 
 SVar:Y:Remembered$Amount/Twice
 SVar:X:Count$xPaid
 DeckHas:Ability$Sacrifice|Counters
-Oracle:When you cast this spell, each player sacrifices X creatures. Gluttonous Hellkite enters with two +1/+1 counters on it for each creature sacrificed this way.\nFlying, trample
+Oracle:When you cast this spell, each player sacrifices X creatures. This creature enters with two +1/+1 counters on it for each creature sacrificed this way.\nFlying, trample

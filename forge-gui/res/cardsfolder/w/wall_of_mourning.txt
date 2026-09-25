@@ -10,4 +10,4 @@ SVar:TrigReturn:DB$ ChangeZone | Origin$ Exile | Destination$ Hand | ChangeType$
 SVar:X:Count$Valid Creature.YouCtrl$DifferentCardPower
 SVar:Y:PlayerCountOpponents$Amount
 DeckHas:Ability$Counters
-Oracle:Defender\nWhen Wall of Mourning enters, exile a card from the top of your library face down for each opponent you have.\nCoven — At the beginning of your end step, if you control three or more creatures with different powers, put a card exiled with Wall of Mourning into its owner's hand.
+Oracle:Defender\nWhen this creature enters, exile a card from the top of your library face down for each opponent you have.\nCoven — At the beginning of your end step, if you control three or more creatures with different powers, put a card exiled with this creature into its owner's hand.

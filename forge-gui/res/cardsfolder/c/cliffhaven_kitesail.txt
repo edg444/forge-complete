@@ -6,4 +6,4 @@ SVar:TrigAttach:DB$ Attach | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select tar
 SVar:NeedsToPlay:Creature.YouCtrl
 S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddKeyword$ Flying | Description$ Equipped creature has flying.
 K:Equip:2
-Oracle:When Cliffhaven Kitesail enters, attach it to target creature you control.\nEquipped creature has flying.\nEquip {2} ({2}: Attach to target creature you control. Equip only as a sorcery.)
+Oracle:When this Equipment enters, attach it to target creature you control.\nEquipped creature has flying.\nEquip {2} ({2}: Attach to target creature you control. Equip only as a sorcery.)

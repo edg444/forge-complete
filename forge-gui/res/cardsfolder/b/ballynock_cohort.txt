@@ -5,4 +5,4 @@ PT:2/2
 K:First Strike
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 1 | AddToughness$ 1 | IsPresent$ Creature.White+Other+YouCtrl | Description$ This creature gets +1/+1 as long as you control another white creature.
 SVar:BuffedBy:Creature.White
-Oracle:First strike\nBallynock Cohort gets +1/+1 as long as you control another white creature.
+Oracle:First strike\nThis creature gets +1/+1 as long as you control another white creature.

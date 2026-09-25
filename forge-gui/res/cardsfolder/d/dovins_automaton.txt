@@ -5,4 +5,4 @@ PT:3/3
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 2 | AddToughness$ 2 | AddKeyword$ Vigilance | IsPresent$ Planeswalker.Dovin+YouCtrl | Description$ As long as you control a Dovin planeswalker, this creature gets +2/+2 and has vigilance. (Attacking doesn't cause it to tap.)
 SVar:BuffedBy:Dovin
 DeckNeeds:Type$Dovin
-Oracle:As long as you control a Dovin planeswalker, Dovin's Automaton gets +2/+2 and has vigilance. (Attacking doesn't cause it to tap.)
+Oracle:As long as you control a Dovin planeswalker, this creature gets +2/+2 and has vigilance. (Attacking doesn't cause it to tap.)

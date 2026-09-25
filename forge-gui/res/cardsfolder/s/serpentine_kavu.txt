@@ -3,4 +3,4 @@ ManaCost:4 G
 Types:Creature Kavu
 PT:4/4
 A:AB$ Pump | Cost$ R | Defined$ Self | KW$ Haste | SpellDescription$ This creature gains haste until end of turn.
-Oracle:{R}: Serpentine Kavu gains haste until end of turn.
+Oracle:{R}: This creature gains haste until end of turn.

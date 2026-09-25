@@ -5,4 +5,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | ValidTgts$ Creature.OppCtrl+cmcLE3 | TgtPrompt$ Select target creature an opponent controls with mana value 3 or less | Duration$ UntilHostLeavesPlay
 SVar:PlayMain1:TRUE
 SVar:NeedsToPlay:Creature.OppCtrl+cmcLE3
-Oracle:When Glass Casket enters, exile target creature an opponent controls with mana value 3 or less until Glass Casket leaves the battlefield.
+Oracle:When this artifact enters, exile target creature an opponent controls with mana value 3 or less until this artifact leaves the battlefield.

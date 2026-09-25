@@ -7,4 +7,4 @@ S:Mode$ Continuous | Affected$ Land.YouCtrl | AddAbility$ AnyMana | Description$
 SVar:AnyMana:AB$ Mana | Cost$ T | Produced$ Any | Amount$ 2 | SpellDescription$ Add two mana of any one color.
 AI:RemoveDeck:All
 AI:RemoveDeck:Random
-Oracle:As Overlaid Terrain enters, sacrifice all lands you control.\nLands you control have "{T}: Add two mana of any one color."
+Oracle:As this enchantment enters, sacrifice all lands you control.\nLands you control have "{T}: Add two mana of any one color."

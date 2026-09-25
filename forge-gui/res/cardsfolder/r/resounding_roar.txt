@@ -6,4 +6,4 @@ A:SP$ Pump | ValidTgts$ Creature | NumAtt$ +3 | NumDef$ +3 | SpellDescription$ T
 T:Mode$ Cycled | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ When you cycle this card, target creature gets +6/+6 until end of turn.
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature | NumAtt$ +6 | NumDef$ +6
 AI:RemoveDeck:All
-Oracle:Target creature gets +3/+3 until end of turn.\nCycling {5}{R}{G}{W} ({5}{R}{G}{W}, Discard this card: Draw a card.)\nWhen you cycle Resounding Roar, target creature gets +6/+6 until end of turn.
+Oracle:Target creature gets +3/+3 until end of turn.\nCycling {5}{R}{G}{W} ({5}{R}{G}{W}, Discard this card: Draw a card.)\nWhen you cycle this card, target creature gets +6/+6 until end of turn.

@@ -8,4 +8,4 @@ T:Mode$ SpellCast | ValidCard$ Zombie | ValidActivatingPlayer$ You | TriggerZone
 SVar:TrigToken:DB$ Token | TokenScript$ b_2_2_zombie | TokenTapped$ True | TokenOwner$ You
 SVar:BuffedBy:Zombie
 DeckHints:Type$Zombie
-Oracle:Diregraf Colossus enters with a +1/+1 counter on it for each Zombie card in your graveyard.\nWhenever you cast a Zombie spell, create a tapped 2/2 black Zombie creature token.
+Oracle:This creature enters with a +1/+1 counter on it for each Zombie card in your graveyard.\nWhenever you cast a Zombie spell, create a tapped 2/2 black Zombie creature token.

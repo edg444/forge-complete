@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigKicker:DB$ Destroy | ValidTgts$ Artifact | NoRegen$ True | TgtPrompt$ Select target artifact
 SVar:NeedsToPlayKicked:Artifact.OppCtrl
 DeckHints:Color$Red
-Oracle:Kicker {1}{R} (You may pay an additional {1}{R} as you cast this spell.)\nWhen Verduran Emissary enters, if it was kicked, destroy target artifact. It can't be regenerated.
+Oracle:Kicker {1}{R} (You may pay an additional {1}{R} as you cast this spell.)\nWhen this creature enters, if it was kicked, destroy target artifact. It can't be regenerated.

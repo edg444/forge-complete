@@ -8,4 +8,4 @@ T:Mode$ Cycled | ValidCard$ Card.Self | Execute$ TrigDestroy | TriggerDescriptio
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Artifact | TgtPrompt$ Select up to X target artifacts | TargetMin$ 0 | TargetMax$ X
 SVar:X:Count$xPaid
 DeckHas:Ability$Discard
-Oracle:Trample\nCycling {X}{2}{R} ({X}{2}{R}, Discard this card: Draw a card.)\nWhen you cycle Rampaging War Mammoth, destroy up to X target artifacts.
+Oracle:Trample\nCycling {X}{2}{R} ({X}{2}{R}, Discard this card: Draw a card.)\nWhen you cycle this card, destroy up to X target artifacts.

@@ -7,4 +7,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Lifelink | IsPresent$ F
 A:AB$ Pump | Cost$ 2 B | NumAtt$ +1 | Defined$ Self | SpellDescription$ This creature gets +1/+0 until end of turn.
 DeckHints:Type$Faerie
 DeckHas:Ability$LifeGain
-Oracle:Flying\nBarrow Naughty has lifelink as long as you control another Faerie.\n{2}{B}: Barrow Naughty gets +1/+0 until end of turn.
+Oracle:Flying\nThis creature has lifelink as long as you control another Faerie.\n{2}{B}: This creature gets +1/+0 until end of turn.

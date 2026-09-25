@@ -9,4 +9,4 @@ SVar:SacAllOthers:DB$ SacrificeAll | ValidCards$ Permanent.nonLand+nonChosenCard
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 AI:RemoveDeck:All
 DeckHas:Ability$Sacrifice
-Oracle:Vigilance\nWhen Cataclysmic Gearhulk enters, each player chooses an artifact, a creature, an enchantment, and a planeswalker from among the nonland permanents they control, then sacrifices the rest.
+Oracle:Vigilance\nWhen this creature enters, each player chooses an artifact, a creature, an enchantment, and a planeswalker from among the nonland permanents they control, then sacrifices the rest.

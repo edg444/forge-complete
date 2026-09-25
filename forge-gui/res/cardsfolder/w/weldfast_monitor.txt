@@ -4,4 +4,4 @@ Types:Artifact Creature Lizard
 PT:3/2
 A:AB$ Pump | Cost$ R | KW$ Menace | Defined$ Self | SpellDescription$ This creature gains menace until end of turn.
 AI:RemoveDeck:Random
-Oracle:{R}: Weldfast Monitor gains menace until end of turn.
+Oracle:{R}: This creature gains menace until end of turn.

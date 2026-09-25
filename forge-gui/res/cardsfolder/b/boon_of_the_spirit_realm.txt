@@ -7,4 +7,4 @@ S:Mode$ Continuous | Affected$ Creature.YouCtrl | AddPower$ X | AddToughness$ X 
 SVar:X:Count$CardCounters.BLESSING
 DeckHints:Type$Enchantment
 DeckHas:Ability$Counters
-Oracle:Constellation — Whenever Boon of the Spirit Realm or another enchantment you control enters, put a blessing counter on Boon of the Spirit Realm.\nCreatures you control get +1/+1 for each blessing counter on Boon of the Spirit Realm.
+Oracle:Constellation — Whenever this enchantment or another enchantment you control enters, put a blessing counter on this enchantment.\nCreatures you control get +1/+1 for each blessing counter on this enchantment.

@@ -7,7 +7,7 @@ SVar:TrigPumpAll:DB$ PumpAll | ValidCards$ Creature.YouCtrl | NumAtt$ +1 | KW$ H
 SVar:PlayMain1:TRUE
 DeckHas:Ability$Token & Type$Knight
 AlternateMode:Adventure
-Oracle:When Imodane's Recruiter enters, creatures you control get +1/+0 and gain haste until end of turn.
+Oracle:When this creature enters, creatures you control get +1/+0 and gain haste until end of turn.
 
 ALTERNATE
 

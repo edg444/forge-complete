@@ -10,4 +10,4 @@ SVar:ReduceLoss:DB$ ReplaceEffect | VarName$ Amount | VarValue$ X
 SVar:X:ReplaceCount$Amount/LimitMax.Difference
 SVar:Difference:Count$YourLifeTotal/Minus.7
 SVar:YourLife:Count$YourLifeTotal
-Oracle:Trample\nWhen Elderscale Wurm enters, if your life total is less than 7, your life total becomes 7.\nAs long as you have 7 or more life, damage that would reduce your life total to less than 7 reduces it to 7 instead.
+Oracle:Trample\nWhen this creature enters, if your life total is less than 7, your life total becomes 7.\nAs long as you have 7 or more life, damage that would reduce your life total to less than 7 reduces it to 7 instead.

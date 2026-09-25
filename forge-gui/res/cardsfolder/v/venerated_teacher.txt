@@ -5,4 +5,4 @@ PT:2/2
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigPut | TriggerDescription$ When this creature enters, put two level counters on each creature you control with level up.
 SVar:TrigPut:DB$ PutCounterAll | ValidCards$ Creature.YouCtrl+withLevel up | CounterType$ LEVEL | CounterNum$ 2
 AI:RemoveDeck:Random
-Oracle:When Venerated Teacher enters, put two level counters on each creature you control with level up.
+Oracle:When this creature enters, put two level counters on each creature you control with level up.

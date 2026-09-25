@@ -7,4 +7,4 @@ SVar:TrigDrain:DB$ LoseLife | Defined$ Player.Opponent | LifeAmount$ X | SubAbil
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ X
 SVar:X:Count$Converge
 DeckHas:Ability$LifeGain
-Oracle:Converge — When Radiant Epicure enters, each opponent loses X life and you gain X life, where X is the number of colors of mana spent to cast this spell.
+Oracle:Converge — When this creature enters, each opponent loses X life and you gain X life, where X is the number of colors of mana spent to cast this spell.

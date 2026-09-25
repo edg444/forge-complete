@@ -9,4 +9,4 @@ SVar:TrigMill:DB$ Mill | NumCards$ 3
 A:AB$ Effect | Cost$ U | RememberObjects$ Self | ForgetOnMoved$ Battlefield | StaticAbilities$ CantPhaseOut | Duration$ UntilYourNextUpkeep | SpellDescription$ Until your next upkeep, this creature can't phase out.
 SVar:CantPhaseOut:Mode$ CantPhaseOut | ValidCard$ Card.IsRemembered | Description$ Until your next upkeep, EFFECTSOURCE can't phase out.
 DeckHas:Ability$Mill
-Oracle:Phasing (This phases in or out before you untap during each of your untap steps. While it's phased out, it's treated as though it doesn't exist.)\nWhen Ertai's Familiar phases out or leaves the battlefield, mill three cards.\n{U}: Until your next upkeep, Ertai's Familiar can't phase out.
+Oracle:Phasing (This phases in or out before you untap during each of your untap steps. While it's phased out, it's treated as though it doesn't exist.)\nWhen this creature phases out or leaves the battlefield, mill three cards.\n{U}: Until your next upkeep, this creature can't phase out.

@@ -8,4 +8,4 @@ SVar:PlayMain1:TRUE
 SVar:BuffedBy:Ally
 AI:RemoveDeck:Random
 DeckHints:Type$Ally
-Oracle:Whenever Highland Berserker or another Ally you control enters, you may have Ally creatures you control gain first strike until end of turn.
+Oracle:Whenever this creature or another Ally you control enters, you may have Ally creatures you control gain first strike until end of turn.

@@ -7,4 +7,4 @@ T:Mode$ AttackerBlockedByCreature | ValidCard$ Card.Self | ValidBlocker$ Creatur
 SVar:TrigBlocks:DB$ Effect | RememberObjects$ TriggeredAttackerLKICopy | ForgetOnMoved$ Battlefield | StaticAbilities$ NoRegen | IsCurse$ True | AILogic$ CantRegenerate
 SVar:TrigBlocked:DB$ Effect | RememberObjects$ TriggeredBlockerLKICopy | ForgetOnMoved$ Battlefield | StaticAbilities$ NoRegen | IsCurse$ True | AILogic$ CantRegenerate
 SVar:NoRegen:Mode$ CantRegenerate | ValidCard$ Card.IsRemembered | Description$ Creature can't be regenerated this turn.
-Oracle:Whenever Lim-Dûl's Cohort blocks or becomes blocked by a creature, that creature can't be regenerated this turn.
+Oracle:Whenever this creature blocks or becomes blocked by a creature, that creature can't be regenerated this turn.

@@ -6,4 +6,4 @@ K:Flying
 K:Flash
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigTapOrUntap | OptionalDecider$ You | TriggerDescription$ When this creature enters, you may tap or untap target permanent.
 SVar:TrigTapOrUntap:DB$ TapOrUntap | ValidTgts$ Permanent
-Oracle:Flash\nFlying\nWhen Pestermite enters, you may tap or untap target permanent.
+Oracle:Flash\nFlying\nWhen this creature enters, you may tap or untap target permanent.

@@ -3,4 +3,4 @@ ManaCost:RG RG RG RG
 Types:Creature Giant
 PT:5/5
 S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.Knight,Creature.Wall | Description$ This creature can't be blocked by Knights or Walls.
-Oracle:Rampart Smasher can't be blocked by Knights or Walls.
+Oracle:This creature can't be blocked by Knights or Walls.

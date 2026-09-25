@@ -5,4 +5,4 @@ PT:4/2
 T:Mode$ Taps | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ Whenever this creature becomes tapped, target opponent gains 2 life.
 A:AB$ Regenerate | Cost$ 2 | SpellDescription$ Regenerate this creature.
 SVar:TrigGainLife:DB$ GainLife | ValidTgts$ Opponent | LifeAmount$ 2
-Oracle:Whenever Soldevi Steam Beast becomes tapped, target opponent gains 2 life.\n{2}: Regenerate Soldevi Steam Beast.
+Oracle:Whenever this creature becomes tapped, target opponent gains 2 life.\n{2}: Regenerate this creature.

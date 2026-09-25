@@ -5,4 +5,4 @@ PT:3/3
 K:ETBReplacement:Other:CounterChoice
 SVar:CounterChoice:DB$ PutCounter | ETB$ True | CounterType$ Menace,Deathtouch,Lifelink | ChooseDifferent$ 2 | SpellDescription$ This creature enters with your choice of two different counters on it from among menace, deathtouch, and lifelink.
 DeckHas:Ability$Counters|LifeGain
-Oracle:Grimdancer enters with your choice of two different counters on it from among menace, deathtouch, and lifelink.
+Oracle:This creature enters with your choice of two different counters on it from among menace, deathtouch, and lifelink.

@@ -5,4 +5,4 @@ PT:2/3
 S:Mode$ CantAttack | ValidCard$ Card.Self | IsPresent$ Artifact.YouCtrl | PresentCompare$ EQ0 | Description$ This creature can't attack unless you control an artifact.
 SVar:BuffedBy:Artifact
 DeckHints:Type$Artifact
-Oracle:Desperate Castaways can't attack unless you control an artifact.
+Oracle:This creature can't attack unless you control an artifact.

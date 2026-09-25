@@ -4,4 +4,4 @@ Types:Creature Hellion Beast
 PT:5/4
 S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't block.
 K:Haste
-Oracle:Haste\nIron-Barb Hellion can't block.
+Oracle:Haste\nThis creature can't block.

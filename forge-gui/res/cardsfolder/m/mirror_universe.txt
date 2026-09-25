@@ -4,4 +4,4 @@ Types:Artifact
 A:AB$ ExchangeLife | Cost$ T Sac<1/CARDNAME> | ValidTgts$ Opponent | ActivationPhases$ Upkeep | PlayerTurn$ True | SpellDescription$ Exchange life totals with target opponent. Activate only during your upkeep.
 SVar:NonStackingEffect:True
 DeckHas:Ability$Sacrifice
-Oracle:{T}, Sacrifice Mirror Universe: Exchange life totals with target opponent. Activate only during your upkeep.
+Oracle:{T}, Sacrifice this artifact: Exchange life totals with target opponent. Activate only during your upkeep.

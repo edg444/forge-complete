@@ -8,4 +8,4 @@ T:Mode$ Always | TriggerZones$ Battlefield | IsPresent$ Card.Self+counters_GE3_P
 SVar:TrigDestroyAll:AB$ DestroyAll | ValidCards$ Permanent.nonLand | Cost$ Mandatory Sac<1/CARDNAME>
 AI:RemoveDeck:All
 DeckHas:Ability$Counters|Sacrifice
-Oracle:At the beginning of your upkeep, put a plague counter on Plague Boiler.\n{1}{B}{G}: Put a plague counter on Plague Boiler or remove a plague counter from it.\nWhen Plague Boiler has three or more plague counters on it, sacrifice it. If you do, destroy all nonland permanents.
+Oracle:At the beginning of your upkeep, put a plague counter on this artifact.\n{1}{B}{G}: Put a plague counter on this artifact or remove a plague counter from it.\nWhen this artifact has three or more plague counters on it, sacrifice it. If you do, destroy all nonland permanents.

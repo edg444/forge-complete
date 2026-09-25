@@ -9,4 +9,4 @@ K:Embalm:5 R
 SVar:XPower:Spawner>Sacrificed$CardPower
 SVar:AIPreferenceParams:CreatureEvalThreshold$ 200
 DeckHas:Ability$Token|Sacrifice
-Oracle:When Heart-Piercer Manticore enters, you may sacrifice another creature. When you do, Heart-Piercer Manticore deals damage equal to that creature's power to any target.\nEmbalm {5}{R} ({5}{R}, Exile this card from your graveyard: Create a token that's a copy of it, except it's a white Zombie Manticore with no mana cost. Embalm only as a sorcery.)
+Oracle:When this creature enters, you may sacrifice another creature. When you do, this creature deals damage equal to that creature's power to any target.\nEmbalm {5}{R} ({5}{R}, Exile this card from your graveyard: Create a token that's a copy of it, except it's a white Zombie Manticore with no mana cost. Embalm only as a sorcery.)

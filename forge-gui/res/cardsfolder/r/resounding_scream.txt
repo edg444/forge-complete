@@ -6,4 +6,4 @@ A:SP$ Discard | ValidTgts$ Player | NumCards$ 1 | Mode$ Random | SpellDescriptio
 T:Mode$ Cycled | ValidCard$ Card.Self | Execute$ TrigDiscard | TriggerDescription$ When you cycle this card, target player discards two cards at random.
 SVar:TrigDiscard:DB$ Discard | ValidTgts$ Player | NumCards$ 2 | Mode$ Random
 AI:RemoveDeck:All
-Oracle:Target player discards a card at random.\nCycling {5}{U}{B}{R} ({5}{U}{B}{R}, Discard this card: Draw a card.)\nWhen you cycle Resounding Scream, target player discards two cards at random.
+Oracle:Target player discards a card at random.\nCycling {5}{U}{B}{R} ({5}{U}{B}{R}, Discard this card: Draw a card.)\nWhen you cycle this card, target player discards two cards at random.

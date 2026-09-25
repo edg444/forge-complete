@@ -7,4 +7,4 @@ A:AB$ Mana | Cost$ T | Produced$ W | SpellDescription$ Add {W}.
 A:AB$ Token | Cost$ 2 W W T | TokenScript$ w_1_1_human | TokenOwner$ You | SpellDescription$ Create a 1/1 white Human creature token.
 DeckHints:Type$Human
 DeckHas:Ability$Token
-Oracle:Castle Ardenvale enters tapped unless you control a Plains.\n{T}: Add {W}.\n{2}{W}{W}, {T}: Create a 1/1 white Human creature token.
+Oracle:This land enters tapped unless you control a Plains.\n{T}: Add {W}.\n{2}{W}{W}, {T}: Create a 1/1 white Human creature token.

@@ -10,4 +10,4 @@ SVar:TrigPump:DB$ Pump | ValidTgts$ Creature.attacking+Other | TgtPrompt$ Select
 SVar:DBUntap:DB$ Untap | Defined$ Targeted
 SVar:HasAttackEffect:TRUE
 DeckHas:Type$Dinosaur & Color$Red|Green
-Oracle:Restless Ridgeline enters tapped.\n{T}: Add {R} or {G}.\n{2}{R}{G}: Restless Ridgeline becomes a 3/4 red and green Dinosaur creature until end of turn. It's still a land.\nWhenever Restless Ridgeline attacks, another target attacking creature gets +2/+0 until end of turn. Untap that creature.
+Oracle:This land enters tapped.\n{T}: Add {R} or {G}.\n{2}{R}{G}: This land becomes a 3/4 red and green Dinosaur creature until end of turn. It's still a land.\nWhenever this land attacks, another target attacking creature gets +2/+0 until end of turn. Untap that creature.

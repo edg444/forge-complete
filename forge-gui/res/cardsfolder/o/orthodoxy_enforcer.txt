@@ -6,4 +6,4 @@ K:Vigilance
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 2 | IsPresent$ Artifact.YouCtrl | PresentCompare$ GE2 | Description$ This creature gets +2/+0 as long as you control two or more artifacts.
 SVar:BuffedBy:Artifact
 DeckHints:Type$Artifact
-Oracle:Vigilance\nOrthodoxy Enforcer gets +2/+0 as long as you control two or more artifacts.
+Oracle:Vigilance\nThis creature gets +2/+0 as long as you control two or more artifacts.

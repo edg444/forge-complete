@@ -8,4 +8,4 @@ A:AB$ Draw | Cost$ T PayLife<4> | NumCards$ 1 | SpellDescription$ Draw a card.
 A:AB$ Untap | Cost$ 5 | SpellDescription$ Untap this artifact.
 DeckHas:Ability$Proliferate
 DeckHints:Ability$Counters
-Oracle:{T}, Pay 1 life: Destroy target permanent you own.\n{T}, Pay 2 life: Add one mana of any color.\n{T}, Pay 3 life: Proliferate.\n{T}, Pay 4 life: Draw a card.\n{5}: Untap Staff of Compleation.
+Oracle:{T}, Pay 1 life: Destroy target permanent you own.\n{T}, Pay 2 life: Add one mana of any color.\n{T}, Pay 3 life: Proliferate.\n{T}, Pay 4 life: Draw a card.\n{5}: Untap this artifact.

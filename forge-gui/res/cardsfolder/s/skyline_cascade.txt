@@ -6,4 +6,4 @@ SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ When this land enters, target creature an opponent controls doesn't untap during its controller's next untap step.
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Choose target creature an opponent controls | KW$ HIDDEN This card doesn't untap during your next untap step. | Duration$ Permanent
 A:AB$ Mana | Cost$ T | Produced$ U | SpellDescription$ Add {U}.
-Oracle:Skyline Cascade enters tapped.\nWhen Skyline Cascade enters, target creature an opponent controls doesn't untap during its controller's next untap step.\n{T}: Add {U}.
+Oracle:This land enters tapped.\nWhen this land enters, target creature an opponent controls doesn't untap during its controller's next untap step.\n{T}: Add {U}.

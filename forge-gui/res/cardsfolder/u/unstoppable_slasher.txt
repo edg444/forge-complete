@@ -8,4 +8,4 @@ SVar:TrigLoseLifeOpp:DB$ LoseLife | Defined$ TriggeredTarget | LifeAmount$ X
 T:Mode$ ChangesZone | ValidCard$ Card.Self+!HasCounters | Origin$ Battlefield | Destination$ Graveyard | Execute$ TrigChangeZone | TriggerDescription$ When this creature dies, if it had no counters on it, return it to the battlefield tapped under its owner's control with two stun counters on it.
 SVar:TrigChangeZone:DB$ ChangeZone | Origin$ Graveyard | Destination$ Battlefield | Tapped$ True | Defined$ TriggeredCard | WithCountersType$ STUN | WithCountersAmount$ 2
 SVar:X:TriggeredTarget$LifeTotal/HalfUp
-Oracle:Deathtouch\nWhenever Unstoppable Slasher deals combat damage to a player, they lose half their life, rounded up.\nWhen Unstoppable Slasher dies, if it had no counters on it, return it to the battlefield tapped under its owner's control with two stun counters on it.
+Oracle:Deathtouch\nWhenever this creature deals combat damage to a player, they lose half their life, rounded up.\nWhen this creature dies, if it had no counters on it, return it to the battlefield tapped under its owner's control with two stun counters on it.

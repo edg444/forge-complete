@@ -8,4 +8,4 @@ SVar:TrigExile:DB$ ChangeZone | ValidTgts$ Artifact.OppCtrl,Creature.OppCtrl | T
 SVar:PlayMain1:TRUE
 DeckHas:Ability$Sacrifice
 DeckHints:Type$Artifact
-Oracle:As an additional cost to cast this spell, sacrifice an artifact or creature.\nWard {2}\nWhen Dusk Rose Reliquary enters, exile target artifact or creature an opponent controls until Dusk Rose Reliquary leaves the battlefield.
+Oracle:As an additional cost to cast this spell, sacrifice an artifact or creature.\nWard {2}\nWhen this artifact enters, exile target artifact or creature an opponent controls until this artifact leaves the battlefield.

@@ -5,4 +5,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDealDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 1
 A:AB$ DealDamage | Cost$ 2 R Sac<1/CARDNAME> | ValidTgts$ Any | NumDmg$ 1 | SpellDescription$ It deals 1 damage to any target.
 DeckHas:Ability$Sacrifice
-Oracle:When Fireforger's Puzzleknot enters, it deals 1 damage to any target.\n{2}{R}, Sacrifice Fireforger's Puzzleknot: It deals 1 damage to any target.
+Oracle:When this artifact enters, it deals 1 damage to any target.\n{2}{R}, Sacrifice this artifact: It deals 1 damage to any target.

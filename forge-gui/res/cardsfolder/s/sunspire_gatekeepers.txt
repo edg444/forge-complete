@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigToken:DB$ Token | TokenScript$ w_2_2_knight_vigilance | TokenOwner$ You
 DeckHas:Ability$Token
 DeckHints:Type$Gate
-Oracle:When Sunspire Gatekeepers enters, if you control two or more Gates, create a 2/2 white Knight creature token with vigilance.
+Oracle:When this creature enters, if you control two or more Gates, create a 2/2 white Knight creature token with vigilance.

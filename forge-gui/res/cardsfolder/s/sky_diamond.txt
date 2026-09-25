@@ -4,4 +4,4 @@ Types:Artifact
 A:AB$ Mana | Cost$ T | Produced$ U | SpellDescription$ Add {U}.
 R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This artifact enters tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
-Oracle:Sky Diamond enters tapped.\n{T}: Add {U}.
+Oracle:This artifact enters tapped.\n{T}: Add {U}.

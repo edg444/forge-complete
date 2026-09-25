@@ -10,4 +10,4 @@ S:Mode$ Continuous | Affected$ Card.ChosenCardStrict | AddKeyword$ Flying | AddT
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Battlefield | Destination$ Any | Execute$ TrigSacrifice | TriggerDescription$ When this creature leaves the battlefield, sacrifice the chosen creature.
 SVar:TrigSacrifice:DB$ SacrificeAll | ValidCards$ Card.ChosenCardStrict
 DeckHas:Ability$Sacrifice
-Oracle:Flying, trample\nAs Tyrannical Pitlord enters, choose another creature you control.\nThe chosen creature gets +3/+3 and has flying.\nWhen Tyrannical Pitlord leaves the battlefield, sacrifice the chosen creature.
+Oracle:Flying, trample\nAs this creature enters, choose another creature you control.\nThe chosen creature gets +3/+3 and has flying.\nWhen this creature leaves the battlefield, sacrifice the chosen creature.

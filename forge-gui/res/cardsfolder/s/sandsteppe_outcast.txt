@@ -7,4 +7,4 @@ SVar:TrigCharm:DB$ Charm | Choices$ DBCounter,DBToken
 SVar:DBCounter:DB$ PutCounter | CounterType$ P1P1 | CounterNum$ 1 | SpellDescription$ Put a +1/+1 counter on this creature.
 SVar:DBToken:DB$ Token | TokenOwner$ You | TokenScript$ w_1_1_spirit_flying | SpellDescription$ Create a 1/1 white Spirit creature token with flying.
 DeckHas:Ability$Counters|Token
-Oracle:When Sandsteppe Outcast enters, choose one —\n• Put a +1/+1 counter on Sandsteppe Outcast.\n• Create a 1/1 white Spirit creature token with flying.
+Oracle:When this creature enters, choose one —\n• Put a +1/+1 counter on this creature.\n• Create a 1/1 white Spirit creature token with flying.

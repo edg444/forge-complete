@@ -6,4 +6,4 @@ SVar:DBCopy:DB$ Clone | Choices$ Creature | AddTypes$ Artifact | AddAbilities$ A
 SVar:ABMana:AB$ Mana | Cost$ T | Produced$ U | SpellDescription$ Add {U}.
 A:AB$ Mana | Cost$ T | Produced$ U | SpellDescription$ Add {U}.
 SVar:NeedsToPlay:Creature
-Oracle:You may have Machine God's Effigy enter as a copy of any creature on the battlefield, except it's an artifact and it has "{T}: Add {U}." (It's not a creature.)\n{T}: Add {U}.
+Oracle:You may have this artifact enter as a copy of any creature on the battlefield, except it's an artifact and it has "{T}: Add {U}." (It's not a creature.)\n{T}: Add {U}.

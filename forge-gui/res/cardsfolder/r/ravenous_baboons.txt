@@ -4,4 +4,4 @@ Types:Creature Monkey
 PT:2/2
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDestroy | TriggerDescription$ When this creature enters, destroy target nonbasic land.
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Land.nonBasic | TgtPrompt$ Select target nonbasic land.
-Oracle:When Ravenous Baboons enters, destroy target nonbasic land.
+Oracle:When this creature enters, destroy target nonbasic land.

@@ -4,4 +4,4 @@ Types:Creature Merfolk Wizard
 PT:2/2
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When this creature dies, you may pay {1}{U}. If you do, draw a card.
 SVar:TrigDraw:AB$ Draw | Cost$ 1 U | Defined$ You | NumCards$ 1
-Oracle:When Merfolk Seer dies, you may pay {1}{U}. If you do, draw a card.
+Oracle:When this creature dies, you may pay {1}{U}. If you do, draw a card.

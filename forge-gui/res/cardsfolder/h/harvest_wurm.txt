@@ -9,4 +9,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Amount
 SVar:NeedsToPlayVar:Y GE1
 SVar:Y:Count$ValidGraveyard Land.Basic+YouOwn
-Oracle:When Harvest Wurm enters, sacrifice it unless you return a basic land card from your graveyard to your hand.
+Oracle:When this creature enters, sacrifice it unless you return a basic land card from your graveyard to your hand.

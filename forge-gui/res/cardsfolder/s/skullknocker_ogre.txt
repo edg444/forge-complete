@@ -6,4 +6,4 @@ T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Opponent | TriggerZon
 SVar:TrigDiscard:DB$ Discard | Defined$ TriggeredTarget | NumCards$ 1 | Mode$ Random | RememberDiscarded$ True | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | Defined$ TriggeredTarget | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ GE1 | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:Whenever Skullknocker Ogre deals damage to an opponent, that player discards a card at random. If the player does, they draw a card.
+Oracle:Whenever this creature deals damage to an opponent, that player discards a card at random. If the player does, they draw a card.

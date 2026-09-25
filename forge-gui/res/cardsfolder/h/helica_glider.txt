@@ -5,4 +5,4 @@ PT:2/2
 K:ETBReplacement:Other:CounterChoice
 SVar:CounterChoice:DB$ PutCounter | ETB$ True | CounterType$ Flying,First Strike | SpellDescription$ This creature enters with your choice of a flying counter or a first strike counter on it.
 DeckHints:Ability$Counters
-Oracle:Helica Glider enters with your choice of a flying counter or a first strike counter on it.
+Oracle:This creature enters with your choice of a flying counter or a first strike counter on it.

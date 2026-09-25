@@ -7,4 +7,4 @@ T:Mode$ SpellCast | ValidCard$ Card | ValidActivatingPlayer$ Player | TriggerZon
 SVar:Trig5Damage:DB$ DealDamage | Defined$ TriggeredActivator | NumDmg$ 5
 A:AB$ Effect | Cost$ R | StaticAbilities$ STCantGain | AILogic$ NoGain | SpellDescription$ Your opponents can't gain life this turn.
 SVar:STCantGain:Mode$ CantGainLife | ValidPlayer$ Player.Opponent | Description$ Your opponents can't gain life this turn.
-Oracle:At the beginning of each player's upkeep, Roiling Vortex deals 1 damage to them.\nWhenever a player casts a spell, if no mana was spent to cast that spell, Roiling Vortex deals 5 damage to that player.\n{R}: Your opponents can't gain life this turn.
+Oracle:At the beginning of each player's upkeep, this enchantment deals 1 damage to them.\nWhenever a player casts a spell, if no mana was spent to cast that spell, this enchantment deals 5 damage to that player.\n{R}: Your opponents can't gain life this turn.

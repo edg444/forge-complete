@@ -6,4 +6,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 1 | IsPresent$ Planeswalk
 S:Mode$ CantBlockBy | ValidAttacker$ Card.Self | IsPresent$ Planeswalker.Jace+YouCtrl
 SVar:BuffedBy:Jace
 DeckNeeds:Type$Jace
-Oracle:As long as you control a Jace planeswalker, Jace's Sentinel gets +1/+0 and can't be blocked.
+Oracle:As long as you control a Jace planeswalker, this creature gets +1/+0 and can't be blocked.

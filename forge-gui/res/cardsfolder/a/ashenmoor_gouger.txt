@@ -3,4 +3,4 @@ ManaCost:BR BR BR
 Types:Creature Elemental Warrior
 PT:4/4
 S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't block.
-Oracle:Ashenmoor Gouger can't block.
+Oracle:This creature can't block.

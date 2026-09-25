@@ -9,4 +9,4 @@ SVar:DoDay:DB$ DayTime | Value$ Day
 T:Mode$ DayTimeChanges | Execute$ TrigPutCounter | TriggerZones$ Battlefield | TriggerDescription$ Whenever day becomes night or night becomes day, put a +1/+1 counter on target creature you control.
 SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Creature | CounterType$ P1P1 | CounterNum$ 1
 DeckHas:Ability$Counters
-Oracle:Trample, haste\nIf it's neither day nor night, it becomes day as Sunrise Cavalier enters.\nWhenever day becomes night or night becomes day, put a +1/+1 counter on target creature you control.
+Oracle:Trample, haste\nIf it's neither day nor night, it becomes day as this creature enters.\nWhenever day becomes night or night becomes day, put a +1/+1 counter on target creature you control.

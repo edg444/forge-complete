@@ -8,4 +8,4 @@ SVar:DBDraw:DB$ Draw | ConditionCheckSVar$ Resolved | ConditionSVarCompare$ EQ2
 SVar:Resolved:Count$ResolvedThisTurn
 SVar:PlayMain1:TRUE
 DeckHints:Type$Rabbit
-Oracle:Whenever Harvestrite Host or another Rabbit you control enters, target creature you control gets +1/+0 until end of turn. Then draw a card if this is the second time this ability has resolved this turn.
+Oracle:Whenever this creature or another Rabbit you control enters, target creature you control gets +1/+0 until end of turn. Then draw a card if this is the second time this ability has resolved this turn.

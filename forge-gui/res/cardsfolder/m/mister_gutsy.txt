@@ -9,4 +9,4 @@ SVar:TrigToken:DB$ Token | TokenAmount$ X | TokenScript$ c_a_junk_sac_exileplay 
 SVar:X:TriggeredCard$CardCounters.P1P1
 DeckHas:Ability$Counters|Token & Type$Junk|Artifact
 DeckNeeds:Type$Aura|Equipment
-Oracle:Whenever you cast an Aura or Equipment spell, put a +1/+1 counter on Mister Gutsy.\nWhen Mister Gutsy dies, create X Junk tokens, where X is the number of +1/+1 counters on it. (They're artifacts with "{T}, Sacrifice this token: Exile the top card of your library. You may play that card this turn. Activate only as a sorcery.")
+Oracle:Whenever you cast an Aura or Equipment spell, put a +1/+1 counter on this creature.\nWhen this creature dies, create X Junk tokens, where X is the number of +1/+1 counters on it. (They're artifacts with "{T}, Sacrifice this token: Exile the top card of your library. You may play that card this turn. Activate only as a sorcery.")

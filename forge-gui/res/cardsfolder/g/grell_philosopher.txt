@@ -8,4 +8,4 @@ SVar:TrigEffect:DB$ Effect | ValidTgts$ Card.Artifact+OppCtrl | TgtZone$ Battlef
 SVar:STSteal:Mode$ Continuous | Affected$ Card.IsImprinted | GainsAbilitiesOfDefined$ RememberedLKI | ManaConversion$ Blue->AnyColor
 AI:RemoveDeck:All
 DeckHints:Type$Horror
-Oracle:Aberrant Tinkering — When Grell Philosopher enters and at the beginning of your upkeep, each Horror you control gains all activated abilities of target artifact an opponent controls until end of turn. You may spend blue mana as though it were mana of any color to activate those abilities.
+Oracle:Aberrant Tinkering — When this creature enters and at the beginning of your upkeep, each Horror you control gains all activated abilities of target artifact an opponent controls until end of turn. You may spend blue mana as though it were mana of any color to activate those abilities.

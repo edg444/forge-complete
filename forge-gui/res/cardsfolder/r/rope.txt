@@ -6,4 +6,4 @@ S:Mode$ MinMaxBlocker | ValidCard$ Creature.EquippedBy | Max$ 1 | Secondary$ Tru
 A:AB$ Draw | Cost$ 2 Sac<1/CARDNAME> | NumCards$ 1 | SpellDescription$ Draw a card.
 K:Equip:3
 DeckHas:Ability$Sacrifice
-Oracle:Equipped creature gets +1/+2, has reach, and can't be blocked by more than one creature.\n{2}, Sacrifice Rope: Draw a card.\nEquip {3}
+Oracle:Equipped creature gets +1/+2, has reach, and can't be blocked by more than one creature.\n{2}, Sacrifice this Equipment: Draw a card.\nEquip {3}

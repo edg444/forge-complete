@@ -6,4 +6,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ X | Description$ This cre
 SVar:X:Count$Valid Equipment.YouCtrl
 SVar:BuffedBy:Equipment
 DeckHints:Type$Equipment
-Oracle:Militant Inquisitor gets +1/+0 for each Equipment you control.
+Oracle:This creature gets +1/+0 for each Equipment you control.

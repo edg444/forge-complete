@@ -7,4 +7,4 @@ SVar:TrigToken:DB$ Token | TokenScript$ w_2_2_knight_vigilance | TokenOwner$ You
 SVar:DBCentaurToken:DB$ Token | TokenScript$ g_3_3_centaur | TokenOwner$ You | SubAbility$ DBRhinoToken
 SVar:DBRhinoToken:DB$ Token | TokenScript$ g_4_4_rhino_trample | TokenOwner$ You
 DeckHas:Ability$Token
-Oracle:When Trostani's Summoner enters, create a 2/2 white Knight creature token with vigilance, a 3/3 green Centaur creature token, and a 4/4 green Rhino creature token with trample.
+Oracle:When this creature enters, create a 2/2 white Knight creature token with vigilance, a 3/3 green Centaur creature token, and a 4/4 green Rhino creature token with trample.

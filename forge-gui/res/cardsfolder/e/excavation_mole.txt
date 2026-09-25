@@ -6,4 +6,4 @@ K:Trample
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigMill | TriggerDescription$ When this creature enters, mill three cards.
 SVar:TrigMill:DB$ Mill | NumCards$ 3 | Defined$ You
 DeckHas:Ability$Graveyard
-Oracle:Trample\nWhen Excavation Mole enters, mill three cards.
+Oracle:Trample\nWhen this creature enters, mill three cards.

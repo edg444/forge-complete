@@ -10,7 +10,7 @@ SVar:AIPreference:SacCost$Creature.token
 DeckHints:Ability$Graveyard & Type$Eldrazi|Horror
 DeckHas:Ability$Token|Delirium
 AlternateMode:DoubleFaced
-Oracle:When Extricator of Sin enters, you may sacrifice another permanent. If you do, create a 3/2 colorless Eldrazi Horror creature token.\nDelirium — At the beginning of your upkeep, if there are four or more card types among cards in your graveyard, transform Extricator of Sin.
+Oracle:When this creature enters, you may sacrifice another permanent. If you do, create a 3/2 colorless Eldrazi Horror creature token.\nDelirium — At the beginning of your upkeep, if there are four or more card types among cards in your graveyard, transform this creature.
 
 ALTERNATE
 

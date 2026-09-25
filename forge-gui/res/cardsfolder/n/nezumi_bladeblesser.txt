@@ -5,4 +5,4 @@ PT:3/2
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Deathtouch | IsPresent$ Artifact.YouCtrl | Description$ This creature has deathtouch as long as you control an artifact.
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Menace | IsPresent$ Enchantment.YouCtrl | Description$ This creature has menace as long as you control an enchantment. (It can't be blocked except by two or more creatures.)
 DeckHints:Type$Artifact|Enchantment
-Oracle:Nezumi Bladeblesser has deathtouch as long as you control an artifact.\nNezumi Bladeblesser has menace as long as you control an enchantment. (It can't be blocked except by two or more creatures.)
+Oracle:This creature has deathtouch as long as you control an artifact.\nThis creature has menace as long as you control an enchantment. (It can't be blocked except by two or more creatures.)

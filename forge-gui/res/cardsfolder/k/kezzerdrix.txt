@@ -5,4 +5,4 @@ PT:4/4
 K:First Strike
 T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | IsPresent$ Creature.OppCtrl | PresentCompare$ EQ0 | Execute$ TrigDealDamage | TriggerZones$ Battlefield | TriggerDescription$ At the beginning of your upkeep, if your opponents control no creatures, this creature deals 4 damage to you.
 SVar:TrigDealDamage:DB$ DealDamage | Defined$ You | NumDmg$ 4
-Oracle:First strike\nAt the beginning of your upkeep, if your opponents control no creatures, Kezzerdrix deals 4 damage to you.
+Oracle:First strike\nAt the beginning of your upkeep, if your opponents control no creatures, this creature deals 4 damage to you.

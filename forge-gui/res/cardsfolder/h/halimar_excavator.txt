@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigMill:DB$ Mill | ValidTgts$ Player | NumCards$ X | TgtPrompt$ Select a target player. | SpellDescription$ Target player mills X cards, where X is the number of Allies you control.
 SVar:X:Count$Valid Ally.YouCtrl
 SVar:BuffedBy:Ally
-Oracle:Whenever Halimar Excavator or another Ally you control enters, target player mills X cards, where X is the number of Allies you control.
+Oracle:Whenever this creature or another Ally you control enters, target player mills X cards, where X is the number of Allies you control.

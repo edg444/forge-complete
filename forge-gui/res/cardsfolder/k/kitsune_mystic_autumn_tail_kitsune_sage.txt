@@ -8,7 +8,7 @@ AI:RemoveDeck:Random
 DeckNeeds:Type$Aura
 SVar:EnchantMe:Multiple
 AlternateMode:Flip
-Oracle:At the beginning of the end step, if Kitsune Mystic is enchanted by two or more Auras, flip it.
+Oracle:At the beginning of the end step, if this creature is enchanted by two or more Auras, flip it.
 
 ALTERNATE
 

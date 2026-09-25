@@ -4,4 +4,4 @@ Types:Creature Vedalken Artificer
 PT:2/2
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When this creature enters, draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
-Oracle:When Nimble Innovator enters, draw a card.
+Oracle:When this creature enters, draw a card.

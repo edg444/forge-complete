@@ -6,4 +6,4 @@ SVar:DelTrigSlowtrip:DB$ DelayedTrigger | NextTurn$ True | Mode$ Phase | Phase$ 
 SVar:DrawSlowtrip:DB$ Draw | Defined$ You
 AI:RemoveDeck:Random
 AI:RemoveDeck:All
-Oracle:{T}, Sacrifice Scarab of the Unseen: Return all Auras attached to target permanent you own to their owners' hands. Draw a card at the beginning of the next turn's upkeep.
+Oracle:{T}, Sacrifice this artifact: Return all Auras attached to target permanent you own to their owners' hands. Draw a card at the beginning of the next turn's upkeep.

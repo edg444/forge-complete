@@ -11,4 +11,4 @@ SVar:DBChangeZone:DB$ ChangeZone | Origin$ Library | Destination$ Battlefield | 
 SVar:DBChangeZone2:DB$ ChangeZone | Origin$ Library | Destination$ Hand | ChangeType$ Card.IsRemembered | Mandatory$ True | NoLooking$ True | SelectPrompt$ Select a card to put into your hand | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:BuffedBy:Forest
-Oracle:Flourishing Bloom-Kin gets +1/+1 for each Forest you control.\nDisguise {4}{G}\nWhen Flourishing Bloom-Kin is turned face up, search your library for up to two Forest cards and reveal them. Put one of them onto the battlefield tapped and the other into your hand, then shuffle.
+Oracle:This creature gets +1/+1 for each Forest you control.\nDisguise {4}{G}\nWhen this creature is turned face up, search your library for up to two Forest cards and reveal them. Put one of them onto the battlefield tapped and the other into your hand, then shuffle.

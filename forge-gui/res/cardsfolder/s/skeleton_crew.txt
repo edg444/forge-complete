@@ -10,4 +10,4 @@ SVar:DiscardMe:1
 SVar:SacMe:1
 DeckHints:Type$Pirate|Skeleton
 DeckHas:Ability$Token|Graveyard
-Oracle:Each other creature you control that's a Skeleton or Pirate gets +1/+1.\nWhenever one or more creature cards leave your graveyard, create a 2/2 black Skeleton Pirate creature token. (This ability triggers only from the battlefield.)\n{5}{B}: Return Skeleton Crew from your graveyard to the battlefield tapped.
+Oracle:Each other creature you control that's a Skeleton or Pirate gets +1/+1.\nWhenever one or more creature cards leave your graveyard, create a 2/2 black Skeleton Pirate creature token. (This ability triggers only from the battlefield.)\n{5}{B}: Return this card from your graveyard to the battlefield tapped.

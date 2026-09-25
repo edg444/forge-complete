@@ -10,4 +10,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Count$RememberedNumber
 AI:RemoveDeck:Random
 DeckHas:Ability$Counters
-Oracle:Flying\nAs Thief of Blood enters, remove all counters from all permanents. Thief of Blood enters with a +1/+1 counter on it for each counter removed this way.
+Oracle:Flying\nAs this creature enters, remove all counters from all permanents. This creature enters with a +1/+1 counter on it for each counter removed this way.

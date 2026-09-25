@@ -5,4 +5,4 @@ PT:1/3
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When this creature dies, draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ TriggeredCardController
 SVar:SacMe:1
-Oracle:When Feral Prowler dies, draw a card.
+Oracle:When this creature dies, draw a card.

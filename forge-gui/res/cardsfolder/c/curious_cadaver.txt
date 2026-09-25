@@ -9,4 +9,4 @@ SVar:SacMe:3
 SVar:DiscardMe:3
 DeckHas:Ability$Graveyard
 DeckNeeds:Type$Clue
-Oracle:Flying\nWhen you sacrifice a Clue, return Curious Cadaver from your graveyard to your hand.
+Oracle:Flying\nWhen you sacrifice a Clue, return this card from your graveyard to your hand.

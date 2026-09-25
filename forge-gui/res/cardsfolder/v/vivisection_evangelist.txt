@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Creature.OppCtrl,Planeswalker.OppCtrl | TgtPrompt$ Select target creature or planeswalker an opponent controls
 SVar:X:PlayerCountOpponents$HighestCounters.Poison
 DeckNeeds:Keyword$Toxic|Infect
-Oracle:Vigilance\nCorrupted — When Vivisection Evangelist enters, if an opponent has three or more poison counters, destroy target creature or planeswalker an opponent controls.
+Oracle:Vigilance\nCorrupted — When this creature enters, if an opponent has three or more poison counters, destroy target creature or planeswalker an opponent controls.

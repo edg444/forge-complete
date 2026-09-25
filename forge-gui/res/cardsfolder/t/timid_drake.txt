@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creatu
 SVar:TrigReturn:DB$ ChangeZone | Defined$ Self | Origin$ Battlefield | Destination$ Hand
 SVar:AntiBuffedBy:Creature
 AI:RemoveDeck:All
-Oracle:Flying\nWhen another creature enters, return Timid Drake to its owner's hand.
+Oracle:Flying\nWhen another creature enters, return this creature to its owner's hand.

@@ -8,4 +8,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | Affected$ Card.counters_GE4_P1P1 | 
 S:Mode$ Continuous | AffectedDefined$ Self | Affected$ Card.counters_GE10_P1P1 | AddKeyword$ Indestructible | Description$ As long as this creature has ten or more +1/+1 counters on it, it has indestructible.
 DeckHints:Ability$LifeGain
 DeckHas:Ability$Counters
-Oracle:Whenever you gain life, put a +1/+1 counter on Voice of the Blessed.\nAs long as Voice of the Blessed has four or more +1/+1 counters on it, it has flying and vigilance.\nAs long as Voice of the Blessed has ten or more +1/+1 counters on it, it has indestructible.
+Oracle:Whenever you gain life, put a +1/+1 counter on this creature.\nAs long as this creature has four or more +1/+1 counters on it, it has flying and vigilance.\nAs long as this creature has ten or more +1/+1 counters on it, it has indestructible.

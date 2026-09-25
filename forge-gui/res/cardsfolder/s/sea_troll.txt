@@ -3,4 +3,4 @@ ManaCost:2 U
 Types:Creature Troll
 PT:2/1
 A:AB$ Regenerate | Cost$ U | IsPresent$ Card.Self+blockedValidThisTurn Creature.Blue,Card.Self+blockedByValidThisTurn Creature.Blue | SpellDescription$ Regenerate this creature. Activate only if this creature blocked or was blocked by a blue creature this turn.
-Oracle:{U}: Regenerate Sea Troll. Activate only if Sea Troll blocked or was blocked by a blue creature this turn.
+Oracle:{U}: Regenerate this creature. Activate only if this creature blocked or was blocked by a blue creature this turn.

@@ -9,4 +9,4 @@ SVar:DBDamage:DB$ DamageAll | ValidPlayers$ Opponent | NumDmg$ X
 SVar:X:Count$Valid Creature.Other+YouCtrl+modified
 DeckHas:Ability$Counters
 DeckHints:Type$Equipment|Aura & Ability$Counters
-Oracle:Haste\nWhenever Thundering Raiju attacks, put a +1/+1 counter on target creature you control. Then Thundering Raiju deals X damage to each opponent, where X is the number of modified creatures you control other than Thundering Raiju. (Equipment, Auras you control, and counters are modifications.)
+Oracle:Haste\nWhenever this creature attacks, put a +1/+1 counter on target creature you control. Then this creature deals X damage to each opponent, where X is the number of modified creatures you control other than this creature. (Equipment, Auras you control, and counters are modifications.)

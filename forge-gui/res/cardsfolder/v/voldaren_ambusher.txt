@@ -7,4 +7,4 @@ SVar:TrigDealDamage:DB$ DealDamage | NumDmg$ X | TargetMin$ 0 | TargetMax$ 1 | V
 SVar:X:Count$Valid Vampire.YouCtrl
 SVar:Y:Count$LifeOppsLostThisTurn
 DeckNeeds:Type$Vampire
-Oracle:When Voldaren Ambusher enters, if an opponent lost life this turn, it deals X damage to up to one target creature or planeswalker, where X is the number of Vampires you control.
+Oracle:When this creature enters, if an opponent lost life this turn, it deals X damage to up to one target creature or planeswalker, where X is the number of Vampires you control.

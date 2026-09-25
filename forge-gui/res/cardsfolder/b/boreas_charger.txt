@@ -10,4 +10,4 @@ SVar:TrigSearchPlay:DB$ ChangeZone | Origin$ Library | Destination$ Battlefield 
 SVar:X:Count$Valid Land.ChosenCtrl/Minus.Y
 SVar:Y:Count$Valid Land.YouCtrl
 SVar:Z:SVar$X/Minus.1
-Oracle:Flying\nWhen Boreas Charger leaves the battlefield, choose an opponent who controls more lands than you. Search your library for a number of Plains cards equal to the difference, reveal those cards, put one of them onto the battlefield tapped and the rest into your hand, then shuffle.
+Oracle:Flying\nWhen this creature leaves the battlefield, choose an opponent who controls more lands than you. Search your library for a number of Plains cards equal to the difference, reveal those cards, put one of them onto the battlefield tapped and the rest into your hand, then shuffle.

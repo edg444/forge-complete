@@ -6,4 +6,4 @@ K:Flying
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigExile | TriggerDescription$ When this creature dies, you may exile it and collect evidence 4. If you do, return this card to the battlefield tapped. (To collect evidence 4, exile cards with total mana value 4 or greater from your graveyard.)
 SVar:TrigExile:AB$ ChangeZone | Cost$ ExileAnyGrave<1/Card.TriggeredNewCard> CollectEvidence<4> | Origin$ Exile | Destination$ Battlefield | Defined$ ExiledCards | Tapped$ True
 DeckHints:Ability$Graveyard|Mill|Discard
-Oracle:Flying\nWhen Lamplight Phoenix dies, you may exile it and collect evidence 4. If you do, return Lamplight Phoenix to the battlefield tapped. (To collect evidence 4, exile cards with total mana value 4 or greater from your graveyard.)
+Oracle:Flying\nWhen this creature dies, you may exile it and collect evidence 4. If you do, return this card to the battlefield tapped. (To collect evidence 4, exile cards with total mana value 4 or greater from your graveyard.)

@@ -7,4 +7,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature.ControlledBy TriggeredDefendingPlayer | TgtPrompt$ Select target creature defending player controls | NumAtt$ -2 | Duration$ UntilYourNextTurn | IsCurse$ True | SubAbility$ DBDebuff
 SVar:DBDebuff:DB$ Debuff | Defined$ Targeted | Keywords$ Flying | Duration$ UntilYourNextTurn
 SVar:HasAttackEffect:TRUE
-Oracle:Flying\nWhenever Fear of Falling attacks, target creature defending player controls gets -2/-0 and loses flying until your next turn.
+Oracle:Flying\nWhenever this creature attacks, target creature defending player controls gets -2/-0 and loses flying until your next turn.

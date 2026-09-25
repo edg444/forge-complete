@@ -4,4 +4,4 @@ Types:Creature Ape
 PT:5/4
 T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ StayTapped | TriggerDescription$ Whenever this creature attacks, it doesn't untap during its controller's next untap step.
 SVar:StayTapped:DB$ Pump | KW$ HIDDEN This card doesn't untap during your next untap step. | Defined$ Self | Duration$ Permanent
-Oracle:Whenever Apes of Rath attacks, it doesn't untap during its controller's next untap step.
+Oracle:Whenever this creature attacks, it doesn't untap during its controller's next untap step.

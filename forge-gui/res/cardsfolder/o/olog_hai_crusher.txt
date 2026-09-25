@@ -5,4 +5,4 @@ PT:4/4
 K:Trample
 S:Mode$ CantBlock | ValidCard$ Card.Self | IsPresent$ Goblin.YouCtrl,Orc.YouCtrl | PresentCompare$ EQ0 | Description$ This creature can't block unless you control a Goblin or Orc.
 DeckHints:Type$Goblin|Orc
-Oracle:Trample\nOlog-hai Crusher can't block unless you control a Goblin or Orc.
+Oracle:Trample\nThis creature can't block unless you control a Goblin or Orc.

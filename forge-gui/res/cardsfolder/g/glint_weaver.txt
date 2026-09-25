@@ -8,4 +8,4 @@ SVar:TrigCounter:DB$ PutCounter | ValidTgts$ Creature | TgtPrompt$ Select one, t
 SVar:DBGainLife:DB$ GainLife | LifeAmount$ X
 SVar:X:Count$Valid Creature.YouCtrl$GreatestCardToughness
 DeckHas:Ability$LifeGain|Counters
-Oracle:Reach\nWhen Glint Weaver enters, distribute three +1/+1 counters among one, two, or three target creatures, then you gain life equal to the greatest toughness among creatures you control.
+Oracle:Reach\nWhen this creature enters, distribute three +1/+1 counters among one, two, or three target creatures, then you gain life equal to the greatest toughness among creatures you control.

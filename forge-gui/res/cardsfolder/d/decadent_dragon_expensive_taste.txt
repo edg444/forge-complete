@@ -9,7 +9,7 @@ SVar:TrigToken:DB$ Token | TokenScript$ c_a_treasure_sac
 DeckHas:Ability$Token|Sacrifice & Type$Treasure|Artifact
 SVar:HasAttackEffect:TRUE
 AlternateMode:Adventure
-Oracle:Flying, trample\nWhenever Decadent Dragon attacks, create a Treasure token.
+Oracle:Flying, trample\nWhenever this creature attacks, create a Treasure token.
 
 ALTERNATE
 

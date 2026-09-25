@@ -4,4 +4,4 @@ Types:Creature Devil
 PT:3/3
 T:Mode$ Sacrificed | ValidCard$ Permanent | Execute$ TrigDealDamage | TriggerZones$ Battlefield | TriggerDescription$ Whenever a player sacrifices a permanent, this creature deals 1 damage to any target.
 SVar:TrigDealDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 1
-Oracle:Whenever a player sacrifices a permanent, Mayhem Devil deals 1 damage to any target.
+Oracle:Whenever a player sacrifices a permanent, this creature deals 1 damage to any target.

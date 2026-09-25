@@ -8,4 +8,4 @@ SVar:TrigDestroyBlocked:DB$ Pump | Defined$ TriggeredAttacker | RememberObjects$
 SVar:TrigDestroyBlocker:DB$ Pump | Defined$ TriggeredBlocker | RememberObjects$ TriggeredBlocker | SubAbility$ DBDestroy
 SVar:DBDestroy:DB$ DestroyAll | ValidCards$ Aura.AttachedTo Card.IsRemembered | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:Whenever Treefolk Mystic blocks or becomes blocked by a creature, destroy all Auras attached to that creature.
+Oracle:Whenever this creature blocks or becomes blocked by a creature, destroy all Auras attached to that creature.

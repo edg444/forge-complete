@@ -5,4 +5,4 @@ A:AB$ PutCounter | Cost$ 1 T | CounterType$ WINCH | CounterNum$ 1 | SpellDescrip
 A:AB$ ChangeZone | Cost$ T SubCounter<X/WINCH> | ChangeNum$ 1 | ChangeType$ Creature.cmcEQX | Origin$ Hand | Destination$ Battlefield | Optional$ True | SpellDescription$ You may put a creature card with mana value X from your hand onto the battlefield.
 SVar:X:Count$xPaid
 AI:RemoveDeck:All
-Oracle:{1}, {T}: Put a winch counter on Mercadian Lift.\n{T}, Remove X winch counters from Mercadian Lift: You may put a creature card with mana value X from your hand onto the battlefield.
+Oracle:{1}, {T}: Put a winch counter on this artifact.\n{T}, Remove X winch counters from this artifact: You may put a creature card with mana value X from your hand onto the battlefield.

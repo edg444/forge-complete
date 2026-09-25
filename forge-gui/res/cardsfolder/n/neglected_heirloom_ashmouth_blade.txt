@@ -6,7 +6,7 @@ T:Mode$ Transformed | ValidCard$ Creature.EquippedBy | Execute$ TrigTransform | 
 SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform
 K:Equip:1
 AlternateMode:DoubleFaced
-Oracle:Equipped creature gets +1/+1.\nWhen equipped creature transforms, transform Neglected Heirloom.\nEquip {1}
+Oracle:Equipped creature gets +1/+1.\nWhen equipped creature transforms, transform this Equipment.\nEquip {1}
 
 ALTERNATE
 

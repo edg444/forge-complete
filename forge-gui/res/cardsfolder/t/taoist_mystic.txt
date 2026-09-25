@@ -3,4 +3,4 @@ ManaCost:2 G
 Types:Creature Human Mystic
 PT:2/2
 S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.withHorsemanship | Description$ This creature can't be blocked by creatures with horsemanship.
-Oracle:Taoist Mystic can't be blocked by creatures with horsemanship.
+Oracle:This creature can't be blocked by creatures with horsemanship.

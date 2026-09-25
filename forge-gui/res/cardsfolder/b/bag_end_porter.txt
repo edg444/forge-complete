@@ -7,4 +7,4 @@ SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +X | NumDef$ +X
 SVar:X:Count$Valid Creature.Legendary+YouCtrl
 SVar:HasAttackEffect:TRUE
 DeckHints:Type$Legendary
-Oracle:Whenever Bag End Porter attacks, it gets +X/+X until end of turn, where X is the number of legendary creatures you control.
+Oracle:Whenever this creature attacks, it gets +X/+X until end of turn, where X is the number of legendary creatures you control.

@@ -3,4 +3,4 @@ ManaCost:1 W
 Types:Creature Human Mercenary
 PT:2/2
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Double Strike | CheckSVar$ Count$CommittedCrimeThisTurn.1.0 | Description$ This creature has double strike as long as you've committed a crime this turn. (Targeting opponents, anything they control, and/or cards in their graveyards is a crime.)
-Oracle:Omenport Vigilante has double strike as long as you've committed a crime this turn. (Targeting opponents, anything they control, and/or cards in their graveyards is a crime.)
+Oracle:This creature has double strike as long as you've committed a crime this turn. (Targeting opponents, anything they control, and/or cards in their graveyards is a crime.)

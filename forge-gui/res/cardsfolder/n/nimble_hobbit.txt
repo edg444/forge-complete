@@ -10,4 +10,4 @@ SVar:TrigTap:DB$ Tap | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target cr
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Sacrifice
 DeckHints:Type$Food
-Oracle:Whenever Nimble Hobbit attacks, you may sacrifice a Food or pay {2}{W}. When you do, tap target creature an opponent controls.
+Oracle:Whenever this creature attacks, you may sacrifice a Food or pay {2}{W}. When you do, tap target creature an opponent controls.

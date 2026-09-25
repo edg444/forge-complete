@@ -5,4 +5,4 @@ PT:2/1
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigMana | TriggerDescription$ When this creature enters, add {B}{B}{B}.
 SVar:TrigMana:DB$ Mana | Produced$ B | Amount$ 3
 SVar:FreeSpellAI:True
-Oracle:When Priest of Gix enters, add {B}{B}{B}.
+Oracle:When this creature enters, add {B}{B}{B}.

@@ -5,4 +5,4 @@ PT:4/5
 S:Mode$ Continuous | AffectedDefined$ Self | CheckSVar$ X | SVarCompare$ GE2 | AddKeyword$ Lifelink & Deathtouch | Description$ As long as you've drawn two or more cards this turn, this creature has deathtouch and lifelink.
 SVar:X:Count$YouDrewThisTurn
 DeckHas:Ability$LifeGain & Keyword$Lifelink|Deathtouch
-Oracle:As long as you've drawn two or more cards this turn, Trench Stalker has deathtouch and lifelink.
+Oracle:As long as you've drawn two or more cards this turn, this creature has deathtouch and lifelink.

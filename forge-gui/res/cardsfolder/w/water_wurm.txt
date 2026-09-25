@@ -3,4 +3,4 @@ ManaCost:U
 Types:Creature Wurm
 PT:1/1
 S:Mode$ Continuous | AffectedDefined$ Self | AddToughness$ 1 | IsPresent$ Island.OppCtrl | Description$ This creature gets +0/+1 as long as an opponent controls an Island.
-Oracle:Water Wurm gets +0/+1 as long as an opponent controls an Island.
+Oracle:This creature gets +0/+1 as long as an opponent controls an Island.

@@ -7,4 +7,4 @@ K:ETBReplacement:Other:ChooseColor
 SVar:ChooseColor:DB$ ChooseColor | Defined$ You | Exclude$ green | AILogic$ MostProminentInComputerDeck | SpellDescription$ As this land enters, choose a color other than green.
 A:AB$ Mana | Cost$ T | Produced$ Combo G Chosen | SpellDescription$ Add {G} or one mana of the chosen color.
 DeckHints:Type$Gate
-Oracle:Manor Gate enters tapped.\nAs Manor Gate enters, choose a color other than green.\n{T}: Add {G} or one mana of the chosen color.
+Oracle:This land enters tapped.\nAs this land enters, choose a color other than green.\n{T}: Add {G} or one mana of the chosen color.

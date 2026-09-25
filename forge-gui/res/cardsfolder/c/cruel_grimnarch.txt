@@ -10,4 +10,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:SVar$Y/Times.4
 SVar:Y:PlayerCountOpponents$Amount/Minus.Remembered$Amount
 DeckHas:Ability$LifeGain
-Oracle:Deathtouch\nWhen Cruel Grimnarch enters, each opponent discards a card. For each opponent who can't, you gain 4 life.
+Oracle:Deathtouch\nWhen this creature enters, each opponent discards a card. For each opponent who can't, you gain 4 life.

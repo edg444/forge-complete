@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigScry:DB$ Scry | ScryNum$ X
 SVar:X:Count$CardPower
 DeckHints:Color$Blue
-Oracle:Prototype {3}{U} — 2/3 (You may cast this spell with different mana cost, color, and size. It keeps its abilities and types.)\nFlying\nWhen Spotter Thopter enters, scry X, where X is its power.
+Oracle:Prototype {3}{U} — 2/3 (You may cast this spell with different mana cost, color, and size. It keeps its abilities and types.)\nFlying\nWhen this creature enters, scry X, where X is its power.

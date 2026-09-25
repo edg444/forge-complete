@@ -7,4 +7,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigToken | TriggerZones$ Batt
 SVar:TrigToken:DB$ Token | TokenScript$ gw_x_x_elemental_total_creatures | TokenOwner$ You
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Token
-Oracle:Whenever Vernal Sovereign enters or attacks, create a green and white Elemental creature token with "This token's power and toughness are each equal to the number of creatures you control."
+Oracle:Whenever this creature enters or attacks, create a green and white Elemental creature token with "This token's power and toughness are each equal to the number of creatures you control."

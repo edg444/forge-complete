@@ -5,4 +5,4 @@ A:AB$ PumpAll | Cost$ Sac<1/CARDNAME> | ValidCards$ Creature.OppCtrl | NumAtt$ -
 SVar:DBEffect:DB$ Effect | RememberObjects$ Valid Creature.OppCtrl | StaticAbilities$ MustAttack
 SVar:MustAttack:Mode$ MustAttack | ValidCreature$ Card.IsRemembered | Description$ Those creatures attack this turn if able.
 AI:RemoveDeck:All
-Oracle:Sacrifice Suicidal Charge: Creatures your opponents control get -1/-1 until end of turn. Those creatures attack this turn if able.
+Oracle:Sacrifice this enchantment: Creatures your opponents control get -1/-1 until end of turn. Those creatures attack this turn if able.

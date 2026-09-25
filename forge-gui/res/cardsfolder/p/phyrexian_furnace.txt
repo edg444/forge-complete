@@ -6,4 +6,4 @@ A:AB$ ChangeZone | Cost$ 1 Sac<1/CARDNAME> | Origin$ Graveyard | Destination$ Ex
 SVar:DBDraw:DB$ Draw
 AI:RemoveDeck:Random
 SVar:NeedsOrderedGraveyard:TRUE
-Oracle:{T}: Exile the bottom card of target player's graveyard.\n{1}, Sacrifice Phyrexian Furnace: Exile target card from a graveyard. Draw a card.
+Oracle:{T}: Exile the bottom card of target player's graveyard.\n{1}, Sacrifice this artifact: Exile target card from a graveyard. Draw a card.

@@ -7,4 +7,4 @@ T:Mode$ Surveil | ValidPlayer$ You | Execute$ TrigCopy | TriggerZones$ Battlefie
 SVar:TrigCopy:AB$ CopyPermanent | Cost$ 1 U | Defined$ Self
 DeckHas:Ability$Token
 DeckNeeds:Ability$Surveil
-Oracle:Flying\nWhenever you surveil, you may pay {1}{U}. If you do, create a token that's a copy of Copy Catchers.
+Oracle:Flying\nWhenever you surveil, you may pay {1}{U}. If you do, create a token that's a copy of this creature.

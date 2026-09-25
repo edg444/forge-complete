@@ -7,4 +7,4 @@ SVar:TrigChoose:DB$ ChooseCard | Choices$ Creature.YouCtrl+Other | ChoiceZone$ B
 SVar:DBDamageChosen:DB$ DealDamage | Defined$ ChosenCard | NumDmg$ 2 | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | ConditionDefined$ ChosenCard | ConditionPresent$ Card | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
-Oracle:When Wicked Guardian enters, you may have it deal 2 damage to another creature you control. If you do, draw a card.
+Oracle:When this creature enters, you may have it deal 2 damage to another creature you control. If you do, draw a card.

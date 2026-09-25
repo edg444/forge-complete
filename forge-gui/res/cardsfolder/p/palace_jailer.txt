@@ -11,4 +11,4 @@ SVar:ComeBack:Mode$ BecomeMonarch | ValidPlayer$ Player.OpponentOf Remembered | 
 SVar:TrigReturn:DB$ ChangeZoneAll | Origin$ Exile | Destination$ Battlefield | ChangeType$ Card.IsRemembered | SubAbility$ ExileSelf
 SVar:ExileSelf:DB$ ChangeZone | Origin$ Command | Destination$ Exile | Defined$ Self
 SVar:PlayMain1:TRUE
-Oracle:When Palace Jailer enters, you become the monarch.\nWhen Palace Jailer enters, exile target creature an opponent controls until an opponent becomes the monarch.
+Oracle:When this creature enters, you become the monarch.\nWhen this creature enters, exile target creature an opponent controls until an opponent becomes the monarch.

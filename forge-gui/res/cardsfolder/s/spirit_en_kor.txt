@@ -7,4 +7,4 @@ A:AB$ Effect | Cost$ 0 | Name$ en-Kor Redirection | ValidTgts$ Creature.YouCtrl 
 SVar:EnKor:Event$ DamageDone | ValidTarget$ Creature.EffectSource | ReplaceWith$ EnKorDmg | DamageTarget$ Remembered | Description$ The next 1 damage that would be dealt to EFFECTSOURCE this turn is dealt to target creature you control instead.
 SVar:EnKorDmg:DB$ ReplaceSplitDamage | DamageTarget$ Remembered
 AI:RemoveDeck:All
-Oracle:Flying\n{0}: The next 1 damage that would be dealt to Spirit en-Kor this turn is dealt to target creature you control instead.
+Oracle:Flying\n{0}: The next 1 damage that would be dealt to this creature this turn is dealt to target creature you control instead.

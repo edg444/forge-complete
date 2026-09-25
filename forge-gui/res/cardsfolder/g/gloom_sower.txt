@@ -6,4 +6,4 @@ T:Mode$ AttackerBlockedByCreature | ValidCard$ Card.Self | ValidBlocker$ Creatur
 SVar:DBLoseLife:DB$ LoseLife | Defined$ TriggeredBlockerController | LifeAmount$ 2 | SubAbility$ DBGainLife
 SVar:DBGainLife:DB$ GainLife | LifeAmount$ 2
 DeckHas:Ability$LifeGain
-Oracle:Whenever Gloom Sower becomes blocked by a creature, that creature's controller loses 2 life and you gain 2 life.
+Oracle:Whenever this creature becomes blocked by a creature, that creature's controller loses 2 life and you gain 2 life.

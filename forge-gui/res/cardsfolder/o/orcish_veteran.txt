@@ -4,4 +4,4 @@ Types:Creature Orc
 PT:2/2
 S:Mode$ CantBlockBy | ValidAttacker$ Creature.White+powerGE2 | ValidBlocker$ Creature.Self | Description$ This creature can't block white creatures with power 2 or greater.
 A:AB$ Pump | Cost$ R | Defined$ Self | KW$ First Strike | SpellDescription$ This creature gains first strike until end of turn.
-Oracle:Orcish Veteran can't block white creatures with power 2 or greater.\n{R}: Orcish Veteran gains first strike until end of turn.
+Oracle:This creature can't block white creatures with power 2 or greater.\n{R}: This creature gains first strike until end of turn.

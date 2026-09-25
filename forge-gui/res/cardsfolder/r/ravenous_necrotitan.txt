@@ -7,4 +7,4 @@ SVar:TrigSacrifice:DB$ Sacrifice | SacValid$ Creature | Defined$ You | Condition
 SVar:X:PlayerCountOpponents$HighestCounters.Poison
 DeckHints:Keyword$Toxic|Infect
 DeckHas:Ability$Sacrifice
-Oracle:Corrupted — When Ravenous Necrotitan enters, sacrifice a creature unless an opponent has three or more poison counters.
+Oracle:Corrupted — When this creature enters, sacrifice a creature unless an opponent has three or more poison counters.

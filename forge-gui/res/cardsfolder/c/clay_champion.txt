@@ -11,4 +11,4 @@ SVar:WW:Count$EachSpentToCast.W/HalfDown
 SVar:X:Count$xPaid
 DeckHas:Ability$Counters
 DeckHints:Color$Green|White
-Oracle:Clay Champion enters with three +1/+1 counters on it for each {G}{G} spent to cast it.\nWhen Clay Champion enters, choose up to two other target creatures you control. For each {W}{W} spent to cast Clay Champion, put a +1/+1 counter on each of them.
+Oracle:This creature enters with three +1/+1 counters on it for each {G}{G} spent to cast it.\nWhen this creature enters, choose up to two other target creatures you control. For each {W}{W} spent to cast this creature, put a +1/+1 counter on each of them.

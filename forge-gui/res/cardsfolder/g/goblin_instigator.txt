@@ -5,4 +5,4 @@ PT:1/1
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | TriggerDescription$ When this creature enters, create a 1/1 red Goblin creature token. | Execute$ TrigToken
 SVar:TrigToken:DB$ Token | TokenOwner$ You | TokenScript$ r_1_1_goblin
 DeckHas:Ability$Token
-Oracle:When Goblin Instigator enters, create a 1/1 red Goblin creature token.
+Oracle:When this creature enters, create a 1/1 red Goblin creature token.

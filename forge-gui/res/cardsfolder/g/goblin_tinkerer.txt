@@ -5,4 +5,4 @@ PT:1/2
 A:AB$ Destroy | Cost$ R T | ValidTgts$ Artifact | SubAbility$ DBDamage | SpellDescription$ Destroy target artifact. That artifact deals damage equal to its mana value to this creature.
 SVar:DBDamage:DB$ DealDamage | Defined$ Self | NumDmg$ X
 SVar:X:Targeted$CardManaCost
-Oracle:{R}, {T}: Destroy target artifact. That artifact deals damage equal to its mana value to Goblin Tinkerer.
+Oracle:{R}, {T}: Destroy target artifact. That artifact deals damage equal to its mana value to this creature.

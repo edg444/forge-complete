@@ -7,4 +7,4 @@ R:Event$ ProduceMana | ActiveZones$ Battlefield | ValidCard$ Land | ReplaceWith$
 SVar:ProduceB:DB$ ReplaceMana | ReplaceMana$ B
 AI:RemoveDeck:All
 SVar:NonStackingEffect:True
-Oracle:At the beginning of your upkeep, sacrifice Contamination unless you sacrifice a creature.\nIf a land is tapped for mana, it produces {B} instead of any other type and amount.
+Oracle:At the beginning of your upkeep, sacrifice this enchantment unless you sacrifice a creature.\nIf a land is tapped for mana, it produces {B} instead of any other type and amount.

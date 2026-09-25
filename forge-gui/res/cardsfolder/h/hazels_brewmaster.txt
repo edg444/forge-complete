@@ -11,4 +11,4 @@ S:Mode$ Continuous | Affected$ Food.YouCtrl | EffectZone$ Battlefield | GainsAbi
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Token|Graveyard & Type$Food|Artifact
 DeckHints:Ability$Graveyard|Mill
-Oracle:Menace\nWhenever Hazel's Brewmaster enters or attacks, exile up to one target card from a graveyard and create a Food token.\nFoods you control have all activated abilities of all creature cards exiled with Hazel's Brewmaster.
+Oracle:Menace\nWhenever this creature enters or attacks, exile up to one target card from a graveyard and create a Food token.\nFoods you control have all activated abilities of all creature cards exiled with this creature.

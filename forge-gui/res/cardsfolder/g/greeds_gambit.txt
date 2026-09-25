@@ -15,4 +15,4 @@ SVar:DBLoseLifeThree:DB$ LoseLife | Defined$ You | LifeAmount$ 6 | SubAbility$ D
 SVar:DBSacrificeThree:DB$ Sacrifice | SacValid$ Creature | SacMessage$ three creatures | Amount$ 3
 DeckHas:Ability$LifeGain|Token|Sacrifice & Type$Bat
 DeckHints:Ability$Discard
-Oracle:When Greed's Gambit enters, you draw three cards, gain 6 life, and create three 2/1 black Bat creature tokens with flying.\nAt the beginning of your end step, you discard a card, lose 2 life, and sacrifice a creature.\nWhen Greed's Gambit leaves the battlefield, you discard three cards, lose 6 life, and sacrifice three creatures.
+Oracle:When this enchantment enters, you draw three cards, gain 6 life, and create three 2/1 black Bat creature tokens with flying.\nAt the beginning of your end step, you discard a card, lose 2 life, and sacrifice a creature.\nWhen this enchantment leaves the battlefield, you discard three cards, lose 6 life, and sacrifice three creatures.

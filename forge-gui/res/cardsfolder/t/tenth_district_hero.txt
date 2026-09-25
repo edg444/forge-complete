@@ -7,4 +7,4 @@ A:AB$ Animate | Cost$ 2 W CollectEvidence<4> | staticAbilities$ Static | Conditi
 SVar:Static:Mode$ Continuous | Affected$ Creature.Other+YouCtrl | AddKeyword$ Indestructible | Description$ Other creatures you control have indestructible.
 DeckHints:Ability$Graveyard|Mill|Discard|Dredge
 DeckHas:Type$Detective
-Oracle:{1}{W}, Collect evidence 2: Tenth District Hero becomes a Human Detective with base power and toughness 4/4 and gains vigilance.\n{2}{W}, Collect evidence 4: If Tenth District Hero is a Detective, it becomes a legendary creature named Mileva, the Stalwart, it has base power and toughness 5/5, and it gains "Other creatures you control have indestructible."
+Oracle:{1}{W}, Collect evidence 2: This creature becomes a Human Detective with base power and toughness 4/4 and gains vigilance.\n{2}{W}, Collect evidence 4: If this creature is a Detective, it becomes a legendary creature named Mileva, the Stalwart, it has base power and toughness 5/5, and it gains "Other creatures you control have indestructible."

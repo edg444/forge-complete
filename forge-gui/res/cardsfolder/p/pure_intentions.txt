@@ -10,4 +10,4 @@ SVar:TrigPureReturn:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand
 SVar:DiscardMeByOpp:1
 AI:RemoveDeck:All
 AI:RemoveDeck:Random
-Oracle:Whenever a spell or ability an opponent controls causes you to discard cards this turn, return those cards from your graveyard to your hand.\nWhen a spell or ability an opponent controls causes you to discard Pure Intentions, return Pure Intentions from your graveyard to your hand at the beginning of the next end step.
+Oracle:Whenever a spell or ability an opponent controls causes you to discard cards this turn, return those cards from your graveyard to your hand.\nWhen a spell or ability an opponent controls causes you to discard this card, return this card from your graveyard to your hand at the beginning of the next end step.

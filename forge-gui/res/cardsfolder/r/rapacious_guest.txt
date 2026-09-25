@@ -12,4 +12,4 @@ SVar:TrigLoseLife:DB$ LoseLife | ValidTgts$ Opponent | LifeAmount$ X
 SVar:X:TriggeredCard$CardPower
 DeckHas:Ability$Token|Counters & Type$Food
 DeckHints:Type$Food
-Oracle:Menace\nWhenever one or more creatures you control deal combat damage to a player, create a Food token.\nWhenever you sacrifice a Food, put a +1/+1 counter on Rapacious Guest.\nWhen Rapacious Guest leaves the battlefield, target opponent loses life equal to its power.
+Oracle:Menace\nWhenever one or more creatures you control deal combat damage to a player, create a Food token.\nWhenever you sacrifice a Food, put a +1/+1 counter on this creature.\nWhen this creature leaves the battlefield, target opponent loses life equal to its power.

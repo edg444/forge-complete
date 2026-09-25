@@ -9,4 +9,4 @@ SVar:DBDamageToController:DB$ DealDamage | Defined$ You | NumDmg$ X | SpellDescr
 SVar:DBDamageToDefending:DB$ DealDamage | Defined$ Player.attackedBySourceThisCombat | NumDmg$ X | SpellDescription$ 10—19 | CARDNAME deals damage equal to its power to defending player.
 SVar:DBDamageToOpponents:DB$ DealDamage | Defined$ Player.Opponent | NumDmg$ X | SpellDescription$ 20 | CARDNAME deals damage equal to its power to each opponent.
 SVar:X:Count$CardPower
-Oracle:Whenever Iron Mastiff attacks, roll a d20 for each player being attacked and ignore all but the highest roll.\n1—9 | Iron Mastiff deals damage equal to its power to you.\n10—19 | Iron Mastiff deals damage equal to its power to defending player.\n20 | Iron Mastiff deals damage equal to its power to each opponent.
+Oracle:Whenever this creature attacks, roll a d20 for each player being attacked and ignore all but the highest roll.\n1—9 | This creature deals damage equal to its power to you.\n10—19 | This creature deals damage equal to its power to defending player.\n20 | This creature deals damage equal to its power to each opponent.

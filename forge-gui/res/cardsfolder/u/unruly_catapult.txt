@@ -7,4 +7,4 @@ A:AB$ DealDamage | Cost$ T | Defined$ Player.Opponent | NumDmg$ 1 | SpellDescrip
 T:Mode$ SpellCast | ValidCard$ Instant,Sorcery | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigUntap | TriggerDescription$ Whenever you cast an instant or sorcery spell, untap this creature.
 SVar:TrigUntap:DB$ Untap | Defined$ Self
 DeckHints:Type$Instant|Sorcery
-Oracle:Defender\n{T}: Unruly Catapult deals 1 damage to each opponent.\nWhenever you cast an instant or sorcery spell, untap Unruly Catapult.
+Oracle:Defender\n{T}: This creature deals 1 damage to each opponent.\nWhenever you cast an instant or sorcery spell, untap this creature.

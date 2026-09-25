@@ -7,7 +7,7 @@ SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform
 SVar:CardsDiscarded:PlayerCountPropertyYou$CardsDiscardedThisTurn
 DeckHints:Ability$Discard
 AlternateMode:DoubleFaced
-Oracle:At the beginning of your end step, if you discarded a card this turn, transform Ragged Recluse.
+Oracle:At the beginning of your end step, if you discarded a card this turn, transform this creature.
 
 ALTERNATE
 
@@ -21,4 +21,4 @@ SVar:TrigLoseLife:DB$ LoseLife | Defined$ TriggeredDefendingPlayer | LifeAmount$
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 1
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$LifeGain
-Oracle:Whenever Odious Witch attacks, defending player loses 1 life and you gain 1 life.
+Oracle:Whenever this creature attacks, defending player loses 1 life and you gain 1 life.

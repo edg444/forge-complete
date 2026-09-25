@@ -4,4 +4,4 @@ Types:Creature Nightstalker
 PT:1/1
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ Whenever this creature attacks, it gets +2/+0 until end of turn.
 SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +2
-Oracle:Whenever Lurking Nightstalker attacks, it gets +2/+0 until end of turn.
+Oracle:Whenever this creature attacks, it gets +2/+0 until end of turn.

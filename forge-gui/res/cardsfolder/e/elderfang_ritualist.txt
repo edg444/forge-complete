@@ -7,4 +7,4 @@ SVar:TrigChangeZone:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand | Val
 SVar:SacMe:2
 DeckHas:Ability$Graveyard
 DeckNeeds:Type$Elf
-Oracle:When Elderfang Ritualist dies, return another target Elf card from your graveyard to your hand.
+Oracle:When this creature dies, return another target Elf card from your graveyard to your hand.

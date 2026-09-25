@@ -4,4 +4,4 @@ Types:Creature Elf Shaman
 PT:2/2
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDestroy | TriggerDescription$ When this creature enters, destroy target artifact.
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Artifact
-Oracle:When Viridian Shaman enters, destroy target artifact.
+Oracle:When this creature enters, destroy target artifact.

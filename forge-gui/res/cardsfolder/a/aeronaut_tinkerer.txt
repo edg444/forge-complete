@@ -5,4 +5,4 @@ PT:2/3
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Flying | IsPresent$ Artifact.YouCtrl | Description$ This creature has flying as long as you control an artifact. (It can't be blocked except by creatures with flying or reach.)
 SVar:BuffedBy:Artifact
 DeckHints:Type$Artifact
-Oracle:Aeronaut Tinkerer has flying as long as you control an artifact. (It can't be blocked except by creatures with flying or reach.)
+Oracle:This creature has flying as long as you control an artifact. (It can't be blocked except by creatures with flying or reach.)

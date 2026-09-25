@@ -4,4 +4,4 @@ Types:Creature Elemental Warrior
 PT:2/4
 T:Mode$ AbilityCast | ValidCard$ Elemental.inZoneBattlefield | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPump | TriggerDescription$ Whenever you activate an ability of an Elemental, this creature gets +1/+0 until end of turn.
 SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +1
-Oracle:Whenever you activate an ability of an Elemental, Ceaseless Searblades gets +1/+0 until end of turn.
+Oracle:Whenever you activate an ability of an Elemental, this creature gets +1/+0 until end of turn.

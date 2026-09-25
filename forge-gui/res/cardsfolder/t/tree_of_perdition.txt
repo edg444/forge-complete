@@ -4,4 +4,4 @@ Types:Creature Plant
 PT:0/13
 K:Defender
 A:AB$ ExchangeLifeVariant | Cost$ T | ValidTgts$ Opponent | Mode$ Toughness | SpellDescription$ Exchange target opponent's life total with this creature's toughness. | StackDescription$ REP target opponent_{p:Targeted}
-Oracle:Defender\n{T}: Exchange target opponent's life total with Tree of Perdition's toughness.
+Oracle:Defender\n{T}: Exchange target opponent's life total with this creature's toughness.

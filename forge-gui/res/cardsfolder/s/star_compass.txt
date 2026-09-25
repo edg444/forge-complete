@@ -4,4 +4,4 @@ Types:Artifact
 R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This artifact enters tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ ManaReflected | Cost$ T | ColorOrType$ Color | Valid$ Basic.YouCtrl | ReflectProperty$ Produce | SpellDescription$ Add one mana of any color a basic land you control could produce.
-Oracle:Star Compass enters tapped.\n{T}: Add one mana of any color that a basic land you control could produce.
+Oracle:This artifact enters tapped.\n{T}: Add one mana of any color that a basic land you control could produce.

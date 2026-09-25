@@ -7,4 +7,4 @@ T:Mode$ Blocks | ValidCard$ Card.Self | Execute$ DBNoCombatDamage | Secondary$ T
 SVar:DBNoCombatDamage:DB$ Effect | StaticAbilities$ SNoCombatDamage | Duration$ UntilHostLeavesPlayOrEOT | UnlessCost$ ExileFromGrave<1/Card> | UnlessPayer$ Player | UnlessSwitched$ True
 SVar:SNoCombatDamage:Mode$ AssignNoCombatDamage | ValidCard$ Card.EffectSource | Description$ EFFECTSOURCE assigns no combat damage this turn.
 AI:RemoveDeck:All
-Oracle:Whenever Carrion Rats attacks or blocks, any player may exile a card from their graveyard. If a player does, Carrion Rats assigns no combat damage this turn.
+Oracle:Whenever this creature attacks or blocks, any player may exile a card from their graveyard. If a player does, this creature assigns no combat damage this turn.

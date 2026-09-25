@@ -5,4 +5,4 @@ A:AB$ Pump | Cost$ T Sac<1/CARDNAME> | ValidTgts$ Creature | KW$ HIDDEN CARDNAME
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | OptionalDecider$ TriggeredCardController | Execute$ TrigDraw | TriggerDescription$ When this artifact is put into a graveyard from the battlefield, you may pay {R}. If you do, draw a card.
 SVar:TrigDraw:AB$ Draw | Cost$ R | NumCards$ 1
 AI:RemoveDeck:Random
-Oracle:{T}, Sacrifice Panic Spellbomb: Target creature can't block this turn.\nWhen Panic Spellbomb is put into a graveyard from the battlefield, you may pay {R}. If you do, draw a card.
+Oracle:{T}, Sacrifice this artifact: Target creature can't block this turn.\nWhen this artifact is put into a graveyard from the battlefield, you may pay {R}. If you do, draw a card.

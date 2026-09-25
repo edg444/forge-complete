@@ -5,4 +5,4 @@ PT:2/3
 S:Mode$ MustAttack | ValidCreature$ Card.Self | Description$ This creature attacks each combat if able.
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 2 | IsPresent$ Artifact.YouCtrl+Other | Description$ This creature gets +2/+0 as long as you control another artifact.
 SVar:BuffedBy:Artifact
-Oracle:Ramroller attacks each combat if able.\nRamroller gets +2/+0 as long as you control another artifact.
+Oracle:This creature attacks each combat if able.\nThis creature gets +2/+0 as long as you control another artifact.

@@ -7,4 +7,4 @@ SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Artifact | TgtPrompt$ Choose target ar
 R:Event$ Moved | ValidCard$ Artifact.OppCtrl | Destination$ Battlefield | ReplaceWith$ ETBTapped | ReplacementResult$ Updated | ActiveZones$ Battlefield | Description$ Artifacts your opponents control enter tapped.
 SVar:ETBTapped:DB$ Tap | ETB$ True | Defined$ ReplacedCard
 SVar:PlayMain1:TRUE
-Oracle:When Manglehorn enters, you may destroy target artifact.\nArtifacts your opponents control enter tapped.
+Oracle:When this creature enters, you may destroy target artifact.\nArtifacts your opponents control enter tapped.

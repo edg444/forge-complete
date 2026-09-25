@@ -6,4 +6,4 @@ T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Creature | CombatDama
 SVar:TrigDestroy:DB$ Destroy | Defined$ TriggeredTargetLKICopy | NoRegen$ True
 A:AB$ Pump | Cost$ Discard<1/Card> | Defined$ Self | KW$ Flying | SubAbility$ DBProtect | SpellDescription$ This creature gains flying and protection from green and from white until end of turn.
 SVar:DBProtect:DB$ Protection | Defined$ Self | Gains$ green,white
-Oracle:Whenever Grotesque Hybrid deals combat damage to a creature, destroy that creature. It can't be regenerated.\nDiscard a card: Grotesque Hybrid gains flying and protection from green and from white until end of turn.
+Oracle:Whenever this creature deals combat damage to a creature, destroy that creature. It can't be regenerated.\nDiscard a card: This creature gains flying and protection from green and from white until end of turn.

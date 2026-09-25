@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
 A:AB$ Draw | Cost$ 2 T Sac<1/CARDNAME> | NumCards$ 1 | SpellDescription$ Draw a card.
 DeckHas:Ability$Sacrifice
-Oracle:Spare Supplies enters tapped.\nWhen Spare Supplies enters, draw a card.\n{2}, {T}, Sacrifice Spare Supplies: Draw a card.
+Oracle:This artifact enters tapped.\nWhen this artifact enters, draw a card.\n{2}, {T}, Sacrifice this artifact: Draw a card.

@@ -4,4 +4,4 @@ Types:Artifact Creature Bird
 PT:2/4
 A:AB$ Pump | Cost$ U | KW$ Flying | Defined$ Self | SpellDescription$ This creature gains flying until end of turn.
 AI:RemoveDeck:Random
-Oracle:{U}: Dukhara Peafowl gains flying until end of turn.
+Oracle:{U}: This creature gains flying until end of turn.

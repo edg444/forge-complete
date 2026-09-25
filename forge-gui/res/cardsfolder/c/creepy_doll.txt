@@ -7,4 +7,4 @@ T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Creature | CombatDama
 SVar:TrigFlip:DB$ FlipCoin | Defined$ You | WinSubAbility$ DBDestroy
 SVar:DBDestroy:DB$ Destroy | Defined$ TriggeredTargetLKICopy | NoRegen$ False
 SVar:HasCombatEffect:TRUE
-Oracle:Indestructible\nWhenever Creepy Doll deals combat damage to a creature, flip a coin. If you win the flip, destroy that creature.
+Oracle:Indestructible\nWhenever this creature deals combat damage to a creature, flip a coin. If you win the flip, destroy that creature.

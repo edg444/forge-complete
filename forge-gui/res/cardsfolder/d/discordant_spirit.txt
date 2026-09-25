@@ -7,4 +7,4 @@ SVar:GhostCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNu
 T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ GhostClear | TriggerDescription$ At the beginning of your end step, remove all +1/+1 counters from this creature.
 SVar:GhostClear:DB$ RemoveCounter | CounterType$ P1P1 | CounterNum$ All
 SVar:X:PlayerCountPropertyYou$DamageThisTurn
-Oracle:At the beginning of each end step, if it's an opponent's turn, put a +1/+1 counter on Discordant Spirit for each 1 damage dealt to you this turn.\nAt the beginning of your end step, remove all +1/+1 counters from Discordant Spirit.
+Oracle:At the beginning of each end step, if it's an opponent's turn, put a +1/+1 counter on this creature for each 1 damage dealt to you this turn.\nAt the beginning of your end step, remove all +1/+1 counters from this creature.

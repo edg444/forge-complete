@@ -6,4 +6,4 @@ SVar:DBDelayedTrigger:DB$ DelayedTrigger | Mode$ ChangesZone | RememberObjects$ 
 SVar:TrigDestroy:DB$ Destroy | Defined$ Self
 AI:RemoveDeck:Random
 DeckHas:Keyword$Landwalk:Island
-Oracle:{2}, {T}: Target creature gains islandwalk until end of turn. When that creature dies this turn, destroy Sandals of Abdallah. (A creature with islandwalk can't be blocked as long as defending player controls an Island.)
+Oracle:{2}, {T}: Target creature gains islandwalk until end of turn. When that creature dies this turn, destroy this artifact. (A creature with islandwalk can't be blocked as long as defending player controls an Island.)

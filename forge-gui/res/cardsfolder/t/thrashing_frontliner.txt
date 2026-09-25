@@ -6,4 +6,4 @@ K:Trample
 T:Mode$ Attacks | ValidCard$ Card.Self | Attacked$ Battle | Execute$ TrigPump | TriggerZones$ Battlefield | TriggerDescription$ Whenever this creature attacks a battle, it gets +1/+1 until end of turn.
 SVar:TrigPump:DB$ Pump | NumAtt$ +1 | NumDef$ +1
 AI:RemoveDeck:Random
-Oracle:Trample\nWhenever Thrashing Frontliner attacks a battle, it gets +1/+1 until end of turn.
+Oracle:Trample\nWhenever this creature attacks a battle, it gets +1/+1 until end of turn.

@@ -4,4 +4,4 @@ Types:Creature Thrull
 PT:2/2
 T:Mode$ AttackerUnblocked | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigDiscard | TriggerDescription$ Whenever this creature attacks and isn't blocked, you may sacrifice it. If you do, defending player discards three cards.
 SVar:TrigDiscard:AB$ Discard | Cost$ Sac<1/CARDNAME> | Defined$ TriggeredDefendingPlayer | NumCards$ 3 | AILogic$ AtLeast2 | Mode$ TgtChoose
-Oracle:Whenever Mindstab Thrull attacks and isn't blocked, you may sacrifice it. If you do, defending player discards three cards.
+Oracle:Whenever this creature attacks and isn't blocked, you may sacrifice it. If you do, defending player discards three cards.

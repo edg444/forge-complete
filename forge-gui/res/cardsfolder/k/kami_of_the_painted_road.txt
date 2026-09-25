@@ -7,4 +7,4 @@ SVar:TrigProtect:DB$ Protection | Defined$ Self | Gains$ Choice | Choices$ AnyCo
 SVar:BuffedBy:Arcane,Spirit
 AI:RemoveDeck:Random
 DeckHints:Type$Spirit|Arcane
-Oracle:Whenever you cast a Spirit or Arcane spell, Kami of the Painted Road gains protection from the color of your choice until end of turn.
+Oracle:Whenever you cast a Spirit or Arcane spell, this creature gains protection from the color of your choice until end of turn.

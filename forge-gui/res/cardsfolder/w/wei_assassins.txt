@@ -4,4 +4,4 @@ Types:Creature Human Soldier Assassin
 PT:3/2
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ When this creature enters, target opponent chooses a creature they control. Destroy that creature.
 SVar:TrigSac:DB$ Sacrifice | ValidTgts$ Opponent | SacValid$ Creature | Destroy$ True
-Oracle:When Wei Assassins enters, target opponent chooses a creature they control. Destroy that creature.
+Oracle:When this creature enters, target opponent chooses a creature they control. Destroy that creature.

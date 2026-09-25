@@ -7,4 +7,4 @@ SVar:TrigAttach:DB$ Attach | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select tar
 SVar:DBPump:DB$ Pump | Defined$ Targeted | KW$ Indestructible
 S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddPower$ 1 | Description$ Equipped creature gets +1/+0.
 K:Equip:1
-Oracle:Flash\nWhen Bladed Battle-Fan enters, attach it to target creature you control. That creature gains indestructible until end of turn.\nEquipped creature gets +1/+0.\nEquip {1} ({1}: Attach to target creature you control. Equip only as a sorcery.)
+Oracle:Flash\nWhen this Equipment enters, attach it to target creature you control. That creature gains indestructible until end of turn.\nEquipped creature gets +1/+0.\nEquip {1} ({1}: Attach to target creature you control. Equip only as a sorcery.)

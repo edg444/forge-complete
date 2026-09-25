@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | ValidCard$ Artifact.YouCtrl+Other | Destination$ Battlefie
 SVar:TrigPump:DB$ Pump | NumAtt$ +1
 SVar:BuffedBy:Artifact
 DeckHints:Type$Artifact
-Oracle:Whenever another artifact you control enters, Towashi Songshaper gets +1/+0 until end of turn.
+Oracle:Whenever another artifact you control enters, this creature gets +1/+0 until end of turn.

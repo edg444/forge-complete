@@ -4,4 +4,4 @@ Types:Land Swamp Forest Island
 R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This land enters tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 K:Cycling:3
-Oracle:({T}: Add {B}, {G}, or {U}.)\nZagoth Triome enters tapped.\nCycling {3} ({3}, Discard this card: Draw a card.)
+Oracle:({T}: Add {B}, {G}, or {U}.)\nThis land enters tapped.\nCycling {3} ({3}, Discard this card: Draw a card.)

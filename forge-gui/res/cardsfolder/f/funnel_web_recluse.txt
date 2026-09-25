@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigInvestigate:DB$ Investigate
 SVar:Morbid:Count$Morbid.1.0
 DeckHas:Ability$Investigate|Token
-Oracle:Reach\nMorbid — When Funnel-Web Recluse enters, if a creature died this turn, investigate. (Create a Clue token. It's an artifact with "{2}, Sacrifice this token: Draw a card.")
+Oracle:Reach\nMorbid — When this creature enters, if a creature died this turn, investigate. (Create a Clue token. It's an artifact with "{2}, Sacrifice this token: Draw a card.")

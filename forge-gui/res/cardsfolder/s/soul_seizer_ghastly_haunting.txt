@@ -8,7 +8,7 @@ SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform | RememberChan
 SVar:DBAttach:DB$ Attach | ValidTgts$ Creature.ControlledBy TriggeredTarget | TgtPrompt$ Select target creature that damaged player controls | AILogic$ GainControl | ConditionDefined$ Remembered | ConditionPresent$ Card | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 AlternateMode:DoubleFaced
-Oracle:Flying\nWhen Soul Seizer deals combat damage to a player, you may transform it. If you do, attach it to target creature that player controls.
+Oracle:Flying\nWhen this creature deals combat damage to a player, you may transform it. If you do, attach it to target creature that player controls.
 
 ALTERNATE
 

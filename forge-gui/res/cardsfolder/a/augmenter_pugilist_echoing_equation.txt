@@ -5,7 +5,7 @@ PT:3/3
 K:Trample
 S:Mode$ Continuous | IsPresent$ Land.YouCtrl | PresentCompare$ GE8 | AffectedDefined$ Self | AddPower$ 5 | AddToughness$ 5 | Description$ As long as you control eight or more lands, this creature gets +5/+5.
 AlternateMode:Modal
-Oracle:Trample\nAs long as you control eight or more lands, Augmenter Pugilist gets +5/+5.
+Oracle:Trample\nAs long as you control eight or more lands, this creature gets +5/+5.
 
 ALTERNATE
 

@@ -8,4 +8,4 @@ SVar:TrigInitiative:DB$ TakeInitiative
 T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | TriggerZones$ Battlefield | CheckDefinedPlayer$ You.hasInitiative | Execute$ TrigPutCounter | TriggerDescription$ At the beginning of your end step, if you have the initiative, put a +1/+1 counter on this creature.
 SVar:TrigPutCounter:DB$ PutCounter | CounterType$ P1P1
 DeckHas:Ability$LifeGain|Counters
-Oracle:Lifelink\nWhen Passageway Seer enters, you take the initiative.\nAt the beginning of your end step, if you have the initiative, put a +1/+1 counter on Passageway Seer.
+Oracle:Lifelink\nWhen this creature enters, you take the initiative.\nAt the beginning of your end step, if you have the initiative, put a +1/+1 counter on this creature.

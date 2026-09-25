@@ -7,7 +7,7 @@ A:AB$ SetState | Cost$ Sac<3/Creature.Other/other creatures> | Defined$ Self | M
 K:Madness:B B B
 DeckHints:Ability$Discard
 AlternateMode:DoubleFaced
-Oracle:Flying\nSacrifice three other creatures: Transform Voldaren Pariah.\nMadness {B}{B}{B} (If you discard this card, discard it into exile. When you do, cast it for its madness cost or put it into your graveyard.)
+Oracle:Flying\nSacrifice three other creatures: Transform this creature.\nMadness {B}{B}{B} (If you discard this card, discard it into exile. When you do, cast it for its madness cost or put it into your graveyard.)
 
 ALTERNATE
 

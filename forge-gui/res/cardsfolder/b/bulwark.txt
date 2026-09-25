@@ -7,4 +7,4 @@ SVar:A:Count$ValidHand Card.YouOwn
 SVar:B:Count$ValidHand Card.TargetedPlayerOwn
 SVar:X:SVar$A/Minus.B
 AI:RemoveDeck:All
-Oracle:At the beginning of your upkeep, Bulwark deals X damage to target opponent, where X is the number of cards in your hand minus the number of cards in that player's hand.
+Oracle:At the beginning of your upkeep, this enchantment deals X damage to target opponent, where X is the number of cards in your hand minus the number of cards in that player's hand.

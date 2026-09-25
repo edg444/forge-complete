@@ -6,4 +6,4 @@ K:Defender
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChangeZone | OptionalDecider$ You | TriggerDescription$ When this creature enters, you may return target instant or sorcery card from your graveyard to your hand.
 SVar:TrigChangeZone:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand | ValidTgts$ Instant.YouCtrl,Sorcery.YouCtrl
 DeckHints:Type$Instant|Sorcery
-Oracle:Defender\nWhen Mnemonic Wall enters, you may return target instant or sorcery card from your graveyard to your hand.
+Oracle:Defender\nWhen this creature enters, you may return target instant or sorcery card from your graveyard to your hand.

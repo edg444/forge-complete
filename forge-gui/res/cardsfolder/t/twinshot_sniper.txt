@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDealDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 2
 A:AB$ DealDamage | Cost$ 1 R Discard<1/CARDNAME> | ValidTgts$ Any | NumDmg$ 2 | ActivationZone$ Hand | PrecostDesc$ Channel — | SpellDescription$ It deals 2 damage to any target.
 DeckHas:Ability$Discard
-Oracle:Reach\nWhen Twinshot Sniper enters, it deals 2 damage to any target.\nChannel — {1}{R}, Discard Twinshot Sniper: It deals 2 damage to any target.
+Oracle:Reach\nWhen this creature enters, it deals 2 damage to any target.\nChannel — {1}{R}, Discard this card: It deals 2 damage to any target.

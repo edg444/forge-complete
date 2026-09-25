@@ -6,4 +6,4 @@ K:First Strike
 T:Mode$ Taps | ValidCard$ Card.Self | OptionalDecider$ You | Execute$ TrigDiscard | TriggerDescription$ Whenever this creature becomes tapped, you may discard a card. If you do, draw a card.
 SVar:TrigDiscard:AB$ Draw | Cost$ Discard<1/Card>
 DeckHas:Ability$Discard
-Oracle:First strike\nWhenever Reckless Racer becomes tapped, you may discard a card. If you do, draw a card.
+Oracle:First strike\nWhenever this creature becomes tapped, you may discard a card. If you do, draw a card.

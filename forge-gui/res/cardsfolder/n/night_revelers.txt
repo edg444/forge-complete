@@ -3,4 +3,4 @@ ManaCost:4 R
 Types:Creature Vampire
 PT:4/4
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Haste | IsPresent$ Human.OppCtrl | Description$ CARDNAME has haste as long as an opponent controls a human.
-Oracle:Night Revelers has haste as long as an opponent controls a Human.
+Oracle:This creature has haste as long as an opponent controls a Human.

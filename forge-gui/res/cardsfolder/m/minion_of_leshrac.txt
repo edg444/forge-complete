@@ -9,4 +9,4 @@ SVar:DBTap:DB$ Tap | Defined$ Self | ConditionPlayerDefined$ Remembered | Condit
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 A:AB$ Destroy | Cost$ T | ValidTgts$ Land,Creature | TgtPrompt$ Select target creature or land | SpellDescription$ Destroy target creature or land.
 AI:RemoveDeck:All
-Oracle:Protection from black\nAt the beginning of your upkeep, Minion of Leshrac deals 5 damage to you unless you sacrifice a creature other than Minion of Leshrac. If Minion of Leshrac deals damage to you this way, tap it.\n{T}: Destroy target creature or land.
+Oracle:Protection from black\nAt the beginning of your upkeep, this creature deals 5 damage to you unless you sacrifice a creature other than this creature. If this creature deals damage to you this way, tap it.\n{T}: Destroy target creature or land.

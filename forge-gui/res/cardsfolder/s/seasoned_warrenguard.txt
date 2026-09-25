@@ -6,4 +6,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | IsPresent$ Permanent.token+YouCtrl | No
 SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +2
 SVar:HasAttackEffect:TRUE
 DeckHints:Ability$Token
-Oracle:Whenever Seasoned Warrenguard attacks while you control a token, Seasoned Warrenguard gets +2/+0 until end of turn.
+Oracle:Whenever this creature attacks while you control a token, this creature gets +2/+0 until end of turn.

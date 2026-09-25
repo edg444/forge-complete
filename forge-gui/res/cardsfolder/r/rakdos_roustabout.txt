@@ -5,4 +5,4 @@ PT:3/2
 T:Mode$ AttackerBlocked | ValidCard$ Card.Self | Execute$ TrigDealDamage | TriggerDescription$ Whenever this creature becomes blocked, it deals 1 damage to the player or planeswalker it's attacking.
 SVar:TrigDealDamage:DB$ DealDamage | Defined$ TriggeredDefender.Opponent & Valid Planeswalker.TriggeredDefender | NumDmg$ 1
 SVar:HasAttackEffect:Blocked
-Oracle:Whenever Rakdos Roustabout becomes blocked, it deals 1 damage to the player or planeswalker it's attacking.
+Oracle:Whenever this creature becomes blocked, it deals 1 damage to the player or planeswalker it's attacking.

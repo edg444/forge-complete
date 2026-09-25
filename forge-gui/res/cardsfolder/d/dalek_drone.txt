@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls | SubAbility$ DBLoseLife
 SVar:DBLoseLife:DB$ LoseLife | Defined$ TargetedController | LifeAmount$ 3
 SVar:PlayMain1:TRUE
-Oracle:Flying, menace\nExterminate! — When Dalek Drone enters, destroy target creature an opponent controls. That player loses 3 life.
+Oracle:Flying, menace\nExterminate! — When this creature enters, destroy target creature an opponent controls. That player loses 3 life.

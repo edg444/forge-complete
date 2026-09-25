@@ -9,4 +9,4 @@ SVar:TripPumpOpp:DB$ Pump | ValidTgts$ Creature.ActivePlayerCtrl | TgtPrompt$ Se
 SVar:PlayMain1:TRUE
 DeckHints:Ability$Graveyard|Discard
 DeckHas:Ability$Delirium
-Oracle:When Tooth Collector enters, target creature an opponent controls gets -1/-1 until end of turn.\nDelirium — At the beginning of each opponent's upkeep, if there are four or more card types among cards in your graveyard, target creature that player controls gets -1/-1 until end of turn.
+Oracle:When this creature enters, target creature an opponent controls gets -1/-1 until end of turn.\nDelirium — At the beginning of each opponent's upkeep, if there are four or more card types among cards in your graveyard, target creature that player controls gets -1/-1 until end of turn.

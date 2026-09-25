@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigCounter:DB$ PutCounter | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | CounterType$ P1P1
 DeckHas:Ability$Counters
 DeckHints:Color$Green
-Oracle:Kicker {G} (You may pay an additional {G} as you cast this spell.)\nWhen Juniper Order Rootweaver enters, if it was kicked, put a +1/+1 counter on target creature you control.
+Oracle:Kicker {G} (You may pay an additional {G} as you cast this spell.)\nWhen this creature enters, if it was kicked, put a +1/+1 counter on target creature you control.

@@ -6,4 +6,4 @@ K:Flying
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Hexproof & Indestructible | IsPresent$ Human.YouCtrl | Description$ As long as you control a Human, this creature has hexproof and indestructible.
 SVar:BuffedBy:Human
 DeckHints:Type$Human
-Oracle:Flying\nAs long as you control a Human, Angelic Overseer has hexproof and indestructible.
+Oracle:Flying\nAs long as you control a Human, this creature has hexproof and indestructible.

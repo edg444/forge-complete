@@ -4,4 +4,4 @@ Types:Creature Goblin Shaman
 PT:1/1
 A:AB$ DamageAll | Cost$ Sac<1/Artifact> | ValidCards$ Creature.withoutFlying | NumDmg$ 1 | ValidDescription$ each creature without flying. | SpellDescription$ This creature deals 1 damage to each creature without flying.
 AI:RemoveDeck:All
-Oracle:Sacrifice an artifact: Krark-Clan Shaman deals 1 damage to each creature without flying.
+Oracle:Sacrifice an artifact: This creature deals 1 damage to each creature without flying.

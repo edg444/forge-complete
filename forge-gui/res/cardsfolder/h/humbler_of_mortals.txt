@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigPump:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Trample | SpellDescription$ Creatures you control gain trample until end of turn.
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Enchantment
-Oracle:Constellation — Whenever Humbler of Mortals or another enchantment you control enters, creatures you control gain trample until end of turn.
+Oracle:Constellation — Whenever this creature or another enchantment you control enters, creatures you control gain trample until end of turn.

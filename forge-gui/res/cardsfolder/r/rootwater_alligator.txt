@@ -4,4 +4,4 @@ Types:Creature Crocodile
 PT:3/2
 A:AB$ Regenerate | Cost$ Sac<1/Forest> | SpellDescription$ Regenerate this creature.
 SVar:AIPreference:SacCost$Forest.Basic
-Oracle:Sacrifice a Forest: Regenerate Rootwater Alligator.
+Oracle:Sacrifice a Forest: Regenerate this creature.

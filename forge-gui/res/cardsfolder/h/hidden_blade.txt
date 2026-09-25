@@ -8,4 +8,4 @@ SVar:DBPump:DB$ Pump | Defined$ Targeted | ConditionDefined$ Targeted | Conditio
 S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddPower$ 1 | AddKeyword$ First Strike | Description$ Equipped creature gets +1/+0 and has first strike.
 K:Equip:2
 DeckHints:Type$Assassin
-Oracle:Flash\nWhen Hidden Blade enters, attach it to target creature you control. If that creature is an Assassin, it gains deathtouch until end of turn.\nEquipped creature gets +1/+0 and has first strike.\nEquip {2}
+Oracle:Flash\nWhen this Equipment enters, attach it to target creature you control. If that creature is an Assassin, it gains deathtouch until end of turn.\nEquipped creature gets +1/+0 and has first strike.\nEquip {2}

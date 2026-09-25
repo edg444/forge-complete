@@ -8,4 +8,4 @@ A:AB$ ChangeZone | Cost$ 1 R R W T Sac<1/CARDNAME> | Origin$ Library | Destinati
 AI:RemoveDeck:Random
 DeckHas:Ability$Sacrifice
 DeckNeeds:Type$Aura|Equipment
-Oracle:Axgard Armory enters tapped.\n{T}: Add {W}.\n{1}{R}{R}{W}, {T}, Sacrifice Axgard Armory: Search your library for an Aura card and/or an Equipment card, reveal them, put them into your hand, then shuffle.
+Oracle:This land enters tapped.\n{T}: Add {W}.\n{1}{R}{R}{W}, {T}, Sacrifice this land: Search your library for an Aura card and/or an Equipment card, reveal them, put them into your hand, then shuffle.

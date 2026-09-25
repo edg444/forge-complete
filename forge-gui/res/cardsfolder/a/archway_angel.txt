@@ -8,4 +8,4 @@ SVar:TrigGainLife:DB$ GainLife | LifeAmount$ X
 SVar:X:Count$Valid Gate.YouCtrl/Times.2
 DeckHas:Ability$LifeGain
 DeckHints:Type$Gate
-Oracle:Flying\nWhen Archway Angel enters, you gain 2 life for each Gate you control.
+Oracle:Flying\nWhen this creature enters, you gain 2 life for each Gate you control.

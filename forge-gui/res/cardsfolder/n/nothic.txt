@@ -10,4 +10,4 @@ SVar:DBMDraw:DB$ Draw | NumCards$ 2 | SubAbility$ DBMLoseLife | SpellDescription
 SVar:DBMLoseLife:DB$ LoseLife | LifeAmount$ 2
 SVar:DBLDraw:DB$ Draw | NumCards$ 7 | SubAbility$ DBLLoseLife | SpellDescription$ 20 | You draw seven cards and you lose 7 life.
 SVar:DBLLoseLife:DB$ LoseLife | LifeAmount$ 7
-Oracle:Weird Insight — When Nothic dies, roll a d20.\n1—9 | You draw a card and you lose 1 life.\n10—19 | You draw two cards and you lose 2 life.\n20 | You draw seven cards and you lose 7 life.
+Oracle:Weird Insight — When this creature dies, roll a d20.\n1—9 | You draw a card and you lose 1 life.\n10—19 | You draw two cards and you lose 2 life.\n20 | You draw seven cards and you lose 7 life.

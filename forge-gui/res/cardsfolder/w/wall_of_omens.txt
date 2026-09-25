@@ -5,4 +5,4 @@ PT:0/4
 K:Defender
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When this creature enters, draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
-Oracle:Defender\nWhen Wall of Omens enters, draw a card.
+Oracle:Defender\nWhen this creature enters, draw a card.

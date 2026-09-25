@@ -7,4 +7,4 @@ SVar:TrigSac:DB$ Sacrifice | Defined$ You | SacValid$ Creature
 S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.Saproling | Description$ This creature can't be blocked by Saprolings.
 AI:RemoveDeck:Random
 SVar:NeedsToPlay:Creature.YouCtrl
-Oracle:When Vindictive Mob enters, sacrifice a creature.\nVindictive Mob can't be blocked by Saprolings.
+Oracle:When this creature enters, sacrifice a creature.\nThis creature can't be blocked by Saprolings.

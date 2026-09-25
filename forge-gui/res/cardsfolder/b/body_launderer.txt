@@ -9,4 +9,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigReturn:DB$ ChangeZone | ValidTgts$ Creature.powerLEX+YouOwn+nonRogue+Other | TgtPrompt$ Select target non-Rogue creature card with equal or lesser power | Origin$ Graveyard | Destination$ Battlefield
 SVar:X:TriggeredCard$CardPower
 DeckHas:Ability$Discard|Counters|Graveyard
-Oracle:Deathtouch\nWhenever another nontoken creature you control dies, Body Launderer connives.\nWhen Body Launderer dies, return another target non-Rogue creature card with equal or lesser power from your graveyard to the battlefield.
+Oracle:Deathtouch\nWhenever another nontoken creature you control dies, this creature connives.\nWhen this creature dies, return another target non-Rogue creature card with equal or lesser power from your graveyard to the battlefield.

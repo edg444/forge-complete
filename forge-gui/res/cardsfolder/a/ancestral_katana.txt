@@ -7,4 +7,4 @@ SVar:TrigAttach:DB$ Attach | Defined$ DelayTriggerRememberedLKI
 S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddPower$ 2 | AddToughness$ 1 | Description$ Equipped creature gets +2/+1.
 K:Equip:3
 DeckHints:Type$Samurai|Warrior
-Oracle:Whenever a Samurai or Warrior you control attacks alone, you may pay {1}. When you do, attach Ancestral Katana to it.\nEquipped creature gets +2/+1.\nEquip {3} ({3}: Attach to target creature you control. Equip only as a sorcery.)
+Oracle:Whenever a Samurai or Warrior you control attacks alone, you may pay {1}. When you do, attach this Equipment to it.\nEquipped creature gets +2/+1.\nEquip {3} ({3}: Attach to target creature you control. Equip only as a sorcery.)

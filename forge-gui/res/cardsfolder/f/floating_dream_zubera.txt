@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ X
 SVar:X:Count$ThisTurnEntered_Graveyard_from_Battlefield_Card.Zubera
 DeckHints:Type$Zubera
-Oracle:When Floating-Dream Zubera dies, draw a card for each Zubera that died this turn.
+Oracle:When this creature dies, draw a card for each Zubera that died this turn.

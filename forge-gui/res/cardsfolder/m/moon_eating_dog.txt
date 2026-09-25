@@ -4,4 +4,4 @@ Types:Creature Dog
 PT:3/3
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Flying | IsPresent$ Planeswalker.Yanling+YouCtrl | Description$ As long as you control a Yanling planeswalker, this creature has flying.
 SVar:BuffedBy:Yanling
-Oracle:As long as you control a Yanling planeswalker, Moon-Eating Dog has flying. (It can't be blocked except by creatures with flying or reach.)
+Oracle:As long as you control a Yanling planeswalker, this creature has flying. (It can't be blocked except by creatures with flying or reach.)

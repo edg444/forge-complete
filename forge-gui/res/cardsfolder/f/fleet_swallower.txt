@@ -6,4 +6,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigMill | TriggerDescription$
 SVar:TrigMill:DB$ Mill | NumCards$ X | ValidTgts$ Player | TgtPrompt$ Select target player
 SVar:X:TargetedPlayer$CardsInLibrary/HalfUp
 SVar:HasAttackEffect:TRUE
-Oracle:Whenever Fleet Swallower attacks, target player mills half their library, rounded up.
+Oracle:Whenever this creature attacks, target player mills half their library, rounded up.

@@ -9,4 +9,4 @@ SVar:X:Count$TimesKicked
 # TODO: The AI maximizes payment, even if it can't return anything from the graveyard. Otherwise the card is played just fine.
 AI:RemoveDeck:All
 DeckHas:Ability$Counters
-Oracle:Multikicker {1}{W} (You may pay an additional {1}{W} any number of times as you cast this spell.)\nCreatures you control get +1/+1.\nWhen Marshal's Anthem enters, return up to X target creature cards from your graveyard to the battlefield, where X is the number of times Marshal's Anthem was kicked.
+Oracle:Multikicker {1}{W} (You may pay an additional {1}{W} any number of times as you cast this spell.)\nCreatures you control get +1/+1.\nWhen this enchantment enters, return up to X target creature cards from your graveyard to the battlefield, where X is the number of times this enchantment was kicked.

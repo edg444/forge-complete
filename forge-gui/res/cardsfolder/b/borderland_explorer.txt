@@ -11,4 +11,4 @@ SVar:DBSearch:DB$ ChangeZone | Origin$ Library | Destination$ Hand | ChangeType$
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | SubAbility$ DBClearNotes
 SVar:DBClearNotes:DB$ Pump | Defined$ Player | ClearNotedCardsFor$ Discard
 DeckHas:Ability$Discard
-Oracle:When Borderland Explorer enters, each player may discard a card. Each player who discarded a card this way may search their library for a basic land card, reveal it, put it into their hand, then shuffle.
+Oracle:When this creature enters, each player may discard a card. Each player who discarded a card this way may search their library for a basic land card, reveal it, put it into their hand, then shuffle.

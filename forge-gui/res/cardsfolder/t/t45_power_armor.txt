@@ -10,4 +10,4 @@ SVar:TrigUntap:AB$ Untap | Cost$ PayEnergy<1> | Defined$ Equipped | SubAbility$ 
 SVar:DBPutCounter:DB$ PutCounter | CounterType$ Menace,Trample,Lifelink | Defined$ Equipped
 DeckHas:Ability$Counters|LifeGain
 K:Equip:3
-Oracle:When T-45 Power Armor enters, you get {E}{E} (two energy counters).\nEquipped creature gets +3/+3 and doesn't untap during its controller's untap step.\nAt the beginning of your upkeep, you may pay {E}. If you do, untap equipped creature, then put your choice of a menace, trample, or lifelink counter on it.\nEquip {3}
+Oracle:When this Equipment enters, you get {E}{E} (two energy counters).\nEquipped creature gets +3/+3 and doesn't untap during its controller's untap step.\nAt the beginning of your upkeep, you may pay {E}. If you do, untap equipped creature, then put your choice of a menace, trample, or lifelink counter on it.\nEquip {3}

@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigToken:DB$ Token | TokenAmount$ 2 | TokenScript$ r_1_1_elemental | TokenOwner$ You | SubAbility$ DBPump
 SVar:DBPump:DB$ PumpAll | ValidCards$ Elemental.YouCtrl | KW$ Haste
 DeckHas:Ability$Token
-Oracle:When Scampering Scorcher enters, create two 1/1 red Elemental creature tokens. Elementals you control gain haste until end of turn. (They can attack and {T} this turn.)
+Oracle:When this creature enters, create two 1/1 red Elemental creature tokens. Elementals you control gain haste until end of turn. (They can attack and {T} this turn.)

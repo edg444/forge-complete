@@ -5,4 +5,4 @@ PT:4/5
 T:Mode$ LifeGained | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPump | TriggerDescription$ Whenever you gain life, this creature gains flying until end of turn.
 SVar:TrigPump:DB$ Pump | Defined$ Self | KW$ Flying
 DeckHints:Ability$LifeGain
-Oracle:Whenever you gain life, Kalastria Nightwatch gains flying until end of turn.
+Oracle:Whenever you gain life, this creature gains flying until end of turn.

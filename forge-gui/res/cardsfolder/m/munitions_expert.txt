@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Creature,Planeswalker | TgtPrompt$ Select target creature or planeswalker | NumDmg$ X
 SVar:X:Count$Valid Goblin.YouCtrl
 DeckHints:Type$Goblin
-Oracle:Flash\nWhen Munitions Expert enters, you may have it deal damage to target creature or planeswalker equal to the number of Goblins you control.
+Oracle:Flash\nWhen this creature enters, you may have it deal damage to target creature or planeswalker equal to the number of Goblins you control.

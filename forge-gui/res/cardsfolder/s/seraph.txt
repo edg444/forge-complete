@@ -11,4 +11,4 @@ SVar:TrigDelay2:DB$ DelayedTrigger | Mode$ ChangesController | ValidCard$ Card.S
 SVar:TrigSac:DB$ SacrificeAll | Defined$ DelayTriggerRememberedLKI | Controller$ You | SubAbility$ DBCleanup2
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:DBCleanup2:DB$ Cleanup | ClearTriggered$ True
-Oracle:Flying\nWhenever a creature dealt damage by Seraph this turn dies, put that card onto the battlefield under your control at the beginning of the next end step. Sacrifice the creature when you lose control of Seraph.
+Oracle:Flying\nWhenever a creature dealt damage by this creature this turn dies, put that card onto the battlefield under your control at the beginning of the next end step. Sacrifice the creature when you lose control of this creature.

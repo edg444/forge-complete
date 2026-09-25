@@ -8,4 +8,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 1 | AddToughness$ 1 | Add
 SVar:X:Count$ValidGraveyard Card.YouOwn$DifferentCardManaCost
 DeckHas:Ability$Mill|LifeGain
 DeckHints:Ability$Discard
-Oracle:When Snooping Newsie enters, mill two cards. (Put the top two cards of your library into your graveyard.)\nAs long as there are five or more mana values among cards in your graveyard, Snooping Newsie gets +1/+1 and has lifelink.
+Oracle:When this creature enters, mill two cards. (Put the top two cards of your library into your graveyard.)\nAs long as there are five or more mana values among cards in your graveyard, this creature gets +1/+1 and has lifelink.

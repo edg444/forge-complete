@@ -6,4 +6,4 @@ T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player.TriggeredDefen
 SVar:TrigDmgBlockers:DB$ DamageAll | ValidCards$ Creature.blocking | NumDmg$ X | ValidDescription$ each blocking creature
 SVar:X:Count$CardPower
 SVar:MustBeBlocked:True
-Oracle:Whenever Electryte deals combat damage to defending player, it deals damage equal to its power to each blocking creature.
+Oracle:Whenever this creature deals combat damage to defending player, it deals damage equal to its power to each blocking creature.

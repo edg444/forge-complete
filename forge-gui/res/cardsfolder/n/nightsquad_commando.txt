@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigToken:DB$ Token | TokenScript$ w_1_1_human_soldier | TokenOwner$ You
 SVar:RaidTest:Count$AttackersDeclared
 DeckHas:Ability$Token
-Oracle:When Nightsquad Commando enters, if you attacked this turn, create a 1/1 white Human Soldier creature token.
+Oracle:When this creature enters, if you attacked this turn, create a 1/1 white Human Soldier creature token.

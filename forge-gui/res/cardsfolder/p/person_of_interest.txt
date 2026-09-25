@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigSuspect:DB$ AlterAttribute | Defined$ Self | Attributes$ Suspected | SubAbility$ DBToken
 SVar:DBToken:DB$ Token | TokenScript$ wu_2_2_detective
 DeckHas:Ability$Token & Type$Detective & Color$Blue|White
-Oracle:When Person of Interest enters, suspect it. Create a 2/2 white and blue Detective creature token. (A suspected creature has menace and can't block.)
+Oracle:When this creature enters, suspect it. Create a 2/2 white and blue Detective creature token. (A suspected creature has menace and can't block.)

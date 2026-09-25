@@ -8,4 +8,4 @@ T:Mode$ ChangesZoneAll | ValidCards$ Enchantment.YouCtrl | Destination$ Battlefi
 SVar:TrigDraw:DB$ Draw
 DeckHas:Ability$Counters
 DeckHints:Type$Enchantment|Artifact
-Oracle:Whenever one or more artifacts you control enter, put two +1/+1 counters on Elvish Archivist. This ability triggers only once each turn.\nWhenever one or more enchantments you control enter, draw a card. This ability triggers only once each turn.
+Oracle:Whenever one or more artifacts you control enter, put two +1/+1 counters on this creature. This ability triggers only once each turn.\nWhenever one or more enchantments you control enter, draw a card. This ability triggers only once each turn.

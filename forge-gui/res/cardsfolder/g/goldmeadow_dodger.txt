@@ -3,4 +3,4 @@ ManaCost:W
 Types:Creature Kithkin Rogue
 PT:1/1
 S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.powerGE4 | Description$ This creature can't be blocked by creatures with power 4 or greater.
-Oracle:Goldmeadow Dodger can't be blocked by creatures with power 4 or greater.
+Oracle:This creature can't be blocked by creatures with power 4 or greater.

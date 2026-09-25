@@ -8,7 +8,7 @@ A:AB$ SetState | Cost$ 5 G | Defined$ Self | Mode$ Transform | SpellDescription$
 DeckHas:Ability$Token
 DeckHints:Type$Eldrazi|Horror
 AlternateMode:DoubleFaced
-Oracle:Creatures with power less than Shrill Howler's power can't block it.\n{5}{G}: Transform Shrill Howler.
+Oracle:Creatures with power less than this creature's power can't block it.\n{5}{G}: Transform this creature.
 
 ALTERNATE
 
@@ -20,4 +20,4 @@ S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.powe
 SVar:X:Count$CardPower
 T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigToken | TriggerDescription$ Whenever this creature deals combat damage to a player, create a 3/2 colorless Eldrazi Horror creature token.
 SVar:TrigToken:DB$ Token | TokenScript$ c_3_2_eldrazi_horror | TokenOwner$ You
-Oracle:Creatures with power less than Howling Chorus's power can't block it.\nWhenever Howling Chorus deals combat damage to a player, create a 3/2 colorless Eldrazi Horror creature token.
+Oracle:Creatures with power less than this creature's power can't block it.\nWhenever this creature deals combat damage to a player, create a 3/2 colorless Eldrazi Horror creature token.

@@ -8,4 +8,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | SetPower$ 10 | CheckSVar$ X | SVarC
 SVar:X:Count$Valid Aura.Attached
 SVar:EnchantMe:Multiple
 DeckNeeds:Type$Aura
-Oracle:As long as Timber Paladin is enchanted by exactly one Aura, it has base power and toughness 3/3.\nAs long as Timber Paladin is enchanted by exactly two Auras, it has base power and toughness 5/5 and vigilance.\nAs long as Timber Paladin is enchanted by three or more Auras, it has base power and toughness 10/10, vigilance, and trample.
+Oracle:As long as this creature is enchanted by exactly one Aura, it has base power and toughness 3/3.\nAs long as this creature is enchanted by exactly two Auras, it has base power and toughness 5/5 and vigilance.\nAs long as this creature is enchanted by three or more Auras, it has base power and toughness 10/10, vigilance, and trample.

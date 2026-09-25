@@ -7,7 +7,7 @@ SVar:TrigChange:DB$ ChangeZone | Defined$ TriggeredNewCardLKICopy | Origin$ Grav
 DeckHints:Type$Adventure
 DeckHas:Ability$Graveyard
 AlternateMode:Adventure
-Oracle:When Fell Horseman dies, put it on the bottom of its owner's library.
+Oracle:When this creature dies, put it on the bottom of its owner's library.
 
 ALTERNATE
 

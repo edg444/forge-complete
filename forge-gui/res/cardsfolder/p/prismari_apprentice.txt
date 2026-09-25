@@ -8,4 +8,4 @@ SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | Descript
 SVar:DBPutCounter:DB$ PutCounter | CounterType$ P1P1 | ConditionCheckSVar$ TriggeredSpellAbility$CardManaCostLKI | ConditionSVarCompare$ GE5
 DeckHas:Ability$Counters
 DeckNeeds:Type$Instant|Sorcery
-Oracle:Magecraft — Whenever you cast or copy an instant or sorcery spell, Prismari Apprentice can't be blocked this turn. If that spell has mana value 5 or greater, put a +1/+1 counter on Prismari Apprentice.
+Oracle:Magecraft — Whenever you cast or copy an instant or sorcery spell, this creature can't be blocked this turn. If that spell has mana value 5 or greater, put a +1/+1 counter on this creature.

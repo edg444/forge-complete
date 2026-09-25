@@ -7,4 +7,4 @@ SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Creature | NumDmg$ 1
 SVar:BuffedBy:Arcane,Spirit
 AI:RemoveDeck:Random
 DeckHints:Type$Spirit|Arcane
-Oracle:Whenever you cast a Spirit or Arcane spell, Soul of Magma deals 1 damage to target creature.
+Oracle:Whenever you cast a Spirit or Arcane spell, this creature deals 1 damage to target creature.

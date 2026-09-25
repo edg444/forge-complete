@@ -5,4 +5,4 @@ PT:4/3
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 1 | AddToughness$ 1 | IsPresent$ Mountain.YouCtrl | Description$ This creature gets +1/+1 as long as you control a Mountain.
 A:AB$ DealDamage | Cost$ 4 R | ValidTgts$ Any | NumDmg$ 2 | SpellDescription$ This creature deals 2 damage to any target.
 SVar:BuffedBy:Mountain
-Oracle:Nightfire Giant gets +1/+1 as long as you control a Mountain.\n{4}{R}: Nightfire Giant deals 2 damage to any target.
+Oracle:This creature gets +1/+1 as long as you control a Mountain.\n{4}{R}: This creature deals 2 damage to any target.

@@ -5,4 +5,4 @@ PT:2/2
 S:Mode$ MustAttack | ValidCreature$ Card.Self | IsPresent$ Ally.Other+YouCtrl | PresentCompare$ EQ0 | Description$ This creature attacks each combat if able unless you control another Ally.
 SVar:BuffedBy:Ally
 DeckHints:Type$Ally
-Oracle:Reckless Cohort attacks each combat if able unless you control another Ally.
+Oracle:This creature attacks each combat if able unless you control another Ally.

@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | ValidCard$ Card.Self+wasCastByYou | Destination$ Battlefie
 SVar:TrigBounceAll:DB$ ChangeZoneAll | ChangeType$ Creature.nonDinosaur | Origin$ Battlefield | Destination$ Hand
 DeckHas:Ability$Sacrifice
 DeckHints:Type$Dinosaur
-Oracle:Emerge {6}{U} (You may cast this spell by sacrificing a creature and paying the emerge cost reduced by that creature's mana value.)\nWhen Cresting Mosasaurus enters, if you cast it, return each non-Dinosaur creature to its owner's hand.
+Oracle:Emerge {6}{U} (You may cast this spell by sacrificing a creature and paying the emerge cost reduced by that creature's mana value.)\nWhen this creature enters, if you cast it, return each non-Dinosaur creature to its owner's hand.

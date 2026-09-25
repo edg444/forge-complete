@@ -9,4 +9,4 @@ SVar:DBCopy:DB$ CopyPermanent | Defined$ Self
 SVar:X:Count$Valid Land.YouCtrl
 SVar:BuffedBy:Land
 DeckHas:Ability$Token
-Oracle:Landfall — Whenever a land you control enters, create a 1/1 green Insect creature token. If you control six or more lands, create a token that's a copy of Scute Swarm instead.
+Oracle:Landfall — Whenever a land you control enters, create a 1/1 green Insect creature token. If you control six or more lands, create a token that's a copy of this creature instead.

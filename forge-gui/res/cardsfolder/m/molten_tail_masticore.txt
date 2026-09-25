@@ -9,4 +9,4 @@ A:AB$ Regenerate | Cost$ 2 | SpellDescription$ Regenerate this creature.
 SVar:NeedsToPlayVar:Z GE3
 SVar:Z:Count$ValidHand Card.YouOwn
 AI:RemoveDeck:Random
-Oracle:At the beginning of your upkeep, sacrifice Molten-Tail Masticore unless you discard a card.\n{4}, Exile a creature card from your graveyard: Molten-Tail Masticore deals 4 damage to any target.\n{2}: Regenerate Molten-Tail Masticore.
+Oracle:At the beginning of your upkeep, sacrifice this creature unless you discard a card.\n{4}, Exile a creature card from your graveyard: This creature deals 4 damage to any target.\n{2}: Regenerate this creature.

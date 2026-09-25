@@ -5,4 +5,4 @@ PT:1/1
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Land.YouCtrl | Execute$ TrigUntap | TriggerZones$ Battlefield | TriggerDescription$ Landfall — Whenever a land you control enters, untap this creature.
 A:AB$ Untap | Cost$ T | ValidTgts$ Land | AILogic$ PoolExtraMana | SpellDescription$ Untap target land.
 SVar:TrigUntap:DB$ Untap | Defined$ Self
-Oracle:Landfall — Whenever a land you control enters, untap Stone-Seeder Hierophant.\n{T}: Untap target land.
+Oracle:Landfall — Whenever a land you control enters, untap this creature.\n{T}: Untap target land.

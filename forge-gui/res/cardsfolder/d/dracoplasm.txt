@@ -12,4 +12,4 @@ SVar:DracoPwr:RememberedLKI$CardPower
 SVar:DracoTgn:RememberedLKI$CardToughness
 A:AB$ Pump | Cost$ R | Defined$ Self | NumAtt$ +1 | SpellDescription$ This creature gets +1/+0 until end of turn.
 DeckHas:Ability$Sacrifice
-Oracle:Flying\nAs Dracoplasm enters, sacrifice any number of creatures. Dracoplasm's power becomes the total power of those creatures and its toughness becomes their total toughness.\n{R}: Dracoplasm gets +1/+0 until end of turn.
+Oracle:Flying\nAs this creature enters, sacrifice any number of creatures. This creature's power becomes the total power of those creatures and its toughness becomes their total toughness.\n{R}: This creature gets +1/+0 until end of turn.

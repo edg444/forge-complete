@@ -5,4 +5,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
 A:AB$ GainLife | Cost$ W T Sac<1/CARDNAME> | LifeAmount$ 3 | SpellDescription$ You gain 3 life.
 DeckHas:Ability$LifeGain
-Oracle:When Potion of Healing enters, draw a card.\n{W}, {T}, Sacrifice Potion of Healing: You gain 3 life.
+Oracle:When this artifact enters, draw a card.\n{W}, {T}, Sacrifice this artifact: You gain 3 life.

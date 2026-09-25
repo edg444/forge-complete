@@ -3,4 +3,4 @@ ManaCost:1 G G
 Types:Creature Turtle
 PT:2/4
 S:Mode$ CantAttack | ValidCard$ Card.Self+attackedLastTurn | Description$ This creature can't attack if it attacked during your last turn.
-Oracle:Giant Turtle can't attack if it attacked during your last turn.
+Oracle:This creature can't attack if it attacked during your last turn.

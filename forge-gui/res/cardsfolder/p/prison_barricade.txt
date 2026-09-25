@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | ValidCard$ Card.Self+kicked | Origin$ Any | Destination$ B
 SVar:BarricadePumped:DB$ PutCounter | CounterType$ P1P1 | SubAbility$ DBAnimate
 SVar:DBAnimate:DB$ Animate | Defined$ Self | staticAbilities$ CanAttack | Duration$ Permanent
 SVar:CanAttack:Mode$ CanAttackDefender | ValidCard$ Card.Self | Description$ CARDNAME can attack as though it didn't have defender.
-Oracle:Defender (This creature can't attack.)\nKicker {1}{W} (You may pay an additional {1}{W} as you cast this spell.)\nIf Prison Barricade was kicked, it enters with a +1/+1 counter on it and with "Prison Barricade can attack as though it didn't have defender."
+Oracle:Defender (This creature can't attack.)\nKicker {1}{W} (You may pay an additional {1}{W} as you cast this spell.)\nIf this creature was kicked, it enters with a +1/+1 counter on it and with "This creature can attack as though it didn't have defender."

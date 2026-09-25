@@ -10,4 +10,4 @@ SVar:DBAnimate:DB$ Animate | Defined$ Remembered | staticAbilities$ SpendAnyMana
 SVar:SpendAnyMana:Mode$ ManaConvert | EffectZone$ Stack | ValidPlayer$ You | ValidCard$ Card.Self | ValidSA$ Spell | ManaConversion$ AnyType->AnyColor | Description$ You may spend mana as though it were mana of any color to cast this spell.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHints:Color$Blue
-Oracle:Prototype {3}{U} — 3/3\nWhen Warzone Duplicator enters, return target creature an opponent controls with power less than Warzone Duplicator's power to its owner's hand. If that creature wasn't a token, conjure a duplicate of it into your hand. It perpetually gains "You may spend mana as though it were mana of any color to cast this spell."
+Oracle:Prototype {3}{U} — 3/3\nWhen this creature enters, return target creature an opponent controls with power less than this creature's power to its owner's hand. If that creature wasn't a token, conjure a duplicate of it into your hand. It perpetually gains "You may spend mana as though it were mana of any color to cast this spell."

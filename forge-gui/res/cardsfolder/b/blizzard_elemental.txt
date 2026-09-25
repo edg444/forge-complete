@@ -4,4 +4,4 @@ Types:Creature Elemental
 PT:5/5
 K:Flying
 A:AB$ Untap | Cost$ 3 U | SpellDescription$ Untap this creature.
-Oracle:Flying\n{3}{U}: Untap Blizzard Elemental.
+Oracle:Flying\n{3}{U}: Untap this creature.

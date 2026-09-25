@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Artifa
 SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +1 | NumDef$ +1
 DeckHints:Type$Artifact
 DeckHas:Ability$LifeGain
-Oracle:Lifelink\nWhenever another artifact you control enters, Mandible Justiciar gets +1/+1 until end of turn.
+Oracle:Lifelink\nWhenever another artifact you control enters, this creature gets +1/+1 until end of turn.

@@ -9,4 +9,4 @@ SVar:PlayMain1:TRUE
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Token
 DeckHints:Type$Citizen
-Oracle:Other Citizens you control get +1/+0.\nWhenever Darling of the Masses attacks, create a 1/1 green and white Citizen creature token.
+Oracle:Other Citizens you control get +1/+0.\nWhenever this creature attacks, create a 1/1 green and white Citizen creature token.

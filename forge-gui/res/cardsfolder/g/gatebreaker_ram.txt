@@ -7,4 +7,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Vigilance & Trample | C
 SVar:X:Count$Valid Land.Gate+YouCtrl
 SVar:BuffedBy:Land.Gate
 DeckNeeds:Type$Gate
-Oracle:Gatebreaker Ram gets +1/+1 for each Gate you control.\nAs long as you control two or more Gates, Gatebreaker Ram has vigilance and trample.
+Oracle:This creature gets +1/+1 for each Gate you control.\nAs long as you control two or more Gates, this creature has vigilance and trample.

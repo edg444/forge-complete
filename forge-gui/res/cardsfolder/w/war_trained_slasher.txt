@@ -5,4 +5,4 @@ PT:4/3
 K:Menace
 T:Mode$ Attacks | ValidCard$ Card.Self | Attacked$ Battle | Execute$ TrigPump | TriggerZones$ Battlefield | TriggerDescription$ Whenever this creature attacks a battle, double its power until end of turn.
 SVar:TrigPump:DB$ Pump | Defined$ TriggeredAttackerLKICopy | NumAtt$ Double
-Oracle:Menace (This creature can't be blocked except by two or more creatures.)\nWhenever War-Trained Slasher attacks a battle, double its power until end of turn.
+Oracle:Menace (This creature can't be blocked except by two or more creatures.)\nWhenever this creature attacks a battle, double its power until end of turn.

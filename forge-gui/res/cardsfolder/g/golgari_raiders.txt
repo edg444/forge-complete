@@ -7,4 +7,4 @@ K:etbCounter:P1P1:X:no Condition:Undergrowth — CARDNAME enters with a +1/+1 co
 SVar:X:Count$ValidGraveyard Creature.YouCtrl
 SVar:NeedsToPlayVar:X GE3
 DeckHas:Ability$Counters
-Oracle:Haste\nUndergrowth — Golgari Raiders enters with a +1/+1 counter on it for each creature card in your graveyard.
+Oracle:Haste\nUndergrowth — This creature enters with a +1/+1 counter on it for each creature card in your graveyard.

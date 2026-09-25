@@ -8,7 +8,7 @@ SVar:TrigOppToken:DB$ Token | ValidTgts$ Opponent | TokenAmount$ 2 | TokenScript
 T:Mode$ DamageDone | ValidSource$ Creature.EquippedBy | ValidTarget$ Player | CombatDamage$ True | Execute$ DBTransform | TriggerDescription$ Whenever CARDNAME deals combat damage to a player, you may transform CARDNAME.
 SVar:DBTransform:DB$ SetState | Defined$ Self | Mode$ Transform | Optional$ True
 AlternateMode:DoubleFaced
-Oracle:When Dowsing Dagger enters, target opponent creates two 0/2 green Plant creature tokens with defender.\nEquipped creature gets +2/+1.\nWhenever equipped creature deals combat damage to a player, you may transform Dowsing Dagger.\nEquip {2}
+Oracle:When this Equipment enters, target opponent creates two 0/2 green Plant creature tokens with defender.\nEquipped creature gets +2/+1.\nWhenever equipped creature deals combat damage to a player, you may transform this Equipment.\nEquip {2}
 
 ALTERNATE
 

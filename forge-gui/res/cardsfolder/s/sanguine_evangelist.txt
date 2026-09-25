@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigToken | Secondary$ True | TriggerDescription$ When this creature enters or dies, create a 1/1 black Bat creature token with flying.
 SVar:TrigToken:DB$ Token | TokenScript$ b_1_1_bat_flying | TokenOwner$ TriggeredCardController
 DeckHas:Ability$Token & Type$Bat
-Oracle:Battle cry (Whenever this creature attacks, each other attacking creature gets +1/+0 until end of turn.)\nWhen Sanguine Evangelist enters or dies, create a 1/1 black Bat creature token with flying.
+Oracle:Battle cry (Whenever this creature attacks, each other attacking creature gets +1/+0 until end of turn.)\nWhen this creature enters or dies, create a 1/1 black Bat creature token with flying.

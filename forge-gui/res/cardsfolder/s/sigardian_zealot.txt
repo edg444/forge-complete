@@ -8,4 +8,4 @@ SVar:DBPump:DB$ Pump | Defined$ ChosenCard | NumAtt$ +X | NumDef$ +X | KW$ Vigil
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 SVar:Max:Count$Valid Creature$DifferentCardPower
 SVar:X:Count$CardPower
-Oracle:At the beginning of combat on your turn, choose any number of creatures with different powers. Each of them gets +X/+X and gains vigilance until end of turn, where X is Sigardian Zealot's power.
+Oracle:At the beginning of combat on your turn, choose any number of creatures with different powers. Each of them gets +X/+X and gains vigilance until end of turn, where X is this creature's power.

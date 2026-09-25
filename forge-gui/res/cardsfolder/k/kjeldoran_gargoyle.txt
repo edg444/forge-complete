@@ -8,4 +8,4 @@ T:Mode$ DamageDealtOnce | ValidSource$ Card.Self | Execute$ TrigGain | TriggerZo
 SVar:TrigGain:DB$ GainLife | Defined$ You | LifeAmount$ X
 SVar:X:TriggerCount$DamageAmount
 SVar:HasCombatEffect:TRUE
-Oracle:Flying, first strike\nWhenever Kjeldoran Gargoyle deals damage, you gain that much life.
+Oracle:Flying, first strike\nWhenever this creature deals damage, you gain that much life.

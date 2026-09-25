@@ -5,4 +5,4 @@ PT:1/1
 A:AB$ DealDamage | Cost$ 1 T | ValidTgts$ Creature | NumDmg$ 1 | SubAbility$ DBTap | SpellDescription$ This creature deals 1 damage to target creature. Tap that creature.
 SVar:DBTap:DB$ Tap | Defined$ Targeted
 SVar:NonCombatPriority:1
-Oracle:{1}, {T}: Stun Sniper deals 1 damage to target creature. Tap that creature.
+Oracle:{1}, {T}: This creature deals 1 damage to target creature. Tap that creature.

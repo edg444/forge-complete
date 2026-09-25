@@ -6,4 +6,4 @@ A:AB$ Pump | Cost$ 1 Sac<1/Creature.Other;Artifact.Other/another creature or art
 SVar:DBTap:DB$ Tap | Defined$ Self | StackDescription$ SpellDescription | SpellDescription$ Tap it.
 DeckHas:Ability$Sacrifice
 DeckHints:Ability$Token & Type$Artifact|Treasure|Map
-Oracle:{1}, Sacrifice another creature or artifact: Vanguard of the Rose gains indestructible until end of turn. Tap it.
+Oracle:{1}, Sacrifice another creature or artifact: This creature gains indestructible until end of turn. Tap it.

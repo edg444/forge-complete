@@ -7,4 +7,4 @@ SVar:TrigChooseThree:DB$ ChooseCard | Defined$ Player | Choices$ Land | Controll
 SVar:DBAllOthers:DB$ SacrificeAll | ValidCards$ Land.nonChosenCard | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 DeckHas:Ability$Sacrifice
-Oracle:When Keldon Firebombers enters, each player sacrifices all lands they control except for three.
+Oracle:When this creature enters, each player sacrifices all lands they control except for three.

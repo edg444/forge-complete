@@ -3,4 +3,4 @@ ManaCost:1 R
 Types:Creature Human Soldier
 PT:2/2
 S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't block.
-Oracle:Yellow Scarves Troops can't block.
+Oracle:This creature can't block.

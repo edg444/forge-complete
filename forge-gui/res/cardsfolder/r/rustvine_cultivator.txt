@@ -5,4 +5,4 @@ PT:1/2
 A:AB$ PutCounter | Cost$ T | CounterType$ OIL | SpellDescription$ Put an oil counter on this creature.
 A:AB$ Untap | Cost$ T SubCounter<1/OIL> | ValidTgts$ Land | SpellDescription$ Untap target land.
 DeckHas:Ability$Counters
-Oracle:{T}: Put an oil counter on Rustvine Cultivator.\n{T}, Remove an oil counter from Rustvine Cultivator: Untap target land.
+Oracle:{T}: Put an oil counter on this creature.\n{T}, Remove an oil counter from this creature: Untap target land.

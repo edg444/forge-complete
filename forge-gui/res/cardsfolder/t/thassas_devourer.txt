@@ -5,4 +5,4 @@ PT:2/6
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self,Enchantment.Other+YouCtrl | Execute$ TrigMill | TriggerDescription$ Constellation — Whenever this creature or another enchantment you control enters, target player mills two cards.
 SVar:TrigMill:DB$ Mill | ValidTgts$ Player | NumCards$ 2
 SVar:BuffedBy:Enchantment
-Oracle:Constellation — Whenever Thassa's Devourer or another enchantment you control enters, target player mills two cards.
+Oracle:Constellation — Whenever this creature or another enchantment you control enters, target player mills two cards.

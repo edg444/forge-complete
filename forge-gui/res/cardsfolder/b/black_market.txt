@@ -6,4 +6,4 @@ SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ CHARGE | Count
 T:Mode$ Phase | Phase$ Main1 | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigGetMana | TriggerDescription$ At the beginning of your first main phase, add {B} for each charge counter on this enchantment.
 SVar:TrigGetMana:DB$ Mana | Produced$ B | Amount$ X
 SVar:X:Count$CardCounters.CHARGE
-Oracle:Whenever a creature dies, put a charge counter on Black Market.\nAt the beginning of your first main phase, add {B} for each charge counter on Black Market.
+Oracle:Whenever a creature dies, put a charge counter on this enchantment.\nAt the beginning of your first main phase, add {B} for each charge counter on this enchantment.

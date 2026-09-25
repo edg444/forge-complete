@@ -10,4 +10,4 @@ T:Mode$ Phase | Phase$ End of Turn | TriggerZones$ Battlefield | Execute$ TrigSa
 SVar:TrigSac:DB$ Sacrifice | SacValid$ Self
 SVar:EndOfTurnLeavePlay:True
 SVar:PlayMain1:TRUE
-Oracle:Trample, haste\nWhenever Lightning Skelemental deals combat damage to a player, that player discards two cards.\nAt the beginning of the end step, sacrifice Lightning Skelemental.
+Oracle:Trample, haste\nWhenever this creature deals combat damage to a player, that player discards two cards.\nAt the beginning of the end step, sacrifice this creature.

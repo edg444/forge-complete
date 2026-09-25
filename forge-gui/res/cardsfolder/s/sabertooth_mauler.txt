@@ -7,4 +7,4 @@ SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | Counter
 SVar:DBUntap:DB$ Untap | Defined$ Self
 SVar:Morbid:Count$Morbid.1.0
 DeckHas:Ability$Counters
-Oracle:At the beginning of your end step, if a creature died this turn, put a +1/+1 counter on Sabertooth Mauler and untap it.
+Oracle:At the beginning of your end step, if a creature died this turn, put a +1/+1 counter on this creature and untap it.

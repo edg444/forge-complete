@@ -7,4 +7,4 @@ S:Mode$ MinMaxBlocker | ValidCard$ Creature.YouCtrl+counters_GE1_P1P1 | Max$ 1 |
 SVar:NonStackingEffect:True
 SVar:PlayMain1:TRUE
 DeckHints:Ability$Counters
-Oracle:Battlefront Krushok can't be blocked by more than one creature.\nEach creature you control with a +1/+1 counter on it can't be blocked by more than one creature.
+Oracle:This creature can't be blocked by more than one creature.\nEach creature you control with a +1/+1 counter on it can't be blocked by more than one creature.

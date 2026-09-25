@@ -8,4 +8,4 @@ SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ X
 SVar:X:Count$Party
 DeckHas:Ability$Party|LifeGain
 DeckHints:Type$Rogue|Warrior|Wizard
-Oracle:When Malakir Blood-Priest enters, each opponent loses X life and you gain X life, where X is the number of creatures in your party. (Your party consists of up to one each of Cleric, Rogue, Warrior, and Wizard.)
+Oracle:When this creature enters, each opponent loses X life and you gain X life, where X is the number of creatures in your party. (Your party consists of up to one each of Cleric, Rogue, Warrior, and Wizard.)

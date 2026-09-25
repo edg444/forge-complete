@@ -5,4 +5,4 @@ PT:0/6
 K:Defender
 T:Mode$ Blocks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ Whenever this creature blocks, put a -0/-1 counter on it.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ M0M1 | CounterNum$ 1
-Oracle:Defender\nWhenever Shield Sphere blocks, put a -0/-1 counter on it.
+Oracle:Defender\nWhenever this creature blocks, put a -0/-1 counter on it.

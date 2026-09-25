@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigToken:DB$ Token | TokenAmount$ X | TokenScript$ g_2_2_wolf | TokenOwner$ You
 SVar:X:Count$TimesKicked
 DeckHas:Ability$Token
-Oracle:Multikicker {G} (You may pay an additional {G} any number of times as you cast this spell.)\nWhen Wolfbriar Elemental enters, create a 2/2 green Wolf creature token for each time it was kicked.
+Oracle:Multikicker {G} (You may pay an additional {G} any number of times as you cast this spell.)\nWhen this creature enters, create a 2/2 green Wolf creature token for each time it was kicked.

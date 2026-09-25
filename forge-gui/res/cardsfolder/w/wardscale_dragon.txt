@@ -4,4 +4,4 @@ Types:Creature Dragon
 PT:4/4
 K:Flying
 S:Mode$ CantBeCast | ValidCard$ Card | Caster$ Player.attackedBySourceThisCombat | IsPresent$ Card.Self+attacking | Description$ As long as this creature is attacking, defending player can't cast spells.
-Oracle:Flying\nAs long as Wardscale Dragon is attacking, defending player can't cast spells.
+Oracle:Flying\nAs long as this creature is attacking, defending player can't cast spells.

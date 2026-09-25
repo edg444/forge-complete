@@ -6,4 +6,4 @@ K:Trample
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ Whenever this creature attacks, it gets +1/+1 until end of turn for each land you control.
 SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +X | NumDef$ +X
 SVar:X:Count$Valid Land.YouCtrl
-Oracle:Trample\nWhenever Rampaging Brontodon attacks, it gets +1/+1 until end of turn for each land you control.
+Oracle:Trample\nWhenever this creature attacks, it gets +1/+1 until end of turn for each land you control.

@@ -6,4 +6,4 @@ T:Mode$ Taps | ValidCard$ Card.Self | Execute$ TrigDrain | TriggerDescription$ W
 SVar:TrigDrain:DB$ LoseLife | Defined$ Opponent | LifeAmount$ 1 | SubAbility$ DBGainLife
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 1
 DeckHas:Ability$LifeGain
-Oracle:Whenever Night Market Lookout becomes tapped, each opponent loses 1 life and you gain 1 life.
+Oracle:Whenever this creature becomes tapped, each opponent loses 1 life and you gain 1 life.

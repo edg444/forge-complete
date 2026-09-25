@@ -11,4 +11,4 @@ SVar:Y:Count$ValidGraveyard Creature.YouOwn/LimitMax.1
 SVar:Z:SVar$X/Times.Y
 DeckHas:Ability$Graveyard
 DeckHints:Ability$Discard
-Oracle:When Young Necromancer enters, you may exile two cards from your graveyard. When you do, return target creature card from your graveyard to the battlefield.
+Oracle:When this creature enters, you may exile two cards from your graveyard. When you do, return target creature card from your graveyard to the battlefield.

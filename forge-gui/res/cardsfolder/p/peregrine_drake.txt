@@ -6,4 +6,4 @@ K:Flying
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigUntap | TriggerDescription$ When this creature enters, untap up to five lands.
 SVar:TrigUntap:DB$ Untap | UntapUpTo$ True | UntapType$ Land | Amount$ 5
 SVar:FreeSpellAI:True
-Oracle:Flying\nWhen Peregrine Drake enters, untap up to five lands.
+Oracle:Flying\nWhen this creature enters, untap up to five lands.

@@ -4,4 +4,4 @@ Types:Artifact Creature Construct
 PT:2/2
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Flying | Condition$ Metalcraft | Description$ Metalcraft — This creature has flying as long as you control three or more artifacts.
 SVar:BuffedBy:Artifact
-Oracle:Metalcraft — Snapsail Glider has flying as long as you control three or more artifacts.
+Oracle:Metalcraft — This creature has flying as long as you control three or more artifacts.

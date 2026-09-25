@@ -8,4 +8,4 @@ SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Opponent | NumDmg$ X
 SVar:X:TriggerCount$DamageAmount
 SVar:HasCombatEffect:TRUE
 A:AB$ Fight | Cost$ 2 R T | Defined$ Self | ValidTgts$ Creature.Other | TgtPrompt$ Select another target creature | SpellDescription$ This creature fights another target creature.
-Oracle:Indestructible\nWhenever Brash Taunter is dealt damage, it deals that much damage to target opponent.\n{2}{R}, {T}: Brash Taunter fights another target creature.
+Oracle:Indestructible\nWhenever this creature is dealt damage, it deals that much damage to target opponent.\n{2}{R}, {T}: This creature fights another target creature.

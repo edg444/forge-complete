@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigEnergy:DB$ PutCounter | Defined$ You | CounterType$ ENERGY | CounterNum$ 4
 A:AB$ Effect | Cost$ PayEnergy<2> | StaticAbilities$ CanAttack | Duration$ UntilHostLeavesPlayOrEOT | SpellDescription$ This creature can attack this turn as though it didn't have defender.
 SVar:CanAttack:Mode$ CanAttackDefender | ValidCard$ Card.EffectSource | Description$ EFFECTSOURCE can attack this turn as though it didn't have defender.
-Oracle:Defender\nWhen Hightide Hermit enters, you get {E}{E}{E}{E} (four energy counters).\nPay {E}{E}: Hightide Hermit can attack this turn as though it didn't have defender.
+Oracle:Defender\nWhen this creature enters, you get {E}{E}{E}{E} (four energy counters).\nPay {E}{E}: This creature can attack this turn as though it didn't have defender.

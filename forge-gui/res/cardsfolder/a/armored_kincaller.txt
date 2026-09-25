@@ -9,4 +9,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:DinoControlled:Count$Valid Dinosaur.Other+YouCtrl
 DeckHints:Type$Dinosaur
 DeckHas:Ability$LifeGain
-Oracle:When Armored Kincaller enters, you may reveal a Dinosaur card from your hand. If you do or if you control another Dinosaur, you gain 3 life.
+Oracle:When this creature enters, you may reveal a Dinosaur card from your hand. If you do or if you control another Dinosaur, you gain 3 life.

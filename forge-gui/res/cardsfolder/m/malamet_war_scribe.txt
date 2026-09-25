@@ -4,4 +4,4 @@ Types:Creature Cat Warrior
 PT:4/3
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigPumpAll | TriggerDescription$ When this creature enters, creatures you control get +2/+1 until end of turn.
 SVar:TrigPumpAll:DB$ PumpAll | ValidCards$ Creature.YouCtrl | NumAtt$ +2 | NumDef$ +1
-Oracle:When Malamet War Scribe enters, creatures you control get +2/+1 until end of turn.
+Oracle:When this creature enters, creatures you control get +2/+1 until end of turn.

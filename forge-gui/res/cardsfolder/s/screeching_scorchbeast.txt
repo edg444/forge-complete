@@ -11,4 +11,4 @@ SVar:TrigToken:DB$ Token | TokenAmount$ TriggerCount$Amount | TokenScript$ b_2_2
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Token & Type$Zombie
 DeckHints:Ability$Mill
-Oracle:Flying, menace\nWhenever Screeching Scorchbeast attacks, each player gets two rad counters.\nWhenever one or more nonland cards are milled, you may create that many 2/2 black Zombie Mutant creature tokens. Do this only once each turn.
+Oracle:Flying, menace\nWhenever this creature attacks, each player gets two rad counters.\nWhenever one or more nonland cards are milled, you may create that many 2/2 black Zombie Mutant creature tokens. Do this only once each turn.

@@ -8,4 +8,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigSearch | CheckSVar$ Y | SV
 SVar:TrigSearch:DB$ ChangeZone | Origin$ Library | Destination$ Battlefield | ChangeType$ Plains.Basic | ChangeNum$ 1 | Tapped$ True
 SVar:X:Count$Valid Land.YouCtrl
 SVar:Y:Count$Valid Land.DefenderCtrl
-Oracle:Flying\nWhenever Aerial Surveyor attacks, if defending player controls more lands than you, search your library for a basic Plains card, put it onto the battlefield tapped, then shuffle.\nCrew 2
+Oracle:Flying\nWhenever this Vehicle attacks, if defending player controls more lands than you, search your library for a basic Plains card, put it onto the battlefield tapped, then shuffle.\nCrew 2

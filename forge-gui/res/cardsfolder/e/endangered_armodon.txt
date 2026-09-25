@@ -5,4 +5,4 @@ PT:4/5
 T:Mode$ Always | TriggerZones$ Battlefield | IsPresent$ Creature.toughnessLE2+YouCtrl | Execute$ TrigSac | TriggerDescription$ When you control a creature with toughness 2 or less, sacrifice this creature.
 SVar:TrigSac:DB$ Sacrifice
 AI:RemoveDeck:Random
-Oracle:When you control a creature with toughness 2 or less, sacrifice Endangered Armodon.
+Oracle:When you control a creature with toughness 2 or less, sacrifice this creature.

@@ -4,4 +4,4 @@ Types:Creature Shade
 PT:1/1
 K:Lifelink
 A:AB$ Pump | Cost$ 2 B | NumAtt$ +1 | NumDef$ +1 | SpellDescription$ This creature gets +1/+1 until end of turn.
-Oracle:Lifelink\n{2}{B}: Thirsting Shade gets +1/+1 until end of turn.
+Oracle:Lifelink\n{2}{B}: This creature gets +1/+1 until end of turn.

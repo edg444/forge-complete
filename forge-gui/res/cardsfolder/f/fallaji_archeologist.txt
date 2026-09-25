@@ -9,4 +9,4 @@ SVar:DBCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | ConditionDef
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearImprinted$ True
 DeckHas:Ability$Mill|Counters
 DeckHints:Ability$Graveyard
-Oracle:When Fallaji Archaeologist enters, mill three cards. You may put a noncreature, nonland card from among the cards milled this way into your hand. If you don't, put a +1/+1 counter on Fallaji Archaeologist. (To mill a card, put the top card of your library into your graveyard.)
+Oracle:When this creature enters, mill three cards. You may put a noncreature, nonland card from among the cards milled this way into your hand. If you don't, put a +1/+1 counter on this creature. (To mill a card, put the top card of your library into your graveyard.)

@@ -4,4 +4,4 @@ Types:Creature Vampire Knight
 PT:3/2
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When this creature enters, create a 1/1 white Vampire creature token with lifelink.
 SVar:TrigToken:DB$ Token | TokenScript$ w_1_1_vampire_lifelink | TokenOwner$ You
-Oracle:When Paladin of the Bloodstained enters, create a 1/1 white Vampire creature token with lifelink.
+Oracle:When this creature enters, create a 1/1 white Vampire creature token with lifelink.

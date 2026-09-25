@@ -5,4 +5,4 @@ PT:2/3
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDamageAll | TriggerDescription$ When this creature enters, it deals 1 damage to each opponent and 1 damage to each creature your opponents control.
 SVar:TrigDamageAll:DB$ DamageAll | NumDmg$ 1 | ValidPlayers$ Player.Opponent | SubAbility$ DBDamageCreature
 SVar:DBDamageCreature:DB$ DamageAll | NumDmg$ 1 | ValidCards$ Creature.OppCtrl
-Oracle:When Dagger Caster enters, it deals 1 damage to each opponent and 1 damage to each creature your opponents control.
+Oracle:When this creature enters, it deals 1 damage to each opponent and 1 damage to each creature your opponents control.

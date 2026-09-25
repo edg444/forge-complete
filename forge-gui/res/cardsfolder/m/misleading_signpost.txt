@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Phase$ Declare Attackers | Origin$ Any | Destination$ Batt
 SVar:TrigChangeAttacker:DB$ ChangeCombatants | ValidTgts$ Creature.attacking | TgtPrompt$ Select target attacking creature | Attacking$ True
 AI:RemoveDeck:All
 A:AB$ Mana | Cost$ T | Produced$ U | SpellDescription$ Add {U}.
-Oracle:Flash\nWhen Misleading Signpost enters during the declare attackers step, you may reselect which player or permanent target attacking creature is attacking. (It can't attack its controller or their permanents.)\n{T}: Add {U}.
+Oracle:Flash\nWhen this artifact enters during the declare attackers step, you may reselect which player or permanent target attacking creature is attacking. (It can't attack its controller or their permanents.)\n{T}: Add {U}.

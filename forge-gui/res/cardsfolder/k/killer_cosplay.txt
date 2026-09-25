@@ -6,4 +6,4 @@ SVar:TrigChoose:DB$ NameCard | Defined$ You | ValidCards$ Creature.ManaCost=Equi
 SVar:DBCopy:DB$ Clone | CopyFromChosenName$ True | CloneTarget$ TriggeredTarget | Duration$ UntilUnattached | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearNamedCard$ True
 K:Equip:3
-Oracle:Whenever Killer Cosplay becomes attached to a creature, choose a creature card name with an identical mana cost. That creature becomes a copy of the card with the chosen name until Killer Cosplay becomes unattached from it.\nEquip {3}
+Oracle:Whenever this Equipment becomes attached to a creature, choose a creature card name with an identical mana cost. That creature becomes a copy of the card with the chosen name until this Equipment becomes unattached from it.\nEquip {3}

@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigGainLife:DB$ GainLife | Defined$ You | LifeAmount$ X
 SVar:X:Count$Valid Creature.StrictlyOther+YouCtrl
 DeckHas:Ability$LifeGain
-Oracle:Flying\nWhen Speakeasy Server enters, you gain 1 life for each other creature you control.
+Oracle:Flying\nWhen this creature enters, you gain 1 life for each other creature you control.

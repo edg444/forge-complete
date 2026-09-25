@@ -4,4 +4,4 @@ Types:Creature Human Soldier
 PT:2/3
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.Other | TriggerZones$ Battlefield | Execute$ TrigUntap | TriggerDescription$ Whenever another creature enters, untap this creature.
 SVar:TrigUntap:DB$ Untap | Defined$ Self
-Oracle:Whenever another creature enters, untap Midnight Guard.
+Oracle:Whenever another creature enters, untap this creature.

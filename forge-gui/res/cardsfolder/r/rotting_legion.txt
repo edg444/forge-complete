@@ -4,4 +4,4 @@ Types:Creature Zombie
 PT:4/5
 R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This creature enters tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
-Oracle:Rotting Legion enters tapped.
+Oracle:This creature enters tapped.

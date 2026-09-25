@@ -10,4 +10,4 @@ SVar:TrigSacrifice:DB$ Sacrifice | SacValid$ Egg.YouCtrl | SacMessage$ Egg you c
 SVar:DBToken:DB$ Token | TokenOwner$ You | TokenScript$ g_3_3_dinosaur
 DeckHas:Ability$Graveyard|Token & Type$Egg
 DeckHints:Type$Dinosaur
-Oracle:Other Dinosaurs you control have haste.\nWhen Palani's Hatcher enters, create two 0/1 green Dinosaur Egg creature tokens.\nAt the beginning of combat on your turn, if you control one or more Eggs, sacrifice an Egg, then create a 3/3 green Dinosaur creature token.
+Oracle:Other Dinosaurs you control have haste.\nWhen this creature enters, create two 0/1 green Dinosaur Egg creature tokens.\nAt the beginning of combat on your turn, if you control one or more Eggs, sacrifice an Egg, then create a 3/3 green Dinosaur creature token.

@@ -5,4 +5,4 @@ PT:2/2
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChange | TriggerDescription$ When this creature enters, gain control of target artifact for as long as you control this creature.
 SVar:TrigChange:DB$ GainControl | ValidTgts$ Artifact | LoseControl$ LeavesPlay,LoseControl | SpellDescription$ Gain control of target artifact for as long as you control CARDNAME.
 SVar:PlayMain1:TRUE
-Oracle:When Master Thief enters, gain control of target artifact for as long as you control Master Thief.
+Oracle:When this creature enters, gain control of target artifact for as long as you control this creature.

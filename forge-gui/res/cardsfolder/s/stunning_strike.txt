@@ -9,4 +9,4 @@ SVar:TrigTap:DB$ Tap | Defined$ Enchanted | SubAbility$ RemCombat
 SVar:RemCombat:DB$ RemoveFromCombat | Defined$ Enchanted
 S:Mode$ Continuous | Affected$ Creature.nonLegendary+EnchantedBy | AddHiddenKeyword$ This card doesn't untap during your next untap step. | Description$ As long as enchanted creature isn't legendary, it doesn't untap during its controller's untap step.
 DeckHints:Type$Creature
-Oracle:Flash\nEnchant creature\nWhen Stunning Strike enters, tap enchanted creature and remove it from combat.\nAs long as enchanted creature isn't legendary, it doesn't untap during its controller's untap step.
+Oracle:Flash\nEnchant creature\nWhen this Aura enters, tap enchanted creature and remove it from combat.\nAs long as enchanted creature isn't legendary, it doesn't untap during its controller's untap step.

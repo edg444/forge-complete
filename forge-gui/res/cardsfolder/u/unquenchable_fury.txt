@@ -10,4 +10,4 @@ SVar:X:TriggeredDefendingPlayer$CardsInHand
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self+YouOwn | TriggerZones$ Battlefield | Execute$ TrigReturn | TriggerDescription$ When this Aura is put into your graveyard from the battlefield, return it to your hand.
 SVar:TrigReturn:DB$ ChangeZone | Defined$ TriggeredNewCardLKICopy | Origin$ Graveyard | Destination$ Hand
 SVar:AE:SVar:HasAttackEffect:TRUE
-Oracle:Enchant creature\nEnchanted creature has "Whenever this creature attacks, it deals X damage to defending player, where X is the number of cards in their hand."\nWhen Unquenchable Fury is put into your graveyard from the battlefield, return it to your hand.
+Oracle:Enchant creature\nEnchanted creature has "Whenever this creature attacks, it deals X damage to defending player, where X is the number of cards in their hand."\nWhen this Aura is put into your graveyard from the battlefield, return it to your hand.

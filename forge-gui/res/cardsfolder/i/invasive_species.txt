@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigChange:DB$ ChangeZone | Origin$ Battlefield | Destination$ Hand | Hidden$ True | Mandatory$ True | ChangeType$ Permanent.Other+YouCtrl | AILogic$ NeverBounceItself
 SVar:NeedsToPlay:Creature.YouCtrl+cmcLE2
 AI:RemoveDeck:Random
-Oracle:When Invasive Species enters, return another permanent you control to its owner's hand.
+Oracle:When this creature enters, return another permanent you control to its owner's hand.

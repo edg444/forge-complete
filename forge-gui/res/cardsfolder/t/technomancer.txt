@@ -8,4 +8,4 @@ SVar:DBChange:DB$ ChangeZone | Origin$ Graveyard | Destination$ Battlefield | Wi
 SVar:X:Count$ValidGraveyard Artifact.Creature+YouOwn
 DeckHas:Ability$Graveyard|Mill
 DeckHints:Type$Artifact
-Oracle:When Technomancer enters, mill three cards, then return any number of artifact creature cards with total mana value 6 or less from your graveyard to the battlefield.
+Oracle:When this creature enters, mill three cards, then return any number of artifact creature cards with total mana value 6 or less from your graveyard to the battlefield.

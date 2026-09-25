@@ -5,4 +5,4 @@ PT:1/1
 K:Flying
 A:AB$ Regenerate | Cost$ Sac<1/CARDNAME> | ValidTgts$ Artifact | SpellDescription$ Regenerate target artifact.
 AI:RemoveDeck:All
-Oracle:Flying\nSacrifice Pteron Ghost: Regenerate target artifact.
+Oracle:Flying\nSacrifice this creature: Regenerate target artifact.

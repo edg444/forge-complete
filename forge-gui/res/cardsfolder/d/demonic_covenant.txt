@@ -11,4 +11,4 @@ SVar:DBSacrifice:DB$ Sacrifice | SacValid$ Self | ShowSacrificedCards$ True | Co
 SVar:MilledSharesAllTypes:Remembered$Valid Card.sharesAllCardTypesWithOther Remembered
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHas:Ability$Token|Mill|Sacrifice
-Oracle:Whenever one or more Demons you control attack a player, you draw a card and lose 1 life.\nAt the beginning of your end step, create a 5/5 black Demon creature token with flying, then mill two cards. If two cards that share all their card types were milled this way, sacrifice Demonic Covenant.
+Oracle:Whenever one or more Demons you control attack a player, you draw a card and lose 1 life.\nAt the beginning of your end step, create a 5/5 black Demon creature token with flying, then mill two cards. If two cards that share all their card types were milled this way, sacrifice this enchantment.

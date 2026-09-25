@@ -4,4 +4,4 @@ Types:Creature Zombie
 PT:3/3
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigDestroy | TriggerDescription$ When CARDNAME is put into a graveyard from the battlefield, destroy target land.
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Land | TgtPrompt$ Select target land
-Oracle:When Polluted Dead dies, destroy target land.
+Oracle:When this creature dies, destroy target land.

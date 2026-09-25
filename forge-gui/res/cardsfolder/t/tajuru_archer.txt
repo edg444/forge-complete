@@ -8,4 +8,4 @@ SVar:NumAllies:Count$Valid Ally.YouCtrl
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Ally
 AI:RemoveDeck:Random
-Oracle:Whenever Tajuru Archer or another Ally you control enters, you may have Tajuru Archer deal damage to target creature with flying equal to the number of Allies you control.
+Oracle:Whenever this creature or another Ally you control enters, you may have this creature deal damage to target creature with flying equal to the number of Allies you control.

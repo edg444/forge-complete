@@ -6,4 +6,4 @@ SVar:DBExile:DB$ ChangeZoneAll | Origin$ Library | Destination$ Exile | Defined$
 SVar:DBReturn:DB$ ChangeZoneAll | Origin$ Exile | Destination$ Library | Defined$ You | ChangeType$ Card.ChosenCard
 AI:RemoveDeck:Random
 AI:RemoveDeck:All
-Oracle:{T}, Sacrifice Mirror of Fate: Choose up to seven face-up exiled cards you own. Exile all the cards from your library, then put the chosen cards on top of your library.
+Oracle:{T}, Sacrifice this artifact: Choose up to seven face-up exiled cards you own. Exile all the cards from your library, then put the chosen cards on top of your library.

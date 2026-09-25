@@ -7,4 +7,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 A:AB$ Untap | Cost$ tapXType<1/Creature.Legendary/untapped legendary creature> | SpellDescription$ Untap this artifact.
 DeckHas:Ability$Mill
 DeckNeeds:Type$Instant|Sorcery & Type$Legendary
-Oracle:{1}, {T}: Mill a card. You may put an instant or sorcery card milled this way into your hand.\nTap an untapped legendary creature you control: Untap Leyline Dowser.
+Oracle:{1}, {T}: Mill a card. You may put an instant or sorcery card milled this way into your hand.\nTap an untapped legendary creature you control: Untap this artifact.

@@ -9,4 +9,4 @@ SVar:TrigFoodToken:DB$ Token | TokenScript$ c_a_food_sac | TokenOwner$ You
 SVar:X:Count$ThisTurnEntered_Graveyard_from_Battlefield_Human.Other+YouCtrl
 DeckHas:Ability$Token|Food
 DeckHints:Type$Human
-Oracle:When White Glove Gourmand enters, create two 1/1 white Human Soldier creature tokens.\nAt the beginning of your end step, if another Human died under your control this turn, create a Food token.
+Oracle:When this creature enters, create two 1/1 white Human Soldier creature tokens.\nAt the beginning of your end step, if another Human died under your control this turn, create a Food token.

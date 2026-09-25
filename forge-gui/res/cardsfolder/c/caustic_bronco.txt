@@ -9,4 +9,4 @@ SVar:DBLoseLifeOpponents:DB$ LoseLife | Defined$ Opponent | ConditionDefined$ Se
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$CardManaCost
 K:Saddle:3
-Oracle:Whenever Caustic Bronco attacks, reveal the top card of your library and put it into your hand. You lose life equal to that card's mana value if Caustic Bronco isn't saddled. Otherwise, each opponent loses that much life.\nSaddle 3 (Tap any number of other creatures you control with total power 3 or more: This Mount becomes saddled until end of turn. Saddle only as a sorcery.)
+Oracle:Whenever this creature attacks, reveal the top card of your library and put it into your hand. You lose life equal to that card's mana value if this creature isn't saddled. Otherwise, each opponent loses that much life.\nSaddle 3 (Tap any number of other creatures you control with total power 3 or more: This Mount becomes saddled until end of turn. Saddle only as a sorcery.)

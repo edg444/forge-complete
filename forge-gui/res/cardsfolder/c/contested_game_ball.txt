@@ -10,4 +10,4 @@ SVar:DBSac:DB$ Sacrifice | SacValid$ Self | ConditionPresent$ Card.Self+counters
 SVar:DBTreasure:DB$ Token | TokenScript$ c_a_treasure_sac
 SVar:CountCounters:Count$CardCounters.POINT
 DeckHas:Ability$Counters|Token|Sacrifice & Type$Treasure
-Oracle:Whenever you're dealt combat damage, the attacking player gains control of Contested Game Ball and untaps it.\n{2}, {T}: Draw a card and put a point counter on Contested Game Ball. Then if it has five or more point counters on it, sacrifice it and create a Treasure token.
+Oracle:Whenever you're dealt combat damage, the attacking player gains control of this artifact and untaps it.\n{2}, {T}: Draw a card and put a point counter on this artifact. Then if it has five or more point counters on it, sacrifice it and create a Treasure token.

@@ -9,7 +9,7 @@ SVar:HasCombatEffect:TRUE
 A:AB$ Pump | Cost$ 1 R | Defined$ Self | NumAtt$ +2 | SpellDescription$ This creature gets +2/+0 until end of turn.
 K:Daybound
 AlternateMode:DoubleFaced
-Oracle:Whenever Ill-Tempered Loner is dealt damage, it deals that much damage to any target.\n{1}{R}: Ill-Tempered Loner gets +2/+0 until end of turn.\nDaybound (If a player casts no spells during their own turn, it becomes night next turn.)
+Oracle:Whenever this creature is dealt damage, it deals that much damage to any target.\n{1}{R}: This creature gets +2/+0 until end of turn.\nDaybound (If a player casts no spells during their own turn, it becomes night next turn.)
 
 ALTERNATE
 
@@ -25,4 +25,4 @@ S:Mode$ Continuous | Affected$ Permanent.YouCtrl | AddSVar$ CE
 SVar:CE:SVar:HasCombatEffect:TRUE
 A:AB$ Pump | Cost$ 1 R | Defined$ Self | NumAtt$ +2 | SpellDescription$ This creature gets +2/+0 until end of turn.
 K:Nightbound
-Oracle:Whenever a permanent you control is dealt damage, Howlpack Avenger deals that much damage to any target.\n{1}{R}: Howlpack Avenger gets +2/+0 until end of turn.\nNightbound (If a player casts at least two spells during their own turn, it becomes day next turn.)
+Oracle:Whenever a permanent you control is dealt damage, this creature deals that much damage to any target.\n{1}{R}: This creature gets +2/+0 until end of turn.\nNightbound (If a player casts at least two spells during their own turn, it becomes day next turn.)

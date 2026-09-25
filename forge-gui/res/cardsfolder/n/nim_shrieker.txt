@@ -8,4 +8,4 @@ SVar:X:Count$Valid Artifact.YouCtrl
 SVar:NeedsToPlayVar:X GE2
 AI:RemoveDeck:Random
 SVar:BuffedBy:Artifact
-Oracle:Flying\nNim Shrieker gets +1/+0 for each artifact you control.
+Oracle:Flying\nThis creature gets +1/+0 for each artifact you control.

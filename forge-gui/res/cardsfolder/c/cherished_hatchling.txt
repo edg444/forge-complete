@@ -10,4 +10,4 @@ SVar:TrigHatchlingAnimate:DB$ Animate | Defined$ TriggeredCardLKICopy | Duration
 SVar:TrigETBHatchling:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ HatchlingFight | OptionalDecider$ You | TriggerDescription$ When this creature enters, you may have it fight another target creature.
 SVar:HatchlingFight:DB$ Fight | Defined$ TriggeredCardLKICopy | ValidTgts$ Creature.Other | TgtPrompt$ Select another target creature
 DeckHints:Type$Dinosaur
-Oracle:When Cherished Hatchling dies, you may cast Dinosaur spells this turn as though they had flash, and whenever you cast a Dinosaur spell this turn, it gains "When this creature enters, you may have it fight another target creature."
+Oracle:When this creature dies, you may cast Dinosaur spells this turn as though they had flash, and whenever you cast a Dinosaur spell this turn, it gains "When this creature enters, you may have it fight another target creature."

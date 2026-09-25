@@ -12,4 +12,4 @@ SVar:MayPlay:Mode$ Continuous | MayPlay$ True | Affected$ Card.IsImprinted+IsRem
 SVar:Cast:Mode$ SpellCast | ValidCard$ Card.IsImprinted+IsRemembered+wasCastFromExile | Execute$ ExileSelf | Static$ True
 SVar:ExileSelf:DB$ ChangeZone | Origin$ Command | Destination$ Exile | Defined$ Self
 DeckHas:Ability$LifeGain
-Oracle:Flying\nWhen Shattered Seraph enters, you gain 3 life.\n{2}, Exile Shattered Seraph from your hand: Target land gains "{T}: Add {W}, {U}, or {B}" until Shattered Seraph is cast from exile. You may cast Shattered Seraph for as long as it remains exiled.
+Oracle:Flying\nWhen this creature enters, you gain 3 life.\n{2}, Exile this card from your hand: Target land gains "{T}: Add {W}, {U}, or {B}" until this card is cast from exile. You may cast this card for as long as it remains exiled.

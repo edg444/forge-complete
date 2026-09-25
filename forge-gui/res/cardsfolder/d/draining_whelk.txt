@@ -9,4 +9,4 @@ SVar:TrigCounter:DB$ Counter | TargetType$ Spell | ValidTgts$ Card | TgtPrompt$ 
 SVar:DBPutCounter:DB$ PutCounter | CounterType$ P1P1 | Defined$ Self | CounterNum$ X | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Count$RememberedNumber
-Oracle:Flash\nFlying\nWhen Draining Whelk enters, counter target spell. Put X +1/+1 counters on Draining Whelk, where X is that spell's mana value.
+Oracle:Flash\nFlying\nWhen this creature enters, counter target spell. Put X +1/+1 counters on this creature, where X is that spell's mana value.

@@ -7,4 +7,4 @@ SVar:TrigPump:DB$ PumpAll | ValidCards$ Ally.YouCtrl | KW$ Flying
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Ally
 AI:RemoveDeck:Random
-Oracle:Whenever Seascape Aerialist or another Ally you control enters, you may have Ally creatures you control gain flying until end of turn.
+Oracle:Whenever this creature or another Ally you control enters, you may have Ally creatures you control gain flying until end of turn.

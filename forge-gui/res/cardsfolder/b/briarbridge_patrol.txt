@@ -9,4 +9,4 @@ SVar:TrigCheatCreature:DB$ ChangeZone | Origin$ Hand | Destination$ Battlefield 
 SVar:ClueResearch:PlayerCountPropertyYou$SacrificedThisTurn Clue
 DeckHints:Ability$Investigate
 DeckHas:Ability$Investigate|Token
-Oracle:Whenever Briarbridge Patrol deals damage to one or more creatures, investigate. (Create a Clue token. It's an artifact with "{2}, Sacrifice this token: Draw a card.")\nAt the beginning of each end step, if you sacrificed three or more Clues this turn, you may put a creature card from your hand onto the battlefield.
+Oracle:Whenever this creature deals damage to one or more creatures, investigate. (Create a Clue token. It's an artifact with "{2}, Sacrifice this token: Draw a card.")\nAt the beginning of each end step, if you sacrificed three or more Clues this turn, you may put a creature card from your hand onto the battlefield.

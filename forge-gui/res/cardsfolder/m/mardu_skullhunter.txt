@@ -7,4 +7,4 @@ SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | CheckSVar$ RaidTest | Execute$ TrigDiscard | TriggerDescription$ Raid — When this creature enters, if you attacked this turn, target opponent discards a card.
 SVar:TrigDiscard:DB$ Discard | ValidTgts$ Opponent | NumCards$ 1 | Mode$ TgtChoose
 SVar:RaidTest:Count$AttackersDeclared
-Oracle:Mardu Skullhunter enters tapped.\nRaid — When Mardu Skullhunter enters, if you attacked this turn, target opponent discards a card.
+Oracle:This creature enters tapped.\nRaid — When this creature enters, if you attacked this turn, target opponent discards a card.

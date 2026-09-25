@@ -7,4 +7,4 @@ SVar:TrigTap:DB$ Tap | ValidTgts$ Creature | TargetMin$ 0 | TargetMax$ 1 | SubAb
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ X
 SVar:X:Targeted$CardPower
 DeckHas:Ability$LifeGain
-Oracle:When Brightmare enters, tap up to one target creature. You gain life equal to that creature's power.
+Oracle:When this creature enters, tap up to one target creature. You gain life equal to that creature's power.

@@ -7,4 +7,4 @@ A:AB$ Surveil | Cost$ Sac<1/CARDNAME> | Amount$ 3 | SubAbility$ DBDraw | IsPrese
 SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 3
 DeckHints:Ability$Graveyard|Mill|Discard|Dredge
 DeckHas:Ability$Counters|Sacrifice|Surveil
-Oracle:{T}, Collect evidence 3: Add one mana of any color. Put an unlock counter on Cryptex. (To collect evidence 3, exile cards with total mana value 3 or greater from your graveyard.)\nSacrifice Cryptex: Surveil 3, then draw three cards. Activate only if Cryptex has five or more unlock counters on it.
+Oracle:{T}, Collect evidence 3: Add one mana of any color. Put an unlock counter on this artifact. (To collect evidence 3, exile cards with total mana value 3 or greater from your graveyard.)\nSacrifice this artifact: Surveil 3, then draw three cards. Activate only if this artifact has five or more unlock counters on it.

@@ -12,4 +12,4 @@ SVar:DBDmg:DB$ DealDamage | Defined$ EnchantedController | NumDmg$ 2 | SubAbilit
 SVar:DBReset:DB$ StoreSVar | SVar$ PaidAmount | Type$ Number | Expression$ 0
 SVar:Y:Count$ChosenNumber
 SVar:PaidAmount:Number$0
-Oracle:Enchant enchantment\nAt the beginning of the upkeep of enchanted enchantment's controller, that player may pay any amount of mana. Power Leak deals 2 damage to that player. Prevent X of that damage, where X is the amount of mana that player paid this way.
+Oracle:Enchant enchantment\nAt the beginning of the upkeep of enchanted enchantment's controller, that player may pay any amount of mana. This Aura deals 2 damage to that player. Prevent X of that damage, where X is the amount of mana that player paid this way.

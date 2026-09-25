@@ -6,4 +6,4 @@ K:Flying
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGainLife | IsPresent$ Spirit.Other+YouCtrl | TriggerDescription$ When CARDNAME enters, if you control another Spirit, gain 3 life.
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 3
 DeckHints:Type$Spirit
-Oracle:Flying\nWhen Apothecary Geist enters, if you control another Spirit, you gain 3 life.
+Oracle:Flying\nWhen this creature enters, if you control another Spirit, you gain 3 life.

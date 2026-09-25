@@ -5,4 +5,4 @@ R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementRe
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ Mana | Cost$ T | Produced$ Combo Any | Amount$ X | PrecostDesc$ Domain — | SpellDescription$ Add X mana in any combination of colors, where X is the number of basic land types among lands you control.
 SVar:X:Count$Domain
-Oracle:Prismatic Geoscope enters tapped.\nDomain — {T}: Add X mana in any combination of colors, where X is the number of basic land types among lands you control.
+Oracle:This artifact enters tapped.\nDomain — {T}: Add X mana in any combination of colors, where X is the number of basic land types among lands you control.

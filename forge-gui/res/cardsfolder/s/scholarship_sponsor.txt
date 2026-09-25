@@ -11,4 +11,4 @@ SVar:Z:SVar$Y/Minus.X
 SVar:Check1:Count$Valid Land.YouCtrl
 SVar:Check2:SVar$Y/Minus.Check1
 SVar:NeedsToPlayVar:Check2 GE2
-Oracle:When Scholarship Sponsor enters, each player who controls fewer lands than the player who controls the most lands searches their library for a number of basic land cards less than or equal to the difference, puts those cards onto the battlefield tapped, then shuffles.
+Oracle:When this creature enters, each player who controls fewer lands than the player who controls the most lands searches their library for a number of basic land cards less than or equal to the difference, puts those cards onto the battlefield tapped, then shuffles.

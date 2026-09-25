@@ -8,4 +8,4 @@ SVar:DBChangeZone:DB$ ChangeZone | Origin$ Graveyard | Destination$ Battlefield 
 SVar:DBPutCounter:DB$ PutCounter | ValidTgts$ Creature | CounterType$ SHIELD | SpellDescription$ Put a shield counter on target creature. (If it would be dealt damage or destroyed, remove a shield counter from it instead.)
 DeckHas:Ability$Graveyard|Counters
 DeckNeeds:Type$Equipment|Aura
-Oracle:When Brotherhood Outcast enters, choose one —\n• Return target Aura or Equipment card with mana value 3 or less from your graveyard to the battlefield.\n• Put a shield counter on target creature. (If it would be dealt damage or destroyed, remove a shield counter from it instead.)
+Oracle:When this creature enters, choose one —\n• Return target Aura or Equipment card with mana value 3 or less from your graveyard to the battlefield.\n• Put a shield counter on target creature. (If it would be dealt damage or destroyed, remove a shield counter from it instead.)

@@ -8,4 +8,4 @@ AI:RemoveDeck:Random
 SVar:NeedsToPlayVar:CountOpps GTCountMe
 SVar:CountOpps:Count$Valid Swamp.OppCtrl/LimitMax.5
 SVar:CountMe:Count$Valid Swamp.YouCtrl
-Oracle:At the beginning of each player's upkeep, Karma deals damage to that player equal to the number of Swamps they control.
+Oracle:At the beginning of each player's upkeep, this enchantment deals damage to that player equal to the number of Swamps they control.

@@ -11,4 +11,4 @@ SVar:TrigNotKicked:DB$ Sacrifice
 SVar:NeedsToPlay:WillAttack
 SVar:NeedsToPlayKickedVar:Z GE1
 SVar:Z:Number$1
-Oracle:Kicker {R} (You may pay an additional {R} as you cast this spell.)\nTrample, haste\nAt the beginning of the end step, if Skizzik wasn't kicked, sacrifice it.
+Oracle:Kicker {R} (You may pay an additional {R} as you cast this spell.)\nTrample, haste\nAt the beginning of the end step, if this creature wasn't kicked, sacrifice it.

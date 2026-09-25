@@ -7,4 +7,4 @@ A:AB$ Tap | Cost$ T PayEnergy<2> | ValidTgts$ Creature | SpellDescription$ Tap t
 A:AB$ Draw | Cost$ T PayEnergy<3> | SpellDescription$ Draw a card.
 A:AB$ Animate | Cost$ PayEnergy<4> | Defined$ Self | Types$ Artifact,Creature | SpellDescription$ CARDNAME becomes an artifact creature until end of turn.
 K:Crew:4
-Oracle:{T}: You get {E}{E} (two energy counters).\n{T}, Pay {E}{E}: Tap target creature.\n{T}, Pay {E}{E}{E}: Draw a card.\nPay {E}{E}{E}{E}: Bespoke Battlewagon becomes an artifact creature until end of turn.\nCrew 4
+Oracle:{T}: You get {E}{E} (two energy counters).\n{T}, Pay {E}{E}: Tap target creature.\n{T}, Pay {E}{E}{E}: Draw a card.\nPay {E}{E}{E}{E}: This Vehicle becomes an artifact creature until end of turn.\nCrew 4

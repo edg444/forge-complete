@@ -10,4 +10,4 @@ T:Mode$ CounterRemoved | ValidCard$ Card.Self | TriggerZones$ Exile | CounterTyp
 SVar:TrigToken:DB$ Token | TokenScript$ rw_2_2_dinosaur_flying_haste | TokenOwner$ You
 DeckHas:Ability$Token
 DeckHints:Type$Dinosaur
-Oracle:Vigilance, trample\nOther Dinosaurs you control get +1/+1 and have vigilance and trample.\nSuspend 4—{3}{R}{W}\nWhenever a time counter is removed from Dinosaurs on a Spaceship while it's exiled, create a 2/2 red and white Dinosaur creature token with flying and haste.
+Oracle:Vigilance, trample\nOther Dinosaurs you control get +1/+1 and have vigilance and trample.\nSuspend 4—{3}{R}{W}\nWhenever a time counter is removed from this card while it's exiled, create a 2/2 red and white Dinosaur creature token with flying and haste.

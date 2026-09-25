@@ -4,4 +4,4 @@ Types:Creature Dinosaur
 PT:4/4
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Haste | IsPresent$ Dinosaur.Other+YouCtrl | Description$ This creature has haste as long as you control another Dinosaur.
 DeckHints:Type$Dinosaur
-Oracle:Stampeding Horncrest has haste as long as you control another Dinosaur.
+Oracle:This creature has haste as long as you control another Dinosaur.

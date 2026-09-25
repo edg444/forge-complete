@@ -8,4 +8,4 @@ SVar:DBDiscard:DB$ Discard | Mode$ TgtChoose
 S:Mode$ Continuous | AffectedDefined$ Self | CheckSVar$ X | SVarCompare$ GE2 | AddPower$ 1 | AddKeyword$ Menace | Description$ As long as you've drawn two or more cards this turn, this creature gets +1/+0 and has menace.
 SVar:X:Count$YouDrewThisTurn
 DeckHas:Ability$Discard & Keyword$Menace
-Oracle:When Evangel of Synthesis enters, draw a card, then discard a card.\nAs long as you've drawn two or more cards this turn, Evangel of Synthesis gets +1/+0 and has menace.
+Oracle:When this creature enters, draw a card, then discard a card.\nAs long as you've drawn two or more cards this turn, this creature gets +1/+0 and has menace.

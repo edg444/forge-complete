@@ -7,4 +7,4 @@ A:AB$ PumpAll | Cost$ 4 W | ValidCards$ Creature.YouCtrl | NumAtt$ +1 | NumDef$ 
 SVar:BuffedBy:Plains
 AI:RemoveDeck:Random
 DeckNeeds:Color$White
-Oracle:Sunblade Elf gets +1/+1 as long as you control a Plains.\n{4}{W}: Creatures you control get +1/+1 until end of turn.
+Oracle:This creature gets +1/+1 as long as you control a Plains.\n{4}{W}: Creatures you control get +1/+1 until end of turn.

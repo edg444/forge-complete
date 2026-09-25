@@ -3,4 +3,4 @@ ManaCost:3
 Types:Artifact Creature Construct
 PT:3/1
 S:Mode$ Continuous | AffectedDefined$ Self | CanBlockAmount$ 1 | Description$ This creature can block an additional creature each combat.
-Oracle:Night Market Guard can block an additional creature each combat.
+Oracle:This creature can block an additional creature each combat.

@@ -6,4 +6,4 @@ A:AB$ Mana | Cost$ T Sac<1/CARDNAME> | Produced$ Any | SpellDescription$ Add one
 R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This land enters tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 DeckNeeds:Color$Blue
-Oracle:Seafloor Debris enters tapped.\n{T}: Add {U}.\n{T}, Sacrifice Seafloor Debris: Add one mana of any color.
+Oracle:This land enters tapped.\n{T}: Add {U}.\n{T}, Sacrifice this land: Add one mana of any color.

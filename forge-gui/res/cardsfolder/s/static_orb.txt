@@ -5,4 +5,4 @@ S:Mode$ Continuous | Affected$ Player | AddKeyword$ UntapAdjust:Permanent:2 | Is
 AI:RemoveDeck:All
 AI:RemoveDeck:Random
 SVar:NonStackingEffect:True
-Oracle:As long as Static Orb is untapped, players can't untap more than two permanents during their untap steps.
+Oracle:As long as this artifact is untapped, players can't untap more than two permanents during their untap steps.

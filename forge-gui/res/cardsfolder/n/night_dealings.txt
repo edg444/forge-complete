@@ -7,4 +7,4 @@ A:AB$ ChangeZone | Cost$ 2 B B SubCounter<X/THEFT> | Origin$ Library | Destinati
 SVar:X:Count$xPaid
 SVar:Y:TriggerCount$DamageAmount
 AI:RemoveDeck:All
-Oracle:Whenever a source you control deals damage to another player, put that many theft counters on Night Dealings.\n{2}{B}{B}, Remove X theft counters from Night Dealings: Search your library for a nonland card with mana value X, reveal it, put it into your hand, then shuffle.
+Oracle:Whenever a source you control deals damage to another player, put that many theft counters on this enchantment.\n{2}{B}{B}, Remove X theft counters from this enchantment: Search your library for a nonland card with mana value X, reveal it, put it into your hand, then shuffle.

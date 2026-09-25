@@ -8,4 +8,4 @@ SVar:TrigMill:DB$ Mill | NumCards$ 1 | Defined$ You | Optional$ True
 SVar:X:Count$Delirium.0.1
 DeckHints:Ability$Graveyard|Discard
 DeckHas:Ability$Delirium
-Oracle:Delirium — Patchwork Beastie can't attack or block unless there are four or more card types among cards in your graveyard.\nAt the beginning of your upkeep, you may mill a card. (You may put the top card of your library into your graveyard.)
+Oracle:Delirium — This creature can't attack or block unless there are four or more card types among cards in your graveyard.\nAt the beginning of your upkeep, you may mill a card. (You may put the top card of your library into your graveyard.)

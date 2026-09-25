@@ -5,4 +5,4 @@ A:SP$ Draw | Defined$ Player | NumCards$ X | SpellDescription$ Each player draws
 A:AB$ Draw | Cost$ 2 U Reveal<1/CARDNAME> | NumCards$ 1 | Defined$ Player | Forecast$ True | SpellDescription$ Each player draws a card. (Activate only during your upkeep and only once each turn.)
 SVar:X:Count$xPaid
 AI:RemoveDeck:All
-Oracle:Each player draws X cards.\nForecast — {2}{U}, Reveal Skyscribing from your hand: Each player draws a card. (Activate only during your upkeep and only once each turn.)
+Oracle:Each player draws X cards.\nForecast — {2}{U}, Reveal this card from your hand: Each player draws a card. (Activate only during your upkeep and only once each turn.)

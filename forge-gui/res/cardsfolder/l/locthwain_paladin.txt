@@ -6,4 +6,4 @@ K:Menace
 K:etbCounter:P1P1:1:Adamant$ Black:Adamant — If at least three black mana was spent to cast this spell, CARDNAME enters with a +1/+1 counter on it.
 SVar:AIManaPref:B
 DeckHas:Ability$Counters
-Oracle:Menace (This creature can't be blocked except by two or more creatures.)\nAdamant — If at least three black mana was spent to cast this spell, Locthwain Paladin enters with a +1/+1 counter on it.
+Oracle:Menace (This creature can't be blocked except by two or more creatures.)\nAdamant — If at least three black mana was spent to cast this spell, this creature enters with a +1/+1 counter on it.

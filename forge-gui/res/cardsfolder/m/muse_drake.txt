@@ -5,4 +5,4 @@ PT:1/3
 K:Flying
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When this creature enters, draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
-Oracle:Flying\nWhen Muse Drake enters, draw a card.
+Oracle:Flying\nWhen this creature enters, draw a card.

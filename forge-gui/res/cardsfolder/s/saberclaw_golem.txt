@@ -4,4 +4,4 @@ Types:Artifact Creature Golem
 PT:4/2
 A:AB$ Pump | Cost$ R | KW$ First Strike | Defined$ Self | SpellDescription$ This creature gains first strike until end of turn.
 DeckNeeds:Color$Red
-Oracle:{R}: Saberclaw Golem gains first strike until end of turn.
+Oracle:{R}: This creature gains first strike until end of turn.

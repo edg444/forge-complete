@@ -6,7 +6,7 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 2
 DeckHas:Ability$LifeGain
 AlternateMode:Modal
-Oracle:When Skyclave Cleric enters, you gain 2 life.
+Oracle:When this creature enters, you gain 2 life.
 
 ALTERNATE
 
@@ -16,4 +16,4 @@ Types:Land
 R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This land enters tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ Mana | Cost$ T | Produced$ W | SpellDescription$ Add {W}.
-Oracle:Skyclave Basilica enters tapped.\n{T}: Add {W}.
+Oracle:This land enters tapped.\n{T}: Add {W}.

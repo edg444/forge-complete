@@ -11,4 +11,4 @@ SVar:DBPump:DB$ Pump | Defined$ ChosenCard | KW$ Double Strike | SubAbility$ DBC
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 SVar:Max:Count$Valid Creature$DifferentCardPower
 SVar:HasAttackEffect:TRUE
-Oracle:Flash\nFlying\nWhenever Sigarda's Vanguard enters or attacks, choose any number of creatures with different powers. Those creatures gain double strike until end of turn.
+Oracle:Flash\nFlying\nWhenever this creature enters or attacks, choose any number of creatures with different powers. Those creatures gain double strike until end of turn.
