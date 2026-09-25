@@ -1562,6 +1562,10 @@ public class ComputerUtilMana {
                             Set<String> reflectedColors = CardUtil.getReflectableManaColors(m);
                             // find possible colors
                             for (MagicColor.Color color : MagicColor.Color.values()) {
+                                // pink and gold are never mana, but "any color" sources answer yes to them
+                                if ((color.getColorMask() & ~MagicColor.ALL_COLORS) != 0) {
+                                    continue;
+                                }
                                 if (mp.canProduce(color.getShortName(), tail) || reflectedColors.contains(color.getName())) {
                                     manaMap.put((int) ManaAtom.fromName(color.getName()), m);
                                 }

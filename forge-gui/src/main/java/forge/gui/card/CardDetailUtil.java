@@ -122,6 +122,8 @@ public class CardDetailUtil {
             case RED -> DetailColors.RED;
             case GREEN -> DetailColors.GREEN;
             case PINK -> DetailColors.PINK;
+            // a gold card is monocolored, but gold is exactly the shade Forge already uses for multicolor
+            case GOLD -> DetailColors.MULTICOLOR;
             default -> null;
         };
     }

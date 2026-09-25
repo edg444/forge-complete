@@ -13,4 +13,4 @@ Border=Silver
 3 M Sword of Dungeons & Dragons @Chris Rahn
 
 [tokens]
-4 c_4_4_dragon_flying @Autumn Rain Turkel
+4 gold_4_4_dragon_flying @Autumn Rain Turkel

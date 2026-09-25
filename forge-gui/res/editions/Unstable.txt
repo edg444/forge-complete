@@ -297,7 +297,7 @@ ScryfallCode=UST
 13 g_3_3_beast @John Donahue
 14 g_1_1_saproling @Brad Rigney
 15 g_1_1_squirrel @John Thacker
-16 c_4_4_dragon_flying @Autumn Rain Turkel
+16 gold_4_4_dragon_flying @Autumn Rain Turkel
 17 gw_x_x_elemental_total_creatures @Mark Winters
 18 c_a_clue_draw @John Avon
 19 c_x_x_a_construct @Matt Gaser

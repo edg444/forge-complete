@@ -70,6 +70,9 @@ public class CardFaceSymbols {
         // for pink would read as "colorless", the one thing pink is not.
         Forge.getAssets().manaImages().put("K",
                 new FDrawnSymbol(new Color(1f, 0.522f, 0.753f, 1f), new Color(0.62f, 0.243f, 0.431f, 1f)));
+        // gold (the Sword of Dungeons & Dragons Dragon) is in the same position
+        Forge.getAssets().manaImages().put("O",
+                new FDrawnSymbol(new Color(0.973f, 0.859f, 0.333f, 1f), new Color(0.588f, 0.463f, 0.078f, 1f)));
         for (final int n : new int[] { 100, 1000000 }) {
             Forge.getAssets().manaImages().put(String.valueOf(n),
                     new FDrawnSymbol(new Color(0.796f, 0.776f, 0.757f, 1f), new Color(0.47f, 0.439f, 0.416f, 1f)));

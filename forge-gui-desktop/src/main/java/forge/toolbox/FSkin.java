@@ -1487,6 +1487,8 @@ public class FSkin {
         // drawn and written into the symbol cache by hand or the <img> tag resolves to a missing file.
         CardFaceSymbols.pinkPlaceholder().save(
                 ForgeConstants.CACHE_SYMBOLS_DIR + "/K.png", SYMBOL_WIDTH, SYMBOL_HEIGHT);
+        CardFaceSymbols.goldPlaceholder().save(
+                ForgeConstants.CACHE_SYMBOLS_DIR + "/O.png", SYMBOL_WIDTH, SYMBOL_HEIGHT);
         // likewise generic mana past {20}, which the skin sprites stop at
         for (final int n : CardFaceSymbols.OVERSIZED_GENERIC) {
             CardFaceSymbols.genericNumberSymbol(n).save(

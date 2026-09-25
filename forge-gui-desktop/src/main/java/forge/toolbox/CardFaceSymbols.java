@@ -59,6 +59,14 @@ public class CardFaceSymbols {
         return SkinImage.fromImage(img);
     }
 
+    static SkinImage goldPlaceholder() {
+        final java.awt.image.BufferedImage img = new java.awt.image.BufferedImage(
+                DRAWN_SYMBOL_SIZE, DRAWN_SYMBOL_SIZE, java.awt.image.BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = startSymbol(img, new Color(248, 219, 85), new Color(150, 118, 20));
+        g.dispose();
+        return SkinImage.fromImage(img);
+    }
+
     static SkinImage genericNumberSymbol(final int n) {
         final java.awt.image.BufferedImage img = new java.awt.image.BufferedImage(
                 DRAWN_SYMBOL_SIZE, DRAWN_SYMBOL_SIZE, java.awt.image.BufferedImage.TYPE_INT_ARGB);
@@ -108,6 +116,8 @@ public class CardFaceSymbols {
         // of the skin sprite. Borrowing the colorless one would read as "colorless", which is the one
         // thing pink is not - so it gets a drawn placeholder instead.
         MANA_IMAGES.put("K", pinkPlaceholder());
+        // gold (the Sword of Dungeons & Dragons Dragon) likewise has no symbol of its own
+        MANA_IMAGES.put("O", goldPlaceholder());
         for (final int n : OVERSIZED_GENERIC) {
             MANA_IMAGES.put(String.valueOf(n), genericNumberSymbol(n));
         }

@@ -396,7 +396,8 @@ public class ConquestAEtherScreen extends FScreen {
 
     private class ColorButton extends AbstractFilterButton<ColorSet> {
         private ColorButton(String caption0) {
-            super(caption0, Arrays.stream(ColorSet.values()).sorted(Comparator.comparing(ColorSet::getOrderWeight)).toArray(ColorSet[]::new),
+            // pink and gold are only ever a card's color, never something a deck is built around
+            super(caption0, Arrays.stream(ColorSet.values()).filter(c -> c.hasNoColorsExcept(MagicColor.ALL_COLORS)).sorted(Comparator.comparing(ColorSet::getOrderWeight)).toArray(ColorSet[]::new),
                     c -> "Playable in " + c.stream().map(MagicColor.Color::getSymbol).collect(Collectors.joining()));
         }
 
