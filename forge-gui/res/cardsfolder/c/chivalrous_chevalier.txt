@@ -1,0 +1,39 @@
+Name:Chivalrous Chevalier
+ManaCost:4 W
+Types:Artifact Creature Cyborg Knight
+PT:3/3
+K:Flying
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigBounce | TriggerDescription$ When this creature enters, return a creature you control to its owner's hand unless you compliment an opponent.
+SVar:TrigBounce:DB$ ChangeZone | Origin$ Battlefield | Destination$ Hand | Hidden$ True | Mandatory$ True | ChangeType$ Creature.YouCtrl | ChangeNum$ 1 | AILogic$ NeverBounceItself | UnlessCost$ FlavorAction<Compliment an opponent/Huzzah!> | UnlessPayer$ You | UnlessAI$ Chance.90 | UnlessResolveSubs$ WhenPaid | SubAbility$ DBRoll
+SVar:DBRoll:DB$ RollDice | Defined$ You | Sides$ 30 | ResultSubAbilities$ 1:DBC1,2:DBC2,3:DBC3,4:DBC4,5:DBC5,6:DBC6,7:DBC7,8:DBC8,9:DBC9,10:DBC10,11:DBC11,12:DBC12,13:DBC13,14:DBC14,15:DBC15,16:DBC16,17:DBC17,18:DBC18,19:DBC19,20:DBC20,21:DBC21,22:DBC22,23:DBC23,24:DBC24,25:DBC25,26:DBC26,27:DBC27,28:DBC28,29:DBC29,30:DBC30 | StackDescription$ None
+SVar:DBC1:DB$ Cleanup | NotifyMessage$ You declare your opponent's mana curve the fairest in all the land.
+SVar:DBC2:DB$ Cleanup | NotifyMessage$ You bow deeply and praise the valor of your opponent's 1/1 tokens.
+SVar:DBC3:DB$ Cleanup | NotifyMessage$ You swear upon your sword that your opponent shuffles with the grace of a hundred swans.
+SVar:DBC4:DB$ Cleanup | NotifyMessage$ You proclaim that bards shall sing of your opponent's sideboarding for generations.
+SVar:DBC5:DB$ Cleanup | NotifyMessage$ You kneel and commend your opponent's impeccable land drops.
+SVar:DBC6:DB$ Cleanup | NotifyMessage$ You salute your opponent's card sleeves as the finest heraldry you have ever beheld.
+SVar:DBC7:DB$ Cleanup | NotifyMessage$ You vow that no dragon in the realm could withstand your opponent's combat math.
+SVar:DBC8:DB$ Cleanup | NotifyMessage$ You tip your helm to your opponent's truly noble deckbuilding.
+SVar:DBC9:DB$ Cleanup | NotifyMessage$ You declare your opponent's life total as radiant as the morning sun.
+SVar:DBC10:DB$ Cleanup | NotifyMessage$ You compliment your opponent's graveyard as the best-kept in the kingdom.
+SVar:DBC11:DB$ Cleanup | NotifyMessage$ You praise your opponent's tapped lands for being so neatly rotated.
+SVar:DBC12:DB$ Cleanup | NotifyMessage$ You proclaim your opponent's playmat worthy of hanging in the royal hall.
+SVar:DBC13:DB$ Cleanup | NotifyMessage$ You offer your opponent your finest handkerchief in honor of their excellent mulligan.
+SVar:DBC14:DB$ Cleanup | NotifyMessage$ You announce that your opponent's dice rolls are blessed by the heavens themselves.
+SVar:DBC15:DB$ Cleanup | NotifyMessage$ You commend your opponent's creatures for their courage, even the ones with defender.
+SVar:DBC16:DB$ Cleanup | NotifyMessage$ You declare that your opponent blocks with the wisdom of an ancient sage.
+SVar:DBC17:DB$ Cleanup | NotifyMessage$ You praise the elegant penmanship on your opponent's life pad.
+SVar:DBC18:DB$ Cleanup | NotifyMessage$ You pledge eternal admiration for the way your opponent announces their attacks.
+SVar:DBC19:DB$ Cleanup | NotifyMessage$ You laud your opponent's instant-speed interaction as positively gallant.
+SVar:DBC20:DB$ Cleanup | NotifyMessage$ You recite a short sonnet in honor of your opponent's opening hand.
+SVar:DBC21:DB$ Cleanup | NotifyMessage$ You declare your opponent's deck box a treasure chest fit for a king.
+SVar:DBC22:DB$ Cleanup | NotifyMessage$ You praise your opponent's gracious habit of passing priority.
+SVar:DBC23:DB$ Cleanup | NotifyMessage$ You insist your opponent's library is the most well-read in the realm.
+SVar:DBC24:DB$ Cleanup | NotifyMessage$ You compliment your opponent's steed. They have no steed. You compliment it anyway.
+SVar:DBC25:DB$ Cleanup | NotifyMessage$ You proclaim that your opponent's timing on triggers is worthy of knighthood.
+SVar:DBC26:DB$ Cleanup | NotifyMessage$ You bow and praise your opponent's exquisite taste in basic land art.
+SVar:DBC27:DB$ Cleanup | NotifyMessage$ You name your opponent a worthy foe, and you mean every word of it.
+SVar:DBC28:DB$ Cleanup | NotifyMessage$ You hail your opponent's last turn as a masterpiece of medieval strategy.
+SVar:DBC29:DB$ Cleanup | NotifyMessage$ You tell your opponent their token-making is the stuff of legend.
+SVar:DBC30:DB$ Cleanup | NotifyMessage$ You challenge anyone present to name a more honorable opponent. None dare.
+Oracle:Flying\nWhen this creature enters, return a creature you control to its owner's hand unless you compliment an opponent.
