@@ -1,0 +1,10 @@
+Name:Do-It-Yourself Seraph
+ManaCost:4 W W
+Types:Artifact Creature Cyborg Angel
+PT:4/4
+K:Flying
+T:Mode$ Attacks | ValidCard$ Card.Self | OptionalDecider$ You | Execute$ TrigSearch | TriggerDescription$ Whenever this creature attacks, you may search your library for an artifact card, exile it, then shuffle.
+SVar:TrigSearch:DB$ ChangeZone | Origin$ Library | Destination$ Exile | ChangeType$ Artifact | ChangeNum$ 1
+S:Mode$ Continuous | AffectedDefined$ Self | EffectZone$ Battlefield | GainsTextBoxOf$ Card.ExiledWithSource | GainsAbilitiesOfZones$ Exile | Description$ This creature has the text box of each card exiled with this creature in addition to its own.
+DeckNeeds:Type$Artifact
+Oracle:Flying\nWhenever this creature attacks, you may search your library for an artifact card, exile it, then shuffle.\nThis creature has the text box of each card exiled with this creature in addition to its own.

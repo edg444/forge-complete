@@ -349,6 +349,18 @@ public final class StaticAbilityContinuous {
             if (params.containsKey("RemoveKeyword")) {
                 removeKeywords = Arrays.asList(params.get("RemoveKeyword").split(" & "));
             }
+
+            // Do-It-Yourself Seraph: the keywords printed in each gained text box, on top of its own
+            if (params.containsKey("GainsTextBoxOf")) {
+                if (addKeywords == null) {
+                    addKeywords = Lists.newArrayList();
+                }
+                for (final Card c : cardsGainedFrom("GainsTextBoxOf", params, hostCard, stAb, game)) {
+                    for (final KeywordInterface ki : c.getCurrentState().getIntrinsicKeywords()) {
+                        addKeywords.add(ki.getOriginal());
+                    }
+                }
+            }
         }
 
         if (layer == StaticAbilityLayer.RULES && params.containsKey("AddHiddenKeyword")) {
@@ -904,6 +916,31 @@ public final class StaticAbilityContinuous {
                     }
                 }
 
+                // "has the text box of each card exiled with it in addition to its own": unlike GainTextOf
+                // (Volrath's Shapeshifter), which replaces the card's text, every trait here is added.
+                // The ByText helpers are only used for their per-static caching, so the copies keep a
+                // stable identity from one static pass to the next.
+                if (params.containsKey("GainsTextBoxOf")) {
+                    for (final Card c : cardsGainedFrom("GainsTextBoxOf", params, hostCard, stAb, game)) {
+                        final CardState state = c.getCurrentState();
+                        for (final SpellAbility sa : state.getSpellAbilities()) {
+                            // the card's own cast spell isn't part of what the Seraph can do
+                            if (sa.isActivatedAbility()) {
+                                addedAbilities.add(affectedCard.getSpellAbilityForStaticAbilityByText(sa, stAb));
+                            }
+                        }
+                        for (final Trigger tr : state.getTriggers()) {
+                            addedTrigger.add(affectedCard.getTriggerForStaticAbilityByText(tr, stAb));
+                        }
+                        for (final ReplacementEffect re : state.getReplacementEffects()) {
+                            addedReplacementEffects.add(affectedCard.getReplacementEffectForStaticAbilityByText(re, stAb));
+                        }
+                        for (final StaticAbility st : state.getStaticAbilities()) {
+                            addedStaticAbility.add(affectedCard.getStaticAbilityForStaticAbilityByText(st, stAb));
+                        }
+                    }
+                }
+
                 if (params.containsKey("GainsTriggerAbsOf")) {
                     CardCollection cards = cardsGainedFrom("GainsTriggerAbsOf", params, hostCard, stAb, game);
 
@@ -931,6 +968,7 @@ public final class StaticAbilityContinuous {
                 }
 
                 if (!addedAbilities.isEmpty() || !addedTrigger.isEmpty() || addReplacements != null || addStatics != null
+                    || !addedReplacementEffects.isEmpty() || !addedStaticAbility.isEmpty()
                     || removeAbilities != null) {
                     affectedCard.addChangedCardTraits(
                         addedAbilities, addedTrigger, addedReplacementEffects, addedStaticAbility, removeAbilities, se.getTimestamp(), stAb.getId(), false
