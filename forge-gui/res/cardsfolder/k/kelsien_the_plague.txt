@@ -10,4 +10,4 @@ A:AB$ DealDamage | Cost$ T | ValidTgts$ Creature.YouDontCtrl | TgtPrompt$ Select
 SVar:DBDelayedTrigger:DB$ DelayedTrigger | Mode$ ChangesZone | RememberObjects$ Targeted | ValidCard$ Card.IsTriggerRemembered | Origin$ Battlefield | Destination$ Graveyard | ThisTurn$ True | Execute$ TrigPutCounter | SpellDescription$ When that creature dies this turn, you get an experience counter.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ You | CounterType$ Experience | CounterNum$ 1
 DeckHas:Ability$Counters
-Oracle:Vigilance, haste\nKelsien, the Plague gets +1/+1 for each experience counter you have.\n{T}: Kelsien deals 1 damage to target creature you don't control. When that creature dies this turn, you get an experience counter.
+Oracle:Vigilance, haste\nKelsien gets +1/+1 for each experience counter you have.\n{T}: Kelsien deals 1 damage to target creature you don't control. When that creature dies this turn, you get an experience counter.

@@ -8,4 +8,4 @@ T:Mode$ Explores | ValidCard$ Creature.YouCtrl | ValidExplored$ Card.nonLand | T
 SVar:TrigPutCounter:DB$ PutCounter | CounterType$ P1P1
 AI:RemoveDeck:Random
 DeckHas:Ability$Counters
-Oracle:Whenever a creature you control explores a land card, you may put a land card from your hand onto the battlefield tapped.\nWhenever a creature you control explores a nonland card, put a +1/+1 counter on Nicanzil, Current Conductor.
+Oracle:Whenever a creature you control explores a land card, you may put a land card from your hand onto the battlefield tapped.\nWhenever a creature you control explores a nonland card, put a +1/+1 counter on Nicanzil.

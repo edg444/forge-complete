@@ -12,4 +12,4 @@ SVar:NeedsToPlayVar:SacX GE5
 SVar:X:Remembered$Amount
 AI:RemoveDeck:Random
 DeckHas:Ability$Sacrifice
-Oracle:As Wood Elemental enters, sacrifice any number of untapped Forests.\nWood Elemental's power and toughness are each equal to the number of Forests sacrificed as it entered.
+Oracle:As this creature enters, sacrifice any number of untapped Forests.\nWood Elemental's power and toughness are each equal to the number of Forests sacrificed as it entered.

@@ -6,4 +6,4 @@ A:AB$ DealDamage | Cost$ X U R T | ValidTgts$ Creature | NumDmg$ X | SubAbility$
 SVar:DBDraw:DB$ Draw | Defined$ TargetedController | NumCards$ X
 SVar:X:Count$xPaid
 AI:RemoveDeck:Random
-Oracle:{X}{U}{R}, {T}: Nin, the Pain Artist deals X damage to target creature. That creature's controller draws X cards.
+Oracle:{X}{U}{R}, {T}: Nin deals X damage to target creature. That creature's controller draws X cards.

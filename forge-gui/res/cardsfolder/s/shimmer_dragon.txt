@@ -7,4 +7,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Hexproof | IsPresent$ A
 A:AB$ Draw | Cost$ tapXType<2/Artifact> | NumCards$ 1 | SpellDescription$ Draw a card.
 SVar:BuffedBy:Artifact
 DeckHints:Type$Artifact
-Oracle:Flying\nAs long as you control four or more artifacts, Shimmer Dragon has hexproof.\nTap two untapped artifacts you control: Draw a card.
+Oracle:Flying\nAs long as you control four or more artifacts, this creature has hexproof.\nTap two untapped artifacts you control: Draw a card.

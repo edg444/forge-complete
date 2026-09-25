@@ -10,4 +10,4 @@ SVar:TrigPut:DB$ PutCounter | CounterType$ P1P1
 K:Choose a Background
 AI:RemoveDeck:Random
 DeckHas:Ability$Counters
-Oracle:If you would roll one or more dice, instead roll that many dice plus one and ignore the lowest roll.\nWhenever you roll one or more dice, put a +1/+1 counter on Wyll, Blade of Frontiers.\nChoose a Background (You can have a Background as a second commander.)
+Oracle:If you would roll one or more dice, instead roll that many dice plus one and ignore the lowest roll.\nWhenever you roll one or more dice, put a +1/+1 counter on Wyll.\nChoose a Background (You can have a Background as a second commander.)

@@ -4,4 +4,4 @@ Types:Legendary Creature Phyrexian Angel
 PT:3/3
 K:Flying
 A:AB$ ChangeZone | Cost$ PayLife<2> | Origin$ Battlefield | Destination$ Hand | SpellDescription$ Return NICKNAME to its owner's hand.
-Oracle:Flying\nPay 2 life: Return Selenia, Dark Angel to its owner's hand.
+Oracle:Flying\nPay 2 life: Return Selenia to its owner's hand.

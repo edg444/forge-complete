@@ -13,4 +13,4 @@ K:Partner
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Discard
 DeckNeeds:Type$Artifact
-Oracle:Whenever Armix, Filigree Thrasher attacks, you may discard a card. When you do, target creature defending player controls gets -X/-X until end of turn, where X is the number of artifacts you control plus the number of artifact cards in your graveyard.\nPartner (You can have two commanders if both have partner.)
+Oracle:Whenever Armix attacks, you may discard a card. When you do, target creature defending player controls gets -X/-X until end of turn, where X is the number of artifacts you control plus the number of artifact cards in your graveyard.\nPartner (You can have two commanders if both have partner.)

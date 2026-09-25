@@ -6,4 +6,4 @@ T:Mode$ Taps | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigD
 SVar:TrigDamage:DB$ DamageAll | ValidCards$ Creature.YouCtrl | ValidPlayers$ You | NumDmg$ 2
 AI:RemoveDeck:Random
 AI:RemoveDeck:All
-Oracle:{T}: Choose two target blocking creatures an opponent controls. If each of those creatures could block all creatures that the other is blocking, remove both of them from combat. Each one then blocks all creatures the other was blocking.\nWhenever Sorrow's Path becomes tapped, it deals 2 damage to you and each creature you control.
+Oracle:{T}: Choose two target blocking creatures an opponent controls. If each of those creatures could block all creatures that the other is blocking, remove both of them from combat. Each one then blocks all creatures the other was blocking.\nWhenever this land becomes tapped, it deals 2 damage to you and each creature you control.

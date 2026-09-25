@@ -9,4 +9,4 @@ SVar:X:Count$Valid Artifact.YouCtrl
 K:Partner
 SVar:BuffedBy:Artifact
 AI:RemoveDeck:Random
-Oracle:First strike, vigilance\nAkiri, Line-Slinger gets +1/+0 for each artifact you control.\nPartner (You can have two commanders if both have partner.)
+Oracle:First strike, vigilance\nAkiri gets +1/+0 for each artifact you control.\nPartner (You can have two commanders if both have partner.)

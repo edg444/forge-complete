@@ -9,4 +9,4 @@ T:Mode$ AttackersDeclared | AttackingPlayer$ You | Execute$ TrigDraw | TriggerZo
 SVar:TrigDraw:DB$ Draw | SubAbility$ DBPut
 SVar:DBPut:DB$ ChangeZone | ChangeType$ Land.YouOwn | ChangeNum$ 1 | Origin$ Hand,Graveyard | Hidden$ True | Destination$ Battlefield
 DeckHas:Ability$Token|Graveyard & Type$Ox
-Oracle:Reach\nWhen Bonny Pall, Clearcutter enters, create Beau, a legendary blue Ox creature token with "Beau's power and toughness are each equal to the number of lands you control."\nWhenever you attack, draw a card, then you may put a land card from your hand or graveyard onto the battlefield.
+Oracle:Reach\nWhen Bonny Pall enters, create Beau, a legendary blue Ox creature token with "Beau's power and toughness are each equal to the number of lands you control."\nWhenever you attack, draw a card, then you may put a land card from your hand or graveyard onto the battlefield.

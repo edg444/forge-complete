@@ -9,4 +9,4 @@ SVar:DBDig:DB$ Dig | Defined$ You | DigNum$ Y | Reveal$ True | ChangeValid$ Card
 SVar:Y:TriggerCount$DamageAmount
 SVar:X:Count$Valid Artifact.YouCtrl$GreatestCardManaCost
 DeckHints:Type$Artifact
-Oracle:Flying\nGlint Raker gets +X/+0, where X is the highest mana value among artifacts you control.\nWhenever Glint Raker deals combat damage to a player, you may reveal that many cards from the top of your library. Put an artifact card revealed this way into your hand and the rest into your graveyard.
+Oracle:Flying\nThis creature gets +X/+0, where X is the highest mana value among artifacts you control.\nWhenever this creature deals combat damage to a player, you may reveal that many cards from the top of your library. Put an artifact card revealed this way into your hand and the rest into your graveyard.

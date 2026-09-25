@@ -8,4 +8,4 @@ S:Mode$ CantAttack | DefenderNotNearestToYouInChosenDirection$ True | Descriptio
 AI:RemoveDeck:Random
 SVar:NonStackingEffect:True
 AI:RemoveDeck:All
-Oracle:When Mystic Barrier enters or at the beginning of your upkeep, choose left or right.\nEach player may attack only the nearest opponent in the last chosen direction and planeswalkers controlled by that opponent.
+Oracle:When this enchantment enters or at the beginning of your upkeep, choose left or right.\nEach player may attack only the nearest opponent in the last chosen direction and planeswalkers controlled by that opponent.

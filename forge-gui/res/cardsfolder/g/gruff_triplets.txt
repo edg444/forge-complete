@@ -9,4 +9,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigCounters:DB$ PutCounterAll | ValidCards$ Creature.YouCtrl+namedGruff_Triplets | CounterType$ P1P1 | CounterNum$ X
 SVar:X:TriggeredCard$CardPower
 DeckHas:Ability$Token|Counters
-Oracle:Trample\nWhen Gruff Triplets enters, if it isn't a token, create two tokens that are copies of it.\nWhen Gruff Triplets dies, put a number of +1/+1 counters equal to its power on each creature you control named Gruff Triplets.
+Oracle:Trample\nWhen this creature enters, if it isn't a token, create two tokens that are copies of it.\nWhen this creature dies, put a number of +1/+1 counters equal to its power on each creature you control named Gruff Triplets.

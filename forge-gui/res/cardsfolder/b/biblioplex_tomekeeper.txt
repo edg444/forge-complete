@@ -2,7 +2,7 @@ Name:Biblioplex Tomekeeper
 ManaCost:4
 Types:Artifact Creature Construct
 PT:3/4
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When CARDNAME enters, ABILITY
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When this creature enters, ABILITY
 SVar:TrigCharm:DB$ Charm | MinCharmNum$ 0 | Choices$ DBPrepare,DBUnprepare
 SVar:DBPrepare:DB$ AlterAttribute | ValidTgts$ Creature | Attributes$ Prepared | SpellDescription$ Target creature becomes prepared. (Only creatures with prepare spells can become prepared.)
 SVar:DBUnprepare:DB$ AlterAttribute | ValidTgts$ Creature | Attributes$ Prepared | Activate$ False | SpellDescription$ Target creature becomes unprepared.

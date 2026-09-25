@@ -9,4 +9,4 @@ SVar:EnchantMe:Multiple
 SVar:EquipMe:Multiple
 DeckHints:Type$Equipment|Aura
 DeckHas:Ability$Token
-Oracle:At the beginning of combat on your turn, for each Aura and Equipment attached to Valduk, Keeper of the Flame, create a 3/1 red Elemental creature token with trample and haste. Exile those tokens at the beginning of the next end step.
+Oracle:At the beginning of combat on your turn, for each Aura and Equipment attached to Valduk, create a 3/1 red Elemental creature token with trample and haste. Exile those tokens at the beginning of the next end step.

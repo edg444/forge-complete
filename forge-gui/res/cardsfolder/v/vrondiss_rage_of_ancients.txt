@@ -8,4 +8,4 @@ T:Mode$ RolledDieOnce | TriggerZones$ Battlefield | ValidPlayer$ You | OptionalD
 SVar:TrigDamageSelf:DB$ DealDamage | Defined$ Self | NumDmg$ 1
 SVar:HasCombatEffect:TRUE
 DeckHas:Ability$Token|Sacrifice
-Oracle:Enrage — Whenever Vrondiss, Rage of Ancients is dealt damage, you may create a 5/4 red and green Dragon Spirit creature token with "When this token deals damage, sacrifice it."\nWhenever you roll one or more dice, you may have Vrondiss deal 1 damage to itself.
+Oracle:Enrage — Whenever Vrondiss is dealt damage, you may create a 5/4 red and green Dragon Spirit creature token with "When this token deals damage, sacrifice it."\nWhenever you roll one or more dice, you may have Vrondiss deal 1 damage to itself.

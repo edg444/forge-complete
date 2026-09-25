@@ -8,4 +8,4 @@ T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | E
 SVar:TrigUpkeep:DB$ Sacrifice | UnlessPayer$ You | UnlessCost$ R W B
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigDamage | TriggerDescription$ When NICKNAME dies, it deals 7 damage to each nonlegendary creature.
 SVar:TrigDamage:DB$ DamageAll | ValidCards$ Creature.nonLegendary | NumDmg$ 7 | ValidDescription$ each nonlegendary creature.
-Oracle:Flying, lifelink\nAt the beginning of your upkeep, sacrifice Piru, the Volatile unless you pay {R}{W}{B}.\nWhen Piru dies, it deals 7 damage to each nonlegendary creature.
+Oracle:Flying, lifelink\nAt the beginning of your upkeep, sacrifice Piru unless you pay {R}{W}{B}.\nWhen Piru dies, it deals 7 damage to each nonlegendary creature.

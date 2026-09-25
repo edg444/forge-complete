@@ -3,13 +3,13 @@ ManaCost:1 U B R
 Types:Legendary Creature Elder Dragon
 PT:4/4
 K:Flying
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDiscard | TriggerDescription$ When CARDNAME enters, each opponent discards a card.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDiscard | TriggerDescription$ When NICKNAME enters, each opponent discards a card.
 SVar:TrigDiscard:DB$ Discard | Defined$ Opponent | Mode$ TgtChoose
-A:AB$ ChangeZone | Cost$ 4 U B R | Origin$ Battlefield | Destination$ Exile | RememberChanged$ True | SubAbility$ DBReturn | SorcerySpeed$ True | StackDescription$ SpellDescription | SpellDescription$ Exile CARDNAME, then return him to the battlefield transformed under his owner's control. Activate only as a sorcery.
+A:AB$ ChangeZone | Cost$ 4 U B R | Origin$ Battlefield | Destination$ Exile | RememberChanged$ True | SubAbility$ DBReturn | SorcerySpeed$ True | StackDescription$ SpellDescription | SpellDescription$ Exile NICKNAME, then return him to the battlefield transformed under his owner's control. Activate only as a sorcery.
 SVar:DBReturn:DB$ ChangeZone | Defined$ Remembered | Origin$ Exile | Destination$ Battlefield | Transformed$ True | ForgetOtherRemembered$ True | SubAbility$ DBCleanup | StackDescription$ None
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 AlternateMode:DoubleFaced
-Oracle:Flying\nWhen Nicol Bolas, the Ravager enters, each opponent discards a card.\n{4}{U}{B}{R}: Exile Nicol Bolas, the Ravager, then return him to the battlefield transformed under his owner's control. Activate only as a sorcery.
+Oracle:Flying\nWhen Nicol Bolas enters, each opponent discards a card.\n{4}{U}{B}{R}: Exile Nicol Bolas, then return him to the battlefield transformed under his owner's control. Activate only as a sorcery.
 
 ALTERNATE
 
@@ -23,4 +23,4 @@ A:AB$ DealDamage | Cost$ SubCounter<3/LOYALTY> | Planeswalker$ True | ValidTgts$
 A:AB$ ChangeZone | Cost$ SubCounter<4/LOYALTY> | Planeswalker$ True | Origin$ Graveyard | Destination$ Battlefield | GainControl$ True | ValidTgts$ Creature,Planeswalker | TgtPrompt$ Select target creature or planeswalker card in a graveyard | SpellDescription$ Put target creature or planeswalker card from a graveyard onto the battlefield under your control.
 A:AB$ Dig | Cost$ SubCounter<12/LOYALTY> | Planeswalker$ True | Ultimate$ True | DigNum$ X | ChangeNum$ All | DestinationZone$ Exile | ValidTgts$ Player | SpellDescription$ Exile all but the bottom card of target player's library.
 SVar:X:Count$ValidLibrary Card.TargetedPlayerOwn/Minus.1
-Oracle:[+2]: Draw two cards.\n[-3]: Nicol Bolas, the Arisen deals 10 damage to target creature or planeswalker.\n[-4]: Put target creature or planeswalker card from a graveyard onto the battlefield under your control.\n[-12]: Exile all but the bottom card of target player's library.
+Oracle:[+2]: Draw two cards.\n[-3]: Nicol Bolas deals 10 damage to target creature or planeswalker.\n[-4]: Put target creature or planeswalker card from a graveyard onto the battlefield under your control.\n[-12]: Exile all but the bottom card of target player's library.

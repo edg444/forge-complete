@@ -11,4 +11,4 @@ SVar:Z:Count$Valid Creature.Snake+YouCtrl+cmcLE2
 AI:RemoveDeck:All
 AI:RemoveDeck:Random
 DeckNeeds:Type$Snake
-Oracle:At the beginning of your upkeep, sacrifice a Snake.\nWhenever Shisato, Whispering Hunter deals combat damage to a player, that player skips their next untap step.
+Oracle:At the beginning of your upkeep, sacrifice a Snake.\nWhenever Shisato deals combat damage to a player, that player skips their next untap step.

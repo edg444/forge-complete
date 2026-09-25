@@ -9,4 +9,4 @@ SVar:DBDrain:DB$ LoseLife | ConditionDefined$ Remembered | ConditionPresent$ Cre
 SVar:DBGainLife:DB$ GainLife | ConditionDefined$ Remembered | ConditionPresent$ Creature | Defined$ You | LifeAmount$ 2 | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHas:Ability$Graveyard|LifeGain
-Oracle:Deathtouch\nWhen Diregraf Scavenger enters, exile up to one target card from a graveyard. If a creature card was exiled this way, each opponent loses 2 life and you gain 2 life.
+Oracle:Deathtouch\nWhen this creature enters, exile up to one target card from a graveyard. If a creature card was exiled this way, each opponent loses 2 life and you gain 2 life.

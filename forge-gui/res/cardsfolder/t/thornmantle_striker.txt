@@ -2,7 +2,7 @@ Name:Thornmantle Striker
 ManaCost:4 B
 Types:Creature Elf Rogue
 PT:4/3
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When CARDNAME enters, ABILITY
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When this creature enters, ABILITY
 SVar:TrigCharm:DB$ Charm | Choices$ DBRemoveCounter,DBPump
 SVar:DBRemoveCounter:DB$ RemoveCounter | ValidTgts$ Permanent | CounterType$ Any | CounterNum$ X | SpellDescription$ Remove X counters from target permanent, where X is the number of Elves you control.
 SVar:DBPump:DB$ Pump | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls | IsCurse$ True | NumAtt$ -X | NumDef$ -X | SpellDescription$ Target creature an opponent controls gets -X/-X until end of turn, where X is the number of Elves you control.

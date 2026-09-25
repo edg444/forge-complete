@@ -12,4 +12,4 @@ SVar:DBChangeZone:DB$ ChangeZone | Origin$ Hand | Destination$ Battlefield | Tap
 SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1 | ConditionDefined$ Remembered | ConditionPresent$ Card
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:BuffedBy:Land
-Oracle:Trample\nCultivator Colossus's power and toughness are each equal to the number of lands you control.\nWhen Cultivator Colossus enters, you may put a land card from your hand onto the battlefield tapped. If you do, draw a card and repeat this process.
+Oracle:Trample\nCultivator Colossus's power and toughness are each equal to the number of lands you control.\nWhen this creature enters, you may put a land card from your hand onto the battlefield tapped. If you do, draw a card and repeat this process.

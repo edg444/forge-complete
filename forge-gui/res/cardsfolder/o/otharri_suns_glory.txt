@@ -15,4 +15,4 @@ SVar:DiscardMe:2
 SVar:SacMe:1
 DeckHas:Ability$Graveyard|Counters|Token & Type$Rebel
 DeckHints:Type$Rebel
-Oracle:Flying, lifelink, haste\nWhenever Otharri, Suns' Glory attacks, you get an experience counter. Then create a 2/2 red Rebel creature token that's tapped and attacking for each experience counter you have.\n{2}{R}{W}, Tap an untapped Rebel you control: Return Otharri from your graveyard to the battlefield tapped.
+Oracle:Flying, lifelink, haste\nWhenever Otharri attacks, you get an experience counter. Then create a 2/2 red Rebel creature token that's tapped and attacking for each experience counter you have.\n{2}{R}{W}, Tap an untapped Rebel you control: Return Otharri from your graveyard to the battlefield tapped.

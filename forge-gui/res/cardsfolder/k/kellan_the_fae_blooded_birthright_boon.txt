@@ -3,13 +3,13 @@ ManaCost:2 R
 Types:Legendary Creature Human Faerie
 PT:2/2
 K:Double Strike
-S:Mode$ Continuous | Affected$ Creature.Other+YouCtrl | AddPower$ X | Description$ Other creatures you control get +1/+0 for each Aura and Equipment attached to CARDNAME.
+S:Mode$ Continuous | Affected$ Creature.Other+YouCtrl | AddPower$ X | Description$ Other creatures you control get +1/+0 for each Aura and Equipment attached to NICKNAME.
 SVar:X:Count$Valid Equipment.Attached,Aura.Attached
 SVar:EnchantMe:Multiple
 SVar:EquipMe:Multiple
 DeckHints:Type$Equipment|Aura
 AlternateMode:Adventure
-Oracle:Double strike\nOther creatures you control get +1/+0 for each Aura and Equipment attached to Kellan, the Fae-Blooded.
+Oracle:Double strike\nOther creatures you control get +1/+0 for each Aura and Equipment attached to Kellan.
 
 ALTERNATE
 

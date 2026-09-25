@@ -8,4 +8,4 @@ S:Mode$ Continuous | Affected$ Phyrexian.Other+YouCtrl | AddPower$ 1 | AddToughn
 A:AB$ ChangeZone | Cost$ 3 B Sac<1/Artifact;Creature/artifact or creature> | Origin$ Graveyard | Destination$ Battlefield | ActivationZone$ Graveyard | SorcerySpeed$ True | SpellDescription$ Return this card from your graveyard to the battlefield. Activate only as a sorcery.
 DeckHints:Type$Phyrexian
 DeckHas:Ability$Sacrifice|Graveyard
-Oracle:When Grafted Butcher enters, Phyrexians you control gain menace until end of turn.\nOther Phyrexians you control get +1/+1\n{3}{B}, Sacrifice an artifact or creature: Return Grafted Butcher from your graveyard to the battlefield. Activate only as a sorcery.
+Oracle:When this creature enters, Phyrexians you control gain menace until end of turn.\nOther Phyrexians you control get +1/+1\n{3}{B}, Sacrifice an artifact or creature: Return this card from your graveyard to the battlefield. Activate only as a sorcery.

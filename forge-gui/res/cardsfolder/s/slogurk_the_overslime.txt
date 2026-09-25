@@ -10,4 +10,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.S
 SVar:DBChangeZone:DB$ ChangeZone | TargetMin$ 0 | TargetMax$ 3 | ValidTgts$ Card.Land+YouOwn | TgtPrompt$ Select up to three target land cards | Origin$ Graveyard | Destination$ Hand
 DeckHas:Ability$Counters|Graveyard
 DeckHints:Ability$Discard
-Oracle:Trample\nWhenever a land card is put into your graveyard from anywhere, put a +1/+1 counter on Slogurk, the Overslime.\nRemove three +1/+1 counters from Slogurk: Return it to its owner's hand.\nWhen Slogurk leaves the battlefield, return up to three target land cards from your graveyard to your hand.
+Oracle:Trample\nWhenever a land card is put into your graveyard from anywhere, put a +1/+1 counter on Slogurk.\nRemove three +1/+1 counters from Slogurk: Return it to its owner's hand.\nWhen Slogurk leaves the battlefield, return up to three target land cards from your graveyard to your hand.

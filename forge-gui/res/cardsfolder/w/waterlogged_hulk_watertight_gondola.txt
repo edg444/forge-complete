@@ -16,6 +16,6 @@ Colors:blue
 Types:Artifact Vehicle
 PT:4/4
 K:Vigilance
-S:Mode$ CantBlockBy | ValidAttacker$ Card.Self | IsPresent$ Permanent.YouOwn | PresentZone$ Graveyard | PresentCompare$ GE8 | Description$ Descend 8 — CARDNAME can't be blocked as long as there are eight or more permanent cards in your graveyard.
+S:Mode$ CantBlockBy | ValidAttacker$ Card.Self | IsPresent$ Permanent.YouOwn | PresentZone$ Graveyard | PresentCompare$ GE8 | Description$ Descend 8 — This Vehicle can't be blocked as long as there are eight or more permanent cards in your graveyard.
 K:Crew:1
 Oracle:Vigilance\nDescend 8 — This Vehicle can't be blocked as long as there are eight or more permanent cards in your graveyard.\nCrew 1 (Tap any number of creatures you control with total power 1 or more: This Vehicle becomes an artifact creature until end of turn.)

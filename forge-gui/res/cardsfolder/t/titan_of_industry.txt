@@ -4,7 +4,7 @@ Types:Creature Elemental
 PT:7/7
 K:Reach
 K:Trample
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When CARDNAME enters, ABILITY
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When this creature enters, ABILITY
 SVar:TrigCharm:DB$ Charm | Choices$ Destroy,GainLife,Token,PutCounter | CharmNum$ 2
 SVar:Destroy:DB$ Destroy | ValidTgts$ Artifact,Enchantment | TgtPrompt$ Select target artifact or enchantment | SpellDescription$ Destroy target artifact or enchantment.
 SVar:GainLife:DB$ GainLife | LifeAmount$ 5 | ValidTgts$ Player | SpellDescription$ Target player gains 5 life.

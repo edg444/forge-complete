@@ -12,4 +12,4 @@ A:AB$ PutCounter | Defined$ You | Cost$ 2 T Sac<1/Artifact> | CounterType$ ENERG
 SVar:DBDraw:DB$ Draw
 DeckHas:Ability$Sacrifice
 DeckHints:Type$Artifact
-Oracle:Vigilance, trample, haste\nWhenever Liberty Prime, Recharged attacks or blocks, sacrifice it unless you pay {E}{E} (two energy counters).\n{2}, {T}, Sacrifice an artifact: You get {E}{E} and draw a card.
+Oracle:Vigilance, trample, haste\nWhenever Liberty Prime attacks or blocks, sacrifice it unless you pay {E}{E} (two energy counters).\n{2}, {T}, Sacrifice an artifact: You get {E}{E} and draw a card.

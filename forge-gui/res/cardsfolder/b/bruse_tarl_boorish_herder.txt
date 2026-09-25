@@ -8,4 +8,4 @@ SVar:TrigPump:DB$ Pump | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target 
 K:Partner
 SVar:HasAttackEffect:TRUE
 SVar:PlayMain1:TRUE
-Oracle:Whenever Bruse Tarl, Boorish Herder enters or attacks, target creature you control gains double strike and lifelink until end of turn.\nPartner (You can have two commanders if both have partner.)
+Oracle:Whenever Bruse Tarl enters or attacks, target creature you control gains double strike and lifelink until end of turn.\nPartner (You can have two commanders if both have partner.)

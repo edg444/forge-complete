@@ -6,4 +6,4 @@ K:Hexproof
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ X | AddToughness$ X | Description$ NICKNAME gets +2/+2 for each Aura attached to it.
 SVar:X:Count$Valid Aura.Attached/Times.2
 SVar:EnchantMe:Multiple
-Oracle:Hexproof (This creature can't be the target of spells or abilities your opponents control.)\nUril, the Miststalker gets +2/+2 for each Aura attached to it.
+Oracle:Hexproof (This creature can't be the target of spells or abilities your opponents control.)\nUril gets +2/+2 for each Aura attached to it.

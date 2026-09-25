@@ -9,4 +9,4 @@ SVar:PlayMain1:TRUE
 SVar:NeedsToPlay:Creature.YouCtrl
 DeckHas:Ability$Counters
 DeckHints:Type$Artifact
-Oracle:When The Flesh Is Weak enters, put a +1/+1 counter on each creature you control.\nCreatures you control with +1/+1 counters on them are artifacts in addition to their other types\nNonartifact creatures get -1/-1.
+Oracle:When this enchantment enters, put a +1/+1 counter on each creature you control.\nCreatures you control with +1/+1 counters on them are artifacts in addition to their other types\nNonartifact creatures get -1/-1.

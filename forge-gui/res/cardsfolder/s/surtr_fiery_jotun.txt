@@ -5,4 +5,4 @@ PT:5/5
 K:Trample
 T:Mode$ SpellCast | ValidCard$ Card.Historic | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDmg | TriggerDescription$ Whenever you cast a historic spell, NICKNAME deals 3 damage to any target. (Artifacts, legendaries, and Sagas are historic.)
 SVar:TrigDmg:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 3
-Oracle:Trample (This creature can deal excess combat damage to the player it's attacking.)\nWhenever you cast a historic spell, Surtr, Fiery Jötun deals 3 damage to any target. (Artifacts, legendaries, and Sagas are historic.)
+Oracle:Trample (This creature can deal excess combat damage to the player it's attacking.)\nWhenever you cast a historic spell, Surtr deals 3 damage to any target. (Artifacts, legendaries, and Sagas are historic.)

@@ -9,4 +9,4 @@ S:Mode$ CantBlockBy | ValidAttacker$ Card.Self | ValidBlocker$ Creature.nonLegen
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigDestroy | TriggerDescription$ When NICKNAME dies, destroy target artifact or creature an opponent controls.
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Artifact.OppCtrl,Creature.OppCtrl | TgtPrompt$ Select target artifact or creature an opponent controls.
 DeckHints:Ability$Sacrifice
-Oracle:This spell costs {1} less to cast for each permanent sacrificed this turn.\nHaste\nThe Balrog, Durin's Bane can't be blocked except by legendary creatures.\nWhen The Balrog dies, destroy target artifact or creature an opponent controls.
+Oracle:This spell costs {1} less to cast for each permanent sacrificed this turn.\nHaste\nThe Balrog can't be blocked except by legendary creatures.\nWhen The Balrog dies, destroy target artifact or creature an opponent controls.

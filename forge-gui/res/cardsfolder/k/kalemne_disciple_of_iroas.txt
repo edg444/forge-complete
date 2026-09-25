@@ -9,4 +9,4 @@ SVar:TrigExperience:DB$ PutCounter | Defined$ You | CounterType$ Experience | Co
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ X | AddToughness$ X | Description$ NICKNAME gets +1/+1 for each experience counter you have.
 SVar:X:Count$YourCountersExperience
 SVar:BuffedBy:Creature.cmcGE5
-Oracle:Double strike, vigilance\nWhenever you cast a creature spell with mana value 5 or greater, you get an experience counter.\nKalemne, Disciple of Iroas gets +1/+1 for each experience counter you have.
+Oracle:Double strike, vigilance\nWhenever you cast a creature spell with mana value 5 or greater, you get an experience counter.\nKalemne gets +1/+1 for each experience counter you have.

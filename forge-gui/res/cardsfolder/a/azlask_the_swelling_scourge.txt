@@ -9,4 +9,4 @@ SVar:DBPumpAll:DB$ PumpAll | ValidCards$ Scion.YouCtrl,Spawn.YouCtrl | KW$ Annih
 SVar:X:Count$YourCountersExperience
 DeckNeeds:Type$Scion|Spawn
 DeckHints:Type$Eldrazi
-Oracle:Whenever Azlask, the Swelling Scourge or another colorless creature you control dies, you get an experience counter.\n{W}{U}{B}{R}{G}: Creatures you control get +X/+X until end of turn, where X is the number of experience counters you have. Scions and Spawns you control gain indestructible and annihilator 1 until end of turn.
+Oracle:Whenever Azlask or another colorless creature you control dies, you get an experience counter.\n{W}{U}{B}{R}{G}: Creatures you control get +X/+X until end of turn, where X is the number of experience counters you have. Scions and Spawns you control gain indestructible and annihilator 1 until end of turn.

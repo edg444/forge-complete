@@ -9,4 +9,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 1 | AddToughness$ 1 | IsP
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 1 | AddToughness$ 1 | IsPresent$ Desert.YouCtrl | PresentZone$ Graveyard | Description$ This creature gets +1/+1 as long as there is a Desert card in your graveyard.
 SVar:BuffedBy:Desert
 DeckHints:Type$Desert
-Oracle:Vigilance, reach, trample\nRamunap Hydra gets +1/+1 as long as you control a Desert.\nRamunap Hydra gets +1/+1 as long as there is a Desert card in your graveyard.
+Oracle:Vigilance, reach, trample\nThis creature gets +1/+1 as long as you control a Desert.\nThis creature gets +1/+1 as long as there is a Desert card in your graveyard.

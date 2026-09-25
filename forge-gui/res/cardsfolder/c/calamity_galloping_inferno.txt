@@ -8,4 +8,4 @@ SVar:TrigCopy:DB$ CopyPermanent | Choices$ Creature.nonLegendary+SaddledThisTurn
 SVar:DBRepeat:DB$ CopyPermanent | Choices$ Creature.nonLegendary+SaddledThisTurn | TokenTapped$ True | TokenAttacking$ True | AtEOT$ Sacrifice
 K:Saddle:1
 DeckHas:Ability$Sacrifice
-Oracle:Haste\nWhenever Calamity, Galloping Inferno attacks while saddled, choose a nonlegendary creature that saddled it this turn and create a tapped and attacking token that's a copy of it. Sacrifice that token at the beginning of the next end step. Repeat this process once.\nSaddle 1
+Oracle:Haste\nWhenever Calamity attacks while saddled, choose a nonlegendary creature that saddled it this turn and create a tapped and attacking token that's a copy of it. Sacrifice that token at the beginning of the next end step. Repeat this process once.\nSaddle 1

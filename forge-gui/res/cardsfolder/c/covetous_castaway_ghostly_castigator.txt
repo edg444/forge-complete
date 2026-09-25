@@ -7,7 +7,7 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigMill:DB$ Mill | NumCards$ 3 | Defined$ You
 DeckHas:Ability$Mill|Graveyard
 AlternateMode:DoubleFaced
-Oracle:When Covetous Castaway dies, mill three cards.\nDisturb {3}{U}{U} (You may cast this card from your graveyard transformed for its disturb cost.)
+Oracle:When this creature dies, mill three cards.\nDisturb {3}{U}{U} (You may cast this card from your graveyard transformed for its disturb cost.)
 
 ALTERNATE
 
@@ -21,4 +21,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigChangeZone:DB$ ChangeZone | Origin$ Graveyard | Destination$ Library | ValidTgts$ Card.YouOwn | TgtPrompt$ Select up to three target cards from your graveyard | TargetMin$ 0 | TargetMax$ 3 | Shuffle$ True | ShuffleNonMandatory$ True
 R:Event$ Moved | ValidCard$ Card.Self | Destination$ Graveyard | ReplaceWith$ Exile | Description$ If CARDNAME would be put into a graveyard from anywhere, exile it instead.
 SVar:Exile:DB$ ChangeZone | Hidden$ True | Origin$ All | Destination$ Exile | Defined$ ReplacedCard
-Oracle:Flying\nWhen Ghostly Castigator enters, you may shuffle up to three target cards from your graveyard into your library.\nIf Ghostly Castigator would be put into a graveyard from anywhere, exile it instead.
+Oracle:Flying\nWhen this creature enters, you may shuffle up to three target cards from your graveyard into your library.\nIf Ghostly Castigator would be put into a graveyard from anywhere, exile it instead.

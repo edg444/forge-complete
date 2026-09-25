@@ -8,4 +8,4 @@ T:Mode$ DiscardedAll | ValidPlayer$ You | FirstTime$ True | TriggerZones$ Battle
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ Y
 SVar:Y:TriggerCount$Amount
 DeckHints:Type$Instant|Sorcery
-Oracle:Rielle, the Everwise gets +1/+0 for each instant and sorcery card in your graveyard.\nWhenever you discard one or more cards for the first time each turn, draw that many cards.
+Oracle:Rielle gets +1/+0 for each instant and sorcery card in your graveyard.\nWhenever you discard one or more cards for the first time each turn, draw that many cards.

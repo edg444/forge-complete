@@ -8,4 +8,4 @@ S:Mode$ Continuous | Affected$ Card.Human+Other+YouCtrl | AddPower$ X | AddTough
 SVar:X:Count$CardCounters.ALL
 DeckHas:Ability$Counters
 DeckNeeds:Type$Human
-Oracle:Whenever another Human you control enters, put a +1/+1 counter on Kyler, Sigardian Emissary.\nOther Humans you control get +1/+1 for each counter on Kyler, Sigardian Emissary.
+Oracle:Whenever another Human you control enters, put a +1/+1 counter on Kyler.\nOther Humans you control get +1/+1 for each counter on Kyler.

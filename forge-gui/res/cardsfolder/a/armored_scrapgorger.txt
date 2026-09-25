@@ -8,4 +8,4 @@ T:Mode$ Taps | ValidCard$ Card.Self | Execute$ TrigExile | TriggerDescription$ W
 SVar:TrigExile:DB$ ChangeZone | Origin$ Graveyard | Destination$ Exile | ValidTgts$ Card | SubAbility$ DBCounter
 SVar:DBCounter:DB$ PutCounter | Defined$ Self | CounterType$ OIL | CounterNum$ 1
 DeckHas:Ability$Counters|Graveyard
-Oracle:Armored Scrapgorger gets +3/+0 as long as it has three or more oil counters on it.\n{T}: Add one mana of any color.\nWhen Armored Scrapgorger becomes tapped, exile target card from a graveyard and put an oil counter on Armored Scrapgorger.
+Oracle:This creature gets +3/+0 as long as it has three or more oil counters on it.\n{T}: Add one mana of any color.\nWhen Armored Scrapgorger becomes tapped, exile target card from a graveyard and put an oil counter on this creature.

@@ -13,4 +13,4 @@ SVar:KWPump:Mode$ Continuous | AffectedZone$ Battlefield | Affected$ Creature | 
 SVar:X:Count$Monarch.1.0
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$LifeGain
-Oracle:Vigilance, lifelink\nWhen Aragorn, King of Gondor enters, you become the monarch.\nWhenever Aragorn attacks, up to one target creature can't block this turn. If you're the monarch, creatures can't block this turn.
+Oracle:Vigilance, lifelink\nWhen Aragorn enters, you become the monarch.\nWhenever Aragorn attacks, up to one target creature can't block this turn. If you're the monarch, creatures can't block this turn.

@@ -11,4 +11,4 @@ SVar:KhansTrigger:Mode$ Phase | Phase$ Main1,Main2 | TriggerZones$ Battlefield |
 SVar:ManaGain:DB$ Mana | Produced$ G G
 SVar:DragonsTrigger:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.YouCtrl+withFlying | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ AirFight | Secondary$ True | TriggerDescription$ Whenever a creature with flying enters under your control, you may have it fight target creature you don't control.
 SVar:AirFight:DB$ Fight | Defined$ TriggeredCardLKICopy | ValidTgts$ Creature.YouDontCtrl | TgtPrompt$ Choose target creature you don't control
-Oracle:As Frontier Siege enters, choose Khans or Dragons.\n• Khans — At the beginning of each of your main phases, add {G}{G}.\n• Dragons — Whenever a creature with flying enters under your control, you may have it fight target creature you don't control.
+Oracle:As this enchantment enters, choose Khans or Dragons.\n• Khans — At the beginning of each of your main phases, add {G}{G}.\n• Dragons — Whenever a creature with flying enters under your control, you may have it fight target creature you don't control.

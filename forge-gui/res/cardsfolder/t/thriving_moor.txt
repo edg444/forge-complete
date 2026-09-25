@@ -6,4 +6,4 @@ SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 K:ETBReplacement:Other:ChooseColor
 SVar:ChooseColor:DB$ ChooseColor | Defined$ You | Exclude$ black | AILogic$ MostProminentInComputerDeck | SpellDescription$ As it enters, choose a color other than black.
 A:AB$ Mana | Cost$ T | Produced$ Combo B Chosen | SpellDescription$ Add {B} or one mana of the chosen color.
-Oracle:Thriving Moor enters tapped.\nAs Thriving Moor enters, choose a color other than black.\n{T}: Add {B} or one mana of the chosen color.
+Oracle:This land enters tapped.\nAs it enters, choose a color other than black.\n{T}: Add {B} or one mana of the chosen color.

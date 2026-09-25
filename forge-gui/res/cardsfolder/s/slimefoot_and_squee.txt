@@ -9,4 +9,4 @@ A:AB$ ChangeZone | Cost$ 1 B R G Sac<1/Saproling> | ThisDefinedAndTgts$ Self | O
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Token|Graveyard|Sacrifice & Type$Saproling
 DeckHints:Type$Fungus
-Oracle:Whenever Slimefoot and Squee enters or attacks, create a 1/1 green Saproling creature token.\n{1}{B}{R}{G}, Sacrifice a Saproling: Return Slimefoot and Squee and up to one other target creature card from your graveyard to the battlefield. Activate only as a sorcery.
+Oracle:Whenever Slimefoot and Squee enters or attacks, create a 1/1 green Saproling creature token.\n{1}{B}{R}{G}, Sacrifice a Saproling: Return this card and up to one other target creature card from your graveyard to the battlefield. Activate only as a sorcery.

@@ -2,7 +2,7 @@ Name:Callous Bloodmage
 ManaCost:2 B
 Types:Creature Vampire Warlock
 PT:2/1
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When CARDNAME enters, ABILITY
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When this creature enters, ABILITY
 SVar:TrigCharm:DB$ Charm | Choices$ DBToken,DBDraw,DBExileYard
 SVar:DBToken:DB$ Token | TokenScript$ bg_1_1_pest_lifegain | TokenOwner$ You | SpellDescription$ Create a 1/1 black and green Pest creature token with "When this token dies, you gain 1 life."
 SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1 | SubAbility$ DBLoseLife | SpellDescription$ You draw a card and you lose 1 life.

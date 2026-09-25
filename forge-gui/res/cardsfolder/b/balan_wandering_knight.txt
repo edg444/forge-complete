@@ -7,4 +7,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Double Strike | IsPrese
 A:AB$ RepeatEach | Cost$ 1 W | RepeatSubAbility$ DBAttach | RepeatCards$ Equipment.YouCtrl | AILogic$ EquipAll | SpellDescription$ Attach all Equipment you control to NICKNAME.
 SVar:DBAttach:DB$ Attach | Object$ Remembered | Defined$ Self
 SVar:EquipMe:Multiple
-Oracle:First strike\nBalan, Wandering Knight has double strike as long as two or more Equipment are attached to it.\n{1}{W}: Attach all Equipment you control to Balan.
+Oracle:First strike\nBalan has double strike as long as two or more Equipment are attached to it.\n{1}{W}: Attach all Equipment you control to Balan.

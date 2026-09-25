@@ -28,4 +28,4 @@ SVar:X:Remembered$CardManaCost
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Graveyard
-Oracle:O-Kagachi Made Manifest is all colors.\nFlying, trample\nWhenever O-Kagachi Made Manifest attacks, defending player chooses a nonland card in your graveyard. Return that card to your hand. O-Kagachi Made Manifest gets +X/+0 until end of turn, where X is the mana value of that card.
+Oracle:O-Kagachi Made Manifest is all colors.\nFlying, trample\nWhenever this creature attacks, defending player chooses a nonland card in your graveyard. Return that card to your hand. This creature gets +X/+0 until end of turn, where X is the mana value of that card.

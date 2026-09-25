@@ -8,4 +8,4 @@ K:Crew:2
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Graveyard
 DeckHints:Type$Creature|Vehicle
-Oracle:Whenever Imperial Recovery Unit attacks, return target creature or Vehicle card with mana value 2 or less from your graveyard to your hand.\nCrew 2
+Oracle:Whenever this Vehicle attacks, return target creature or Vehicle card with mana value 2 or less from your graveyard to your hand.\nCrew 2

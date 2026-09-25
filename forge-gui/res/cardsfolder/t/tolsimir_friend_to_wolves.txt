@@ -10,4 +10,4 @@ SVar:DBFight:DB$ Fight | Defined$ TriggeredCardLKICopy | ValidTgts$ Creature.Opp
 SVar:PlayMain1:TRUE
 DeckHints:Type$Wolf
 DeckHas:Ability$Token|LifeGain
-Oracle:When Tolsimir, Friend to Wolves enters, create Voja, Friend to Elves, a legendary 3/3 green and white Wolf creature token.\nWhenever a Wolf you control enters, you gain 3 life and that creature fights up to one target creature you don't control.
+Oracle:When Tolsimir enters, create Voja, Friend to Elves, a legendary 3/3 green and white Wolf creature token.\nWhenever a Wolf you control enters, you gain 3 life and that creature fights up to one target creature you don't control.

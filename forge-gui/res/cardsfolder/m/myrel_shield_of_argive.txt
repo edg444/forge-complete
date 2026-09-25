@@ -10,4 +10,4 @@ SVar:X:Count$Valid Soldier.YouCtrl
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Token & Type$Artifact
 DeckHints:Type$Soldier
-Oracle:During your turn, your opponents can't cast spells or activate abilities of artifacts, creatures, or enchantments.\nWhenever Myrel, Shield of Argive attacks, create X 1/1 colorless Soldier artifact creature tokens, where X is the number of Soldiers you control.
+Oracle:During your turn, your opponents can't cast spells or activate abilities of artifacts, creatures, or enchantments.\nWhenever Myrel attacks, create X 1/1 colorless Soldier artifact creature tokens, where X is the number of Soldiers you control.

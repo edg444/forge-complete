@@ -8,4 +8,4 @@ SVar:TrigTreasure:DB$ Token | TokenAmount$ X | TokenScript$ c_a_treasure_sac
 SVar:X:Count$CastTotalManaSpent Treasure
 SVar:AIPreference:ManaFrom$Treasure
 DeckHas:Ability$Sacrifice|Token & Type$Treasure|Artifact
-Oracle:Trample\nWhen Marut enters, if mana from a Treasure was spent to cast it, create a Treasure token for each mana from a Treasure spent to cast it.
+Oracle:Trample\nWhen this creature enters, if mana from a Treasure was spent to cast it, create a Treasure token for each mana from a Treasure spent to cast it.

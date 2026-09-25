@@ -2,7 +2,7 @@ Name:Tax Collector
 ManaCost:1 W
 Types:Creature Human Advisor
 PT:2/2
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When CARDNAME enters, ABILITY
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When this creature enters, ABILITY
 SVar:TrigCharm:DB$ Charm | Choices$ DBTax,DBDetain
 SVar:DBTax:DB$ Effect | Duration$ UntilYourNextTurn | StaticAbilities$ RaiseCost | SpellDescription$ Until your next turn, spells your opponents cast cost {1} more to cast.
 SVar:RaiseCost:Mode$ RaiseCost | ValidCard$ Card | Activator$ Opponent | Type$ Spell | Amount$ 1 | Description$ Spells your opponents cast cost {1} more to cast.

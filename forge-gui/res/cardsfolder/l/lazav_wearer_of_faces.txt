@@ -10,4 +10,4 @@ SVar:TrigClone:DB$ Clone | Choices$ Creature.ExiledWithSource | ChoiceZone$ Exil
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Investigate|Token|Graveyard & Type$Artifact|Clue
 DeckHints:Ability$Graveyard
-Oracle:Whenever Lazav, Wearer of Faces attacks, exile target card from a graveyard, then investigate. (Create a Clue token. It's an artifact with "{2}, Sacrifice this token: Draw a card.")\nWhenever you sacrifice a Clue, you may have Lazav become a copy of a creature card exiled with it until end of turn.
+Oracle:Whenever Lazav attacks, exile target card from a graveyard, then investigate. (Create a Clue token. It's an artifact with "{2}, Sacrifice this token: Draw a card.")\nWhenever you sacrifice a Clue, you may have Lazav become a copy of a creature card exiled with it until end of turn.

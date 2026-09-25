@@ -6,4 +6,4 @@ S:Mode$ CantTarget | ValidTarget$ Card.Self | ValidSA$ Activated,Triggered | Act
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ X | AddToughness$ X | Description$ NICKNAME gets +1/+1 for each creature you control.
 SVar:X:Count$Valid Creature.YouCtrl
 SVar:BuffedBy:Creature
-Oracle:Shanna, Sisay's Legacy can't be the target of abilities your opponents control.\nShanna gets +1/+1 for each creature you control.
+Oracle:Shanna can't be the target of abilities your opponents control.\nShanna gets +1/+1 for each creature you control.

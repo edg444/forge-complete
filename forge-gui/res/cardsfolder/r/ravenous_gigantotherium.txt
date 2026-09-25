@@ -8,4 +8,4 @@ SVar:TrigDmg:DB$ DealDamage | ValidTgts$ Creature | TgtPrompt$ Select target cre
 SVar:GigantotheriumFight:DB$ EachDamage | DefinedDamagers$ Targeted | NumDmg$ Count$CardPower | Defined$ Self
 SVar:FirePower:Count$CardPower
 DeckHas:Ability$Counters
-Oracle:Devour 3 (As this enters, you may sacrifice any number of creatures. This creature enters with three times that many +1/+1 counters on it.)\nWhen Ravenous Gigantotherium enters, it deals X damage divided as you choose among up to X target creatures, where X is its power. Each of those creatures deals damage equal to its power to Ravenous Gigantotherium.
+Oracle:Devour 3 (As this enters, you may sacrifice any number of creatures. This creature enters with three times that many +1/+1 counters on it.)\nWhen this creature enters, it deals X damage divided as you choose among up to X target creatures, where X is its power. Each of those creatures deals damage equal to its power to this creature.

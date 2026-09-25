@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDmgOpp:DB$ Pump | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls | SubAbility$ DBDmgOpp | StackDescription$ None | IsCurse$ True | SpellDescription$ Target creature an opponent controls deals damage equal to its power to that player.
 SVar:DBDmgOpp:DB$ DealDamage | DamageSource$ Targeted | Defined$ TargetedController | NumDmg$ X
 SVar:X:Targeted$CardPower
-Oracle:When Dong Zhou, the Tyrant enters, target creature an opponent controls deals damage equal to its power to that player.
+Oracle:When Dong Zhou enters, target creature an opponent controls deals damage equal to its power to that player.

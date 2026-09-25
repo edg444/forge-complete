@@ -8,4 +8,4 @@ SVar:X:Count$Valid Rat.YouCtrl+Other
 SVar:BuffedBy:Rat
 SVar:PlayMain1:TRUE
 DeckNeeds:Type$Rat
-Oracle:Rat Colony gets +1/+0 for each other Rat you control.\nA deck can have any number of cards named Rat Colony.
+Oracle:This creature gets +1/+0 for each other Rat you control.\nA deck can have any number of cards named Rat Colony.

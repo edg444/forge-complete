@@ -2,10 +2,10 @@ Name:Rune-Tail, Kitsune Ascendant
 ManaCost:2 W
 Types:Legendary Creature Fox Monk
 PT:2/2
-T:Mode$ Always | LifeTotal$ You | LifeAmount$ GE30 | TriggerZones$ Battlefield | Execute$ TrigFlip | TriggerDescription$ When you have 30 or more life, flip CARDNAME.
+T:Mode$ Always | LifeTotal$ You | LifeAmount$ GE30 | TriggerZones$ Battlefield | Execute$ TrigFlip | TriggerDescription$ When you have 30 or more life, flip NICKNAME.
 SVar:TrigFlip:DB$ SetState | Defined$ Self | Mode$ Flip
 AlternateMode:Flip
-Oracle:When you have 30 or more life, flip Rune-Tail, Kitsune Ascendant.
+Oracle:When you have 30 or more life, flip Rune-Tail.
 
 ALTERNATE
 

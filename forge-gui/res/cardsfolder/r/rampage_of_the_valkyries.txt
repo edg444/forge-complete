@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigSac:DB$ Sacrifice | Defined$ Opponent | SacValid$ Creature
 DeckHints:Type$Angel
 DeckHas:Ability$Token
-Oracle:When Rampage of the Valkyries enters, create a 4/4 white Angel creature token with flying and vigilance.\nWhenever an Angel you control dies, each other player sacrifices a creature.
+Oracle:When this enchantment enters, create a 4/4 white Angel creature token with flying and vigilance.\nWhenever an Angel you control dies, each other player sacrifices a creature.

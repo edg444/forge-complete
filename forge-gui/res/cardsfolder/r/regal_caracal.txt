@@ -8,4 +8,4 @@ SVar:TrigToken:DB$ Token | TokenAmount$ 2 | TokenScript$ w_1_1_cat_lifelink | To
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Cat
 DeckHas:Ability$Token
-Oracle:Other Cats you control get +1/+1 and have lifelink.\nWhen Regal Caracal enters, create two 1/1 white Cat creature tokens with lifelink.
+Oracle:Other Cats you control get +1/+1 and have lifelink.\nWhen this creature enters, create two 1/1 white Cat creature tokens with lifelink.

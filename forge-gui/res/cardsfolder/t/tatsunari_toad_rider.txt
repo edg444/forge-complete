@@ -10,4 +10,4 @@ SVar:STCantBlockByFrog:Mode$ CantBlockBy | ValidAttacker$ Creature.IsRemembered 
 DeckNeeds:Type$Enchantment
 DeckHints:Type$Frog
 DeckHas:Ability$Token|LifeGain & Type$Frog
-Oracle:Whenever you cast an enchantment spell, if you don't control a creature named Keimi, create Keimi, a legendary 3/3 black and green Frog creature token with "Whenever you cast an enchantment spell, each opponent loses 1 life and you gain 1 life."\n{1}{G/U}: Tatsunari, Toad Rider and target Frog you control can't be blocked this turn except by creatures with flying or reach.
+Oracle:Whenever you cast an enchantment spell, if you don't control a creature named Keimi, create Keimi, a legendary 3/3 black and green Frog creature token with "Whenever you cast an enchantment spell, each opponent loses 1 life and you gain 1 life."\n{1}{G/U}: Tatsunari and target Frog you control can't be blocked this turn except by creatures with flying or reach.

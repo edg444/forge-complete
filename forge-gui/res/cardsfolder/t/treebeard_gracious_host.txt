@@ -11,4 +11,4 @@ SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Creature.Halfling,Creature.Treef
 SVar:X:TriggerCount$LifeAmount
 DeckHints:Ability$Counters|LifeGain|Token
 DeckHas:Ability$Counters|LifeGain|Token
-Oracle:Trample, ward {2}\nWhen Treebeard, Gracious Host enters, create two Food tokens.\nWhenever you gain life, put that many +1/+1 counters on target Halfling or Treefolk.
+Oracle:Trample, ward {2}\nWhen Treebeard enters, create two Food tokens.\nWhenever you gain life, put that many +1/+1 counters on target Halfling or Treefolk.

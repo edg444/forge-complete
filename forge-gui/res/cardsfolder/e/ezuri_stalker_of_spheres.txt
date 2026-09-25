@@ -8,4 +8,4 @@ T:Mode$ Proliferate | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ Tr
 SVar:TrigDraw:DB$ Draw
 DeckHas:Ability$Proliferate|Counters
 DeckNeeds:Ability$Counters
-Oracle:When Ezuri, Stalker of Spheres enters, you may pay {3}. If you do, proliferate twice.\nWhenever you proliferate, draw a card.
+Oracle:When Ezuri enters, you may pay {3}. If you do, proliferate twice.\nWhenever you proliferate, draw a card.

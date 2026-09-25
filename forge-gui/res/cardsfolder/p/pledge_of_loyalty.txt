@@ -4,4 +4,4 @@ Types:Enchantment Aura
 K:Enchant:Creature
 SVar:AttachAILogic:Pump
 S:Mode$ Continuous | AffectedDefined$ Enchanted | AddKeyword$ Protection:Card.ColorsYouCtrl:colorsYouCtrl:Card.CardUID_HostCardUID | Description$ Enchanted creature has protection from the colors of permanents you control. This effect doesn't remove this Aura.
-Oracle:Enchant creature\nEnchanted creature has protection from the colors of permanents you control. This effect doesn't remove Pledge of Loyalty.
+Oracle:Enchant creature\nEnchanted creature has protection from the colors of permanents you control. This effect doesn't remove this Aura.

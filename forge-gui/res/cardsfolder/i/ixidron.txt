@@ -8,4 +8,4 @@ S:Mode$ Continuous | CharacteristicDefining$ True | SetPower$ X | SetToughness$ 
 SVar:X:Count$Valid Creature.faceDown
 SVar:NeedsToPlay:Creature.OppCtrl+!token
 SVar:NoZeroToughnessAI:True
-Oracle:As Ixidron enters, turn all other nontoken creatures face down. (They're 2/2 creatures.)\nIxidron's power and toughness are each equal to the number of face-down creatures on the battlefield.
+Oracle:As this creature enters, turn all other nontoken creatures face down. (They're 2/2 creatures.)\nIxidron's power and toughness are each equal to the number of face-down creatures on the battlefield.

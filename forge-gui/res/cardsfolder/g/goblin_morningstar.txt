@@ -3,7 +3,7 @@ ManaCost:1 R
 Types:Artifact Equipment
 S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddPower$ 1 | AddKeyword$ Trample | Description$ Equipped creature gets +1/+0 and has trample.
 K:Equip:1 R
-T:Mode$ ChangesZone | ValidCard$ Card.Self | Destination$ Battlefield | Execute$ TrigRollDice | TriggerDescription$ When CARDNAME enters, ABILITY
+T:Mode$ ChangesZone | ValidCard$ Card.Self | Destination$ Battlefield | Execute$ TrigRollDice | TriggerDescription$ When this Equipment enters, ABILITY
 SVar:TrigRollDice:DB$ RollDice | Sides$ 20 | ResultSubAbilities$ 1-9:DBToken,10-20:DBTokenAttach | SpellDescription$ roll a d20.
 SVar:DBToken:DB$ Token | TokenScript$ r_1_1_goblin | TokenOwner$ You | SpellDescription$ 1—9 | Create a 1/1 red Goblin creature token.
 SVar:DBTokenAttach:DB$ Token | TokenScript$ r_1_1_goblin | TokenOwner$ You | RememberTokens$ True | SubAbility$ DBAttach | SpellDescription$ 10—20 | Create a 1/1 red Goblin creature token, then attach CARDNAME to it.

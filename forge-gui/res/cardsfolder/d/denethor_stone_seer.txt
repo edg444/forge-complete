@@ -7,4 +7,4 @@ SVar:TrigScry:DB$ Scry | ScryNum$ 2
 A:AB$ BecomeMonarch | Cost$ 3 R T Sac<1/NICKNAME> | ValidTgts$ Player | SubAbility$ DBDamage | SpellDescription$ Target player becomes the monarch. NICKNAME deals 3 damage to any target.
 SVar:DBDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 3
 DeckHas:Ability$Sacrifice
-Oracle:When Denethor, Stone Seer enters, scry 2.\n{3}{R}, {T}, Sacrifice Denethor: Target player becomes the monarch. Denethor deals 3 damage to any target.
+Oracle:When Denethor enters, scry 2.\n{3}{R}, {T}, Sacrifice Denethor: Target player becomes the monarch. Denethor deals 3 damage to any target.

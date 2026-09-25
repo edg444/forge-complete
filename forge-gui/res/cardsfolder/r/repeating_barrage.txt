@@ -4,4 +4,4 @@ Types:Sorcery
 A:SP$ DealDamage | ValidTgts$ Any | NumDmg$ 3 | SpellDescription$ CARDNAME deals 3 damage to any target.
 A:AB$ ChangeZone | Cost$ 3 R R | PrecostDesc$ Raid — | Origin$ Graveyard | Destination$ Hand | ActivationZone$ Graveyard | CheckSVar$ RaidTest | SpellDescription$ Return this card from your graveyard to your hand. Activate only if you attacked this turn.
 SVar:RaidTest:Count$AttackersDeclared
-Oracle:Repeating Barrage deals 3 damage to any target.\nRaid — {3}{R}{R}: Return Repeating Barrage from your graveyard to your hand. Activate only if you attacked this turn.
+Oracle:Repeating Barrage deals 3 damage to any target.\nRaid — {3}{R}{R}: Return this card from your graveyard to your hand. Activate only if you attacked this turn.

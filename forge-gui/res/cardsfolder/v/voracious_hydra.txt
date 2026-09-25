@@ -5,7 +5,7 @@ PT:0/1
 K:Trample
 K:etbCounter:P1P1:X
 SVar:X:Count$xPaid
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When CARDNAME enters, ABILITY
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When this creature enters, ABILITY
 SVar:TrigCharm:DB$ Charm | Choices$ DBCounter,DBFight
 SVar:DBCounter:DB$ MultiplyCounter | Defined$ Self | CounterType$ P1P1 | SpellDescription$ Double the number of +1/+1 counters on this creature.
 SVar:DBFight:DB$ Fight | Defined$ Self | ValidTgts$ Creature.YouDontCtrl | TgtPrompt$ Select target creature you don't control | SpellDescription$ This creature fights target creature you don't control.

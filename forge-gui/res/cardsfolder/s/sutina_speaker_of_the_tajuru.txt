@@ -8,4 +8,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ Tr
 SVar:TrigImmediateTrig:AB$ ImmediateTrigger | Cost$ Return<1/Land> | Execute$ TrigPutCounter | TriggerDescription$ When you do, put a +1/+1 counter on target creature.
 SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Creature | CounterType$ P1P1 | CounterNum$ 1
 SVar:HasAttackEffect:TRUE
-Oracle:When Sutina, Speaker of the Tajuru enters, search your library for a basic land card, put it onto the battlefield tapped, then shuffle.\nWhenever Sutina attacks, you may return a land you control to its owner's hand. When you do, put a +1/+1 counter on target creature.
+Oracle:When Sutina enters, search your library for a basic land card, put it onto the battlefield tapped, then shuffle.\nWhenever Sutina attacks, you may return a land you control to its owner's hand. When you do, put a +1/+1 counter on target creature.

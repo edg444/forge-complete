@@ -11,4 +11,4 @@ T:Mode$ AttackersDeclared | Execute$ TrigDamage | ValidAttackers$ Creature | Val
 SVar:TrigDamage:DB$ DealDamage | Defined$ Opponent | NumDmg$ 3 | SubAbility$ DBGainLife
 SVar:DBGainLife:DB$ GainLife | LifeAmount$ 3
 DeckHas:Ability$LifeGain
-Oracle:Flying, vigilance, haste\nWhenever a player attacks with three or more creatures, you draw a card.\nWhenever a player attacks with five or more creatures, Aurelia, the Law Above deals 3 damage to each of your opponents and you gain 3 life.
+Oracle:Flying, vigilance, haste\nWhenever a player attacks with three or more creatures, you draw a card.\nWhenever a player attacks with five or more creatures, Aurelia deals 3 damage to each of your opponents and you gain 3 life.

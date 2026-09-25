@@ -10,4 +10,4 @@ K:Doctor's companion
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Counters|Sacrifice
 DeckNeeds:Type$Artifact
-Oracle:Nitro-9 — Whenever Ace, Fearless Rebel attacks, you may sacrifice an artifact. When you do, put a +1/+1 counter on Ace, Fearless Rebel, then it fights up to one target creature defending player controls.\nDoctor's companion (You can have two commanders if the other is the Doctor.)
+Oracle:Nitro-9 — Whenever Ace attacks, you may sacrifice an artifact. When you do, put a +1/+1 counter on Ace, then it fights up to one target creature defending player controls.\nDoctor's companion (You can have two commanders if the other is the Doctor.)

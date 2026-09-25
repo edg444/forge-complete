@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigMill:DB$ Mill | NumCards$ 2 | Defined$ You | SubAbility$ DBLifeGain
 SVar:DBLifeGain:DB$ GainLife | Defined$ You | LifeAmount$ 2
 DeckHas:Ability$Graveyard|LifeGain
-Oracle:Deathtouch\nWhen Mire Triton enters, mill two cards and you gain 2 life.
+Oracle:Deathtouch\nWhen this creature enters, mill two cards and you gain 2 life.

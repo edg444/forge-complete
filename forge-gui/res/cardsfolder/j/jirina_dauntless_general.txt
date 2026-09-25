@@ -7,4 +7,4 @@ SVar:TrigExile:DB$ ChangeZoneAll | ValidTgts$ Player | Origin$ Graveyard | Desti
 A:AB$ PumpAll | Cost$ Sac<1/NICKNAME> | ValidCards$ Human.YouCtrl | KW$ Hexproof & Indestructible | SpellDescription$ Humans you control gain hexproof and indestructible until end of turn.
 DeckHas:Ability$Graveyard|Sacrifice
 DeckHints:Type$Human
-Oracle:When Jirina, Dauntless General enters, exile target player's graveyard.\nSacrifice Jirina: Humans you control gain hexproof and indestructible until end of turn.
+Oracle:When Jirina enters, exile target player's graveyard.\nSacrifice Jirina: Humans you control gain hexproof and indestructible until end of turn.

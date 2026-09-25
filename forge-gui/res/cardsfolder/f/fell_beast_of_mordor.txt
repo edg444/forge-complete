@@ -12,4 +12,4 @@ SVar:X:Count$CardCounters.P1P1
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Sacrifice|Counters|LifeGain
 DeckHints:Ability$Counters
-Oracle:Flying\nDevour 1 (As this enters, you may sacrifice any number of creatures. This creature enters with that many +1/+1 counters on it.)\nWhenever Fell Beast of Mordor enters or attacks, target opponent loses X life and you gain X life, where X is the number of +1/+1 counters on it.
+Oracle:Flying\nDevour 1 (As this enters, you may sacrifice any number of creatures. This creature enters with that many +1/+1 counters on it.)\nWhenever this creature enters or attacks, target opponent loses X life and you gain X life, where X is the number of +1/+1 counters on it.

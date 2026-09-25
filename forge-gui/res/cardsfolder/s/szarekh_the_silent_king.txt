@@ -9,4 +9,4 @@ SVar:DBChangeZone:DB$ ChangeZone | Origin$ Graveyard,Exile | Destination$ Hand |
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHas:Ability$Mill
 DeckNeeds:Type$Artifact|Creature|Vehicle
-Oracle:Flying\nMy Will Be Done — Whenever Szarekh, the Silent King attacks, mill three cards. You may put an artifact creature card or Vehicle card from among the cards milled this way into your hand.
+Oracle:Flying\nMy Will Be Done — Whenever Szarekh attacks, mill three cards. You may put an artifact creature card or Vehicle card from among the cards milled this way into your hand.

@@ -7,4 +7,4 @@ T:Mode$ Taps | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 1 | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1
 DeckHas:Ability$LifeGain
-Oracle:Vigilance\nWhenever Wylie Duke, Atiin Hero becomes tapped, you gain 1 life and draw a card.
+Oracle:Vigilance\nWhenever Wylie Duke becomes tapped, you gain 1 life and draw a card.

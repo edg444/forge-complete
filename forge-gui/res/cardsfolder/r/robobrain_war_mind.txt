@@ -11,4 +11,4 @@ SVar:TrigDraw:AB$ Draw | Cost$ PayEnergy<3>
 SVar:HasAttackEffect:TRUE
 SVar:X:Count$Valid Artifact.Creature+YouCtrl
 DeckHas:Ability$Counters
-Oracle:Robobrain War Mind's power is equal to the number of cards in your hand.\nWhen Robobrain War Mind enters, you get an amount of {E} (energy counters) equal to the number of artifact creatures you control.\nWhenever Robobrain War Mind attacks, you may pay {E}{E}{E}. If you do, draw a card.
+Oracle:Robobrain War Mind's power is equal to the number of cards in your hand.\nWhen this creature enters, you get an amount of {E} (energy counters) equal to the number of artifact creatures you control.\nWhenever this creature attacks, you may pay {E}{E}{E}. If you do, draw a card.

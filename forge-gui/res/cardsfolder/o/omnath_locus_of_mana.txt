@@ -6,4 +6,4 @@ S:Mode$ UnspentMana | ValidPlayer$ You | ManaType$ Green | Description$ You don'
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ X | AddToughness$ X | Description$ NICKNAME gets +1/+1 for each unspent green mana you have.
 SVar:X:Count$ManaPool:green
 AI:RemoveDeck:All
-Oracle:You don't lose unspent green mana as steps and phases end.\nOmnath, Locus of Mana gets +1/+1 for each unspent green mana you have.
+Oracle:You don't lose unspent green mana as steps and phases end.\nOmnath gets +1/+1 for each unspent green mana you have.

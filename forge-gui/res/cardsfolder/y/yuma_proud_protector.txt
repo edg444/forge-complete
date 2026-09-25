@@ -11,4 +11,4 @@ SVar:TrigToken:DB$ Token | TokenScript$ g_4_2_plant_warrior_reach
 DeckHas:Ability$Sacrifice|Token & Type$Plant|Warrior
 DeckHints:Ability$Discard|Sacrifice
 DeckNeeds:Type$Desert
-Oracle:This spell costs {1} less to cast for each land card in your graveyard.\nWhenever Yuma, Proud Protector enters or attacks, you may sacrifice a land. If you do, draw a card.\nWhenever a Desert card is put into your graveyard from anywhere, create a 4/2 green Plant Warrior creature token with reach.
+Oracle:This spell costs {1} less to cast for each land card in your graveyard.\nWhenever Yuma enters or attacks, you may sacrifice a land. If you do, draw a card.\nWhenever a Desert card is put into your graveyard from anywhere, create a 4/2 green Plant Warrior creature token with reach.

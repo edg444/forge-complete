@@ -11,4 +11,4 @@ SVar:X:Count$ValidHand Card.YouOwn
 SVar:Y:Remembered$Amount
 SVar:HasAttackEffect:TRUE
 DeckHints:Type$Human
-Oracle:Minas Tirith Garrison's power is equal to the number of cards in your hand.\nWhenever Minas Tirith Garrison attacks, you may tap any number of untapped Humans you control. Draw a card for each Human tapped this way.
+Oracle:Minas Tirith Garrison's power is equal to the number of cards in your hand.\nWhenever this creature attacks, you may tap any number of untapped Humans you control. Draw a card for each Human tapped this way.

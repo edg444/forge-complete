@@ -8,4 +8,4 @@ SVar:TrigReturn:DB$ ChangeZone | ValidTgts$ Creature.Legendary+cmcLTX+YouOwn | T
 SVar:X:TriggeredCard$CardManaCost
 DeckHas:Ability$Graveyard
 DeckHints:Type$Legendary
-Oracle:Havi, the All-Father has indestructible as long as there are four or more historic cards in your graveyard. (Artifacts, legendaries, and Sagas are historic.)\nSage Project — Whenever Havi or another legendary creature you control dies, return target legendary creature card with lesser mana value from your graveyard to the battlefield tapped.
+Oracle:Havi has indestructible as long as there are four or more historic cards in your graveyard. (Artifacts, legendaries, and Sagas are historic.)\nSage Project — Whenever Havi or another legendary creature you control dies, return target legendary creature card with lesser mana value from your graveyard to the battlefield tapped.

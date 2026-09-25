@@ -10,4 +10,4 @@ SVar:DBEffect:DB$ Effect | Triggers$ TrigAbilityActivated | SpellDescription$ Un
 SVar:TrigAbilityActivated:Mode$ AbilityCast | ValidCard$ Planeswalker.ChosenType | ValidSA$ Activated | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCopy | TriggerDescription$ Until end of turn, whenever you activate an ability of a planeswalker of that type, copy that ability. You may choose new targets for the copies.
 SVar:TrigCopy:DB$ CopySpellAbility | Defined$ TriggeredSpellAbility | MayChooseTarget$ True
 DeckHints:Type$Planeswalker
-Oracle:Flying, vigilance\nWhenever Leori, Sparktouched Hunter deals combat damage to a player, choose a planeswalker type. Until end of turn, whenever you activate an ability of a planeswalker of that type, copy that ability. You may choose new targets for the copies.
+Oracle:Flying, vigilance\nWhenever Leori deals combat damage to a player, choose a planeswalker type. Until end of turn, whenever you activate an ability of a planeswalker of that type, copy that ability. You may choose new targets for the copies.

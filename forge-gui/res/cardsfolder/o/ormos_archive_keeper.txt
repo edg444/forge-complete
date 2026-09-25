@@ -7,4 +7,4 @@ R:Event$ Draw | ActiveZones$ Battlefield | ValidPlayer$ You | IsPresent$ Card.Yo
 SVar:AddCounters:DB$ PutCounter | CounterType$ P1P1 | CounterNum$ 5 | Defined$ Self
 A:AB$ Draw | Cost$ 1 U U Discard<3/Card+WithDifferentNames> | NumCards$ 5 | SpellDescription$ Draw five cards.
 AI:RemoveDeck:All
-Oracle:Flying\nIf you would draw a card while your library has no cards in it, instead put five +1/+1 counters on Ormos, Archive Keeper.\n{1}{U}{U}, Discard three cards with different names: Draw five cards.
+Oracle:Flying\nIf you would draw a card while your library has no cards in it, instead put five +1/+1 counters on Ormos.\n{1}{U}{U}, Discard three cards with different names: Draw five cards.

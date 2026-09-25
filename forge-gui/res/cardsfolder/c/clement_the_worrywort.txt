@@ -8,4 +8,4 @@ SVar:TrigReturn:DB$ ChangeZone | ValidTgts$ Creature.YouCtrl+cmcLTX | TargetMin$
 S:Mode$ Continuous | Affected$ Frog.YouCtrl | AddAbility$ AnyMana | Description$ Frogs you control have "{T}: Add {G} or {U}. Spend this mana only to cast a creature spell."
 SVar:AnyMana:AB$ Mana | Cost$ T | Produced$ Combo G U | RestrictValid$ Spell.Creature | SpellDescription$ Add {G} or {U}. Spend this mana only to cast a creature spell.
 SVar:X:TriggeredCard$CardManaCost
-Oracle:Vigilance\nWhenever Clement, the Worrywort or another creature you control enters, return up to one target creature you control with lesser mana value to its owner's hand.\nFrogs you control have "{T}: Add {G} or {U}. Spend this mana only to cast a creature spell."
+Oracle:Vigilance\nWhenever Clement or another creature you control enters, return up to one target creature you control with lesser mana value to its owner's hand.\nFrogs you control have "{T}: Add {G} or {U}. Spend this mana only to cast a creature spell."

@@ -8,4 +8,4 @@ SVar:TrigSac:DB$ Sacrifice | UnlessPayer$ You | UnlessCost$ RemoveAnyCounter<1/A
 SVar:NeedsToPlay:Creature.YouCtrl+HasCounters
 SVar:AIRemoveCounterCostPriority:ANY
 DeckNeeds:Ability$Counters
-Oracle:Flying\nAt the beginning of your upkeep, sacrifice Chisei, Heart of Oceans unless you remove a counter from a permanent you control.
+Oracle:Flying\nAt the beginning of your upkeep, sacrifice Chisei unless you remove a counter from a permanent you control.

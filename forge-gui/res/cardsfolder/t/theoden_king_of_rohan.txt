@@ -5,4 +5,4 @@ PT:2/3
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self,Creature.Human+Other+YouCtrl | Execute$ TrigPump | TriggerDescription$ Whenever NICKNAME or another Human you control enters, target creature gains double strike until end of turn.
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature | KW$ Double Strike
 DeckHints:Type$Human
-Oracle:Whenever Théoden, King of Rohan or another Human you control enters, target creature gains double strike until end of turn.
+Oracle:Whenever Théoden or another Human you control enters, target creature gains double strike until end of turn.

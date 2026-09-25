@@ -7,4 +7,4 @@ SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Creature | CounterType$ M1M1 | T
 SVar:PlayMain1:TRUE
 DeckHas:Ability$Counters
 A:AB$ Clone | Cost$ 1 | ValidTgts$ Creature.HasCounters | TgtPrompt$ Select target creature with a counter on it | Duration$ UntilYourNextTurn | SetPower$ 7 | SetToughness$ 5 | GainThisAbility$ True | SpellDescription$ Until your next turn, NICKNAME becomes a copy of target creature with a counter on it, except it's 7/5 and it has this ability.
-Oracle:At the beginning of combat on your turn, put a -1/-1 counter on up to one target creature.\n{1}: Until your next turn, Volrath, the Shapestealer becomes a copy of target creature with a counter on it, except it's 7/5 and it has this ability.
+Oracle:At the beginning of combat on your turn, put a -1/-1 counter on up to one target creature.\n{1}: Until your next turn, Volrath becomes a copy of target creature with a counter on it, except it's 7/5 and it has this ability.

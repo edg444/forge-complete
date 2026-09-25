@@ -5,4 +5,4 @@ PT:3/3
 K:Horsemanship
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigLoseLife | TriggerDescription$ When NICKNAME enters, you lose 3 life.
 SVar:TrigLoseLife:DB$ LoseLife | LifeAmount$ 3
-Oracle:Horsemanship (This creature can't be blocked except by creatures with horsemanship.)\nWhen Cao Ren, Wei Commander enters, you lose 3 life.
+Oracle:Horsemanship (This creature can't be blocked except by creatures with horsemanship.)\nWhen Cao Ren enters, you lose 3 life.

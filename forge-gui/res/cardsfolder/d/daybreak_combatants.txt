@@ -6,4 +6,4 @@ K:Haste
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ When this creature enters, target creature gets +2/+0 until end of turn.
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature | AILogic$ Pump | NumAtt$ +2
 SVar:PlayMain1:TRUE
-Oracle:Haste\nWhen Daybreak Combatants enters, target creature gets +2/+0 until end of turn.
+Oracle:Haste\nWhen this creature enters, target creature gets +2/+0 until end of turn.

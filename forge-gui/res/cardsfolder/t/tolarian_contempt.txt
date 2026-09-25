@@ -8,4 +8,4 @@ SVar:TrigTarget:DB$ Pump | ValidTgts$ Creature.counters_GE1_REJECTION+OppCtrl | 
 SVar:DBRepeat:DB$ RepeatEach | DefinedCards$ Targeted | RepeatSubAbility$ DBLibrary
 SVar:DBLibrary:DB$ ChangeZone | Defined$ Remembered | Origin$ Battlefield | Destination$ Library | DestinationAlternative$ Library | LibraryPositionAlternative$ -1 | AlternativeDecider$ RememberedOwner
 DeckHas:Ability$Counters
-Oracle:When Tolarian Contempt enters, put a rejection counter on each creature your opponents control.\nAt the beginning of your end step, for each opponent, choose up to one target creature they control with a rejection counter on it. That creature's owner puts it on the top or bottom of their library.
+Oracle:When this enchantment enters, put a rejection counter on each creature your opponents control.\nAt the beginning of your end step, for each opponent, choose up to one target creature they control with a rejection counter on it. That creature's owner puts it on the top or bottom of their library.

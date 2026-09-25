@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | CounterType$ EachFromSource | EachFromSource$ TriggeredCardLKICopy
 SVar:SacMe:2
 DeckHas:Ability$Counters
-Oracle:Training\nWhen Parish-Blade Trainee dies, put its counters on target creature you control.
+Oracle:Training\nWhen this creature dies, put its counters on target creature you control.

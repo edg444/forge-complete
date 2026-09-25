@@ -8,4 +8,4 @@ R:Event$ DamageDone | ActiveZones$ Battlefield | ValidSource$ Card,Emblem | Vali
 SVar:DmgTwice:DB$ ReplaceEffect | VarName$ DamageAmount | VarValue$ X
 SVar:X:ReplaceCount$DamageAmount/Twice
 SVar:PlayMain1:TRUE
-Oracle:As Sawhorn Nemesis enters, choose a player.\nIf a source would deal damage to the chosen player or a permanent they control, it deals double the damage instead.
+Oracle:As this creature enters, choose a player.\nIf a source would deal damage to the chosen player or a permanent they control, it deals double the damage instead.

@@ -6,4 +6,4 @@ K:Trample
 T:Mode$ DamageDoneOnce | ValidTarget$ Card.Self | Execute$ TrigVenture | TriggerDescription$ Whenever NICKNAME is dealt damage, venture into the dungeon. (Enter the first room or advance to the next room.)
 SVar:TrigVenture:DB$ Venture
 SVar:HasCombatEffect:TRUE
-Oracle:Trample\nWhenever Zalto, Fire Giant Duke is dealt damage, venture into the dungeon. (Enter the first room or advance to the next room.)
+Oracle:Trample\nWhenever Zalto is dealt damage, venture into the dungeon. (Enter the first room or advance to the next room.)

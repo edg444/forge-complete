@@ -8,4 +8,4 @@ R:Event$ Moved | ActiveZones$ Battlefield | ValidCard$ Creature.YouCtrl+Other | 
 SVar:EnterWithP1P1:DB$ PutCounter | ETB$ True | Defined$ ReplacedCard | CounterType$ P1P1 | CounterNum$ Treasure
 SVar:Treasure:ReplacedCardLKI$CastTotalManaSpent Treasure
 DeckHas:Ability$Token|Sacrifice|Counters
-Oracle:When Kalain, Reclusive Painter enters, create a Treasure token. (It's an artifact with "{T}, Sacrifice this token: Add one mana of any color.")\nOther creatures you control enter with an additional +1/+1 counter on them for each mana from a Treasure spent to cast them.
+Oracle:When Kalain enters, create a Treasure token. (It's an artifact with "{T}, Sacrifice this token: Add one mana of any color.")\nOther creatures you control enter with an additional +1/+1 counter on them for each mana from a Treasure spent to cast them.

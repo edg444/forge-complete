@@ -6,4 +6,4 @@ K:Flash
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When this creature enters, create a 1/1 white Soldier creature token.
 SVar:TrigToken:DB$ Token | TokenScript$ w_1_1_soldier
 DeckHas:Ability$Token
-Oracle:Flash\nWhen Resolute Reinforcements enters, create a 1/1 white Soldier creature token.
+Oracle:Flash\nWhen this creature enters, create a 1/1 white Soldier creature token.

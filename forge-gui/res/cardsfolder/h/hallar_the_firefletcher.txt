@@ -9,4 +9,4 @@ SVar:DBDealDamage:DB$ DealDamage | Defined$ Player.Opponent | NumDmg$ X
 SVar:X:Count$CardCounters.P1P1
 SVar:BuffedBy:Card.withKicker,Card.withMultikicker
 DeckHas:Ability$Counters
-Oracle:Trample\nWhenever you cast a spell, if that spell was kicked, put a +1/+1 counter on Hallar, the Firefletcher, then Hallar deals damage equal to the number of +1/+1 counters on it to each opponent.
+Oracle:Trample\nWhenever you cast a spell, if that spell was kicked, put a +1/+1 counter on Hallar, then Hallar deals damage equal to the number of +1/+1 counters on it to each opponent.

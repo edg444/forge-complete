@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | ValidCard$ Card.Self,Creature.Other+Legendary+YouCtrl | Or
 SVar:TrigChange:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand | TgtPrompt$ Select target artifact card in your graveyard | ValidTgts$ Artifact.YouCtrl
 DeckHas:Ability$Graveyard
 DeckNeeds:Type$Artifact
-Oracle:Whenever Loran, Disciple of History or another legendary creature you control enters, return target artifact card from your graveyard to your hand.
+Oracle:Whenever Loran or another legendary creature you control enters, return target artifact card from your graveyard to your hand.

@@ -9,7 +9,7 @@ A:AB$ Pump | Cost$ 2 U U | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select targe
 SVar:DBEffect:DB$ Effect | RememberObjects$ Targeted | Triggers$ TrigDamage | StaticAbilities$ CanAttack | ForgetOnMoved$ Battlefield | SubAbility$ DBAnimate
 SVar:CanAttack:Mode$ CanAttackDefender | ValidCard$ Card.IsRemembered | Description$ CARDNAME can attack as though it didn't have defender.
 SVar:DBAnimate:DB$ Animate | Defined$ Targeted | Triggers$ TrigDamage
-SVar:TrigDamage:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | Execute$ TrigDraw | CombatDamage$ True | TriggerDescription$ Whenever CARDNAME deals combat damage to a player, draw cards equal to its toughness.
+SVar:TrigDamage:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | Execute$ TrigDraw | CombatDamage$ True | TriggerDescription$ Whenever this creature deals combat damage to a player, draw cards equal to its toughness.
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ Y
 SVar:Y:Count$CardToughness
 DeckHints:Type$Wall|Treefolk & Keyword$Defender

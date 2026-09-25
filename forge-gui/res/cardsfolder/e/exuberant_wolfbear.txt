@@ -7,4 +7,4 @@ SVar:TrigAnimate:DB$ Animate | ValidTgts$ Creature.Human+YouCtrl | TgtPrompt$ Se
 SVar:X:Count$CardPower
 SVar:Y:Count$CardToughness
 SVar:HasAttackEffect:TRUE
-Oracle:Whenever Exuberant Wolfbear attacks, you may change the base power and toughness of target Human you control to Exuberant Wolfbear's power and toughness until end of turn.
+Oracle:Whenever this creature attacks, you may change the base power and toughness of target Human you control to this creature's power and toughness until end of turn.

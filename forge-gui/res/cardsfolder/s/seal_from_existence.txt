@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | ValidTgts$ Permanent.nonLand+OppCtrl | TgtPrompt$ Select target nonland permanent an opponent controls | Duration$ UntilHostLeavesPlay
 SVar:PlayMain1:TRUE
 SVar:OblivionRing:TRUE
-Oracle:Ward {3}\nWhen Seal from Existence enters, exile target nonland permanent an opponent controls until Seal from Existence leaves the battlefield.
+Oracle:Ward {3}\nWhen this enchantment enters, exile target nonland permanent an opponent controls until this enchantment leaves the battlefield.

@@ -6,4 +6,4 @@ S:Mode$ Continuous | Affected$ Card.Self | AffectedZone$ Graveyard | EffectZone$
 R:Event$ Moved | ValidLKI$ Card.CastSa Spell.MayPlaySource | Origin$ Stack | Destination$ Graveyard | ReplaceWith$ MoveExile
 SVar:MoveExile:DB$ ChangeZone | Defined$ ReplacedCard | Origin$ Stack | Destination$ Exile
 DeckHas:Ability$Graveyard
-Oracle:Eelectrocute deals 2 damage to any target.\nYou may cast Eelectrocute from your graveyard as long as you've rolled a 6 this turn. If you cast Eelectrocute this way and it would be put into your graveyard, exile it instead.
+Oracle:Eelectrocute deals 2 damage to any target.\nYou may cast this card from your graveyard as long as you've rolled a 6 this turn. If you cast it this way and it would be put into your graveyard, exile it instead.

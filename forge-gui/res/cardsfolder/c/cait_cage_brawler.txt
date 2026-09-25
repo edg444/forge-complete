@@ -10,4 +10,4 @@ SVar:DBPutCounter:DB$ PutCounter | ConditionDefined$ Remembered | ConditionPrese
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Discard|Counters
-Oracle:During your turn, Cait, Cage Brawler has indestructible.\nWhenever Cait attacks, you and defending player each draw a card, then discard a card. Put two +1/+1 counters on Cait if you discarded the card with the highest mana value among those cards or tied for highest.
+Oracle:During your turn, Cait has indestructible.\nWhenever Cait attacks, you and defending player each draw a card, then discard a card. Put two +1/+1 counters on Cait if you discarded the card with the highest mana value among those cards or tied for highest.

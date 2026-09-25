@@ -10,4 +10,4 @@ SVar:HasAttackEffect:TRUE
 AI:RemoveDeck:Random
 DeckHas:Ability$Token & Type$Sliver
 DeckNeeds:Type$Sliver
-Oracle:As Rukarumel, Biologist enters, choose a creature type.\nSlivers you control and nontoken creatures you control are the chosen type in addition to their other creature types. The same is true for creature spells you control and creature cards you own that aren't on the battlefield.\n{3}, {T}: Create a 1/1 colorless Sliver creature token.
+Oracle:As Rukarumel enters, choose a creature type.\nSlivers you control and nontoken creatures you control are the chosen type in addition to their other creature types. The same is true for creature spells you control and creature cards you own that aren't on the battlefield.\n{3}, {T}: Create a 1/1 colorless Sliver creature token.

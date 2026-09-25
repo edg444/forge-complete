@@ -8,4 +8,4 @@ S:Mode$ Continuous | EffectZone$ Battlefield | CharacteristicDefining$ True | Se
 SVar:X:Count$Valid Island.YouCtrl
 SVar:Y:Count$CardCounters.TIME
 SVar:NeedsToPlayVar:X GE3
-Oracle:Tidewalker enters with a time counter on it for each Island you control.\nVanishing (At the beginning of your upkeep, remove a time counter from this creature. When the last is removed, sacrifice it.)\nTidewalker's power and toughness are each equal to the number of time counters on it.
+Oracle:This creature enters with a time counter on it for each Island you control.\nVanishing (At the beginning of your upkeep, remove a time counter from this creature. When the last is removed, sacrifice it.)\nTidewalker's power and toughness are each equal to the number of time counters on it.

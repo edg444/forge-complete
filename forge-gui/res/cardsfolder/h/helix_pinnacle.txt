@@ -4,7 +4,7 @@ Types:Enchantment
 T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | IsPresent$ Card.Self+counters_GE100_TOWER | Execute$ TrigWinGame | TriggerDescription$ At the beginning of your upkeep, if there are 100 or more tower counters on this enchantment, you win the game.
 SVar:TrigWinGame:DB$ WinsGame | Defined$ You
 K:Shroud
-A:AB$ PutCounter | Cost$ X | CounterType$ TOWER | CounterNum$ X | SpellDescription$ Put a tower counter on CARDNAME.
+A:AB$ PutCounter | Cost$ X | CounterType$ TOWER | CounterNum$ X | SpellDescription$ Put a tower counter on this enchantment.
 SVar:X:Count$xPaid
 AI:RemoveDeck:Random
 Oracle:Shroud (This enchantment can't be the target of spells or abilities.)\n{X}: Put X tower counters on this enchantment.\nAt the beginning of your upkeep, if there are 100 or more tower counters on this enchantment, you win the game.

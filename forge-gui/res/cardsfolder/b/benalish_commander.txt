@@ -9,4 +9,4 @@ SVar:TrigToken:DB$ Token | TokenScript$ w_1_1_soldier | TokenOwner$ You
 SVar:X:Count$xPaid
 SVar:Y:Count$Valid Soldier.YouCtrl
 SVar:NoZeroToughnessAI:True
-Oracle:Benalish Commander's power and toughness are each equal to the number of Soldiers you control.\nSuspend X—{X}{W}{W}. X can't be 0.\nWhenever a time counter is removed from Benalish Commander while it's exiled, create a 1/1 white Soldier creature token.
+Oracle:Benalish Commander's power and toughness are each equal to the number of Soldiers you control.\nSuspend X—{X}{W}{W}. X can't be 0.\nWhenever a time counter is removed from this card while it's exiled, create a 1/1 white Soldier creature token.

@@ -11,4 +11,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.S
 SVar:TrigSacrificeAll:DB$ SacrificeAll | ValidCards$ Creature.YouCtrl
 K:Madness:C C C C C C
 DeckHints:Ability$Discard
-Oracle:When you cast this spell, gain control of all creatures target player controls.\nFlying, protection from spells and from permanents that were cast this turn\nWhen Emrakul, the World Anew leaves the battlefield, sacrifice all creatures you control.\nMadness—Pay six {C}.
+Oracle:When you cast this spell, gain control of all creatures target player controls.\nFlying, protection from spells and from permanents that were cast this turn\nWhen Emrakul leaves the battlefield, sacrifice all creatures you control.\nMadness—Pay six {C}.

@@ -9,4 +9,4 @@ K:Equip:3
 SVar:BuffedBy:Creature
 AI:RemoveDeck:Random
 DeckHas:Ability$Counters
-Oracle:Equipped creature gets +1/+1 for each charge counter on Mace of the Valiant and has vigilance.\nWhenever a creature you control enters, put a charge counter on Mace of the Valiant.\nEquip {3}
+Oracle:Equipped creature gets +1/+1 for each charge counter on this Equipment and has vigilance.\nWhenever a creature you control enters, put a charge counter on this Equipment.\nEquip {3}

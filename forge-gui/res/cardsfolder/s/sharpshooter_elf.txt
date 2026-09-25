@@ -8,4 +8,4 @@ SVar:X:Count$Valid Creature.YouCtrl
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDamage | TriggerDescription$ When this creature enters, it deals damage equal to its power to target creature with flying an opponent controls.
 SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Creature.OppCtrl+withFlying | TgtPrompt$ Select target creature with flying an opponent controls | NumDmg$ Y
 SVar:Y:Count$CardPower
-Oracle:Reach\nSharpshooter Elf's power is equal to the number of creatures you control.\nWhen Sharpshooter Elf enters, it deals damage equal to its power to target creature with flying an opponent controls.
+Oracle:Reach\nSharpshooter Elf's power is equal to the number of creatures you control.\nWhen this creature enters, it deals damage equal to its power to target creature with flying an opponent controls.

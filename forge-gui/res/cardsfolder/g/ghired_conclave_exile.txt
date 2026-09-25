@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigToken:DB$ Token | TokenScript$ g_4_4_rhino_trample | TokenOwner$ You
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigCopy | TriggerDescription$ Whenever NICKNAME attacks, populate. The token enters tapped and attacking. (To populate, create a token that's a copy of a creature token you control.)
 SVar:TrigCopy:DB$ CopyPermanent | Populate$ True | TokenTapped$ True | TokenAttacking$ True
-Oracle:When Ghired, Conclave Exile enters, create a 4/4 green Rhino creature token with trample.\nWhenever Ghired attacks, populate. The token enters tapped and attacking. (To populate, create a token that's a copy of a creature token you control.)
+Oracle:When Ghired enters, create a 4/4 green Rhino creature token with trample.\nWhenever Ghired attacks, populate. The token enters tapped and attacking. (To populate, create a token that's a copy of a creature token you control.)

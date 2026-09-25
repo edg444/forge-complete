@@ -8,4 +8,4 @@ SVar:X:Count$Valid Creature.namedSeven Dwarves+Other+YouCtrl
 SVar:BuffedBy:Creature.namedSeven Dwarves
 SVar:PlayMain1:TRUE
 DeckNeeds:Name$Seven Dwarves
-Oracle:Seven Dwarves gets +1/+1 for each other creature named Seven Dwarves you control.\nA deck can have up to seven cards named Seven Dwarves.
+Oracle:This creature gets +1/+1 for each other creature named Seven Dwarves you control.\nA deck can have up to seven cards named Seven Dwarves.

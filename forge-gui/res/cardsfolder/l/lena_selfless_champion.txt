@@ -8,4 +8,4 @@ SVar:X:Count$Valid Creature.!token+YouCtrl
 A:AB$ PumpAll | Cost$ Sac<1/NICKNAME> | ValidCards$ Creature.YouCtrl+powerLTY | KW$ Indestructible | SpellDescription$ Creatures you control with power less than NICKNAME's power gain indestructible until end of turn.
 SVar:Y:Count$CardPower
 DeckHas:Ability$Token
-Oracle:When Lena, Selfless Champion enters, create a 1/1 white Soldier creature token for each nontoken creature you control.\nSacrifice Lena: Creatures you control with power less than Lena's power gain indestructible until end of turn.
+Oracle:When Lena enters, create a 1/1 white Soldier creature token for each nontoken creature you control.\nSacrifice Lena: Creatures you control with power less than Lena's power gain indestructible until end of turn.

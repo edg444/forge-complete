@@ -90,4 +90,4 @@ A:AB$ Pump | Cost$ 1 G G ExileFromGrave<1/CARDNAME> | ActivationZone$ Graveyard 
 SVar:DBEffect:DB$ Effect | Name$ Wilson, Majestic Bear's Perpetual Effect | StaticAbilities$ PerpetualPump | RememberObjects$ Targeted | Duration$ Permanent | SubAbility$ DBCleanup
 SVar:PerpetualPump:Mode$ Continuous | Affected$ Card.IsRemembered | AddPower$ 1 | AddToughness$ 1 | AddKeyword$ Reach & Trample & Ward:2 | AffectedZone$ All | Description$ This creature perpetually gets +1/+1 and gains reach, trample, and ward {2}.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:Reach, trample\nWard {2}\n{1}{G}{G}, Exile Wilson, Majestic Bear from your graveyard: Target creature you control perpetually gets +1/+1 and gains reach, trample, and ward {2}. Activate only as a sorcery.
+Oracle:Reach, trample\nWard {2}\n{1}{G}{G}, Exile Wilson from your graveyard: Target creature you control perpetually gets +1/+1 and gains reach, trample, and ward {2}. Activate only as a sorcery.

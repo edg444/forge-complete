@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigChangeZone:DB$ ChangeZone | ChangeType$ Spirit.YouCtrl | Origin$ Library | Destination$ Graveyard | ChangeNum$ X | ShuffleNonMandatory$ True
 SVar:X:Count$ValidLibrary Spirit.YouCtrl
 AI:RemoveDeck:All
-Oracle:When Iname, Death Aspect enters, you may search your library for any number of Spirit cards, put them into your graveyard, then shuffle.
+Oracle:When Iname enters, you may search your library for any number of Spirit cards, put them into your graveyard, then shuffle.

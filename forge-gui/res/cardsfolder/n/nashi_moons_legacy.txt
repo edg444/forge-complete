@@ -12,4 +12,4 @@ SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Token|Graveyard
 DeckHints:Ability$Graveyard
 DeckNeeds:Type$Legendary|Rat
-Oracle:Menace, ward {1}\nWhenever Nashi, Moon's Legacy attacks, exile up to one target legendary or Rat card from your graveyard and copy it. You may cast the copy. (You still pay its costs. A copy of a permanent spell becomes a token.)
+Oracle:Menace, ward {1}\nWhenever Nashi attacks, exile up to one target legendary or Rat card from your graveyard and copy it. You may cast the copy. (You still pay its costs. A copy of a permanent spell becomes a token.)

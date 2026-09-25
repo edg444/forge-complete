@@ -5,4 +5,4 @@ PT:2/2
 K:Flash
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ VensersBounce | TriggerDescription$ When NICKNAME enters, return target spell or permanent to its owner's hand.
 SVar:VensersBounce:DB$ ChangeZone | ValidTgts$ Permanent,Card.inZoneStack | TgtZone$ Stack,Battlefield | Origin$ Battlefield,Stack | Destination$ Hand
-Oracle:Flash\nWhen Venser, Shaper Savant enters, return target spell or permanent to its owner's hand.
+Oracle:Flash\nWhen Venser enters, return target spell or permanent to its owner's hand.

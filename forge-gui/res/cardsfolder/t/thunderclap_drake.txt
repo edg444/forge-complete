@@ -9,4 +9,4 @@ SVar:EffTrigCopy:DB$ CopySpellAbility | Defined$ TriggeredSpellAbility | Amount$
 SVar:X:Count$TotalCommanderCastFromCommandZone
 DeckHas:Ability$Sacrifice
 DeckHints:Type$Instant|Sorcery
-Oracle:Flying\nInstant and sorcery spells you cast cost {1} less to cast.\n{2}{U}, Sacrifice Thunderclap Drake: When you cast your next instant or sorcery spell this turn, copy it for each time you've cast your commander from the command zone this game. You may choose new targets for the copies.
+Oracle:Flying\nInstant and sorcery spells you cast cost {1} less to cast.\n{2}{U}, Sacrifice this creature: When you cast your next instant or sorcery spell this turn, copy it for each time you've cast your commander from the command zone this game. You may choose new targets for the copies.

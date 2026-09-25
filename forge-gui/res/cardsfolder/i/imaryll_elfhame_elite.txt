@@ -8,4 +8,4 @@ SVar:X:Count$Valid Elf.YouCtrl+Other
 SVar:HasAttackEffect:TRUE
 S:Mode$ AssignCombatDamageAsUnblocked | ValidCard$ Card.Self | Optional$ True | Description$ You may have NICKNAME assign its combat damage as though it weren't blocked.
 DeckNeeds:Type$Elf
-Oracle:Whenever Imaryll, Elfhame Elite attacks, it gets +X/+X until end of turn, where X is the number of other Elves you control.\nYou may have Imaryll assign its combat damage as though it weren't blocked.
+Oracle:Whenever Imaryll attacks, it gets +X/+X until end of turn, where X is the number of other Elves you control.\nYou may have Imaryll assign its combat damage as though it weren't blocked.

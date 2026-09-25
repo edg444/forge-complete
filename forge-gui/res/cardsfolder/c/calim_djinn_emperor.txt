@@ -17,4 +17,4 @@ SVar:DBReorder:DB$ ChangeZoneAll | ChangeType$ Card.IsRemembered | Origin$ Libra
 SVar:X:Count$ValidGraveyard Card.namedCalim; Djinn Emperor+YouOwn+Other
 SVar:CalimNumRemembered:Remembered$Amount
 SVar:DiscardMe:1
-Oracle:Flying\nWard {2}\nCalim's Breath — {1}{U}, Discard Calim: Tap up to one target nonland permanent. Draw a card. Then you may exile two other cards named Calim, Djinn Emperor from your graveyard. When you do, return Calim, Djinn Emperor from your graveyard to the battlefield tapped.\nWhen you discard Calim, conjure a card named Calim, Djinn Emperor into your library seventh from the top.
+Oracle:Flying\nWard {2}\nCalim's Breath — {1}{U}, Discard Calim: Tap up to one target nonland permanent. Draw a card. Then you may exile two other cards named Calim, Djinn Emperor from your graveyard. When you do, return Calim from your graveyard to the battlefield tapped.\nWhen you discard Calim, conjure a card named Calim, Djinn Emperor into your library seventh from the top.

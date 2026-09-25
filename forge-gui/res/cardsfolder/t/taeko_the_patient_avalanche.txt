@@ -12,4 +12,4 @@ SVar:TrigImmediateTrig:AB$ ImmediateTrigger | Cost$ UB | Execute$ TrigUnblockabl
 SVar:TrigUnblockable:DB$ Effect | ValidTgts$ Creature.attacking | TgtPrompt$ Select target attacking creature | RememberObjects$ Targeted | ExileOnMoved$ Battlefield | StaticAbilities$ Unblockable
 SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | Description$ This creature can't be blocked this turn.
 DeckHas:Ability$Counters
-Oracle:Taeko, the Patient Avalanche enters tapped.\nWhenever another creature you control leaves the battlefield, if it didn't die, scry 1 and put a +1/+1 counter on Taeko.\nWhenever Taeko attacks, you may pay {U/B}. When you do, target attacking creature can't be blocked this turn.
+Oracle:Taeko enters tapped.\nWhenever another creature you control leaves the battlefield, if it didn't die, scry 1 and put a +1/+1 counter on Taeko.\nWhenever Taeko attacks, you may pay {U/B}. When you do, target attacking creature can't be blocked this turn.

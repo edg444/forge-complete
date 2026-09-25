@@ -12,4 +12,4 @@ SVar:TrigUntap:DB$ UntapAll | ValidCards$ Permanent.YouCtrl+HasCounters
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Counters
 DeckHints:Ability$Counters
-Oracle:Whenever Xolatoyac, the Smiling Flood enters or attacks, put a flood counter on target land. That land is an Island in addition to its other types for as long as it has a flood counter on it.\nAt the beginning of your end step, untap each permanent you control with a counter on it.
+Oracle:Whenever Xolatoyac enters or attacks, put a flood counter on target land. That land is an Island in addition to its other types for as long as it has a flood counter on it.\nAt the beginning of your end step, untap each permanent you control with a counter on it.

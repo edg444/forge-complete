@@ -11,4 +11,4 @@ SVar:DBDiscard:DB$ Discard | Defined$ Player.IsRemembered | NumCards$ X | Mode$ 
 SVar:X:Count$Valid Permanent.RememberedPlayerCtrl/Minus.Y
 SVar:Y:Count$Valid Permanent.RememberedPlayerCtrl+RememberedPlayerOwn
 DeckHints:Ability$Token
-Oracle:Flying\nWhenever Blim, Comedic Genius deals combat damage to a player, that player gains control of target permanent you control. Then each player loses life and discards cards equal to the number of permanents they control but don't own.
+Oracle:Flying\nWhenever Blim deals combat damage to a player, that player gains control of target permanent you control. Then each player loses life and discards cards equal to the number of permanents they control but don't own.

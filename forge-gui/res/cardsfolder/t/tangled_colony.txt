@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigToken:DB$ Token | TokenAmount$ X | TokenScript$ b_1_1_rat_noblock | TokenOwner$ You
 SVar:X:Count$TotalDamageReceivedThisTurn
 DeckHas:Ability$Token
-Oracle:Tangled Colony can't block.\nWhen Tangled Colony dies, create X 1/1 black Rat creature tokens with "This creature can't block," where X is the amount of damage dealt to it this turn.
+Oracle:This creature can't block.\nWhen this creature dies, create X 1/1 black Rat creature tokens with "This token can't block," where X is the amount of damage dealt to it this turn.

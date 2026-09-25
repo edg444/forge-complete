@@ -10,4 +10,4 @@ T:Mode$ SpellCast | ValidCard$ Card | ValidActivatingPlayer$ Player.Chosen | Exe
 SVar:TrigMill:DB$ Mill | Defined$ TriggeredActivator | NumCards$ 1
 SVar:NeedsToPlayVar:Y GE1
 SVar:Y:Count$ValidGraveyard Card.OppCtrl
-Oracle:As Sewer Nemesis enters, choose a player.\nSewer Nemesis's power and toughness are each equal to the number of cards in the chosen player's graveyard.\nWhenever the chosen player casts a spell, that player mills a card.
+Oracle:As this creature enters, choose a player.\nSewer Nemesis's power and toughness are each equal to the number of cards in the chosen player's graveyard.\nWhenever the chosen player casts a spell, that player mills a card.

@@ -7,4 +7,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ 
 SVar:TrigSac:DB$ Sacrifice | Defined$ TriggeredDefendingPlayer | SacValid$ Creature.leastPowerControlledByTriggeredDefendingPlayer
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Sacrifice
-Oracle:Flying\nWhenever Witch-king, Bringer of Ruin attacks, defending player sacrifices a creature with the least power among creatures they control.
+Oracle:Flying\nWhenever Witch-king attacks, defending player sacrifices a creature with the least power among creatures they control.

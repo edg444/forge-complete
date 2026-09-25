@@ -2,7 +2,7 @@ Name:Sandsteppe Outcast
 ManaCost:2 W
 Types:Creature Human Warrior
 PT:2/1
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When CARDNAME enters, ABILITY
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When this creature enters, ABILITY
 SVar:TrigCharm:DB$ Charm | Choices$ DBCounter,DBToken
 SVar:DBCounter:DB$ PutCounter | CounterType$ P1P1 | CounterNum$ 1 | SpellDescription$ Put a +1/+1 counter on this creature.
 SVar:DBToken:DB$ Token | TokenOwner$ You | TokenScript$ w_1_1_spirit_flying | SpellDescription$ Create a 1/1 white Spirit creature token with flying.

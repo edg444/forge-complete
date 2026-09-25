@@ -4,4 +4,4 @@ Types:Legendary Creature Human Soldier
 PT:*/4
 S:Mode$ Continuous | CharacteristicDefining$ True | SetPower$ X | Description$ NICKNAME's power is equal to the number of Swamps you control.
 SVar:X:Count$Valid Swamp.YouCtrl
-Oracle:Sima Yi, Wei Field Marshal's power is equal to the number of Swamps you control.
+Oracle:Sima Yi's power is equal to the number of Swamps you control.

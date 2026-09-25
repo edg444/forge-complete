@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigToken:DB$ Token | TokenScript$ g_x_x_treefolk_warrior_total_forests
 SVar:BuffedBy:Forest
 SVar:NeedsToPlayVar:X GE3
-Oracle:Kalonian Twingrove's power and toughness are each equal to the number of Forests you control.\nWhen Kalonian Twingrove enters, create a green Treefolk Warrior creature token with "This token's power and toughness are each equal to the number of Forests you control."
+Oracle:Kalonian Twingrove's power and toughness are each equal to the number of Forests you control.\nWhen this creature enters, create a green Treefolk Warrior creature token with "This token's power and toughness are each equal to the number of Forests you control."

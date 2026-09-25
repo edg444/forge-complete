@@ -9,4 +9,4 @@ T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage
 SVar:TrigDraw:DB$ Draw | Defined$ You & TriggeredTarget | NumCards$ X
 SVar:X:TriggerCount$DamageAmount
 DeckHas:Ability$Token
-Oracle:Flying\nWhenever an opponent draws a card except the first one they draw in each of their draw steps, create a 1/1 green Snake creature token.\nWhenever Xyris, the Writhing Storm deals combat damage to a player, you and that player each draw that many cards.
+Oracle:Flying\nWhenever an opponent draws a card except the first one they draw in each of their draw steps, create a 1/1 green Snake creature token.\nWhenever Xyris deals combat damage to a player, you and that player each draw that many cards.

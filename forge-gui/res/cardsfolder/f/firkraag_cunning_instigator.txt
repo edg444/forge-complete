@@ -11,4 +11,4 @@ SVar:TrigPutCounter:DB$ PutCounter | CounterType$ P1P1 | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw
 DeckHints:Type$Dragon
 DeckHas:Ability$Counters
-Oracle:Flying, haste\nWhenever one or more Dragons you control attack an opponent, goad target creature that player controls.\nWhenever a creature deals combat damage to one of your opponents, if that creature had to attack this combat, you put a +1/+1 counter on Firkraag, Cunning Instigator and you draw a card.
+Oracle:Flying, haste\nWhenever one or more Dragons you control attack an opponent, goad target creature that player controls.\nWhenever a creature deals combat damage to one of your opponents, if that creature had to attack this combat, you put a +1/+1 counter on Firkraag and you draw a card.

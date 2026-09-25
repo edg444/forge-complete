@@ -4,7 +4,7 @@ Types:Creature Ooze
 PT:0/5
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ X | Description$ This creature gets +1/+0 for each artifact you control.
 SVar:X:Count$Valid Artifact.YouCtrl
-T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Creature | CombatDamage$ True | TriggerZones$ Battlefield | Execute$ TrigDestroy | TriggerDescription$ Whenever CARDNAME deals combat damage to a creature, destroy that creature. It can't be regenerated.
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Creature | CombatDamage$ True | TriggerZones$ Battlefield | Execute$ TrigDestroy | TriggerDescription$ Whenever this creature deals combat damage to a creature, destroy that creature. It can't be regenerated.
 SVar:TrigDestroy:DB$ Destroy | Defined$ TriggeredTargetLKICopy | NoRegen$ True
 SVar:BuffedBy:Artifact
 Oracle:This creature gets +1/+0 for each artifact you control.\nWhenever this creature deals combat damage to a creature, destroy that creature. The creature can't be regenerated.

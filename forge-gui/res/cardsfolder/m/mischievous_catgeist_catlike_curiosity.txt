@@ -7,7 +7,7 @@ SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
 K:Disturb:2 U
 DeckHas:Ability$Graveyard
 AlternateMode:DoubleFaced
-Oracle:Whenever Mischievous Catgeist deals combat damage to a player, draw card.\nDisturb {2}{U} (You may cast this card from your graveyard transformed for its disturb cost.)
+Oracle:Whenever this creature deals combat damage to a player, draw card.\nDisturb {2}{U} (You may cast this card from your graveyard transformed for its disturb cost.)
 
 ALTERNATE
 

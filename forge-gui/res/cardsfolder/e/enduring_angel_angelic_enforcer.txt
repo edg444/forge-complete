@@ -28,4 +28,4 @@ SVar:TrigDoubleLife:DB$ SetLife | LifeAmount$ Y
 SVar:X:Count$YourLifeTotal
 SVar:Y:Count$YourLifeTotal/Twice
 SVar:HasAttackEffect:TRUE
-Oracle:Flying\nYou have hexproof.\nAngelic Enforcer's power and toughness are each equal to your life total.\nWhenever Angelic Enforcer attacks, double your life total.
+Oracle:Flying\nYou have hexproof.\nAngelic Enforcer's power and toughness are each equal to your life total.\nWhenever this creature attacks, double your life total.

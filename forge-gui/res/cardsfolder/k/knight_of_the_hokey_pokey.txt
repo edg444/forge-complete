@@ -8,7 +8,7 @@ SVar:DBFail:DB$ Cleanup | NotifyMessage$ You failed to do the Hokey Pokey correc
 SVar:DBClearRemembered:DB$ Cleanup | ClearRemembered$ True | SubAbility$ DBChoose
 SVar:DBChoose:DB$ ChooseSource | Choices$ Card | RememberChosen$ True | Accumulate$ True | SubAbility$ DBEffect
 SVar:DBEffect:DB$ Effect | ReplacementEffects$ RPrevent | RememberObjects$ Self | ImprintCards$ Remembered
-SVar:RPrevent:Event$ DamageDone | ActiveZones$ Command | Prevent$ True | ValidTarget$ Card.IsRemembered | ValidSource$ Card.IsImprinted | Description$ Prevent all damage the chosen source would deal to CARDNAME this turn.
+SVar:RPrevent:Event$ DamageDone | ActiveZones$ Command | Prevent$ True | ValidTarget$ Card.IsRemembered | ValidSource$ Card.IsImprinted | Description$ Prevent all damage the chosen source would deal to this creature this turn.
 T:Mode$ Phase | Phase$ End of Turn | TriggerZones$ Battlefield | Secondary$ True | Execute$ TrigClearChosen | TriggerDescription$ At the beginning of each end step, clear the displayed list of chosen sources (the prevention effects themselves already expire at end of turn regardless).
 SVar:TrigClearChosen:DB$ Cleanup | ClearChosenCard$ True
 Oracle:First strike\n{1}{W}, Do the Hokey Pokey: Prevent all damage a source of your choice would deal to this creature this turn. (To do the Hokey Pokey, choose an arm, a leg, or your whole self and put it in. Put it out. Put it in. Shake it all about. You do the Hokey Pokey! Turn yourself around.)

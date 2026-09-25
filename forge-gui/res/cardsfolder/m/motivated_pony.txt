@@ -11,4 +11,4 @@ SVar:DBPump:DB$ PumpAll | ValidCards$ Creature.attacking | NumAtt$ +2 | Conditio
 SVar:Food:Count$ThisTurnEntered_Battlefield_Food.YouCtrl
 SVar:HasAttackEffect:TRUE
 DeckHints:Type$Food
-Oracle:Whenever Motivated Pony attacks, attacking creatures get +1/+1 until end of turn. If a Food entered under your control this turn, untap those creatures and they get an additional +2/+2 until end of turn.
+Oracle:Whenever this creature attacks, attacking creatures get +1/+1 until end of turn. If a Food entered under your control this turn, untap those creatures and they get an additional +2/+2 until end of turn.

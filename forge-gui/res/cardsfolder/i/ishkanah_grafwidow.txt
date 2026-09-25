@@ -9,4 +9,4 @@ A:AB$ LoseLife | Cost$ 6 B | ValidTgts$ Opponent | LifeAmount$ X | SpellDescript
 SVar:X:Count$Valid Card.Spider+YouCtrl
 DeckHints:Ability$Graveyard|Discard
 DeckHas:Ability$Delirium
-Oracle:Reach\nDelirium — When Ishkanah, Grafwidow enters, if there are four or more card types among cards in your graveyard, create three 1/2 green Spider creature tokens with reach.\n{6}{B}: Target opponent loses 1 life for each Spider you control.
+Oracle:Reach\nDelirium — When Ishkanah enters, if there are four or more card types among cards in your graveyard, create three 1/2 green Spider creature tokens with reach.\n{6}{B}: Target opponent loses 1 life for each Spider you control.

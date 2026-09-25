@@ -6,7 +6,7 @@ K:Flying
 K:Lifelink
 K:Protection:Vampire
 K:Disturb:3 W W
-S:Mode$ Continuous | CharacteristicDefining$ True | SetPower$ X | SetToughness$ X | Description$ CARDNAME's power and toughness are each equal to the number of permanents you control that are Spirits and/or enchantments.
+S:Mode$ Continuous | CharacteristicDefining$ True | SetPower$ X | SetToughness$ X | Description$ NICKNAME's power and toughness are each equal to the number of permanents you control that are Spirits and/or enchantments.
 SVar:X:Count$Valid Spirit.YouCtrl,Enchantment.YouCtrl
 SVar:NeedsToPlayVar:X GE2
 SVar:BuffedBy:Enchantment,Spirit
@@ -14,7 +14,7 @@ SVar:NoZeroToughnessAI:True
 DeckHints:Type$Spirit|Enchantment
 DeckHas:Ability$LifeGain|Graveyard
 AlternateMode:DoubleFaced
-Oracle:Flying, lifelink, protection from Vampires\nKatilda, Dawnhart Martyr's power and toughness are each equal to the number of permanents you control that are Spirits and/or enchantments.\nDisturb {3}{W}{W} (You may cast this card from your graveyard transformed for its disturb cost.)
+Oracle:Flying, lifelink, protection from Vampires\nKatilda's power and toughness are each equal to the number of permanents you control that are Spirits and/or enchantments.\nDisturb {3}{W}{W} (You may cast this card from your graveyard transformed for its disturb cost.)
 
 ALTERNATE
 

@@ -4,4 +4,4 @@ Types:Creature Vampire Rogue
 PT:2/2
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Lifelink | Condition$ PlayerTurn | Description$ During your turn, this creature has lifelink.
 DeckHas:Ability$LifeGain
-Oracle:During your turn, Blood Burglar has lifelink. (Damage dealt by this creature also causes you to gain that much life.)
+Oracle:During your turn, this creature has lifelink. (Damage dealt by this creature also causes you to gain that much life.)

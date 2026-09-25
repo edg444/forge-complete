@@ -8,4 +8,4 @@ SVar:TrigToken:DB$ Token | TokenScript$ w_2_2_samurai_vigilance
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Token & Type$Samurai
 DeckHints:Type$Artifact|Enchantment
-Oracle:Whenever Naomi, Pillar of Order enters or attacks, if you control an artifact and an enchantment, create a 2/2 white Samurai creature token with vigilance.
+Oracle:Whenever Naomi enters or attacks, if you control an artifact and an enchantment, create a 2/2 white Samurai creature token with vigilance.

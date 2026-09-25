@@ -5,4 +5,4 @@ PT:3/3
 K:Flying
 K:Flash
 A:AB$ ChangeZone | Cost$ U B PayLife<1> | Origin$ Battlefield | Destination$ Hand | SpellDescription$ Return NICKNAME to its owner's hand.
-Oracle:Flash\nFlying\n{U}{B}, Pay 1 life: Return Wydwen, the Biting Gale to its owner's hand.
+Oracle:Flash\nFlying\n{U}{B}, Pay 1 life: Return Wydwen to its owner's hand.

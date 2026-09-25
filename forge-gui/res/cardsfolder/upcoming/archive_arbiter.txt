@@ -3,7 +3,7 @@ ManaCost:6
 Types:Artifact Creature Sphinx
 PT:4/4
 K:Flying
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When CARDNAME enters, ABILITY
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When this creature enters, ABILITY
 SVar:TrigCharm:DB$ Charm | Choices$ DBDestroy,DBGainLife
 SVar:DBDestroy:DB$ Destroy | ValidTgts$ Permanent.nonCreature+nonLand | ValidTgtsDesc$ noncreature, nonland permanent | SpellDescription$ Destroy target noncreature, nonland permanent.
 SVar:DBGainLife:DB$ GainLife | LifeAmount$ 4 | SpellDescription$ You gain 4 life.

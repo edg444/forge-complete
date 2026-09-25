@@ -7,4 +7,4 @@ SVar:TrigImmediate:AB$ ImmediateTrigger | Cost$ 1 | Execute$ TrigClone | Trigger
 SVar:TrigClone:DB$ CopyPermanent | ValidTgts$ Permanent.token+YouCtrl+!namedDutiful Replicator | TgtPrompt$ Select target token you control not named Dutiful Replicator
 DeckHas:Ability$Token
 DeckNeeds:Ability$Token
-Oracle:When Dutiful Replicator enters, you may pay {1}. When you do, create a token that's a copy of target token you control not named Dutiful Replicator.
+Oracle:When this creature enters, you may pay {1}. When you do, create a token that's a copy of target token you control not named Dutiful Replicator.

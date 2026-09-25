@@ -7,4 +7,4 @@ SVar:X:Count$CardCounters.ALL
 K:Undying
 DeckHints:Ability$Counters & Type$Zombie|Mutant
 DeckHas:Ability$Counters
-Oracle:Each other creature you control that's a Zombie or Mutant gets +X/+X, where X is the number of counters on Hancock, Ghoulish Mayor.\nUndying (When this creature dies, if it had no +1/+1 counters on it, return it to the battlefield under its owner's control with a +1/+1 counter on it.)
+Oracle:Each other creature you control that's a Zombie or Mutant gets +X/+X, where X is the number of counters on Hancock.\nUndying (When this creature dies, if it had no +1/+1 counters on it, return it to the battlefield under its owner's control with a +1/+1 counter on it.)

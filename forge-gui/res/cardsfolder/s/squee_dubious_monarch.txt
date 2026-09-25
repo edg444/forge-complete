@@ -8,4 +8,4 @@ SVar:TrigToken:DB$ Token | TokenScript$ r_1_1_goblin | TokenTapped$ True | Token
 S:Mode$ AlternativeCost | ValidSA$ Spell.Self | EffectZone$ Graveyard | Cost$ 3 R ExileFromGrave<4/Card.Other/other cards> | Description$ You may cast this card from your graveyard by paying {3}{R} and exiling four other cards from your graveyard rather than paying its mana cost.
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Token|Graveyard & Type$Goblin
-Oracle:Haste\nWhenever Squee, Dubious Monarch attacks, create a 1/1 red Goblin creature token that's tapped and attacking.\nYou may cast Squee, Dubious Monarch from your graveyard by paying {3}{R} and exiling four other cards from your graveyard rather than paying its mana cost.
+Oracle:Haste\nWhenever Squee attacks, create a 1/1 red Goblin creature token that's tapped and attacking.\nYou may cast this card from your graveyard by paying {3}{R} and exiling four other cards from your graveyard rather than paying its mana cost.

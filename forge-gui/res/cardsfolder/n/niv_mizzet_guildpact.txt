@@ -9,4 +9,4 @@ SVar:DBDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ X | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | NumCards$ X | ValidTgts$ Player | SubAbility$ DBGain
 SVar:DBGain:DB$ GainLife | LifeAmount$ X
 SVar:X:Count$Valid Card.YouCtrl$DifferentColorPair
-Oracle:Flying, hexproof from multicolored\nWhenever Niv-Mizzet, Guildpact deals combat damage to a player, it deals X damage to any target, target player draws X cards, and you gain X life, where X is the number of different color pairs among permanents you control that are exactly two colors.
+Oracle:Flying, hexproof from multicolored\nWhenever Niv-Mizzet deals combat damage to a player, it deals X damage to any target, target player draws X cards, and you gain X life, where X is the number of different color pairs among permanents you control that are exactly two colors.

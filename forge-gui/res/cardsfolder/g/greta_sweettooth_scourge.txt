@@ -8,4 +8,4 @@ A:AB$ PutCounter | Cost$ G Sac<1/Food> | ValidTgts$ Creature | CounterType$ P1P1
 A:AB$ Draw | Cost$ 1 B Sac<1/Food> | SubAbility$ DBLoseLife | SpellDescription$ You draw a card and you lose 1 life.
 SVar:DBLoseLife:DB$ LoseLife | LifeAmount$ 1
 DeckHas:Ability$LifeGain|Token|Food|Sacrifice|Counters & Type$Food|Artifact
-Oracle:When Greta, Sweettooth Scourge enters, create a Food token. (It's an artifact with "{2}, {T}, Sacrifice this token: You gain 3 life.")\n{G}, Sacrifice a Food: Put a +1/+1 counter on target creature. Activate only as a sorcery.\n{1}{B}, Sacrifice a Food: You draw a card and you lose 1 life.
+Oracle:When Greta enters, create a Food token. (It's an artifact with "{2}, {T}, Sacrifice this token: You gain 3 life.")\n{G}, Sacrifice a Food: Put a +1/+1 counter on target creature. Activate only as a sorcery.\n{1}{B}, Sacrifice a Food: You draw a card and you lose 1 life.

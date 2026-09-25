@@ -11,4 +11,4 @@ SVar:DBDealDamage:DB$ DealDamage | Defined$ Targeted | NumDmg$ X | SubAbility$ D
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:RememberedLKI$CardPower
 DeckHints:Type$Pirate
-Oracle:[+2]: Angrath, Minotaur Pirate deals 1 damage to target opponent or planeswalker and each creature that player or that planeswalker's controller controls.\n[-3]: Return target Pirate card from your graveyard to the battlefield.\n[-11]: Destroy all creatures target opponent controls. Angrath, Minotaur Pirate deals damage to that player equal to their total power.
+Oracle:[+2]: Angrath deals 1 damage to target opponent or planeswalker and each creature that player or that planeswalker's controller controls.\n[-3]: Return target Pirate card from your graveyard to the battlefield.\n[-11]: Destroy all creatures target opponent controls. Angrath deals damage to that player equal to their total power.

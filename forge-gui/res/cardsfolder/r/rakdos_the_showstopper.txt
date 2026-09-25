@@ -10,4 +10,4 @@ SVar:DBFlip:DB$ FlipCoin | NoCall$ True | TailsSubAbility$ DBRememberCreature
 SVar:DBRememberCreature:DB$ Pump | Defined$ Imprinted | RememberObjects$ Imprinted
 SVar:DBDestroy:DB$ DestroyAll | ValidCards$ Creature.IsRemembered | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:Flying, trample\nWhen Rakdos, the Showstopper enters, flip a coin for each creature that isn't a Demon, Devil, or Imp. Destroy each creature whose coin comes up tails.
+Oracle:Flying, trample\nWhen Rakdos enters, flip a coin for each creature that isn't a Demon, Devil, or Imp. Destroy each creature whose coin comes up tails.

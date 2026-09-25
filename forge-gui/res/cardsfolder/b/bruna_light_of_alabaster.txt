@@ -14,4 +14,4 @@ SVar:HasAttackEffect:TRUE
 SVar:HasBlockEffect:TRUE
 DeckHas:Ability$Graveyard
 DeckNeeds:Type$Aura
-Oracle:Flying, vigilance\nWhenever Bruna, Light of Alabaster attacks or blocks, you may attach to it any number of Auras on the battlefield and you may put onto the battlefield attached to it any number of Aura cards that could enchant it from your graveyard and/or hand.
+Oracle:Flying, vigilance\nWhenever Bruna attacks or blocks, you may attach to it any number of Auras on the battlefield and you may put onto the battlefield attached to it any number of Aura cards that could enchant it from your graveyard and/or hand.

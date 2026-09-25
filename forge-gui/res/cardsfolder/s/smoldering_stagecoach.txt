@@ -13,4 +13,4 @@ SVar:HasAttackEffect:TRUE
 K:Crew:2
 DeckHas:Keyword$Cascade
 DeckHints:Type$Instant|Sorcery
-Oracle:Smoldering Stagecoach's power is equal to the number of instant and sorcery cards in your graveyard.\nWhenever Smoldering Stagecoach attacks, the next instant spell and the next sorcery spell you cast this turn each have cascade.\nCrew 2
+Oracle:Smoldering Stagecoach's power is equal to the number of instant and sorcery cards in your graveyard.\nWhenever this Vehicle attacks, the next instant spell and the next sorcery spell you cast this turn each have cascade.\nCrew 2

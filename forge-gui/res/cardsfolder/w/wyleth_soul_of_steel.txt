@@ -10,4 +10,4 @@ SVar:HasAttackEffect:TRUE
 SVar:EnchantMe:Multiple
 SVar:EquipMe:Multiple
 DeckHints:Type$Aura|Equipment
-Oracle:Trample\nWhenever Wyleth, Soul of Steel attacks, draw a card for each Aura and Equipment attached to it.
+Oracle:Trample\nWhenever Wyleth attacks, draw a card for each Aura and Equipment attached to it.

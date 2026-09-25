@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigPutCounters:DB$ PutCounterAll | ValidCards$ Creature.namedCharmed Stray+StrictlyOther | CounterType$ P1P1 | CounterNum$ 1
 DeckHints:Name$Charmed Stray
 DeckHas:Ability$Counters
-Oracle:Lifelink\nWhen Charmed Stray enters, put a +1/+1 counter on each other creature you control named Charmed Stray.
+Oracle:Lifelink\nWhen this creature enters, put a +1/+1 counter on each other creature you control named Charmed Stray.

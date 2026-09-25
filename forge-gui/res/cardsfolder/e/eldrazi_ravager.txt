@@ -7,4 +7,4 @@ A:AB$ ChangeZone | Cost$ Sac<2/Eldrazi> | Origin$ Graveyard | Destination$ Hand 
 K:Cycling:2
 DeckHints:Ability$Discard|Mill|Sacrifice
 DeckHas:Ability$Discard|Sacrifice
-Oracle:Annihilator 1 (Whenever this creature attacks, defending player sacrifices a permanent.)\nSacrifice two Eldrazi: Return Eldrazi Ravager from your graveyard to your hand.\nCycling {2} ({2}, Discard this card: Draw a card.)
+Oracle:Annihilator 1 (Whenever this creature attacks, defending player sacrifices a permanent.)\nSacrifice two Eldrazi: Return this card from your graveyard to your hand.\nCycling {2} ({2}, Discard this card: Draw a card.)

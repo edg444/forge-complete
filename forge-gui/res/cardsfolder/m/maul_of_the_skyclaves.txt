@@ -6,4 +6,4 @@ SVar:TrigAttach:DB$ Attach | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select tar
 S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddPower$ 2 | AddToughness$ 2 | AddKeyword$ Flying & First Strike | Description$ Equipped creature gets +2/+2 and has flying and first strike.
 K:Equip:2 W W
 SVar:NeedsToPlay:Creature.YouCtrl
-Oracle:When Maul of the Skyclaves enters, attach it to target creature you control.\nEquipped creature gets +2/+2 and has flying and first strike.\nEquip {2}{W}{W}
+Oracle:When this Equipment enters, attach it to target creature you control.\nEquipped creature gets +2/+2 and has flying and first strike.\nEquip {2}{W}{W}

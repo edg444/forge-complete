@@ -2,7 +2,7 @@ Name:Pygmy Hippo
 ManaCost:G U
 Types:Creature Hippo
 PT:2/2
-T:Mode$ AttackerUnblocked | ValidCard$ Card.Self | Execute$ TrigActivateManaAbility | OptionalDecider$ You | TriggerDescription$ Whenever CARDNAME attacks and isn't blocked, you may have defending player activate a mana ability of each land they control and lose all unspent mana. If you do, CARDNAME assigns no combat damage this turn and at the beginning of your postcombat main phase, you add an amount of {C} equal to the amount of mana that player lost this way.
+T:Mode$ AttackerUnblocked | ValidCard$ Card.Self | Execute$ TrigActivateManaAbility | OptionalDecider$ You | TriggerDescription$ Whenever this creature attacks and isn't blocked, you may have defending player activate a mana ability of each land they control and lose all unspent mana. If you do, this creature assigns no combat damage this turn and at the beginning of your postcombat main phase, you add an amount of {C} equal to the amount of mana that player lost this way.
 SVar:TrigActivateManaAbility:DB$ ActivateAbility | Defined$ DefendingPlayer | Type$ Land | ManaAbility$ True | SubAbility$ DBEmptyPool
 SVar:DBEmptyPool:DB$ DrainMana | Defined$ DefendingPlayer | SubAbility$ DBNoCombatDamage | RememberDrainedMana$ True
 SVar:DBNoCombatDamage:DB$ Effect | StaticAbilities$ SNoCombatDamage | Duration$ UntilHostLeavesPlayOrEOT | SubAbility$ DBDelTrig

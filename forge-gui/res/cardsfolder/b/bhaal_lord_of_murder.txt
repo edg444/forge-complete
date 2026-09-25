@@ -9,4 +9,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:DBPutCounter:DB$ PutCounter | ValidTgts$ Creature | CounterType$ P1P1 | CounterNum$ 1 | SubAbility$ DBGoad
 SVar:DBGoad:DB$ Goad | Defined$ Targeted
 DeckHas:Ability$Counters
-Oracle:As long as your life total is less than or equal to half your starting life total, Bhaal, Lord of Murder has indestructible.\nWhenever another nontoken creature you control dies, put a +1/+1 counter on target creature and goad it.
+Oracle:As long as your life total is less than or equal to half your starting life total, Bhaal has indestructible.\nWhenever another nontoken creature you control dies, put a +1/+1 counter on target creature and goad it.

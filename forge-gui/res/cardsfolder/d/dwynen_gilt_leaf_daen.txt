@@ -10,4 +10,4 @@ SVar:X:Count$Valid Creature.YouCtrl+Elf+attacking
 SVar:HasAttackEffect:TRUE
 SVar:PlayMain1:TRUE
 DeckHints:Type$Elf
-Oracle:Reach\nOther Elf creatures you control get +1/+1.\nWhenever Dwynen, Gilt-Leaf Daen attacks, you gain 1 life for each attacking Elf you control.
+Oracle:Reach\nOther Elf creatures you control get +1/+1.\nWhenever Dwynen attacks, you gain 1 life for each attacking Elf you control.

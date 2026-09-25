@@ -19,7 +19,7 @@ ManaCost:no cost
 Colors:green
 Types:Enchantment Creature Snake Monk
 PT:1/1
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ Whenever CARDNAME attacks, ABILITY
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ Whenever this creature attacks, ABILITY
 SVar:TrigCharm:DB$ Charm | Choices$ DBExileC,DBExileNonC
 SVar:DBExileC:DB$ ChangeZone | ValidTgts$ Creature | TgtPrompt$ Select target creature card | Origin$ Graveyard | Destination$ Exile | RememberChanged$ True | SubAbility$ DBImmediateTrig1 | SpellDescription$ Exile target creature card from a graveyard. When you do, create a 1/1 colorless Spirit creature token.
 SVar:DBImmediateTrig1:DB$ ImmediateTrigger | Execute$ TrigToken | ConditionDefined$ Remembered | ConditionPresent$ Card | SubAbility$ DBCleanup | TriggerDescription$ When you do, create a 1/1 colorless Spirit creature token.

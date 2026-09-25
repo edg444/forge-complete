@@ -10,4 +10,4 @@ SVar:TrigCDPlayer:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Playe
 SVar:DBDraw:DB$ Draw | NumCards$ 2
 K:Crew:4
 DeckHas:Ability$Discard
-Oracle:Trample\nWard — Discard a card.\nWhenever Mighty Servant of Leuk-o becomes crewed for the first time each turn, if it was crewed by exactly two creatures, it gains "Whenever this creature deals combat damage to a player, draw two cards" until end of turn.\nCrew 4
+Oracle:Trample\nWard — Discard a card.\nWhenever this Vehicle becomes crewed for the first time each turn, if it was crewed by exactly two creatures, it gains "Whenever this creature deals combat damage to a player, draw two cards" until end of turn.\nCrew 4

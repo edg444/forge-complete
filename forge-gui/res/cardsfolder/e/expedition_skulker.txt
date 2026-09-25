@@ -4,4 +4,4 @@ Types:Creature Vampire Rogue
 PT:2/2
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Deathtouch | IsPresent$ Rogue.YouCtrl+Other | Description$ This creature has deathtouch as long as you control another Rogue.
 DeckHints:Type$Rogue
-Oracle:Expedition Skulker has deathtouch as long as you control another Rogue.
+Oracle:This creature has deathtouch as long as you control another Rogue.

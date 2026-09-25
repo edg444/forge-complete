@@ -10,4 +10,4 @@ SVar:TrigExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | Remem
 SVar:DBReturn:DB$ ChangeZone | Defined$ Remembered | Origin$ All | Destination$ Battlefield | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHas:Ability$LifeGain
-Oracle:When Oji, the Exquisite Blade enters, you gain 2 life and scry 2.\nWhenever you cast your second spell each turn, exile up to one target creature you control, then return it to the battlefield under its owner's control.
+Oracle:When Oji enters, you gain 2 life and scry 2.\nWhenever you cast your second spell each turn, exile up to one target creature you control, then return it to the battlefield under its owner's control.

@@ -13,4 +13,4 @@ SVar:TrigPayCost:AB$ ImmediateTrigger | Cost$ 1 | Execute$ TrigDestroy | Trigger
 SVar:TrigDestroy:DB$ DestroyAll | ValidCards$ Artifact,Creature,Enchantment
 SVar:NeedsToPlayVar:X GE1
 DeckHas:Ability$Token
-Oracle:Hexproof from artifacts, creatures, and enchantments\nWhen Nevinyrral, Urborg Tyrant enters, create a tapped 2/2 black Zombie creature token for each creature that died this turn.\nWhen Nevinyrral dies, you may pay {1}. When you do, destroy all artifacts, creatures, and enchantments.
+Oracle:Hexproof from artifacts, creatures, and enchantments\nWhen Nevinyrral enters, create a tapped 2/2 black Zombie creature token for each creature that died this turn.\nWhen Nevinyrral dies, you may pay {1}. When you do, destroy all artifacts, creatures, and enchantments.

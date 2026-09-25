@@ -5,4 +5,4 @@ PT:3/1
 K:Flash
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChange | TriggerDescription$ When this creature enters, return up to one other target permanent you control to its owner's hand.
 SVar:TrigChange:DB$ ChangeZone | Origin$ Battlefield | Destination$ Hand | TargetMin$ 0 | TargetMax$ 1 | ValidTgts$ Permanent.YouCtrl+Other | TgtPrompt$ Select up to one other target permanent you control
-Oracle:Flash\nWhen Mischievous Pup enters, return up to one other target permanent you control to its owner's hand.
+Oracle:Flash\nWhen this creature enters, return up to one other target permanent you control to its owner's hand.

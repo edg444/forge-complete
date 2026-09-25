@@ -8,4 +8,4 @@ SVar:TrigToken:DB$ Token | TokenScript$ c_3_3_a_phyrexian_golem | TokenOwner$ Yo
 SVar:X:Count$ThisTurnEntered_Battlefield_Artifact.YouCtrl
 DeckHas:Ability$Token & Type$Golem|Artifact
 DeckHints:Type$Artifact
-Oracle:When Malcator, Purity Overseer enters, create a 3/3 colorless Phyrexian Golem artifact creature token.\nAt the beginning of your end step, if three or more artifacts entered the battlefield under your control this turn, create a 3/3 colorless Phyrexian Golem artifact creature token.
+Oracle:When Malcator enters, create a 3/3 colorless Phyrexian Golem artifact creature token.\nAt the beginning of your end step, if three or more artifacts entered the battlefield under your control this turn, create a 3/3 colorless Phyrexian Golem artifact creature token.

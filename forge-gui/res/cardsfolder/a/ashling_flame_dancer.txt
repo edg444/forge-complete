@@ -10,4 +10,4 @@ SVar:DBDamage:DB$ DamageAll | NumDmg$ 2 | ValidPlayers$ Player.Opponent | Condit
 SVar:DBAddMana:DB$ Mana | Produced$ R | Amount$ 4 | ConditionCheckSVar$ Resolved | ConditionSVarCompare$ EQ3
 SVar:Resolved:Count$ResolvedThisTurn
 DeckHints:Type$Instant|Sorcery
-Oracle:You don't lose unspent red mana as steps and phases end.\nMagecraft — Whenever you cast or copy an instant or sorcery spell, discard a card, then draw a card. If this is the second time this ability has resolved this turn, Ashling, Flame Dancer deals 2 damage to each opponent and each creature they control. If it's the third time, add {R}{R}{R}{R}.
+Oracle:You don't lose unspent red mana as steps and phases end.\nMagecraft — Whenever you cast or copy an instant or sorcery spell, discard a card, then draw a card. If this is the second time this ability has resolved this turn, Ashling deals 2 damage to each opponent and each creature they control. If it's the third time, add {R}{R}{R}{R}.

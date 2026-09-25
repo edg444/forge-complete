@@ -7,4 +7,4 @@ SVar:X:Count$ValidExile Card.OppOwn
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self,Nightmare.Other+YouCtrl,Horror.Other+YouCtrl | Execute$ TrigExile | TriggerZones$ Battlefield | TriggerDescription$ Whenever NICKNAME or another Nightmare or Horror you control enters, target opponent exiles cards from the top of their library until they exile a land card.
 SVar:TrigExile:DB$ DigUntil | ValidTgts$ Opponent | Valid$ Land | ValidDescription$ land | FoundDestination$ Exile | RevealedDestination$ Exile | IsCurse$ True
 DeckHints:Type$Nightmare|Horror
-Oracle:Umbris, Fear Manifest gets +1/+1 for each card your opponents own in exile.\nWhenever Umbris or another Nightmare or Horror you control enters, target opponent exiles cards from the top of their library until they exile a land card.
+Oracle:Umbris gets +1/+1 for each card your opponents own in exile.\nWhenever Umbris or another Nightmare or Horror you control enters, target opponent exiles cards from the top of their library until they exile a land card.

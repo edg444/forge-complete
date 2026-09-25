@@ -9,4 +9,4 @@ SVar:X:Count$CardPower
 SVar:HasAttackEffect:TRUE
 SVar:PlayMain1:TRUE
 DeckHints:Type$Horse
-Oracle:Horses you control have haste. (They can attack and {T} as soon as they come under your control.)\nWhenever Shadowfax, Lord of Horses attacks, you may put a creature card with lesser power from your hand onto the battlefield tapped and attacking.
+Oracle:Horses you control have haste. (They can attack and {T} as soon as they come under your control.)\nWhenever Shadowfax attacks, you may put a creature card with lesser power from your hand onto the battlefield tapped and attacking.

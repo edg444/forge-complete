@@ -9,4 +9,4 @@ SVar:TrigToken:DB$ Token | TokenScript$ c_a_treasure_sac | TokenOwner$ You
 SVar:BuffedBy:Artifact,Instant,Sorcery
 DeckHas:Ability$Token
 DeckHints:Type$Instant|Sorcery|Artifact
-Oracle:Storm-Kiln Artist gets +1/+0 for each artifact you control.\nMagecraft — Whenever you cast or copy an instant or sorcery spell, create a Treasure token.
+Oracle:This creature gets +1/+0 for each artifact you control.\nMagecraft — Whenever you cast or copy an instant or sorcery spell, create a Treasure token.

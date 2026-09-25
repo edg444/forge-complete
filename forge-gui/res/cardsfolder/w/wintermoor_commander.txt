@@ -10,4 +10,4 @@ SVar:NoZeroToughnessAI:True
 T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigPump | TriggerDescription$ Whenever this creature attacks, another target Knight you control gains indestructible until end of turn. (Damage and effects that say "destroy" don't destroy it.)
 SVar:TrigPump:DB$ Pump | ValidTgts$ Knight.YouCtrl+Other | TgtPrompt$ Select another target Knight you control | KW$ Indestructible
 DeckHints:Type$Knight
-Oracle:Deathtouch\nWintermoor Commander's toughness is equal to the number of Knights you control.\nWhenever Wintermoor Commander attacks, another target Knight you control gains indestructible until end of turn. (Damage and effects that say "destroy" don't destroy it.)
+Oracle:Deathtouch\nWintermoor Commander's toughness is equal to the number of Knights you control.\nWhenever this creature attacks, another target Knight you control gains indestructible until end of turn. (Damage and effects that say "destroy" don't destroy it.)

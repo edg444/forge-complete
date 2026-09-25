@@ -8,4 +8,4 @@ SVar:TrigDig:DB$ Dig | DigNum$ X | Defined$ You | DestinationZone$ Library | Res
 SVar:DBDraw:DB$ Draw | ConditionCheckSVar$ X | ConditionSVarCompare$ EQ5
 SVar:X:Count$Domain
 AI:RemoveDeck:Random
-Oracle:Flying\nDomain — Whenever Nael, Avizoa Aeronaut deals combat damage to a player, look at the top X cards of your library, where X is the number of basic land types among lands you control. Put up to one of them on top of your library and the rest on the bottom in a random order. Then if there are five basic land types among lands you control, draw a card.
+Oracle:Flying\nDomain — Whenever Nael deals combat damage to a player, look at the top X cards of your library, where X is the number of basic land types among lands you control. Put up to one of them on top of your library and the rest on the bottom in a random order. Then if there are five basic land types among lands you control, draw a card.

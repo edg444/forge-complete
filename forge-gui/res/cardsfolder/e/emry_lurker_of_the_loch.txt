@@ -9,4 +9,4 @@ A:AB$ Effect | Cost$ T | TgtZone$ Graveyard | ValidTgts$ Artifact.YouOwn | TgtPr
 SVar:STPlay:Mode$ Continuous | MayPlay$ True | Affected$ Card.IsRemembered+nonLand | AffectedZone$ Graveyard | Description$ You may cast that card this turn.
 DeckHas:Ability$Graveyard
 DeckNeeds:Type$Artifact
-Oracle:Affinity for artifacts (This spell costs {1} less to cast for each artifact you control.)\nWhen Emry, Lurker of the Loch enters, mill four cards.\n{T}: Choose target artifact card in your graveyard. You may cast that card this turn. (You still pay its costs. Timing rules still apply.)
+Oracle:Affinity for artifacts (This spell costs {1} less to cast for each artifact you control.)\nWhen Emry enters, mill four cards.\n{T}: Choose target artifact card in your graveyard. You may cast that card this turn. (You still pay its costs. Timing rules still apply.)

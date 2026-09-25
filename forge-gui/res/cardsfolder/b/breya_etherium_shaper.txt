@@ -9,4 +9,4 @@ SVar:DBDealDamage:DB$ DealDamage | ValidTgts$ Player,Planeswalker | TgtPrompt$ S
 SVar:DBPump:DB$ Pump | ValidTgts$ Creature | NumAtt$ -4 | NumDef$ -4 | IsCurse$ True | SpellDescription$ Target creature gets -4/-4 until end of turn.
 SVar:DBGainLife:DB$ GainLife | LifeAmount$ 5 | Defined$ You | SpellDescription$ You gain 5 life.
 DeckHas:Ability$Token|LifeGain|Sacrifice & Type$Thopter
-Oracle:When Breya, Etherium Shaper enters, create two 1/1 blue Thopter artifact creature tokens with flying.\n{2}, Sacrifice two artifacts: Choose one —\n• Breya deals 3 damage to target player or planeswalker.\n• Target creature gets -4/-4 until end of turn.\n• You gain 5 life.
+Oracle:When Breya enters, create two 1/1 blue Thopter artifact creature tokens with flying.\n{2}, Sacrifice two artifacts: Choose one —\n• Breya deals 3 damage to target player or planeswalker.\n• Target creature gets -4/-4 until end of turn.\n• You gain 5 life.

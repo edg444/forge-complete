@@ -8,4 +8,4 @@ A:AB$ Animate | Cost$ 2 G | ValidTgts$ Artifact.nonCreature+YouCtrl | TgtPrompt$
 A:AB$ GainLife | Cost$ 2 T Sac<1/CARDNAME> | LifeAmount$ 3 | SpellDescription$ You gain 3 life.
 DeckHas:Ability$LifeGain|Sacrifice|Token & Type$Food
 DeckHints:Type$Artifact
-Oracle:When Tough Cookie enters, create a Food token. (It's an artifact with "{2}, {T}, Sacrifice this token: You gain 3 life.")\n{2}{G}: Target noncreature artifact you control becomes a 4/4 artifact creature until end of turn.\n{2}, {T}, Sacrifice Tough Cookie: You gain 3 life.
+Oracle:When this creature enters, create a Food token. (It's an artifact with "{2}, {T}, Sacrifice this token: You gain 3 life.")\n{2}{G}: Target noncreature artifact you control becomes a 4/4 artifact creature until end of turn.\n{2}, {T}, Sacrifice this creature: You gain 3 life.

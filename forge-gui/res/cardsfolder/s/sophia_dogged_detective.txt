@@ -11,4 +11,4 @@ SVar:DBInvestigate:DB$ Investigate
 DeckNeeds:Ability$Token
 DeckHints:Ability$Food
 DeckHas:Ability$Investigate|Token|Sacrifice|LifeGain|Food
-Oracle:When Sophia, Dogged Detective enters, create Tiny, a legendary 2/2 green Dog Detective creature token with trample.\n{1}, Sacrifice an artifact token: Put a +1/+1 counter on each Dog you control.\nWhenever a Dog you control deals combat damage to a player, create a Food token, then investigate.
+Oracle:When Sophia enters, create Tiny, a legendary 2/2 green Dog Detective creature token with trample.\n{1}, Sacrifice an artifact token: Put a +1/+1 counter on each Dog you control.\nWhenever a Dog you control deals combat damage to a player, create a Food token, then investigate.

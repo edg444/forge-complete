@@ -11,4 +11,4 @@ SVar:CurLife:Count$YourLifeTotal
 SVar:InitLife:Count$YourStartingLife/Plus.15
 DeckHas:Ability$Token|Counters|LifeGain
 DeckHints:Ability$LifeGain
-Oracle:[+1]: You gain life equal to the number of creatures you control plus the number of planeswalkers you control.\n[-2]: Create a 2/2 white Cat Soldier creature token named Ajani's Pridemate with "Whenever you gain life, put a +1/+1 counter on this token."\n[0]: If you have at least 15 life more than your starting life total, exile Ajani, Strength of the Pride and each artifact and creature your opponents control.
+Oracle:[+1]: You gain life equal to the number of creatures you control plus the number of planeswalkers you control.\n[-2]: Create a 2/2 white Cat Soldier creature token named Ajani's Pridemate with "Whenever you gain life, put a +1/+1 counter on this token."\n[0]: If you have at least 15 life more than your starting life total, exile Ajani and each artifact and creature your opponents control.

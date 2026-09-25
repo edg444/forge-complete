@@ -6,4 +6,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription
 SVar:TrigToken:AB$ Token | Cost$ PayLife<1> | TokenScript$ c_a_treasure_sac
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Token|Sacrifice
-Oracle:Whenever Zhentarim Bandit attacks, you may pay 1 life. If you do, create a Treasure token.
+Oracle:Whenever this creature attacks, you may pay 1 life. If you do, create a Treasure token.

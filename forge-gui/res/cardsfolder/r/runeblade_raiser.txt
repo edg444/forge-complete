@@ -2,7 +2,7 @@ Name:Runeblade Raiser
 ManaCost:B
 Types:Creature Human Warrior
 PT:2/1
-R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ CARDNAME enters the battlefield tapped.
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This creature enters the battlefield tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 T:Mode$ ChangesZone | Origin$ Hand,Library,Exile,Stack,Command | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigAnimate | Static$ True
 SVar:TrigAnimate:DB$ Animate | Defined$ Self | Triggers$ DiesTrig | Duration$ Perpetual

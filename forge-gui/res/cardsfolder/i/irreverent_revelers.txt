@@ -2,7 +2,7 @@ Name:Irreverent Revelers
 ManaCost:2 R
 Types:Creature Satyr
 PT:2/2
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When CARDNAME enters, ABILITY
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When this creature enters, ABILITY
 SVar:TrigCharm:DB$ Charm | Choices$ DBDestroy,DBHaste
 SVar:DBDestroy:DB$ Destroy | ValidTgts$ Artifact | SpellDescription$ Destroy target artifact.
 SVar:DBHaste:DB$ Pump | Defined$ Self | KW$ Haste | SpellDescription$ This creature gains haste until end of turn.

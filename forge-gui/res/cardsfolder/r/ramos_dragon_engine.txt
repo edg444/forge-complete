@@ -8,4 +8,4 @@ SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | Counter
 SVar:X:TriggeredCard$CardNumColors
 A:AB$ Mana | Cost$ SubCounter<5/P1P1/NICKNAME> | Produced$ W W U U B B R R G G | ActivationLimit$ 1 | SpellDescription$ Add {W}{W}{U}{U}{B}{B}{R}{R}{G}{G}. Activate only once each turn.
 DeckHas:Ability$Counters
-Oracle:Flying\nWhenever you cast a spell, put a +1/+1 counter on Ramos, Dragon Engine for each of that spell's colors.\nRemove five +1/+1 counters from Ramos: Add {W}{W}{U}{U}{B}{B}{R}{R}{G}{G}. Activate only once each turn.
+Oracle:Flying\nWhenever you cast a spell, put a +1/+1 counter on Ramos for each of that spell's colors.\nRemove five +1/+1 counters from Ramos: Add {W}{W}{U}{U}{B}{B}{R}{R}{G}{G}. Activate only once each turn.

@@ -3,7 +3,7 @@ ManaCost:2 B
 Types:Creature Zombie Assassin
 PT:2/3
 K:Deathtouch
-T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigLoseLifeOpp | TriggerDescription$ Whenever CARDNAME deals combat damage to a player, that player loses half their life, rounded up.
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigLoseLifeOpp | TriggerDescription$ Whenever this creature deals combat damage to a player, that player loses half their life, rounded up.
 SVar:TrigLoseLifeOpp:DB$ LoseLife | Defined$ TriggeredTarget | LifeAmount$ X
 T:Mode$ ChangesZone | ValidCard$ Card.Self+!HasCounters | Origin$ Battlefield | Destination$ Graveyard | Execute$ TrigChangeZone | TriggerDescription$ When this creature dies, if it had no counters on it, return it to the battlefield tapped under its owner's control with two stun counters on it.
 SVar:TrigChangeZone:DB$ ChangeZone | Origin$ Graveyard | Destination$ Battlefield | Tapped$ True | Defined$ TriggeredCard | WithCountersType$ STUN | WithCountersAmount$ 2

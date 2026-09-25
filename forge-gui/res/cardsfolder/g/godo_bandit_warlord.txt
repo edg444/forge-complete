@@ -8,4 +8,4 @@ T:Mode$ Attacks | ValidCard$ Creature.Self | TriggerZones$ Battlefield | Execute
 SVar:TrigUntap:DB$ UntapAll | ValidCards$ Card.Self,Samurai.YouCtrl | SubAbility$ DBAddCombat
 SVar:DBAddCombat:DB$ AddPhase | ExtraPhase$ Combat | AfterPhase$ EndCombat
 DeckHints:Type$Samurai|Equipment
-Oracle:When Godo, Bandit Warlord enters, you may search your library for an Equipment card, put it onto the battlefield, then shuffle.\nWhenever Godo attacks for the first time each turn, untap it and all Samurai you control. After this phase, there is an additional combat phase.
+Oracle:When Godo enters, you may search your library for an Equipment card, put it onto the battlefield, then shuffle.\nWhenever Godo attacks for the first time each turn, untap it and all Samurai you control. After this phase, there is an additional combat phase.

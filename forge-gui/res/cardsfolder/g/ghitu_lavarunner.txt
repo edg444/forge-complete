@@ -6,4 +6,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | IsPresent$ Instant.YouOwn,Sorcery.Y
 SVar:BuffedBy:Instant,Sorcery
 SVar:PlayMain1:TRUE
 DeckHints:Type$Instant|Sorcery
-Oracle:As long as there are two or more instant and/or sorcery cards in your graveyard, Ghitu Lavarunner gets +1/+0 and has haste.
+Oracle:As long as there are two or more instant and/or sorcery cards in your graveyard, this creature gets +1/+0 and has haste.

@@ -9,4 +9,4 @@ SVar:TrigToken:DB$ Token | TokenScript$ b_2_2_zombie_knight_menace | TokenAmount
 SVar:X:Count$ValidGraveyard Creature.YouOwn
 DeckHas:Ability$Token & Type$Zombie|Knight
 DeckHints:Ability$Graveyard
-Oracle:Flying, haste\nWhenever Bladewing, Deathless Tyrant deals combat damage to a player or planeswalker, for each creature card in your graveyard, create a 2/2 black Zombie Knight creature token with menace.
+Oracle:Flying, haste\nWhenever Bladewing deals combat damage to a player or planeswalker, for each creature card in your graveyard, create a 2/2 black Zombie Knight creature token with menace.

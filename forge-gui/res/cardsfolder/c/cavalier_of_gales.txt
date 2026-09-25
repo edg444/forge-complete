@@ -9,4 +9,4 @@ SVar:DBChangeZone:DB$ ChangeZone | Origin$ Hand | Destination$ Library | ChangeN
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigChange | TriggerDescription$ When this creature dies, shuffle it into its owner's library, then scry 2.
 SVar:TrigChange:DB$ ChangeZone | Destination$ Library | Shuffle$ True | Defined$ TriggeredNewCardLKICopy | SubAbility$ DBScry
 SVar:DBScry:DB$ Scry | ScryNum$ 2
-Oracle:Flying\nWhen Cavalier of Gales enters, draw three cards, then put two cards from your hand on top of your library in any order.\nWhen Cavalier of Gales dies, shuffle it into its owner's library, then scry 2.
+Oracle:Flying\nWhen this creature enters, draw three cards, then put two cards from your hand on top of your library in any order.\nWhen this creature dies, shuffle it into its owner's library, then scry 2.

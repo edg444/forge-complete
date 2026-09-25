@@ -2,7 +2,7 @@ Name:Lightfoot Rogue
 ManaCost:1 B
 Types:Creature Halfling Rogue
 PT:2/1
-T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigRollDice | TriggerDescription$ Sneak Attack — Whenever CARDNAME attacks, ABILITY
+T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigRollDice | TriggerDescription$ Sneak Attack — Whenever this creature attacks, ABILITY
 SVar:TrigRollDice:DB$ RollDice | Sides$ 20 | ResultSubAbilities$ 1-9:Pump1,10-19:Pump2,20:Pump3 | SpellDescription$ roll a d20.
 SVar:Pump1:DB$ Pump | Defined$ Self | KW$ Deathtouch | SpellDescription$ 1—9 | CARDNAME gains deathtouch until end of turn.
 SVar:Pump2:DB$ Pump | Defined$ Self | KW$ Deathtouch | NumAtt$ +1 | SpellDescription$ 10—19 | It gets +1/+0 and gains deathtouch until end of turn.

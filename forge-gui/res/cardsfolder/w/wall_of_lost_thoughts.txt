@@ -5,4 +5,4 @@ PT:0/4
 K:Defender
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigMill | TriggerDescription$ When this creature enters, target player mills four cards.
 SVar:TrigMill:DB$ Mill | NumCards$ 4 | ValidTgts$ Player
-Oracle:Defender\nWhen Wall of Lost Thoughts enters, target player mills four cards.
+Oracle:Defender\nWhen this creature enters, target player mills four cards.

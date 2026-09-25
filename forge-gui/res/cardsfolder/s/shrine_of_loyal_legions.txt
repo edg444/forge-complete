@@ -9,4 +9,4 @@ SVar:X:Count$CardCounters.CHARGE
 DeckNeeds:Color$White
 DeckHints:Type$Myr
 DeckHas:Ability$Token
-Oracle:At the beginning of your upkeep or whenever you cast a white spell, put a charge counter on Shrine of Loyal Legions.\n{3}, {T}, Sacrifice Shrine of Loyal Legions: Create a 1/1 colorless Phyrexian Myr artifact creature token for each charge counter on Shrine of Loyal Legions.
+Oracle:At the beginning of your upkeep or whenever you cast a white spell, put a charge counter on this artifact.\n{3}, {T}, Sacrifice this artifact: Create a 1/1 colorless Phyrexian Myr artifact creature token for each charge counter on this artifact.

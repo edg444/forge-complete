@@ -29,4 +29,4 @@ SVar:DBAnimate:DB$ Animate | Defined$ Targeted | Types$ Vampire | Duration$ Perm
 SVar:DBPutCounter:DB$ PutCounter | Defined$ Targeted | CounterType$ Lifelink | CounterNum$ 1 | ConditionPresent$ Permanent.White+YouCtrl+Other+NotDefinedTargeted
 SVar:X:Count$LifeYouGainedThisTurn
 DeckHas:Ability$LifeGain
-Oracle:[+2]: Create a Food token.\n[-1]: Sorin, Ravenous Neonate deals damage equal to the amount of life you gained this turn to any target.\n[-6]: Gain control of target creature. It becomes a Vampire in addition to its other types. Put a lifelink counter on it if you control a white permanent other than that creature or Sorin.
+Oracle:[+2]: Create a Food token.\n[-1]: Sorin deals damage equal to the amount of life you gained this turn to any target.\n[-6]: Gain control of target creature. It becomes a Vampire in addition to its other types. Put a lifelink counter on it if you control a white permanent other than that creature or Sorin.

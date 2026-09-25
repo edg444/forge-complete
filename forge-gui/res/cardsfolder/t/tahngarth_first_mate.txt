@@ -8,4 +8,4 @@ SVar:TrigGainControl:DB$ GainControl | Defined$ Self | NewController$ TriggeredA
 SVar:DBAttack:DB$ ChangeCombatants | Defined$ Remembered | Attacking$ .Defending & Valid Planeswalker.Defending | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 AI:RemoveDeck:All
-Oracle:Tahngarth, First Mate can't be blocked by more than one creature.\nWhenever an opponent attacks with one or more creatures, if Tahngarth is tapped, you may have that opponent gain control of Tahngarth until end of combat. If you do, choose a player or planeswalker that opponent is attacking. Tahngarth is attacking that player or planeswalker.
+Oracle:Tahngarth can't be blocked by more than one creature.\nWhenever an opponent attacks with one or more creatures, if Tahngarth is tapped, you may have that opponent gain control of Tahngarth until end of combat. If you do, choose a player or planeswalker that opponent is attacking. Tahngarth is attacking that player or planeswalker.

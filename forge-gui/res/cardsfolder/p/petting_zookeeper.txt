@@ -5,4 +5,4 @@ PT:0/4
 K:Reach
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigOpenAttraction | TriggerDescription$ When this creature enters, open an Attraction.
 SVar:TrigOpenAttraction:DB$ OpenAttraction
-Oracle:Reach\nWhen Petting Zookeeper enters, open an Attraction.
+Oracle:Reach\nWhen this creature enters, open an Attraction.

@@ -8,4 +8,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | Affected$ Creature.attacking | AddP
 SVar:X:Count$Valid Land.DefenderCtrl
 SVar:BuffedBy:Land.OppCtrl
 SVar:HasAttackEffect:TRUE
-Oracle:Trample, myriad\nAs long as Elturel Survivors is attacking, it gets +X/+0, where X is the number of lands defending player controls.
+Oracle:Trample, myriad\nAs long as this creature is attacking, it gets +X/+0, where X is the number of lands defending player controls.

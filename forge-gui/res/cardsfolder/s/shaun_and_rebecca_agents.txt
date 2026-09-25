@@ -10,4 +10,4 @@ SVar:DBImmediateTrig:DB$ ImmediateTrigger | Execute$ TrigMill | TriggerDescripti
 SVar:TrigMill:DB$ Mill | NumCards$ 2
 DeckHints:Name$The Animus
 DeckHas:Ability$Mill
-Oracle:Vigilance\nWhen Shaun & Rebecca, Agents enters, search your graveyard, hand, and library for a card named The Animus and put it onto the battlefield, then shuffle.\n{T}: Add {C}. When you do, mill two cards.
+Oracle:Vigilance\nWhen Shaun & Rebecca enters, search your graveyard, hand, and library for a card named The Animus and put it onto the battlefield, then shuffle.\n{T}: Add {C}. When you do, mill two cards.

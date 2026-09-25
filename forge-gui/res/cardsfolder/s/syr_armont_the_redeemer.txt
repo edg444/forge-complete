@@ -7,4 +7,4 @@ SVar:TrigToken:DB$ Token | TokenScript$ role_monster | TokenOwner$ You | Attache
 S:Mode$ Continuous | Affected$ Creature.enchanted+YouCtrl | AddPower$ 1 | AddToughness$ 1 | Description$ Enchanted creatures you control get +1/+1.
 DeckHas:Ability$Token & Type$Aura|Enchantment|Role
 DeckHints:Type$Aura
-Oracle:When Syr Armont, the Redeemer enters, create a Monster Role token attached to another target creature you control. (If you control another Role on it, put that one into the graveyard. Enchanted creature gets +1/+1 and has trample.)\nEnchanted creatures you control get +1/+1.
+Oracle:When Syr Armont enters, create a Monster Role token attached to another target creature you control. (If you control another Role on it, put that one into the graveyard. Enchanted creature gets +1/+1 and has trample.)\nEnchanted creatures you control get +1/+1.

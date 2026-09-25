@@ -9,4 +9,4 @@ T:Mode$ ChangesZone | ValidCard$ Swamp,Card.Black | Origin$ Any | Destination$ B
 SVar:TrigSacrificeBlack:DB$ Sacrifice | Defined$ TriggeredCardController | SacValid$ Swamp,Card.Black | SacMessage$ Swamp or a black permanent
 SVar:NonStackingEffect:True
 AI:RemoveDeck:Random
-Oracle:At the beginning of your upkeep, sacrifice Nature's Wrath unless you pay {G}.\nWhenever a player puts an Island or blue permanent onto the battlefield, that player sacrifices an Island or blue permanent.\nWhenever a player puts a Swamp or black permanent onto the battlefield, that player sacrifices a Swamp or black permanent.
+Oracle:At the beginning of your upkeep, sacrifice this enchantment unless you pay {G}.\nWhenever a player puts an Island or blue permanent onto the battlefield, that player sacrifices an Island or blue permanent.\nWhenever a player puts a Swamp or black permanent onto the battlefield, that player sacrifices a Swamp or black permanent.

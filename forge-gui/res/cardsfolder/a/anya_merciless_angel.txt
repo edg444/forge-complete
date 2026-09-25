@@ -8,4 +8,4 @@ SVar:X:SVar$Y/Times.3
 SVar:Y:PlayerCountOpponents$ConditionLTZ LifeTotal
 SVar:Z:PlayerCountDefinedPlayer.PlayerUID_RelativePlayerUID$StartingLife/HalfDown
 S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Indestructible | CheckSVar$ Y | Description$ As long as an opponent's life total is less than half their starting life total, NICKNAME has indestructible.
-Oracle:Flying\nAnya, Merciless Angel gets +3/+3 for each opponent whose life total is less than half their starting life total.\nAs long as an opponent's life total is less than half their starting life total, Anya has indestructible.
+Oracle:Flying\nAnya gets +3/+3 for each opponent whose life total is less than half their starting life total.\nAs long as an opponent's life total is less than half their starting life total, Anya has indestructible.

@@ -11,4 +11,4 @@ SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 2 | SubAbility$ DBGainLife
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 2 | SpellDescription$ You gain 2 life.
 DeckHints:Ability$Graveyard|Mill|Discard|Dredge
 DeckHas:Ability$Sacrifice|LifeGain|Surveil|Token & Type$Spider
-Oracle:Menace\nWhenever Izoni, Center of the Web enters or attacks, you may collect evidence 4. If you do, create two 2/1 black and green Spider creature tokens with menace and reach.\nSacrifice four tokens: Surveil 2, then draw two cards. You gain 2 life.
+Oracle:Menace\nWhenever Izoni enters or attacks, you may collect evidence 4. If you do, create two 2/1 black and green Spider creature tokens with menace and reach.\nSacrifice four tokens: Surveil 2, then draw two cards. You gain 2 life.

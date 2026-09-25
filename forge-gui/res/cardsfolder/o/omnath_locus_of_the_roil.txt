@@ -10,4 +10,4 @@ SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Elemental.YouCtrl | TgtPrompt$ S
 SVar:DBDraw:DB$ Draw | Defined$ You | ConditionPresent$ Land.YouCtrl | ConditionCompare$ GE8
 DeckHas:Ability$Counters
 DeckHints:Type$Elemental
-Oracle:When Omnath, Locus of the Roil enters, it deals damage to any target equal to the number of Elementals you control.\nLandfall — Whenever a land you control enters, put a +1/+1 counter on target Elemental you control. If you control eight or more lands, draw a card.
+Oracle:When Omnath enters, it deals damage to any target equal to the number of Elementals you control.\nLandfall — Whenever a land you control enters, put a +1/+1 counter on target Elemental you control. If you control eight or more lands, draw a card.

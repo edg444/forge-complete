@@ -5,4 +5,4 @@ PT:3/1
 K:First Strike
 K:Haste
 A:AB$ DealDamage | Cost$ T | ValidTgts$ Any | NumDmg$ 1 | SpellDescription$ NICKNAME deals 1 damage to any target.
-Oracle:First strike, haste\n{T}: Jeska, Warrior Adept deals 1 damage to any target.
+Oracle:First strike, haste\n{T}: Jeska deals 1 damage to any target.

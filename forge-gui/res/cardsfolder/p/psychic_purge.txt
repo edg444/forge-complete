@@ -5,4 +5,4 @@ A:SP$ DealDamage | ValidTgts$ Any | NumDmg$ 1 | SpellDescription$ CARDNAME deals
 T:Mode$ Discarded | ValidCard$ Card.Self | ValidCause$ SpellAbility.OppCtrl | Execute$ TrigLoseLife | TriggerDescription$ When a spell or ability an opponent controls causes you to discard this card, that player loses 5 life.
 SVar:TrigLoseLife:DB$ LoseLife | Defined$ TriggeredCauseController | LifeAmount$ 5
 SVar:DiscardMeByOpp:3
-Oracle:Psychic Purge deals 1 damage to any target.\nWhen a spell or ability an opponent controls causes you to discard Psychic Purge, that player loses 5 life.
+Oracle:Psychic Purge deals 1 damage to any target.\nWhen a spell or ability an opponent controls causes you to discard this card, that player loses 5 life.

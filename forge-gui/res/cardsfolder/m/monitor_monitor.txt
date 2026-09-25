@@ -3,7 +3,7 @@ ManaCost:2 U U
 Types:Creature Human Employee
 PT:2/5
 # The reroll effect does not work with planar dice currently
-T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigOpenAttraction | TriggerDescription$ When CARDNAME enters the battlefield, open an Attraction.
+T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigOpenAttraction | TriggerDescription$ When this creature enters the battlefield, open an Attraction.
 SVar:TrigOpenAttraction:DB$ OpenAttraction
 T:Mode$ TurnBegin | Execute$ ResetTurnCount | Static$ True
 SVar:ResetTurnCount:DB$ StoreSVar | SVar$ ModsThisTurn | Type$ Number | Expression$ 0

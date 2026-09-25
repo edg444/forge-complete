@@ -8,4 +8,4 @@ T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | IsPresent$ Card.StrictlySelf 
 SVar:TrigReturn:AB$ ChangeZone | Cost$ PayLife<1> | Defined$ Self | Origin$ Graveyard | Destination$ Hand
 SVar:SacMe:2
 SVar:DiscardMe:1
-Oracle:When Master of Death enters, surveil 2.\nAt the beginning of your upkeep, if Master of Death is in your graveyard, you may pay 1 life. If you do, return it to your hand.
+Oracle:When this creature enters, surveil 2.\nAt the beginning of your upkeep, if this card is in your graveyard, you may pay 1 life. If you do, return it to your hand.

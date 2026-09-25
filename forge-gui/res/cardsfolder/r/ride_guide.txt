@@ -4,4 +4,4 @@ Types:Creature Human Employee
 PT:4/4
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigOpenAttraction | TriggerDescription$ When this creature enters, open an Attraction.
 SVar:TrigOpenAttraction:DB$ OpenAttraction
-Oracle:When Ride Guide enters, open an Attraction.
+Oracle:When this creature enters, open an Attraction.

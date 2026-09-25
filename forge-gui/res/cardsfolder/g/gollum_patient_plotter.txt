@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Battlefield | Execute$ Trig
 SVar:TrigTempt:DB$ RingTemptsYou
 A:AB$ ChangeZone | Cost$ B Sac<1/Creature> | Origin$ Graveyard | Destination$ Hand | ActivationZone$ Graveyard | SorcerySpeed$ True | SpellDescription$ Return NICKNAME from your graveyard to your hand. Activate only as a sorcery.
 SVar:AIPreference:SacCost$Creature.token,Creature.cmcLE1
-Oracle:When Gollum, Patient Plotter leaves the battlefield, the Ring tempts you.\n{B}, Sacrifice a creature: Return Gollum from your graveyard to your hand. Activate only as a sorcery.
+Oracle:When Gollum leaves the battlefield, the Ring tempts you.\n{B}, Sacrifice a creature: Return Gollum from your graveyard to your hand. Activate only as a sorcery.

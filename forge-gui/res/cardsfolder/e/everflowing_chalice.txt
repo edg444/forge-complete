@@ -9,4 +9,4 @@ SVar:XKicked:Count$TimesKicked
 SVar:NeedsToPlayKickedVar:Z GE4
 SVar:Z:Count$Valid Land.YouCtrl+untapped
 DeckHas:Ability$Counters
-Oracle:Multikicker {2}\nEverflowing Chalice enters with a charge counter on it for each time it was kicked.\n{T}: Add {C} for each charge counter on Everflowing Chalice.
+Oracle:Multikicker {2}\nEverflowing Chalice enters with a charge counter on it for each time it was kicked.\n{T}: Add {C} for each charge counter on this artifact.

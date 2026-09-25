@@ -10,4 +10,4 @@ SVar:X:Count$xPaid
 SVar:LifePaidOnETB:Number$0
 SVar:NoZeroToughnessAI:True
 AI:RemoveDeck:All
-Oracle:Trample\nAs Minion of the Wastes enters, pay any amount of life.\nMinion of the Wastes's power and toughness are each equal to the life paid as it entered.
+Oracle:Trample\nAs this creature enters, pay any amount of life.\nMinion of the Wastes's power and toughness are each equal to the life paid as it entered.
