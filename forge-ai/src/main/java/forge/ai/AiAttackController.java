@@ -1666,8 +1666,9 @@ public class AiAttackController {
                     System.out.println(attacker.getName() + " = all out attacking");
                 return true;
             case 4: // expecting to at least trade with something, or can attack "for free", expecting no counterattack
+                // zero defending power isn't free when a blocker removes the attacker anyway (Wall of Nets)
                 if (saf.canKillAll || (saf.dangerousBlockersPresent && saf.canKillAllDangerous && !saf.canBeKilledByOne) || !saf.canBeBlocked()
-                        || (saf.defPower == 0 && !wouldJustBeAbsorbed(attacker, defenders, combat))) {
+                        || (saf.defPower == 0 && !saf.canBeKilledByOne && !wouldJustBeAbsorbed(attacker, defenders, combat))) {
                     if (LOG_AI_ATTACKS)
                         System.out.println(attacker.getName() + " = attacking expecting to at least trade with something");
                     return true;

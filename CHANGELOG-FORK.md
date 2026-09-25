@@ -121,6 +121,46 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ## Log
 
+### Unreleased — self-reference sweep; AI combat and equip fixes
+
+- **Self-reference sweep over every card's text**, against Scryfall's Oracle bulk data of 2026-09-25.
+  The earlier syncs skipped any line that differed from Oracle in more than the self-reference, and
+  never handled the shortened legendary name, so Dragon Egg still read "When Dragon Egg dies" and
+  Jugan's deck-editor text "When Jugan, the Rising Star dies". New
+  `_tools/oracle-audit/selfref-sweep.js` aligns each line with Oracle word by word and rewrites **only**
+  the card's own name where it sits opposite "this creature" / "this land" / "it" / the short name,
+  leaving any other difference on the line alone:
+  - 1,571 `Oracle:` lines and 821 in-game text fields (trigger, spell, static and stack descriptions)
+    in 1,960 cards. 1,065 are short names: `CARDNAME` → `NICKNAME` in game ("Klauth", "Jugan",
+    "Radiant"), except in `StackDescription$`, whose getter doesn't substitute `NICKNAME`.
+  - A bare "it" is only used when the field names the card earlier, so a delayed trigger's own text
+    ("Destroy Cinder Wall at end of combat.") isn't left with an "it" that points at nothing.
+  - Token self-reference inside quoted granted text (`token-quote-sync.js`): 53 cards whose token
+    text now reads "This token can't block." etc., applied only where that swap makes the `Oracle:`
+    line identical to Scryfall.
+  - Every changed script line was checked parameter by parameter: only display-text keys or the
+    `Oracle:` line differ.
+- **One line instead of two**: Keldon Marauders ("enters or leaves the battlefield") and Tergrid
+  ("sacrifices a nontoken permanent or discards a permanent card") showed each trigger as its own
+  line; the second is now `Secondary$ True` with the joined Oracle sentence, as the 14 other
+  "enters or leaves" cards already did.
+- **AI: die-roll attack pumps count.** Combat prediction skipped any attack trigger whose ability
+  wasn't a Pump at the top, so Strength-Testing Hammer's roll (and Velukan Dragon's) was worth 0 and a
+  Hammer-equipped 1/1 wouldn't attack into a 1/2. It now counts the lowest possible roll — certain,
+  and enough to see the 1/2 always dies.
+- **AI: blockers that remove what they fight.** Wall of Nets (exiles what it blocked) and Kjeldoran
+  Frostbeast (destroys everything in combat with it) do it with an end-of-combat trigger no damage
+  math saw, and the 0-power wall also read as a "free" attack. `canDestroyAttacker`/`canDestroyBlocker`
+  now know, provided the source survives combat damage to trigger; the free-attack shortcut excludes
+  attackers a single blocker removes.
+  - Not changed: at low opposing life the attrition estimate counts a blocked attacker's damage in the
+    first round, so with a 5/5 and a 2/2 against Wall of Nets at 7 life the AI still goes all-in (it
+    does the same against any wall). Upstream heuristic; left alone.
+- **AI: no second Witches' Eye on the same creature.** Added `NonStackingAttachEffect` to Witches'
+  Eye and the other three Equipment that only grant a {T} ability (Siren Song Lyre, Sorcerer's Wand,
+  Lobe Lobber): a second copy's ability can never be used alongside the first.
+- New `CombatRemovalAndEquipAiTest` (7 tests; 6 fail on the old code, Velukan Dragon guards the formula). Suite: 734 run, 0 failed, 6 skipped.
+
 ### 2026-09-25 — Unhinged colorless; more Un-cards; pink and gold; errata reversal; Oracle retemplate
 
 - **All remaining Unhinged colorless cards** (unh/121–135): Gleemax, Letter Bomb, Mox Lotus,

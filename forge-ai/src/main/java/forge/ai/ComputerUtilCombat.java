@@ -1224,6 +1224,25 @@ public class ComputerUtilCombat {
                 continue; // targeted pumping not supported
             }
 
+            // A die-roll pump (Strength-Testing Hammer, Velukan Dragon) rolls first and pumps in a
+            // sub-ability by the result. Predict it at the lowest possible roll: that much is certain,
+            // and it was the whole bonus being missed - a Hammer-equipped 1/1 always kills a 1/2 blocker.
+            String rollVar = null;
+            int minRoll = 0;
+            if (ApiType.RollDice.equals(sa.getApi()) && sa.hasParam("ResultSVar")) {
+                SpellAbility sub = sa.getSubAbility();
+                while (sub != null && !ApiType.Pump.equals(sub.getApi())) {
+                    sub = sub.getSubAbility();
+                }
+                if (sub == null || sub.usesTargeting()) {
+                    continue;
+                }
+                rollVar = sa.getParam("ResultSVar");
+                minRoll = AbilityUtils.calculateAmount(source, sa.getParamOrDefault("Amount", "1"), sa)
+                        + AbilityUtils.calculateAmount(source, sa.getParamOrDefault("Modifier", "0"), sa);
+                sa = sub;
+            }
+
             // Animate counts too: an attack trigger that turns the attacker into a 4/4 (Shadow
             // Puppeteers) raises its damage exactly like a pump would, but SETS base power instead of
             // adding to it, so a NumAtt-only check never saw it and a 1/1 flier was still predicted
@@ -1281,8 +1300,13 @@ public class ComputerUtilCombat {
             }
             if (att.matches("[0-9][0-9]?") || att.matches("-" + "[0-9][0-9]?")) {
                 power += Integer.parseInt(att);
+            } else if (att.equals(rollVar)) {
+                power += minRoll;
             } else {
                 String bonus = AbilityUtils.getSVar(sa, att);
+                if (rollVar != null) {
+                    bonus = TextUtil.fastReplace(bonus, "SVar$" + rollVar, "Number$" + minRoll);
+                }
                 if (bonus.contains("Count$Valid Creature.blockingTriggeredAttacker")) {
                     bonus = TextUtil.fastReplace(bonus, "Count$Valid Creature.blockingTriggeredAttacker", "Number$1");
                 } else if (bonus.contains("TriggeredPlayersDefenders$Amount")) { // for Melee
@@ -1618,6 +1642,48 @@ public class ComputerUtilCombat {
         return false;
     }
 
+    /**
+     * Wall of Nets exiles, and Kjeldoran Frostbeast destroys, the creatures in combat with it at end of
+     * combat. No damage math sees that - Wall of Nets deals no damage at all - so a 5/5 walked into it.
+     * The trigger needs its source still on the battlefield, so it only counts if the victim's
+     * {@code victimDamage} can't kill the source first. {@code relation} is the property naming the
+     * victim's side: "blockedBySource" for an attacker, "blockingSource" for a blocker.
+     */
+    private static boolean removesAtEndOfCombat(final Card source, final Card victim, final String relation,
+            final int victimDamage) {
+        for (final Trigger trigger : source.getTriggers()) {
+            if (trigger.getMode() != TriggerType.Phase || !"EndCombat".equals(trigger.getParam("Phase"))) {
+                continue;
+            }
+            final SpellAbility sa = trigger.ensureAbility();
+            if (sa == null) {
+                continue;
+            }
+            final String valid;
+            if (ApiType.DestroyAll.equals(sa.getApi())) {
+                if (combatantCantBeDestroyed(victim.getController(), victim)) {
+                    continue;
+                }
+                valid = sa.getParam("ValidCards");
+            } else if (ApiType.ChangeZone.equals(sa.getApi()) && "Battlefield".equals(sa.getParam("Origin"))
+                    && sa.hasParam("Defined") && sa.getParam("Defined").startsWith("Valid ")) {
+                valid = sa.getParam("Defined");
+            } else {
+                continue;
+            }
+            if (valid == null || !valid.contains(relation)) {
+                continue;
+            }
+            final boolean sourceSurvives = source.hasKeyword(Keyword.INDESTRUCTIBLE)
+                    || victimDamage <= 0
+                    || (!victim.hasKeyword(Keyword.DEATHTOUCH) && victimDamage < getDamageToKill(source, false));
+            if (sourceSurvives) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // can the combatant be potentially destroyed or is it potentially indestructible?
     /**
      * <p>
@@ -1678,6 +1744,10 @@ public class ComputerUtilCombat {
     	if (canDestroyAttackerBeforeFirstStrike(attacker, blocker, combat, withoutAbilities)) {
     		return true;
     	}
+        if (removesAtEndOfCombat(blocker, attacker, "blockedBySource",
+                attacker.getNetCombatDamage() + predictPowerBonusOfAttacker(attacker, blocker, combat, withoutAbilities))) {
+            return true;
+        }
         // damage, deathtouch and -1/-1 counters all kill through state-based actions
         if (StaticAbilityIgnoreStateBasedActions.ignoresStateBasedActions(attacker)) {
             return false;
@@ -1912,6 +1982,10 @@ public class ComputerUtilCombat {
     	if (canDestroyBlockerBeforeFirstStrike(blocker, attacker, withoutAbilities)) {
     		return true;
     	}
+        if (removesAtEndOfCombat(attacker, blocker, "blockingSource",
+                blocker.getNetCombatDamage() + predictPowerBonusOfBlocker(attacker, blocker, withoutAbilities))) {
+            return true;
+        }
         if (StaticAbilityIgnoreStateBasedActions.ignoresStateBasedActions(blocker)) {
             return false;
         }
