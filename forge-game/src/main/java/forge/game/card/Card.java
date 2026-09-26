@@ -6514,7 +6514,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
      * edition-data answer the silver-border rules were built on. Null for a face-down card.
      */
     public CardEdition.BorderColor printedBorderColor() {
-        if (isFaceDown()) {
+        // an animated library is a stack of cards, not a card with a border of its own
+        if (isFaceDown() || getGamePieceType() == GamePieceType.LIBRARY) {
             return null;
         }
         final PrintingTraits.Traits t = getPrintingTraits();
@@ -7935,6 +7936,11 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
         final String name = getName();
         final String set = getSetCode();
+        // no printing to find for a nameless object (Animate Library's library), and the lookups below
+        // can't parse an empty request
+        if (StringUtils.isBlank(name)) {
+            return null;
+        }
 
         if (StringUtils.isNotBlank(set)) {
             cp = StaticData.instance().getVariantCards().getCard(name, set);

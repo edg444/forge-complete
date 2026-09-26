@@ -1,0 +1,12 @@
+Name:Animate Library
+ManaCost:4 U U
+Types:Enchantment Aura
+K:Enchant:Card.AnimatedLibrary+YouOwn:your library
+# Your library isn't an object on the battlefield until the spell resolves, so the Aura spell makes it one
+# (AnimateLibraryEffect) and then enters attached to it.
+SVar:AuraSpell:SP$ AnimateLibrary | SpellDescription$ Enchant your library
+S:Mode$ Continuous | Affected$ Card.EnchantedBy | SetPower$ X | SetToughness$ X | Description$ Enchanted library is an artifact creature on the battlefield with power and toughness each equal to the number of cards in it. It's still a library.
+SVar:X:Count$InOwnersLibrary
+R:Event$ Moved | ActiveZones$ Battlefield | ValidCard$ Card.EnchantedBy | Origin$ Battlefield | ExcludeDestination$ Battlefield | ReplaceWith$ ExileAura | Description$ If enchanted library would leave the battlefield, exile this Aura instead.
+SVar:ExileAura:DB$ ChangeZone | Defined$ Self | Origin$ Battlefield | Destination$ Exile
+Oracle:Enchant your library\nEnchanted library is an artifact creature on the battlefield with power and toughness each equal to the number of cards in it. It's still a library.\nIf enchanted library would leave the battlefield, exile this Aura instead.

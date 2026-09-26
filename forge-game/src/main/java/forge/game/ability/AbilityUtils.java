@@ -4007,6 +4007,11 @@ public class AbilityUtils {
             someCards.addAll(cc.getCardsIn(ZoneType.Library));
         }
 
+        // Animate Library: the library creature's size is its owner's library, whoever controls it
+        if (sq[0].contains("InOwnersLibrary")) {
+            someCards.addAll(c.getOwner().getCardsIn(ZoneType.Library));
+        }
+
         if (sq[0].contains("InYourHand")) {
             someCards.addAll(cc.getCardsIn(ZoneType.Hand));
         }

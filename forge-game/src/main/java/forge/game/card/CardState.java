@@ -680,6 +680,10 @@ public class CardState implements GameObject, IHasSVars, ITranslatable {
                 extra += " | AIValid$ " + getSVar("AttachAIValid");
             }
             String st = "SP$ Attach | ValidTgts$ Card.CanBeEnchantedBy,Player.CanBeEnchantedBy | TgtZone$ Battlefield,Graveyard | ValidTgtsDesc$ " + desc + extra;
+            // an Aura whose object doesn't exist until the spell resolves (Animate Library) supplies its own
+            if (hasSVar("AuraSpell")) {
+                st = getSVar("AuraSpell");
+            }
             auraAbility = AbilityFactory.getAbility(st, this);
             auraAbility.setIntrinsic(true);
         }

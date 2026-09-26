@@ -134,7 +134,20 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ## Log
 
-### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25
+### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library
+
+- **Animate Library** (ust/26): the library becomes a permanent — new `GamePieceType.LIBRARY`, a
+  nameless colorless artifact creature shown as a card back, P/T from the Aura (`Count$InOwnersLibrary`).
+  - `SVar:AuraSpell` overrides an Aura's generated Attach spell; `SP$ AnimateLibrary` creates the
+    library permanent (or reuses it for a second Animate Library) and enters attached to it.
+  - Per the user's ruling it neither enters nor leaves the battlefield: placed and removed without
+    zone-change triggers. It stays a permanent while any Animate Library is on it.
+  - "Exile this Aura instead" is a plain `Moved` replacement; if a library permanent would still go
+    anywhere, `GameAction.changeZone` makes it just stop existing — it never becomes a card in a zone.
+  - `Card.getPaperCard()` returns null for a blank name instead of throwing; property
+    `AnimatedLibrary`; the library has no printed border.
+  - AI casts it with 6+ cards in library and no library already animated. `AnimateLibraryTest` (4).
+    Suite: 754 run, 0 failed, 6 skipped.
 
 - **Unstable white, ust/12–25**: Knight of the Kitchen Sink (all six variants), Knight of the Widget,
   Oddly Uneven, Old Guard, Ordinary Pony, Rhino-, Sacrifice Play, Side Quest, Success!, Teacher's Pet.

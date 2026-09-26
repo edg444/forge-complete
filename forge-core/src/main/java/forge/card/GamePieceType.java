@@ -52,5 +52,10 @@ public enum GamePieceType {
      * A Dungeon, which is created in the command zone by effects,
      * and leaves the game when completed.
      */
-    DUNGEON
+    DUNGEON,
+    /**
+     * A player's library while Animate Library makes it a permanent. Exists only on the battlefield:
+     * when it stops being a permanent it is simply a library again, without leaving the battlefield.
+     */
+    LIBRARY
 }

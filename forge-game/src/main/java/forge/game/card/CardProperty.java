@@ -309,6 +309,10 @@ public class CardProperty {
             if (!card.isSilverBorderedOrAcorn()) {
                 return false;
             }
+        } else if (property.equals("AnimatedLibrary")) {
+            if (card.getGamePieceType() != forge.card.GamePieceType.LIBRARY) {
+                return false;
+            }
         } else if (property.equals("BlackBordered")) {
             // Knight of the Kitchen Sink. The printed border, so borderless printings don't count.
             if (card.printedBorderColor() != CardEdition.BorderColor.BLACK) {

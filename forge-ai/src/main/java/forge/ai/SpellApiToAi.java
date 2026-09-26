@@ -114,6 +114,7 @@ public enum SpellApiToAi {
             .put(ApiType.SlideOntoBattlefield, CannotPlayAi.class)
             .put(ApiType.ShootAtLibrary, ShootAtLibraryAi.class)
             .put(ApiType.Augment, AugmentAi.class)
+            .put(ApiType.AnimateLibrary, AnimateLibraryAi.class)
             .put(ApiType.Fog, FogAi.class)
             .put(ApiType.GainControl, ControlGainAi.class)
             .put(ApiType.GainControlVariant, ControlGainVariantAi.class)

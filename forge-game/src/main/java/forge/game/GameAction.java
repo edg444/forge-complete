@@ -379,6 +379,13 @@ public class GameAction {
             }
         }
 
+        // Animate Library: if the library permanent would still go somewhere once replacements have had their
+        // say, it doesn't - it just stops being a permanent and is a library again, never a card in a zone
+        if (c.getGamePieceType() == GamePieceType.LIBRARY && !toBattlefield) {
+            ceaseToExist(c, true);
+            return c;
+        }
+
         if (!zoneTo.is(ZoneType.Stack)) {
             // reset timestamp in changezone effects so they have same timestamp if ETB simultaneously
             copied.setGameTimestamp(game.getNextTimestamp());
