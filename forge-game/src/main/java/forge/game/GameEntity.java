@@ -54,6 +54,7 @@ public abstract class GameEntity implements GameObject, IIdentifiable {
     protected CardCollection attachedCards = new CardCollection();
     protected Multiset<CounterType> counters = HashMultiset.create();
     protected List<Pair<Integer, Boolean>> damageReceivedThisTurn = Lists.newArrayList();
+    protected List<Pair<Integer, Boolean>> damageReceivedLastTurn = Lists.newArrayList();
 
     // The odd half of a fractional prevention shield (Save Life's 2 1/2). Whole damage is prevented
     // by the ordinary shield replacement; this covers the leftover 1/2 an Unhinged fractional
@@ -385,6 +386,9 @@ public abstract class GameEntity implements GameObject, IIdentifiable {
     public void setDamageReceivedThisTurn(List<Pair<Integer, Boolean>> dmg) {
         damageReceivedThisTurn.addAll(dmg);
     }
+    public List<Pair<Integer, Boolean>> getDamageReceivedLastTurn() {
+        return damageReceivedLastTurn;
+    }
 
     public void receiveDamage(Pair<Integer, Boolean> dmg) {
         damageReceivedThisTurn.add(dmg);
@@ -397,8 +401,11 @@ public abstract class GameEntity implements GameObject, IIdentifiable {
         return getAssignedDamage(true, null);
     }
     public final int getAssignedDamage(Boolean isCombat, final Card source) {
+        return getAssignedDamage(isCombat, source, false);
+    }
+    public final int getAssignedDamage(Boolean isCombat, final Card source, final boolean lastTurn) {
         int num = 0;
-        for (Pair<Integer, Boolean> dmg : damageReceivedThisTurn) {
+        for (Pair<Integer, Boolean> dmg : (lastTurn ? damageReceivedLastTurn : damageReceivedThisTurn)) {
             if (isCombat != null && dmg.getRight() != isCombat) {
                 continue;
             }

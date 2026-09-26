@@ -4397,7 +4397,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         if (assignNoCombatDamage()) {
             return 0;
         }
-        return toughnessAssignsDamage() ? getNetToughnessInHalves() : getNetPowerInHalves();
+        if (toughnessAssignsDamage()) {
+            return getNetToughnessInHalves();
+        }
+        return negateCombatAssignedDamage() ? -getNetPowerInHalves() : getNetPowerInHalves();
     }
     /** True when this creature's combat damage carries a leftover 1/2 beyond the whole number. */
     public final boolean dealsHalfCombatDamage() {
@@ -4732,12 +4735,21 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return StaticAbilityCombatDamageToughness.combatDamageToughness(this);
     }
 
+    public final boolean negateCombatAssignedDamage() {
+        return StaticAbilityCombatDamageNegatePower.combatDamageNegatePower(this);
+    }
+
     public final boolean assignNoCombatDamage() {
         return StaticAbilityAssignNoCombatDamage.assignNoCombatDamage(this);
     }
 
     // How much combat damage does the card deal
     public final int getNetCombatDamage() {
+        // Loot the Anomaly (upstream): the whole power is negated, not the negated halves floored, so a
+        // 1.5-power creature deals -1 as in upstream's whole-number math
+        if (!assignNoCombatDamage() && !toughnessAssignsDamage() && negateCombatAssignedDamage()) {
+            return -Math.floorDiv(getNetPowerInHalves(), 2);
+        }
         return Math.floorDiv(getNetCombatDamageInHalves(), 2);
     }
 
@@ -7518,7 +7530,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         clearMustBlockCards();
         getDamageHistory().setCreatureAttackedLastTurnOf(turn, getDamageHistory().getCreatureAttacksThisTurn() > 0);
         getDamageHistory().newTurn();
-        damageReceivedThisTurn.clear();
+        damageReceivedLastTurn = damageReceivedThisTurn;
+        damageReceivedThisTurn = Lists.newArrayList();
         resetExcessDamage();
         clearBlockedByThisTurn();
         clearBlockedThisTurn();
