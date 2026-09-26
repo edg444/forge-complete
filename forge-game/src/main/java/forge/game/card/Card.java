@@ -6493,11 +6493,16 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
      * for the same kind of card, so both count wherever an Un rule or card cares about silver borders.
      */
     public boolean isSilverBorderedOrAcorn() {
-        if (borderColor() == CardEdition.BorderColor.SILVER) {
+        final IPaperCard pc = getPaperCard();
+        // the printed border where Scryfall corrects the edition data: Steamflogger Boss is black-bordered
+        // and Unstable's Contraptions and full-art basics are borderless, though their set is silver
+        final PrintingTraits.Traits t = pc == null || getGamePieceType() == GamePieceType.LIBRARY ? null
+                : PrintingTraits.get(pc.getEdition(), pc.getCollectorNumber(), pc instanceof PaperToken);
+        final CardEdition.BorderColor border = t != null && t.getBorder() != null ? t.getBorder() : borderColor();
+        if (border == CardEdition.BorderColor.SILVER) {
             return true;
         }
         final CardEdition edition = StaticData.instance().getEditions().get(getSetCode());
-        final IPaperCard pc = getPaperCard();
         return edition != null && pc != null && edition.isAcorn(pc.getCollectorNumber());
     }
 
@@ -6509,9 +6514,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     /**
      * The border actually printed on this card, for things that look at the physical card (Knight of
-     * the Kitchen Sink). Unlike {@link #borderColor()} it knows borderless printings and the few the
-     * edition files get wrong (Steamflogger Boss is black in a silver set); borderColor() keeps the
-     * edition-data answer the silver-border rules were built on. Null for a face-down card.
+     * the Kitchen Sink, Border Guardian). Unlike {@link #borderColor()} it knows borderless printings and
+     * the few the edition files get wrong (Steamflogger Boss is black in a silver set). Null for a
+     * face-down card.
      */
     public CardEdition.BorderColor printedBorderColor() {
         // an animated library is a stack of cards, not a card with a border of its own

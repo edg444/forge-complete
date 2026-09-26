@@ -88,7 +88,9 @@ public class CardProperty {
                 }
             }
         } else if (property.startsWith("BorderColor")) {
-            if (!property.toUpperCase().contains(card.borderColor().toString())) {
+            // Border Guardian: the printed border, so a borderless printing is none of black/silver/white
+            final CardEdition.BorderColor printed = card.printedBorderColor();
+            if (printed == null || !property.toUpperCase().contains(printed.toString())) {
                 return false;
             }
         } else if (property.equals("Permanent")) {

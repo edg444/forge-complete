@@ -136,6 +136,11 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library
 
+- **Silver border follows the printing**: `isSilverBorderedOrAcorn` and Border Guardian's `BorderColor*`
+  properties read Scryfall's printed border (PrintingTraits) over the edition default. Steamflogger Boss
+  (ust/93) is black-bordered, Unstable's Contraptions (ust/167–211) and full-art basics (ust/212–216)
+  borderless, so none count as silver-bordered any more. Test in `PrintingTraitsTest`.
+
 - **Animate Library** (ust/26): the library becomes a permanent — new `GamePieceType.LIBRARY`, a
   nameless colorless artifact creature shown as a card back, P/T from the Aura (`Count$InOwnersLibrary`).
   - `SVar:AuraSpell` overrides an Aura's generated Attach spell; `SP$ AnimateLibrary` creates the

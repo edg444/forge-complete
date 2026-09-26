@@ -21,6 +21,10 @@ public class PrintingTraitsTest extends AITest {
 
     private Card printing(String name, String set, String cn, Player p, ZoneType zone) {
         PaperCard pc = FModel.getMagicDb().getCommonCards().getCard(name, set, cn);
+        if (pc == null) {
+            // Contraptions and other non-deck cards live in the variant database
+            pc = FModel.getMagicDb().getVariantCards().getCard(name, set, cn);
+        }
         AssertJUnit.assertNotNull(name + " " + set + " " + cn, pc);
         AssertJUnit.assertEquals(cn, pc.getCollectorNumber());
         Card c = Card.fromPaperCard(pc, p);
@@ -53,6 +57,27 @@ public class PrintingTraitsTest extends AITest {
         AssertJUnit.assertTrue(CombatUtil.canBlock(knight, printing("Grizzly Bears", "4ED", "250", opp, ZoneType.Battlefield)));
         // UST itself is silver-bordered, so one Knight doesn't protect itself from another
         AssertJUnit.assertTrue(CombatUtil.canBlock(knight, knight("12f", opp)));
+    }
+
+    @Test
+    public void testSilverBorderFollowsThePrinting() {
+        Game game = initAndCreateGame();
+        Player me = game.getPlayers().get(1);
+        // Scryfall: ust/93 black, ust/167 and ust/212 borderless, ust/12a silver
+        Card boss = printing("Steamflogger Boss", "UST", "93", me, ZoneType.Battlefield);
+        Card contraption = printing("Accessories to Murder", "UST", "167", me, ZoneType.Battlefield);
+        Card plains = printing("Plains", "UST", "212", me, ZoneType.Battlefield);
+        Card knight = knight("12a", me);
+
+        AssertJUnit.assertFalse(boss.isSilverBorderedOrAcorn());
+        AssertJUnit.assertFalse(contraption.isSilverBorderedOrAcorn());
+        AssertJUnit.assertFalse(plains.isSilverBorderedOrAcorn());
+        AssertJUnit.assertTrue(knight.isSilverBorderedOrAcorn());
+        // Border Guardian's properties read the same printed border
+        AssertJUnit.assertTrue(boss.isValid("Card.BorderColorBlack", me, boss, null));
+        AssertJUnit.assertFalse(boss.isValid("Card.BorderColorSilver", me, boss, null));
+        AssertJUnit.assertFalse(plains.isValid("Card.BorderColorBlack", me, plains, null));
+        AssertJUnit.assertTrue(knight.isValid("Card.BorderColorSilver", me, knight, null));
     }
 
     @Test
