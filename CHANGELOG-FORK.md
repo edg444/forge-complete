@@ -153,8 +153,8 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
   Oddly Uneven, Old Guard, Ordinary Pony, Rhino-, Sacrifice Play, Side Quest, Success!, Teacher's Pet.
   - Knight of the Kitchen Sink's protections read the new printing traits (above). Knight of the
     Widget counts `Watermark_orderofthewidget`.
-  - Word counts drop Forge's " Token" suffix on generated token names (Unstable ruling: a Human
-    Soldier token is named "Human Soldier") — affects Double Header too. Zero words counts as even.
+  - Word counts keep "Token" in a generated token's name: CR 111.4 (effective 2026-08-07) names a
+    Human Soldier token "Human Soldier Token", superseding the older Unstable ruling. Zero words is even.
   - `hasReminderText` reads a functional variant's own text, not the base face's.
   - Ordinary Pony's errata ("so you can't flicker creatures more than once each turn") marks the
     returned creature, not the Pony: a Pony that gets flickered back (a new object) still can't

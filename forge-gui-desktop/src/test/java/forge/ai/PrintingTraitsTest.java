@@ -149,14 +149,14 @@ public class PrintingTraitsTest extends AITest {
         Card wisp = addCard("Will-o'-the-Wisp", me);     // 1 - hyphenated
         Card bears = addCard("Grizzly Bears", me);        // 2
         Card knight = knight("12a", me);                  // 5 - "of" and "the" count
-        Card soldier = addToken("w_1_1_human_soldier", me); // "Human Soldier", not "Human Soldier Token"
+        Card soldier = addToken("w_1_1_human_soldier", me); // "Human Soldier Token": 3 words (CR 111.4)
 
         castOddlyUneven(me, "an odd number");
 
         AssertJUnit.assertTrue(wisp.isInZone(ZoneType.Graveyard));
         AssertJUnit.assertTrue(bears.isInZone(ZoneType.Battlefield));
         AssertJUnit.assertTrue(knight.isInZone(ZoneType.Graveyard));
-        AssertJUnit.assertTrue(soldier.isInZone(ZoneType.Battlefield));
+        AssertJUnit.assertFalse(soldier.isInZone(ZoneType.Battlefield));
     }
 
     @Test
@@ -171,7 +171,7 @@ public class PrintingTraitsTest extends AITest {
 
         AssertJUnit.assertTrue(wisp.isInZone(ZoneType.Battlefield));
         AssertJUnit.assertTrue(bears.isInZone(ZoneType.Graveyard));
-        AssertJUnit.assertFalse(soldier.isInZone(ZoneType.Battlefield));
+        AssertJUnit.assertTrue(soldier.isInZone(ZoneType.Battlefield));
     }
 
     @Test

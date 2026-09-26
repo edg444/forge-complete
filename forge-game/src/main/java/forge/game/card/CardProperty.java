@@ -1789,12 +1789,9 @@ public class CardProperty {
             // flavor name counts as printed on the card the player is looking at.
             // nameWords_Odd / nameWords_Even for Oddly Uneven; a nameless card has zero words, which is even.
             final String comparator = property.split("_")[1];
-            String name = card.getDisplayName().trim();
-            // Forge suffixes generated token names with " Token", but per the Unstable rulings a Human
-            // Soldier token is named "Human Soldier" - the suffix is how Forge marks it, not part of it
-            if (card.isToken() && name.endsWith(" Token")) {
-                name = name.substring(0, name.length() - " Token".length()).trim();
-            }
+            // a generated token name keeps its "Token": CR 111.4 makes it part of the name (a Dwarf
+            // Berserker token is named "Dwarf Berserker Token"), superseding the older Unstable ruling
+            final String name = card.getDisplayName().trim();
             final int words = name.isEmpty() ? 0 : name.split("\\s+").length;
             if (comparator.equals("Odd") || comparator.equals("Even")) {
                 if ((words % 2 == 0) != comparator.equals("Even")) {
