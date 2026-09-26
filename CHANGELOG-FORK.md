@@ -61,6 +61,19 @@ A complete half-integer layer running parallel to the whole-number one.
   read the whole text box, flavor included.
 - Flavor names count in name-based mechanics.
 
+### Printing traits
+
+- `res/lists/PrintingTraits.txt` (`forge.card.PrintingTraits`, lazily loaded like `CardFlavorText`) —
+  per printing: watermark (and back-face watermark), open-mouth artwork (Scryfall Tagger's
+  `loose-lips` tag and its children), and the printed border wherever Scryfall disagrees with the
+  edition files (6,724 printings, mostly borderless). Keyed `CODE|collector`; tokens `@CODE|collector`.
+  Regenerate with `_tools/printing-traits/generate.js` from Scryfall's default-cards and art-tags bulk.
+- `Card.printedBorderColor()` (knows `BORDERLESS`/`YELLOW`), `getWatermark()`, `hasOpenMouthArt()`,
+  `getCollectorNumberValue()` (last digit run: 12a → 12). `borderColor()` and the silver-border rules
+  are deliberately unchanged.
+- Properties `BlackBordered`, `CollectorNumberEven`/`Odd`, `Watermarked`, `Watermark_<name>`,
+  `OpenMouthArt`; `nameWords_Odd`/`_Even`.
+
 ### Five-face split cards
 
 Only Who // What // When // Where // Why has ever needed this.
@@ -121,7 +134,31 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ## Log
 
-### Unreleased — self-reference sweep; AI combat and equip fixes
+### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25
+
+- **Unstable white, ust/12–25**: Knight of the Kitchen Sink (all six variants), Knight of the Widget,
+  Oddly Uneven, Old Guard, Ordinary Pony, Rhino-, Sacrifice Play, Side Quest, Success!, Teacher's Pet.
+  - Knight of the Kitchen Sink's protections read the new printing traits (above). Knight of the
+    Widget counts `Watermark_orderofthewidget`.
+  - Word counts drop Forge's " Token" suffix on generated token names (Unstable ruling: a Human
+    Soldier token is named "Human Soldier") — affects Double Header too. Zero words counts as even.
+  - `hasReminderText` reads a functional variant's own text, not the base face's.
+  - Ordinary Pony's errata ("so you can't flicker creatures more than once each turn") marks the
+    returned creature, not the Pony: a Pony that gets flickered back (a new object) still can't
+    flicker the same creature again that turn, while a later flicker by anything else makes a new,
+    unmarked object.
+  - Sacrifice Play: `ChooseCard | AtRandom$ ThreatExtremes` — the person outside the game is
+    simulated: 40% the biggest threat, 40% the smallest, 20% across the rest. Threat is the AI's
+    creature evaluation, plugged into forge-game through `CardThreat` at startup.
+  - Side Quest removes the creature from the game (zone `None`, not exile) until your next turn.
+    `GameAction.moveTo` now passes move params for `None`, so `Duration$` returns work from there,
+    and the return looks in the owner's `None` zone (which `getCardState` doesn't search).
+  - Teacher's Pet: `Augment | ChangeType$` searches the library for the augment card.
+  - AI: ChooseCard picks its target opponent *before* checking the choices, so `TargetedPlayerCtrl`
+    choices (Blot Out, End of the Hunt, Sacrifice Play) no longer always look empty; `AILogic$
+    SideQuest` sends a tapped attacker in main 2; Augment won't sacrifice Teacher's Pet into an empty
+    search.
+  - Tests: `PrintingTraitsTest` (10), `UnstableWhiteTest` (6). Suite: 750 run, 0 failed, 6 skipped.
 
 - **Self-reference sweep over every card's text**, against Scryfall's Oracle bulk data of 2026-09-25.
   The earlier syncs skipped any line that differed from Oracle in more than the self-reference, and

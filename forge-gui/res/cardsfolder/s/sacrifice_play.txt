@@ -1,0 +1,8 @@
+Name:Sacrifice Play
+ManaCost:2 W
+Types:Instant
+# The person outside the game is simulated, not asked: usually they pick the biggest threat (helping you)
+# or the smallest (trolling you), but anything in between can come up (AtRandom$ ThreatExtremes).
+A:SP$ ChooseCard | ValidTgts$ Opponent | Choices$ Creature.TargetedPlayerCtrl+attacking,Creature.TargetedPlayerCtrl+blocking | AtRandom$ ThreatExtremes | Mandatory$ True | SubAbility$ DBSac | StackDescription$ SpellDescription | SpellDescription$ A person outside the game chooses an attacking or blocking creature target opponent controls. That player sacrifices that creature.
+SVar:DBSac:DB$ SacrificeAll | Defined$ ChosenCard | StackDescription$ None
+Oracle:A person outside the game chooses an attacking or blocking creature target opponent controls. That player sacrifices that creature.

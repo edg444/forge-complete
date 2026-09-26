@@ -772,6 +772,9 @@ public class GameAction {
                 case Stack -> moveToStack(c, cause, params);
                 case PlanarDeck, SchemeDeck, AttractionDeck, ContraptionDeck -> moveToVariantDeck(c, name, libPosition, cause, params);
                 case Junkyard -> moveToJunkyard(c, cause, params);
+                // keeps the params so the move is recorded for "until" returns (Side Quest sends a creature
+                // out of the game until your next turn)
+                case None -> moveTo(c.getOwner().getZone(name), c, cause, params);
                 default -> moveTo(c.getOwner().getZone(name), c, cause); // sideboard will also get there
             };
         } catch (Exception e) {

@@ -1,0 +1,7 @@
+Name:Old Guard
+ManaCost:1 W
+Types:Artifact Creature Cyborg Soldier
+PT:2/1
+A:AB$ Tap | Cost$ W T | ValidTgts$ Creature.!hasReminderText | TgtPrompt$ Select target creature without reminder text | SpellDescription$ Tap target creature without reminder text. (Reminder text is still any italicized text in parentheses that explains rules you already know.)
+SVar:NonCombatPriority:1
+Oracle:{W}, {T}: Tap target creature without reminder text. (Reminder text is still any italicized text in parentheses that explains rules you already know.)

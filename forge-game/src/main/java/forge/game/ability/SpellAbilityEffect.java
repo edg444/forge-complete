@@ -872,6 +872,12 @@ public abstract class SpellAbilityEffect {
                         }
                         // better check if card didn't changed zones again?
                         Card newCard = game.getCardState(c, null);
+                        // getCardState doesn't look in the None zone, where Side Quest's creature waits out
+                        // its trip to another game
+                        if (newCard == null && cell.getColumnKey() == ZoneType.None) {
+                            newCard = c.getOwner().getZone(ZoneType.None).getCards().stream()
+                                    .filter(x -> x.getId() == c.getId()).findFirst().orElse(null);
+                        }
                         if (newCard == null || !newCard.equalsWithGameTimestamp(c)) {
                             continue;
                         }

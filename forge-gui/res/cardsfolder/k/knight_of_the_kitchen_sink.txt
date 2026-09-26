@@ -1,0 +1,29 @@
+Name:Knight of the Kitchen Sink
+ManaCost:W W
+Types:Artifact Creature Cyborg Knight
+PT:2/2
+K:First Strike
+Oracle:First strike
+
+# --- VARIANTS ---
+# Borders, watermarks and open mouths come from res/lists/PrintingTraits.txt (per printing, from
+# Scryfall); "open mouth" is Scryfall Tagger's art tag, per the ruling that any open mouth anywhere in
+# the art counts. Collector numbers go by the number itself, so 12a is even.
+
+Variant:A:K:Protection:Card.BlackBordered:black borders
+Variant:A:Oracle:First strike, protection from black borders (Nothing with a black border can block, target, deal damage to, or attach to this creature.)
+
+Variant:B:K:Protection:Card.CollectorNumberEven:even collector numbers
+Variant:B:Oracle:First strike, protection from even collector numbers (Nothing with an even collector number can block, target, deal damage to, or attach to this creature.)
+
+Variant:C:K:Protection:Card.OpenMouthArt:loose lips
+Variant:C:Oracle:First strike, protection from loose lips (Nothing with an open mouth in its artwork can block, target, deal damage to, or attach to this creature.)
+
+Variant:D:K:Protection:Card.CollectorNumberOdd:odd collector numbers
+Variant:D:Oracle:First strike, protection from odd collector numbers (Nothing with an odd collector number can block, target, deal damage to, or attach to this creature.)
+
+Variant:E:K:Protection:Card.nameWords_EQ2:two-word names
+Variant:E:Oracle:First strike, protection from two-word names (Nothing with exactly two words in its name can block, target, deal damage to, or attach to this creature. Hyphenated words are one word.)
+
+Variant:F:K:Protection:Card.Watermarked:watermarks
+Variant:F:Oracle:First strike, protection from watermarks (Nothing with a watermark can block, target, deal damage to, or attach to this creature.)

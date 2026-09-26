@@ -91,10 +91,6 @@ public class ChooseCardAi extends SpellAbilityAi {
     protected AiAbilityDecision checkApiLogic(final Player ai, final SpellAbility sa) {
         // Without an AiLogic nothing else checks that the choice can actually be made, so an
         // effect reading "choose two creatures you control" was cast with none on the battlefield.
-        if (getChoices(ai, sa).size() < requiredChoices(sa)) {
-            return new AiAbilityDecision(0, AiPlayDecision.MissingNeededCards);
-        }
-
         if (sa.usesTargeting()) {
             sa.resetTargets();
             // search targetable Opponents
@@ -104,7 +100,19 @@ public class ChooseCardAi extends SpellAbilityAi {
                 return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
             }
 
-            sa.getTargets().add(Iterables.getFirst(oppList, null));
+            // choices like "Creature.TargetedPlayerCtrl" (Blot Out, Sacrifice Play) only exist once a
+            // target is set, so try each opponent rather than checking the choices before targeting
+            for (final Player opp : oppList) {
+                sa.getTargets().add(opp);
+                if (getChoices(ai, sa).size() >= requiredChoices(sa)) {
+                    return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+                }
+                sa.resetTargets();
+            }
+            return new AiAbilityDecision(0, AiPlayDecision.MissingNeededCards);
+        }
+        if (getChoices(ai, sa).size() < requiredChoices(sa)) {
+            return new AiAbilityDecision(0, AiPlayDecision.MissingNeededCards);
         }
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }

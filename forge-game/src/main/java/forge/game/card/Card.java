@@ -53,6 +53,7 @@ import forge.game.zone.Zone;
 import forge.game.zone.ZoneType;
 import forge.item.IPaperCard;
 import forge.item.PaperCard;
+import forge.item.PaperToken;
 import forge.trackable.TrackableProperty;
 import forge.trackable.Tracker;
 import forge.util.*;
@@ -6499,6 +6500,53 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         final IPaperCard pc = getPaperCard();
         return edition != null && pc != null && edition.isAcorn(pc.getCollectorNumber());
     }
+
+    /** Generated facts about this card's printing, or null. A face-down card shows none of its face. */
+    private PrintingTraits.Traits getPrintingTraits() {
+        final IPaperCard pc = isFaceDown() ? null : getPaperCard();
+        return pc == null ? null : PrintingTraits.get(pc.getEdition(), pc.getCollectorNumber(), pc instanceof PaperToken);
+    }
+
+    /**
+     * The border actually printed on this card, for things that look at the physical card (Knight of
+     * the Kitchen Sink). Unlike {@link #borderColor()} it knows borderless printings and the few the
+     * edition files get wrong (Steamflogger Boss is black in a silver set); borderColor() keeps the
+     * edition-data answer the silver-border rules were built on. Null for a face-down card.
+     */
+    public CardEdition.BorderColor printedBorderColor() {
+        if (isFaceDown()) {
+            return null;
+        }
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t != null && t.getBorder() != null ? t.getBorder() : borderColor();
+    }
+
+    /** Watermark of the face this card is showing, or null. */
+    public String getWatermark() {
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t == null ? null : t.getWatermark(isBackSide());
+    }
+
+    /** Whether the artwork of the face this card is showing has an open mouth in it. */
+    public boolean hasOpenMouthArt() {
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t != null && t.hasOpenMouth(isBackSide());
+    }
+
+    /**
+     * The number in this printing's collector number, or -1 when it has none: 12 for "12a", 123 for
+     * The List's "ELD-123" and Alchemy's "A-123", 1 for Unfinity's "F1". The last run of digits is
+     * the number, since prefixes name a set or variant and suffixes a version.
+     */
+    public int getCollectorNumberValue() {
+        final IPaperCard pc = isFaceDown() ? null : getPaperCard();
+        if (pc == null || pc.getCollectorNumber() == null) {
+            return -1;
+        }
+        final java.util.regex.Matcher m = LAST_DIGIT_RUN.matcher(pc.getCollectorNumber());
+        return m.find() ? Integer.parseInt(m.group(1)) : -1;
+    }
+    private static final java.util.regex.Pattern LAST_DIGIT_RUN = java.util.regex.Pattern.compile("(\\d+)(?!.*\\d)");
 
     public final String getMostRecentSet() {
         return StaticData.instance().getCommonCards().getCard(getPaperCard().getName()).getEdition();

@@ -1,0 +1,9 @@
+Name:Side Quest
+ManaCost:W
+Types:Sorcery
+# The creature goes off to someone else's game: removed from this one entirely (zone None - not exile) and
+# back at the start of your next turn, when the control change ends.
+A:SP$ ChangeZone | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | Origin$ Battlefield | Destination$ None | Duration$ UntilYourNextTurn | AILogic$ SideQuest | SubAbility$ DBDelay | StackDescription$ SpellDescription | SpellDescription$ Target player in an Un-game you can see from your seat gains control of target creature you control until your next turn. At the beginning of your next upkeep, put two +1/+1 counters on that creature. (A creature is on the battlefield of only the game its controller is playing.)
+SVar:DBDelay:DB$ DelayedTrigger | Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | RememberObjects$ Targeted | Execute$ TrigCounters | TriggerDescription$ At the beginning of your next upkeep, put two +1/+1 counters on that creature.
+SVar:TrigCounters:DB$ PutCounter | Defined$ DelayTriggerRemembered | CounterType$ P1P1 | CounterNum$ 2
+Oracle:Target player in an Un-game you can see from your seat gains control of target creature you control until your next turn. At the beginning of your next upkeep, put two +1/+1 counters on that creature. (A creature is on the battlefield of only the game its controller is playing.)

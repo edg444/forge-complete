@@ -839,6 +839,23 @@ public class ChangeZoneAi extends SpellAbilityAi {
 
         final ZoneType destination = ZoneType.smartValueOf(sa.getParam("Destination"));
 
+        if ("SideQuest".equals(sa.getParam("AILogic"))) {
+            // Side Quest: gone until our next turn, back with two +1/+1 counters. A creature that attacked
+            // stays tapped through the opponent's turn and couldn't have blocked anyway, so after combat
+            // sending it is free.
+            if (!ai.getGame().getPhaseHandler().is(PhaseType.MAIN2, ai)) {
+                return new AiAbilityDecision(0, AiPlayDecision.WaitForMain2);
+            }
+            final CardCollection tapped = CardLists.filter(CardLists.getTargetableCards(ai.getCreaturesInPlay(), sa),
+                    c -> c.isTapped() && !c.hasKeyword(Keyword.VIGILANCE));
+            if (tapped.isEmpty()) {
+                return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
+            }
+            sa.resetTargets();
+            sa.getTargets().add(ComputerUtilCard.getBestCreatureAI(tapped));
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
+
         if (sa.usesTargeting()) {
             if (!isPreferredTarget(ai, sa, false, false)) {
                 return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);

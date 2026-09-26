@@ -23,15 +23,18 @@ import com.google.common.collect.Maps;
 import forge.*;
 import forge.CardStorageReader.ProgressObserver;
 import forge.ai.AiProfileUtil;
+import forge.ai.ComputerUtilCard;
 import forge.card.CardFlavorText;
 import forge.card.CardRulesPredicates;
 import forge.card.CardType;
+import forge.card.PrintingTraits;
 import forge.deck.CardArchetypeLDAGenerator;
 import forge.deck.CardRelationMatrixGenerator;
 import forge.deck.io.DeckPreferences;
 import forge.error.ExceptionHandler;
 import forge.game.GameFormat;
 import forge.game.GameType;
+import forge.game.card.CardThreat;
 import forge.game.card.CardUtil;
 import forge.game.spellability.Spell;
 import forge.gamemodes.gauntlet.GauntletData;
@@ -273,6 +276,7 @@ public final class FModel {
         // Preload AI profiles
         AiProfileUtil.loadAllProfiles(ForgeConstants.AI_PROFILE_DIR);
         AiProfileUtil.setAiSideboardingMode(AiProfileUtil.AISideboardingMode.normalizedValueOf(getPreferences().getPref(FPref.MATCH_AI_SIDEBOARDING_MODE)));
+        CardThreat.setEvaluator(ComputerUtilCard::evaluateCreature);
 
         // Generate Deck Gen matrix
         if(getPreferences().getPrefBoolean(FPref.DECKGEN_CARDBASED) && !loadCardsLazily) {
@@ -366,6 +370,7 @@ public final class FModel {
         // handed over as a supplier rather than parsed here - only a few Unhinged cards ever read
         // flavor text, so the 55k-entry table stays unbuilt unless one of them is actually played
         CardFlavorText.setSource(() -> FileUtil.readFile(ForgeConstants.FLAVOR_TEXT_FILE));
+        PrintingTraits.setSource(() -> FileUtil.readFile(ForgeConstants.PRINTING_TRAITS_FILE));
 
         if (!keywordsLoaded) {
             final List<String> nskwListFile = FileUtil.readFile(ForgeConstants.KEYWORD_LIST_FILE);

@@ -309,6 +309,29 @@ public class CardProperty {
             if (!card.isSilverBorderedOrAcorn()) {
                 return false;
             }
+        } else if (property.equals("BlackBordered")) {
+            // Knight of the Kitchen Sink. The printed border, so borderless printings don't count.
+            if (card.printedBorderColor() != CardEdition.BorderColor.BLACK) {
+                return false;
+            }
+        } else if (property.equals("CollectorNumberEven") || property.equals("CollectorNumberOdd")) {
+            final int number = card.getCollectorNumberValue();
+            if (number < 0 || (number % 2 == 0) != property.endsWith("Even")) {
+                return false;
+            }
+        } else if (property.equals("Watermarked")) {
+            if (card.getWatermark() == null) {
+                return false;
+            }
+        } else if (property.startsWith("Watermark_")) {
+            // Scryfall's watermark names, e.g. Watermark_orderofthewidget (Knight of the Widget)
+            if (!property.substring(10).equalsIgnoreCase(card.getWatermark())) {
+                return false;
+            }
+        } else if (property.equals("OpenMouthArt")) {
+            if (!card.hasOpenMouthArt()) {
+                return false;
+            }
         } else if (property.equals("alphabeticallyFirstNonLand")) {
             // Zzzyxas's Abyss. Ties are intentional - every permanent sharing that name qualifies.
             // Compared on the displayed name so a flavor name sorts as printed.
@@ -1733,7 +1756,14 @@ public class CardProperty {
             boolean hasReminder = false;
             final forge.card.CardRules reminderRules = card.getRules();
             if (reminderRules != null) {
-                final String oracle = reminderRules.getOracleText();
+                String oracle = reminderRules.getOracleText();
+                // a functional variant prints its own text (Knight of the Kitchen Sink's six protections
+                // each carry reminder text the base face doesn't)
+                final IPaperCard variantPc = card.getPaperCard();
+                if (variantPc != null && !IPaperCard.NO_FUNCTIONAL_VARIANT.equals(variantPc.getFunctionalVariant())
+                        && variantPc.getMainFace() != null) {
+                    oracle = variantPc.getMainFace().getOracleText();
+                }
                 hasReminder = oracle != null && oracle.contains("(") && oracle.contains(")");
             } else {
                 // a token, whose script omits the reminder text its printed counterpart carries
@@ -1753,10 +1783,20 @@ public class CardProperty {
             // current name, so a renamed permanent counts as whatever it's called now, and
             // "Tovolar, Dire Overlord" is three rather than two. Uses the displayed name so a
             // flavor name counts as printed on the card the player is looking at.
+            // nameWords_Odd / nameWords_Even for Oddly Uneven; a nameless card has zero words, which is even.
             final String comparator = property.split("_")[1];
-            final String name = card.getDisplayName().trim();
+            String name = card.getDisplayName().trim();
+            // Forge suffixes generated token names with " Token", but per the Unstable rulings a Human
+            // Soldier token is named "Human Soldier" - the suffix is how Forge marks it, not part of it
+            if (card.isToken() && name.endsWith(" Token")) {
+                name = name.substring(0, name.length() - " Token".length()).trim();
+            }
             final int words = name.isEmpty() ? 0 : name.split("\\s+").length;
-            if (!Expressions.compare(words, comparator.substring(0, 2),
+            if (comparator.equals("Odd") || comparator.equals("Even")) {
+                if ((words % 2 == 0) != comparator.equals("Even")) {
+                    return false;
+                }
+            } else if (!Expressions.compare(words, comparator.substring(0, 2),
                     Integer.parseInt(comparator.substring(2)))) {
                 return false;
             }

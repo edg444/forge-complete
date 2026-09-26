@@ -110,7 +110,10 @@ public final class CardEdition implements Comparable<CardEdition> {
         WHITE,
         BLACK,
         SILVER,
-        GOLD
+        GOLD,
+        // only ever per printing, from PrintingTraits - no edition is wholly either
+        BORDERLESS,
+        YELLOW
     }
 
     // reserved names of sections inside edition files, that are not parsed as cards

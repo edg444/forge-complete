@@ -11,6 +11,8 @@ import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 
+import java.util.Map;
+
 public class AugmentAi extends SpellAbilityAi {
 
     @Override
@@ -21,9 +23,20 @@ public class AugmentAi extends SpellAbilityAi {
         if (hosts.isEmpty()) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
+        // Teacher's Pet: the sacrifice is wasted if the search can't find anything
+        if (sa.hasParam("ChangeType") && CardLists.getValidCards(ai.getCardsIn(ZoneType.Library),
+                sa.getParam("ChangeType"), ai, sa.getHostCard(), sa).isEmpty()) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
         final Card best = ComputerUtilCard.getBestCreatureAI(hosts);
         sa.resetTargets();
         sa.getTargets().add(best);
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    // Teacher's Pet's library search: always take one - the host is already chosen and the cost paid
+    @Override
+    protected Card chooseSingleCard(Player ai, SpellAbility sa, Iterable<Card> options, boolean isOptional, Player targetedPlayer, Map<String, Object> params) {
+        return ComputerUtilCard.getBestAI(options);
     }
 }

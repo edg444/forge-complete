@@ -1,0 +1,7 @@
+Name:Oddly Uneven
+ManaCost:3 W W
+Types:Sorcery
+A:SP$ Charm | Choices$ DestroyOdd,DestroyEven
+SVar:DestroyOdd:DB$ DestroyAll | ValidCards$ Creature.nameWords_Odd | SpellDescription$ Destroy each creature with an odd number of words in its name. (Hyphenated words are one word.)
+SVar:DestroyEven:DB$ DestroyAll | ValidCards$ Creature.nameWords_Even | SpellDescription$ Destroy each creature with an even number of words in its name.
+Oracle:Choose one —\n• Destroy each creature with an odd number of words in its name. (Hyphenated words are one word.)\n• Destroy each creature with an even number of words in its name.

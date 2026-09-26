@@ -16,6 +16,7 @@ import forge.game.card.CardCollection;
 import forge.game.card.CardCollectionView;
 import forge.game.card.CardLists;
 import forge.game.card.CardPredicates;
+import forge.game.card.CardThreat;
 import forge.game.player.Player;
 import forge.game.player.PlayerActionConfirmMode;
 import forge.game.player.PlayerCollection;
@@ -24,6 +25,7 @@ import forge.game.zone.ZoneType;
 import forge.util.Aggregates;
 import forge.util.Lang;
 import forge.util.Localizer;
+import forge.util.MyRandom;
 
 public class ChooseCardEffect extends SpellAbilityEffect {
     @Override
@@ -222,6 +224,9 @@ public class ChooseCardEffect extends SpellAbilityEffect {
                 notTgtPlayerCtrl.removeAll(tgtPlayerCtrl);
                 chosen.addAll(p.getController().chooseCardsForEffect(notTgtPlayerCtrl, sa, title + " " + "you don't control", minAmount, validAmount,
                         !sa.hasParam("Mandatory"), null));
+            } else if ("ThreatExtremes".equals(sa.getParam("AtRandom")) && !pChoices.isEmpty()) {
+                chosen = new CardCollection(pickThreatExtreme(pChoices));
+                dontRevealToOwner = false;
             } else if (sa.hasParam("AtRandom") && !pChoices.isEmpty()) {
                 // don't pass FCollection for direct modification, the Set part would get messed up
                 chosen = new CardCollection(Aggregates.random(pChoices, validAmount));
@@ -299,5 +304,28 @@ public class ChooseCardEffect extends SpellAbilityEffect {
         if (sa.hasParam("ImprintChosen")) {
             host.addImprintedCards(allChosen);
         }
+    }
+
+    // Sacrifice Play's person outside the game: most likely the obvious pick, the biggest threat (a friend
+    // helping) or the smallest (a friend trolling), but anything in between can still come up
+    private static final double THREAT_EXTREME_CHANCE = 0.4;
+
+    private static Card pickThreatExtreme(final CardCollectionView choices) {
+        final List<Card> sorted = new ArrayList<>(choices);
+        // shuffled first so the stable sort breaks ties at random
+        Collections.shuffle(sorted, MyRandom.getRandom());
+        sorted.sort(Comparator.comparingInt(CardThreat::evaluate));
+        final int n = sorted.size();
+        if (n <= 2) {
+            return sorted.get(MyRandom.getRandom().nextInt(n));
+        }
+        final double roll = MyRandom.getRandom().nextDouble();
+        if (roll < THREAT_EXTREME_CHANCE) {
+            return sorted.get(n - 1);
+        }
+        if (roll < 2 * THREAT_EXTREME_CHANCE) {
+            return sorted.get(0);
+        }
+        return sorted.get(1 + MyRandom.getRandom().nextInt(n - 2));
     }
 }

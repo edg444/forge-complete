@@ -1,0 +1,8 @@
+Name:Knight of the Widget
+ManaCost:2 W
+Types:Artifact Creature Cyborg Knight
+PT:*/*
+K:Vigilance
+S:Mode$ Continuous | CharacteristicDefining$ True | SetPower$ X | SetToughness$ X | Description$ CARDNAME's power and toughness are each equal to the number of Order of the Widget watermarks among permanents you control.
+SVar:X:Count$Valid Permanent.YouCtrl+Watermark_orderofthewidget
+Oracle:Vigilance\nKnight of the Widget's power and toughness are each equal to the number of Order of the Widget watermarks among permanents you control.
