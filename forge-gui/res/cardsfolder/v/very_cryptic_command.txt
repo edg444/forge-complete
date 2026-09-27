@@ -1,0 +1,64 @@
+Name:Very Cryptic Command
+ManaCost:1 U U U
+Types:Instant
+Oracle:<Unsupported Variant>
+
+# --- VARIANTS ---
+# Six printings, each its own "Choose two -" with four modes (the 49a-f edition lines pick the variant).
+
+Variant:A:A:SP$ Charm | CharmNum$ 2 | Choices$ VA1,VA2,VA3,VA4
+Variant:A:SVar:VA1:DB$ Pump | ValidTgts$ Creature | TgtPrompt$ Select target creature | KW$ HIDDEN CARDNAME's power and toughness are switched | SpellDescription$ Switch target creature's power and toughness until end of turn.
+Variant:A:SVar:VA2:DB$ Effect | ValidTgts$ Creature | TgtPrompt$ Select target creature | RememberObjects$ Targeted | ExileOnMoved$ Battlefield | StaticAbilities$ VAUnblockable | StackDescription$ {c:Targeted} can't be blocked this turn. | SpellDescription$ Target creature can't be blocked this turn.
+Variant:A:SVar:VAUnblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | Description$ This creature can't be blocked this turn.
+# the art check is per printing (artIsBy reads the credited artist)
+Variant:A:SVar:VA3:DB$ Draw | NumCards$ 1 | RememberDrawn$ True | SubAbility$ VA3Reveal | SpellDescription$ Draw a card. If that card's art is by Wayne England, you may reveal it and draw another card.
+Variant:A:SVar:VA3Reveal:DB$ ChooseCard | Defined$ You | ChoiceZone$ Hand | Choices$ Card.IsRemembered+artIsBy Wayne England | MinAmount$ 0 | Amount$ 1 | Reveal$ True | ChoiceTitle$ You may reveal the card by Wayne England to draw another card | SubAbility$ VA3Draw
+Variant:A:SVar:VA3Draw:DB$ Draw | NumCards$ 1 | ConditionDefined$ ChosenCard | ConditionPresent$ Card | ConditionCompare$ GE1 | SubAbility$ VA3Cleanup
+Variant:A:SVar:VA3Cleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
+Variant:A:SVar:VA4:DB$ AssembleContraption | SpellDescription$ Assemble a Contraption.
+Variant:A:Oracle:Choose two —\n• Switch target creature's power and toughness until end of turn.\n• Target creature can't be blocked this turn.\n• Draw a card. If that card's art is by Wayne England, you may reveal it and draw another card.\n• Assemble a Contraption.
+
+Variant:B:A:SP$ Charm | CharmNum$ 2 | Choices$ VB1,VB2,VB3,VB4
+Variant:B:SVar:VB1:DB$ Untap | ValidTgts$ Permanent | TargetMin$ 2 | TargetMax$ 2 | TgtPrompt$ Select two target permanents | SpellDescription$ Untap two target permanents.
+# hyphenated words are one word (Unstable ruling), as nameWords counts them
+Variant:B:SVar:VB2:DB$ TapAll | ValidTgts$ Player | TgtPrompt$ Select target player | ValidCards$ Permanent.TargetedPlayerCtrl+nameWords_EQ1 | SpellDescription$ Tap each permanent target player controls with exactly one word in its name.
+Variant:B:SVar:VB3:DB$ Discard | Defined$ You | Mode$ Hand | RememberDiscarded$ True | SubAbility$ VB3Draw | SpellDescription$ Discard all the cards in your hand, then draw that many cards.
+Variant:B:SVar:VB3Draw:DB$ Draw | Defined$ You | NumCards$ VBX | SubAbility$ VB3Cleanup
+Variant:B:SVar:VB3Cleanup:DB$ Cleanup | ClearRemembered$ True
+Variant:B:SVar:VBX:Remembered$Amount
+Variant:B:SVar:VB4:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand | ValidTgts$ Instant.YouOwn,Sorcery.YouOwn | TgtPrompt$ Select target instant or sorcery card in your graveyard | SpellDescription$ Return target instant or sorcery card from your graveyard to your hand.
+Variant:B:Oracle:Choose two —\n• Untap two target permanents.\n• Tap each permanent target player controls with exactly one word in its name.\n• Discard all the cards in your hand, then draw that many cards.\n• Return target instant or sorcery card from your graveyard to your hand.
+
+Variant:C:A:SP$ Charm | CharmNum$ 2 | Choices$ VC1,VC2,VC3,VC4
+# not targeted, so the opponent is chosen as it resolves; the card stays its owner's (as Spy Eye)
+Variant:C:SVar:VC1:DB$ ChoosePlayer | Defined$ You | Choices$ Player.Opponent | ChoiceTitle$ Choose an opponent to draw from | SubAbility$ VC1Draw | SpellDescription$ Draw a card from an opponent's library.
+Variant:C:SVar:VC1Draw:DB$ Draw | Defined$ You | NumCards$ 1 | FromLibraryOf$ ChosenPlayer
+Variant:C:SVar:VC2:DB$ CopySpellAbility | ValidTgts$ Instant,Sorcery | TargetType$ Spell | TgtPrompt$ Select target instant or sorcery spell | MayChooseTarget$ True | SpellDescription$ Copy target instant or sorcery spell. You may choose new targets for the copy.
+Variant:C:SVar:VC3:DB$ Animate | ValidTgts$ Creature | TgtPrompt$ Select target creature | Power$ 1 | Toughness$ 1 | RemoveAllAbilities$ True | Colors$ Blue | OverwriteColors$ True | Types$ Frog | RemoveCreatureTypes$ True | IsCurse$ True | SpellDescription$ Until end of turn, target creature loses all abilities and becomes a blue Frog with base power and toughness 1/1.
+Variant:C:SVar:VC4:DB$ Token | TokenScript$ c_1_1_a_gnome | TokenOwner$ You | SpellDescription$ Create a 1/1 colorless Gnome artifact creature token.
+Variant:C:Oracle:Choose two —\n• Draw a card from an opponent's library.\n• Copy target instant or sorcery spell. You may choose new targets for the copy.\n• Until end of turn, target creature loses all abilities and becomes a blue Frog with base power and toughness 1/1.\n• Create a 1/1 colorless Gnome artifact creature token.
+
+Variant:D:A:SP$ Charm | CharmNum$ 2 | Choices$ VD1,VD2,VD3,VD4
+# its controller's hand, not its owner's: a stolen permanent goes to the thief's hand, still its owner's card
+Variant:D:SVar:VD1:DB$ ChangeZone | ValidTgts$ Permanent | TgtPrompt$ Select target permanent | Origin$ Battlefield | Destination$ Hand | HandOf$ TargetedController | SpellDescription$ Return target permanent to its controller's hand.
+Variant:D:SVar:VD2:DB$ Draw | Defined$ You | NumCards$ 2 | SubAbility$ VD2Discard | SpellDescription$ Draw two cards, then discard a card.
+Variant:D:SVar:VD2Discard:DB$ Discard | Defined$ You | NumCards$ 1 | Mode$ TgtChoose
+Variant:D:SVar:VD3:DB$ ChangeTargets | TargetType$ Spell.singleTarget | ValidTgts$ Card | TgtPrompt$ Select target spell with a single target | SpellDescription$ Change the target of target spell with a single target.
+# face down turns face up, double-faced transforms, anything else turns face down as a 2/2 (Unstable ruling)
+Variant:D:SVar:VD4:DB$ SetState | ValidTgts$ Creature.nonToken | TgtPrompt$ Select target nontoken creature | Mode$ TurnOver | SpellDescription$ Turn over target nontoken creature.
+Variant:D:Oracle:Choose two —\n• Return target permanent to its controller's hand.\n• Draw two cards, then discard a card.\n• Change the target of target spell with a single target.\n• Turn over target nontoken creature.
+
+Variant:E:A:SP$ Charm | CharmNum$ 2 | Choices$ VE1,VE2,VE3,VE4
+Variant:E:SVar:VE1:DB$ Counter | TargetType$ Spell | ValidTgts$ Card.BlackBordered | TgtPrompt$ Select target black-bordered spell | SpellDescription$ Counter target black-bordered spell.
+Variant:E:SVar:VE2:DB$ ChangeZone | ValidTgts$ Creature | TgtPrompt$ Select target creature | Origin$ Battlefield | Destination$ Hand | SpellDescription$ Return target creature to its owner's hand.
+Variant:E:SVar:VE3:DB$ UntapAll | ValidCards$ Permanent.YouCtrl+Watermarked | SpellDescription$ Untap each permanent you control with a watermark.
+Variant:E:SVar:VE4:DB$ RollDice | Amount$ 2 | ResultSVar$ VEX | SubAbility$ VE4Mill | SpellDescription$ Roll two six-sided dice. Target player mills X cards, where X is the total of those results.
+Variant:E:SVar:VE4Mill:DB$ Mill | ValidTgts$ Player | TgtPrompt$ Select target player | NumCards$ VEX
+Variant:E:Oracle:Choose two —\n• Counter target black-bordered spell.\n• Return target creature to its owner's hand.\n• Untap each permanent you control with a watermark.\n• Roll two six-sided dice. Target player mills X cards, where X is the total of those results.
+
+Variant:F:A:SP$ Charm | CharmNum$ 2 | Choices$ VF1,VF2,VF3,VF4
+Variant:F:SVar:VF1:DB$ Scry | ScryNum$ 3 | SpellDescription$ Scry 3.
+Variant:F:SVar:VF2:DB$ Token | TokenScript$ b_2_2_rogue_menace | TokenOwner$ You | SpellDescription$ Create a 2/2 black Rogue creature token with menace.
+Variant:F:SVar:VF3:DB$ NudgeNumber | ValidTgts$ Card | TgtZone$ Stack,Battlefield | TgtPrompt$ Choose target spell or permanent | SpellDescription$ Add or subtract 1 or one from a number or number word on target spell or permanent until end of turn.
+Variant:F:SVar:VF4:DB$ ChangeZoneAll | ValidTgts$ Player | TgtPrompt$ Select target player | Origin$ Battlefield | Destination$ Hand | ChangeType$ Artifact.TargetedPlayerCtrl | SpellDescription$ Return all artifacts target player controls to their owner's hand.
+Variant:F:Oracle:Choose two —\n• Scry 3.\n• Create a 2/2 black Rogue creature token with menace.\n• Add or subtract 1 or one from a number or number word on target spell or permanent until end of turn.\n• Return all artifacts target player controls to their owner's hand.

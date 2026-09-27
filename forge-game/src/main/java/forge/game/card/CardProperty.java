@@ -396,6 +396,16 @@ public class CardProperty {
                     java.util.regex.Pattern.CASE_INSENSITIVE).matcher(rules).find()) {
                 return false;
             }
+        } else if (property.startsWith("artIsBy ")) {
+            // Very Cryptic Command: "If that card's art is by Wayne England" - one of the printing's credited artists
+            final String wanted = property.substring("artIsBy ".length()).trim();
+            boolean byThem = false;
+            for (final String artist : StringUtils.defaultString(card.getArtist()).split("\\s*&\\s*")) {
+                byThem |= artist.trim().equalsIgnoreCase(wanted);
+            }
+            if (!byThem) {
+                return false;
+            }
         } else if (property.equals("ArtistIsChosen")) {
             if (!source.hasChosenArtist()
                     || !card.getArtist().equalsIgnoreCase(source.getChosenArtist())) {

@@ -30,7 +30,9 @@ public class SetStateEffect extends SpellAbilityEffect {
         final StringBuilder sb = new StringBuilder();
         boolean specialize = sa.getParam("Mode").equals("Specialize");
 
-        if (sa.hasParam("Flip")) {
+        if ("TurnOver".equals(sa.getParam("Mode"))) {
+            sb.append("Turn over ");
+        } else if (sa.hasParam("Flip")) {
             sb.append("Flip ");
         } else if (specialize) { // verb will come later
         } else {
@@ -86,10 +88,15 @@ public class SetStateEffect extends SpellAbilityEffect {
                 continue;
             }
 
+            // Very Cryptic Command's "turn over": a face-down card turns face up, a double-faced card transforms,
+            // and anything else turns face down as a 2/2 (Unstable ruling)
+            final String cardMode = !"TurnOver".equals(mode) ? mode : gameCard.isFaceDown() ? "TurnFaceUp"
+                    : gameCard.isTransformable() ? "Transform" : "TurnFaceDown";
+
             // Cards which are not on the battlefield should not be able to transform.
             // TurnFace should be allowed in other zones like Exile too
             // Specialize and Unspecialize are allowed in other zones
-            if (!"TurnFaceUp".equals(mode) && !"TurnFaceDown".equals(mode) && !"Unspecialize".equals(mode) && !"Specialize".equals(mode)
+            if (!"TurnFaceUp".equals(cardMode) && !"TurnFaceDown".equals(cardMode) && !"Unspecialize".equals(cardMode) && !"Specialize".equals(cardMode)
                     && !gameCard.isInPlay() && !sa.hasParam("ETB")) {
                 continue;
             }
@@ -104,7 +111,7 @@ public class SetStateEffect extends SpellAbilityEffect {
             }
 
             // facedown cards that are not Permanent, can't turn faceup there
-            if ("TurnFaceUp".equals(mode) && gameCard.isFaceDown() && gameCard.isInPlay()) {
+            if ("TurnFaceUp".equals(cardMode) && gameCard.isFaceDown() && gameCard.isInPlay()) {
                 if (gameCard.hasMergedCard()) {
                     boolean hasNonPermanent = false;
                     Card nonPermanentCard = null;
@@ -130,7 +137,7 @@ public class SetStateEffect extends SpellAbilityEffect {
             }
 
             // Merged faceup permanent that have double faced cards can't turn face down
-            if ("TurnFaceDown".equals(mode) && !gameCard.isFaceDown() && gameCard.isInPlay()
+            if ("TurnFaceDown".equals(cardMode) && !gameCard.isFaceDown() && gameCard.isInPlay()
                     && gameCard.hasMergedCard()) {
                 boolean hasBackSide = false;
                 for (final Card c : gameCard.getMergedCards()) {
@@ -145,11 +152,11 @@ public class SetStateEffect extends SpellAbilityEffect {
             }
 
             // for reasons it can't transform, skip
-            if ("Transform".equals(mode) && !gameCard.canTransform(sa)) {
+            if ("Transform".equals(cardMode) && !gameCard.canTransform(sa)) {
                 continue;
             }
 
-            if ("Transform".equals(mode) && gameCard.equals(host) && sa.hasSVar("StoredTransform")) {
+            if ("Transform".equals(cardMode) && gameCard.equals(host) && sa.hasSVar("StoredTransform")) {
                 // If want to Transform, and host is trying to transform self, skip if not in alignment
                 boolean skip = gameCard.getTransformedTimestamp() != Long.parseLong(sa.getSVar("StoredTransform"));
                 // Clear SVar from SA so it doesn't get reused accidentally
@@ -169,11 +176,11 @@ public class SetStateEffect extends SpellAbilityEffect {
             boolean hasTransformed;
             if (sa.isTurnFaceUp()) {
                 hasTransformed = gameCard.turnFaceUp(sa);
-            } else if ("Specialize".equals(mode)) {
-                hasTransformed = gameCard.changeCardState(mode, host.getChosenColor(), sa);
+            } else if ("Specialize".equals(cardMode)) {
+                hasTransformed = gameCard.changeCardState(cardMode, host.getChosenColor(), sa);
                 host.setChosenColors(null);
             } else {
-                hasTransformed = gameCard.changeCardState(mode, sa.getParam("NewState"), sa);
+                hasTransformed = gameCard.changeCardState(cardMode, sa.getParam("NewState"), sa);
                 if (hasTransformed && (sa.hasParam("FaceDownPower") || sa.hasParam("FaceDownToughness")
                         || sa.hasParam("FaceDownSetType"))) {
                     CardFactoryUtil.setFaceDownState(gameCard, sa);
@@ -205,7 +212,7 @@ public class SetStateEffect extends SpellAbilityEffect {
                 }
                 if (!gameCard.isTransformable())
                     transformedCards.add(gameCard);
-                if ("Specialize".equals(mode)) {
+                if ("Specialize".equals(cardMode)) {
                     gameCard.setSpecialized(true);
                     //run Specializes trigger
                     final TriggerHandler th = game.getTriggerHandler();
@@ -213,7 +220,7 @@ public class SetStateEffect extends SpellAbilityEffect {
                     th.registerActiveTrigger(gameCard, false);
                     final Map<AbilityKey, Object> runParams = AbilityKey.mapFromCard(gameCard);
                     th.runTrigger(TriggerType.Specializes, runParams, false);
-                } else if ("Unspecialize".equals(mode)) {
+                } else if ("Unspecialize".equals(cardMode)) {
                     gameCard.setSpecialized(false);
                 }
             }

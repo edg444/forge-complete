@@ -134,7 +134,19 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ## Log
 
-### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician; Magic Word; More or Less; S.N.E.A.K. Dispatcher; Socketed Sprocketer; Spy Eye
+### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician; Magic Word; More or Less; S.N.E.A.K. Dispatcher; Socketed Sprocketer; Spy Eye; Very Cryptic Command
+
+- **Very Cryptic Command** (ust/49a-f): none of the six printings existed; one script with six variants, each
+  its own "Choose two -" Charm (base face `<Unsupported Variant>`, as Everythingamajig).
+  - 49a: card property `artIsBy <artist>` (one of the printing's credited artists) - "if that card's art is by
+    Wayne England, you may reveal it and draw another card".
+  - 49d: SetState `Mode$ TurnOver` - a face-down creature turns face up, a double-faced one transforms, anything
+    else turns face down as a 2/2 (Unstable ruling). "Its controller's hand" uses `HandOf$ TargetedController`.
+  - Built on earlier fork pieces: `nameWords_EQ1` (49b), Draw `FromLibraryOf$` (49c), `BlackBordered` and
+    `Watermarked` (49e), `NudgeNumber` (49f).
+  - Not covered: turning over a melded permanent (the ruling splits it into two creatures; it turns face down
+    instead). `VeryCrypticCommandTest` (5). Suite: 796 run, 0 failed, 6 skipped.
+- Time Out (ust/48, upstream) verified against Scryfall, unchanged.
 
 - **Spy Eye** (ust/46): Draw `FromLibraryOf$ <player>` (`Player.drawCards(..., libraryOf)`) — still your draw
   (counts, Drawn triggers, draw replacements), the card enters your hand still its owner's (controller set, as
