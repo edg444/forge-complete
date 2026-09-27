@@ -673,6 +673,11 @@ public class GameAction {
         if (!zoneTo.is(ZoneType.Battlefield) && !zoneTo.is(ZoneType.Stack)) {
             copied.clearControllers();
         }
+        // a spell resolving into a permanent keeps the same card object here, but it's a new object (CR 400.7),
+        // so a number More or Less changed on the spell doesn't carry over
+        if (!suppress) {
+            copied.clearNumberNudges();
+        }
 
         return copied;
     }

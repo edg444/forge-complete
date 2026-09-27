@@ -2291,6 +2291,11 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
     }
 
     @Override
+    public String chooseStringForEffect(final List<String> options, final SpellAbility sa, final String prompt) {
+        return getGui().one(prompt, options);
+    }
+
+    @Override
     public String chooseProtectionType(final SpellAbility sa, final List<String> choices) {
         return getGui().one(Localizer.getInstance().getMessage("lblChooseAProtection"), choices);
     }

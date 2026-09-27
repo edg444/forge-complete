@@ -3238,7 +3238,14 @@ public class AbilityUtils {
         if (ability == null || !ability.isIntrinsic() || ability.hasParam("LockInText")) {
             return def;
         }
-        return applyTextChangeEffects(def, ability.getHostCard(), true);
+        String text = applyTextChangeEffects(def, ability.getHostCard(), true);
+        // More or Less: the number printed in this ability's text reads as changed
+        for (final NumberNudge n : ability.getHostCard().getNumberNudges()) {
+            if (n.kind == NumberNudge.Kind.PARAM && n.descTrait.equals(ability.getOriginalMapParams())) {
+                text = n.applyToText(text);
+            }
+        }
+        return text;
     }
 
     /**

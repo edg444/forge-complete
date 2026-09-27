@@ -2324,9 +2324,19 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
         chosenList = choices;
     }
 
+    private String costParamBuiltFrom = null;
+
     @Override
     public void changeText() {
         super.changeText();
+
+        // More or Less can change the number in an activated ability's cost ("{2}, {T}:"), and changing it
+        // back rebuilds the printed cost again
+        if (!isSpell() && hasParam("Cost") && !getParam("Cost").equals(costParamBuiltFrom == null
+                ? getOriginalMapParams().get("Cost") : costParamBuiltFrom)) {
+            costParamBuiltFrom = getParam("Cost");
+            setPayCosts(new Cost(costParamBuiltFrom, true));
+        }
 
         if (targetRestrictions != null) {
             targetRestrictions.applyTargetTextChanges(this);

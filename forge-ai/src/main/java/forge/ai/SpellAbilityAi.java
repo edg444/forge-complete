@@ -251,6 +251,11 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         return Math.floorMod(z, 100L) < pct;
     }
 
+    /** One of an effect's labelled options (see PlayerController.chooseStringForEffect); the first by default. */
+    public String chooseString(final Player ai, final SpellAbility sa, final List<String> options) {
+        return options.isEmpty() ? null : options.get(0);
+    }
+
     /**
      * The rest of the logic not covered by the canPlayAI template is defined here
      */

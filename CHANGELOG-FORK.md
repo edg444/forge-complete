@@ -134,7 +134,24 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ## Log
 
-### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician; Magic Word
+### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician; Magic Word; More or Less
+
+- **More or Less** (ust/40): new `NudgeNumber` API — one number printed on a spell or permanent reads 1
+  higher or lower until end of turn (or until it changes zones, CR 400.7).
+  - `NumberInstances.of(card)` lists what can be picked: power, toughness, the numeral in the mana cost,
+    numbers in keywords (Bushido 2), activation-cost numerals ({1} in Mind Stone's cost), and ability
+    parameters whose number is really printed in that ability's text. "Draw a card" prints "a", which isn't a
+    number word, so it isn't offered; X never is (Unstable rulings). Repeated numbers are told apart by
+    occurrence ("the second 2"), power bonus before toughness bonus.
+  - `Card.numberNudges` (`NumberNudge`) is applied where each is read: base P/T, `getCMC`, keyword text
+    (`updateChangedText`), trait parameters (`CardTraitBase.changeText`, which every stack/trigger copy re-runs),
+    descriptions (`applyDescriptionTextChangeEffects`, word form kept: "two" → "three"), and activation costs
+    (`SpellAbility` rebuilds its `Cost`).
+  - `PlayerController.chooseStringForEffect(options, sa, prompt)`: a labelled pick with a real prompt; the AI
+    asks the API's `SpellAbilityAi.chooseString`.
+  - AI: casts it to kill an opposing creature one less toughness kills; lowers numbers on opponents' objects
+    and raises its own. `MoreOrLessTest` (5). Suite: 782 run, 0 failed, 6 skipped.
+  - Not covered: numbers inside token scripts ("create a 1/1") and in SVar-computed amounts.
 
 - **Magic Word** (ust/38): the word is chosen as it enters (Keeper of the Sacred Word's free-input
   `ChooseType`). FlavorAction descriptions accept `CHOSENWORD`: "the chosen word" in the ability text,

@@ -1,0 +1,7 @@
+Name:More or Less
+ManaCost:U
+Types:Instant
+# Only numbers really printed on it can be picked (NumberInstances): "draw a card" prints "a", not a number word,
+# and X is never offered (Unstable rulings). A spell's mana cost can change but it's already been paid.
+A:SP$ NudgeNumber | ValidTgts$ Card | TgtZone$ Stack,Battlefield | TgtPrompt$ Choose target spell or permanent | SpellDescription$ Add or subtract 1 or one from a number or number word on target spell or permanent until end of turn.
+Oracle:Add or subtract 1 or one from a number or number word on target spell or permanent until end of turn.

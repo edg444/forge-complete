@@ -720,6 +720,11 @@ public class PlayerControllerAi extends PlayerController {
     }
 
     @Override
+    public String chooseStringForEffect(final List<String> options, final SpellAbility sa, final String prompt) {
+        return SpellApiToAi.Converter.get(sa).chooseString(player, sa, options);
+    }
+
+    @Override
     public String chooseSector(Card assignee, String ai, List<String> sectors) {
         return Aggregates.random(sectors);
     }

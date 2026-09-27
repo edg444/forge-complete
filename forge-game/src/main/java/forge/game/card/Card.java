@@ -4341,11 +4341,48 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     // to apply and the printed value stands
     private int basePowerHalves() {
         final int printed = currentState.getBasePower() * 2 + currentState.getHalfPower();
-        return getGame() == null ? printed : getGame().changeHalves(printed);
+        return (getGame() == null ? printed : getGame().changeHalves(printed)) + 2 * nudgeDelta(NumberNudge.Kind.POWER);
     }
     private int baseToughnessHalves() {
         final int printed = currentState.getBaseToughness() * 2 + currentState.getHalfToughness();
-        return getGame() == null ? printed : getGame().changeHalves(printed);
+        return (getGame() == null ? printed : getGame().changeHalves(printed)) + 2 * nudgeDelta(NumberNudge.Kind.TOUGHNESS);
+    }
+
+    // More or Less: numbers printed on this object that read differently until end of turn. A new object
+    // (any zone change, CR 400.7) starts without them.
+    private final List<NumberNudge> numberNudges = Lists.newArrayList();
+
+    public final List<NumberNudge> getNumberNudges() {
+        return numberNudges;
+    }
+    public final void addNumberNudge(final NumberNudge n) {
+        numberNudges.add(n);
+        refreshNudgedText();
+    }
+    public final void removeNumberNudge(final long timestamp) {
+        if (numberNudges.removeIf(n -> n.timestamp == timestamp)) {
+            refreshNudgedText();
+        }
+    }
+    public final void clearNumberNudges() {
+        if (!numberNudges.isEmpty()) {
+            numberNudges.clear();
+            refreshNudgedText();
+        }
+    }
+    private void refreshNudgedText() {
+        updateChangedText();
+        // a changed keyword ("Bushido 2" -> "Bushido 3") only shows up once the keyword cache is rebuilt
+        updateKeywords();
+    }
+    private int nudgeDelta(final NumberNudge.Kind kind) {
+        int delta = 0;
+        for (final NumberNudge n : numberNudges) {
+            if (n.kind == kind) {
+                delta += n.delta();
+            }
+        }
+        return delta;
     }
     public final int getBasePower() {
         return Math.floorDiv(basePowerHalves(), 2);
@@ -5697,7 +5734,12 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                     trait.changeText();
                 }
             } else {
-                final String newtxt = AbilityUtils.applyKeywordTextChangeEffects(oldtxt, getChangedTextColorWords(), getChangedTextTypeWords());
+                String newtxt = AbilityUtils.applyKeywordTextChangeEffects(oldtxt, getChangedTextColorWords(), getChangedTextTypeWords());
+                for (final NumberNudge n : numberNudges) {
+                    if (n.kind == NumberNudge.Kind.KEYWORD && n.keyword.equals(oldtxt)) {
+                        newtxt = n.applyToKeyword(newtxt);
+                    }
+                }
                 if (!newtxt.equals(oldtxt)) {
                     KeywordInterface newKw = Keyword.getInstance(newtxt);
                     newKw.createTraits(this, true);
@@ -7641,7 +7683,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         } else {
             requestedCMC = getManaCost().getCMC() + xPaid;
         }
-        return requestedCMC;
+        // the numeral in the mana cost as More or Less left it (it can't go below 0 of mana value)
+        return Math.max(0, requestedCMC + nudgeDelta(NumberNudge.Kind.MANA_COST));
     }
 
     public final void setLKICMC(final int cmc) {

@@ -22,6 +22,7 @@ import forge.game.card.CardPredicates;
 import forge.game.card.CardState;
 import forge.game.card.CardView;
 import forge.game.card.IHasCardView;
+import forge.game.card.NumberNudge;
 import forge.game.keyword.Keyword;
 import forge.game.keyword.KeywordInterface;
 import forge.game.player.GameLossReason;
@@ -709,6 +710,16 @@ public abstract class CardTraitBase implements GameObject, IHasCardView, IHasSVa
 
             if (newValue != null) {
                 this.mapParams.put(key, newValue);
+            }
+        }
+
+        // More or Less: a number in one of this trait's parameters (or its cost) reads differently
+        if (getHostCard() != null) {
+            for (final NumberNudge n : getHostCard().getNumberNudges()) {
+                if ((n.kind == NumberNudge.Kind.PARAM || n.kind == NumberNudge.Kind.COST)
+                        && n.paramTrait.equals(this.originalMapParams) && this.mapParams.containsKey(n.key)) {
+                    this.mapParams.put(n.key, n.applyToParam(this.mapParams.get(n.key)));
+                }
             }
         }
     }

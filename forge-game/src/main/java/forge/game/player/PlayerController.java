@@ -246,6 +246,14 @@ public abstract class PlayerController {
     public abstract Mana chooseManaFromPool(List<Mana> manaChoices);
 
     public abstract String chooseSomeType(String kindOfType, SpellAbility sa, Collection<String> validTypes, boolean isOptional);
+    /**
+     * Pick one of some labelled options an effect offers, under its own prompt (More or Less: which printed
+     * number, then up or down). The AI asks the ability's own AI class.
+     */
+    public String chooseStringForEffect(final List<String> options, final SpellAbility sa, final String prompt) {
+        return options.isEmpty() ? null : options.get(0);
+    }
+
     public final String chooseSomeType(String kindOfType, SpellAbility sa, Collection<String> validTypes) {
         return chooseSomeType(kindOfType, sa, validTypes, false);
     }
