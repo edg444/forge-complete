@@ -134,7 +134,16 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ## Log
 
-### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus
+### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective
+
+- **Defective Detective** (ust/32): the person outside the game is simulated. New ChooseCard
+  `AtRandom$ ThreatWeighted` picks at random with weight = impact², so bigger cards are clearly likelier
+  and near-equal ones stay near-equal (Forest 30 / Grizzly Bears 161 / Shivan Dragon 316 came up
+  0.5% / 20% / 80% over 3000 trials). The chosen card is revealed; its controller never sees the hand.
+  - `ComputerUtilCard.evaluateCardImpact`: one scale across card types — creatures by
+    `evaluateCreature`, other spells 50 + 30 × mana value (the AI's own cross-type scale), lands 30.
+    It's now `CardThreat`'s evaluator; creatures score as before, so Sacrifice Play is unchanged.
+    `ThreatWeightedTest` (2). Suite: 766 run, 0 failed, 6 skipped.
 
 - **Crafty Octopus** (ust/30): host whose ETB has the creature itself assemble a Contraption
   (`AssembleContraption` defaults the assembler to a creature host, so Steamflogger Boss doubles it).

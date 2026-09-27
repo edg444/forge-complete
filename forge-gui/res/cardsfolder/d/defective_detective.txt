@@ -1,0 +1,10 @@
+Name:Defective Detective
+ManaCost:2 U
+Types:Creature Human Spy
+PT:2/1
+S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | Description$ This creature can't be blocked.
+# The person outside the game is simulated, not asked: they pick at random, but the more impactful a card
+# is, the likelier they pick it (AtRandom$ ThreatWeighted). You never see the hand, only the revealed card.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChoose | TriggerDescription$ When this creature enters, a person outside the game looks at target opponent's hand and chooses a card from it. That player reveals that card.
+SVar:TrigChoose:DB$ ChooseCard | ValidTgts$ Opponent | ChoiceZone$ Hand | Choices$ Card.TargetedPlayerCtrl | AtRandom$ ThreatWeighted | Mandatory$ True | Reveal$ True | RevealTitle$ Chosen by a person outside the game:
+Oracle:This creature can't be blocked.\nWhen this creature enters, a person outside the game looks at target opponent's hand and chooses a card from it. That player reveals that card.

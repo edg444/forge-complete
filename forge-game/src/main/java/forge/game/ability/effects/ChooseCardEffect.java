@@ -227,6 +227,9 @@ public class ChooseCardEffect extends SpellAbilityEffect {
             } else if ("ThreatExtremes".equals(sa.getParam("AtRandom")) && !pChoices.isEmpty()) {
                 chosen = new CardCollection(pickThreatExtreme(pChoices));
                 dontRevealToOwner = false;
+            } else if ("ThreatWeighted".equals(sa.getParam("AtRandom")) && !pChoices.isEmpty()) {
+                chosen = new CardCollection(pickThreatWeighted(pChoices));
+                dontRevealToOwner = false;
             } else if (sa.hasParam("AtRandom") && !pChoices.isEmpty()) {
                 // don't pass FCollection for direct modification, the Set part would get messed up
                 chosen = new CardCollection(Aggregates.random(pChoices, validAmount));
@@ -309,6 +312,28 @@ public class ChooseCardEffect extends SpellAbilityEffect {
     // Sacrifice Play's person outside the game: most likely the obvious pick, the biggest threat (a friend
     // helping) or the smallest (a friend trolling), but anything in between can still come up
     private static final double THREAT_EXTREME_CHANCE = 0.4;
+
+    // Defective Detective's person outside the game: any card can come up, but the more impactful a card is,
+    // the likelier - weighted by the square of its threat, so a clearly bigger card is clearly likelier while
+    // near-equal cards stay near-equal
+    private static Card pickThreatWeighted(final CardCollectionView choices) {
+        final List<Card> cards = new ArrayList<>(choices);
+        final double[] weights = new double[cards.size()];
+        double total = 0;
+        for (int i = 0; i < cards.size(); i++) {
+            final double threat = Math.max(1, CardThreat.evaluate(cards.get(i)));
+            weights[i] = threat * threat;
+            total += weights[i];
+        }
+        double roll = MyRandom.getRandom().nextDouble() * total;
+        for (int i = 0; i < cards.size(); i++) {
+            roll -= weights[i];
+            if (roll < 0) {
+                return cards.get(i);
+            }
+        }
+        return cards.get(cards.size() - 1);
+    }
 
     private static Card pickThreatExtreme(final CardCollectionView choices) {
         final List<Card> sorted = new ArrayList<>(choices);

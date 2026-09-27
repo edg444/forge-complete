@@ -582,6 +582,25 @@ public class ComputerUtilCard {
         return getMostExpensivePermanentAI(list);
     }
 
+    /**
+     * How impactful a card is on one scale across card types, e.g. for judging a hand. Uses the AI's own
+     * cross-type scale (see evaluateRemovalTargetPriority): creatures by evaluateCreature, other spells by mana
+     * value, where a 5-drop comes out near a 5/5 - and lands below any spell.
+     */
+    public static int evaluateCardImpact(final Card c) {
+        if (c.isCreature()) {
+            return evaluateCreature(c);
+        }
+        if (c.isLand()) {
+            return 30;
+        }
+        int value = 50 + 30 * c.getCMC();
+        if (c.isPlaneswalker()) {
+            value += c.getCounters(CounterEnumType.LOYALTY) * 10;
+        }
+        return value;
+    }
+
     public static Card getBestRemovalTargetAI(final Player ai, final Iterable<Card> list) {
         if (Iterables.isEmpty(list)) {
             return null;
