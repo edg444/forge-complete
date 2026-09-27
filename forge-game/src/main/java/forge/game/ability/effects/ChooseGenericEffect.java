@@ -138,7 +138,13 @@ public class ChooseGenericEffect extends SpellAbilityEffect {
             if (tempRem) {
                 host.removeRemembered(p);
                 host.addRemembered(oldRem);
-            } 
+            }
+            // after the TempRemember swap, which would otherwise take the chooser back out again
+            for (SpellAbility chosenSA : chosenSAs) {
+                if (chosenSA.hasParam("RememberChooser")) {
+                    host.addRemembered(p);
+                }
+            }
         }
         if (secretly) {
             game.getAction().notifyOfValue(sa, host, record.toString(), null);

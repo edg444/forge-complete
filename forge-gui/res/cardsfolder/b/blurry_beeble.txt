@@ -1,0 +1,18 @@
+Name:Blurry Beeble
+ManaCost:U
+Types:Artifact Creature Cyborg Beeble
+PT:1/1
+# Blurry is honor system: as it's cast, every player (any of them could be the defending player later,
+# e.g. after a control change) says whether they were wearing glasses, and the ones who were are
+# remembered. Only their creatures can block it. Put onto the battlefield without being cast, it can't
+# be blocked at all (Unstable ruling) - the !wasCast static covers a flickered Beeble too, since the
+# card copy made on leaving the battlefield carries its remembered players along.
+T:Mode$ SpellCast | ValidCard$ Card.Self | Static$ True | Secondary$ True | Execute$ TrigGlasses | TriggerDescription$ As this spell is cast, each player says whether they're wearing glasses.
+SVar:TrigGlasses:DB$ GenericChoice | Defined$ Player | Choices$ NoGlasses,Glasses | ChoicePrompt$ Honor system: were you wearing glasses as Blurry Beeble was cast? (Any glasses with lenses count, including sunglasses and glasses on your head, around your neck, or in your lap. Monocles and contacts don't.) | ShowChoice$ True | AILogic$ GameChance.50.Glasses
+SVar:NoGlasses:DB$ Cleanup | SpellDescription$ I wasn't wearing glasses.
+SVar:Glasses:DB$ Cleanup | RememberChooser$ True | SpellDescription$ I was wearing glasses.
+S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.!RememberedPlayerCtrl | Description$ Blurry (This creature can be blocked only if defending player was wearing glasses as it was cast.)
+S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self+!wasCast | Secondary$ True | Description$ This creature can't be blocked because it wasn't cast.
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigLoot | TriggerDescription$ Whenever this creature deals combat damage to a player, you may draw a card. If you do, discard a card.
+SVar:TrigLoot:AB$ Discard | Defined$ You | Mode$ TgtChoose | Cost$ Draw<1/You>
+Oracle:Blurry (This creature can be blocked only if defending player was wearing glasses as it was cast.)\nWhenever this creature deals combat damage to a player, you may draw a card. If you do, discard a card.

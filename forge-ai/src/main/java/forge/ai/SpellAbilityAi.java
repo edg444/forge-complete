@@ -185,7 +185,8 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
     protected static boolean rollChanceLogic(final Player ai, final SpellAbility sa) {
         final String aiLogic = sa.getParam("AILogic");
         if (aiLogic != null && aiLogic.startsWith("GameChance.")) {
-            return rollGameChanceLogic(ai, sa, aiLogic);
+            // for GenericChoice it's the answer to the question, read when the choice is made
+            return sa.getApi() == ApiType.GenericChoice || rollGameChanceLogic(ai, sa, aiLogic);
         }
         if (aiLogic == null || !aiLogic.startsWith("Chance.")) {
             return true;
@@ -227,7 +228,7 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
      * by every ability naming the same Key. Unlike Chance.N there's no per-turn cap - once the fact
      * is true, the API's own logic decides when the ability is worth using.
      */
-    private static boolean rollGameChanceLogic(final Player ai, final SpellAbility sa, final String aiLogic) {
+    protected static boolean rollGameChanceLogic(final Player ai, final SpellAbility sa, final String aiLogic) {
         final String[] parts = aiLogic.split("\\.", 3);
         final int pct = Integer.parseInt(parts[1]);
         final String key = parts.length > 2 ? parts[2] : sa.getDescription();

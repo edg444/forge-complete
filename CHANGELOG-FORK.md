@@ -134,7 +134,18 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ## Log
 
-### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library
+### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble
+
+- **Blurry Beeble** (ust/27): Blurry is honor system. As it's cast (static `SpellCast` trigger), every
+  player — the caster too, since a control change can make them the defending player — answers
+  whether they were wearing glasses; those who were are remembered, and `CantBlockBy` with
+  `Creature.!RememberedPlayerCtrl` lets only their creatures block. A `!wasCast` Beeble (put onto the
+  battlefield, or flickered — the copy keeps its remembered players) can't be blocked at all, per the
+  Unstable ruling.
+  - GenericChoice: an option with `RememberChooser$ True` remembers the player who picked it on the
+    host (after any `TempRemember` swap, so it sticks).
+  - AI: GenericChoice accepts `AILogic$ GameChance.N.Key` — the second choice is the "yes" answer,
+    taken when that player's per-game roll for Key succeeds (`Glasses`, 50%). `BlurryTest` (3).
 
 - **Silver border follows the printing**: `isSilverBorderedOrAcorn` and Border Guardian's `BorderColor*`
   properties read Scryfall's printed border (PrintingTraits) over the edition default. Steamflogger Boss

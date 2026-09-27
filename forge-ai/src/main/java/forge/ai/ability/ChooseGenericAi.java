@@ -89,6 +89,13 @@ public class ChooseGenericAi extends SpellAbilityAi {
         final String logic = sa.getParam("AILogic");
         if (logic == null) {
             return spells.get(0);
+        } else if (logic.startsWith("GameChance.")) {
+            // Honor-system fact about the AI's own situation for the whole game (e.g. wearing
+            // glasses): spells.get(0) is the "no" answer, spells.get(1) the "yes"
+            if (spells.size() > 1 && rollGameChanceLogic(player, sa, logic)) {
+                return spells.get(1);
+            }
+            return spells.get(0);
         } else if (logic.startsWith("Chance.")) {
             // Honor-system choices (see the Sex Appeal/Bureaucracy/Common Courtesy/Sorry family of
             // cards) where spells.get(0) is the safe/default answer - Chance.N is the percent chance
