@@ -2,6 +2,7 @@ Name:Gnome-Made Engine
 ManaCost:4
 Types:Host Artifact Creature Construct
 PT:2/2
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | Host$ True | TriggerDescription$ When this creature enters, create a 1/1 colorless Gnome artifact creature token.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When this creature enters, create a 1/1 colorless Gnome artifact creature token.
+# You, not TriggeredCardController: augmented, this becomes the effect of another trigger that has no TriggeredCard
 SVar:TrigToken:DB$ Token | TokenScript$ c_1_1_a_gnome | TokenOwner$ You
 Oracle:When this creature enters, create a 1/1 colorless Gnome artifact creature token.

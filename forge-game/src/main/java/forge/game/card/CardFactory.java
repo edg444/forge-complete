@@ -118,6 +118,21 @@ public class CardFactory {
     }
 
     /**
+     * A host's one "when this creature enters" trigger - the part an augment's unfinished trigger is completed
+     * with. Marked Host$ True in the fork's own scripts, but upstream's card linter strips params it doesn't know,
+     * so it's also recognised by shape: a Host card's trigger for itself entering the battlefield.
+     */
+    private static boolean isHostTrigger(final Trigger t, final CardState hostState) {
+        if (t.hasParam("Host")) {
+            return true;
+        }
+        return hostState.getType().hasSupertype(CardType.Supertype.Host)
+                && t.getMode() == forge.game.trigger.TriggerType.ChangesZone
+                && "Battlefield".equals(t.getParam("Destination"))
+                && t.getParamOrDefault("ValidCard", "").matches("(Card|Creature)\\.Self");
+    }
+
+    /**
      * <p>
      * copySpellAbilityAndPossiblyHost.
      * creates a copy of the Spell/ability `sa`, and puts it on the stack.
@@ -850,13 +865,13 @@ public class CardFactory {
 
         Trigger hostTrigger = null;
         for (final Trigger t : hostState.getTriggers()) {
-            if (t.hasParam("Host")) {
+            if (isHostTrigger(t, hostState)) {
                 hostTrigger = t;
                 break;
             }
         }
         for (final Trigger t : Lists.newArrayList(ret.getTriggers())) {
-            if (t.hasParam("Host")) {
+            if (isHostTrigger(t, hostState)) {
                 ret.removeTrigger(t);
             }
         }

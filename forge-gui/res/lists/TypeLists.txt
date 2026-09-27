@@ -491,6 +491,7 @@ Samut
 Sarkhan
 Serra
 Sifa
+Sivitri
 Sorin
 Szat
 Tamiyo
@@ -595,6 +596,7 @@ Theros
 Time
 Trenzalore
 Ulgrotha
+Unknown Planet
 Valla
 Vryn
 Wildfire

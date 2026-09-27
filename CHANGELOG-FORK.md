@@ -136,6 +136,12 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician; Magic Word; More or Less; S.N.E.A.K. Dispatcher; Socketed Sprocketer; Spy Eye; Very Cryptic Command; Wall of Fortune
 
+- **Upstream merge 2026-09-27** (12 commits): upstream's card-script linter (#12048) strips params it doesn't
+  know, including the fork's `Host$ True` on every host's enter trigger, which augment relied on. A host
+  trigger is now also recognised by shape (`CardFactory.isHostTrigger`: a Host card's trigger for itself
+  entering), so future linter passes can't break augment. Gnome-Made Engine keeps `TokenOwner$ You` over
+  upstream's new `TriggeredCardController`, which has no triggered card once augmented.
+
 - **Wall of Fortune** (ust/50): static `Mode$ RerollWithWall`. After any die roll - including the planar die -
   anyone with the permission may tap an untapped Wall they control to have the roller reroll it, seen first
   and repeatable with more Walls (`RollDiceEffect.tapWallToReroll`, also called from `PlanarDice.roll`). Not an
