@@ -383,6 +383,19 @@ public class CardProperty {
                     .matcher(text).find()) {
                 return false;
             }
+        } else if (property.startsWith("rulesTextHasWord_")) {
+            // Kindly Cognician: the word or its plural in the rules text. Reminder text, the name, the type
+            // line and flavor text don't count (Unstable ruling), and whole words only - "nonartifact" isn't it
+            final String word = property.substring("rulesTextHasWord_".length());
+            String rules = StringUtils.defaultString(card.getOracleText()).replace("\\n", "\n")
+                    .replaceAll("\\([^)]*\\)", " ");
+            if (!card.getName().isEmpty()) {
+                rules = rules.replace(card.getName(), " ");
+            }
+            if (!java.util.regex.Pattern.compile("\\b" + java.util.regex.Pattern.quote(word) + "(?:e?s)?\\b",
+                    java.util.regex.Pattern.CASE_INSENSITIVE).matcher(rules).find()) {
+                return false;
+            }
         } else if (property.equals("ArtistIsChosen")) {
             if (!source.hasChosenArtist()
                     || !card.getArtist().equalsIgnoreCase(source.getChosenArtist())) {

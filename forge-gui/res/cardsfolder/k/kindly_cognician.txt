@@ -1,0 +1,6 @@
+Name:Kindly Cognician
+ManaCost:1 U
+Types:Artifact Creature Cyborg Artificer
+PT:1/3
+S:Mode$ ReduceCost | ValidCard$ Card.rulesTextHasWord_artifact,Card.rulesTextHasWord_Contraption | Type$ Spell | Activator$ You | Amount$ 1 | Description$ Spells you cast that refer to artifacts or Contraptions in their rules text cost {1} less to cast.
+Oracle:Spells you cast that refer to artifacts or Contraptions in their rules text cost {1} less to cast.

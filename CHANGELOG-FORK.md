@@ -134,7 +134,12 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ## Log
 
-### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-
+### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician
+
+- **Kindly Cognician** (ust/37): card property `rulesTextHasWord_<word>` — the word or its plural, whole
+  words only, in the Oracle text with reminder text and the card's own name removed (the Unstable ruling
+  excludes reminder text, name, type line and flavor text; "nonartifact" doesn't count).
+  `KindlyCognicianTest` (2).
 
 - **Half-Shark, Half-** (ust/35): augment (+3/+3, {5}{U}) whose condition is "At the beginning of your upkeep,".
 
