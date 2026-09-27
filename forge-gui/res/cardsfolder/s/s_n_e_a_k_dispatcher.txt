@@ -1,0 +1,8 @@
+Name:S.N.E.A.K. Dispatcher
+ManaCost:1 U
+Types:Creature Human Spy
+PT:2/1
+# Another player's card goes into your hand but stays theirs (HandOf$, as Five-Finger Discount): if it later
+# dies, is discarded or shuffled away, it goes to its owner's zones.
+A:AB$ Dig | Cost$ 2 U T | ValidTgts$ Player | TgtPrompt$ Select target player | DigNum$ 1 | ChangeNum$ 1 | Optional$ True | ChangeValid$ Card.Watermark_agentsofsneak | ForceRevealToController$ True | DestinationZone$ Hand | HandOf$ You | DestinationZone2$ Library | RestTopOrBottom$ True | SpellDescription$ Look at the top card of target player's library. If it has an Agents of S.N.E.A.K. watermark, you may reveal it and put it into your hand. Otherwise, put it on your choice of the top or bottom of its owner's library.
+Oracle:{2}{U}, {T}: Look at the top card of target player's library. If it has an Agents of S.N.E.A.K. watermark, you may reveal it and put it into your hand. Otherwise, put it on your choice of the top or bottom of its owner's library.

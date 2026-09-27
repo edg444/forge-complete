@@ -393,6 +393,21 @@ public abstract class SpellAbilityEffect {
                 : AbilityUtils.getDefinedObjects(sa.getHostCard(), sa.getParam(definedParam), sa);
     }
 
+    /**
+     * HandOf$: put a card into a given player's hand without changing its owner (Five-Finger Discount, S.N.E.A.K.
+     * Dispatcher). The holder controls it while it's there, so they see and cast it; its next zone change clears
+     * that, and it goes to its owner's graveyard, library or hand like any other card.
+     */
+    protected static Card moveToHandOf(final Player holder, final Card c, final SpellAbility sa,
+            final Map<AbilityKey, Object> moveParams) {
+        final Game game = holder.getGame();
+        final Card moved = game.getAction().moveTo(holder.getZone(ZoneType.Hand), c, sa, moveParams);
+        if (moved != null && holder.getZone(ZoneType.Hand).contains(moved) && !holder.equals(moved.getOwner())) {
+            moved.setController(holder, game.getNextTimestamp());
+        }
+        return moved;
+    }
+
     protected final static List<Card> getCardsfromTargets(final SpellAbility sa) {
         List<Card> cards = getTargetCards(sa);
         // some card effects can also target a spell

@@ -560,6 +560,10 @@ public class PlayerControllerAi extends PlayerController {
         // This is used for Clash. Currently uses Scry logic to determine whether the card should be put on top.
         // Note that the AI does not know what will happen next (another clash or that would become his topdeck)
 
+        // a card from an opponent's library (S.N.E.A.K. Dispatcher) stays on top when its owner wouldn't want it
+        if (c.getOwner().isOpponentOf(player)) {
+            return ComputerUtil.scryWillMoveCardToBottomOfLibrary(c.getOwner(), c);
+        }
         return !ComputerUtil.scryWillMoveCardToBottomOfLibrary(player, c);
     }
 

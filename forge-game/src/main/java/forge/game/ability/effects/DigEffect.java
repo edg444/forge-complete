@@ -404,7 +404,12 @@ public class DigEffect extends SpellAbilityEffect {
                                 moveParams.put(AbilityKey.CounterTable, table);
                             }
                         }
-                        c = game.getAction().moveTo(c.getController().getZone(destZone1), c, sa, moveParams);
+                        if (destZone1.equals(ZoneType.Hand) && sa.hasParam("HandOf")) {
+                            c = moveToHandOf(AbilityUtils.getDefinedPlayers(host, sa.getParam("HandOf"), sa).getFirst(),
+                                    c, sa, moveParams);
+                        } else {
+                            c = game.getAction().moveTo(c.getController().getZone(destZone1), c, sa, moveParams);
+                        }
                         if (destZone1.equals(ZoneType.Battlefield)) {
                             if (addToCombat(c, sa, "Attacking", "Blocking")) {
                                 combatChanged = true;
@@ -452,7 +457,10 @@ public class DigEffect extends SpellAbilityEffect {
                             Map<AbilityKey, Object> moveParams = AbilityKey.newMap();
                             AbilityKey.addCardZoneTableParams(moveParams, zoneMovements);
 
-                            Card m = game.getAction().moveTo(destZone2, c, libraryPosition2, sa, moveParams);
+                            // "on your choice of the top or bottom of its owner's library" (S.N.E.A.K. Dispatcher)
+                            final int position = destZone2 == ZoneType.Library && sa.hasParam("RestTopOrBottom")
+                                    ? (chooser.getController().willPutCardOnTop(c) ? 0 : -1) : libraryPosition2;
+                            Card m = game.getAction().moveTo(destZone2, c, position, sa, moveParams);
                             if (remZone2) {
                                 host.addRemembered(m);
                             }

@@ -134,7 +134,14 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ## Log
 
-### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician; Magic Word; More or Less
+### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician; Magic Word; More or Less; S.N.E.A.K. Dispatcher
+
+- **S.N.E.A.K. Dispatcher** (ust/43): Dig from any player's library; an Agents of S.N.E.A.K. card
+  (`Watermark_agentsofsneak`) may go into your hand, still its owner's.
+  - Dig `HandOf$` (shared `SpellAbilityEffect.moveToHandOf`, now also behind ChangeZone's `HandOf$`) and
+    `RestTopOrBottom$` (the chooser's `willPutCardOnTop` decision per card).
+  - AI `willPutCardOnTop` on an opponent's card: keeps it on top only when its owner wouldn't want it.
+    `SneakDispatcherTest` (2). Suite: 785 run, 0 failed, 6 skipped.
 
 - **More or Less** (ust/40): new `NudgeNumber` API — one number printed on a spell or permanent reads 1
   higher or lower until end of turn (or until it changes zones, CR 400.7).

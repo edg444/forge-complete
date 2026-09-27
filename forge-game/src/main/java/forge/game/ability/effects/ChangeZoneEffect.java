@@ -746,15 +746,8 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
                 }
 
                 if (ZoneType.Hand.equals(destination) && sa.hasParam("HandOf")) {
-                    // Five-Finger Discount: into someone else's hand without changing its owner. The holder
-                    // controls it while it's there (so they see and cast it); its next zone change clears
-                    // that, and it goes to its owner's graveyard, library or hand like any other card.
-                    final Player holder = AbilityUtils.getDefinedPlayers(hostCard, sa.getParam("HandOf"), sa).getFirst();
-                    movedCard = game.getAction().moveTo(holder.getZone(ZoneType.Hand), gameCard, sa, moveParams);
-                    if (movedCard != null && holder.getZone(ZoneType.Hand).contains(movedCard)
-                            && !holder.equals(movedCard.getOwner())) {
-                        movedCard.setController(holder, game.getNextTimestamp());
-                    }
+                    movedCard = moveToHandOf(AbilityUtils.getDefinedPlayers(hostCard, sa.getParam("HandOf"), sa).getFirst(),
+                            gameCard, sa, moveParams);
                 } else {
                     movedCard = game.getAction().moveTo(destination, gameCard, libPos, sa, moveParams);
                 }
