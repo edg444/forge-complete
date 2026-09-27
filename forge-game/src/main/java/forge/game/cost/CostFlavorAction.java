@@ -1,5 +1,6 @@
 package forge.game.cost;
 
+import forge.game.card.Card;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 
@@ -34,9 +35,21 @@ public class CostFlavorAction extends CostPart {
         return 22;
     }
 
+    // stands for the host's chosen word (Magic Word): "the chosen word" in rules text, the word itself when paying
+    private static final String CHOSEN_WORD = "CHOSENWORD";
+
     @Override
     public final String toString() {
-        return getTypeDescription();
+        return getTypeDescription().replace(CHOSEN_WORD, "the chosen word");
+    }
+
+    /** What the payer is asked to do right now - with the actual chosen word, where the text names one. */
+    public final String getPrompt(final SpellAbility sa) {
+        final Card host = sa == null ? null : sa.getHostCard();
+        if (host != null && host.hasChosenType()) {
+            return getTypeDescription().replace(CHOSEN_WORD, "\"" + host.getChosenType() + "\"");
+        }
+        return toString();
     }
 
     @Override

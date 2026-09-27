@@ -1,0 +1,10 @@
+Name:Magic Word
+ManaCost:2 U
+Types:Enchantment Aura
+K:Enchant:Creature
+SVar:AttachAILogic:Curse
+K:ETBReplacement:Other:DBChooseWord
+SVar:DBChooseWord:DB$ ChooseType | Type$ word | Chooser$ You | FreeInput$ True | ChoiceTitle$ Choose a word | ValidTypes$ creature,land,card,target,player,draw,damage,destroy,counter,token,mana,attack,block,graveyard,library,hand,exile,sacrifice,discard,flying,trample,vigilance,haste,black,white,blue,red,green,artifact,enchantment,instant,sorcery,life,turn,combat | SpellDescription$ As this Aura enters, choose a word.
+# CHOSENWORD reads "the chosen word" in the ability text and becomes the word itself in the whisper prompt
+A:AB$ Tap | Cost$ FlavorAction<Whisper CHOSENWORD/Whispered> | Defined$ Enchanted | SpellDescription$ Tap enchanted creature.
+Oracle:Enchant creature\nAs this Aura enters, choose a word.\nWhisper the chosen word: Tap enchanted creature.

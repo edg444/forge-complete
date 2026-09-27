@@ -658,7 +658,7 @@ public class HumanCostDecision extends CostDecisionMakerBase {
     public PaymentDecision visit(final CostFlavorAction cost) {
         List<String> options = ImmutableList.of(cost.getYesButtonText(), Localizer.getInstance().getMessage("lblNo"));
         boolean result = controller.confirmAction(ability, PlayerActionConfirmMode.OptionalChoose,
-                cost.toString() + "?", options, null, null);
+                cost.getPrompt(ability) + "?", options, null, null);
         return result ? PaymentDecision.number(1) : null;
     }
 

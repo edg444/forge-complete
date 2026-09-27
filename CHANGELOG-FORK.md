@@ -134,7 +134,13 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ## Log
 
-### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician
+### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician; Magic Word
+
+- **Magic Word** (ust/38): the word is chosen as it enters (Keeper of the Sacred Word's free-input
+  `ChooseType`). FlavorAction descriptions accept `CHOSENWORD`: "the chosen word" in the ability text,
+  the word itself in the payment prompt (`CostFlavorAction.getPrompt`), so you're asked
+  `Whisper "xyzzy"?`. The AI puts it on an opponent's creature (`Curse`) and taps it down on their turn.
+  `MagicWordTest` (1).
 
 - **Kindly Cognician** (ust/37): card property `rulesTextHasWord_<word>` — the word or its plural, whole
   words only, in the Oracle text with reminder text and the card's own name removed (the Unstable ruling
