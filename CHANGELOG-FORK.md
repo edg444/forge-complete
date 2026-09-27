@@ -134,7 +134,10 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ## Log
 
-### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper
+### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus
+
+- **Crafty Octopus** (ust/30): host whose ETB has the creature itself assemble a Contraption
+  (`AssembleContraption` defaults the assembler to a creature host, so Steamflogger Boss doubles it).
 
 - **Clocknapper** (ust/29): phase stealing. `DB$ StealPhase | Phase$ Beginning|Main1|Combat|Main2|Ending`
   (`PhaseHandler.stealPhase`) marks that phase of the victim's next turn; as it begins the thief becomes
