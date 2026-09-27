@@ -149,6 +149,7 @@ public enum SpellApiToAi {
             .put(ApiType.NameCard, ChooseCardNameAi.class)
             //.put(ApiType.NoteCounters, AlwaysPlayAi.class)
             .put(ApiType.NudgeNumber, NudgeNumberAi.class)
+            .put(ApiType.InstallResult, InstallResultAi.class)
             .put(ApiType.OpenAttraction, AssembleContraptionAi.class)
             .put(ApiType.PeekAndReveal, PeekAndRevealAi.class)
             .put(ApiType.PermanentCreature, PermanentCreatureAi.class)

@@ -453,6 +453,14 @@ public class CardView extends GameEntityView {
     public String getChosenNumber() {
         return get(TrackableProperty.ChosenNumber);
     }
+
+    public String getInstalledResults() {
+        return get(TrackableProperty.InstalledResults);
+    }
+    void updateInstalledResults(Card c) {
+        set(TrackableProperty.InstalledResults, c.getInstalledResults().isEmpty() ? ""
+                : c.getInstalledResults().toString().replace("[", "").replace("]", ""));
+    }
     void updateChosenNumber(Card c) {
         set(TrackableProperty.ChosenNumber, c.getChosenNumber().toString());
     }

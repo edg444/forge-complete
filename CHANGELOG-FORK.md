@@ -134,7 +134,17 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ## Log
 
-### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician; Magic Word; More or Less; S.N.E.A.K. Dispatcher
+### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician; Magic Word; More or Less; S.N.E.A.K. Dispatcher; Socketed Sprocketer
+
+- **Socketed Sprocketer** (ust/44): "installing" a die result. `Card.installedResults` holds the dice sitting on
+  a permanent (not counters, so proliferate and counter effects never see them), shown in the detail panel
+  ("installed: 5", `TrackableProperty.InstalledResults`); a new object starts without any.
+  - `InstallResult` API: `Uninstall$ All`, `Install$ <amount>`.
+  - `Uninstall<N>` cost (`CostUninstall`), a real cost so a 6 can't also be spent on a roll in response.
+  - Static `Mode$ UseInstalledResult`: after each die you roll (you see it first, per the ruling), an installed
+    result on a permanent you control may take its place (`RollDiceEffect.useInstalledResult`); logged.
+  - AI: swaps in a higher result, spending a 6 only on a roll of 1-2; re-rolls when nothing 4+ is installed, at
+    an opponent's end step or its own second main. `SocketedSprocketerTest` (4). Suite: 789 run, 0 failed, 6 skipped.
 
 - **S.N.E.A.K. Dispatcher** (ust/43): Dig from any player's library; an Agents of S.N.E.A.K. card
   (`Watermark_agentsofsneak`) may go into your hand, still its owner's.

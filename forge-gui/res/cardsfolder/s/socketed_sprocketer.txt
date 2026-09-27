@@ -1,0 +1,11 @@
+Name:Socketed Sprocketer
+ManaCost:U
+Types:Artifact Creature Cyborg Knight
+PT:1/1
+# Installed results are the dice themselves sitting on it (InstallResult / Card.installedResults), not counters.
+A:AB$ InstallResult | Cost$ T | Defined$ Self | Uninstall$ All | SubAbility$ DBRoll | SpellDescription$ Uninstall all results from this creature, then roll a six-sided die. Install the result on this creature. (Put the die on this creature.)
+SVar:DBRoll:DB$ RollDice | ResultSVar$ Result | SubAbility$ DBInstall
+SVar:DBInstall:DB$ InstallResult | Defined$ Self | Install$ Result
+S:Mode$ UseInstalledResult | Description$ You may uninstall a result from this creature to use it for a die you rolled.
+A:AB$ Draw | Cost$ Uninstall<6> | NumCards$ 1 | SpellDescription$ Draw a card.
+Oracle:{T}: Uninstall all results from this creature, then roll a six-sided die. Install the result on this creature. (Put the die on this creature.)\nYou may uninstall a result from this creature to use it for a die you rolled.\nUninstall a 6 from this creature: Draw a card.

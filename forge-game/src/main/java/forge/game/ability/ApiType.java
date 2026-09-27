@@ -215,6 +215,7 @@ public enum ApiType {
     SkipTurn (SkipTurnEffect.class),
     StealPhase (StealPhaseEffect.class),
     NudgeNumber (NudgeNumberEffect.class),
+    InstallResult (InstallResultEffect.class),
     StoreSVar (StoreSVarEffect.class),
     Subgame (SubgameEffect.class),
     Surveil (SurveilEffect.class),

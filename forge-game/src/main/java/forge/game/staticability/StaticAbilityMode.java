@@ -7,6 +7,8 @@ public enum StaticAbilityMode {
     Continuous,
     // Graveyard Busybody - read by Game.updateGraveyardHolder, not applied in layers
     AllGraveyardsYours,
+    // Socketed Sprocketer - its installed results may stand in for a die its controller rolls (RollDiceEffect)
+    UseInstalledResult,
 
     // StaticAbility
     CantAttackUnless,

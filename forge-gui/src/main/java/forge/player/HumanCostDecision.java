@@ -655,6 +655,11 @@ public class HumanCostDecision extends CostDecisionMakerBase {
     }
 
     @Override
+    public PaymentDecision visit(final CostUninstall cost) {
+        return PaymentDecision.number(1);
+    }
+
+    @Override
     public PaymentDecision visit(final CostFlavorAction cost) {
         List<String> options = ImmutableList.of(cost.getYesButtonText(), Localizer.getInstance().getMessage("lblNo"));
         boolean result = controller.confirmAction(ability, PlayerActionConfirmMode.OptionalChoose,

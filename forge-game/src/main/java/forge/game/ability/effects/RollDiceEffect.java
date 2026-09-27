@@ -16,6 +16,8 @@ import forge.game.replacement.ReplacementType;
 import forge.game.spellability.SpellAbility;
 import forge.game.trigger.TriggerType;
 import forge.game.zone.ZoneType;
+import forge.game.staticability.StaticAbilityMode;
+import forge.game.GameLogEntryType;
 import forge.util.Lang;
 import forge.util.Localizer;
 import forge.util.MyRandom;
@@ -485,7 +487,7 @@ public class RollDiceEffect extends SpellAbilityEffect {
             // Play the die roll sound
             player.getGame().fireEvent(new GameEventRollDie());
             player.roll();
-            naturalRolls.add(roll);
+            naturalRolls.add(useInstalledResult(player, roll));
         }
 
         naturalRolls.sort(null);
@@ -507,6 +509,30 @@ public class RollDiceEffect extends SpellAbilityEffect {
         }
 
         return naturalRolls;
+    }
+
+    /**
+     * Socketed Sprocketer: "You may uninstall a result from this creature to use it for a die you rolled." The roll
+     * is seen first (Unstable ruling), then each installed result on a permanent you control may take its place.
+     */
+    private static int useInstalledResult(final Player player, final int roll) {
+        for (final Card c : player.getCardsIn(ZoneType.Battlefield)) {
+            if (c.getInstalledResults().isEmpty() || c.getStaticAbilities().stream()
+                    .noneMatch(st -> st.checkConditions(StaticAbilityMode.UseInstalledResult))) {
+                continue;
+            }
+            for (final Integer installed : Lists.newArrayList(c.getInstalledResults())) {
+                if (player.getController().confirmStaticApplication(c, null,
+                        "You rolled a " + roll + ". Uninstall the " + installed + " from " + c.getName() + " to use it instead?",
+                        "InstalledResult:" + installed + ":" + roll)) {
+                    c.uninstallResult(installed);
+                    player.getGame().getGameLog().add(GameLogEntryType.INFORMATION, player + " uses the " + installed
+                            + " installed on " + c.getName() + " instead of a rolled " + roll + ".");
+                    return installed;
+                }
+            }
+        }
+        return roll;
     }
 
     private static void resolveSub(SpellAbility sa, int num) {

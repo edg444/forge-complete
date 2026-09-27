@@ -411,6 +411,12 @@ public class Cost implements Serializable {
             return new CostFlipCoin(splitStr[0]);
         }
 
+        if (parse.startsWith("Uninstall<")) {
+            // Uninstall<Result> - Socketed Sprocketer
+            final String[] splitStr = abCostParse(parse, 1);
+            return new CostUninstall(splitStr[0]);
+        }
+
         if (parse.startsWith("FlavorAction<")) {
             // FlavorAction<Description/YesButtonText>
             final String[] splitStr = abCostParse(parse, 2);

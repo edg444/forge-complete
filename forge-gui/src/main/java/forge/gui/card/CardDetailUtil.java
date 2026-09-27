@@ -520,6 +520,14 @@ public class CardDetailUtil {
         }
 
         // chosen number
+        // Socketed Sprocketer's dice sitting on it
+        if (card.getInstalledResults() != null && !card.getInstalledResults().isEmpty()) {
+            if (area.length() != 0) {
+                area.append("\n");
+            }
+            area.append("(installed: ").append(card.getInstalledResults()).append(")");
+        }
+
         if (!card.getChosenNumber().isEmpty()) {
             area.append("\n");
             area.append("(chosen number: ").append(card.getChosenNumber()).append(")");

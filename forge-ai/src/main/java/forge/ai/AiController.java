@@ -1270,6 +1270,14 @@ public class AiController {
     }
 
     public boolean confirmStaticApplication(Card hostCard, String logic) {
+        if (logic != null && logic.startsWith("InstalledResult:")) {
+            // Socketed Sprocketer: swap in a higher installed result, but a 6 also draws a card on its own,
+            // so it's only spent on a roll that came up low
+            final String[] parts = logic.split(":");
+            final int installed = Integer.parseInt(parts[1]);
+            final int roll = Integer.parseInt(parts[2]);
+            return installed > roll && (installed < 6 || roll <= 2);
+        }
         return true;
     }
 

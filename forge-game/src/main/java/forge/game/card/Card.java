@@ -4348,6 +4348,27 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return (getGame() == null ? printed : getGame().changeHalves(printed)) + 2 * nudgeDelta(NumberNudge.Kind.TOUGHNESS);
     }
 
+    // Socketed Sprocketer: die results sitting on this permanent ("installed"), kept for a later roll. They're
+    // dice, not counters - proliferate and counter effects never see them. A new object starts without any.
+    private final List<Integer> installedResults = Lists.newArrayList();
+
+    public final List<Integer> getInstalledResults() {
+        return installedResults;
+    }
+    public final void installResult(final int result) {
+        installedResults.add(result);
+        view.updateInstalledResults(this);
+    }
+    public final boolean uninstallResult(final int result) {
+        final boolean removed = installedResults.remove(Integer.valueOf(result));
+        view.updateInstalledResults(this);
+        return removed;
+    }
+    public final void clearInstalledResults() {
+        installedResults.clear();
+        view.updateInstalledResults(this);
+    }
+
     // More or Less: numbers printed on this object that read differently until end of turn. A new object
     // (any zone change, CR 400.7) starts without them.
     private final List<NumberNudge> numberNudges = Lists.newArrayList();
