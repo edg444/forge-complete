@@ -1,0 +1,9 @@
+Name:Wall of Fortune
+ManaCost:1 U
+Types:Artifact Creature Wall
+PT:0/4
+K:Defender
+# Not an activated ability: after any die roll you may tap any untapped Wall you control (this one, even the turn
+# it arrives) to have that player reroll it, and again with another Wall (RollDiceEffect.tapWallToReroll).
+S:Mode$ RerollWithWall | Description$ You may tap an untapped Wall you control to have any player reroll a die that player rolled.
+Oracle:Defender\nYou may tap an untapped Wall you control to have any player reroll a die that player rolled.

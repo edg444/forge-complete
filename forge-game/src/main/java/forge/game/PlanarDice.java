@@ -44,6 +44,12 @@ public enum PlanarDice {
             PlanarDice thisRoll = Blank;
             int i = forge.util.MyRandom.getRandom().nextInt(6);
             roller.roll();
+            // Wall of Fortune can have the planar die rerolled too (Unstable ruling)
+            while (riggedResult == null && forge.game.ability.effects.RollDiceEffect.tapWallToReroll(roller, -1, 6,
+                    (i == 0 ? "Planeswalk" : i == 1 ? "Chaos" : "Blank") + " on the planar die")) {
+                i = forge.util.MyRandom.getRandom().nextInt(6);
+                roller.roll();
+            }
             if (riggedResult != null)
                 thisRoll = riggedResult;
             else if (i == 0)

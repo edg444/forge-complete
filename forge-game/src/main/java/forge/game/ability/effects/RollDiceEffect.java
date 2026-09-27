@@ -17,6 +17,7 @@ import forge.game.spellability.SpellAbility;
 import forge.game.trigger.TriggerType;
 import forge.game.zone.ZoneType;
 import forge.game.staticability.StaticAbilityMode;
+import forge.game.Game;
 import forge.game.GameLogEntryType;
 import forge.util.Lang;
 import forge.util.Localizer;
@@ -487,6 +488,11 @@ public class RollDiceEffect extends SpellAbilityEffect {
             // Play the die roll sound
             player.getGame().fireEvent(new GameEventRollDie());
             player.roll();
+            while (tapWallToReroll(player, roll, sides, roll + " on a " + sides + "-sided die")) {
+                roll = MyRandom.getRandom().nextInt(sides) + 1;
+                player.getGame().fireEvent(new GameEventRollDie());
+                player.roll();
+            }
             naturalRolls.add(useInstalledResult(player, roll));
         }
 
@@ -509,6 +515,50 @@ public class RollDiceEffect extends SpellAbilityEffect {
         }
 
         return naturalRolls;
+    }
+
+    /**
+     * Wall of Fortune: "You may tap an untapped Wall you control to have any player reroll a die that player rolled."
+     * Decided after seeing the result, by anyone with the permission, and again with another Wall after the reroll
+     * (Unstable rulings) - the caller rerolls and asks again while this returns true. It's not an activated
+     * ability, so a Wall that just came under your control can be tapped. value is -1 for the planar die.
+     */
+    public static boolean tapWallToReroll(final Player roller, final int value, final int sides, final String rolled) {
+        final Game game = roller.getGame();
+        for (final Player p : game.getPlayersInTurnOrder(game.getPhaseHandler().getPlayerTurn())) {
+            Card permission = null;
+            for (final Card c : p.getCardsIn(ZoneType.Battlefield)) {
+                if (c.getStaticAbilities().stream().anyMatch(st -> st.checkConditions(StaticAbilityMode.RerollWithWall))) {
+                    permission = c;
+                    break;
+                }
+            }
+            if (permission == null) {
+                continue;
+            }
+            final CardCollection walls = CardLists.filter(p.getCardsIn(ZoneType.Battlefield),
+                    c -> c.getType().hasCreatureType("Wall") && c.isUntapped());
+            if (walls.isEmpty()) {
+                continue;
+            }
+            final String who = p.equals(roller) ? "You" : roller.getName();
+            if (!p.getController().confirmStaticApplication(permission, null,
+                    who + " rolled " + rolled + ". Tap an untapped Wall to have " + (p.equals(roller) ? "you" : "them")
+                            + " reroll it?",
+                    "WallReroll:" + (p.equals(roller) ? "own" : "opp") + ":" + value + ":" + sides)) {
+                continue;
+            }
+            final Card wall = walls.size() == 1 || p.getController().isAI() ? walls.getFirst()
+                    : p.getController().chooseSingleEntityForEffect(walls, null, "Choose a Wall to tap", null);
+            if (wall == null) {
+                continue;
+            }
+            wall.tap(true, null, p);
+            game.getGameLog().add(GameLogEntryType.INFORMATION, p + " taps " + wall.getName() + " to have " + roller
+                    + " reroll a " + rolled + ".");
+            return true;
+        }
+        return false;
     }
 
     /**

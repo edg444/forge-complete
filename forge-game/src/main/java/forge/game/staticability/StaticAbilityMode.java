@@ -9,6 +9,8 @@ public enum StaticAbilityMode {
     AllGraveyardsYours,
     // Socketed Sprocketer - its installed results may stand in for a die its controller rolls (RollDiceEffect)
     UseInstalledResult,
+    // Wall of Fortune - lets its controller tap an untapped Wall to have a player reroll a die (RollDiceEffect)
+    RerollWithWall,
 
     // StaticAbility
     CantAttackUnless,

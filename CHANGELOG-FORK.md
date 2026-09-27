@@ -134,7 +134,13 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ## Log
 
-### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician; Magic Word; More or Less; S.N.E.A.K. Dispatcher; Socketed Sprocketer; Spy Eye; Very Cryptic Command
+### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician; Magic Word; More or Less; S.N.E.A.K. Dispatcher; Socketed Sprocketer; Spy Eye; Very Cryptic Command; Wall of Fortune
+
+- **Wall of Fortune** (ust/50): static `Mode$ RerollWithWall`. After any die roll - including the planar die -
+  anyone with the permission may tap an untapped Wall they control to have the roller reroll it, seen first
+  and repeatable with more Walls (`RollDiceEffect.tapWallToReroll`, also called from `PlanarDice.roll`). Not an
+  activated ability, so a Wall that just arrived can be tapped. AI rerolls its own below-average rolls and
+  opponents' above-average ones (not the planar die). `WallOfFortuneTest` (2). Suite: 798 run, 0 failed, 6 skipped.
 
 - **Very Cryptic Command** (ust/49a-f): none of the six printings existed; one script with six variants, each
   its own "Choose two -" Charm (base face `<Unsupported Variant>`, as Everythingamajig).

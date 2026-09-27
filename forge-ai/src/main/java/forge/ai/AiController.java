@@ -1270,6 +1270,17 @@ public class AiController {
     }
 
     public boolean confirmStaticApplication(Card hostCard, String logic) {
+        if (logic != null && logic.startsWith("WallReroll:")) {
+            // Wall of Fortune: reroll its own below-average rolls and opponents' above-average ones; the planar die
+            // (value -1) is left alone
+            final String[] parts = logic.split(":");
+            final int value = Integer.parseInt(parts[2]);
+            final double average = (Integer.parseInt(parts[3]) + 1) / 2.0;
+            if (value < 0) {
+                return false;
+            }
+            return "own".equals(parts[1]) ? value < average : value > average;
+        }
         if (logic != null && logic.startsWith("InstalledResult:")) {
             // Socketed Sprocketer: swap in a higher installed result, but a 6 also draws a card on its own,
             // so it's only spent on a roll that came up low
