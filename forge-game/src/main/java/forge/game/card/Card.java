@@ -3810,6 +3810,12 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         if (controller != null) {
             return controller;
         }
+        // Graveyard Busybody: cards in graveyards are in its controller's graveyards, and only that player
+        // can use their abilities
+        if (currentZone != null && currentZone.is(ZoneType.Graveyard) && getGame() != null
+                && getGame().getGraveyardHolder() != null) {
+            return getGame().getGraveyardHolder();
+        }
         return owner;
     }
 

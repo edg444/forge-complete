@@ -5,6 +5,8 @@ import java.util.Set;
 
 public enum StaticAbilityMode {
     Continuous,
+    // Graveyard Busybody - read by Game.updateGraveyardHolder, not applied in layers
+    AllGraveyardsYours,
 
     // StaticAbility
     CantAttackUnless,

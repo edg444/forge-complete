@@ -43,6 +43,17 @@ import java.util.*;
 
 public class CardProperty {
 
+    /**
+     * Whose a card is in zone terms - scripts write "a card in your graveyard" as YouOwn. That's its owner,
+     * except that with a Graveyard Busybody out every graveyard is its controller's.
+     */
+    private static Player whoseZone(final Card card) {
+        if (card.isInZone(ZoneType.Graveyard) && card.getGame() != null && card.getGame().getGraveyardHolder() != null) {
+            return card.getGame().getGraveyardHolder();
+        }
+        return card.getOwner();
+    }
+
     public static boolean cardHasProperty(Card card, String property, Player sourceController, Card source, CardTraitBase spellAbility) {
         final Game game = card.getGame();
         final Combat combat = game.getCombat();
@@ -511,26 +522,27 @@ public class CardProperty {
                 return false;
             }
         } else if (property.startsWith("YouOwn")) {
-            if (!card.getOwner().equals(sourceController)) {
+            if (!whoseZone(card).equals(sourceController)) {
                 return false;
             }
         } else if (property.startsWith("YouDontOwn")) {
-            if (card.getOwner().equals(sourceController)) {
+            if (whoseZone(card).equals(sourceController)) {
                 return false;
             }
         } else if (property.startsWith("OppOwn")) {
-            if (!card.getOwner().getOpponents().contains(sourceController)) {
+            if (!whoseZone(card).getOpponents().contains(sourceController)) {
                 return false;
             }
         } else if (property.equals("TargetedPlayerOwn")) {
-            if (!AbilityUtils.getDefinedPlayers(source, "TargetedPlayer", spellAbility).contains(card.getOwner())) {
+            if (!AbilityUtils.getDefinedPlayers(source, "TargetedPlayer", spellAbility).contains(whoseZone(card))) {
                 return false;
             }
         } else if (property.startsWith("OwnedBy")) {
             final String valid = property.substring(8);
-            if (!card.getOwner().isValid(valid, sourceController, source, spellAbility)) {
+            final Player owner = whoseZone(card);
+            if (!owner.isValid(valid, sourceController, source, spellAbility)) {
                 final List<Player> lp = AbilityUtils.getDefinedPlayers(source, valid, spellAbility);
-                if (!lp.contains(card.getOwner())) {
+                if (!lp.contains(owner)) {
                     return false;
                 }
             }
@@ -797,23 +809,23 @@ public class CardProperty {
                 return false;
             }
         } else if (property.startsWith("Above")) { // "Are Above" Source
-            final CardCollectionView cards = card.getOwner().getCardsIn(ZoneType.Graveyard);
+            final CardCollectionView cards = card.getOwner().getZone(ZoneType.Graveyard).getCards();
             if (cards.indexOf(source) >= cards.indexOf(card)) {
                 return false;
             }
         } else if (property.startsWith("DirectlyAbove")) { // "Are Directly Above" Source
-            final CardCollectionView cards = card.getOwner().getCardsIn(ZoneType.Graveyard);
+            final CardCollectionView cards = card.getOwner().getZone(ZoneType.Graveyard).getCards();
             if (cards.indexOf(card) - cards.indexOf(source) != 1) {
                 return false;
             }
         } else if (property.startsWith("TopGraveyardCreature")) {
-            CardCollection cards = CardLists.filter(card.getOwner().getCardsIn(ZoneType.Graveyard), CardPredicates.CREATURES);
+            CardCollection cards = CardLists.filter(card.getOwner().getZone(ZoneType.Graveyard).getCards(), CardPredicates.CREATURES);
             Collections.reverse(cards);
             if (cards.isEmpty() || !card.equals(cards.get(0))) {
                 return false;
             }
         } else if (property.startsWith("TopGraveyard")) {
-            final CardCollection cards = new CardCollection(card.getOwner().getCardsIn(ZoneType.Graveyard));
+            final CardCollection cards = new CardCollection(card.getOwner().getZone(ZoneType.Graveyard).getCards());
             Collections.reverse(cards);
             if (property.substring(12).matches("[0-9][0-9]?")) {
                 int n = Integer.parseInt(property.substring(12));
@@ -831,7 +843,7 @@ public class CardProperty {
                 }
             }
         } else if (property.startsWith("BottomGraveyard")) {
-            final CardCollectionView cards = card.getOwner().getCardsIn(ZoneType.Graveyard);
+            final CardCollectionView cards = card.getOwner().getZone(ZoneType.Graveyard).getCards();
             if (cards.isEmpty() || !card.equals(cards.get(0))) {
                 return false;
             }

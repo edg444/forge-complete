@@ -43,7 +43,9 @@ import forge.game.player.*;
 import forge.game.replacement.ReplacementHandler;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.SpellAbilityStackInstance;
+import forge.game.staticability.StaticAbility;
 import forge.game.staticability.StaticAbilityCantChangeDayTime;
+import forge.game.staticability.StaticAbilityMode;
 import forge.game.trigger.TriggerHandler;
 import forge.game.trigger.TriggerType;
 import forge.game.zone.*;
@@ -660,6 +662,29 @@ public class Game {
 
     public Zone getZoneOf(final Card card) {
         return card == null ? null : card.getLastKnownZone();
+    }
+
+    // Graveyard Busybody: "All graveyards are also your graveyards." While one is on the battlefield every
+    // graveyard is its controller's and no one else has one (Unstable rulings); the one that entered most
+    // recently wins. Cards still physically sit in, and go to, their owners' graveyards.
+    private transient Player graveyardHolder = null;
+
+    /** The player every graveyard belongs to, or null normally. */
+    public Player getGraveyardHolder() {
+        return graveyardHolder;
+    }
+
+    public void updateGraveyardHolder() {
+        Card winner = null;
+        for (final Card c : getCardsIn(ZoneType.Battlefield)) {
+            for (final StaticAbility st : c.getStaticAbilities()) {
+                if (st.checkConditions(StaticAbilityMode.AllGraveyardsYours) && st.zonesCheck()
+                        && (winner == null || c.getGameTimestamp() > winner.getGameTimestamp())) {
+                    winner = c;
+                }
+            }
+        }
+        graveyardHolder = winner == null ? null : winner.getController();
     }
 
     public CardCollectionView getCardsIn(final ZoneType zone) {

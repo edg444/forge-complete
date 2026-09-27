@@ -114,7 +114,9 @@ public class PlayerZone extends Zone {
 
     public Iterable<Card> getCardsPlayerCanActivate(Player who) {
         Iterable<Card> cl = getCards(false);
-        boolean checkingForOwner = who == player;
+        // a Graveyard Busybody's controller has every graveyard as their own
+        boolean checkingForOwner = who == player
+                || (is(ZoneType.Graveyard) && who.equals(player.getGame().getGraveyardHolder()));
 
         if (checkingForOwner && (is(ZoneType.Battlefield) || is(ZoneType.Hand))) {
             return cl;

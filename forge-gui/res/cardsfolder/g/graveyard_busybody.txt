@@ -1,0 +1,12 @@
+Name:Graveyard Busybody
+ManaCost:4 U U
+Types:Creature Human Spy
+PT:*/*
+# While it's on the battlefield every graveyard is yours and no one else has one (Game.getGraveyardHolder):
+# "your graveyard" counts, costs, targets and choices see them all, and only you can use abilities of cards
+# in them. Cards still go to, and are shuffled back from, their owners' graveyards. With several out, the one
+# that entered most recently wins; any other is 0/0, its controller having no graveyards at all.
+S:Mode$ AllGraveyardsYours | Description$ All graveyards are also your graveyards.
+S:Mode$ Continuous | EffectZone$ All | CharacteristicDefining$ True | SetPower$ X | SetToughness$ X | Description$ CARDNAME's power and toughness are each equal to the number of cards with flavor text in your graveyards.
+SVar:X:Count$ValidGraveyard Card.YouOwn+hasFlavorText+nonToken
+Oracle:All graveyards are also your graveyards.\nGraveyard Busybody's power and toughness are each equal to the number of cards with flavor text in your graveyards.

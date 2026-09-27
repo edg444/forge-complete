@@ -1472,6 +1472,22 @@ public class Player extends GameEntity implements Comparable<Player> {
             return getCardsActivatableInExternalZones(true);
         }
 
+        if (zoneType == ZoneType.Graveyard && game.getGraveyardHolder() != null) {
+            // Graveyard Busybody: all graveyards are its controller's, and no one else has any
+            if (!game.getGraveyardHolder().equals(this)) {
+                return CardCollection.EMPTY;
+            }
+            final CardCollection all = new CardCollection();
+            for (final Player p : game.getPlayers()) {
+                if (!p.equals(this)) {
+                    all.addAll(p.getZone(ZoneType.Graveyard).getCards(filterOutPhasedOut));
+                }
+            }
+            // own graveyard last, so "the top card of your graveyard" is still your own top card
+            all.addAll(getZone(ZoneType.Graveyard).getCards(filterOutPhasedOut));
+            return all;
+        }
+
         PlayerZone zone = getZone(zoneType);
         return zone == null ? CardCollection.EMPTY : zone.getCards(filterOutPhasedOut);
     }

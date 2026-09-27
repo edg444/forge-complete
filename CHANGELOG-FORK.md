@@ -134,7 +134,24 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ## Log
 
-### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount
+### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody
+
+- **Graveyard Busybody** (ust/34): "All graveyards are also your graveyards." New static
+  `Mode$ AllGraveyardsYours`; `Game.getGraveyardHolder()` is the controller of the one that entered most
+  recently, recomputed before the layers on every static-ability pass. Everything is gated on it, so games
+  without a Busybody are untouched. Per the Unstable rulings, while it's out:
+  - `Player.getCardsIn(Graveyard)` gives the holder every graveyard (own last) and everyone else none —
+    counts, delve/escape/exile costs, "from your graveyard" fetches, threshold/delirium all follow.
+  - Cards in graveyards are controlled by the holder (`Card.getController`), so only they can use those
+    cards' activated, triggered and static abilities; flashback and the like from any graveyard
+    (`SpellAbilityRestriction.zoneHolder`, `PlayerZone` activatable list).
+  - `YouOwn`/`YouDontOwn`/`OppOwn`/`TargetedPlayerOwn`/`OwnedBy` read a graveyard card's zone holder
+    (scripts write "in your graveyard" as YouOwn); ownership itself never changes, so cards still go to,
+    and are shuffled back from, their owners' graveyards.
+  - "Top/bottom/above" graveyard properties now read the physical graveyard.
+  - P/T: `Count$ValidGraveyard Card.YouOwn+hasFlavorText` (the per-printing flavor text table). A second
+    Busybody's controller has no graveyards, so theirs is 0/0.
+  - `GraveyardBusybodyTest` (5, incl. AI turns played with one out). Suite: 774 run, 0 failed, 6 skipped.
 
 - **Five-Finger Discount** (ust/33): a card in another player's hand. ChangeZone `HandOf$ <player>` puts
   it into that player's hand without changing its owner (unlike `GainOwnership`, which Last-Minute

@@ -1104,6 +1104,8 @@ public class GameAction {
         if (game.isGameOver()) {
             return;
         }
+        // before the layers, so Graveyard Busybody's own */* already counts every graveyard
+        game.updateGraveyardHolder();
         game.getTracker().freeze(); //prevent views flickering during while updating for state-based effects
 
         final Map<StaticAbilityLayer, Set<Card>> affectedPerLayer = Maps.newHashMap();

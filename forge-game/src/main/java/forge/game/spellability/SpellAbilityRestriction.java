@@ -277,6 +277,10 @@ public class SpellAbilityRestriction extends SpellAbilityVariables {
      * taking ownership of it (Five-Finger Discount) - that card is cast from their hand, by them.
      */
     private static Player zoneHolder(final Card c, final Zone cardZone) {
+        // Graveyard Busybody makes every graveyard its controller's
+        if (cardZone != null && cardZone.is(ZoneType.Graveyard) && c.getGame().getGraveyardHolder() != null) {
+            return c.getGame().getGraveyardHolder();
+        }
         return cardZone != null && cardZone.getPlayer() != null ? cardZone.getPlayer() : c.getOwner();
     }
 
