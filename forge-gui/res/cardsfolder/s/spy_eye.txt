@@ -1,0 +1,9 @@
+Name:Spy Eye
+ManaCost:2 U U
+Types:Creature Eye Spy
+PT:1/3
+K:Flying
+# Still your draw (it counts and triggers as one); the card comes into your hand but stays that player's.
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | OptionalDecider$ You | Execute$ TrigDraw | TriggerDescription$ Whenever this creature deals combat damage to a player, you may draw a card from that player's library.
+SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1 | FromLibraryOf$ TriggeredTarget
+Oracle:Flying\nWhenever this creature deals combat damage to a player, you may draw a card from that player's library.

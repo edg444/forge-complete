@@ -1266,6 +1266,14 @@ public class Player extends GameEntity implements Comparable<Player> {
         return drawCards(n, cause, params, this.getZone(ZoneType.Hand));
     }
     public final CardCollectionView drawCards(final int n, SpellAbility cause, Map<AbilityKey, Object> params, PlayerZone zone) {
+        return drawCards(n, cause, params, zone, this);
+    }
+    /**
+     * Draw from another player's library (Spy Eye). It's still this player's draw - it counts, triggers and can be
+     * replaced like any other - and the card comes into this player's hand without changing its owner.
+     */
+    public final CardCollectionView drawCards(final int n, SpellAbility cause, Map<AbilityKey, Object> params, PlayerZone zone,
+            final Player libraryOf) {
         final CardCollection drawn = new CardCollection();
         if (n <= 0) {
             return drawn;
@@ -1291,7 +1299,7 @@ public class Player extends GameEntity implements Comparable<Player> {
             if (gameStarted && !canDraw()) {
                 return drawn;
             }
-            CardCollectionView cards = doDraw(toReveal, cause, params, zone);
+            CardCollectionView cards = doDraw(toReveal, cause, params, zone, libraryOf);
             if (cards == null) {
                 break;
             }
@@ -1311,9 +1319,10 @@ public class Player extends GameEntity implements Comparable<Player> {
      * @return a CardCollectionView of cards actually drawn, or null if the library is empty and no
      *         replacement effect applies, since every further draw of the same batch would do the same
      */
-    private CardCollectionView doDraw(Map<Player, CardCollection> revealed, SpellAbility sa, Map<AbilityKey, Object> params, PlayerZone hand) {
+    private CardCollectionView doDraw(Map<Player, CardCollection> revealed, SpellAbility sa, Map<AbilityKey, Object> params, PlayerZone hand,
+            final Player libraryOf) {
         CardCollection drawn = new CardCollection();
-        final PlayerZone library = getZone(ZoneType.Library);
+        final PlayerZone library = libraryOf.getZone(ZoneType.Library);
 
         SpellAbility cause = sa;
         if (cause != null && cause.isReplacementAbility()) {
@@ -1338,7 +1347,7 @@ public class Player extends GameEntity implements Comparable<Player> {
 
         if (!library.isEmpty()) {
             Card c;
-            if (hasKeyword("You draw cards from the bottom of your library instead of the top of your library.")) {
+            if (libraryOf == this && hasKeyword("You draw cards from the bottom of your library instead of the top of your library.")) {
                 c = library.get(library.size() - 1);
             } else {
                 c = library.get(0);
@@ -1352,6 +1361,10 @@ public class Player extends GameEntity implements Comparable<Player> {
             }
 
             c = game.getAction().moveTo(hand, c, cause, params);
+            // someone else's card in this player's hand: theirs to see and cast, still its owner's (as HandOf$)
+            if (hand.contains(c) && !c.getOwner().equals(this)) {
+                c.setController(this, game.getNextTimestamp());
+            }
             drawn.add(c);
 
             // CR 121.6c additional actions can't be performed when draw gets replaced

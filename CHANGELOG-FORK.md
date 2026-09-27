@@ -134,7 +134,13 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ## Log
 
-### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician; Magic Word; More or Less; S.N.E.A.K. Dispatcher; Socketed Sprocketer
+### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician; Magic Word; More or Less; S.N.E.A.K. Dispatcher; Socketed Sprocketer; Spy Eye
+
+- **Spy Eye** (ust/46): Draw `FromLibraryOf$ <player>` (`Player.drawCards(..., libraryOf)`) — still your draw
+  (counts, Drawn triggers, draw replacements), the card enters your hand still its owner's (controller set, as
+  `HandOf$`). Drawing from an empty library still loses (CR 704.5b says "a library"), so the AI declines then.
+  `SpyEyeTest` (2, one through real combat). Suite: 791 run, 0 failed, 6 skipped.
+- Spell Suck (ust/45, upstream): `Oracle:` gains its reminder text to match Scryfall.
 
 - **Socketed Sprocketer** (ust/44): "installing" a die result. `Card.installedResults` holds the dice sitting on
   a permanent (not counters, so proliferate and counter effects never see them), shown in the detail panel

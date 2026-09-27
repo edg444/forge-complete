@@ -14,6 +14,7 @@ import forge.game.card.CardCollectionView;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.staticability.StaticAbilityCantDraw;
+import forge.game.zone.ZoneType;
 import forge.util.Lang;
 import forge.util.Localizer;
 
@@ -107,7 +108,10 @@ public class DrawEffect extends SpellAbilityEffect {
                 actualNum = p.getController().chooseNumber(sa, Localizer.getInstance().getMessage("lblHowManyCardDoYouWantDraw"), 0, actualNum);
             }
 
-            final CardCollectionView drawn = p.drawCards(actualNum, sa, moveParams);
+            // FromLibraryOf$: draw from that player's library instead (Spy Eye)
+            final Player libraryOf = sa.hasParam("FromLibraryOf")
+                    ? AbilityUtils.getDefinedPlayers(source, sa.getParam("FromLibraryOf"), sa).getFirst() : p;
+            final CardCollectionView drawn = p.drawCards(actualNum, sa, moveParams, p.getZone(ZoneType.Hand), libraryOf);
             if (sa.hasParam("Reveal")) {
                 p.getGame().getAction().reveal(drawn, p, !sa.getParam("Reveal").equals("All"));
             }

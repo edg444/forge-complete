@@ -562,6 +562,15 @@ public class DrawAi extends SpellAbilityAi {
 
     @Override
     protected AiAbilityDecision doTriggerNoCost(Player ai, SpellAbility sa, boolean mandatory) {
+        // Spy Eye: a card from someone else's library is free - unless that library is empty, since trying to
+        // draw from an empty library loses the game whoever's library it is (CR 704.5b)
+        if (sa.hasParam("FromLibraryOf")) {
+            final java.util.List<Player> from = AbilityUtils.getDefinedPlayers(sa.getHostCard(), sa.getParam("FromLibraryOf"), sa);
+            if (!mandatory && (from.isEmpty() || from.get(0).getCardsIn(ZoneType.Library).isEmpty())) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            }
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
         if (targetAI(ai, sa, mandatory)) {
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
