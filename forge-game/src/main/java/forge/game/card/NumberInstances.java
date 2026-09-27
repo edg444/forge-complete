@@ -29,11 +29,13 @@ public final class NumberInstances {
 
     public static List<NumberNudge> of(final Card c) {
         final List<NumberNudge> result = Lists.newArrayList();
-        if (isPrintedNumber(c.getBasePowerString())) {
+        // an instant has a base power of 0 too, but nothing printed
+        final boolean hasPT = c.getCurrentState().hasPrintedPT();
+        if (hasPT && isPrintedNumber(c.getBasePowerString())) {
             final int p = Integer.parseInt(c.getBasePowerString());
             result.add(new NumberNudge(NumberNudge.Kind.POWER, "Power " + p, null, null, null, 0, null, p, p, 0));
         }
-        if (isPrintedNumber(c.getBaseToughnessString())) {
+        if (hasPT && isPrintedNumber(c.getBaseToughnessString())) {
             final int t = Integer.parseInt(c.getBaseToughnessString());
             result.add(new NumberNudge(NumberNudge.Kind.TOUGHNESS, "Toughness " + t, null, null, null, 0, null, t, t, 0));
         }

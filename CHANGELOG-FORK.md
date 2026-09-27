@@ -150,7 +150,10 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
   - `PlayerController.chooseStringForEffect(options, sa, prompt)`: a labelled pick with a real prompt; the AI
     asks the API's `SpellAbilityAi.chooseString`.
   - AI: casts it to kill an opposing creature one less toughness kills; lowers numbers on opponents' objects
-    and raises its own. `MoreOrLessTest` (5). Suite: 782 run, 0 failed, 6 skipped.
+    and raises its own. `MoreOrLessTest` (6). Suite: 782 run, 0 failed, 6 skipped.
+  - Fix after live testing: a spell on the stack is targeted as its spell ability, so the effect (and its AI)
+    read targets with `getCardsfromTargets`, as Mind Bend does - it silently did nothing on a spell before.
+    Noncreatures no longer offer a "Power 0"/"Toughness 0" (`CardState.hasPrintedPT`).
   - Not covered: numbers inside token scripts ("create a 1/1") and in SVar-computed amounts.
 
 - **Magic Word** (ust/38): the word is chosen as it enters (Keeper of the Sacred Word's free-input

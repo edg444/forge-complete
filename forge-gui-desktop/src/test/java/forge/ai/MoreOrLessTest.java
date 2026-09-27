@@ -138,4 +138,30 @@ public class MoreOrLessTest extends AITest {
         AssertJUnit.assertEquals(2, bounced.getBasePower());
         AssertJUnit.assertFalse(bounced.hasKeyword(Keyword.FLYING));
     }
+    @Test
+    public void testSpellOnTheStack() {
+        Game game = initAndCreateGame();
+        Player me = game.getPlayers().get(1);
+        Player opp = game.getPlayers().get(0);
+        Card bolt = addCardToZone("Lightning Bolt", opp, ZoneType.Hand);
+        SpellAbility boltSa = bolt.getFirstSpellAbility();
+        boltSa.setActivatingPlayer(opp);
+        boltSa.getTargets().add(me);
+        Card onStack = game.getAction().moveToStack(bolt, boltSa);
+        boltSa.setHostCard(onStack);
+        game.getStack().add(boltSa);
+        // an instant has no power or toughness to offer
+        AssertJUnit.assertEquals(List.of("The 3 in \"this deals 3 damage to any target.\""), labels(onStack));
+
+        // targeted the way the stack is targeted: as the spell, not the card
+        Card mol = addCardToZone("More or Less", me, ZoneType.Hand);
+        SpellAbility sa = mol.getFirstSpellAbility();
+        sa.setActivatingPlayer(me);
+        sa.getTargets().add(boltSa);
+        forge.game.ability.AbilityUtils.resolve(sa);
+
+        game.getStack().resolveStack();
+        // the AI lowers the number on its opponent's spell: 2 damage, not 3
+        AssertJUnit.assertEquals(18, me.getLife());
+    }
 }

@@ -25,7 +25,7 @@ public class NudgeNumberEffect extends SpellAbilityEffect {
 
     @Override
     protected String getStackDescription(SpellAbility sa) {
-        return "Add or subtract 1 from a number on " + Lists.newArrayList(getTargetCards(sa)) + " until end of turn.";
+        return "Add or subtract 1 from a number on " + getCardsfromTargets(sa) + " until end of turn.";
     }
 
     @Override
@@ -33,7 +33,8 @@ public class NudgeNumberEffect extends SpellAbilityEffect {
         final Player chooser = sa.getActivatingPlayer();
         final Game game = chooser.getGame();
 
-        for (final Card tgt : getTargetCards(sa)) {
+        // a spell on the stack is targeted as its spell ability, not as a card
+        for (final Card tgt : getCardsfromTargets(sa)) {
             final Card c = game.getCardState(tgt);
             if (!c.isInPlay() && !c.isInZone(ZoneType.Stack)) {
                 continue;

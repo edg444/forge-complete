@@ -61,7 +61,11 @@ public class NudgeNumberAi extends SpellAbilityAi {
 
     @Override
     public String chooseString(final Player ai, final SpellAbility sa, final List<String> options) {
-        final Card tgt = sa.getTargetCard();
+        // a spell on the stack is targeted as its spell ability
+        Card tgt = sa.getTargetCard();
+        if (tgt == null && sa.getTargets().getFirstTargetedSpell() != null) {
+            tgt = sa.getTargets().getFirstTargetedSpell().getHostCard();
+        }
         final boolean theirs = tgt != null && tgt.getController().isOpponentOf(ai);
         if (!options.isEmpty() && (options.get(0).startsWith(NudgeNumberEffect.ADD)
                 || options.get(0).startsWith(NudgeNumberEffect.SUBTRACT))) {
