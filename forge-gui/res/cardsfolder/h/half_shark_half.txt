@@ -1,0 +1,10 @@
+Name:Half-Shark, Half-
+ManaCost:no cost
+Colors:blue
+Types:Creature Shark
+PT:+3/+3
+K:Augment:5 U
+# An augment's triggers are unfinished conditions with no Execute - combining with a host completes them with
+# the host's effect (CardFactory.getAugmentedCloneStates). On their own they never do anything.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | TriggerDescription$ At the beginning of your upkeep,
+Oracle:At the beginning of your upkeep,\nAugment {5}{U} ({5}{U}, Reveal this card from your hand: Combine it with target host. Augment only as a sorcery.)
