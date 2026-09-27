@@ -1,0 +1,12 @@
+Name:Clocknapper
+ManaCost:3 U U
+Types:Creature Human Spy
+PT:2/2
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChoosePhase | TriggerDescription$ When this creature enters, choose beginning phase, first main phase, combat phase, postcombat main phase, or ending phase. Steal that phase from target player during their next turn. (That phase occurs as though it's your turn instead.)
+SVar:TrigChoosePhase:DB$ GenericChoice | ValidTgts$ Player | TgtPrompt$ Select target player to steal a phase from | Defined$ You | Choices$ StealBeginning,StealMain1,StealCombat,StealMain2,StealEnding | ChoicePrompt$ Choose a phase to steal | AILogic$ StealPhase
+SVar:StealBeginning:DB$ StealPhase | Defined$ ParentTarget | Phase$ Beginning | SpellDescription$ Beginning phase
+SVar:StealMain1:DB$ StealPhase | Defined$ ParentTarget | Phase$ Main1 | SpellDescription$ First main phase
+SVar:StealCombat:DB$ StealPhase | Defined$ ParentTarget | Phase$ Combat | SpellDescription$ Combat phase
+SVar:StealMain2:DB$ StealPhase | Defined$ ParentTarget | Phase$ Main2 | SpellDescription$ Postcombat main phase
+SVar:StealEnding:DB$ StealPhase | Defined$ ParentTarget | Phase$ Ending | SpellDescription$ Ending phase
+Oracle:When this creature enters, choose beginning phase, first main phase, combat phase, postcombat main phase, or ending phase. Steal that phase from target player during their next turn. (That phase occurs as though it's your turn instead.)

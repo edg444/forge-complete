@@ -79,6 +79,7 @@ public class GameSnapshot {
         PhaseHandler origPhaseHandler = fromGame.getPhaseHandler();
         Player newPlayerTurn = findBy(toGame, origPhaseHandler.getPlayerTurn());
         toGame.getPhaseHandler().devModeSet(origPhaseHandler.getPhase(), newPlayerTurn, origPhaseHandler.getTurn());
+        toGame.getPhaseHandler().copyStolenPhasesFrom(origPhaseHandler, p -> findBy(toGame, p));
         toGame.getTriggerHandler().suppressMode(TriggerType.ChangesZone);
         for (Player p : toGame.getPlayers()) {
             ((PlayerZoneBattlefield) p.getZone(ZoneType.Battlefield)).setTriggers(false);

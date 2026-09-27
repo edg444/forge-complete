@@ -84,6 +84,22 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     private transient Player playerTurn = null;
     private transient Player playerPreviousTurn = null;
 
+    // Unstable's Clocknapper: a phase stolen from a player's next turn happens as though it were the
+    // thief's turn, so the thief is the active player for just that phase and the victim gets it back after
+    public static final List<String> STEALABLE_PHASE_NAMES = List.of("Beginning", "Main1", "Combat", "Main2", "Ending");
+    private static final List<List<PhaseType>> STEALABLE_PHASES = List.of(
+            List.of(PhaseType.UNTAP, PhaseType.UPKEEP, PhaseType.DRAW),
+            List.of(PhaseType.MAIN1),
+            List.of(PhaseType.COMBAT_BEGIN, PhaseType.COMBAT_DECLARE_ATTACKERS, PhaseType.COMBAT_DECLARE_BLOCKERS,
+                    PhaseType.COMBAT_FIRST_STRIKE_DAMAGE, PhaseType.COMBAT_DAMAGE, PhaseType.COMBAT_END),
+            List.of(PhaseType.MAIN2),
+            // Forge splits the ending phase into two groups (for Topsy Turvy), but it's one phase to steal
+            List.of(PhaseType.END_OF_TURN, PhaseType.CLEANUP));
+    private record StolenPhase(Player thief, Player victim, int victimTurn, int phaseIndex) {}
+    private final transient List<StolenPhase> stolenPhases = Lists.newArrayList();
+    private transient Player phaseStolenFrom = null;
+    private transient List<PhaseType> stolenPhaseSteps = null;
+
     // priority player
 
     private transient Player pPlayerPriority = null;
@@ -174,6 +190,13 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 setPhase(PhaseType.getNext(phase, isTopsy));
             }
 
+            // the last step ending also covers an extra phase of the same kind following it (e.g. an
+            // additional combat), which isn't the stolen one
+            if (phaseStolenFrom != null && (turnEnded || !stolenPhaseSteps.contains(phase)
+                    || oldPhase == stolenPhaseSteps.get(stolenPhaseSteps.size() - 1))) {
+                endStolenPhase();
+            }
+
             if (turnEnded) {
                 turn++;
                 extraPhases.clear();
@@ -191,6 +214,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 final int lands = CardLists.count(playerTurn.getLandsInPlay(), CardPredicates.UNTAPPED);
                 playerTurn.setNumPowerSurgeLands(lands);
             }
+
+            // before BeginPhase replacements, so "skip your untap step" asks whoever's untap step it now is
+            beginStolenPhase();
 
             final Map<AbilityKey, Object> repRunParams = AbilityKey.mapFromAffected(playerTurn);
             repRunParams.put(AbilityKey.Phase, phase);
@@ -522,6 +548,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
             case CLEANUP:
                 if (!bRepeatCleanup) {
+                    // the turn passes on from whoever's turn it really was
+                    endStolenPhase();
+                    expireStolenPhases(playerTurn);
                     // only call onCleanupPhase when Cleanup is not repeated
                     game.onCleanupPhase();
                     // set previous player
@@ -842,6 +871,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     public void restart() {
         extraPhases.clear();
         extraTurns.clear();
+        stolenPhases.clear();
+        phaseStolenFrom = null;
+        stolenPhaseSteps = null;
         turn = 0;
     }
 
@@ -916,7 +948,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
     public final Player getNextTurn() {
         if (extraTurns.isEmpty()) {
-            return game.getNextPlayerAfter(playerTurn);
+            return game.getNextPlayerAfter(getActualTurnPlayer());
         }
         return extraTurns.peek().getPlayer();
     }
@@ -925,7 +957,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         Player previous = null;
         // use a stack to handle extra turns, make sure the bottom of the stack restores original turn order
         if (extraTurns.isEmpty()) {
-            extraTurns.push(new ExtraTurn(game.getNextPlayerAfter(playerTurn)));
+            extraTurns.push(new ExtraTurn(game.getNextPlayerAfter(getActualTurnPlayer())));
         } else {
             previous = extraTurns.peek().getPlayer();
         }
@@ -1219,6 +1251,8 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     // this is a hack for the setup game state mode, do not use outside of devSetupGameState code
     // as it avoids calling any of the phase effects that may be necessary in a less enforced context
     public final void devModeSet(final PhaseType phase0, final Player player0, boolean endCombat, int cturn) {
+        phaseStolenFrom = null;
+        stolenPhaseSteps = null;
         if (phase0 != null) {
             setPhase(phase0);
         }
@@ -1253,7 +1287,10 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
     public final void endTurnByEffect() {
         extraPhases.clear();
+        endStolenPhase();
         setPhase(PhaseType.CLEANUP);
+        // the cleanup step is still the ending phase, so a stolen ending phase begins here instead
+        beginStolenPhase();
         game.fireEvent(new GameEventTurnPhase(playerTurn, phase, ""));
         onPhaseBegin();
     }
@@ -1307,6 +1344,92 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
             count += 1;
         }
         return count;
+    }
+
+    /**
+     * Steal a phase from the victim's next turn (Clocknapper): as that phase begins, the thief becomes the
+     * active player until it ends. A later steal of the same phase from the same turn replaces an earlier one.
+     */
+    public final void stealPhase(final Player thief, final Player victim, final String phaseName) {
+        final int idx = STEALABLE_PHASE_NAMES.indexOf(phaseName);
+        if (idx < 0) {
+            throw new IllegalArgumentException("Unknown phase to steal: " + phaseName);
+        }
+        final int victimTurn = victim.getTurn() + 1;
+        stolenPhases.removeIf(s -> s.victim().equals(victim) && s.victimTurn() == victimTurn && s.phaseIndex() == idx);
+        stolenPhases.add(new StolenPhase(thief, victim, victimTurn, idx));
+    }
+
+    /** Whose turn it really is - differs from {@link #getPlayerTurn()} only during a stolen phase. */
+    public final Player getActualTurnPlayer() {
+        return phaseStolenFrom != null ? phaseStolenFrom : playerTurn;
+    }
+
+    public final boolean isPhaseStolen() {
+        return phaseStolenFrom != null;
+    }
+
+    private void beginStolenPhase() {
+        if (phaseStolenFrom != null || stolenPhases.isEmpty() || playerTurn == null) {
+            return;
+        }
+        StolenPhase steal = null;
+        for (StolenPhase s : stolenPhases) {
+            if (s.victim().equals(playerTurn) && s.victimTurn() == playerTurn.getTurn()
+                    && STEALABLE_PHASES.get(s.phaseIndex()).contains(phase)) {
+                steal = s;
+            }
+        }
+        if (steal == null) {
+            return;
+        }
+        stolenPhases.remove(steal);
+        if (!steal.thief().isInGame() || steal.thief().equals(playerTurn)) {
+            return;
+        }
+        phaseStolenFrom = playerTurn;
+        stolenPhaseSteps = STEALABLE_PHASES.get(steal.phaseIndex());
+        setPlayerTurn(steal.thief());
+        game.getGameLog().add(GameLogEntryType.PHASE, steal.thief() + " steals " + phaseStolenFrom + "'s "
+                + stolenPhaseLabel(steal.phaseIndex()) + ".");
+    }
+
+    private void endStolenPhase() {
+        if (phaseStolenFrom == null) {
+            return;
+        }
+        final Player victim = phaseStolenFrom;
+        phaseStolenFrom = null;
+        stolenPhaseSteps = null;
+        setPlayerTurn(victim);
+    }
+
+    private void expireStolenPhases(final Player endingTurn) {
+        stolenPhases.removeIf(s -> !s.victim().isInGame() || s.victimTurn() < s.victim().getTurn()
+                || (s.victim().equals(endingTurn) && s.victimTurn() == endingTurn.getTurn()));
+    }
+
+    public static String stolenPhaseLabel(final int idx) {
+        return switch (idx) {
+            case 0 -> "beginning phase";
+            case 1 -> "first main phase";
+            case 2 -> "combat phase";
+            case 3 -> "postcombat main phase";
+            default -> "ending phase";
+        };
+    }
+
+    /** For game copies (AI simulation, snapshots): carry over pending and in-progress steals. */
+    public final void copyStolenPhasesFrom(final PhaseHandler from, final java.util.function.Function<Player, Player> map) {
+        if (from == this) {
+            return;
+        }
+        stolenPhases.clear();
+        for (StolenPhase s : from.stolenPhases) {
+            stolenPhases.add(new StolenPhase(map.apply(s.thief()), map.apply(s.victim()), s.victimTurn(), s.phaseIndex()));
+        }
+        phaseStolenFrom = from.phaseStolenFrom == null ? null : map.apply(from.phaseStolenFrom);
+        stolenPhaseSteps = from.stolenPhaseSteps;
     }
 
     private void handleMultiplayerEffects() {

@@ -8,6 +8,7 @@ import forge.game.card.Card;
 import forge.game.card.CardCollectionView;
 import forge.game.combat.CombatUtil;
 import forge.game.cost.Cost;
+import forge.game.keyword.Keyword;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
 import forge.game.spellability.AbilitySub;
@@ -76,6 +77,23 @@ public class ChooseGenericAi extends SpellAbilityAi {
             }
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay); // perhaps the opponent(s) had Sigarda, Heron's Grace or another effect giving hexproof in play, still play the creature as 6/6
         }
+        if ("StealPhase".equals(sa.getParam("AILogic")) && sa.usesTargeting()) {
+            // Clocknapper: rob the weakest opponent, whose next turn is where the stolen phase happens
+            sa.resetTargets();
+            final List<Player> opps = Lists.newArrayList(aiPlayer.getOpponents());
+            opps.sort((a, b) -> Integer.compare(a.getLife(), b.getLife()));
+            for (final Player p : opps) {
+                if (p.canBeTargetedBy(sa)) {
+                    sa.getTargets().add(p);
+                    return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+                }
+            }
+            if (mandatory && aiPlayer.canBeTargetedBy(sa)) {
+                sa.getTargets().add(aiPlayer); // stealing from yourself changes nothing
+                return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+            }
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
         if (ComputerUtilAbility.getAbilitySourceName(sa).equals("Deathmist Raptor")) {
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
@@ -105,6 +123,8 @@ public class ChooseGenericAi extends SpellAbilityAi {
                 return Aggregates.random(spells.subList(1, spells.size()));
             }
             return spells.get(0);
+        } else if ("StealPhase".equals(logic)) {
+            return chooseStolenPhase(player, sa, spells);
         } else if ("HinderAttacker".equals(logic)) {
             // Dumb Ass: the creature's own controller doesn't decide whether it attacks - an
             // opponent does, and wants whichever answer hurts that controller more. Forcing the
@@ -320,5 +340,36 @@ public class ChooseGenericAi extends SpellAbilityAi {
             return ComputerUtil.aiLifeInDanger(player, false, 0) ? spells.get(0) : spells.get(1);
         }
         return spells.get(0);   // return first choice if no logic found
+    }
+    /**
+     * Clocknapper. The beginning phase is the default: the AI untaps and draws while the victim doesn't. Combat
+     * wins only when what can attack in it looks lethal - nothing untaps before then, so that's creatures untapped
+     * and unsick now that won't be tapped attacking this turn (the sickness flag only clears on the AI's own turn).
+     */
+    private static SpellAbility chooseStolenPhase(final Player ai, final SpellAbility sa, final List<SpellAbility> spells) {
+        SpellAbility beginning = spells.get(0);
+        SpellAbility combat = null;
+        for (final SpellAbility sp : spells) {
+            if ("Beginning".equals(sp.getParam("Phase"))) {
+                beginning = sp;
+            } else if ("Combat".equals(sp.getParam("Phase"))) {
+                combat = sp;
+            }
+        }
+        final Player victim = sa.getTargets().getFirstTargetedPlayer();
+        if (combat == null || victim == null || !ai.isOpponentOf(victim)) {
+            return beginning;
+        }
+        final Game game = ai.getGame();
+        final boolean attacksStillToCome = game.getPhaseHandler().isPlayerTurn(ai)
+                && game.getPhaseHandler().getPhase().isBefore(PhaseType.COMBAT_DECLARE_ATTACKERS);
+        int power = 0;
+        for (final Card c : ai.getCreaturesInPlay()) {
+            if (c.isTapped() || c.isSick() || (attacksStillToCome && !c.hasKeyword(Keyword.VIGILANCE))) {
+                continue;
+            }
+            power += ComputerUtilCombat.damageIfUnblocked(c, victim, null, false);
+        }
+        return power >= victim.getLife() ? combat : beginning;
     }
 }

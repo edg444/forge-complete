@@ -134,7 +134,24 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ## Log
 
-### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble
+### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper
+
+- **Clocknapper** (ust/29): phase stealing. `DB$ StealPhase | Phase$ Beginning|Main1|Combat|Main2|Ending`
+  (`PhaseHandler.stealPhase`) marks that phase of the victim's next turn; as it begins the thief becomes
+  the active player (`getPlayerTurn()`), and the victim gets it back when it ends. Everything keyed off
+  the active player follows from that, matching the Unstable rulings: the thief untaps, gets the upkeep
+  triggers and draws; gets sorcery timing; attacks its opponents while the victim can only block; and
+  discards to hand size in a stolen cleanup. `getActualTurnPlayer()` says whose turn it really is — the
+  next turn, extra turns and turn counts use it, so turn order never shifts.
+  - Only the first instance of the phase is stolen (an additional combat after it isn't). A later steal
+    of the same phase from the same turn replaces an earlier one; stealing from yourself does nothing; a
+    skipped phase fizzles the steal; it expires once that turn ends. "End the turn" during a stolen
+    phase hands the cleanup back (or starts a stolen ending phase there). Logged as "X steals Y's …".
+  - Carried through `GameSnapshot` and the AI `GameCopier`.
+  - Card: a GenericChoice of the five phases (`Defined$ You` so the controller chooses, the target on it).
+    AI (`AILogic$ StealPhase`): targets the lowest-life opponent; steals combat when its untapped,
+    unsick creatures that won't attack this turn deal lethal, otherwise the beginning phase.
+    `StealPhaseTest` (6). Suite: 764 run, 0 failed, 6 skipped.
 
 - **Blurry Beeble** (ust/27): Blurry is honor system. As it's cast (static `SpellCast` trigger), every
   player — the caster too, since a control change can make them the defending player — answers

@@ -122,6 +122,7 @@ public class GameCopier {
         PhaseHandler origPhaseHandler = origGame.getPhaseHandler();
         Player newPlayerTurn = playerMap.get(origPhaseHandler.getPlayerTurn());
         newGame.getPhaseHandler().devModeSet(origPhaseHandler.getPhase(), newPlayerTurn, origPhaseHandler.getTurn());
+        newGame.getPhaseHandler().copyStolenPhasesFrom(origPhaseHandler, playerMap::get);
         newGame.getTriggerHandler().suppressMode(TriggerType.ChangesZone);
         for (Player p : newGame.getPlayers()) {
             ((PlayerZoneBattlefield) p.getZone(ZoneType.Battlefield)).setTriggers(false);
