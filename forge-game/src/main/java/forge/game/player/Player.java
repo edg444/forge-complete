@@ -1807,7 +1807,10 @@ public class Player extends GameEntity implements Comparable<Player> {
             }
 
             final boolean mayPlay = landSa == null ? !land.mayPlay(this).isEmpty() : landSa.getMayPlay() != null;
-            if (land.getOwner() != this && !mayPlay) {
+            // the hand it's in, not its owner (Five-Finger Discount puts cards into another player's hand)
+            final Zone landZone = game.getZoneOf(land);
+            final Player holder = landZone != null && landZone.getPlayer() != null ? landZone.getPlayer() : land.getOwner();
+            if (holder != this && !mayPlay) {
                 return false;
             }
 

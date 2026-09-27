@@ -134,7 +134,19 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ## Log
 
-### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective
+### Unreleased — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount
+
+- **Five-Finger Discount** (ust/33): a card in another player's hand. ChangeZone `HandOf$ <player>` puts
+  it into that player's hand without changing its owner (unlike `GainOwnership`, which Last-Minute
+  Chopping and Gifts Given use — the Unstable rulings say ownership stays put here). While it's there
+  the holder controls it, so they see it and the owner doesn't; any later zone change clears that, so it
+  dies into, is bounced to, or is shuffled into its owner's zones.
+  - Casting from hand and playing lands now check whose hand the card is in rather than its owner
+    (`SpellAbilityRestriction.zoneHolder`, `Player.canPlayLand`) — identical for every other card.
+  - "Any color the next time you cast that card": a `ManaConvert` effect with `ForgetOnMoved$ Hand`,
+    which lasts through paying for the cast and ends when the cast is done.
+  - `FiveFingerDiscountTest` (3), including the AI casting a stolen Shivan Dragon off six Islands.
+    Suite: 769 run, 0 failed, 6 skipped.
 
 - **Defective Detective** (ust/32): the person outside the game is simulated. New ChooseCard
   `AtRandom$ ThreatWeighted` picks at random with weight = impact², so bigger cards are clearly likelier

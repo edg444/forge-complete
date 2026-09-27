@@ -1,0 +1,11 @@
+Name:Five-Finger Discount
+ManaCost:4 U U
+Types:Sorcery
+# Ownership doesn't change (Unstable rulings): HandOf$ puts it into your hand as its owner's card, so if it
+# dies, is bounced or is shuffled away it goes to its owner's graveyard, hand or library.
+A:SP$ ChangeZone | ValidTgts$ Permanent.nonLand | TgtPrompt$ Select target nonland permanent | Origin$ Battlefield | Destination$ Hand | HandOf$ You | RememberChanged$ True | SubAbility$ DBEffect | SpellDescription$ Put target nonland permanent into your hand. You may spend mana as though it were mana of any color the next time you cast that card.
+# forgotten once it's cast, or once it leaves your hand any other way (then it's a new object)
+SVar:DBEffect:DB$ Effect | RememberObjects$ Remembered | StaticAbilities$ SpendAnyColor | Duration$ Permanent | ForgetOnMoved$ Hand | SubAbility$ DBCleanup
+SVar:SpendAnyColor:Mode$ ManaConvert | ValidPlayer$ You | ValidCard$ Card.IsRemembered | ValidSA$ Spell | ManaConversion$ AnyType->AnyColor | Description$ You may spend mana as though it were mana of any color the next time you cast that card.
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Put target nonland permanent into your hand. You may spend mana as though it were mana of any color the next time you cast that card.
