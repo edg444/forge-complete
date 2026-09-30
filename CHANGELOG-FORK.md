@@ -184,6 +184,47 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
   - Merges: resolve an `Oracle:` conflict by taking upstream's side, then
     `node _tools/oracle-audit/oracle-drift.js <oracle-cards.jsonl.gz> --apply` (it replaces
     `sync-oracle-field.js`, which only knew self-references).
+- **In-game ability text brought to current Oracle** (2026-09-30). Measured directly this time: every
+  face of every card is rendered through the engine (`Card.getAbilityText`, 34,870 faces) and compared with
+  its `Oracle:` text sentence by sentence. Line breaks, ability order and which keywords share a line are
+  print layout and don't count. **29,592 faces matched at the start; 33,931 (97.3%) match now.**
+  - *Engine* (one change, many cards): a card referring to itself in a cost or an "enters with" line says
+    "this creature" / "this artifact" / "this Equipment" / "this card" as Oracle does
+    (`CardFactoryUtil.getSelfReferenceNoun`, which matches 2,547 of the 2,555 such references in Scryfall's
+    Oracle). Where a script can't tell two wordings apart - "Remove X +1/+1 counters" vs "Remove any number
+    of storage counters", or a digital-only card that still prints its name - the card's own `Oracle:`
+    text picks (`SpellAbility.withSelfReferences`). `Lang.getPlural` uses each type's own plural and leaves
+    already-plural phrases alone (no more "creatureses", "Elfs", "Merfolks"). Alchemy cards say "Orcish
+    Bowmasters", not "A-Orcish Bowmasters", in their own text. Two protections or hexproofs join
+    ("protection from white and from blue"). Periods on "Adapt 1.", "Monstrosity 4.", "Buyback—Sacrifice a
+    land."; "Mill a card"; "0:" loyalty; "Living weapon", "Power-up", "Web-slinging", "Start your engines!";
+    Aftermath printed once; NICKNAME filled in on keyword lines.
+  - *Scripts*: about 2,100 display fields reworded (`SpellDescription$` and the like, and the description
+    part of `K:` lines). Template-only edits were applied automatically; everything else was read first, and
+    checked against the script where a rules-bearing word changed. Every rewritten line was verified to
+    change no parameter but display ones.
+  - **d20 tables were broken by this fork and are restored.** An earlier round (`fix-vert.js`, 2026-08) took
+    the scripts' `VERT` placeholder for corruption and replaced it with a literal `|`, which is the script's
+    param separator, so 43 cards showed their result ranges with no result text. `VERT` is back (114 rows;
+    counts match upstream file by file). `,,,` is a placeholder too (a line break in the card panel).
+  - *Script bugs the review exposed*, each confirmed on Scryfall: Corpse Traders, Pilfering Imp, Dread Rider
+    and Demonic Pact's discard could target any player (Oracle: opponent). Blood Speaker, Roots of Life and
+    Timeless Witness were optional (Oracle has no "you may"). Prayer of Binding and Struggle for Skemfar's
+    fight had to target (Oracle: up to one). Resounding Wave's cycle trigger and Twigwalker allowed fewer
+    than two targets. Mercenary Informer could target tokens. Vivien Reid's +1 didn't randomize the bottom.
+    Blast from the Past couldn't hit planeswalkers.
+  - *Mistakes made and repaired along the way*: the text fixer had three flaws - a one-character mis-cut (12
+    lines lost a comma or dash), re-inserting text when run on a stale render (20 doubled words), and
+    matching a generic tail on the wrong ability (7 cards). All were found by an audit that checks every
+    new sentence against the card's Oracle text (`audit-edits.js`), repaired, and guarded against.
+  - *Not done* (939 faces): text Forge never renders (Conspiracy draft text, ante and deck-building lines),
+    sub-abilities with no description, sentences Oracle and the script split differently, and one-off
+    keyword wordings. `render-review.json` lists the open sentences.
+  - Tooling in `_tools/oracle-audit/`: `RenderAbilityTextDump.java` + `rerender.sh` (render and diff),
+    `render-diff.js`, `render-attribute.js`, `render-fix.js`, `render-triage.js`, `regress.js`,
+    `audit-edits.js`, `restore-vert.js`. Always re-render before applying a batch.
+  - Tests: `GameSimulationTest` and `CountersPutAiTest` find abilities by their new text. Suite: 808 run,
+    0 failed, 6 skipped.
 
 ### 2026-09-27 (deployed: desktop, Android, GitHub) — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician; Magic Word; More or Less; S.N.E.A.K. Dispatcher; Socketed Sprocketer; Spy Eye; Very Cryptic Command; Wall of Fortune
 
