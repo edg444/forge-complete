@@ -1,7 +1,7 @@
 Name:Outpace Oblivion
 ManaCost:2 R
 Types:Enchantment
-K:Start your engines
+K:Start your engines!
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDamage | TriggerDescription$ When this enchantment enters, it deals 5 damage to up to one target creature or planeswalker.
 SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Creature,Planeswalker | TgtPrompt$ Select up to one target creature or planeswalker | TargetMin$ 0 | TargetMax$ 1 | NumDmg$ 5
 A:AB$ DealDamage | Cost$ 2 Sac<1/CARDNAME/this enchantment> | Defined$ Player.!MaxSpeed | NumDmg$ 2 | StackDescription$ SpellDescription | SpellDescription$ It deals 2 damage to each player who doesn't have max speed.

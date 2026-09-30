@@ -2,7 +2,7 @@ Name:Brine Comber
 ManaCost:1 W U
 Types:Creature Spirit
 PT:1/1
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When CARDNAME enters or becomes the target of an Aura spell, create a 1/1 white Spirit creature token with flying.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ Whenever this creature enters or becomes the target of an Aura spell, create a 1/1 white Spirit creature token with flying.
 T:Mode$ BecomesTarget | ValidTarget$ Card.Self | ValidSource$ Spell.Aura | TriggerZones$ Battlefield | Execute$ TrigToken | Secondary$ True | TriggerDescription$ When CARDNAME enters or becomes the target of an Aura spell, create a 1/1 white Spirit creature token with flying.
 SVar:TrigToken:DB$ Token | TokenScript$ w_1_1_spirit_flying
 K:Disturb:W U

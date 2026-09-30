@@ -4,6 +4,6 @@ Types:Creature Nightmare Horse
 PT:3/3
 S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't block.
 K:Escape:4 B ExileFromGrave<3/Card.Other>
-K:etbCounter:P1P1:2:ValidCard$ Card.Self+escaped:CARDNAME escapes with two +1/+1 counters on it.
+K:etbCounter:P1P1:2:ValidCard$ Card.Self+escaped:This creature escapes with two +1/+1 counters on it.
 DeckHas:Ability$Counters
 Oracle:This creature can't block.\nEscape—{4}{B}, Exile three other cards from your graveyard. (You may cast this card from your graveyard for its escape cost.)\nThis creature escapes with two +1/+1 counters on it.

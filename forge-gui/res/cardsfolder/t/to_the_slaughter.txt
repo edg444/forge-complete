@@ -1,7 +1,7 @@
 Name:To the Slaughter
 ManaCost:2 B
 Types:Instant
-A:SP$ StoreSVar | SVar$ XDelirium | Type$ Count | Expression$ Delirium.1.0 | SubAbility$ DBSacrifice | StackDescription$ SpellDescription | SpellDescription$ Target player sacrifices a creature or planeswalker. Delirium — If there are four or more card types among cards in your graveyard, instead that player sacrifices a creature and a planeswalker.
+A:SP$ StoreSVar | SVar$ XDelirium | Type$ Count | Expression$ Delirium.1.0 | SubAbility$ DBSacrifice | StackDescription$ SpellDescription | SpellDescription$ Target player sacrifices a creature or planeswalker of their choice. Delirium — If there are four or more card types among cards in your graveyard, instead that player sacrifices a creature and a planeswalker of their choice.
 SVar:DBSacrifice:DB$ Sacrifice | ValidTgts$ Player | SacValid$ Creature,Planeswalker | ConditionCheckSVar$ XDelirium | ConditionSVarCompare$ EQ0 | SubAbility$ DBSacrificeBoth | StackDescription$ None
 SVar:DBSacrificeBoth:DB$ Sacrifice | Defined$ Targeted | SacValid$ Creature & Planeswalker | SacEachValid$ True | ConditionCheckSVar$ XDelirium | StackDescription$ None
 SVar:XDelirium:Number$0

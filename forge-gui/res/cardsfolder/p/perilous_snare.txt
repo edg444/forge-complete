@@ -1,7 +1,7 @@
 Name:Perilous Snare
 ManaCost:2 W
 Types:Artifact
-K:Start your engines
+K:Start your engines!
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigExile | TriggerDescription$ When this artifact enters, exile target nonland permanent an opponent controls until this artifact leaves the battlefield.
 SVar:TrigExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | ValidTgts$ Permanent.nonLand+OppCtrl | TgtPrompt$ Select target nonland permanent an opponent controls | Duration$ UntilHostLeavesPlay
 S:Mode$ Continuous | AffectedDefined$ Self | Condition$ MaxSpeed | AddAbility$ ABPutCounter | Description$ Max speed — {T}: Put a +1/+1 counter on target creature or Vehicle you control. Activate only as a sorcery.

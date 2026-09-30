@@ -2,5 +2,5 @@ Name:Everdawn Champion
 ManaCost:1 W W
 Types:Creature Human Soldier
 PT:2/2
-K:Prevent all combat damage that would be dealt to CARDNAME.
+K:Prevent all combat damage that would be dealt to this creature.
 Oracle:Prevent all combat damage that would be dealt to this creature.

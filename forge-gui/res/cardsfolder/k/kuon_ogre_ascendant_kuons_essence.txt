@@ -14,6 +14,6 @@ Name:Kuon's Essence
 ManaCost:B B B
 Colors:black
 Types:Legendary Enchantment
-T:Mode$ Phase | Phase$ Upkeep | TriggerZones$ Battlefield | Execute$ TrigSac | TriggerDescription$ At the beginning of each player's upkeep, that player sacrifices a creature.
+T:Mode$ Phase | Phase$ Upkeep | TriggerZones$ Battlefield | Execute$ TrigSac | TriggerDescription$ At the beginning of each player's upkeep, that player sacrifices a creature of their choice.
 SVar:TrigSac:DB$ Sacrifice | Defined$ TriggeredPlayer | SacValid$ Creature
 Oracle:At the beginning of each player's upkeep, that player sacrifices a creature of their choice.

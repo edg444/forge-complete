@@ -14,6 +14,6 @@ ManaCost:no cost
 Types:Creature Eldrazi Werewolf
 PT:4/6
 K:Vigilance
-K:CARDNAME must be blocked if able.
+K:This creature must be blocked if able.
 S:Mode$ Continuous | AffectedDefined$ Self | CanBlockAmount$ 1 | Description$ This creature can block an additional creature each combat.
 Oracle:Vigilance\nThis creature must be blocked if able.\nThis creature can block an additional creature each combat.

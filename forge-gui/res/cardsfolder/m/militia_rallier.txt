@@ -2,7 +2,7 @@ Name:Militia Rallier
 ManaCost:2 W
 Types:Creature Human Soldier
 PT:3/3
-K:CARDNAME can't attack alone.
+K:This creature can't attack alone.
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigUntap | TriggerDescription$ Whenever this creature attacks, untap target creature.
 SVar:TrigUntap:DB$ Untap | ValidTgts$ Creature | TgtPrompt$ Select target creature
 SVar:HasAttackEffect:TRUE

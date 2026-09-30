@@ -3,7 +3,7 @@ Variant:UniversesWithin:FlavorName:Carriage of Dreams
 ManaCost:3
 Types:Artifact Vehicle
 PT:4/3
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigImmediateTrig | TriggerZones$ Battlefield | TriggerDescription$ When this Vehicle attacks, you may pay {U}. When you do, another target attacking creature can't be blocked this turn.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigImmediateTrig | TriggerZones$ Battlefield | TriggerDescription$ Whenever this Vehicle attacks, you may pay {U}. When you do, another target attacking creature can't be blocked this turn.
 SVar:TrigImmediateTrig:AB$ ImmediateTrigger | Cost$ U | Execute$ TrigUnblockable | TriggerDescription$ When you do, another target attacking creature can't be blocked this turn.
 SVar:TrigUnblockable:DB$ Effect | ValidTgts$ Creature.Other+attacking | TgtPrompt$ Select another target attacking creature | RememberObjects$ Targeted | ExileOnMoved$ Battlefield | StaticAbilities$ Unblockable | AILogic$ Pump
 SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | Description$ This creature can't be blocked this turn.

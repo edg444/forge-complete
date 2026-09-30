@@ -8,7 +8,7 @@ SVar:X:TargetedPlayer$CardsInHand/HalfDown
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigMill | TriggerDescription$ Whenever NICKNAME attacks, defending player mills half their library, rounded down.
 SVar:TrigMill:DB$ Mill | Defined$ TriggeredDefendingPlayer | NumCards$ Y
 SVar:Y:TriggeredDefendingPlayer$CardsInLibrary/HalfDown
-T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Battlefield | Destination$ Graveyard | Execute$ TrigSacrifice | TriggerDescription$ When NICKNAME dies, target opponent sacrifices half the nonland permanents they control, rounded down.
+T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Battlefield | Destination$ Graveyard | Execute$ TrigSacrifice | TriggerDescription$ When NICKNAME dies, target opponent sacrifices half the nonland permanents they control of their choice, rounded down.
 SVar:TrigSacrifice:DB$ Sacrifice | ValidTgts$ Opponent | Amount$ Z | SacValid$ Permanent.nonLand | Mode$ TgtChoose
 SVar:Z:Count$Valid Permanent.nonLand+TargetedPlayerCtrl/HalfDown
 SVar:HasAttackEffect:TRUE

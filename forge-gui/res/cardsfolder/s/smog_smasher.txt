@@ -3,7 +3,7 @@ ManaCost:4 R
 Types:Creature Mutant Berserker
 PT:4/4
 K:Menace
-K:Start your engines
+K:Start your engines!
 T:Mode$ DamageDoneOnce | CombatDamage$ True | ValidSource$ Creature.YouCtrl | TriggerZones$ Battlefield | ValidTarget$ Player | Execute$ TrigConjure | TriggerDescription$ Whenever one or more creatures you control deal combat damage to a player, conjure a duplicate of target nontoken creature into exile.
 SVar:TrigConjure:DB$ MakeCard | Conjure$ True | TgtPrompt$ Select another target nontoken creature | DefinedName$ Targeted | ValidTgts$ Creature.!token | Zone$ Exile | ImprintMade$ True
 S:Mode$ Continuous | AffectedDefined$ Self | Condition$ MaxSpeed | AddTrigger$ PhaseTrig | Description$ Max speed — At the beginning of combat on your turn, put all cards exiled with this creature onto the battlefield. They gain haste. Sacrifice them at the beginning of the next end step.

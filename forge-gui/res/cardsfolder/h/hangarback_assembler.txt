@@ -1,7 +1,7 @@
 Name:Hangarback Assembler
 ManaCost:1 W
 Types:Artifact
-K:Start your engines
+K:Start your engines!
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigConjure | TriggerDescription$ When this artifact enters, conjure a card named Hangarback Walker onto the battlefield, then put a +1/+1 counter on it.
 SVar:TrigConjure:DB$ MakeCard | Conjure$ True | Name$ Hangarback Walker | Zone$ Battlefield | RememberMade$ True | SubAbility$ DBPutCounter
 SVar:DBPutCounter:DB$ PutCounter | Defined$ Remembered | CounterType$ P1P1 | CounterNum$ 1 | SubAbility$ DBCleanup

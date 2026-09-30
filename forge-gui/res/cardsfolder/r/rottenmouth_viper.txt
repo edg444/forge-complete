@@ -6,7 +6,7 @@ A:SP$ PermanentCreature | Cost$ 5 B Sac<X/Permanent.nonLand/nonland permanent> |
 S:Mode$ ReduceCost | ValidCard$ Card.Self | Type$ Spell | Amount$ X | EffectZone$ All | Relative$ True
 SVar:X:Count$xPaid
 SVar:AIPreference:SacCost$Artifact.token+nonLegendary,Creature.token+powerLE2+toughnessLE2,Creature.cmcLE2+powerLE2+toughnessLE2
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPutCounter | TriggerDescription$ Whenever this creature enters or attacks, put a blight counter on it. Then for each blight counter on it, each opponent loses 4 life unless that player sacrifices a nonland permanent or discards a card.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPutCounter | TriggerDescription$ Whenever this creature enters or attacks, put a blight counter on it. Then for each blight counter on it, each opponent loses 4 life unless that player sacrifices a nonland permanent of their choice or discards a card.
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPutCounter | Secondary$ True | TriggerDescription$ Whenever this creature enters or attacks, put a blight counter on it. Then for each blight counter on it, each opponent loses 4 life unless that player sacrifices a nonland permanent or discards a card.
 SVar:TrigPutCounter:DB$ PutCounter | CounterType$ BLIGHT | CounterNum$ 1 | SubAbility$ DBRepeat
 SVar:DBRepeat:DB$ Repeat | MaxRepeat$ Y | RepeatSubAbility$ RepeatTorment | AILogic$ MaxY | StackDescription$ Each opponent loses 4 life unless that player sacrifices a nonland permanent or discards a card.

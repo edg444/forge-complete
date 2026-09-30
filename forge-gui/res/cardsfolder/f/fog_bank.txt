@@ -4,5 +4,5 @@ Types:Creature Wall
 PT:0/2
 K:Defender
 K:Flying
-K:Prevent all combat damage that would be dealt to and dealt by CARDNAME.
+K:Prevent all combat damage that would be dealt to and dealt by this creature.
 Oracle:Defender (This creature can't attack.)\nFlying\nPrevent all combat damage that would be dealt to and dealt by this creature.

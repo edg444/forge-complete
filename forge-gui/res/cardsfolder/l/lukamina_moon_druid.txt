@@ -57,7 +57,7 @@ ManaCost:2 R G
 Types:Legendary Creature Wolf Druid
 PT:4/4
 K:Menace
-T:Mode$ Specializes | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When this creature specializes or attacks, create a 2/2 green Wolf creature token.
+T:Mode$ Specializes | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ Whenever this creature specializes or attacks, create a 2/2 green Wolf creature token.
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigToken | Secondary$ True | TriggerDescription$ Whenever this creature specializes or attacks, create a 2/2 green Wolf creature token.
 SVar:TrigToken:DB$ Token | TokenScript$ g_2_2_wolf
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Battlefield | Destination$ Graveyard | Execute$ TrigUnspecialize | TriggerDescription$ When NICKNAME dies, it unspecializes. If it unspecializes this way, return it to the battlefield tapped.

@@ -3,7 +3,7 @@ ManaCost:1 G U
 Types:Creature Plant Mutant
 PT:0/0
 K:Graft:5
-K:CARDNAME can't attack or block.
+K:This creature can't attack or block.
 DeckHas:Ability$Counters
 DeckNeeds:Ability$Counters
 Oracle:Graft 5 (This creature enters with five +1/+1 counters on it. Whenever another creature enters, you may move a +1/+1 counter from this creature onto it.)\nThis creature can't attack or block.

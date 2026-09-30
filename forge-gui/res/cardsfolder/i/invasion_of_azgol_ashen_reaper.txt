@@ -2,7 +2,7 @@ Name:Invasion of Azgol
 ManaCost:B R
 Types:Battle Siege
 Defense:4
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSacrifice | TriggerDescription$ When this Siege enters, target player sacrifices a creature or planeswalker and loses 1 life.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSacrifice | TriggerDescription$ When this Siege enters, target player sacrifices a creature or planeswalker of their choice and loses 1 life.
 SVar:TrigSacrifice:DB$ Sacrifice | ValidTgts$ Player | SacValid$ Creature,Planeswalker | SubAbility$ DBLoseLife
 SVar:DBLoseLife:DB$ LoseLife | Defined$ TargetedPlayer | LifeAmount$ 1
 DeckHas:Ability$Sacrifice|Counters

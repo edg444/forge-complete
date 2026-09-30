@@ -1,7 +1,7 @@
 Name:Kickoff Celebrations
 ManaCost:1 R
 Types:Enchantment
-K:Start your engines
+K:Start your engines!
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When this enchantment enters, you may discard a card. If you do, draw two cards.
 SVar:TrigDraw:AB$ Draw | Cost$ Discard<1/Card> | NumCards$ 2
 S:Mode$ Continuous | AffectedDefined$ Self | Condition$ MaxSpeed | AddAbility$ ABPumpAll | Description$ Max speed — Sacrifice this enchantment: Creatures and Vehicles you control gain haste until end of turn.

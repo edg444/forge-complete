@@ -13,7 +13,7 @@ ManaCost:no cost
 Colors:black,red
 Types:Creature Phyrexian Devil
 PT:3/2
-T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ When this creature dies, each opponent sacrifices an artifact or creature.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ When this creature dies, each opponent sacrifices an artifact or creature of their choice.
 SVar:TrigSac:DB$ Sacrifice | Defined$ Opponent | SacValid$ Creature,Artifact
 SVar:SacMe:2
 DeckHas:Ability$Sacrifice

@@ -1,7 +1,7 @@
 Name:Demonic Attorney
 ManaCost:1 B B
 Types:Sorcery
-K:Remove CARDNAME from your deck before playing if you're not playing for ante.
+K:Remove this card from your deck before playing if you're not playing for ante.
 A:SP$ Dig | Defined$ Player | DigNum$ 1 | ChangeNum$ All | DestinationZone$ Ante | SpellDescription$ Each player antes the top card of their library.
 AI:RemoveDeck:All
 AI:RemoveDeck:Random

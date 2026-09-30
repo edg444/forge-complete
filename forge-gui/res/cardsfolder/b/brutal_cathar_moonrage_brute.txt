@@ -2,7 +2,7 @@ Name:Brutal Cathar
 ManaCost:2 W
 Types:Creature Human Soldier Werewolf
 PT:2/2
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigExile | TriggerDescription$ When this creature enters or transforms into CARDNAME, exile target creature an opponent controls until this creature leaves the battlefield.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigExile | TriggerDescription$ Whenever this creature enters or transforms into CARDNAME, exile target creature an opponent controls until this creature leaves the battlefield.
 T:Mode$ Transformed | ValidCard$ Card.Self | Execute$ TrigExile | Secondary$ True | TriggerDescription$ When this creature enters or transforms into CARDNAME, exile target creature an opponent controls until this creature leaves the battlefield.
 SVar:TrigExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls | Duration$ UntilHostLeavesPlay
 K:Daybound

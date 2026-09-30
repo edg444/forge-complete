@@ -1,7 +1,7 @@
 Name:Avishkar Raceway
 ManaCost:no cost
 Types:Land
-K:Start your engines
+K:Start your engines!
 A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
 S:Mode$ Continuous | CharacteristicDefining$ True | Affected$ Card.Self | Condition$ MaxSpeed | AddAbility$ ABDraw | Description$ Max speed — {3}, {T}, Discard a card: Draw a card.
 SVar:ABDraw:AB$ Draw | PrecostDesc$ Max speed — | Cost$ 3 T Discard<1/Card> | Secondary$ True | SpellDescription$ Draw a card.

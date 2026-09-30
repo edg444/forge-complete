@@ -16,6 +16,6 @@ ManaCost:no cost
 Types:Creature Eldrazi Vampire
 PT:6/5
 K:Flying
-T:Mode$ Transformed | ValidCard$ Card.Self | Execute$ TrigSacrifice | TriggerDescription$ When this creature transforms into CARDNAME, target opponent sacrifices three creatures.
+T:Mode$ Transformed | ValidCard$ Card.Self | Execute$ TrigSacrifice | TriggerDescription$ When this creature transforms into CARDNAME, target opponent sacrifices three creatures of their choice.
 SVar:TrigSacrifice:DB$ Sacrifice | ValidTgts$ Opponent | SacValid$ Creature | Amount$ 3
 Oracle:Flying\nWhen this creature transforms into Abolisher of Bloodlines, target opponent sacrifices three creatures of their choice.

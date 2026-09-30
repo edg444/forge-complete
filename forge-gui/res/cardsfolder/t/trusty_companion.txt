@@ -3,5 +3,5 @@ ManaCost:1 W
 Types:Creature Hyena
 PT:3/2
 K:Vigilance
-K:CARDNAME can't attack alone.
+K:This creature can't attack alone.
 Oracle:Vigilance\nThis creature can't attack alone.

@@ -2,5 +2,5 @@ Name:Bonded Horncrest
 ManaCost:3 R
 Types:Creature Dinosaur
 PT:5/5
-K:CARDNAME can't attack or block alone.
+K:This creature can't attack or block alone.
 Oracle:This creature can't attack or block alone.
