@@ -2953,7 +2953,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
             while (result.endsWith("\r\n")) {
                 result = result.substring(0, result.length() - 2);
             }
-            return TextUtil.fastReplace(result, "CARDNAME", CardTranslation.getTranslatedName(state.getName()));
+            result = TextUtil.fastReplace(result, "CARDNAME", CardTranslation.getTranslatedName(state.getName()));
+            return TextUtil.fastReplace(result, "NICKNAME", Lang.getInstance().getNickName(CardTranslation.getTranslatedName(state.getName())));
         }
 
         if (type.hasSubtype("Class")) {
@@ -3236,6 +3237,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         }
 
         String desc = TextUtil.fastReplace(sb.toString(), "CARDNAME", CardTranslation.getTranslatedName(state.getName()));
+        // keyword-line descriptions (K:etbCounter's, a ward cost) use the short name too
+        desc = TextUtil.fastReplace(desc, "NICKNAME", Lang.getInstance().getNickName(CardTranslation.getTranslatedName(state.getName())));
         if (getEffectSource() != null) {
             desc = TextUtil.fastReplace(desc, "EFFECTSOURCE", getEffectSource().getName());
         }
