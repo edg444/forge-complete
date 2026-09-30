@@ -4204,11 +4204,13 @@ public class CardFactoryUtil {
     /**
      * Capital Offense - capital letters in a card's rules text. Reminder text and flavor text are
      * out (the card says so); ability words and every capital, not just sentence openers, are in
-     * (Unstable rulings). Mana and tap symbols print as icons rather than letters, so they don't count.
+     * (Unstable rulings). Mana and tap symbols print as icons rather than letters, so they don't count,
+     * and neither does Forge's own "STATION 8+" line, which Oracle writes as just "8+ |".
      */
     public static int getCapitalLetterCount(final Card card) {
         final String rules = StringUtils.defaultString(card.getOracleText()).replace("\\n", "\n")
-                .replaceAll("\\([^)]*\\)", " ").replaceAll("\\{[^}]*\\}", " ");
+                .replaceAll("\\([^)]*\\)", " ").replaceAll("\\{[^}]*\\}", " ")
+                .replaceAll("(?m)^STATION \\d+\\+$", " ");
         int count = 0;
         for (int i = 0; i < rules.length(); i++) {
             if (Character.isUpperCase(rules.charAt(i))) {

@@ -30,6 +30,9 @@ public class CapitalOffenseTest extends AITest {
         AssertJUnit.assertEquals(2, CardFactoryUtil.getCapitalLetterCount(addCard("Scythe Leopard", me)));
         AssertJUnit.assertEquals(0, CardFactoryUtil.getCapitalLetterCount(
                 addCardToZone("capital offense", me, ZoneType.Hand)));
+        // Oracle "When this Spacecraft ... Station (...) 8+ | Flying {1}{R}: This Spacecraft ..." - Forge's
+        // "STATION 8+" line isn't in it, which would make 13
+        AssertJUnit.assertEquals(6, CardFactoryUtil.getCapitalLetterCount(addCard("Debris Field Crusher", me)));
     }
 
     @Test

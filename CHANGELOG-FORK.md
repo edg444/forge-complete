@@ -141,10 +141,49 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
   reminder text and mana/tap symbols (printed as icons, not letters). Ability words and mid-sentence capitals
   count (Unstable rulings). AI: `PumpAi` now works out a target-dependent -X/-X (`SVar:X:Targeted...`) for
   each candidate and targets the best creature it kills. Before, X read as 0 or a guess before any target
-  was chosen. Also fixes Flunk's AI. Known limit: 512 of 34,891 `Oracle:` lines count differently from
-  Scryfall's current Oracle (e.g. Serra Angel `Flying, vigilance` vs `Flying`/`Vigilance`), the pending
-  other-drift Oracle sync. `CapitalOffenseTest` (3). Suite: 801 run, 0 failed, 6 skipped.
+  was chosen. Also fixes Flunk's AI. `CapitalOffenseTest` (3). Suite: 801 run, 0 failed, 6 skipped.
+  - The count skips Forge's own `STATION 8+` lines, which Oracle writes as `8+ |` (they'd add 7 capitals
+    per threshold). Now that `Oracle:` lines are synced (below), every card with an unambiguous Scryfall
+    text counts the same as Scryfall except Phila, Unsealed (kept on purpose).
 - **Big Boa Constrictor** (ust/51): already scripted upstream, checked against Scryfall, no change.
+- **`Oracle:` fields synced to current Scryfall Oracle** (bulk data of 2026-09-29): 2,035 lines in 1,999
+  scripts that still differed after the self-reference retemplate. 628 reminder text only, 55 keyword
+  line splits, 42 punctuation or line breaks, and 1,310 wording (242 of them WotC's "of their choice",
+  plus "enters" and "greatest" template changes, boons becoming "one-time boons" and so on).
+  - *Forge's house formats are kept*: loyalty abilities stay `[+1]:` / `[-2]:` (Scryfall `+1:` / `−2:`),
+    and a Station threshold stays its own `STATION 8+` line (Scryfall `8+ | `; d20 tables keep `15+ |`).
+    `_tools/oracle-audit/forge-format.js` does the conversion.
+  - *Left alone*: 11 names with more than one Scryfall text (B.F.M.'s halves, Everythingamajig and the other
+    Un variants, Cunning's Planechase theme card), Phila, Unsealed (the script implements one outcome of the
+    Unknown event; Scryfall prints both), and Khod, Etlan Shiis Envoy (playtest card printed before WotC
+    folded Cephalid into Octopus; the script rightly pumps Octopuses).
+  - *Verified*: every affected script was parsed with the real `CardRules` reader before and after, and
+    every public getter on the rules and each face compared, plus what each game-code reader of the text
+    derives (`CountersMoveEffect`'s counter kind, `SpellAbility`'s mana-spent checks, `hasReminderText`,
+    the "(Transforms" header, the renderer's "Level up" test, `DeckGeneratorBase`'s creature-type and
+    dual/fetch-land regexes). No card's rules changed except two color-identity fixes: **Fetching Garden**
+    (G/W) and **The Belligerent and Useless Island** (U) were colorless because their stored text lacked
+    the `({T}: Add ...)` line that Tundra-style lands have; Scryfall agrees with the new identities. A control
+    run including the Oracle getters flags every edit. Harness: `_tools/oracle-audit/OracleSyncHarness.java`.
+  - *Meant to follow the new text*: Punctuate (646 faces), capital offense (357), Lexivore line counts (111),
+    Duh's `hasReminderText` (387), the "refers to a kind of counter" check on 18 cards, deck-generator
+    type hints on 8, and four back faces now get the "(Transforms from ...)" header in play.
+  - *Script bugs the drift exposed*, each confirmed against Scryfall: **Dragonborn Immolator** pumped +2/+0
+    (Oracle +1/+0). **Obscura Polymorphist** could exile nothing (Oracle: "exile target creature").
+    **Charred Graverobber** escaped for {3}{B} (Oracle {3}{B}{B}). **Disciple of Perdition** could exile
+    your own graveyard and never made that player lose 1 life (the life loss wasn't chained). **Psychic
+    Whorl** could target you (Oracle: opponent). **Kodama of the West Tree** needed damage to an opponent
+    (Oracle: a player). **Mizzix, Replica Rider**'s copies were sacrificed at the next end step (Oracle:
+    your end step). **Verdant Dread** triggered on any player's Verdant Dread (Oracle: a permanent you
+    control). **The Forgotten Place** didn't enter tapped. **Gryffwing Cavalry** couldn't target itself
+    (Oracle drops "another"). **Supernatural Rescue** could enchant any creature (Oracle: creature you
+    control). Ability names corrected: Primaris Eliminator's Hyperfrag Round, Lychguard's Guardian
+    Protocols, Necron Overlord's Relentless March, Shard of the Void Dragon's Spear of the Void Dragon.
+    `OracleDriftFixesTest` (7); `TextBoxTest` now pins Shivan Dragon's current text. Suite: 808 run,
+    0 failed, 6 skipped.
+  - Merges: resolve an `Oracle:` conflict by taking upstream's side, then
+    `node _tools/oracle-audit/oracle-drift.js <oracle-cards.jsonl.gz> --apply` (it replaces
+    `sync-oracle-field.js`, which only knew self-references).
 
 ### 2026-09-27 (deployed: desktop, Android, GitHub) — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician; Magic Word; More or Less; S.N.E.A.K. Dispatcher; Socketed Sprocketer; Spy Eye; Very Cryptic Command; Wall of Fortune
 
@@ -489,9 +528,10 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     reward filters (`cardText` regexes) gain or lose some matches on 2,959 cards — mostly
     accidental own-name substring hits dropping out ("Rat" in "Wrath", "Cat" in "Catapult") and
     "this Enchantment"/"this Equipment" newly matching.
-  - The remaining 3,341 differing `Oracle:` fields have other wording drift and were left alone.
+  - The remaining 3,341 differing `Oracle:` fields have other wording drift and were left alone
+    (synced 2026-09-30, see that entry).
   - Merges: an upstream edit to one of these lines will now conflict. Take upstream's side of the
-    line, then re-run `_tools/oracle-audit/sync-oracle-field.js <oracle-cards.jsonl.gz> --apply`.
+    line, then re-run `_tools/oracle-audit/oracle-drift.js <oracle-cards.jsonl.gz> --apply`.
 - **Text-box readers now see paragraphs.** Stored Oracle text separates paragraphs with the script's
   literal two-character `\n`, not a real newline, but the text-box readers assumed real newlines:
   - *Lexivore / Frazzled Editor* (`CardFactoryUtil.getTextBoxLineCount`) split on `\r?\n`, so every
