@@ -147,8 +147,11 @@ public class RemoteClientGuiGame extends NetworkGuiGame implements IHasForgeLog 
      */
     private void syncAndSend(final ProtocolMethod method, final Object... args) {
         if (paused) { return; }
+        // if this gets provided with new object views while more updates got chained (e.g. revealing what got bounced):
+        // the client may not be quick enough to replace it in the EDT before this passes IO lookup, so take the safer route
+        boolean pendingZoneChange = !getForwarder().hasPendingZoneChange(args);
         updateGameView();
-        sender.send(method, args);
+        sender.send(method, pendingZoneChange, args);
     }
 
     /**
@@ -349,7 +352,9 @@ public class RemoteClientGuiGame extends NetworkGuiGame implements IHasForgeLog 
     }
 
     @Override
-    public void alertUser() { send(ProtocolMethod.alertUser); }
+    public void alertUser() {
+        send(ProtocolMethod.alertUser);
+    }
 
     @Override
     public void enableOverlay() {
@@ -374,11 +379,6 @@ public class RemoteClientGuiGame extends NetworkGuiGame implements IHasForgeLog 
     @Override
     public void hideManaPool(final PlayerView player) {
         send(ProtocolMethod.hideManaPool, player);
-    }
-
-    @Override
-    public void updateShards(Iterable<PlayerView> shardsUpdate) {
-        //mobile adventure local game only..
     }
 
     @Override
