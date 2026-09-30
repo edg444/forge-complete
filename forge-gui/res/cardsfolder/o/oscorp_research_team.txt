@@ -3,5 +3,5 @@ Variant:UniversesWithin:FlavorName:Pinnacle Research Team
 ManaCost:3 U
 Types:Creature Human Scientist
 PT:1/5
-A:AB$ Draw | Cost$ 6 U | NumCards$ 2 | SpellDescription$ Draw a card.
+A:AB$ Draw | Cost$ 6 U | NumCards$ 2 | SpellDescription$ Draw two cards.
 Oracle:{6}{U}: Draw two cards.

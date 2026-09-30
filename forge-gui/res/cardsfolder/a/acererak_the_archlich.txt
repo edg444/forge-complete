@@ -6,7 +6,7 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigBounce:DB$ ChangeZone | Origin$ Battlefield | Destination$ Hand | SubAbility$ DBVenture
 SVar:DBVenture:DB$ Venture
 SVar:X:DungeonsCompleted$Valid Card.namedTomb of Annihilation
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigRepeat | TriggerDescription$ Whenever CARDNAME attacks, for each opponent, you create a 2/2 black Zombie creature token unless that player sacrifices a creature.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigRepeat | TriggerDescription$ Whenever Acererak attacks, for each opponent, you create a 2/2 black Zombie creature token unless that player sacrifices a creature of their choice.
 SVar:TrigRepeat:DB$ RepeatEach | RepeatPlayers$ Opponent | RepeatSubAbility$ DBToken
 SVar:DBToken:DB$ Token | TokenScript$ b_2_2_zombie | UnlessCost$ Sac<1/Creature> | UnlessPayer$ Player.IsRemembered
 SVar:HasAttackEffect:TRUE

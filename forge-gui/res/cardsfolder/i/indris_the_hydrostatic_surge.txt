@@ -2,7 +2,7 @@ Name:Indris, the Hydrostatic Surge
 ManaCost:4 U R
 Types:Legendary Creature Otter Incarnation
 PT:5/5
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigConjure | TriggerDescription$ When CARDNAME enters, conjure four cards named Lightning Bolt into your library. It perpetually gains storm. Then shuffle.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigConjure | TriggerDescription$ When CARDNAME enters, conjure four cards named Lightning Bolt into your library. They perpetually gain storm. Then shuffle.
 SVar:TrigConjure:DB$ MakeCard | Conjure$ True | Name$ Lightning Bolt | Amount$ 4 | Zone$ Library | RememberMade$ True | SubAbility$ DBPump
 SVar:DBPump:DB$ Pump | Defined$ Remembered | PumpZone$ Library | KW$ Storm | Duration$ Perpetual | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True

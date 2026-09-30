@@ -44,7 +44,7 @@ Name:Rasaad, Shadow Monk
 ManaCost:2 W B
 Types:Legendary Creature Human Monk
 PT:4/4
-T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When CARDNAME dies, create a 4/1 black Skeleton creature token.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When CARDNAME dies, create a 4/1 black Skeleton creature token with menace.
 SVar:TrigToken:DB$ Token | TokenScript$ b_4_1_skeleton_menace
 DeckHas:Ability$Token & Type$Skeleton
 Oracle:When Rasaad, Shadow Monk dies, create a 4/1 black Skeleton creature token with menace.
@@ -66,7 +66,7 @@ Name:Rasaad, Sylvan Monk
 ManaCost:2 G W
 Types:Legendary Creature Human Monk
 PT:4/4
-T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When CARDNAME dies, create 2/2 green Boar creature tokens.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When CARDNAME dies, create two 2/2 green Boar creature tokens.
 SVar:TrigToken:DB$ Token | TokenAmount$ 2 | TokenScript$ g_2_2_boar
 DeckHas:Ability$Token & Type$Boar
 Oracle:When Rasaad, Sylvan Monk dies, create two 2/2 green Boar creature tokens.

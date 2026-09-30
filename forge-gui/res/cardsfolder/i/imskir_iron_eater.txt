@@ -7,7 +7,7 @@ T:Mode$ ChangesZone | ValidCard$ Card.Self | Destination$ Battlefield | Execute$
 SVar:TrigDraw:DB$ Draw | NumCards$ Y | SubAbility$ DBLoseLife
 SVar:DBLoseLife:DB$ LoseLife | LifeAmount$ Y
 SVar:Y:Count$Valid Artifact.YouCtrl/HalfDown
-A:AB$ DealDamage | Cost$ 3 R Sac<1/Artifact> | ValidTgts$ Any | NumDmg$ X | SpellDescription$ NICKNAME deals damage to any target equal to the sacrificed artifact's mana value.
+A:AB$ DealDamage | Cost$ 3 R Sac<1/Artifact> | ValidTgts$ Any | NumDmg$ X | SpellDescription$ NICKNAME deals damage equal to the sacrificed artifact's mana value to any target.
 SVar:X:Sacrificed$CardManaCost
 DeckHints:Type$Artifact
 DeckHas:Ability$Sacrifice

@@ -2,7 +2,7 @@ Name:Dakkon, Shadow Slayer
 ManaCost:W U B
 Types:Legendary Planeswalker Dakkon
 Loyalty:0
-K:etbCounter:LOYALTY:X:no Condition:CARDNAME enters with a number of loyalty counters on him equal to the number of lands you control.
+K:etbCounter:LOYALTY:X:no Condition:Dakkon enters with a number of loyalty counters on him equal to the number of lands you control.
 SVar:X:Count$Valid Land.YouCtrl
 A:AB$ Surveil | Cost$ AddCounter<1/LOYALTY> | Amount$ 2 | Planeswalker$ True | SpellDescription$ Surveil 2. (Look at the top two cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)
 A:AB$ ChangeZone | Cost$ SubCounter<3/LOYALTY> | Planeswalker$ True | ValidTgts$ Creature | Origin$ Battlefield | Destination$ Exile | SpellDescription$ Exile target creature.

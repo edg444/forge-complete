@@ -1,7 +1,7 @@
 Name:Soul Transfer
 ManaCost:1 B B
 Types:Sorcery
-A:SP$ Charm | MinCharmNum$ 1 | CharmNum$ Count$Compare B GE2.2.1 | Choices$ Exile,Return | AdditionalDescription$ . If you control an artifact and an enchantment as you cast this spell, you may choose both.
+A:SP$ Charm | MinCharmNum$ 1 | CharmNum$ Count$Compare B GE2.2.1 | Choices$ Exile,Return | AdditionalDescription$ . If you control an artifact and an enchantment as you cast this spell, you may choose both instead.
 SVar:Exile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | TgtPrompt$ Select target creature or planeswalker | ValidTgts$ Creature,Planeswalker | SpellDescription$ Exile target creature or planeswalker.
 SVar:Return:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand | ValidTgts$ Creature.YouOwn,Planeswalker.YouOwn | TgtPrompt$ Select target creature or planeswalker | SpellDescription$ Return target creature or planeswalker card from your graveyard to your hand.
 SVar:B:SVar$A/Plus.E

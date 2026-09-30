@@ -1,7 +1,7 @@
 Name:Ominous Roost
 ManaCost:2 U
 Types:Enchantment
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When this enchantment enters or whenever you cast a spell from your graveyard, create a 1/1 blue Bird creature token with flying and "This creature can block only creatures with flying."
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When this enchantment enters and whenever you cast a spell from your graveyard, create a 1/1 blue Bird creature token with flying and "This token can block only creatures with flying."
 T:Mode$ SpellCast | ValidCard$ Card.wasCastFromYourGraveyard | ValidActivatingPlayer$ You | Execute$ TrigToken | TriggerZones$ Battlefield | Secondary$ True | TriggerDescription$ When this enchantment enters or whenever you cast a spell from your graveyard, create a 1/1 blue Bird creature token with flying and "This creature can block only creatures with flying."
 SVar:TrigToken:DB$ Token | TokenOwner$ You | TokenScript$ u_1_1_bird_flying_blockflying
 DeckHas:Ability$Token

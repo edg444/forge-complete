@@ -20,7 +20,7 @@ Colors:white,blue
 Types:Enchantment Aura
 K:Enchant:Creature
 SVar:AttachAILogic:Pump
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When CARDNAME enters or enchanted creature becomes the target of an Aura spell, create a 1/1 white Spirit creature token with flying.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ Whenever this Aura enters or enchanted creature becomes the target of an Aura spell, create a 1/1 white Spirit creature token with flying.
 T:Mode$ BecomesTarget | ValidTarget$ Creature.EnchantedBy | ValidSource$ Spell.Aura | TriggerZones$ Battlefield | Execute$ TrigToken | Secondary$ True | TriggerDescription$ When CARDNAME enters or enchanted creature becomes the target of an Aura spell, create a 1/1 white Spirit creature token with flying.
 SVar:TrigToken:DB$ Token | TokenScript$ w_1_1_spirit_flying
 R:Event$ Moved | ValidCard$ Card.Self | Destination$ Graveyard | ReplaceWith$ Exile | Description$ If this Aura would be put into a graveyard from anywhere, exile it instead.

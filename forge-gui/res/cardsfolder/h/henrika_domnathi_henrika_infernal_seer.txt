@@ -23,5 +23,5 @@ PT:3/4
 K:Flying
 K:Deathtouch
 K:Lifelink
-A:AB$ PumpAll | Cost$ 1 B B | ValidCards$ Creature.YouCtrl+withFlying,Creature.YouCtrl+withLifelink,Creature.YouCtrl+withDeathtouch | NumAtt$ +1 | SpellDescription$ Each creature you control with flying, deathtouch  and/or lifelink gets +1/+0 until end of turn.
+A:AB$ PumpAll | Cost$ 1 B B | ValidCards$ Creature.YouCtrl+withFlying,Creature.YouCtrl+withLifelink,Creature.YouCtrl+withDeathtouch | NumAtt$ +1 | SpellDescription$ Each creature you control with flying, deathtouch     and/or lifelink gets +1/+0 until end of turn.
 Oracle:Flying, deathtouch, lifelink\n{1}{B}{B}: Each creature you control with flying, deathtouch, and/or lifelink gets +1/+0 until end of turn.

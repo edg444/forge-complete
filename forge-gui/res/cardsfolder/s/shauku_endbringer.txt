@@ -3,7 +3,7 @@ ManaCost:5 B B
 Types:Legendary Creature Vampire
 PT:5/5
 K:Flying
-S:Mode$ CantAttack | ValidCard$ Card.Self | IsPresent$ Creature | PresentCompare$ GT1 | Description$ NICKNAME can't attack if another creature is on the battlefield.
+S:Mode$ CantAttack | ValidCard$ Card.Self | IsPresent$ Creature | PresentCompare$ GT1 | Description$ NICKNAME can't attack if there's another creature on the battlefield.
 T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigLoseLife | TriggerDescription$ At the beginning of your upkeep, you lose 3 life.
 A:AB$ ChangeZone | Cost$ T | ValidTgts$ Creature | Origin$ Battlefield | Destination$ Exile | SubAbility$ DBCounter | SpellDescription$ Exile target creature and put a +1/+1 counter on NICKNAME.
 SVar:TrigLoseLife:DB$ LoseLife | Defined$ You | LifeAmount$ 3

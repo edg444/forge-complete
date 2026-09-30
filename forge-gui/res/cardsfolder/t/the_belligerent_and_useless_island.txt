@@ -4,7 +4,7 @@ Types:Legendary Artifact Land Vehicle Island
 PT:2/2
 R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ CARDNAME enter the battlefield tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
-T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player,Battle | Execute$ TrigDraw | CombatDamage$ True | TriggerDescription$ When CARDNAME deals combat damage to a player or battle, draw a card, then discard a card.
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player,Battle | Execute$ TrigDraw | CombatDamage$ True | TriggerDescription$ When CARDNAME deal combat damage to a player or battle, draw a card, then discard a card.
 SVar:TrigDraw:DB$ Draw | Defined$ You | SubAbility$ DBDiscard
 SVar:DBDiscard:DB$ Discard | Defined$ You | Mode$ TgtChoose | NumCards$ 1
 K:Crew:2

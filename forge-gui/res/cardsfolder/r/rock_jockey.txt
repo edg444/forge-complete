@@ -2,8 +2,8 @@ Name:Rock Jockey
 ManaCost:2 R
 Types:Creature Goblin
 PT:3/3
-S:Mode$ CantBeCast | Caster$ You | ValidCard$ Card.Self | CheckSVar$ XJockey | EffectZone$ All | Description$ You can't cast this spell if you've played a land this turn.
-S:Mode$ CantPlayLand | Player$ You | CheckSVar$ RockyX | Description$ You can't play lands if you've cast CARDNAME this turn.
+S:Mode$ CantBeCast | Caster$ You | ValidCard$ Card.Self | CheckSVar$ XJockey | EffectZone$ All | Description$ You can't cast CARDNAME if you've played a land this turn.
+S:Mode$ CantPlayLand | Player$ You | CheckSVar$ RockyX | Description$ You can't play lands if this creature was cast this turn.
 SVar:XJockey:PlayerCountPropertyYou$LandsPlayed
 SVar:RockyX:Count$ThisTurnCast_Card.Self
 Oracle:You can't cast Rock Jockey if you've played a land this turn.\nYou can't play lands if this creature was cast this turn.

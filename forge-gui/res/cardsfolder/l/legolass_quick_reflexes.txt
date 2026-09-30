@@ -2,7 +2,7 @@ Name:Legolas's Quick Reflexes
 ManaCost:G
 Types:Instant
 K:Split second
-A:SP$ Untap | ValidTgts$ Creature | SubAbility$ DBEffect | SpellDescription$ Untap target creature. Until end of turn, it gains hexproof, reach, and "Whenever this creature becomes tapped, it deals damage equal to its power to up to one target creature."
+A:SP$ Untap | ValidTgts$ Creature | SubAbility$ DBEffect | SpellDescription$ Untap target creature. Until end of turn, it gains reach, hexproof, and "Whenever this creature becomes tapped, it deals damage equal to its power to up to one target creature."
 SVar:DBEffect:DB$ Effect | RememberObjects$ Targeted | StaticAbilities$ PumpStatic
 SVar:PumpStatic:Mode$ Continuous | AddKeyword$ Hexproof & Reach | AddTrigger$ BecomesTapped | Affected$ Card.IsRemembered | Description$ Until end of turn, it gains hexproof, reach, and "Whenever this creature becomes tapped, it deals damage equal to its power to up to one target creature."
 SVar:BecomesTapped:Mode$ Taps | ValidCard$ Card.Self | Execute$ TrigFight | TriggerDescription$ Whenever this creature becomes tapped, it deals damage equal to its power to up to one target creature.

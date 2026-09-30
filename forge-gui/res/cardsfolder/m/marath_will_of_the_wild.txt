@@ -2,7 +2,7 @@ Name:Marath, Will of the Wild
 ManaCost:R G W
 Types:Legendary Creature Elemental Beast
 PT:0/0
-K:etbCounter:P1P1:Y:no Condition:CARDNAME enters with a number of +1/+1 counters on it equal to the amount of mana spent to cast it.
+K:etbCounter:P1P1:Y:no Condition:Marath enters with a number of +1/+1 counters on it equal to the amount of mana spent to cast it.
 SVar:Y:Count$CastTotalManaSpent
 A:AB$ Charm | Cost$ XMin1 X SubCounter<X/P1P1/NICKNAME> | Choices$ MarathCounters,MarathDmg,MarathToken | Defined$ You | MinCharmNum$ 1 | IsPresent$ Card.Self+!PrintedTextActive | PresentDefined$ Self | AdditionalDescription$ . X can't be 0.
 # R&D's Secret Lair: the first printing had no "X can't be 0", so X may be 0

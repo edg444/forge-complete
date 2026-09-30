@@ -1,7 +1,7 @@
 Name:Out of Time
 ManaCost:1 W W
 Types:Enchantment
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigUntap | TriggerDescription$ When this enchantment enters, untap all creatures, then phase them out until this enchantment leaves the battlefield. Put a time counter on this enchantment for each creature phased out this way.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigUntap | TriggerDescription$ When this enchantment enters, untap all creatures, then those creatures phase out until this enchantment leaves the battlefield. Put a time counter on this enchantment for each creature that that phased out this way.
 SVar:TrigUntap:DB$ UntapAll | ValidCards$ Creature | SubAbility$ DBPhase
 SVar:DBPhase:DB$ Phases | AllValid$ Creature | RememberAffected$ True | WontPhaseInNormal$ True | ConditionPresent$ Card.Self | SubAbility$ DBEffect
 SVar:DBEffect:DB$ Effect | Triggers$ TrigComeBack | RememberObjects$ Remembered | ImprintCards$ Self | ConditionPresent$ Card.Self | Duration$ Permanent | ForgetOnPhasedIn$ True | SubAbility$ DBPutCounter
