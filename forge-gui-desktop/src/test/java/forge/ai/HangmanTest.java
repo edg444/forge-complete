@@ -48,7 +48,20 @@ public class HangmanTest extends AITest {
     public void testWordList() {
         initAndCreateGame();
         List<String> words = WordList.get(6, 8);
-        AssertJUnit.assertTrue(words.size() > 400);
+        AssertJUnit.assertTrue(words.size() > 40000);
+        List<String> common = WordList.getCommon(6, 8);
+        AssertJUnit.assertTrue(common.size() > 15000 && common.size() < words.size());
+        AssertJUnit.assertTrue(words.containsAll(common));
+        AssertJUnit.assertTrue(WordList.isCommon("castle"));
+        // a word people know, but not an everyday one
+        AssertJUnit.assertTrue(words.contains("ZEPHYR") && !WordList.isCommon("zephyr"));
+        // American spelling only
+        for (String american : new String[] {"THEATER", "COLORS", "LICENSE", "CANCELED", "PAJAMAS", "JUDGMENT"}) {
+            AssertJUnit.assertTrue(american, words.contains(american));
+        }
+        for (String other : new String[] {"THEATRE", "COLOUR", "COLOURS", "LICENCE", "PYJAMAS", "JEWELLERY"}) {
+            AssertJUnit.assertFalse(other, words.contains(other));
+        }
         for (String word : words) {
             AssertJUnit.assertTrue(word, word.length() >= 6 && word.length() <= 8 && WordList.isPlainWord(word));
         }
@@ -66,7 +79,7 @@ public class HangmanTest extends AITest {
 
         AssertJUnit.assertTrue(hangman.hasGuessableWord());
         String word = hangman.getChosenType();
-        AssertJUnit.assertTrue(word, WordList.get(6, 8).contains(word));
+        AssertJUnit.assertTrue(word, WordList.getCommon(6, 8).contains(word));
         AssertJUnit.assertEquals(me, hangman.getWordNoter());
         // the view only has the blanks, which also tell everyone how long the word is
         AssertJUnit.assertEquals(String.join(" ", "_".repeat(word.length()).split("")), hangman.getView().getChosenType());
@@ -116,13 +129,13 @@ public class HangmanTest extends AITest {
         Player me = game.getPlayers().get(1);
         Player opp = game.getPlayers().get(0);
         Card hangman = addCard("Hangman", me);
-        // not in the word list, so with B and N showing the AI has nothing to match and goes by letter frequency
         // registers the new card's trigger, as any priority would
         game.getAction().checkStateEffects(true);
-        hangman.setGuessableWord("banana", me);
+        // not a word, so with B and X showing the AI has nothing to match and goes by letter frequency
+        hangman.setGuessableWord("baxaxa", me);
         hangman.addGuessedLetter('B');
-        hangman.addGuessedLetter('N');
-        AssertJUnit.assertEquals("B_N_N_", hangman.getWordPattern());
+        hangman.addGuessedLetter('X');
+        AssertJUnit.assertEquals("B_X_X_", hangman.getWordPattern());
         AssertJUnit.assertTrue(GuessWordAi.candidates(hangman).isEmpty());
         AssertJUnit.assertFalse(GuessWordEffect.unguessedLetters(hangman).contains("B"));
 
@@ -130,12 +143,12 @@ public class HangmanTest extends AITest {
         AssertJUnit.assertEquals(1, hangman.getCounters(CounterEnumType.P1P1));
         guess(hangman, opp, opp); // T
         AssertJUnit.assertEquals(2, hangman.getCounters(CounterEnumType.P1P1));
-        AssertJUnit.assertEquals("BNET", hangman.getGuessedLetters());
-        AssertJUnit.assertEquals("B _ N _ N _ - wrong: E, T", hangman.getView().getChosenType());
+        AssertJUnit.assertEquals("BXET", hangman.getGuessedLetters());
+        AssertJUnit.assertEquals("B _ X _ X _ - wrong: E, T", hangman.getView().getChosenType());
         AssertJUnit.assertTrue(game.getStack().isEmpty());
 
         guess(hangman, me, opp); // A, every instance of it
-        AssertJUnit.assertEquals("BANANA", hangman.getWordPattern());
+        AssertJUnit.assertEquals("BAXAXA", hangman.getWordPattern());
         AssertJUnit.assertEquals(2, hangman.getCounters(CounterEnumType.P1P1));
         AssertJUnit.assertTrue(hangman.isInZone(ZoneType.Battlefield));
         playUntilStackClear(game);
@@ -208,6 +221,32 @@ public class HangmanTest extends AITest {
         // whoever noted the word knows it, if the Hangman ends up with someone else
         other.setController(opp, game.getNextTimestamp());
         AssertJUnit.assertEquals("WIZARD", GuessWordAi.guessWord(me, other));
+    }
+
+    @Test
+    public void testTheAiIsADecentGuesser() {
+        Game game = initAndCreateGame();
+        Player me = game.getPlayers().get(1);
+        Player opp = game.getPlayers().get(0);
+        List<String> everyday = WordList.getCommon(6, 8);
+        List<String> rare = WordList.get(6, 8).subList(everyday.size(), WordList.get(6, 8).size());
+        for (List<String> words : List.of(everyday, rare)) {
+            int wrong = 0;
+            final int games = 60;
+            for (int i = 0; i < games; i++) {
+                Card hangman = addCard("Hangman", me);
+                hangman.setGuessableWord(words.get((i * 7919) % words.size()), me);
+                for (int turn = 0; turn < 40 && !hangman.isWordFullyGuessed(); turn++) {
+                    guess(hangman, me, opp);
+                }
+                AssertJUnit.assertTrue(hangman.getChosenType(), hangman.isWordFullyGuessed());
+                wrong += hangman.getCounters(CounterEnumType.P1P1);
+            }
+            System.out.println("Hangman AI: " + (wrong / (double) games) + " wrong guesses a word, "
+                    + (words == everyday ? "everyday" : "rare") + " words");
+            // a loose bound: these 60 words of each kind averaged 2.1 and 3.4 wrong guesses when this was written
+            AssertJUnit.assertTrue("wrong guesses: " + wrong, wrong < games * 5);
+        }
     }
 
     @Test

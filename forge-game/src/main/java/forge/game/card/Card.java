@@ -4547,7 +4547,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     // Unhinged half power/toughness (11 cards, all in Unhinged). Same approach as half life: the
     // stats stay whole ints for the ~1000 places that read them, and the printed half rides along
     // as a 0-or-1 extra. For every other card in the game these are 0 and everything below reduces
-    // to exactly the old whole-number behaviour.
+    // to exactly the old whole-number behavior.
     private boolean hasSwitchedPT() {
         return getAmountOfKeyword("CARDNAME's power and toughness are switched") % 2 != 0;
     }
@@ -4559,7 +4559,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
     public final void setHalfPower(final boolean h) {
         currentState.setHalfPower(h ? 1 : 0);
-        // the view is populated before this runs, and nothing else marks P/T dirty afterwards
+        // the view is populated before this runs, and nothing else marks P/T dirty afterward
         currentState.getView().updatePower(currentState);
     }
     public final void setHalfToughness(final boolean h) {

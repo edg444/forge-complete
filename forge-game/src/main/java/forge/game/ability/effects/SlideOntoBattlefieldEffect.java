@@ -18,7 +18,7 @@ import java.util.List;
  * The dexterity half of Goblin Sleigh Ride: a creature rides the card across the table, and what it
  * hits on the way is a physical outcome rather than a target.
  * <p>
- * Modelled on {@link FlipOntoBattlefieldEffect} - you say where you were aiming, and chance decides
+ * Modeled on {@link FlipOntoBattlefieldEffect} - you say where you were aiming, and chance decides
  * the rest - because that is already how Forge stands in for Chaos Orb and Falling Star, and the
  * table's answer to "did it stay on?" isn't something one player should simply declare. Cards
  * touched are remembered on the host for a following damage effect to use.

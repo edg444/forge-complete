@@ -14,9 +14,9 @@ import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 
-// Head to Head. The parenthetical on that card is rules text, not flavour: the questioned player
+// Head to Head. The parenthetical on that card is rules text, not flavor: the questioned player
 // looks at their top card, the asker puts up to six yes-or-no questions to them, and question seven
-// is the guess at its name. Against a human the truthful answering is on their honour, but Forge
+// is the guess at its name. Against a human the truthful answering is on their honor, but Forge
 // knows exactly what the card is, so the questions here are ones the engine can answer itself -
 // which makes the whole game playable against the AI rather than being an empty prompt.
 public class SevenQuestionsEffect extends SpellAbilityEffect {
@@ -79,7 +79,7 @@ public class SevenQuestionsEffect extends SpellAbilityEffect {
         final List<String> remaining = Lists.newArrayList(QUESTIONS.keySet());
         for (int i = 0; i < allowed && !remaining.isEmpty(); i++) {
             // the card allows UP TO six questions, so guessing early has to be an offered choice -
-            // cancelling out of the prompt isn't reliably available
+            // canceling out of the prompt isn't reliably available
             final List<String> choices = Lists.newArrayList(remaining);
             choices.add(0, GUESS_NOW);
             final String question = asker.getController().chooseSomeType("Question", sa, choices, true);

@@ -1791,7 +1791,7 @@ public class CardProperty {
                 return false;
             }
         } else if (property.equals("hasReminderText")) {
-            // Duh. On a real card the reminder text is the parenthesised italics, which Forge keeps
+            // Duh. On a real card the reminder text is the parenthesized italics, which Forge keeps
             // in the Oracle text. Token scripts drop it (a Thopter token just says "Flying"), but a
             // printed token does carry it, so for those the keyword's own reminder text is the test.
             boolean hasReminder = false;

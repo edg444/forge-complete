@@ -113,9 +113,9 @@ public class ChooseCardNameEffect extends SpellAbilityEffect {
                                 v = v.replace("=Imprinted", s);
                             } else if (v.contains("ManaCost=Chosen")) {
                                 // Richard Garfield, Ph.D. - the cost to match comes from the card just
-                                // chosen out of hand, and colour matters, so it's the full cost string.
+                                // chosen out of hand, and color matters, so it's the full cost string.
                                 // Asked via hasChosenCard because getChosenCard throws on an empty
-                                // collection rather than returning null, which cancelling leaves behind.
+                                // collection rather than returning null, which canceling leaves behind.
                                 // Nothing chosen means nothing to name, so skip this player outright -
                                 // labeled because a plain continue would only skip this one alternative.
                                 if (!host.hasChosenCard()) {

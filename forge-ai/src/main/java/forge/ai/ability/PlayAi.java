@@ -226,7 +226,7 @@ public class PlayAi extends SpellAbilityAi {
         final Card source = sa.getHostCard();
 
         // ValidZone comes first: it defines the pool, and every later filter has to narrow that
-        // same pool. Applying them in the other order let the pool be rebuilt afterwards, throwing
+        // same pool. Applying them in the other order let the pool be rebuilt afterward, throwing
         // away the ValidSA filter entirely - the AI would cast "cast an instant or sorcery from
         // your graveyard" effects while owning no instants or sorceries at all.
         if (sa.hasParam("ValidZone")) {

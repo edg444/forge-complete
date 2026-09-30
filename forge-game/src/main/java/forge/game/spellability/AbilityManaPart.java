@@ -152,7 +152,7 @@ public class AbilityManaPart implements java.io.Serializable {
      * @param sa
      *
      */
-    /** The colour of a produced half-mana token such as "HR", or 0 when this isn't one. */
+    /** The color of a produced half-mana token such as "HR", or 0 when this isn't one. */
     private static byte halfColorProduced(final String token) {
         if (token.length() != 2 || Character.toUpperCase(token.charAt(0)) != 'H') {
             return 0;
@@ -201,8 +201,8 @@ public class AbilityManaPart implements java.io.Serializable {
                 manaPool.addInfiniteColorless(source, this);
             } else if (halfColorProduced(c) != 0) {
                 // Unhinged half mana (Mons's Goblin Waiters' {HR}). This has to be caught before the
-                // colour lookup below, which reads a two-character token as a pair of colours and so
-                // would quietly turn "HR" into a whole red. Two halves of a colour make a whole, so
+                // color lookup below, which reads a two-character token as a pair of colors and so
+                // would quietly turn "HR" into a whole red. Two halves of a color make a whole, so
                 // they are folded together on arrival rather than left stranded in the pool.
                 final byte half = halfColorProduced(c);
                 if (manaPool.payHalfManaExact(half)) {

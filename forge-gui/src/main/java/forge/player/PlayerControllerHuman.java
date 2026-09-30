@@ -2904,7 +2904,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
     }
 
     /**
-     * A single printing of a card, labelled by set and collector number so the dev mode chooser can
+     * A single printing of a card, labeled by set and collector number so the dev mode chooser can
      * tell printings apart - PaperCard's own toString is just the card name.
      */
     private record PrintingView(PaperCard card) implements Serializable, Comparable<PrintingView> {
@@ -3402,7 +3402,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
         }
 
         /**
-         * Offers the printings of the chosen card so a specific set or art can be added. Cancelling
+         * Offers the printings of the chosen card so a specific set or art can be added. Canceling
          * keeps the database's default printing, so this never gets in the way of a quick add.
          */
         private PaperCard choosePrinting(final CardDb carddb, final CardFaceView f) {

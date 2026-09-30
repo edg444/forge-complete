@@ -105,7 +105,7 @@ public class CardFaceSymbols {
             MANA_IMAGES.put(e.getKey(), FSkin.getImage(e.getValue()));
         }
 
-        // Unhinged half mana has no art of its own, so it borrows its colour's symbol
+        // Unhinged half mana has no art of its own, so it borrows its color's symbol
         for (final String c : new String[] { "W", "U", "B", "R", "G" }) {
             if (MANA_IMAGES.containsKey(c)) {
                 MANA_IMAGES.put("H" + c, MANA_IMAGES.get(c));

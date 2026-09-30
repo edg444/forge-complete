@@ -17,8 +17,8 @@ import forge.util.WordList;
 /**
  * Hangman. The AI plays it the way a person does: from what's on the sheet, never from the noted word itself
  * (unless it noted the word). It matches the pattern against the word list and guesses the letter most of the
- * matching words have, or the word once only one matches; with nothing matching it falls back on the commonest
- * letters in English.
+ * matching words have (everyday words counting for more than rare ones), or the word once only one matches; with
+ * nothing matching it falls back on the most common letters in English.
  *
  * With its own Hangman it makes an opponent guess while most of the word is still hidden - a wrong guess is a
  * +1/+1 counter. Against someone else's it only pays when its guess will finish the word.
@@ -115,7 +115,8 @@ public class GuessWordAi extends SpellAbilityAi {
             int count = 0;
             for (final String word : candidates) {
                 if (word.contains(letter)) {
-                    count++;
+                    // an everyday word is a likelier pick than a rare one
+                    count += WordList.isCommon(word) ? 4 : 1;
                 }
             }
             if (count > bestCount) {

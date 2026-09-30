@@ -57,7 +57,7 @@ public class CardFaceSymbols {
             Forge.getAssets().manaImages().put(e.getKey(), Forge.getAssets().images().get(e.getValue()));
         }
 
-        // Unhinged half mana has no symbol art of its own, so it borrows its colour's
+        // Unhinged half mana has no symbol art of its own, so it borrows its color's
         for (final String c : new String[] { "W", "U", "B", "R", "G", "1" }) {
             if (Forge.getAssets().manaImages().containsKey(c)) {
                 Forge.getAssets().manaImages().put("H" + c, Forge.getAssets().manaImages().get(c));

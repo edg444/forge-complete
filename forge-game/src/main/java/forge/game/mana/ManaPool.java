@@ -65,12 +65,12 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
     // Unhinged half mana. A half reaches the pool either as change from paying a whole mana into a
     // half cost (Cheap Ass reducing {2} to {1 1/2}) or produced outright by Mons's Goblin Waiters,
     // and it stays there so it can pay a half cost later, e.g. Little Girl's {HW}. Two halves of a
-    // colour are folded into a whole mana as they meet, so they aren't stranded - see
+    // color are folded into a whole mana as they meet, so they aren't stranded - see
     // AbilityManaPart.produceMana.
     private final Map<Byte, Integer> floatingHalves = Maps.newHashMap();
 
     // Mox Lotus adds {inf}. Rather than a very large number that can still be exhausted, the pool
-    // remembers that its colourless is unbounded: spending some puts it straight back. It empties
+    // remembers that its colorless is unbounded: spending some puts it straight back. It empties
     // with everything else at end of step or phase.
     private boolean infiniteColorless;
     private Card infiniteSource;
@@ -83,7 +83,7 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
     public final boolean hasHalfMana() {
         return floatingHalves.values().stream().anyMatch(i -> i > 0);
     }
-    /** Total floating halves across all colours, for mana burn. */
+    /** Total floating halves across all colors, for mana burn. */
     public final int totalHalfMana() {
         return floatingHalves.values().stream().mapToInt(Integer::intValue).sum();
     }
@@ -102,8 +102,8 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
     }
 
     /**
-     * Spend a floating half of a colour this cost accepts.
-     * @param colorMask colours that may pay, 0xFF for any
+     * Spend a floating half of a color this cost accepts.
+     * @param colorMask colors that may pay, 0xFF for any
      * @return true if a half was found and spent
      */
     public final boolean payHalfMana(final byte colorMask) {
@@ -118,8 +118,8 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
     }
 
     /**
-     * Spend a floating half of exactly this colour, unlike {@link #payHalfMana} which also accepts a
-     * colourless half against any mask.
+     * Spend a floating half of exactly this color, unlike {@link #payHalfMana} which also accepts a
+     * colorless half against any mask.
      */
     public final boolean payHalfManaExact(final byte color) {
         final int n = floatingHalves.getOrDefault(color, 0);

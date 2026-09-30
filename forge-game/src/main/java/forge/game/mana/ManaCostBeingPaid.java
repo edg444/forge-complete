@@ -776,7 +776,7 @@ public class ManaCostBeingPaid {
         return result;
     }
 
-    /** The half shard for a colour restriction, defaulting to white as the only printed one. */
+    /** The half shard for a color restriction, defaulting to white as the only printed one. */
     private static ManaCostShard halfShardForColor(final byte colorMask) {
         for (final ManaCostShard shard : new ManaCostShard[] { ManaCostShard.HW, ManaCostShard.HU,
                 ManaCostShard.HB, ManaCostShard.HR, ManaCostShard.HG }) {

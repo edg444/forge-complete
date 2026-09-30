@@ -18,8 +18,8 @@ public final class MagicColor {
     public static final byte BLACK     = 1 << 2;
     public static final byte RED       = 1 << 3;
     public static final byte GREEN     = 1 << 4;
-    // Water Gun Balloon Game's Giant Teddy Bear. A real sixth colour bit, deliberately left out of
-    // ALL_COLORS so nothing that deals with the five touches it - but it is not colourless either.
+    // Water Gun Balloon Game's Giant Teddy Bear. A real sixth color bit, deliberately left out of
+    // ALL_COLORS so nothing that deals with the five touches it - but it is not colorless either.
     public static final byte PINK      = 1 << 5;
     // Sword of Dungeons & Dragons' Dragon token: monocolored gold (per its ruling), not multicolored.
     // A seventh bit on the same terms as pink.

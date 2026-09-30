@@ -10,10 +10,10 @@ import forge.game.card.Card;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 
-// Avatar of Me. Eyes can be any colour at all, not just the five, so this is one plain list rather
-// than a colour picker that has to somehow offer "none" - the generic multi-select won't accept an
-// empty choice. A colour that isn't one of the five leaves nothing chosen, which makes the card
-// colourless, and the name is kept only so it can be displayed.
+// Avatar of Me. Eyes can be any color at all, not just the five, so this is one plain list rather
+// than a color picker that has to somehow offer "none" - the generic multi-select won't accept an
+// empty choice. A color that isn't one of the five leaves nothing chosen, which makes the card
+// colorless, and the name is kept only so it can be displayed.
 public class ChooseEyeColorEffect extends SpellAbilityEffect {
 
     private static final List<String> OTHER = Lists.newArrayList(
@@ -42,7 +42,7 @@ public class ChooseEyeColorEffect extends SpellAbilityEffect {
             }
 
             if ("Two different colors".equals(chosen)) {
-                // heterochromia makes it both, so exactly two are picked and both are real colours
+                // heterochromia makes it both, so exactly two are picked and both are real colors
                 final List<String> two = Lists.newArrayList();
                 for (final String color : MagicColor.Constant.ONLY_COLORS) {
                     two.add(capitalize(color));

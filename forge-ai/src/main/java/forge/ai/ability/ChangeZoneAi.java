@@ -145,13 +145,13 @@ public class ChangeZoneAi extends SpellAbilityAi {
     /**
      * Whether the AI could pay this cost on its next turn, when everything it controls has untapped.
      * <p>
-     * Checking each coloured requirement on its own is not enough - one Mountain would "cover" both
+     * Checking each colored requirement on its own is not enough - one Mountain would "cover" both
      * pips of {@code {R}{R}}. Each pip has to get a source of its own, which is a bipartite matching
      * between pips and sources, solved here with Kuhn's augmenting-path algorithm. Both sides are
      * tiny (a few pips against a dozen or so permanents), so the simple version is plenty.
      * <p>
      * Deliberately conservative: every source counts for exactly one mana even if it makes more, and
-     * the land drop still to come isn't counted. Erring towards "can't pay" only costs an attack,
+     * the land drop still to come isn't counted. Erring toward "can't pay" only costs an attack,
      * while erring the other way costs the game.
      */
     private static CardCollection coverNextTurn(final Player ai, final ManaCost cost) {
@@ -182,7 +182,7 @@ public class ChangeZoneAi extends SpellAbilityAi {
             return null;
         }
 
-        // one entry per coloured pip - ManaCost keeps its shards as a list, so {R}{R} really is two
+        // one entry per colored pip - ManaCost keeps its shards as a list, so {R}{R} really is two
         final List<Byte> pips = Lists.newArrayList();
         for (final ManaCostShard shard : cost) {
             if (shard.getColorMask() != 0) {
@@ -243,9 +243,9 @@ public class ChangeZoneAi extends SpellAbilityAi {
 
         // Sources are counted ignoring whether they can be activated right now, because everything
         // untaps before the payment is due next turn. The land drop to come is deliberately not
-        // counted - it may never arrive. A bare count isn't enough either: four off-colour lands
-        // would pass a total-mana check and still never produce the coloured half of the cost, so
-        // every coloured shard has to have a source that can actually make it.
+        // counted - it may never arrive. A bare count isn't enough either: four off-color lands
+        // would pass a total-mana check and still never produce the colored half of the cost, so
+        // every colored shard has to have a source that can actually make it.
         final Card host = sa.getHostCard();
         final CardCollection needed = coverNextTurn(ai, host.getManaCost());
         if (needed == null) {

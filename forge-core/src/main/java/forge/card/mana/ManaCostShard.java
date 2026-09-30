@@ -61,13 +61,13 @@ public enum ManaCostShard {
     CG(ManaAtom.GREEN | ManaAtom.COLORLESS, "C/G"),
 
     /* Unhinged half mana - only white was ever printed (Little Girl), but the whole cycle of
-     * colours is here so the shard doesn't have to be special-cased if another one turns up. */
+     * colors is here so the shard doesn't have to be special-cased if another one turns up. */
     HW(ManaAtom.WHITE | ManaAtom.IS_HALF, "HW"),
     HU(ManaAtom.BLUE | ManaAtom.IS_HALF, "HU"),
     HB(ManaAtom.BLACK | ManaAtom.IS_HALF, "HB"),
     HR(ManaAtom.RED | ManaAtom.IS_HALF, "HR"),
     HG(ManaAtom.GREEN | ManaAtom.IS_HALF, "HG"),
-    // Flaccify's {1/2} - half of a generic mana, payable with any colour
+    // Flaccify's {1/2} - half of a generic mana, payable with any color
     HGENERIC(ManaAtom.GENERIC | ManaAtom.IS_HALF, "H1"),
 
     // Snow and colorless
@@ -318,7 +318,7 @@ public enum ManaCostShard {
         return isOfKind(ManaAtom.IS_HALF);
     }
 
-    /** The colours this shard may be paid with, 0xFF when it is colourless and accepts any. */
+    /** The colors this shard may be paid with, 0xFF when it is colorless and accepts any. */
     public byte getPayableColorMask() {
         final byte colors = getColorMask();
         return colors == 0 ? (byte) 0xFF : colors;

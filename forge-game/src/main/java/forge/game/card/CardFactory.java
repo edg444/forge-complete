@@ -120,7 +120,7 @@ public class CardFactory {
     /**
      * A host's one "when this creature enters" trigger - the part an augment's unfinished trigger is completed
      * with. Marked Host$ True in the fork's own scripts, but upstream's card linter strips params it doesn't know,
-     * so it's also recognised by shape: a Host card's trigger for itself entering the battlefield.
+     * so it's also recognized by shape: a Host card's trigger for itself entering the battlefield.
      */
     private static boolean isHostTrigger(final Trigger t, final CardState hostState) {
         if (t.hasParam("Host")) {

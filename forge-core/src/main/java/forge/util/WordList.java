@@ -1,42 +1,56 @@
 package forge.util;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
 
 /**
- * Ordinary English words (res/lists/Words.txt, one per line, '#' starts a comment), for the cards that make a
- * player come up with a word - Unstable's Hangman. The AI notes its words from this list and guesses against it;
- * a person may note any word at all.
+ * Ordinary English words (res/lists/Words.txt), for the cards that make a player come up with a word - Unstable's
+ * Hangman. One word per line under a [common] or [more] heading; '#' starts a comment. The AI notes its words from
+ * the common ones and guesses against all of them; a person may note any word at all.
  */
 public final class WordList {
     private WordList() { }
 
     private static Supplier<List<String>> source = null;
-    private static List<String> words = null;
+    private static Set<String> common = null;
+    private static Set<String> all = null;
 
     /** Set by the GUI layer at startup; the file isn't read until something asks for it. */
     public static synchronized void setSource(final Supplier<List<String>> lineSource) {
         source = lineSource;
-        words = null;
+        common = null;
+        all = null;
     }
 
-    private static synchronized List<String> words() {
-        if (words != null) {
-            return words;
+    private static synchronized void load() {
+        if (all != null) {
+            return;
         }
-        final List<String> result = new ArrayList<>();
+        final Set<String> commonWords = new LinkedHashSet<>();
+        final Set<String> allWords = new LinkedHashSet<>();
         if (source != null) {
-            for (final String line : source.get()) {
-                final String word = line.trim().toUpperCase();
-                if (isPlainWord(word) && !result.contains(word)) {
-                    result.add(word);
+            boolean inCommon = true;
+            for (final String raw : source.get()) {
+                final String line = raw.trim();
+                if (line.startsWith("[")) {
+                    inCommon = line.equalsIgnoreCase("[common]");
+                    continue;
+                }
+                final String word = line.toUpperCase();
+                if (!isPlainWord(word)) {
+                    continue;
+                }
+                allWords.add(word);
+                if (inCommon) {
+                    commonWords.add(word);
                 }
             }
         }
-        words = Collections.unmodifiableList(result);
-        return words;
+        common = commonWords;
+        all = allWords;
     }
 
     /** Only the letters A to Z, and at least one of them. */
@@ -53,14 +67,36 @@ public final class WordList {
         return true;
     }
 
-    /** The words with minLetters to maxLetters letters, in upper case. */
-    public static List<String> get(final int minLetters, final int maxLetters) {
+    private static List<String> ofLength(final Set<String> words, final int minLetters, final int maxLetters) {
         final List<String> result = new ArrayList<>();
-        for (final String word : words()) {
+        for (final String word : words) {
             if (word.length() >= minLetters && word.length() <= maxLetters) {
                 result.add(word);
             }
         }
         return result;
+    }
+
+    /** Every word with minLetters to maxLetters letters, in upper case, the common ones first. */
+    public static List<String> get(final int minLetters, final int maxLetters) {
+        load();
+        final List<String> result = ofLength(common, minLetters, maxLetters);
+        for (final String word : ofLength(all, minLetters, maxLetters)) {
+            if (!common.contains(word)) {
+                result.add(word);
+            }
+        }
+        return result;
+    }
+
+    /** The everyday words with minLetters to maxLetters letters, in upper case. */
+    public static List<String> getCommon(final int minLetters, final int maxLetters) {
+        load();
+        return ofLength(common, minLetters, maxLetters);
+    }
+
+    public static boolean isCommon(final String word) {
+        load();
+        return word != null && common.contains(word.toUpperCase());
     }
 }

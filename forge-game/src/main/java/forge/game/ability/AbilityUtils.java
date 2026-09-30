@@ -2448,8 +2448,8 @@ public class AbilityUtils {
             }
             return doXMath(letters.size(), expr, c, ctb);
         }
-        // lets a card tell "no colour was chosen" apart from a choice, which Avatar of Me needs to
-        // know whether the eyes were one of the five colours at all
+        // lets a card tell "no color was chosen" apart from a choice, which Avatar of Me needs to
+        // know whether the eyes were one of the five colors at all
         if (sq[0].equals("ChosenColorCount")) {
             return doXMath(Iterables.size(c.getChosenColors()), expr, c, ctb);
         }

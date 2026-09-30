@@ -1106,7 +1106,7 @@ public class FSkin {
         if (FModel.getPreferences().getPrefBoolean(FPref.UI_SCREENREADER_OPTIMIZE)) {
             return str;
         }
-        // Unhinged half mana has no symbol art, so {HW} is shown as a half sign next to the colour
+        // Unhinged half mana has no symbol art, so {HW} is shown as a half sign next to the color
         // a half generic has nothing to draw beside it, so it's just the fraction on its own
         str = str.replaceAll("\\{H1\\}", "½");
         str = str.replaceAll("\\{H([WUBRG])\\}", "½{$1}");

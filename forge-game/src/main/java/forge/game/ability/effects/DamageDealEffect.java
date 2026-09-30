@@ -159,7 +159,7 @@ public class DamageDealEffect extends DamageBaseEffect {
         // Halves$ True says NumDmg already counts halves; otherwise a power-derived amount is
         // re-read in halves automatically, so the hundreds of cards that word it that way need no
         // script change. The whole part goes through the damage map as usual and the leftover half
-        // is marked afterwards, the same way combat damage handles it.
+        // is marked afterward, the same way combat damage handles it.
         int dmgInHalves = sa.hasParam("Halves") ? dmg : powerDerivedHalves(hostCard, sa);
         final boolean halves = dmgInHalves >= 0 && !sa.isDividedAsYouChoose();
         final boolean oddHalf = halves && dmgInHalves % 2 != 0;

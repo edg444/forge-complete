@@ -38,7 +38,7 @@ A complete half-integer layer running parallel to the whole-number one.
 - `CostFlavorAction<description/ButtonLabel>` — a cost paid by asserting you did something physical.
 - `AILogic$ Chance.N` — rolled once per turn (not at every priority), one attempt per turn, honored
   by every API rather than only ones using the base `canPlay`.
-- Persistent honor states modelled as custom counters toggled by two zero-cost abilities
+- Persistent honor states modeled as custom counters toggled by two zero-cost abilities
   (Standing Army's `STANDING`, Fat Ass's `EATING`).
 
 ### Choices the rules can't derive
@@ -145,22 +145,32 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 - **Hangman** (ust/56). The game keeps the hangman sheet, so nothing here is honor system except that the
   noted word is a real word.
   - Noting: a person types any word of six to eight letters (A-Z only; re-asked if it isn't, and offered the
-    list if they give none); the AI takes a random one from `res/lists/Words.txt` (563 words written for this
-    fork). Everyone is told the length (ruling). The word is held in `chosenType` but kept out of `CardView`:
+    given one from the list, told only to them, if they give none); the AI takes a random everyday word from
+    `res/lists/Words.txt`. Everyone is told the length (ruling). The word is held in `chosenType` but kept out of `CardView`:
     the detail panel shows `(chosen word: _ A _ _ E _ - wrong: Q, X)`.
   - Guessing: `{1}`, any player may activate, target is `Player.!controlsCard.Self`. The guesser picks an
     unguessed letter from a list or "Guess the word" and types it. A right letter fills in every instance; a
     letter is never offered twice (rulings). A wrong guess resolves `GuessWrong$` (+1/+1 counter). The guess
     that finishes the word runs `WordGuessed`, a real trigger of Hangman's that sacrifices it.
   - AI (`GuessWordAi`) plays from the sheet, never from the word: it matches the pattern, wrong letters and
-    wrong words against the list and guesses the letter most matches share, or the word when one match is
-    left; with no match it goes by English letter frequency. It reads the word itself only if it noted it
+    wrong words against the list and guesses the letter most matches share (an everyday word counting four
+    times a rare one), or the word when one match is left; with no match it goes by English letter frequency. It reads the word itself only if it noted it
     (ruling: the noter keeps answering for the word, and knowing it, after a control change). With its own
     Hangman it makes an opponent guess once a turn (second main phase or the opponent's end step) while three
     or more letters are hidden; against another player's it pays only when its guess will finish the word.
   - New: `forge.util.WordList`, `Card.setGuessableWord` and friends (copied by `CardCopyService` and
     `GameCopier`), `GuessWordEffect`, `TriggerWordGuessed`, `ComputerUtil.chooseSomeType` "word" +
-    `AILogic$ Random`. `HangmanTest` (9). Suite: 830 run, 0 failed, 6 skipped.
+    `AILogic$ Random`. `HangmanTest` (10; against words from the list the AI averaged 2.1 wrong guesses on everyday words and 3.4 on rare ones). Suite: 831 run, 0 failed, 6 skipped.
+  - **Word list:** `res/lists/Words.txt` is 43,478 six-to-eight-letter words in American spelling, built by
+    `_tools/wordlist/build-words.js` from SCOWL 2020.12.07 (wordlist.aspell.net): its `english-words` and
+    `american-words` files only, never the British, Canadian, Australian or variant ones. `[common]` (18,423,
+    SCOWL sizes 10-35) is what the AI notes from; `[more]` (25,055, sizes 40-70) is only there so it can
+    recognize a rarer word a person notes. 115 crude or grim words were moved from common to more so the AI
+    never puts one on screen. SCOWL's license needs its notice kept with copies: it ships verbatim as
+    `res/lists/Words-SCOWL-Copyright.txt`. (The first version of this list was 563 words written by hand.)
+- **American spelling** in the fork's own comments and this changelog (58 lines: colour, labelled, recognised,
+  afterwards and the like). `_tools/american-spelling.js` rewrites only lines the fork added, so upstream's
+  lines and merges are untouched.
 - **Finders, Keepers** (ust/55) was already in from upstream; script checked against Scryfall, no change.
 
 - **Extremely Slow Zombie** (ust/54a–d, four printings that differ only in flavor text; the edition file already
@@ -280,7 +290,7 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 - **Upstream merge 2026-09-27** (12 commits): upstream's card-script linter (#12048) strips params it doesn't
   know, including the fork's `Host$ True` on every host's enter trigger, which augment relied on. A host
-  trigger is now also recognised by shape (`CardFactory.isHostTrigger`: a Host card's trigger for itself
+  trigger is now also recognized by shape (`CardFactory.isHostTrigger`: a Host card's trigger for itself
   entering), so future linter passes can't break augment. Gnome-Made Engine keeps `TokenOwner$ You` over
   upstream's new `TriggeredCardController`, which has no triggered card once augmented.
 
@@ -336,7 +346,7 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     (`updateChangedText`), trait parameters (`CardTraitBase.changeText`, which every stack/trigger copy re-runs),
     descriptions (`applyDescriptionTextChangeEffects`, word form kept: "two" → "three"), and activation costs
     (`SpellAbility` rebuilds its `Cost`).
-  - `PlayerController.chooseStringForEffect(options, sa, prompt)`: a labelled pick with a real prompt; the AI
+  - `PlayerController.chooseStringForEffect(options, sa, prompt)`: a labeled pick with a real prompt; the AI
     asks the API's `SpellAbilityAi.chooseString`.
   - AI: casts it to kill an opposing creature one less toughness kills; lowers numbers on opponents' objects
     and raises its own. `MoreOrLessTest` (6). Suite: 782 run, 0 failed, 6 skipped.

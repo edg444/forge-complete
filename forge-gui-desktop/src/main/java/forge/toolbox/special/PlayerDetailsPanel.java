@@ -285,7 +285,7 @@ public class PlayerDetailsPanel extends JPanel {
         // a floating half shows as "1½", or a bare "½" on its own (Unhinged half mana)
         @Override
         protected String displayText(final int count) {
-            // Mox Lotus: unbounded colourless says so rather than showing whatever number happens
+            // Mox Lotus: unbounded colorless says so rather than showing whatever number happens
             // to be sitting in the pool
             if (ManaAtom.fromName(color) == ManaAtom.COLORLESS && player.hasInfiniteColorless()) {
                 return "∞";

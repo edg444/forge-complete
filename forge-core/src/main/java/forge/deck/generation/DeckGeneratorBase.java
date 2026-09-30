@@ -108,7 +108,7 @@ public abstract class DeckGeneratorBase {
      * A random pile is fine, a random pile with a Zombie lord and no other Zombies is not. Find the
      * creature type this deck's card text actually cares about and, if the deck is short on bodies of
      * that type, trade some filler for them. Only the single strongest theme is reinforced, so a
-     * multicolour pile stays a pile rather than turning into three half-tribes.
+     * multicolor pile stays a pile rather than turning into three half-tribes.
      */
     protected void reinforceTypalPayoffs(int size, boolean forAi) {
         final Map<String, Integer> payoffWeight = new HashMap<>();

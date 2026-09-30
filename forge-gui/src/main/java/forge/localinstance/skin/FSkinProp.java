@@ -738,7 +738,7 @@ public enum FSkinProp {
             case BLACK -> IMG_MANA_B;
             case RED -> IMG_MANA_R;
             case GREEN -> IMG_MANA_G;
-            // pink has no mana symbol of its own - it only ever appears as a card's colour
+            // pink has no mana symbol of its own - it only ever appears as a card's color
             case PINK, GOLD, COLORLESS -> IMG_MANA_COLORLESS;
         };
     }

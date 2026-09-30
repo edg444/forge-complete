@@ -94,7 +94,7 @@ public class GuessWordEffect extends SpellAbilityEffect {
             AbilityUtils.resolve(sa.getAdditionalAbility("GuessWrong"));
         }
 
-        // only the guess that finishes the word: a wrong letter afterwards isn't guessing it again
+        // only the guess that finishes the word: a wrong letter afterward isn't guessing it again
         if (wordGuessed || (correct && host.isWordFullyGuessed())) {
             final Map<AbilityKey, Object> runParams = AbilityKey.mapFromCard(host);
             runParams.put(AbilityKey.Player, guesser);

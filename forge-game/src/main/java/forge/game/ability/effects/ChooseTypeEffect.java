@@ -53,7 +53,7 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
         if (sa.hasParam("ValidTypes")) {
             validTypes.addAll(Arrays.asList(sa.getParam("ValidTypes").split(",")));
         } else if (sa.hasParam("WordList")) {
-            validTypes.addAll(WordList.get(minLetters, maxLetters == 0 ? Integer.MAX_VALUE : maxLetters));
+            validTypes.addAll(WordList.getCommon(minLetters, maxLetters == 0 ? Integer.MAX_VALUE : maxLetters));
         } else {
             switch (type) {
             case "Card":
@@ -160,8 +160,11 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
                         }
                     }
                     if (choice == null && guessable) {
-                        // the card can't work without a word, so no answer means picking one from the list
-                        choice = p.getController().chooseSomeType(type, sa, validTypes);
+                        // the card can't work without a word, so no answer gets one from the list, told only
+                        // to the player it's noted for
+                        choice = Aggregates.random(validTypes);
+                        p.getController().notifyOfValue(null, card, "No word given. The word noted for you on "
+                                + card.getName() + " is " + choice + ".");
                     }
                     if (choice == null) {
                         continue;
