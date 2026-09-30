@@ -3,7 +3,7 @@ ManaCost:3 U B
 Types:Creature Drake
 PT:4/4
 K:Flying
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When CARDNAME enters, ABILITY
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When CARDNAME enters the battlefield, ABILITY
 SVar:TrigCharm:DB$ Charm | Choices$ DBDistract,DBEnthrall
 SVar:DBDistract:DB$ Tap | ValidTgts$ Land | SubAbility$ DBDraw | SpellDescription$ Distract — Tap target land. Draw a card.
 SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1

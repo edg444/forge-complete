@@ -2,5 +2,5 @@ Name:Distract
 ManaCost:U
 Types:Instant
 A:SP$ Tap | ValidTgts$ Land | SubAbility$ DBDraw | SpellDescription$ Tap target land.
-SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1
+SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1 | SpellDescription$ Draw a card.
 Oracle:Tap target land. Draw a card.

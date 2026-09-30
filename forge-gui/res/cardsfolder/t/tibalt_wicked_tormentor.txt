@@ -2,7 +2,7 @@ Name:Tibalt, Wicked Tormentor
 ManaCost:3 R R
 Types:Legendary Planeswalker Tibalt
 Loyalty:3
-A:AB$ Mana | Cost$ AddCounter<1/LOYALTY> | Planeswalker$ True | Produced$ R | Amount$ 2 | SubAbility$ DBDraft | StackDescription$ REP Add_{p:You} adds & Draft_{p:You} drafts & then exile_then they exile & you may_{p:You} may | SpellDescription$ Add {R}{R}. Draft a card from CARDNAME's spellbook, then exile it. Until end of turn, you may cast that a card.
+A:AB$ Mana | Cost$ AddCounter<1/LOYALTY> | Planeswalker$ True | Produced$ R | Amount$ 2 | SubAbility$ DBDraft | StackDescription$ REP Add_{p:You} adds & Draft_{p:You} drafts & then exile_then they exile & you may_{p:You} may | SpellDescription$ Add {R}{R}. Draft a card from CARDNAME's spellbook, then exile it. Until end of turn, you may cast that card.
 SVar:DBDraft:DB$ Draft | Spellbook$ Chained Brute,Charmbreaker Devils,Festival Crasher,Forge Devil,Frenzied Devils,Havoc Jester,Hellrider,Hobblefiend,Pitchburn Devils,Sin Prodder,Spiteful Prankster,Tibalt's Rager,Torch Fiend,Brimstone Vandal,Devil's Play | RememberDrafted$ True | SubAbility$ DBExile | StackDescription$ None
 SVar:DBExile:DB$ ChangeZone | Origin$ Hand | Destination$ Exile | Defined$ Remembered | SubAbility$ DBEffect | StackDescription$ None
 SVar:DBEffect:DB$ Effect | RememberObjects$ RememberedCard | StaticAbilities$ Play | ExileOnMoved$ Exile | SubAbility$ DBCleanup | StackDescription$ None

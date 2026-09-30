@@ -3,7 +3,7 @@ ManaCost:2 G
 Types:Legendary Creature Monkey Noble
 PT:2/2
 A:AB$ Token | Cost$ T | TokenOwner$ Player | TokenScript$ banana | SpellDescription$ Each player creates a colorless artifact token named Banana with "{T}, Sacrifice this token: Add {R} or {G}. You gain 2 life."
-T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Artifact.OppCtrl | TriggerZones$ Battlefield | Execute$ TrigCounter | TriggerDescription$ Whenever an artifact an opponent controls is put into a graveyard from the battlefield, put a +1/+1 counter on each creature you control that's an Ape or a a Monkey.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Artifact.OppCtrl | TriggerZones$ Battlefield | Execute$ TrigCounter | TriggerDescription$ Whenever an artifact an opponent controls is put into a graveyard from the battlefield, put a +1/+1 counter on each creature you control that's an Ape or a Monkey.
 SVar:TrigCounter:DB$ PutCounterAll | ValidCards$ Creature.Monkey+YouCtrl,Creature.Ape+YouCtrl | CounterType$ P1P1 | CounterNum$ 1
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ Whenever NICKNAME attacks, defending player sacrifices an artifact of their choice.
 SVar:TrigSac:DB$ Sacrifice | Defined$ TriggeredDefendingPlayer | SacValid$ Artifact

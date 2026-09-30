@@ -2,7 +2,7 @@ Name:Hivespine Wolverine
 ManaCost:3 G G
 Types:Creature Elemental Wolverine
 PT:5/4
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When CARDNAME enters the battlefield, ABILITY
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When this creature enters, ABILITY
 SVar:TrigCharm:DB$ Charm | Choices$ DBPutCounter,DBFight,DBDestroy
 SVar:DBPutCounter:DB$ PutCounter | ValidTgts$ Creature.YouCtrl | CounterType$ P1P1 | TgtPrompt$ Select target creature you control | StackDescription$ Put a +1/+1 counter on {c:ThisTargetedCard}. | SpellDescription$ Put a +1/+1 counter on target creature you control.
 SVar:DBFight:DB$ Fight | Defined$ TriggeredCardLKICopy | ValidTgts$ Creature.token | TgtPrompt$ Select target creature token | SpellDescription$ This creature fights target creature token.

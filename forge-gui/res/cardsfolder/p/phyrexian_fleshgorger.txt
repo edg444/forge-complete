@@ -5,7 +5,7 @@ PT:7/5
 K:Prototype:1 B B:3:3
 K:Menace
 K:Lifelink
-K:Ward:PayLife<X/life equal to CARDNAME's power>
+K:Ward:PayLife<X/life equal to this creature's power>
 SVar:X:Count$CardPower
 DeckHas:Ability$LifeGain
 DeckHints:Color$Black
