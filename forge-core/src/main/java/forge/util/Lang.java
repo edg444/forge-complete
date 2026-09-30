@@ -133,6 +133,14 @@ public abstract class Lang {
         return verb + "s";
     }
 
+    /**
+     * A card's name as its own rules text says it. Alchemy rebalanced cards are named "A-Orcish Bowmasters",
+     * but their text - like Arena's and Scryfall's - says "Orcish Bowmasters deals 1 damage".
+     */
+    public static String rulesTextName(final String name) {
+        return name != null && name.startsWith("A-") ? name.substring(2) : name;
+    }
+
     public static String getPlural(final String noun) {
         // the last word carries the number. A type name knows its own plural (Elves, Merfolk), and a phrase that
         // is already plural ("artifacts and/or creatures", "creature cards") stays as it is - blindly adding a

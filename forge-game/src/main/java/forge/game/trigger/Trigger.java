@@ -127,7 +127,7 @@ public abstract class Trigger extends TriggerReplacementBase {
         String desc = getParam("TriggerDescription");
         if (!desc.contains("ABILITY")) {
             desc = CardTranslation.translateSingleDescriptionText(getParam("TriggerDescription"), nameSource);
-            String translatedName = nameSource.getTranslatedName();
+            String translatedName = Lang.rulesTextName(nameSource.getTranslatedName());
             desc = TextUtil.fastReplace(desc,"CARDNAME", translatedName);
             desc = TextUtil.fastReplace(desc,"NICKNAME", Lang.getInstance().getNickName(translatedName));
             if (desc.contains("ORIGINALHOST") && this.getOriginalHost() != null) {
@@ -215,7 +215,7 @@ public abstract class Trigger extends TriggerReplacementBase {
             result = TextUtil.fastReplace(result, "ABILITY", saDesc);
 
             result = CardTranslation.translateMultipleDescriptionText(result, sa.getHostCard());
-            String translatedName = sa.getHostCard().getTranslatedName();
+            String translatedName = Lang.rulesTextName(sa.getHostCard().getTranslatedName());
             result = TextUtil.fastReplace(result,"CARDNAME", translatedName);
             result = TextUtil.fastReplace(result,"NICKNAME", Lang.getInstance().getNickName(translatedName));
         }

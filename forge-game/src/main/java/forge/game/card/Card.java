@@ -2882,8 +2882,30 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         if (sbLong.length() > 0) {
             sbLong.append("\r\n");
         }
+        final String keywordLine = joinPairedFrom(joinPairedFrom(sb.toString(), "protection"), "hexproof");
+        sb.setLength(0);
+        sb.append(keywordLine);
         sb.append(sbLong);
         return CardTranslation.translateMultipleDescriptionText(sb.toString(), this);
+    }
+
+    // Oracle joins exactly two of these: "protection from white and from blue", "hexproof from artifacts and
+    // enchantments" (colors repeat "from", types don't). Three or more stay as separate keywords.
+    private static String joinPairedFrom(final String line, final String keyword) {
+        final java.util.regex.Matcher m = java.util.regex.Pattern.compile(
+                "(?i)(" + keyword + ") from ([a-z]+), " + keyword + " from ([a-z]+)").matcher(line);
+        if (!m.find() || line.toLowerCase().split(keyword + " from ", -1).length != 3) {
+            return line;
+        }
+        final boolean colors = MagicColor.fromName(m.group(2)) != 0 && MagicColor.fromName(m.group(3)) != 0;
+        return line.substring(0, m.start()) + m.group(1) + " from " + m.group(2)
+                + (colors ? " and from " : " and ") + m.group(3) + line.substring(m.end());
+    }
+
+    // Oracle ends a keyword with a non-mana cost like a sentence: "Buyback—Sacrifice a land."
+    private static String titleAsPrinted(final KeywordInterface inst) {
+        return inst instanceof KeywordWithCostInterface kwc && kwc.getCost() != null && kwc.isComplexCost()
+                ? inst.getTitle() + "." : inst.getTitle();
     }
 
     private String kickerDesc(String keyword, String remText) {
@@ -2953,8 +2975,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
             while (result.endsWith("\r\n")) {
                 result = result.substring(0, result.length() - 2);
             }
-            result = TextUtil.fastReplace(result, "CARDNAME", CardTranslation.getTranslatedName(state.getName()));
-            return TextUtil.fastReplace(result, "NICKNAME", Lang.getInstance().getNickName(CardTranslation.getTranslatedName(state.getName())));
+            result = TextUtil.fastReplace(result, "CARDNAME", Lang.rulesTextName(CardTranslation.getTranslatedName(state.getName())));
+            return TextUtil.fastReplace(result, "NICKNAME", Lang.getInstance().getNickName(Lang.rulesTextName(CardTranslation.getTranslatedName(state.getName()))));
         }
 
         if (type.hasSubtype("Class")) {
@@ -3178,7 +3200,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                     if (found) {
                         final Card host = stAb.getHostCard();
 
-                        String currentName = host.getName();
+                        String currentName = Lang.rulesTextName(host.getName());
                         String desc = TextUtil.fastReplace(stAb.toString(), "CARDNAME", currentName);
                         desc = TextUtil.fastReplace(desc, "NICKNAME", Lang.getInstance().getNickName(currentName));
                         if (host.getEffectSource() != null) {
@@ -3236,9 +3258,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
             start = sb.lastIndexOf(s);
         }
 
-        String desc = TextUtil.fastReplace(sb.toString(), "CARDNAME", CardTranslation.getTranslatedName(state.getName()));
+        String desc = TextUtil.fastReplace(sb.toString(), "CARDNAME", Lang.rulesTextName(CardTranslation.getTranslatedName(state.getName())));
         // keyword-line descriptions (K:etbCounter's, a ward cost) use the short name too
-        desc = TextUtil.fastReplace(desc, "NICKNAME", Lang.getInstance().getNickName(CardTranslation.getTranslatedName(state.getName())));
+        desc = TextUtil.fastReplace(desc, "NICKNAME", Lang.getInstance().getNickName(Lang.rulesTextName(CardTranslation.getTranslatedName(state.getName()))));
         if (getEffectSource() != null) {
             desc = TextUtil.fastReplace(desc, "EFFECTSOURCE", getEffectSource().getName());
         }
@@ -3312,7 +3334,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                 } else if (keyword.startsWith("Escalate") || keyword.startsWith("Buyback")
                         || keyword.startsWith("Freerunning") || keyword.startsWith("Prowl")
                         || keyword.startsWith("Sneak") || keyword.startsWith("Cleave")) {
-                    sbBefore.append(inst.getTitle()).append(" (").append(inst.getReminderText()).append(")");
+                    sbBefore.append(titleAsPrinted(inst)).append(" (").append(inst.getReminderText()).append(")");
                     sbBefore.append("\r\n");
                 } else if (keyword.startsWith("Multikicker")) {
                     final String[] n = keyword.split(":");
@@ -3342,7 +3364,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.startsWith("Disturb") || keyword.startsWith("Overload")
                         || keyword.startsWith("Plot") || keyword.startsWith("Mayhem")
                         || keyword.startsWith("Splice")) {
-                    sbAfter.append(inst.getTitle()).append(" (").append(inst.getReminderText()).append(")");
+                    sbAfter.append(titleAsPrinted(inst)).append(" (").append(inst.getReminderText()).append(")");
                     sbAfter.append("\r\n");
                 } else if (keyword.equals("Gift")) {
                     sbBefore.append(keyword);

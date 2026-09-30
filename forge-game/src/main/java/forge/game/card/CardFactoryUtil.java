@@ -2067,7 +2067,8 @@ public class CardFactoryUtil {
         } else if (keyword.equals("Aftermath") && card.getStateName().equals(CardStateName.RightSplit)) {
             StringBuilder sb = new StringBuilder();
             sb.append("Event$ Moved | ValidCard$ Card.Self | Origin$ Stack | ExcludeDestination$ Exile ");
-            sb.append("| ValidStackSa$ Spell.Aftermath | Description$ Aftermath");
+            // Secondary: the keyword line already prints "Aftermath (...)", this would print it a second time
+            sb.append("| ValidStackSa$ Spell.Aftermath | Secondary$ True | Description$ Aftermath");
 
             sb.append(" (");
             sb.append(inst.getReminderText());
@@ -2901,11 +2902,17 @@ public class CardFactoryUtil {
             }
             if (!altCost) {
                 // Oracle ends a non-mana equip cost like a sentence: "Equip—Sacrifice a creature."
-                abilityStr.append("| CostDesc$ ").append(cost.toSimpleString())
-                        .append(cost.isOnlyManaCost() ? " " : ". ");
+                // The extra sentence rides with the cost, so its period closes up: "Equip {3}. Activate only ..."
+                abilityStr.append("| CostDesc$ ").append(cost.toSimpleString());
+                if (!extraDesc.isEmpty()) {
+                    abilityStr.append(". ").append(extraDesc).append(".");
+                } else if (!cost.isOnlyManaCost()) {
+                    abilityStr.append(".");
+                }
+                abilityStr.append(" ");
             }
             abilityStr.append(" | SpellDescription$ ");
-            if (!extraDesc.isEmpty()) {
+            if (altCost && !extraDesc.isEmpty()) {
                 abilityStr.append(". ").append(extraDesc).append(". ");
             }
             if (!altCost && !hasFlav) {

@@ -131,7 +131,7 @@ public class CharmEffect extends SpellAbilityEffect {
         }
 
         if (sa.hasParam("Pawprint")) {
-            sb.append("{P} worth of modes");
+            sb.append(" {P} worth of modes");
         }
 
         if (sa.hasParam("ChoiceRestriction")) {
