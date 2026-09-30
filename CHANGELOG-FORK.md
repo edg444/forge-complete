@@ -136,6 +136,11 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ### Unreleased
 
+- **Upstream merge 2026-09-30** (30 commits, through the 2.0.15 release; the fork is now 2.0.16-SNAPSHOT): one
+  conflict, the `Oracle:` line of The Disciple of Vess (upstream removed a stray second line) - took upstream's
+  side and re-ran `oracle-drift.js --apply`. No fork params were stripped from card scripts. Suite: 814 run,
+  0 failed, 6 skipped.
+
 - **capital offense** (ust/52, printed all lowercase, and the name is too): `Count$ CardCapitalLetters`
   (`CardFactoryUtil.getCapitalLetterCount`) counts capitals in the target's `Oracle:` text, leaving out
   reminder text and mana/tap symbols (printed as icons, not letters). Ability words and mid-sentence capitals
