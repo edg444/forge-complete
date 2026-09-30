@@ -16,6 +16,7 @@ import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 import forge.util.Aggregates;
 import forge.util.Lang;
+import forge.util.WordList;
 
 public class ChooseTypeEffect extends SpellAbilityEffect {
 
@@ -43,10 +44,16 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
         final List<Player> tgtPlayers = sa.hasParam("Chooser")
                 ? AbilityUtils.getDefinedPlayers(sa.getHostCard(), sa.getParam("Chooser"), sa)
                 : getTargetPlayers(sa);
-        final boolean secret = sa.hasParam("Secretly");
+        // Hangman: a secretly noted word the other players then guess at, so only plain letters
+        final boolean guessable = sa.hasParam("Guessable");
+        final boolean secret = sa.hasParam("Secretly") || guessable;
+        final int minLetters = Integer.parseInt(sa.getParamOrDefault("MinLetters", "0"));
+        final int maxLetters = Integer.parseInt(sa.getParamOrDefault("MaxLetters", "0"));
 
         if (sa.hasParam("ValidTypes")) {
             validTypes.addAll(Arrays.asList(sa.getParam("ValidTypes").split(",")));
+        } else if (sa.hasParam("WordList")) {
+            validTypes.addAll(WordList.get(minLetters, maxLetters == 0 ? Integer.MAX_VALUE : maxLetters));
         } else {
             switch (type) {
             case "Card":
@@ -139,17 +146,22 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
                     final String title = sa.hasParam("ChoiceTitle") ? sa.getParam("ChoiceTitle") : type;
                     // Meddling Kids needs "four or more letters", so a short word is re-asked rather
                     // than silently accepted. Bounded so a stubborn answer can't hang the game.
-                    final int minLetters = Integer.parseInt(sa.getParamOrDefault("MinLetters", "0"));
                     choice = null;
                     for (int attempt = 0; attempt < 10; attempt++) {
                         final String entered = p.getController().guessString(sa, title);
                         if (entered == null || entered.trim().isEmpty()) {
                             break;
                         }
-                        if (countLetters(entered) >= minLetters) {
+                        if (countLetters(entered) >= minLetters
+                                && (maxLetters == 0 || countLetters(entered) <= maxLetters)
+                                && (!guessable || WordList.isPlainWord(entered.trim()))) {
                             choice = entered.trim();
                             break;
                         }
+                    }
+                    if (choice == null && guessable) {
+                        // the card can't work without a word, so no answer means picking one from the list
+                        choice = p.getController().chooseSomeType(type, sa, validTypes);
                     }
                     if (choice == null) {
                         continue;
@@ -172,7 +184,12 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
                     // remember what kind of thing this was, so the detail panel says "chosen word"
                     // or "chosen letter" rather than always "chosen type"
                     card.setChosenTypeKind(type);
-                    if (secret) card.setSecretChosenType(choice);
+                    if (guessable) {
+                        card.setGuessableWord(choice, p);
+                        // "You tell each player how long the secret word is." (Hangman ruling)
+                        p.getGame().getAction().notifyOfValue(sa, p,
+                                "a " + type + " with " + choice.length() + " letters", null);
+                    } else if (secret) card.setSecretChosenType(choice);
                     else card.setChosenType(choice);
                 }
             }

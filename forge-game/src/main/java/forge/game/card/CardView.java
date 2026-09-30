@@ -432,7 +432,8 @@ public class CardView extends GameEntityView {
     }
     void updateChosenType(Card c) {
         set(TrackableProperty.ChosenTypeKind, c.getChosenTypeKind());
-        set(TrackableProperty.ChosenType, c.getChosenType());
+        // a word the players are guessing at (Hangman) only ever shows its guessed letters
+        set(TrackableProperty.ChosenType, c.hasGuessableWord() ? c.getGuessableWordDisplay() : c.getChosenType());
     }
 
     public String getChosenType2() {

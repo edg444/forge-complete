@@ -122,6 +122,7 @@ public enum ApiType {
     Gerrymander (GerrymanderEffect.class),
     GuessArtist (GuessArtistEffect.class),
     GuessName (GuessNameEffect.class),
+    GuessWord (GuessWordEffect.class),
     Goad (GoadEffect.class),
     Haunt (HauntEffect.class),
     HealDamage (HealDamageEffect.class),

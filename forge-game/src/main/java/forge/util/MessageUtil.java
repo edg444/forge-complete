@@ -55,9 +55,14 @@ public class MessageUtil {
                         : Localizer.getInstance().getMessage("lblPlayerChoosesNumberIs",
                             mayBeYou(player, target), value);
             case ChooseType:
+                if (sa.hasParam("Guessable")) {
+                    return choser + " secretly noted " + value + ".";
+                }
                 return sa.hasParam("AtRandom")
                         ? Localizer.getInstance().getMessage("lblRandomTypeChosen", value)
                         : Localizer.getInstance().getMessage("lblPlayerPickedChosen", choser, value);
+            case GuessWord:
+                return choser + " guessed " + value;
             case FlipCoin:
                 String flipper = StringUtils.capitalize(mayBeYou(player, target));
                 return sa.hasParam("NoCall")

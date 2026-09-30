@@ -430,6 +430,9 @@ public class GameCopier {
             }
             if (c.hasChosenType()) {
                 newCard.setChosenType(c.getChosenType());
+                if (c.hasGuessableWord()) {
+                    newCard.copyGuessableWordFrom(c, c.getWordNoter() == null ? null : playerMap.get(c.getWordNoter()));
+                }
             }
             if (c.hasChosenType2()) {
                 newCard.setChosenType2(c.getChosenType2());

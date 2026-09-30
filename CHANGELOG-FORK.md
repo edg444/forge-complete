@@ -60,6 +60,10 @@ A complete half-integer layer running parallel to the whole-number one.
 - Flavor text available in-game (`CardFlavorText`, `Card.getTextBoxContents`) — several Un-set cards
   read the whole text box, flavor included.
 - Flavor names count in name-based mechanics.
+- **A secret word the players guess at** (Hangman): ChooseType `Guessable$ True` (with `MinLetters$`,
+  `MaxLetters$`, `WordList$ True` for the AI's vocabulary from `res/lists/Words.txt`), `DB$ GuessWord` with
+  `GuessWrong$`/`GuessCorrect$`, trigger `Mode$ WordGuessed`. The word never reaches the view - only the
+  hangman sheet does.
 
 ### Printing traits
 
@@ -137,6 +141,27 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 ## Log
 
 ### Unreleased
+
+- **Hangman** (ust/56). The game keeps the hangman sheet, so nothing here is honor system except that the
+  noted word is a real word.
+  - Noting: a person types any word of six to eight letters (A-Z only; re-asked if it isn't, and offered the
+    list if they give none); the AI takes a random one from `res/lists/Words.txt` (563 words written for this
+    fork). Everyone is told the length (ruling). The word is held in `chosenType` but kept out of `CardView`:
+    the detail panel shows `(chosen word: _ A _ _ E _ - wrong: Q, X)`.
+  - Guessing: `{1}`, any player may activate, target is `Player.!controlsCard.Self`. The guesser picks an
+    unguessed letter from a list or "Guess the word" and types it. A right letter fills in every instance; a
+    letter is never offered twice (rulings). A wrong guess resolves `GuessWrong$` (+1/+1 counter). The guess
+    that finishes the word runs `WordGuessed`, a real trigger of Hangman's that sacrifices it.
+  - AI (`GuessWordAi`) plays from the sheet, never from the word: it matches the pattern, wrong letters and
+    wrong words against the list and guesses the letter most matches share, or the word when one match is
+    left; with no match it goes by English letter frequency. It reads the word itself only if it noted it
+    (ruling: the noter keeps answering for the word, and knowing it, after a control change). With its own
+    Hangman it makes an opponent guess once a turn (second main phase or the opponent's end step) while three
+    or more letters are hidden; against another player's it pays only when its guess will finish the word.
+  - New: `forge.util.WordList`, `Card.setGuessableWord` and friends (copied by `CardCopyService` and
+    `GameCopier`), `GuessWordEffect`, `TriggerWordGuessed`, `ComputerUtil.chooseSomeType` "word" +
+    `AILogic$ Random`. `HangmanTest` (9). Suite: 830 run, 0 failed, 6 skipped.
+- **Finders, Keepers** (ust/55) was already in from upstream; script checked against Scryfall, no change.
 
 - **Extremely Slow Zombie** (ust/54a–d, four printings that differ only in flavor text; the edition file already
   listed them) and the **last strike** keyword it needs. `Combat` holds a creature with last strike out of the

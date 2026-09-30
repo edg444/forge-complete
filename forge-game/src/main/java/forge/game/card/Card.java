@@ -312,6 +312,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     private String originalText = "", text = "";
     private String chosenType = "";
     private String chosenTypeKind = "";
+    // Hangman: chosenType is a secretly noted word the players guess at. Null unless there is one.
+    private String guessedLetters = null;
+    private List<String> wrongWordGuesses = new ArrayList<>();
+    private Player wordNoter = null;
     private String chosenType2 = "";
     private String chosenArtist = "";
     private List<String> notedTypes = new ArrayList<>();
@@ -2273,6 +2277,83 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     public final void setSecretChosenType(final String s) {
         chosenType = s;
+    }
+
+    /**
+     * Secretly notes a word for the players to guess at, a letter at a time or outright (Hangman). The word
+     * itself stays out of the view: what everyone sees is getGuessableWordDisplay().
+     */
+    public final void setGuessableWord(final String word, final Player noter) {
+        chosenType = word.toUpperCase();
+        guessedLetters = "";
+        wrongWordGuesses = new ArrayList<>();
+        wordNoter = noter;
+        view.updateChosenType(this);
+    }
+    public final boolean hasGuessableWord() {
+        return guessedLetters != null;
+    }
+    /** The letters guessed so far, right and wrong, in the order they were guessed. */
+    public final String getGuessedLetters() {
+        return guessedLetters == null ? "" : guessedLetters;
+    }
+    public final List<String> getWrongWordGuesses() {
+        return wrongWordGuesses;
+    }
+    /** Whoever noted the word. They keep answering for it, and knowing it, if the card changes controllers. */
+    public final Player getWordNoter() {
+        return wordNoter;
+    }
+    public final void addGuessedLetter(final char letter) {
+        final char c = Character.toUpperCase(letter);
+        if (guessedLetters != null && guessedLetters.indexOf(c) < 0) {
+            guessedLetters += c;
+            view.updateChosenType(this);
+        }
+    }
+    public final void addWrongWordGuess(final String word) {
+        wrongWordGuesses.add(word.toUpperCase());
+        view.updateChosenType(this);
+    }
+    /** The word was guessed outright: fill in every letter. */
+    public final void revealGuessableWord() {
+        for (int i = 0; i < chosenType.length(); i++) {
+            addGuessedLetter(chosenType.charAt(i));
+        }
+    }
+    public final boolean isWordFullyGuessed() {
+        return hasGuessableWord() && getWordPattern().indexOf('_') < 0;
+    }
+    /** The word with a '_' for each letter not guessed yet. Public information. */
+    public final String getWordPattern() {
+        final StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < chosenType.length(); i++) {
+            final char c = chosenType.charAt(i);
+            sb.append(getGuessedLetters().indexOf(c) >= 0 ? c : '_');
+        }
+        return sb.toString();
+    }
+    /** The pattern spaced out the way hangman is drawn, followed by the wrong guesses. */
+    public final String getGuessableWordDisplay() {
+        final StringBuilder sb = new StringBuilder(String.join(" ", getWordPattern().split("")));
+        final List<String> wrong = new ArrayList<>();
+        for (int i = 0; i < getGuessedLetters().length(); i++) {
+            final char c = getGuessedLetters().charAt(i);
+            if (chosenType.indexOf(c) < 0) {
+                wrong.add(String.valueOf(c));
+            }
+        }
+        wrong.addAll(wrongWordGuesses);
+        if (!wrong.isEmpty()) {
+            sb.append(" - wrong: ").append(String.join(", ", wrong));
+        }
+        return sb.toString();
+    }
+    public final void copyGuessableWordFrom(final Card other, final Player noter) {
+        guessedLetters = other.guessedLetters;
+        wrongWordGuesses = new ArrayList<>(other.wrongWordGuesses);
+        wordNoter = noter;
+        view.updateChosenType(this);
     }
     public final void revealChosenType() {
         view.updateChosenType(this);

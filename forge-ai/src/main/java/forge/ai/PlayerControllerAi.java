@@ -3,6 +3,7 @@ package forge.ai;
 import com.google.common.collect.*;
 import forge.LobbyPlayer;
 import forge.StaticData;
+import forge.ai.ability.GuessWordAi;
 import forge.ai.ability.ProtectAi;
 import forge.card.CardStateName;
 import forge.card.ColorSet;
@@ -1534,6 +1535,9 @@ public class PlayerControllerAi extends PlayerController {
         // currently see - an honest small chance of being right rather than guaranteed wrong.
         // What KIND of answer differs per card, though: guessing an artist when asked for a card
         // name is wrong every single time, which is no guess at all.
+        if (sa != null && sa.getApi() == ApiType.GuessWord) {
+            return GuessWordAi.guessWord(player, sa.getHostCard());
+        }
         final boolean wantsArtist = sa != null && sa.getApi() == ApiType.GuessArtist;
 
         final CardCollection seen = new CardCollection();

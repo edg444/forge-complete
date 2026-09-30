@@ -2606,6 +2606,10 @@ public class ComputerUtil {
                 chosen = "Island";
             }
         }
+        else if (kindOfType.equals("word") && "Random".equals(logic) && !validTypes.isEmpty()) {
+            // Hangman: any word from the list is as good as another, as long as it can't be predicted
+            chosen = Aggregates.random(validTypes);
+        }
         else if (kindOfType.equals("letter")) {
             // Monkey Monkey Monkey pays off names that START with the letter, so it wants the most
             // common initial. When Fluffy Bunnies Attack cares about occurrences anywhere instead,

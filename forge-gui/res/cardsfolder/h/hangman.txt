@@ -1,0 +1,14 @@
+Name:Hangman
+ManaCost:B
+Types:Creature Human Villain
+PT:1/1
+K:ETBReplacement:Other:DBNoteWord
+# Guessable: noted in secret; everyone sees only the hangman sheet (blanks, right letters, wrong guesses).
+# A person types any word of the right length; the AI takes one from res/lists/Words.txt.
+SVar:DBNoteWord:DB$ ChooseType | Type$ word | Chooser$ You | FreeInput$ True | Guessable$ True | MinLetters$ 6 | MaxLetters$ 8 | WordList$ True | AILogic$ Random | ChoiceTitle$ Secretly note a word with six to eight letters | SpellDescription$ As this creature enters, secretly note a word with six to eight letters.
+A:AB$ GuessWord | Cost$ 1 | ValidTgts$ Player.!controlsCard.Self | TgtPrompt$ Select target player who doesn't control this creature | Activator$ Player | GuessWrong$ DBPutCounter | SpellDescription$ Target player who doesn't control this creature guesses the noted word or an unguessed letter in that word. If they guess wrong, put a +1/+1 counter on this creature. Any player may activate this ability.
+SVar:DBPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1
+T:Mode$ WordGuessed | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigSac | TriggerDescription$ When a player guesses the noted word or all of its letters, sacrifice this creature.
+SVar:TrigSac:DB$ Sacrifice
+DeckHas:Ability$Counters
+Oracle:As this creature enters, secretly note a word with six to eight letters.\n{1}: Target player who doesn't control this creature guesses the noted word or an unguessed letter in that word. If they guess wrong, put a +1/+1 counter on this creature. Any player may activate this ability.\nWhen a player guesses the noted word or all of its letters, sacrifice this creature.

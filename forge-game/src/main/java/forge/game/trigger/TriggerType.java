@@ -159,6 +159,7 @@ public enum TriggerType {
     Untaps(TriggerUntaps.class),
     VisitAttraction(TriggerVisitAttraction.class),
     Vote(TriggerVote.class),
+    WordGuessed(TriggerWordGuessed.class),
     Waterbend(TriggerElementalbend.class)          
     ;
 

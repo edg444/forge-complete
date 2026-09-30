@@ -364,6 +364,9 @@ public class CardCopyService {
         newCopy.setChosenCards(copyFrom.getChosenCards());
 
         newCopy.setChosenType(copyFrom.getChosenType());
+        if (copyFrom.hasGuessableWord()) {
+            newCopy.copyGuessableWordFrom(copyFrom, copyFrom.getWordNoter());
+        }
         newCopy.setChosenType2(copyFrom.getChosenType2());
         newCopy.setNamedCards(Lists.newArrayList(copyFrom.getNamedCards()));
         newCopy.setChosenColors(Lists.newArrayList(copyFrom.getChosenColors()));

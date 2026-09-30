@@ -373,6 +373,7 @@ public final class FModel {
         // flavor text, so the 55k-entry table stays unbuilt unless one of them is actually played
         CardFlavorText.setSource(() -> FileUtil.readFile(ForgeConstants.FLAVOR_TEXT_FILE));
         PrintingTraits.setSource(() -> FileUtil.readFile(ForgeConstants.PRINTING_TRAITS_FILE));
+        WordList.setSource(() -> FileUtil.readFile(ForgeConstants.WORD_LIST_FILE));
 
         if (!keywordsLoaded) {
             final List<String> nskwListFile = FileUtil.readFile(ForgeConstants.KEYWORD_LIST_FILE);
