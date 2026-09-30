@@ -295,6 +295,13 @@ public class PumpAi extends PumpAiBase {
             }
         }
 
+        if (isTargetDependentShrink(sa)) {
+            if (targetDependentShrink(ai, sa, false)) {
+                return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+            }
+            return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
+        }
+
         if ((numDefense.contains("X") && defense == 0) || (numAttack.contains("X") && attack == 0 && !isBerserk)) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
@@ -646,11 +653,45 @@ public class PumpAi extends PumpAiBase {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
 
+        if (isTargetDependentShrink(sa) && targetDependentShrink(ai, sa, true)) {
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
+
         if (pumpTgtAI(ai, sa, defense, attack, mandatory, true)) {
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
 
         return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+    }
+
+    // -X/-X where X is read off the target itself (Capital Offense, Flunk): before a target is
+    // chosen X means nothing, so it has to be worked out per candidate rather than once up front
+    private static boolean isTargetDependentShrink(final SpellAbility sa) {
+        return sa.usesTargeting() && sa.isCurse() && "-X".equals(sa.getParam("NumDef"))
+                && sa.getSVar("X").startsWith("Targeted");
+    }
+
+    private boolean targetDependentShrink(final Player ai, final SpellAbility sa, final boolean immediately) {
+        final CardCollection killable = new CardCollection();
+        for (final Card c : CardLists.getTargetableCards(ai.getOpponents().getCreaturesInPlay(), sa)) {
+            sa.resetTargets();
+            sa.getTargets().add(c);
+            final int x = AbilityUtils.calculateAmount(sa.getHostCard(), "X", sa);
+            if (x > 0 && x >= c.getNetToughness()) {
+                killable.add(c);
+            }
+        }
+        sa.resetTargets();
+        final Card best = ComputerUtilCard.getBestCreatureAI(killable);
+        if (best == null) {
+            return false;
+        }
+        if (!immediately && !ComputerUtilCard.useRemovalNow(sa, best, best.getNetToughness(), ZoneType.Graveyard)
+                && !ComputerUtil.activateForCost(sa, sa.getActivatingPlayer())) {
+            return false;
+        }
+        sa.getTargets().add(best);
+        return true;
     }
 
     @Override

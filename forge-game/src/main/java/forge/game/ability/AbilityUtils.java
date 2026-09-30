@@ -2168,6 +2168,9 @@ public class AbilityUtils {
         if (sq[0].equals("CardPunctuationMarks")) {
             return doXMath(CardFactoryUtil.getPunctuationMarkCount(c), expr, c, ctb);
         }
+        if (sq[0].equals("CardCapitalLetters")) {
+            return doXMath(CardFactoryUtil.getCapitalLetterCount(c), expr, c, ctb);
+        }
         // Elvish House Party reads the real-world clock. Twelve-hour system, so midnight and noon
         // are 12 rather than 0 - the card is never a 0/0 and never dies to the clock alone.
         if (sq[0].equals("CurrentHour")) {

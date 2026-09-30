@@ -52,7 +52,7 @@ A complete half-integer layer running parallel to the whole-number one.
 
 ### Card-text and name mechanics
 
-- `Count$ CardPunctuationMarks`, `CardTextBoxNumbers`, `WordsInName` (readable from a static),
+- `Count$ CardPunctuationMarks`, `CardCapitalLetters`, `CardTextBoxNumbers`, `WordsInName` (readable from a static),
   `ChosenLetterInName`, `CardBingoLines`, `CurrentHour`, `MergedCount`,
   `DifferentExpansionSymbols`.
 - Properties: `textHasChosenWord`, `nameStartsWithChosenLetter`, `fewerLettersInNameThanSource`,
@@ -135,6 +135,16 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 ## Log
 
 ### Unreleased
+
+- **capital offense** (ust/52, printed all lowercase, and the name is too): `Count$ CardCapitalLetters`
+  (`CardFactoryUtil.getCapitalLetterCount`) counts capitals in the target's `Oracle:` text, leaving out
+  reminder text and mana/tap symbols (printed as icons, not letters). Ability words and mid-sentence capitals
+  count (Unstable rulings). AI: `PumpAi` now works out a target-dependent -X/-X (`SVar:X:Targeted...`) for
+  each candidate and targets the best creature it kills. Before, X read as 0 or a guess before any target
+  was chosen. Also fixes Flunk's AI. Known limit: 512 of 34,891 `Oracle:` lines count differently from
+  Scryfall's current Oracle (e.g. Serra Angel `Flying, vigilance` vs `Flying`/`Vigilance`), the pending
+  other-drift Oracle sync. `CapitalOffenseTest` (3). Suite: 801 run, 0 failed, 6 skipped.
+- **Big Boa Constrictor** (ust/51): already scripted upstream, checked against Scryfall, no change.
 
 ### 2026-09-27 (deployed: desktop, Android, GitHub) — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician; Magic Word; More or Less; S.N.E.A.K. Dispatcher; Socketed Sprocketer; Spy Eye; Very Cryptic Command; Wall of Fortune
 

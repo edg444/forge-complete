@@ -4202,6 +4202,23 @@ public class CardFactoryUtil {
     }
 
     /**
+     * Capital Offense - capital letters in a card's rules text. Reminder text and flavor text are
+     * out (the card says so); ability words and every capital, not just sentence openers, are in
+     * (Unstable rulings). Mana and tap symbols print as icons rather than letters, so they don't count.
+     */
+    public static int getCapitalLetterCount(final Card card) {
+        final String rules = StringUtils.defaultString(card.getOracleText()).replace("\\n", "\n")
+                .replaceAll("\\([^)]*\\)", " ").replaceAll("\\{[^}]*\\}", " ");
+        int count = 0;
+        for (int i = 0; i < rules.length(); i++) {
+            if (Character.isUpperCase(rules.charAt(i))) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
      * Symbol Status - how many different expansion symbols are on permanents this player controls.
      * Tokens are skipped: a token isn't printed with an expansion symbol, so it can't add one (which
      * also stops the Expansion-Symbol tokens this makes from inflating the next casting).
