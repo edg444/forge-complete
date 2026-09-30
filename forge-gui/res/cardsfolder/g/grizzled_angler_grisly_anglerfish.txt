@@ -8,7 +8,7 @@ SVar:X:Count$ValidGraveyard Creature.YouOwn+Colorless
 DeckHas:Ability$Graveyard
 DeckHints:Ability$Delirium & Color$Colorless
 AlternateMode:DoubleFaced
-Oracle:{T}: Mill two cards. Then if there is a colorless creature card in your graveyard, transform Grizzled Angler.
+Oracle:{T}: Mill two cards. Then if there is a colorless creature card in your graveyard, transform this creature. (To mill two cards, put the top two cards of your library into your graveyard.)
 
 ALTERNATE
 

@@ -8,4 +8,4 @@ SVar:TrigConjure:DB$ MakeCard | Conjure$ True | TargetType$ Spell | TgtPrompt$ S
 SVar:DBAnimate:DB$ Animate | Defined$ Remembered | staticAbilities$ SpendAnyMana | Duration$ Perpetual | SubAbility$ DBCleanup
 SVar:SpendAnyMana:Mode$ ManaConvert | EffectZone$ Stack | ValidPlayer$ You | ValidCard$ Card.Self | ValidSA$ Spell | ManaConversion$ AnyType->AnyColor | Description$ You may spend mana as though it were mana of any color to cast this spell.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:Flash\nWhen Futurist Spellthief enters, conjure a duplicate of target spell into your hand. That card perpetually gains "You may spend mana as though it were mana of any color to cast this spell."
+Oracle:Flash\nWhen Futurist Spellthief enters the battlefield, conjure a duplicate of target spell into your hand. That card perpetually gains "You may spend mana as though it were mana of any color to cast this spell."

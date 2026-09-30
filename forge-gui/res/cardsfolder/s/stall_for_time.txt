@@ -7,4 +7,4 @@ SVar:DBCounter:DB$ PutCounter | Condition$ Kicked | Defined$ Targeted | CounterT
 SVar:DBDraw:DB$ Draw | SpellDescription$ Draw a card.
 DeckHas:Ability$Counters
 DeckHints:Color$Blue
-Oracle:Kicker {1}{U} (You may pay an additional {1}{U} as you cast this spell.)\nTap up to two target creatures. If this spell was kicked, put a stun counter on each of those creatures. (If a permanent with a stun counter on it would become untapped, remove one from it instead.)\nDraw a card.
+Oracle:Kicker {1}{U} (You may pay an additional {1}{U} as you cast this spell.)\nTap up to two target creatures. If this spell was kicked, put a stun counter on each of those creatures. (If a permanent with a stun counter would become untapped, remove one from it instead.)\nDraw a card.

@@ -11,4 +11,4 @@ A:AB$ GainLife | Cost$ 2 T Sac<1/CARDNAME> | LifeAmount$ 3 | SpellDescription$ Y
 SVar:PlayMain1:TRUE
 DeckHas:Ability$LifeGain|Counters & Type$Knight
 DeckHints:Type$Food
-Oracle:Other Food creatures you control have horsemanship. (They can't be blocked except by creatures with horsemanship.)\nAt the beginning of your combat step, you may put a +1/+1 counter on target non-creature Food you control. If you do, it becomes a 0/0 Knight creature in addition to its other types.\n{2}, {T}, Sacrifice Cinnamon, Seasoned Steed: You gain 3 life.
+Oracle:Other Food creatures you control have horsemanship. (They can't be blocked except by creatures with horsemanship.)\nAt the beginning of your combat step, you may put a +1/+1 counter on target noncreature Food you control. If you do, it becomes a 0/0 Knight creature in addition to its other types.\n{2}, {T}, Sacrifice Cinnamon, Seasoned Steed: You gain 3 life.

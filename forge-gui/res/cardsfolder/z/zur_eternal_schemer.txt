@@ -8,4 +8,4 @@ A:AB$ Animate | Cost$ 1 W | ValidTgts$ Enchantment.nonAura+YouCtrl | TgtPrompt$ 
 SVar:X:Targeted$CardManaCost
 DeckHas:Ability$LifeGain
 DeckNeeds:Type$Enchantment
-Oracle:Flying\nEnchantment creatures you control have deathtouch, lifelink, and hexproof.\n{1}{W}: Target non-Aura enchantment you control becomes a creature in addition to its other types and has base power and toughness each equal to its mana value.
+Oracle:Flying\nEnchantment creatures you control have deathtouch, lifelink, and hexproof.\n{1}{W}: Target non-Aura enchantment you control becomes a creature in addition to its other types and has base power and base toughness each equal to its mana value.

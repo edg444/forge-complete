@@ -11,7 +11,7 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:PlayerCountOpponents$HighestCardsInGraveyard
 DeckHints:Ability$Graveyard|Mill
 AlternateMode:DoubleFaced
-Oracle:Menace\nWhen Sheoldred enters, each opponent sacrifices a nontoken creature or planeswalker.\n{4}{B}: Exile Sheoldred, then return it to the battlefield transformed under its owner's control. Activate only as a sorcery and only if an opponent has eight or more cards in their graveyard.
+Oracle:Menace\nWhen Sheoldred enters, each opponent sacrifices a nontoken creature or planeswalker of their choice.\n{4}{B}: Exile Sheoldred, then return it to the battlefield transformed under its owner's control. Activate only as a sorcery and only if an opponent has eight or more cards in their graveyard.
 
 ALTERNATE
 

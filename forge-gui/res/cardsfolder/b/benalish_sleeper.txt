@@ -6,4 +6,4 @@ K:Kicker:B
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self+kicked | Execute$ TrigSac | TriggerDescription$ When this creature enters, if it was kicked, each player sacrifices a creature.
 SVar:TrigSac:DB$ Sacrifice | Defined$ Player | SacValid$ Creature
 SVar:NeedsToPlay:Creature.OppCtrl
-Oracle:Kicker {B} (You may pay an additional {B} as you cast this spell.)\nWhen this creature enters, if it was kicked, each player sacrifices a creature.
+Oracle:Kicker {B} (You may pay an additional {B} as you cast this spell.)\nWhen this creature enters, if it was kicked, each player sacrifices a creature of their choice.

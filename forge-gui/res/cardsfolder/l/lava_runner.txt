@@ -6,4 +6,4 @@ K:Haste
 T:Mode$ BecomesTarget | ValidTarget$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigSac | TriggerDescription$ Whenever this creature becomes the target of a spell or ability, that spell or ability's controller sacrifices a land.
 SVar:TrigSac:DB$ Sacrifice | SacValid$ Land | ChangeNum$ 1 | Defined$ TriggeredSourceController
 SVar:Targeting:Counter
-Oracle:Haste\nWhenever this creature becomes the target of a spell or ability, that spell or ability's controller sacrifices a land.
+Oracle:Haste\nWhenever this creature becomes the target of a spell or ability, that spell or ability's controller sacrifices a land of their choice.

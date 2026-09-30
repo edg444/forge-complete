@@ -4,4 +4,4 @@ Types:Creature Human Archer
 PT:2/1
 K:Hexproof
 K:Reach
-Oracle:Hexproof, reach
+Oracle:Reach, hexproof

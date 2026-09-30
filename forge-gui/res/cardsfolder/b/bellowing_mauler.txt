@@ -6,4 +6,4 @@ T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | TriggerZones$ Battlefiel
 SVar:TrigRepeatEach:DB$ RepeatEach | RepeatSubAbility$ DBLoseLife | RepeatPlayers$ Player
 SVar:DBLoseLife:DB$ LoseLife | Defined$ Remembered | LifeAmount$ 4 | UnlessCost$ Sac<1/Creature.!token/a nontoken creature> | UnlessPayer$ Remembered
 DeckHas:Ability$Sacrifice
-Oracle:At the beginning of your end step, each player loses 4 life unless they sacrifice a nontoken creature.
+Oracle:At the beginning of your end step, each player loses 4 life unless they sacrifice a nontoken creature of their choice.

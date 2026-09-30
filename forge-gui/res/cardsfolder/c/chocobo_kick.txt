@@ -7,4 +7,4 @@ SVar:DBDealDamage:DB$ DealDamage | ValidTgts$ Creature.OppCtrl | AILogic$ PowerD
 SVar:X:Count$Kicked.Y.Z
 SVar:Y:ParentTargeted$CardPower/Times.2
 SVar:Z:ParentTargeted$CardPower
-Oracle:Kicker—Return a land you control to its owner's hand. (You may return a land you control to its owner's hand in addition to any other costs as you cast this spell.)\nTarget creature you control deals damage equal to its power to target creature an opponent control. If this spell was kicked, the creature you control deals twice that much damage instead.
+Oracle:Kicker—Return a land you control to its owner's hand. (You may return a land you control to its owner's hand in addition to any other costs as you cast this spell.)\nTarget creature you control deals damage equal to its power to target creature an opponent controls. If this spell was kicked, the creature you control deals twice that much damage instead.

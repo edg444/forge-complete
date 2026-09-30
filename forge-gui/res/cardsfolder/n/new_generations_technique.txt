@@ -3,4 +3,4 @@ ManaCost:3 G
 Types:Sorcery
 K:Sneak:2 G
 A:SP$ ChangeZone | Origin$ Library | Destination$ Battlefield | Tapped$ True | ChangeType$ Land.Basic | ChangeTypeDesc$ basic land | ChangeNum$ 2 | SpellDescription$ Search your library for up to two basic land cards, put them onto the battlefield tapped, then shuffle.
-Oracle:Sneak {2}{G}\nSearch your library for up to two basic land cards, put them onto the battlefield tapped, then shuffle.
+Oracle:Sneak {2}{G} (You may cast this spell for {2}{G} if you also return an unblocked attacker you control to hand during the declare blockers step.)\nSearch your library for up to two basic land cards, put them onto the battlefield tapped, then shuffle.

@@ -11,4 +11,4 @@ SVar:TrigDraft:DB$ Draft | Spellbook$ Air Response Unit,Skysovereign; Consul Fla
 SVar:DBAnimate:DB$ Animate | Defined$ Remembered | Types$ Creature,Artifact | Duration$ Perpetual | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 K:Crew:4
-Oracle:Flying, vigilance\nWhen this Vehicle enters, create four 1/1 colorless Servo artifact creature tokens.\nWhenever this Vehicle attacks, draft a card from Support Skyforge's spellbook. That card perpetually becomes an artifact creature.\nCrew 4
+Oracle:Flying, Vigilance\nWhen this Vehicle enters, create four 1/1 colorless Servo artifact creature tokens.\nWhenever this Vehicle attacks, draft a card from Support Skyforge's spellbook. That card perpetually becomes an artifact creature.\nCrew 4

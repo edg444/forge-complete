@@ -8,4 +8,4 @@ SVar:DBDiscard:DB$ Discard | Defined$ Opponent | Mode$ TgtChoose | SpellDescript
 SVar:X:Count$xPaid
 AI:RemoveDeck:All
 DeckHas:Ability$Sacrifice|Token|Discard & Type$Artifact|Dalek
-Oracle:Choose X. You may choose the same mode more than once.\n• Each player sacrifices a nonartifact creature.\n• Create a 3/3 black Dalek artifact creature token with menace.\n• Each opponent discards a card.
+Oracle:Choose X. You may choose the same mode more than once.\n• Each player sacrifices a nonartifact creature of their choice.\n• Create a 3/3 black Dalek artifact creature token with menace.\n• Each opponent discards a card.

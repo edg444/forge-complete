@@ -6,4 +6,4 @@ SVar:DBRepeatEach:DB$ RepeatEach | RepeatPlayers$ Player | RepeatSubAbility$ DBF
 SVar:DBFlip:DB$ FlipCoin | Flipper$ Remembered | NoCall$ True | HeadsSubAbility$ DBCopyPermanent
 SVar:DBCopyPermanent:DB$ CopyPermanent | Defined$ ChosenCard | Controller$ Remembered
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
-Oracle:{3}, {T}: Choose a creature card at random from all players' decklists. Each player flips a coin. Each player whose coin comes up heads creates a token that's a copy of that card.
+Oracle:{3}, {T}: Choose a random summon card from all players' decks. For each player, flip a coin. If the flip ends up heads, put a token creature into play and treat it as though an exact copy of the chosen summon card were just played.

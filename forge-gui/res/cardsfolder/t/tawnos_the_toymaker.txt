@@ -6,4 +6,4 @@ T:Mode$ SpellCast | TriggerZones$ Battlefield | OptionalDecider$ You | ValidCard
 SVar:TrigCopy:DB$ CopySpellAbility | Defined$ TriggeredSpellAbility | AddTypes$ Artifact
 DeckHas:Ability$Token & Type$Artifact
 DeckNeeds:Type$Beast|Bird
-Oracle:Whenever you cast a Beast or Bird creature spell, you may copy it, except it's an artifact in addition to its other types. (The copy becomes a token.)
+Oracle:Whenever you cast a Beast or Bird creature spell, you may copy it, except the copy is an artifact in addition to its other types. (The copy becomes a token.)

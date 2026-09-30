@@ -11,4 +11,4 @@ SVar:DBSacAll:DB$ SacrificeAll | ValidCards$ Card.IsRemembered | SubAbility$ DBC
 SVar:DBCleanupChosen:DB$ Cleanup | ClearChosenPlayer$ True
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:NeedsToPlay:Creature.OppCtrl
-Oracle:Roll a d20.\n1—9 | Choose an opponent. That player sacrifices a creature.\n10—19 | Each opponent sacrifices a creature.\n20 | Each opponent sacrifices a creature with the greatest power among creatures that player controls.
+Oracle:Roll a d20.\n1—9 | Choose an opponent. That player sacrifices a creature of their choice.\n10—19 | Each opponent sacrifices a creature of their choice.\n20 | Each opponent sacrifices a creature with the greatest power among creatures that player controls.

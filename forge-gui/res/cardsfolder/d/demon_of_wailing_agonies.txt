@@ -8,4 +8,4 @@ SVar:TrigDealsCB:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player
 SVar:TrigSac:DB$ Sacrifice | Defined$ TriggeredTarget | SacValid$ Creature
 SVar:BuffedBy:Card.IsCommander
 AI:RemoveDeck:Random
-Oracle:Flying\nLieutenant — As long as you control your commander, this creature gets +2/+2 and has "Whenever this creature deals combat damage to a player, that player sacrifices a creature."
+Oracle:Flying\nLieutenant — As long as you control your commander, this creature gets +2/+2 and has "Whenever this creature deals combat damage to a player, that player sacrifices a creature of their choice."

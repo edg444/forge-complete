@@ -8,4 +8,4 @@ SVar:TrigLoseLife:DB$ LoseLife | Defined$ You | LifeAmount$ 1 | SubAbility$ DBDr
 SVar:DBDraw:DB$ Draw | Defined$ You
 DeckHas:Ability$Token & Type$Role|Aura
 DeckHints:Type$Aura
-Oracle:When this enchantment enters, create a Wicked Role token attached to target creature you control. (If you control another Role on it, put that one into the graveyard. Enchanted creature gets +1/+1. When this Aura is put into a graveyard, each opponent loses 1 life.)\nAt the beginning of your draw step, if you control an enchanted creature, you lose 1 life and you draw an additional card.
+Oracle:When this enchantment enters, create a Wicked Role token attached to target creature you control. (Enchanted creature gets +1/+1. When this token is put into a graveyard, each opponent loses 1 life.)\nAt the beginning of your draw step, if you control an enchanted creature, you lose 1 life and you draw an additional card.

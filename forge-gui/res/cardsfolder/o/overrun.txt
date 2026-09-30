@@ -2,4 +2,4 @@ Name:Overrun
 ManaCost:2 G G G
 Types:Sorcery
 A:SP$ PumpAll | ValidCards$ Creature.YouCtrl | NumAtt$ +3 | NumDef$ +3 | KW$ Trample | SpellDescription$ Creatures you control get +3/+3 and gain trample until end of turn.
-Oracle:Creatures you control get +3/+3 and gain trample until end of turn.
+Oracle:Creatures you control get +3/+3 and gain trample until end of turn. (Each of those creatures can deal excess combat damage to the player or planeswalker it's attacking.)

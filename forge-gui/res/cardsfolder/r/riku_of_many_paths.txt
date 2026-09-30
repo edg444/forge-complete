@@ -14,4 +14,4 @@ SVar:DBPump:DB$ Pump | KW$ Trample | StackDescription$ It gains trample until en
 SVar:DBToken:DB$ Token | TokenScript$ u_1_1_bird_flying | SpellDescription$ Create a 1/1 blue Bird creature token with flying.
 AI:RemoveDeck:Random
 DeckHas:Ability$Counters|Token & Type$Bird
-Oracle:Whenever you cast a modal spell, choose up to X, where X is the number of times you chose a mode for that spell —\n• Exile the top card of your library. Until the end of your next turn, you may play it.\n• Put a +1/+1 counter on Riku of Many Paths. It gains trample until end of turn.\n• Create a 1/1 blue Bird creature token with flying.
+Oracle:Whenever you cast a modal spell, choose up to X, where X is the number of times you chose a mode for that spell —\n• Exile the top card of your library. Until the end of your next turn, you may play it.\n• Put a +1/+1 counter on Riku. It gains trample until end of turn.\n• Create a 1/1 blue Bird creature token with flying.

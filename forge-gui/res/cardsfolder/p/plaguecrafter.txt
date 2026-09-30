@@ -7,4 +7,4 @@ SVar:TrigSac:DB$ Sacrifice | Defined$ Player | SacValid$ Creature,Planeswalker |
 SVar:Discard:DB$ Discard | Mode$ TgtChoose | NumCards$ 1 | Defined$ NonRememberedController | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:NeedsToPlay:Creature.OppCtrl,Planeswalker.OppCtrl
-Oracle:When this creature enters, each player sacrifices a creature or planeswalker. Each player who can't discards a card.
+Oracle:When this creature enters, each player sacrifices a creature or planeswalker of their choice. Each player who can't discards a card.

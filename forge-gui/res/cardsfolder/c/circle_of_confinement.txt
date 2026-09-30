@@ -12,4 +12,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:PlayMain1:TRUE
 SVar:NeedsToPlay:Creature.cmcLE3+OppCtrl
 DeckHas:Ability$LifeGain
-Oracle:When this enchantment enters, exile target creature with mana value 3 or less an opponent controls until this enchantment leaves the battlefield.\nWhenever an opponent casts a Vampire spell with the same name as a card exiled with this enchantment, you gain 2 life.
+Oracle:When this enchantment enters, exile target creature an opponent controls with mana value 3 or less until this enchantment leaves the battlefield.\nWhenever an opponent casts a Vampire spell with the same name as a card exiled with this enchantment, you gain 2 life.

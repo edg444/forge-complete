@@ -4,4 +4,4 @@ Types:Creature Leech Cleric
 PT:3/4
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigConjure | TriggerDescription$ When CARDNAME enters the battlefield, create a Leeches token card and put it into your hand.
 SVar:TrigConjure:DB$ MakeCard | Name$ Leeches | TokenCard$ True | Zone$ Hand
-Oracle:When Leech Medic enters the battlefield, create a Leeches token card and put it into your hand.
+Oracle:When Leech Medic enters the battlefield, create a Leeches token card and put it into your hand. (Leeches is a {1}{W}{W} sorcery from Homelands that reads, "Target player loses all poison counters. Leeches deals that much damage to that player.")

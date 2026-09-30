@@ -5,4 +5,4 @@ A:SP$ Branch | BranchConditionSVar$ X | BranchConditionSVarCompare$ GE1 | TrueSu
 SVar:Seek1:DB$ Seek | Types$ Card.Land,Card.nonLand
 SVar:Seek2:DB$ Seek | Type$ Card.nonLand | Num$ 2
 SVar:X:Count$ValidHand Land.YouCtrl
-Oracle:If you have no land cards in your hand, seek a land card and a nonland card. Otherwise, seek two nonland cards.
+Oracle:If you have no land cards in your hand, seek a land card and a nonland card. Otherwise, seek two nonland cards. (To seek a card, put one at random from your library into your hand.)

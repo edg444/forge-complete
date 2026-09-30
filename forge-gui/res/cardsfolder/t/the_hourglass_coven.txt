@@ -9,4 +9,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 S:Mode$ Continuous | Affected$ Warlock.Other+YouCtrl | AddPower$ 1 | AddToughness$ 1 | Description$ Other Warlocks you control get +1/+1.
 SVar:PlayMain1:TRUE
 DeckHints:Type$Warlock
-Oracle:When The Hourglass Coven enters, draft a card from The Hourglass Coven's spellbook twice, then put those cards onto the battlefield.\nOther Warlocks you control get +1/+1.
+Oracle:When The Hourglass Coven enters the battlefield, draft a card from The Hourglass Coven's spellbook twice, then put those cards onto the battlefield.\nOther Warlocks you control get +1/+1.

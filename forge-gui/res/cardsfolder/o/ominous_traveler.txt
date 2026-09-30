@@ -9,4 +9,4 @@ SVar:SpendAnyMana:Mode$ ManaConvert | EffectZone$ Stack | ValidPlayer$ You | Val
 SVar:CastTrigger:Mode$ SpellCast | ValidCard$ Card.Self | Execute$ TrigReturn | TriggerDescription$ When you cast this spell, return a card named Ominous Traveler you control to its owner's hand.
 SVar:TrigReturn:DB$ ChangeZone | ChangeType$ Card.namedOminous Traveler+YouCtrl | ChangeNum$ 1 | Origin$ Battlefield | Destination$ Hand | Hidden$ True | Mandatory$ True
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:When Ominous Traveler enters, draft a card from Ominous Traveler's spellbook. That card perpetually gains "You may spend mana as though it were mana of any color to cast this spell" and "When you cast this spell, return a card named Ominous Traveler you control to its owner's hand."
+Oracle:When Ominous Traveler enters the battlefield, draft a card from Ominous Traveler's spellbook. That card perpetually gains "You may spend mana as though it were mana of any color to cast this spell" and "When you cast this spell, return a creature named Ominous Traveler you control to its owner's hand."

@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDestroy:DB$ Destroy | TargetMin$ 0 | TargetMax$ 1 | ValidTgts$ Artifact,Enchantment | TgtPrompt$ Select up to one target artifact or enchantment
 A:AB$ Draw | Cost$ T | ValidTgts$ Opponent | Defined$ TargetedAndYou | NumCards$ 1 | SpellDescription$ You and target opponent each draw a card.
 AI:RemoveDeck:Random
-Oracle:Vigilance\nWhen Loran of the Third Path enters, destroy up to one target artifact or enchantment.\n{T}: You and target opponent each draw a card.
+Oracle:Vigilance\nWhen Loran enters, destroy up to one target artifact or enchantment.\n{T}: You and target opponent each draw a card.

@@ -8,4 +8,4 @@ SVar:TrigMill:DB$ Mill | NumCards$ 3 | Defined$ You | SubAbility$ DBPutCounter
 SVar:DBPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ X
 SVar:X:Count$ValidGraveyard Creature.YouOwn/Times.2
 DeckHas:Ability$Mill|Graveyard
-Oracle:When Siegfried enters, mill three cards. Then put X +1/+1 counters on Siegfried, where X is twice the number of creature cards in your graveyard.
+Oracle:Menace\nWhen Siegfried enters, mill three cards. Then put X +1/+1 counters on Siegfried, where X is twice the number of creature cards in your graveyard.

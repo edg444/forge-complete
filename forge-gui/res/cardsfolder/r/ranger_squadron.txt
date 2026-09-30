@@ -4,4 +4,4 @@ Types:Creature Cat Ranger
 PT:3/4
 K:Flying
 K:Double team
-Oracle:Flying\nDouble team
+Oracle:Flying, double team (When this creature attacks, conjure a duplicate into your hand, then both of them perpetually lose double team.)

@@ -9,4 +9,4 @@ SVar:TrigKicker:DB$ Token | TokenAmount$ X | TokenScript$ g_1_1_saproling | Toke
 SVar:X:Count$xPaid
 DeckHints:Type$Fungus|Treefolk
 DeckHas:Ability$Token
-Oracle:Kicker {X} (You may pay an additional {X} as you cast this spell.)\nSaproling creatures and other Treefolk creatures get +1/+1.\nWhen Verdeloth the Ancient enters, if it was kicked, create X 1/1 green Saproling creature tokens.
+Oracle:Kicker {X} (You may pay an additional {X} as you cast this spell.)\nSaproling creatures and other Treefolk creatures get +1/+1.\nWhen Verdeloth enters, if it was kicked, create X 1/1 green Saproling creature tokens.

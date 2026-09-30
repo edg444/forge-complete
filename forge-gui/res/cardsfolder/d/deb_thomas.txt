@@ -10,4 +10,4 @@ SVar:PlayMain1:TRUE
 SVar:X:Count$xPaid
 DeckHas:Ability$Token
 DeckHints:Type$Employee|Dog
-Oracle:Whenever an Employee you control enters, put a loyalty counter on Deb Thomas.\n[+1]: Create a 1/1 red Employee creature token.\n[-X]: Employees and Dogs you control get +X/+0 until end of turn.
+Oracle:Whenever an Employee enters under your control, put a loyalty counter on Deb Thomas.\n[+1]: Create a 1/1 red Employee creature token.\n[-X]: Employees and Dogs you control get +X/+0 until end of turn.

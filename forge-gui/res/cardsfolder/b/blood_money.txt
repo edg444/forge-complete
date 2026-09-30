@@ -6,4 +6,4 @@ SVar:DBTreasure:DB$ Token | TokenAmount$ X | TokenTapped$ True | TokenScript$ c_
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Valid Card.!token
 DeckHas:Ability$Token|Sacrifice
-Oracle:Destroy all creatures. For each nontoken creature destroyed this way, create a tapped Treasure token.
+Oracle:Destroy all creatures. For each nontoken creature destroyed this way, you create a tapped Treasure token.

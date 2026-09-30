@@ -6,4 +6,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigAnimate | TriggerZones$ Ba
 SVar:TrigAnimate:DB$ Animate | UnlessCost$ Sac<1/Creature> | UnlessPayer$ DefendingPlayer | staticAbilities$ Unblockable
 SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Card.Self | Description$ CARDNAME can't be blocked.
 SVar:HasAttackEffect:TRUE
-Oracle:Whenever this creature attacks, it gains "this creature can't be blocked" until end of turn unless defending player sacrifices a creature.
+Oracle:Whenever this creature attacks, it gains "this creature can't be blocked" until end of turn unless defending player sacrifices a creature of their choice.

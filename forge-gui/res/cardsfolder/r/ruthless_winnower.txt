@@ -7,4 +7,4 @@ SVar:TrigSac:DB$ Sacrifice | SacValid$ Creature.nonElf | Defined$ TriggeredPlaye
 AI:RemoveDeck:Random
 DeckHints:Type$Elf
 DeckHas:Ability$Sacrifice
-Oracle:At the beginning of each player's upkeep, that player sacrifices a non-Elf creature.
+Oracle:At the beginning of each player's upkeep, that player sacrifices a non-Elf creature of their choice.

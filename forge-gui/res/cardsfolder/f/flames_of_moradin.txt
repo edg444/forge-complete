@@ -9,4 +9,4 @@ SVar:PhaseTrig:Mode$ Phase | ValidPlayer$ You | Phase$ End of Turn | Execute$ Tr
 SVar:TrigSacrifice:DB$ Sacrifice
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHas:Type$Artifact & Ability$Sacrifice
-Oracle:Destroy up to three target artifacts. Conjure a duplicate of each nontoken artifact destroyed this way into your hand. The duplicates perpetually gain "You may pay {R} rather than pay this spell's mana cost" and "at the beginning of your end step, sacrifice this artifact."
+Oracle:Destroy up to three target artifacts. Conjure a duplicate of each nontoken artifact destroyed this way into your hand. The duplicates perpetually gain "You may pay {R} rather than pay this spell's mana cost" and "At the beginning of your end step, sacrifice this artifact."

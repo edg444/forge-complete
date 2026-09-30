@@ -11,4 +11,4 @@ SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ X
 SVar:X:TriggeredCard$CardCounters.P1P1
 SVar:PlayMain1:TRUE
 DeckHas:Ability$Counters
-Oracle:Whenever you win a coin flip, put a +1/+1 counter on Toothy and Zndrsplt.\nAt the beginning of combat on your turn, flip a coin until you lose a flip.\nWhen Toothy and Zndrsplt leaves the battlefield, draw a card for each +1/+1 counter on it.
+Oracle:Whenever you win a coin flip, put a +1/+1 counter on Toothy and Zndrsplt.\nAt the beginning of combat on your turn, flip a coin until you lose a flip.\nWhen Toothy and Zndrsplt leaves the battlefield, draw a card for each +1/+1 counter on Toothy and Zndrsplt.

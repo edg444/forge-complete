@@ -9,4 +9,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ X
 SVar:X:Count$Valid Giant.YouCtrl$GreatestCardPower
 DeckHints:Type$Giant
-Oracle:Vigilance, reach\nWard {2} (Whenever this creature becomes the target of a spell or ability an opponent controls, counter it unless that player pays {2}.)\nWhen this creature enters, you gain X life, where X is the greatest power among Giants you control.
+Oracle:Reach, vigilance\nWard {2} (Whenever this creature becomes the target of a spell or ability an opponent controls, counter it unless that player pays {2}.)\nWhen this creature enters, you gain X life, where X is the greatest power among Giants you control.

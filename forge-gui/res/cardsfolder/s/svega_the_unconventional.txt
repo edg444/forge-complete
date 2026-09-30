@@ -16,4 +16,4 @@ DeckHints:Type$Planeswalker
 Text:CARDNAME can be your commander.
 AI:RemoveDeck:Random
 DeckHas:Ability$Token
-Oracle:Landfall — Whenever a land enters under your control, put a loyalty counter on target planeswalker.\n[−2]: For each planeswalker type among planeswalkers you control, create a 1/1 Attendee creature token that’s all colors.\n[−X]: Choose an Elspeth, Teferi, Liliana, Chandra, or Garruk planeswalker card name with mana value X. Create a copy of the card with the chosen name. You may cast the copy without paying its mana cost.\nSvega can be your commander.
+Oracle:Landfall — Whenever a land enters under your control, put a loyalty counter on target planeswalker.\n[-2]: For each planeswalker type among planeswalkers you control, create a 1/1 Attendee creature token that's all colors.\n[-X]: Choose an Elspeth, Teferi, Liliana, Chandra, or Garruk planeswalker card name with mana value X. Create a copy of the card with the chosen name. You may cast the copy without paying its mana cost.\nSvega can be your commander.

@@ -10,4 +10,4 @@ T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage
 SVar:TrigDraw:DB$ Draw
 SVar:BuffedBy:Creature.Legendary
 DeckHas:Ability$Counters
-Oracle:Reach\nLegolas Greenleaf can't be blocked by creatures with power 2 or less.\nWhenever another legendary creature you control enters, put a +1/+1 counter on Legolas Greenleaf.\nWhenever Legolas Greenleaf deals combat damage to a player, draw a card.
+Oracle:Reach\nLegolas can't be blocked by creatures with power 2 or less.\nWhenever another legendary creature you control enters, put a +1/+1 counter on Legolas.\nWhenever Legolas deals combat damage to a player, draw a card.

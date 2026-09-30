@@ -6,4 +6,4 @@ K:First Strike
 K:Protection from red
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDestroy | TriggerDescription$ When NICKNAME enters, destroy target Goblin.
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Goblin | TgtPrompt$ Select target Goblin
-Oracle:First strike, protection from red\nWhen Tivadar of Thorn enters, destroy target Goblin.
+Oracle:First strike, protection from red\nWhen Tivadar enters, destroy target Goblin.

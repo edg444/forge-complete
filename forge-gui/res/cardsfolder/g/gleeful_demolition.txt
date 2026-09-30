@@ -5,4 +5,4 @@ A:SP$ Destroy | ValidTgts$ Artifact | SubAbility$ DBToken | RememberLKI$ True | 
 SVar:DBToken:DB$ Token | TokenAmount$ 3 | TokenScript$ r_1_1_phyrexian_goblin | TokenOwner$ You | ConditionDefined$ RememberedLKI | ConditionPresent$ Card.YouCtrl | SubAbility$ DBCleanup | SpellDescription$ If you controlled that artifact, creature three 1/1 red Phyrexian Goblin creature tokens.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHas:Type$Goblin|Phyrexian & Ability$Token
-Oracle:Destroy target artifact. If you controlled that artifact, creature three 1/1 red Phyrexian Goblin creature tokens.
+Oracle:Destroy target artifact. If you controlled that artifact, create three 1/1 red Phyrexian Goblin creature tokens.

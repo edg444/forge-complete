@@ -3,4 +3,4 @@ ManaCost:3 B
 Types:Creature Snake
 PT:2/5
 K:Deathtouch
-Oracle:Deathtouch
+Oracle:Deathtouch (Any amount of damage this deals to a creature is enough to destroy it.)

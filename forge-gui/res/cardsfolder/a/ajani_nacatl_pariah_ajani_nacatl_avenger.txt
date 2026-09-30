@@ -28,4 +28,4 @@ A:AB$ ChooseCard | Cost$ SubCounter<4/LOYALTY> | Planeswalker$ True | Ultimate$ 
 SVar:SacAllOthers:DB$ SacrificeAll | ValidCards$ Permanent.nonLand+OppCtrl+nonChosenCard | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 SVar:DBCleanup2:DB$ Cleanup | ClearRemembered$ True
-Oracle:[+2]: Put a +1/+1 counter on each Cat you control.\n[0]: Create a 2/1 white Cat Warrior creature token. When you do, if you control a red permanent other than Ajani, he deals damage equal to the number of creatures you control to any target.\n[-4]: Each opponent chooses an artifact, a creature, an enchantment and a planeswalker from among the nonland permanents they control, then sacrifices the rest.
+Oracle:[+2]: Put a +1/+1 counter on each Cat you control.\n[0]: Create a 2/1 white Cat Warrior creature token. When you do, if you control a red permanent other than Ajani, he deals damage equal to the number of creatures you control to any target.\n[-4]: Each opponent chooses an artifact, a creature, an enchantment, and a planeswalker from among the nonland permanents they control, then sacrifices the rest.

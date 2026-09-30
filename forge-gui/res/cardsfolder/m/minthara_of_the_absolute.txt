@@ -9,4 +9,4 @@ S:Mode$ Continuous | Affected$ Creature.YouCtrl | AddPower$ X | Description$ Cre
 SVar:X:Count$Intensity
 SVar:BuffedBy:Creature
 DeckHints:Ability$Token|Sacrifice
-Oracle:Starting intensity 0\nCreatures you control get +X/+0, where X is Minthara of the Absolute's intensity.\nWhenever one or more permanents you control leave the battlefield, perpetually increase Minthara's intensity and the intensity of cards named Minthara of the Absolute in your hand, graveyard, and library by 1. This ability triggers only once each turn.
+Oracle:Starting intensity 0\nCreatures you control get +X/+0, where X is Minthara of the Absolute's intensity.\nWhenever one or more permanents you control leave the battlefield, cards you own named Minthara of the Absolute intensify by 1. This ability triggers only once each turn.

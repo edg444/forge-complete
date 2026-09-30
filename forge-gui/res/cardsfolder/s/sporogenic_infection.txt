@@ -10,4 +10,4 @@ SVar:MortalDestroy:SVar:DestroyWhenDamaged:True
 T:Mode$ DamageDoneOnce | ValidTarget$ Creature.EnchantedBy | Execute$ TrigDestroy | TriggerZones$ Battlefield | TriggerDescription$ When enchanted creature is dealt damage, destroy it.
 SVar:TrigDestroy:DB$ Destroy | Defined$ TriggeredTargetLKICopy
 SVar:NonStackingAttachEffect:True
-Oracle:Enchant creature\nWhen this Aura enters, target player sacrifices a creature other than enchanted creature.\nWhen enchanted creature is dealt damage, destroy it.
+Oracle:Enchant creature\nWhen this Aura enters, target player sacrifices a creature of their choice other than enchanted creature.\nWhen enchanted creature is dealt damage, destroy it.

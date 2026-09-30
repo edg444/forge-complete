@@ -5,4 +5,4 @@ A:SP$ Counter | TargetType$ Spell | TgtPrompt$ Select target spell | RememberCou
 SVar:DBPlay:DB$ Play | Valid$ Card.nonLand+YouOwn | ValidSA$ Spell.cmcLEX | ValidZone$ Hand | WithoutManaCost$ True | Optional$ True | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Count$RememberedNumber
-Oracle:Counter target spell. You may cast a spell with an equal or lesser mana value from your hand without paying its mana cost.
+Oracle:Counter target spell. You may cast a spell with equal or lesser mana value from your hand without paying its mana cost.

@@ -2,4 +2,4 @@ Name:Overcome
 ManaCost:3 G G
 Types:Sorcery
 A:SP$ PumpAll | ValidCards$ Creature.YouCtrl | NumAtt$ +2 | NumDef$ +2 | KW$ Trample | SpellDescription$ Creatures you control get +2/+2 and gain trample until end of turn. (They can deal excess combat damage to the player or planeswalker they're attacking.)
-Oracle:Creatures you control get +2/+2 and gain trample until end of turn. (They can deal excess combat damage to the player or planeswalker they're attacking.)
+Oracle:Creatures you control get +2/+2 and gain trample until end of turn. (Each of those creatures can deal excess combat damage to the player or planeswalker it's attacking.)

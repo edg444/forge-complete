@@ -7,4 +7,4 @@ SVar:Return:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand | ValidTgts$ 
 SVar:B:SVar$A/Plus.E
 SVar:A:Count$Valid Artifact.YouCtrl/LimitMax.1
 SVar:E:Count$Valid Enchantment.YouCtrl/LimitMax.1
-Oracle:Choose one. If you control an artifact and an enchantment as you cast this spell, you may choose both.\n• Exile target creature or planeswalker.\n• Return target creature or planeswalker card from your graveyard to your hand.
+Oracle:Choose one. If you control an artifact and an enchantment as you cast this spell, you may choose both instead.\n• Exile target creature or planeswalker.\n• Return target creature or planeswalker card from your graveyard to your hand.

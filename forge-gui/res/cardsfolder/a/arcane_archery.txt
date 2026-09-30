@@ -9,4 +9,4 @@ SVar:ETBAddCounter:Event$ Moved | Origin$ Stack | Destination$ Battlefield | Val
 SVar:ETBAddExtraCounter:DB$ PutCounter | ETB$ True | Defined$ ReplacedCard | CounterTypes$ P1P1,Reach,Trample | CounterNum$ 1 | SubAbility$ DBRemoveSelf
 SVar:DBRemoveSelf:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
 DeckHas:Ability$Counters
-Oracle:Target creature gets +3/+3 and gains reach and trample until end of turn.\nYou get a boon with "When you cast your next creature spell, that creature enters with an additional +1/+1 counter, reach counter, and trample counter on it."
+Oracle:Target creature gets +3/+3 and gains reach and trample until end of turn.\nYou get a one-time boon with "When you cast a creature spell, that creature enters with an additional +1/+1 counter, reach counter, and trample counter on it."

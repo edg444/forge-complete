@@ -6,4 +6,4 @@ SVar:EffTrigCopy:DB$ CopySpellAbility | Defined$ TriggeredSpellAbility | Amount$
 SVar:X:Count$xPaid
 AI:RemoveDeck:All
 DeckNeeds:Type$Instant|Sorcery
-Oracle:When you cast your next instant or sorcery spell this turn, copy that spell X times. You may choose new targets for the copies.
+Oracle:When you next cast an instant or sorcery spell this turn, copy that spell X times. You may choose new targets for the copies.

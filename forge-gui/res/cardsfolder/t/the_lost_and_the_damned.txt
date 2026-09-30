@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Land.
 T:Mode$ SpellCast | ValidCard$ Card.!wasCastFromYourHand | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigToken | Secondary$ True | TriggerDescription$ Whenever a land you control enters from anywhere other than your hand or you cast a spell from anywhere other than your hand, create 3/3 red Spawn creature token.
 SVar:TrigToken:DB$ Token | TokenScript$ r_3_3_spawn
 DeckHas:Ability$Token & Type$Spawn
-Oracle:Whenever a land you control enters from anywhere other than your hand or you cast a spell from anywhere other than your hand, create 3/3 red Spawn creature token.
+Oracle:Whenever a land you control enters from anywhere other than your hand or you cast a spell from anywhere other than your hand, create a 3/3 red Spawn creature token.

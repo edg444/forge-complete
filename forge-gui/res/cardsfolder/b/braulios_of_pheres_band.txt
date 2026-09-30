@@ -8,4 +8,4 @@ SVar:TrigDraw:DB$ Draw | SubAbility$ DBChangeZone
 SVar:DBChangeZone:DB$ ChangeZone | Origin$ Hand | Destination$ Battlefield | ChangeType$ Land | ChangeNum$ 1 | Optional$ You
 SVar:X:Count$Valid Land.YouCtrl
 SVar:BuffedBy:Land
-Oracle:Braulios of Pheres Band's power and toughness are each equal to the number of lands you control.\nWhenever Braulios of Pheres Band attacks, draw a card, then you may put a land card from your hand onto the battlefield.
+Oracle:Braulios's power and toughness are each equal to the number of lands you control.\nWhenever Braulios attacks, draw a card, then you may put a land card from your hand onto the battlefield.

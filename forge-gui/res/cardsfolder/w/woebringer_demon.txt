@@ -10,4 +10,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Amount
 SVar:NeedsToPlayVar:Y GE2
 SVar:Y:Count$Valid Creature.YouDontCtrl
-Oracle:Flying\nAt the beginning of each player's upkeep, that player sacrifices a creature. If the player can't, sacrifice this creature.
+Oracle:Flying\nAt the beginning of each player's upkeep, that player sacrifices a creature of their choice. If the player can't, sacrifice this creature.

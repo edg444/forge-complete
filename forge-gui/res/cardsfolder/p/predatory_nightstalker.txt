@@ -5,4 +5,4 @@ PT:3/2
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSac | OptionalDecider$ You | TriggerDescription$ When this creature enters, you may have target opponent sacrifice a creature.
 SVar:TrigSac:DB$ Sacrifice | ValidTgts$ Opponent | SacValid$ Creature
 SVar:PlayMain1:TRUE
-Oracle:When this creature enters, you may have target opponent sacrifice a creature.
+Oracle:When this creature enters, you may have target opponent sacrifice a creature of their choice.

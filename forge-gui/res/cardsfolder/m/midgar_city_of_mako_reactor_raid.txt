@@ -16,4 +16,4 @@ A:SP$ Sacrifice | Defined$ You | SacValid$ Artifact,Creature | Optional$ True | 
 SVar:DBDraw:DB$ Draw | NumCards$ 2 | ConditionCheckSVar$ X | ConditionSVarCompare$ EQ1 | ConditionDescription$ If they do, | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Amount
-Oracle:You may sacrifice an artifact or creature. If you do, draw two cards.
+Oracle:You may sacrifice an artifact or creature. If you do, draw two cards. (Then exile this card. You may play the land later from exile.)

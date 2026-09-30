@@ -5,4 +5,4 @@ A:AB$ Dig | Cost$ 1 T Sac<1/Artifact.Other/another artifact> | DigNum$ 8 | Revea
 SVar:X:Sacrificed$CardManaCost
 DeckHas:Ability$Sacrifice
 DeckNeeds:Type$Artifact
-Oracle:{1}, {T}, Sacrifice another artifact: Reveal the top eight cards of your library. Put up to two noncreature artifact cards with total mana value less than or equal to the sacrificed artifact's mana value from among them onto the battlefield, and the rest on the bottom of your library in a random order.
+Oracle:{1}, {T}, Sacrifice another artifact: Reveal the top eight cards of your library. Put up to two noncreature artifact cards with total mana value less than or equal to the sacrificed artifact's mana value from among them onto the battlefield and the rest on the bottom of your library in a random order.

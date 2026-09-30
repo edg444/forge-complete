@@ -6,4 +6,4 @@ A:AB$ Pump | Cost$ 1 U | ValidTgts$ Creature | SubAbility$ DBChangePower | Stack
 SVar:DBChangePower:DB$ Animate | Defined$ Self | Power$ X | Duration$ Permanent
 SVar:X:Targeted$CardPower
 AI:RemoveDeck:All
-Oracle:{1}{U}: Change Riptide Mangler's base power to target creature's power. (This effect lasts indefinitely.)
+Oracle:{1}{U}: This creature's base power becomes equal to target creature's power. (This effect lasts indefinitely.)

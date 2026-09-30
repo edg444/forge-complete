@@ -6,7 +6,7 @@ SVar:DBDmg:DB$ DealDamage | NumDmg$ X | Defined$ Targeted | SubAbility$ DBCleanu
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$CardManaCost
 AlternateMode:Split
-Oracle:Target player sacrifices an artifact or creature. Hit deals damage to that player equal to that permanent's mana value.
+Oracle:Target player sacrifices an artifact or creature of their choice. Hit deals damage to that player equal to that permanent's mana value.
 
 ALTERNATE
 

@@ -4,4 +4,4 @@ Types:Land
 K:ETBReplacement:Other:ChooseColor
 SVar:ChooseColor:DB$ ChooseColor | Random$ True | SpellDescription$ As CARDNAME enters, choose a color at random.
 A:AB$ Mana | Cost$ T | Produced$ Chosen | SubAbility$ ChooseColor | SpellDescription$ Add one mana of the chosen color. Then choose a color at random.
-Oracle:As Gem Bazaar enters, choose a color at random.\n{T}: Add one mana of the chosen color. Then choose a color at random.
+Oracle:When Gem Bazaar comes into play, choose a random color.\n{T}: Add to your mana pool one mana of the color last chosen. Then choose a random color.

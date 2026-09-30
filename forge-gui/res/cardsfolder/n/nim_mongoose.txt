@@ -8,4 +8,4 @@ SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ X | Condition$ Threshold | Description$ Threshold — CARDNAME gets +1/+0 for each artifact you control as long as there are seven or more cards in your graveyard.
 SVar:X:Count$Valid Artifact.YouCtrl
 SVar:BuffedBy:Artifact
-Oracle:Shroud\nNim Mongoose enters the battlefield tapped.\nThreshold — Nim Mongoose gets +1/+0 for each artifact you control as long as there are seven or more cards in your graveyard.
+Oracle:Shroud (This creature can't be the target of spells or abilities.)\nNim Mongoose enters the battlefield tapped.\nThreshold — Nim Mongoose gets +1/+0 for each artifact you control as long as seven or more cards are in your graveyard.

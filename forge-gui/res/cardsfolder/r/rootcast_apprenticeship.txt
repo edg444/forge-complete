@@ -7,4 +7,4 @@ SVar:DBCopy:DB$ CopyPermanent | ValidTgts$ Permanent.token+YouCtrl | TgtPrompt$ 
 SVar:DBToken:DB$ Token | ValidTgts$ Player | TokenScript$ g_1_1_squirrel | StackDescription$ SpellDescription | SpellDescription$ Target player creates a 1/1 green Squirrel creature token.
 SVar:DBSacrifice:DB$ Sacrifice | ValidTgts$ Opponent | SacValid$ Artifact.!token | SpellDescription$ Target opponent sacrifices a nontoken artifact. | SacMessage$ nontoken artifact
 DeckHas:Ability$Counters|Token
-Oracle:Choose three. You may choose the same mode more than once.\n• Put two +1/+1 counters on target creature.\n• Create a token that's a copy of target token you control.\n• Target player creates a 1/1 green Squirrel creature token.\n• Target opponent sacrifices a nontoken artifact.
+Oracle:Choose three. You may choose the same mode more than once.\n• Put two +1/+1 counters on target creature.\n• Create a token that's a copy of target token you control.\n• Target player creates a 1/1 green Squirrel creature token.\n• Target opponent sacrifices a nontoken artifact of their choice.

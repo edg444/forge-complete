@@ -35,7 +35,7 @@ SVar:DontUntap:Event$ Untap | ValidCard$ Card.IsRemembered | ValidStepTurnToCont
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Battlefield | Destination$ Graveyard | Execute$ TrigUnspecialize | TriggerDescription$ When NICKNAME dies, it unspecializes. If it unspecializes this way, return it to the battlefield tapped.
 SVar:TrigUnspecialize:DB$ SetState | Defined$ TriggeredCard | Mode$ Unspecialize | RememberChanged$ True | SubAbility$ DBReturn
 SVar:DBReturn:DB$ ChangeZone | ConditionDefined$ Remembered | ConditionPresent$ Card | Origin$ Graveyard | Destination$ Battlefield | Tapped$ True | Defined$ Remembered
-Oracle:When this creature specializes, tap target nonland permanent an opponent controls. That permanent doesn't untap during its controller's untap step for as long as you control Lukamina, Crocodile Form.\nWhen Lukamina dies, it unspecializes. If it unspecializes this way, return it to the battlefield tapped.
+Oracle:When this creature specializes, tap target nonland permanent an opponent controls. That permanent doesn't untap during its controller's untap step for as long as you control Lukamina, Crocodile Form.\nWhen Lukamina, Crocodile Form dies, it unspecializes. If it unspecializes this way, return it to the battlefield tapped.
 
 SPECIALIZE:BLACK
 
@@ -48,7 +48,7 @@ K:CARDNAME must be blocked if able.
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Battlefield | Destination$ Graveyard | Execute$ TrigUnspecialize | TriggerDescription$ When NICKNAME dies, it unspecializes. If it unspecializes this way, return it to the battlefield tapped.
 SVar:TrigUnspecialize:DB$ SetState | Defined$ TriggeredCard | Mode$ Unspecialize | RememberChanged$ True | SubAbility$ DBReturn
 SVar:DBReturn:DB$ ChangeZone | ConditionDefined$ Remembered | ConditionPresent$ Card | Origin$ Graveyard | Destination$ Battlefield | Tapped$ True | Defined$ Remembered
-Oracle:Deathtouch\nLukamina, Scorpion Form must be blocked if able.\nWhen Lukamina dies, it unspecializes. If it unspecializes this way, return it to the battlefield tapped.
+Oracle:Deathtouch\nLukamina, Scorpion Form must be blocked if able.\nWhen Lukamina, Scorpion Form dies, it unspecializes. If it unspecializes this way, return it to the battlefield tapped.
 
 SPECIALIZE:RED
 

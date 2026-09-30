@@ -12,4 +12,4 @@ SVar:TrigDraw:AB$ Draw | Cost$ Discard<1/Hand> | NumCards$ X
 SVar:X:Count$Intensity
 DeckHas:Ability$Discard|Sacrifice
 DeckHints:Ability$Graveyard
-Oracle:Starting intensity 1\nMenace\nAt the beginning of your upkeep, sacrifice Great Desert Hellion unless you discard a card. If you discard a card this way, perpetually increase Great Desert Hellion's intensity by 1.\nWhen Great Desert Hellion leaves the battlefield, you may discard your hand. If you do, draw cards equal to Great Desert Hellion's intensity.
+Oracle:Starting intensity 1\nMenace\nAt the beginning of your upkeep, sacrifice Great Desert Hellion unless you discard a card. If you discard a card this way, Great Desert Hellion intensifies by 1.\nWhen Great Desert Hellion leaves the battlefield, you may discard your hand. If you do, draw cards equal to Great Desert Hellion's intensity.

@@ -11,7 +11,7 @@ SVar:DBTransform:DB$ SetState | Defined$ Self | Mode$ Transform | ConditionDefin
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHas:Ability$Graveyard|Token
 AlternateMode:DoubleFaced
-Oracle:Flying\nWhen Runo Stromkirk enters, put up to one target creature card from your graveyard on top of your library.\nAt the beginning of your upkeep, look at the top card of your library. You may reveal that card. If a creature card with mana value 6 or greater is revealed this way, transform Runo Stromkirk.
+Oracle:Flying\nWhen Runo enters, put up to one target creature card from your graveyard on top of your library.\nAt the beginning of your upkeep, look at the top card of your library. You may reveal that card. If a creature card with mana value 6 or greater is revealed this way, transform Runo.
 
 ALTERNATE
 

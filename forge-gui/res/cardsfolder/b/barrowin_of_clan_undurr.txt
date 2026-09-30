@@ -9,4 +9,4 @@ SVar:DBVenture:DB$ Venture | Defined$ You
 SVar:X:DungeonsCompleted$Amount
 DeckHints:Ability$Mill|Discard
 DeckHas:Ability$Graveyard
-Oracle:When Barrowin of Clan Undurr enters, venture into the dungeon. (Enter the first room or advance to the next room.)\nWhenever Barrowin of Clan Undurr attacks, return up to one creature card with mana value 3 or less from your graveyard to the battlefield if you've completed a dungeon.
+Oracle:When Barrowin enters, venture into the dungeon. (Enter the first room or advance to the next room.)\nWhenever Barrowin attacks, return up to one creature card with mana value 3 or less from your graveyard to the battlefield if you've completed a dungeon.

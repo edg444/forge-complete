@@ -8,4 +8,4 @@ SVar:TrigChangeZone:AB$ ChangeZone | Cost$ 1 R | Origin$ Hand | Destination$ Bat
 SVar:TrigChangeZoneBis:AB$ ChangeZone | Cost$ 1 R | Origin$ Hand | Destination$ Battlefield | ChangeType$ Creature.cmcLTY+YouCtrl | ChangeNum$ 1 | Tapped$ True | Attacking$ True
 SVar:X:TriggeredAttacker$CardManaCost
 SVar:Y:TriggeredCard$CardManaCost
-Oracle:Whenever a creature you control attacks or a creature you control enters attacking, you may pay {1}{R}. If you do, you may put a creature card with mana value less than that creature's mana value from your hand onto the battlefield tapped and attacking.
+Oracle:Whenever a creature you control attacks or enters attacking, you may pay {1}{R}. If you do, you may put a creature card with mana value less than that creature's mana value from your hand onto the battlefield tapped and attacking.

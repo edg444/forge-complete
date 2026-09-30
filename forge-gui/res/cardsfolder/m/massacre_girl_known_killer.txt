@@ -7,4 +7,4 @@ S:Mode$ Continuous | Affected$ Creature.YouCtrl | AddKeyword$ Wither | Descripti
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Creature.OppCtrl+toughnessLT1 | Execute$ TrigDraw | TriggerDescription$ Whenever a creature an opponent controls dies, if its toughness was less than 1, draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
 DeckHints:Ability$Counters
-Oracle:Menace\nCreatures you control have wither.\nWhenever a creature an opponent controls dies, if its toughness was less than 1, draw a card.
+Oracle:Menace\nCreatures you control have wither. (They deal damage to creatures in the form of -1/-1 counters.)\nWhenever a creature an opponent controls dies, if its toughness was less than 1, draw a card.

@@ -9,4 +9,4 @@ SVar:TrigImmediateTrig:AB$ ImmediateTrigger | Cost$ CollectEvidence<X> | Remembe
 SVar:TrigDamage:DB$ DamageAll | NumDmg$ Count$TriggerRememberAmount | ValidCards$ Creature.ControlledBy Spawner>TriggeredTarget,Planeswalker.ControlledBy Spawner>TriggeredTarget
 SVar:X:Count$xPaid
 DeckHints:Ability$Graveyard|Mill|Discard|Dredge
-Oracle:Flying, trample\nWhenever this creature deals combat damage to a player, you may collect evidence X. When you do, this creature deals X damage to each creature and each planeswalker that player controls. (To collect evidence X, exile cards with total mana value X or greater from your graveyard.)
+Oracle:Flying, trample\nWhenever this creature deals combat damage to a player, you may collect evidence X. When you do, this creature deals X damage to each creature and planeswalker that player controls. (To collect evidence X, exile cards with total mana value X or greater from your graveyard.)

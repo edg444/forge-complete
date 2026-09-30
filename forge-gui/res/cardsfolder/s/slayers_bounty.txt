@@ -8,4 +8,4 @@ SVar:TrigDraft:DB$ Draft | Spellbook$ Bounty Agent,Outflank,Bound in Gold,Bring 
 A:AB$ Draw | Cost$ 2 Sac<1/CARDNAME> | NumCards$ 1 | SpellDescription$ Draw a card.
 DeckHas:Ability$Sacrifice
 DeckHints:Ability$Investigate & Type$Clue
-Oracle:When Slayer's Bounty enters, look at the creature cards in target opponent's hand.\nWhenever you sacrifice Slayer's Bounty or another Clue, draft a card from Slayer's Bounty's spellbook.\n{2}, Sacrifice Slayer's Bounty: Draw a card.
+Oracle:When Slayer's Bounty enters the battlefield, look at the creature cards in target opponent's hand.\nWhenever you sacrifice Slayer's Bounty or another Clue, draft a card from Slayer's Bounty's spellbook.\n{2}, Sacrifice Slayer's Bounty: Draw a card.

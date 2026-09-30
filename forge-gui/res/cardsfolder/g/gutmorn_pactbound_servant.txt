@@ -14,4 +14,4 @@ SVar:SpendAnyMana:Mode$ ManaConvert | EffectZone$ Stack | ValidPlayer$ You | Val
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenPlayer$ True
 DeckHas:Ability$Discard
 DeckHints:Ability$Discard
-Oracle:Flying, deathtouch\nWhenever Gutmorn, Pactbound Servant enters, each player discards a nonland card.\nWhenever a player discards a card during your turn, they choose another player. That player conjures a duplicate of that card into their hand. It perpetually gains "You may spend mana as though it were mana of any color to cast this spell."
+Oracle:Flying, deathtouch\nWhen Gutmorn, Pactbound Servant enters the battlefield, each player discards a nonland card.\nWhenever a player discards a card during your turn, they choose another player. That player conjures a duplicate of that card into their hand. It perpetually gains "You may spend mana as though it were mana of any color to cast this spell."

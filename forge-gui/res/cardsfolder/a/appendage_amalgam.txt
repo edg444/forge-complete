@@ -7,4 +7,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigSurveil | TriggerZones$ Ba
 SVar:TrigSurveil:DB$ Surveil | Amount$ 1
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Surveil|Graveyard
-Oracle:Flash\nWhenever this creature attacks, surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)
+Oracle:Flash\nWhenever this creature attacks, surveil 1. (Look at the top card of your library. You may put it into your graveyard.)

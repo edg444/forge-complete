@@ -5,4 +5,4 @@ PT:2/1
 A:AB$ Draw | Cost$ T PayLife<2> | CheckSVar$ X | SpellDescription$ Draw a card. Activate only if an artifact entered under your control this turn.
 SVar:X:Count$ThisTurnEntered_Battlefield_Artifact.YouCtrl
 DeckHints:Type$Artifact
-Oracle:{T}, Pay 2 life: Draw a card. Activate only if an artifact entered under your control this turn.
+Oracle:{T}, Pay 2 life: Draw a card. Activate only if an artifact entered the battlefield under your control this turn.

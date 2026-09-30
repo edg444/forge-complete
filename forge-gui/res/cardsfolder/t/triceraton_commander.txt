@@ -10,4 +10,4 @@ SVar:TrigToken:DB$ Token | TokenAmount$ X | TokenScript$ w_2_2_dinosaur_soldier 
 SVar:X:Count$xPaid
 SVar:HasAttackEffect:TRUE
 DeckHints:Type$Dinosaur
-Oracle:Flying\nWhenever this creature attacks, Dinosaurs you control other than this creature get +1/+1 and gain flying until end of turn.\nWhen this creature enters, create X 2/2 white Dinosaur Soldier creature tokens.
+Oracle:Flying\nWhen this creature enters, create X 2/2 white Dinosaur Soldier creature tokens.\nWhenever this creature attacks, Dinosaurs you control other than this creature get +1/+1 and gain flying until end of turn.

@@ -5,4 +5,4 @@ PT:2/2
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 1 | AddAbility$ Pump | Condition$ Hellbent | Description$ Hellbent — As long as you have no cards in hand, this creature gets +1/+0 and has "{B}: Regenerate this creature."
 SVar:Pump:AB$ Regenerate | Cost$ B | SpellDescription$ Regenerate this creature.
 SVar:BuffedBy:Card
-Oracle:Hellbent — As long as you have no cards in hand, this creature gets +1/+0 and has "{B}: Regenerate this creature."
+Oracle:Hellbent — As long as you have no cards in hand, this creature gets +1/+0 and has "{B}: Regenerate this creature." (The next time it would be destroyed this turn, instead tap it, remove it from combat, and heal all damage on it.)

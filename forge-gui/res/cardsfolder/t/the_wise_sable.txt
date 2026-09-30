@@ -7,4 +7,4 @@ SVar:DBName:DB$ NameCard | Defined$ You | AtRandom$ True | ChooseFromList$ Blood
 SVar:DBMake:DB$ MakeCard | Name$ ChosenName | Zone$ None | RememberMade$ True | SubAbility$ DBCopyPerm
 SVar:DBCopyPerm:DB$ CopyPermanent | Defined$ Remembered | SubAbility$ DBClearNamed
 SVar:DBClearNamed:DB$ Cleanup | ClearNamedCard$ True | ClearRemembered$ True
-Oracle:Judge Call! — When The Wise Sable enters the battlefield, choose one of the following six cards at random: Blood Moon; Enraging Licid; Humility; Life and Limb; Opalescence; Yavimaya, Cradle of Growth. Create a token that’s a copy of the chosen card. (One easy way to determine is to roll a D6.)
+Oracle:Judge Call! — When The Wise Sable enters the battlefield, choose one of the following six cards at random: Blood Moon; Enraging Licid; Humility; Life and Limb; Opalescence; Yavimaya, Cradle of Growth. Create a token that's a copy of the chosen card. (One easy way to determine is to roll a D6.)

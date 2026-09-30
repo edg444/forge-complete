@@ -8,4 +8,4 @@ SVar:GreenBoar:DB$ Token | TokenScript$ g_2_2_boar | TokenOwner$ TargetedControl
 SVar:WhiteGoat:DB$ Token | TokenScript$ w_0_1_goat | TokenOwner$ TargetedController | SpellDescription$ 20 | Its controller creates a 0/1 white Goat creature token.
 AI:RemoveDeck:All
 DeckHas:Ability$Token
-Oracle:Exile target creature, then roll a d20.\n1-9 | Its controller creates a 4/4 green Ox creature token.\n10-19 | Its controller creates a 2/2 green Boar creature token.\n20 | Its controller creates a 0/1 white Goat creature token.
+Oracle:Exile target creature, then roll a d20.\n1—9 | Its controller creates a 4/4 green Ox creature token.\n10—19 | Its controller creates a 2/2 green Boar creature token.\n20 | Its controller creates a 0/1 white Goat creature token.

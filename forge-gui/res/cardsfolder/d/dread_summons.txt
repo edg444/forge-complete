@@ -7,4 +7,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Count$xPaid
 SVar:Y:Remembered$Valid Creature.inZoneGraveyard
 DeckHas:Ability$Token
-Oracle:Each player mills X cards. For each creature card put into a graveyard this way, you create a tapped 2/2 black Zombie creature token.
+Oracle:Each player mills X cards. For each creature card put into a graveyard this way, you create a tapped 2/2 black Zombie creature token. (To mill a card, a player puts the top card of their library into their graveyard.)

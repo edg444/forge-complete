@@ -11,4 +11,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$CardPower
 AI:RemoveDeck:All
 DeckHas:Ability$Graveyard|Token
-Oracle:Flash\nMenace\nWhen Lobelia Sackville-Baggins enters, exile target creature card from an opponent's graveyard that was put there from the battlefield this turn, then create X Treasure tokens, where X is the exiled card's power.
+Oracle:Flash\nMenace\nWhen Lobelia enters, exile target creature card from an opponent's graveyard that was put there from the battlefield this turn, then create X Treasure tokens, where X is the exiled card's power.

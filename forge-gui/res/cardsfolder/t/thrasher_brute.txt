@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | ValidCard$ Card.Self,Warrior.Other+YourTeamCtrl | Origin$ 
 SVar:TrigDrain:DB$ LoseLife | ValidTgts$ Opponent | LifeAmount$ 1 | SubAbility$ DBGainLife
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 1
 SVar:BuffedBy:Warrior
-Oracle:Whenever this creature or another Warrior enters under your team's control, target opponent loses 1 life and you gain 1 life.
+Oracle:Whenever this creature or another Warrior your team controls enters, target opponent loses 1 life and you gain 1 life.

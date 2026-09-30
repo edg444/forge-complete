@@ -8,4 +8,4 @@ SVar:DBPump:DB$ Pump | Defined$ Remembered | PumpZone$ Library | KW$ Storm | Dur
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 T:Mode$ SpellCast | ValidCard$ Instant,Sorcery | ValidActivatingPlayer$ You | Execute$ TrigDraw | TriggerZones$ Battlefield | TriggerDescription$ Whenever you cast an instant or sorcery spell, draw a card.
 SVar:TrigDraw:DB$ Draw
-Oracle:When Indris, the Hydrostatic Surge enters, conjure four cards named Lightning Bolt into your library. It perpetually gains storm. Then shuffle.\nWhenever you cast an instant or sorcery spell, draw a card.
+Oracle:When Indris, the Hydrostatic Surge enters, conjure four cards named Lightning Bolt into your library. They perpetually gain storm. Then shuffle.\nWhenever you cast an instant or sorcery spell, draw a card.

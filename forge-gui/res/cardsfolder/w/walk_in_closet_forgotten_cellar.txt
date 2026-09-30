@@ -3,7 +3,7 @@ ManaCost:2 G
 Types:Enchantment Room
 S:Mode$ Continuous | Affected$ Land.YouOwn | MayPlay$ True | AffectedZone$ Graveyard | Description$ You may play lands from your graveyard.
 AlternateMode:Split
-Oracle:(You may cast either half. That door unlocks on the battlefield. As a sorcery, you may pay the mana cost of a locked door to unlock it.)\nYou may play lands from your graveyard.
+Oracle:You may play lands from your graveyard.\n(You may cast either half. That door unlocks on the battlefield. As a sorcery, you may pay the mana cost of a locked door to unlock it.)
 
 ALTERNATE
 
@@ -15,4 +15,4 @@ SVar:TrigPlay:DB$ Effect | ReplacementEffects$ GraveToExile | StaticAbilities$ S
 SVar:STPlay:Mode$ Continuous | Affected$ Card.YouCtrl+nonLand | AffectedZone$ Graveyard | MayPlay$ True | Description$ You may cast spells from your graveyard this turn.
 SVar:GraveToExile:Event$ Moved | ActiveZones$ Command | Destination$ Graveyard | ValidCard$ Card.!token+YouOwn | ReplaceWith$ Exile | Description$ If a card would be put into your graveyard from anywhere, exile it instead.
 SVar:Exile:DB$ ChangeZone | Hidden$ True | Origin$ All | Destination$ Exile | Defined$ ReplacedCard
-Oracle:(You may cast either half. That door unlocks on the battlefield. As a sorcery, you may pay the mana cost of a locked door to unlock it.)\nWhen you unlock this door, you may cast spells from your graveyard this turn, and if a card would be put into your graveyard from anywhere this turn, exile it instead.
+Oracle:When you unlock this door, you may cast spells from your graveyard this turn, and if a card would be put into your graveyard from anywhere this turn, exile it instead.\n(You may cast either half. That door unlocks on the battlefield. As a sorcery, you may pay the mana cost of a locked door to unlock it.)

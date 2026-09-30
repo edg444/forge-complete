@@ -5,4 +5,4 @@ A:SP$ ChangeZone | Origin$ Graveyard | Destination$ Battlefield | GainControl$ T
 SVar:DBLoseLifeYou:DB$ LoseLife | Defined$ You | LifeAmount$ X | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:RememberedLKI$CardManaCost
-Oracle:Put target creature card from a graveyard onto the battlefield under your control. You lose life equal to its mana value.
+Oracle:Put target creature card from a graveyard onto the battlefield under your control. You lose life equal to that card's mana value.

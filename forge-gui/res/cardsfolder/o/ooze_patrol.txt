@@ -8,4 +8,4 @@ SVar:DBPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNu
 SVar:X:Count$ValidGraveyard Artifact.YouOwn,Creature.YouOwn
 DeckHas:Ability$Graveyard|Mill|Counters
 DeckHints:Type$Artifact & Ability$Discard|Sacrifice
-Oracle:When this creature enters the battlefield, mill two cards, then put a +1/+1 counter on this creature for each card in your graveyard that is an artifact or creature.
+Oracle:When this creature enters, mill two cards, then put a +1/+1 counter on this creature for each artifact and/or creature card in your graveyard. (To mill two cards, put the top two cards of your library into your graveyard.)

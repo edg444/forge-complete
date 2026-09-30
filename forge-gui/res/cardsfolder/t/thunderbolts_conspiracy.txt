@@ -5,4 +5,4 @@ K:Flash
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Villain.YouCtrl | Execute$ TrigChange | TriggerDescription$ Whenever a Villain you control dies, return it to the battlefield under its owner's control with a finality counter on it. That creature is a Hero in addition to its other types. (If a creature with a finality counter on it would die, exile it instead.)
 SVar:TrigChange:DB$ ChangeZone | Origin$ Graveyard | Destination$ Battlefield | Defined$ TriggeredNewCardLKICopy | WithCountersType$ FINALITY | StaticEffect$ Animate
 SVar:Animate:Mode$ Continuous | Affected$ Card.IsRemembered | AddType$ Hero
-Oracle:Whenever a Villain you control dies, return it to the battlefield under its owner's control with a finality counter on it. That creature is a Hero in addition to its other types. (If a creature with a finality counter on it would die, exile it instead.)
+Oracle:Flash\nWhenever a Villain you control dies, return it to the battlefield under its owner's control with a finality counter on it. That creature is a Hero in addition to its other types. (If a creature with a finality counter on it would die, exile it instead.)

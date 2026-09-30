@@ -7,4 +7,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ Tr
 SVar:TrigPumpAttack:DB$ PumpAll | ValidCards$ Creature.modified+YouCtrl+StrictlyOther | NumAtt$ +X | NumDef$ +X
 SVar:X:Count$CardPower
 DeckHints:Type$Aura|Equipment
-Oracle:Aura and equipment spells you cast cost {X} less to cast, where X is this creature's power.\nWhenever this creature attacks, other modified creatures you control get +X/+X until end of turn, where X is this creature's power.
+Oracle:Aura and Equipment spells you cast cost {X} less to cast, where X is this creature's power.\nWhenever this creature attacks, other modified creatures you control get +X/+X until end of turn, where X is this creature's power. (Equipment, Auras you control, and counters are modifications.)

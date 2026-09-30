@@ -7,4 +7,4 @@ SVar:TrigCharm:DB$ Charm | Choices$ BraveTheStench,SearchTheBody
 SVar:BraveTheStench:DB$ Pump | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls. | NumAtt$ -1 | NumDef$ -1 | IsCurse$ True | SpellDescription$ Brave the Stench — Target creature an opponent controls gets -1/-1 until end of turn.
 SVar:SearchTheBody:DB$ Token | TokenScript$ c_a_treasure_sac | TokenOwner$ You | SpellDescription$ Search the Body — Create a Treasure token. (It's an artifact with "{T}, Sacrifice this token: Add one mana of any color.")
 DeckHas:Ability$Token
-Oracle:When this creature dies, choose one —\n• Brave the Stench — Target creature an opponent controls gets -1/-1 until end of turn.\n• Search the Body — Create a Treasure token. (It's an artifact with "{T}, Sacrifice this token: Add one mana of any color.")
+Oracle:When this creature dies, choose one —\n• Target creature an opponent controls gets -1/-1 until end of turn.\n• Create a Treasure token. (It's an artifact with "{T}, Sacrifice this token: Add one mana of any color.")

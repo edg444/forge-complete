@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigTap:DB$ Tap | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Choose target creature an opponent controls.
 SVar:BuffedBy:Spirit
 DeckHints:Type$Spirit
-Oracle:Flash (You may cast this spell any time you could cast an instant.)\nFlying\nWhenever Nebelgast Herald or another Spirit you control enters, tap target creature an opponent controls.
+Oracle:Flash\nFlying\nWhenever this creature or another Spirit you control enters, tap target creature an opponent controls.

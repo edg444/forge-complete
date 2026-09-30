@@ -14,4 +14,4 @@ SVar:X:Count$xPaid
 # X Will get overwritten by Announce
 SVar:Y:Number$0
 AI:RemoveDeck:All
-Oracle:{X}, {T}: The next X damage that would be dealt this turn to target white creature you control is dealt to Hazduhr the Abbot instead.
+Oracle:{X}, {T}: The next X damage that would be dealt this turn to target white creature you control is dealt to Hazduhr instead.

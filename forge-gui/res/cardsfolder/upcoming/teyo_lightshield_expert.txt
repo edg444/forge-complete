@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigPump:DB$ Pump | ValidTgts$ Permanent.YouCtrl | ValidTgtsDesc$ permanent you control | KW$ Hexproof | SubAbility$ DBPutCounterP1P1
 SVar:DBPutCounterP1P1:DB$ PutCounter | Defined$ Targeted | CounterType$ P1P1 | CounterNum$ 1 | ConditionDefined$ Targeted | ConditionPresent$ Creature | SubAbility$ DBPutCounterLoyalty
 SVar:DBPutCounterLoyalty:DB$ PutCounter | Defined$ Targeted | CounterType$ LOYALTY | CounterNum$ 1 | ConditionDefined$ Targeted | ConditionPresent$ Planeswalker
-Oracle:Flash\nWhen Teyo enters, target permanent you control gains hexproof until end of turn. Put a +1/+1 counter on it if it's a creature. Put a loyalty counter on it if it's a planeswalker.
+Oracle:Flash\nWhen Teyo enters, target permanent you control gains hexproof until end of turn. Put a +1/+1 counter on it if it's a creature. Put a loyalty counter on it if it's a planeswalker. (It can't be the target of spells or abilities your opponents control.)

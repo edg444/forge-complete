@@ -3,4 +3,4 @@ ManaCost:R R
 Types:Creature Human Wizard
 PT:1/2
 A:AB$ DealDamage | Cost$ R T | ValidTgts$ Opponent | ValidAfterStack$ Ability.IsTargeting Player.hasMoreLife | NumDmg$ 2 | SpellDescription$ Choose target opponent who had more life than you did as you activated this ability. This creature deals 2 damage to that player.
-Oracle:{R}, {T}: Choose target opponent who had more life than you did as you activated this ability. This creature deals 2 damage to that player.
+Oracle:{R}, {T}: Choose target opponent who has more life than you do as you activate this ability. This creature deals 2 damage to that player.

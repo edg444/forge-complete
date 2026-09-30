@@ -3,4 +3,4 @@ ManaCost:3 W W
 Types:Sorcery
 A:SP$ DestroyAll | ValidCards$ Artifact,Creature | SubAbility$ DBEndTurn | SpellDescription$ Destroy all artifacts and creatures. End the turn.
 SVar:DBEndTurn:DB$ EndTurn
-Oracle:Destroy all artifacts and creatures. End the turn.
+Oracle:Destroy all artifacts and creatures. End the turn. (Exile all spells and abilities from the stack, including this card. The player whose turn it is discards down to their maximum hand size. Damage wears off, and "this turn" and "until end of turn" effects end.)

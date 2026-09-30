@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigSac:DB$ Sacrifice | Defined$ Player | SacValid$ Creature.!token
 SVar:NeedsToPlay:Creature.YouDontCtrl
 DeckHas:Ability$Sacrifice
-Oracle:Animate Chains — When this creature enters, each player sacrifices a nontoken creature.
+Oracle:Animate Chains — When this creature enters, each player sacrifices a nontoken creature of their choice.

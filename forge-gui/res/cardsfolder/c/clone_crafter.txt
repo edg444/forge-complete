@@ -8,4 +8,4 @@ SVar:DBConjure:DB$ MakeCard | Conjure$ True | DefinedName$ ChosenCard | Zone$ Ha
 SVar:DBAnimate:DB$ Animate | Defined$ Remembered | staticAbilities$ SpendAnyMana | Duration$ Perpetual | SubAbility$ DBCleanup
 SVar:SpendAnyMana:Mode$ ManaConvert | EffectZone$ Stack | ValidPlayer$ You | ValidCard$ Card.Self | ValidSA$ Spell | ManaConversion$ AnyType->AnyColor | Description$ You may spend mana as though it were mana of any color to cast this spell.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
-Oracle:When Clone Crafter enters, conjure a duplicate of a random creature card from your opponent's library into your hand. It perpetually gains "You may spend mana as though it were mana of any color to cast this spell."
+Oracle:When Clone Crafter enters the battlefield, conjure a duplicate of a random creature card from your opponent's library into your hand. It perpetually gains "You may spend mana as though it were mana of any color to cast this spell."

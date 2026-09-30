@@ -7,4 +7,4 @@ SVar:DBSacCreature:DB$ Sacrifice | Amount$ X | SacValid$ Creature | Defined$ Pla
 SVar:DBSacLand:DB$ Sacrifice | Amount$ X | SacValid$ Land | Defined$ Player
 SVar:X:Count$xPaid
 AI:RemoveDeck:All
-Oracle:Each player loses X life, discards X cards, sacrifices X creatures, then sacrifices X lands.
+Oracle:Each player loses X life, discards X cards, sacrifices X creatures of their choice, then sacrifices X lands of their choice.

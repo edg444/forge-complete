@@ -5,4 +5,4 @@ A:SP$ Destroy | ValidTgts$ Creature | SubAbility$ DBClash | SpellDescription$ De
 SVar:DBClash:DB$ Clash | WinSubAbility$ DBGain
 SVar:DBGain:DB$ GainLife | Defined$ You | LifeAmount$ X
 SVar:X:Targeted$CardToughness
-Oracle:Destroy target creature. Clash with an opponent. If you win, you gain life equal to that creature's toughness. (Each clashing player reveals the top card of their library, then puts that card on the top or bottom. A player wins if their card had a higher mana value.)
+Oracle:Destroy target creature. Clash with an opponent. If you win, you gain life equal to that creature's toughness. (Each clashing player reveals the top card of their library, then puts that card on their choice of the top or bottom. A player wins if their card had a greater mana value.)

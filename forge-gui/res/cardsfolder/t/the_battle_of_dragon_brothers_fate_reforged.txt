@@ -11,7 +11,7 @@ SVar:DBManifestThree:DB$ Manifest | Amount$ 3 | SubAbility$ DBClearBolas | Spell
 SVar:DBClearBolas:DB$ Pump | Defined$ Player | ClearNotedCardsFor$ BattleBolas | SubAbility$ DBNoteUgin | StackDescription$ None
 SVar:DBNoteUgin:DB$ Pump | NoteCards$ Self | NoteCardsFor$ BattleUgin | StackDescription$ None
 AlternateMode:DoubleFaced
-Oracle:(As a Siege enters, choose an opponent to protect it. You and others can attack it. When it's defeated, exile it, then cast it transformed.)\nWhen The Battle of Dragon Brothers enters, choose Bolas or Ugin.\n• Bolas — Destroy all creatures.\n• Ugin — Manifest the top three cards of your library.
+Oracle:(As a Siege enters, choose an opponent to protect it. You and others can attack it. When it's defeated, exile it, then cast it transformed.)\nWhen The Battle of Dragon Brothers Enters, choose Bolas or Ugin.\n• Bolas — Destroy all creatures.\n• Ugin — Manifest the top three cards of your library.
 
 ALTERNATE
 
@@ -33,4 +33,4 @@ SVar:DBClearNamed:DB$ Cleanup | ClearNamedCard$ True | ClearRemembered$ True
 SVar:DBReforge:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | SubAbility$ DBReturnSelf | RememberChanged$ True | SpellDescription$ Exile CARDNAME, then return it to the battlefield (front face up).
 SVar:DBReturnSelf:DB$ ChangeZone | Defined$ Remembered | Origin$ Exile | Destination$ Battlefield | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:I (Bolas) — Each opponent discards their hand. You draw seven cards.\n(Ugin) — Manifest your hand, then draw seven cards.\nII (Both) — Create a token that's a copy of any Elder Dragon from the Legends expansion.\nIII (Both) — Exile Fate Reforged, then return it to the battlefield (front face up).
+Oracle:I — (Bolas) Each opponent discards their hand. You draw seven cards.\nI — (Ugin) Manifest your hand, then draw seven cards.\nII — (Both) Create a token that's a copy of any Elder Dragon from the Legends expansion.\nIII — (Both) Exile Fate Reforged, then return it to the battlefield (Front face up).

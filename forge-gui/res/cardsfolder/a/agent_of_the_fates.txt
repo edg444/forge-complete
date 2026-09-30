@@ -5,4 +5,4 @@ PT:3/2
 K:Deathtouch
 T:Mode$ SpellCast | ValidActivatingPlayer$ You | TargetsValid$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigSac | TriggerDescription$ Heroic — Whenever you cast a spell that targets this creature, each opponent sacrifices a creature.
 SVar:TrigSac:DB$ Sacrifice | SacValid$ Creature | Defined$ Player.Opponent
-Oracle:Deathtouch\nHeroic — Whenever you cast a spell that targets this creature, each opponent sacrifices a creature.
+Oracle:Deathtouch\nHeroic — Whenever you cast a spell that targets this creature, each opponent sacrifices a creature of their choice.

@@ -9,4 +9,4 @@ SVar:DBCast:DB$ Play | ValidZone$ Hand | Valid$ Instant.YouCtrl+cmcLEX,Sorcery.Y
 SVar:X:Count$Valid Equipment.Attached$GreatestCardManaCost
 SVar:EquipMe:Once
 DeckHints:Type$Equipment
-Oracle:Whenever Tetsuo attacks, if it's equipped, choose one —\n• Tetsuo deals damage equal to the highest mana value among Equipment attached to it to any target.\n• You may cast an instant or sorcery spell from your hand with mana value less than or equal to the highest mana value among Equipment attached to Tetsuo without paying its mana cost.
+Oracle:Whenever Tetsuo attacks, if it's equipped, choose one —\n• Tetsuo deals damage equal to the greatest mana value among Equipment attached to it to any target.\n• You may cast an instant or sorcery spell from your hand with mana value less than or equal to the greatest mana value among Equipment attached to Tetsuo without paying its mana cost.

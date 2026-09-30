@@ -4,4 +4,4 @@ Types:Sorcery
 A:SP$ Sacrifice | Amount$ X | SacValid$ Land | Defined$ Player | SpellDescription$ Each player sacrifices X lands.
 SVar:X:Count$xPaid
 AI:RemoveDeck:All
-Oracle:Each player sacrifices X lands.
+Oracle:Each player sacrifices X lands of their choice.

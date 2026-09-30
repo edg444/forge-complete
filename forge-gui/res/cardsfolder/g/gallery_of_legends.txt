@@ -8,7 +8,7 @@ SVar:DBMake:DB$ MakeCard | Name$ ChosenName | Zone$ None | RememberMade$ True | 
 SVar:DBCopyPerm:DB$ CopyPermanent | Defined$ Remembered | PumpKeywords$ Haste | AtEOT$ Exile | SubAbility$ DBClearNamed
 SVar:DBClearNamed:DB$ Cleanup | ClearNamedCard$ True | ClearRemembered$ True | ClearImprinted$ True
 SVar:X:Imprinted$CardManaCost
-Oracle:Visit — Exile cards from the top of your library until you exile a nonland card, then choose a legendary creature card name with the same mana value as that card. Create a token that’s a copy of the card with the chosen name. That token gains haste. Exile it at the beginning of the next end step.
+Oracle:Visit — Exile cards from the top of your library until you exile a nonland card, then choose a legendary creature card name with the same mana value as that card. Create a token that's a copy of the card with the chosen name. That token gains haste. Exile it at the beginning of the next end step.
 
 # --- VARIANTS ---
 

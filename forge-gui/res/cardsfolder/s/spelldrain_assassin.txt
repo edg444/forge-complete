@@ -8,4 +8,4 @@ SVar:DBPump:DB$ Pump | PumpZone$ Hand | Defined$ ChosenCard | KW$ Casualty:2 | D
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 DeckHints:Type$Instant|Sorcery
 DeckHas:Ability$Sacrifice
-Oracle:When Spelldrain Assassin enters, choose an instant or sorcery card in your hand. It perpetually gains casualty 2.
+Oracle:When Spelldrain Assassin enters the battlefield, choose an instant or sorcery card in your hand. It perpetually gains casualty 2. (As you cast this spell, you may sacrifice a creature with power 2 or greater. When you do, copy this spell and you may choose a new target for the copy.)

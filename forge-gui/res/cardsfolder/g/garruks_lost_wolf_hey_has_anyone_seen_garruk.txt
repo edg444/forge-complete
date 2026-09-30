@@ -6,7 +6,7 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigToken:DB$ Token | TokenScript$ role_huntsman | TokenOwner$ You | AttachedTo$ Targeted | ValidTgts$ Creature.YouCtrl+Other | TgtPrompt$ Select another target creature you control
 DeckHas:Ability$Mill|Graveyard|Token & Type$Aura|Enchantment|Role
 AlternateMode:Adventure
-Oracle:When Garruk's Lost Wolf enters the battlefield, create a Huntsman Role token attached to another target creature you control. (Enchanted creature gets +1/+1 and has "{T}: Add {G}.")
+Oracle:When Garruk's Lost Wolf enters the battlefield, create a Huntsman Role token attached to another target creature you control. (Enchanted creature gets +1/+1 and has "{T}: Add {G}")
 
 ALTERNATE
 

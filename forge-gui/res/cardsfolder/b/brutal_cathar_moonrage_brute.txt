@@ -9,7 +9,7 @@ K:Daybound
 SVar:PlayMain1:TRUE
 SVar:OblivionRing:TRUE
 AlternateMode:DoubleFaced
-Oracle:When this creature enters or transforms into Brutal Cathar, exile target creature an opponent controls until this creature leaves the battlefield.\nDaybound (If a player casts no spells during their own turn, it becomes night next turn.)
+Oracle:Whenever this creature enters or transforms into Brutal Cathar, exile target creature an opponent controls until this creature leaves the battlefield.\nDaybound (If a player casts no spells during their own turn, it becomes night next turn.)
 
 ALTERNATE
 

@@ -11,4 +11,4 @@ SVar:DBToken:DB$ Token | TokenScript$ role_wicked | AttachedTo$ ChosenCard
 SVar:DBBargained:DB$ ChangeZone | ConditionDefined$ Self | ConditionPresent$ Card.bargained | Origin$ Graveyard | Destination$ Hand | Hidden$ True | ChangeType$ Creature.YouOwn | ChangeNum$ 1
 DeckHints:Type$Artifact|Enchantment & Ability$Token
 DeckHas:Ability$Sacrifice|LifeGain|Token|Graveyard & Type$Aura
-Oracle:Bargain\nWhen Dunbarrow Revivalist enters, you get a one-time boon with "When one or more creatures you control enter, create a Wicked Role token attached to one of them." Then if Dunbarrow Revivalist was bargained, return a creature card from your graveyard to your hand.
+Oracle:Bargain\nWhen Dunbarrow Revivalist enters, you get a one-time boon with "When one or more creatures enter under your control, create a Wicked Role token attached to one of them." Then if Dunbarrow Revivalist was bargained, return a creature card from your graveyard to your hand.

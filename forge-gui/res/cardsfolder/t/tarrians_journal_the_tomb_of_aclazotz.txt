@@ -23,4 +23,4 @@ SVar:ETBAddExtraCounter:DB$ PutCounter | ETB$ True | Defined$ ReplacedCard | Cou
 SVar:DBExileSelf:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
 SVar:DBAnimate:DB$ Animate | Defined$ TriggeredCardLKICopy | Types$ Vampire | Duration$ Permanent
 DeckHas:Ability$Counters
-Oracle:{T}: Add {B}.\n{T}: You may cast a creature spell from your graveyard this turn. If you do, it enters with a finality counter on it and is a Vampire in addition to its other types. (If a creature with a finality counter on it would die, exile it instead.)
+Oracle:(Transforms from Tarrian's Journal.)\n{T}: Add {B}.\n{T}: You may cast a creature spell from your graveyard this turn. If you do, it enters with a finality counter on it and is a Vampire in addition to its other types. (If a creature with a finality counter on it would die, exile it instead.)

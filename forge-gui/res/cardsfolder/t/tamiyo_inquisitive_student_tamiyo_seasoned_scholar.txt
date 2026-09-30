@@ -12,7 +12,7 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHints:Ability$Investigate
 DeckHas:Ability$Investigate|Token
 AlternateMode:DoubleFaced
-Oracle:Flying\nWhenever Tamiyo attacks, investigate. (Create a Clue token. It's an artifact with "{2}, Sacrifice this token: Draw a card.")\nWhenever you draw your third card in a turn, exile Tamiyo, then return her to the battlefield transformed under her owner's control.
+Oracle:Flying\nWhenever Tamiyo attacks, investigate. (Create a Clue token. It's an artifact with "{2}, Sacrifice this token: Draw a card.")\nWhen you draw your third card in a turn, exile Tamiyo, then return her to the battlefield transformed under her owner's control.
 
 ALTERNATE
 
@@ -31,4 +31,4 @@ A:AB$ Draw | Cost$ SubCounter<7/LOYALTY> | Planeswalker$ True | Ultimate$ True |
 SVar:DBEmblem:DB$ Effect | Name$ Emblem — Tamiyo, Seasoned Scholar | Image$ emblem_tamiyo_seasoned_scholar | StaticAbilities$ UnlimitedHand | Stackable$ False | Duration$ Permanent | AILogic$ Always
 SVar:UnlimitedHand:Mode$ Continuous | Affected$ You | SetMaxHandSize$ Unlimited | Description$ You have no maximum hand size.
 SVar:X:Count$ValidLibrary Card.YouOwn/HalfUp
-Oracle:[+2]: Until your next turn, whenever a creature an opponent controls attacks you or a planeswalker you control, it gets -1/-0 until end of turn.\n[-3]: Return target instant or sorcery card from your graveyard to your hand. If it's a green card, add one mana of any color.\n[-7]: Draw cards equal to half the number of cards in your library, rounded up. You get an emblem with "You have no maximum hand size."
+Oracle:[+2]: Until your next turn, whenever a creature attacks you or a planeswalker you control, it gets -1/-0 until end of turn.\n[-3]: Return target instant or sorcery card from your graveyard to your hand. If it's a green card, add one mana of any color.\n[-7]: Draw cards equal to half the number of cards in your library, rounded up. You get an emblem with "You have no maximum hand size."

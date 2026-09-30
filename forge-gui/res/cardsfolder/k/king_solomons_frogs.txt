@@ -8,4 +8,4 @@ SVar:DrawEach:DB$ Draw | Defined$ RememberedController | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:OneEach:PlayerCountOpponents$Amount
 A:AB$ BecomeMonarch | Cost$ 3 T Exile<1/CARDNAME> | Defined$ You | SpellDescription$ You become the monarch.
-Oracle:When King Solomon's Frogs enters, if you cast it, for each opponent, exile up to one target permanent that player controls with mana value 3 or greater. For each permanent exiled this way, its controller draws a card.\n{3}, {T}, Exile King Solomon's Frogs: You become the monarch.
+Oracle:Flash\nWhen King Solomon's Frogs enters, if you cast it, for each opponent, exile up to one target permanent that player controls with mana value 3 or greater. For each permanent exiled this way, its controller draws a card.\n{3}, {T}, Exile King Solomon's Frogs: You become the monarch.

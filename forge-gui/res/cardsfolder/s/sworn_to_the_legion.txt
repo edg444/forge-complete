@@ -6,4 +6,4 @@ SVar:TrigPump:DB$ PumpAll | ValidCards$ Creature.YouCtrl+!token | Duration$ Perp
 T:Mode$ SpellCast | ValidCard$ Creature | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCast | TriggerDescription$ Whenever you cast a creature spell, it perpetually gains double team.
 SVar:TrigCast:DB$ Pump | PumpZone$ Stack | Defined$ TriggeredCard | Duration$ Perpetual | KW$ Double team
 SVar:BuffedBy:Creature
-Oracle:When Sworn to the Legion enters, nontoken creatures you control perpetually gain double team.\nWhenever you cast a creature spell, it perpetually gains double team.
+Oracle:When Sworn to the Legion enters the battlefield, nontoken creatures you control perpetually gain double team. (When a creature with double team attacks, conjure a duplicate into your hand, then both of them perpetually lose double team.)\nWhenever you cast a creature spell, it perpetually gains double team.

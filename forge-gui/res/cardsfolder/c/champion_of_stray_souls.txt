@@ -7,4 +7,4 @@ A:AB$ ChangeZone | Cost$ 5 B B | Origin$ Graveyard | Destination$ Library | Acti
 SVar:X:Count$xPaid
 SVar:AIPreference:SacCost$Creature.token,Creature.cmcLE3
 AI:RemoveDeck:All
-Oracle:{3}{B}{B}, {T}, Sacrifice X other creatures: Return X target creature cards from your graveyard to the battlefield.\n{5}{B}{B}: Put Champion of Stray Souls on top of your library from your graveyard.
+Oracle:{3}{B}{B}, {T}, Sacrifice X other creatures: Return X target creature cards from your graveyard to the battlefield.\n{5}{B}{B}: Put this card from your graveyard on top of your library.

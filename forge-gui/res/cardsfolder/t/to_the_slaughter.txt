@@ -7,4 +7,4 @@ SVar:DBSacrificeBoth:DB$ Sacrifice | Defined$ Targeted | SacValid$ Creature & Pl
 SVar:XDelirium:Number$0
 DeckHints:Ability$Graveyard|Discard
 DeckHas:Ability$Delirium
-Oracle:Target player sacrifices a creature or planeswalker.\nDelirium — If there are four or more card types among cards in your graveyard, instead that player sacrifices a creature and a planeswalker.
+Oracle:Target player sacrifices a creature or planeswalker of their choice.\nDelirium — If there are four or more card types among cards in your graveyard, instead that player sacrifices a creature and a planeswalker of their choice.

@@ -11,4 +11,4 @@ SVar:ExileEffect:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$
 SVar:X:ReplaceCount$DamageAmount
 AI:RemoveDeck:All
 DeckHas:Ability$Token & Type$Mite|Artifact
-Oracle:Battle cry\nAt the beginning of combat on your turn, the next time target creature would deal combat damage to one or more players this combat, prevent that damage. If damage is prevented this way, create that many 1/1 colorless Phyrexian Mite artifact creature tokens with toxic 1 and "This creature can't block."
+Oracle:Battle cry (Whenever this creature attacks, each other attacking creature gets +1/+0 until end of turn.)\nAt the beginning of combat on your turn, the next time target creature would deal combat damage to one or more players this combat, prevent that damage. If damage is prevented this way, create that many 1/1 colorless Phyrexian Mite artifact creature tokens with toxic 1 and "This token can't block."

@@ -7,4 +7,4 @@ SVar:DBScry:DB$ Scry | ScryNum$ 1 | ConditionDefined$ Remembered | ConditionPres
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:SVar$Y/Plus.1
 SVar:Y:Count$Valid Permanent.YouCtrl+Other$GreatestCardManaCost
-Oracle:At the beginning of your upkeep, you may cast a permanent spell from your hand with mana value equal to 1 plus the highest mana value among other permanents you control without paying its mana cost. If you don't, scry 1.
+Oracle:At the beginning of your upkeep, you may cast a permanent spell from your hand with mana value equal to 1 plus the greatest mana value among other permanents you control without paying its mana cost. If you don't, scry 1.

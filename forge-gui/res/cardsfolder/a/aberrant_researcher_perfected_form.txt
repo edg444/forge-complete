@@ -9,7 +9,7 @@ SVar:DBTransform:DB$ SetState | Defined$ Self | ConditionDefined$ Remembered | C
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHints:Ability$Delirium & Type$Instant|Sorcery
 AlternateMode:DoubleFaced
-Oracle:Flying\nAt the beginning of your upkeep, mill a card. If an instant or sorcery card was milled this way, transform Aberrant Researcher.
+Oracle:Flying\nAt the beginning of your upkeep, mill a card. If an instant or sorcery card was milled this way, transform this creature. (To mill a card, put the top card of your library into your graveyard.)
 
 ALTERNATE
 

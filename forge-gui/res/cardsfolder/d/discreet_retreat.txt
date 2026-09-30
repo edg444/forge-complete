@@ -9,4 +9,4 @@ T:Mode$ SpellCast | ValidCard$ Card.Outlaw | ValidActivatingPlayer$ You | Activa
 SVar:TrigDraw:DB$ Draw | Defined$ You | SubAbility$ DBLoseLife
 SVar:DBLoseLife:DB$ LoseLife | LifeAmount$ 1
 DeckNeeds:Type$Assassin|Mercenary|Pirate|Rogue|Warlock
-Oracle:Enchant land\nEnchanted land has "{T}: Add two mana of any one color. Spend this mana only to cast outlaw spells or activate abilities from outlaw sources." (Assassins, Mercenaries, Pirates, Rogues, and Warlocks are outlaws.)\nWhenever you cast your first outlaw spell each turn, you draw a card and you lose 1 life.
+Oracle:Enchant land\nEnchanted land has "{T}: Add two mana of any one color. Spend this mana only to cast outlaw spells or activate abilities of outlaw sources." (Assassins, Mercenaries, Pirates, Rogues, and Warlocks are outlaws.)\nWhenever you cast your first outlaw spell each turn, you draw a card and you lose 1 life.

@@ -4,4 +4,4 @@ Types:Creature Pegasus
 PT:2/3
 K:Flying
 A:AB$ Pump | Cost$ 1 W | KW$ Lifelink & Vigilance | Defined$ Self | SpellDescription$ This creature gains vigilance and lifelink until end of turn.
-Oracle:Flying\n{1}{W}: This creature gains vigilance and lifelink until end of turn.
+Oracle:Flying\n{1}{W}: This creature gains vigilance and lifelink until end of turn. (Attacking doesn't cause it to tap. Damage dealt by it also causes you to gain that much life.)

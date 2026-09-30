@@ -6,4 +6,4 @@ SVar:DestroyCreature:DB$ Pump | ValidTgts$ Creature | AILogic$ Destroy | IsCurse
 SVar:DestroyEnch:DB$ Pump | ValidTgts$ Enchantment | AILogic$ Destroy | IsCurse$ True | SubAbility$ DestroyLand | StackDescription$ None
 SVar:DestroyLand:DB$ Pump | ValidTgts$ Land | AILogic$ Destroy | IsCurse$ True | SubAbility$ DBDestroy | StackDescription$ None
 SVar:DBDestroy:DB$ Destroy | Defined$ Targeted
-Oracle:Destroy target artifact, target creature, target enchantment, and target land.
+Oracle:Destroy target artifact, target creature, target enchantment, and target land. (You can't cast this spell unless you have legal choices for all its targets.)

@@ -6,4 +6,4 @@ K:Convoke
 T:Mode$ SpellCast | ValidCard$ Card.nonCreature | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPumpAll | TriggerDescription$ Whenever you cast a noncreature spell, creatures you control get +1/+0 until end of turn.
 SVar:TrigPumpAll:DB$ PumpAll | ValidCards$ Creature.YouCtrl | NumAtt$ +1
 SVar:BuffedBy:Card.nonCreature+nonLand
-Oracle:Convoke\nWhenever you cast a noncreature spell, creatures you control get +1/+0 until end of turn.
+Oracle:Convoke (Your creatures can help cast this spell. Each creature you tap while casting this spell pays for {1} or one mana of that creature's color.)\nWhenever you cast a noncreature spell, creatures you control get +1/+0 until end of turn.

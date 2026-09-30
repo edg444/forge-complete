@@ -12,4 +12,4 @@ SVar:DrawX:Remembered$Amount
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard,Exile | ValidCard$ Card.Self | Execute$ TriReturn | OptionalDecider$ You | TriggerDescription$ When CARDNAME dies or is put into exile from the battlefield, you may put it into its owner's library third from the top.
 SVar:TriReturn:DB$ ChangeZone | Defined$ TriggeredNewCardLKICopy | Destination$ Library | LibraryPosition$ 2
 AI:RemoveDeck:All
-Oracle:Menace\nWhen God-Eternal Bontu enters, sacrifice any number of other permanents, then draw that many cards.\nWhen God-Eternal Bontu dies or is put into exile from the battlefield, you may put it into its owner's library third from the top.
+Oracle:Menace\nWhen God-Eternal Bontu enters, sacrifice any number of other permanents, then draw that many cards.\nWhen God-Eternal Bontu dies or is put into exile from the battlefield, you may put her into her owner's library third from the top.

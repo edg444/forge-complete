@@ -6,4 +6,4 @@ SVar:AttacksPlayer:Mode$ Attacks | ValidCard$ Card.Self | Attacked$ Player | Con
 SVar:TrigTreasure:DB$ Token | TokenAmount$ 2 | TokenScript$ c_a_treasure_sac
 AI:RemoveDeck:NonCommander
 DeckHas:Ability$Token|Sacrifice & Type$Treasure|Artifact
-Oracle:Commander creatures you own have "Whenever this creature attacks a player, if no other opponent has more life than that player, create two Treasure tokens." (They're artifacts with "{T}, Sacrifice this token: Add one mana of any color.")
+Oracle:Commander creatures you own have "Whenever this creature attacks a player, if no opponent has more life than that player, you create two Treasure tokens." (They're artifacts with "{T}, Sacrifice this token: Add one mana of any color.")

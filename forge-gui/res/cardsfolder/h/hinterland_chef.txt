@@ -8,4 +8,4 @@ SVar:DBAnimate:DB$ Animate | Defined$ Remembered | Types$ Food,Artifact | Durati
 SVar:FoodSac:AB$ GainLife | Cost$ 2 T Sac<1/CARDNAME/this creature> | LifeAmount$ 3 | SpellDescription$ You gain 3 life.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHas:Ability$Sacrifice|LifeGain & Type$Food
-Oracle:When Hinterland Chef enters, draft a card from Hinterland Chef's spellbook. It perpetually becomes a Food artifact in addition to its other types and perpetually gains "{2}, {T}, Sacrifice this creature: You gain 3 life."
+Oracle:When Hinterland Chef enters the battlefield, draft a card from Hinterland Chef's spellbook. It perpetually becomes a Food artifact in addition to its other types and perpetually gains "{2}, {T}, Sacrifice this creature: You gain 3 life."

@@ -11,4 +11,4 @@ SVar:ETBAddCounter:Event$ Moved | Origin$ Stack | Destination$ Battlefield | Val
 SVar:ETBAddExtraCounter:DB$ PutCounter | ETB$ True | Defined$ ReplacedCard | CounterType$ P1P1 | SubAbility$ DBRemoveSelf
 SVar:DBRemoveSelf:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
 DeckHas:Ability$Counters
-Oracle:Enlist\nWhenever Benalish Knight-Counselor enlists a creature, you get a boon with "When you cast your next creature spell, that creature enters with a +1/+1 counter on it."
+Oracle:Enlist\nWhenever Benalish Knight-Counselor enlists a creature, you get a one-time boon with "When you cast a creature spell, that creature enters with a +1/+1 counter on it."

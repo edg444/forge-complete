@@ -53,4 +53,4 @@ SVar:X19:RememberedLKI$CardPower
 SVar:Orcish:DB$ ChooseCard | Choices$ Creature | Amount$ Random | AtRandom$ True | SubAbility$ DBPutCounter20 | SpellDescription$ Randomly distribute X -0/-1 counters among a random number of creatures chosen at random, where X is the number of creatures in play.
 SVar:DBPutCounter20:DB$ PutCounter | Defined$ ChosenCard | CounterType$ M0M1 | CounterNum$ X20 | DividedRandomly$ True | SubAbility$ DBCleanup
 SVar:X20:Count$Valid Creature
-Oracle:Flying\n{1}{G}{G}: Perform a random action.
+Oracle:Flying\n{1}{G}{G}: Play a random effect.

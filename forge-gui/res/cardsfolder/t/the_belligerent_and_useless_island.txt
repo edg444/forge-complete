@@ -9,4 +9,4 @@ SVar:TrigDraw:DB$ Draw | Defined$ You | SubAbility$ DBDiscard
 SVar:DBDiscard:DB$ Discard | Defined$ You | Mode$ TgtChoose | NumCards$ 1
 K:Crew:2
 DeckHas:Ability$Discard
-Oracle:The Belligerent and Useless Island enter the battlefield tapped.\nWhen The Belligerent and Useless Island deal combat damage to a player or battle, draw a card, then discard a card.\nCrew 2
+Oracle:({T}: Add {U}.)\nThe Belligerent and Useless Island enter the battlefield tapped.\nWhen The Belligerent and Useless Island deal combat damage to a player or battle, draw a card, then discard a card.\nCrew 2

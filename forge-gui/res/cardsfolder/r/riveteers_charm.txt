@@ -10,4 +10,4 @@ SVar:STPlay:Mode$ Continuous | MayPlay$ True | Affected$ Card.IsRemembered | Aff
 SVar:DBExileGrave:DB$ ChangeZoneAll | Origin$ Graveyard | Destination$ Exile | ValidTgts$ Player | ChangeType$ Card | SpellDescription$ Exile target player's graveyard.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHas:Ability$Sacrifice
-Oracle:Choose one —\n• Target opponent sacrifices a creature or planeswalker they control with the highest mana value among creatures and planeswalkers they control.\n• Exile the top three cards of your library. Until your next end step, you may play those cards.\n• Exile target player's graveyard.
+Oracle:Choose one —\n• Target opponent sacrifices a creature or planeswalker they control with the greatest mana value among creatures and planeswalkers they control.\n• Exile the top three cards of your library. Until your next end step, you may play those cards.\n• Exile target player's graveyard.

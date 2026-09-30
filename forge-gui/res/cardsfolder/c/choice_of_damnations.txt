@@ -10,4 +10,4 @@ SVar:Y:SVar$W/LimitMin.0
 SVar:W:SVar$Z/Minus.X
 SVar:Z:Count$Valid Permanent.TargetedPlayerCtrl
 AI:RemoveDeck:All
-Oracle:Target opponent chooses a number. You may have that player lose that much life. If you don't, that player sacrifices all but that many permanents.
+Oracle:Target opponent chooses a number. You may have that player lose that much life. If you don't, that player sacrifices all but that many permanents of their choice.

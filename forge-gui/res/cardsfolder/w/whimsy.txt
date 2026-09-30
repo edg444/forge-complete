@@ -42,4 +42,4 @@ SVar:DBDiscard20:DB$ Discard | Mode$ Defined | Defined$ You | DefinedCards$ Reme
 SVar:DBCleanup:DB$ Cleanup | Log$ True | ClearRemembered$ True | ClearChosenCard$ True | ClearChosenPlayer$ True
 SVar:X:Count$xPaid
 DeckHas:Ability$LifeGain|Token|Discard
-Oracle:Perform X random actions.
+Oracle:Play X random fast effects.

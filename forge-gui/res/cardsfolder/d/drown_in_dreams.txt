@@ -8,4 +8,4 @@ SVar:W:Count$Compare Y GE1.2.1
 SVar:X:Count$xPaid
 SVar:Y:Count$Valid Card.IsCommander+YouCtrl
 SVar:Z:Count$xPaid/Twice
-Oracle:Choose one. If you control a commander as you cast this spell, you may choose both.\n• Target player draws X cards.\n• Target player mills twice X cards.
+Oracle:Choose one. If you control a commander as you cast this spell, you may choose both instead.\n• Target player draws X cards.\n• Target player mills twice X cards.

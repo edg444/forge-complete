@@ -11,4 +11,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
 SVar:X:Count$Intensity
 DeckHas:Ability$Graveyard
 DeckHints:Ability$Mill|Graveyard
-Oracle:Starting intensity 1\nAt the beginning of combat on your turn, you may cast a spell with mana value equal to Jarsyl, Dark Age Scion's intensity from your graveyard without paying its mana cost. If you do, perpetually increase Jarsyl's intensity by 1.
+Oracle:Starting intensity 1\nAt the beginning of combat on your turn, you may cast a spell with mana value equal to Jarsyl, Dark Age Scion's intensity from your graveyard without paying its mana cost. If you do, Jarsyl intensifies by 1.

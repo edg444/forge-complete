@@ -11,4 +11,4 @@ SVar:SpendAnyMana:Mode$ ManaConvert | EffectZone$ Stack | ValidPlayer$ You | Val
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:Y:Count$Kicked.1.0
 DeckHas:Ability$Graveyard
-Oracle:Kicker{B}\nWhen Nantuko Slicer enters, return target card from your graveyard to your hand. If this spell was kicked, conjure a duplicate of target card in an opponent's graveyard into your hand. It perpetually gains "You may spend mana as though it were mana of any color to cast this spell."
+Oracle:Kicker {B}\nWhen Nantuko Slicer enters, return target card from your graveyard to your hand. If this spell was kicked, conjure a duplicate of target card in an opponent's graveyard into your hand. It perpetually gains "You may spend mana as though it were mana of any color to cast this spell."

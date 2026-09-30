@@ -6,4 +6,4 @@ PT:6/6
 K:Double Strike
 S:Mode$ Continuous | AffectedDefined$ Self | Affected$ Card.attacking | AddPower$ X | Description$ As long as this creature is attacking, it gets +1/+0 for each red card in your graveyard.
 SVar:X:Count$ValidGraveyard Card.Red+YouOwn
-Oracle:Double strike\nWhile attacking, this creature gets +1 power for each red card in your graveyard.
+Oracle:Double b̶r̶e̶a̶k̶e̶r̶ strike\nWhile attacking, this creature gets +10̶0̶0̶ power for each f̶i̶r̶e̶ red card in your graveyard.

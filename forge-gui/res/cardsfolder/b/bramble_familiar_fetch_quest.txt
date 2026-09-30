@@ -16,4 +16,4 @@ Types:Sorcery Adventure
 A:SP$ Mill | NumCards$ 7 | RememberMilled$ True | SubAbility$ DBChangeZone | SpellDescription$ Mill seven cards, then put a creature, enchantment, or land card from among cards milled this way onto the battlefield.
 SVar:DBChangeZone:DB$ ChangeZone | Hidden$ True | Mandatory$ True | Origin$ Graveyard,Exile | Destination$ Battlefield | ChangeType$ Creature.IsRemembered,Enchantment.IsRemembered,Land.IsRemembered | SelectPrompt$ Choose a creature, enchantment, or land card from among cards milled this way | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:Mill seven cards, then put a creature, enchantment, or land card from among cards milled this way onto the battlefield.
+Oracle:Mill seven cards. Then put a creature, enchantment, or land card from among the milled cards onto the battlefield.

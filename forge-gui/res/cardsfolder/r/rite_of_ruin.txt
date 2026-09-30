@@ -52,4 +52,4 @@ SVar:DBChooseA3:DB$ RepeatEach | RepeatPlayers$ Player | RepeatSubAbility$ Choos
 SVar:SacA3:DB$ SacrificeAll | ValidCards$ Artifact.IsRemembered | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 AI:RemoveDeck:All
-Oracle:Choose an order for artifacts, creatures, and lands. Each player sacrifices one permanent of the first type, sacrifices two of the second type, then sacrifices three of the third type.
+Oracle:Choose an order for artifacts, creatures, and lands. Each player sacrifices one permanent of their choice of the first type, sacrifices two of their choice of the second type, then sacrifices three of their choice of the third type.

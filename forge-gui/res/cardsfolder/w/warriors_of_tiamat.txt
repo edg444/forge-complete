@@ -4,4 +4,4 @@ Types:Creature Dragon Warrior
 PT:4/2
 K:Haste
 K:Double team
-Oracle:Haste\nDouble team
+Oracle:Haste, double team (When this creature attacks, conjure a duplicate into your hand, then both of them perpetually lose double team.)

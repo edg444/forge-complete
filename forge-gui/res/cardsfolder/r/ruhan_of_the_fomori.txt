@@ -6,4 +6,4 @@ T:Mode$ Phase | Phase$ BeginCombat | ValidPlayer$ You | Execute$ TrigChoose | Tr
 SVar:TrigChoose:DB$ ChoosePlayer | Defined$ You | Choices$ Player.Opponent | Random$ True | SubAbility$ DBEffect
 SVar:DBEffect:DB$ Effect | RememberObjects$ Self | ExileOnMoved$ Battlefield | StaticAbilities$ AttackChosen | Duration$ UntilEndOfCombat
 SVar:AttackChosen:Mode$ MustAttack | ValidCreature$ Card.IsRemembered | MustAttack$ ChosenPlayer | Description$ EFFECTSOURCE attacks that player this combat if able.
-Oracle:At the beginning of combat on your turn, choose an opponent at random. Ruhan of the Fomori attacks that player this combat if able.
+Oracle:At the beginning of combat on your turn, choose an opponent at random. Ruhan attacks that player this combat if able.

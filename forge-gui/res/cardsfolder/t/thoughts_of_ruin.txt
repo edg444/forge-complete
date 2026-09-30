@@ -4,4 +4,4 @@ Types:Sorcery
 A:SP$ Sacrifice | SacValid$ Land | Amount$ X | Defined$ Player | SpellDescription$ Each player sacrifices a land for each card in your hand.
 SVar:X:Count$ValidHand Card.YouOwn
 AI:RemoveDeck:All
-Oracle:Each player sacrifices a land for each card in your hand.
+Oracle:Each player sacrifices a land of their choice for each card in your hand.

@@ -9,4 +9,4 @@ SVar:DBReturn:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand | TargetMin
 SVar:YouLifeGained:Count$LifeYouGainedThisTurn
 DeckHints:Ability$LifeGain
 DeckHas:Ability$Graveyard
-Oracle:Deathtouch\nAt the beginning of your end step, if you gained life this turn, each opponent sacrifices a creature and you return up to one target creature card from your graveyard to your hand.
+Oracle:Deathtouch\nAt the beginning of your end step, if you gained life this turn, each opponent sacrifices a creature of their choice and you return up to one target creature card from your graveyard to your hand.

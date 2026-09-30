@@ -6,4 +6,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Indestructible | CheckS
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigOpenAttraction | TriggerDescription$ When this creature enters the battlefield, open an Attraction.
 SVar:TrigOpenAttraction:DB$ OpenAttraction
 SVar:X:PlayerCountPropertyYou$AttractionsVisitedThisTurn
-Oracle:As long as you've visited an Attraction this turn, this creature has indestructible. (Damage and effects that say "destroy" don't destroy it.)\nWhen this creature enters the battlefield, open an Attraction. (Put the top card of your Attraction deck onto the battlefield.)
+Oracle:As long as you've visited an Attraction this turn, this creature has indestructible. (Damage and effects that say "destroy" don't destroy it.)\nWhen this creature enters, open an Attraction. (Put the top card of your Attraction deck onto the battlefield.)

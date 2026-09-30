@@ -5,4 +5,4 @@ A:SP$ Counter | TargetType$ Spell | TgtZone$ Stack | ValidTgts$ Card | UnlessCos
 SVar:DBSeek:DB$ Seek | Type$ Card.cmcEQX | Condition$ Threshold | SpellDescription$ Threshold — If there are seven or more cards in your graveyard, seek a creature card with the same mana value as the chosen spell.
 SVar:X:Targeted$CardManaCost
 DeckHints:Ability$Graveyard|Mill
-Oracle:Choose target spell. Counter that spell unless its controller pays {2}.\nThreshold — If there are seven or more cards in your graveyard, seek a creature card with the same mana value as the chosen spell.
+Oracle:Choose target spell. Counter that spell unless its controller pays {2}.\nThreshold — If seven or more cards are in your graveyard, seek a creature card with the same mana value as the chosen spell.

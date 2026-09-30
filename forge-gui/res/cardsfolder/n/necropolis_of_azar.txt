@@ -7,4 +7,4 @@ A:AB$ Token | Cost$ 5 SubCounter<1/HUSK> | TokenScript$ spawn_of_azar | TokenPow
 SVar:X:Count$Random.1.3
 SVar:Y:Count$Random.1.3
 DeckHas:Ability$Counters|Token
-Oracle:Whenever a nonblack creature dies, put a husk counter on Necropolis of Azar.\n{5}, Remove a husk counter from Necropolis of Azar: Create an X/Y black Spawn creature token with swampwalk named Spawn of Azar, where X and Y are numbers chosen at random from 1 to 3.
+Oracle:Whenever a non-black creature is put into any graveyard from play, put a husk counter on Necropolis of Azar.\n{5}, Remove a husk counter from Necropolis of Azar: Put a Spawn of Azar token into play. Treat this token as a black creature with a random power and toughness, each no less than 1 and no greater than 3, that has swampwalk.

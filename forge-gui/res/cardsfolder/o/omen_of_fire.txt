@@ -6,4 +6,4 @@ SVar:DBSac:DB$ RepeatEach | RepeatPlayers$ Player | RepeatSubAbility$ DBSacEach
 SVar:DBSacEach:DB$ Sacrifice | Defined$ Player.IsRemembered | Amount$ OppX | SacValid$ Plains,Permanent.White
 SVar:OppX:Count$Valid Permanent.White+RememberedPlayerCtrl
 AI:RemoveDeck:Random
-Oracle:Return all Islands to their owners' hands. Each player sacrifices a Plains or a white permanent for each white permanent they control.
+Oracle:Return all Islands to their owners' hands. Each player sacrifices a Plains or a white permanent of their choice for each white permanent they control.

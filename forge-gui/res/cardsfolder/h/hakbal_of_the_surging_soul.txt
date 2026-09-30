@@ -10,4 +10,4 @@ SVar:DBDraw:DB$ Draw | ConditionDefined$ Remembered | ConditionPresent$ Card | C
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHas:Ability$Counters
 DeckHints:Type$Merfolk
-Oracle:At the beginning of combat on your turn, each Merfolk creature you control explores. (Reveal the top card of your library. Put that card into your hand if it's a land. Otherwise, put a +1/+1 counter on the exploring creature, then put the card back or put it into your graveyard.)\nWhenever Hakbal of the Surging Soul attacks, you may put a land card from your hand onto the battlefield. If you don't, draw a card.
+Oracle:At the beginning of combat on your turn, each Merfolk creature you control explores. (Reveal the top card of your library. Put that card into your hand if it's a land. Otherwise, put a +1/+1 counter on the exploring creature, then put the card back or put it into your graveyard.)\nWhenever Hakbal attacks, you may put a land card from your hand onto the battlefield. If you don't, draw a card.

@@ -7,4 +7,4 @@ T:Mode$ DamageDone | ValidTarget$ Card.Self | Execute$ TrigSac | TriggerZones$ B
 SVar:TrigSac:DB$ Sacrifice | Amount$ X | SacValid$ Permanent | Defined$ TriggeredSourceController
 SVar:X:TriggerCount$DamageAmount
 SVar:HasCombatEffect:TRUE
-Oracle:Trample\nWhenever a source deals damage to this creature, that source's controller sacrifices that many permanents.
+Oracle:Trample\nWhenever a source deals damage to this creature, that source's controller sacrifices that many permanents of their choice.

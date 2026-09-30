@@ -11,4 +11,4 @@ SVar:ToGrave:DB$ ChangeZone | Defined$ Remembered | Origin$ Exile | Destination$
 SVar:DBLoseLife:DB$ LoseLife | LifeAmount$ 3 | SubAbility$ DBCleanup | SpellDescription$ You lose 3 life.
 SVar:DBCleanup:DB$ Cleanup | ClearImprinted$ True
 DeckHints:Ability$Graveyard
-Oracle:Exile the top three cards of your library in a face-down pile, then exile the next top three cards of your library in another face-down pile. Look at the cards in each pile, then turn a pile of your choice face up. An opponent chooses one of those piles. Put all cards in the chosen pile into your hand and the rest into your graveyard. You lose 3 life.
+Oracle:Exile the top three cards of your library in a face-down pile, then exile the top three cards of your library in another face-down pile. Look at the cards in each pile, then turn a pile of your choice face up. An opponent chooses one of those piles. Put that pile into your hand and the other into your graveyard. You lose 3 life.

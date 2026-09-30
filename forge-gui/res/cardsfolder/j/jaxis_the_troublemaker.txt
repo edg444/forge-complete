@@ -9,4 +9,4 @@ SVar:Dies:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | Val
 SVar:TrigDraw:DB$ Draw
 K:Blitz:1 R
 DeckHas:Ability$Discard|Token|Sacrifice
-Oracle:{R}, {T}, Discard a card: Create a token that's a copy of another target creature you control. It gains haste and "When this creature dies, draw a card." Sacrifice it at the beginning of the next end step. Activate only as a sorcery.\nBlitz {1}{R} (If you cast this spell for its blitz cost, it gains haste and "When this creature dies, draw a card." Sacrifice it at the beginning of the next end step.)
+Oracle:{R}, {T}, Discard a card: Create a token that's a copy of another target creature you control. It gains haste and "When this token dies, draw a card." Sacrifice it at the beginning of the next end step. Activate only as a sorcery.\nBlitz {1}{R} (If you cast this spell for its blitz cost, it gains haste and "When this creature dies, draw a card." Sacrifice it at the beginning of the next end step.)

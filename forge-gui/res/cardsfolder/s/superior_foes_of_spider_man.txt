@@ -13,4 +13,4 @@ SVar:DBEffect:DB$ Effect | RememberObjects$ Remembered | StaticAbilities$ Play |
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ DBCleanup2 | Static$ True
 SVar:DBCleanup2:DB$ Cleanup | ClearImprinted$ True
 SVar:Play:Mode$ Continuous | MayPlay$ True | Affected$ Card.IsRemembered | AffectedZone$ Exile | Description$ You may play this card until you exile another card with this creature.
-Oracle:Whenever you cast a spell with mana value 4 or greater, you may exile the top card of your library. If you do, you may play that card until you exile another card with this creature.
+Oracle:Trample\nWhenever you cast a spell with mana value 4 or greater, you may exile the top card of your library. If you do, you may play that card until you exile another card with this creature.

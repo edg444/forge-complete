@@ -7,4 +7,4 @@ R:Event$ DamageDone | ActiveZones$ Battlefield | ValidSource$ Card.YouCtrl+cmcM2
 SVar:DmgTwice:DB$ ReplaceEffect | VarName$ DamageAmount | VarValue$ Y
 SVar:Y:ReplaceCount$DamageAmount/Twice
 SVar:PlayMain1:TRUE
-Oracle:Companion — Your starting deck contains only cards with odd mana values and land cards. (If this card is your chosen companion, you may put it into your hand from outside the game for {3} any time you could cast a sorcery.)\nIf a source you control with an odd mana value would deal damage to a permanent or player, it deals double that damage to that permanent or player instead.
+Oracle:Companion — Your starting deck contains only cards with odd mana values and land cards. (If this card is your chosen companion, you may put it into your hand from outside the game for {3} as a sorcery.)\nIf a source you control with an odd mana value would deal damage to a permanent or player, it deals double that damage to that permanent or player instead.

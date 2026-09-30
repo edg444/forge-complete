@@ -3,4 +3,4 @@ ManaCost:3 G
 Types:Creature Treefolk
 PT:4/4
 K:Reach
-Oracle:Reach
+Oracle:Reach (This creature can block creatures with flying.)

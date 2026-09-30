@@ -5,4 +5,4 @@ PT:5/5
 K:Flying
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigDealDamage | TriggerDescription$ When this creature enters, it deals 5 damage to target opponent unless that player sacrifices a creature.
 SVar:TrigDealDamage:DB$ DealDamage | ValidTgts$ Opponent | NumDmg$ 5 | UnlessCost$ Sac<1/Creature> | UnlessPayer$ Targeted
-Oracle:Flying\nWhen this creature enters, it deals 5 damage to target opponent unless that player sacrifices a creature.
+Oracle:Flying\nWhen this creature enters, it deals 5 damage to target opponent unless that player sacrifices a creature of their choice.

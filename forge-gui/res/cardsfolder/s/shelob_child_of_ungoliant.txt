@@ -11,4 +11,4 @@ SVar:FoodSac:AB$ GainLife | Cost$ 2 T Sac<1/CARDNAME/this creature> | Defined$ Y
 SVar:PlayMain1:TRUE
 DeckHas:Ability$Token|LifeGain & Type$Artifact|Food
 DeckHints:Type$Spider
-Oracle:Deathtouch, ward {2}\nOther Spiders you control have deathtouch and ward {2}.\nWhenever another creature dealt damage this turn by a Spider you controlled dies, create a token that's a copy of that creature, except it's a Food artifact with "{2}, {T}, Sacrifice this artifact: You gain 3 life," and it loses all other card types.
+Oracle:Deathtouch, ward {2}\nOther Spiders you control have deathtouch and ward {2}.\nWhenever another creature dealt damage this turn by a Spider you controlled dies, create a token that's a copy of that creature, except it's a Food artifact with "{2}, {T}, Sacrifice this token: You gain 3 life," and it loses all other card types.

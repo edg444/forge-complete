@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ X | DamageSource$ TriggeredCard
 SVar:X:Count$Valid Hero.YouCtrl
 DeckHints:Type$Hero
-Oracle:First strike, reach\nWhenever Hawkeye or another Hero you control enters, it deals damage equal to the number of Heroes you control to any target.
+Oracle:Reach, first strike\nWhenever Hawkeye or another Hero you control enters, it deals damage equal to the number of Heroes you control to any target.

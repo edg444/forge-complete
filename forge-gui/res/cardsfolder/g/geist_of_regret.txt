@@ -11,4 +11,4 @@ SVar:TrigCopy:DB$ CopySpellAbility | Defined$ TriggeredSpellAbility | AILogic$ A
 AI:RemoveDeck:Random
 DeckHas:Ability$Graveyard
 DeckHints:Ability$Graveyard & Type$Instant|Sorcery
-Oracle:Flying\nWhen Geist of Regret enters, put a random instant card from your library into your graveyard. Then put a random sorcery card from your library into your graveyard.\nWhenever you cast an instant or sorcery spell from your graveyard, copy that spell. You may choose new targets for the copy.
+Oracle:Flying\nWhen Geist of Regret enters the battlefield, put a random instant card from your library into your graveyard. Then put a random sorcery card from your library into your graveyard.\nWhenever you cast an instant or sorcery spell from your graveyard, copy that spell. You may choose new targets for the copy.

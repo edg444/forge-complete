@@ -6,4 +6,4 @@ SVar:RepeatPlayers:DB$ RepeatEach | RepeatPlayers$ Opponent | RepeatSubAbility$ 
 SVar:DBDebuff:DB$ PumpAll | ValidCards$ Creature.RememberedPlayerCtrl | NumAtt$ -X | NumDef$ -X
 SVar:X:PlayerCountRemembered$Counters.Poison
 DeckHints:Ability$Proliferate & Keyword$Infect|Toxic
-Oracle:Each opponent gets a poison counter. Then each creature your opponents control get -1/-1 for each poison counter its controller has.
+Oracle:Each opponent gets a poison counter. Then each creature your opponents control gets -1/-1 until end of turn for each poison counter its controller has.

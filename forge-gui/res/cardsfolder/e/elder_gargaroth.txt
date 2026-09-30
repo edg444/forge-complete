@@ -14,4 +14,4 @@ SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1 | SpellDescription$ Draw a car
 SVar:HasAttackEffect:TRUE
 SVar:HasBlockEffect:TRUE
 DeckHas:Ability$Token|LifeGain
-Oracle:Vigilance, reach, trample\nWhenever this creature attacks or blocks, choose one —\n• Create a 3/3 green Beast creature token.\n• You gain 3 life.\n• Draw a card.
+Oracle:Reach, vigilance, trample\nWhenever this creature attacks or blocks, choose one —\n• Create a 3/3 green Beast creature token.\n• You gain 3 life.\n• Draw a card.

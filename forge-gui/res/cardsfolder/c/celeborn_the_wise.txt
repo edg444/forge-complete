@@ -8,4 +8,4 @@ T:Mode$ Scry | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPump 
 SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +X | NumDef$ +X
 SVar:X:TriggerCount$ScryNum
 DeckHints:Type$Elf
-Oracle:Whenever you attack with one or more Elves, scry 1.\nWhenever you scry, Celeborn the Wise gets +1/+1 until end of turn for each card you looked at while scrying this way.
+Oracle:Whenever you attack with one or more Elves, scry 1.\nWhenever you scry, Celeborn gets +1/+1 until end of turn for each card looked at while scrying this way.

@@ -8,4 +8,4 @@ SVar:DBChangeZoneAll:DB$ ChangeZone | Origin$ Graveyard | Destination$ Battlefie
 SVar:Animate:Mode$ Continuous | Affected$ Card.IsRemembered | AddType$ Creature & Elemental | SetPower$ 5 | SetToughness$ 5
 DeckHas:Ability$Graveyard & Type$Elemental
 DeckHints:Ability$Graveyard|Mill & Type$Enchantment|Artifact
-Oracle:Return up to one target artifact card, up to one target land card, and up to one target non-Aura enchantment card from your graveyard to the battlefield.
+Oracle:Return up to one target artifact card, up to one target land card, and up to one target non-Aura enchantment card from your graveyard to the battlefield. They are 5/5 Elemental creatures in addition to their other types.

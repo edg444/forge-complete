@@ -16,4 +16,4 @@ Types:Artifact Equipment
 S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddPower$ 1 | AddToughness$ 1 | Description$ Equipped creature gets +1/+1.
 S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Card.Human | AddKeyword$ Menace | Description$ As long as equipped creature is a Human, it has menace. (It can't be blocked except by two or more creatures.)
 K:Equip:2
-Oracle:Equipped creature gets +1/+1.\nAs long as equipped creature is a Human, it has menace. (It can't be blocked except by two or more creatures.)\nEquip {2}
+Oracle:Equipped creature gets +1/+1.\nAs long as equipped creature is a Human, it has menace. (It can't be blocked except by two or more creatures.)\nEquip {2} ({2}: Attach to target creature you control. Equip only as a sorcery.)

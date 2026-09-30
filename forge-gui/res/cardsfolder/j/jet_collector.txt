@@ -8,4 +8,4 @@ A:AB$ ChangeZone | Cost$ X B | Origin$ Graveyard | Destination$ Battlefield | Tg
 SVar:X:Count$xPaid
 DeckHas:Type$Artifact|Graveyard|Counters
 DeckHints:Ability$Mill|Graveyard
-Oracle:At the beginning of your second main phase, if four or more cards are in your graveyard, conjure a card named Mox Jet into your hand. This ability triggers only once.\n{X}{B}: Put target creature card with mana value X from your graveyard onto the battlefield with a finality counter on it. Activate only as a sorcery.
+Oracle:At the beginning of your second main phase, if there are four or more cards in your graveyard, conjure a card named Mox Jet into your hand. This ability triggers only once.\n{X}{B}: Return target creature card with mana value X from your graveyard to the battlefield with a finality counter on it. Activate only as a sorcery.

@@ -9,4 +9,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ DBScry | TriggerZones$ Battlef
 SVar:DBScry:DB$ Scry
 SVar:HasAttackEffect:TRUE
 DeckHas:Type$Artifact|Instant|Sorcery & Ability$Sacrifice
-Oracle:Flying\nWhen Oracle of the Alpha enters, conjure the Power Nine into your library, then shuffle.\nWhenever Oracle of the Alpha attacks, scry 1.
+Oracle:Flying\nWhen Oracle of the Alpha enters the battlefield, conjure the Power Nine into your library, then shuffle.\nWhenever Oracle of the Alpha attacks, scry 1.

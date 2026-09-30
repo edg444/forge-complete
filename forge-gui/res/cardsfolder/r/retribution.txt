@@ -6,4 +6,4 @@ SVar:DBChoose:DB$ ChooseCard | Defined$ TargetedController | Mandatory$ True | C
 SVar:DBSac:DB$ SacrificeAll | Defined$ ChosenCard | SubAbility$ DBPutCounter | StackDescription$ None
 SVar:DBPutCounter:DB$ PutCounter | Defined$ Remembered | CounterType$ M1M1 | CounterNum$ 1 | StackDescription$ None | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:Choose two target creatures an opponent controls. That player chooses and sacrifices one of those creatures. Put a -1/-1 counter on the other.
+Oracle:Choose two target creatures controlled by the same opponent. That player chooses and sacrifices one of those creatures. Put a -1/-1 counter on the other.

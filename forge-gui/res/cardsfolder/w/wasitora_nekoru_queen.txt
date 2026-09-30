@@ -10,4 +10,4 @@ SVar:DBToken:DB$ Token | TokenScript$ brg_3_3_cat_dragon_flying | TokenOwner$ Yo
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Amount
 SVar:MustBeBlocked:True
-Oracle:Flying, trample\nWhenever Wasitora deals combat damage to a player, that player sacrifices a creature. If the player can't, you create a 3/3 black, red, and green Cat Dragon creature token with flying.
+Oracle:Flying, trample\nWhenever Wasitora deals combat damage to a player, that player sacrifices a creature of their choice. If the player can't, you create a 3/3 black, red, and green Cat Dragon creature token with flying.

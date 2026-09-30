@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.S
 SVar:TrigExile:DB$ ChangeZone | IsCurse$ True | ValidTgts$ Creature.Other | TgtPrompt$ Choose another target creature | Origin$ Battlefield | Destination$ Exile
 SVar:TrigReturn:DB$ ChangeZoneAll | ChangeType$ Card.ExiledWithSource | Origin$ Exile | Destination$ Battlefield
 SVar:PlayMain1:TRUE
-Oracle:When this creature enters, exile target creature other than Faceless Butcher.\nWhen this creature leaves the battlefield, return the exiled card to the battlefield under its owner's control.
+Oracle:When this creature enters, exile another target creature.\nWhen this creature leaves the battlefield, return the exiled card to the battlefield under its owner's control.

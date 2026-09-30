@@ -4,4 +4,4 @@ Types:Creature Aetherborn Warrior
 PT:3/2
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPump | Revolt$ True | TriggerDescription$ Revolt — When this creature enters, if a permanent you controlled left the battlefield this turn, target creature an opponent controls gets -3/-3 until end of turn.
 SVar:TrigPump:DB$ Pump | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls | NumAtt$ -3 | NumDef$ -3 | IsCurse$ True
-Oracle:Revolt — When this creature enters, if a permanent you controlled left the battlefield this turn, target creature an opponent controls gets -3/-3 until end of turn.
+Oracle:Revolt — When this creature enters, if a permanent left the battlefield under your control this turn, target creature an opponent controls gets -3/-3 until end of turn.

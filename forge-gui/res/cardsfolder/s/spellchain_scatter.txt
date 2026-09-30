@@ -10,4 +10,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Count$TimesKicked
 DeckNeeds:Type$Instant|Sorcery
 DeckHints:Color$Blue
-Oracle:Kicker {U}\nWhen you cast your next instant or sorcery spell this turn, conjure a duplicate of that spell into your hand. If this spell wasn't kicked, discard the duplicate at the beginning of your next end step.
+Oracle:Kicker {U}\nWhen you next cast an instant or sorcery spell this turn, conjure a duplicate of that spell into your hand. If this spell wasn't kicked, discard the duplicate at the beginning of your next end step.

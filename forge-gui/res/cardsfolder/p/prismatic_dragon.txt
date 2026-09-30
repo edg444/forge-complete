@@ -8,4 +8,4 @@ SVar:TrigChooseColor:DB$ ChooseColor | Random$ True | SubAbility$ DBAnimate
 SVar:DBAnimate:DB$ Animate | Colors$ ChosenColor | OverwriteColors$ True | Duration$ Permanent | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearChosenColor$ True
 A:AB$ ChooseColor | Cost$ 2 | Random$ True | SubAbility$ DBAnimate | StackDescription$ SpellDescription | SpellDescription$ CARDNAME becomes a color chosen at random. (This effect lasts indefinitely.)
-Oracle:Flying\nAt the beginning of your upkeep, Prismatic Dragon becomes a color chosen at random. (This effect lasts indefinitely.)\n{2}: Prismatic Dragon becomes a color chosen at random. (This effect lasts indefinitely.)
+Oracle:Flying\nDuring your upkeep, Prismatic Dragon becomes a random color permanently.\n{2}: Prismatic Dragon becomes a random color permanently.

@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigSac:DB$ Sacrifice | UnlessCost$ Sac<2/Creature> | UnlessPayer$ Player | UnlessSwitched$ True
 SVar:AIPreference:SacCost$Creature.token,Creature
 SVar:AIPreferenceParams:CreatureEvalThreshold$ 150 | MinCreaturesBelowThreshold$ 2
-Oracle:When this creature enters, any player may sacrifice two creatures. If a player does, sacrifice this creature.
+Oracle:When this creature enters, any player may sacrifice two creatures of their choice. If a player does, sacrifice this creature.

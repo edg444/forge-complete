@@ -9,4 +9,4 @@ SVar:DBCopyPerm:DB$ CopyPermanent | Defined$ Remembered | ImprintTokens$ True | 
 SVar:DBClearNamed:DB$ Cleanup | ClearNamedCard$ True | ClearRemembered$ True
 SVar:SacRemembered:DB$ SacrificeAll | Defined$ Imprinted | SubAbility$ DBCleanUp
 SVar:DBCleanUp:DB$ Cleanup | ClearImprinted$ True
-Oracle:At the beginning of your upkeep, create a random token that’s a copy of one of the following:\nAven Mindcensor, Drannith Magistrate, Ghostly Prison, Hushbringer, Smokestack, or Thalia, Guardian of Thraben. (There are six of them, so one easy way to select is to roll a D6.)\nWhen Form of the Stax Player leaves the battlefield, sacrifice each token created with it.
+Oracle:At the beginning of your upkeep, create a random token that's a copy of one of the following:\nAven Mindcensor, Drannith Magistrate, Ghostly Prison, Hushbringer, Smokestack, or Thalia, Guardian of Thraben. (There are six of them, so one easy way to select is to roll a D6.)\nWhen Form of the Stax Player leaves the battlefield, sacrifice each token created with it.

@@ -17,4 +17,4 @@ SVar:TrigChooseReturn:DB$ ChooseCard | Defined$ Remembered | Choices$ Permanent.
 SVar:DBReturn:DB$ ChangeZone | Origin$ Battlefield | Destination$ Hand | Defined$ Remembered | SubAbility$ DBDiscard
 SVar:DBDiscard:DB$ Discard | Defined$ Player.Opponent | NumCards$ 1 | Mode$ TgtChoose | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:Each opponent returns a nonland permanent they control with the highest mana value among permanents they control to its owner's hand, then discards a card.
+Oracle:Each opponent returns a nonland permanent they control with the greatest mana value among permanents they control to its owner's hand, then discards a card.

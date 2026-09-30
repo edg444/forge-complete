@@ -8,4 +8,4 @@ SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ X | SubAbility$ DBInte
 SVar:DBIntensify:DB$ Intensify
 SVar:X:Count$Intensity
 SVar:HasAttackEffect:TRUE
-Oracle:Starting intensity 1\nWhenever this creature attacks, it deals damage equal to its intensity to any target, then perpetually increase its intensity by 1.
+Oracle:Starting intensity 1\nWhenever this creature attacks, it deals damage equal to its intensity to any target. Then this creature intensifies by 1.

@@ -6,4 +6,4 @@ SVar:TrigSearch:DB$ ChangeZone | Origin$ Library | Destination$ Hand | ChangeTyp
 A:AB$ Draw | Cost$ 2 T | SubAbility$ DBDiscard | SpellDescription$ Draw a card, then discard a card.
 SVar:DBDiscard:DB$ Discard | Defined$ You | Mode$ TgtChoose | NumCards$ 1
 DeckHas:Ability$Discard
-Oracle:When Thror's Map enters, search your library for a basic land card, reveal it, put it into your hand, then shuffle.\n{2}, {T}: Draw a card, then discard a card.
+Oracle:When Thrór's Map enters, search your library for a basic land card, reveal it, put it into your hand, then shuffle.\n{2}, {T}: Draw a card, then discard a card.

@@ -9,4 +9,4 @@ SVar:DBMill:DB$ Mill | NumCards$ 2
 A:AB$ Pump | Cost$ 1 BG | ValidTgts$ Insect | NumAtt$ +1 | KW$ Deathtouch | SpellDescription$ Target Insect gets +1/+0 and gains deathtouch until end of turn.
 DeckHas:Ability$Mill|Graveyard & Keyword$Deathtouch
 DeckNeeds:Type$Insect
-Oracle:You may play lands and cast Insect spells from your graveyard.\nWhenever another Insect you control dies, put it on the bottom of its owner's library, then mill two cards. (Put the top two cards of your library into your graveyard.)\n{1}{B/G}: Target Insect gets +1/+0 and gains deathtouch until end of turn.
+Oracle:You may play lands and cast Insect spells from your graveyard.\nWhenever another Insect you control dies, put it on the bottom of its owner's library, then mill two cards. (Put the top two cards of your library into your graveyard.)\n{1}{B/G}: Target Insect gets +1/+0 and gains deathtouch until end of turn. ({B/G} can be paid with either {B} or {G}.)

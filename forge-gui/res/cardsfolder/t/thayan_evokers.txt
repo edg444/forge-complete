@@ -10,4 +10,4 @@ T:Mode$ ConjureAll | ValidPlayer$ You | ValidCard$ Card | TriggerZones$ Battlefi
 SVar:TrigPutCounter:DB$ PutCounter | CounterType$ P1P1
 DeckHas:Ability$Discard|Counters
 DeckNeeds:Color$Red
-Oracle:Double team\nWhen Thayan Evokers enters, conjure a card named Lightning Bolt into your hand, then discard a card.\nWhenever you conjure one or more cards, put a +1/+1 counter on Thayan Evokers.
+Oracle:Double team\nWhen Thayan Evokers enters the battlefield, conjure a card named Lightning Bolt into your hand, then discard a card.\nWhenever you conjure one or more cards, put a +1/+1 counter on Thayan Evokers.

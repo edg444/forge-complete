@@ -3,4 +3,4 @@ ManaCost:1
 Types:Artifact Equipment
 K:Equip:1
 S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddKeyword$ Haste & Ward:1 | AddPower$ 1 | Description$ Equipped creature gets +1/+0 and has haste and ward {1}.
-Oracle:Equipped creature gets +1/+0 and has haste and ward {1}.\nEquip {1}
+Oracle:Equipped creature gets +1/+0 and has haste and ward {1}. (Whenever it becomes the target of a spell or ability an opponent controls, counter it unless that player pays {1}.)\nEquip {1}

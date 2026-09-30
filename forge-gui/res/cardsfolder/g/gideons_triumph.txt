@@ -5,4 +5,4 @@ A:SP$ Sacrifice | ValidTgts$ Opponent | SacValid$ Creature.attackedThisTurn,Crea
 SVar:Y:Count$Valid Planeswalker.Gideon+YouCtrl
 SVar:X:Count$Compare Y GE1.2.1
 DeckHints:Type$Gideon
-Oracle:Target opponent sacrifices a creature that attacked or blocked this turn. If you control a Gideon planeswalker, that player sacrifices two of those creatures instead.
+Oracle:Target opponent sacrifices a creature of their choice that attacked or blocked this turn. If you control a Gideon planeswalker, that player sacrifices two of those creatures of their choice instead.

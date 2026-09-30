@@ -29,10 +29,9 @@ public class TextBoxTest extends AITest {
         Game game = initAndCreateGame();
         Card shivan = addCard("Shivan Dragon", game.getPlayers().get(1));
 
-        // 81 characters wrap to 3 lines and 48 to 2; measured as one 131-character run it would be 4
-        AssertJUnit.assertEquals("Flying (This creature can't be blocked except by creatures with flying or reach.)"
-                + "\\n{R}: Shivan Dragon gets +1/+0 until end of turn.", shivan.getOracleText());
-        AssertJUnit.assertEquals(5, CardFactoryUtil.getTextBoxLineCount(shivan));
+        // "Flying" takes a line and 48 characters wrap to 2; measured as one 56-character run it would be 2
+        AssertJUnit.assertEquals("Flying\\n{R}: This creature gets +1/+0 until end of turn.", shivan.getOracleText());
+        AssertJUnit.assertEquals(3, CardFactoryUtil.getTextBoxLineCount(shivan));
     }
 
     @Test

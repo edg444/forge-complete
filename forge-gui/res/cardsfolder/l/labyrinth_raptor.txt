@@ -7,4 +7,4 @@ T:Mode$ AttackerBlocked | ValidCard$ Creature.YouCtrl+withMenace | TriggerZones$
 SVar:TrigSac:DB$ Sacrifice | Defined$ TriggeredDefendingPlayer | SacValid$ Creature.blockingTriggeredAttacker | Amount$ 1
 A:AB$ PumpAll | Cost$ B R | ValidCards$ Creature.YouCtrl+withMenace | NumAtt$ +1 | SpellDescription$ Creatures you control with menace get +1/+0 until end of turn.
 SVar:PlayMain1:TRUE
-Oracle:Menace\nWhenever a creature you control with menace becomes blocked, defending player sacrifices a creature blocking it.\n{B}{R}: Creatures you control with menace get +1/+0 until end of turn.
+Oracle:Menace\nWhenever a creature you control with menace becomes blocked, defending player sacrifices a creature of their choice that's blocking it.\n{B}{R}: Creatures you control with menace get +1/+0 until end of turn.

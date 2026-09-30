@@ -7,4 +7,4 @@ A:AB$ Mana | Cost$ T | Produced$ Combo G U | SpellDescription$ Add {G} or {U}.
 K:Flying
 K:Vigilance
 K:Trample
-Oracle:Slumbering Waterways enters tapped.\n{T}: Add {G} or {U}.\nFlying, vigilance, trample
+Oracle:Slumbering Waterways enters the battlefield tapped.\n{T}: Add {G} or {U}.\nFlying, vigilance, trample

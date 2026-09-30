@@ -7,4 +7,4 @@ SVar:TrigDamageAll:DB$ DamageAll | ValidCards$ Creature | NumDmg$ X
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:TriggerRemembered$GreatestCardManaCost
 DeckHas:Ability$Counters|Discard
-Oracle:Draw two cards. Then you may discard two cards. When you do, Ill-Timed Explosion deals X damage to each creature, where X is the highest mana value among the discarded cards.
+Oracle:Draw two cards. Then you may discard two cards. When you do, Ill-Timed Explosion deals X damage to each creature, where X is the greatest mana value among cards discarded this way.

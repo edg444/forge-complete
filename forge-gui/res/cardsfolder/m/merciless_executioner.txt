@@ -5,4 +5,4 @@ PT:3/1
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ When this creature enters, each player sacrifices a creature.
 SVar:TrigSac:DB$ Sacrifice | Defined$ Player | SacValid$ Creature
 SVar:NeedsToPlay:Creature.YouDontCtrl
-Oracle:When this creature enters, each player sacrifices a creature.
+Oracle:When this creature enters, each player sacrifices a creature of their choice.

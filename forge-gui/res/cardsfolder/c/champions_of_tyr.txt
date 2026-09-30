@@ -12,4 +12,4 @@ SVar:ETBAddCounter:Event$ Moved | Origin$ Stack | Destination$ Battlefield | Val
 SVar:ETBAddExtraCounter:DB$ PutCounter | ETB$ True | Defined$ ReplacedCard | CounterType$ P1P1,Flying,Lifelink | CounterNum$ 1 | SubAbility$ DBRemoveSelf
 SVar:DBRemoveSelf:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
 DeckHas:Ability$LifeGain|Counters & Keyword$Lifelink|Flying
-Oracle:Flying\nDouble team\nWhen this creature enters, you get a boon with "When you cast your next creature spell, that creature enters with your choice of a +1/+1 counter, a flying counter, or a lifelink counter on it."
+Oracle:Flying\nDouble team\nWhen this creature enters, you get a one-time boon with "When you cast a creature spell, that creature enters the battlefield with your choice of a +1/+1 counter, a flying counter, or a lifelink counter on it."

@@ -6,4 +6,4 @@ K:Lifelink
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigMill | TriggerDescription$ When this creature dies, each player mills three cards.
 SVar:TrigMill:DB$ Mill | Defined$ Player | NumCards$ 3
 DeckHas:Ability$LifeGain|Mill
-Oracle:Lifelink\nWhen this creature dies, each player mills three cards. (To mill a card, a player puts the top card of their library into their graveyard.)
+Oracle:Lifelink (Damage dealt by this creature also causes you to gain that much life.)\nWhen this creature dies, each player mills three cards. (They each put the top three cards of their library into their graveyard.)

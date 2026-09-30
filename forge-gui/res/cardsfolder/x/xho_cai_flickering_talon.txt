@@ -12,4 +12,4 @@ T:Mode$ SpellCast | ValidCard$ Card.YouCtrl | ValidActivatingPlayer$ You | Trigg
 SVar:TrigExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | RememberChanged$ True | ValidTgts$ Creature.YouCtrl | TargetMin$ 0 | TargetMax$ 1 | TgtPrompt$ Select up to one target creature you control | SubAbility$ DBReturn
 SVar:DBReturn:DB$ ChangeZone | Defined$ Remembered | Origin$ All | Destination$ Battlefield | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:Flying, vigilance, haste\nWhen Xho Cai enters, the next noncreature spell you cast costs {1} less to cast.\nFlurry — Whenever you cast your second spell each turn, exile up to one target creature you control, then return it to the battlefield under its owner's control.
+Oracle:Flying, Vigilance, Haste\nWhen Xho Cai enters, the next noncreature spell you cast costs {1} less to cast.\nFlurry — Whenever you cast your second spell each turn, exile up to one target creature you control, then return it to the battlefield under its owner's control.

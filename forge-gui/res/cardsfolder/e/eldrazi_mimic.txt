@@ -8,4 +8,4 @@ SVar:X:TriggeredCard$CardPower
 SVar:Y:TriggeredCard$CardToughness
 SVar:BuffedBy:Creature.Colorless
 DeckHints:Keyword$Devoid & Color$Colorless
-Oracle:Whenever another colorless creature you control enters, you may change Eldrazi Mimic's base power and toughness to that creature's power and toughness until end of turn.
+Oracle:Whenever another colorless creature you control enters, you may have this creature's base power and toughness become equal to that creature's power and toughness until end of turn.

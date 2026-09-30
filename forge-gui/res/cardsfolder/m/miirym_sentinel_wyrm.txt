@@ -8,4 +8,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Dragon
 SVar:TrigCopy:DB$ CopyPermanent | Defined$ TriggeredCardLKICopy | NonLegendary$ True
 DeckHas:Ability$Token
 DeckNeeds:Type$Dragon
-Oracle:Flying, ward {2}\nWhenever another nontoken Dragon you control enters, create a token that's a copy of it, except the token isn't legendary if that Dragon is legendary.
+Oracle:Flying, ward {2}\nWhenever another nontoken Dragon you control enters, create a token that's a copy of it, except the token isn't legendary.

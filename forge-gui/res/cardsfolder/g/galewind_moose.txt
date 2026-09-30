@@ -6,4 +6,4 @@ K:Flash
 K:Vigilance
 K:Reach
 K:Trample
-Oracle:Flash\nVigilance, reach, trample
+Oracle:Flash\nReach, vigilance, trample

@@ -9,4 +9,4 @@ SVar:TrigSearch:DB$ ChangeZone | Origin$ Library | Destination$ Battlefield | Ch
 SVar:FoodCheck:PlayerCountPropertyYou$SacrificedThisTurn Food
 DeckHas:Ability$LifeGain|Token|Food
 DeckHints:Ability$Food
-Oracle:When Elanor Gardner enters, create a Food token.\nAt the beginning of your end step, if you sacrificed a Food this turn, you may search your library for a basic land card, put that card onto the battlefield tapped, then shuffle.
+Oracle:When Elanor enters, create a Food token.\nAt the beginning of your end step, if you sacrificed a Food this turn, you may search your library for a basic land card, put that card onto the battlefield tapped, then shuffle.

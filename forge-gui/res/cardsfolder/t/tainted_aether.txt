@@ -5,4 +5,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creatu
 SVar:TrigSacrifice:DB$ Sacrifice | SacValid$ Creature,Land | Defined$ TriggeredCardController
 AI:RemoveDeck:All
 AI:RemoveDeck:Random
-Oracle:Whenever a creature enters, its controller sacrifices a creature or land.
+Oracle:Whenever a creature enters, its controller sacrifices a creature or land of their choice.

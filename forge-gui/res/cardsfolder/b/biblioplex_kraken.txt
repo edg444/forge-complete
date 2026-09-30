@@ -8,4 +8,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ Tr
 SVar:TrigUnblockable:AB$ Effect | Cost$ Return<1/Creature.Other> | RememberObjects$ TriggeredAttacker | ExileOnMoved$ Battlefield | StaticAbilities$ Unblockable
 SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | Description$ EFFECTSOURCE can't be blocked this turn.
 SVar:HasAttackEffect:TRUE
-Oracle:When this creature enters, scry 3.\nWhenever this creature attacks, you may return another creature you control to it's owner's hand. If you do, this creature can't be blocked this turn.
+Oracle:When this creature enters, scry 3. (Look at the top three cards of your library, then put any number of them on the bottom and the rest on top in any order.)\nWhenever this creature attacks, you may return another creature you control to its owner's hand. If you do, this creature can't be blocked this turn.

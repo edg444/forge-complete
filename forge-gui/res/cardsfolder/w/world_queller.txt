@@ -6,4 +6,4 @@ T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | O
 SVar:ChooseType:DB$ ChooseType | Defined$ You | Type$ Card | SubAbility$ TrigSac
 SVar:TrigSac:DB$ Sacrifice | SacValid$ Permanent.ChosenType | Defined$ Player
 AI:RemoveDeck:All
-Oracle:At the beginning of your upkeep, you may choose a card type. If you do, each player sacrifices a permanent of that type.
+Oracle:At the beginning of your upkeep, you may choose a card type. If you do, each player sacrifices a permanent of their choice of that type.

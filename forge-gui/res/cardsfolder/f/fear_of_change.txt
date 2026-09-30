@@ -9,4 +9,4 @@ SVar:DBNameCard:DB$ NameCard | AtRandom$ True | ValidCards$ Creature.cmcEQX | Co
 SVar:DBConjure:DB$ MakeCard | Name$ ChosenName | Conjure$ True | Zone$ Battlefield | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$CardManaCost/Plus.2
-Oracle:When this creatures enters or dies, exile another creature you control. If you do, conjure a duplicate of a random creature card with mana value X onto the battlefield, where X is 2 plus the exiled creature's mana value.
+Oracle:When this creature enters or dies, exile another creature you control. If you do, conjure a duplicate of a random creature card with mana value X onto the battlefield, where X is 2 plus the exiled creature's mana value.

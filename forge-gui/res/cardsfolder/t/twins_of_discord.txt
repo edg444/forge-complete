@@ -11,4 +11,4 @@ SVar:CantBlockEven:Mode$ Continuous | AffectedZone$ Battlefield | Affected$ Crea
 S:Mode$ Continuous | Affected$ Creature.Other+YouCtrl+Colorless | AddKeyword$ Bloodthirst:2 | Description$ Each other colorless creature you control has bloodthirst 2.
 DeckHas:Ability$Counters
 DeckHints:Type$Eldrazi|Construct|Scarecrow|Juggernaut
-Oracle:Whenever you attack, choose odd or even. Creatures with mana value of that quality can't block this turn.\nEach other colorless creature you control has bloodthirst 2.
+Oracle:Whenever you attack, choose odd or even. Creatures with mana value of that quality can't block this turn. (Zero is even.)\nEach other colorless creature you control has bloodthirst 2. (If an opponent was dealt damage this turn, that creature enters with two additional +1/+1 counters on it.)

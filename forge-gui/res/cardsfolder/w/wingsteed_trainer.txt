@@ -7,4 +7,4 @@ T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigConjure | TriggerZones$ Ba
 SVar:TrigConjure:DB$ MakeCard | Conjure$ True | Name$ Stormfront Pegasus | Zone$ Hand
 SVar:HasAttackEffect:TRUE
 DeckHints:Type$Pegasus
-Oracle:Whenever Wingsteed Trainer enters or attacks, conjure a Stormfront Pegasus card into your hand.
+Oracle:When Wingsteed Trainer enters the battlefield or attacks, conjure a card named Stormfront Pegasus into your hand.

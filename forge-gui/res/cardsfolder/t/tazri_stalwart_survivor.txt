@@ -9,4 +9,4 @@ SVar:DBChangeZone:DB$ ChangeZoneAll | ChangeType$ Creature.IsRemembered+hasNonMa
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 AI:RemoveDeck:Random
 DeckHas:Ability$Mill
-Oracle:Each creature you control has "{T}: Add one mana of any of this creature's colors. Spend this mana only to activate an ability of a creature. Activate only if this creature has another activated ability."\n{W}{U}{B}{R}{G}: Mill five cards. Put all creature cards with activated abilities that aren't mana abilities from among the milled cards into your hand.
+Oracle:Each creature you control has "{T}: Add one mana of any of this creature's colors. Spend this mana only to activate an ability of a creature. Activate only if this creature has another activated ability."\n{W}{U}{B}{R}{G}, {T}: Mill five cards. Put all creature cards with activated abilities that aren't mana abilities from among the milled cards into your hand.

@@ -9,4 +9,4 @@ SVar:AIPreference:DiscardCost$Card
 AI:RemoveDeck:Random
 DeckHas:Ability$Token
 DeckNeeds:Type$Zombie
-Oracle:{1}{B}, {T}, Discard a card: Create a 2/2 black Zombie creature token.\nTap three untapped Zombies you control: You draw a card and you lose 1 life.
+Oracle:{1}{B}, {T}, Discard a card: Create a 2/2 black Zombie creature token.\nTap three untapped Zombies you control: You draw a card and lose 1 life.

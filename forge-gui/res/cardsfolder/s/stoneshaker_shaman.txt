@@ -7,4 +7,4 @@ SVar:TrigSac:DB$ Sacrifice | SacValid$ Land.untapped | Defined$ TriggeredPlayer 
 S:Mode$ Continuous | Affected$ Land | AddSVar$ AITap
 SVar:AITap:SVar:AITapDown:True
 AI:RemoveDeck:Random
-Oracle:At the beginning of each player's end step, that player sacrifices an untapped land.
+Oracle:At the beginning of each player's end step, that player sacrifices an untapped land of their choice.

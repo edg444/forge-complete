@@ -3,4 +3,4 @@ ManaCost:R
 Types:Sorcery Arcane
 A:SP$ Sacrifice | SacValid$ Permanent | Defined$ Player | SpellDescription$ Each player sacrifices a permanent.
 AI:RemoveDeck:Random
-Oracle:Each player sacrifices a permanent.
+Oracle:Each player sacrifices a permanent of their choice.

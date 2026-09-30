@@ -5,4 +5,4 @@ S:Mode$ OptionalCost | EffectZone$ All | ValidCard$ Card.Self | ValidSA$ Spell |
 A:SP$ Sacrifice | ValidTgts$ Player | SacValid$ Creature | SubAbility$ DBGainLife | SpellDescription$ Target player sacrifices a creature. If you revealed a Dragon card or controlled a Dragon as you cast this spell, you gain 4 life. | StackDescription$ SpellDescription
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 4 | ConditionCheckSVar$ Count$Presence_Dragon.1.0
 DeckHints:Type$Dragon
-Oracle:As an additional cost to cast this spell, you may reveal a Dragon card from your hand.\nTarget player sacrifices a creature. If you revealed a Dragon card or controlled a Dragon as you cast this spell, you gain 4 life.
+Oracle:As an additional cost to cast this spell, you may reveal a Dragon card from your hand.\nTarget player sacrifices a creature of their choice. If you revealed a Dragon card or controlled a Dragon as you cast this spell, you gain 4 life.

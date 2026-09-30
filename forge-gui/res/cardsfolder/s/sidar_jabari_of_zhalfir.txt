@@ -13,4 +13,4 @@ SVar:TrigReturn:DB$ ChangeZone | Origin$ Graveyard | Destination$ Battlefield | 
 SVar:BuffedBy:Knight
 DeckHas:Ability$Discard|Graveyard
 DeckHints:Type$Knight
-Oracle:Eminence — Whenever you attack with one or more Knights, if Sidar Jabari of Zhalfir is in the command zone or on the battlefield, draw a card, then discard a card.\nFlying, first strike\nWhenever Sidar Jabari deals combat damage to a player, return target Knight creature card from your graveyard to the battlefield.
+Oracle:Eminence — Whenever you attack with one or more Knights, if Sidar Jabari is in the command zone or on the battlefield, draw a card, then discard a card.\nFlying, first strike\nWhenever Sidar Jabari deals combat damage to a player, return target Knight creature card from your graveyard to the battlefield.

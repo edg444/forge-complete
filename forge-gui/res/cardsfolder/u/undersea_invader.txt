@@ -5,4 +5,4 @@ PT:5/6
 K:Flash
 R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ This creature enters tapped.
 SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
-Oracle:Flash\nUndersea Invader enters tapped.
+Oracle:Flash (You may cast this spell any time you could cast an instant.)\nThis creature enters tapped.

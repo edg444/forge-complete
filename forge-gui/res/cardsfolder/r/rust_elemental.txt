@@ -11,4 +11,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Amount
 AI:RemoveDeck:Random
 SVar:DonateMe:4
-Oracle:Flying\nAt the beginning of your upkeep, sacrifice an artifact other than Rust Elemental. If you can't, tap this creature and you lose 4 life.
+Oracle:Flying\nAt the beginning of your upkeep, sacrifice another artifact. If you can't, tap this creature and you lose 4 life.

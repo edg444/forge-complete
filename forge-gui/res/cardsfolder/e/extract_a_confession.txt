@@ -9,4 +9,4 @@ SVar:DBSac:DB$ SacrificeAll | ValidCards$ Card.IsRemembered | SubAbility$ DBClea
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
 DeckHints:Ability$Graveyard|Mill|Discard|Dredge
 DeckHas:Ability$Counters|Sacrifice|Surveil
-Oracle:As an additional cost to cast this spell, you may collect evidence 6. (Exile cards with total mana value 6 or greater from your graveyard.)\nEach opponent sacrifices a creature. If evidence was collected, instead each opponent sacrifices a creature with the greatest power among creatures they control.
+Oracle:As an additional cost to cast this spell, you may collect evidence 6. (Exile cards with total mana value 6 or greater from your graveyard.)\nEach opponent sacrifices a creature of their choice. If evidence was collected, instead each opponent sacrifices a creature with the greatest power among creatures they control.

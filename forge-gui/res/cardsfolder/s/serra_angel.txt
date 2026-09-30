@@ -4,4 +4,4 @@ Types:Creature Angel
 PT:4/4
 K:Flying
 K:Vigilance
-Oracle:Flying, vigilance
+Oracle:Flying\nVigilance (Attacking doesn't cause this creature to tap.)

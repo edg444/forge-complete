@@ -7,4 +7,4 @@ SVar:DBEffect:DB$ Effect | StaticAbilities$ STPlay | ForgetOnMoved$ Exile | Dura
 SVar:STPlay:Mode$ Continuous | MayPlay$ True | MayPlayIgnoreType$ True | Affected$ Card.IsRemembered | AffectedZone$ Exile | Description$ Until the end of your next turn, you may play those cards, and mana of any type can be spent to cast them.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 DeckHas:Ability$Graveyard
-Oracle:Exile the top card of each player's library. Until the end of your next turn, you may play those cards, and mana of any type can be spent to cast them.\nFlashback {2}{B}{R} (You may cast this card from your graveyard for its flashback cost. Then exile it.)
+Oracle:Exile the top card of each player's library. Until the end of your next turn, you may play those cards, and mana of any type can be spent to cast those spells.\nFlashback {2}{B}{R} (You may cast this card from your graveyard for its flashback cost. Then exile it.)

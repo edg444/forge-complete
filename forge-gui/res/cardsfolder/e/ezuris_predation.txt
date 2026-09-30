@@ -6,4 +6,4 @@ SVar:DBToken:DB$ Token | TokenScript$ g_4_4_phyrexian_beast | TokenOwner$ You | 
 SVar:DBFight:DB$ Fight | Defined$ Imprinted & Remembered | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:NeedsToPlay:Creature.OppCtrl+powerLE3
-Oracle:For each creature your opponents control, create a 4/4 green Phyrexian Beast creature token. Each of those Beasts fights a different one of those creatures.
+Oracle:For each creature your opponents control, create a 4/4 green Phyrexian Beast creature token. Each of those tokens fights a different one of those creatures.

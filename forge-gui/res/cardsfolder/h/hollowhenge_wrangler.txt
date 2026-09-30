@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigSeek:DB$ Seek | Type$ Card.Land
 A:AB$ MakeCard | Cost$ Discard<1/Land/land> | Conjure$ True | Name$ Hollowhenge Beast | Zone$ Hand | AdditionalActivationZone$ Graveyard | StackDescription$ Conjure a card named Hollowhenge Beast into your hand. | SpellDescription$ Conjure a card named Hollowhenge Beast into your hand. You may also activate this ability while CARDNAME is in your graveyard.
 DeckHas:Ability$Discard
-Oracle:When Hollowhenge Wrangler enters, seek a land card.\nDiscard a land card: Conjure a card named Hollowhenge Beast into your hand. You may also activate this ability while Hollowhenge Wrangler is in your graveyard.
+Oracle:When Hollowhenge Wrangler enters the battlefield, seek a land card.\nDiscard a land card: Conjure a card named Hollowhenge Beast into your hand. You may also activate this ability while Hollowhenge Wrangler is in your graveyard.

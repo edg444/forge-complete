@@ -10,4 +10,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigTap | TriggerDescription$ When CARDNAME enters the battlefield, tap target permanent you don't control.
 SVar:TrigTap:DB$ Tap | ValidTgts$ Permanent.YouDontCtrl | TgtPrompt$ Select target permanent you don't control
 DeckHas:Ability$Discard
-Oracle:When Sigardian Evangel enters, conjure a card named Sigardian Evangel into your hand. Discard that card at the beginning of the next end step.\nWhen Sigardian Evangel enters, tap target permanent you don't control.
+Oracle:When Sigardian Evangel enters the battlefield, conjure a card named Sigardian Evangel into your hand. Discard that card at the beginning of the next end step.\nWhen Sigardian Evangel enters the battlefield, tap target permanent you don't control.

@@ -10,4 +10,4 @@ SVar:DBBottom:DB$ ChangeZone | Defined$ RememberedCard | Origin$ Battlefield | D
 SVar:DBCleanup:DB$ Cleanup | ClearImprinted$ True
 SVar:NeedsToPlayVar:Z GE2
 SVar:Z:Count$Valid Creature.attacking+OppCtrl
-Oracle:For each attacking creature, its owner puts it on the top or bottom of their library.
+Oracle:For each attacking creature, its owner puts it on their choice of the top or bottom of their library.

@@ -7,4 +7,4 @@ SVar:Discard:DB$ LoseLife | LifeAmount$ 5 | Defined$ ParentTarget | UnlessCost$ 
 SVar:Sacrifice:DB$ LoseLife | LifeAmount$ 5 | Defined$ ParentTarget | UnlessCost$ Sac<1/Creature;Planeswalker/creature or planeswalker> | UnlessPayer$ ParentTarget | SpellDescription$ you lose 5 life unless you sacrifice a creature or planeswalker.
 SVar:LoseLifeFallback:DB$ LoseLife | Defined$ ParentTarget | LifeAmount$ 5
 SVar:AIPreference:SacCost$Creature.token
-Oracle:Target opponent loses 5 life unless that player discards two cards or sacrifices a creature or planeswalker. Repeat this process once.
+Oracle:Target opponent loses 5 life unless that player discards two cards or sacrifices a creature or planeswalker of their choice. Repeat this process once.

@@ -10,4 +10,4 @@ SVar:ETBTappedDesc:Mode$ Continuous | AffectedDefined$ Self | Description$ This 
 SVar:DBMayPlayEffect:DB$ Effect | RememberObjects$ Remembered | StaticAbilities$ OwnerMayPlay | Duration$ Permanent | SubAbility$ DBCleanup | ForgetOnMoved$ Exile | SpellDescription$ For as long as each of them remain exiled, its owner may play it.
 SVar:OwnerMayPlay:Mode$ Continuous | Affected$ Card.IsRemembered | AffectedZone$ Exile | MayPlay$ True | MayPlayPlayer$ CardOwner | Description$ For as long as each of these remain exiled, its owner may play it.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:Exile all artifacts and creatures with mana value 3 or less. They perpetually gain "This spell costs {2} more to cast" and "This permanent enters tapped." For as long as each of them remain exiled, its owner may play it.
+Oracle:Exile all artifacts and creatures with mana value 3 or less. They perpetually gain "This spell costs {2} more to cast" and "This permanent enters the battlefield tapped." For as long as each of them remain exiled, its owner may play it.

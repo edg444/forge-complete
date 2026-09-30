@@ -5,4 +5,4 @@ A:SP$ ChangeZone | ValidTgts$ Creature.YouCtrl | Origin$ Battlefield | Destinati
 SVar:DBReturn:DB$ ChangeZone | Defined$ Remembered | Origin$ All | Destination$ Battlefield | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | SpellDescription$ Draw a card.
-Oracle:Exile target creature you control, then return that card to the battlefield under their owner's control.\nDraw a card.
+Oracle:Exile target creature you control, then return that card to the battlefield under its owner's control.\nDraw a card.

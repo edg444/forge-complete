@@ -13,4 +13,4 @@ Name:Ends
 ManaCost:3 R W
 Types:Instant
 A:SP$ Sacrifice | ValidTgts$ Player | Amount$ 2 | SacValid$ Creature.attacking | SpellDescription$ Target player sacrifices two attacking creatures.
-Oracle:Target player sacrifices two attacking creatures.
+Oracle:Target player sacrifices two attacking creatures of their choice.

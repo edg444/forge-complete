@@ -5,4 +5,4 @@ PT:2/2
 K:First Strike
 K:Mentor
 DeckHas:Ability$Counters
-Oracle:First strike\nMentor (Whenever this creature attacks, put a +1/+1 counter on target attacking creature with lesser power.)
+Oracle:First strike (This creature deals combat damage before creatures without first strike.)\nMentor (Whenever this creature attacks, put a +1/+1 counter on target attacking creature with lesser power.)

@@ -6,4 +6,4 @@ K:Haste
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ Whenever this creature attacks, each player who controls the most lands sacrifices two lands.
 SVar:TrigSac:DB$ Sacrifice | Amount$ 2 | SacValid$ Land | Defined$ Player.withMostTypeLand
 AI:RemoveDeck:Random
-Oracle:Haste\nWhenever this creature attacks, each player who controls the most lands sacrifices two lands.
+Oracle:Haste\nWhenever this creature attacks, each player who controls the most lands sacrifices two lands of their choice.

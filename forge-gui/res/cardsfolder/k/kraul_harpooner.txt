@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +X | SubAbility$ DBFight
 SVar:DBFight:DB$ Fight | Defined$ Self | ValidTgts$ Creature.withFlying+YouDontCtrl | TgtPrompt$ Select target creature with flying you don't control | TargetMin$ 0 | TargetMax$ 1 | Optional$ True
 SVar:X:Count$ValidGraveyard Creature.YouOwn
-Oracle:Reach\nUndergrowth — When this creature enters, choose up to one target creature with flying you don't control. This creature gets +X/+0 until end of turn, where X is the number of creature cards in your graveyard, then you may have this creature fight that creature.
+Oracle:Reach\nUndergrowth — When this creature enters, choose up to one target creature you don't control with flying. This creature gets +X/+0 until end of turn, where X is the number of creature cards in your graveyard, then you may have this creature fight that creature.

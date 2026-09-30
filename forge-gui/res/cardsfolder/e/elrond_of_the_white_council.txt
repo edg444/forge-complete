@@ -14,4 +14,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearImprinted$ True | ClearChosenCard$ True | SubA
 SVar:DBClearSVar:DB$ StoreSVar | SVar$ Aid | Type$ Number | Expression$ 0
 SVar:Aid:Number$0
 DeckHas:Ability$Counters
-Oracle:Secret council — When Elrond of the White Council enters, each player secretly votes for fellowship or aid, then those votes are revealed. For each fellowship vote, the voter chooses a creature they control. You gain control of each creature chosen this way, and they gain "This creature can't attack its owner." Then for each aid vote, put a +1/+1 counter on each creature you control.
+Oracle:Secret council — When Elrond enters, each player secretly votes for fellowship or aid, then those votes are revealed. For each fellowship vote, the voter chooses a creature they control. You gain control of each creature chosen this way, and they gain "This creature can't attack its owner." Then for each aid vote, put a +1/+1 counter on each creature you control.

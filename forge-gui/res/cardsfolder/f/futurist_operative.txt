@@ -6,4 +6,4 @@ S:Mode$ Continuous | AffectedDefined$ Self | Affected$ Card.tapped | SetPower$ 1
 S:Mode$ CantBlockBy | ValidAttacker$ Card.Self | IsPresent$ Card.Self+tapped
 A:AB$ Untap | Cost$ 2 U | SpellDescription$ Untap this creature.
 DeckHas:Type$Citizen
-Oracle:As long as this creature is tapped, it is a Human Citizen with base power and toughness 1/1 and it can't be blocked.\n{2}{U}: Untap this creature.
+Oracle:As long as this creature is tapped, it's a Human Citizen with base power and toughness 1/1 and can't be blocked.\n{2}{U}: Untap this creature.

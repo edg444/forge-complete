@@ -20,4 +20,4 @@ K:Enchant:Player
 SVar:AttachAILogic:Curse
 R:Event$ Moved | ValidCard$ Creature.EnchantedPlayerCtrl | Destination$ Battlefield | ReplaceWith$ ETBTapped | ReplacementResult$ Updated | ActiveZones$ Battlefield | Description$ Creatures enchanted player controls enter tapped.
 SVar:ETBTapped:DB$ Tap | ETB$ True | Defined$ ReplacedCard
-Oracle:Creatures enchanted player controls enter tapped.
+Oracle:Enchant player\nCreatures enchanted player controls enter tapped.

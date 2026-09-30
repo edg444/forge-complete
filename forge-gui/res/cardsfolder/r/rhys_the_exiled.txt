@@ -8,4 +8,4 @@ SVar:TrigGainLife:DB$ GainLife | Defined$ You | LifeAmount$ X
 SVar:X:Count$Valid Elf.YouCtrl
 SVar:AIPreference:SacCost$Creature.Elf
 AI:RemoveDeck:Random
-Oracle:Whenever Rhys the Exiled attacks, you gain 1 life for each Elf you control.\n{B}, Sacrifice an Elf: Regenerate Rhys the Exiled.
+Oracle:Whenever Rhys attacks, you gain 1 life for each Elf you control.\n{B}, Sacrifice an Elf: Regenerate Rhys.

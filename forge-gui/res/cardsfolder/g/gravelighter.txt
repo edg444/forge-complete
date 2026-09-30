@@ -10,4 +10,4 @@ SVar:DBSac:DB$ Sacrifice | Defined$ Player | SacValid$ Creature
 SVar:X:Count$ThisTurnEntered_Graveyard_from_Battlefield_Creature
 SVar:NeedsToPlayVar:X GE1
 DeckHas:Ability$Sacrifice
-Oracle:Flying\nWhen this creature enters, draw a card if a creature died this turn. Otherwise, each player sacrifices a creature.
+Oracle:Flying\nWhen this creature enters, draw a card if a creature died this turn. Otherwise, each player sacrifices a creature of their choice.

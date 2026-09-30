@@ -11,4 +11,4 @@ SVar:DBPump:DB$ Pump | KW$ Double Strike | Defined$ ChosenCard | SubAbility$ DBC
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 SVar:X:Targeted$CardPower
 DeckHas:Ability$Discard|Counters
-Oracle:Whenever you attack, target attacking creature can't be blocked this turn. It connives. Then choose another attacking creature with lesser power. That creature gains double strike until end of turn. (To have a creature connive, draw a card, then discard a card. Put a +1/+1 counter on that creature for each nonland card discarded this way.)
+Oracle:Whenever you attack, target attacking creature can't be blocked this turn. It connives. Then choose another attacking creature with lesser power. That creature gains double strike until end of turn. (To have a creature connive, draw a card, then discard a card. If you discarded a nonland card, put a +1/+1 counter on that creature.)

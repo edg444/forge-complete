@@ -4,4 +4,4 @@ Types:Creature Vampire Employee
 PT:1/1
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigOpenAttraction | TriggerDescription$ When this creature enters the battlefield, open an Attraction.
 SVar:TrigOpenAttraction:DB$ OpenAttraction
-Oracle:When this creature enters the battlefield, open an Attraction. (Put the top card of your Attraction deck onto the battlefield.)
+Oracle:When this creature enters, open an Attraction. (Put the top card of your Attraction deck onto the battlefield.)

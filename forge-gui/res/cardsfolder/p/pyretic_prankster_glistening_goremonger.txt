@@ -17,4 +17,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigSac:DB$ Sacrifice | Defined$ Opponent | SacValid$ Creature,Artifact
 SVar:SacMe:2
 DeckHas:Ability$Sacrifice
-Oracle:When this creature dies, each opponent sacrifices an artifact or creature.
+Oracle:When this creature dies, each opponent sacrifices an artifact or creature of their choice.

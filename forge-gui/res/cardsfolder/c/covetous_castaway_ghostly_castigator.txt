@@ -7,7 +7,7 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigMill:DB$ Mill | NumCards$ 3 | Defined$ You
 DeckHas:Ability$Mill|Graveyard
 AlternateMode:DoubleFaced
-Oracle:When this creature dies, mill three cards.\nDisturb {3}{U}{U} (You may cast this card from your graveyard transformed for its disturb cost.)
+Oracle:When this creature dies, mill three cards. (Put the top three cards of your library into your graveyard.)\nDisturb {3}{U}{U} (You may cast this card from your graveyard transformed for its disturb cost.)
 
 ALTERNATE
 

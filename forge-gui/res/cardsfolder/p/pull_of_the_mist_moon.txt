@@ -11,4 +11,4 @@ SVar:ETBExile:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | Valid
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 SVar:OblivionRing:TRUE
 DeckHints:Color$Blue
-Oracle:Kicker {1}{U}\nWhen Pull of the Mist Moon enters, exile target nonland permanent an opponent controls until Pull of the Mist Moon leaves the battlefield.\nWhen Pull of the Mist Moon enters, if it was kicked, choose a nonland permanent in your hand. It perpetually gains "When this permanent enters, exile target nonland permanent an opponent controls until this permanent leaves the battlefield."
+Oracle:Kicker {1}{U}\nWhen Pull of the Mist Moon enters, exile target nonland permanent an opponent controls until Pull of the Mist Moon leaves the battlefield.\nWhen Pull of the Mist Moon enters, if it was kicked, choose a nonland permanent card in your hand. It perpetually gains "When this permanent enters, exile target nonland permanent an opponent controls until this permanent leaves the battlefield."

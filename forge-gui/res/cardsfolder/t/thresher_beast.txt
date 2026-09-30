@@ -5,4 +5,4 @@ PT:4/4
 T:Mode$ AttackerBlocked | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ Whenever this creature becomes blocked, defending player sacrifices a land.
 SVar:TrigSac:DB$ Sacrifice | SacValid$ Land | Defined$ TriggeredDefendingPlayer | ChangeNum$ 1
 SVar:HasAttackEffect:Blocked
-Oracle:Whenever this creature becomes blocked, defending player sacrifices a land.
+Oracle:Whenever this creature becomes blocked, defending player sacrifices a land of their choice.

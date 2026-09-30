@@ -8,4 +8,4 @@ T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage
 SVar:TrigUntap:DB$ Untap | Defined$ Self | SubAbility$ DBAddCombat
 SVar:DBAddCombat:DB$ AddPhase | ExtraPhase$ Combat | AfterPhase$ EndCombat
 S:Mode$ CantAttack | ValidCard$ Card.Self | Target$ Player.attackedBySourceThisTurn | Description$ This creature can't attack a player it has already attacked this turn.
-Oracle:Flying, trample\nWhenever this creature deals combat damage to a player, untap it. After this combat phase, there is an additional combat phase.\nThis creature can't attack a player it has already attacked this turn.
+Oracle:Flying, trample\nWhenever this creature deals combat damage to a player, untap it. After this phase, there is an additional combat phase.\nThis creature can't attack a player it has already attacked this turn.

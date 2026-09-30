@@ -8,4 +8,4 @@ SVar:DBChooseNumber:DB$ ChooseNumber | Max$ Count$YourCountersEnergy | ListTitle
 SVar:DBToken:DB$ Token | ConditionCheckSVar$ X | UnlessCost$ Mandatory PayEnergy<X> | UnlessPayer$ You | UnlessSwitched$ True | TokenScript$ b_x_x_aetherborn | TokenPower$ X | TokenToughness$ X | StackDescription$ SpellDescription | SpellDescription$ If you do, create an X/X black Aetherborn creature token, where X is the amount of {E} paid this way.
 SVar:X:Count$ChosenNumber
 DeckHas:Ability$Token
-Oracle:If you would get one or more {E}, you get twice that many {E} instead.\n{T}: You get {E}, then you may pay one or more {E}. If you do, create an X/X black Aetherborn creature token, where X is the amount of {E} paid this way.
+Oracle:If you would get one or more {E} (energy counters), you get twice that many {E} instead.\n{T}: You get {E}, then you may pay one or more {E}. If you do, create an X/X black Aetherborn creature token, where X is the amount of {E} paid this way.

@@ -7,4 +7,4 @@ SVar:TrigAnimate:DB$ Pump | ValidTgts$ Creature.Other | TgtPrompt$ Select target
 SVar:DBAnimate:DB$ Animate | Defined$ Self | Power$ X | Toughness$ Y | Duration$ UntilTheEndOfYourNextUpkeep
 SVar:X:Targeted$CardPower
 SVar:Y:Targeted$CardToughness
-Oracle:At the beginning of your upkeep, change Halfdane's base power and toughness to the power and toughness of target creature other than Halfdane until the end of your next upkeep.
+Oracle:At the beginning of your upkeep, Halfdane's base power and toughness become equal to the power and toughness of target creature other than Halfdane until the end of your next upkeep.

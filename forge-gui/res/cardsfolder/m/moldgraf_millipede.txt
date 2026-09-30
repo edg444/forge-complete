@@ -8,4 +8,4 @@ SVar:DBPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNu
 SVar:X:Count$ValidGraveyard Creature.YouCtrl
 SVar:NeedsToPlayVar:X GE3
 DeckHas:Ability$Mill|Counters
-Oracle:When this creature enters, mill three cards, then put a +1/+1 counter on this creature for each creature card in your graveyard. (To mill a card, put the top card of your library into your graveyard.)
+Oracle:When this creature enters, mill three cards, then put a +1/+1 counter on this creature for each creature card in your graveyard. (To mill three cards, put the top three cards of your library into your graveyard.)

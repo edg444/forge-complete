@@ -6,4 +6,4 @@ SVar:DBToken:DB$ Token | TokenAmount$ X | TokenScript$ w_1_1_soldier | SubAbilit
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:RememberedLKI$CardToughness
 DeckHas:Ability$Token & Type$Soldier
-Oracle:Target player sacrifices an attacking creature. You create X 1/1 white Soldier creature tokens, where X is that creature's toughness.
+Oracle:Target player sacrifices an attacking creature of their choice. You create X 1/1 white Soldier creature tokens, where X is that creature's toughness.

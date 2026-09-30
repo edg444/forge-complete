@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigScry:DB$ Scry | ScryNum$ 1
 A:AB$ Pump | Cost$ B | KW$ Deathtouch | Defined$ Self | SpellDescription$ This creature gains deathtouch until end of turn.
 A:AB$ Pump | Cost$ 1 G | KW$ Hexproof | Defined$ Self | SpellDescription$ This creature gains hexproof until end of turn.
-Oracle:Whenever another creature dies, scry 1. (Look at the top card of your library. You may put that card on the bottom.)\n{B}: Reaper of the Wilds gains deathtouch until end of turn.\n{1}{G}: Reaper of the Wilds gains hexproof until end of turn.
+Oracle:Whenever another creature dies, scry 1.\n{B}: This creature gains deathtouch until end of turn.\n{1}{G}: This creature gains hexproof until end of turn.

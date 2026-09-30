@@ -6,4 +6,4 @@ A:AB$ Animate | Cost$ 1 | ValidTgts$ Permanent.token+YouCtrl | TgtPrompt$ Select
 K:Choose a Background
 DeckHas:Type$Bear
 DeckNeeds:Ability$Token
-Oracle:{1}: Until end of turn, target token you control becomes a green Bear creature with base power and toughness 4/4 in addition to its other types and colors.\nChoose a Background (You can have a Background as a second commander.)
+Oracle:{1}: Until end of turn, target token you control becomes a green Bear creature with base power and toughness 4/4 in addition to its other colors and types.\nChoose a Background (You can have a Background as a second commander.)

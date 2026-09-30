@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigPumpAll:DB$ PumpAll | ValidCards$ Creature.YouCtrl | NumAtt$ +1
 SVar:BuffedBy:Human
 DeckHints:Type$Human
-Oracle:Whenever Erkenbrand or another Human creature you control enters, creatures you control get +1/+0 until end of turn.
+Oracle:Whenever Erkenbrand or another Human you control enters, creatures you control get +1/+0 until end of turn.

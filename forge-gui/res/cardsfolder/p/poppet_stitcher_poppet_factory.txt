@@ -9,7 +9,7 @@ SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform
 DeckHas:Ability$Token
 DeckNeeds:Type$Instant|Sorcery
 AlternateMode:DoubleFaced
-Oracle:Whenever you cast an instant or sorcery spell, create a 2/2 black Zombie creature token with decayed. (It can't block. When it attacks, sacrifice it at end of combat.)\nAt the beginning of your upkeep, if you control three or more creature tokens, you may transform Poppet Sticher.
+Oracle:Whenever you cast an instant or sorcery spell, create a 2/2 black Zombie creature token with decayed. (It can't block. When it attacks, sacrifice it at end of combat.)\nAt the beginning of your upkeep, if you control three or more creature tokens, you may transform this creature.
 
 ALTERNATE
 

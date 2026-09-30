@@ -6,4 +6,4 @@ K:Deathtouch
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigMill | TriggerDescription$ When this creature enters, mill three cards.
 SVar:TrigMill:DB$ Mill | NumCards$ 3 | Defined$ You
 DeckHas:Ability$Graveyard|Mill
-Oracle:Deathtouch\nWhen this creature enters, mill three cards.
+Oracle:Deathtouch (Any amount of damage this deals to a creature is enough to destroy it.)\nWhen this creature enters, mill three cards. (Put the top three cards of your library into your graveyard.)

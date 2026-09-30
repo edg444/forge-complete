@@ -9,4 +9,4 @@ T:Mode$ LandPlayed | ValidCard$ Land | ValidSA$ SpellAbility.MayPlaySource | Tri
 SVar:TrigFood:DB$ Token | TokenScript$ c_a_food_sac | TokenOwner$ You
 DeckHints:Type$Artifact|Legendary|Saga
 DeckHas:Ability$Token|Sacrifice & Type$Food|Artifact
-Oracle:You may look at the top card of your library any time.\nWould You Like A . . . ? — Once each turn, you may play a historic land or cast a historic spell from the top of your library. When you do, create a Food token. (Artifacts, legendaries, and Sagas are historic.)
+Oracle:You may look at the top card of your library any time.\nWould You Like A...? — Once each turn, you may play a historic land or cast a historic spell from the top of your library. When you do, create a Food token. (Artifacts, legendaries, and Sagas are historic.)

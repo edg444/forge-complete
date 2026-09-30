@@ -8,4 +8,4 @@ SVar:TrigChoice:DB$ GenericChoice | ValidTgts$ Opponent | Choices$ DBPayLife,DBS
 SVar:DBSacCreature:DB$ Draw | Defined$ You | UnlessCost$ Sac<1/Creature> | UnlessPayer$ Targeted | UnlessAI$ LowPriority | SpellDescription$ CARDNAME's controller draws a card unless you sacrifice a creature.
 SVar:DBPayLife:DB$ Draw | Defined$ You | UnlessCost$ PayLife<3> | UnlessPayer$ Targeted | SpellDescription$ CARDNAME's controller draws a card unless you pay 3 life.
 SVar:DrawFallback:DB$ Draw
-Oracle:Flying\nAt the beginning of your upkeep, draw a card unless target opponent sacrifices a creature or pays 3 life.
+Oracle:Flying\nAt the beginning of your upkeep, draw a card unless target opponent sacrifices a creature of their choice or pays 3 life.

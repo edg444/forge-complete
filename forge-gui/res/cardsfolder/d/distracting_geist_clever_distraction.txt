@@ -24,4 +24,4 @@ SVar:TrigTap:DB$ Tap | ValidTgts$ Creature.ControlledBy TriggeredDefendingPlayer
 SVar:AE:SVar:HasAttackEffect:TRUE
 R:Event$ Moved | ValidCard$ Card.Self | Destination$ Graveyard | ReplaceWith$ Exile | Description$ If CARDNAME would be put into a graveyard from anywhere, exile it instead.
 SVar:Exile:DB$ ChangeZone | Hidden$ True | Origin$ All | Destination$ Exile | Defined$ ReplacedCard
-Oracle:Enchant creature\nEnchanted creature has "Whenever this creature attacks, tap target creature defending player controls." If Clever Distraction would be put into a graveyard from anywhere, exile it instead.
+Oracle:Enchant creature\nEnchanted creature has "Whenever this creature attacks, tap target creature defending player controls."\nIf Clever Distraction would be put into a graveyard from anywhere, exile it instead.

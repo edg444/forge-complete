@@ -9,4 +9,4 @@ SVar:X:Count$Valid Card.IsCommander+YouCtrl
 SVar:Y:Count$Valid Creature.TargetedPlayerCtrl
 SVar:Z:Count$Valid Creature.YouCtrl
 DeckHas:Ability$Token
-Oracle:Choose one. If you control a commander as you cast this spell, you may choose both.\n• Create a number of 1/1 red Warrior creature tokens equal to the number of creatures target player controls.\n• Will of the Mardu deals damage to target creature equal to the number of creatures you control.
+Oracle:Choose one. If you control a commander as you cast this spell, you may choose both instead.\n• Create a number of 1/1 red Warrior creature tokens equal to the number of creatures target player controls.\n• Will of the Mardu deals damage to target creature equal to the number of creatures you control.

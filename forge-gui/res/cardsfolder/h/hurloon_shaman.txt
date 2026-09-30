@@ -4,4 +4,4 @@ Types:Creature Minotaur Shaman
 PT:2/3
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ When this creature dies, each player sacrifices a land.
 SVar:TrigSac:DB$ Sacrifice | SacValid$ Land | Defined$ Player
-Oracle:When this creature dies, each player sacrifices a land.
+Oracle:When this creature dies, each player sacrifices a land of their choice.

@@ -5,4 +5,4 @@ A:SP$ Effect | Triggers$ CreatureETB | SpellDescription$ Whenever a nontoken cre
 SVar:CreatureETB:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.!token+OppCtrl | TriggerZones$ Command | Execute$ TrigCopy | TriggerDescription$ Whenever a nontoken creature enters under an opponent's control this turn, create a token that's a copy of that creature.
 SVar:TrigCopy:DB$ CopyPermanent | Defined$ TriggeredCardLKICopy | Controller$ You
 DeckHas:Ability$Token
-Oracle:Whenever a nontoken creature enters under an opponent's control this turn, create a token that's a copy of that creature.
+Oracle:Whenever a nontoken creature an opponent controls enters this turn, create a token that's a copy of that creature.

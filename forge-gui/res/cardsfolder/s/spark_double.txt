@@ -13,4 +13,4 @@ SVar:NeedsToPlayVar:Z GE1
 SVar:Z:Count$Valid Creature.YouCtrl/Plus.Z1
 SVar:Z1:Count$Valid Planeswalker.YouCtrl
 DeckHas:Ability$Counters
-Oracle:You may have this creature enter as a copy of a creature or planeswalker you control, except it enters with an additional +1/+1 counter on it if it's a creature, it enters with an additional loyalty counter on it if it's a planeswalker, and it isn't legendary if that permanent is legendary.
+Oracle:You may have this creature enter as a copy of a creature or planeswalker you control, except it enters with an additional +1/+1 counter on it if it's a creature, it enters with an additional loyalty counter on it if it's a planeswalker, and it isn't legendary.

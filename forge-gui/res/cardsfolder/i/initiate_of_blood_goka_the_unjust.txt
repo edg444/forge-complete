@@ -16,4 +16,4 @@ Colors:red
 Types:Legendary Creature Ogre Shaman
 PT:4/4
 A:AB$ DealDamage | Cost$ T | ValidTgts$ Creature.wasDealtDamageThisTurn | TgtPrompt$ Select target creature that was dealt damage this turn. | NumDmg$ 4 | SpellDescription$ CARDNAME deals 4 damage to target creature that was dealt damage this turn.
-Oracle:{T}: Goka the Unjust deals 4 damage to target creature that was dealt damage this turn.
+Oracle:{T}: Goka deals 4 damage to target creature that was dealt damage this turn.

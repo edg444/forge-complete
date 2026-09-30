@@ -8,4 +8,4 @@ SVar:TrigDelayedTrigger:AB$ DelayedTrigger | Cost$ 2 | AILogic$ SpellCopy | Exec
 SVar:EffTrigCopy:DB$ CopySpellAbility | Defined$ TriggeredSpellAbility | MayChooseTarget$ True
 SVar:HasAttackEffect:TRUE
 DeckHints:Type$Instant|Sorcery
-Oracle:You may cast sorcery spells as though they had flash.\nWhenever Najal attacks, you may pay {2}. If you do, when you cast your next instant or sorcery spell this turn, copy it. You may choose new targets for the copy.
+Oracle:You may cast sorcery spells as though they had flash.\nWhenever Najal attacks, you may pay {2}. If you do, when you next cast an instant or sorcery spell this turn, copy it. You may choose new targets for the copy.

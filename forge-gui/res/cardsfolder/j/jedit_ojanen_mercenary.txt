@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | ValidCard$ Card.Self,Creature.Other+Legendary+YouCtrl | Or
 SVar:TrigToken:AB$ Token | Cost$ G | TokenOwner$ You | TokenScript$ g_2_2_cat_warrior_forestwalk
 DeckHas:Ability$Token & Type$Warrior
 DeckHints:Type$Legendary
-Oracle:Whenever Jedit Ojanen or another legendary creature enters, you may pay {G}. If you do, create a 2/2 green Cat Warrior creature token with forestwalk.
+Oracle:Whenever Jedit Ojanen or another legendary creature you control enters, you may pay {G}. If you do, create a 2/2 green Cat Warrior creature token with forestwalk. (It can't be blocked as long as defending player controls a Forest.)

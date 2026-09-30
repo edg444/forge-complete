@@ -5,4 +5,4 @@ A:SP$ Charm | Choices$ SacCreature,SacEnchantment | Defined$ You
 SVar:SacCreature:DB$ Sacrifice | ValidTgts$ Opponent | SacValid$ Creature | SpellDescription$ Target opponent sacrifices a creature.
 SVar:SacEnchantment:DB$ Sacrifice | ValidTgts$ Opponent | SacValid$ Enchantment | SpellDescription$ Target opponent sacrifices an enchantment.
 DeckHas:Ability$Sacrifice
-Oracle:Choose one —\n• Target opponent sacrifices a creature.\n• Target opponent sacrifices an enchantment.
+Oracle:Choose one —\n• Target opponent sacrifices a creature of their choice.\n• Target opponent sacrifices an enchantment of their choice.

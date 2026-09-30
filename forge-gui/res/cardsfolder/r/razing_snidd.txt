@@ -8,4 +8,4 @@ SVar:TrigChange:DB$ ChangeZone | Origin$ Battlefield | Destination$ Hand | Hidde
 SVar:TrigSac:DB$ Sacrifice | Defined$ Player | SacValid$ Land
 AI:RemoveDeck:Random
 SVar:NeedsToPlay:Creature.Black+cmcLE3+YouCtrl,Creature.Red+cmcLE3+YouCtrl
-Oracle:When this creature enters, return a black or red creature you control to its owner's hand.\nWhen this creature enters, each player sacrifices a land.
+Oracle:When this creature enters, return a black or red creature you control to its owner's hand.\nWhen this creature enters, each player sacrifices a land of their choice.

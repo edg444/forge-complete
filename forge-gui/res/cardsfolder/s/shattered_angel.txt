@@ -5,4 +5,4 @@ PT:3/3
 K:Flying
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Land.OppCtrl | TriggerZones$ Battlefield | Execute$ TrigGain | OptionalDecider$ You | TriggerDescription$ Whenever a land enters under an opponent's control, you may gain 3 life.
 SVar:TrigGain:DB$ GainLife | LifeAmount$ 3
-Oracle:Flying\nWhenever a land enters under an opponent's control, you may gain 3 life.
+Oracle:Flying\nWhenever a land an opponent controls enters, you may gain 3 life.

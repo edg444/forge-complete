@@ -7,4 +7,4 @@ SVar:TrigSeek:DB$ Seek | Type$ Land | RememberFound$ True | SubAbility$ DBPut
 SVar:DBPut:DB$ ChangeZone | Origin$ Hand | Destination$ Battlefield | Defined$ Remembered | Tapped$ True | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:BuffedBy:Creature
-Oracle:Alliance — Whenever one or more other creatures you control enter, seek a land card, then put it onto the battlefield tapped. This ability triggers only once each turn.
+Oracle:Alliance — Whenever one or more other creatures enter the battlefield under your control, seek a land card, then put it onto the battlefield tapped. This ability triggers only once each turn.

@@ -7,4 +7,4 @@ S:Mode$ CantAttack | ValidCard$ Card.Self | Condition$ ExtraTurn | Description$ 
 T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigAddTurn | TriggerZones$ Battlefield | TriggerDescription$ Whenever NICKNAME deals combat damage to a player, take an extra turn after this one.
 SVar:TrigAddTurn:DB$ AddTurn | NumTurns$ 1
 SVar:MustBeBlocked:True
-Oracle:Flying\nWhenever Medomai the Ageless deals combat damage to a player, take an extra turn after this one.\nMedomai the Ageless can't attack during extra turns.
+Oracle:Flying\nWhenever Medomai deals combat damage to a player, take an extra turn after this one.\nMedomai can't attack during extra turns.

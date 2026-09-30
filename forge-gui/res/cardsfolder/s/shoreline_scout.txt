@@ -9,4 +9,4 @@ S:Mode$ Continuous | CheckSVar$ X | AffectedDefined$ Self | AddPower$ 1 | Descri
 SVar:X:Count$Valid Merfolk.Other+ThisTurnEntered+EnteredUnder You/Plus.Y
 SVar:Y:Count$Valid Island.ThisTurnEntered+EnteredUnder You
 DeckHints:Type$Merfolk
-Oracle:When Shoreline Scout enters, you may exile a Merfolk card or a land card from your hand. If you do, conjure a Tropical Island card into your hand.\nAs long as another Merfolk or an Island entered the battlefield under your control this turn, Shoreline Scout gets +1/+0.
+Oracle:When Shoreline Scout enters the battlefield, you may exile a Merfolk card or a land card from your hand. If you do, conjure a card named Tropical Island into your hand.\nAs long as another Merfolk or an Island entered the battlefield under your control this turn, Shoreline Scout gets +1/+0.

@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigEffect:DB$ Pump | Defined$ TriggeredNewCardLKICopy | PumpZone$ Graveyard | NumAtt$ -1 | NumDef$ -1 | Duration$ Perpetual | SubAbility$ DBReturn
 SVar:DBReturn:DB$ ChangeZone | Defined$ TriggeredNewCardLKICopy | ConditionDefined$ TriggeredNewCardLKICopy | ConditionPresent$ Creature.toughnessGE1 | Origin$ Graveyard | Destination$ Battlefield
 DeckHas:Ability$Sacrifice
-Oracle:Molting Exoskeleton — Whenever Hook Horror dies, it perpetually gets -1/-1. Then if that card's toughness is 1 or greater, return it to the battlefield under its owner's control.
+Oracle:Molting Exoskeleton — When Hook Horror dies, it perpetually gets -1/-1. Then if that card's toughness is 1 or greater, return it to the battlefield under its owner's control.

@@ -12,4 +12,4 @@ SVar:DBCopy:DB$ CopyPermanent | Defined$ ValidExile Card.ExiledWithSource | Toke
 SVar:PlayMain1:TRUE
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Sacrifice
-Oracle:Deathtouch, haste\nWhen this creature enters, exile up to one other target creature you control until this creature leaves the battlefield.\nWhenever this creature attacks, for each opponent, create a tapped token that's a copy of the exiled card attacking that opponent. At the beginning of your end step, sacrifice those tokens.
+Oracle:Deathtouch, haste\nWhen this creature enters, exile up to one other target creature you control until this creature leaves the battlefield.\nWhenever this creature attacks, for each opponent, create a tapped token that's a copy of the exiled card attacking that opponent. At the beginning of your next end step, sacrifice those tokens.

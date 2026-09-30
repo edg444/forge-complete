@@ -5,4 +5,4 @@ A:SP$ Pump | ValidTgts$ Creature | NumAtt$ -2 | NumDef$ -2 | IsCurse$ True | Sub
 SVar:DBToken:DB$ Token | TokenScript$ c_a_food_sac | TokenOwner$ You | SpellDescription$ Create a Food token.
 DeckHas:Ability$Token|LifeGain|Food
 DeckHints:Ability$Food
-Oracle:Target creature gets -2/-2 until end of turn. Create a Food Token.
+Oracle:Target creature gets -2/-2 until end of turn. Create a Food token. (It's an artifact with "{2}, {T}, Sacrifice this token: You gain 3 life.")

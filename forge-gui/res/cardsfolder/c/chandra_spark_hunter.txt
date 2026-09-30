@@ -14,4 +14,4 @@ SVar:EffDealDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 3
 SVar:PlayMain1:TRUE
 DeckHas:Ability$Sacrifice|Discard|Token
 DeckHints:Type$Artifact|Vehicle
-Oracle:At the beginning of combat on your turn, choose up to one target Vehicle you control. Until end of turn, it becomes an artifact creature and gains haste.\n[+2]: You may sacrifice an artifact or discard a card. If you do, draw a card.\n[0]: Create a 3/2 colorless Vehicle token with crew 1.\n[-7]: You get an emblem with "Whenever an artifact you control enters, this emblem deals 3 damage to any target."
+Oracle:At the beginning of combat on your turn, choose up to one target Vehicle you control. Until end of turn, it becomes an artifact creature and gains haste.\n[+2]: You may sacrifice an artifact or discard a card. If you do, draw a card.\n[0]: Create a 3/2 colorless Vehicle artifact token with crew 1.\n[-7]: You get an emblem with "Whenever an artifact you control enters, this emblem deals 3 damage to any target."

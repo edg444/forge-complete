@@ -8,4 +8,4 @@ A:AB$ Token | Cost$ 4 B B T Sac<1/CARDNAME> | TokenAmount$ X | TokenScript$ b_2_
 SVar:X:Count$CardCounters.CORPSE
 SVar:PlayMain1:TRUE
 DeckHas:Ability$Token|Sacrifice
-Oracle:{T}: Add {B}.\nWhenever a creature you control dies, put a corpse counter on this artifact.\n{4}{B}{B}, {T}, Sacrifice this artifact: Create a 2/2 black Zombie token with decayed for each corpse counter on this artifact. (A creature with decayed can't block. When it attacks, sacrifice it at end of combat.)
+Oracle:{T}: Add {B}.\nWhenever a creature you control dies, put a corpse counter on this artifact.\n{4}{B}{B}, {T}, Sacrifice this artifact: Create a 2/2 black Zombie creature token with decayed for each corpse counter on this artifact. (A creature with decayed can't block. When it attacks, sacrifice it at end of combat.)

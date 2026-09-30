@@ -5,4 +5,4 @@ PT:5/5
 K:Flying
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChangeZone | OptionalDecider$ You | TriggerDescription$ When NICKNAME enters, you may return target artifact card from your graveyard to the battlefield.
 SVar:TrigChangeZone:DB$ ChangeZone | Origin$ Graveyard | Destination$ Battlefield | ValidTgts$ Artifact.YouCtrl
-Oracle:Flying\nWhen Sharuum the Hegemon enters, you may return target artifact card from your graveyard to the battlefield.
+Oracle:Flying\nWhen Sharuum enters, you may return target artifact card from your graveyard to the battlefield.

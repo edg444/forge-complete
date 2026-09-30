@@ -7,4 +7,4 @@ T:Mode$ DamageDone | ValidSource$ Creature.EquippedBy | ValidTarget$ Player | Co
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ X
 SVar:X:TriggerCount$DamageAmount
 DeckHints:Type$Shaman|Warlock|Wizard
-Oracle:Whenever equipped creature deals combat damage to a player, draw that many cards.\nEquip {4}\nEquip Shaman, Warlock, or Wizard {1}
+Oracle:Whenever equipped creature deals combat damage to a player, you draw that many cards.\nEquip {4}\nEquip Shaman, Warlock, or Wizard {1}

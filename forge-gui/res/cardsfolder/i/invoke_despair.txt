@@ -14,4 +14,4 @@ SVar:DBLoseLifeP:DB$ LoseLife | Defined$ Targeted | LifeAmount$ 2 | SubAbility$ 
 SVar:DBDrawP:DB$ Draw | Defined$ You | ConditionCheckSVar$ X | ConditionSVarCompare$ EQ0 | SubAbility$ DBCleanP | StackDescription$ None
 SVar:DBCleanP:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Amount
-Oracle:Target opponent sacrifices a creature. If they can't, they lose 2 life and you draw a card. Then repeat this process for an enchantment and a planeswalker.
+Oracle:Target opponent sacrifices a creature of their choice. If they can't, they lose 2 life and you draw a card. Then repeat this process for an enchantment and a planeswalker.

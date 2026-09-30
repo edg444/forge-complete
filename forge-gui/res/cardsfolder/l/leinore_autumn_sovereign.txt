@@ -7,4 +7,4 @@ SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Creature.YouCtrl | TargetMin$ 0 
 SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1 | ConditionCheckSVar$ X | ConditionSVarCompare$ GE3
 SVar:X:Count$Valid Creature.YouCtrl$DifferentCardPower
 DeckHas:Ability$Counters
-Oracle:Coven — At the beginning of combat on your turn, put a +1/+1 counter on up to one creature you control. Then if you control three or more creatures with different powers, draw a card.
+Oracle:Coven — At the beginning of combat on your turn, put a +1/+1 counter on up to one target creature you control. Then if you control three or more creatures with different powers, draw a card.

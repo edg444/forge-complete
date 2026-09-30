@@ -7,4 +7,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigChangeZone:DB$ ChangeZone | ValidTgts$ Permanent.YouOwn+ThisTurnEnteredFrom_Battlefield | Origin$ Graveyard | Destination$ Hand | SubAbility$ TrigTempt | TargetMin$ 0 | TargetMax$ 1 | TgtPrompt$ Choose target permanent card in your graveyard that was put there from the battlefield this turn
 SVar:TrigTempt:DB$ RingTemptsYou
 DeckHas:Ability$Graveyard
-Oracle:Flash\nWhen Samwise the Stouthearted enters, choose up to one target permanent card in your graveyard that was put there from the battlefield this turn. Return it to your hand. Then the Ring tempts you.
+Oracle:Flash\nWhen Samwise enters, choose up to one target permanent card in your graveyard that was put there from the battlefield this turn. Return it to your hand. Then the Ring tempts you.

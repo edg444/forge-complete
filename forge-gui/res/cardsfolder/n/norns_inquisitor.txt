@@ -7,4 +7,4 @@ SVar:TrigIncubate:DB$ Incubate | Amount$ 2
 T:Mode$ Transformed | ValidCard$ Phyrexian.YouCtrl+inZoneBattlefield | Execute$ TrigPutCounter | TriggerZones$ Battlefield | TriggerDescription$ Whenever a permanent you control transforms into a Phyrexian, put a +1/+1 counter on it.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ TriggeredCard | CounterType$ P1P1
 DeckHas:Ability$Token|Counters & Type$Artifact
-Oracle:When this creature enters, incubate 2.\nWhenever a permanent you control transforms into a Phyrexian, put a +1/+1 counter on it.
+Oracle:When this creature enters, incubate 2. (Create an Incubator token with two +1/+1 counters on it and "{2}: Transform this token." It transforms into a 0/0 Phyrexian artifact creature.)\nWhenever a permanent you control transforms into a Phyrexian, put a +1/+1 counter on it.

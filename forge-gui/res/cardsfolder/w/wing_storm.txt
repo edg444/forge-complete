@@ -5,4 +5,4 @@ A:SP$ RepeatEach | RepeatPlayers$ Player | RepeatSubAbility$ DBDamage | DamageMa
 SVar:DBDamage:DB$ DealDamage | Defined$ Remembered | NumDmg$ X
 SVar:X:Count$Valid Creature.withFlying+RememberedPlayerCtrl/Times.2
 AI:RemoveDeck:Random
-Oracle:Wing Storm deals damage to each player equal to twice the number of creatures with flying that player controls.
+Oracle:Wing Storm deals damage to each player equal to twice the number of creatures that player controls with flying.

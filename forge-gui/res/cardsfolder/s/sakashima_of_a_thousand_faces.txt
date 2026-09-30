@@ -7,4 +7,4 @@ SVar:DBCopy:DB$ Clone | Choices$ Creature.YouCtrl+Other | AddKeywords$ Partner |
 SVar:NoLegendRule:Mode$ IgnoreLegendRule | ValidCard$ Permanent.YouCtrl | Description$ The "legend rule" doesn't apply to permanents you control.
 S:Mode$ IgnoreLegendRule | ValidCard$ Permanent.YouCtrl | Description$ The "legend rule" doesn't apply to permanents you control.
 K:Partner
-Oracle:You may have Sakashima of a Thousand Faces enter as a copy of another creature you control, except it has Sakashima of a Thousand Faces's other abilities.\nThe "legend rule" doesn't apply to permanents you control.\nPartner (You can have two commanders if both have partner.)
+Oracle:You may have Sakashima enter as a copy of another creature you control, except it has Sakashima's other abilities.\nThe "legend rule" doesn't apply to permanents you control.\nPartner (You can have two commanders if both have partner.)

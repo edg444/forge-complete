@@ -10,4 +10,4 @@ SVar:DBShuffle:DB$ Shuffle | Defined$ You | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 A:AB$ Mana | Cost$ T | Produced$ Any | SpellDescription$ Add one mana of any color.
 DeckNeeds:Type$Shrine
-Oracle:When Chronicler of Worship enters, put a random Shrine card from among the top seven cards of your library into your hand. It perpetually gains "This spell costs {1} less to cast." Then shuffle.\n{T}: Add one mana of any color.
+Oracle:When Chronicler of Worship enters the battlefield, put a random Shrine card from among the top seven cards of your library into your hand. It perpetually gains "This spell costs {1} less to cast." Then shuffle.\n{T}: Add one mana of any color.

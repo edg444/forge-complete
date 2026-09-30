@@ -9,4 +9,4 @@ S:Mode$ Continuous | Affected$ Angel.Other+YouCtrl | AddPower$ 1 | AddToughness$
 SVar:BuffedBy:Angel
 SVar:PlayMain1:TRUE
 DeckHints:Type$Angel
-Oracle:Flying, first strike, lifelink\nOther Angels you control get +1/+1 and have lifelink.
+Oracle:Flying\nFirst strike (This creature deals combat damage before creatures without first strike.)\nLifelink (Damage dealt by this creature also causes you to gain that much life.)\nOther Angels you control get +1/+1 and have lifelink.

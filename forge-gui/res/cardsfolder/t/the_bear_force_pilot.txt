@@ -6,4 +6,4 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigToken:DB$ Token | TokenScript$ bear_force_one
 DeckHas:Ability$Token & Type$Artifact|Vehicle
 DeckHints:Type$Bear
-Oracle:When The Bear Force Pilot enters the battlefield, create a colorless artifact Vehicle token with flying, "This creature gets +1/+1 for each Bear you control," and Crew 2.
+Oracle:When The Bear Force Pilot enters the battlefield, create a 0/0 colorless artifact Vehicle token with flying, "This creature gets +1/+1 for each Bear you control," and crew 2.

@@ -12,4 +12,4 @@ SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 SVar:BuffedBy:Cleric,Rogue,Warrior,Wizard
 DeckHas:Ability$Party|LifeGain
 DeckHints:Type$Rogue|Warrior|Wizard
-Oracle:Flying, lifelink\nWhenever this creature enters or you cast a party spell, choose a party creature card in your hand. It perpetually gets +1/+1. (A party card or spell is a Cleric, Rogue, Warrior, or Wizard.)
+Oracle:Flying, lifelink\nWhenever this creature enters and whenever you cast a party spell, choose a party creature card in your hand. It perpetually gets +1/+1. (A party card or spell is a Cleric, Rogue, Warrior, or Wizard.)

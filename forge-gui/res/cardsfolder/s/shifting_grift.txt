@@ -6,4 +6,4 @@ A:SP$ Charm | Choices$ DBCreature,DBArtifact,DBEnchantment | MinCharmNum$ 1 | Ch
 SVar:DBCreature:DB$ ExchangeControl | ModeCost$ 2 | ValidTgts$ Creature | TargetMin$ 2 | TargetMax$ 2 | SpellDescription$ Exchange control of two target creatures.
 SVar:DBArtifact:DB$ ExchangeControl | ModeCost$ 1 | ValidTgts$ Artifact | TargetMin$ 2 | TargetMax$ 2 | SpellDescription$ Exchange control of two target artifacts.
 SVar:DBEnchantment:DB$ ExchangeControl | ModeCost$ 1 | ValidTgts$ Enchantment | TargetMin$ 2 | TargetMax$ 2 | SpellDescription$ Exchange control of two target enchantments.
-Oracle:Spree (Choose one or more additional costs.)\n+{2} — Exchange control of two target creatures.\n+{1} — Exchange control of two target artifacts.\n+{1} — Exchange control of two target enchantments.
+Oracle:Spree (Choose one or more additional costs.)\n+ {2} — Exchange control of two target creatures.\n+ {1} — Exchange control of two target artifacts.\n+ {1} — Exchange control of two target enchantments.

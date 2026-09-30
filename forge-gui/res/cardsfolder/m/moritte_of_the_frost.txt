@@ -10,4 +10,4 @@ SVar:ETBCreat:Event$ Moved | ValidCard$ Creature.IsRemembered | Destination$ Bat
 SVar:DBPutP1P1:DB$ PutCounter | Defined$ ReplacedCard | CounterType$ P1P1 | ETB$ True | CounterNum$ 2 | SubAbility$ DBExile
 SVar:DBExile:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
 DeckHas:Ability$Counters
-Oracle:Changeling (This card is every creature type.)\nYou may have Moritte of the Frost enter as a copy of a permanent you control, except it's legendary and snow in addition to its other types and, if it's a creature, it enters with two additional +1/+1 counters on it and has changeling.
+Oracle:Changeling (This card is every creature type.)\nYou may have Moritte enter as a copy of a permanent you control, except it's legendary and snow in addition to its other types and, if it's a creature, it enters with two additional +1/+1 counters on it and has changeling.

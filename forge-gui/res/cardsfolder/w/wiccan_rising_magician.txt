@@ -9,4 +9,4 @@ SVar:DelTrig:DB$ DelayedTrigger | Mode$ Phase | Phase$ End of Turn | Execute$ Tr
 SVar:TrigBounce:DB$ ChangeZone | Origin$ Exile | Destination$ Battlefield | Defined$ DelayTriggerRememberedLKI
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:BuffedBy:Card.nonCreature
-Oracle:Flying\nWhenever you cast a noncreature spell, exile another nonland, nontoken permanent. Return that card to the battlefield under its owner's control at the beginning of the next end step.
+Oracle:Flying\nWhenever you cast a noncreature spell, exile another target nonland, nontoken permanent. Return that card to the battlefield under its owner's control at the beginning of the next end step.

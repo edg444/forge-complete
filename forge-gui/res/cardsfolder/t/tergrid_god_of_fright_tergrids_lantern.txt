@@ -22,4 +22,4 @@ SVar:PaySac:DB$ LoseLife | LifeAmount$ 3 | Defined$ Targeted | UnlessCost$ Sac<1
 SVar:PayDiscard:DB$ LoseLife | LifeAmount$ 3 | Defined$ Targeted | UnlessCost$ Discard<1/Card> | UnlessPayer$ Targeted | SpellDescription$ You lose 3 life unless you discard a card.
 # TODO: Most likely the ChooseGenericEffect code can be simplified somehow to avoid the necessity of having a dedicated fallback ability
 SVar:LoseLifeFallback:DB$ LoseLife | Defined$ Targeted | LifeAmount$ 3
-Oracle:{T}: Target player loses 3 life unless they sacrifice a nonland permanent or discard a card.\n{3}{B}: Untap Tergrid's Lantern.
+Oracle:{T}: Target player loses 3 life unless they sacrifice a nonland permanent of their choice or discard a card.\n{3}{B}: Untap Tergrid's Lantern.

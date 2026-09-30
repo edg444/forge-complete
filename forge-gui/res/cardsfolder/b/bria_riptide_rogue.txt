@@ -8,4 +8,4 @@ T:Mode$ SpellCast | ValidCard$ Card.nonCreature | ValidActivatingPlayer$ You | T
 SVar:TrigUnblockable:DB$ Effect | ValidTgts$ Creature.YouCtrl | RememberObjects$ Targeted | ExileOnMoved$ Battlefield | StaticAbilities$ Unblockable | AILogic$ Pump
 SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | Description$ This creature can't be blocked this turn.
 SVar:BuffedBy:Card.nonCreature
-Oracle:Prowess\nOther creatures you control have prowess.\nWhenever you cast a noncreature spell, target creature you control can't be blocked this turn.
+Oracle:Prowess (Whenever you cast a noncreature spell, this creature gets +1/+1 until end of turn.)\nOther creatures you control have prowess. (If a creature has multiple instances of prowess, each triggers separately.)\nWhenever you cast a noncreature spell, target creature you control can't be blocked this turn.

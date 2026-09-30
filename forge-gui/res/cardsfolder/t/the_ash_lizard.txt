@@ -8,4 +8,4 @@ SVar:TrigCopyToken:DB$ NameCard | AtRandom$ True | Defined$ You | ChooseFromList
 SVar:DBMake:DB$ MakeCard | Name$ ChosenName | Zone$ None | RememberMade$ True | SubAbility$ DBCopyPerm
 SVar:DBCopyPerm:DB$ CopyPermanent | Defined$ Remembered | SubAbility$ DBClearNamed
 SVar:DBClearNamed:DB$ Cleanup | ClearNamedCard$ True | ClearRemembered$ True
-Oracle:Other Lizards, Treefolk, And Warriors you control get +2/+2.\nWhenever The Ash Lizard attacks, create a token that’s a copy of one of the following cards at random: Ash Zealot; Bog-Strider Ash; Grotag ThrASHer; Seedguide Ash; Unstoppable Ash; ViASHino Warrior. (You’re probably going to need to look these cards up.)
+Oracle:Other Lizards, Treefolk, And Warriors you control get +2/+2.\nWhenever The Ash Lizard attacks, create a token that's a copy of one of the following cards at random: Ash Zealot; Bog-Strider Ash; Grotag ThrASHer; Seedguide Ash; Unstoppable Ash; ViASHino Warrior. (You're probably going to need to look these cards up.)

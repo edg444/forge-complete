@@ -16,4 +16,4 @@ Types:Instant
 A:SP$ Effect | Triggers$ IslandTrigger | SpellDescription$ Until end of turn, whenever you tap a Mountain for mana, add an additonal {R}.
 SVar:IslandTrigger:Mode$ TapsForMana | ValidCard$ Mountain | Activator$ You | Execute$ TrigMana | Static$ True | TriggerDescription$ Whenever you tap a Mountain for mana, add an additonal {R}.
 SVar:TrigMana:DB$ Mana | Produced$ R
-Oracle:Until end of turn, whenever you tap a Mountain for mana, add an additonal {R}.
+Oracle:Until end of turn, whenever you tap a Mountain for mana, add an additional {R}.

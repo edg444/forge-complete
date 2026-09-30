@@ -6,4 +6,4 @@ SVar:LandTapped:DB$ Tap | Defined$ Self | ETB$ True | ConditionPresent$ Island.Y
 A:AB$ Mana | Cost$ T | Produced$ G | SpellDescription$ Add {G}.
 A:AB$ Surveil | Cost$ 3 G T | Amount$ 2 | SpellDescription$ Surveil 2.
 DeckHas:Ability$Surveil|Graveyard
-Oracle:This land enters tapped unless you control an Island or a Swamp.\n{T}: Add {G}.\n{3}{G}, {T}: Surveil 2.
+Oracle:This land enters tapped unless you control an Island or a Swamp.\n{T}: Add {G}.\n{3}{G}, {T}: Surveil 2. (Look at the top two cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)
