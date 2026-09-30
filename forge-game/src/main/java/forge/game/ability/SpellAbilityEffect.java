@@ -91,7 +91,7 @@ public abstract class SpellAbilityEffect {
             sa.putParam("PrecostDesc", "Exhaust — ");
         }
         if (sa.isPowerUp()) {
-            sa.putParam("PrecostDesc", "Power-Up — ");
+            sa.putParam("PrecostDesc", "Power-up — ");
         }
 
         if (sa.hasParam("Named")) {

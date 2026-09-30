@@ -118,7 +118,7 @@ public enum Keyword {
     LEVEL_UP("Level up", KeywordWithCost.class, false, "%s: Put a level counter on this. Level up only as a sorcery."),
     LIFELINK("Lifelink", SimpleKeyword.class, true, "Damage dealt by this creature also causes its controller to gain that much life."),
     LIVING_METAL("Living metal", SimpleKeyword.class, true, "During your turn, this Vehicle is also a creature."),
-    LIVING_WEAPON("Living Weapon", SimpleKeyword.class, false, "When this Equipment enters, create a 0/0 black Phyrexian Germ creature token, then attach this to it."),
+    LIVING_WEAPON("Living weapon", SimpleKeyword.class, false, "When this Equipment enters, create a 0/0 black Phyrexian Germ creature token, then attach this to it."),
     MADNESS("Madness", KeywordWithCost.class, false, "If you discard this card, discard it into exile. When you do, cast it for its madness cost or put it into your graveyard."),
     MAYHEM("Mayhem", Mayhem.class, false, "You may cast this card from your graveyard for %s if you discarded it this turn. Timing rules still apply."),
     MELEE("Melee", SimpleKeyword.class, false, "Whenever this creature attacks, it gets +1/+1 until end of turn for each opponent you attacked this combat."),
@@ -185,7 +185,7 @@ public enum Keyword {
     STATION("Station", KeywordWithAmount.class, false, "Tap another creature you control: Put charge counters equal to its power on this Spacecraft. Station only as a sorcery. It’s an artifact creature at %d+."),
     STORIED("Storied", SimpleKeyword.class, true, "If you control three or more artifacts, legendaries, and/or Sagas, you have an enduring story for the rest of the game."),
     STORM("Storm", SimpleKeyword.class, false, "When you cast this spell, copy it for each other spell that was cast before it this turn. You may choose new targets for the copies."),
-    STRIVE("Strive", KeywordWithCost.class, false, "CARDNAME costs %s more to cast for each target beyond the first."),
+    STRIVE("Strive", KeywordWithCost.class, false, "This spell costs %s more to cast for each target beyond the first."),
     SUNBURST("Sunburst", SimpleKeyword.class, false, "This enters with either a +1/+1 or charge counter on it for each color of mana spent to cast it based on whether it's a creature."),
     SURGE("Surge", KeywordWithCost.class, false, "You may cast this spell for its surge cost if you or a teammate has cast another spell this turn."),
     SUSPEND("Suspend", Suspend.class, false, "If you could begin to cast this card by putting it onto the stack from your hand, you may pay %s and exile it with {%d:time counter} on it. At the beginning of your upkeep, remove a time counter. When the last is removed, play it without paying its mana cost. If you cast a creature spell this way, it gains haste until you lose control of the spell or the permanent it becomes."),
@@ -211,8 +211,8 @@ public enum Keyword {
     WITHER("Wither", SimpleKeyword.class, true, "This deals damage to creatures in the form of -1/-1 counters."),
 
     // mayflash additional cast
-    MAYFLASHCOST("MayFlashCost", KeywordWithCost.class, false, "You may cast CARDNAME as though it had flash if you pay %s more to cast it."),
-    MAYFLASHSAC("MayFlashSac", SimpleKeyword.class, false, "You may cast CARDNAME as though it had flash. If you cast it any time a sorcery couldn't have been cast, the controller of the permanent it becomes sacrifices it at the beginning of the next cleanup step."),
+    MAYFLASHCOST("MayFlashCost", KeywordWithCost.class, false, "You may cast this spell as though it had flash if you pay %s more to cast it."),
+    MAYFLASHSAC("MayFlashSac", SimpleKeyword.class, false, "You may cast this spell as though it had flash. If you cast it any time a sorcery couldn't have been cast, the controller of the permanent it becomes sacrifices it at the beginning of the next cleanup step."),
 
     ;
 

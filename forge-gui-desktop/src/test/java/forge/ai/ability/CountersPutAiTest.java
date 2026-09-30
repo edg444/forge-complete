@@ -39,7 +39,7 @@ public class CountersPutAiTest extends SimulationTest {
         combat.addBlocker(brawler, spider);
         game.getPhaseHandler().setCombat(combat);
 
-        SpellAbility powerUpSA = findSAWithPrefix(brawler, "Power-Up");
+        SpellAbility powerUpSA = findSAWithPrefix(brawler, "Power-up");
         assertNotNull(powerUpSA);
         powerUpSA.setActivatingPlayer(ai);
 

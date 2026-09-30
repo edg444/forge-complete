@@ -4,7 +4,10 @@ public class Protection extends KeywordWithType {
 
     @Override
     public String getTitle() {
-        return "Protection from " + getTypeDescription();
+        // K:Protection:Artifact describes itself as "artifact"; Oracle says "protection from artifacts"
+        final String desc = getTypeDescription();
+        final boolean typeName = forge.card.CardType.Constant.pluralTypes.keySet().stream().anyMatch(t -> t.equalsIgnoreCase(desc));
+        return "Protection from " + (typeName ? forge.util.Lang.getPlural(desc) : desc);
     }
 
     public static String getProtectionValid(final String kw, final boolean damage) {

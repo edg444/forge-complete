@@ -78,7 +78,9 @@ public class CostMill extends CostPart {
         final Integer i = this.convertAmount();
         sb.append("Mill ");
 
-        if (i != null) {
+        if (i != null && i == 1) {
+            sb.append("a");
+        } else if (i != null) {
             sb.append(i);
         } else {
             sb.append(this.getAmount());

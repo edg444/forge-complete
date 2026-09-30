@@ -1091,7 +1091,11 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
         // descriptors
         if (hasParam("PrecostDesc")) {
             equip = getParam("PrecostDesc").startsWith("Equip");
-            sb.append(getParam("PrecostDesc")).append(" ");
+            sb.append(getParam("PrecostDesc"));
+            // a keyword's cost dash is closed up ("Equip—Sacrifice a creature"); an ability word's isn't ("Endurant — ")
+            if (!getParam("PrecostDesc").matches(".*\\S—$")) {
+                sb.append(" ");
+            }
         }
         if (hasParam("CostDesc")) {
             sb.append(getParam("CostDesc")).append(" ");
@@ -1118,20 +1122,39 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
         return sb.toString();
     }
 
-    // Current Oracle prints a cost the card pays with itself as "Sacrifice this artifact", or "Discard this
-    // card" / "Exile this card from your graveyard" when the card isn't on the battlefield - not with its name.
-    // Only the cost text is touched: the effect's own wording lives in its description.
+    // Cost wording as current Oracle prints it. Some wording can't be told apart from the script: "Remove X +1/+1
+    // counters" and "Remove any number of storage counters" are the same cost, and digital-only cards (Alchemy
+    // rebalances and the like) never got the self-reference retemplate and still print their name. So when the
+    // card's own Oracle text prints one of the candidate wordings, that one is used. Only the cost text is
+    // touched: the effect's own wording lives in its description.
     private String withSelfReferences(final String cost) {
-        if (getHostCard() == null || !(cost.contains("CARDNAME") || cost.contains("NICKNAME"))) {
+        if (getHostCard() == null) {
             return cost;
         }
         final CardState state = getCardState() != null ? getCardState() : getHostCard().getCurrentState();
-        // digital-only cards (Alchemy rebalances and the like) never got the retemplate and still print the
-        // name, so the card's own Oracle text decides
+        final String oracle = StringUtils.defaultString(state.getOracleText());
         final String printedName = state.getName().replaceFirst("^A-", "");
         final String named = cost.replace("CARDNAME", printedName)
                 .replace("NICKNAME", Lang.getInstance().getNickName(printedName));
-        if (StringUtils.defaultString(state.getOracleText()).contains(named)) {
+        final String self = selfReferenced(cost, state);
+        // "Remove five fuse counters from this enchantment and sacrifice it"
+        final String selfJoined = self.replaceAll("(this [A-Za-z]+), Sacrifice \\1$", "$1 and sacrifice it");
+        for (final String candidate : new String[] {self, selfJoined, withX(self), named, withX(named)}) {
+            if (!candidate.isEmpty() && oracle.contains(candidate)) {
+                return candidate;
+            }
+        }
+        return self;
+    }
+
+    private static String withX(final String cost) {
+        return cost.replace("You may sacrifice any number of", "Sacrifice X").replace("any number of", "X");
+    }
+
+    // "Sacrifice this artifact", or "Discard this card" / "Exile this card from your graveyard" when the card
+    // isn't on the battlefield
+    private String selfReferenced(final String cost, final CardState state) {
+        if (!(cost.contains("CARDNAME") || cost.contains("NICKNAME"))) {
             return cost;
         }
         final ZoneType zone = getRestrictions() == null ? null : getRestrictions().getZone();

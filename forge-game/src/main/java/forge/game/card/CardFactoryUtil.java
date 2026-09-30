@@ -2900,7 +2900,9 @@ public class CardFactoryUtil {
                 abilityStr.append(" ");
             }
             if (!altCost) {
-                abilityStr.append("| CostDesc$ ").append(cost.toSimpleString()).append(" ");
+                // Oracle ends a non-mana equip cost like a sentence: "Equip—Sacrifice a creature."
+                abilityStr.append("| CostDesc$ ").append(cost.toSimpleString())
+                        .append(cost.isOnlyManaCost() ? " " : ". ");
             }
             abilityStr.append(" | SpellDescription$ ");
             if (!extraDesc.isEmpty()) {
@@ -3702,7 +3704,7 @@ public class CardFactoryUtil {
             }
 
             final StringBuilder desc = new StringBuilder();
-            desc.append("Web-Slinging ").append(ManaCostParser.parse(manaCost)).append(" (");
+            desc.append("Web-slinging ").append(ManaCostParser.parse(manaCost)).append(" (");
             desc.append(inst.getReminderText());
             desc.append(")");
 
@@ -4035,7 +4037,7 @@ public class CardFactoryUtil {
             final String manacost = k[1];
 
             String effect = "Mode$ RaiseCost | ValidCard$ Card.Self | Type$ Spell | Amount$ Strive | Cost$ "+ manacost +" | EffectZone$ All" +
-                    " | Description$ Strive - " + inst.getReminderText();
+                    " | Description$ Strive — " + inst.getReminderText();
             inst.addStaticAbility(StaticAbility.create(effect, state.getCard(), state, intrinsic));
         } else if (keyword.equals("Tiered")) {
             String effect = "Mode$ RaiseCost | ValidCard$ Card.Self | Type$ Spell | Secondary$ True | Amount$ Tiered | EffectZone$ All"

@@ -134,8 +134,28 @@ public abstract class Lang {
     }
 
     public static String getPlural(final String noun) {
+        // the last word carries the number. A type name knows its own plural (Elves, Merfolk), and a phrase that
+        // is already plural ("artifacts and/or creatures", "creature cards") stays as it is - blindly adding a
+        // suffix gave "creatureses", "Elfs" and "cardss"
+        final int space = noun.lastIndexOf(' ');
+        final String head = noun.substring(0, space + 1);
+        final String last = noun.substring(space + 1);
+        for (final Map.Entry<String, String> e : CardType.Constant.pluralTypes.entrySet()) {
+            if (e.getKey().equalsIgnoreCase(last)) {
+                return head + matchCase(e.getValue(), last);
+            }
+        }
+        if (CardType.Constant.pluralTypes.values().stream().anyMatch(p -> p.equalsIgnoreCase(last))
+                || last.equalsIgnoreCase("cards") || last.equalsIgnoreCase("tokens") || last.equalsIgnoreCase("spells")
+                || last.equalsIgnoreCase("permanents")) {
+            return noun;
+        }
         return noun + (noun.endsWith("s") && !noun.endsWith("ds") || noun.endsWith("x") || noun.endsWith("ch") ? "es"
                 : noun.endsWith("ds") ? "" : "s");
+    }
+
+    private static String matchCase(final String word, final String like) {
+        return Character.isLowerCase(like.charAt(0)) ? StringUtils.uncapitalize(word) : word;
     }
 
     public static String nounWithAmount(final int cnt, final String noun) {

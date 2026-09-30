@@ -760,7 +760,7 @@ public class CountersPutEffect extends SpellAbilityEffect {
                 sa.putParam("StackDescription", "SpellDescription");
             }
             if (!sa.hasParam("SpellDescription")) {
-                sa.putParam("SpellDescription", "Adapt " + n);
+                sa.putParam("SpellDescription", "Adapt " + n + ".");
             }
         } else if (sa.hasParam("Bolster")) {
             String n = sa.getParam("Bolster");
@@ -773,7 +773,7 @@ public class CountersPutEffect extends SpellAbilityEffect {
                 StringBuilder sb = new StringBuilder("Bolster");
                 sb.append(" ").append(n);
                 String desc = Lang.nounWithNumeralExceptOne(n, "+1/+1 counter");
-                sb.append(" (Choose a creature with the least toughness among creatures you control and put ").append(desc).append(" on it.)");
+                sb.append(". (Choose a creature with the least toughness among creatures you control and put ").append(desc).append(" on it.)");
                 sa.putParam("SpellDescription", sb.toString());
             }
         } else if (sa.hasParam("Monstrosity")) {
@@ -788,7 +788,7 @@ public class CountersPutEffect extends SpellAbilityEffect {
                 StringBuilder sb = new StringBuilder("Monstrosity");
                 sb.append(" ").append(n);
                 String desc = Lang.nounWithNumeralExceptOne(n, "+1/+1 counter");
-                sb.append(" (If this creature isn’t monstrous, put ").append(desc).append(" on it and it becomes monstrous.)");
+                sb.append(". (If this creature isn't monstrous, put ").append(desc).append(" on it and it becomes monstrous.)");
                 sa.putParam("SpellDescription", sb.toString());
             }
         } else if (sa.hasParam("Support")) {
@@ -812,7 +812,7 @@ public class CountersPutEffect extends SpellAbilityEffect {
                 StringBuilder sb = new StringBuilder("Support");
                 sb.append(" ").append(n);
                 desc = Lang.nounWithNumeralExceptOne(n, desc);
-                sb.append(" (Put a +1/+1 counter on each of up to ").append(desc).append(".)");
+                sb.append(". (Put a +1/+1 counter on each of up to ").append(desc).append(".)");
                 sa.putParam("SpellDescription", sb.toString());
             }
         }

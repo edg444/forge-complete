@@ -2576,7 +2576,12 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.startsWith("Emerge") || keyword.startsWith("More Than Meets the Eye")
                         || keyword.startsWith("Level up") || keyword.startsWith("Plot")
                         || keyword.startsWith("Impending") || keyword.equals("Suspend")) {
-                    sbLong.append(inst.getTitle()).append(" (").append(inst.getReminderText()).append(")");
+                    sbLong.append(inst.getTitle());
+                    // Oracle ends a keyword with a non-mana cost like a sentence: "Buyback—Sacrifice a land."
+                    if (inst instanceof KeywordWithCostInterface kwc && kwc.getCost() != null && kwc.isComplexCost()) {
+                        sbLong.append(".");
+                    }
+                    sbLong.append(" (").append(inst.getReminderText()).append(")");
                     sbLong.append("\r\n");
                 } else if (keyword.startsWith("Escape") || keyword.startsWith("Foretell:")
                         || keyword.startsWith("Madness:") || keyword.startsWith("Reconfigure")
@@ -2622,7 +2627,14 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                 } else if (keyword.startsWith("Cumulative upkeep")) {
                     sbLong.append("Cumulative upkeep ");
                     final String[] upkeepCostParams = keyword.split(":");
-                    sbLong.append(upkeepCostParams.length > 2 ? "— " + upkeepCostParams[2] : ManaCostParser.parse(upkeepCostParams[1]));
+                    if (upkeepCostParams.length > 2) {
+                        // Oracle: "Cumulative upkeep—Put a -1/-1 counter on this creature."
+                        sbLong.setLength(sbLong.length() - 1);
+                        sbLong.append("—").append(upkeepCostParams[2].replace("CARDNAME",
+                                "this " + CardFactoryUtil.getSelfReferenceNoun(getType())));
+                    } else {
+                        sbLong.append(ManaCostParser.parse(upkeepCostParams[1]));
+                    }
                     sbLong.append("\r\n");
                 } else if (keyword.startsWith("AlternateAdditionalCost")) {
                     final String[] costs = keyword.split(":", 2)[1].split(":");
@@ -2684,7 +2696,12 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.startsWith("Afflict") || keyword.startsWith ("Poisonous") || keyword.startsWith("Rampage")
                         || keyword.startsWith("Renown") || keyword.startsWith("Annihilator") || keyword.startsWith("Ripple")
                         || keyword.startsWith("Ward")) {
-                    sbLong.append(inst.getTitle()).append(" (").append(inst.getReminderText()).append(")");
+                    sbLong.append(inst.getTitle());
+                    // parsed as "Start your engines", printed with its exclamation mark
+                    if (keyword.equals("Start your engines")) {
+                        sbLong.append("!");
+                    }
+                    sbLong.append(" (").append(inst.getReminderText()).append(")");
                 } else if (keyword.startsWith("Partner with:")) {
                     final String[] k = keyword.split(":");
                     sbLong.append("Partner with ").append(k[1]).append(" (").append(inst.getReminderText()).append(")");

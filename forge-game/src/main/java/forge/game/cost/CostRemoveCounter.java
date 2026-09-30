@@ -111,7 +111,7 @@ public class CostRemoveCounter extends CostPart {
         final boolean anyCounter = this.counter == null;
         final String ctrName = anyCounter ? "counters" : this.counter.getName().toLowerCase() + " counters";
         if (this.counter != null && this.counter.is(CounterEnumType.LOYALTY) && payCostFromSource()) {
-            sb.append("-").append(this.getAmount());
+            sb.append("0".equals(this.getAmount()) ? "" : "-").append(this.getAmount());
         } else {
             sb.append("Remove ");
             if (this.getAmount().equals("X")) {
