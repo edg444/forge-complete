@@ -1107,7 +1107,7 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
                         StringUtils.uncapitalize(alternateCost.toString()));
                 sb.append(equip && !altOnlyMana ? "." : "");
             } else {
-                sb.append(payCosts);
+                sb.append(payCosts.isAbility() ? withSelfReferences(payCosts.toString()) : payCosts.toString());
             }
 
             if (payCosts.isAbility() && !equip) {
@@ -1116,6 +1116,35 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
         }
 
         return sb.toString();
+    }
+
+    // Current Oracle prints a cost the card pays with itself as "Sacrifice this artifact", or "Discard this
+    // card" / "Exile this card from your graveyard" when the card isn't on the battlefield - not with its name.
+    // Only the cost text is touched: the effect's own wording lives in its description.
+    private String withSelfReferences(final String cost) {
+        if (getHostCard() == null || !(cost.contains("CARDNAME") || cost.contains("NICKNAME"))) {
+            return cost;
+        }
+        final CardState state = getCardState() != null ? getCardState() : getHostCard().getCurrentState();
+        // digital-only cards (Alchemy rebalances and the like) never got the retemplate and still print the
+        // name, so the card's own Oracle text decides
+        final String printedName = state.getName().replaceFirst("^A-", "");
+        final String named = cost.replace("CARDNAME", printedName)
+                .replace("NICKNAME", Lang.getInstance().getNickName(printedName));
+        if (StringUtils.defaultString(state.getOracleText()).contains(named)) {
+            return cost;
+        }
+        final ZoneType zone = getRestrictions() == null ? null : getRestrictions().getZone();
+        final String noun = zone != null && zone != ZoneType.Battlefield ? "card"
+                : CardFactoryUtil.getSelfReferenceNoun(state.getType());
+        String out = cost;
+        for (final String self : new String[] {"CARDNAME", "NICKNAME"}) {
+            out = out.replace("Discard " + self, "Discard this card").replace("Reveal " + self, "Reveal this card")
+                    .replace(self + " from your graveyard", "this card from your graveyard")
+                    .replace(self + " from your hand", "this card from your hand")
+                    .replace(self, "this " + noun);
+        }
+        return out;
     }
 
     public void rebuiltDescription() {

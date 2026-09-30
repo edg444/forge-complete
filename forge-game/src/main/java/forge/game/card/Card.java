@@ -2556,7 +2556,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                             s.append(p[4]);
                         }
                     } else {
-                        s.append(getName()).append(" enters with ");
+                        s.append("This ").append(CardFactoryUtil.getSelfReferenceNoun(getType())).append(" enters with ");
                         s.append(Lang.nounWithNumeralExceptOne(p[2],
                                 CounterType.getType(p[1]).getName().toLowerCase() + " counter"));
                         s.append(" on it.");

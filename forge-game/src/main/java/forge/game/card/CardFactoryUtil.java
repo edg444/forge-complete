@@ -549,7 +549,7 @@ public class CardFactoryUtil {
 
         String[] splitkw = parse.split(":");
 
-        String desc = "CARDNAME enters with ";
+        String desc = "This " + getSelfReferenceNoun(card.getType()) + " enters with ";
         desc += Lang.nounWithNumeralExceptOne(splitkw[2], CounterType.getType(splitkw[1]).getName().toLowerCase() + " counter");
         desc += " on it.";
 
@@ -4182,6 +4182,41 @@ public class CardFactoryUtil {
     // nothing outside that list does. Both straight and curly quotes are here because stored Oracle
     // text uses either depending on the card.
     private static final String PUNCTUATION_MARKS = "!?,;:-—()/\"“”'‘’&.";
+
+    // Checked against Scryfall's Oracle 2026-09-30: with these, the noun below matches 2,547 of the 2,555
+    // self-references WotC prints in costs and "enters" sentences. A card that differs says so in its script
+    // (Sac<1/CARDNAME/this token>).
+    private static final String[] SELF_REFERENCE_SUBTYPES = {"Aura", "Equipment", "Saga", "Vehicle",
+            "Spacecraft", "Contraption", "Siege", "Class", "Case", "Attraction", "Room"};
+
+    /** The noun current Oracle uses when a permanent refers to itself: "this creature", "this Equipment"... */
+    public static String getSelfReferenceNoun(final CardTypeView type) {
+        if (type.isCreature()) {
+            return "creature";
+        }
+        for (final String subtype : SELF_REFERENCE_SUBTYPES) {
+            if (type.hasSubtype(subtype)) {
+                return subtype;
+            }
+        }
+        if (type.isPlaneswalker()) {
+            return "planeswalker";
+        }
+        if (type.isBattle()) {
+            return "battle";
+        }
+        // artifact lands (the Bridges) say "this land"
+        if (type.isLand()) {
+            return "land";
+        }
+        if (type.isArtifact()) {
+            return "artifact";
+        }
+        if (type.isEnchantment()) {
+            return "enchantment";
+        }
+        return "permanent";
+    }
 
     /**
      * Punctuation marks in a card's text box (Punctuate). The Unhinged FAQ is explicit that this

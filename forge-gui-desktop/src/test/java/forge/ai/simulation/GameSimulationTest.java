@@ -640,7 +640,7 @@ public class GameSimulationTest extends SimulationTest {
         AssertJUnit.assertEquals(1, scion.getNetPower());
         AssertJUnit.assertEquals(1, scion.getNetToughness());
         AssertJUnit.assertTrue(scion.isSick());
-        AssertJUnit.assertNotNull(findSAWithPrefix(scion, "Sacrifice CARDNAME: Add {C}."));
+        AssertJUnit.assertNotNull(findSAWithPrefix(scion, "Sacrifice this token: Add {C}."));
 
         GameCopier copier = new GameCopier(simGame);
         Game copy = copier.makeCopy();
@@ -649,7 +649,7 @@ public class GameSimulationTest extends SimulationTest {
         AssertJUnit.assertEquals(1, scionCopy.getNetPower());
         AssertJUnit.assertEquals(1, scionCopy.getNetToughness());
         AssertJUnit.assertTrue(scionCopy.isSick());
-        AssertJUnit.assertNotNull(findSAWithPrefix(scionCopy, "Sacrifice CARDNAME: Add {C}."));
+        AssertJUnit.assertNotNull(findSAWithPrefix(scionCopy, "Sacrifice this token: Add {C}."));
     }
 
     @Test
