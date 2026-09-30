@@ -136,6 +136,8 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ### Unreleased
 
+### 2026-09-30 (deployed: desktop, Android, GitHub) — upstream merge (2.0.16-SNAPSHOT); capital offense; Oracle: line sync; in-game ability text sync
+
 - **Upstream merge 2026-09-30** (30 commits, through the 2.0.15 release; the fork is now 2.0.16-SNAPSHOT): one
   conflict, the `Oracle:` line of The Disciple of Vess (upstream removed a stray second line) - took upstream's
   side and re-ran `oracle-drift.js --apply`. No fork params were stripped from card scripts. Suite: 814 run,
