@@ -142,6 +142,16 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ### Unreleased
 
+- **Hazmat Suit (Used)** (ust/57), honor system: the touch is an ability any player may activate to own up
+  (`FlavorAction`, as on Vile Bile) and lose 2 life. The prompt notes that the sleeve counts (ruling); touching
+  the Aura itself isn't offered (ruling). The ability reads exactly as Oracle does, its wording carried by
+  `CostDesc$`/`SpellDescription$`.
+  - New AI param `AIActivator$ <player>`: an ability any player may activate that the AI only considers when
+    it matches. Here `Player.controlsCreature.EnchantedBy`, so only the AI that handles the enchanted creature
+    ever "touches" it (10% of its turns, in its own main phase, per `Chance.10`).
+  - Vile Bile now reads like its Oracle sentence in game too (its AI is unchanged). `HazmatSuitTest` (2).
+    Suite: 833 run, 0 failed, 6 skipped.
+
 - **Hangman** (ust/56). The game keeps the hangman sheet, so nothing here is honor system except that the
   noted word is a real word.
   - Noting: a person types any word of six to eight letters (A-Z only; re-asked if it isn't, and offered the

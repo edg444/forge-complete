@@ -62,6 +62,12 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         if (!rollChanceLogic(aiPlayer, sa)) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
+        // An honor-system ability any player may call, that only some would ever have cause to: Hazmat Suit
+        // (Used) is touched by whoever handles the enchanted creature, not by the player across the table.
+        if (sa.hasParam("AIActivator") && sa.getHostCard() != null && !aiPlayer.isValid(sa.getParam("AIActivator"),
+                sa.getHostCard().getController(), sa.getHostCard(), sa)) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
         AiAbilityDecision decision = canPlay(aiPlayer, sa);
         if (!decision.willingToPlay() && !"PlayForSub".equals(sa.getParam("AILogic"))) {
             return decision;

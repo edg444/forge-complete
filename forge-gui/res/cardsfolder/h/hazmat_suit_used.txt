@@ -1,0 +1,9 @@
+Name:Hazmat Suit (Used)
+ManaCost:3 B
+Types:Enchantment Aura
+K:Enchant:Creature
+SVar:AttachAILogic:Pump
+S:Mode$ Continuous | AffectedDefined$ Enchanted | Affected$ Creature | AddPower$ 2 | AddToughness$ 1 | AddKeyword$ Menace | Description$ Enchanted creature gets +2/+1 and has menace.
+# Honor system: whoever touched the creature owns up. The AI only ever "touches" a creature it controls.
+A:AB$ LoseLife | Cost$ FlavorAction<Confirm your skin or fingernail touched enchanted creature (its sleeve counts)/Ew!> | CostDesc$ Whenever a player's skin or fingernail touches enchanted creature, | Activator$ Player | AIActivator$ Player.controlsCreature.EnchantedBy | Defined$ You | LifeAmount$ 2 | AILogic$ Chance.10 | SpellDescription$ that player loses 2 life.
+Oracle:Enchant creature\nEnchanted creature gets +2/+1 and has menace.\nWhenever a player's skin or fingernail touches enchanted creature, that player loses 2 life.
