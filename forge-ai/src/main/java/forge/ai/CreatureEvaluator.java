@@ -102,6 +102,9 @@ public class CreatureEvaluator implements Function<Card, Integer> {
             } else if (c.hasKeyword(Keyword.FIRST_STRIKE)) {
                 value += addValue(10 + (power * 5), "fs");
             }
+            if (c.hasKeyword(Keyword.LAST_STRIKE) && !c.hasKeyword(Keyword.FIRST_STRIKE) && !c.hasKeyword(Keyword.DOUBLE_STRIKE)) {
+                value -= subValue(power * 5, "ls");
+            }
             if (c.hasKeyword(Keyword.DEATHTOUCH)) {
                 value += addValue(25, "dt");
             }

@@ -1,0 +1,6 @@
+Name:Extremely Slow Zombie
+ManaCost:1 B
+Types:Creature Zombie
+PT:3/3
+K:Last Strike
+Oracle:Last strike (This creature deals combat damage after creatures without last strike.)

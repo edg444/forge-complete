@@ -1768,6 +1768,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public final boolean hasSecondStrike() {
         return hasDoubleStrike() || !hasFirstStrike();
     }
+    public final boolean hasLastStrike() {
+        return hasKeyword(Keyword.LAST_STRIKE);
+    }
 
     public final boolean hasSuspend() {
         return hasKeyword(Keyword.SUSPEND) && getLastKnownZone().is(ZoneType.Exile)

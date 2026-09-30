@@ -129,12 +129,30 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 - `AddTrigger$`, `RandomSet`, `Staying Power`, additional activation zones, `Rotate180` display for
   tokens printed inverted.
 - Dev mode can pick which printing to add.
+- **Last strike** (`K:Last Strike`, Unstable) — a further combat damage step after the regular one, run as a
+  repeat of `COMBAT_DAMAGE` rather than a new `PhaseType`.
 
 ---
 
 ## Log
 
 ### Unreleased
+
+- **Extremely Slow Zombie** (ust/54a–d, four printings that differ only in flavor text; the edition file already
+  listed them) and the **last strike** keyword it needs. `Combat` holds a creature with last strike out of the
+  regular damage; when that step ends, `PhaseHandler` repeats `COMBAT_DAMAGE` once as the last-strike step if
+  a creature still in combat has last strike (or was held back for it). Players get priority in between, as
+  with first strike, and the log names the step "Last strike:". Per the Unstable FAQ: it deals damage only if
+  it survives first-strike and regular damage; first strike + last strike deals damage twice (first-strike and
+  last-strike steps, not the regular one); double strike + last strike three times.
+  - Judgment calls the FAQ doesn't cover, by analogy with CR 510.4: no last-strike step when no creature in
+    combat has last strike; a creature that lost last strike after sitting out the regular damage still deals
+    its damage in the last-strike step.
+  - AI: `ComputerUtilCombat.dealsDamageBefore` replaces the "first strike vs. none" checks in
+    `canDestroyAttacker`/`canDestroyBlocker`, the wither predictions and the gang-block filter, so it knows a
+    creature that kills the Zombie takes no damage from it. `CreatureEvaluator` values last strike as a
+    drawback (-5 per power). `LastStrikeTest` (7). Suite: 821 run, 0 failed, 6 skipped.
+- **Dirty Rat** (ust/53) was already in from upstream; script checked against Scryfall, no change.
 
 ### 2026-09-30 (deployed: desktop, Android, GitHub) — upstream merge (2.0.16-SNAPSHOT); capital offense; Oracle: line sync; in-game ability text sync
 

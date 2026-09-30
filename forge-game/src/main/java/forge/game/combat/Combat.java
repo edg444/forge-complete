@@ -73,6 +73,11 @@ public class Combat {
     // List holds creatures who have dealt 1st strike damage to disallow them deal damage on regular basis (unless they have double-strike KW)
     private final Supplier<CardCollection> combatantsThatDealtFirstStrikeDamage = Suppliers.memoize(CardCollection::new);
 
+    // Unstable's last strike: creatures that sat out the regular combat damage step because they had last strike,
+    // and so deal their damage in the step after it
+    private final Supplier<CardCollection> combatantsWaitingForLastStrikeDamage = Suppliers.memoize(CardCollection::new);
+    private boolean lastStrikeDamage = false;
+
     public Combat(final Player attacker) {
         playerWhoAttacks = attacker;
         legacyOrderCombatants = playerWhoAttacks.getGame().getRules().hasOrderCombatants();
@@ -161,6 +166,7 @@ public class Combat {
         blockersOrderedForDamageAssignment.get().clear();
         lkiCache.get().clear();
         combatantsThatDealtFirstStrikeDamage.get().clear();
+        combatantsWaitingForLastStrikeDamage.get().clear();
 
         //clear tracking for cards that care about "this combat"
         Game game = playerWhoAttacks.getGame();
@@ -907,13 +913,24 @@ public class Combat {
     private boolean dealDamageThisPhase(Card combatant, boolean firstStrikeDamage) {
         // During first strike damage, double strike and first strike deal damage
         // During regular strike damage, double strike and anyone who hasn't dealt damage deal damage
+        // During last strike damage, last strike and anyone last strike kept out of the regular damage deal damage
+        if (lastStrikeDamage) {
+            return combatant.hasLastStrike() || combatantsWaitingForLastStrikeDamage.get().contains(combatant);
+        }
         if (combatant.hasDoubleStrike()) {
             return true;
         }
-        if (firstStrikeDamage && combatant.hasFirstStrike()) {
-            return true;
+        if (firstStrikeDamage) {
+            return combatant.hasFirstStrike();
         }
-        return !firstStrikeDamage && !combatantsThatDealtFirstStrikeDamage.get().contains(combatant);
+        if (combatantsThatDealtFirstStrikeDamage.get().contains(combatant)) {
+            return false;
+        }
+        if (combatant.hasLastStrike()) {
+            combatantsWaitingForLastStrikeDamage.get().add(combatant);
+            return false;
+        }
+        return true;
     }
 
     public final boolean assignCombatDamage(boolean firstStrikeDamage) {
@@ -924,6 +941,36 @@ public class Combat {
             combatantsThatDealtFirstStrikeDamage.get().clear();
         }
         return assignedDamage;
+    }
+
+    /**
+     * Whether this combat gets a last strike combat damage step after the regular one: some creature still in
+     * it has last strike, or sat out the regular damage because it had last strike then.
+     */
+    public final boolean needsLastStrikeDamageStep() {
+        for (final Card c : getAttackers()) {
+            if (c.hasLastStrike() || combatantsWaitingForLastStrikeDamage.get().contains(c)) {
+                return true;
+            }
+        }
+        for (final Card c : getAllBlockers()) {
+            if (c.hasLastStrike() || combatantsWaitingForLastStrikeDamage.get().contains(c)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public final boolean assignLastStrikeCombatDamage() {
+        lastStrikeDamage = true;
+        try {
+            boolean assignedDamage = assignAttackersDamage(false);
+            assignedDamage |= assignBlockersDamage(false);
+            return assignedDamage;
+        } finally {
+            lastStrikeDamage = false;
+            combatantsWaitingForLastStrikeDamage.get().clear();
+        }
     }
 
     public void dealAssignedDamage() {

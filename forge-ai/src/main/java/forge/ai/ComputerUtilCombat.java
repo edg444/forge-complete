@@ -886,9 +886,8 @@ public class ComputerUtilCombat {
 
         // if the attacker has first strike and wither the blocker will deal
         // less damage than expected
-        if (dealsFirstStrikeDamage(attacker, withoutAbilities, null)
+        if (dealsDamageBefore(attacker, blocker, withoutAbilities, null)
                 && attacker.isWitherDamage()
-                && !dealsFirstStrikeDamage(blocker, withoutAbilities, null)
                 && blocker.canReceiveCounters(CounterEnumType.M1M1)) {
             power -= attacker.getNetCombatDamage();
         }
@@ -1168,9 +1167,8 @@ public class ComputerUtilCombat {
         // if the defender has first strike and wither the attacker will deal
         // less damage than expected
         if (null != blocker) {
-            if (dealsFirstStrikeDamage(blocker, withoutAbilities, combat)
+            if (dealsDamageBefore(blocker, attacker, withoutAbilities, combat)
                     && blocker.isWitherDamage()
-                    && !dealsFirstStrikeDamage(attacker, withoutAbilities, combat)
                     && attacker.canReceiveCounters(CounterEnumType.M1M1)) {
                 power -= blocker.getNetCombatDamage();
             }
@@ -1841,9 +1839,8 @@ public class ComputerUtilCombat {
         } // defender double strike
         else { // no double strike for defender
                // Attacker may kill the blocker before he can deal any damage
-            if (dealsFirstStrikeDamage(attacker, withoutAbilities, combat)
-                    && !blocker.hasKeyword(Keyword.INDESTRUCTIBLE)
-                    && !dealsFirstStrikeDamage(blocker, withoutAbilities, combat)) {
+            if (dealsDamageBefore(attacker, blocker, withoutAbilities, combat)
+                    && !blocker.hasKeyword(Keyword.INDESTRUCTIBLE)) {
                 if (attackerDamage >= defenderLife) {
                     return false;
                 }
@@ -2078,9 +2075,8 @@ public class ComputerUtilCombat {
 
         else { // no double strike for attacker
                // Defender may kill the attacker before he can deal any damage
-            if (dealsFirstStrikeDamage(blocker, withoutAbilities, combat)
-                    && !attacker.hasKeyword(Keyword.INDESTRUCTIBLE)
-                    && !dealsFirstStrikeDamage(attacker, withoutAbilities, combat)) {
+            if (dealsDamageBefore(blocker, attacker, withoutAbilities, combat)
+                    && !attacker.hasKeyword(Keyword.INDESTRUCTIBLE)) {
 
                 if (defenderDamage >= attackerLife) {
                     return false;
@@ -2364,6 +2360,17 @@ public class ComputerUtilCombat {
         }
 
         return false;
+    }
+
+    /**
+     * Whether one combatant deals its combat damage in an earlier step than the other deals any: first strike
+     * against a creature without it, or anything against a creature that only has Unstable's last strike.
+     */
+    public final static boolean dealsDamageBefore(final Card first, final Card second, final boolean withoutAbilities, final Combat combat) {
+        if (dealsFirstStrikeDamage(first, withoutAbilities, combat)) {
+            return !dealsFirstStrikeDamage(second, withoutAbilities, combat);
+        }
+        return !first.hasLastStrike() && second.hasLastStrike() && !dealsFirstStrikeDamage(second, withoutAbilities, combat);
     }
 
     /**

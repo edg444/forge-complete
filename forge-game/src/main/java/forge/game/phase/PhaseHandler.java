@@ -107,6 +107,8 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     private transient Combat combat = null;
     private boolean skipDamageSteps = false;
     private boolean bRepeatCleanup = false;
+    // Unstable's last strike: the combat damage step is followed by another one, for creatures with last strike
+    private boolean lastStrikeDamageStep = false;
 
     /** The need to next phase. */
     private boolean givePriorityToPlayer = false;
@@ -172,7 +174,10 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
         if (bRepeatCleanup) { // for when Cleanup needs to repeat itself
             bRepeatCleanup = false;
+        } else if (phase == PhaseType.COMBAT_DAMAGE && !lastStrikeDamageStep && inCombat() && combat.needsLastStrikeDamageStep()) {
+            lastStrikeDamageStep = true;
         } else {
+            lastStrikeDamageStep = false;
             // If the phase that's ending has a stack of additional phases
             // Take the LIFO one and move to that instead of the normal one
             ExtraPhase extraPhase = null;
@@ -239,7 +244,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
             }
         }
 
-        String phaseType = oldPhase == phase ? "Repeat" : phase == PhaseType.getNext(oldPhase, isTopsy) ? "" : "Additional";
+        String phaseType = lastStrikeDamageStep && phase == PhaseType.COMBAT_DAMAGE ? "Last strike: " : oldPhase == phase ? "Repeat" : phase == PhaseType.getNext(oldPhase, isTopsy) ? "" : "Additional";
         game.fireEvent(new GameEventTurnPhase(playerTurn, phase, phaseType));
     }
 
@@ -363,7 +368,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                         game.updateCombatForView();
                     }
 
-                    if (!combat.assignCombatDamage(false)) {
+                    if (!(lastStrikeDamageStep ? combat.assignLastStrikeCombatDamage() : combat.assignCombatDamage(false))) {
                         givePriorityToPlayer = false;
                     } else {
                         combat.dealAssignedDamage();

@@ -19,6 +19,7 @@ Indestructible
 Infect
 Intimidate
 Islandwalk
+Last Strike
 Lifelink
 Menace
 Mountainwalk

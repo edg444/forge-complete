@@ -431,8 +431,7 @@ public class AiBlockController {
             // Try to add blockers that could be destroyed, but are worth less than the attacker
             // Don't use blockers without First Strike or Double Strike if attacker has it
             List<Card> usableBlockers = CardLists.filter(blockers, c -> {
-                if (ComputerUtilCombat.dealsFirstStrikeDamage(attacker, false, combat)
-                        && !ComputerUtilCombat.dealsFirstStrikeDamage(c, false, combat)) {
+                if (ComputerUtilCombat.dealsDamageBefore(attacker, c, false, combat)) {
                     return false;
                 }
                 // a blocker destroyed before it deals its damage can't help the gang kill the attacker
