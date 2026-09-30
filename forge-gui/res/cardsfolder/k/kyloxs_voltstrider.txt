@@ -2,7 +2,7 @@ Name:Kylox's Voltstrider
 ManaCost:1 U R
 Types:Artifact Vehicle
 PT:4/4
-A:AB$ Animate | Cost$ CollectEvidence<6> | Defined$ Self | Types$ Artifact,Creature | SpellDescription$ CARDNAME becomes an artifact creature until end of turn.
+A:AB$ Animate | Cost$ CollectEvidence<6> | Defined$ Self | Types$ Artifact,Creature | SpellDescription$ This Vehicle becomes an artifact creature until end of turn.
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPlay | OptionalDecider$ You | TriggerDescription$ Whenever this Vehicle attacks, you may cast an instant or sorcery spell from among cards exiled with it. If that spell would be put into a graveyard, put it on the bottom of its owner's library instead.
 SVar:TrigPlay:DB$ Play | ValidZone$ Exile | Valid$ Card.ExiledWithSource | ValidSA$ Instant,Sorcery | Controller$ You | Optional$ True | RememberPlayed$ True | Amount$ 1 | SubAbility$ DBEffect
 SVar:DBEffect:DB$ Effect | ReplacementEffects$ StaticReplace | RememberObjects$ Remembered

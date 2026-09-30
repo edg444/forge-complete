@@ -2,7 +2,7 @@ Name:Capenna Express
 ManaCost:3 G
 Types:Artifact Vehicle
 PT:6/6
-A:AB$ Animate | Cost$ Sac<1/Treasure> | Defined$ Self | Types$ Artifact,Creature | SpellDescription$ CARDNAME becomes an artifact creature until end of turn.
+A:AB$ Animate | Cost$ Sac<1/Treasure> | Defined$ Self | Types$ Artifact,Creature | SpellDescription$ This Vehicle becomes an artifact creature until end of turn.
 K:Crew:3
 DeckHas:Ability$Sacrifice
 DeckHints:Type$Treasure

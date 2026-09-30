@@ -5,7 +5,7 @@ K:Enchant:Artifact.OppCtrl,Artifact.PrintedTextActive+SourcePrintedBefore 199504
 SVar:AttachAILogic:Curse
 T:Mode$ Taps | ValidCard$ Card.AttachedBy | TriggerZones$ Battlefield | Execute$ TrigCharm | TriggerDescription$ Whenever enchanted artifact becomes tapped, ABILITY
 SVar:TrigCharm:DB$ Charm | Choices$ DBDamage,DBGain
-SVar:DBDamage:DB$ DealDamage | ValidTgts$ Player,Planeswalker | TgtPrompt$ Select target player or planeswalker | NumDmg$ 1 | SpellDescription$ CARDNAME deals 1 damage to target player or planeswalker.
+SVar:DBDamage:DB$ DealDamage | ValidTgts$ Player,Planeswalker | TgtPrompt$ Select target player or planeswalker | NumDmg$ 1 | SpellDescription$ This Aura deals 1 damage to target player or planeswalker.
 SVar:DBGain:DB$ GainLife | ValidTgts$ Player | LifeAmount$ 1 | SpellDescription$ Target player gains 1 life.
 AI:RemoveDeck:All
 DeckHas:Ability$LifeGain

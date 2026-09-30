@@ -3,7 +3,7 @@ ManaCost:4 B BP
 Types:Legendary Planeswalker Vraska
 Loyalty:6
 K:Compleated
-A:AB$ Draw | Cost$ AddCounter<0/LOYALTY> | Planeswalker$ True | SubAbility$ DBLoseLife | SpellDescription$ You draw a card and you lose 1 life. Proliferate.
+A:AB$ Draw | Cost$ AddCounter<0/LOYALTY> | Planeswalker$ True | SubAbility$ DBLoseLife | SpellDescription$ You draw a card and lose 1 life. Proliferate.
 SVar:DBLoseLife:DB$ LoseLife | LifeAmount$ 1 | SubAbility$ DBProliferate
 SVar:DBProliferate:DB$ Proliferate
 A:AB$ Animate | Cost$ SubCounter<2/LOYALTY> | Planeswalker$ True | ValidTgts$ Creature | RemoveAllAbilities$ True | Types$ Artifact,Treasure | Abilities$ TreasureSac | RemoveCardTypes$ True | Duration$ Permanent | StackDescription$ {c:Targeted} becomes a Treasure artifact with "{T}, Sacrifice this artifact: Add one mana of any color" and loses all other card types and abilities. | SpellDescription$ Target creature becomes a Treasure artifact with "{T}, Sacrifice this artifact: Add one mana of any color" and loses all other card types and abilities.

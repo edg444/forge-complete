@@ -2,7 +2,7 @@ Name:Origin of the Hidden Ones
 ManaCost:3 R
 Types:Enchantment Saga
 K:Chapter:3:DBDamage,DBToken,DBEffect
-SVar:DBDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 4 | SpellDescription$ CARDNAME deals 4 damage to any target.
+SVar:DBDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 4 | SpellDescription$ This Saga deals 4 damage to any target.
 SVar:DBToken:DB$ Token | TokenAmount$ 2 | TokenScript$ b_1_1_assassin_menace | TokenOwner$ You | SpellDescription$ Create two 1/1 black Assassin creature tokens with menace.
 SVar:DBEffect:DB$ Effect | Triggers$ TrigAttack | SpellDescription$ Whenever an Assassin you control attacks this turn, create a 1/1 black Assassin creature token with menace that's tapped and attacking.
 SVar:TrigAttack:Mode$ Attacks | ValidCard$ Creature.Assassin+YouCtrl | Execute$ TrigToken | TriggerDescription$ Whenever an Assassin you control attacks this turn, create a 1/1 black Assassin creature token with menace that's tapped and attacking.

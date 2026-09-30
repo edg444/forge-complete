@@ -2,7 +2,7 @@ Name:Ravenous Demon
 ManaCost:3 B B
 Types:Creature Demon
 PT:4/4
-A:AB$ SetState | Cost$ Sac<1/Human> | Defined$ Self | SorcerySpeed$ True | Mode$ Transform | SpellDescription$ Transform CARDNAME. Activate this only any time you could cast a sorcery.
+A:AB$ SetState | Cost$ Sac<1/Human> | Defined$ Self | SorcerySpeed$ True | Mode$ Transform | SpellDescription$ Transform this creature. Activate this only any time you could cast a sorcery.
 AlternateMode:DoubleFaced
 Oracle:Sacrifice a Human: Transform this creature. Activate only as a sorcery.
 
