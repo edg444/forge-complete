@@ -7,8 +7,12 @@ import forge.ai.SpellAbilityAi;
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
 import forge.game.card.CardLists;
+import forge.game.combat.Combat;
+import forge.game.phase.PhaseHandler;
+import forge.game.phase.PhaseType;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
+import forge.game.staticability.StaticAbilityCastWithFlash;
 import forge.game.zone.ZoneType;
 
 import java.util.Map;
@@ -27,6 +31,25 @@ public class AugmentAi extends SpellAbilityAi {
         if (sa.hasParam("ChangeType") && CardLists.getValidCards(ai.getCardsIn(ZoneType.Library),
                 sa.getParam("ChangeType"), ai, sa.getHostCard(), sa).isEmpty()) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        // Ninja: an augment that can go on any time we could cast an instant goes on an unblocked attacker,
+        // so the combined creature's combat damage trigger fires this turn
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        if (StaticAbilityCastWithFlash.anyWithFlash(sa, sa.getHostCard(), ai)) {
+            final Combat combat = ai.getGame().getCombat();
+            if (ph.isPlayerTurn(ai) && ph.is(PhaseType.COMBAT_DECLARE_BLOCKERS) && combat != null) {
+                final CardCollection unblocked = CardLists.filter(hosts,
+                        c -> combat.isAttacking(c) && combat.isUnblocked(c));
+                if (unblocked.isEmpty()) {
+                    return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
+                }
+                hosts = unblocked;
+            } else if (ph.isPlayerTurn(ai) && ph.getPhase().isBefore(PhaseType.COMBAT_DECLARE_BLOCKERS)
+                    && hosts.anyMatch(c -> ComputerUtilCard.doesCreatureAttackAI(ai, c) || (combat != null && combat.isAttacking(c)))) {
+                return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
+            } else if (!ph.isPlayerTurn(ai) && !ph.is(PhaseType.END_OF_TURN)) {
+                return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
+            }
         }
         final Card best = ComputerUtilCard.getBestCreatureAI(hosts);
         sa.resetTargets();

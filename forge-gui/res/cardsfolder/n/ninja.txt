@@ -1,0 +1,9 @@
+Name:Ninja
+ManaCost:no cost
+Colors:black
+Types:Creature Ninja
+PT:+1/+0
+K:Augment:2 B:Augment only as—oh, never mind.
+S:Mode$ CastWithFlash | ValidCard$ Card.Self | ValidSA$ Activated.Augment | Caster$ You | EffectZone$ Hand | Description$ You may activate this card's augment ability any time you could cast an instant.
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | TriggerDescription$ Whenever this creature deals combat damage to a player,
+Oracle:You may activate this card's augment ability any time you could cast an instant.\nWhenever this creature deals combat damage to a player,\nAugment {2}{B} ({2}{B}, Reveal this card from your hand: Combine it with target host. Augment only as—oh, never mind.)

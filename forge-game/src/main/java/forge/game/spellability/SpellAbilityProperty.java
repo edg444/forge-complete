@@ -107,6 +107,8 @@ public class SpellAbilityProperty {
             return sa.isKeyword(Keyword.MODULAR);
         } else if (property.equals("Equip")) {
             return sa.isEquip();
+        } else if (property.equals("Augment")) {
+            return sa.getApi() == ApiType.Augment;
         } else if (property.equals("Boast")) {
             return sa.isBoast();
         } else if (property.equals("Monstrosity")) {

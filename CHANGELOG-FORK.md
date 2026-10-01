@@ -176,6 +176,19 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     during combat. Anything goes when the hand is over its maximum size or the AI's life is in danger.
   - `AiPlayReportsTest` (6). Suite: 839 run, 0 failed, 6 skipped.
 
+- **Ninja** (ust/61), an augment. "You may activate this card's augment ability any time you could cast an
+  instant": a `CastWithFlash` static from hand (`EffectZone$ Hand`) with `ValidSA$ Activated.Augment` (new SA
+  property `Augment`). Combined with a host it's "Ninja <host's last word>" (Ninja Kitten), and the host's
+  effect finishes "Whenever this creature deals combat damage to a player,". Augmenting an attacking host
+  leaves it attacking.
+  - `K:Augment:<cost>:<sentence>`: an optional third field replaces the reminder's "Augment only as a
+    sorcery." (Ninja: "Augment only as—oh, never mind.").
+  - Every augment card printed its raw keyword (`Augment:3 W`) above its augment line in game; it no longer
+    does.
+  - AI (`AugmentAi`): an augment it may activate at instant speed goes on an unblocked attacking host after
+    blockers are declared; it waits while it has a host that would attack, and otherwise augments in main 2
+    or at an opponent's end step. `NinjaAugmentTest` (4). Suite: 848 run, 0 failed, 6 skipped.
+
 - **Masterful Ninja** (ust/60). "Reveal this card from your hand: Masterful Ninja is on the battlefield and in your
   hand until end of turn." Built on the dual residency Yet Another Aether Vortex uses, with the hand as the
   second zone: the card really is on the battlefield (a permanent with haste, its pump works, it attacks and
