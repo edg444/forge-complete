@@ -150,6 +150,8 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ### Unreleased
 
+### 2026-10-01 (deployed: desktop, Android, GitHub) — upstream merge (15 commits, 2.0.16-SNAPSHOT); Unstable black complete (Dirty Rat through Zombified); functional keyword text restored; doubled cost words; AI fixes
+
 - **Functional keyword text restored** (found 2026-10-01: Amber Prison's untap choice was gone). The 2026-09-30
   in-game text retemplating rewrote K: lines to Oracle wording, but a K: line is engine input: its head is
   parsed into a `Keyword`, and sentence keywords are found by their exact text from Java
