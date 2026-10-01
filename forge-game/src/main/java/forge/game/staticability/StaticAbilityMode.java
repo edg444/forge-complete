@@ -13,6 +13,8 @@ public enum StaticAbilityMode {
     RerollWithWall,
     // Snickering Squirrel - lets its controller tap it to increase any player's die result by 1 (RollDiceEffect)
     TapToIncreaseRoll,
+    // Squirrel-Powered Scheme - Amount$ added to each die result a ValidPlayer$ rolls (RollDiceEffect)
+    IncreaseRollResult,
 
     // StaticAbility
     CantAttackUnless,

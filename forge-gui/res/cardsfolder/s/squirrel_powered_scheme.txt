@@ -1,0 +1,5 @@
+Name:Squirrel-Powered Scheme
+ManaCost:2 B
+Types:Enchantment
+S:Mode$ IncreaseRollResult | ValidPlayer$ You | Amount$ 2 | Description$ Increase the result of each die you roll by 2.
+Oracle:Increase the result of each die you roll by 2.

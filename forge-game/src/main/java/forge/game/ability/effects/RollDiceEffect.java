@@ -16,6 +16,7 @@ import forge.game.replacement.ReplacementType;
 import forge.game.spellability.SpellAbility;
 import forge.game.trigger.TriggerType;
 import forge.game.zone.ZoneType;
+import forge.game.staticability.StaticAbility;
 import forge.game.staticability.StaticAbilityMode;
 import forge.game.Game;
 import forge.game.GameLogEntryType;
@@ -287,6 +288,15 @@ public class RollDiceEffect extends SpellAbilityEffect {
         for (Integer unmodified : naturalRolls) {
             // Add all the unmodified rolls into the results
             resultsList.add(new DieRollResult(unmodified, unmodified));
+        }
+
+        // Squirrel-Powered Scheme: the result goes up, the natural roll doesn't
+        final int flatIncrease = rollResultIncrease(player);
+        if (flatIncrease != 0) {
+            for (DieRollResult result : resultsList) {
+                result.setModifiedValue(result.getModifiedValue() + flatIncrease);
+            }
+            hasBeenModified = true;
         }
 
         // Snickering Squirrel: decided once the result is seen, and any number can go on one die
@@ -568,6 +578,19 @@ public class RollDiceEffect extends SpellAbilityEffect {
             return true;
         }
         return false;
+    }
+
+    /** Squirrel-Powered Scheme: "Increase the result of each die you roll by 2." Every such static adds its own. */
+    public static int rollResultIncrease(final Player roller) {
+        int total = 0;
+        for (final Card ca : roller.getGame().getCardsIn(ZoneType.STATIC_ABILITIES_SOURCE_ZONES)) {
+            for (final StaticAbility stAb : ca.getStaticAbilities()) {
+                if (stAb.checkConditions(StaticAbilityMode.IncreaseRollResult) && stAb.matchesValidParam("ValidPlayer", roller)) {
+                    total += AbilityUtils.calculateAmount(ca, stAb.getParamOrDefault("Amount", "1"), stAb);
+                }
+            }
+        }
+        return total;
     }
 
     /**

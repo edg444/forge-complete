@@ -210,6 +210,12 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     checks the full decision at the opponent's end step, where the tempo value doubles to 1.0 and the roll
     always passes (200 of 200).
 
+- **Squirrel-Powered Scheme** (ust/70; 71 Steady-Handed Mook and 72 Stinging Scorpion were already upstream and
+  match Scryfall). New static mode `IncreaseRollResult` (`ValidPlayer$`, `Amount$`): each die result that player
+  rolls goes up, after rerolls and swaps and before Snickering Squirrel is offered; the natural roll is unchanged.
+  Several add up. `RollDiceEffect.rollResultIncrease`. `SquirrelPoweredSchemeTest` (2). Suite: 888 run, 0 failed,
+  6 skipped.
+
 - **Subcontract** (ust/73). The person outside the game is simulated as for Defective Detective: a random nonland
   card from the target opponent's hand, likelier the more impactful it is (`ChooseCard | AtRandom$ ThreatWeighted`),
   which that player discards. Script only. `SubcontractTest` (2: over 200 casts a land is never picked and Shivan
