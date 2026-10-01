@@ -49,6 +49,7 @@ public final class ForgeConstants {
     public static final String FLAVOR_TEXT_FILE                      = LISTS_DIR + "FlavorText.txt";
     public static final String PRINTING_TRAITS_FILE                  = LISTS_DIR + "PrintingTraits.txt";
     public static final String WORD_LIST_FILE                        = LISTS_DIR + "Words.txt";
+    public static final String BANNED_OR_RESTRICTED_FILE             = LISTS_DIR + "BannedOrRestricted.txt";
     public static final String SPECIAL_CARD_ACHIEVEMENT_LIST_FILE    = LISTS_DIR + "special-card-achievements.txt";
     public static final String PLANESWALKER_ACHIEVEMENT_LIST_FILE    = LISTS_DIR + "planeswalker-achievements.txt";
     public static final String ALTWIN_ACHIEVEMENT_LIST_FILE          = LISTS_DIR + "altwin-achievements.txt";

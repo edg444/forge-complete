@@ -24,6 +24,7 @@ import forge.*;
 import forge.CardStorageReader.ProgressObserver;
 import forge.ai.AiProfileUtil;
 import forge.ai.ComputerUtilCard;
+import forge.card.BannedOrRestricted;
 import forge.card.CardFlavorText;
 import forge.card.CardRulesPredicates;
 import forge.card.CardType;
@@ -374,6 +375,7 @@ public final class FModel {
         CardFlavorText.setSource(() -> FileUtil.readFile(ForgeConstants.FLAVOR_TEXT_FILE));
         PrintingTraits.setSource(() -> FileUtil.readFile(ForgeConstants.PRINTING_TRAITS_FILE));
         WordList.setSource(() -> FileUtil.readFile(ForgeConstants.WORD_LIST_FILE));
+        BannedOrRestricted.setSource(() -> FileUtil.readFile(ForgeConstants.BANNED_OR_RESTRICTED_FILE));
 
         if (!keywordsLoaded) {
             final List<String> nskwListFile = FileUtil.readFile(ForgeConstants.KEYWORD_LIST_FILE);

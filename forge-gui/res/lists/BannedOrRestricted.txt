@@ -1,0 +1,560 @@
+# Spike, Tournament Grinder: cards that have been banned or restricted in a Constructed format.
+# Built by _tools/spike-list/generate.js from the Unstable FAQ list (December 2017) and Scryfall bulk data
+# (oracle-cards-20260930.jsonl.gz): current bans in standard, pioneer, modern, legacy, vintage, pauper, historic, timeless, alchemy, brawl, standardbrawl, competitivebrawl, commander; plus legendary cards first
+# printed in Legends, Ice Age or Homelands, and conspiracies. One card name per line.
+_____ _____ _____ Trespasser
+_____ _____ Rocketship
+_____ Balls of Fire
+_____ Bird Gets the Worm
+_____ Goblin
+_____-o-saurus
+"Lifetime" Pass Holder
+"Name Sticker" Goblin
+Aarakocra Sneak
+Abuelo's Awakening
+Adriana's Valor
+Adun Oakenshield
+Advantageous Proclamation
+Aerialephant
+Aether Vial
+Aetherworks Marvel
+Agent of Treachery
+Ajani, Nacatl Pariah
+Ajani, Nacatl Pariah // Ajani, Nacatl Avenger
+Ali from Cairo
+All That Glitters
+Amalia Benavides Aguirre
+Ambassador Blorpityblorpboop
+Amped Raptor
+Amulet of Quoz
+Ancestral Recall
+Ancestral Vision
+Ancient Den
+Ancient Tomb
+Angus Mackenzie
+Arcades Sabboth
+Arcbound Ravager
+Arcum's Astrolabe
+Arid Mesa
+Armageddon
+Assemble the Rank and Vile
+Atog
+Autumn Willow
+Axelrod Gunnarson
+Ayesha Tanaka
+Baaallerina
+Backup Plan
+Badgermole Cub
+Balance
+Balustrade Spy
+Barktooth Warbeard
+Baron Sengir
+Bartel Runeaxe
+Basking Broodscale
+Bazaar of Baghdad
+Berserk
+Bioluminary
+Biorhythm
+Birthing Pod
+Bitterblossom
+Black Lotus
+Black Vise
+Blazing Shoal
+Blood Moon
+Bloodbraid Elf
+Bloodstained Mire
+Boris Devilboon
+Brago's Favor
+Braids, Cabal Minion
+Braingeyser
+Brainstorm
+Brainstorm // Brainstorm
+Bridge from Below
+Broadside Bombardiers
+Bronze Tablet
+Burning Wish
+Candelabra of Tawnos
+Carnival Carnivore
+Chalice of the Void
+Chalice of the Void // Chalice of the Void
+Chandler
+Channel
+Chaos Orb
+Chatterstorm
+Chicken Troupe
+Chrome Mox
+Chromium
+Clandestine Chameleon
+Cleanse
+Cloud of Faeries
+Cloudpost
+Coalition Victory
+Coming Attraction
+Command From the Shadows
+Command Performance
+Commandeer
+Complaints Clerk
+Contract from Below
+Copy Artifact
+Cori-Steel Cutter
+Cranial Plating
+Cranial Ram
+Crop Rotation
+Crusade
+Cursed Scroll
+Dakkon Blackblade
+Dark Depths
+Dark Ritual
+Darkpact
+Darksteel Citadel
+Daughter of Autumn
+Daze
+Deadbeat Attendant
+Deadly Dispute
+Deadly Rollick
+Deathrite Shaman
+Dee Kay, Finder of the Lost
+Deflecting Swat
+Demonic Attorney
+Demonic Consultation
+Demonic Tutor
+Demonic Tutor // Demonic Tutor
+Devoted Druid
+Dig Through Time
+Dingus Egg
+Disciple of the Vault
+Discourtesy Clerk
+Disruptor Flute
+Divine Intervention
+Dockside Extortionist
+Done for the Day
+Doomsday
+Double Stroke
+Draconian Gate-Bot
+Drannith Magistrate
+Dread Return
+Dread Return // Dread Return
+Dreadhorde Arcanist
+Dream Halls
+Earthcraft
+Echoing Boon
+Eldrazi Temple
+Emissary's Ploy
+Empty the Warrens
+Empty the Warrens // Empty the Warrens
+Emrakul, the Aeons Torn
+Emrakul, the Promised End
+Enlightened Tutor
+Entomb
+Erayo, Soratami Ascendant
+Erayo, Soratami Ascendant // Erayo's Essence
+Eron the Relentless
+Everyone's an Imposter
+Expressive Iteration
+Eye of Ugin
+Fact or Fiction
+Fall from Favor
+Falling Star
+Fastbond
+Feldon's Cane
+Felidar Guardian
+Field of the Dead
+Fierce Guardianship
+Fight the _____ Fight
+Finishing Move
+Fireblast
+Flare of Cultivation
+Flare of Denial
+Flare of Duplication
+Flare of Fortitude
+Flare of Malice
+Flash
+Flawless Maneuver
+Flooded Strand
+Fluctuator
+Food Chain
+Force of Will
+Fork
+Frantic Search
+Fury
+Gabriel Angelfire
+Gaea's Cradle
+Galvanic Discharge
+Galvanic Relay
+Gauntlet of Might
+General Jarkeld
+Geological Appraiser
+Gideon's Intervention
+Gifts Ungiven
+Gitaxian Probe
+Glimpse of Nature
+Glitterflitter
+Goblin Lackey
+Goblin Recruiter
+Golgari Grave-Troll
+Golos, Tireless Pilgrim
+Gosta Dirk
+Gran-Gran
+Grandmother Sengir
+Grapeshot
+Grapeshot // Grapeshot
+Great Furnace
+Green Sun's Zenith
+Grief
+Grim Monolith
+Griselbrand
+Guide of Souls
+Gush
+Gut, True Soul Zealot
+Gwendlyn Di Corci
+Halfdane
+Hammerheim
+Hazduhr the Abbot
+Hazezon Tamar
+Heartfire Hero
+Hermit Druid
+High Tide
+Hired Heist
+Hogaak, Arisen Necropolis
+Hold the Perimeter
+Hopeless Nightmare
+Hullbreacher
+Hunding Gjornersen
+Hurkyl's Recall
+Hymn of the Wilds
+Hymn to Tourach
+Hypergenesis
+Hypnotic Specter
+Icy Manipulator
+Ihsan's Shade
+Illusionary Mask
+Immediate Action
+Imperial Seal
+Imprison
+Incendiary Dissent
+Intangible Virtue
+Intruder Alarm
+Inverter of Truth
+Invigorate
+Invoke Prejudice
+Iona, Shield of Emeria
+Irini Sengir
+Iterative Analysis
+Ivory Tower
+Ivory Tower // Ivory Tower
+Jace, the Mind Sculptor
+Jace, the Mind Sculptor // Jace, the Mind Sculptor
+Jacques le Vert
+Jasmine Boreal
+Jedit Ojanen
+Jegantha, the Wellspring
+Jerrard of the Closed Fist
+Jeweled Bird
+Jeweled Lotus
+Jihad
+Johan
+Joven
+Juggernaut
+Karakas
+Karn, the Great Creator
+Kasimir the Lone Wolf
+Kei Takahashi
+Kethis, the Hidden Hand
+Kird Ape
+Krark-Clan Ironworks
+Kuldotha Rebirth
+Lady Caleria
+Lady Evangela
+Lady Orca
+Land Tax
+Last Voyage of the _____
+Leovold, Emissary of Trest
+Leyline of Abundance
+Library of Alexandria
+Lightning Bolt
+Limited Resources
+Lin Sivvi, Defiant Hero
+Line Cutter
+Lineprancers
+Lingering Souls
+Lion's Eye Diamond
+Livonya Silone
+Lodestone Golem
+Lord Magnus
+Lotus Field
+Lotus Petal
+Lurrus of the Dream-Den
+Lutri, the Spellchaser
+Make a _____ Splash
+Mana Crypt
+Mana Drain
+Mana Drain // Mana Drain
+Mana Vault
+Marchesa's Surprise Party
+Marhault Elsdragon
+Marsh Flats
+Márton Stromgald
+Maze of Ith
+Meddling Mage
+Memory Jar
+Memory Lapse
+Mental Misstep
+Merchant Scroll
+Merieke Ri Berit
+Metalworker
+Mind Over Matter
+Mind Twist
+Mind's Desire
+Minotaur de Force
+Mirror Universe
+Mishra's Bauble
+Mishra's Workshop
+Misty Rainforest
+Monastery Mentor
+Monastery Swiftspear
+Monitor Monitor
+Monstrous Rage
+Mox Diamond
+Mox Emerald
+Mox Jet
+Mox Opal
+Mox Pearl
+Mox Ruby
+Mox Sapphire
+Muzzio's Preparations
+Mycosynth Lattice
+Myra the Magnificent
+Mystic Forge
+Mystic Sanctuary
+Mystical Tutor
+Nadu, Winged Wisdom
+Narcomoeba
+Narset, Parter of Veils
+Natural Order
+Natural Unity
+Nebuchadnezzar
+Necropotence
+Necropotence // Necropotence
+Nexus of Fate
+Nicol Bolas
+Oath of Druids
+Obscuring Haze
+Oko, Thief of Crowns
+Old Stickfingers
+Once Upon a Time
+Orcish Oriflamme
+Painter's Servant
+Painter's Servant // Painter's Servant
+Palladia-Mors
+Panoptic Mirror
+Paradox Engine
+Park Bleater
+Pavel Maliki
+Pendelhaven
+Peregrine Drake
+Personal Tutor
+Personal Tutor // Personal Tutor
+Petting Zookeeper
+Phlage, Titan of Fire's Fury
+Phyrexian Revoker
+Pin Collection
+Pithing Needle
+Polluted Delta
+Ponder
+Power Play
+Pradesh Gypsies
+Preordain
+Price of Progress
+Primeval Titan
+Princess Lucrezia
+Prize Wall
+Proficient Pyrodancer
+Proft's Eidetic Memory
+Prophet of Kruphix
+Psychic Frog
+Punishing Fire
+Pyrokinesis
+Quick Fixer
+Rad Rascal
+Ragavan, Nimble Pilferer
+Ragnar
+Ramirez DePietro
+Ramses Overdark
+Rashka the Slayer
+Rasputin Dreamweaver
+Reanimate
+Rebirth
+Recall
+Recurring Nightmare
+Reflector Mage
+Regrowth
+Replenish
+Reveka, Wizard Savant
+Ride Guide
+Rishadan Port
+Rite of Flame
+Riven Turnbull
+Robo-Piñata
+Rofellos, Llanowar Emissary
+Rohgahh of Kher Keep
+Roxi, Publicist to the Stars
+Rubinia Soulsinger
+Rukh Egg
+Rule with an Even Hand
+Runed Halo
+Rusko, Clockmaker
+Scalding Tarn
+Scampire
+Scholar of the Lost Trove
+Screaming Nemesis
+Seasoned Buttoneer
+Seat of the Synod
+Second Sunrise
+Secret Summoning
+Secrets of Paradise
+Seeker of Skybreak
+Seething Song
+Sensei's Divining Top
+Sentinel Dispatch
+Serendib Efreet
+Serra's Sanctum
+Sewer-veillance Cam
+Shahrazad
+Show and Tell
+Simian Spirit Guide
+Sinkhole
+Sir Shandlar of Eberyn
+Sivitri Scarzam
+Skeleton Ship
+Skullclamp
+Smuggler's Copter
+Sneak Attack
+Sojourner's Companion
+Sol Ring
+Sol Ring // Sol Ring
+Sol'kanar the Swamp King
+Solitude
+Soraya the Falconer
+Sorcerous Spyglass
+Sorin, Imperious Bloodlord
+Soul Swindler
+Sovereign's Realm
+Sowing Mycospawn
+Spinnerette, Arachnobat
+Splinter Twin
+Spreading Seas
+Squandered Resources
+Squirrel Squatters
+Stangg
+Step Right Up
+Stiltstrider
+Stirring Bard
+Stone-Throwing Devils
+Stoneforge Mystic
+Stormchaser's Talent
+Strip Mine
+Stroke of Genius
+Subtlety
+Summer Bloom
+Summoner's Bond
+Sunastian Falconer
+Sundering Titan
+Survival of the Fittest
+Sway of the Stars
+Sword of the Ages
+Sword of the Meek
+Sword-Swallowing Seraph
+Swords to Plowshares
+Sylvan Primordial
+Tainted Pact
+Tajic, Legion's Valor
+Tamiyo, Inquisitive Student
+Tamiyo, Inquisitive Student // Tamiyo, Seasoned Scholar
+Teferi, Time Raveler
+Tempest Efreet
+Temporal Fissure
+Temporal Manipulation
+Tetsuo Umezawa
+Thassa's Oracle
+Thawing Glaciers
+The Fantasticar
+The Lady of the Mountain
+The Most Dangerous Gamer
+The One Ring
+The Tabernacle at Pendrell Vale
+Thirst for Knowledge
+This Town Ain't Big Enough
+Thorn of Amethyst
+Thorn of Amethyst // Thorn of Amethyst
+Tibalt's Trickery
+Ticketomaton
+Time Spiral
+Time Vault
+Time Walk
+Time Warp
+Timetwister
+Timmerian Fiends
+Tinker
+Tobias Andrion
+Tolaria
+Tolarian Academy
+Tor Wauki
+Torsten Von Ursus
+Trade Secrets
+Treasure Cruise
+Tree of Tales
+Trinisphere
+Troll of Khazad-dûm
+Tuknir Deathlock
+Tusk and Whiskers
+Ugin, the Spirit Dragon
+Ugin's Labyrinth
+Umezawa's Jitte
+Undercity Informer
+Underdark Explorer
+Underworld Breach
+Underworld Dreams
+Unexpected Potential
+Up the Beanstalk
+Upheaval
+Ur-Drago
+Urborg
+Uro, Titan of Nature's Wrath
+Urza's Saga
+Vaevictis Asmadi
+Valakut, the Molten Pinnacle
+Vampiric Tutor
+Vampiric Tutor // Vampiric Tutor
+Vault of Whispers
+Veil of Summer
+Veldrane of Sengir
+Verdant Catacombs
+Vexing Bauble
+Vicious Battlerager
+Vivi Ornitier
+Voltaic Key
+Walking Ballista
+Wash Away
+Weight Advantage
+Wheel of Fortune
+White Plume Adventurer
+Wicker Picker
+Wild Nacatl
+Wilderness Reclamation
+Windfall
+Windswept Heath
+Winota, Joiner of Forces
+Winter Moon
+Wizards of the _____
+Wolf in _____ Clothing
+Wooded Foothills
+Worldfire
+Worldgorger Dragon
+Worldknit
+Wrenn and Six
+Xira Arien
+Yawgmoth's Bargain
+Yawgmoth's Will
+Yorion, Sky Nomad
+Zirda, the Dawnwaker
+Zuran Orb

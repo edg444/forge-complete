@@ -350,6 +350,13 @@ public class CardProperty {
             if (!property.substring(10).equalsIgnoreCase(card.getWatermark())) {
                 return false;
             }
+        } else if (property.equals("everBannedOrRestricted")) {
+            // Spike, Tournament Grinder: banned or restricted in a Constructed format, now or by the Unstable FAQ
+            final forge.item.IPaperCard pc = card.getPaperCard();
+            if (!forge.card.BannedOrRestricted.contains(card.getName())
+                    && (pc == null || !forge.card.BannedOrRestricted.contains(pc.getName()))) {
+                return false;
+            }
         } else if (property.equals("FacingLeft")) {
             if (!"left".equals(card.getArtFacing())) {
                 return false;

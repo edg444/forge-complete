@@ -203,6 +203,17 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     during combat. Anything goes when the hand is over its maximum size or the AI's life is in danger.
   - `AiPlayReportsTest` (6). Suite: 839 run, 0 failed, 6 skipped.
 
+- **Spike, Tournament Grinder** (ust/69). Outside the game is the sideboard, as for the Wishes. "Banned or restricted
+  in a Constructed format" is `res/lists/BannedOrRestricted.txt` (card property `everBannedOrRestricted`,
+  `forge.card.BannedOrRestricted`), built by `_tools/spike-list/generate.js`: the Unstable FAQ's list as of December
+  2017 (193 names, all matched), every card Scryfall marks banned or restricted on 2026-09-30 in a format Wizards of
+  the Coast runs (Standard, Pioneer, Modern, Legacy, Vintage, Pauper, Historic, Timeless, Alchemy, Brawl, Standard
+  Brawl, Competitive Brawl, Commander: 377 cards), legendary cards first printed in Legends, Ice Age or Homelands
+  (79), and conspiracies (29, per the FAQ). 556 names in all. Ante cards are on it but, as the FAQ says, can't be in a
+  game that isn't for ante. Not covered: bans since 2018 that were lifted or whose cards rotated out (Scryfall only
+  has current legality), e.g. Oko's 2019 Standard ban (it counts anyway through Pioneer and Modern).
+  - `SpikeTournamentGrinderTest` (2). Suite: 884 run, 0 failed, 6 skipped.
+
 - **Snickering Squirrel** (ust/68). New static mode `TapToIncreaseRoll` (not a keyword-text match, so a wording
   change can't break it): once a die's result is final, `RollDiceEffect.tapToIncrease` offers each untapped
   creature with it to its controller, in turn order and again after every increase, so several can go on one

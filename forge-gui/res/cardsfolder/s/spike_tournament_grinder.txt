@@ -1,0 +1,8 @@
+Name:Spike, Tournament Grinder
+ManaCost:2 B/P B/P
+Types:Legendary Creature Human Gamer
+PT:1/1
+# Outside the game is the sideboard, as for the Wishes. Banned or restricted = res/lists/BannedOrRestricted.txt: the
+# Unstable FAQ's list as of December 2017 plus every current Wizards of the Coast ban or restriction (from Scryfall).
+A:AB$ ChangeZone | Cost$ B/P B/P B/P B/P | Origin$ Sideboard | Destination$ Hand | ChangeType$ Card.YouOwn+everBannedOrRestricted | ChangeTypeDesc$ card they own that has been banned or restricted in a Constructed format | ChangeNum$ 1 | Hidden$ True | Mandatory$ True | Reveal$ True | SpellDescription$ Reveal a card you own from outside the game that has been banned or restricted in a Constructed format and put it into your hand.
+Oracle:({B/P} can be paid with either {B} or 2 life.)\n{B/P}{B/P}{B/P}{B/P}: Reveal a card you own from outside the game that has been banned or restricted in a Constructed format and put it into your hand.
