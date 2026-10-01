@@ -30,6 +30,10 @@ public final class PrintingTraits {
         private String backWatermark = null;
         private boolean openMouth = false;
         private boolean backOpenMouth = false;
+        private boolean facingLeft = false;
+        private boolean facingRight = false;
+        private boolean backFacingLeft = false;
+        private boolean backFacingRight = false;
 
         /** The border as printed, or null when the edition data already has it right. */
         public CardEdition.BorderColor getBorder() {
@@ -42,6 +46,16 @@ public final class PrintingTraits {
 
         public boolean hasOpenMouth(final boolean backFace) {
             return backFace ? backOpenMouth : openMouth;
+        }
+
+        /** Scryfall Tagger's left-facing tag on the artwork (as seen by the viewer). */
+        public boolean isFacingLeft(final boolean backFace) {
+            return backFace ? backFacingLeft : facingLeft;
+        }
+
+        /** Scryfall Tagger's right-facing tag on the artwork (as seen by the viewer). */
+        public boolean isFacingRight(final boolean backFace) {
+            return backFace ? backFacingRight : facingRight;
         }
     }
 
@@ -82,6 +96,14 @@ public final class PrintingTraits {
                     t.openMouth = true;
                 } else if (trait.equals("backopenmouth")) {
                     t.backOpenMouth = true;
+                } else if (trait.equals("facingleft")) {
+                    t.facingLeft = true;
+                } else if (trait.equals("facingright")) {
+                    t.facingRight = true;
+                } else if (trait.equals("backfacingleft")) {
+                    t.backFacingLeft = true;
+                } else if (trait.equals("backfacingright")) {
+                    t.backFacingRight = true;
                 }
             }
             table.put(parts[0].toUpperCase() + "|" + parts[1], t);

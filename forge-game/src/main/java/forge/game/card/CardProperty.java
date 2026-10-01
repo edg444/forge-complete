@@ -350,6 +350,35 @@ public class CardProperty {
             if (!property.substring(10).equalsIgnoreCase(card.getWatermark())) {
                 return false;
             }
+        } else if (property.equals("FacingLeft")) {
+            if (!"left".equals(card.getArtFacing())) {
+                return false;
+            }
+        } else if (property.equals("FacingRight")) {
+            if (!"right".equals(card.getArtFacing())) {
+                return false;
+            }
+        } else if (property.equals("FacingUnknown")) {
+            if (card.getArtFacing() != null) {
+                return false;
+            }
+        } else if (property.equals("longestNameInHand")) {
+            // Sly Spy: characters in the name, ignoring spaces (ruling), compared with the rest of the hand it's in
+            Player holder = null;
+            for (final Player p : game.getPlayers()) {
+                if (p.getZone(ZoneType.Hand).contains(card)) {
+                    holder = p;
+                }
+            }
+            if (holder == null) {
+                return false;
+            }
+            final int length = card.getDisplayName().replace(" ", "").length();
+            for (final Card other : holder.getZone(ZoneType.Hand).getCards()) {
+                if (other.getDisplayName().replace(" ", "").length() > length) {
+                    return false;
+                }
+            }
         } else if (property.equals("OpenMouthArt")) {
             if (!card.hasOpenMouthArt()) {
                 return false;

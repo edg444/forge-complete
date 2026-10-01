@@ -176,6 +176,23 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     during combat. Anything goes when the hand is over its maximum size or the AI's life is in danger.
   - `AiPlayReportsTest` (6). Suite: 839 run, 0 failed, 6 skipped.
 
+- **Sly Spy** (ust/67a-f), all six printings (upstream had only F, the die roll; its text now says "this creature"
+  like Oracle). Each is "Whenever this creature deals combat damage to a player, ...":
+  - **A** reveals the hand and discards a card with the longest name, counting characters without spaces
+    (ruling). New card property `longestNameInHand`.
+  - **B/D** destroy a creature facing left/right in its art. Facing comes from Scryfall Tagger's `left-facing`
+    and `right-facing` tags, now in `PrintingTraits.txt` (`facingleft`/`facingright`, plus back faces) and
+    exposed as `Card.getArtFacing()` and the properties `FacingLeft`, `FacingRight`, `FacingUnknown`. Only 4,090
+    of 26,580 creature artworks are tagged (45 both ways, which counts as unknown), so an untagged creature stays
+    a legal target for the player to judge from the art (honor system); the AI targets only known facings
+    (`AITgts$`). Right means the viewer's right (FAQ; Tagger agrees).
+  - **C** honor system: a "Lost Finger" effect for that player, lasting until Sly Spy leaves the battlefield.
+  - **E** puts the top card of that player's library into your hand (still theirs: `HandOf$ You`) and you lose
+    life equal to its mana value.
+  - `_tools/printing-traits/generate.js` writes the facing traits; regenerated from the same bulk data, every
+    other trait is unchanged (7,981 new rows, facing only). `SlySpyTest` (7, each variant played through an AI
+    combat). Suite: 867 run, 0 failed, 6 skipped.
+
 - **Skull Saucer** (ust/66), honor system. Its enters trigger destroys the target, then asks you to put your head
   on the table (`UnlessCost$ FlavorAction`): decline and it's sacrificed, as the ruling says (the creature is
   still destroyed). Later, "I lifted my head" sacrifices it; that line reads exactly like Oracle via

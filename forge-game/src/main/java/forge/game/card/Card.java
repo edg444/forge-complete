@@ -6740,6 +6740,21 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return t == null ? null : t.getWatermark(isBackSide());
     }
 
+    /**
+     * Which way the creature in the artwork of the face this card is showing faces, as the viewer sees it:
+     * "left" or "right" (Sly Spy), or null when that isn't known. Scryfall's Tagger has tagged only about one
+     * creature artwork in six either way, and art tagged both ways (several creatures) is left to the players too.
+     */
+    public String getArtFacing() {
+        final PrintingTraits.Traits t = getPrintingTraits();
+        if (t == null) {
+            return null;
+        }
+        final boolean left = t.isFacingLeft(isBackSide());
+        final boolean right = t.isFacingRight(isBackSide());
+        return left == right ? null : left ? "left" : "right";
+    }
+
     /** Whether the artwork of the face this card is showing has an open mouth in it. */
     public boolean hasOpenMouthArt() {
         final PrintingTraits.Traits t = getPrintingTraits();

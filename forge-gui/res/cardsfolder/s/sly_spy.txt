@@ -4,9 +4,40 @@ Types:Creature Human Spy
 PT:2/2
 Oracle:<Unsupported Variant>
 
-# --- VARIANT F ---
+# --- VARIANTS ---
+# Six printings, each its own combat damage trigger (the 67a-f edition lines pick the variant).
 
-Variant:F:T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigRoll | TriggerDescription$ Whenever CARDNAME deals combat damage to a player, roll a six-sided die. That player loses life equal to the result.
+Variant:A:T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | Execute$ TrigDiscard | TriggerDescription$ Whenever this creature deals combat damage to a player, that player reveals their hand. You choose a card from it with the longest name. That player discards that card.
+# longest = most characters in the name, ignoring spaces (ruling)
+Variant:A:SVar:TrigDiscard:DB$ Discard | Defined$ TriggeredTarget | Mode$ RevealYouChoose | DiscardValid$ Card.longestNameInHand | NumCards$ 1
+Variant:A:Oracle:Whenever this creature deals combat damage to a player, that player reveals their hand. You choose a card from it with the longest name. That player discards that card.
+
+# Facing comes from Scryfall Tagger's left-facing/right-facing tags (res/lists/PrintingTraits.txt). Only about one
+# creature artwork in six is tagged, so an untagged one stays a legal target for the player to judge from its art
+# (honor system); the AI only picks creatures whose facing is known.
+Variant:B:T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigDestroy | TriggerDescription$ Whenever this creature deals combat damage to a player, you may destroy target creature facing left in its art. (Creatures without faces don't face anywhere.)
+Variant:B:SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Creature.FacingLeft,Creature.FacingUnknown | TgtPrompt$ Select target creature facing left in its art | AITgts$ Creature.FacingLeft
+Variant:B:Oracle:Whenever this creature deals combat damage to a player, you may destroy target creature facing left in its art. (Creatures without faces don't face anywhere.)
+
+# Honor system: the game can't take a finger, so the player gets a reminder that lasts as long as this creature.
+Variant:C:T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | Execute$ TrigFinger | TriggerDescription$ Whenever this creature deals combat damage to a player, that player loses a finger until this creature leaves the battlefield. (The finger is chosen by its owner and can't roll dice or touch cards.)
+Variant:C:SVar:TrigFinger:DB$ Effect | EffectOwner$ TriggeredTarget | Name$ Lost Finger | Duration$ UntilHostLeavesPlay | StaticAbilities$ FingerNote
+Variant:C:SVar:FingerNote:Mode$ Continuous | Affected$ Card.Self | Description$ You've lost a finger (you choose which; the thumb counts) until Sly Spy leaves the battlefield. It can't roll dice or touch cards, but it can still eat, drink, and so on.
+Variant:C:Oracle:Whenever this creature deals combat damage to a player, that player loses a finger until this creature leaves the battlefield. (The finger is chosen by its owner and can't roll dice or touch cards.)
+
+Variant:D:T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigDestroy | TriggerDescription$ Whenever this creature deals combat damage to a player, you may destroy target creature facing right in its art. (Creatures without faces don't face anywhere.)
+Variant:D:SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Creature.FacingRight,Creature.FacingUnknown | TgtPrompt$ Select target creature facing right in its art | AITgts$ Creature.FacingRight
+Variant:D:Oracle:Whenever this creature deals combat damage to a player, you may destroy target creature facing right in its art. (Creatures without faces don't face anywhere.)
+
+# The card goes to your hand but stays its owner's (rulings), as with Five-Finger Discount.
+Variant:E:T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | Execute$ TrigDig | TriggerDescription$ Whenever this creature deals combat damage to a player, that player reveals the top card of their library. Put that card into your hand and you lose life equal to its mana value.
+Variant:E:SVar:TrigDig:DB$ Dig | Defined$ TriggeredTarget | DigNum$ 1 | ChangeNum$ All | Reveal$ True | DestinationZone$ Hand | HandOf$ You | RememberChanged$ True | SubAbility$ DBLoseLife
+Variant:E:SVar:DBLoseLife:DB$ LoseLife | Defined$ You | LifeAmount$ X | SubAbility$ DBCleanup
+Variant:E:SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Variant:E:SVar:X:Remembered$CardManaCost
+Variant:E:Oracle:Whenever this creature deals combat damage to a player, that player reveals the top card of their library. Put that card into your hand and you lose life equal to its mana value.
+
+Variant:F:T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | Execute$ TrigRoll | TriggerDescription$ Whenever this creature deals combat damage to a player, roll a six-sided die. That player loses life equal to the result.
 Variant:F:SVar:TrigRoll:DB$ RollDice | ResultSVar$ Result | SubAbility$ DBLoseLife
 Variant:F:SVar:DBLoseLife:DB$ LoseLife | Defined$ TriggeredTarget | LifeAmount$ Result
-Variant:F:Oracle:Whenever Sly Spy deals combat damage to a player, roll a six-sided die. That player loses life equal to the result.
+Variant:F:Oracle:Whenever this creature deals combat damage to a player, roll a six-sided die. That player loses life equal to the result.
