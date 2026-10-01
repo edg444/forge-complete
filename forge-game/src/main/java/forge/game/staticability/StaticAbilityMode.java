@@ -11,6 +11,8 @@ public enum StaticAbilityMode {
     UseInstalledResult,
     // Wall of Fortune - lets its controller tap an untapped Wall to have a player reroll a die (RollDiceEffect)
     RerollWithWall,
+    // Snickering Squirrel - lets its controller tap it to increase any player's die result by 1 (RollDiceEffect)
+    TapToIncreaseRoll,
 
     // StaticAbility
     CantAttackUnless,

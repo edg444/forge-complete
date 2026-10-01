@@ -176,6 +176,14 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     during combat. Anything goes when the hand is over its maximum size or the AI's life is in danger.
   - `AiPlayReportsTest` (6). Suite: 839 run, 0 failed, 6 skipped.
 
+- **Snickering Squirrel** (ust/68). New static mode `TapToIncreaseRoll` (not a keyword-text match, so a wording
+  change can't break it): once a die's result is final, `RollDiceEffect.tapToIncrease` offers each untapped
+  creature with it to its controller, in turn order and again after every increase, so several can go on one
+  die and a 6 can become a 7 (rulings). It isn't a {T} ability, so a Squirrel that just arrived can be tapped. The
+  AI raises only its own rolls. Note that upstream scripts which encode "N or higher" as a range ending at the
+  die's top face (Inhumaniac's 5-6) won't count a raised 7.
+  - `SnickeringSquirrelTest` (3, one a real Sly Spy roll in an AI combat). Suite: 870 run, 0 failed, 6 skipped.
+
 - **Sly Spy** (ust/67a-f), all six printings (upstream had only F, the die roll; its text now says "this creature"
   like Oracle). Each is "Whenever this creature deals combat damage to a player, ...":
   - **A** reveals the hand and discards a card with the longest name, counting characters without spaces

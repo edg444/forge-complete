@@ -289,6 +289,15 @@ public class RollDiceEffect extends SpellAbilityEffect {
             resultsList.add(new DieRollResult(unmodified, unmodified));
         }
 
+        // Snickering Squirrel: decided once the result is seen, and any number can go on one die
+        for (DieRollResult result : resultsList) {
+            final int increase = tapToIncrease(player, result.getModifiedValue(), sides);
+            if (increase > 0) {
+                result.setModifiedValue(result.getModifiedValue() + increase);
+                hasBeenModified = true;
+            }
+        }
+
         // Vedalken Exchange
         CardCollection vedalkenSwaps = new CardCollection(dicePTExchanges);
         if (!vedalkenSwaps.isEmpty()) {
@@ -559,6 +568,45 @@ public class RollDiceEffect extends SpellAbilityEffect {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Snickering Squirrel: "You may tap this creature to increase the result of a die any player rolled by 1." Each
+     * untapped creature with the permission is offered to its controller in turn order, again after every increase,
+     * so several can go on one die and a 6 can become a 7 (Unstable rulings). It isn't an activated ability, so one
+     * that just came under your control can be tapped. Returns how much the result went up.
+     */
+    public static int tapToIncrease(final Player roller, final int value, final int sides) {
+        final Game game = roller.getGame();
+        int increase = 0;
+        for (final Player p : game.getPlayersInTurnOrder(game.getPhaseHandler().getPlayerTurn())) {
+            while (true) {
+                Card squirrel = null;
+                for (final Card c : p.getCardsIn(ZoneType.Battlefield)) {
+                    if (c.isUntapped() && c.getStaticAbilities().stream()
+                            .anyMatch(st -> st.checkConditions(StaticAbilityMode.TapToIncreaseRoll))) {
+                        squirrel = c;
+                        break;
+                    }
+                }
+                if (squirrel == null) {
+                    break;
+                }
+                final int now = value + increase;
+                final String who = p.equals(roller) ? "You" : roller.getName();
+                if (!p.getController().confirmStaticApplication(squirrel, null,
+                        who + " rolled " + now + " on a " + sides + "-sided die. Tap " + squirrel.getName()
+                                + " to make it " + (now + 1) + "?",
+                        "TapToIncrease:" + (p.equals(roller) ? "own" : "opp") + ":" + now + ":" + sides)) {
+                    break;
+                }
+                squirrel.tap(true, null, p);
+                increase++;
+                game.getGameLog().add(GameLogEntryType.INFORMATION, p + " taps " + squirrel.getName() + " to make "
+                        + roller + "'s " + now + " a " + (now + 1) + ".");
+            }
+        }
+        return increase;
     }
 
     /**

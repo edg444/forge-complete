@@ -1286,6 +1286,10 @@ public class AiController {
             }
             return "own".equals(parts[1]) ? value < average : value > average;
         }
+        if (logic != null && logic.startsWith("TapToIncrease:")) {
+            // Snickering Squirrel: a higher result is what the roller wants, so only its own rolls
+            return "own".equals(logic.split(":")[1]);
+        }
         if (logic != null && logic.startsWith("InstalledResult:")) {
             // Socketed Sprocketer: swap in a higher installed result, but a 6 also draws a card on its own,
             // so it's only spent on a roll that came up low

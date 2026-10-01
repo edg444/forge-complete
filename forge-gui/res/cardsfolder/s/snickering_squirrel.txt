@@ -1,0 +1,6 @@
+Name:Snickering Squirrel
+ManaCost:B
+Types:Creature Squirrel Advisor
+PT:1/1
+S:Mode$ TapToIncreaseRoll | Description$ You may tap this creature to increase the result of a die any player rolled by 1.
+Oracle:You may tap this creature to increase the result of a die any player rolled by 1.
