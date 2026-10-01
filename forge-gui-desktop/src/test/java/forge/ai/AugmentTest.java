@@ -8,12 +8,15 @@ import forge.game.Game;
 import forge.game.ability.AbilityUtils;
 import forge.game.ability.ApiType;
 import forge.game.card.Card;
+import forge.game.card.CardView;
 import forge.game.card.CounterEnumType;
 import forge.game.keyword.Keyword;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 import forge.gui.card.CardDetailUtil;
+import forge.item.PaperCard;
+import forge.model.FModel;
 
 /**
  * Unstable's host/augment. Expected characteristics follow the "Monkey- Kitten" example in the Unstable mechanics
@@ -164,5 +167,14 @@ public class AugmentTest extends AITest {
         kitten.updateStateForView();
         AssertJUnit.assertNull(kitten.getView().getCurrentState().getAugmentPT());
         AssertJUnit.assertEquals("2 / 3", CardDetailUtil.formatPrimaryCharacteristic(kitten.getView().getCurrentState(), true));
+    }
+
+    @Test
+    public void testDeckEditorViewShowsTheAdjustment() {
+        initAndCreateGame();
+        PaperCard pc = FModel.getMagicDb().getCommonCards().getCard("Zombified");
+        CardView.CardStateView state = CardView.getCardForUi(pc).getCurrentState();
+        AssertJUnit.assertEquals("+2/+2", state.getAugmentPT());
+        AssertJUnit.assertEquals("[+2 / +2]", CardDetailUtil.formatPrimaryCharacteristic(state, true));
     }
 }

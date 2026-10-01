@@ -1235,7 +1235,9 @@ public class CardView extends GameEntityView {
 
         currentStateView.updateAttractionLights(currentState);
         currentStateView.updateHasPrintedPT((currentStateView.isVehicle() || currentStateView.isSpaceCraft()) && currentState.hasPrintedPT());
-        currentStateView.updateAugmentPT(c.isAugmentCard() && currentState.hasPrintedPT()
+        // display-only cards (Deck Editor, negative id) get no keywords, so also ask the printed face
+        final boolean augment = c.isAugmentCard() || (c.getRules() != null && CardFactory.isAugmentFace(c.getRules().getMainPart()));
+        currentStateView.updateAugmentPT(augment && currentState.hasPrintedPT()
                 ? currentState.getBasePowerString() + "/" + currentState.getBaseToughnessString() : null);
 
         CardState alternateState = isSplitCard && isFaceDown() ? c.getState(CardStateName.RightSplit) : c.getAlternateState();
