@@ -150,6 +150,8 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ### Unreleased
 
+### 2026-10-01, second build (deployed: desktop, Android, GitHub) — augment P/T box
+
 - **Augment P/T box shows the adjustment.** Off the battlefield an augment card (Half-Kitten, Half-; Ninja; ...)
   is a 0/0, so its P/T box read "0/0". It now shows the printed adjustment bracketed like a Vehicle's,
   `[+1/+2]`, in the battlefield/hand card overlay, the card detail panel, and mobile's card and list renderers
