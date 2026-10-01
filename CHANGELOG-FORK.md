@@ -150,6 +150,14 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ### Unreleased
 
+### 2026-10-01, third build (deployed: desktop, Android, GitHub) — augment P/T fix
+
+- **Fixed the second build's augment P/T box breaking every card's display.** An unset tracked string reads
+  back as `""`, not null, so every card off the battlefield got an empty `[]` P/T box, and the card image
+  renderers threw splitting it - only the first hand/library card drew and the stack flickered endlessly.
+  `getAugmentPT()` now treats empty as "not an augment"; `AugmentTest` checks a non-augment in hand and a
+  drawn augment.
+
 ### 2026-10-01, second build (deployed: desktop, Android, GitHub) — augment P/T box
 
 - **Augment P/T box shows the adjustment.** Off the battlefield an augment card (Half-Kitten, Half-; Ninja; ...)
