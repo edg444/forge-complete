@@ -2,7 +2,7 @@ Name:Embalmed Ascendant
 ManaCost:1 W B
 Types:Creature Zombie
 PT:1/2
-K:Start your engines!
+K:Start your engines
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When this creature enters, create a 2/2 black Zombie creature token.
 SVar:TrigToken:DB$ Token | TokenScript$ b_2_2_zombie
 S:Mode$ Continuous | AffectedDefined$ Self | Condition$ MaxSpeed | AddTrigger$ DiesTrig | Description$ Max speed — Whenever a creature you control dies, each opponent loses 1 life and you gain 1 life.

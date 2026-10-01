@@ -2,7 +2,7 @@ Name:Far Fortune, End Boss
 ManaCost:2 B R
 Types:Legendary Creature Human Mercenary
 PT:4/5
-K:Start your engines!
+K:Start your engines
 T:Mode$ AttackersDeclared | AttackingPlayer$ You | Execute$ TrigDamage | TriggerZones$ Battlefield | TriggerDescription$ Whenever you attack, NICKNAME deals 1 damage to each opponent.
 SVar:TrigDamage:DB$ DealDamage | NumDmg$ 1 | Defined$ Opponent
 S:Mode$ Continuous | AffectedDefined$ Self | Condition$ MaxSpeed | AddReplacementEffect$ DamageRep | Description$ Max speed — If a source you control would deal damage to an opponent or a permanent an opponent controls, it deals that much damage plus 1 instead.

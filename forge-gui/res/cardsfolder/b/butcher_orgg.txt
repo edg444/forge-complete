@@ -2,6 +2,6 @@ Name:Butcher Orgg
 ManaCost:4 R R R
 Types:Creature Orgg
 PT:6/6
-K:You may assign this creature's combat damage divided as you choose among defending player and/or any number of creatures they control.
+K:You may assign CARDNAME's combat damage divided as you choose among defending player and/or any number of creatures they control.
 AI:RemoveDeck:All
 Oracle:You may assign this creature's combat damage divided as you choose among defending player and/or any number of creatures they control.

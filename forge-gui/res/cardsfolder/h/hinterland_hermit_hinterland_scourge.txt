@@ -14,7 +14,7 @@ ManaCost:no cost
 Colors:red
 Types:Creature Werewolf
 PT:3/2
-K:This creature must be blocked if able.
+K:CARDNAME must be blocked if able.
 T:Mode$ Phase | Phase$ Upkeep | WerewolfUntransformCondition$ True | TriggerZones$ Battlefield | Execute$ TrigTransform | TriggerDescription$ At the beginning of each upkeep, if a player cast two or more spells last turn, transform this creature.
 SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform
 Oracle:This creature must be blocked if able.\nAt the beginning of each upkeep, if a player cast two or more spells last turn, transform this creature.

@@ -140,6 +140,9 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 - Dev mode can pick which printing to add.
 - **Last strike** (`K:Last Strike`, Unstable) — a further combat damage step after the regular one, run as a
   repeat of `COMBAT_DAMAGE` rather than a new `PhaseType`.
+- **K: lines keep upstream's text.** The engine parses a K: line's head into a `Keyword` and looks sentence
+  keywords up by their exact text, so Oracle wording for them is display-only, from
+  `CardFactoryUtil.keywordAsPrinted`. `KeywordScriptTextTest` enforces it.
 
 ---
 
@@ -147,6 +150,30 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ### Unreleased
 
+- **Functional keyword text restored** (found 2026-10-01: Amber Prison's untap choice was gone). The 2026-09-30
+  in-game text retemplating rewrote K: lines to Oracle wording, but a K: line is engine input: its head is
+  parsed into a `Keyword`, and sentence keywords are found by their exact text from Java
+  (`hasKeyword("You may choose not to untap CARDNAME during your untap step.")`). 154 lines on 152 cards had
+  silently stopped working:
+  - 107 sentence keywords on 105 cards: optional untap (42), must be blocked if able (11), lure (10), ante
+    removal (9, so ante cards stayed in decks for games not played for ante), can't attack or block alone and
+    its variants (13), damage prevention (9), can't attack or block (2), and one-offs on Okk, Orcish
+    Conscripts, Scarred Puma, Panglacial Wurm, Ogre Enforcer, Nacatl War Pride, Butcher Orgg, Cunning Giant and
+    Xenosquirrels (its die modification).
+  - 46 `Start your engines!` lines no longer parsed as the keyword, so none of those cards gave speed.
+  - Collective Brutality's escalate cost had become `Discard.<1/Card>`, which parsed as Escalate {0}.
+
+  All are back to upstream's exact text, which also keeps those lines out of merge conflicts. The Oracle
+  wording now comes from the display: `CardFactoryUtil.keywordAsPrinted` puts in "this artifact", "this card"
+  or a legendary card's short name, but only when the card's own Oracle text prints that sentence. A full
+  re-render: 0 faces newly drifting, 5 more matching Oracle (the ante line now shows on ante sorceries, plus
+  Collective Brutality's cost and Gorm's and B.O.B.'s short names).
+  - Guard: `KeywordScriptTextTest` fails on any K: line whose keyword head has print punctuation added, whose
+    cost type has punctuation glued on, or whose self-reference was reworded away from a string the engine's
+    Java looks up. Run against the broken scripts, it flagged the same 153 sentence and keyword lines as the git
+    audit (`_tools/oracle-audit/k-line-audit.js`). `FunctionalKeywordTextTest` (9) covers Amber Prison,
+    Hivis, a lure, must-be-blocked, ante removal, Xenosquirrels, speed and Collective Brutality. Suite: 882 run,
+    0 failed, 6 skipped.
 - **Doubled words in in-game cost text** (reported on Spire Mechcycle: "Tap another untapped another Mount or
   Vehicle"). A script's cost description that already said what the engine adds printed twice: "untapped" and
   "another" (`CostTapType`), "a"/"an" (`CostSacrifice`), "card" (`CostDiscard`). The engine now leaves out

@@ -2,7 +2,7 @@ Name:Vnwxt, Verbose Host
 ManaCost:1 U
 Types:Legendary Creature Homunculus
 PT:0/4
-K:Start your engines!
+K:Start your engines
 S:Mode$ Continuous | Affected$ You | SetMaxHandSize$ Unlimited | Description$ You have no maximum hand size.
 S:Mode$ Continuous | AffectedDefined$ Self | Condition$ MaxSpeed | AddReplacementEffect$ RepDraw | Description$ Max speed — If you would draw a card, draw two cards instead.
 SVar:RepDraw:Event$ Draw | Secondary$ True | ActiveZones$ Battlefield | ValidPlayer$ You | ReplaceWith$ DrawTwo | Description$ Max speed — If you would draw a card, draw two cards instead.

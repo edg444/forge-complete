@@ -4234,6 +4234,47 @@ public class CardFactoryUtil {
     }
 
     /**
+     * A sentence keyword ("You may choose not to untap CARDNAME during your untap step.") as current Oracle prints
+     * it on this card. K: lines must keep upstream's exact text, because the engine finds these keywords by it
+     * (Untap, CombatUtil, Match's ante check...), so the Oracle self-reference ("this artifact", "this card", a
+     * legendary card's short name) is put in only here, for display, and only when the card's own Oracle text
+     * prints that very sentence. A K: line that names its card instead of saying CARDNAME (Xenosquirrels) is
+     * matched the same way. Anything else is returned unchanged.
+     */
+    public static String keywordAsPrinted(final String keyword, final CardState state) {
+        final String name = Lang.rulesTextName(state.getName());
+        final String oracle = state.getOracleText();
+        if (StringUtils.isEmpty(oracle) || StringUtils.isEmpty(name)) {
+            return keyword;
+        }
+        final String generic = keyword.contains("CARDNAME") ? keyword : keyword.replace(name, "CARDNAME");
+        if (!generic.contains("CARDNAME")) {
+            return keyword;
+        }
+        for (final String self : new String[] {"this " + getSelfReferenceNoun(state.getType()), "this card",
+                Lang.getInstance().getNickName(name), name}) {
+            final String candidate = withSelfReference(generic, self);
+            if (oracle.contains(candidate)) {
+                return candidate;
+            }
+        }
+        return keyword;
+    }
+
+    private static String withSelfReference(final String text, final String self) {
+        final StringBuilder sb = new StringBuilder();
+        int from = 0;
+        int at;
+        while ((at = text.indexOf("CARDNAME", from)) >= 0) {
+            sb.append(text, from, at);
+            final String before = sb.toString().stripTrailing();
+            sb.append(before.isEmpty() || before.endsWith(".") ? StringUtils.capitalize(self) : self);
+            from = at + "CARDNAME".length();
+        }
+        return sb.append(text.substring(from)).toString();
+    }
+
+    /**
      * Punctuation marks in a card's text box (Punctuate). The Unhinged FAQ is explicit that this
      * counts flavor text as well as rules text, so it reads the whole text box.
      */

@@ -2,6 +2,6 @@ Name:Cunning Giant
 ManaCost:5 R
 Types:Creature Giant
 PT:4/4
-K:If this creature is unblocked, you may have it assign its combat damage to a creature defending player controls.
+K:If CARDNAME is unblocked, you may have it assign its combat damage to a creature defending player controls.
 AI:RemoveDeck:All
 Oracle:If this creature is unblocked, you may have it assign its combat damage to a creature defending player controls.

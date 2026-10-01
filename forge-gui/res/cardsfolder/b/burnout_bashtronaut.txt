@@ -3,7 +3,7 @@ ManaCost:R
 Types:Creature Goblin Warrior
 PT:1/1
 K:Menace
-K:Start your engines!
+K:Start your engines
 A:AB$ Pump | Cost$ 2 | NumAtt$ +1 | SpellDescription$ This creature gets +1/+0 until end of turn.
 S:Mode$ Continuous | AffectedDefined$ Self | Condition$ MaxSpeed | AddStaticAbility$ MaxSpeedStatic | Description$ Max speed — This creature has double strike.
 SVar:MaxSpeedStatic:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Double Strike | Secondary$ True | Description$ Max speed — This creature has double strike.

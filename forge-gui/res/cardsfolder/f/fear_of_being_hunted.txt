@@ -3,5 +3,5 @@ ManaCost:1 R R
 Types:Enchantment Creature Nightmare
 PT:4/2
 K:Haste
-K:This creature must be blocked if able.
+K:CARDNAME must be blocked if able.
 Oracle:Haste\nThis creature must be blocked if able.

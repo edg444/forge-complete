@@ -1,7 +1,7 @@
 Name:Racers' Scoreboard
 ManaCost:4
 Types:Artifact
-K:Start your engines!
+K:Start your engines
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When this artifact enters, draw two cards, then discard a card.
 SVar:TrigDraw:DB$ Draw | NumCards$ 2 | SubAbility$ DBDiscard
 SVar:DBDiscard:DB$ Discard | Defined$ You | NumCards$ 1 | Mode$ TgtChoose

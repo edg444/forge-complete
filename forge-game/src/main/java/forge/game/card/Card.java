@@ -2622,7 +2622,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
 
     // convert a keyword list to the String that should be displayed in game
-    private String keywordsToText(final Collection<KeywordInterface> keywords) {
+    private String keywordsToText(final Collection<KeywordInterface> keywords, final CardState state) {
         final StringBuilder sb = new StringBuilder();
         final StringBuilder sbLong = new StringBuilder();
 
@@ -2928,7 +2928,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                     String desc = AbilityFactory.getMapParams(getSVar(k[1])).get("SpellDescription");
                     sbLong.append(desc);
                 } else if (keyword.endsWith(".")) {
-                    sbLong.append(keyword).append("\r\n");
+                    sbLong.append(CardFactoryUtil.keywordAsPrinted(keyword, state)).append("\r\n");
                 } else {
                     if (keyword.contains("Strike")) {
                         keyword = keyword.replace("Strike", "strike");
@@ -3126,7 +3126,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         if (isPrepared()) {
             sb.append("Prepared\r\n");
         }
-        String keywordText = keywordsToText(getUnhiddenKeywords(state).getValues());
+        String keywordText = keywordsToText(getUnhiddenKeywords(state).getValues(), state);
         sb.append(keywordText).append(keywordText.length() > 0 ? linebreak : "");
 
         // DeckRule descriptions (e.g. Rulebreaker) print alongside the card's other rules text.
@@ -3457,7 +3457,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                     }
                     sbBefore.append("\r\n");
                 } else if (keyword.equals("Remove CARDNAME from your deck before playing if you're not playing for ante.")) {
-                    sbBefore.append(keyword);
+                    sbBefore.append(CardFactoryUtil.keywordAsPrinted(keyword, state));
                     sbBefore.append("\r\n");
                 } else if (keyword.startsWith("Haunt")) {
                     sbAfter.append("Haunt (");

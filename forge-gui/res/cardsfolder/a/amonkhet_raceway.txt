@@ -1,7 +1,7 @@
 Name:Amonkhet Raceway
 ManaCost:no cost
 Types:Land
-K:Start your engines!
+K:Start your engines
 A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
 S:Mode$ Continuous | AffectedDefined$ Self | Condition$ MaxSpeed | AddAbility$ ABPump | Description$ Max speed — {T}: Target creature gains haste until end of turn.
 SVar:ABPump:AB$ Pump | Secondary$ True | PrecostDesc$ Max speed — | Cost$ T | ValidTgts$ Creature | KW$ Haste | SpellDescription$ Target creature gains haste until end of turn.
