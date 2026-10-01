@@ -150,6 +150,20 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ### Unreleased
 
+- **Augment P/T in the Deck Editor.** Display-only cards (negative id) get no keywords, so the augment check
+  missed them and Zombified still read 0/0 there; `CardView` now also asks the printed face
+  (`CardFactory.isAugmentFace`).
+- **Random color decks honor a colorless card's `DeckNeeds:Color$`.** Kefnet's Monument (blue creatures)
+  landed in a red/black deck: colorless cards were let in unchecked. `DeckGeneratorBase` now requires one of
+  the needed colors (new `DeckHints.getColors()`); colorless cards with no color need are unaffected.
+- **"Doesn't untap during its controller's next untap step" AI.** Kefnet's Monument, Fogwalker and Skyline
+  Cascade lacked `IsCurse$ True`, so the AI treated the effect as a buff and forced it onto the opponent's
+  worst creature, tapped or not. And as a curse, `PumpAiBase` only valued it from main 2 on the AI's turn, so
+  a main-1 creature cast fell back to the best creature; now any tapped creature that can untap is the
+  useful target, whenever it lands (it stays tapped until that untap step either way).
+- **Marble Priest / Talruum Piper text.** `MustBeBlockedByAll:<valid>:<description>` printed the whole
+  keyword as card text (upstream too); only the description prints now.
+
 ### 2026-10-01, third build (deployed: desktop, Android, GitHub) — augment P/T fix
 
 - **Fixed the second build's augment P/T box breaking every card's display.** An unset tracked string reads

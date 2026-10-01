@@ -2927,6 +2927,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                     // need to get SpellDescription from Svar
                     String desc = AbilityFactory.getMapParams(getSVar(k[1])).get("SpellDescription");
                     sbLong.append(desc);
+                } else if (keyword.startsWith("MustBeBlockedByAll:")) {
+                    // MustBeBlockedByAll:<valid>:<description> - only the description is card text
+                    sbLong.append(CardFactoryUtil.keywordAsPrinted(keyword.split(":", 3)[2], state)).append("\r\n");
                 } else if (keyword.endsWith(".")) {
                     sbLong.append(CardFactoryUtil.keywordAsPrinted(keyword, state)).append("\r\n");
                 } else {
