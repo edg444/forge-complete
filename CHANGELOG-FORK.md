@@ -150,6 +150,12 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ### Unreleased
 
+- **Augment P/T box shows the adjustment.** Off the battlefield an augment card (Half-Kitten, Half-; Ninja; ...)
+  is a 0/0, so its P/T box read "0/0". It now shows the printed adjustment bracketed like a Vehicle's,
+  `[+1/+2]`, in the battlefield/hand card overlay, the card detail panel, and mobile's card and list renderers
+  (desktop's drawn card image shows `+1/+2` unbracketed, as it does Vehicles). On the battlefield, combined or
+  alone, the real P/T shows as before. New tracked `CardStateView.getAugmentPT()` (null on the battlefield).
+
 ### 2026-10-01 (deployed: desktop, Android, GitHub) — upstream merge (15 commits, 2.0.16-SNAPSHOT); Unstable black complete (Dirty Rat through Zombified); functional keyword text restored; doubled cost words; AI fixes
 
 - **Functional keyword text restored** (found 2026-10-01: Amber Prison's untap choice was gone). The 2026-09-30

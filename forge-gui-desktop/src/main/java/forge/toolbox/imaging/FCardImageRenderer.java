@@ -825,7 +825,13 @@ public class FCardImageRenderer {
 
     private static void drawPTBox(Graphics2D g, CardStateView state, String ptOverride, Color[] colors, int x, int y, int w, int h) {
         List<String> pieces = new ArrayList<>();
-        if (state.isCreature()) {
+        if (state.getAugmentPT() != null) {
+            String [] pt = state.getAugmentPT().split("/");
+            pieces.add(pt[0]);
+            pieces.add("/");
+            pieces.add(pt[1]);
+        }
+        else if (state.isCreature()) {
             if (ptOverride != null) {
                 String [] pt = ptOverride.split("/");
                 pieces.add(pt[0]);

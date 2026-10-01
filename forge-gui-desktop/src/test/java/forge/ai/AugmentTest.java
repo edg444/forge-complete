@@ -13,6 +13,7 @@ import forge.game.keyword.Keyword;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
+import forge.gui.card.CardDetailUtil;
 
 /**
  * Unstable's host/augment. Expected characteristics follow the "Monkey- Kitten" example in the Unstable mechanics
@@ -136,5 +137,23 @@ public class AugmentTest extends AITest {
         Card mine = addCard("Adorable Kitten", me);
         AssertJUnit.assertTrue(SpellApiToAi.Converter.get(sa).canPlayWithSubs(me, sa).willingToPlay());
         AssertJUnit.assertEquals(mine, sa.getTargets().getFirstTargetedCard());
+    }
+
+    @Test
+    public void testPtBoxShowsTheAdjustmentOffTheBattlefield() {
+        Game game = initAndCreateGame();
+        Player me = game.getPlayers().get(1);
+        Card kitten = addCard("Adorable Kitten", me);
+        Card aug = addCardToZone("Half-Kitten, Half-", me, ZoneType.Hand);
+        aug.updateStateForView();
+
+        AssertJUnit.assertEquals("+1/+2", aug.getView().getCurrentState().getAugmentPT());
+        AssertJUnit.assertEquals("[+1 / +2]", CardDetailUtil.formatPrimaryCharacteristic(aug.getView().getCurrentState(), true));
+        AssertJUnit.assertNull(kitten.getView().getCurrentState().getAugmentPT());
+
+        augment(me, aug, kitten);
+        kitten.updateStateForView();
+        AssertJUnit.assertNull(kitten.getView().getCurrentState().getAugmentPT());
+        AssertJUnit.assertEquals("2 / 3", CardDetailUtil.formatPrimaryCharacteristic(kitten.getView().getCurrentState(), true));
     }
 }

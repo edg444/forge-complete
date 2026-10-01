@@ -151,6 +151,7 @@ public enum TrackableProperty {
     ChangedColorWords(TrackableTypes.StringMapType),
     HasChangedColors(TrackableTypes.BooleanType),
     HasPrintedPT(TrackableTypes.BooleanType),
+    AugmentPT(TrackableTypes.StringType),
     ChangedTypes(TrackableTypes.StringMapType),
 
     //check produce mana for BG

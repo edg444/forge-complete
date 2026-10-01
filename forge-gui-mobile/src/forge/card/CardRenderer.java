@@ -593,7 +593,9 @@ public class CardRenderer {
             drawSetLabel(g, typeFont, set, rarity, x + availableTypeWidth + SET_BOX_MARGIN, y - SET_BOX_MARGIN, setWidth, lineHeight + 2 * SET_BOX_MARGIN);
         }
         String type = CardDetailUtil.formatCardType(card.getCurrentState(), true);
-        if (cardCurrentState.isCreature()) { //include P/T or Loyalty at end of type
+        if (cardCurrentState.getAugmentPT() != null) {
+            type += " [" + cardCurrentState.getAugmentPT().replace("/", " / ") + "]";
+        } else if (cardCurrentState.isCreature()) { //include P/T or Loyalty at end of type
             type += " (" + power + " / " + toughness + ")";
         } else if (cardCurrentState.isPlaneswalker()) {
             type += " (" + loyalty + ")";
@@ -1125,7 +1127,14 @@ public class CardRenderer {
     private static void drawPtBox(Graphics g, CardView card, CardStateView details, Color color, float x, float y, float w, float h) {
         listItemPtPieces.clear();
 
-        if (details.isCreature()) {
+        if (details.getAugmentPT() != null) {
+            final String[] pt = details.getAugmentPT().split("/");
+            listItemPtPieces.add("[");
+            listItemPtPieces.add(pt[0]);
+            listItemPtPieces.add("/");
+            listItemPtPieces.add(pt[1]);
+            listItemPtPieces.add("]");
+        } else if (details.isCreature()) {
             listItemPtPieces.add(details.getPowerString());
             listItemPtPieces.add("/");
             listItemPtPieces.add(details.getToughnessString());

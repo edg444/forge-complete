@@ -1047,7 +1047,10 @@ public class CardPanel extends SkinnedPanel implements CardContainer, IDisposabl
         // P/T overlay
         final CardStateView state = card.getCurrentState();
         String sPt = "";
-        if (state.isCreature() && state.isPlaneswalker()) {
+        if (state.getAugmentPT() != null) {
+            sPt = "[" + state.getAugmentPT() + "]";
+        }
+        else if (state.isCreature() && state.isPlaneswalker()) {
             sPt = state.getPowerString() + "/" + state.getToughnessString() +
                     " (" + state.getLoyalty() + ")";
         }

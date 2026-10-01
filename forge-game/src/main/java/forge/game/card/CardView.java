@@ -1235,6 +1235,8 @@ public class CardView extends GameEntityView {
 
         currentStateView.updateAttractionLights(currentState);
         currentStateView.updateHasPrintedPT((currentStateView.isVehicle() || currentStateView.isSpaceCraft()) && currentState.hasPrintedPT());
+        currentStateView.updateAugmentPT(c.isAugmentCard() && currentState.hasPrintedPT()
+                ? currentState.getBasePowerString() + "/" + currentState.getBaseToughnessString() : null);
 
         CardState alternateState = isSplitCard && isFaceDown() ? c.getState(CardStateName.RightSplit) : c.getAlternateState();
 
@@ -1703,6 +1705,18 @@ public class CardView extends GameEntityView {
         }
         void updateHasPrintedPT(boolean v) {
             set(TrackableProperty.HasPrintedPT, v);
+        }
+
+        /**
+         * An augment's printed "+1/+2" - what it adjusts a host by. Off the battlefield the card is a 0/0, so this
+         * is what its P/T box shows instead, bracketed like a Vehicle's; on the battlefield (combined, or alone after
+         * Grusilda) the real P/T applies and this is null.
+         */
+        public String getAugmentPT() {
+            return CardView.this.getZone() == ZoneType.Battlefield ? null : get(TrackableProperty.AugmentPT);
+        }
+        void updateAugmentPT(String v) {
+            set(TrackableProperty.AugmentPT, v);
         }
 
         public String getSetCode() {

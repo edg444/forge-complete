@@ -173,6 +173,9 @@ public class CardDetailUtil {
         if (!canShow && card.getState() != CardStateName.FaceDown) {
             return "";
         }
+        if (card.getAugmentPT() != null) {
+            return "[" + card.getAugmentPT().replace("/", " / ") + "]";
+        }
         final StringBuilder ptText = new StringBuilder();
         if (card.hasPrintedPT() && !card.isCreature()) {
             ptText.append("[");
