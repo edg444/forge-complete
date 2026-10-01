@@ -1,0 +1,8 @@
+Name:Hoisted Hireling
+ManaCost:2 B
+Types:Creature Zombie
+PT:2/1
+A:AB$ PutCounter | Cost$ FlavorAction<Hold this creature's card above the battlefield/I'm holding it up> | Defined$ Self | CounterType$ HOISTED | CounterNum$ 1 | ConditionPresent$ Card.Self+counters_EQ0_HOISTED | AILogic$ Chance.50 | SpellDescription$ You hold this creature above the battlefield. It has flying for as long as you keep holding it there.
+A:AB$ RemoveCounter | Cost$ FlavorAction<Set this creature's card back down on the battlefield/I set it down> | Defined$ Self | CounterType$ HOISTED | CounterNum$ 1 | ConditionPresent$ Card.Self+counters_GE1_HOISTED | AILogic$ Chance.50 | SpellDescription$ You set this creature back down. It loses flying.
+S:Mode$ Continuous | Affected$ Card.Self+counters_GE1_HOISTED | AddKeyword$ Flying | Description$ This creature has flying as long as it's being held above the battlefield.
+Oracle:This creature has flying as long as it's being held above the battlefield.

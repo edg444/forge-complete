@@ -39,7 +39,7 @@ A complete half-integer layer running parallel to the whole-number one.
 - `AILogic$ Chance.N` — rolled once per turn (not at every priority), one attempt per turn, honored
   by every API rather than only ones using the base `canPlay`.
 - Persistent honor states modeled as custom counters toggled by two zero-cost abilities
-  (Standing Army's `STANDING`, Fat Ass's `EATING`).
+  (Standing Army's `STANDING`, Fat Ass's `EATING`, Hoisted Hireling's `HOISTED`).
 
 ### Choices the rules can't derive
 
@@ -170,6 +170,10 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     than the lost points, planeswalkers, a land when short of mana for something in hand, a combat trick
     during combat. Anything goes when the hand is over its maximum size or the AI's life is in danger.
   - `AiPlayReportsTest` (6). Suite: 839 run, 0 failed, 6 skipped.
+
+- **Hoisted Hireling** (ust/58), honor system on the Standing Army idiom: its controller lifts it (a `HOISTED`
+  counter) and sets it back down with two free abilities, and it has flying while the counter is on it. No
+  Scryfall rulings and no entry in the Unstable FAQ. Script only.
 
 - **Hazmat Suit (Used)** (ust/57), honor system: the touch is an ability any player may activate to own up
   (`FlavorAction`, as on Vile Bile) and lose 2 life. The prompt notes that the sleeve counts (ruling); touching
