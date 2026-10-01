@@ -150,6 +150,8 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ### Unreleased
 
+### 2026-10-01, fourth build (deployed: desktop, Android, GitHub) — Deck Editor augment P/T; Kefnet's Monument deck gen and AI; MustBeBlockedByAll text
+
 - **Augment P/T in the Deck Editor.** Display-only cards (negative id) get no keywords, so the augment check
   missed them and Zombified still read 0/0 there; `CardView` now also asks the printed face
   (`CardFactory.isAugmentFace`).
