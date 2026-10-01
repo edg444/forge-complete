@@ -7356,7 +7356,13 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     public boolean isInZone(final ZoneType zone) {
         Zone z = this.getLastKnownZone();
-        return z != null && z.is(zone);
+        if (z != null && z.is(zone)) {
+            return true;
+        }
+        // Masterful Ninja is in its owner's hand as well, for anything that cares about cards in hand (Unstable
+        // FAQ). Yet Another Aether Vortex's library listing isn't asked about: it only keeps the library's size
+        // and top card right.
+        return zone == ZoneType.Hand && shadowZone != null && shadowZone.is(ZoneType.Hand);
     }
 
     public boolean isInZones(final List<ZoneType> zones) {

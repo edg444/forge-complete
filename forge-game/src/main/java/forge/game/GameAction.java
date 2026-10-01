@@ -121,6 +121,9 @@ public class GameAction {
         boolean fromBattlefield = zoneFrom != null && zoneFrom.is(ZoneType.Battlefield);
         boolean fromGraveyard = zoneFrom != null && zoneFrom.is(ZoneType.Graveyard);
         boolean wasFacedown = c.isFaceDown();
+        // Masterful Ninja: abilities that care about a creature entering or leaving the battlefield don't notice
+        // this move, so no replacement effects, zone-change triggers, or "entered/left this turn" records
+        final boolean unnoticed = params != null && params.containsKey(AbilityKey.Unnoticed);
 
         // Rule 111.8: A token that has left the battlefield can't move to another zone
         if (!c.isSpell() && c.isToken() && !fromBattlefield && zoneFrom != null && !zoneFrom.is(ZoneType.Stack)
@@ -143,6 +146,12 @@ public class GameAction {
                 && StaticAbilityTopLibraryOnBattlefield.qualifies(c)
                 && StaticAbilityTopLibraryOnBattlefield.appliesTo(c.getOwner())) {
             zoneTo.addShadow(c, 0);
+            return c;
+        }
+
+        // Masterful Ninja: a card that's on the battlefield and in its owner's hand at once is already where a
+        // move between those two zones would put it, so it stays in both (Unsummon does nothing, for one)
+        if (!unnoticed && fromBattlefield && isAlsoInHand(c) && (toBattlefield || zoneTo == c.getShadowZone())) {
             return c;
         }
 
@@ -319,7 +328,7 @@ public class GameAction {
             table = new GameEntityCounterTable();
         }
 
-        if (!suppress) {
+        if (!suppress && !unnoticed) {
             // Temporary disable commander replacement effect
             // 903.9a
             if (fromBattlefield && !toBattlefield && c.isCommander() && c.hasMergedCard()) {
@@ -538,7 +547,7 @@ public class GameAction {
             }
             copied.clearMergedCards();
         } else {
-            if (!suppress) {
+            if (!suppress && !unnoticed) {
                 storeChangesZoneAll(copied, zoneFrom, zoneTo, params);
             }
             // "enter the battlefield as a copy" - apply code here
@@ -548,7 +557,9 @@ public class GameAction {
         }
 
         if (fromBattlefield) {
-            game.addLeftBattlefieldThisTurn(lastKnownInfo);
+            if (!unnoticed) {
+                game.addLeftBattlefieldThisTurn(lastKnownInfo);
+            }
             // order here is important so it doesn't unattach cards that might have returned from UntilHostLeavesPlay
             unattachCardLeavingBattlefield(copied, c);
             c.runLeavesPlayCommands();
@@ -587,7 +598,7 @@ public class GameAction {
         checkStaticAbilities();
 
         // CR 603.6b
-        if (toBattlefield) {
+        if (toBattlefield && !unnoticed) {
             zoneTo.saveLKI(copied, lastKnownInfo);
             if (copied.isRoom() && copied.getCastSA() != null) {
                 copied.unlockRoom(copied.getCastSA().getActivatingPlayer(), copied.getCastSA().getCardStateName());
@@ -605,7 +616,7 @@ public class GameAction {
         game.getTriggerHandler().clearActiveTriggers(copied, null);
         game.getTriggerHandler().registerActiveTrigger(copied, false);
 
-        if (!suppress) {
+        if (!suppress && !unnoticed) {
             final Map<AbilityKey, Object> runParams = AbilityKey.mapFromCard(copied);
             runParams.put(AbilityKey.CardLKI, lastKnownInfo);
             runParams.put(AbilityKey.Cause, cause);
@@ -895,6 +906,49 @@ public class GameAction {
         return moveTo(play, c, cause, params);
     }
 
+    /** Masterful Ninja: whether this permanent is also in its owner's hand right now. */
+    public static boolean isAlsoInHand(final Card c) {
+        return c.getShadowZone() != null && c.getShadowZone().is(ZoneType.Hand) && c.isInPlay();
+    }
+
+    /**
+     * Masterful Ninja: "is on the battlefield and in your hand". The card really moves onto the battlefield and is
+     * re-listed in the hand it came from, so it counts and can be chosen as a card in hand. Nothing notices it
+     * entering (rulings). Returns the permanent, or null if it couldn't go.
+     */
+    public final Card putOntoBattlefieldAlsoInHand(final Card c, final Player controller, final SpellAbility cause) {
+        final Zone hand = c.getZone();
+        if (hand == null || !hand.is(ZoneType.Hand) || c.getShadowZone() != null) {
+            return null;
+        }
+        final int index = hand.getCards().indexOf(c);
+        final Map<AbilityKey, Object> params = AbilityKey.newMap();
+        params.put(AbilityKey.Unnoticed, true);
+        final Card inPlay = moveToPlay(c, controller, cause, params);
+        if (inPlay == null || !inPlay.isInPlay()) {
+            return null;
+        }
+        hand.addShadow(inPlay, Math.min(Math.max(index, 0), hand.size()));
+        return inPlay;
+    }
+
+    /**
+     * Masterful Ninja: the permanent stops being on the battlefield and is just a card in its owner's hand again,
+     * keeping its place there. Nothing notices it leaving (rulings), but it is a new object as any card leaving
+     * the battlefield is.
+     */
+    public final Card endAlsoInHand(final Card c) {
+        if (!isAlsoInHand(c)) {
+            return c;
+        }
+        final Zone hand = c.getShadowZone();
+        final int index = hand.getCards().indexOf(c);
+        final Map<AbilityKey, Object> params = AbilityKey.newMap();
+        params.put(AbilityKey.Unnoticed, true);
+        // removing it from the battlefield ends its listing in the hand as well, so the hand is one shorter
+        return changeZone(c.getZone(), hand, c, Math.min(Math.max(index, 0), hand.size() - 1), null, params);
+    }
+
     public final Card moveToBottomOfLibrary(final Card c, SpellAbility cause) {
         return moveToBottomOfLibrary(c, cause, AbilityKey.newMap());
     }
@@ -1053,8 +1107,15 @@ public class GameAction {
 
         game.getTriggerHandler().suppressMode(TriggerType.ChangesZone);
 
+        // a control change isn't a zone change, so a second residency (Masterful Ninja's hand, Yet Another
+        // Aether Vortex's library) survives it; Zone.remove would otherwise end it
+        final Zone shadow = c.getShadowZone();
+        final int shadowIndex = shadow == null ? -1 : shadow.getCards().indexOf(c);
         oldBattlefield.remove(c);
         newBattlefield.add(c);
+        if (shadow != null && shadowIndex >= 0) {
+            shadow.addShadow(c, Math.min(shadowIndex, shadow.size()));
+        }
         if (game.getPhaseHandler().inCombat()) {
             game.getCombat().removeFromCombat(c);
         }

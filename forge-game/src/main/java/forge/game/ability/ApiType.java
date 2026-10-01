@@ -20,6 +20,7 @@ public enum ApiType {
     AddTurn (AddTurnEffect.class),
     AdvanceCrank (AdvanceCrankEffect.class),
     Airbend (AirbendEffect.class),
+    AlsoOnBattlefield (AlsoOnBattlefieldEffect.class),
     AlterAttribute (AlterAttributeEffect.class),
     Amass (AmassEffect.class),
     Animate (AnimateEffect.class),

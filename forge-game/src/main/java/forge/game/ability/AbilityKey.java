@@ -135,6 +135,7 @@ public enum AbilityKey {
     Targets("Targets"),
     Token("Token"),
     TokenNum("TokenNum"),
+    Unnoticed("Unnoticed"),
     Valiant("Valiant"),
     Won("Won"),
 

@@ -25,6 +25,7 @@ public enum SpellApiToAi {
             .put(ApiType.AddTurn, AddTurnAi.class)
             .put(ApiType.AdvanceCrank, AdvanceCrankAi.class)
             .put(ApiType.Airbend, AirbendAi.class)
+            .put(ApiType.AlsoOnBattlefield, AlsoOnBattlefieldAi.class)
             .put(ApiType.AlterAttribute, AlterAttributeAi.class)
             .put(ApiType.Amass, AmassAi.class)
             .put(ApiType.Animate, AnimateAi.class)

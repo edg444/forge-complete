@@ -102,6 +102,11 @@ Only Who // What // When // Where // Why has ever needed this.
   on the battlefield *and* in the library. Battlefield is the primary zone; the library keeps a
   shadow entry. Residency must end in `Zone.remove`, never `Zone.add`: leaving the battlefield hands
   a *copy* to the destination zone, so an add-side hook never sees the original.
+  Masterful Ninja uses it with the hand as the second zone (`GameAction.putOntoBattlefieldAlsoInHand` /
+  `endAlsoInHand` / `isAlsoInHand`, API `AlsoOnBattlefield`); `Card.isInZone(Hand)` sees that residency, and a
+  control change keeps any second residency.
+- **Unnoticed zone changes** — `AbilityKey.Unnoticed` in a move's params skips replacement effects, zone-change
+  triggers and the "entered/left the battlefield this turn" records (Masterful Ninja).
 
 ### Pink, a sixth color
 
@@ -170,6 +175,21 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     than the lost points, planeswalkers, a land when short of mana for something in hand, a combat trick
     during combat. Anything goes when the hand is over its maximum size or the AI's life is in danger.
   - `AiPlayReportsTest` (6). Suite: 839 run, 0 failed, 6 skipped.
+
+- **Masterful Ninja** (ust/60). "Reveal this card from your hand: Masterful Ninja is on the battlefield and in your
+  hand until end of turn." Built on the dual residency Yet Another Aether Vortex uses, with the hand as the
+  second zone: the card really is on the battlefield (a permanent with haste, its pump works, it attacks and
+  blocks) and is still listed in its owner's hand (hand size counts it, it can be chosen to discard).
+  - Rulings and FAQ: nothing notices it enter or, at end of turn, leave (new `AbilityKey.Unnoticed` move);
+    moving it between battlefield and hand does nothing, so Unsummon leaves it in both; destroyed or discarded,
+    it's in the graveyard only. Discarding it to hand size at cleanup happens before it goes back (CR 514.1
+    before 514.2), as in paper. A control change no longer ends a second residency (this also fixes a stolen
+    Vortex permanent dropping out of its owner's library).
+  - Not offered: casting it from your hand while it's in both zones (rules-legal; it would leave the
+    battlefield for the stack), or revealing it again then (does nothing).
+  - AI (`AlsoOnBattlefieldAi`): on its own turn before combat when the Ninja would attack; on an opponent's turn
+    once attackers are declared, to block one it beats or when the attack is dangerous. Never otherwise.
+  - `MasterfulNinjaTest` (5).
 
 - **Hoisted Hireling** (ust/58), honor system on the Standing Army idiom: its controller lifts it (a `HOISTED`
   counter) and sets it back down with two free abilities, and it has flying while the counter is on it. No
