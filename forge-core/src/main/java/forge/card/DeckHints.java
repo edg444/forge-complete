@@ -90,6 +90,19 @@ public class DeckHints {
         }
         return false;
     }
+    /** The colors this hint's Color$ filters name, any one of which satisfies it; colorless when it names none. */
+    public ColorSet getColors() {
+        int mask = 0;
+        if (filters != null) {
+            for (Pair<Type, String> filter : filters) {
+                if (filter.getLeft() == Type.COLOR) {
+                    mask |= ColorSet.fromNames(filter.getRight().split("\\|")).getColor();
+                }
+            }
+        }
+        return ColorSet.fromMask(mask);
+    }
+
     public boolean is(Type type, String hints[]) {
         if (filters == null) {
             return false;

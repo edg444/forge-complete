@@ -135,8 +135,10 @@ public abstract class PumpAiBase extends SpellAbilityAi {
             });
             return CombatUtil.canBlockAtLeastOne(card, attackers);
         } else if (keyword.endsWith("This card doesn't untap during your next untap step.")) {
-            return !ph.getPhase().isBefore(PhaseType.MAIN2) && !card.isUntapped() && ph.isPlayerTurn(ai)
-                    && card.canUntap(card.getController(), true);
+            // Only a tapped creature is held down, and it stays tapped until that untap step whenever in the turn
+            // this lands - a main-2-only check left Kefnet's Monument's main-1 creature-cast trigger with no
+            // useful target, and the mandatory fallback then picked the best creature, tapped or not.
+            return card.isTapped() && card.canUntap(card.getController(), true);
         } else if (keyword.endsWith("Prevent all combat damage that would be dealt by CARDNAME.")
                 || keyword.endsWith("Prevent all damage that would be dealt by CARDNAME.")) {
             if (ph.isPlayerTurn(ai) && (!(CombatUtil.canBlock(card) || combat != null && combat.isBlocking(card))
