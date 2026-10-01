@@ -176,6 +176,13 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     during combat. Anything goes when the hand is over its maximum size or the AI's life is in danger.
   - `AiPlayReportsTest` (6). Suite: 839 run, 0 failed, 6 skipped.
 
+- **Old-Fashioned Vampire** (ust/62), honor system. Whether it's dark outdoors is one fact for the whole game:
+  any player may say "It's dark out" (a `Dark Outdoors` effect in the command zone) or "It's light out"
+  (removes it), and every Old-Fashioned Vampire reads it (`IsPresent$ Effect.namedDark_Outdoors`). Only the
+  claim that changes things is offered. The AI never says, since it can't look outside. No Scryfall rulings
+  or FAQ entry. New creature type **Vampyre** (as printed; plural "Vampyres") in `TypeLists`.
+  `OldFashionedVampireTest` (2). Suite: 850 run, 0 failed, 6 skipped.
+
 - **Ninja** (ust/61), an augment. "You may activate this card's augment ability any time you could cast an
   instant": a `CastWithFlash` static from hand (`EffectZone$ Hand`) with `ValidSA$ Activated.Augment` (new SA
   property `Augment`). Combined with a host it's "Ninja <host's last word>" (Ninja Kitten), and the host's

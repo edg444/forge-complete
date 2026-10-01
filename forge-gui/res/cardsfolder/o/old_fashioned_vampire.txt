@@ -1,0 +1,13 @@
+Name:Old-Fashioned Vampire
+ManaCost:3 B B
+Types:Creature Vampyre
+PT:3/3
+K:Flying
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ 2 | AddToughness$ 2 | AddKeyword$ Deathtouch | IsPresent$ Effect.namedDark_Outdoors | PresentZone$ Command | Description$ This creature gets +2/+2 and has deathtouch as long as it's dark outdoors.
+# Honor system. Whether it's dark outdoors is a fact about the real world, the same for every player and every
+# Vampire, so whoever looks outside says so and it's kept once for the game: a "Dark Outdoors" effect in the
+# command zone, there until someone says it's light again. The AI can't look outside, so it never says.
+A:AB$ Effect | Cost$ FlavorAction<Confirm it's dark outdoors right now/It's dark out> | Activator$ Player | Name$ Dark Outdoors | Duration$ Permanent | StaticAbilities$ DarkNote | IsPresent$ Effect.namedDark_Outdoors | PresentZone$ Command | PresentCompare$ EQ0 | AILogic$ Never | StackDescription$ SpellDescription | SpellDescription$ It's dark outdoors.
+A:AB$ ChangeZoneAll | Cost$ FlavorAction<Confirm it's no longer dark outdoors/It's light out> | Activator$ Player | ChangeType$ Effect.namedDark_Outdoors | Origin$ Command | Destination$ Exile | IsPresent$ Effect.namedDark_Outdoors | PresentZone$ Command | AILogic$ Never | StackDescription$ SpellDescription | SpellDescription$ It's no longer dark outdoors.
+SVar:DarkNote:Mode$ Continuous | Affected$ Card.Self | Description$ It's dark outdoors (until a player says it isn't).
+Oracle:Flying\nThis creature gets +2/+2 and has deathtouch as long as it's dark outdoors.

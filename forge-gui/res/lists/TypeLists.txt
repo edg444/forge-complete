@@ -358,6 +358,7 @@ Unicorn:Unicorns
 Urzan:Urzans
 Utrom:Utroms
 Vampire:Vampires
+Vampyre:Vampyres
 Varmint:Varmints
 Vedalken:Vedalkens
 Villain:Villains
