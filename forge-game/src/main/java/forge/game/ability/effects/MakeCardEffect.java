@@ -130,6 +130,23 @@ public class MakeCardEffect extends SpellAbilityEffect {
                     else
                         throw new RuntimeException("MakeCardEffect didn't find card face by name: " + pc);
                 }
+                // "reveal the cards" (Booster Tutor, Summon the Pack): the whole pack, not only what's taken from it
+                if (sa.hasParam("Reveal")) {
+                    final CardCollection opened = new CardCollection();
+                    for (PaperCard pc : pack) {
+                        opened.add(Card.fromPaperCard(pc, player));
+                    }
+                    game.getAction().reveal(opened, ZoneType.None, player, false, player + " opens a " + pack.get(0).getEdition() + " booster: ");
+                }
+                // Summon the Pack: every card in the pack that passes the filter, duplicates included - nothing to choose
+                if (sa.hasParam("PutAll")) {
+                    for (PaperCard pc : pack) {
+                        if (!sa.hasParam("Filter") || Card.fromPaperCard(pc, player).isValid(sa.getParam("Filter"), player, source, sa)) {
+                            names.add(pc.getRules().getMainPart().getName());
+                        }
+                    }
+                    faces.clear();
+                }
             }
 
             if (!faces.isEmpty()) {
@@ -253,7 +270,7 @@ public class MakeCardEffect extends SpellAbilityEffect {
             triggerList.triggerChangesZoneAll(game, sa);
             counterTable.replaceCounterEffect(game, sa);
 
-            if (sa.hasParam("Reveal")) {
+            if (sa.hasParam("Reveal") && pack == null) {
                 game.getAction().reveal(cards, player, true);
             }
 

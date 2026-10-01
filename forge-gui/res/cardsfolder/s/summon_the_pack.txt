@@ -1,0 +1,8 @@
+Name:Summon the Pack
+ManaCost:7 B
+Types:Sorcery
+A:SP$ MakeCard | Booster$ True | Filter$ Creature | PutAll$ True | Reveal$ True | Zone$ Battlefield | RememberMade$ True | SubAbility$ DBZombie | StackDescription$ SpellDescription | SpellDescription$ Open a sealed Magic booster pack, reveal the cards, and put all creature cards revealed this way onto the battlefield under your control. They're Zombies in addition to their other types. (Remove those cards from your deck before beginning a new game.)
+SVar:DBZombie:DB$ Animate | Defined$ Remembered | Types$ Zombie | Duration$ Permanent | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+AI:RemoveDeck:Random
+Oracle:Open a sealed Magic booster pack, reveal the cards, and put all creature cards revealed this way onto the battlefield under your control. They're Zombies in addition to their other types. (Remove those cards from your deck before beginning a new game.)

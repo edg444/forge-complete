@@ -210,6 +210,14 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     checks the full decision at the opponent's end step, where the tempo value doubles to 1.0 and the roll
     always passes (200 of 200).
 
+- **Summon the Pack** (ust/74). Upstream's `MakeCard | Booster$ True` (Booster Tutor's random Forge booster) gains
+  `PutAll$ True`: every card in the pack that passes `Filter$`, duplicates included, with nothing to choose. Here
+  every creature card goes onto the battlefield (their enters abilities trigger, so the FAQ's Phage the
+  Untouchable really does lose you the game), and an `Animate` makes them Zombies for as long as they stay. A pack
+  with no creature cards does nothing (FAQ). `Reveal$ True` on a booster now shows the whole opened pack to
+  everyone, as "reveal the cards" says, for Booster Tutor too (it used to show only the card taken).
+  `SummonThePackTest` (2). Suite: 890 run, 0 failed, 6 skipped.
+
 - **Squirrel-Powered Scheme** (ust/70; 71 Steady-Handed Mook and 72 Stinging Scorpion were already upstream and
   match Scryfall). New static mode `IncreaseRollResult` (`ValidPlayer$`, `Amount$`): each die result that player
   rolls goes up, after rerolls and swaps and before Snickering Squirrel is offered; the natural roll is unchanged.
