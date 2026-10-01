@@ -1382,8 +1382,60 @@ public class AiAttackController {
         }
 
         pruneLostAloneEvasion(combat);
+        pruneSupportOnlyAttackers(combat);
 
         return aiAggression;
+    }
+
+    /**
+     * A creature that deals no damage and whose only reason to attack is boosting the other attackers (Signal
+     * Pest's battle cry) does nothing when it ends up attacking on its own - it just isn't there to block. Once the
+     * attack is settled, send it home if no other creature is attacking.
+     */
+    private void pruneSupportOnlyAttackers(final Combat combat) {
+        final CardCollection attacking = new CardCollection(combat.getAttackers());
+        for (final Card attacker : attacking) {
+            if (!attacker.getController().equals(ai) || !onlyHelpsOtherAttackers(attacker)) {
+                continue;
+            }
+            final GameEntity defender = combat.getDefenderByAttacker(attacker);
+            if (ComputerUtilCombat.damageIfUnblocked(attacker, defender, combat, true) > 0
+                    || (defender instanceof Player player && ComputerUtilCombat.poisonIfUnblocked(attacker, player) > 0)) {
+                continue;
+            }
+            boolean othersAttack = false;
+            for (final Card other : combat.getAttackers()) {
+                if (other != attacker && !onlyHelpsOtherAttackers(other)) {
+                    othersAttack = true;
+                    break;
+                }
+            }
+            if (!othersAttack) {
+                combat.removeFromCombat(attacker);
+            }
+        }
+    }
+
+    /** Whether everything this creature's attack does is for the other attackers: battle cry and the like. */
+    private static boolean onlyHelpsOtherAttackers(final Card attacker) {
+        if ("TRUE".equals(attacker.getSVar("HasAttackEffect"))) {
+            return false;
+        }
+        boolean helps = false;
+        for (final Trigger t : attacker.getTriggers()) {
+            if (t.getMode() != TriggerType.Attacks) {
+                continue;
+            }
+            final SpellAbility ab = t.ensureAbility();
+            if (t.isKeyword(Keyword.BATTLE_CRY) || (ab != null && ab.getApi() == ApiType.PumpAll
+                    && ab.getSubAbility() == null && ab.getParamOrDefault("ValidCards", "").contains("attacking")
+                    && ab.getParamOrDefault("ValidCards", "").contains("Other"))) {
+                helps = true;
+            } else {
+                return false;
+            }
+        }
+        return helps;
     }
 
     /**

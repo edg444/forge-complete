@@ -110,7 +110,10 @@ public class CostDiscard extends CostPartWithList {
             }
             else {
                 desc.append(this.getDescriptiveType());
-                desc.append(" card");
+                // a description can already say it ("Mountain card or a red card", "historic card")
+                if (!this.getDescriptiveType().matches("(?s).*\\bcards?$")) {
+                    desc.append(" card");
+                }
             }
 
             sb.append(Cost.convertAmountTypeToWords(i, this.getAmount(), desc.toString()));

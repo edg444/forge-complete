@@ -2,7 +2,7 @@ Name:Saruman of Many Colors
 ManaCost:3 W U B
 Types:Legendary Creature Avatar Wizard
 PT:5/4
-K:Ward:Discard<1/Enchantment;Instant;Sorcery/enchantment, instant or sorcery card>
+K:Ward:Discard<1/Enchantment;Instant;Sorcery/enchantment, instant, or sorcery card>
 T:Mode$ SpellCast | ValidCard$ Card.YouCtrl | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigMill | ActivatorThisTurnCast$ EQ2 | TriggerDescription$ Whenever you cast your second spell each turn, each opponent mills two cards. When one or more cards are milled this way, exile target enchantment, instant, or sorcery card with equal or lesser mana value than that spell from an opponent's graveyard. Copy the exiled card. You may cast the copy without paying its mana cost.
 SVar:TrigMill:DB$ Mill | Defined$ Opponent | NumCards$ 2 | RememberMilled$ True | SubAbility$ DBImmediateTrigger
 SVar:DBImmediateTrigger:DB$ ImmediateTrigger | ConditionDefined$ Remembered | ConditionPresent$ Card | RememberObjects$ TriggeredCardLKICopy | Execute$ TrigExile | SubAbility$ DBCleanup | TriggerDescription$ When one or more cards are milled this way, exile target enchantment, instant, or sorcery card with equal or lesser mana value than that spell from an opponent's graveyard. Copy the exiled card. You may cast the copy without paying its mana cost.

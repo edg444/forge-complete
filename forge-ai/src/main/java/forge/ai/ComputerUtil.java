@@ -1177,6 +1177,16 @@ public class ComputerUtil {
             }
         }
 
+        // an enters trigger that pumps our creatures until end of turn (Terror of Mount Velus: "creatures you control
+        // gain double strike") is wasted once combat is over
+        if (etbPumpsOwnCreaturesThisTurn(cardState)) {
+            for (Card potentialAtkr : ai.getCreaturesInPlay()) {
+                if (potentialAtkr != card && ComputerUtilCombat.canAttackNextTurn(potentialAtkr)) {
+                    return true;
+                }
+            }
+        }
+
         // cast Backup creatures in main 1 to pump attackers
         if (cardState.hasKeyword(Keyword.BACKUP)) {
             for (Card potentialAtkr: ai.getCreaturesInPlay()) {
@@ -1313,6 +1323,26 @@ public class ComputerUtil {
             if (((creatures2.size() + CardUtil.getThisTurnCast("Creature.YouCtrl", vengevines.get(0), null, ai).size()) > 1)
                     && card.isCreature() && card.getManaCost().getCMC() <= 3) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean etbPumpsOwnCreaturesThisTurn(final CardState state) {
+        for (final Trigger t : state.getTriggers()) {
+            if (t.getMode() != TriggerType.ChangesZone || !"Battlefield".equals(t.getParam("Destination"))
+                    || t.getParam("ValidCard") == null || !t.getParam("ValidCard").startsWith("Card.Self")) {
+                continue;
+            }
+            for (SpellAbility ab = t.ensureAbility(); ab != null; ab = ab.getSubAbility()) {
+                if (ab.getApi() != ApiType.PumpAll || ab.hasParam("Duration")
+                        || !ab.getParamOrDefault("ValidCards", "").contains("YouCtrl")) {
+                    continue;
+                }
+                final String att = ab.getParamOrDefault("NumAtt", "0");
+                if (ab.hasParam("KW") || (!att.startsWith("-") && !att.equals("0"))) {
+                    return true;
+                }
             }
         }
         return false;

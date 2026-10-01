@@ -106,7 +106,8 @@ public class CostSacrifice extends CostPartWithList {
                 desc = this.getTypeDescription();
             }
 
-            if (desc.startsWith("another")) sb.append(desc);
+            // a description with its own article ("an artifact", "an Equipment attached to it") reads as is
+            if (desc.startsWith("another") || desc.startsWith("a ") || desc.startsWith("an ")) sb.append(desc);
             else sb.append(convertAmount() == null ? Lang.nounWithNumeralExceptOne(getAmount(), desc)
                     : Lang.nounWithNumeralExceptOne(convertAmount(), desc));
         }

@@ -142,6 +142,35 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 
 ### Unreleased
 
+- **Doubled words in in-game cost text** (reported on Spire Mechcycle: "Tap another untapped another Mount or
+  Vehicle"). A script's cost description that already said what the engine adds printed twice: "untapped" and
+  "another" (`CostTapType`), "a"/"an" (`CostSacrifice`), "card" (`CostDiscard`). The engine now leaves out
+  what the description already says. Also a double space after "Exhaust —", "Boast —", "Power-up —" and other
+  ability words (from my 2026-09-30 keyword-dash change), and two scripts (Threefold Thunderhulk "another
+  artifact", Saruman of Many Colors's ward cost with Oracle's serial comma). A full re-render fixed 15 faces
+  and broke none; no doubled words are left. Component Pouch's d20 rows were already restored by the VERT fix
+  in the 2026-09-30 deploy.
+- **AI fixes from play:**
+  - Vibranium Strike Gauntlets (and any "attach it to target creature" Equipment or Aura): an attach trigger
+    with no creature to target no longer reads as worth it, so the AI doesn't cast it with no creature out.
+    Flash Equipment that attaches as it enters now gets the flash-Aura timing (`AttachAi.doAdvancedFlashAuraLogic`):
+    a combat trick on a creature that survives, or a main-phase play, never a buff for a creature that's about
+    to die. The attach target skips our creatures that are dying in the current combat when there's another
+    choice. That survival check also counts damage already marked and blockers now (it compared power with
+    toughness using `>`, so exactly lethal damage read as survivable).
+  - Terror of Mount Velus: an enters trigger that pumps our creatures until end of turn (`PumpAll` of
+    `...YouCtrl` with keywords or +power) is now a reason to cast precombat when we have a creature that can
+    attack (`ComputerUtil.castPermanentInMain1`).
+  - Signal Pest: once attackers are chosen, a creature that deals no damage and whose only attack value is
+    boosting other attackers (battle cry, "other attacking creatures get") goes home if nothing else attacks
+    (`AiAttackController.pruneSupportOnlyAttackers`).
+  - Hand-size creatures (Maro, Masumaro, Sturmgeist, Psychosis Crawler, Body of Knowledge, Kagemaro...): with one
+    out, a card from hand is played only if it's worth the shrink (`HandSizeAi`, new decision
+    `KeepInHandForSize`): removal and other interaction, cards that draw two or more, creatures worth more
+    than the lost points, planeswalkers, a land when short of mana for something in hand, a combat trick
+    during combat. Anything goes when the hand is over its maximum size or the AI's life is in danger.
+  - `AiPlayReportsTest` (6). Suite: 839 run, 0 failed, 6 skipped.
+
 - **Hazmat Suit (Used)** (ust/57), honor system: the touch is an ability any player may activate to own up
   (`FlavorAction`, as on Vile Bile) and lose 2 life. The prompt notes that the sleeve counts (ruling); touching
   the Aura itself isn't offered (ruling). The ability reads exactly as Oracle does, its wording carried by

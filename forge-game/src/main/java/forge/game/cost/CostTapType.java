@@ -86,7 +86,8 @@ public class CostTapType extends CostPartWithList {
     public final String toString() {
         final StringBuilder sb = new StringBuilder();
 
-        final String desc = this.getDescriptiveType();
+        // "untapped" and "another" are added below, so a description that already says them would print twice
+        final String desc = this.getDescriptiveType().replaceFirst("^(another |untapped )+", "");
         final String type = this.getType();
         final String amt = this.getAmount();
 

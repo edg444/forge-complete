@@ -1086,7 +1086,8 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
             equip = getParam("PrecostDesc").startsWith("Equip");
             sb.append(getParam("PrecostDesc"));
             // a keyword's cost dash is closed up ("Equip—Sacrifice a creature"); an ability word's isn't ("Endurant — ")
-            if (!getParam("PrecostDesc").matches(".*\\S—$")) {
+            // and one that already ends in a space (Exhaust's "Exhaust — ") needs no other
+            if (!getParam("PrecostDesc").matches(".*(\\S—|\\s)$")) {
                 sb.append(" ");
             }
         }

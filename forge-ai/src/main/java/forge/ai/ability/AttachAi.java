@@ -88,7 +88,8 @@ public class AttachAi extends SpellAbilityAi {
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
 
-    private boolean doAdvancedFlashAuraLogic(Player ai, SpellAbility sa, Card attachTarget) {
+    /** Whether to cast a buffing Aura (or an Equipment that attaches as it enters) at instant speed now. */
+    static boolean doAdvancedFlashAuraLogic(Player ai, SpellAbility sa, Card attachTarget) {
         Card source = sa.getHostCard();
         Game game = ai.getGame();
         Combat combat = game.getCombat();
@@ -162,10 +163,13 @@ public class AttachAi extends SpellAbilityAi {
                     }
                     totalAtkPower += attacker.getNetPower();
                 }
-                if (totalAtkPower > attachTarget.getNetToughness() + toughness || dangerous) {
+                if (totalAtkPower >= attachTarget.getLethalDamage() + toughness || dangerous) {
                     canSurviveCombat = false;
                 }
             }
+        } else if (combat != null && toughness <= 0 && combat.isBlocking(attachTarget)
+                && ComputerUtilCombat.blockerWouldBeDestroyed(ai, attachTarget, combat)) {
+            canSurviveCombat = false;
         }
 
         if (!canSurviveCombat || (attachTarget.isCreature() && ComputerUtilCard.isUselessCreature(ai, attachTarget))) {
@@ -930,6 +934,10 @@ public class AttachAi extends SpellAbilityAi {
             targets = sa.getTargets();
         }
 
+        // "attach it to target creature you control" with no creature to target: nothing to gain
+        if (!mandatory && tgt != null && targets.isEmpty() && tgt.getNumCandidates(sa) == 0) {
+            return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
+        }
         if (!mandatory && card.isEquipment() && !targets.isEmpty()) {
             Card newTarget = (Card) targets.get(0);
             if (newTarget.getController().isOpponentOf(ai)) {
@@ -1099,6 +1107,16 @@ public class AttachAi extends SpellAbilityAi {
             }
         }
         list.removeAll(toRemove);
+
+        // a creature of ours that's dying in this combat anyway would take the bonus to the graveyard with it
+        final Combat combat = ai.getGame().getCombat();
+        if (combat != null && ai.getGame().getPhaseHandler().getPhase().isAfter(PhaseType.COMBAT_DECLARE_ATTACKERS)) {
+            final List<Card> doomed = CardLists.filter(list, c -> c.isCreature() && c.getController().equals(ai)
+                    && ComputerUtilCombat.combatantWouldBeDestroyed(ai, c, combat));
+            if (doomed.size() < list.size()) {
+                list.removeAll(doomed);
+            }
+        }
 
         if (magnetList != null) {
             // Look for Heroic triggers

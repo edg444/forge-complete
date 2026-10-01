@@ -31,6 +31,7 @@ public enum AiPlayDecision {
     CostNotAcceptable,
     DoesntImpactCombat,
     DoesntImpactGame,
+    KeepInHandForSize,
     TimingRestrictions,
     MissingPhaseRestrictions,
     MissingLogic,

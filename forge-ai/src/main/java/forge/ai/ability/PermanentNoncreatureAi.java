@@ -3,6 +3,11 @@ package forge.ai.ability;
 import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
 import forge.ai.ComputerUtilAbility;
+import forge.ai.SpellApiToAi;
+import forge.game.ability.ApiType;
+import forge.game.keyword.Keyword;
+import forge.game.trigger.Trigger;
+import forge.game.trigger.TriggerType;
 import forge.game.Game;
 import forge.game.ability.AbilityFactory;
 import forge.game.card.Card;
@@ -47,6 +52,27 @@ public class PermanentNoncreatureAi extends PermanentAi {
             }
             if (targets.isEmpty()) {
                 return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
+            }
+        }
+        // Flash Equipment that attaches as it enters (Vibranium Strike Gauntlets) is a buff Aura at instant speed:
+        // a combat trick or an end-of-turn play, never a bonus for a creature that's about to die
+        if (host.isEquipment() && host.hasKeyword(Keyword.FLASH) && !ai.canCastSorcery()) {
+            for (final Trigger t : host.getTriggers()) {
+                if (t.getMode() != TriggerType.ChangesZone || !"Battlefield".equals(t.getParam("Destination"))
+                        || !"Card.Self".equals(t.getParam("ValidCard"))) {
+                    continue;
+                }
+                final SpellAbility attach = t.ensureAbility();
+                if (attach == null || attach.getApi() != ApiType.Attach || !attach.usesTargeting()) {
+                    continue;
+                }
+                final SpellAbility probe = attach.copy(ai);
+                probe.resetTargets();
+                SpellApiToAi.Converter.get(probe).doTriggerNoCostWithSubs(ai, probe, true);
+                final Card target = probe.getTargetCard();
+                if (target == null || !AttachAi.doAdvancedFlashAuraLogic(ai, sa, target)) {
+                    return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
+                }
             }
         }
         return decision;

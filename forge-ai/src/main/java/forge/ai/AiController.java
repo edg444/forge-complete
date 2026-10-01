@@ -983,6 +983,11 @@ public class AiController {
             return AiPlayDecision.WillPlay;
         }
 
+        // with Maro-style creatures out, each card played from hand shrinks them
+        if (!HandSizeAi.isWorthACardFromHand(player, sa)) {
+            return AiPlayDecision.KeepInHandForSize;
+        }
+
         if ("True".equals(card.getSVar("NonStackingEffect")) && ComputerUtilCard.isNonDisabledCardInPlay(player, card.getName())) {
             return AiPlayDecision.DoesntImpactGame;
         }
