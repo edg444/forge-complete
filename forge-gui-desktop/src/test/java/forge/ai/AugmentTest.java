@@ -145,11 +145,20 @@ public class AugmentTest extends AITest {
         Player me = game.getPlayers().get(1);
         Card kitten = addCard("Adorable Kitten", me);
         Card aug = addCardToZone("Half-Kitten, Half-", me, ZoneType.Hand);
-        aug.updateStateForView();
 
         AssertJUnit.assertEquals("+1/+2", aug.getView().getCurrentState().getAugmentPT());
         AssertJUnit.assertEquals("[+1 / +2]", CardDetailUtil.formatPrimaryCharacteristic(aug.getView().getCurrentState(), true));
         AssertJUnit.assertNull(kitten.getView().getCurrentState().getAugmentPT());
+        Card bearsInHand = addCardToZone("Grizzly Bears", me, ZoneType.Hand);
+        AssertJUnit.assertNull(bearsInHand.getView().getCurrentState().getAugmentPT());
+        AssertJUnit.assertEquals("2 / 2", CardDetailUtil.formatPrimaryCharacteristic(bearsInHand.getView().getCurrentState(), true));
+
+        Card drawn = addCardToZone("Zombified", me, ZoneType.Library);
+        me.getZone(ZoneType.Library).remove(drawn);
+        me.getZone(ZoneType.Library).add(drawn, 0);
+        Card inHand = me.drawCard().getFirst();
+        AssertJUnit.assertTrue(inHand.isInZone(ZoneType.Hand));
+        AssertJUnit.assertEquals("+2/+2", inHand.getView().getCurrentState().getAugmentPT());
 
         augment(me, aug, kitten);
         kitten.updateStateForView();

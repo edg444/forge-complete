@@ -1713,7 +1713,9 @@ public class CardView extends GameEntityView {
          * Grusilda) the real P/T applies and this is null.
          */
         public String getAugmentPT() {
-            return CardView.this.getZone() == ZoneType.Battlefield ? null : get(TrackableProperty.AugmentPT);
+            // an unset string property reads back as "", not null - every non-augment card
+            final String pt = get(TrackableProperty.AugmentPT);
+            return CardView.this.getZone() == ZoneType.Battlefield || StringUtils.isEmpty(pt) ? null : pt;
         }
         void updateAugmentPT(String v) {
             set(TrackableProperty.AugmentPT, v);
