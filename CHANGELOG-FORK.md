@@ -176,6 +176,27 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     during combat. Anything goes when the hand is over its maximum size or the AI's life is in danger.
   - `AiPlayReportsTest` (6). Suite: 839 run, 0 failed, 6 skipped.
 
+- **Over My Dead Bodies** (ust/63). Graveyard creatures fight on Masterful Ninja's dual residency, with the
+  graveyard as the second zone:
+  - Declaring: as attackers (the attacking player's graveyard) or blockers (a defending player's, only when a
+    graveyard creature attacks them) are declared, creature cards there are put onto the battlefield unnoticed
+    and stay listed in the graveyard (`GameAction.enlistGraveyardCombatants`); the ones not declared go straight
+    back. One that state-based actions would remove at once (0 toughness, a legend-rule clash) can't be declared
+    (ruling). A card in the graveyard since before this turn isn't summoning sick; "creature cards in your
+    graveyard have haste" covers the rest.
+  - In combat they're treated as on the battlefield (rulings): lords apply, Giant Growth can target them, attack
+    triggers fire, and nothing notices them enter or leave. `CantBlockBy` statics and the new card property
+    `GraveyardCombatant` keep graveyard and battlefield creatures from blocking each other.
+  - Destroyed (lethal damage, Murder) a graveyard creature is just removed from combat; sent anywhere else
+    (Unsummon, exile) it goes from the graveyard. Undeathtouch is a `DamageDone` replacement that exiles the
+    creature card instead. At end of combat, or once Over My Dead Bodies is gone, they're just dead again (a
+    state-based sweep plus `PhaseHandler.endCombat`).
+  - New static mode `GraveyardCombat`; `Card.isInZone(Graveyard)` sees the graveyard listing. The residency
+    helpers Masterful Ninja used are now zone-generic.
+  - The AI attacks and blocks with graveyard creatures through its normal combat code, but when it attacks it
+    doesn't foresee the defender's graveyard blockers (they only show up in the block step).
+  - `OverMyDeadBodiesTest` (4, one a full AI turn). Suite: 854 run, 0 failed, 6 skipped.
+
 - **Old-Fashioned Vampire** (ust/62), honor system. Whether it's dark outdoors is one fact for the whole game:
   any player may say "It's dark out" (a `Dark Outdoors` effect in the command zone) or "It's light out"
   (removes it), and every Old-Fashioned Vampire reads it (`IsPresent$ Effect.namedDark_Outdoors`). Only the

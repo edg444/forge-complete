@@ -7359,10 +7359,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         if (z != null && z.is(zone)) {
             return true;
         }
-        // Masterful Ninja is in its owner's hand as well, for anything that cares about cards in hand (Unstable
-        // FAQ). Yet Another Aether Vortex's library listing isn't asked about: it only keeps the library's size
-        // and top card right.
-        return zone == ZoneType.Hand && shadowZone != null && shadowZone.is(ZoneType.Hand);
+        // Masterful Ninja is in its owner's hand as well, for anything that cares about cards in hand, and a
+        // creature card fighting under Over My Dead Bodies never leaves its graveyard (Unstable FAQ). Yet Another
+        // Aether Vortex's library listing isn't asked about: it only keeps the library's size and top card right.
+        return (zone == ZoneType.Hand || zone == ZoneType.Graveyard) && shadowZone != null && shadowZone.is(zone);
     }
 
     public boolean isInZones(final List<ZoneType> zones) {

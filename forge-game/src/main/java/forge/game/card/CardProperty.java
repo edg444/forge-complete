@@ -153,6 +153,11 @@ public class CardProperty {
                     property.split("PrintedBefore ", 2)[1])) {
                 return false;
             }
+        } else if (property.equals("GraveyardCombatant")) {
+            // Over My Dead Bodies: a creature card attacking or blocking from its graveyard
+            if (!forge.game.GameAction.isAlsoInGraveyard(card)) {
+                return false;
+            }
         } else if (property.equals("hasFlavorText")) {
             // My First Tome asks you to say a card's flavor text, so a card without any isn't a
             // legal choice - the guess it sets up would be impossible rather than merely hard.

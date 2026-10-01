@@ -583,6 +583,8 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
     private void declareAttackersTurnBasedAction() {
         final Player whoDeclares = Objects.requireNonNullElse(playerTurn.getDeclaresAttackers(), playerTurn);
+        // Over My Dead Bodies: creature cards in the attacker's graveyard can be declared too
+        final CardCollection fromGraveyard = game.getAction().enlistGraveyardCombatants(playerTurn);
 
         if (CombatUtil.canAttack(playerTurn)) {
             boolean success = false;
@@ -659,6 +661,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 whoDeclares.getGame().getTriggerHandler().runTrigger(TriggerType.TapAll, runParams, false);
             }
         }
+        game.getAction().dismissGraveyardCombatants(CardLists.filter(fromGraveyard, c -> !combat.isAttacking(c)));
 
         if (game.isGameOver()) { // they just like to close window at any moment
             return;
@@ -710,6 +713,16 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
             p = game.getNextPlayerAfter(p);
             // Apply Odric's effect here
             Player whoDeclaresBlockers = Objects.requireNonNullElse(p.getDeclaresBlockers(), p);
+            // Over My Dead Bodies: graveyard creatures can block only graveyard attackers, so they're offered only
+            // when one is attacking this player
+            CardCollection fromGraveyard = new CardCollection();
+            if (combat.isPlayerAttacked(p)) {
+                final Player defender = p;
+                if (combat.getAttackers().anyMatch(a -> GameAction.isAlsoInGraveyard(a)
+                        && defender.equals(combat.getDefenderPlayerByAttacker(a)))) {
+                    fromGraveyard = game.getAction().enlistGraveyardCombatants(p);
+                }
+            }
             if (combat.isPlayerAttacked(p)) {
                 if (CombatUtil.canBlock(p, combat)) {
                     // Replacement effects (for Camouflage)
@@ -771,6 +784,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     }
                 }
             } while (!reachedSteadyState);
+            game.getAction().dismissGraveyardCombatants(CardLists.filter(fromGraveyard, c -> !combat.isBlocking(c)));
 
             // Player is done declaring blockers - redraw UI at this point
 
@@ -1323,6 +1337,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
             combat.endCombat();
             combat = null;
         }
+        // Over My Dead Bodies: the graveyard creatures go back to being just dead
+        game.getAction().dismissGraveyardCombatants(CardLists.filter(game.getCardsIn(ZoneType.Battlefield),
+                GameAction::isAlsoInGraveyard));
         game.updateCombatForView();
     }
 

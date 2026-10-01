@@ -226,6 +226,9 @@ public enum StaticAbilityMode {
     // StaticAbilityTopLibraryOnBattlefield
     TopLibraryPermanentsOnBattlefield,
 
+    // StaticAbilityGraveyardCombat
+    GraveyardCombat,
+
     // StaticAbilityChoosesTargets
     ChoosesTargets,
 

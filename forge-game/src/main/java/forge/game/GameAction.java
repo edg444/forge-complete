@@ -32,6 +32,7 @@ import forge.game.ability.AbilityUtils;
 import forge.game.ability.ApiType;
 import forge.game.ability.SpellAbilityEffect;
 import forge.game.card.*;
+import forge.game.combat.Combat;
 import forge.game.event.*;
 import forge.game.extrahands.BackupPlanService;
 import forge.game.keyword.Keyword;
@@ -46,6 +47,7 @@ import forge.game.spellability.SpellPermanent;
 import forge.game.staticability.StaticAbility;
 import forge.game.staticability.StaticAbilityCountersRemain;
 import forge.game.staticability.StaticAbilityContinuous;
+import forge.game.staticability.StaticAbilityGraveyardCombat;
 import forge.game.staticability.StaticAbilityIgnoreStateBasedActions;
 import forge.game.staticability.StaticAbilityLayer;
 import forge.game.staticability.StaticAbilityMode;
@@ -153,6 +155,18 @@ public class GameAction {
         // move between those two zones would put it, so it stays in both (Unsummon does nothing, for one)
         if (!unnoticed && fromBattlefield && isAlsoInHand(c) && (toBattlefield || zoneTo == c.getShadowZone())) {
             return c;
+        }
+
+        // Over My Dead Bodies: a creature card fighting from a graveyard is still only in that graveyard. Destroyed
+        // or otherwise sent there, it's just removed from combat; sent anywhere else, it goes from the graveyard
+        // (rulings: it never enters or leaves the battlefield)
+        if (!unnoticed && fromBattlefield && isAlsoInGraveyard(c)) {
+            final Zone graveyard = c.getShadowZone();
+            final Card inGraveyard = endBattlefieldResidency(c);
+            if (zoneTo == graveyard) {
+                return inGraveyard;
+            }
+            return changeZone(graveyard, zoneTo, inGraveyard, position, cause, params);
         }
 
         CardCollectionView lastBattlefield = getLastState(AbilityKey.LastStateBattlefield, cause, params, false);
@@ -911,24 +925,37 @@ public class GameAction {
         return c.getShadowZone() != null && c.getShadowZone().is(ZoneType.Hand) && c.isInPlay();
     }
 
+    /** Over My Dead Bodies: whether this permanent is a creature card fighting from its graveyard. */
+    public static boolean isAlsoInGraveyard(final Card c) {
+        return c.getShadowZone() != null && c.getShadowZone().is(ZoneType.Graveyard) && c.isInPlay();
+    }
+
     /**
      * Masterful Ninja: "is on the battlefield and in your hand". The card really moves onto the battlefield and is
      * re-listed in the hand it came from, so it counts and can be chosen as a card in hand. Nothing notices it
      * entering (rulings). Returns the permanent, or null if it couldn't go.
      */
     public final Card putOntoBattlefieldAlsoInHand(final Card c, final Player controller, final SpellAbility cause) {
-        final Zone hand = c.getZone();
-        if (hand == null || !hand.is(ZoneType.Hand) || c.getShadowZone() != null) {
+        if (c.getZone() == null || !c.getZone().is(ZoneType.Hand)) {
             return null;
         }
-        final int index = hand.getCards().indexOf(c);
+        return putOntoBattlefieldKeepingListing(c, controller, cause);
+    }
+
+    /** The card moves onto the battlefield unnoticed and stays listed where it was, at the same place. */
+    private Card putOntoBattlefieldKeepingListing(final Card c, final Player controller, final SpellAbility cause) {
+        final Zone from = c.getZone();
+        if (from == null || c.getShadowZone() != null) {
+            return null;
+        }
+        final int index = from.getCards().indexOf(c);
         final Map<AbilityKey, Object> params = AbilityKey.newMap();
         params.put(AbilityKey.Unnoticed, true);
         final Card inPlay = moveToPlay(c, controller, cause, params);
         if (inPlay == null || !inPlay.isInPlay()) {
             return null;
         }
-        hand.addShadow(inPlay, Math.min(Math.max(index, 0), hand.size()));
+        from.addShadow(inPlay, Math.min(Math.max(index, 0), from.size()));
         return inPlay;
     }
 
@@ -941,12 +968,105 @@ public class GameAction {
         if (!isAlsoInHand(c)) {
             return c;
         }
-        final Zone hand = c.getShadowZone();
-        final int index = hand.getCards().indexOf(c);
+        return endBattlefieldResidency(c);
+    }
+
+    private Card endBattlefieldResidency(final Card c) {
+        final Zone listing = c.getShadowZone();
+        final int index = listing.getCards().indexOf(c);
         final Map<AbilityKey, Object> params = AbilityKey.newMap();
         params.put(AbilityKey.Unnoticed, true);
-        // removing it from the battlefield ends its listing in the hand as well, so the hand is one shorter
-        return changeZone(c.getZone(), hand, c, Math.min(Math.max(index, 0), hand.size() - 1), null, params);
+        // removing it from the battlefield ends its other listing as well, so that zone is one shorter
+        return changeZone(c.getZone(), listing, c, Math.min(Math.max(index, 0), listing.size() - 1), null, params);
+    }
+
+    // Over My Dead Bodies: set while attackers or blockers are being declared, when graveyard creatures are on the
+    // battlefield to be chosen without being in combat yet
+    private boolean declaringGraveyardCombatants = false;
+
+    /**
+     * Over My Dead Bodies: puts the creature cards in this player's graveyard onto the battlefield, unnoticed and
+     * still listed in the graveyard, so they can be declared as attackers or blockers. A card that has been in the
+     * graveyard since before this turn isn't summoning sick. One that state-based actions would remove at once
+     * can't attack or block (ruling), so it goes straight back. Call {@link #dismissGraveyardCombatants} with the
+     * ones that weren't declared.
+     */
+    public final CardCollection enlistGraveyardCombatants(final Player p) {
+        final CardCollection enlisted = new CardCollection();
+        if (!StaticAbilityGraveyardCombat.anyActive(game)) {
+            return enlisted;
+        }
+        declaringGraveyardCombatants = true;
+        final int turn = game.getPhaseHandler().getTurn();
+        for (final Card c : new CardCollection(p.getCardsIn(ZoneType.Graveyard))) {
+            if (!c.isCreature() || c.getShadowZone() != null || c.getZone() == null || !c.getZone().is(ZoneType.Graveyard)) {
+                continue;
+            }
+            final int since = c.getTurnInZone();
+            final Card inPlay = putOntoBattlefieldKeepingListing(c, p, null);
+            if (inPlay == null) {
+                continue;
+            }
+            inPlay.setTurnInZone(since);
+            inPlay.setSickness(since >= turn);
+            enlisted.add(inPlay);
+        }
+        checkStaticAbilities();
+
+        final CardCollection unfit = new CardCollection();
+        for (final Card c : enlisted) {
+            if (c.getNetToughness() <= 0) {
+                unfit.add(c);
+                continue;
+            }
+            if (c.getType().isLegendary()) {
+                for (final Card other : p.getCardsIn(ZoneType.Battlefield)) {
+                    if (other != c && !unfit.contains(other) && other.getType().isLegendary() && other.sharesNameWith(c)
+                            && (!enlisted.contains(other) || enlisted.indexOf(other) < enlisted.indexOf(c))) {
+                        unfit.add(c);
+                        break;
+                    }
+                }
+            }
+        }
+        for (final Card c : unfit) {
+            endBattlefieldResidency(c);
+            enlisted.remove(c);
+        }
+        return enlisted;
+    }
+
+    /** Over My Dead Bodies: these go back to being just creature cards in their graveyards. */
+    public final void dismissGraveyardCombatants(final Iterable<Card> cards) {
+        for (final Card c : new CardCollection(cards)) {
+            if (isAlsoInGraveyard(c)) {
+                endBattlefieldResidency(c);
+            }
+        }
+        declaringGraveyardCombatants = false;
+    }
+
+    /**
+     * Over My Dead Bodies: outside of declaring, a graveyard creature is on the battlefield only while it's
+     * attacking or blocking and something still lets it fight. Removed from combat, at end of combat, or if Over My
+     * Dead Bodies leaves, it's just dead again (rulings).
+     */
+    private boolean checkGraveyardCombatants() {
+        if (declaringGraveyardCombatants) {
+            return false;
+        }
+        final Combat combat = game.getCombat();
+        final boolean fighting = combat != null && StaticAbilityGraveyardCombat.anyActive(game);
+        final CardCollection idle = new CardCollection();
+        for (final Card c : game.getCardsIn(ZoneType.Battlefield)) {
+            if (isAlsoInGraveyard(c) && (!fighting || !(combat.isAttacking(c) || combat.isBlocking(c)))) {
+                idle.add(c);
+            }
+        }
+        for (final Card c : idle) {
+            endBattlefieldResidency(c);
+        }
+        return !idle.isEmpty();
     }
 
     public final Card moveToBottomOfLibrary(final Card c, SpellAbility cause) {
@@ -1574,6 +1694,7 @@ public class GameAction {
             AbilityKey.addCardZoneTableParams(mapParams, table);
 
             checkAgain |= checkTopLibraryPermanents(mapParams);
+            checkAgain |= checkGraveyardCombatants();
 
             for (final Player p : game.getPlayers()) {
                 p.checkKeywordCard();

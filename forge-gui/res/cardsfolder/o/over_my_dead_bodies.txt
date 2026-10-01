@@ -1,0 +1,13 @@
+Name:Over My Dead Bodies
+ManaCost:4 B B
+Types:Enchantment
+# While attackers or blockers are declared, creature cards in graveyards are put onto the battlefield unnoticed and
+# stay listed in their graveyard; they go back once they're out of combat (GameAction.enlistGraveyardCombatants)
+S:Mode$ GraveyardCombat | Description$ Creature cards in graveyards can attack and block as though they were on the battlefield, can block or be blocked only by creature cards in graveyards, are Zombies in addition to their other types, and have undeathtouch. (If they would deal damage to a creature card, exile that creature card instead.)
+S:Mode$ CantBlockBy | ValidAttacker$ Creature.GraveyardCombatant | ValidBlocker$ Creature.!GraveyardCombatant
+S:Mode$ CantBlockBy | ValidAttacker$ Creature.!GraveyardCombatant | ValidBlocker$ Creature.GraveyardCombatant
+S:Mode$ Continuous | Affected$ Creature | AffectedZone$ Graveyard | AddType$ Zombie | AddKeyword$ Undeathtouch
+R:Event$ DamageDone | ActiveZones$ Battlefield | ValidSource$ Card.withUndeathtouch | ValidTarget$ Card.GraveyardCombatant | ReplaceWith$ DBUndeath
+SVar:DBUndeath:DB$ ChangeZone | Defined$ ReplacedTarget | Origin$ Battlefield | Destination$ Exile
+S:Mode$ Continuous | Affected$ Creature.YouOwn | AffectedZone$ Graveyard | AddKeyword$ Haste | Description$ Creature cards in your graveyard have haste.
+Oracle:Creature cards in graveyards can attack and block as though they were on the battlefield, can block or be blocked only by creature cards in graveyards, are Zombies in addition to their other types, and have undeathtouch. (If they would deal damage to a creature card, exile that creature card instead.)\nCreature cards in your graveyard have haste.
