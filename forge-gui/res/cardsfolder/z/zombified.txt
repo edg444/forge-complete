@@ -1,0 +1,11 @@
+Name:Zombified
+ManaCost:no cost
+Colors:black
+Types:Creature Zombie
+PT:+2/+2
+K:Augment:4 B
+A:AB$ Augment | Cost$ 4 B | ActivationZone$ Graveyard | FromZone$ Graveyard | ValidTgts$ Creature.Host | TgtPrompt$ Select target host | SpellDescription$ Combine this card from your graveyard with target host.
+# An activated condition: never usable on its own (an augment card can't be on the battlefield by itself);
+# combining with a host replaces it with the host's effect for this cost (CardFactory.getAugmentedCloneStates).
+A:AB$ Pump | Cost$ 2 B ExileFromGrave<1/Creature> | Defined$ Self | AugmentCondition$ True | SpellDescription$
+Oracle:{4}{B}: Combine this card from your graveyard with target host.\n{2}{B}, Exile a creature card from your graveyard:\nAugment {4}{B} ({4}{B}, Reveal this card from your hand: Combine it with target host. Augment only as a sorcery.)

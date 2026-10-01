@@ -1168,7 +1168,8 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
         // SubAbilities don't have Costs or Cost descriptors
 
         String sb = getCostDescription() + getParam("SpellDescription");
-        setDescription(sb);
+        // a bare cost with nothing after it (an augment's unfinished "{2}{B}, Exile ...:" condition) has no trailing space
+        setDescription(getParam("SpellDescription").isEmpty() ? sb.stripTrailing() : sb);
     }
 
     /** {@inheritDoc} */

@@ -18,6 +18,7 @@ import forge.game.zone.ZoneType;
  * characteristics differ (see CardFactory.getAugmentedCloneStates).
  * <p>
  * With {@code ChangeType$}, the augment card is instead searched for in the activator's library (Teacher's Pet).
+ * With {@code FromZone$}, the card combines from that zone instead of the hand (Zombified, from the graveyard).
  */
 public class AugmentEffect extends SpellAbilityEffect {
 
@@ -41,8 +42,8 @@ public class AugmentEffect extends SpellAbilityEffect {
             }
         } else {
             augment = sa.getHostCard();
-            // ruling: if the card with augment has left your hand, nothing happens
-            if (!augment.isInZone(ZoneType.Hand)) {
+            // ruling: if the card with augment has left your hand (or the zone it combines from), nothing happens
+            if (!augment.isInZone(ZoneType.smartValueOf(sa.getParamOrDefault("FromZone", "Hand")))) {
                 return;
             }
         }

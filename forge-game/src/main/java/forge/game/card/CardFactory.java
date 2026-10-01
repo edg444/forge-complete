@@ -897,11 +897,18 @@ public class CardFactory {
         ret.setBaseToughness(toughness);
         ret.setBaseToughnessString(String.valueOf(toughness));
 
-        // the augment's unfinished conditions are triggers with nothing to execute; they only mean something here
+        // the augment's unfinished conditions are triggers with nothing to execute, or placeholder activated
+        // abilities marked AugmentCondition$ (Zombified's "{2}{B}, Exile a creature card from your graveyard:");
+        // they only mean something here
         ret.addAbilitiesFrom(augState, false);
         for (final Trigger t : Lists.newArrayList(ret.getTriggers())) {
             if (!t.hasParam("Execute")) {
                 ret.removeTrigger(t);
+            }
+        }
+        for (final SpellAbility a : Lists.newArrayList(ret.getSpellAbilities())) {
+            if (a.hasParam("AugmentCondition")) {
+                ret.removeSpellAbility(a);
             }
         }
         for (final Map.Entry<String, String> e : augState.getSVars().entrySet()) {
@@ -933,6 +940,18 @@ public class CardFactory {
                 combined.setCardState(ret);
                 ret.addTrigger(combined);
             }
+            // an activated condition: the host's effect, paid for with the condition's cost
+            final String execute = ret.getSVar(hostTrigger.getParam("Execute"));
+            for (final SpellAbility cond : augState.getSpellAbilities()) {
+                if (!cond.hasParam("AugmentCondition") || !execute.startsWith("DB$")) {
+                    continue;
+                }
+                final String ability = "AB$" + execute.substring(3) + " | Cost$ " + cond.getParam("Cost")
+                        + " | SpellDescription$ " + capitalizeFirst(effectText);
+                final SpellAbility combined = AbilityFactory.getAbility(ability, ret);
+                combined.setIntrinsic(true);
+                ret.addSpellAbility(combined);
+            }
         }
 
         final List<String> oracle = Lists.newArrayList();
@@ -942,7 +961,13 @@ public class CardFactory {
             }
         }
         for (final String line : augState.getOracleText().split("\\\\n")) {
-            oracle.add(line.endsWith(",") && !effectText.isEmpty() ? line + " " + effectText : line);
+            if (line.endsWith(",") && !effectText.isEmpty()) {
+                oracle.add(line + " " + effectText);
+            } else if (line.endsWith(":") && !effectText.isEmpty()) {
+                oracle.add(line + " " + capitalizeFirst(effectText));
+            } else {
+                oracle.add(line);
+            }
         }
         ret.setOracleText(String.join("\\n", oracle));
 
@@ -952,6 +977,10 @@ public class CardFactory {
             result.add(hostPart.getState(CardStateName.Original).copy(card, sa));
         }
         return result;
+    }
+
+    private static String capitalizeFirst(final String s) {
+        return s.isEmpty() ? s : Character.toUpperCase(s.charAt(0)) + s.substring(1);
     }
 
     /** An augment's printed "+1", "-1" or "-0" - the amount it adjusts its host by. */

@@ -210,6 +210,18 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     checks the full decision at the opponent's end step, where the tempo value doubles to 1.0 and the roll
     always passes (200 of 200).
 
+- **Zombified** (ust/75), the last black Unstable card. Two pieces of augment the fork hadn't built:
+  - Combining from the graveyard: `AB$ Augment | ActivationZone$ Graveyard | FromZone$ Graveyard` ("{4}{B}:
+    Combine this card from your graveyard with target host."). `AugmentEffect` takes `FromZone$` (default Hand).
+  - Activated conditions: an augment's "{2}{B}, Exile a creature card from your graveyard:" is a placeholder
+    ability marked `AugmentCondition$ True` (never usable alone); `CardFactory.getAugmentedCloneStates` replaces it
+    with an ability of that cost whose effect is the host's enters effect, and the combined Oracle line gets the
+    effect capitalized after the colon. Steam-Powered (red) can use the same. Zombified + Adorable Kitten is
+    "Zombified Kitten", 3/3, "{2}{B}, Exile a creature card from your graveyard: Roll a six-sided die. You gain life
+    equal to the result."
+  - A cost with an empty `SpellDescription$` no longer leaves a trailing space (`SpellAbility.rebuiltDescription`);
+    `CardState.removeSpellAbility` added. `ZombifiedTest` (2). Suite: 892 run, 0 failed, 6 skipped.
+
 - **Summon the Pack** (ust/74). Upstream's `MakeCard | Booster$ True` (Booster Tutor's random Forge booster) gains
   `PutAll$ True`: every card in the pack that passes `Filter$`, duplicates included, with nothing to choose. Here
   every creature card goes onto the battlefield (their enters abilities trigger, so the FAQ's Phage the

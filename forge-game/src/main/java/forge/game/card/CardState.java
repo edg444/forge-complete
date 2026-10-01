@@ -706,6 +706,10 @@ public class CardState implements GameObject, IHasSVars, ITranslatable {
         return abilities.add(a);
     }
 
+    public final boolean removeSpellAbility(final SpellAbility a) {
+        return abilities.remove(a);
+    }
+
     public final FCollectionView<Trigger> getTriggers() {
         FCollection<Trigger> result = new FCollection<>(triggers);
         if (getStateName().equals(CardStateName.Original)) {
