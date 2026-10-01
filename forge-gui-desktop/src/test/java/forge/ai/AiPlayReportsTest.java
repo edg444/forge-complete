@@ -164,9 +164,14 @@ public class AiPlayReportsTest extends AITest {
         AssertJUnit.assertEquals(1, HandSizeAi.pointsPerCardInHand(ai));
         // +1/+2 on a creature isn't worth -1/-1 on Maro; removal is
         AssertJUnit.assertEquals(AiPlayDecision.KeepInHandForSize, decide(ai, aura));
+        AssertJUnit.assertTrue(HandSizeAi.isWorthACardFromHand(ai, bolt));
+        // useRemovalNow flips a coin on an instant in the AI's own main 2 (holding it is fine); at the opponent's
+        // end step it always fires, so the whole decision can be checked there
+        game.getPhaseHandler().devModeSet(PhaseType.END_OF_TURN, opp);
         AssertJUnit.assertEquals(AiPlayDecision.WillPlay, decide(ai, bolt));
 
         // over the maximum hand size the card would be discarded anyway
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN2, ai);
         for (int i = 0; i < 7; i++) {
             addCardToZone("Island", ai, ZoneType.Hand);
         }

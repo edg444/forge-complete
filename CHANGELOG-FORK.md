@@ -202,6 +202,13 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     than the lost points, planeswalkers, a land when short of mana for something in hand, a combat trick
     during combat. Anything goes when the hand is over its maximum size or the AI's life is in danger.
   - `AiPlayReportsTest` (6). Suite: 839 run, 0 failed, 6 skipped.
+  - Flaky test fixed: `testHandSizeCreatureKeepsTheHand` failed about half the time on "Lightning Bolt is
+    played". `HandSizeAi` passed the Bolt every time. The failures came from upstream's
+    `ComputerUtilCard.useRemovalNow`, which deliberately rolls dice on holding instant removal: on the AI's
+    own main 2, Bolt on a Hill Giant has a value of 0.5, so it was cast 94 times in 200 calls. That's a
+    reasonable hold, so the AI is unchanged. The test now checks `HandSizeAi` directly in main 2, and
+    checks the full decision at the opponent's end step, where the tempo value doubles to 1.0 and the roll
+    always passes (200 of 200).
 
 - **Spike, Tournament Grinder** (ust/69). Outside the game is the sideboard, as for the Wishes. "Banned or restricted
   in a Constructed format" is `res/lists/BannedOrRestricted.txt` (card property `everBannedOrRestricted`,
