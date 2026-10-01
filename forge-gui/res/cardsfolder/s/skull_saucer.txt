@@ -1,0 +1,12 @@
+Name:Skull Saucer
+ManaCost:4 B B
+Types:Creature Zombie Head
+PT:4/1
+K:Flying
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDestroy | TriggerDescription$ When this creature enters, destroy target creature and put your head on the table.
+SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Creature | TgtPrompt$ Select target creature | SubAbility$ DBHead
+# Honor system. Putting your head down is optional: if you don't, it's sacrificed (ruling). The AI keeps its head
+# down for good; a person owns up when theirs comes up.
+SVar:DBHead:DB$ Sacrifice | Defined$ Self | UnlessCost$ FlavorAction<Put your head on the table (any part of it counts - your chin will do)/My head is down> | UnlessPayer$ You
+A:AB$ Sacrifice | Cost$ FlavorAction<Confirm your head stopped touching the table/I lifted my head> | CostDesc$ Sacrifice this creature | Defined$ Self | AILogic$ Never | SpellDescription$ when your head stops touching the table.
+Oracle:Flying\nWhen this creature enters, destroy target creature and put your head on the table. Sacrifice this creature when your head stops touching the table.

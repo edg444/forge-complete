@@ -176,6 +176,16 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     during combat. Anything goes when the hand is over its maximum size or the AI's life is in danger.
   - `AiPlayReportsTest` (6). Suite: 839 run, 0 failed, 6 skipped.
 
+- **Skull Saucer** (ust/66), honor system. Its enters trigger destroys the target, then asks you to put your head
+  on the table (`UnlessCost$ FlavorAction`): decline and it's sacrificed, as the ruling says (the creature is
+  still destroyed). Later, "I lifted my head" sacrifices it; that line reads exactly like Oracle via
+  `CostDesc$`/`SpellDescription$`. The AI keeps its head down for good. Rulings and FAQ: any part of your head,
+  any playing surface, and nobody may physically lift yours.
+  - `AILogic$ Never` is now honored for every API (`SpellAbilityAi.canPlayWithSubs`, next to `Chance.N`):
+    APIs that override `canPlay` (Sacrifice among them) never reached `checkAiLogic`, so the AI would have lifted
+    its head. Upstream scripts that use `Never` on an activated ability or spell now really never do it.
+  - `SkullSaucerTest` (2). Suite: 860 run, 0 failed, 6 skipped.
+
 - **"Rumors of My Death . . ."** (ust/65). Script on the existing per-printing `Watermark_` property: the cost
   exiles `Permanent.YouCtrl+Watermark_leagueofdastardlydoom` (itself included: it has that watermark), the
   effect returns a `Permanent.YouOwn` card with it from the graveyard, chosen on resolution. Contraptions count

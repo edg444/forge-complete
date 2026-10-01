@@ -62,6 +62,10 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         if (!rollChanceLogic(aiPlayer, sa)) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
+        // Never, likewise: checkAiLogic is skipped by the same overrides (Skull Saucer's "my head came up" Sacrifice)
+        if ("Never".equals(sa.getParam("AILogic"))) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
         // An honor-system ability any player may call, that only some would ever have cause to: Hazmat Suit
         // (Used) is touched by whoever handles the enchanted creature, not by the player across the table.
         if (sa.hasParam("AIActivator") && sa.getHostCard() != null && !aiPlayer.isValid(sa.getParam("AIActivator"),
