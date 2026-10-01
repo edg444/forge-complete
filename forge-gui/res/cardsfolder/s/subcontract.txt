@@ -1,0 +1,9 @@
+Name:Subcontract
+ManaCost:B
+Types:Sorcery
+# The person outside the game is simulated, not asked: they pick at random among the nonland cards, but the more
+# impactful a card is, the likelier they pick it (AtRandom$ ThreatWeighted, as Defective Detective).
+A:SP$ ChooseCard | ValidTgts$ Opponent | ChoiceZone$ Hand | Choices$ Card.nonLand+TargetedPlayerCtrl | AtRandom$ ThreatWeighted | Mandatory$ True | SubAbility$ DBDiscard | StackDescription$ SpellDescription | SpellDescription$ A person outside the game looks at target opponent's hand and chooses a nonland card from it. That player discards that card.
+SVar:DBDiscard:DB$ Discard | DefinedCards$ ChosenCard | Defined$ Targeted | Mode$ Defined | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+Oracle:A person outside the game looks at target opponent's hand and chooses a nonland card from it. That player discards that card.
