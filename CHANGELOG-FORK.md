@@ -176,6 +176,18 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     during combat. Anything goes when the hand is over its maximum size or the AI's life is in danger.
   - `AiPlayReportsTest` (6). Suite: 839 run, 0 failed, 6 skipped.
 
+- **"Rumors of My Death . . ."** (ust/65). Script on the existing per-printing `Watermark_` property: the cost
+  exiles `Permanent.YouCtrl+Watermark_leagueofdastardlydoom` (itself included: it has that watermark), the
+  effect returns a `Permanent.YouOwn` card with it from the graveyard, chosen on resolution. Contraptions count
+  (the Unstable FAQ treats their faction symbol as a watermark, and Scryfall records it). No Scryfall rulings or
+  FAQ entry. Watermarks follow the printing, so Hoisted Hireling's Unsanctioned reprint (no watermark) doesn't
+  qualify.
+  - AI (`ChangeZoneAi` logic `ExileAndRetFromGrave`): only when the best returnable card is worth more than the
+    cheapest permanent it would exile (`ComputerUtilCard.evaluateCardImpact`), in main 2 or at an opponent's end
+    step. The cost is paid with that same card (`ComputerUtil.leastValuableToExile`), keeping Rumors unless it's
+    the only choice. The default AI had it backwards: it exiled by lowest power (Rumors itself first) and would
+    trade down. `RumorsOfMyDeathTest` (4). Suite: 858 run, 0 failed, 6 skipped.
+
 - **Over My Dead Bodies** (ust/63). Graveyard creatures fight on Masterful Ninja's dual residency, with the
   graveyard as the second zone:
   - Declaring: as attackers (the attacking player's graveyard) or blockers (a defending player's, only when a

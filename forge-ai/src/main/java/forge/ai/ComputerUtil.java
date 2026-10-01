@@ -649,6 +649,11 @@ public class ComputerUtil {
             return null;
         }
 
+        // the same card the decision to activate was weighed against (ChangeZoneAi ExileAndRetFromGrave)
+        if (amount == 1 && sa != null && "ExileAndRetFromGrave".equals(sa.getParam("AILogic"))) {
+            return new CardCollection(leastValuableToExile(typeList, activate));
+        }
+
         CardLists.sortByPowerAsc(typeList);
         if (sa.isCraft()) {
             // remove anything above 3 CMC so that high tier stuff doesn't get exiled with this
@@ -673,6 +678,18 @@ public class ComputerUtil {
         }
 
         return typeList.subList(0, amount);
+    }
+
+    /** The least impactful card to exile as a cost, keeping the card that pays it unless nothing else will do. */
+    public static Card leastValuableToExile(final CardCollectionView candidates, final Card host) {
+        Card worst = null;
+        for (final Card c : candidates) {
+            if (worst == null || (worst == host && c != host)
+                    || (c != host && ComputerUtilCard.evaluateCardImpact(c) < ComputerUtilCard.evaluateCardImpact(worst))) {
+                worst = c;
+            }
+        }
+        return worst;
     }
 
     public static CardCollection choosePutToLibraryFrom(final Player ai, final ZoneType zone, final String type, final Card activate,

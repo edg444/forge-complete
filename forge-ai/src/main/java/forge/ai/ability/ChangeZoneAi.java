@@ -290,6 +290,8 @@ public class ChangeZoneAi extends SpellAbilityAi {
                 return doSacAndUpgradeLogic(aiPlayer, sa);
             } else if (aiLogic.startsWith("SacAndRetFromGrave")) { // Recurring Nightmare, etc.
                 return doSacAndReturnFromGraveLogic(aiPlayer, sa);
+            } else if (aiLogic.equals("ExileAndRetFromGrave")) { // "Rumors of My Death . . ."
+                return doExileAndReturnFromGraveLogic(aiPlayer, sa);
             } else if (aiLogic.equals("Necropotence")) {
                 return SpecialCardAi.Necropotence.consider(aiPlayer, sa);
             } else if (aiLogic.equals("ReanimateAll")) {
@@ -1962,6 +1964,44 @@ public class ChangeZoneAi extends SpellAbilityAi {
         }
 
         return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
+    }
+
+    /**
+     * Exile a permanent as the cost, return a permanent card from the graveyard: worth it only when what comes back
+     * is worth more than what goes ("Rumors of My Death . . ."). The cost is paid with the same card weighed here
+     * (ComputerUtil.chooseExileFromList). Done in main 2 or at an opponent's end step.
+     */
+    private AiAbilityDecision doExileAndReturnFromGraveLogic(final Player ai, final SpellAbility sa) {
+        final Card source = sa.getHostCard();
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        if (!ph.is(PhaseType.MAIN2, ai) && !(ph.is(PhaseType.END_OF_TURN) && !ph.isPlayerTurn(ai))) {
+            return new AiAbilityDecision(0, AiPlayDecision.WaitForMain2);
+        }
+        CostExile exile = null;
+        for (final CostPart part : sa.getPayCosts().getCostParts()) {
+            if (part instanceof CostExile ce) {
+                exile = ce;
+            }
+        }
+        if (exile == null) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final CardCollection toExile = CardLists.filter(CardLists.getValidCards(ai.getCardsIn(exile.getFrom()),
+                exile.getType().split(";"), ai, source, sa), CardPredicates.canExiledBy(sa, false));
+        final CardCollection returnable = CardLists.getValidCards(ai.getCardsIn(ZoneType.Graveyard),
+                sa.getParam("ChangeType"), ai, source, sa);
+        if (toExile.isEmpty() || returnable.isEmpty()) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final Card worst = ComputerUtil.leastValuableToExile(toExile, source);
+        int best = 0;
+        for (final Card c : returnable) {
+            best = Math.max(best, ComputerUtilCard.evaluateCardImpact(c));
+        }
+        if (best > ComputerUtilCard.evaluateCardImpact(worst)) {
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
+        return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
     }
 
     private AiAbilityDecision doSacAndUpgradeLogic(final Player ai, final SpellAbility sa) {

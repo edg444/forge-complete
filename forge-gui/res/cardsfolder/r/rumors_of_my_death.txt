@@ -1,0 +1,5 @@
+Name:"Rumors of My Death . . ."
+ManaCost:2 B
+Types:Enchantment
+A:AB$ ChangeZone | Cost$ 3 B Exile<1/Permanent.YouCtrl+Watermark_leagueofdastardlydoom/permanent you control with a League of Dastardly Doom watermark> | Origin$ Graveyard | Destination$ Battlefield | Hidden$ True | Mandatory$ True | ChangeType$ Permanent.YouOwn+Watermark_leagueofdastardlydoom | ChangeNum$ 1 | AILogic$ ExileAndRetFromGrave | SpellDescription$ Return a permanent card with a League of Dastardly Doom watermark from your graveyard to the battlefield.
+Oracle:{3}{B}, Exile a permanent you control with a League of Dastardly Doom watermark: Return a permanent card with a League of Dastardly Doom watermark from your graveyard to the battlefield.
