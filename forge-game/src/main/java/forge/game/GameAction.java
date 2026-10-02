@@ -1801,7 +1801,9 @@ public class GameAction {
                     // Rule 704.5g - Destroy due to lethal damage
                     // Rule 704.5h - Destroy due to deathtouch
                     else if (c.hasBeenDealtDeathtouchDamage()
-                            || (c.getDamageInHalves() > 0 && c.getLethalInHalves() <= c.getDamageInHalves())) {
+                            || (c.getDamageInHalves() > 0 && c.getLethalInHalves() <= c.getDamageInHalves())
+                            // Just Desserts' π, exactly: 3.14159... is lethal to toughness 3 but not 3 1/2
+                            || (c.getPiDamage() > 0 && c.getLethalInHalves() / 2.0 <= c.getExactDamage())) {
                         if (desCreats == null) {
                             desCreats = new CardCollection();
                         }
@@ -3121,6 +3123,25 @@ public class GameAction {
                     c.addHalfDamage();
                 } else if (halfTarget instanceof Player p) {
                     p.addHalfDamage();
+                }
+            }
+
+            // Just Desserts' π damage (Pi$ True): the whole 3 went through above, and the π - 3 left over follows it to
+            // wherever it actually landed - redirected to a player that's .14 more ("use 3.14", rulings). Doubled or
+            // tripled damage doubles or triples the π; added or partly prevented damage keeps one; prevented, none.
+            if (cause != null && cause.hasParam("Pi")) {
+                final int base = AbilityUtils.calculateAmount(cause.getHostCard(), cause.getParam("NumDmg"), cause);
+                for (Map.Entry<GameEntity, Integer> e : et.getValue().entrySet()) {
+                    final int dealt = e.getValue();
+                    if (dealt <= 0) {
+                        continue;
+                    }
+                    final int times = base > 0 && dealt == 2 * base ? 2 : base > 0 && dealt == 3 * base ? 3 : 1;
+                    if (e.getKey() instanceof Card c && c.isCreature()) {
+                        c.addPiDamage(times);
+                    } else if (e.getKey() instanceof Player p) {
+                        p.addHundredthsDamage(14 * times);
+                    }
                 }
             }
 

@@ -201,6 +201,11 @@ public class PlayerView extends GameEntityView {
     }
     void updateHalfLife(Player p) {
         set(TrackableProperty.HasHalfLife, p.hasHalfLife());
+        set(TrackableProperty.LifeHundredths, p.getLifeHundredths());
+    }
+    public int getLifeHundredths() {
+        final Integer h = get(TrackableProperty.LifeHundredths);
+        return h == null ? 0 : h;
     }
 
     // "19 1/2" rather than "19" wherever a life total is shown to a player
@@ -208,7 +213,16 @@ public class PlayerView extends GameEntityView {
         if (Infinity.isEitherInfinite(getLife())) {
             return Infinity.format(getLife());
         }
-        return hasHalfLife() ? getLife() + "½" : String.valueOf(getLife());
+        final int hundredths = getLifeHundredths();
+        if (hundredths == 0) {
+            return String.valueOf(getLife());
+        }
+        if (hundredths == 50) {
+            return getLife() + "½";
+        }
+        // Just Desserts: 16.86, and -0.14 rather than -1.86 for a total just under zero
+        final int total = getLife() * 100 + hundredths;
+        return (total < 0 ? "-" : "") + Math.abs(total) / 100 + String.format(".%02d", Math.abs(total) % 100);
     }
 
     public boolean getIsExtraTurn() {

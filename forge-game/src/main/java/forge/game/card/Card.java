@@ -273,6 +273,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     private long mutatedTimestamp = -1;
     private int timesMutated = 0;
     private int halfDamage = 0;
+    // Just Desserts: how many times π damage was marked; the whole 3 of each is in the damage map, and this counts the
+    // π - 3 left over, so the lethal check can be exact (one destroys toughness 3, four destroy 12 1/2)
+    private int piDamage = 0;
 
     private long gameTimestamp = -1; // permanents on the battlefield
     private long layerTimestamp = -1; // order for Static Abilities
@@ -4617,6 +4620,17 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         halfDamage++;
         view.updateDamage(this);
     }
+    public final void addPiDamage(final int times) {
+        piDamage += times;
+        view.updateDamage(this);
+    }
+    public final int getPiDamage() {
+        return piDamage;
+    }
+    /** All marked damage as a real number, π included - for the lethal check and the display. */
+    public final double getExactDamage() {
+        return getDamageInHalves() / 2.0 + piDamage * (Math.PI - 3);
+    }
     /** Damage needed to destroy this creature, counted in halves. */
     public final int getLethalInHalves() {
         if (hasKeyword("Lethal damage dealt to CARDNAME is determined by its power rather than its toughness.")) {
@@ -6479,8 +6493,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
     public final void setDamage(int damage0) {
         if (damage0 == 0) {
-            // damage wearing off at cleanup takes the half with it
+            // damage wearing off at cleanup takes the half (and any π) with it
             halfDamage = 0;
+            piDamage = 0;
         }
         if (getDamage() == damage0) { return; }
         damage.clear();

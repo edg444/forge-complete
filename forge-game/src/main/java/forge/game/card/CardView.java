@@ -390,6 +390,11 @@ public class CardView extends GameEntityView {
     /** Marked damage as the player sees it, so a half (Save Life, Smart Ass) isn't rounded away. */
     public String getDamageString() {
         final int whole = getDamage();
+        final Integer pi = get(TrackableProperty.PiDamage);
+        if (pi != null && pi > 0 && !Infinity.isEitherInfinite(whole)) {
+            // Just Desserts: 3.14 for one, 6.28 for two
+            return String.format("%.2f", whole + (hasHalfDamage() ? 0.5 : 0) + pi * (Math.PI - 3));
+        }
         if (!hasHalfDamage() || Infinity.isEitherInfinite(whole)) {
             return Infinity.format(whole);
         }
@@ -399,6 +404,7 @@ public class CardView extends GameEntityView {
         // read through the halves so a half hit isn't silently dropped from the display
         set(TrackableProperty.Damage, c.getDamageInHalves() / 2);
         set(TrackableProperty.HasHalfDamage, c.getDamageInHalves() % 2 != 0);
+        set(TrackableProperty.PiDamage, c.getPiDamage());
         updateLethalDamage(c);
     }
 

@@ -182,6 +182,8 @@ public enum TrackableProperty {
     Opponents(TrackableTypes.PlayerViewCollectionType),
     Life(TrackableTypes.IntegerType),
     HasHalfLife(TrackableTypes.BooleanType),
+    LifeHundredths(TrackableTypes.IntegerType),
+    PiDamage(TrackableTypes.IntegerType),
     HasHalfDamage(TrackableTypes.BooleanType),
     HasHalfPower(TrackableTypes.BooleanType),
     HasHalfToughness(TrackableTypes.BooleanType),

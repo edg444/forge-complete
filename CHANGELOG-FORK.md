@@ -247,6 +247,22 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   haste is an `UnlessCost$ FlavorAction` the player pays by confirming the high five - or that there was no one to
   ask, since then it doesn't gain haste (rulings). The AI has no one to ask, so it never gains haste.
   `ItThatGetsLeftHangingTest` (2).
+- **Just Desserts** (ust/90; not scripted upstream) and **π damage**. `NumDmg$ 3 | Pi$ True`: the whole 3 goes
+  through damage as usual (prevention, redirection, triggers), and `GameAction.dealDamage` marks the π - 3 left over
+  on wherever the 3 actually landed, which is how the rulings' redirected-to-a-player case gets its 3.14.
+  - Creatures count it exactly (`Card.addPiDamage`, `getExactDamage`; the lethal check compares the real number), so
+    the rulings and FAQ hold: one destroys toughness 3, two 6 (not 6 1/2), four 12 1/2 (not 13), eight 25.
+  - Players take .14 more per π ("use 3.14"): 20 life becomes 16.86. Life's fraction is now kept in hundredths
+    (`Player.lifeHundredths`, replacing the 0-or-1 half): a half is 50, and the half-life API reads the same as
+    before. `changeLifeByHundredths` carries like `changeLifeByHalves`; 704.5a counts any fraction as more than 0.
+  - Doubled or tripled damage doubles or triples the π; added or partly prevented damage keeps one; fully prevented,
+    none. Damage both doubled and then partly prevented is read as one π. π damage to a planeswalker or battle removes
+    the whole 3 counters only, since counters are whole.
+  - Display: card damage "3.14" / "6.28", life "16.86", "16.36" from 19 1/2, "-0.14" just below zero; the mobile
+    life-change label counts in hundredths ("-3.14"), and the mobile life label shrinks its font to fit totals
+    longer than two digits. `PlayerView.getLifeHundredths`, trackable `LifeHundredths` and `PiDamage`.
+  - Merges: `Pi$` is a fork-only script param the engine depends on - check upstream's linter didn't strip it.
+  - `JustDessertsTest` (7). Suite: 942 run, 0 failed, 6 skipped.
 
 ### 2026-10-01, fourth build (deployed: desktop, Android, GitHub) — Deck Editor augment P/T; Kefnet's Monument deck gen and AI; MustBeBlockedByAll text
 

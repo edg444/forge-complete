@@ -66,7 +66,7 @@ public class VAvatar extends FDisplayObject {
                 drawPlayerIndicator(g, w, h, percentage);
                 g.setAlphaComposite(fade);
                 g.drawRect(w / 12f, Color.WHITE, 0, 0, w, h);
-                g.drawOutlinedText(halvesLabel(amount), Forge.altZoneTabs ? LIFE_FONT_ALT : LIFE_FONT, Color.WHITE, Color.SKY, 0, (getHeight()/2)*fade, getWidth(), getHeight(), false, Align.center, true);
+                g.drawOutlinedText(hundredthsLabel(amount), Forge.altZoneTabs ? LIFE_FONT_ALT : LIFE_FONT, Color.WHITE, Color.SKY, 0, (getHeight()/2)*fade, getWidth(), getHeight(), false, Align.center, true);
                 g.setAlphaComposite(oldAlpha);
             } else if (amount < 0) {
                 if (splatter == null) {
@@ -81,23 +81,27 @@ public class VAvatar extends FDisplayObject {
                 }
                 drawPlayerIndicator(g, w, h, percentage);
                 g.setAlphaComposite(fade);
-                g.drawOutlinedText(halvesLabel(amount), Forge.altZoneTabs ? LIFE_FONT_ALT : LIFE_FONT, Color.RED, Color.ORANGE, 0, (getHeight()/2)*fade, getWidth(), getHeight(), false, Align.center, true);
+                g.drawOutlinedText(hundredthsLabel(amount), Forge.altZoneTabs ? LIFE_FONT_ALT : LIFE_FONT, Color.RED, Color.ORANGE, 0, (getHeight()/2)*fade, getWidth(), getHeight(), false, Align.center, true);
                 g.setAlphaComposite(oldAlpha);
             }
         }
 
-        /** The life difference is counted in halves, so 5 reads as +2 1/2 and -5 as -2 1/2. */
-        private static String halvesLabel(final int halves) {
-            final String sign = halves < 0 ? "-" : "+";
+        /** The life difference is counted in hundredths: 250 reads as +2 1/2, -314 as -3.14 (Just Desserts). */
+        private static String hundredthsLabel(final int hundredths) {
+            final String sign = hundredths < 0 ? "-" : "+";
             // gaining or losing infinite life (Infinity Elemental)
-            if (Infinity.isEitherInfinite(halves / 2)) {
+            if (Infinity.isEitherInfinite(hundredths / 100)) {
                 return sign + "∞";
             }
-            final int whole = Math.abs(halves) / 2;
-            if (Math.abs(halves) % 2 == 0) {
+            final int whole = Math.abs(hundredths) / 100;
+            final int fraction = Math.abs(hundredths) % 100;
+            if (fraction == 0) {
                 return sign + whole;
             }
-            return sign + (whole == 0 ? "½" : whole + "½");
+            if (fraction == 50) {
+                return sign + (whole == 0 ? "½" : whole + "½");
+            }
+            return sign + whole + String.format(".%02d", fraction);
         }
 
         @Override

@@ -79,7 +79,9 @@ public class Player extends GameEntity implements Comparable<Player> {
             ZoneType.Junkyard, ZoneType.Merged, ZoneType.Subgame, ZoneType.None));
 
     private int life = 20;
-    private int halfLife = 0;
+    // the fraction of a life point beyond the whole number, in hundredths: 50 is Bosom Buddy's 1/2, 86 is what Just
+    // Desserts leaves of 20 life ("use 3.14", rulings)
+    private int lifeHundredths = 0;
     private int startingLife = 20;
     private int lifeStartedThisTurnWith = startingLife;
     private int lifeLostThisTurn;
@@ -127,6 +129,7 @@ public class Player extends GameEntity implements Comparable<Player> {
 
     private int simultaneousDamage = 0;
     private int simultaneousHalfDamage = 0;
+    private int simultaneousHundredthsDamage = 0;
 
     private int lastTurnNr = 0;
 
@@ -444,7 +447,7 @@ public class Player extends GameEntity implements Comparable<Player> {
         boolean change = false;
         // becoming exactly N leaves no leftover half - without this, setting the life of a player
         // sitting at 19 1/2 lands them on 20 1/2
-        final boolean hadHalf = hasHalfLife();
+        final boolean hadHalf = hasFractionalLife();
         // Infinity Elemental: "If an effect sets your life total to a specific number, it will be that number, even if
         // you previously had infinite life" - but losing or gaining from infinity changes nothing, so set it outright
         if (Infinity.isEitherInfinite(life) && !Infinity.isEitherInfinite(newLife)) {
@@ -498,20 +501,30 @@ public class Player extends GameEntity implements Comparable<Player> {
 
     // Un-set half life (Bosom Buddy and friends). Life itself stays a whole number everywhere -
     // getLife() feeds ~290 call sites, the network layer and every AI heuristic - so the fraction
-    // is kept as a separate 0-or-1 "extra half" riding alongside it. Nothing outside these methods
+    // is kept as a separate "extra hundredths" riding alongside it. Nothing outside these methods
     // and the 704.5a check needs to know it exists, because every non-Un effect moves life in whole
-    // numbers and therefore leaves the half untouched.
+    // numbers and therefore leaves the fraction untouched.
     public final boolean hasHalfLife() {
-        return halfLife > 0;
+        return lifeHundredths == 50;
     }
+    /** The fraction counted in halves, rounding down - 1 for a 1/2, and for anything else from .50 to .99. */
     public final int getHalfLife() {
-        return halfLife;
+        return lifeHundredths / 50;
+    }
+    public final boolean hasFractionalLife() {
+        return lifeHundredths > 0;
+    }
+    public final int getLifeHundredths() {
+        return lifeHundredths;
     }
     private void setHalfLife(final int h) {
-        if (halfLife == h) {
+        setLifeHundredths(h * 50);
+    }
+    private void setLifeHundredths(final int h) {
+        if (lifeHundredths == h) {
             return;
         }
-        halfLife = h;
+        lifeHundredths = h;
         view.updateHalfLife(this);
         // The life panel only repaints on a life event, so losing just the half - 19 1/2 down to 19,
         // where the whole part never moves - would leave the old total on screen.
@@ -538,14 +551,23 @@ public class Player extends GameEntity implements Comparable<Player> {
         if (halves == 0) {
             return false;
         }
-        final int total = halves + halfLife;
-        // floorDiv/floorMod so a loss that lands on a half borrows from the whole part correctly
-        final int whole = Math.floorDiv(total, 2);
-        final int remainder = Math.floorMod(total, 2);
+        return changeLifeByHundredths(halves * 50, source, sa, manaBurn);
+    }
+
+    /** Change this player's life by hundredths of a point (Just Desserts redirected: -314), carrying like halves do. */
+    public final boolean changeLifeByHundredths(final int hundredths, final Card source, final SpellAbility sa,
+            final boolean manaBurn) {
+        if (hundredths == 0) {
+            return false;
+        }
+        final int total = hundredths + lifeHundredths;
+        // floorDiv/floorMod so a loss that lands on a fraction borrows from the whole part correctly
+        final int whole = Math.floorDiv(total, 100);
+        final int remainder = Math.floorMod(total, 100);
 
         // a blocked or replaced life change must not let the fraction sneak through either. On the
         // loss side the return value can't tell "blocked" from "0 whole life lost", so ask first.
-        if (halves > 0) {
+        if (hundredths > 0) {
             if (!gainLife(Math.max(whole, 0), source, sa, true)) {
                 return false;
             }
@@ -555,7 +577,7 @@ public class Player extends GameEntity implements Comparable<Player> {
             }
             loseLife(Math.max(-whole, 0), false, manaBurn, sa, true);
         }
-        setHalfLife(remainder);
+        setLifeHundredths(remainder);
         return true;
     }
 
@@ -947,10 +969,12 @@ public class Player extends GameEntity implements Comparable<Player> {
         simultaneousDamage = 0;
         // an Unhinged half-power attacker's extra 1/2 lands as 1/2 life, resolved through the same
         // half-life carry the life gain cards use
-        if (simultaneousHalfDamage > 0) {
+        // and Just Desserts' leftover .14 per π, the same way
+        if (simultaneousHalfDamage > 0 || simultaneousHundredthsDamage > 0) {
             final int before = life;
-            changeLifeByHalves(-simultaneousHalfDamage, null, null);
+            changeLifeByHundredths(-(simultaneousHalfDamage * 50 + simultaneousHundredthsDamage), null, null, false);
             simultaneousHalfDamage = 0;
+            simultaneousHundredthsDamage = 0;
             lost += before - life;
         }
         return lost;
@@ -958,6 +982,11 @@ public class Player extends GameEntity implements Comparable<Player> {
 
     public final void addHalfDamage() {
         simultaneousHalfDamage++;
+    }
+
+    /** Just Desserts: the .14 of each 3.14 damage dealt to a player, beyond the whole 3 (rulings: "use 3.14"). */
+    public final void addHundredthsDamage(final int hundredths) {
+        simultaneousHundredthsDamage += hundredths;
     }
 
     /**
@@ -2249,7 +2278,7 @@ public class Player extends GameEntity implements Comparable<Player> {
 
         // Rule 704.5a -  If a player has 0 or less life, he or she loses the game.
         // 1/2 life is still more than 0, so a player sitting on the fraction hasn't lost yet
-        final boolean hasNoLife = getLife() < 0 || (getLife() == 0 && !hasHalfLife());
+        final boolean hasNoLife = getLife() < 0 || (getLife() == 0 && !hasFractionalLife());
         if (hasNoLife && loseConditionMet(GameLossReason.LifeReachedZero, null)) {
             return true;
         }

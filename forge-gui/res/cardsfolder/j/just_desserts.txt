@@ -1,0 +1,7 @@
+Name:Just Desserts
+ManaCost:1 R
+Types:Instant
+# π damage: NumDmg is its whole 3, and Pi$ marks the π - 3 left over wherever the 3 lands (GameAction.dealDamage) -
+# exact on a creature, .14 on a player ("use 3.14", rulings)
+A:SP$ DealDamage | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumDmg$ 3 | Pi$ True | StackDescription$ SpellDescription | SpellDescription$ CARDNAME deals π damage to target creature. (π is the ratio of a circle's circumference to its diameter. (It's a smidgen more than 3.))
+Oracle:Just Desserts deals π damage to target creature. (π is the ratio of a circle's circumference to its diameter. (It's a smidgen more than 3.))

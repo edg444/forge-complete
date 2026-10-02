@@ -562,20 +562,19 @@ public class VPlayerPanel extends FContainer {
         private int ticketCounters = player.getCounters(CounterEnumType.TICKET);
         private int radCounters = player.getCounters(CounterEnumType.RAD);
         private int manaShards = player.getNumManaShards();
-        private boolean halfLife = player.hasHalfLife();
+        private int lifeHundredths = player.getLifeHundredths();
         private String lifeStr = player.getLifeString();
 
         private LifeLabel() {
         }
 
         private void update() {
-            // counted in halves so half damage shows as 2 1/2 rather than rounding to 2 or 3
-            int delta = (player.getLife() * 2 + (player.hasHalfLife() ? 1 : 0))
-                    - (life * 2 + (halfLife ? 1 : 0));
+            // counted in hundredths so half damage shows as 2 1/2 and Just Desserts as 3.14, not rounded away
+            int delta = (player.getLife() * 100 + player.getLifeHundredths()) - (life * 100 + lifeHundredths);
             player.setAvatarLifeDifference(player.getAvatarLifeDifference() + delta);
-            if (delta != 0 || halfLife != player.hasHalfLife()) {
+            if (delta != 0) {
                 life = player.getLife();
-                halfLife = player.hasHalfLife();
+                lifeHundredths = player.getLifeHundredths();
                 lifeStr = player.getLifeString();
             }
 
@@ -602,22 +601,36 @@ public class VPlayerPanel extends FContainer {
             return true;
         }
 
+        /**
+         * The label is sized for a 2-digit total, so a longer one - 19½, 16.86 (Just Desserts), -∞ - steps down
+         * through smaller sizes of the same font until it fits rather than spilling past the avatar.
+         */
+        private FSkinFont fit(final FSkinFont font, final float width) {
+            FSkinFont f = font;
+            while (f.getBounds(lifeStr).width > width && f.canShrink()) {
+                f = f.shrink();
+            }
+            return f;
+        }
+
         @Override
         public void draw(Graphics g) {
             adjustHeight = 1;
             float divider = Gdx.app.getGraphics().getHeight() > 900 ? 1.2f : 2f;
             if (Forge.altPlayerLayout && !Forge.altZoneTabs && Forge.isLandscapeMode()) {
                 if (poisonCounters == 0 && energyCounters == 0 && experienceCounters == 0 && ticketCounters == 0 && radCounters == 0 && manaShards == 0) {
-                    g.fillRect(Color.DARK_GRAY, 0, 0, INFO2_FONT.getBounds(lifeStr).width + 1, INFO2_FONT.getBounds(lifeStr).height + 1);
-                    g.drawText(lifeStr, INFO2_FONT, getInfoForeColor().getColor(), 0, 0, getWidth(), getHeight(), false, Align.left, false);
+                    final FSkinFont lifeFont = fit(INFO2_FONT, getWidth());
+                    g.fillRect(Color.DARK_GRAY, 0, 0, lifeFont.getBounds(lifeStr).width + 1, lifeFont.getBounds(lifeStr).height + 1);
+                    g.drawText(lifeStr, lifeFont, getInfoForeColor().getColor(), 0, 0, getWidth(), getHeight(), false, Align.left, false);
                 } else {
                     float halfHeight = getHeight() / divider;
                     float textStart = halfHeight + Utils.scale(1);
                     float textWidth = getWidth() - textStart;
                     int mod = 1;
-                    g.fillRect(Color.DARK_GRAY, 0, 0, INFO_FONT.getBounds(lifeStr).width + halfHeight + 1, INFO_FONT.getBounds(lifeStr).height + 1);
+                    final FSkinFont lifeFont = fit(INFO_FONT, textWidth);
+                    g.fillRect(Color.DARK_GRAY, 0, 0, lifeFont.getBounds(lifeStr).width + halfHeight + 1, lifeFont.getBounds(lifeStr).height + 1);
                     g.drawImage(FSkinImage.QUEST_LIFE, 0, 0, halfHeight, halfHeight);
-                    g.drawText(lifeStr, INFO_FONT, getInfoForeColor().getColor(), textStart, 0, textWidth, halfHeight, false, Align.left, false);
+                    g.drawText(lifeStr, lifeFont, getInfoForeColor().getColor(), textStart, 0, textWidth, halfHeight, false, Align.left, false);
                     if (poisonCounters > 0) {
                         g.fillRect(Color.DARK_GRAY, 0, halfHeight + 2, INFO_FONT.getBounds(String.valueOf(poisonCounters)).width + halfHeight + 1, INFO_FONT.getBounds(String.valueOf(poisonCounters)).height + 1);
                         g.drawImage(FSkinImage.POISON, 0, halfHeight + 2, halfHeight, halfHeight);
@@ -658,13 +671,13 @@ public class VPlayerPanel extends FContainer {
                 }
             } else {
                 if (poisonCounters == 0 && energyCounters == 0 && manaShards == 0) {
-                    g.drawText(lifeStr, Forge.altZoneTabs ? LIFE_FONT_ALT : LIFE_FONT, getInfoForeColor(), 0, 0, getWidth(), getHeight(), false, Align.center, true);
+                    g.drawText(lifeStr, fit(Forge.altZoneTabs ? LIFE_FONT_ALT : LIFE_FONT, getWidth()), getInfoForeColor(), 0, 0, getWidth(), getHeight(), false, Align.center, true);
                 } else {
                     float halfHeight = getHeight() / 2;
                     float textStart = halfHeight + Utils.scale(1);
                     float textWidth = getWidth() - textStart;
                     g.drawImage(FSkinImage.QUEST_LIFE, 0, 0, halfHeight, halfHeight);
-                    g.drawText(lifeStr, INFO_FONT, getInfoForeColor(), textStart, 0, textWidth, halfHeight, false, Align.center, true);
+                    g.drawText(lifeStr, fit(INFO_FONT, textWidth), getInfoForeColor(), textStart, 0, textWidth, halfHeight, false, Align.center, true);
                     if (poisonCounters > 0) { //prioritize showing poison counters over energy counters
                         g.drawImage(FSkinImage.POISON, 0, halfHeight, halfHeight, halfHeight);
                         g.drawText(String.valueOf(poisonCounters), INFO_FONT, getInfoForeColor(), textStart, halfHeight, textWidth, halfHeight, false, Align.center, true);
