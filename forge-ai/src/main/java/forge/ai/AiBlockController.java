@@ -825,6 +825,7 @@ public class AiBlockController {
             if (ComputerUtilCombat.dealsFirstStrikeDamage(attacker, false, combat)) {
                 safeBlockers = CardLists.getKeyword(blockers, Keyword.FIRST_STRIKE);
                 safeBlockers.addAll(CardLists.getKeyword(blockers, Keyword.DOUBLE_STRIKE));
+                safeBlockers.addAll(CardLists.getKeyword(blockers, Keyword.TRIPLE_STRIKE));
             } else {
                 safeBlockers = new ArrayList<>(blockers);
             }

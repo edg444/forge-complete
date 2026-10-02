@@ -149,9 +149,7 @@ public class ComputerUtilCombat {
     public static int getAttack(final Card c) {
         int n = c.getNetCombatDamage();
 
-        if (c.hasDoubleStrike()) {
-            n *= 2;
-        }
+        n *= c.getCombatDamageStrikes();
 
         return n;
     }
@@ -185,9 +183,7 @@ public class ComputerUtilCombat {
 
             damage += predictPowerBonusOfAttacker(attacker, null, combat, withoutAbilities);
             sum = predictDamageTo(attacked, damage, attacker, true);
-            if (attacker.hasDoubleStrike()) {
-                sum *= 2;
-            }
+            sum *= attacker.getCombatDamageStrikes();
         }
         return sum;
     }
@@ -216,9 +212,7 @@ public class ComputerUtilCombat {
             // opponent can always order it so that he gets 0
             if (pd > 1 || !attacker.getController().getOpponents().getCardsIn(ZoneType.Battlefield).anyMatch(CardPredicates.nameEquals("Vorinclex, Monstrous Raider"))) {
                 poison = pd;
-                if (attacker.hasDoubleStrike()) {
-                    poison *= 2;
-                }
+                poison *= attacker.getCombatDamageStrikes();
             }
         }
         if (damage > 0) {
@@ -557,8 +551,10 @@ public class ComputerUtilCombat {
     public static int dealsDamageAsBlocker(final Card attacker, final Card defender) {
         int defenderDamage = predictDamageByBlockerWithoutDoubleStrike(attacker, defender);
 
-        if (defender.hasDoubleStrike()) {
-            defenderDamage += predictDamageTo(attacker, defenderDamage, defender, true);
+        // each extra strike (double, triple) deals it again
+        final int perStrike = defenderDamage;
+        for (int i = 1; i < defender.getCombatDamageStrikes(); i++) {
+            defenderDamage += predictDamageTo(attacker, perStrike, defender, true);
         }
 
         return defenderDamage;
@@ -2654,9 +2650,7 @@ public class ComputerUtilCombat {
             // intern toxic effect
             poison += attacker.getKeywordMagnitude(Keyword.TOXIC);
         }
-        if (attacker.hasDoubleStrike()) {
-            poison *= 2;
-        }
+        poison *= attacker.getCombatDamageStrikes();
         return poison;
     }
 

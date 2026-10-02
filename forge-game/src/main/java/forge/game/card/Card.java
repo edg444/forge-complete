@@ -1771,13 +1771,24 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return hasKeyword(Keyword.FIRST_STRIKE);
     }
     public final boolean hasDoubleStrike() {
-        return hasKeyword(Keyword.DOUBLE_STRIKE);
+        return hasKeyword(Keyword.DOUBLE_STRIKE) || hasTripleStrike();
+    }
+    /** Three-Headed Goblin: "Triple strike is all the strikes" - first-strike, regular and last-strike damage. */
+    public final boolean hasTripleStrike() {
+        return hasKeyword(Keyword.TRIPLE_STRIKE);
+    }
+    /** How many combat damage steps this deals damage in, if it survives them: 3, 2 or 1. */
+    public final int getCombatDamageStrikes() {
+        if (hasDoubleStrike()) {
+            return hasLastStrike() ? 3 : 2;
+        }
+        return hasFirstStrike() && hasLastStrike() ? 2 : 1;
     }
     public final boolean hasSecondStrike() {
         return hasDoubleStrike() || !hasFirstStrike();
     }
     public final boolean hasLastStrike() {
-        return hasKeyword(Keyword.LAST_STRIKE);
+        return hasKeyword(Keyword.LAST_STRIKE) || hasTripleStrike();
     }
 
     public final boolean hasSuspend() {
@@ -2787,6 +2798,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.startsWith("Graft") || keyword.startsWith("Fading") || keyword.startsWith("Vanishing:")
                         || keyword.startsWith("Afterlife") || keyword.startsWith("Hideaway") || keyword.startsWith("Toxic")
                         || keyword.startsWith("Afflict") || keyword.startsWith ("Poisonous") || keyword.startsWith("Rampage") || keyword.startsWith("Frenzy")
+                        || keyword.equals("Triple strike")
                         || keyword.startsWith("Renown") || keyword.startsWith("Annihilator") || keyword.startsWith("Ripple")
                         || keyword.startsWith("Ward")) {
                     sbLong.append(inst.getTitle());

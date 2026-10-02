@@ -437,9 +437,7 @@ public class AiAttackController {
                     } else {
                         ownAttackerDmg += ComputerUtilCombat.predictPowerBonusOfAttacker(c, null, null, true);
                     }
-                    if (c.hasDoubleStrike()) {
-                        ownAttackerDmg *= 2;
-                    }
+                    ownAttackerDmg *= c.getCombatDamageStrikes();
                     ownAttackerDmg += thresholdMod;
                     // bail if it would cause AI more life loss from counterattack than the damage it provides as attacker
                     if (Math.abs(currentBaselineLife - lastAcceptableBaselineLife) > ownAttackerDmg) {

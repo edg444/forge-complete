@@ -300,6 +300,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   marked damage counts toward lethal, and only the creature is targeted, so a hexproof controller still takes the
   excess.
   - `SuperDuperDeathRayTest` (4). Suite: 954 run, 0 failed, 6 skipped.
+- **Three-Headed Goblin** (ust/99; not scripted upstream; 98a-d Target Minotaur, 100 and 101 are upstream) and
+  **triple strike**: new `Keyword.TRIPLE_STRIKE` ("Triple strike", printed with its reminder text as on the card).
+  The Unstable FAQ says double strike + last strike = triple strike, so `Card.hasDoubleStrike()` and
+  `hasLastStrike()` both include it, and the last-strike step deals its third hit. It has to survive each step to
+  strike again (ruling): a 3/3 first striker trades with it in the first-strike step, and unblocked it deals 9.
+  - AI: `Card.getCombatDamageStrikes()` (3, 2 or 1, also counting first + last strike as 2) replaces the "double
+    strike = x2" in damage and poison predictions, attack planning and blocker damage. Creature evaluation values
+    triple strike above double strike, and first-strike-safe blockers include it.
+  - Every Unstable printing up to 101 now has a script, which completes red.
+  - `ThreeHeadedGoblinTest` (4). Suite: 958 run, 0 failed, 6 skipped.
 
 ### 2026-10-01, fourth build (deployed: desktop, Android, GitHub) — Deck Editor augment P/T; Kefnet's Monument deck gen and AI; MustBeBlockedByAll text
 
