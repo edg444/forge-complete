@@ -263,6 +263,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     longer than two digits. `PlayerView.getLifeHundredths`, trackable `LifeHundredths` and `PiDamage`.
   - Merges: `Pi$` is a fork-only script param the engine depends on - check upstream's linter didn't strip it.
   - `JustDessertsTest` (7). Suite: 942 run, 0 failed, 6 skipped.
+- **Jester's Sombrero AI.** It cast the Sombrero and activated it at players with no sideboard. Now:
+  - New deck flag `AI:RemoveDeck:NoSideboard` (`CardAiHints.getRemNoSideboardDecks`): out of generated decks for games
+    without sideboards - random constructed, Commander and themed decks, through `IS_KEPT_IN_RANDOM_DECKS` and
+    `CardThemedDeckBuilder` - but kept by Limited, whose decks have the rest of the pool as a sideboard.
+  - ChooseCard `AILogic$ TargetHasChoices`: target only a player with something to choose, and the one with the most
+    (a targeted "choose up to N" with MinAmount 0 otherwise counted zero as enough).
+  - `SVar:NeedsToPlayVar` on opponents' sideboard cards, so it isn't cast with nothing to raid.
+  - `JestersSombreroTest` (3). Suite: 945 run, 0 failed, 6 skipped.
 
 ### 2026-10-01, fourth build (deployed: desktop, Android, GitHub) — Deck Editor augment P/T; Kefnet's Monument deck gen and AI; MustBeBlockedByAll text
 

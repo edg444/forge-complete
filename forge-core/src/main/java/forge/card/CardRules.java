@@ -639,6 +639,7 @@ public final class CardRules implements ICardCharacteristics {
         // fields to build CardAiHints
         private boolean removedFromAIDecks = false;
         private boolean removedFromRandomDecks = false;
+        private boolean removedFromNoSideboardDecks = false;
         private boolean removedFromNonCommanderDecks = false;
         private DeckHints hints = null;
         private DeckHints needs = null;
@@ -663,6 +664,7 @@ public final class CardRules implements ICardCharacteristics {
 
             this.removedFromAIDecks = false;
             this.removedFromRandomDecks = false;
+            this.removedFromNoSideboardDecks = false;
             this.removedFromNonCommanderDecks = false;
             this.needs = null;
             this.hints = null;
@@ -683,7 +685,8 @@ public final class CardRules implements ICardCharacteristics {
          * @return the card
          */
         public final CardRules getCard() {
-            CardAiHints cah = new CardAiHints(removedFromAIDecks, removedFromRandomDecks, removedFromNonCommanderDecks, hints, needs, has);
+            CardAiHints cah = new CardAiHints(removedFromAIDecks, removedFromRandomDecks, removedFromNonCommanderDecks,
+                    removedFromNoSideboardDecks, hints, needs, has);
             if (null != faces[0]) faces[0].assignMissingFields();
             else assert(placeholderFaces != null);
             if (null != faces[1]) faces[1].assignMissingFields();
@@ -765,6 +768,7 @@ public final class CardRules implements ICardCharacteristics {
                             this.removedFromAIDecks |= "All".equalsIgnoreCase(value);
                             this.removedFromRandomDecks |= "Random".equalsIgnoreCase(value);
                             this.removedFromNonCommanderDecks |= "NonCommander".equalsIgnoreCase(value);
+                            this.removedFromNoSideboardDecks |= "NoSideboard".equalsIgnoreCase(value);
                         }
                     } else if ("AlternateMode".equals(key)) {
                         this.altMode = CardSplitType.smartValueOf(value);

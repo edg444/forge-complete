@@ -101,13 +101,28 @@ public class ChooseCardAi extends SpellAbilityAi {
             }
 
             // choices like "Creature.TargetedPlayerCtrl" (Blot Out, Sacrifice Play) only exist once a
-            // target is set, so try each opponent rather than checking the choices before targeting
+            // target is set, so try each opponent rather than checking the choices before targeting.
+            // AILogic$ TargetHasChoices: "choose up to N" from the target's cards is pointless with none to choose
+            // (Jester's Sombrero against an empty sideboard), so it takes the opponent with the most.
+            final boolean wantMost = "TargetHasChoices".equals(sa.getParam("AILogic"));
+            final int need = wantMost ? Math.max(1, requiredChoices(sa)) : requiredChoices(sa);
+            Player best = null;
+            int bestCount = -1;
             for (final Player opp : oppList) {
                 sa.getTargets().add(opp);
-                if (getChoices(ai, sa).size() >= requiredChoices(sa)) {
-                    return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
-                }
+                final int count = getChoices(ai, sa).size();
                 sa.resetTargets();
+                if (count >= need && count > bestCount) {
+                    best = opp;
+                    bestCount = count;
+                    if (!wantMost) {
+                        break;
+                    }
+                }
+            }
+            if (best != null) {
+                sa.getTargets().add(best);
+                return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
             }
             return new AiAbilityDecision(0, AiPlayDecision.MissingNeededCards);
         }
@@ -361,6 +376,8 @@ public class ChooseCardAi extends SpellAbilityAi {
             }
         } else if ("NextTurnAttacker".equals(logic)) {
             choice = ComputerUtilCard.getBestCreatureToAttackNextTurnAI(ai, options);
+        } else if ("TargetHasChoices".equals(logic)) {
+            choice = ComputerUtilCard.getBestAI(options);
         } else {
             choice = ComputerUtilCard.getBestAI(options);
             System.err.println("Bad ChooseCard AILogic value for " + host.getName() + " - reverting to default");

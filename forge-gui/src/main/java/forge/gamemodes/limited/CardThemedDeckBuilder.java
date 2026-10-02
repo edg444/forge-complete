@@ -590,6 +590,7 @@ public class CardThemedDeckBuilder extends DeckGeneratorBase {
                         && !deckListNames.contains(card.getName())
                         && !card.getRules().getAiHints().getRemAIDecks()
                         && !card.getRules().getAiHints().getRemRandomDecks()
+                        && !card.getRules().getAiHints().getRemNoSideboardDecks()
                         && !card.getRules().getMainPart().getType().isLand();
             }
         };
@@ -804,6 +805,7 @@ public class CardThemedDeckBuilder extends DeckGeneratorBase {
                 && !deckListNames.contains(card.getName())
                 && !card.getRules().getAiHints().getRemAIDecks()
                 && !card.getRules().getAiHints().getRemRandomDecks()
+                && !card.getRules().getAiHints().getRemNoSideboardDecks()
                 && !card.getRules().getMainPart().getType().isLand();
 
         List<PaperCard> possibleList = Lists.newArrayList(pool.getAllCards(possibleFromFullPool));

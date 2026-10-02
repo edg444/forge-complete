@@ -9,12 +9,19 @@ public class CardAiHints {
     private final boolean isRemovedFromAIDecks;
     private final boolean isRemovedFromRandomDecks;
     private final boolean isRemovedFromNonCommanderDecks;
+    private final boolean isRemovedFromNoSideboardDecks;
 
     private final DeckHints deckHints;
     private final DeckHints deckNeeds;
     private final DeckHints deckHas;
 
     public CardAiHints(boolean remAi, boolean remRandom, boolean remUnlessCommander, DeckHints dh, DeckHints dn, DeckHints has) {
+        this(remAi, remRandom, remUnlessCommander, false, dh, dn, has);
+    }
+
+    public CardAiHints(boolean remAi, boolean remRandom, boolean remUnlessCommander, boolean remNoSideboard, DeckHints dh,
+            DeckHints dn, DeckHints has) {
+        isRemovedFromNoSideboardDecks = remNoSideboard;
         isRemovedFromAIDecks = remAi;
         isRemovedFromRandomDecks = remRandom;
         isRemovedFromNonCommanderDecks = remUnlessCommander;
@@ -37,6 +44,15 @@ public class CardAiHints {
      * 
      * @return the rem random decks
      */
+    /**
+     * AI:RemoveDeck:NoSideboard - a card that only works on sideboards (Jester's Sombrero) stays out of generated
+     * decks for games without them: random constructed, Commander and themed decks. Limited decks have a sideboard
+     * (the rest of the pool), so they keep it.
+     */
+    public boolean getRemNoSideboardDecks() {
+        return isRemovedFromNoSideboardDecks;
+    }
+
     public boolean getRemRandomDecks() {
         return this.isRemovedFromRandomDecks;
     }

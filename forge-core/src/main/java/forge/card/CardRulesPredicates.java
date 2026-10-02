@@ -23,7 +23,9 @@ public final class CardRulesPredicates {
 
     public static final Predicate<CardRules> IS_KEPT_IN_AI_DECKS = card -> !card.getAiHints().getRemAIDecks();
     public static final Predicate<CardRules> IS_KEPT_IN_AI_LIMITED_DECKS = card -> !card.getAiHints().getRemAIDecks() && !card.getAiHints().getRemNonCommanderDecks();
-    public static final Predicate<CardRules> IS_KEPT_IN_RANDOM_DECKS = card -> !card.getAiHints().getRemRandomDecks();
+    // generated decks have no sideboard, so a card that needs one (AI:RemoveDeck:NoSideboard) is out too
+    public static final Predicate<CardRules> IS_KEPT_IN_RANDOM_DECKS = card -> !card.getAiHints().getRemRandomDecks()
+            && !card.getAiHints().getRemNoSideboardDecks();
 
     // Static builder methods - they choose concrete implementation by themselves
     /**
