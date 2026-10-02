@@ -178,8 +178,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ## Log
 
-### Unreleased
+### 2026-10-02 (deployed: desktop, Android, GitHub) — upstream merge (12 commits, incl. Unfinity stickers); Unstable red complete (The Big Idea through Three-Headed Goblin); printed-line OCR; infinity; π damage; Party Crasher; triple strike; Jester's Sombrero AI
 
+- **Upstream merge** (12 commits, among them Unfinity stickers and sticker sheets, Goblin Blastronauts, and the
+  draw-from-the-bottom keyword becoming a `DrawFromBottom` static). Six conflicts, each kept both sides:
+  `StaticAbility` (the fork's `GainsTextBoxOf` beside the sticker params), `PlayerControllerAi`
+  (`chooseStringForEffect` beside the sticker choices), `GamePieceType` (`LIBRARY` and `STICKER_SHEET`),
+  `CardView` (chosen expansion and player-counter info beside `updateStickers`), `RollDiceEffect` (The Big Idea's
+  per-die `RolledDie` triggers now also pass upstream's `SourceSA`), and `Player` (drawing another player's library
+  still ignores your own `drawsFromBottom()`). No fork-only script params were stripped. Suite after the merge:
+  983 run, 0 failed, 6 skipped.
 - **The Big Idea** (ust/76, first red Unstable card; not scripted upstream either). Its shield is an Effect
   (`Duration$ Permanent`, since the card has no "this turn") with a `RollDice` replacement that raises a new
   replacement value, `CombinedDice`. `RollDiceEffect.rollAction` rolls that many extra dice for the first die
