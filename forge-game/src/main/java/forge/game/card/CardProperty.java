@@ -11,6 +11,7 @@ import forge.card.MagicColor;
 import forge.card.mana.ManaCost;
 import forge.card.mana.ManaCostShard;
 import forge.game.CardTraitBase;
+import forge.game.card.sticker.StickerKind;
 import forge.game.EvenOdd;
 import forge.game.Game;
 import forge.game.GameEntity;
@@ -1712,6 +1713,15 @@ public class CardProperty {
             if (!card.isModified()) {
                 return false;
             }
+        } else if (property.equals("stickered")) {
+            if (!card.isStickered()) {
+                return false;
+            }
+        } else if (property.startsWith("stickeredWith ")) {
+            StickerKind wanted = StickerKind.smartValueOf(property.substring("stickeredWith ".length()));
+            if (card.getStickers().stream().noneMatch(s -> s.getKind() == wanted)) {
+                return false;
+            }
         } else if (property.startsWith("token")) {
             if (!card.isToken() && !card.isTokenCard()) {
                 return false;
@@ -1801,7 +1811,8 @@ public class CardProperty {
             }
         } else if (property.startsWith("power") || property.startsWith("toughness") || property.startsWith("cmc")
                 || property.startsWith("totalPT") || property.startsWith("numColors")
-                || property.startsWith("basePower") || property.startsWith("baseToughness") || property.startsWith("numTypes")) {
+                || property.startsWith("basePower") || property.startsWith("baseToughness") || property.startsWith("numTypes")
+                || property.startsWith("numCreatureTypes")) {
             int x;
             int y = 0;
             String rhs = "";
@@ -1830,6 +1841,9 @@ public class CardProperty {
             } else if (property.startsWith("numTypes")) {
                 rhs = property.substring(10);
                 y = Iterables.size(card.getType().getCoreTypes());
+            } else if (property.startsWith("numCreatureTypes")) {
+                rhs = property.substring(18);
+                y = card.getType().getCreatureTypes().size();
             }
             if (rhs.equals("Chosen")) {
                 if (!source.hasChosenNumber()) {

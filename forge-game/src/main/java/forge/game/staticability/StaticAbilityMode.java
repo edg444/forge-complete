@@ -126,6 +126,9 @@ public enum StaticAbilityMode {
     // StaticAbilityCantDraw
     CantDraw,
 
+    // StaticAbilityDrawFromBottom
+    DrawFromBottom,
+
     // StaticAbilityCantDiscard
     CantDiscard,
 

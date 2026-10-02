@@ -434,6 +434,7 @@ public class RollDiceEffect extends SpellAbilityEffect {
             }
         }
 
+        SpellAbility sourceSA = sa != null ? sa.getRootAbility() : null;
         // The Big Idea rulings: "whenever you roll a die" triggers for each of the dice rolled for one, and sees
         // each die's own result rather than the total
         int extraDice = 0;
@@ -452,6 +453,7 @@ public class RollDiceEffect extends SpellAbilityEffect {
                 runParams.put(AbilityKey.NaturalResult, dice == null ? roll.getNaturalValue() : dice.get(d));
                 runParams.put(AbilityKey.RolledToVisitAttractions, toVisitAttractions);
                 runParams.put(AbilityKey.Number, player.getNumRollsThisTurn() - amount - extraDice + rollNum);
+                runParams.put(AbilityKey.SourceSA, sourceSA);
                 player.getGame().getTriggerHandler().runTrigger(TriggerType.RolledDie, runParams, false);
                 rollNum++;
             }
@@ -460,6 +462,7 @@ public class RollDiceEffect extends SpellAbilityEffect {
         runParams.put(AbilityKey.Sides, sides);
         runParams.put(AbilityKey.Result, getFinalResults(resultsList));
         runParams.put(AbilityKey.RolledToVisitAttractions, toVisitAttractions);
+        runParams.put(AbilityKey.SourceSA, sourceSA);
         player.getGame().getTriggerHandler().runTrigger(TriggerType.RolledDieOnce, runParams, false);
 
         return getFinalResults(resultsList).stream().reduce(0, Integer::sum);

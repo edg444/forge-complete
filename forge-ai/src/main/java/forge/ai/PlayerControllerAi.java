@@ -5,6 +5,7 @@ import forge.LobbyPlayer;
 import forge.StaticData;
 import forge.ai.ability.GuessWordAi;
 import forge.ai.ability.ProtectAi;
+import forge.ai.ability.PutStickerAi;
 import forge.card.CardStateName;
 import forge.card.ColorSet;
 import forge.card.ICardFace;
@@ -19,6 +20,7 @@ import forge.game.ability.ApiType;
 import forge.game.ability.effects.CharmEffect;
 import forge.game.ability.effects.RollDiceEffect;
 import forge.game.card.*;
+import forge.game.card.sticker.Sticker;
 import forge.game.combat.Combat;
 import forge.game.cost.*;
 import forge.game.keyword.Keyword;
@@ -733,6 +735,21 @@ public class PlayerControllerAi extends PlayerController {
     @Override
     public String chooseStringForEffect(final List<String> options, final SpellAbility sa, final String prompt) {
         return SpellApiToAi.Converter.get(sa).chooseString(player, sa, options);
+    }
+
+    @Override
+    public Sticker chooseSticker(List<Sticker> options, Card target, SpellAbility sa, boolean isOptional) {
+        return PutStickerAi.chooseSticker(options, target, sa, isOptional);
+    }
+
+    @Override
+    public int chooseStickerNamePosition(Sticker sticker, Card target) {
+        return 0;
+    }
+
+    @Override
+    public Card chooseCardToKeepStickers(CardCollectionView options) {
+        return ComputerUtilCard.getBestAI(options);
     }
 
     @Override
