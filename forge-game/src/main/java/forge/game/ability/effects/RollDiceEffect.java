@@ -49,6 +49,7 @@ public class RollDiceEffect extends SpellAbilityEffect {
     public static class DieRollResult {
         private int naturalValue;
         private int modifiedValue;
+        private List<Integer> combinedDice;
 
         public DieRollResult(int naturalValue, int modifiedValue) {
             this.naturalValue = naturalValue;
@@ -57,6 +58,13 @@ public class RollDiceEffect extends SpellAbilityEffect {
 
         public int getNaturalValue() {
             return naturalValue;
+        }
+        /** The Big Idea: the physical dice whose total is this one result, or null for an ordinary die. */
+        public List<Integer> getCombinedDice() {
+            return combinedDice;
+        }
+        public void setCombinedDice(List<Integer> combinedDice) {
+            this.combinedDice = combinedDice;
         }
         public int getModifiedValue() {
             return modifiedValue;
@@ -97,6 +105,19 @@ public class RollDiceEffect extends SpellAbilityEffect {
             naturalResults.add(r.getModifiedValue());
         }
         return naturalResults;
+    }
+
+    /** Each physical die's result: a combined result counts as the dice it was made of (The Big Idea rulings). */
+    public static List<Integer> getPhysicalResults(List<DieRollResult> results) {
+        List<Integer> physical = new ArrayList<>();
+        for (DieRollResult r : results) {
+            if (r.getCombinedDice() == null) {
+                physical.add(r.getModifiedValue());
+            } else {
+                physical.addAll(r.getCombinedDice());
+            }
+        }
+        return physical;
     }
 
     /* (non-Javadoc)
@@ -145,7 +166,8 @@ public class RollDiceEffect extends SpellAbilityEffect {
 
         final Map<AbilityKey, Object> repParams = AbilityKey.mapFromAffected(player);
         List<Integer> ignored = new ArrayList<>();
-        List<Integer> naturalRolls = rollAction(amount, sides, ignore, rollsResult, ignored, ignoreChosenMap, dicePTExchanges, player, repParams);
+        List<List<Integer>> combinedRolls = new ArrayList<>();
+        List<Integer> naturalRolls = rollAction(amount, sides, ignore, rollsResult, ignored, ignoreChosenMap, dicePTExchanges, combinedRolls, player, repParams);
 
         if (sa != null && sa.hasParam("UseHighestRoll")) {
             naturalRolls.subList(0, naturalRolls.size() - 1).clear();
@@ -171,7 +193,7 @@ public class RollDiceEffect extends SpellAbilityEffect {
                     naturalRolls.remove(roll);
                 }
                 int amountToReroll = diceToReroll.size();
-                List<Integer> rerolls = rollAction(amountToReroll, sides, 0, null, ignored, Maps.newHashMap(), dicePTExchanges, player, repParams);
+                List<Integer> rerolls = rollAction(amountToReroll, sides, 0, null, ignored, Maps.newHashMap(), dicePTExchanges, combinedRolls, player, repParams);
                 naturalRolls.addAll(rerolls);
                 activationsThisTurn += 1;
                 c.setSVar("ModsThisTurn", "Number$" + activationsThisTurn);
@@ -204,7 +226,7 @@ public class RollDiceEffect extends SpellAbilityEffect {
                     naturalRolls.remove(roll);
                 }
                 int amountToReroll = diceToReroll.size();
-                List<Integer> rerolls = rollAction(amountToReroll, sides, 0, null, ignored, Maps.newHashMap(), dicePTExchanges, player, repParams);
+                List<Integer> rerolls = rollAction(amountToReroll, sides, 0, null, ignored, Maps.newHashMap(), dicePTExchanges, combinedRolls, player, repParams);
                 naturalRolls.addAll(rerolls);
                 activationsThisTurn += 1;
                 c.setSVar("ModsThisTurn", "Number$" + activationsThisTurn);
@@ -231,7 +253,7 @@ public class RollDiceEffect extends SpellAbilityEffect {
                     break;
                 }
                 naturalRolls.remove(Integer.valueOf(3));
-                List<Integer> reroll = rollAction(1, sides, 0, null, ignored, Maps.newHashMap(), dicePTExchanges, player, repParams);
+                List<Integer> reroll = rollAction(1, sides, 0, null, ignored, Maps.newHashMap(), dicePTExchanges, combinedRolls, player, repParams);
                 naturalRolls.addAll(reroll);
             }
         }
@@ -288,6 +310,17 @@ public class RollDiceEffect extends SpellAbilityEffect {
         for (Integer unmodified : naturalRolls) {
             // Add all the unmodified rolls into the results
             resultsList.add(new DieRollResult(unmodified, unmodified));
+        }
+
+        // A combined total can have been rerolled or ignored away since, so only one still in the results is matched
+        for (List<Integer> combined : combinedRolls) {
+            final int total = combined.stream().reduce(0, Integer::sum);
+            for (DieRollResult result : resultsList) {
+                if (result.getCombinedDice() == null && result.getNaturalValue() == total) {
+                    result.setCombinedDice(combined);
+                    break;
+                }
+            }
         }
 
         // Squirrel-Powered Scheme: the result goes up, the natural roll doesn't
@@ -354,8 +387,14 @@ public class RollDiceEffect extends SpellAbilityEffect {
                 sb.append("\r\n").append(Localizer.getInstance().getMessage("lblNaturalRolls",
                         StringUtils.join(getNaturalResults(resultsList), ", ")));
             }
+            for (DieRollResult result : resultsList) {
+                if (result.getCombinedDice() != null) {
+                    sb.append("\r\n").append("Rolled ").append(result.getCombinedDice().size()).append(" dice for one: ")
+                            .append(StringUtils.join(result.getCombinedDice(), " + ")).append(" = ").append(result.getNaturalValue());
+                }
+            }
             player.getGame().getAction().notifyOfValue(sa, player, sb.toString(), null);
-            player.addDieRollThisTurn(getFinalResults(resultsList));
+            player.addDieRollThisTurn(getPhysicalResults(resultsList));
         }
 
         List<Integer> rolls = Lists.newArrayList();
@@ -395,16 +434,27 @@ public class RollDiceEffect extends SpellAbilityEffect {
             }
         }
 
+        // The Big Idea rulings: "whenever you roll a die" triggers for each of the dice rolled for one, and sees
+        // each die's own result rather than the total
+        int extraDice = 0;
+        for (DieRollResult roll : resultsList) {
+            if (roll.getCombinedDice() != null) {
+                extraDice += roll.getCombinedDice().size() - 1;
+            }
+        }
         int rollNum = 1;
         for (DieRollResult roll : resultsList) {
-            final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(player);
-            runParams.put(AbilityKey.Sides, sides);
-            runParams.put(AbilityKey.Result, roll.getModifiedValue());
-            runParams.put(AbilityKey.NaturalResult, roll.getNaturalValue());
-            runParams.put(AbilityKey.RolledToVisitAttractions, toVisitAttractions);
-            runParams.put(AbilityKey.Number, player.getNumRollsThisTurn() - amount + rollNum);
-            player.getGame().getTriggerHandler().runTrigger(TriggerType.RolledDie, runParams, false);
-            rollNum++;
+            final List<Integer> dice = roll.getCombinedDice();
+            for (int d = 0; d < (dice == null ? 1 : dice.size()); d++) {
+                final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(player);
+                runParams.put(AbilityKey.Sides, sides);
+                runParams.put(AbilityKey.Result, dice == null ? roll.getModifiedValue() : dice.get(d));
+                runParams.put(AbilityKey.NaturalResult, dice == null ? roll.getNaturalValue() : dice.get(d));
+                runParams.put(AbilityKey.RolledToVisitAttractions, toVisitAttractions);
+                runParams.put(AbilityKey.Number, player.getNumRollsThisTurn() - amount - extraDice + rollNum);
+                player.getGame().getTriggerHandler().runTrigger(TriggerType.RolledDie, runParams, false);
+                rollNum++;
+            }
         }
         final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(player);
         runParams.put(AbilityKey.Sides, sides);
@@ -480,8 +530,10 @@ public class RollDiceEffect extends SpellAbilityEffect {
      * @return list of final roll results after applying ignores and replacements, sorted in ascending order
      */
     @SuppressWarnings("unchecked")
-    private static List<Integer> rollAction(int amount, int sides, int ignore, List<Integer> rollsResult, List<Integer> ignored, Map<Player, Integer> ignoreChosenMap, Set<Card> dicePTExchanges, Player player, Map<AbilityKey, Object> repParams) {
+    private static List<Integer> rollAction(int amount, int sides, int ignore, List<Integer> rollsResult, List<Integer> ignored, Map<Player, Integer> ignoreChosenMap, Set<Card> dicePTExchanges, List<List<Integer>> combinedRolls, Player player, Map<AbilityKey, Object> repParams) {
+        int combined = 0;
         repParams.put(AbilityKey.Sides, sides);
+        repParams.put(AbilityKey.CombinedDice, combined);
         repParams.put(AbilityKey.Number, amount);
         repParams.put(AbilityKey.Ignore, ignore);
         repParams.put(AbilityKey.DicePTExchanges, dicePTExchanges);
@@ -494,6 +546,7 @@ public class RollDiceEffect extends SpellAbilityEffect {
                 ignore = (int) repParams.get(AbilityKey.Ignore);
                 //noinspection unchecked
                 ignoreChosenMap = (Map<Player, Integer>) repParams.get(AbilityKey.IgnoreChosen);
+                combined = (int) repParams.get(AbilityKey.CombinedDice);
                 break;
             }
             default:
@@ -503,16 +556,18 @@ public class RollDiceEffect extends SpellAbilityEffect {
         List<Integer> naturalRolls = (rollsResult == null ? new ArrayList<>() : rollsResult);
 
         for (int i = 0; i < amount; i++) {
-            int roll = MyRandom.getRandom().nextInt(sides) + 1;
-            // Play the die roll sound
-            player.getGame().fireEvent(new GameEventRollDie());
-            player.roll();
-            while (tapWallToReroll(player, roll, sides, roll + " on a " + sides + "-sided die")) {
-                roll = MyRandom.getRandom().nextInt(sides) + 1;
-                player.getGame().fireEvent(new GameEventRollDie());
-                player.roll();
+            if (i == 0 && combined > 0) {
+                // The Big Idea: one die is replaced by more dice, and their total is that die's result. A second
+                // such replacement applies to the dice the first one rolled (614.5), so they all add up to one.
+                final List<Integer> dice = new ArrayList<>();
+                for (int d = 0; d <= combined; d++) {
+                    dice.add(rollPhysicalDie(player, sides));
+                }
+                combinedRolls.add(dice);
+                naturalRolls.add(dice.stream().reduce(0, Integer::sum));
+            } else {
+                naturalRolls.add(rollPhysicalDie(player, sides));
             }
-            naturalRolls.add(useInstalledResult(player, roll));
         }
 
         naturalRolls.sort(null);
@@ -534,6 +589,19 @@ public class RollDiceEffect extends SpellAbilityEffect {
         }
 
         return naturalRolls;
+    }
+
+    private static int rollPhysicalDie(final Player player, final int sides) {
+        int roll = MyRandom.getRandom().nextInt(sides) + 1;
+        // Play the die roll sound
+        player.getGame().fireEvent(new GameEventRollDie());
+        player.roll();
+        while (tapWallToReroll(player, roll, sides, roll + " on a " + sides + "-sided die")) {
+            roll = MyRandom.getRandom().nextInt(sides) + 1;
+            player.getGame().fireEvent(new GameEventRollDie());
+            player.roll();
+        }
+        return useInstalledResult(player, roll);
     }
 
     /**

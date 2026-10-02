@@ -138,6 +138,9 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 - `AddTrigger$`, `RandomSet`, `Staying Power`, additional activation zones, `Rotate180` display for
   tokens printed inverted.
 - Dev mode can pick which printing to add.
+- **Several dice rolled for one** (`ReplaceEffect | VarName$ CombinedDice`, The Big Idea): a `RollDice`
+  replacement that turns the first die into extra dice whose total is its result; roll triggers still see each
+  physical die.
 - **Last strike** (`K:Last Strike`, Unstable) — a further combat damage step after the regular one, run as a
   repeat of `COMBAT_DAMAGE` rather than a new `PhaseType`.
 - **K: lines keep upstream's text.** The engine parses a K: line's head into a `Keyword` and looks sentence
@@ -149,6 +152,18 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 ## Log
 
 ### Unreleased
+
+- **The Big Idea** (ust/76, first red Unstable card; not scripted upstream either). Its shield is an Effect
+  (`Duration$ Permanent`, since the card has no "this turn") with a `RollDice` replacement that raises a new
+  replacement value, `CombinedDice`. `RollDiceEffect.rollAction` rolls that many extra dice for the first die
+  and sums them into one result (`DieRollResult.getCombinedDice()`), so the total feeds everything that reads
+  the result, and the log shows "Rolled 2 dice for one: 3 + 3 = 6". Two shields both apply to the same next
+  roll (614.5), making it three dice for one. Following the three Scryfall rulings (2018-01-19): `RolledDie`
+  triggers fire once per physical die with that die's own value (Chittering Doom doesn't see the total), and a
+  roll-two-dice-and-use-the-difference ability gets only one die replaced. `Number$` (Resolute Veggiesaur)
+  and "dice rolled this turn" count the physical dice. The AI shields at the opponent's end step
+  (`AILogic$ AtOppEOT`), when tapping its Brainiacs costs nothing.
+  - `TheBigIdeaTest` (7). Suite: 904 run, 0 failed, 6 skipped.
 
 ### 2026-10-01, fourth build (deployed: desktop, Android, GitHub) — Deck Editor augment P/T; Kefnet's Monument deck gen and AI; MustBeBlockedByAll text
 

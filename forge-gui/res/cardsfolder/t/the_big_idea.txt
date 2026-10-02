@@ -1,0 +1,13 @@
+Name:The Big Idea
+ManaCost:4 R R
+Types:Legendary Creature Brainiac Villain
+PT:4/4
+A:AB$ RollDice | Cost$ 2 BR BR T | ResultSVar$ X | SubAbility$ DBToken | SpellDescription$ Roll a six-sided die. Create a number of 1/1 red Brainiac creature tokens equal to the result.
+SVar:DBToken:DB$ Token | TokenAmount$ X | TokenScript$ r_1_1_brainiac
+A:AB$ Effect | Cost$ tapXType<3/Creature.Brainiac/Brainiac> | ReplacementEffects$ BigRoll | Duration$ Permanent | AILogic$ AtOppEOT | SpellDescription$ The next time you would roll a six-sided die, instead roll two six-sided dice and use the total of those results.
+SVar:BigRoll:Event$ RollDice | ValidPlayer$ You | ValidSides$ 6 | ReplaceWith$ TwoDice | Description$ The next time you would roll a six-sided die, instead roll two six-sided dice and use the total of those results.
+SVar:TwoDice:DB$ ReplaceEffect | VarName$ CombinedDice | VarValue$ ReplaceCount$CombinedDice/Plus.1 | SubAbility$ DBExileEffect
+SVar:DBExileEffect:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
+DeckHas:Ability$Token & Type$Brainiac
+DeckHints:Type$Brainiac
+Oracle:{2}{B/R}{B/R}, {T}: Roll a six-sided die. Create a number of 1/1 red Brainiac creature tokens equal to the result.\nTap three untapped Brainiacs you control: The next time you would roll a six-sided die, instead roll two six-sided dice and use the total of those results.

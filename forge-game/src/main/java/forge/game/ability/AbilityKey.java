@@ -37,6 +37,7 @@ public enum AbilityKey {
     Causer("Causer"),
     Championed("Championed"),
     ClassLevel("ClassLevel"),
+    CombinedDice("CombinedDice"),
     CostStack("CostStack"),
     CounterAmount("CounterAmount"),
     CounterNum("CounterNum"),
