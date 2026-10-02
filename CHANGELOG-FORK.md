@@ -210,6 +210,10 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     is about the physical card, so like a signature it stays with the card through every zone. The AI can't look,
     so it never claims a hat.
   - `GoblinHaberdasherTest` (5). Suite: 916 run, 0 failed, 6 skipped.
+- **Half-Orc, Half-** (ust/84; not scripted upstream). The first augment whose unfinished condition has an
+  intervening "if" (`CheckSVar$` with `PlayerCountRegisteredOpponents$HasPropertywasDealtDamageThisTurn`); the
+  combined trigger keeps the condition and its SVar, so no engine change was needed. `HalfOrcTest` (3, with
+  Adorable Kitten as the host). Suite: 919 run, 0 failed, 6 skipped.
 
 ### 2026-10-01, fourth build (deployed: desktop, Android, GitHub) — Deck Editor augment P/T; Kefnet's Monument deck gen and AI; MustBeBlockedByAll text
 

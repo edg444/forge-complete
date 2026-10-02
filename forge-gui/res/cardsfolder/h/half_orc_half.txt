@@ -1,0 +1,12 @@
+Name:Half-Orc, Half-
+ManaCost:no cost
+Colors:red
+Types:Creature Orc Warrior
+PT:+3/+1
+K:Trample
+K:Augment:1 R R
+# An augment's triggers are unfinished conditions with no Execute - combining with a host completes them with
+# the host's effect (CardFactory.getAugmentedCloneStates). On their own they never do anything.
+T:Mode$ Phase | Phase$ End of Turn | TriggerZones$ Battlefield | CheckSVar$ HalfOrcOpponentDamaged | SVarCompare$ GE1 | TriggerDescription$ At the beginning of each end step, if an opponent was dealt damage this turn,
+SVar:HalfOrcOpponentDamaged:PlayerCountRegisteredOpponents$HasPropertywasDealtDamageThisTurn
+Oracle:Trample\nAt the beginning of each end step, if an opponent was dealt damage this turn,\nAugment {1}{R}{R} ({1}{R}{R}, Reveal this card from your hand: Combine it with target host. Augment only as a sorcery.)
