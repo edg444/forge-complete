@@ -9,7 +9,7 @@ import forge.game.card.CardFactoryUtil;
 import forge.game.player.Player;
 
 /**
- * Text-box readers (Lexivore, Frazzled Editor, Pygmy Giant, Tainted Monkey). Stored Oracle text separates
+ * Text-box readers (Pygmy Giant, Tainted Monkey). Stored Oracle text separates
  * paragraphs with the script's literal backslash-n, not a real newline, so these check that the readers see
  * paragraphs rather than one long run with "\n" glued into it.
  */
@@ -22,34 +22,6 @@ public class TextBoxTest extends AITest {
 
         AssertJUnit.assertTrue(shivan.getOracleText().contains("\\n"));
         AssertJUnit.assertFalse(shivan.getOracleText().contains("\n"));
-    }
-
-    @Test
-    public void testLineCountMeasuresEachParagraph() {
-        Game game = initAndCreateGame();
-        Card shivan = addCard("Shivan Dragon", game.getPlayers().get(1));
-
-        // "Flying" takes a line and 48 characters wrap to 2; measured as one 56-character run it would be 2
-        AssertJUnit.assertEquals("Flying\\n{R}: This creature gets +1/+0 until end of turn.", shivan.getOracleText());
-        AssertJUnit.assertEquals(3, CardFactoryUtil.getTextBoxLineCount(shivan));
-    }
-
-    @Test
-    public void testLineCountGivesShortParagraphsALineEach() {
-        Game game = initAndCreateGame();
-        Card bears = addCard("Grizzly Bears", game.getPlayers().get(1));
-        bears.setOracleText("Flying\\nVigilance\\nTrample\\nHaste");
-
-        AssertJUnit.assertEquals(4, CardFactoryUtil.getTextBoxLineCount(bears));
-    }
-
-    @Test
-    public void testLineCountAcceptsRealNewlines() {
-        Game game = initAndCreateGame();
-        Card bears = addCard("Grizzly Bears", game.getPlayers().get(1));
-        bears.setOracleText("Flying\r\nVigilance\nTrample");
-
-        AssertJUnit.assertEquals(3, CardFactoryUtil.getTextBoxLineCount(bears));
     }
 
     @Test

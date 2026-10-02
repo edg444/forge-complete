@@ -1107,6 +1107,15 @@ public class CardFactoryUtil {
             trigger.setOverridingAbility(AbilityFactory.getAbility(effect, card));
 
             inst.addTrigger(trigger);
+        } else if (keyword.startsWith("Frenzy")) {
+            final String n = keyword.split(":")[1];
+            final String trigStr = "Mode$ AttackerUnblocked | ValidCard$ Card.Self | TriggerZones$ Battlefield | Secondary$ True"
+                    + " | TriggerDescription$ Frenzy " + n + " (" + inst.getReminderText() + ")";
+            final Trigger trigger = TriggerHandler.parseTrigger(trigStr, card, intrinsic);
+            final SpellAbility sa = AbilityFactory.getAbility("DB$ Pump | Defined$ Self | NumAtt$ +" + n, card);
+            sa.setIntrinsic(intrinsic);
+            trigger.setOverridingAbility(sa);
+            inst.addTrigger(trigger);
         } else if (keyword.equals("For Mirrodin")) {
             final StringBuilder sbTrig = new StringBuilder();
             sbTrig.append("Mode$ ChangesZone | Destination$ Battlefield | ");
@@ -3796,6 +3805,13 @@ public class CardFactoryUtil {
             sb2.append("Count$Valid ").append(t).append(t.contains(".") ? "+" : ".").append("YouCtrl");
             st.setSVar("AffinityX", sb2.toString());
             inst.addStaticAbility(st);
+        } else if (keyword.equals("Art menace")) {
+            // Garbage Elemental. Art Scryfall's Tagger hasn't counted figures in is left to the players, except that
+            // the AI, which can't look at it, only blocks with art it knows shows two or more
+            String effect = "Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.ArtFiguresSolo,"
+                    + "Creature.ArtFiguresUnknown+ControlledByAI | Secondary$ True"
+                    + " | Description$ Art menace (" + inst.getReminderText() + ")";
+            inst.addStaticAbility(StaticAbility.create(effect, state.getCard(), state, intrinsic));
         } else if (keyword.startsWith("Blitz")) {
             final String[] k = keyword.split(":");
             final String manacost = k[1];
@@ -4185,14 +4201,6 @@ public class CardFactoryUtil {
         }
     }
 
-    // "Most lines of text in its text box" (Lexivore) has no comprehensive-rules definition -
-    // real line count depends on the specific printing's frame/font, which even paper players
-    // just eyeball. This approximates it from the card's stored Oracle text (which already
-    // includes keyword lines and reminder text, matching what's actually printed) by simulating
-    // word wrap at a fixed width calibrated to a typical modern card frame. Not pixel-accurate
-    // to any one printing, but deterministic and consistent across every card for comparison.
-    private static final int TEXT_BOX_CHARS_PER_LINE = 40;
-
     // Punctuate names the marks that count in its own reminder text, and the Unhinged FAQ confirms
     // nothing outside that list does. Both straight and curly quotes are here because stored Oracle
     // text uses either depending on the card.
@@ -4419,22 +4427,4 @@ public class CardFactoryUtil {
         return Lists.newArrayList(found);
     }
 
-    // Stored Oracle text separates paragraphs with the script's literal backslash-n, not a real newline
-    private static final Pattern ORACLE_PARAGRAPH_BREAK = Pattern.compile("\\\\n|\r?\n");
-
-    public static int getTextBoxLineCount(final Card card) {
-        final String oracleText = card.getOracleText();
-        if (StringUtils.isBlank(oracleText)) {
-            return 0;
-        }
-        int totalLines = 0;
-        for (final String paragraph : ORACLE_PARAGRAPH_BREAK.split(oracleText)) {
-            final String trimmed = paragraph.trim();
-            if (trimmed.isEmpty()) {
-                continue;
-            }
-            totalLines += Math.max(1, (int) Math.ceil(trimmed.length() / (double) TEXT_BOX_CHARS_PER_LINE));
-        }
-        return totalLines;
-    }
 }

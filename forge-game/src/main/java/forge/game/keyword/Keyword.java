@@ -15,6 +15,7 @@ public enum Keyword {
     AFTERMATH("Aftermath", SimpleKeyword.class, false, "Cast this spell only from your graveyard. Then exile it."),
     AMPLIFY("Amplify", Amplify.class, false, "As this creature enters, put {%d:+1/+1 counter} on it for each %s card you reveal in your hand."),
     ANNIHILATOR("Annihilator", KeywordWithAmount.class, false, "Whenever this creature attacks, defending player sacrifices {%d:permanent}."),
+    ART_MENACE("Art menace", SimpleKeyword.class, true, "This creature can't be blocked except by creatures with two or more visible figures in their art."),
     ASCEND("Ascend", SimpleKeyword.class, true, "If you control ten or more permanents, you get the city's blessing for the rest of the game."),
     ASSIST("Assist", SimpleKeyword.class, true, "Another player can pay up to %s of this spell's cost."),
     AUGMENT("Augment", KeywordWithCost.class, false, "%s, Reveal this card from your hand: Combine it with target host. Augment only as a sorcery."),

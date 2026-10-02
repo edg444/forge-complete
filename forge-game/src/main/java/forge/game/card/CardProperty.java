@@ -390,6 +390,23 @@ public class CardProperty {
             if (!card.hasOpenMouthArt()) {
                 return false;
             }
+        } else if (property.equals("ArtFiguresSolo")) {
+            if (card.getArtFigures() != 1) {
+                return false;
+            }
+        } else if (property.equals("ArtFiguresMultiple")) {
+            if (card.getArtFigures() != 2) {
+                return false;
+            }
+        } else if (property.equals("ArtFiguresUnknown")) {
+            if (card.getArtFigures() != 0) {
+                return false;
+            }
+        } else if (property.equals("ControlledByAI")) {
+            // for honor-system facts the AI can't check for itself (art menace)
+            if (card.getController() == null || !card.getController().isAI()) {
+                return false;
+            }
         } else if (property.equals("alphabeticallyFirstNonLand")) {
             // Zzzyxas's Abyss. Ties are intentional - every permanent sharing that name qualifies.
             // Compared on the displayed name so a flavor name sorts as printed.
@@ -1624,13 +1641,13 @@ public class CardProperty {
             // its own text box (see Lexivore).
             CardCollection cards = new CardCollection(game.getCardsIn(ZoneType.Battlefield));
             cards.remove(source);
-            if (!CardLists.getCardsWithMostTextBoxLines(cards).contains(card)) {
+            // a permanent whose lines couldn't be read off its card is left to the players
+            if (card.getPrintedTextLines() >= 0 && !CardLists.getCardsWithMostTextBoxLines(cards).contains(card)) {
                 return false;
             }
         } else if (property.equals("wordy")) {
-            // Frazzled Editor defines wordy as four or more lines of rules text, measured the same
-            // way Lexivore measures "most lines of text" so the two never disagree
-            if (CardFactoryUtil.getTextBoxLineCount(card) < 4) {
+            // Frazzled Editor and Garbage Elemental: four or more printed lines of rules text
+            if (!card.isWordy()) {
                 return false;
             }
         } else if (property.startsWith("greatestRememberedCMC")) {

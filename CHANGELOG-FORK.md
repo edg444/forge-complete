@@ -77,6 +77,14 @@ A complete half-integer layer running parallel to the whole-number one.
   are deliberately unchanged.
 - Properties `BlackBordered`, `CollectorNumberEven`/`Odd`, `Watermarked`, `Watermark_<name>`,
   `OpenMouthArt`; `nameWords_Odd`/`_Even`.
+- **Printed lines of text** (`rulelines=`/`textlines=`, front and back) — counted on every printing's card
+  image by `_tools/rules-lines` (OCR), not estimated from Oracle text. `Card.isWordy()` (4+ lines of rules text,
+  reminder text included) and `Card.getPrintedTextLines()` (whole text box, flavor included; -1 = unread).
+  After a new set: `jobs.js`, `count.py` (reads only new printings), then `generate.js`.
+- **Figures in the art** (`figures=solo|multi`, art menace) — Tagger's `solo` and two-or-more tags. A solo
+  artwork that also shows an animal beside another kind of being is unknown (`Card.getArtFigures()` 0).
+  Properties `ArtFiguresSolo`, `ArtFiguresMultiple`, `ArtFiguresUnknown`, and `ControlledByAI` for
+  honor-system facts the AI can't check.
 
 ### Five-face split cards
 
@@ -164,6 +172,30 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
   and "dice rolled this turn" count the physical dice. The AI shields at the opponent's end step
   (`AILogic$ AtOppEOT`), when tapping its Brainiacs costs nothing.
   - `TheBigIdeaTest` (7). Suite: 904 run, 0 failed, 6 skipped.
+- **Garbage Elemental A, E and F** (ust/82a, 82e, 82f; B, C and D were upstream and match Scryfall). The edition's
+  82a and 82e-f printings no longer load as an unsupported variant.
+  - **A** — Frenzy 2 and "can't be blocked by wordy creatures". Frenzy had a `Keyword` entry but no ability and
+    no card using it; it now triggers on `AttackerUnblocked` and prints with its reminder text.
+  - **E** — Unleash, and creatures you control with any kind of counter have **art menace**: new keyword
+    `Art menace`, a `CantBlockBy` static. Art Tagger counts as one figure can't block; untagged art is left to
+    the players (as with Sly Spy's facing), except that the AI doesn't block with it.
+  - **F** — last strike and a Battalion trigger (target creature can't block this turn).
+- **"Wordy" and "most lines of text" now come from the printed card.** Garbage Elemental's wordy is "four or
+  more lines of rules text"; the Unstable FAQ's Silver Rule says to look at the actual card, and how text wraps
+  isn't in any dataset. `_tools/rules-lines` reads every face of every English paper printing Forge has (92,407)
+  off Scryfall's card images with RapidOCR on the GPU, and `PrintingTraits.txt` now carries the counts:
+  - Rows below the type line, up to the artist/copyright footer, minus the rows matching that printing's flavor
+    text. 90,842 faces read (98.3%); Sagas, Rooms, Classes, Cases, flip and level-up cards, planes, schemes and
+    other layouts whose text isn't one block are left unread, and unread never restricts anything.
+  - Checked by eye on 54 sampled faces across frames and card types: rules lines exact on all 54 after the one
+    miss was fixed ("+1/+1." on its own line had been dropped as a P/T box). Profiling the failures caught
+    "Wizards" in rules text taken for the copyright line, and instants and sorceries counted from the wrong row
+    (15,851 corrected); comparing flavor rows with Scryfall's flavor text caught trailing artist names counted
+    as flavor (471). About 0.2% of flavor-bearing faces still miss a flavor line the OCR didn't detect.
+  - **Replaces the fork's Oracle-text estimate** (`CardFactoryUtil.getTextBoxLineCount`, 40 characters a line,
+    removed): Frazzled Editor's protection from `wordy` and Lexivore's `mostLinesOfText` read the printed
+    counts too. Lexivore may target an unread permanent; the AI goes by known counts only.
+  - `GarbageElementalTest` (7), `PrintedLinesTest` (3); `TextBoxTest` loses its three estimator tests. Suite: 911 run, 0 failed, 6 skipped.
 
 ### 2026-10-01, fourth build (deployed: desktop, Android, GitHub) — Deck Editor augment P/T; Kefnet's Monument deck gen and AI; MustBeBlockedByAll text
 

@@ -2777,7 +2777,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.startsWith("Saddle") || keyword.startsWith("Tribute") || keyword.startsWith("Absorb")
                         || keyword.startsWith("Graft") || keyword.startsWith("Fading") || keyword.startsWith("Vanishing:")
                         || keyword.startsWith("Afterlife") || keyword.startsWith("Hideaway") || keyword.startsWith("Toxic")
-                        || keyword.startsWith("Afflict") || keyword.startsWith ("Poisonous") || keyword.startsWith("Rampage")
+                        || keyword.startsWith("Afflict") || keyword.startsWith ("Poisonous") || keyword.startsWith("Rampage") || keyword.startsWith("Frenzy")
                         || keyword.startsWith("Renown") || keyword.startsWith("Annihilator") || keyword.startsWith("Ripple")
                         || keyword.startsWith("Ward")) {
                     sbLong.append(inst.getTitle());
@@ -6762,6 +6762,34 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public boolean hasOpenMouthArt() {
         final PrintingTraits.Traits t = getPrintingTraits();
         return t != null && t.hasOpenMouth(isBackSide());
+    }
+
+    /**
+     * Figures in the artwork of the face this card is showing (art menace): 1, 2 for two or more, or 0 when Scryfall's
+     * Tagger hasn't counted them - about two creature artworks in three, which are left to the players.
+     */
+    public int getArtFigures() {
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t == null ? 0 : t.getArtFigures(isBackSide());
+    }
+
+    /**
+     * Garbage Elemental: "A creature is wordy if it has four or more lines of rules text." Lines as printed on this
+     * printing's face (the Unstable FAQ's Silver Rule), read off the card image; one that couldn't be read isn't wordy.
+     */
+    public boolean isWordy() {
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t != null && t.getRulesLines(isBackSide()) >= 4;
+    }
+
+    /**
+     * Lexivore: lines of text in the text box of the face this card is showing, flavor text included, as printed on
+     * this printing and read off the card image; -1 when they couldn't be read (Sagas, Rooms and other layouts whose
+     * text isn't one block, a face-down card, or a printing Scryfall has no image of).
+     */
+    public int getPrintedTextLines() {
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t == null ? -1 : t.getTextLines(isBackSide());
     }
 
     /**
