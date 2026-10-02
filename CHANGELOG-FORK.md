@@ -271,6 +271,28 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     (a targeted "choose up to N" with MinAmount 0 otherwise counted zero as enough).
   - `SVar:NeedsToPlayVar` on opponents' sideboard cards, so it isn't cast with nothing to raid.
   - `JestersSombreroTest` (3). Suite: 945 run, 0 failed, 6 skipped.
+- **Party Crasher** (ust/92; not scripted upstream) - a second player attacking in someone else's combat. New static
+  mode `AttackDuringOpponentsTurn` (`StaticAbilityAttackDuringOpponentsTurn`).
+  - In the declare attackers step, after the active player declares, each of their opponents in turn order may
+    declare such creatures (`PhaseHandler.declareOpponentsTurnAttackers`; the choice is
+    `PlayerController.chooseAttackDuringOpponentsTurn`, an optional pick of what it attacks). It attacks any of its
+    controller's opponents (user, 2026-10-02), so `Combat.addDefender` adds the active player, their planeswalkers or
+    battles when needed. Attack costs and tapping work as for any attacker. Since it's offered once per declare
+    attackers step, it's once each combat.
+  - Blocking (rulings): the player it attacks blocks after the others (declare blockers already ends with the active
+    player). An untapped attacking creature can block it, and the Crasher, if untapped, can block back. Two creatures
+    blocking each other deal combat damage to each other once, as attackers. The human block input picks out only
+    other players' attackers, so your own untapped attackers can be chosen as blockers, and removing one of them
+    removes only the block. Removing a creature that's both attacking and blocking takes it out of both.
+  - Combat damage from an attacker is now assigned by its controller, not by the active player.
+  - "Whenever you attack" (AttackersDeclared) now fires once for each player who attacked, with their own
+    attackers. A player's "attacked this turn" lists now clear at every cleanup, not only on their own turn, so an
+    attack on an opponent's turn doesn't count toward their next turn. "Attacked this combat" clears for everyone.
+  - AI: it stays home when it's needed to block - its life is in danger, or it can block an attacker, kill it and
+    survive - unless it has vigilance. Otherwise it attacks the opponent with the least life among those with nothing
+    able to block and kill it. `lifeInDanger` no longer assumes the active player can't be attacked, and the AI's
+    blocker reset only undoes the block of a creature that's also attacking.
+  - `PartyCrasherTest` (5). Suite: 950 run, 0 failed, 6 skipped.
 
 ### 2026-10-01, fourth build (deployed: desktop, Android, GitHub) — Deck Editor augment P/T; Kefnet's Monument deck gen and AI; MustBeBlockedByAll text
 

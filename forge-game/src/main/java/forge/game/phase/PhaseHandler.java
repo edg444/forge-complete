@@ -39,6 +39,8 @@ import forge.game.replacement.ReplacementResult;
 import forge.game.replacement.ReplacementType;
 
 import forge.game.spellability.SpellAbility;
+import forge.game.staticability.StaticAbilityAttackDuringOpponentsTurn;
+import forge.game.staticability.StaticAbilityAttacksItsController;
 import forge.game.staticability.StaticAbilityNoCleanupDamage;
 import forge.game.staticability.StaticAbilityStayingPower;
 import forge.game.trigger.Trigger;
@@ -47,6 +49,7 @@ import forge.game.zone.Zone;
 import forge.game.zone.ZoneType;
 import forge.util.IHasForgeLog;
 import forge.util.TextUtil;
+import forge.util.collect.FCollection;
 
 import org.apache.commons.lang3.time.StopWatch;
 
@@ -666,6 +669,10 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         if (game.isGameOver()) { // they just like to close window at any moment
             return;
         }
+        declareOpponentsTurnAttackers();
+        if (game.isGameOver()) {
+            return;
+        }
         // Goblin Haberdasher: a hat gives menace, which matters from here on
         game.getAction().askHatInArt(combat.getAttackers());
 
@@ -679,22 +686,28 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         }
         game.fireEvent(new GameEventAttackersDeclared(playerTurn, attackersMap));
 
-        // fire AttackersDeclared trigger
-        if (!combat.getAttackers().isEmpty()) {
+        // fire AttackersDeclared trigger, once for each player who attacked - the active player, and anyone attacking
+        // during their turn with Party Crasher
+        for (final Player attackingPlayer : game.getPlayersInTurnOrder(playerTurn)) {
+            final CardCollection theirAttackers = CardLists.filterControlledBy(combat.getAttackers(), attackingPlayer);
+            if (theirAttackers.isEmpty()) {
+                continue;
+            }
             List<GameEntity> attackedTarget = new ArrayList<>();
             for (GameEntity ge : combat.getDefenders()) {
-                if (!combat.getAttackersOf(ge).isEmpty()) {
+                final CardCollection attackersOfGe = CardLists.filterControlledBy(combat.getAttackersOf(ge), attackingPlayer);
+                if (!attackersOfGe.isEmpty()) {
                     final Map<AbilityKey, Object> runParams = AbilityKey.newMap();
-                    runParams.put(AbilityKey.Attackers, combat.getAttackersOf(ge));
-                    runParams.put(AbilityKey.AttackingPlayer, combat.getAttackingPlayer());
+                    runParams.put(AbilityKey.Attackers, attackersOfGe);
+                    runParams.put(AbilityKey.AttackingPlayer, attackingPlayer);
                     runParams.put(AbilityKey.AttackedTarget, Collections.singletonList(ge));
                     attackedTarget.add(ge);
                     game.getTriggerHandler().runTrigger(TriggerType.AttackersDeclaredOneTarget, runParams, false);
                 }
             }
             final Map<AbilityKey, Object> runParams = AbilityKey.newMap();
-            runParams.put(AbilityKey.Attackers, combat.getAttackers());
-            runParams.put(AbilityKey.AttackingPlayer, combat.getAttackingPlayer());
+            runParams.put(AbilityKey.Attackers, theirAttackers);
+            runParams.put(AbilityKey.AttackingPlayer, attackingPlayer);
             runParams.put(AbilityKey.AttackedTarget, attackedTarget);
             game.getTriggerHandler().runTrigger(TriggerType.AttackersDeclared, runParams, false);
         }
@@ -706,6 +719,63 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         game.getTriggerHandler().resetActiveTriggers();
         game.updateCombatForView();
         game.fireEvent(new GameEventCombatChanged());
+    }
+
+    /**
+     * Party Crasher (rulings): in the declare attackers step, once the active player is done, each of their opponents
+     * may declare creatures that can attack during an opponent's turn, attacking any of their own opponents (user,
+     * 2026-10-02) - so the active player can end up a defending player. They pay attack costs and tap as usual.
+     */
+    private void declareOpponentsTurnAttackers() {
+        final CardCollection tapped = new CardCollection();
+        for (final Player p : game.getPlayersInTurnOrder(playerTurn)) {
+            if (p == playerTurn || !p.isOpponentOf(playerTurn) || game.isGameOver()) {
+                continue;
+            }
+            for (final Card c : CardLists.filter(p.getCreaturesInPlay(), StaticAbilityAttackDuringOpponentsTurn::qualifies)) {
+                if (combat.isAttacking(c)) {
+                    continue;
+                }
+                final FCollection<GameEntity> defenders = new FCollection<>();
+                for (final GameEntity ge : CombatUtil.getAllPossibleDefenders(p)) {
+                    if ((ge != p || StaticAbilityAttacksItsController.qualifies(c)) && CombatUtil.canAttack(c, ge)) {
+                        defenders.add(ge);
+                    }
+                }
+                if (defenders.isEmpty()) {
+                    continue;
+                }
+                final GameEntity defender = p.getController().chooseAttackDuringOpponentsTurn(c, defenders, combat);
+                if (defender == null || !defenders.contains(defender)) {
+                    continue;
+                }
+                combat.addDefender(defender);
+                combat.addAttacker(c, defender);
+                final boolean taps = !c.attackVigilance();
+                if (taps) {
+                    // tapped first without triggers, so it can't help pay its own Propaganda cost
+                    c.setTapped(true);
+                }
+                if (!CombatUtil.checkPropagandaEffects(game, c, combat, List.of())) {
+                    combat.removeFromCombat(c);
+                    if (taps) {
+                        c.setTapped(false);
+                    }
+                    continue;
+                }
+                if (taps) {
+                    c.setTapped(false);
+                    if (c.tap(true, true, null, null)) {
+                        tapped.add(c);
+                    }
+                }
+            }
+        }
+        if (!tapped.isEmpty()) {
+            final Map<AbilityKey, Object> runParams = AbilityKey.newMap();
+            runParams.put(AbilityKey.Cards, tapped);
+            game.getTriggerHandler().runTrigger(TriggerType.TapAll, runParams, false);
+        }
     }
 
     private void declareBlockersTurnBasedAction() {

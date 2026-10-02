@@ -188,7 +188,7 @@ public class InfinityTest extends AITest {
         spell.setActivatingPlayer(me);
         AssertJUnit.assertTrue(me.getManaPool().payManaCostFromPool(cost, spell, false, new java.util.ArrayList<>()));
         AssertJUnit.assertTrue(cost.isPaid());
-        // still unbounded afterwards
+        // still unbounded afterward
         AssertJUnit.assertTrue(me.getManaPool().hasInfinite(MagicColor.RED));
     }
 

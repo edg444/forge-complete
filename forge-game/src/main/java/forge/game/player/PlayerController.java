@@ -155,6 +155,17 @@ public abstract class PlayerController {
     public abstract List<Card> enlistAttackers(List<Card> attackers);
 
     public abstract void declareAttackers(Player attacker, Combat combat);
+
+    /**
+     * Party Crasher: once the active player has declared attackers, a creature of this player's that can attack during
+     * an opponent's turn may join the combat. Returns the player, planeswalker or battle it attacks, or null to stay
+     * home.
+     */
+    public GameEntity chooseAttackDuringOpponentsTurn(final Card attacker, final FCollectionView<GameEntity> defenders,
+            final Combat combat) {
+        return chooseSingleEntityForEffect(defenders, new SpellAbility.EmptySa(attacker, player),
+                "Attack with " + attacker + " this combat? Choose what it attacks", true, null);
+    }
     public abstract void declareBlockers(Player defender, Combat combat);
 
     public abstract CardCollection orderBlockers(Card attacker, CardCollection blockers);

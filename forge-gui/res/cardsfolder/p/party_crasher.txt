@@ -1,0 +1,9 @@
+Name:Party Crasher
+ManaCost:4 R
+Types:Creature Goblin Berserker
+PT:3/3
+K:Haste
+# AttackDuringOpponentsTurn is a fork mode: after the active player declares attackers, it may attack any of its
+# controller's opponents (PhaseHandler.declareOpponentsTurnAttackers; see StaticAbilityAttackDuringOpponentsTurn)
+S:Mode$ AttackDuringOpponentsTurn | ValidCreature$ Card.Self | Description$ You can attack with this creature once each combat during each opponent's turn.
+Oracle:Haste\nYou can attack with this creature once each combat during each opponent's turn.

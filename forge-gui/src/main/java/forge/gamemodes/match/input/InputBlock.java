@@ -115,18 +115,18 @@ public class InputBlock extends InputSyncronizedBase {
     public final boolean onCardSelected(final Card card, final List<Card> otherCardsToSelect, final ITriggerEvent triggerEvent) {
         boolean isCorrectAction = false;
         if (triggerEvent != null && triggerEvent.getButton() == 3 && card.getController() == defender) {
-            combat.removeFromCombat(card);
+            unblock(card);
             card.getGame().getMatch().fireEvent(new UiEventBlockerAssigned(CardView.get(card), null));
             if (otherCardsToSelect != null) {
                 for (Card c : otherCardsToSelect) {
                     if (c.getController() == defender) {
-                        combat.removeFromCombat(c);
+                        unblock(c);
                         c.getGame().getMatch().fireEvent(new UiEventBlockerAssigned(CardView.get(c), null));
                     }
                 }
             }
             isCorrectAction = true;
-        } else if (combat.isAttacking(card)) {
+        } else if (isAttackerToBlock(card)) {
             setCurrentAttacker(card);
             isCorrectAction = true;
         } else if (currentAttacker != null && card.isCreature() && defender.getZone(ZoneType.Battlefield).contains(card)) {
@@ -171,9 +171,26 @@ public class InputBlock extends InputSyncronizedBase {
         return isCorrectAction;
     }
 
+    /**
+     * Party Crasher: during an opponent's turn their attackers and yours share a combat, and an untapped creature of
+     * yours that's attacking can still block - so only other players' attackers are picked out to be blocked.
+     */
+    private boolean isAttackerToBlock(final Card card) {
+        return combat.isAttacking(card) && card.getController() != defender;
+    }
+
+    // undoes only the block of a creature that's attacking as well
+    private void unblock(final Card card) {
+        if (combat.isAttacking(card)) {
+            combat.undoBlockingAssignment(card);
+        } else {
+            combat.removeFromCombat(card);
+        }
+    }
+
     @Override
     public String getActivateAction(Card card) {
-        if (combat.isAttacking(card)) {
+        if (isAttackerToBlock(card)) {
             return Localizer.getInstance().getMessage("lblDeclareBlockersForCard");
         }
         if (currentAttacker != null && card.isCreature() && defender.getZone(ZoneType.Battlefield).contains(card)) {

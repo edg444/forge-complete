@@ -2748,9 +2748,10 @@ public class Player extends GameEntity implements Comparable<Player> {
         if (game.getPhaseHandler().isPlayerTurn(this)) {
             setBeenDealtCombatDamageSinceLastTurn(false);
             setAttackedPlayersMyLastTurn(getAttackedPlayersMyTurn());
-            clearAttackedMyTurn();
             this.lastTurnNr = game.getPhaseHandler().getTurn();
         }
+        // Party Crasher attacks during opponents' turns, and those attacks were this turn's, not the next one's
+        clearAttackedMyTurn();
     }
 
     public boolean canCastSorcery() {

@@ -464,6 +464,12 @@ public class PlayerControllerAi extends PlayerController {
     }
 
     @Override
+    public GameEntity chooseAttackDuringOpponentsTurn(final Card attacker, final FCollectionView<GameEntity> defenders,
+            final Combat combat) {
+        return AiAttackController.chooseAttackDuringOpponentsTurn(player, attacker, defenders, combat);
+    }
+
+    @Override
     public List<Card> exertAttackers(List<Card> attackers) {
         return AiAttackController.exertAttackers(attackers, brains.getAttackAggression());
     }

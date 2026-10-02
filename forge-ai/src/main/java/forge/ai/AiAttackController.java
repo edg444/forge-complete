@@ -1756,6 +1756,45 @@ public class AiAttackController {
         return false; // don't attack
     }
 
+    /**
+     * Party Crasher: whether to join an opponent's combat, and whom to attack. Their attackers are already declared,
+     * so it stays home when it's wanted as a blocker - tapping to attack would cost that, unless it has vigilance -
+     * and otherwise attacks the opponent with the least life among those with no creature that could block and kill it.
+     */
+    public static GameEntity chooseAttackDuringOpponentsTurn(final Player ai, final Card attacker,
+            final FCollectionView<GameEntity> defenders, final Combat combat) {
+        if (!attacker.attackVigilance() && combat != null && CombatUtil.canBlock(attacker)) {
+            if (ComputerUtilCombat.lifeInDanger(ai, combat)) {
+                return null;
+            }
+            for (final Card a : combat.getAttackersOf(ai)) {
+                // a block that kills the attacker and survives
+                if (CombatUtil.canBlock(a, attacker)
+                        && ComputerUtilCombat.canDestroyAttacker(ai, a, attacker, combat, false)
+                        && !ComputerUtilCombat.canDestroyBlocker(ai, attacker, a, combat, false)) {
+                    return null;
+                }
+            }
+        }
+        Player best = null;
+        for (final GameEntity ge : defenders) {
+            if (!(ge instanceof Player p)) {
+                continue;
+            }
+            boolean safe = true;
+            for (final Card b : p.getCreaturesInPlay()) {
+                if (CombatUtil.canBlock(attacker, b) && ComputerUtilCombat.canDestroyAttacker(ai, attacker, b, combat, false)) {
+                    safe = false;
+                    break;
+                }
+            }
+            if (safe && (best == null || p.getLife() < best.getLife())) {
+                best = p;
+            }
+        }
+        return best;
+    }
+
     public static List<Card> exertAttackers(final List<Card> attackers, int aggression) {
         List<Card> exerters = Lists.newArrayList();
         for (Card c : attackers) {

@@ -393,7 +393,8 @@ public class ComputerUtilCombat {
     }
     public static boolean lifeInDanger(final Player ai, final Combat combat, final int payment) {
         // life in danger only cares about the player's life. Not Planeswalkers' life
-        if (ai.cantLose() || combat == null || combat.getAttackingPlayer() == ai) {
+        // Party Crasher can attack the active player
+        if (ai.cantLose() || combat == null || combat.getAttackingPlayer() == ai && !combat.isPlayerAttacked(ai)) {
             return false;
         }
 

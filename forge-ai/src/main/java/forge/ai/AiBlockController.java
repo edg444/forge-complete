@@ -978,7 +978,12 @@ public class AiBlockController {
     private void clearBlockers(final Combat combat, final List<Card> possibleBlockers) {
         for (final Card blocker : CardLists.filterControlledBy(combat.getAllBlockers(), ai)) {
             // don't touch other player's blockers
-            combat.removeFromCombat(blocker);
+            if (combat.isAttacking(blocker)) {
+                // Party Crasher: a blocker can be attacking as well, and keeps attacking
+                combat.undoBlockingAssignment(blocker);
+            } else {
+                combat.removeFromCombat(blocker);
+            }
         }
 
         attackersLeft = new ArrayList<>(attackers);

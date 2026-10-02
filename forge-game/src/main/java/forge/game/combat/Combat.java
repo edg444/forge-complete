@@ -173,7 +173,10 @@ public class Combat {
         for (Card c : game.getCardsIncludePhasingIn(ZoneType.Battlefield)) {
             c.getDamageHistory().endCombat();
         }
-        playerWhoAttacks.clearAttackedPlayersMyCombat();
+        // Party Crasher: other players can attack in this combat too
+        for (Player p : game.getPlayers()) {
+            p.clearAttackedPlayersMyCombat();
+        }
 
         //update view for all attackers and blockers
         for (Card c : attackers) {
@@ -199,6 +202,16 @@ public class Combat {
     }
     public final FCollectionView<GameEntity> getDefenders() {
         return attackableEntries.get();
+    }
+
+    /**
+     * Party Crasher attacks during an opponent's turn, possibly that opponent: they, their planeswalkers and battles
+     * aren't among the active player's defenders, so it adds whichever it attacks.
+     */
+    public final void addDefender(final GameEntity defender) {
+        if (!attackableEntries.get().contains(defender)) {
+            attackableEntries.get().add(defender);
+        }
     }
 
     //gets attacked player opponents (ignores planeswalkers)
@@ -611,7 +624,10 @@ public class Combat {
             unregisterAttacker(c, ab);
             ab.removeAttacker(c);
             c.updateAttackingForView();
-            return;
+            // Party Crasher: an attacking creature may be blocking too, so it leaves both
+            if (!blockedBands.get().containsValue(c)) {
+                return;
+            }
         }
 
         // if not found in attackers, look for this card in blockers
@@ -729,6 +745,12 @@ public class Combat {
 
             final int damage = blocker.getNetCombatDamage();
 
+            if (attackers != null && isAttacking(blocker)) {
+                // Party Crasher (rulings): a creature that's attacking and blocking deals combat damage to a creature
+                // that's blocking it and that it's blocking only once - as an attacker
+                final CardCollection itsBlockers = getBlockers(blocker);
+                attackers = CardLists.filter(attackers, a -> !itsBlockers.contains(a));
+            }
             if (attackers != null && !attackers.isEmpty()) {
                 Player attackingPlayer = getAttackingPlayer();
                 Player assigningPlayer = blocker.getController();
@@ -798,7 +820,8 @@ public class Combat {
             }
 
             GameEntity defender = getDefenderByAttacker(band);
-            Player assigningPlayer = getAttackingPlayer();
+            // Party Crasher: not every attacker is the active player's
+            Player assigningPlayer = attacker.getController();
             orderedBlockers = blockersOrderedForDamageAssignment.get().get(attacker);
             // Defensive Formation is very similar to Banding with Blockers
             // It allows the defending player to assign damage instead of the attacking player
@@ -882,7 +905,7 @@ public class Combat {
                 } // No damage happens if blocked but no blockers left
             } else {
                 Map<Card, Integer> map = assigningPlayer.getController().assignCombatDamage(attacker, orderedBlockers, attackers,
-                        damageDealt, defender, divideCombatDamageAsChoose || getAttackingPlayer() != assigningPlayer || !this.legacyOrderCombatants);
+                        damageDealt, defender, divideCombatDamageAsChoose || attacker.getController() != assigningPlayer || !this.legacyOrderCombatants);
 
                 attackers.remove(attacker);
                 // player wants to assign another first
