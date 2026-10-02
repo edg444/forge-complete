@@ -826,7 +826,7 @@ public class RollDiceEffect extends SpellAbilityEffect {
     public void resolve(SpellAbility sa) {
         final Card host = sa.getHostCard();
 
-        int amount = AbilityUtils.calculateAmount(host, sa.getParamOrDefault("Amount", "1"), sa);
+        int amount = finiteAmount(sa, AbilityUtils.calculateAmount(host, sa.getParamOrDefault("Amount", "1"), sa), "dice");
         int sides = AbilityUtils.calculateAmount(host, sa.getParamOrDefault("Sides", "6"), sa);
         boolean rememberHighest = sa.hasParam("RememberHighestPlayer");
         boolean rememberLowest = sa.hasParam("RememberLowestPlayer");

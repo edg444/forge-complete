@@ -44,6 +44,7 @@ import forge.toolbox.FScrollPane;
 import forge.toolbox.FSkin;
 import forge.toolbox.FSkin.SkinImage;
 import forge.toolbox.FSkin.SkinnedPanel;
+import forge.util.Infinity;
 import forge.util.Localizer;
 import forge.util.TextUtil;
 import forge.view.FDialog;
@@ -426,18 +427,18 @@ public class VAssignCombatDamage {
             int lethal = getDamageToKill(dt.card);
             int overkill = dmg - lethal;
             StringBuilder sb = new StringBuilder();
-            sb.append(dmg);
+            sb.append(Infinity.format(dmg));
             if( overkill >= 0 ) {
                 sb.append(" (").append(localizer.getMessage("lblLethal"));
                 if( overkill > 0 )
-                    sb.append(" +").append(overkill);
+                    sb.append(" +").append(Infinity.format(overkill));
                 sb.append(")");
             }
             allHaveLethal &= dmg >= lethal;
             dt.label.setText(sb.toString());
         }
 
-        lblTotalDamage.setText(TextUtil.concatNoSpace(localizer.getMessage("lblAvailableDamagePoints"), ": " , String.valueOf(damageLeft), " (of ", String.valueOf(totalDamageToAssign), ")"));
+        lblTotalDamage.setText(TextUtil.concatNoSpace(localizer.getMessage("lblAvailableDamagePoints"), ": " , Infinity.format(damageLeft), " (of ", Infinity.format(totalDamageToAssign), ")"));
         btnOK.setEnabled(damageLeft == 0);
         if (btnOK.isEnabled()) {
             btnOK.requestFocus();

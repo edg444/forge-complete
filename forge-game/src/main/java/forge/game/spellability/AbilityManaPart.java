@@ -199,6 +199,10 @@ public class AbilityManaPart implements java.io.Serializable {
             } else if ("Infinity".equals(c)) {
                 // Mox Lotus. Unbounded rather than a big pile, so it can't be spent dry.
                 manaPool.addInfiniteColorless(source, this);
+            } else if (c.startsWith("Infinity-")) {
+                // an infinite amount of a color (GameActionUtil.generatedMana), e.g. from Infinity Elemental's power
+                final byte color = MagicColor.fromName(c.substring(9));
+                manaPool.addInfinite(color == 0 ? (byte) ManaAtom.COLORLESS : color, source, this);
             } else if (halfColorProduced(c) != 0) {
                 // Unhinged half mana (Mons's Goblin Waiters' {HR}). This has to be caught before the
                 // color lookup below, which reads a two-character token as a pair of colors and so

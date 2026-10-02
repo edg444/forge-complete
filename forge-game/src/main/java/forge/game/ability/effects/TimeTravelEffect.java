@@ -33,7 +33,7 @@ public class TimeTravelEffect extends SpellAbilityEffect {
         final Player activator = sa.getActivatingPlayer();
         final Card host = sa.getHostCard();
         final Game game = host.getGame();
-        int num = sa.hasParam("Amount") ? AbilityUtils.calculateAmount(host, sa.getParam("Amount"), sa) : 1;
+        int num = finiteAmount(sa, sa.hasParam("Amount") ? AbilityUtils.calculateAmount(host, sa.getParam("Amount"), sa) : 1, "time travels");
 
         PlayerController pc = activator.getController();
 

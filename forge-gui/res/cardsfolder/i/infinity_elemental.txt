@@ -1,0 +1,7 @@
+Name:Infinity Elemental
+ManaCost:4 R R R
+Types:Creature Elemental
+# genuinely infinite (forge.util.Infinity), not a large number: pumps don't change it, setting it does
+PT:∞/5
+Text:(This creature has INFINITE POWER.)
+Oracle:(This creature has INFINITE POWER.)

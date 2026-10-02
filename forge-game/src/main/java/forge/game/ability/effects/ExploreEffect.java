@@ -55,7 +55,7 @@ public class ExploreEffect extends SpellAbilityEffect {
     public void resolve(SpellAbility sa) {
         final Card host = sa.getHostCard();
         final Game game = host.getGame();
-        int amount = AbilityUtils.calculateAmount(host, sa.getParamOrDefault("Num", "1"), sa);
+        int amount = finiteAmount(sa, AbilityUtils.calculateAmount(host, sa.getParamOrDefault("Num", "1"), sa), "explores");
 
         CardCollectionView tgts = GameActionUtil.orderCardsByTheirOwners(game, getTargetCards(sa), ZoneType.Battlefield, sa);
 

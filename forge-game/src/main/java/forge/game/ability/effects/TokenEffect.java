@@ -122,7 +122,7 @@ public class TokenEffect extends TokenEffectBase {
             useZoneTable = true;
         }
 
-        int amount = AbilityUtils.calculateAmount(host, sa.getParamOrDefault("TokenAmount", "1"), sa);
+        int amount = finiteAmount(sa, AbilityUtils.calculateAmount(host, sa.getParamOrDefault("TokenAmount", "1"), sa), "tokens");
         if (amount < 1) {
             return;
         }

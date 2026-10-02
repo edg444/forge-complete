@@ -120,6 +120,10 @@ final class CardFace implements ICardFace, Cloneable {
     }
 
     static int parsePT(String val) {
+        // Infinity Elemental's "∞/5"
+        if (forge.util.Infinity.isInfinityText(val)) {
+            return forge.util.Infinity.VALUE;
+        }
         // normalize PT value
         if (val.contains("*")) {
             val = val.replace("+*", "");

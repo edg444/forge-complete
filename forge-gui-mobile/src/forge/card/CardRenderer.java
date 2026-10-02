@@ -980,8 +980,8 @@ public class CardRenderer {
                 }
             }
 
-            if (font != null && !String.valueOf(maxCounters).isEmpty()) {
-                glyphLayout.setText(font, String.valueOf(maxCounters));
+            if (font != null && !Infinity.format(maxCounters).isEmpty()) {
+                glyphLayout.setText(font, Infinity.format(maxCounters));
                 if (counterBoxBaseWidth + glyphLayout.width > w) {
                     drawCounterImage(card, g, x, y, w, h);
                     return;
@@ -999,7 +999,7 @@ public class CardRenderer {
             final int numberOfCounters = counterEntry.getCount();
 
             if (font != null && numberOfCounters > 0) {
-                String counterValueStr = String.valueOf(numberOfCounters);
+                String counterValueStr = Infinity.format(numberOfCounters);
                 String displayName = counter.getCounterOnCardDisplayName();
 
                 stringBuilder.setLength(0);

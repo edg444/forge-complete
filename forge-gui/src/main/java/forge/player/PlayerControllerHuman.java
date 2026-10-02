@@ -385,6 +385,26 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
 
         String announceTitle = "X".equals(announce) ? ability.getParamOrDefault("XAnnounceTitle", announce) :
                 ability.getParamOrDefault("AnnounceTitle", announce);
+        // X = ∞ with infinite mana (Infinity Elemental's conversions, Mox Lotus)
+        if ("X".equals(announce) && cost != null && cost.getTotalMana().countX() > 0
+                && player.getManaPool().canPayInfiniteX(ability)) {
+            final List<Object> choices = Lists.newArrayList();
+            choices.add("∞");
+            for (int i = min; i <= Math.min(max, min + 9); i++) {
+                choices.add(i);
+            }
+            choices.add(localizer.getMessage("lblOtherInteger"));
+            final Object choice = getGui().oneOrNone(localizer.getMessage("lblChooseAnnounceForCard", announceTitle,
+                    host.getTranslatedName()), choices);
+            if (choice == null || choice instanceof Integer) {
+                return (Integer) choice;
+            }
+            if ("∞".equals(choice)) {
+                return Infinity.VALUE;
+            }
+            return getGui().getInteger(localizer.getMessage("lblChooseAnnounceForCard", announceTitle,
+                    host.getTranslatedName()), min, max, false);
+        }
         if (cost != null && cost.isMandatory()) {
             return chooseNumber(ability, localizer.getMessage("lblChooseAnnounceForCard", announceTitle,
                     host.getTranslatedName()), min, max);

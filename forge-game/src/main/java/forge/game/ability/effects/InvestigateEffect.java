@@ -34,7 +34,7 @@ public class InvestigateEffect extends TokenEffectBase {
         final Card card = sa.getHostCard();
         final Game game = card.getGame();
 
-        final int amount = AbilityUtils.calculateAmount(card, sa.getParamOrDefault("Num", "1"), sa);
+        final int amount = finiteAmount(sa, AbilityUtils.calculateAmount(card, sa.getParamOrDefault("Num", "1"), sa), "Clues");
 
         // Investigate in Sequence
         for (int i = 0; i < amount; i++) {

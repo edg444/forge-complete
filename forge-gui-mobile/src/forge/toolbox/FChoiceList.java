@@ -655,7 +655,7 @@ public class FChoiceList<T> extends FList<T> implements ActivateHandler {
             g.drawImage(MatchController.getPlayerAvatar(player), x - FList.PADDING, y - FList.PADDING, VAvatar.WIDTH, VAvatar.HEIGHT);
             x += VAvatar.WIDTH;
             w -= VAvatar.WIDTH;
-            g.drawText(player.getName() + " (" + player.getLife() + ")", font, foreColor, x, y, w, h, false, Align.left, true);
+            g.drawText(player.getName() + " (" + player.getLifeString() + ")", font, foreColor, x, y, w, h, false, Align.left, true);
         }
     }
 

@@ -29,6 +29,7 @@ import forge.game.zone.PlayerZone;
 import forge.game.zone.ZoneType;
 import forge.item.PaperCard;
 import forge.util.ITriggerEvent;
+import forge.util.Infinity;
 import forge.util.collect.FCollectionView;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -295,6 +296,15 @@ public abstract class PlayerController {
     }
 
     public abstract int chooseNumber(SpellAbility sa, String title, int min, int max);
+
+    /**
+     * An effect would make infinitely many objects or repeat infinitely (Infinity Elemental's power, X = ∞), which the
+     * engine can't hold, so the player picks a finite number instead - as many as they like (user, 2026-10-02).
+     */
+    public int chooseFiniteForInfinite(final SpellAbility sa, final String what) {
+        final int n = chooseNumber(sa, "Infinitely many " + what + ": how many?", 0, Integer.MAX_VALUE);
+        return Math.min(n, Infinity.THRESHOLD - 1);
+    }
     public abstract int chooseNumber(SpellAbility sa, String title, List<Integer> values, Player relatedPlayer);
     public int chooseNumber(SpellAbility sa, String string, int min, int max, Map<String, Object> params) {
         return chooseNumber(sa, string, min, max);

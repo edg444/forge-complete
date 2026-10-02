@@ -26,6 +26,7 @@ import forge.card.mana.IParserManaCost;
 import forge.card.mana.ManaAtom;
 import forge.card.mana.ManaCost;
 import forge.card.mana.ManaCostShard;
+import forge.util.Infinity;
 import forge.util.IterableUtil;
 import org.apache.commons.lang3.StringUtils;
 
@@ -289,7 +290,7 @@ public class ManaCostBeingPaid {
     }
 
     public final void setXManaCostPaid(final int xPaid, final String xColor) {
-        int xCost = xPaid * cntX;
+        int xCost = Infinity.isInfinite(xPaid) ? Infinity.VALUE : xPaid * cntX;
         cntX = 0;
 
         ManaCostShard shard;
@@ -552,8 +553,13 @@ public class ManaCostBeingPaid {
         // An unbounded pool settles the rest of the generic portion at once. Every payment path
         // decrements generic a point at a time, so Gleemax's {1000000} would otherwise take a million
         // round trips through the payment machinery - which reads as a hang, not as slowness.
-        if (paidShard == ManaCostShard.GENERIC && pool.hasInfiniteColorless() && getGenericManaAmount() > 0) {
+        if (paidShard == ManaCostShard.GENERIC && pool.hasAnyInfinite() && getGenericManaAmount() > 0) {
             decreaseGenericMana(getGenericManaAmount());
+        }
+        // and an unbounded color settles the rest of whatever shard it just paid - X = ∞ in that color included
+        final ShardCount rest = unpaidShards.get(paidShard);
+        if (pool.hasInfinite(inColor) && rest != null && rest.totalCount > 0) {
+            decreaseShard(paidShard, rest.totalCount);
         }
         return true;
     }
@@ -703,7 +709,10 @@ public class ManaCostBeingPaid {
         int nGeneric = getGenericManaAmount();
         List<ManaCostShard> shards = Lists.newArrayList(unpaidShards.keySet());
 
-        if (nGeneric > 0) {
+        if (Infinity.isInfinite(nGeneric)) {
+            // X = ∞, written the way Mox Lotus's own text writes its mana
+            sb.append("{∞}");
+        } else if (nGeneric > 0) {
             if (nGeneric <= 20) {
                 sb.append("{").append(nGeneric).append("}");
             }
@@ -724,6 +733,10 @@ public class ManaCostBeingPaid {
             
             final String str = shard.toString();
             final int count = unpaidShards.get(shard).totalCount;
+            if (Infinity.isInfinite(count)) {
+                sb.append(str).append("×∞");
+                continue;
+            }
             for (int i = 0; i < count; i++) {
                 sb.append(str);
             }
@@ -766,7 +779,8 @@ public class ManaCostBeingPaid {
     public final List<ManaCostShard> getUnpaidShards() {
         List<ManaCostShard> result = new ArrayList<>();
         for (Entry<ManaCostShard, ShardCount> kv : unpaidShards.entrySet()) {
-           for (int i = kv.getValue().totalCount; i > 0; i--) {
+           // X = ∞: one entry stands for the lot, since only unbounded mana can pay it, and paying one settles it all
+           for (int i = Infinity.isInfinite(kv.getValue().totalCount) ? 1 : kv.getValue().totalCount; i > 0; i--) {
                result.add(kv.getKey());
            }
         }

@@ -38,7 +38,7 @@ public class OpenAttractionEffect extends SpellAbilityEffect {
     public void resolve(SpellAbility sa) {
         final Card source = sa.getHostCard();
         final List<Player> tgtPlayers = getDefinedPlayersOrTargeted(sa);
-        int amount = sa.hasParam("Amount") ? AbilityUtils.calculateAmount(sa.getHostCard(), sa.getParam("Amount"), sa) : 1;
+        int amount = finiteAmount(sa, sa.hasParam("Amount") ? AbilityUtils.calculateAmount(sa.getHostCard(), sa.getParam("Amount"), sa) : 1, "Attractions");
 
         Map<AbilityKey, Object> moveParams = AbilityKey.newMap();
         final CardZoneTable triggerList = AbilityKey.addCardZoneTableParams(moveParams, sa);

@@ -928,6 +928,14 @@ public class PlayerControllerAi extends PlayerController {
         return brains.chooseNumber(sa, title, min, max);
     }
 
+    /** Plenty to win with, without making a game of thousands of objects for the engine to churn through. */
+    public static final int FINITE_FOR_INFINITE = 30;
+
+    @Override
+    public int chooseFiniteForInfinite(final SpellAbility sa, final String what) {
+        return FINITE_FOR_INFINITE;
+    }
+
     @Override
     public int chooseNumber(SpellAbility sa, String string, int min, int max, Map<String, Object> params) {
         return SpellApiToAi.Converter.get(sa).chooseNumber(player, sa, min, max, params);

@@ -1,5 +1,6 @@
 package forge.screens.match.views;
 
+import forge.util.Infinity;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -88,6 +89,10 @@ public class VAvatar extends FDisplayObject {
         /** The life difference is counted in halves, so 5 reads as +2 1/2 and -5 as -2 1/2. */
         private static String halvesLabel(final int halves) {
             final String sign = halves < 0 ? "-" : "+";
+            // gaining or losing infinite life (Infinity Elemental)
+            if (Infinity.isEitherInfinite(halves / 2)) {
+                return sign + "∞";
+            }
             final int whole = Math.abs(halves) / 2;
             if (Math.abs(halves) % 2 == 0) {
                 return sign + whole;

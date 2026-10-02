@@ -134,10 +134,27 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - The one broad rule is templating: a card printed before Dominaria reads "target creature or
   player" and can't hit planeswalkers or battles. Everything else is per card, on the card.
 
-### Infinite mana
+### Infinity
 
-`ManaPool.addInfiniteColorless()` — a genuine flag, not a large number. Spending colorless refills
-it; it clears with the pool at end of step or phase, and displays as ∞.
+- **Infinite mana** — `ManaPool.addInfinite(color, ...)` (Mox Lotus's `addInfiniteColorless()` is now the colorless
+  case): a genuine per-color flag, not a large number. Spending an unbounded color refills it, and paying one point of
+  any shard with it settles the whole shard (`{∞}`, `{R}×∞` in the payment prompt). It clears with the pool and
+  displays as ∞. A produced amount that's infinite becomes `Infinity-<color>` tokens (`GameActionUtil.generatedMana`);
+  infinite combo mana is unbounded mana of every offered color.
+- **Infinite quantities** (`forge.util.Infinity`, Infinity Elemental) — the engine counts in ints, so ∞ is the reserved
+  value `Infinity.VALUE` (2^24), and anything past `Infinity.THRESHOLD` (2^20) reads as infinite: small enough that
+  sums and AI evaluations can't overflow, big enough that no finite game gets there. `Infinity.add/subtract`
+  saturate, `Infinity.format` shows ∞ / -∞. Wired through power and toughness (`PT:∞/5`; boosts and counters don't
+  change an infinite value, a set value replaces it), life (gains and losses don't change infinite life, any amount
+  can be paid from it, setting it works), damage, counters (removing some of infinitely many leaves infinitely many
+  but counts as removed; removing infinitely many empties them; per-counter triggers fire once for an infinite batch)
+  and display (P/T, life, damage, counters, the damage assignment dialogs, desktop and mobile).
+- **X = ∞** — offered when unbounded mana that can pay X is floating, or a source of it (Mox Lotus) can still be
+  activated (`ManaPool.canPayInfiniteX`).
+- **Infinitely many objects or repetitions** — tokens, copies, "do this X times", dice, coin flips, Clues, explores,
+  proliferates and the like ask the controller for a finite number instead (`SpellAbilityEffect.finiteAmount`,
+  `PlayerController.chooseFiniteForInfinite`; the AI picks `PlayerControllerAi.FINITE_FOR_INFINITE`, 30). Drawing
+  infinitely many draws the library and then fails the draw that loses.
 
 ### Other
 
@@ -217,6 +234,15 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
 - **Hammerfest Boomtacular** (ust/87; 85 Hammer Helper and 86 Hammer Jammer were already upstream). Script only:
   a `SpellCast` trigger on `Card.Watermark_goblinexplosioneers`, the printing's watermark from PrintingTraits.
   `HammerfestBoomtacularTest` (2, casting Goblin Haberdasher's UST printing and Grizzly Bears).
+- **Infinity Elemental** (ust/88; not scripted upstream) and **infinity** throughout the engine - see the *Infinity*
+  index entry. Built to the five Scryfall rulings (2020-02-29) and the Unstable FAQ: its power ties with another
+  Infinity Elemental's, lifelink gains infinite life, infinite life survives even infinite damage, setting life works,
+  and drawing from an empty library still loses. User decisions (2026-10-02): an infinite number of objects or
+  repetitions becomes a finite number the controller picks; X = ∞ is allowed with infinite mana, and Mox Lotus works
+  the same way (checked: it pays X = ∞, and ∞ is offered before it's tapped). Mox Lotus's infinite colorless now goes
+  through the same per-color pool flag. The desktop text-only card renderer now uses the P/T display strings, so it
+  shows half and infinite values too.
+  - `InfinityTest` (12, including an AI turn with it on the battlefield). Suite: 933 run, 0 failed, 6 skipped.
 
 ### 2026-10-01, fourth build (deployed: desktop, Android, GitHub) — Deck Editor augment P/T; Kefnet's Monument deck gen and AI; MustBeBlockedByAll text
 

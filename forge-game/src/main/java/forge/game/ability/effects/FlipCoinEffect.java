@@ -57,7 +57,7 @@ public class FlipCoinEffect extends SpellAbilityEffect {
         String varName = sa.getParamOrDefault("SaveNumFlipsToSVar", "X");
         int amount = 1;
         if (sa.hasParam("Amount")) {
-            amount = AbilityUtils.calculateAmount(host, sa.getParam("Amount"), sa);
+            amount = finiteAmount(sa, AbilityUtils.calculateAmount(host, sa.getParam("Amount"), sa), "coin flips");
         }
 
         for (final Player flipper : playersToFlip) {

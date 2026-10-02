@@ -17,6 +17,7 @@
  */
 package forge.view.arcane;
 
+import forge.util.Infinity;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -810,7 +811,7 @@ public class CardPanel extends SkinnedPanel implements CardContainer, IDisposabl
         if (CounterDisplayType.from(FModel.getPreferences().getPref(FPref.UI_CARD_COUNTER_DISPLAY_TYPE)) == CounterDisplayType.OLD_WHEN_SMALL) {
             int maxCounters = card.getCounters().entrySet().stream().mapToInt(Multiset.Entry::getCount).max().orElse(0);
 
-            if (counterBoxBaseWidth + largeFontMetrics.stringWidth(String.valueOf(maxCounters)) > cardWidth) {
+            if (counterBoxBaseWidth + largeFontMetrics.stringWidth(Infinity.format(maxCounters)) > cardWidth) {
                 drawCounterImage(g);
                 return;
             }
@@ -820,7 +821,7 @@ public class CardPanel extends SkinnedPanel implements CardContainer, IDisposabl
         for (Multiset.Entry<CounterType> counterEntry : new HashSet<>(card.getCounters().entrySet())) {
             final CounterType counter = counterEntry.getElement();
             final int numberOfCounters = counterEntry.getCount();
-            final int counterBoxRealWidth = counterBoxBaseWidth + largeFontMetrics.stringWidth(String.valueOf(numberOfCounters));
+            final int counterBoxRealWidth = counterBoxBaseWidth + largeFontMetrics.stringWidth(Infinity.format(numberOfCounters));
 
             final int counterYOffset;
 
@@ -855,7 +856,7 @@ public class CardPanel extends SkinnedPanel implements CardContainer, IDisposabl
 
             Rectangle numberBounds = counterArea.getBounds();
             numberBounds.x += 52;
-            drawVerticallyCenteredString(g, String.valueOf(numberOfCounters), numberBounds, largeCounterFont, largeFontMetrics);
+            drawVerticallyCenteredString(g, Infinity.format(numberOfCounters), numberBounds, largeCounterFont, largeFontMetrics);
 
         }
     }

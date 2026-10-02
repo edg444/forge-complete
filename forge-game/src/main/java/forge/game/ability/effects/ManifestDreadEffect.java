@@ -15,7 +15,8 @@ public class ManifestDreadEffect extends ManifestEffect {
     @Override
     protected void manifestLoop(SpellAbility sa, Player p, final int amount) {
         final Game game = p.getGame();
-        for (int i = 0; i < amount; i++) {
+        final int times = finiteAmount(sa, amount, "manifest dreads");
+        for (int i = 0; i < times; i++) {
             CardCollection tgtCards = p.getTopXCardsFromLibrary(2);
             CardCollection toGrave = new CardCollection();
             if (!tgtCards.isEmpty()) {

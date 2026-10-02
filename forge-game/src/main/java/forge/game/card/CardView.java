@@ -390,8 +390,8 @@ public class CardView extends GameEntityView {
     /** Marked damage as the player sees it, so a half (Save Life, Smart Ass) isn't rounded away. */
     public String getDamageString() {
         final int whole = getDamage();
-        if (!hasHalfDamage()) {
-            return String.valueOf(whole);
+        if (!hasHalfDamage() || Infinity.isEitherInfinite(whole)) {
+            return Infinity.format(whole);
         }
         return whole == 0 ? "½" : whole + "½";
     }
@@ -1591,8 +1591,9 @@ public class CardView extends GameEntityView {
             return halfLabel(getToughness(), hasHalfToughness());
         }
         private static String halfLabel(final int whole, final boolean half) {
-            if (!half) {
-                return String.valueOf(whole);
+            // Infinity Elemental's ∞/5
+            if (!half || Infinity.isEitherInfinite(whole)) {
+                return Infinity.format(whole);
             }
             return whole == 0 ? "½" : (whole == -1 ? "-½" : whole + "½");
         }

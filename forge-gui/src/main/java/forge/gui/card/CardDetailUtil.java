@@ -20,6 +20,7 @@ import forge.item.SealedProduct;
 import forge.localinstance.properties.ForgeConstants;
 import forge.localinstance.properties.ForgePreferences;
 import forge.model.FModel;
+import forge.util.Infinity;
 import forge.util.CardTranslation;
 import forge.util.Lang;
 import forge.util.Localizer;
@@ -376,7 +377,7 @@ public class CardDetailUtil {
                 if (c.getCount() != 0) {
                     area.append("\n");
                     area.append(c.getElement().getName()).append(" counters: ");
-                    area.append(c.getCount());
+                    area.append(Infinity.format(c.getCount()));
                 }
             }
         }

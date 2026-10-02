@@ -39,6 +39,7 @@ import forge.game.card.CounterEnumType;
 import forge.game.player.PlayerView;
 import forge.screens.match.MatchController;
 import forge.toolbox.*;
+import forge.util.Infinity;
 import forge.util.CardTranslation;
 import forge.util.TextUtil;
 import forge.util.Utils;
@@ -411,11 +412,11 @@ public class VAssignCombatDamage extends FDialog {
             int lethal = getDamageToKill(dt.card);
             int overkill = dmg - lethal;
             StringBuilder sb = new StringBuilder();
-            sb.append(dmg);
+            sb.append(Infinity.format(dmg));
             if(overkill >= 0) { 
                 sb.append(" (" + Forge.getLocalizer().getMessage("lblLethal"));
                 if(overkill > 0) 
-                    sb.append(" +").append(overkill);
+                    sb.append(" +").append(Infinity.format(overkill));
                 sb.append(")");
             }
             allHaveLethal &= dmg >= lethal;
@@ -423,7 +424,7 @@ public class VAssignCombatDamage extends FDialog {
         }
 
         lblTotalDamage.setText(TextUtil.concatNoSpace(Forge.getLocalizer().getMessage("lblAvailableDamagePoints") + ": ",
-                String.valueOf(damageLeft), " (of ", String.valueOf(totalDamageToAssign), ")"));
+                Infinity.format(damageLeft), " (of ", Infinity.format(totalDamageToAssign), ")"));
 
         setButtonEnabled(OK_INDEX, damageLeft == 0);
         FButton btnOK = getButton(OK_INDEX);

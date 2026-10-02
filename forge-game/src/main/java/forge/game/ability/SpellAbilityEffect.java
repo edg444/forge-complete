@@ -42,6 +42,18 @@ import java.util.*;
 
 public abstract class SpellAbilityEffect {
 
+    /**
+     * How many things to make or times to do something. That can't be infinite, so an infinite amount (Infinity
+     * Elemental's power, X = ∞) becomes a finite one the controller picks (PlayerController.chooseFiniteForInfinite).
+     */
+    protected static int finiteAmount(final SpellAbility sa, final int amount, final String what) {
+        if (!Infinity.isInfinite(amount)) {
+            return amount;
+        }
+        final Player chooser = sa.getActivatingPlayer() != null ? sa.getActivatingPlayer() : sa.getHostCard().getController();
+        return chooser.getController().chooseFiniteForInfinite(sa, what);
+    }
+
     public void resolve(SpellAbility sa) {}
 
     /**

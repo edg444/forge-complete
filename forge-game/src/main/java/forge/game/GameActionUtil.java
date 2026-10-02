@@ -17,6 +17,7 @@
  */
 package forge.game;
 
+import forge.util.Infinity;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
@@ -890,6 +891,16 @@ public final class GameActionUtil {
         final StringBuilder sb = new StringBuilder();
         if (amount <= 0) {
             sb.append("0");
+        } else if (Infinity.isInfinite(amount) && !abMana.isComboMana()) {
+            // infinitely much of each mana the ability makes, as a pool flag rather than that many symbols
+            final List<String> unbounded = Lists.newArrayList();
+            for (final String m : baseMana.split(" ")) {
+                final String token = StringUtils.isNumeric(m) || m.equals("C") ? "Infinity" : "Infinity-" + m;
+                if (!unbounded.contains(token)) {
+                    unbounded.add(token);
+                }
+            }
+            sb.append(String.join(" ", unbounded));
         } else if (abMana.isComboMana()) {
             // amount is already taken care of in resolve method for combination mana, just append baseMana
             sb.append(baseMana);

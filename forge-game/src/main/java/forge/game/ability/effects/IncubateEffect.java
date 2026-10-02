@@ -28,7 +28,7 @@ public class IncubateEffect extends TokenEffectBase {
         final StringBuilder sb = new StringBuilder("Incubate ");
         final Card card = sa.getHostCard();
         final int amount = AbilityUtils.calculateAmount(card, sa.getParamOrDefault("Amount", "1"), sa);
-        final int times = AbilityUtils.calculateAmount(card, sa.getParamOrDefault("Times", "1"), sa);
+        final int times = finiteAmount(sa, AbilityUtils.calculateAmount(card, sa.getParamOrDefault("Times", "1"), sa), "Incubator tokens");
 
         sb.append(amount);
         if (times > 1) {

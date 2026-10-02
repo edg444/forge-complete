@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import forge.game.card.CardUtil;
+import forge.util.Infinity;
 import forge.util.Lang;
 import org.apache.commons.lang3.StringUtils;
 
@@ -86,8 +87,17 @@ public class ManaEffect extends SpellAbilityEffect {
                 ColorSet fullOptions = colorOptions;
                 final StringBuilder choiceString = new StringBuilder();
                 final StringBuilder choiceSymbols = new StringBuilder();
-                // Use specifyManaCombo if possible
-                if (colorsNeeded == null && amount > 1 && !sa.hasParam("Each")) {
+                if (Infinity.isInfinite(amount) || Infinity.isInfinite(each)) {
+                    // infinitely much in any combination is an unbounded supply of every color offered
+                    for (final MagicColor.Color color : colorOptions) {
+                        if (choiceString.length() > 0) {
+                            choiceString.append(" ");
+                        }
+                        choiceString.append("Infinity-").append(color.getShortName());
+                        choiceSymbols.append("∞").append(color.getSymbol());
+                    }
+                } else if (colorsNeeded == null && amount > 1 && !sa.hasParam("Each")) {
+                    // Use specifyManaCombo if possible
                     Map<Byte, Integer> choices = chooser.getController().specifyManaCombo(sa, colorOptions, amount, differentChoice);
                     for (Map.Entry<Byte, Integer> e : choices.entrySet()) {
                         Byte chosenColor = e.getKey();

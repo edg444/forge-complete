@@ -838,18 +838,18 @@ public class FCardImageRenderer {
                 pieces.add("/");
                 pieces.add(pt[1]);
             } else {
-                pieces.add(String.valueOf(state.getPower()));
+                pieces.add(state.getPowerString());
                 pieces.add("/");
-                pieces.add(String.valueOf(state.getToughness()));
+                pieces.add(state.getToughnessString());
             }
         }
         else if (state.isSpaceCraft()) {
             Color [] scColor = { Color.BLACK };
             colors = scColor;
             TEXT_COLOR = Color.WHITE;
-            pieces.add(String.valueOf(state.getPower()));
+            pieces.add(state.getPowerString());
             pieces.add("/");
-            pieces.add(String.valueOf(state.getToughness()));
+            pieces.add(state.getToughnessString());
         }
         else if (state.isPlaneswalker()) {
             Color [] pwColor = { Color.BLACK };
@@ -867,9 +867,9 @@ public class FCardImageRenderer {
             Color [] vhColor = { new Color(128, 96, 64) };
             colors = vhColor;
             TEXT_COLOR = Color.WHITE;
-            pieces.add(String.valueOf(state.getPower()));
+            pieces.add(state.getPowerString());
             pieces.add("/");
-            pieces.add(String.valueOf(state.getToughness()));
+            pieces.add(state.getToughnessString());
         }
         else { return; }
 

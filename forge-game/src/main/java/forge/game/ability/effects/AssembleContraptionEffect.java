@@ -53,7 +53,7 @@ public class AssembleContraptionEffect extends SpellAbilityEffect {
                 sb.append(" assembles a number of Contraptions equal to the result.");
                 return sb.toString();
             }
-            amount = AbilityUtils.calculateAmount(sa.getHostCard(), amountText, sa);
+            amount = finiteAmount(sa, AbilityUtils.calculateAmount(sa.getHostCard(), amountText, sa), "Contraptions");
         }
         else
             amount = 1;

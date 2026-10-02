@@ -68,7 +68,7 @@ public class CopySpellAbilityEffect extends SpellAbilityEffect {
 
         int amount = 1;
         if (sa.hasParam("Amount")) {
-            amount = AbilityUtils.calculateAmount(card, sa.getParam("Amount"), sa);
+            amount = finiteAmount(sa, AbilityUtils.calculateAmount(card, sa.getParam("Amount"), sa), "copies");
         }
 
         List<SpellAbility> tgtSpells = getTargetSpells(sa);

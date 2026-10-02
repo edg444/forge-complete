@@ -1,5 +1,6 @@
 package forge.game.player;
 
+import forge.util.Infinity;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -204,6 +205,9 @@ public class PlayerView extends GameEntityView {
 
     // "19 1/2" rather than "19" wherever a life total is shown to a player
     public String getLifeString() {
+        if (Infinity.isEitherInfinite(getLife())) {
+            return Infinity.format(getLife());
+        }
         return hasHalfLife() ? getLife() + "½" : String.valueOf(getLife());
     }
 
@@ -522,7 +526,8 @@ public class PlayerView extends GameEntityView {
         Map<Byte, Integer> mana = new HashMap<>();
         Map<Byte, Integer> halves = new HashMap<>();
         for (byte b : ManaAtom.MANATYPES) {
-            mana.put(b, p.getManaPool().getAmountOfColor(b));
+            // an unbounded color shows as ∞ (Infinity.format), not as the one mana that stands for it in the pool
+            mana.put(b, p.getManaPool().hasInfinite(b) ? Infinity.VALUE : p.getManaPool().getAmountOfColor(b));
             halves.put(b, p.getManaPool().getHalfMana(b));
         }
         set(TrackableProperty.Mana, mana);

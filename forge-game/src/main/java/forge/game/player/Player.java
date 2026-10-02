@@ -445,6 +445,16 @@ public class Player extends GameEntity implements Comparable<Player> {
         // becoming exactly N leaves no leftover half - without this, setting the life of a player
         // sitting at 19 1/2 lands them on 20 1/2
         final boolean hadHalf = hasHalfLife();
+        // Infinity Elemental: "If an effect sets your life total to a specific number, it will be that number, even if
+        // you previously had infinite life" - but losing or gaining from infinity changes nothing, so set it outright
+        if (Infinity.isEitherInfinite(life) && !Infinity.isEitherInfinite(newLife)) {
+            final int oldLife = life;
+            life = newLife;
+            view.updateLife(this);
+            game.fireEvent(new GameEventPlayerLivesChanged(this, oldLife, life));
+            setHalfLife(0);
+            return true;
+        }
         // rule 119.5
         if (life > newLife) {
             change = loseLife(life - newLife, false, false, sa) > 0;
@@ -588,10 +598,11 @@ public class Player extends GameEntity implements Comparable<Player> {
         }
 
         int oldLife = life;
-        life += lifeGain;
+        // infinite life gained (Infinity Elemental with lifelink) is infinite life; at infinite life a gain changes nothing
+        life = Infinity.add(life, lifeGain);
         view.updateLife(this);
         boolean firstGain = lifeGainedTimesThisTurn == 0;
-        lifeGainedThisTurn += lifeGain;
+        lifeGainedThisTurn = Infinity.add(lifeGainedThisTurn, lifeGain);
         lifeGainedTimesThisTurn++;
 
         // team mates need to be notified about life gained
@@ -652,7 +663,8 @@ public class Player extends GameEntity implements Comparable<Player> {
             return 0;
         }
 
-        life -= toLose;
+        // at infinite life a loss changes nothing, even an infinite one; an infinite loss from a finite total is -∞
+        life = Infinity.subtract(life, toLose);
         view.updateLife(this);
         if (manaBurn) {
             game.fireEvent(new GameEventManaBurn(PlayerView.get(this), true, toLose));
@@ -661,7 +673,7 @@ public class Player extends GameEntity implements Comparable<Player> {
         }
 
         boolean firstLost = lifeLostThisTurn == 0;
-        lifeLostThisTurn += toLose;
+        lifeLostThisTurn = Infinity.add(lifeLostThisTurn, toLose);
 
         final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(this);
         runParams.put(AbilityKey.LifeAmount, toLose);
@@ -677,7 +689,8 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
 
     public final boolean canPayLife(final int lifePayment, final boolean effect, SpellAbility cause) {
-        if (lifePayment > 0 && life < lifePayment) {
+        // any amount of life can be paid from infinite life (Infinity Elemental rulings)
+        if (lifePayment > 0 && life < lifePayment && !Infinity.isInfinite(life)) {
             return false;
         }
         return lifePayment <= 0 || !StaticAbilityCantGainLosePayLife.anyCantPayLife(this, effect, cause);
@@ -795,7 +808,7 @@ public class Player extends GameEntity implements Comparable<Player> {
         }
         else {
             // rule 118.2. Damage dealt to a player normally causes that player to lose that much life.
-            simultaneousDamage += amount;
+            simultaneousDamage = Infinity.add(simultaneousDamage, amount);
         }
 
         if (isCombat) {
@@ -995,7 +1008,7 @@ public class Player extends GameEntity implements Comparable<Player> {
         }
 
         final int oldValue = getCounters(counterType);
-        final int newValue = addAmount + oldValue;
+        final int newValue = Infinity.add(oldValue, addAmount);
         this.setCounters(counterType, newValue, source, fireEvents);
 
         if (counterType.is(CounterEnumType.RAD) && newValue > 0) {
@@ -1013,8 +1026,9 @@ public class Player extends GameEntity implements Comparable<Player> {
         if (params != null) {
             runParams.putAll(params);
         }
-        for (int i = 0; i < addAmount; i++) {
-            runParams.put(AbilityKey.CounterAmount, oldValue + i + 1);
+        // an infinite batch (poison from Infinity Elemental with infect) can't trigger once per counter
+        for (int i = 0; i < (Infinity.isInfinite(addAmount) ? 1 : addAmount); i++) {
+            runParams.put(AbilityKey.CounterAmount, Infinity.add(oldValue, i + 1));
             getGame().getTriggerHandler().runTrigger(TriggerType.CounterAdded, AbilityKey.newMap(runParams), false);
         }
         runParams.put(AbilityKey.CounterAmount, addAmount);
@@ -1027,9 +1041,11 @@ public class Player extends GameEntity implements Comparable<Player> {
     @Override
     public int subtractCounter(CounterType counterName, int num, final Player remover) {
         int oldValue = getCounters(counterName);
-        int newValue = Math.max(oldValue - num, 0);
+        final boolean fromInfinite = Infinity.isInfinite(oldValue) && !Infinity.isInfinite(num);
+        // removing infinitely many leaves none, from any number
+        int newValue = Infinity.isInfinite(num) ? 0 : fromInfinite ? oldValue : Math.max(oldValue - num, 0);
 
-        final int delta = oldValue - newValue;
+        final int delta = fromInfinite ? num : oldValue - newValue;
         if (delta == 0) { return 0; }
 
         setCounters(counterName, newValue, null, true);
@@ -1295,7 +1311,10 @@ public class Player extends GameEntity implements Comparable<Player> {
 
         final Map<Player, CardCollection> toReveal = Maps.newHashMap();
 
-        for (int i = 0; i < n; i++) {
+        // drawing infinitely many cards draws the library and then fails the draw that loses the game (Infinity
+        // Elemental rulings) - one attempt past the end is all an infinite draw can do
+        final int draws = Infinity.isInfinite(n) ? (libraryOf != null ? libraryOf : this).getZone(ZoneType.Library).size() + 1 : n;
+        for (int i = 0; i < draws; i++) {
             if (gameStarted && !canDraw()) {
                 return drawn;
             }

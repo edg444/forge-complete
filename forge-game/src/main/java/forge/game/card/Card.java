@@ -1839,7 +1839,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
             }
         }
 
-        final int newValue = addAmount + oldValue;
+        // infinitely many counters (Infinity Elemental's power turned into counters) stay infinitely many
+        final int newValue = Infinity.add(oldValue, addAmount);
         if (fireEvents) {
             getGame().updateLastStateForCard(this);
 
@@ -1871,8 +1872,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
             if (params != null) {
                 runParams.putAll(params);
             }
-            for (int i = 0; i < addAmount; i++) {
-                runParams.put(AbilityKey.CounterAmount, oldValue + i + 1);
+            // an infinite batch can't trigger once per counter, so it triggers once
+            for (int i = 0; i < (Infinity.isInfinite(addAmount) ? 1 : addAmount); i++) {
+                runParams.put(AbilityKey.CounterAmount, Infinity.add(oldValue, i + 1));
                 getGame().getTriggerHandler().runTrigger(
                         TriggerType.CounterAdded, AbilityKey.newMap(runParams), false);
             }
@@ -1949,7 +1951,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     public final int subtractCounter(final CounterType counterName, final int n, final Player remover, final boolean isDamage) {
         int oldValue = getCounters(counterName);
-        int newValue = max(oldValue - n, 0);
+        // removing some of infinitely many counters leaves infinitely many, but they were still removed
+        final boolean fromInfinite = Infinity.isInfinite(oldValue) && !Infinity.isInfinite(n);
+        // removing infinitely many leaves none, from any number
+        int newValue = Infinity.isInfinite(n) ? 0 : fromInfinite ? oldValue : max(oldValue - n, 0);
 
         final Map<AbilityKey, Object> repParams = AbilityKey.mapFromAffected(this);
         repParams.put(AbilityKey.CounterType, counterName);
@@ -1971,7 +1976,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                 break;
         }
 
-        final int delta = oldValue - newValue;
+        final int delta = fromInfinite && newValue == oldValue ? n : oldValue - newValue;
         if (delta == 0) { return 0; }
 
         int powerBonusBefore = getPowerBonusFromCounters();
@@ -2000,7 +2005,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         final Map<AbilityKey, Object> runParams = AbilityKey.mapFromCard(this);
         runParams.put(AbilityKey.CounterType, counterName);
         runParams.put(AbilityKey.Player, remover);
-        for (int i = 0; i < delta && curCounters != 0; i++) {
+        for (int i = 0; i < (Infinity.isInfinite(delta) ? 1 : delta) && curCounters != 0; i++) {
             runParams.put(AbilityKey.NewCounterAmount, --curCounters);
             getGame().getTriggerHandler().runTrigger(TriggerType.CounterRemoved, AbilityKey.newMap(runParams), false);
         }
@@ -4820,7 +4825,13 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         if (isInPlay() && !isCreature()) {
             return 0;
         }
-        return getUnswitchedPowerBreakdown().getTotal() * 2
+        // Infinity Elemental: gaining or losing power is meaningless to infinite power, but setting it works (rulings),
+        // which getCurrentPower already does
+        final StatBreakdown breakdown = getUnswitchedPowerBreakdown();
+        if (Infinity.isEitherInfinite(breakdown.currentValue) || Infinity.isEitherInfinite(breakdown.getTotal())) {
+            return 2 * Infinity.normalize(Infinity.isEitherInfinite(breakdown.currentValue) ? breakdown.currentValue : breakdown.getTotal());
+        }
+        return breakdown.getTotal() * 2
                 + Math.floorMod(basePowerHalves(), 2) + getTempPowerBoostHalves();
     }
     public final int getUnswitchedPower() {
@@ -4894,7 +4905,11 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         if (isInPlay() && !isCreature()) {
             return 0;
         }
-        return getUnswitchedToughnessBreakdown().getTotal() * 2
+        final StatBreakdown breakdown = getUnswitchedToughnessBreakdown();
+        if (Infinity.isEitherInfinite(breakdown.currentValue) || Infinity.isEitherInfinite(breakdown.getTotal())) {
+            return 2 * Infinity.normalize(Infinity.isEitherInfinite(breakdown.currentValue) ? breakdown.currentValue : breakdown.getTotal());
+        }
+        return breakdown.getTotal() * 2
                 + Math.floorMod(baseToughnessHalves(), 2) + getTempToughnessBoostHalves();
     }
     public final int getUnswitchedToughness() {
@@ -6458,7 +6473,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public final int getDamage() {
         int sum = 0;
         for (int i : damage.values()) {
-            sum += i;
+            sum = Infinity.add(sum, i);
         }
         return sum;
     }
@@ -6664,7 +6679,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                 damageType = DamageType.M1M1Counters;
             }
             else { // 120.3e
-                damage.merge(Objects.hash(source.getId(), source.getGameTimestamp()), damageIn, Integer::sum);
+                damage.merge(Objects.hash(source.getId(), source.getGameTimestamp()), damageIn, Infinity::add);
                 view.updateDamage(this);
             }
 
