@@ -1,0 +1,8 @@
+Name:Super-Duper Death Ray
+ManaCost:2 R
+Types:Instant
+# trample on a spell (rulings): damage beyond lethal - counting damage already marked - goes to the creature's
+# controller, who isn't targeted. K:Trample:Spell gives the spell's reminder text; ExcessDamage needs the trample.
+K:Trample:Spell
+A:SP$ DealDamage | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumDmg$ 4 | ExcessDamage$ TargetedController | ExcessDamageCondition$ Card.withTrample | SpellDescription$ CARDNAME deals 4 damage to target creature.
+Oracle:Trample (This spell can deal excess damage to its target's controller.)\nSuper-Duper Death Ray deals 4 damage to target creature.

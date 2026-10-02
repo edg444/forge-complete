@@ -293,6 +293,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     able to block and kill it. `lifeInDanger` no longer assumes the active player can't be attacked, and the AI's
     blocker reset only undoes the block of a creature that's also attacking.
   - `PartyCrasherTest` (5). Suite: 950 run, 0 failed, 6 skipped.
+- **Super-Duper Death Ray** (ust/97; not scripted upstream; 93-96, the Steamfloggers, are upstream and match Oracle).
+  Trample on an instant: `K:Trample:Spell`, whose title is plain "Trample" with the reminder "This spell can deal
+  excess damage to its target's controller.", and which instant and sorcery text now prints. The damage is the existing
+  `ExcessDamage$ TargetedController` (as on Flame Spill), conditioned on the spell having trample. Per the rulings,
+  marked damage counts toward lethal, and only the creature is targeted, so a hexproof controller still takes the
+  excess.
+  - `SuperDuperDeathRayTest` (4). Suite: 954 run, 0 failed, 6 skipped.
 
 ### 2026-10-01, fourth build (deployed: desktop, Android, GitHub) — Deck Editor augment P/T; Kefnet's Monument deck gen and AI; MustBeBlockedByAll text
 

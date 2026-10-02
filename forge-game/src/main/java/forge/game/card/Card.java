@@ -3410,6 +3410,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.equals("Tiered") || keyword.equals("Split second")) {
                     sbBefore.append(keyword).append(" (").append(inst.getReminderText()).append(")");
                     sbBefore.append("\r\n\r\n");
+                } else if (keyword.startsWith("Trample:")) {
+                    // Super-Duper Death Ray's Trample:Spell
+                    sbBefore.append(inst.getTitle()).append(" (").append(inst.getReminderText()).append(")");
+                    sbBefore.append("\r\n\r\n");
                 } else if (keyword.equals("Conspire") || keyword.equals("Epic")
                         || keyword.equals("Suspend") || keyword.equals("Jump-start")
                         || keyword.equals("Fuse") || keyword.equals("Paradigm")) {
