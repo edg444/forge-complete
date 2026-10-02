@@ -42,6 +42,8 @@ public final class PrintingTraits {
         private int backRulesLines = -1;
         private int textLines = -1;
         private int backTextLines = -1;
+        private boolean hat = false;
+        private boolean backHat = false;
 
         /** The border as printed, or null when the edition data already has it right. */
         public CardEdition.BorderColor getBorder() {
@@ -74,6 +76,11 @@ public final class PrintingTraits {
         /** Printed lines of rules text, counted on the card image; -1 when they couldn't be read. */
         public int getRulesLines(final boolean backFace) {
             return backFace ? backRulesLines : rulesLines;
+        }
+
+        /** A hat on single-figure art (Goblin Haberdasher), so on the creature itself; false can still mean untagged. */
+        public boolean hasHat(final boolean backFace) {
+            return backFace ? backHat : hat;
         }
 
         /** Printed lines in the whole text box, flavor text included (Lexivore); -1 when they couldn't be read. */
@@ -135,6 +142,10 @@ public final class PrintingTraits {
                     t.rulesLines = Integer.parseInt(trait.substring(10));
                 } else if (trait.startsWith("backrulelines=")) {
                     t.backRulesLines = Integer.parseInt(trait.substring(14));
+                } else if (trait.equals("hat")) {
+                    t.hat = true;
+                } else if (trait.equals("backhat")) {
+                    t.backHat = true;
                 } else if (trait.startsWith("textlines=")) {
                     t.textLines = Integer.parseInt(trait.substring(10));
                 } else if (trait.startsWith("backtextlines=")) {

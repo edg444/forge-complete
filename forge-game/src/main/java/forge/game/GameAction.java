@@ -985,6 +985,55 @@ public class GameAction {
     private boolean declaringGraveyardCombatants = false;
 
     /**
+     * Goblin Haberdasher: "creatures you control wearing hats in their art have menace." Where the printing data can't
+     * confirm a hat, the creature's controller is asked once (honor system; the answer stays with the card) - right
+     * after attackers are declared, the first point menace matters, and only for an attacker a hat would actually
+     * give something to.
+     */
+    public void askHatInArt(final Iterable<Card> attackers) {
+        final List<StaticAbility> hatStatics = Lists.newArrayList();
+        for (final Card ca : game.getCardsIn(ZoneType.STATIC_ABILITIES_SOURCE_ZONES)) {
+            for (final StaticAbility st : ca.getStaticAbilities()) {
+                if (st.checkConditions(StaticAbilityMode.Continuous) && st.getParamOrDefault("Affected", "").contains("HatInArt")) {
+                    hatStatics.add(st);
+                }
+            }
+        }
+        if (hatStatics.isEmpty()) {
+            return;
+        }
+        boolean answered = false;
+        for (final Card c : attackers) {
+            if (c.hasKnownHatInArt() || c.getHatInArtClaim() != null) {
+                continue;
+            }
+            StaticAbility asker = null;
+            c.setHatInArtClaim(true);
+            for (final StaticAbility st : hatStatics) {
+                if (c.isValid(st.getParam("Affected").split(","), st.getHostCard().getController(), st.getHostCard(), st)) {
+                    asker = st;
+                    break;
+                }
+            }
+            c.setHatInArtClaim(null);
+            if (asker == null) {
+                continue;
+            }
+            final boolean hat = c.getController().getController().confirmStaticApplication(asker.getHostCard(), null,
+                    "Is " + c.getName() + " wearing a hat in its art? (" + asker.getHostCard().getName() + ": a hat is "
+                            + "worn on the head and isn't part of another garment - not a hood or a face mask - and a "
+                            + "background character's doesn't count.)", "HatInArt");
+            c.setHatInArtClaim(hat);
+            game.getGameLog().add(GameLogEntryType.INFORMATION, c.getController() + (hat ? " says " : " says not: ")
+                    + c.getName() + " is wearing a hat in its art.");
+            answered = true;
+        }
+        if (answered) {
+            checkStaticAbilities();
+        }
+    }
+
+    /**
      * Over My Dead Bodies: puts the creature cards in this player's graveyard onto the battlefield, unnoticed and
      * still listed in the graveyard, so they can be declared as attackers or blockers. A card that has been in the
      * graveyard since before this turn isn't summoning sick. One that state-based actions would remove at once

@@ -428,6 +428,7 @@ public class GameCopier {
             if (c.hasChosenPlayer()) {
                 newCard.setChosenPlayer(playerMap.get(c.getChosenPlayer()));
             }
+            newCard.setHatInArtClaim(c.getHatInArtClaim());
             if (c.hasChosenType()) {
                 newCard.setChosenType(c.getChosenType());
                 if (c.hasGuessableWord()) {

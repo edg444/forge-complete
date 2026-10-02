@@ -152,6 +152,7 @@ Hag:Hags
 Halfling:Halflings
 Hamster:Hamsters
 Harpy:Harpies
+Hatificer:Hatificers
 Head:Heads
 Hedgehog:Hedgehogs
 Hellion:Hellions

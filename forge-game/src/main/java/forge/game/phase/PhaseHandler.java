@@ -666,6 +666,8 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         if (game.isGameOver()) { // they just like to close window at any moment
             return;
         }
+        // Goblin Haberdasher: a hat gives menace, which matters from here on
+        game.getAction().askHatInArt(combat.getAttackers());
 
         // Reset all active Triggers
         game.getTriggerHandler().resetActiveTriggers();

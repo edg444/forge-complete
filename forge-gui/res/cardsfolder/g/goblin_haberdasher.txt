@@ -1,0 +1,9 @@
+Name:Goblin Haberdasher
+ManaCost:2 R
+Types:Creature Goblin Hatificer
+PT:2/2
+K:Menace
+# hats come from PrintingTraits where single-figure art is tagged with one; otherwise the controller is asked when
+# the creature attacks (GameAction.askHatInArt)
+S:Mode$ Continuous | Affected$ Creature.Other+YouCtrl+HatInArt | AddKeyword$ Menace | Description$ Other creatures you control wearing hats in their art have menace.
+Oracle:Menace (This creature can't be blocked except by two or more creatures.)\nOther creatures you control wearing hats in their art have menace.

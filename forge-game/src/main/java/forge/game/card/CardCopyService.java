@@ -64,6 +64,7 @@ public class CardCopyService {
         out.setStartingDeckCard(copyFrom.isStartingDeckCard());
         // a signature is on the physical card, so it follows it into every zone
         out.setSigned(copyFrom.isSigned());
+        out.setHatInArtClaim(copyFrom.getHatInArtClaim());
 
         if (toGame == copyFrom.getGame()) {
             // Only copy these things if we're not copying them into a new game
@@ -364,6 +365,7 @@ public class CardCopyService {
         newCopy.setChosenCards(copyFrom.getChosenCards());
 
         newCopy.setChosenType(copyFrom.getChosenType());
+        newCopy.setHatInArtClaim(copyFrom.getHatInArtClaim());
         if (copyFrom.hasGuessableWord()) {
             newCopy.copyGuessableWordFrom(copyFrom, copyFrom.getWordNoter());
         }

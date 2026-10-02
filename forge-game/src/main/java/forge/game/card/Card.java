@@ -359,6 +359,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     // Letter Bomb is physically signed, so it stays identifiable after being shuffled into somebody
     // else's library - which means it has to survive the copy every zone change makes.
     private boolean signed;
+    private Boolean hatInArtClaim = null;
     // Present Arms pushed this out of the library into the sideboard. Deliberately NOT propagated by
     // CardCopyService: every zone change makes a copy, so the flag dies the moment Decorated Knight
     // draws the card back into the game, which is exactly when it should stop counting.
@@ -7382,6 +7383,28 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public void setSigned(final boolean s) {
         signed = s;
         view.updateSigned(this);
+    }
+
+    /**
+     * Goblin Haberdasher: what this card's controller answered when asked whether the creature it represents wears a
+     * hat in its art (honor system, see GameAction.askHatInArt), or null if never asked. It's about the physical
+     * card, so like a signature it follows the card into every zone.
+     */
+    public Boolean getHatInArtClaim() {
+        return hatInArtClaim;
+    }
+    public void setHatInArtClaim(final Boolean claim) {
+        hatInArtClaim = claim;
+    }
+
+    /** A hat the printing data confirms: tagged on single-figure art, so it's on the creature itself. */
+    public boolean hasKnownHatInArt() {
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t != null && t.hasHat(isBackSide());
+    }
+
+    public boolean isWearingHatInArt() {
+        return hasKnownHatInArt() || Boolean.TRUE.equals(hatInArtClaim);
     }
 
     public boolean isDisplacedFromLibrary() {

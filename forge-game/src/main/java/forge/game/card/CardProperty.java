@@ -398,6 +398,10 @@ public class CardProperty {
             if (card.getArtFigures() != 2) {
                 return false;
             }
+        } else if (property.equals("HatInArt")) {
+            if (!card.isWearingHatInArt()) {
+                return false;
+            }
         } else if (property.equals("ArtFiguresUnknown")) {
             if (card.getArtFigures() != 0) {
                 return false;

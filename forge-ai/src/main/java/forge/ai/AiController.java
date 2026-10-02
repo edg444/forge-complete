@@ -1290,6 +1290,10 @@ public class AiController {
             // Snickering Squirrel: a higher result is what the roller wants, so only its own rolls
             return "own".equals(logic.split(":")[1]);
         }
+        if ("HatInArt".equals(logic)) {
+            // Goblin Haberdasher's honor question: the AI can't look at the art, so it never claims a hat
+            return false;
+        }
         if (logic != null && logic.startsWith("InstalledResult:")) {
             // Socketed Sprocketer: swap in a higher installed result, but a 6 also draws a card on its own,
             // so it's only spent on a roll that came up low

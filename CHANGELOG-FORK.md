@@ -85,6 +85,8 @@ A complete half-integer layer running parallel to the whole-number one.
   artwork that also shows an animal beside another kind of being is unknown (`Card.getArtFigures()` 0).
   Properties `ArtFiguresSolo`, `ArtFiguresMultiple`, `ArtFiguresUnknown`, and `ControlledByAI` for
   honor-system facts the AI can't check.
+- **Hats in the art** (`hat`, Goblin Haberdasher) — confirmed hats only; `HatInArt` also counts the controller's
+  answer to `GameAction.askHatInArt`, kept on the card (`Card.getHatInArtClaim()`).
 
 ### Five-face split cards
 
@@ -196,6 +198,18 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
     removed): Frazzled Editor's protection from `wordy` and Lexivore's `mostLinesOfText` read the printed
     counts too. Lexivore may target an unread permanent; the AI goes by known counts only.
   - `GarbageElementalTest` (7), `PrintedLinesTest` (3); `TextBoxTest` loses its three estimator tests. Suite: 911 run, 0 failed, 6 skipped.
+- **Goblin Haberdasher** (ust/83; not scripted upstream). New creature type **Hatificer**. "Wearing hats in their
+  art" (`Creature.HatInArt`) is confirmed by the printing data or, failing that, asked:
+  - **Confirmed** (`hat` in PrintingTraits, 1,116 printings): worn headwear in Tagger's hat tree - helmets and
+    crowns included, per the FAQ's "garment worn on the head that's not part of another garment" - on art tagged
+    as one figure, since a background character's hat doesn't count (rulings) and Tagger doesn't say who wears
+    it. Not counted: a helmet being held, sticker sheets, "not-a-hat", and the plain `helmet` tag alone (8ED
+    Seasoned Marshal carries hers and is tagged `helmet`). Checked by eye on 12 random printings: all wearing one.
+  - **Asked** otherwise, honor system and only when it matters: right after attackers are declared, the
+    controller of each attacker a hat would give something to is asked once (`GameAction.askHatInArt`). The answer
+    is about the physical card, so like a signature it stays with the card through every zone. The AI can't look,
+    so it never claims a hat.
+  - `GoblinHaberdasherTest` (5). Suite: 916 run, 0 failed, 6 skipped.
 
 ### 2026-10-01, fourth build (deployed: desktop, Android, GitHub) — Deck Editor augment P/T; Kefnet's Monument deck gen and AI; MustBeBlockedByAll text
 
