@@ -214,6 +214,9 @@ it; it clears with the pool at end of step or phase, and displays as ∞.
   intervening "if" (`CheckSVar$` with `PlayerCountRegisteredOpponents$HasPropertywasDealtDamageThisTurn`); the
   combined trigger keeps the condition and its SVar, so no engine change was needed. `HalfOrcTest` (3, with
   Adorable Kitten as the host). Suite: 919 run, 0 failed, 6 skipped.
+- **Hammerfest Boomtacular** (ust/87; 85 Hammer Helper and 86 Hammer Jammer were already upstream). Script only:
+  a `SpellCast` trigger on `Card.Watermark_goblinexplosioneers`, the printing's watermark from PrintingTraits.
+  `HammerfestBoomtacularTest` (2, casting Goblin Haberdasher's UST printing and Grizzly Bears).
 
 ### 2026-10-01, fourth build (deployed: desktop, Android, GitHub) — Deck Editor augment P/T; Kefnet's Monument deck gen and AI; MustBeBlockedByAll text
 

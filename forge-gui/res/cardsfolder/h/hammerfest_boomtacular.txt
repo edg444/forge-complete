@@ -1,0 +1,6 @@
+Name:Hammerfest Boomtacular
+ManaCost:3 R R
+Types:Enchantment
+T:Mode$ SpellCast | ValidCard$ Card.Watermark_goblinexplosioneers | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDamage | TriggerDescription$ Whenever you cast a spell with a Goblin Explosioneers watermark, this enchantment deals 2 damage to any target.
+SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 2
+Oracle:Whenever you cast a spell with a Goblin Explosioneers watermark, this enchantment deals 2 damage to any target.
