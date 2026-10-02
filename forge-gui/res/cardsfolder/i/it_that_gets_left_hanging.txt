@@ -1,0 +1,9 @@
+Name:It That Gets Left Hanging
+ManaCost:5 R
+Types:Creature Elemental Horror
+PT:5/4
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigHaste | TriggerDescription$ When this creature enters, ask a person outside the game to high-five you. If they won't, this creature gains haste until end of turn.
+# Honor system. They must clearly decline, and with no one around to ask it doesn't gain haste (rulings) - so the
+# player owns up when they got the high five or had no one to ask. The AI has no one to ask, so it never gains haste.
+SVar:TrigHaste:DB$ Pump | Defined$ Self | KW$ Haste | UnlessCost$ FlavorAction<Ask a person outside the game to high-five you. Confirm if they did - or if there was no one to ask/They high-fived me> | UnlessPayer$ You
+Oracle:When this creature enters, ask a person outside the game to high-five you. If they won't, this creature gains haste until end of turn.

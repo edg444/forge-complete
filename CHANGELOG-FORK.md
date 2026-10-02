@@ -243,6 +243,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   through the same per-color pool flag. The desktop text-only card renderer now uses the P/T display strings, so it
   shows half and infinite values too.
   - `InfinityTest` (12, including an AI turn with it on the battlefield). Suite: 933 run, 0 failed, 6 skipped.
+- **It That Gets Left Hanging** (ust/89; not scripted upstream). Script only, honor system like Skull Saucer: the
+  haste is an `UnlessCost$ FlavorAction` the player pays by confirming the high five - or that there was no one to
+  ask, since then it doesn't gain haste (rulings). The AI has no one to ask, so it never gains haste.
+  `ItThatGetsLeftHangingTest` (2).
 
 ### 2026-10-01, fourth build (deployed: desktop, Android, GitHub) — Deck Editor augment P/T; Kefnet's Monument deck gen and AI; MustBeBlockedByAll text
 
