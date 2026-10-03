@@ -182,6 +182,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 - **Clever Combo** (ust/105, first green Unstable card; not scripted upstream). Script only: a tutor whose
   `ChangeType$ Host,Card.withAugment` is Labro Bot's host-or-augment filter. Scryfall lists no rulings.
+- **Druid of the Sacred Beaker** (ust/106; not scripted upstream). Script plus a new creature type, **Deer**, in
+  `TypeLists.txt` (Scryfall's creature-type catalog leaves out Un-only types, as with Hatificer). The mana count is
+  Knight of the Widget's `Permanent.YouCtrl+Watermark_crossbreedlabs`; the Unstable FAQ's one ruling for the card
+  (Contraptions' faction symbols count) is already covered, since the printing traits carry Contraption
+  watermarks. A combined permanent counts once: no host, augment, or mutate printing has a watermark (Scryfall
+  search, 2026-10-03), so a second card under one can't add another.
 
 ### 2026-10-02 (deployed: desktop, Android, GitHub) — upstream merge (12 commits, incl. Unfinity stickers); Unstable red complete (The Big Idea through Three-Headed Goblin); printed-line OCR; infinity; π damage; Party Crasher; triple strike; Jester's Sombrero AI
 

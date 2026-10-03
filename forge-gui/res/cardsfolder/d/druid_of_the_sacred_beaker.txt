@@ -1,0 +1,7 @@
+Name:Druid of the Sacred Beaker
+ManaCost:2 G
+Types:Creature Deer Bird Ape Druid
+PT:2/2
+A:AB$ Mana | Cost$ T | Produced$ G | Amount$ X | SpellDescription$ Add {G} for each Crossbreed Labs watermark among permanents you control.
+SVar:X:Count$Valid Permanent.YouCtrl+Watermark_crossbreedlabs
+Oracle:{T}: Add {G} for each Crossbreed Labs watermark among permanents you control.

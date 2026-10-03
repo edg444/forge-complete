@@ -89,6 +89,7 @@ Cyclops:Cyclopes
 Dalek:Daleks
 Detective:Detectives
 Dauthi:Dauthis
+Deer:Deer
 Demigod:Demigods
 Demon:Demons
 Deserter:Deserters
