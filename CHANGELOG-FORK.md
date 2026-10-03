@@ -185,7 +185,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ## Log
 
-### Unreleased
+### 2026-10-03 (deployed: desktop, Android, GitHub) — upstream merge (2 commits, data only); Unstable green complete and multicolor through Grusilda; audit of upstream Unstable scripts; open-ended die results; artists as people; tree-in-art; just a second; whole-card combination
+
+- **Upstream merge** (2 commits: an SLD commander precon deck and FRA/FRC achievements, data only; no conflicts).
+  Suite before the merge: 1019 run, 0 failed, 6 skipped.
 
 - **Clever Combo** (ust/105, first green Unstable card; not scripted upstream). Script only: a tutor whose
   `ChangeType$ Host,Card.withAugment` is Labro Bot's host-or-augment filter. Scryfall lists no rulings.
