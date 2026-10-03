@@ -223,6 +223,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - AI: GenericChoice `AILogic$ MostMatchingCreatures` picks the choice whose `AIMatch$` the most creature cards
     in library and hand satisfy; ChooseArtist `MostCreaturesToCome`; ChooseNumber `MostCommonNameWordCount`.
   - `IneffableBlessingTest` (9).
+- **Joyride Rigger** (ust/114, upstream) checked against Scryfall: matches, no rulings or FAQ entry.
+- **Monkey-** (ust/115; not scripted upstream). Script only, the standard augment shape; its rulings are the generic
+  augment ones.
 
 ### 2026-10-02 (deployed: desktop, Android, GitHub) — upstream merge (12 commits, incl. Unfinity stickers); Unstable red complete (The Big Idea through Three-Headed Goblin); printed-line OCR; infinity; π damage; Party Crasher; triple strike; Jester's Sombrero AI
 
