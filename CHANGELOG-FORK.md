@@ -188,6 +188,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   (Contraptions' faction symbols count) is already covered, since the printing traits carry Contraption
   watermarks. A combined permanent counts once: no host, augment, or mutate printing has a watermark (Scryfall
   search, 2026-10-03), so a second card under one can't add another.
+- **Half-Squirrel, Half-** (ust/111; not scripted upstream). Script only: the standard augment shape with the
+  first negative adjustment, `PT:-1/-0` - `augmentAdjustment` and `CardFace.parsePT` both read it via
+  `Integer.parseInt`, and the P/T box shows the printed `[-1 / -0]`. Its seven Scryfall rulings are the generic
+  augment ones.
 
 ### 2026-10-02 (deployed: desktop, Android, GitHub) — upstream merge (12 commits, incl. Unfinity stickers); Unstable red complete (The Big Idea through Three-Headed Goblin); printed-line OCR; infinity; π damage; Party Crasher; triple strike; Jester's Sombrero AI
 

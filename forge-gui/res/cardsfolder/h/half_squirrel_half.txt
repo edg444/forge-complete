@@ -1,0 +1,10 @@
+Name:Half-Squirrel, Half-
+ManaCost:no cost
+Colors:green
+Types:Creature Squirrel
+PT:-1/-0
+K:Augment:G
+# An augment's triggers are unfinished conditions with no Execute - combining with a host completes them with
+# the host's effect (CardFactory.getAugmentedCloneStates). On their own they never do anything.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.!token | TriggerZones$ Battlefield | TriggerDescription$ Whenever a nontoken creature enters,
+Oracle:Whenever a nontoken creature enters,\nAugment {G} ({G}, Reveal this card from your hand: Combine it with target host. Augment only as a sorcery.)
