@@ -1,0 +1,12 @@
+Name:Squirrel Dealer
+ManaCost:G
+Types:Creature Raccoon Lizard Bird
+PT:1/1
+# Honor system, like It That Gets Left Hanging: the player asks a real person. Only a yes counts - no reply isn't one
+# (FAQ). The AI has no one to ask, so it takes the first answer and gets no Squirrel.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigAsk | TriggerDescription$ When this creature enters, ask a person outside the game "Do you like Squirrels?" If they do, create a 1/1 green Squirrel creature token.
+SVar:TrigAsk:DB$ GenericChoice | Defined$ You | Choices$ NoSquirrels,LikesSquirrels | ChoicePrompt$ Ask a person outside the game "Do you like Squirrels?" | ShowChoice$ ExceptSelf
+SVar:NoSquirrels:DB$ Pump | SpellDescription$ They don't (or didn't answer, or there was no one to ask)
+SVar:LikesSquirrels:DB$ Token | TokenScript$ g_1_1_squirrel | SpellDescription$ They said they like Squirrels
+DeckHas:Ability$Token
+Oracle:When this creature enters, ask a person outside the game "Do you like Squirrels?" If they do, create a 1/1 green Squirrel creature token.

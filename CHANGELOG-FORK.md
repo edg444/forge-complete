@@ -265,6 +265,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     the best creature, or with `AILogic$ ThrowFight` the best one the Mantis kills. Applies to Chaos Orb and
     Falling Star too.
   - New creature type **Wrestler**. `SlayingMantisTest` (4).
+- **Squirrel Dealer** (ust/123; not scripted upstream). Script only: honor-system GenericChoice, as It That Gets Left
+  Hanging - only a yes makes the Squirrel (FAQ: no reply isn't one); the AI has no one to ask, so no Squirrel.
 
 ### 2026-10-02 (deployed: desktop, Android, GitHub) — upstream merge (12 commits, incl. Unfinity stickers); Unstable red complete (The Big Idea through Three-Headed Goblin); printed-line OCR; infinity; π damage; Party Crasher; triple strike; Jester's Sombrero AI
 
