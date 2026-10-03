@@ -253,6 +253,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   both until changed. AI: defines it once as a 3/3 (new CharmAi `AIPreferred$` mode marker, gated by
   `AICheckSVar$` on base toughness 0), never changes its types.
   - `ShellephantTest` (4).
+- **Slaying Mantis** (ust/122; not scripted upstream).
+  - **Just a second** (`Keyword.JUST_A_SECOND`): the ruling makes it split second (no spells, no abilities) plus not
+    moving permanents, so `MagicStack.isSplitSecondOnStack` counts it; prints with its reminder text.
+  - **The throw** reuses upstream's Chaos Orb/Falling Star simulation (`FlipOntoBattlefield`: aim at a card, land on
+    it and/or a neighbor by chance) as an ETB replacement, with a new `Thrown$ True` that skips the flip-over roll
+    (it's thrown; it always lands). With nothing on the battlefield it touches nothing (no longer an exception).
+  - **The fight**: RepeatEach over the touched opposing creatures with `DamageMap$ True`, so each fight is
+    one-on-one but all damage lands at once (the ruling's 3/3 + 4/4 + 5/5 example: all four die).
+  - **Flip/throw AI** now aims at an opponent's permanent (it took the first battlefield card, often its own):
+    the best creature, or with `AILogic$ ThrowFight` the best one the Mantis kills. Applies to Chaos Orb and
+    Falling Star too.
+  - New creature type **Wrestler**. `SlayingMantisTest` (4).
 
 ### 2026-10-02 (deployed: desktop, Android, GitHub) — upstream merge (12 commits, incl. Unfinity stickers); Unstable red complete (The Big Idea through Three-Headed Goblin); printed-line OCR; infinity; π damage; Party Crasher; triple strike; Jester's Sombrero AI
 

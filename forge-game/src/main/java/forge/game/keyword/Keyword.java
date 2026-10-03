@@ -114,6 +114,8 @@ public enum Keyword {
     INTIMIDATE("Intimidate", SimpleKeyword.class, true, "This creature can't be blocked except by artifact creatures and/or creatures that share a color with it."),
     KICKER("Kicker", Kicker.class, false, "You may pay an additional %s as you cast this spell."),
     JOB_SELECT("Job select", SimpleKeyword.class, false, "When this Equipment enters, create a 1/1 colorless Hero creature token, then attach this to it."),
+    // Slaying Mantis. A variant of split second (ruling): no spells, no abilities, and no moving permanents
+    JUST_A_SECOND("Just a second", SimpleKeyword.class, true, "As long as this spell is on the stack, players can't move permanents."),
     JUMP_START("Jump-start", SimpleKeyword.class, false, "You may cast this card from your graveyard by discarding a card in addition to paying its other costs. Then exile this card."),
     LANDWALK("Landwalk", Landwalk.class, true, "This creature is unblockable as long as defending player controls {1:%s}."),
     LAST_STRIKE("Last Strike", SimpleKeyword.class, true, "This creature deals combat damage after creatures without last strike."),

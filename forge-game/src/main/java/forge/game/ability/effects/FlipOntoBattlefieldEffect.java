@@ -33,6 +33,10 @@ public class FlipOntoBattlefieldEffect extends SpellAbilityEffect {
         // TODO: allow to make a bounding box of sorts somehow, ideally - upgrade to a full system allowing to actually target by location
         CardCollectionView tgtBox = p.getController().chooseCardsForEffect(game.getCardsIn(ZoneType.Battlefield), sa, Localizer.getInstance().getMessage("lblChooseDesiredLocation"), 1, 1, sa.hasParam("AllowRandom"), null);
 
+        // nothing on the battlefield to aim at (Slaying Mantis can be the first permanent): it touches nothing
+        if (tgtBox.isEmpty()) {
+            return;
+        }
         Card tgtLoc = tgtBox.getFirst();
 
         Card lhsNeighbor = getNeighboringCard(tgtLoc, -1);
@@ -48,8 +52,12 @@ public class FlipOntoBattlefieldEffect extends SpellAbilityEffect {
 
         // TODO: would be fun to add a small chance (e.g. 3-5%) to land unpredictably on some random target?
 
-        flippedOnce = MyRandom.getRandom().nextFloat() <= chanceToFlip; // 20% chance that the card won't flip even once
-        if (!flippedOnce) {
+        // Slaying Mantis is thrown, not flipped: it lands no matter what, so only where it lands is left to chance
+        final boolean thrown = sa.hasParam("Thrown");
+        flippedOnce = thrown || MyRandom.getRandom().nextFloat() <= chanceToFlip; // 20% chance that the card won't flip even once
+        if (thrown) {
+            sa.setSVar("TimesFlipped", "0");
+        } else if (!flippedOnce) {
             sa.setSVar("TimesFlipped", "0");
             game.getAction().notifyOfValue(sa, host, Localizer.getInstance().getMessage("lblDidNotFlipOver"), null);
             return;

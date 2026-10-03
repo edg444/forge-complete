@@ -2,7 +2,10 @@ package forge.ai.ability;
 
 import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
+import forge.ai.ComputerUtilCard;
 import forge.ai.SpellAbilityAi;
+import forge.game.card.Card;
+import forge.game.card.CardCollection;
 import forge.game.card.CardCollectionView;
 import forge.game.card.CardLists;
 import forge.game.phase.PhaseHandler;
@@ -13,6 +16,8 @@ import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 
 import java.util.Map;
+
+import com.google.common.collect.Iterables;
 
 public class FlipOntoBattlefieldAi extends SpellAbilityAi {
     @Override
@@ -53,6 +58,28 @@ public class FlipOntoBattlefieldAi extends SpellAbilityAi {
         }
 
         return canPlay(aiPlayer, sa);
+    }
+
+    /** Where to aim: an opponent's permanent, never one of our own. */
+    @Override
+    protected Card chooseSingleCard(Player ai, SpellAbility sa, Iterable<Card> options, boolean isOptional, Player targetedPlayer, Map<String, Object> params) {
+        final CardCollection theirs = CardLists.filter(options, c -> c.getController().isOpponentOf(ai));
+        final CardCollection creatures = CardLists.filter(theirs, Card::isCreature);
+        if ("ThrowFight".equals(sa.getParam("AILogic"))) {
+            // Slaying Mantis fights what it lands on: aim for the best creature it kills
+            final int power = sa.getHostCard().getNetPower();
+            final CardCollection killable = CardLists.filter(creatures, c -> c.getNetToughness() <= power);
+            if (!killable.isEmpty()) {
+                return ComputerUtilCard.getBestCreatureAI(killable);
+            }
+        }
+        if (!creatures.isEmpty()) {
+            return ComputerUtilCard.getBestCreatureAI(creatures);
+        }
+        if (!theirs.isEmpty()) {
+            return ComputerUtilCard.getBestAI(theirs);
+        }
+        return Iterables.getFirst(options, null);
     }
 
     @Override

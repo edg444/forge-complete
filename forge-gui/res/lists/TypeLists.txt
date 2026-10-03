@@ -382,6 +382,7 @@ Wolverine:Wolverines
 Wombat:Wombats
 Worm:Worms
 Wraith:Wraiths
+Wrestler:Wrestlers
 Wurm:Wurms
 Xindi:Xindi
 Yeti:Yetis

@@ -1,0 +1,16 @@
+Name:Slaying Mantis
+ManaCost:5 G G
+Types:Creature Insect Wrestler
+PT:6/6
+# no casting spells or activating abilities while it's on the stack (ruling), as split second
+K:Just a second
+# The throw is simulated the way Chaos Orb's flip is: aim at a card, then where it lands is left to chance
+# (FlipOntoBattlefield). Whatever it touches is remembered for the fight.
+K:ETBReplacement:Other:Throw
+SVar:Throw:DB$ FlipOntoBattlefield | Thrown$ True | AILogic$ ThrowFight | SpellDescription$ This creature enters by being thrown from a distance of at least three feet.
+# each fight is one-on-one but all the damage is dealt at once (ruling: a 3/3, 4/4 and 5/5 all die, and so does it)
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigFight | TriggerDescription$ When this creature enters, it fights each creature an opponent controls that it touched as it entered.
+SVar:TrigFight:DB$ RepeatEach | RepeatCards$ Creature.IsRemembered+OppCtrl | UseImprinted$ True | DamageMap$ True | RepeatSubAbility$ DBFight | SubAbility$ DBCleanup
+SVar:DBFight:DB$ Fight | Defined$ Imprinted & Self
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearImprinted$ True
+Oracle:Just a second (As long as this spell is on the stack, players can't move permanents.)\nThis creature enters by being thrown from a distance of at least three feet.\nWhen this creature enters, it fights each creature an opponent controls that it touched as it entered.
