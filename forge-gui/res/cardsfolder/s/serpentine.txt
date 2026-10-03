@@ -1,0 +1,10 @@
+Name:Serpentine
+ManaCost:no cost
+Colors:green
+Types:Creature Wurm
+PT:+3/+3
+K:Augment:2 G
+# An augment's triggers are unfinished conditions with no Execute - combining with a host completes them with
+# the host's effect (CardFactory.getAugmentedCloneStates). On their own they never do anything.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Land.YouCtrl | TriggerZones$ Battlefield | TriggerDescription$ Landfall — Whenever a land you control enters,
+Oracle:Landfall — Whenever a land you control enters,\nAugment {2}{G} ({2}{G}, Reveal this card from your hand: Combine it with target host. Augment only as a sorcery.)

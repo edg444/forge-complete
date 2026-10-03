@@ -244,6 +244,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - `PrintingTraits.txt` regenerated (same Scryfall bulk files): only `tree`/`backtree` added, plus two rows for
     the Unfinity sticker-sheet edition upstream added after the last run.
   - `SelfiePreservationTest` (2).
+- **Serpentine** (ust/120; not scripted upstream). Script only, the standard augment shape with a landfall
+  condition.
 
 ### 2026-10-02 (deployed: desktop, Android, GitHub) — upstream merge (12 commits, incl. Unfinity stickers); Unstable red complete (The Big Idea through Three-Headed Goblin); printed-line OCR; infinity; π damage; Party Crasher; triple strike; Jester's Sombrero AI
 
