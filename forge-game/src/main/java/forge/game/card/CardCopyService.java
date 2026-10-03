@@ -373,6 +373,7 @@ public class CardCopyService {
         newCopy.setNamedCards(Lists.newArrayList(copyFrom.getNamedCards()));
         newCopy.setChosenColors(Lists.newArrayList(copyFrom.getChosenColors()));
         if (copyFrom.hasChosenNumber()) {
+            newCopy.setChosenNumberLabel(copyFrom.getChosenNumberLabel());
             newCopy.setChosenNumber(copyFrom.getChosenNumber());
         }
         newCopy.setChosenEvenOdd(copyFrom.getChosenEvenOdd());

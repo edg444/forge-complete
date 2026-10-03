@@ -413,6 +413,12 @@ public class CardProperty {
             if (!card.isWearingHatInArt()) {
                 return false;
             }
+        } else if (property.startsWith("hasNumeral_")) {
+            // hasNumeral_<digit or SVar> (Baron Von Count's indicated numeral)
+            final int n = AbilityUtils.calculateAmount(source, property.substring("hasNumeral_".length()), spellAbility);
+            if (n < 0 || n > 9 || !CardFactoryUtil.hasNumeral(card, Character.forDigit(n, 10))) {
+                return false;
+            }
         } else if (property.equals("KnownTreeInArt")) {
             // tagged by Scryfall Tagger; an untagged art may still have one, so scripts ask about the rest
             if (!card.hasKnownTreeInArt()) {

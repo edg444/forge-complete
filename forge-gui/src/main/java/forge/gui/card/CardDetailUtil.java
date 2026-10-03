@@ -534,7 +534,9 @@ public class CardDetailUtil {
 
         if (!card.getChosenNumber().isEmpty()) {
             area.append("\n");
-            area.append("(chosen number: ").append(card.getChosenNumber()).append(")");
+            final String label = card.getChosenNumberLabel();
+            area.append("(").append(label == null || label.isEmpty() ? "chosen number" : label)
+                    .append(": ").append(card.getChosenNumber()).append(")");
         }
 
         // stored dice results

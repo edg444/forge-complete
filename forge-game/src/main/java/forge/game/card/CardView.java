@@ -469,7 +469,11 @@ public class CardView extends GameEntityView {
         set(TrackableProperty.InstalledResults, c.getInstalledResults().isEmpty() ? ""
                 : c.getInstalledResults().toString().replace("[", "").replace("]", ""));
     }
+    public String getChosenNumberLabel() {
+        return get(TrackableProperty.ChosenNumberLabel);
+    }
     void updateChosenNumber(Card c) {
+        set(TrackableProperty.ChosenNumberLabel, c.getChosenNumberLabel());
         set(TrackableProperty.ChosenNumber, c.getChosenNumber().toString());
     }
     void clearChosenNumber() {

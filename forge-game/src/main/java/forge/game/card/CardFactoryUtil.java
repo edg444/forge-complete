@@ -4403,6 +4403,23 @@ public class CardFactoryUtil {
      * Every distinct number appearing in a card's text box, ascending (Pygmy Giant). Covers rules
      * text and flavor text, since the FAQ counts both - Pygmy Giant's own 487 lives in its flavor.
      */
+    /**
+     * Baron Von Count: whether a digit appears in the card's mana cost, text box (flavor text included) or power/
+     * toughness box - not its name, art, collector number or legal text (FAQ). 10 holds both a 1 and a 0 (ruling).
+     */
+    public static boolean hasNumeral(final Card card, final char digit) {
+        final StringBuilder sb = new StringBuilder();
+        if (card.getManaCost() != null) {
+            sb.append(card.getManaCost().getShortString()).append(' ');
+        }
+        sb.append(StringUtils.defaultString(card.getTextBoxContents())).append(' ');
+        final CardState state = card.getCurrentState();
+        if (state.hasPrintedPT()) {
+            sb.append(state.getBasePowerString()).append(' ').append(state.getBaseToughnessString());
+        }
+        return sb.indexOf(String.valueOf(digit)) >= 0;
+    }
+
     public static List<Integer> getTextBoxNumbers(final Card card) {
         final Set<Integer> found = Sets.newTreeSet();
         final String text = card.getTextBoxContents();

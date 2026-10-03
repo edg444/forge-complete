@@ -33,6 +33,10 @@ public class GameLossAi extends SpellAbilityAi {
         if (ai.getGame().getCombat() != null) {
             loser = ai.getGame().getCombat().getDefenderPlayerByAttacker(sa.getHostCard());
         }
+        // a targeted one (Baron Von Count's "destroy target player") goes at an opponent, not at the AI itself
+        if (sa.usesTargeting() && (loser == null || loser == ai)) {
+            loser = ai.getStrongestOpponent();
+        }
 
         if (!mandatory && (loser == ai || loser.cantLose())) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);

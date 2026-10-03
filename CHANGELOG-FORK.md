@@ -267,6 +267,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - New creature type **Wrestler**. `SlayingMantisTest` (4).
 - **Squirrel Dealer** (ust/123; not scripted upstream). Script only: honor-system GenericChoice, as It That Gets Left
   Hanging - only a yes makes the Squirrel (FAQ: no reply isn't one); the AI has no one to ask, so no Squirrel.
+- **Steamflogger Service Rep, Wild Crocodile, Willing Test Subject** (ust/124-126, upstream) checked against Scryfall
+  and rulings: match. **Green Unstable complete.**
+- **Baron Von Count** (ust/127, first multicolor; not scripted upstream). One real doom counter (counter removal takes
+  it); the numeral it sits on is the chosen number, set by `ChooseNumber` with Min = Max (no prompt) and a new
+  `NumberLabel$` so the panel reads "doom counter on: 4". New property `hasNumeral_<digit or SVar>`
+  (`CardFactoryUtil.hasNumeral`): mana cost, text box with flavor text, printed power/toughness - not name, art,
+  collector number or legal text (FAQ); 10 counts as 1 and 0 (ruling). Moving from 1 is a reflexive trigger
+  (checked before the move, so 2 -> 1 doesn't fire it): the targeted player loses the game (rulings), back on 5.
+  - **GameLossAi**: a targeted lose-the-game trigger outside combat aimed at the AI itself (the Phage path); it
+    now aims at the strongest opponent.
+  - `BaronVonCountTest` (4).
 
 ### 2026-10-02 (deployed: desktop, Android, GitHub) — upstream merge (12 commits, incl. Unfinity stickers); Unstable red complete (The Big Idea through Three-Headed Goblin); printed-line OCR; infinity; π damage; Party Crasher; triple strike; Jester's Sombrero AI
 

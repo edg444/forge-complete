@@ -1,0 +1,22 @@
+Name:Baron Von Count
+ManaCost:1 B R
+Types:Legendary Creature Human Villain
+PT:3/3
+# One real doom counter (so counter removal takes it away); which printed numeral it sits on is the chosen number,
+# labeled for the detail panel. Min = Max, so setting it never prompts anyone.
+K:ETBReplacement:Other:DoomOnFive
+SVar:DoomOnFive:DB$ PutCounter | Defined$ Self | CounterType$ DOOM | CounterNum$ 1 | ETB$ True | SubAbility$ DBOnFive | SpellDescription$ CARDNAME enters with a doom counter on "5."
+SVar:DBOnFive:DB$ ChooseNumber | Defined$ You | Min$ 5 | Max$ 5 | NumberLabel$ doom counter on
+# numerals in the mana cost, text box (flavor text too) or power/toughness, never number words; 10 is a 1 and a 0
+T:Mode$ SpellCast | ValidCard$ Card.hasNumeral_Doom | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | IsPresent$ Card.Self+counters_GE1_DOOM | Execute$ TrigFromOne | TriggerDescription$ Whenever you cast a spell with the indicated numeral in its mana cost, text box, power, or toughness, move the doom counter one numeral to the left.
+# checked before moving, so going from 2 to 1 doesn't count as moving from 1
+SVar:TrigFromOne:DB$ ImmediateTrigger | ConditionCheckSVar$ Doom | ConditionSVarCompare$ EQ1 | Execute$ TrigDestroy | SubAbility$ DBMoveLeft | TriggerDescription$ When the doom counter moves from "1," destroy target player and put that doom counter on "5."
+SVar:DBMoveLeft:DB$ ChooseNumber | Defined$ You | Min$ Left | Max$ Left | NumberLabel$ doom counter on | ConditionCheckSVar$ Doom | ConditionSVarCompare$ GE2
+# a destroyed player loses the game (rulings)
+SVar:TrigDestroy:DB$ LosesGame | ValidTgts$ Player | TgtPrompt$ Select target player | SubAbility$ DBBackToFive
+SVar:DBBackToFive:DB$ ChooseNumber | Defined$ You | Min$ 5 | Max$ 5 | NumberLabel$ doom counter on
+SVar:Doom:Count$ChosenNumber
+SVar:Left:Count$ChosenNumber/Minus.1
+# the third ability is a reflexive trigger of the second; this prints it
+S:Mode$ Continuous | Affected$ Card.Self | Description$ When the doom counter moves from "1," destroy target player and put that doom counter on "5."
+Oracle:Baron Von Count enters with a doom counter on "5."\nWhenever you cast a spell with the indicated numeral in its mana cost, text box, power, or toughness, move the doom counter one numeral to the left.\nWhen the doom counter moves from "1," destroy target player and put that doom counter on "5."

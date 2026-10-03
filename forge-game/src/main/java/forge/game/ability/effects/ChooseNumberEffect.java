@@ -105,6 +105,10 @@ public class ChooseNumberEffect extends SpellAbilityEffect {
             } else if (secretlyChoose) {
                 chooseMap.put(p, chosen);
             } else {
+                // Baron Von Count's doom counter position: the panel says "doom counter on: 4"
+                if (sa.hasParam("NumberLabel")) {
+                    source.setChosenNumberLabel(sa.getParam("NumberLabel"));
+                }
                 source.setChosenNumber(chosen);
             }
             if (sa.hasParam("Notify")) {

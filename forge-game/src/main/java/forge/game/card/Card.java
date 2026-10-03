@@ -320,6 +320,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     private String originalText = "", text = "";
     private String chosenType = "";
     private String chosenTypeKind = "";
+    private String chosenNumberLabel = "";
     // Hangman: chosenType is a secretly noted word the players guess at. Null unless there is one.
     private String guessedLetters = null;
     private List<String> wrongWordGuesses = new ArrayList<>();
@@ -2248,6 +2249,14 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
     public final Integer getChosenNumber() {
         return chosenNumber;
+    }
+
+    /** What the chosen number stands for ("doom counter on"), so the detail panel can name it; "" = a chosen number. */
+    public final String getChosenNumberLabel() {
+        return chosenNumberLabel;
+    }
+    public final void setChosenNumberLabel(final String s) {
+        chosenNumberLabel = s;
     }
 
     public final void setChosenNumber(final int i) { setChosenNumber(i, false); }
