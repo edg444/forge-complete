@@ -1,0 +1,20 @@
+Name:Cramped Bunker
+ManaCost:4 R G
+Types:Enchantment
+# The Bunker remembers the permanents touching it. Room is 8 (user, 2026-10-03: one per side and one per corner,
+# each touching only the Bunker); a player "can't" when it's full or nothing of theirs is left outside.
+# Checked before anything moves, so filling the last slot doesn't count as can't.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ Opponent | TriggerZones$ Battlefield | Execute$ TrigCantFit | TriggerDescription$ At the beginning of each opponent's upkeep, that player moves a permanent they control to touch this enchantment and no other permanents. If the player can't, destroy each permanent they control that isn't touching this enchantment, then sacrifice it.
+SVar:TrigCantFit:DB$ DestroyAll | ValidCards$ Permanent.ControlledBy TriggeredPlayer+!IsRemembered | ConditionCheckSVar$ Fit | ConditionSVarCompare$ EQ0 | SubAbility$ DBSacrifice
+SVar:DBSacrifice:DB$ Sacrifice | Defined$ Self | ConditionCheckSVar$ Fit | ConditionSVarCompare$ EQ0 | SubAbility$ DBMoveIn
+# what goes in is safe from the wipe, so the AI's default (its best permanent) is the right pick
+SVar:DBMoveIn:DB$ ChooseCard | Defined$ TriggeredPlayer | Choices$ Permanent.ControlledBy TriggeredPlayer+!IsRemembered | Mandatory$ True | RememberChosen$ True | ChoiceTitle$ Choose a permanent to move so it touches Cramped Bunker and no other permanents | ConditionCheckSVar$ Fit | ConditionSVarCompare$ GE1
+SVar:Free:Count$Valid Permanent.IsRemembered/NMinus.8
+SVar:Outside:Count$Valid Permanent.ControlledBy TriggeredPlayer+!IsRemembered
+SVar:Fit:Count$SVar$Free/LimitMax.Outside
+# a permanent that leaves the battlefield is out of the Bunker; one still in it says so on its own text
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.IsRemembered | Static$ True | Execute$ DBForget
+SVar:DBForget:DB$ Pump | ForgetObjects$ TriggeredCard
+S:Mode$ Continuous | Affected$ Permanent.IsRemembered | AddStaticAbility$ InTheBunker
+SVar:InTheBunker:Mode$ Continuous | Affected$ Card.Self | Description$ This permanent is touching Cramped Bunker.
+Oracle:At the beginning of each opponent's upkeep, that player moves a permanent they control to touch this enchantment and no other permanents. If the player can't, destroy each permanent they control that isn't touching this enchantment, then sacrifice it.

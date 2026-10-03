@@ -278,6 +278,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - **GameLossAi**: a targeted lose-the-game trigger outside combat aimed at the AI itself (the Phage path); it
     now aims at the strongest opponent.
   - `BaronVonCountTest` (4).
+- **Better Than One** (ust/128) deferred by the user: needs a player joining mid-game and Two-Headed Giant rules,
+  neither of which Forge has (same blocker as Splendid Genesis).
+- **Cramped Bunker** (ust/129; not scripted upstream). Script only. The Bunker remembers what touches it (forgotten
+  when it leaves the battlefield; each one shows "This permanent is touching Cramped Bunker."). Room for 8 (user:
+  one per side and one per corner). "Can't" = full or nothing of theirs left outside, checked before anything
+  moves; then everything they control outside is destroyed and the Bunker is sacrificed. The AI moves in its best
+  permanent (what's inside survives the wipe).
+  - `CrampedBunkerTest` (4).
 
 ### 2026-10-02 (deployed: desktop, Android, GitHub) — upstream merge (12 commits, incl. Unfinity stickers); Unstable red complete (The Big Idea through Three-Headed Goblin); printed-line OCR; infinity; π damage; Party Crasher; triple strike; Jester's Sombrero AI
 
