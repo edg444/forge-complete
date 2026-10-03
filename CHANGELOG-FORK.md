@@ -91,6 +91,9 @@ A complete half-integer layer running parallel to the whole-number one.
   honor-system facts the AI can't check.
 - **Hats in the art** (`hat`, Goblin Haberdasher) — confirmed hats only; `HatInArt` also counts the controller's
   answer to `GameAction.askHatInArt`, kept on the card (`Card.getHatInArtClaim()`).
+- **Trees in the art** (`tree`, Selfie Preservation) — Tagger's `tree` tag and its whole subtree (dead, fallen,
+  Treefolk...) plus `bonsai-tree`; `tree-stump` isn't in it. Property `KnownTreeInArt`; untagged art is asked
+  about where it matters.
 
 ### Five-face split cards
 
@@ -232,6 +235,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Really Epic Punch** (ust/118; not scripted upstream). Script only: Savage Swipe's pump-then-fight with Success!'s
   `Card.Host,Card.withAugment` condition and `Duration$ Permanent`, following the three rulings (the +2/+2 never
   wears off; a combined creature still has augment; any creature you control can fight without the bonus).
+- **Selfie Preservation** (ust/119; not scripted upstream). A new printing trait, `tree`: Scryfall Tagger's tree tag
+  and everything under it, which follows the rulings and FAQ (dead and fallen trees count, Treefolk count, stumps
+  don't and aren't under it), plus bonsai. 4,679 tagged arts; 291 of 375 basic Forest arts. A tagged tree goes
+  straight onto the battlefield tapped; Tagger is incomplete, so for an untagged land the caster, who can see the
+  revealed art, is asked (Goblin Haberdasher's rule: confirmed data first, a question only for the rest). The AI
+  can't look, so it answers no. Search shape is Cultivate's.
+  - `PrintingTraits.txt` regenerated (same Scryfall bulk files): only `tree`/`backtree` added, plus two rows for
+    the Unfinity sticker-sheet edition upstream added after the last run.
+  - `SelfiePreservationTest` (2).
 
 ### 2026-10-02 (deployed: desktop, Android, GitHub) — upstream merge (12 commits, incl. Unfinity stickers); Unstable red complete (The Big Idea through Three-Headed Goblin); printed-line OCR; infinity; π damage; Party Crasher; triple strike; Jester's Sombrero AI
 

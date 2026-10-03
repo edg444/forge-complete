@@ -413,6 +413,11 @@ public class CardProperty {
             if (!card.isWearingHatInArt()) {
                 return false;
             }
+        } else if (property.equals("KnownTreeInArt")) {
+            // tagged by Scryfall Tagger; an untagged art may still have one, so scripts ask about the rest
+            if (!card.hasKnownTreeInArt()) {
+                return false;
+            }
         } else if (property.equals("ArtFiguresUnknown")) {
             if (card.getArtFigures() != 0) {
                 return false;

@@ -1,0 +1,13 @@
+Name:Selfie Preservation
+ManaCost:1 G
+Types:Sorcery
+A:SP$ ChangeZone | Origin$ Library | Destination$ Library | ChangeType$ Land.Basic | ChangeTypeDesc$ basic land | ChangeNum$ 1 | RememberChanged$ True | Reveal$ True | Shuffle$ False | StackDescription$ SpellDescription | SubAbility$ DBKnownTree | SpellDescription$ Search your library for a basic land card and reveal it. If there's a tree in its art, put it onto the battlefield tapped. Otherwise, put it into your hand. Then shuffle.
+# A tree Scryfall Tagger confirms (PrintingTraits) needs no question. Tagger is incomplete, so for the rest the
+# player who can see the revealed art says (honor system); the AI can't look, so it answers no.
+SVar:DBKnownTree:DB$ ChangeZone | Defined$ Remembered | Origin$ Library | Destination$ Battlefield | Tapped$ True | ConditionDefined$ Remembered | ConditionPresent$ Card.KnownTreeInArt | ForgetChanged$ True | SubAbility$ DBAskTree
+SVar:DBAskTree:DB$ GenericChoice | Defined$ You | Choices$ NoTree,Tree | ChoicePrompt$ Is there a tree in the revealed land's art? (Dead or fallen trees and Treefolk count; stumps don't.) | ConditionDefined$ Remembered | ConditionPresent$ Card | SubAbility$ DBShuffle
+SVar:NoTree:DB$ ChangeZone | Defined$ Remembered | Origin$ Library | Destination$ Hand | SpellDescription$ No tree: put it into your hand
+SVar:Tree:DB$ ChangeZone | Defined$ Remembered | Origin$ Library | Destination$ Battlefield | Tapped$ True | SpellDescription$ There's a tree: put it onto the battlefield tapped
+SVar:DBShuffle:DB$ Shuffle | Defined$ You | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Search your library for a basic land card and reveal it. If there's a tree in its art, put it onto the battlefield tapped. Otherwise, put it into your hand. Then shuffle.

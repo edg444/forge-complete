@@ -7568,6 +7568,12 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return hasKnownHatInArt() || Boolean.TRUE.equals(hatInArtClaim);
     }
 
+    /** A tree the printing data confirms in the art (Selfie Preservation); false can still mean untagged. */
+    public boolean hasKnownTreeInArt() {
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t != null && t.hasTree(isBackSide());
+    }
+
     public boolean isDisplacedFromLibrary() {
         return displacedFromLibrary;
     }

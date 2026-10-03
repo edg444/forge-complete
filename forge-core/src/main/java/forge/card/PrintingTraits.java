@@ -44,6 +44,8 @@ public final class PrintingTraits {
         private int backTextLines = -1;
         private boolean hat = false;
         private boolean backHat = false;
+        private boolean tree = false;
+        private boolean backTree = false;
 
         /** The border as printed, or null when the edition data already has it right. */
         public CardEdition.BorderColor getBorder() {
@@ -81,6 +83,11 @@ public final class PrintingTraits {
         /** A hat on single-figure art (Goblin Haberdasher), so on the creature itself; false can still mean untagged. */
         public boolean hasHat(final boolean backFace) {
             return backFace ? backHat : hat;
+        }
+
+        /** A tree in the artwork (Selfie Preservation), per Scryfall Tagger; false can still mean untagged. */
+        public boolean hasTree(final boolean backFace) {
+            return backFace ? backTree : tree;
         }
 
         /** Printed lines in the whole text box, flavor text included (Lexivore); -1 when they couldn't be read. */
@@ -146,6 +153,10 @@ public final class PrintingTraits {
                     t.hat = true;
                 } else if (trait.equals("backhat")) {
                     t.backHat = true;
+                } else if (trait.equals("tree")) {
+                    t.tree = true;
+                } else if (trait.equals("backtree")) {
+                    t.backTree = true;
                 } else if (trait.startsWith("textlines=")) {
                     t.textLines = Integer.parseInt(trait.substring(10));
                 } else if (trait.startsWith("backtextlines=")) {
