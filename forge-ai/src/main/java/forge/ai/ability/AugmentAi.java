@@ -57,6 +57,19 @@ public class AugmentAi extends SpellAbilityAi {
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
 
+    // Dr. Julius Jumblemorph's "you may search": worth it whenever there's a card with augment to find
+    @Override
+    protected AiAbilityDecision doTriggerNoCost(Player ai, SpellAbility sa, boolean mandatory) {
+        if (mandatory || !sa.hasParam("ChangeType")) {
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
+        final CardCollection found = CardLists.getValidCards(
+                ai.getCardsIn(ZoneType.listValueOf(sa.getParamOrDefault("SearchZones", "Library"))),
+                sa.getParam("ChangeType"), ai, sa.getHostCard(), sa);
+        return found.isEmpty() ? new AiAbilityDecision(0, AiPlayDecision.CantPlayAi)
+                : new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
     // Teacher's Pet's library search: always take one - the host is already chosen and the cost paid
     @Override
     protected Card chooseSingleCard(Player ai, SpellAbility sa, Iterable<Card> options, boolean isOptional, Player targetedPlayer, Map<String, Object> params) {

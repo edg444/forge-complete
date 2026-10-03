@@ -1,5 +1,11 @@
 package forge.game.ability.effects;
 
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.google.common.collect.Lists;
+
 import forge.card.CardType;
 import forge.game.Game;
 import forge.game.ability.SpellAbilityEffect;
@@ -30,16 +36,40 @@ public class AugmentEffect extends SpellAbilityEffect {
         }
 
         final Card augment;
+        boolean shuffleAfter = false;
         if (sa.hasParam("ChangeType")) {
             // a search for a card with a stated quality, so the searcher may fail to find one
             final Player p = sa.getActivatingPlayer();
-            final CardCollection choices = CardLists.getValidCards(p.getCardsIn(ZoneType.Library),
+            List<ZoneType> zones = ZoneType.listValueOf(sa.getParamOrDefault("SearchZones", "Library"));
+            if (zones.size() > 1) {
+                // Dr. Julius Jumblemorph: "your library and/or graveyard" - the searcher picks which, and only a
+                // library search shuffles, so searching just the graveyard keeps the library as it is
+                final List<String> options = Lists.newArrayList();
+                options.add(StringUtils.join(zones, " and ").toLowerCase());
+                for (final ZoneType z : zones) {
+                    options.add(z.name().toLowerCase() + " only");
+                }
+                final String picked = p.getController().chooseStringForEffect(options, sa,
+                        "Search your " + options.get(0) + " for " + sa.getParamOrDefault("ChangeTypeDesc", "a card"));
+                for (final ZoneType z : zones) {
+                    if ((z.name().toLowerCase() + " only").equals(picked)) {
+                        zones = Lists.newArrayList(z);
+                        break;
+                    }
+                }
+            }
+            final CardCollection choices = CardLists.getValidCards(p.getCardsIn(zones),
                     sa.getParam("ChangeType"), p, sa.getHostCard(), sa);
             augment = p.getController().chooseSingleEntityForEffect(choices, sa,
                     "Choose " + sa.getParamOrDefault("ChangeTypeDesc", "a card"), true, null);
+            final boolean searchedLibrary = zones.contains(ZoneType.Library);
             if (augment == null) {
+                if (searchedLibrary && sa.hasParam("Shuffle")) {
+                    p.shuffle(sa);
+                }
                 return;
             }
+            shuffleAfter = searchedLibrary && sa.hasParam("Shuffle");
         } else {
             augment = sa.getHostCard();
             // ruling: if the card with augment has left your hand (or the zone it combines from), nothing happens
@@ -68,6 +98,10 @@ public class AugmentEffect extends SpellAbilityEffect {
         augment.setTapped(target.isTapped());
         target.updateStateForView();
         target.updateTokenView();
+
+        if (shuffleAfter) {
+            sa.getActivatingPlayer().shuffle(sa);
+        }
     }
 
     @Override

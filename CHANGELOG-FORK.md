@@ -286,6 +286,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   moves; then everything they control outside is destroyed and the Bunker is sacrificed. The AI moves in its best
   permanent (what's inside survives the wipe).
   - `CrampedBunkerTest` (4).
+- **Dr. Julius Jumblemorph** (ust/130; not scripted upstream). Every creature type in every zone (Mistform Ultimus's
+  static). The host trigger is a searched `Augment` with a new `SearchZones$ Library,Graveyard`: the searcher picks
+  "library and graveyard", "library only" or "graveyard only", so searching just the graveyard keeps the library
+  unshuffled; `Shuffle$ True` shuffles only when the library was searched (found or not). AugmentAi takes the
+  optional trigger when there's a card with augment to find. No rulings or FAQ entry.
+  - `DrJuliusJumblemorphTest` (4).
 
 ### 2026-10-02 (deployed: desktop, Android, GitHub) — upstream merge (12 commits, incl. Unfinity stickers); Unstable red complete (The Big Idea through Three-Headed Goblin); printed-line OCR; infinity; π damage; Party Crasher; triple strike; Jester's Sombrero AI
 

@@ -1,0 +1,9 @@
+Name:Dr. Julius Jumblemorph
+ManaCost:2 G W
+Types:Legendary Creature
+PT:4/4
+S:Mode$ Continuous | Affected$ Card.Self | CharacteristicDefining$ True | AddAllCreatureTypes$ True | Description$ CARDNAME is every creature type (even if this card isn't on the battlefield).
+# The searcher picks library, graveyard or both (AugmentEffect SearchZones$); only a library search shuffles.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.Host+YouCtrl | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigAugment | TriggerDescription$ Whenever a host you control enters, you may search your library and/or graveyard for a card with augment and combine it with that host. If you search your library this way, shuffle.
+SVar:TrigAugment:DB$ Augment | Defined$ TriggeredCard | ChangeType$ Card.withAugment+YouOwn | ChangeTypeDesc$ a card with augment | SearchZones$ Library,Graveyard | Shuffle$ True
+Oracle:Dr. Julius Jumblemorph is every creature type (even if this card isn't on the battlefield).\nWhenever a host you control enters, you may search your library and/or graveyard for a card with augment and combine it with that host. If you search your library this way, shuffle.
