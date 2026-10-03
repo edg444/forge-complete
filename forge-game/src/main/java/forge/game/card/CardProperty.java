@@ -226,7 +226,11 @@ public class CardProperty {
         } else if (property.startsWith("Rarity")) {
             // Rare-B-Gone. One rarity per property (RarityRare, RarityMythicRare, ...); "rare or
             // mythic" is expressed as two comma-separated alternatives in the valid string itself.
-            final CardRarity rarity = card.getRarity();
+            CardRarity rarity = card.getRarity();
+            // a basic land's expansion symbol is black, so it's a common (Ineffable Blessing ruling)
+            if (rarity == CardRarity.BasicLand) {
+                rarity = CardRarity.Common;
+            }
             if (rarity == null || !rarity.name().equalsIgnoreCase(property.substring(6))) {
                 return false;
             }
@@ -335,6 +339,12 @@ public class CardProperty {
         } else if (property.equals("BlackBordered")) {
             // Knight of the Kitchen Sink. The printed border, so borderless printings don't count.
             if (card.printedBorderColor() != CardEdition.BorderColor.BLACK) {
+                return false;
+            }
+        } else if (property.equals("WhiteBordered")) {
+            // Ineffable Blessing. Printed border too: Unstable's FAQ asks about full-art cards and never answers,
+            // so a borderless printing is neither white- nor silver-bordered
+            if (card.printedBorderColor() != CardEdition.BorderColor.WHITE) {
                 return false;
             }
         } else if (property.equals("CollectorNumberEven") || property.equals("CollectorNumberOdd")) {
@@ -461,17 +471,21 @@ public class CardProperty {
             }
         } else if (property.startsWith("artIsBy ")) {
             // Very Cryptic Command: "If that card's art is by Wayne England" - one of the printing's credited artists
-            final String wanted = property.substring("artIsBy ".length()).trim();
-            boolean byThem = false;
-            for (final String artist : StringUtils.defaultString(card.getArtist()).split("\\s*&\\s*")) {
-                byThem |= artist.trim().equalsIgnoreCase(wanted);
-            }
-            if (!byThem) {
+            if (!ArtistCredit.credits(card.getArtist(), property.substring("artIsBy ".length()).trim())) {
                 return false;
             }
         } else if (property.equals("ArtistIsChosen")) {
-            if (!source.hasChosenArtist()
-                    || !card.getArtist().equalsIgnoreCase(source.getChosenArtist())) {
+            if (!source.hasChosenArtist()) {
+                return false;
+            }
+            // a combined (augmented) creature has the artists of every card in it (augment ruling)
+            boolean byThem = ArtistCredit.credits(card.getArtist(), source.getChosenArtist());
+            if (card.hasMergedCard()) {
+                for (final Card m : card.getMergedCards()) {
+                    byThem |= ArtistCredit.credits(m.getArtist(), source.getChosenArtist());
+                }
+            }
+            if (!byThem) {
                 return false;
             }
         } else if (property.equals("IsTriggerRemembered")) {
@@ -1911,7 +1925,7 @@ public class CardProperty {
                     return false;
                 }
             } else if (!Expressions.compare(words, comparator.substring(0, 2),
-                    Integer.parseInt(comparator.substring(2)))) {
+                    AbilityUtils.calculateAmount(source, comparator.substring(2), spellAbility))) {
                 return false;
             }
         } else if (property.equals("HasCounters")) {

@@ -1,0 +1,64 @@
+Name:Ineffable Blessing
+ManaCost:1 G
+Types:Enchantment
+SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
+Oracle:<Unsupported Variant>
+
+# --- VARIANTS ---
+# Six printings (the 113a-f edition lines pick the variant), each choosing something about the printed card as it
+# enters. Choices with one trigger each are gated on the chosen mode; only the first of a set prints (Secondary$).
+# A face-down creature shows just a card back, so it has no flavor text, artist, border, rarity or collector number.
+
+Variant:A:K:ETBReplacement:Other:ChooseFlavor
+Variant:A:SVar:ChooseFlavor:DB$ GenericChoice | Choices$ Flavorful,Bland | Defined$ You | SetChosenMode$ True | ShowChoice$ ExceptSelf | AILogic$ MostMatchingCreatures | SpellDescription$ As this enchantment enters, choose Flavorful or Bland.
+Variant:A:SVar:Flavorful:DB$ Pump | AIMatch$ Creature.hasFlavorText | SpellDescription$ Flavorful
+Variant:A:SVar:Bland:DB$ Pump | AIMatch$ Creature.!hasFlavorText | SpellDescription$ Bland
+# per printing, so Lexivore counts (ruling: it's eating its own flavor text, which is still printed on it)
+Variant:A:T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.YouCtrl+faceUp+hasFlavorText | TriggerZones$ Battlefield | PresentDefined$ Self | IsPresent$ Card.ChosenModeFlavorful | Execute$ TrigDraw | TriggerDescription$ • Flavorful — Whenever a creature you control with flavor text enters, draw a card.
+Variant:A:T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.YouCtrl+!hasFlavorText,Creature.YouCtrl+faceDown | TriggerZones$ Battlefield | PresentDefined$ Self | IsPresent$ Card.ChosenModeBland | Execute$ TrigDraw | TriggerDescription$ • Bland — Whenever a creature you control without flavor text enters, draw a card.
+Variant:A:Oracle:As this enchantment enters, choose Flavorful or Bland.\n• Flavorful — Whenever a creature you control with flavor text enters, draw a card.\n• Bland — Whenever a creature you control without flavor text enters, draw a card.
+
+# any artist ever credited, nicknames ignored (rulings) - see ArtistCredit
+Variant:B:K:ETBReplacement:Other:ChooseArt
+Variant:B:SVar:ChooseArt:DB$ ChooseArtist | Defined$ You | AILogic$ MostCreaturesToCome | SpellDescription$ As this enchantment enters, choose an artist.
+Variant:B:T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.YouCtrl+faceUp+ArtistIsChosen | TriggerZones$ Battlefield | Execute$ TrigDraw | TriggerDescription$ Whenever a creature you control with art by the chosen artist enters, draw a card.
+Variant:B:Oracle:As this enchantment enters, choose an artist.\nWhenever a creature you control with art by the chosen artist enters, draw a card.
+
+# printed border: borderless printings (Unstable's basics, Invocations) are neither; acorn counts as silver-bordered
+Variant:C:K:ETBReplacement:Other:ChooseBorder
+Variant:C:SVar:ChooseBorder:DB$ GenericChoice | Choices$ WhiteBorder,SilverBorder | Defined$ You | SetChosenMode$ True | ShowChoice$ ExceptSelf | AILogic$ MostMatchingCreatures | SpellDescription$ As this enchantment enters, choose white-bordered or silver-bordered.
+Variant:C:SVar:WhiteBorder:DB$ Pump | AIMatch$ Creature.WhiteBordered | SpellDescription$ White-bordered
+Variant:C:SVar:SilverBorder:DB$ Pump | AIMatch$ Creature.SilverBordered | SpellDescription$ Silver-bordered
+Variant:C:T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.YouCtrl+faceUp+WhiteBordered | TriggerZones$ Battlefield | PresentDefined$ Self | IsPresent$ Card.ChosenModeWhite-bordered | Execute$ TrigDraw | TriggerDescription$ Whenever a creature you control with the chosen border enters, draw a card.
+Variant:C:T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.YouCtrl+faceUp+SilverBordered | TriggerZones$ Battlefield | PresentDefined$ Self | IsPresent$ Card.ChosenModeSilver-bordered | Execute$ TrigDraw | Secondary$ True | TriggerDescription$ Whenever a creature you control with the chosen border enters, draw a card.
+Variant:C:Oracle:As this enchantment enters, choose white-bordered or silver-bordered.\nWhenever a creature you control with the chosen border enters, draw a card.
+
+# the expansion symbol's color (ruling): basic lands are common (CardProperty Rarity), tokens have no rarity
+Variant:D:K:ETBReplacement:Other:ChooseRarity
+Variant:D:SVar:ChooseRarity:DB$ GenericChoice | Choices$ Common,Uncommon,Rare,MythicRare,Special | Defined$ You | SetChosenMode$ True | ShowChoice$ ExceptSelf | AILogic$ MostMatchingCreatures | SpellDescription$ As this enchantment enters, choose a rarity.
+Variant:D:SVar:Common:DB$ Pump | AIMatch$ Creature.RarityCommon | SpellDescription$ Common
+Variant:D:SVar:Uncommon:DB$ Pump | AIMatch$ Creature.RarityUncommon | SpellDescription$ Uncommon
+Variant:D:SVar:Rare:DB$ Pump | AIMatch$ Creature.RarityRare | SpellDescription$ Rare
+Variant:D:SVar:MythicRare:DB$ Pump | AIMatch$ Creature.RarityMythicRare | SpellDescription$ Mythic Rare
+Variant:D:SVar:Special:DB$ Pump | AIMatch$ Creature.RaritySpecial | SpellDescription$ Special
+Variant:D:T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.YouCtrl+faceUp+RarityCommon | TriggerZones$ Battlefield | PresentDefined$ Self | IsPresent$ Card.ChosenModeCommon | Execute$ TrigDraw | TriggerDescription$ Whenever a creature you control with the chosen rarity enters, draw a card.
+Variant:D:T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.YouCtrl+faceUp+RarityUncommon | TriggerZones$ Battlefield | PresentDefined$ Self | IsPresent$ Card.ChosenModeUncommon | Execute$ TrigDraw | Secondary$ True | TriggerDescription$ Whenever a creature you control with the chosen rarity enters, draw a card.
+Variant:D:T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.YouCtrl+faceUp+RarityRare | TriggerZones$ Battlefield | PresentDefined$ Self | IsPresent$ Card.ChosenModeRare | Execute$ TrigDraw | Secondary$ True | TriggerDescription$ Whenever a creature you control with the chosen rarity enters, draw a card.
+Variant:D:T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.YouCtrl+faceUp+RarityMythicRare | TriggerZones$ Battlefield | PresentDefined$ Self | IsPresent$ Card.ChosenModeMythic Rare | Execute$ TrigDraw | Secondary$ True | TriggerDescription$ Whenever a creature you control with the chosen rarity enters, draw a card.
+Variant:D:T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.YouCtrl+faceUp+RaritySpecial | TriggerZones$ Battlefield | PresentDefined$ Self | IsPresent$ Card.ChosenModeSpecial | Execute$ TrigDraw | Secondary$ True | TriggerDescription$ Whenever a creature you control with the chosen rarity enters, draw a card.
+Variant:D:Oracle:As this enchantment enters, choose a rarity.\nWhenever a creature you control with the chosen rarity enters, draw a card.
+
+Variant:E:K:ETBReplacement:Other:ChooseParity
+Variant:E:SVar:ChooseParity:DB$ GenericChoice | Choices$ Odd,Even | Defined$ You | SetChosenMode$ True | ShowChoice$ ExceptSelf | AILogic$ MostMatchingCreatures | SpellDescription$ As this enchantment enters, choose odd or even.
+Variant:E:SVar:Odd:DB$ Pump | AIMatch$ Creature.CollectorNumberOdd | SpellDescription$ Odd
+Variant:E:SVar:Even:DB$ Pump | AIMatch$ Creature.CollectorNumberEven | SpellDescription$ Even
+Variant:E:T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.YouCtrl+faceUp+CollectorNumberOdd | TriggerZones$ Battlefield | PresentDefined$ Self | IsPresent$ Card.ChosenModeOdd | Execute$ TrigDraw | TriggerDescription$ Whenever a creature you control with a collector number of the chosen value enters, draw a card.
+Variant:E:T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.YouCtrl+faceUp+CollectorNumberEven | TriggerZones$ Battlefield | PresentDefined$ Self | IsPresent$ Card.ChosenModeEven | Execute$ TrigDraw | Secondary$ True | TriggerDescription$ Whenever a creature you control with a collector number of the chosen value enters, draw a card.
+Variant:E:Oracle:As this enchantment enters, choose odd or even.\nWhenever a creature you control with a collector number of the chosen value enters, draw a card.
+
+# 25 words is the longest name in the card pool; a face-down creature has no name, so zero is worth choosing too
+Variant:F:K:ETBReplacement:Other:ChooseWords
+Variant:F:SVar:ChooseWords:DB$ ChooseNumber | Defined$ You | Min$ 0 | Max$ 25 | AILogic$ MostCommonNameWordCount | SpellDescription$ As Ineffable Blessing enters, choose a number.
+Variant:F:T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.YouCtrl+nameWords_EQX | TriggerZones$ Battlefield | Execute$ TrigDraw | TriggerDescription$ Whenever a creature you control with exactly the chosen number of words in its name enters, draw a card. (Hyphenated words are one word.)
+Variant:F:SVar:X:Count$ChosenNumber
+Variant:F:Oracle:As Ineffable Blessing enters, choose a number.\nWhenever a creature you control with exactly the chosen number of words in its name enters, draw a card. (Hyphenated words are one word.)

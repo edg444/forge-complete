@@ -1906,6 +1906,23 @@ public class AiController {
             }
         } else if ("Min".equals(logic)) {
             return min;
+        } else if ("MostCommonNameWordCount".equals(logic)) {
+            // Ineffable Blessing: the word count most of the creature cards still to come share
+            final Map<Integer, Integer> counts = new HashMap<>();
+            for (final Card c : player.getCardsIn(ZoneType.Library, ZoneType.Hand)) {
+                if (c.isCreature()) {
+                    final String name = c.getDisplayName().trim();
+                    counts.merge(name.isEmpty() ? 0 : name.split("\\s+").length, 1, Integer::sum);
+                }
+            }
+            int best = Math.max(min, Math.min(2, max));
+            for (final Map.Entry<Integer, Integer> e : counts.entrySet()) {
+                if (e.getKey() >= min && e.getKey() <= max
+                        && e.getValue() > counts.getOrDefault(best, 0)) {
+                    best = e.getKey();
+                }
+            }
+            return best;
         } else if ("DigACard".equals(logic)) {
             int random = MyRandom.getRandom().nextInt(Math.min(4, max)) + 1;
             if (player.getLife() < random + 5) {

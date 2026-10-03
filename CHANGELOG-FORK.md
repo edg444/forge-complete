@@ -43,7 +43,10 @@ A complete half-integer layer running parallel to the whole-number one.
 
 ### Choices the rules can't derive
 
-- `DB$ ChooseArtist` + `Card.ArtistIsChosen` + `sharesArtistWith <restriction>` + `DB$ SetArtist`.
+- `DB$ ChooseArtist` + `Card.ArtistIsChosen` + `sharesArtistWith <restriction>` + `DB$ SetArtist`. The chosen
+  artist is a person (`ArtistCredit`): "A & B" credits split, nicknames ignored, merged cards' artists included.
+- GenericChoice `AILogic$ MostMatchingCreatures` with an `AIMatch$ <valid>` on each choice - the AI picks what
+  its creature cards in library and hand match most (Ineffable Blessing).
 - `ChooseType | Type$ word | FreeInput$ True` (free text) with `MinLetters$` validation;
   `Type$ letter` with an AI branch (`MostCommonInitial`) in `chooseSomeType`.
 - `DB$ ChooseEyeColor`, `DB$ GuessArtist`.
@@ -56,7 +59,8 @@ A complete half-integer layer running parallel to the whole-number one.
   `ChosenLetterInName`, `CardBingoLines`, `CurrentHour`, `MergedCount`,
   `DifferentExpansionSymbols`.
 - Properties: `textHasChosenWord`, `nameStartsWithChosenLetter`, `fewerLettersInNameThanSource`,
-  `HasHalfSymbol`, `Rarity<name>`, `alphabeticallyFirstNonLand`, `SilverBordered`.
+  `HasHalfSymbol`, `Rarity<name>` (a basic land is common), `alphabeticallyFirstNonLand`, `SilverBordered`.
+- Die results: `ResultSubAbilities$` keys `N`, `N-M`, and open-ended `N+` ("on an N or higher").
 - Flavor text available in-game (`CardFlavorText`, `Card.getTextBoxContents`) — several Un-set cards
   read the whole text box, flavor included.
 - Flavor names count in name-based mechanics.
@@ -75,8 +79,8 @@ A complete half-integer layer running parallel to the whole-number one.
 - `Card.printedBorderColor()` (knows `BORDERLESS`/`YELLOW`), `getWatermark()`, `hasOpenMouthArt()`,
   `getCollectorNumberValue()` (last digit run: 12a → 12). `borderColor()` and the silver-border rules
   are deliberately unchanged.
-- Properties `BlackBordered`, `CollectorNumberEven`/`Odd`, `Watermarked`, `Watermark_<name>`,
-  `OpenMouthArt`; `nameWords_Odd`/`_Even`.
+- Properties `BlackBordered`, `WhiteBordered`, `CollectorNumberEven`/`Odd`, `Watermarked`, `Watermark_<name>`,
+  `OpenMouthArt`; `nameWords_Odd`/`_Even`, `nameWords_EQ<n or SVar>`.
 - **Printed lines of text** (`rulelines=`/`textlines=`, front and back) — counted on every printing's card
   image by `_tools/rules-lines` (OCR), not estimated from Oracle text. `Card.isWordy()` (4+ lines of rules text,
   reminder text included) and `Card.getPrintedTextLines()` (whole text box, flavor included; -1 = unread).
@@ -200,6 +204,25 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   open-ended `N+` key (`RollDiceEffect.resolveSub`); Inhumaniac and Lobe Lobber use `5+`, Dungeon Master `12+`
   (a d20 with a modifier can pass 20).
   - `InhumaniacTest` (1).
+- **Hydradoodle** (ust/112, upstream) checked against Scryfall and the FAQ: matches, including X = 0 (no dice, dies
+  as a 0/0).
+- **Ineffable Blessing** (ust/113a-f, all six; not scripted upstream). Each variant chooses as it enters
+  (`K:ETBReplacement`) and draws for creatures you control that match. A **Flavorful**/**Bland** (`hasFlavorText`,
+  per printing, so Lexivore counts as the ruling says), B **an artist**, C **white-** or **silver-bordered**, D
+  **a rarity**, E **odd** or **even** collector number, F **a number** of words in the name (0-25: the longest
+  name in the pool is 25 words, and a face-down creature's is none). Choices with a trigger each are gated on the
+  chosen mode with only the first printed (`Secondary$`). A face-down creature shows only a card back, so it has no
+  flavor text, artist, border, rarity or collector number.
+  - **Artists are people, not credit lines** (`ArtistCredit`): "A & B" credits both, and nicknames are dropped
+    (ruling: "ignore all the various nicknames"), so `Rebecca "Don't Mess with Me" Guay` is Rebecca Guay. Applies
+    to every choose-an-artist card: `ChooseArtist` offers individual names, `ArtistIsChosen` and `artIsBy` match
+    any credited artist (Very Cryptic Command's `artIsBy Wayne England` now also finds `Wayne "King of" England`),
+    and a combined (augmented) creature has every merged card's artist.
+  - New card property `WhiteBordered` (printed border; borderless is neither). `Rarity*` treats a basic land as
+    common (ruling: black expansion symbol). `nameWords_EQ` accepts an SVar.
+  - AI: GenericChoice `AILogic$ MostMatchingCreatures` picks the choice whose `AIMatch$` the most creature cards
+    in library and hand satisfy; ChooseArtist `MostCreaturesToCome`; ChooseNumber `MostCommonNameWordCount`.
+  - `IneffableBlessingTest` (9).
 
 ### 2026-10-02 (deployed: desktop, Android, GitHub) — upstream merge (12 commits, incl. Unfinity stickers); Unstable red complete (The Big Idea through Three-Headed Goblin); printed-line OCR; infinity; π damage; Party Crasher; triple strike; Jester's Sombrero AI
 

@@ -2593,22 +2593,29 @@ public class ComputerUtil {
             // Mana Flair counts nonland permanents on both sides and pays exactly one mana each, so
             // it wants a flat headcount across the whole battlefield rather than either side's
             // threats weighted by power.
+            // Ineffable Blessing draws for creatures still to come, so it counts the creature cards in library
+            // and hand, one each.
             final boolean nonLandPool = "MostProminentNonLand".equals(logic);
             final boolean ownCards = "MostProminentYouCtrl".equals(logic);
-            final CardCollectionView artPool = nonLandPool ? ai.getGame().getCardsIn(ZoneType.Battlefield)
+            final boolean deckCreatures = "MostCreaturesToCome".equals(logic);
+            final CardCollectionView artPool = deckCreatures
+                    ? CardLists.filter(ai.getCardsIn(ZoneType.Library, ZoneType.Hand), CardPredicates.CREATURES)
+                    : nonLandPool ? ai.getGame().getCardsIn(ZoneType.Battlefield)
                     : ownCards ? ai.getCardsIn(ZoneType.Battlefield)
                     : ai.getOpponents().getCardsIn(ZoneType.Battlefield);
             final Map<String, Integer> counts = Maps.newHashMap();
             for (Card c : artPool) {
                 final IPaperCard pc = c.getPaperCard();
-                if (pc == null || !validTypes.contains(pc.getArtist())) {
+                if (pc == null || (nonLandPool && c.isLand())) {
                     continue;
                 }
-                if (nonLandPool && c.isLand()) {
-                    continue;
+                final int weight = nonLandPool || deckCreatures ? 1 : (c.isCreature() ? Math.max(1, c.getNetPower()) : 1);
+                // the choices are people, so a card credited to two artists counts for each (ArtistCredit)
+                for (final String artist : ArtistCredit.individuals(pc.getArtist())) {
+                    if (validTypes.contains(artist)) {
+                        counts.merge(artist, weight, Integer::sum);
+                    }
                 }
-                final int weight = nonLandPool ? 1 : (c.isCreature() ? Math.max(1, c.getNetPower()) : 1);
-                counts.merge(pc.getArtist(), weight, Integer::sum);
             }
             for (Map.Entry<String, Integer> e : counts.entrySet()) {
                 if (chosen.isEmpty() || e.getValue() > counts.get(chosen)) {

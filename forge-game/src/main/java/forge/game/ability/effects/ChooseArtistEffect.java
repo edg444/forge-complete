@@ -8,6 +8,7 @@ import com.google.common.collect.Sets;
 import forge.StaticData;
 import forge.game.Game;
 import forge.game.ability.SpellAbilityEffect;
+import forge.game.card.ArtistCredit;
 import forge.game.card.Card;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
@@ -52,7 +53,7 @@ public class ChooseArtistEffect extends SpellAbilityEffect {
             // Persecute Artist won't let you name its own illustrator
             if (sa.hasParam("ExcludeArtist")) {
                 for (final String excluded : sa.getParam("ExcludeArtist").split(",")) {
-                    artists.remove(excluded.trim());
+                    artists.remove(ArtistCredit.withoutNickname(excluded.trim()));
                 }
             }
             if (artists.isEmpty()) {
@@ -68,9 +69,8 @@ public class ChooseArtistEffect extends SpellAbilityEffect {
         }
     }
 
-    private static void addArtist(final Set<String> artists, final String artist) {
-        if (artist != null && !artist.isEmpty()) {
-            artists.add(artist);
-        }
+    // people, not credit lines: "A & B" offers A and B, and nicknames are dropped (Ineffable Blessing ruling)
+    private static void addArtist(final Set<String> artists, final String credit) {
+        artists.addAll(ArtistCredit.individuals(credit));
     }
 }

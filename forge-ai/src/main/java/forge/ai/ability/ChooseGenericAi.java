@@ -6,6 +6,8 @@ import forge.card.MagicColor;
 import forge.game.Game;
 import forge.game.card.Card;
 import forge.game.card.CardCollectionView;
+import forge.game.card.CardLists;
+import forge.game.card.CardPredicates;
 import forge.game.combat.CombatUtil;
 import forge.game.cost.Cost;
 import forge.game.keyword.Keyword;
@@ -143,6 +145,22 @@ public class ChooseGenericAi extends SpellAbilityAi {
                 }
             }
             return spells.get(1);
+        } else if ("MostMatchingCreatures".equals(logic)) {
+            // Ineffable Blessing: each choice names the creatures it rewards (AIMatch$), so pick the one most of
+            // the creature cards still to come - library and hand - would satisfy
+            final CardCollectionView toCome = CardLists.filter(player.getCardsIn(ZoneType.Library, ZoneType.Hand),
+                    CardPredicates.CREATURES);
+            SpellAbility best = spells.get(0);
+            int bestCount = -1;
+            for (final SpellAbility choice : spells) {
+                final int count = choice.hasParam("AIMatch")
+                        ? CardLists.getValidCardCount(toCome, choice.getParam("AIMatch"), player, host, sa) : 0;
+                if (count > bestCount) {
+                    best = choice;
+                    bestCount = count;
+                }
+            }
+            return best;
         } else if ("Random".equals(logic)) {
             return Aggregates.random(spells);
         } else if ("Phasing".equals(logic)) { // Teferi's Realm : keep aggressive
