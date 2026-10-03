@@ -1,0 +1,12 @@
+Name:Multi-Headed
+ManaCost:no cost
+Colors:green
+Types:Creature Hydra
+PT:+4/+4
+K:Augment:4 G
+# An augment's triggers are unfinished conditions with no Execute - combining with a host completes them with
+# the host's effect (CardFactory.getAugmentedCloneStates). On their own they never do anything.
+# any die counts, the planar die included (Player.roll is called for both)
+T:Mode$ Phase | Phase$ End of Turn | TriggerZones$ Battlefield | CheckSVar$ MultiHeadedRolled | SVarCompare$ GE1 | TriggerDescription$ At the beginning of each end step, if you rolled a die this turn,
+SVar:MultiHeadedRolled:Count$YouRollThisTurn
+Oracle:At the beginning of each end step, if you rolled a die this turn,\nAugment {4}{G} ({4}{G}, Reveal this card from your hand: Combine it with target host. Augment only as a sorcery.)
