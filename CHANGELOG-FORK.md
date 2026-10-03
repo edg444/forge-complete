@@ -192,6 +192,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   first negative adjustment, `PT:-1/-0` - `augmentAdjustment` and `CardFace.parsePT` both read it via
   `Integer.parseInt`, and the P/T box shows the printed `[-1 / -0]`. Its seven Scryfall rulings are the generic
   augment ones.
+- **Audit of the upstream-scripted Unstable cards** (ust/1-111, the 47 cards skipped as already scripted, every
+  printing and variant). Cost, type line, P/T, color indicator and Oracle text all match Scryfall; each script was
+  read against its Oracle text and Scryfall rulings. One real bug: **"on an N or higher" die results** were
+  scripted as closed ranges (Inhumaniac `5-6`), so a result pushed past the die's maximum (Snickering Squirrel,
+  Squirrel-Powered Scheme, The Big Idea's combined dice) did nothing. `ResultSubAbilities$` now takes an
+  open-ended `N+` key (`RollDiceEffect.resolveSub`); Inhumaniac and Lobe Lobber use `5+`, Dungeon Master `12+`
+  (a d20 with a modifier can pass 20).
+  - `InhumaniacTest` (1).
 
 ### 2026-10-02 (deployed: desktop, Android, GitHub) — upstream merge (12 commits, incl. Unfinity stickers); Unstable red complete (The Big Idea through Three-Headed Goblin); printed-line OCR; infinity; π damage; Party Crasher; triple strike; Jester's Sombrero AI
 

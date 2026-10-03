@@ -738,6 +738,13 @@ public class RollDiceEffect extends SpellAbilityEffect {
                     resultAbility = e.getValue();
                     break;
                 }
+            } else if (diceKey.endsWith("+") && StringUtils.isNumeric(diceKey.substring(0, diceKey.length() - 1))) {
+                // "N+" for "on an N or higher": roll modifiers (Snickering Squirrel, The Big Idea's combined dice,
+                // d20 bonuses) can go past the die's printed maximum, which a closed range would drop
+                if (num >= Integer.parseInt(diceKey.substring(0, diceKey.length() - 1))) {
+                    resultAbility = e.getValue();
+                    break;
+                }
             } else if (StringUtils.isNumeric(diceKey) && Integer.parseInt(diceKey) == num) {
                 resultAbility = e.getValue();
                 break;
