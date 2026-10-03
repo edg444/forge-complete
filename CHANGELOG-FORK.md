@@ -292,6 +292,22 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   unshuffled; `Shuffle$ True` shuffles only when the library was searched (found or not). AugmentAi takes the
   optional trigger when there's a card with augment to find. No rulings or FAQ entry.
   - `DrJuliusJumblemorphTest` (4).
+- **The Grand Calcutron** (ust/131) deferred by the user (too complex; not scripted upstream either).
+- **Grusilda, Monster Masher** (ust/132; not scripted upstream).
+  - New `DB$ Combine` (`CombineEffect`, `CombineAi`): two target creature cards from graveyards are merged while
+    still in the graveyard, then enter as one creature under your control, so both cards' enter abilities fire
+    (two hosts both trigger, and the result is still a host an augment can go on - rulings). A host and a card
+    with augment combine the augment way; a card with augment and a non-host keep augment with no host, and the
+    existing state-based action sends both to the graveyard (ruling).
+  - Whole-card combination (`Card.isCombinedWhole`, `CardFactory.getCombinedCloneStates`): summed power and
+    toughness, both names (shown "A // B"; `Card.getNames` feeds `sharesNameWith` and the legend rule, which now
+    indexes each name and won't put the same permanent away twice), combined mana cost, colors, types, abilities.
+    Not done: two characteristic-defining P/T abilities aren't added together (FAQ) - the later one wins.
+  - `Combined` card property (hers, host with augment, melded, merged) for her menace static.
+  - **Merged permanents leaving the battlefield** now send each card to its own owner's zone (they all went to the
+    top card's owner's): mattered for Grusilda's two graveyards and for augmenting another player's host.
+  - AI: picks the two best creature cards, a host with an augment when it can, never an augment with a non-host.
+  - `GrusildaTest` (4).
 
 ### 2026-10-02 (deployed: desktop, Android, GitHub) — upstream merge (12 commits, incl. Unfinity stickers); Unstable red complete (The Big Idea through Three-Headed Goblin); printed-line OCR; infinity; π damage; Party Crasher; triple strike; Jester's Sombrero AI
 

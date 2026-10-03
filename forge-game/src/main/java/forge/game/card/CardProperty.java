@@ -409,6 +409,11 @@ public class CardProperty {
             if (card.getArtFigures() != 2) {
                 return false;
             }
+        } else if (property.equals("Combined")) {
+            // Grusilda's rulings: hers, a host with augment, a melded creature, or a merged permanent
+            if (!card.isCombined()) {
+                return false;
+            }
         } else if (property.equals("HatInArt")) {
             if (!card.isWearingHatInArt()) {
                 return false;

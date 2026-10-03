@@ -1,0 +1,8 @@
+Name:Grusilda, Monster Masher
+ManaCost:3 B R
+Types:Legendary Creature Zombie Villain
+PT:4/4
+# combined: hers, a host with augment, a melded creature, or a merged permanent (rulings)
+S:Mode$ Continuous | Affected$ Creature.YouCtrl+Combined,Creature.YouCtrl+enchanted,Creature.YouCtrl+equipped | AddKeyword$ Menace | Description$ Combined, enchanted, and equipped creatures you control have menace.
+A:AB$ Combine | Cost$ 3 B R T | ValidTgts$ Creature | TgtZone$ Graveyard | TargetMin$ 2 | TargetMax$ 2 | TargetUnique$ True | TgtPrompt$ Select two target creature cards in graveyards | SpellDescription$ Put two target creature cards from graveyards onto the battlefield combined into one creature under your control. (Its power is equal to their total power, its toughness is equal to their total toughness, and it has their names, mana costs, types, text boxes, etc.)
+Oracle:Combined, enchanted, and equipped creatures you control have menace.\n{3}{B}{R}, {T}: Put two target creature cards from graveyards onto the battlefield combined into one creature under your control. (Its power is equal to their total power, its toughness is equal to their total toughness, and it has their names, mana costs, types, text boxes, etc.)

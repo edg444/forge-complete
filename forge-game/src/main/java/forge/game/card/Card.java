@@ -113,6 +113,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
             exiledCards, encodedCards;
     private CardCollection gainControlTargets, chosenCards;
     private CardCollection mergedCards;
+    // Grusilda, Monster Masher: the merged cards make one creature with everything of each, not mutate's "top card"
+    private boolean combinedWhole = false;
     private Map<Long, CardCollection> mustBlockCards = Maps.newHashMap();
     private List<Card> blockedThisTurn = Lists.newArrayList();
     private List<Card> blockedByThisTurn = Lists.newArrayList();
@@ -1503,6 +1505,34 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
 
     /** Unstable: an augment combined with this creature - mutate's merge plumbing, augment's characteristics. */
+    /**
+     * Grusilda's combined creature: its power and toughness are their total, and it has their names, mana costs,
+     * types and text boxes (see CardFactory.getCombinedCloneStates).
+     */
+    public final boolean isCombinedWhole() {
+        return combinedWhole && hasMergedCard();
+    }
+    public final void setCombinedWhole(final boolean b) {
+        combinedWhole = b;
+    }
+
+    /** Every name this object has: one, or each of its cards' for Grusilda's combined creature. */
+    public final List<String> getNames() {
+        if (!isCombinedWhole()) {
+            return Lists.newArrayList(getName());
+        }
+        final List<String> names = Lists.newArrayList();
+        for (final Card c : getMergedCards()) {
+            names.add(c.getOriginalState(CardStateName.Original).getName());
+        }
+        return names;
+    }
+
+    /** A combined creature (Grusilda's rulings): hers, a host with augment, a melded one, or a merged permanent. */
+    public final boolean isCombined() {
+        return hasMergedCard() || getMeldedWith() != null;
+    }
+
     public final boolean isAugmentCombined() {
         return hasMergedCard() && getTopMergedCard() != this && getTopMergedCard().isAugmentCard();
     }
@@ -1539,6 +1569,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
     public final void clearMergedCards() {
         mergedCards.clear();
+        combinedWhole = false;
     }
 
     public final Card getMergedToCard() {
@@ -6450,7 +6481,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
             return false;
         }
 
-        boolean shares = getName().equals(name);
+        boolean shares = getName().equals(name) || (isCombinedWhole() && getNames().contains(name));
 
         // Split cards has extra logic to check if it does share a name with
         if (!shares && !hasNameOverwrite()) {

@@ -80,6 +80,7 @@ public class CardCopyService {
             }
             if (copyFrom.hasMergedCard()) {
                 out.setMergedCards(copyFrom.getMergedCards());
+                out.setCombinedWhole(copyFrom.isCombinedWhole());
             }
 
             out.setLeavesPlayCommands(copyFrom.getLeavesPlayCommands());

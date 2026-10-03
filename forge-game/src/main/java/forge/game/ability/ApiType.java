@@ -112,6 +112,7 @@ public enum ApiType {
     SlideOntoBattlefield (SlideOntoBattlefieldEffect.class),
     ShootAtLibrary (ShootAtLibraryEffect.class),
     Augment (AugmentEffect.class),
+    Combine (CombineEffect.class),
     AnimateLibrary (AnimateLibraryEffect.class),
     Fog (FogEffect.class),
     GainControl (ControlGainEffect.class),

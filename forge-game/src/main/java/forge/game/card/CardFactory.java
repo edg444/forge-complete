@@ -797,6 +797,9 @@ public class CardFactory {
         if (card.isAugmentCombined()) {
             return getAugmentedCloneStates(card, sa);
         }
+        if (card.isCombinedWhole()) {
+            return getCombinedCloneStates(card, sa);
+        }
         final Card top = card.getTopMergedCard();
         final CardStateName state = top.getCurrentStateName();
         CardState ret;
@@ -823,6 +826,53 @@ public class CardFactory {
             result.add(top.getState(CardStateName.Original).copy(card, sa));
         }
 
+        return result;
+    }
+
+    /**
+     * Grusilda, Monster Masher's combined creature: "Its power is equal to their total power, its toughness is equal
+     * to their total toughness, and it has their names, mana costs, types, text boxes, etc." Every card's abilities
+     * stay, so two hosts both trigger as it enters, and the names are joined " // " for display (name checks and the
+     * legend rule go through Card.getNames).
+     */
+    public static CardCloneStates getCombinedCloneStates(final Card card, final CardTraitBase sa) {
+        final Card base = card.getMergedCards().getFirst();
+        final CardStateName stateName = base.getCurrentStateName();
+        final CardState ret = base.getOriginalState(stateName).copy(card, sa);
+        final List<String> names = Lists.newArrayList(ret.getName());
+        CardType type = new CardType(ret.getType());
+        int power = ret.getBasePower();
+        int toughness = ret.getBaseToughness();
+        for (final Card c : card.getMergedCards()) {
+            if (c == base) {
+                continue;
+            }
+            final CardState other = c.getOriginalState(CardStateName.Original);
+            names.add(other.getName());
+            ret.setManaCost(ManaCost.combine(ret.getManaCost(), other.getManaCost()));
+            ret.setColor(ColorSet.combine(ret.getColor(), other.getColor()));
+            type = CardType.combine(type, new CardType(other.getType()));
+            power += other.getBasePower();
+            toughness += other.getBaseToughness();
+            ret.addAbilitiesFrom(other, false);
+            for (final Map.Entry<String, String> e : other.getSVars().entrySet()) {
+                if (!ret.getSVars().containsKey(e.getKey())) {
+                    ret.setSVar(e.getKey(), e.getValue());
+                }
+            }
+        }
+        ret.setName(String.join(" // ", names));
+        ret.setType(type);
+        ret.setBasePower(power);
+        ret.setBasePowerString(String.valueOf(power));
+        ret.setBaseToughness(toughness);
+        ret.setBaseToughnessString(String.valueOf(toughness));
+
+        final CardCloneStates result = new CardCloneStates(base, sa);
+        result.put(stateName, ret);
+        if (stateName != CardStateName.Original) {
+            result.add(base.getState(CardStateName.Original).copy(card, sa));
+        }
         return result;
     }
 

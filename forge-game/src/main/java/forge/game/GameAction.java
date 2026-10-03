@@ -564,11 +564,17 @@ public class GameAction {
                     storeChangesZoneAll(copied, zoneFrom, zoneTo, params);
                     zoneTo.add(copied, position, toBattlefield ? null : lastKnownInfo); // the modified state of the card is also reported here (e.g. for Morbid + Awaken)
                 } else {
-                    storeChangesZoneAll(card, zoneFrom, zoneTo, params);
-                    zoneTo.add(card, position, CardCopyService.getLKICopy(card));
+                    // each card goes to its own owner's zone: Grusilda can combine cards from two graveyards, and an
+                    // augment can go on another player's host
+                    final Zone cardZoneTo = zoneTo.getPlayer() != null && !card.getOwner().equals(zoneTo.getPlayer())
+                            ? card.getOwner().getZone(zoneTo.getZoneType()) : zoneTo;
+                    storeChangesZoneAll(card, zoneFrom, cardZoneTo, params);
+                    cardZoneTo.add(card, position, CardCopyService.getLKICopy(card));
                     card.setState(CardStateName.Original, false);
                     card.setBackSide(false);
                     card.updateStateForView();
+                    card.setZone(cardZoneTo);
+                    continue;
                 }
                 card.setZone(zoneTo);
             }
@@ -2388,7 +2394,13 @@ public class GameAction {
         // Corner Case 1: Legendary with non legendary creature names
         CardCollection nonLegendaryNames = CardLists.filter(a, Card::hasNonLegendaryCreatureNames);
 
-        Multimap<String, Card> uniqueLegends = Multimaps.index(a, Card::getName);
+        // indexed by every name it has: Grusilda's combined creature has each of its cards' names
+        Multimap<String, Card> uniqueLegends = ArrayListMultimap.create();
+        for (final Card c : a) {
+            for (final String n : c.getNames()) {
+                uniqueLegends.put(n, c);
+            }
+        }
         CardCollection removed = new CardCollection();
 
         for (String name : uniqueLegends.keySet()) {
@@ -2402,6 +2414,8 @@ public class GameAction {
             if (!name.isEmpty() && StaticData.instance().getCommonCards().isNonLegendaryCreatureName(name)) {
                 cc.addAll(nonLegendaryNames);
             }
+            // a combined creature already put away under one of its names isn't chosen again under another
+            cc.removeAll(removed);
             if (cc.size() < 2) {
                 continue;
             }
