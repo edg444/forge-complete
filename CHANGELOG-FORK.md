@@ -246,6 +246,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - `SelfiePreservationTest` (2).
 - **Serpentine** (ust/120; not scripted upstream). Script only, the standard augment shape with a landfall
   condition.
+- **Shellephant** (ust/121; not scripted upstream). `{0}` Charm activatable in any zone (_____'s
+  `AdditionalActivationZone$` list); each mode is `Animate | Duration$ Perpetual`, so the definition follows the card
+  between zones - the FAQ has you define it before it's on the battlefield, where an undefined 0/0 (ruling) dies
+  first. "Turtle and/or Elephant" is a stack-free special action (`A:ST$`), changeable anywhere, anytime (FAQ); it's
+  both until changed. AI: defines it once as a 3/3 (new CharmAi `AIPreferred$` mode marker, gated by
+  `AICheckSVar$` on base toughness 0), never changes its types.
+  - `ShellephantTest` (4).
 
 ### 2026-10-02 (deployed: desktop, Android, GitHub) — upstream merge (12 commits, incl. Unfinity stickers); Unstable red complete (The Big Idea through Three-Headed Goblin); printed-line OCR; infinity; π damage; Party Crasher; triple strike; Jester's Sombrero AI
 

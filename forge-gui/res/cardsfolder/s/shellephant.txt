@@ -1,0 +1,18 @@
+Name:Shellephant
+ManaCost:1 G G
+Types:Creature Turtle Elephant
+# printed ?/? - undefined until the ability is activated, which is 0/0 (ruling)
+PT:0/0
+# The definition stays with the card from zone to zone (Perpetual): the FAQ has you define it before it's going to be
+# on the battlefield, where an undefined 0/0 would die before anyone could activate anything.
+A:AB$ Charm | Cost$ 0 | ActivationZone$ Hand | AdditionalActivationZone$ Battlefield,Graveyard,Library,Exile,Command,Stack,Sideboard,Ante,Junkyard | Choices$ DBSmall,DBBig | AICheckSVar$ BaseToughness | AISVarCompare$ EQ0 | SpellDescription$ Choose one. You may activate this ability while Shellephant is in any zone.
+SVar:DBSmall:DB$ Animate | Defined$ Self | Power$ 1 | Toughness$ 4 | Duration$ Perpetual | SpellDescription$ Shellephant has base power and toughness 1/4.
+SVar:DBBig:DB$ Animate | Defined$ Self | Power$ 3 | Toughness$ 3 | Duration$ Perpetual | AIPreferred$ True | SpellDescription$ Shellephant has base power and toughness 3/3.
+SVar:BaseToughness:Count$CardBaseToughness
+# "Turtle and/or Elephant": its controller may change which at any time, in any zone (FAQ). That's the type line,
+# not an ability, so it's a special action - no stack, nothing can respond. It's both until someone says otherwise.
+A:ST$ GenericChoice | Cost$ 0 | ActivationZone$ Hand | AdditionalActivationZone$ Battlefield,Graveyard,Library,Exile,Command,Stack,Sideboard,Ante,Junkyard | InstantSpeed$ True | Defined$ You | Choices$ BeTurtle,BeElephant,BeBoth | AILogic$ Never | SpellDescription$ (Turtle and/or Elephant: change which, anywhere, anytime. This is a special action.)
+SVar:BeTurtle:DB$ Animate | Defined$ Self | Types$ Turtle | RemoveCreatureTypes$ True | Duration$ Perpetual | SpellDescription$ Turtle
+SVar:BeElephant:DB$ Animate | Defined$ Self | Types$ Elephant | RemoveCreatureTypes$ True | Duration$ Perpetual | SpellDescription$ Elephant
+SVar:BeBoth:DB$ Animate | Defined$ Self | Types$ Turtle,Elephant | RemoveCreatureTypes$ True | Duration$ Perpetual | SpellDescription$ Turtle and Elephant
+Oracle:{0}: Choose one. You may activate this ability while Shellephant is in any zone.\n• Shellephant has base power and toughness 1/4.\n• Shellephant has base power and toughness 3/3.

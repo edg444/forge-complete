@@ -50,6 +50,14 @@ public class CharmAi extends SpellAbilityAi {
             chosenList = choices.subList(1, choices.size());
         } else if ("Triskaidekaphobia".equals(ComputerUtilAbility.getAbilitySourceName(sa))) {
             chosenList = chooseTriskaidekaphobia(choices, ai);
+        } else if (choices.stream().anyMatch(c -> c.hasParam("AIPreferred"))) {
+            // the script names the mode the AI wants (Shellephant defines itself as a 3/3)
+            chosenList = Lists.newArrayList();
+            for (final AbilitySub c : choices) {
+                if (c.hasParam("AIPreferred") && chosenList.size() < num) {
+                    chosenList.add(c);
+                }
+            }
         } else {
             // only randomize if not all possible together
             if (num < choices.size()) {
