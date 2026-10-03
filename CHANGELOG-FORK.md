@@ -229,6 +229,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Mother Kangaroo** (ust/116, upstream) checked against Scryfall: matches; its one ruling is the generic host one.
 - **Multi-Headed** (ust/117; not scripted upstream). Script only: Half-Orc's intervening-if shape with
   `Count$YouRollThisTurn`, which counts every die you rolled, the planar die included.
+- **Really Epic Punch** (ust/118; not scripted upstream). Script only: Savage Swipe's pump-then-fight with Success!'s
+  `Card.Host,Card.withAugment` condition and `Duration$ Permanent`, following the three rulings (the +2/+2 never
+  wears off; a combined creature still has augment; any creature you control can fight without the bonus).
 
 ### 2026-10-02 (deployed: desktop, Android, GitHub) — upstream merge (12 commits, incl. Unfinity stickers); Unstable red complete (The Big Idea through Three-Headed Goblin); printed-line OCR; infinity; π damage; Party Crasher; triple strike; Jester's Sombrero AI
 

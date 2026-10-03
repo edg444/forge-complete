@@ -1,0 +1,8 @@
+Name:Really Epic Punch
+ManaCost:1 G
+Types:Sorcery
+# no "until end of turn": the +2/+2 lasts (ruling). A combined host/augment creature isn't a host any more but
+# still has augment, so it gets it too (ruling); any creature you control can be the target and still fights.
+A:SP$ Pump | ValidTgts$ Creature.YouCtrl | AILogic$ Fight | TgtPrompt$ Select target creature you control | NumAtt$ +2 | NumDef$ +2 | Duration$ Permanent | ConditionDefined$ ThisTargetedCard | ConditionPresent$ Card.Host,Card.withAugment | SubAbility$ DBFight | SpellDescription$ Target creature you control gets +2/+2 if it's a host or has augment. Then it fights target creature you don't control.
+SVar:DBFight:DB$ Fight | Defined$ ParentTarget | ValidTgts$ Creature.YouDontCtrl | TgtPrompt$ Select target creature you don't control
+Oracle:Target creature you control gets +2/+2 if it's a host or has augment. Then it fights target creature you don't control.
