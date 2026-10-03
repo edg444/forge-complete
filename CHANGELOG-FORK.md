@@ -178,6 +178,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ## Log
 
+### Unreleased
+
+- **Clever Combo** (ust/105, first green Unstable card; not scripted upstream). Script only: a tutor whose
+  `ChangeType$ Host,Card.withAugment` is Labro Bot's host-or-augment filter. Scryfall lists no rulings.
+
 ### 2026-10-02 (deployed: desktop, Android, GitHub) — upstream merge (12 commits, incl. Unfinity stickers); Unstable red complete (The Big Idea through Three-Headed Goblin); printed-line OCR; infinity; π damage; Party Crasher; triple strike; Jester's Sombrero AI
 
 - **Upstream merge** (12 commits, among them Unfinity stickers and sticker sheets, Goblin Blastronauts, and the

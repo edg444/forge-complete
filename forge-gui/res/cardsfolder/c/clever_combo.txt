@@ -1,0 +1,5 @@
+Name:Clever Combo
+ManaCost:1 G
+Types:Sorcery
+A:SP$ ChangeZone | Origin$ Library | Destination$ Hand | ChangeType$ Host,Card.withAugment | ChangeTypeDesc$ host card or card with augment | ChangeNum$ 1 | SpellDescription$ Search your library for a host card or a card with augment, reveal it, put it into your hand, then shuffle.
+Oracle:Search your library for a host card or a card with augment, reveal it, put it into your hand, then shuffle.
