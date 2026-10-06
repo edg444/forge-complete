@@ -34,6 +34,9 @@ public class DualListBox<T> extends FDialog {
     private final FLabel selectOrder;
     private final FCheckBox rememberDecisionCheckBox;
 
+    private FEventHandler accept;
+    private boolean finished;
+
     private final int targetRemainingSourcesMin;
     private final int targetRemainingSourcesMax;
 
@@ -101,9 +104,12 @@ public class DualListBox<T> extends FDialog {
         removeAllButton = add(new FButton("<<", e -> removeAll()));
         
         final FEventHandler onAccept = e -> {
+            if (finished) { return; }
+            finished = true;
             hide();
             callback.accept(destList.extractListData());
         };
+        accept = onAccept;
 
         // Dual List Complete Buttons
         initButton(0, Forge.getLocalizer().getMessage("lblOK"), onAccept);
@@ -158,6 +164,20 @@ public class DualListBox<T> extends FDialog {
         }
 
         return maxHeight;
+    }
+
+    /** Replaces the "select order" line above the lists (Hot Fix's countdown). */
+    public void setHeaderText(String text) {
+        selectOrder.setText(text);
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    /** Closes as if OK were pressed, whether or not it's enabled (Hot Fix's clock running out). */
+    public void finishNow() {
+        accept.handleEvent(null);
     }
 
     public void setSecondColumnLabelText(String label) {

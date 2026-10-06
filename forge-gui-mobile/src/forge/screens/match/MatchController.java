@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Timer;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 
@@ -68,6 +70,7 @@ import forge.screens.match.views.VPlayerPanel;
 import forge.screens.match.views.VPlayerPanel.InfoTab;
 import forge.screens.match.views.VPrompt;
 import forge.screens.match.winlose.ViewWinLose;
+import forge.toolbox.DualListBox;
 import forge.toolbox.FButton;
 import forge.toolbox.FDisplayObject;
 import forge.toolbox.FOptionPane;
@@ -708,6 +711,47 @@ public class MatchController extends NetworkGuiGame {
         final int m1 = max >= 0 ? optionList.size() - max : -1;
         final int m2 = min >= 0 ? optionList.size() - min : -1;
         return SGuiChoose.order(title, Forge.getLocalizer().getMessage("lblSelected"), m1, m2, (List<GameEntityView>) optionList, null);
+    }
+
+    @Override
+    public TimedArrangement rearrangeInTime(final String title, final List<CardView> cards, final int seconds) {
+        return new WaitCallback<TimedArrangement>() {
+            @Override
+            public void run() {
+                final WaitCallback<TimedArrangement> done = this;
+                final boolean[] touching = {false};
+                @SuppressWarnings("unchecked")
+                final DualListBox<CardView>[] holder = new DualListBox[1];
+                // cards moved across go on top in that order; the rest keep their order below them
+                holder[0] = new DualListBox<>(title, 0, -1, cards, null, top -> {
+                    final List<CardView> order = new ArrayList<>(top);
+                    order.addAll(holder[0].getRemainingSourceList());
+                    done.accept(new TimedArrangement(order, touching[0]));
+                });
+                holder[0].setSecondColumnLabelText(Forge.getLocalizer().getMessage("lblClosestToTop"));
+                holder[0].setHeaderText(Forge.getLocalizer().getMessage("lblSecondsLeft", seconds));
+                final int[] left = {seconds};
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        if (holder[0].isFinished()) {
+                            cancel();
+                            return;
+                        }
+                        left[0]--;
+                        if (left[0] > 0) {
+                            holder[0].setHeaderText(Forge.getLocalizer().getMessage("lblSecondsLeft", left[0]));
+                            return;
+                        }
+                        cancel();
+                        // a finger (or held mouse button) on the screen is a hand on the cards
+                        touching[0] = Gdx.input.isTouched();
+                        holder[0].finishNow();
+                    }
+                }, 1, 1);
+                holder[0].show();
+            }
+        }.invokeAndWait();
     }
 
     @Override

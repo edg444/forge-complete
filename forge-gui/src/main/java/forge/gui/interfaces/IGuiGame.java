@@ -41,6 +41,8 @@ import java.util.concurrent.CountDownLatch;
 public interface IGuiGame {
 
     record OrderResult<T>(List<T> ordered, boolean rememberDecision) implements Serializable {}
+    /** Hot Fix: the order the cards were left in, and whether one was still being touched when time ran out. */
+    record TimedArrangement(List<CardView> ordered, boolean touching) implements Serializable {}
 
     /**
      * Whether the renderer for this GUI is the mobile port.
@@ -250,6 +252,11 @@ public interface IGuiGame {
 
     // show a list of cards and allow some of them to be moved around and return new list
     List<CardView> manipulateCardList(String title, final Iterable<CardView> cards, final Iterable<CardView> manipulable, boolean toTop, boolean toBottom, boolean toAnywhere);
+
+    /** Hot Fix: rearrange cards (first = top) until the given seconds run out. Untimed where a UI has no clock. */
+    default TimedArrangement rearrangeInTime(String title, List<CardView> cards, int seconds) {
+        return new TimedArrangement(manipulateCardList(title, cards, cards, true, true, true), false);
+    }
 
     void setCard(CardView card);
 

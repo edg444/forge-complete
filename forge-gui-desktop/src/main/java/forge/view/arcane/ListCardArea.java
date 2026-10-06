@@ -23,6 +23,8 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Timer;
+
 import forge.game.card.CardView;
 import forge.screens.match.CMatchUI;
 import forge.toolbox.FButton;
@@ -93,6 +95,48 @@ public class ListCardArea extends FloatingCardArea {
 		this.setDragEnabled(true);
 		this.setVertical(true);
 		storedArea = this;
+    }
+
+    private boolean touchingAtBuzzer;
+
+    /**
+     * Hot Fix: the same rearranging window, closed by the clock instead of only by Done. Whether a card was being
+     * held down when time ran out is kept for {@link #wasTouchingAtBuzzer()}.
+     */
+    public static ListCardArea showTimed(final CMatchUI matchUI, final String title0, final List<CardView> cards, final int seconds) {
+        final ListCardArea area = new ListCardArea(matchUI, countdownTitle(title0, seconds), cards, cards, true, true, true);
+        area.window.setModal(true);
+        final int[] left = {seconds};
+        final Timer timer = new Timer(1000, null);
+        timer.addActionListener(e -> {
+            left[0]--;
+            if (left[0] > 0) {
+                area.title = countdownTitle(title0, left[0]);
+                area.getWindow().setTitle(area.title);
+                return;
+            }
+            timer.stop();
+            area.touchingAtBuzzer = area.isTouchingCard();
+            if (area.getMouseDragPanel() != null && CardPanel.getDragAnimationPanel() != null
+                    && CardPanel.getDragAnimationPanel().getParent() != null) {
+                CardPanel.getDragAnimationPanel().getParent().remove(CardPanel.getDragAnimationPanel());
+            }
+            area.window.setVisible(false);
+        });
+        timer.start();
+        area.showWindow();
+        timer.stop();
+        area.window.dispose();
+        return area;
+    }
+
+    // the window title is run through String.format
+    private static String countdownTitle(final String title0, final int seconds) {
+        return (title0 + " - " + Localizer.getInstance().getMessage("lblSecondsLeft", seconds)).replace("%", "%%");
+    }
+
+    public boolean wasTouchingAtBuzzer() {
+        return touchingAtBuzzer;
     }
 
     public List<CardView> getCards() {

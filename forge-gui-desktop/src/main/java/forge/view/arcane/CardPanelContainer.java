@@ -62,6 +62,7 @@ public abstract class CardPanelContainer extends SkinnedPanel {
     private int intialMouseDragX = -1, intialMouseDragY;
     private boolean dragEnabled;
     private boolean isDragged;
+    private boolean pressedOnCard;
 
     private final List<LayoutEventListener> layoutListeners = new ArrayList<>(1);
 
@@ -125,6 +126,7 @@ public abstract class CardPanelContainer extends SkinnedPanel {
                 }
                 this.buttonsDown[button] = true;
                 mouseDownPanel = getCardPanel(evt.getX(), evt.getY());
+                pressedOnCard = mouseDownPanel != null;
 
                 if (mouseDownPanel != null && getMouseDragPanel() == null &&
                         (this.buttonsDown[2] || (this.buttonsDown[1] && this.buttonsDown[3]))) {
@@ -139,6 +141,7 @@ public abstract class CardPanelContainer extends SkinnedPanel {
                 if (button < 1 || button > 3) {
                     return;
                 }
+                pressedOnCard = false;
 
                 final boolean zoomed = CardZoomer.SINGLETON_INSTANCE.isZoomerOpen();
                 if (!zoomed && dragEnabled) {
@@ -383,6 +386,11 @@ public abstract class CardPanelContainer extends SkinnedPanel {
 
     public final void setDragEnabled(final boolean dragEnabled) {
         this.dragEnabled = dragEnabled;
+    }
+
+    /** Whether a mouse button is held down on one of the cards, dragging it or not (Hot Fix's "touching"). */
+    public final boolean isTouchingCard() {
+        return pressedOnCard || getMouseDragPanel() != null;
     }
 
     public final boolean isDragged() {

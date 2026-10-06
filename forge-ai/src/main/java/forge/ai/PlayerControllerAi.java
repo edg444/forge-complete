@@ -577,6 +577,11 @@ public class PlayerControllerAi extends PlayerController {
     }
 
     @Override
+    public Pair<CardCollectionView, Boolean> rearrangeInTime(final CardCollectionView cards, final int seconds, final SpellAbility sa) {
+        return AiTimedRearrange.arrange(player, cards, seconds);
+    }
+
+    @Override
     public int chooseProgramPosition(final Card card, final CardCollectionView program) {
         return AiProgram.insertPosition(player, card, program);
     }

@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import forge.card.CardStateName;
 import forge.card.ICardFace;
+import forge.gui.interfaces.IGuiGame;
 import forge.gui.interfaces.IGuiGame.OrderResult;
 import forge.game.card.Card;
 import forge.game.card.CardFaceView;
@@ -269,6 +270,20 @@ public class GuiChoose {
             e.printStackTrace();
         }
         return new OrderResult<>(null, false);
+    }
+
+    public static IGuiGame.TimedArrangement rearrangeInTime(final CMatchUI gui, final String title, final List<CardView> cards, final int seconds) {
+        final FutureTask<IGuiGame.TimedArrangement> ft = new FutureTask<>(() -> {
+            final ListCardArea area = ListCardArea.showTimed(gui, title, cards, seconds);
+            return new IGuiGame.TimedArrangement(area.getCards(), area.wasTouchingAtBuzzer());
+        });
+        FThreads.invokeInEdtAndWait(ft);
+        try {
+            return ft.get();
+        } catch (final Exception e) {
+            e.printStackTrace();
+        }
+        return new IGuiGame.TimedArrangement(null, false);
     }
 
     public static List<CardView> manipulateCardList(final CMatchUI gui, final String title, final Iterable<CardView> cards, final Iterable<CardView> manipulable, 

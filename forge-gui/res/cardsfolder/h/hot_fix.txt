@@ -1,0 +1,5 @@
+Name:Hot Fix
+ManaCost:4 W U
+Types:Sorcery
+A:SP$ ReorderZone | Zone$ Library | Defined$ You | Seconds$ 10 | SpellDescription$ You have ten seconds to look at and rearrange the cards in your library. At the end of those ten seconds, if you're touching one or more of those cards, shuffle.
+Oracle:You have ten seconds to look at and rearrange the cards in your library. At the end of those ten seconds, if you're touching one or more of those cards, shuffle.

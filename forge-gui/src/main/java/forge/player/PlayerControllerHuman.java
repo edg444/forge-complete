@@ -3896,6 +3896,21 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
     }
 
     @Override
+    public Pair<CardCollectionView, Boolean> rearrangeInTime(final CardCollectionView cards, final int seconds, final SpellAbility sa) {
+        final GameEntityViewMap<Card, CardView> gameCache = GameEntityView.getMap(cards);
+        tempShowCards(cards);
+        final IGuiGame.TimedArrangement result = getGui().rearrangeInTime(localizer.getMessage("lblRearrangeYourLibrary"),
+                gameCache.getTrackableKeys(), seconds);
+        endTempShowCards();
+        if (result == null || result.ordered() == null || result.ordered().size() != cards.size()) {
+            return Pair.of(cards, result != null && result.touching());
+        }
+        final CardCollection ordered = new CardCollection();
+        gameCache.addToList(result.ordered(), ordered);
+        return Pair.of(ordered, result.touching());
+    }
+
+    @Override
     public int chooseProgramPosition(final Card card, final CardCollectionView program) {
         final List<String> options = Lists.newArrayList();
         for (int i = 0; i <= program.size(); i++) {

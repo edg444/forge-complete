@@ -211,6 +211,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - AI (`AiProgram`): orders turn by turn - a land if it can still play one, then the spells that fit that turn's
     mana, biggest first; a new card goes before the first card the same plan would put after it.
   - `GrandCalcutronTest` (4). Suite: 1023 run, 0 failed, 6 skipped.
+- **Hot Fix** (ust/133; not scripted upstream).
+  - **Real-time limits**: `ReorderZone | Seconds$ N` gives the player N seconds to rearrange the zone
+    (`PlayerController.rearrangeInTime`, `IGuiGame.rearrangeInTime` returning `TimedArrangement`); if they're still
+    touching a card when time runs out, the zone is shuffled and the log says so. Contents never change (ruling).
+  - Desktop: the drag-to-rearrange window (`ListCardArea.showTimed`, top first, drag anywhere, click = to top)
+    counts down in its title and closes itself at zero; "touching" = a mouse button held down on a card, dragging
+    or not (`CardPanelContainer.isTouchingCard`). Done before the buzzer = hands off.
+  - Mobile: the order dialog counts down in its header and closes itself (`DualListBox.finishNow`); cards moved
+    across go on top in that order, the rest keep their order below; "touching" = a finger on the screen at zero
+    (`Gdx.input.isTouched`). Network clients get the untimed default.
+  - AI (`AiTimedRearrange`): pulls up to five cards it wants next to the top (lands until it has enough for its
+    hand, then the best spell it can cast) and always lets go in time.
+  - `HotFixTest` (3). Suite: 1026 run, 0 failed, 6 skipped.
 
 ### 2026-10-03 (deployed: desktop, Android, GitHub) — upstream merge (2 commits, data only); Unstable green complete and multicolor through Grusilda; audit of upstream Unstable scripts; open-ended die results; artists as people; tree-in-art; just a second; whole-card combination
 

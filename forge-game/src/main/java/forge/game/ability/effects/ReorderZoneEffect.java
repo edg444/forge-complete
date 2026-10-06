@@ -3,6 +3,9 @@ package forge.game.ability.effects;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+
+import forge.game.GameLogEntryType;
 import forge.game.ability.SpellAbilityEffect;
 import forge.game.card.CardCollection;
 import forge.game.card.CardCollectionView;
@@ -15,6 +18,9 @@ import forge.util.MyRandom;
 public class ReorderZoneEffect extends SpellAbilityEffect {
     @Override
     protected String getStackDescription(SpellAbility sa) {
+        if (sa.hasParam("Seconds")) {
+            return Lang.joinHomogenous(getTargetPlayers(sa)) + " has " + sa.getParam("Seconds") + " seconds to rearrange their " + ZoneType.smartValueOf(sa.getParam("Zone")).toString().toLowerCase() + ".";
+        }
         if (sa.hasParam("Program")) {
             return Lang.joinHomogenous(getTargetPlayers(sa)) + " order their hands into programs.";
         }
@@ -44,7 +50,18 @@ public class ReorderZoneEffect extends SpellAbilityEffect {
             if (list.size() < 2 && sa.hasParam("Program")) {
                 continue;
             }
-            if (shuffle) {
+            if (sa.hasParam("Seconds")) {
+                // Hot Fix: rearranged against the clock; still touching a card when time runs out = shuffle
+                final Pair<CardCollectionView, Boolean> result = p.getController().rearrangeInTime(list,
+                        Integer.parseInt(sa.getParam("Seconds")), sa);
+                if (result.getLeft().size() == list.size() && result.getLeft().containsAll(list)) {
+                    p.getZone(zone).setCards(result.getLeft());
+                }
+                if (result.getRight()) {
+                    p.getGame().getGameLog().add(GameLogEntryType.STACK_RESOLVE, p + " was still touching their " + zone.toString().toLowerCase() + " when time ran out and shuffles it.");
+                    p.shuffle(sa);
+                }
+            } else if (shuffle) {
                 Collections.shuffle(list, MyRandom.getRandom());
                 p.getZone(zone).setCards(list);
             } else {

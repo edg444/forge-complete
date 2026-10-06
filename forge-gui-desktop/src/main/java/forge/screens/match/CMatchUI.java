@@ -1369,6 +1369,11 @@ public final class CMatchUI
     }
 
     @Override
+    public TimedArrangement rearrangeInTime(final String title, final List<CardView> cards, final int seconds) {
+        return GuiChoose.rearrangeInTime(this, title, cards, seconds);
+    }
+
+    @Override
     public void setPlayerAvatar(final LobbyPlayer player, final IHasIcon ihi) {
         avatarImages.put(player.getName(), ihi.getIconImageKey());
     }

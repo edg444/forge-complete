@@ -432,6 +432,14 @@ public abstract class PlayerController {
 
     public boolean isOrderedZone() { return false; }
 
+    /**
+     * Hot Fix: rearrange cards (first = top) within the given seconds. The Boolean is whether the player was still
+     * touching one of them when time ran out.
+     */
+    public Pair<CardCollectionView, Boolean> rearrangeInTime(final CardCollectionView cards, final int seconds, final SpellAbility sa) {
+        return Pair.of(cards, false);
+    }
+
     /** The Grand Calcutron: where in this player's program (0 = first) a card put into their hand goes. */
     public int chooseProgramPosition(final Card card, final CardCollectionView program) {
         return program.size();
