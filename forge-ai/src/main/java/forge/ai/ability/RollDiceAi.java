@@ -2,7 +2,13 @@ package forge.ai.ability;
 
 import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
+import forge.ai.ComputerUtilCard;
+import forge.ai.ComputerUtilCombat;
 import forge.ai.SpellAbilityAi;
+import forge.game.ability.AbilityUtils;
+import forge.game.card.CardCollection;
+import forge.game.card.CardLists;
+import com.google.common.collect.Iterables;
 import forge.game.Game;
 import forge.game.card.Card;
 import forge.game.cost.Cost;
@@ -50,5 +56,26 @@ public class RollDiceAi extends SpellAbilityAi {
     @Override
     public boolean confirmAction(Player player, SpellAbility sa, PlayerActionConfirmMode mode, String message, Map<String, Object> params) {
         return true;
+    }
+
+    /**
+     * Ol' Buzzbark: where to aim the dice. Each die that lands deals its result to an opponent's creature it touches,
+     * so aim at the best one the dice could kill; with nothing of theirs worth it, aim at our own best creature.
+     */
+    @Override
+    protected Card chooseSingleCard(Player ai, SpellAbility sa, Iterable<Card> options, boolean isOptional, Player targetedPlayer, Map<String, Object> params) {
+        final CardCollection theirs = CardLists.filter(options, c -> c.getController().isOpponentOf(ai));
+        final int dice = AbilityUtils.calculateAmount(sa.getHostCard(), sa.getParamOrDefault("Amount", "1"), sa);
+        // about half the dice land on a card, averaging 3.5
+        final double expected = Math.max(3.5, dice * 3.5 * 0.5);
+        final CardCollection killable = CardLists.filter(theirs, c -> ComputerUtilCombat.getDamageToKill(c, false) <= expected);
+        if (!killable.isEmpty()) {
+            return ComputerUtilCard.getBestCreatureAI(killable);
+        }
+        final CardCollection mine = CardLists.filter(options, c -> c.getController().equals(ai));
+        if (!mine.isEmpty()) {
+            return ComputerUtilCard.getBestCreatureAI(mine);
+        }
+        return theirs.isEmpty() ? Iterables.getFirst(options, null) : ComputerUtilCard.getBestCreatureAI(theirs);
     }
 }

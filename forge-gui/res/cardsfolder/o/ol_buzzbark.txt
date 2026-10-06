@@ -1,0 +1,11 @@
+Name:Ol' Buzzbark
+ManaCost:X R G
+Types:Legendary Creature Goblin Warrior
+PT:3/3
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigRoll | TriggerDescription$ When CARDNAME enters, roll X six-sided dice onto the battlefield from a height of at least X inches. For each die, put a number of +1/+1 counters equal to the result on each creature you control that die is touching. For each die, CARDNAME deals damage equal to the result to each creature an opponent controls that die is touching.
+SVar:TrigRoll:DB$ RollDice | Amount$ X | Sides$ 6 | OntoBattlefield$ X | DieLandedSubAbility$ DBCounters
+SVar:DBCounters:DB$ PutCounterAll | ValidCards$ Creature.IsRemembered+YouCtrl | CounterType$ P1P1 | CounterNum$ DieResult | SubAbility$ DBDamage
+SVar:DBDamage:DB$ DamageAll | ValidCards$ Creature.IsRemembered+OppCtrl | NumDmg$ DieResult
+SVar:X:Count$xPaid
+DeckHas:Ability$Counters
+Oracle:When Ol' Buzzbark enters, roll X six-sided dice onto the battlefield from a height of at least X inches. For each die, put a number of +1/+1 counters equal to the result on each creature you control that die is touching. For each die, Ol' Buzzbark deals damage equal to the result to each creature an opponent controls that die is touching.

@@ -759,13 +759,51 @@ public class RollDiceEffect extends SpellAbilityEffect {
         }
     }
 
+    /** Ol' Buzzbark: each counted die comes to rest somewhere, and DieLandedSubAbility runs for it once it has. */
+    private static void landDice(final SpellAbility sa, final Player player, final Card aim, final List<Integer> rolls) {
+        final Card host = sa.getHostCard();
+        final Game game = player.getGame();
+        final int height = AbilityUtils.calculateAmount(host, sa.getParam("OntoBattlefield"), sa);
+        final List<CardCollection> landings = DiceLanding.land(aim, rolls.size(), height);
+        final SpellAbility each = sa.getAdditionalAbility("DieLandedSubAbility");
+        for (int i = 0; i < rolls.size(); i++) {
+            final CardCollection touched = landings.get(i);
+            final String where = touched.isEmpty() ? "comes to rest touching no creature"
+                    : "comes to rest touching " + Lang.joinHomogenous(touched);
+            final String message = "Die " + (i + 1) + " (" + rolls.get(i) + ") " + where + ".";
+            game.getGameLog().add(GameLogEntryType.STACK_RESOLVE, player + "'s die " + (i + 1) + " (" + rolls.get(i) + ") " + where + ".");
+            game.getAction().notifyOfValue(sa, host, message, null);
+            if (each == null || touched.isEmpty()) {
+                continue;
+            }
+            sa.setSVar("DieResult", Integer.toString(rolls.get(i)));
+            host.addRemembered(touched);
+            AbilityUtils.resolve(each);
+            host.removeRemembered(touched);
+        }
+    }
+
     private int rollDice(SpellAbility sa, Player player, int amount, int sides) {
         final Card host = sa.getHostCard();
         final int modifier = AbilityUtils.calculateAmount(host, sa.getParamOrDefault("Modifier", "0"), sa);
         final int ignore = AbilityUtils.calculateAmount(host, sa.getParamOrDefault("IgnoreLower", "0"), sa);
 
+        // Ol' Buzzbark: the dice are aimed before they leave the hand
+        Card aim = null;
+        if (sa.hasParam("OntoBattlefield") && amount > 0) {
+            final CardCollection creatures = CardLists.filter(player.getGame().getCardsIn(ZoneType.Battlefield), Card::isCreature);
+            if (!creatures.isEmpty()) {
+                aim = player.getController().chooseSingleEntityForEffect(creatures, sa,
+                        Localizer.getInstance().getMessage("lblAimTheDice"), null);
+            }
+        }
+
         List<Integer> rolls = new ArrayList<>();
         int total = rollDiceForPlayer(sa, player, amount, sides, ignore, modifier, rolls, sa.hasParam("ToVisitYourAttractions"));
+
+        if (sa.hasParam("OntoBattlefield")) {
+            landDice(sa, player, aim, rolls);
+        }
 
         if (sa.hasParam("UseDifferenceBetweenRolls")) {
             total = Collections.max(rolls) - Collections.min(rolls);

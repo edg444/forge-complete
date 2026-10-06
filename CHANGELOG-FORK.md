@@ -224,6 +224,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - AI (`AiTimedRearrange`): pulls up to five cards it wants next to the top (lands until it has enough for its
     hand, then the best spell it can cast) and always lets go in time.
   - `HotFixTest` (3). Suite: 1026 run, 0 failed, 6 skipped.
+- **Ol' Buzzbark** (ust/134; not scripted upstream).
+  - **Dice rolled onto the battlefield**: `RollDice | OntoBattlefield$ <height>` - the roller aims the volley at a
+    creature before rolling (all dice leave the hand at once - ruling), then each counted die comes to rest
+    (`DiceLanding`, simulated like upstream's FlipOntoBattlefield): it lands around the aimed creature in its
+    controller's row of creatures, scattering more and staying on a card less often the higher the drop; it can
+    stop on the edge between two neighbors and touch both. `DieLandedSubAbility$` runs once per die with
+    `DieResult` set and the touched creatures Remembered; each die is announced and logged. Roll modifiers
+    (Krark's Other Thumb, Snickering Squirrel, ...) apply since it's a normal roll. Not modeled: one die touching
+    creatures of two different players (ruling allows it; the rows don't meet).
+  - AI aims at the best opposing creature the dice could plausibly kill, otherwise its own best creature.
+  - `OlBuzzbarkTest` (4). Suite: 1030 run, 0 failed, 6 skipped.
 
 ### 2026-10-03 (deployed: desktop, Android, GitHub) — upstream merge (2 commits, data only); Unstable green complete and multicolor through Grusilda; audit of upstream Unstable scripts; open-ended die results; artists as people; tree-in-art; just a second; whole-card combination
 

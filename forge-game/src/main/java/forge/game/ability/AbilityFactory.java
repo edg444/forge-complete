@@ -64,7 +64,8 @@ public final class AbilityFactory {
             "ReturnAbility", // for Delayed Trigger on Magpie
             "GiftAbility", // for Promise Gift
             "VoteSubAbility", // for Vote with VoteCard
-            "VoteTiedAbility" // for fallback to Choices
+            "VoteTiedAbility", // for fallback to Choices
+            "DieLandedSubAbility" // RollDice OntoBattlefield, once per die (Ol' Buzzbark)
         );
 
     public enum AbilityRecordType {
