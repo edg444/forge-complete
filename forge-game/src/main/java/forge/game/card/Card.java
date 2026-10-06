@@ -102,6 +102,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     private GamePieceType gamePieceType = GamePieceType.CARD;
 
     private Zone castFrom;
+    private boolean wasFirstOfProgram;
     private SpellAbility castSA;
 
     // Hidden keywords won't be displayed on the card
@@ -7936,6 +7937,13 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
     public void setCastFrom(final Zone castFrom0) {
         castFrom = castFrom0;
+    }
+    /** Whether this spell was the first card of its hand when cast (The Grand Calcutron's programs). */
+    public boolean wasFirstOfProgram() {
+        return wasFirstOfProgram;
+    }
+    public void setWasFirstOfProgram(final boolean first) {
+        wasFirstOfProgram = first;
     }
     public boolean wasCast() {
         if (hasMergedCard()) {

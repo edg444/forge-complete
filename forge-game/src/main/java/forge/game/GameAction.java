@@ -51,6 +51,7 @@ import forge.game.staticability.StaticAbilityGraveyardCombat;
 import forge.game.staticability.StaticAbilityIgnoreStateBasedActions;
 import forge.game.staticability.StaticAbilityLayer;
 import forge.game.staticability.StaticAbilityMode;
+import forge.game.staticability.StaticAbilityPlaceInProgram;
 import forge.game.staticability.StaticAbilityTopLibraryOnBattlefield;
 import forge.game.trigger.TriggerType;
 import forge.game.zone.PlayerZone;
@@ -93,6 +94,26 @@ public class GameAction {
     public Card changeZone(final Zone zoneFrom, Zone zoneTo, final Card c, Integer position, SpellAbility cause) {
         return changeZone(zoneFrom, zoneTo, c, position, cause, null);
     }
+    /**
+     * The Grand Calcutron: a card put into the hand of a player whose hand is a program is revealed and placed
+     * wherever in the program that player chooses.
+     */
+    private Integer programPosition(final Zone zoneTo, final Card c, final Integer position) {
+        if (position != null || !zoneTo.is(ZoneType.Hand) || zoneTo.isEmpty()) {
+            return position;
+        }
+        final Player p = zoneTo.getPlayer();
+        if (p == null || !p.hasProgram() || !StaticAbilityPlaceInProgram.anyActive(game)) {
+            return position;
+        }
+        final CardCollectionView program = zoneTo.getCards();
+        final int index = Math.max(0, Math.min(program.size(), p.getController().chooseProgramPosition(c, program)));
+        final String where = index == 0 ? "first" : index == program.size() ? "last"
+                : "after " + program.get(index - 1).getName();
+        game.getGameLog().add(GameLogEntryType.ZONE_CHANGE, p + " reveals " + c.getName() + " and places it " + where + " in their program.");
+        return index;
+    }
+
     private Card changeZone(final Zone zoneFrom, Zone zoneTo, final Card c, Integer position, SpellAbility cause, Map<AbilityKey, Object> params) {
         // 111.11. A copy of a permanent spell becomes a token as it resolves.
         // The token has the characteristics of the spell that became that token.
@@ -112,7 +133,7 @@ public class GameAction {
 
         // dev mode
         if (zoneFrom == null && !c.isToken()) {
-            zoneTo.add(c, position, CardCopyService.getLKICopy(c));
+            zoneTo.add(c, programPosition(zoneTo, c, position), CardCopyService.getLKICopy(c));
             checkStaticAbilities();
             game.getTriggerHandler().registerActiveTrigger(c, true);
             game.fireEvent(new GameEventCardChangeZone(c, zoneFrom, zoneTo));
@@ -263,6 +284,7 @@ public class GameAction {
 
                 if (cause != null && cause.isSpell() && c.equals(cause.getHostCard())) {
                     copied.setCastFrom(zoneFrom);
+                    copied.setWasFirstOfProgram(zoneFrom != null && zoneFrom.is(ZoneType.Hand) && zoneFrom.getCards().indexOf(c) == 0);
                     copied.setCastSA(cause);
                     copied.setSplitStateToPlayAbility(cause);
 
@@ -562,14 +584,14 @@ public class GameAction {
                 }
                 if (card == c) {
                     storeChangesZoneAll(copied, zoneFrom, zoneTo, params);
-                    zoneTo.add(copied, position, toBattlefield ? null : lastKnownInfo); // the modified state of the card is also reported here (e.g. for Morbid + Awaken)
+                    zoneTo.add(copied, programPosition(zoneTo, copied, position), toBattlefield ? null : lastKnownInfo); // the modified state of the card is also reported here (e.g. for Morbid + Awaken)
                 } else {
                     // each card goes to its own owner's zone: Grusilda can combine cards from two graveyards, and an
                     // augment can go on another player's host
                     final Zone cardZoneTo = zoneTo.getPlayer() != null && !card.getOwner().equals(zoneTo.getPlayer())
                             ? card.getOwner().getZone(zoneTo.getZoneType()) : zoneTo;
                     storeChangesZoneAll(card, zoneFrom, cardZoneTo, params);
-                    cardZoneTo.add(card, position, CardCopyService.getLKICopy(card));
+                    cardZoneTo.add(card, programPosition(cardZoneTo, card, position), CardCopyService.getLKICopy(card));
                     card.setState(CardStateName.Original, false);
                     card.setBackSide(false);
                     card.updateStateForView();
@@ -585,7 +607,7 @@ public class GameAction {
             }
             // "enter the battlefield as a copy" - apply code here
             // but how to query for input here and continue later while the callers assume synchronous result?
-            zoneTo.add(copied, position, toBattlefield ? null : lastKnownInfo); // the modified state of the card is also reported here (e.g. for Morbid + Awaken)
+            zoneTo.add(copied, programPosition(zoneTo, copied, position), toBattlefield ? null : lastKnownInfo); // the modified state of the card is also reported here (e.g. for Morbid + Awaken)
             c.setZone(zoneTo);
         }
 
@@ -1749,6 +1771,10 @@ public class GameAction {
         checkGameOverCondition();
         if (game.isGameOver()) {
             return false;
+        }
+        // The Grand Calcutron's programs end once it has left the battlefield
+        for (final Player p : game.getPlayers()) {
+            p.updateProgramForView();
         }
 
         final boolean refreeze = game.getStack().isFrozen();

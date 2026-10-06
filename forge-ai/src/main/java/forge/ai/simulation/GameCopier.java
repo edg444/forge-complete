@@ -112,6 +112,7 @@ public class GameCopier {
             newPlayer.setMaxHandSize(origPlayer.getMaxHandSize());
             newPlayer.setUnlimitedHandSize(origPlayer.isUnlimitedHandSize());
             newPlayer.setCrankCounter(origPlayer.getCrankCounter());
+            newPlayer.setProgramSources(origPlayer.getProgramSources());
             // TODO creatureAttackedThisTurn
             for (Mana m : origPlayer.getManaPool()) {
                 newPlayer.getManaPool().addManaNoEvent(m);

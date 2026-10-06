@@ -472,6 +472,16 @@ public class CardDetailUtil {
             area.append("(signed)");
         }
 
+        // The Grand Calcutron's program
+        if (card.getZone() == ZoneType.Hand && card.getController() != null && card.getController().hasProgram()) {
+            final int index = card.getController().getHand().indexOf(card);
+            if (index >= 0) {
+                area.append("\n");
+                area.append("(program: ").append(index + 1).append(" of ").append(card.getController().getHand().size())
+                        .append(index == 0 ? ", playable" : "").append(")");
+            }
+        }
+
         // chosen artist
         if (!card.getChosenArtist().isEmpty()) {
             area.append("\n");

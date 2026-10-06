@@ -577,11 +577,21 @@ public class PlayerControllerAi extends PlayerController {
     }
 
     @Override
+    public int chooseProgramPosition(final Card card, final CardCollectionView program) {
+        return AiProgram.insertPosition(player, card, program);
+    }
+
+    @Override
     public CardCollectionView orderMoveToZoneList(CardCollectionView cards, ZoneType destinationZone, SpellAbility source) {
         //TODO Add more logic for AI ordering here
 
         if (cards.isEmpty()) {
             return cards;
+        }
+
+        if (destinationZone == ZoneType.Hand) {
+            // The Grand Calcutron's program
+            return AiProgram.idealOrder(player, cards);
         }
 
         if (destinationZone == ZoneType.Graveyard) {

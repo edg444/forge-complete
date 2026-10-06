@@ -59,6 +59,10 @@ public class PlayerProperty {
             if (!game.getPhaseHandler().isPlayerTurn(player)) {
                 return false;
             }
+        } else if (property.equals("hasProgram")) {
+            if (!player.hasProgram()) {
+                return false;
+            }
         } else if (property.equals("NonActive")) {
             if (game.getPhaseHandler().isPlayerTurn(player)) {
                 return false;

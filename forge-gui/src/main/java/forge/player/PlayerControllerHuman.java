@@ -1240,6 +1240,9 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
             case Stack:
                 choices = getGui().order(localizer.getMessage("lblChooseOrderCopiesCast"), localizer.getMessage("lblPutFirst"), choices, null);
                 break;
+            case Hand: // The Grand Calcutron makes a hand a program
+                choices = getGui().order(localizer.getMessage("lblChooseOrderOfProgram"), localizer.getMessage("lblPutFirst"), choices, null);
+                break;
             case None: //for when we want to order but don't really want to move the cards
                 choices = getGui().order(localizer.getMessage("lblChooseOrderCards"), localizer.getMessage("lblPutFirst"), choices, null);
                 break;
@@ -3893,7 +3896,33 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
     }
 
     @Override
+    public int chooseProgramPosition(final Card card, final CardCollectionView program) {
+        final List<String> options = Lists.newArrayList();
+        for (int i = 0; i <= program.size(); i++) {
+            final String where;
+            if (i == 0) {
+                where = localizer.getMessage("lblProgramBefore", program.get(0).getName());
+            } else if (i == program.size()) {
+                where = localizer.getMessage("lblProgramAfter", program.get(i - 1).getName());
+            } else {
+                where = localizer.getMessage("lblProgramBetween", program.get(i - 1).getName(), program.get(i).getName());
+            }
+            options.add((i + 1) + ". " + where);
+        }
+        tempShowCard(card);
+        getGui().setCard(card.getView());
+        final String choice = getGui().one(localizer.getMessage("lblPlaceInProgram", CardTranslation.getTranslatedName(card.getName())), options);
+        endTempShowCards();
+        return choice == null ? program.size() : options.indexOf(choice);
+    }
+
+    @Override
     public void reorderHand(final CardView card, final int index) {
+        // a program's order is fixed
+        if (player.hasProgram()) {
+            player.updateZoneForView(player.getZone(ZoneType.Hand));
+            return;
+        }
         final PlayerZone hand = player.getZone(ZoneType.Hand);
         hand.reorder(getCard(card), index);
         player.updateZoneForView(hand);

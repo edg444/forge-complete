@@ -86,6 +86,17 @@ public class StaticAbilityCantBeCast {
     }
 
     /**
+     * The Grand Calcutron: a player whose hand is a program can play only the first card of it, from anywhere.
+     * Suspend also asks CantBeCast, but it's a special action, not playing the card.
+     */
+    private static boolean onlyFirstOfProgramForbids(final SpellAbility spell, final Card card, final Player player) {
+        if (player == null || (spell != null && !spell.isSpell()) || !player.hasProgram()) {
+            return false;
+        }
+        return !player.isFirstOfProgram(card);
+    }
+
+    /**
      * TODO Write javadoc for this method.
      *
      * @param stAb
@@ -98,6 +109,9 @@ public class StaticAbilityCantBeCast {
      */
     public static boolean applyCantBeCastAbility(final StaticAbility stAb, final SpellAbility spell, final Card card, final Player activator) {
         if (!stAb.matchesValidParam("ValidCard", card)) {
+            return false;
+        }
+        if (stAb.hasParam("OnlyFirstOfProgram") && !onlyFirstOfProgramForbids(spell, card, activator)) {
             return false;
         }
 
@@ -189,6 +203,9 @@ public class StaticAbilityCantBeCast {
      */
     public static boolean applyCantPlayLandAbility(final StaticAbility stAb, final Card card, final Player player) {
         if (!stAb.matchesValidParam("ValidCard", card)) {
+            return false;
+        }
+        if (stAb.hasParam("OnlyFirstOfProgram") && !onlyFirstOfProgramForbids(null, card, player)) {
             return false;
         }
 

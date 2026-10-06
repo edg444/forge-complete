@@ -237,6 +237,8 @@ public enum StaticAbilityMode {
 
     // StaticAbilityGraveyardCombat
     GraveyardCombat,
+    // StaticAbilityPlaceInProgram
+    PlaceInProgram,
 
     // StaticAbilityChoosesTargets
     ChoosesTargets,

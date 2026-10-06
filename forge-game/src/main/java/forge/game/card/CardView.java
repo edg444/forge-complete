@@ -725,7 +725,8 @@ public class CardView extends GameEntityView {
             }
             break;
         case Hand:
-            if (controller.equals(viewer)) {
+            // The Grand Calcutron's programs are rows of revealed cards
+            if (controller.equals(viewer) || controller.hasProgram()) {
                 return true;
             }
             break;

@@ -245,6 +245,10 @@ public class Player extends GameEntity implements Comparable<Player> {
 
     private int crankCounter = 3;
 
+    // The Grand Calcutron: id -> timestamp of each permanent whose ETB made this hand a program. The program
+    // lasts while that same object stays on the battlefield
+    private Map<Integer, Long> programSources = Maps.newHashMap();
+
     private PlayerStatistics stats = new PlayerStatistics();
 
     private final AchievementTracker achievementTracker = new AchievementTracker();
@@ -4256,6 +4260,55 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
     public int getAttractionsVisitedThisTurn() {
         return this.attractionsVisitedThisTurn;
+    }
+
+    public Map<Integer, Long> getProgramSources() {
+        return programSources;
+    }
+    public void setProgramSources(final Map<Integer, Long> sources) {
+        programSources = Maps.newHashMap(sources);
+        updateProgramForView();
+    }
+    public void addProgramSource(final Card source) {
+        programSources.put(source.getId(), source.getGameTimestamp());
+        updateProgramForView();
+    }
+    public boolean hasProgram() {
+        if (programSources.isEmpty()) {
+            return false;
+        }
+        // phased out isn't gone: only leaving the battlefield ends the program
+        for (final Player p : game.getPlayers()) {
+            for (final Card c : p.getZone(ZoneType.Battlefield).getCards(false)) {
+                final Long ts = programSources.get(c.getId());
+                if (ts != null && ts == c.getGameTimestamp()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    /** The program's cards in order, or null if this hand isn't a program. */
+    public CardCollectionView getProgram() {
+        return hasProgram() ? getZone(ZoneType.Hand).getCards() : null;
+    }
+    /** Whether card is the first card of this player's program, judged where it was when its play began. */
+    public boolean isFirstOfProgram(final Card card) {
+        final Zone hand = getZone(ZoneType.Hand);
+        final Card current = game.getCardState(card, null);
+        if (current != null && hand.contains(current)) {
+            return hand.getCards().indexOf(current) == 0;
+        }
+        // already moved to the stack to be cast
+        return card.getCastFrom() == hand && card.wasFirstOfProgram();
+    }
+    public void updateProgramForView() {
+        if (view.hasProgram() == hasProgram()) {
+            return;
+        }
+        view.updateHasProgram(this);
+        // redraw the hand: a program shows in its own order, a hand again in the player's
+        updateZoneForView(getZone(ZoneType.Hand));
     }
 
     public int getCrankCounter() {

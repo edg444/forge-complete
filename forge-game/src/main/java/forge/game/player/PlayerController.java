@@ -431,4 +431,9 @@ public abstract class PlayerController {
     }
 
     public boolean isOrderedZone() { return false; }
+
+    /** The Grand Calcutron: where in this player's program (0 = first) a card put into their hand goes. */
+    public int chooseProgramPosition(final Card card, final CardCollectionView program) {
+        return program.size();
+    }
 }

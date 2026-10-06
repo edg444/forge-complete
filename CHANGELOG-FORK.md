@@ -124,6 +124,9 @@ Only Who // What // When // Where // Why has ever needed this.
   control change keeps any second residency.
 - **Unnoticed zone changes** — `AbilityKey.Unnoticed` in a move's params skips replacement effects, zone-change
   triggers and the "entered/left the battlefield this turn" records (Masterful Ninja).
+- **Programs** (The Grand Calcutron) — a hand that is an ordered row of revealed cards: `Player.hasProgram`,
+  `ReorderZone | Program$ True`, `OnlyFirstOfProgram$` on CantBeCast/CantPlayLand, static `PlaceInProgram`,
+  `PlayerController.chooseProgramPosition`.
 
 ### Pink, a sixth color
 
@@ -184,6 +187,30 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 ---
 
 ## Log
+
+### Unreleased
+
+- **The Grand Calcutron** (ust/131; previously deferred, not scripted upstream).
+  - **Programs**: `DB$ ReorderZone | Zone$ Hand | Program$ True` has each player order their hand and records the
+    host (id + timestamp) on the player (`Player.addProgramSource` / `hasProgram`); the program lasts while that
+    object stays on the battlefield (phased out still counts), so it ends on its own when the Calcutron leaves
+    (rulings, FAQ). Its order is the hand zone's order, first = leftmost. While a hand is a program: it's revealed
+    to everyone (`CardView.canBeShownTo`), the hand-sorting preference doesn't apply (game layer and desktop
+    `CHand`), dragging cards around in the desktop hand is refused, and the card detail panel shows
+    "(program: N of M, playable)". `PlayerView.hasProgram` is refreshed in state-based checks.
+  - `CantBeCast`/`CantPlayLand` param `OnlyFirstOfProgram$ True`: a player with a program can play only its first
+    card, **from anywhere** (user ruling: graveyard, exile, library and command zone are closed too). Suspend
+    isn't playing, so it isn't stopped. A spell already moved to the stack is judged by `Card.wasFirstOfProgram`
+    (set where `castFrom` is).
+  - Static `Mode$ PlaceInProgram`: a card moved into a program player's hand (`GameAction.programPosition`, every
+    `zoneTo.add` of a hand move, merged cards included) is placed where that player chooses
+    (`PlayerController.chooseProgramPosition`; human: numbered "First, before X / Between X and Y / Last, after Y"
+    list), and the game log says where. Applied after other replacements.
+  - Player property `hasProgram`; end-step refill is a plain Phase trigger with `ValidPlayer$ Player.hasProgram`,
+    an intervening-if on hand size and a resolution check that the program still exists.
+  - AI (`AiProgram`): orders turn by turn - a land if it can still play one, then the spells that fit that turn's
+    mana, biggest first; a new card goes before the first card the same plan would put after it.
+  - `GrandCalcutronTest` (4). Suite: 1023 run, 0 failed, 6 skipped.
 
 ### 2026-10-03 (deployed: desktop, Android, GitHub) — upstream merge (2 commits, data only); Unstable green complete and multicolor through Grusilda; audit of upstream Unstable scripts; open-ended die results; artists as people; tree-in-art; just a second; whole-card combination
 

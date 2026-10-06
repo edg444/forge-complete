@@ -190,6 +190,7 @@ public enum TrackableProperty {
     HasHalfToughness(TrackableTypes.BooleanType),
     MaxHandSize(TrackableTypes.IntegerType),
     HasUnlimitedHandSize(TrackableTypes.BooleanType),
+    HasProgram(TrackableTypes.BooleanType),
     MaxLandPlay(TrackableTypes.IntegerType),
     HasUnlimitedLandPlay(TrackableTypes.BooleanType),
     NumLandThisTurn(TrackableTypes.IntegerType),

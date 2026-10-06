@@ -414,6 +414,7 @@ public class CardCopyService {
             newCopy.setCastSA(castSA);
         }
         newCopy.setCastFrom(copyFrom.getCastFrom());
+        newCopy.setWasFirstOfProgram(copyFrom.wasFirstOfProgram());
 
         newCopy.setExiledBy(copyFrom.getExiledBy());
         newCopy.setExiledWith(getLKICopy(copyFrom.getExiledWith(), cachedMap));

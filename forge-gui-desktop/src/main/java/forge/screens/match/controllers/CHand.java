@@ -105,7 +105,7 @@ public class CHand implements ICDoc {
             // PlayerZone.onChanged(), but is necessary because network clients only have CardViews
             // (no access to the game model), and because toggling the preference mid-game needs
             // to take effect immediately without waiting for a zone change event.
-            if (FModel.getPreferences().getPrefBoolean(FPref.UI_ORDER_HAND)) {
+            if (FModel.getPreferences().getPrefBoolean(FPref.UI_ORDER_HAND) && !player.hasProgram()) {
                 ordering.sort(Comparator.comparingInt((CardView cv) -> cv.getCurrentState().getManaCost().getCMC())
                         .thenComparing(cv -> cv.getCurrentState().getColors().getOrderWeight())
                         .thenComparing(cv -> cv.getCurrentState().getName()));

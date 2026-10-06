@@ -15,6 +15,9 @@ import forge.util.MyRandom;
 public class ReorderZoneEffect extends SpellAbilityEffect {
     @Override
     protected String getStackDescription(SpellAbility sa) {
+        if (sa.hasParam("Program")) {
+            return Lang.joinHomogenous(getTargetPlayers(sa)) + " order their hands into programs.";
+        }
         final ZoneType zone = ZoneType.smartValueOf(sa.getParam("Zone"));
         final List<Player> tgtPlayers = getTargetPlayers(sa);
         boolean shuffle = sa.hasParam("Random");
@@ -32,7 +35,15 @@ public class ReorderZoneEffect extends SpellAbilityEffect {
                 continue;
             }
 
+            // The Grand Calcutron: the hand becomes a program, kept in the order chosen here
+            if (sa.hasParam("Program")) {
+                p.addProgramSource(sa.getHostCard());
+            }
+
             CardCollection list = new CardCollection(p.getCardsIn(zone));
+            if (list.size() < 2 && sa.hasParam("Program")) {
+                continue;
+            }
             if (shuffle) {
                 Collections.shuffle(list, MyRandom.getRandom());
                 p.getZone(zone).setCards(list);

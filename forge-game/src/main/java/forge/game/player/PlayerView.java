@@ -281,6 +281,14 @@ public class PlayerView extends GameEntityView {
         set(TrackableProperty.HasUnlimitedHandSize, p.isUnlimitedHandSize());
     }
 
+    /** The Grand Calcutron: this player's hand is a program, an ordered row of revealed cards. */
+    public boolean hasProgram() {
+        return get(TrackableProperty.HasProgram);
+    }
+    void updateHasProgram(Player p) {
+        set(TrackableProperty.HasProgram, p.hasProgram());
+    }
+
     public String getMaxHandString() {
         return hasUnlimitedHandSize() ? Localizer.getInstance().getMessage("lblUnlimited") : String.valueOf(getMaxHandSize());
     }

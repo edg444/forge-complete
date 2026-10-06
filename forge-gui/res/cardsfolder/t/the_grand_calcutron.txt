@@ -1,0 +1,14 @@
+Name:The Grand Calcutron
+ManaCost:W U
+Types:Legendary Artifact
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigProgram | TriggerDescription$ When CARDNAME enters, each player's hand becomes a program (an ordered row of revealed cards).
+SVar:TrigProgram:DB$ ReorderZone | Zone$ Hand | Defined$ Player | Program$ True
+S:Mode$ CantBeCast | OnlyFirstOfProgram$ True | Description$ Players can play only the first card of their program.
+S:Mode$ CantPlayLand | OnlyFirstOfProgram$ True
+S:Mode$ PlaceInProgram | Description$ If a card would be put into a player's hand from anywhere, that player reveals it and places it anywhere within their program instead.
+T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ Player.hasProgram | TriggerZones$ Battlefield | CheckSVar$ X | SVarCompare$ LT5 | Execute$ TrigDraw | TriggerDescription$ At the beginning of each player's end step, if that player's program has fewer than five cards, they draw cards equal to the difference.
+SVar:TrigDraw:DB$ Draw | Defined$ TriggeredPlayer | NumCards$ Difference | ConditionPlayerDefined$ Player.hasProgram | ConditionPlayerContains$ TriggeredPlayer
+SVar:X:TriggeredPlayer$CardsInHand
+SVar:Difference:Number$5/Minus.X
+Text:CARDNAME can be your commander.
+Oracle:When The Grand Calcutron enters, each player's hand becomes a program (an ordered row of revealed cards).\nPlayers can play only the first card of their program.\nIf a card would be put into a player's hand from anywhere, that player reveals it and places it anywhere within their program instead.\nAt the beginning of each player's end step, if that player's program has fewer than five cards, they draw cards equal to the difference.\nThe Grand Calcutron can be your commander.
