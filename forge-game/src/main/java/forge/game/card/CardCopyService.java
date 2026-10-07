@@ -415,6 +415,8 @@ public class CardCopyService {
         }
         newCopy.setCastFrom(copyFrom.getCastFrom());
         newCopy.setWasFirstOfProgram(copyFrom.wasFirstOfProgram());
+        newCopy.setTextBoxStolen(copyFrom.isTextBoxStolen());
+        newCopy.setStolenTextBoxes(copyFrom.getStolenTextBoxes());
 
         newCopy.setExiledBy(copyFrom.getExiledBy());
         newCopy.setExiledWith(getLKICopy(copyFrom.getExiledWith(), cachedMap));

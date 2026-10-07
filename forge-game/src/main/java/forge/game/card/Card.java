@@ -102,6 +102,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     private GamePieceType gamePieceType = GamePieceType.CARD;
 
     private Zone castFrom;
+    private boolean textBoxStolen;
+    private List<StolenTextBox> stolenTextBoxes = Lists.newArrayList();
     private boolean wasFirstOfProgram;
     private SpellAbility castSA;
 
@@ -6941,10 +6943,66 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return t != null && t.getBorder() != null ? t.getBorder() : borderColor();
     }
 
-    /** Watermark of the face this card is showing, or null. */
+    /** Watermark of the face this card is showing, or null - also null once Phoebe has stolen its text box. */
     public String getWatermark() {
+        if (textBoxStolen) {
+            return null;
+        }
         final PrintingTraits.Traits t = getPrintingTraits();
         return t == null ? null : t.getWatermark(isBackSide());
+    }
+
+    /** Every watermark in this card's text boxes: its own, then each one Phoebe stole. */
+    public List<String> getWatermarks() {
+        final List<String> result = Lists.newArrayList();
+        if (getWatermark() != null) {
+            result.add(getWatermark());
+        }
+        for (final StolenTextBox box : stolenTextBoxes) {
+            result.addAll(box.watermarks());
+        }
+        return result;
+    }
+
+    /**
+     * Phoebe, Head of S.N.E.A.K.: what a stolen text box carried besides its abilities, which the thief gains as
+     * changed traits. Both sides belong to the object - a zone change leaves them behind (rulings).
+     */
+    public record StolenTextBox(String name, String oracle, String flavor, List<String> watermarks,
+            int rulesLines, int textLines) { }
+
+    public boolean isTextBoxStolen() {
+        return textBoxStolen;
+    }
+    /** Its text box is gone, including any it had stolen itself: those were part of it (rulings). */
+    public void setTextBoxStolen(final boolean stolen) {
+        textBoxStolen = stolen;
+        if (stolen) {
+            stolenTextBoxes.clear();
+        }
+    }
+    public List<StolenTextBox> getStolenTextBoxes() {
+        return stolenTextBoxes;
+    }
+    public void setStolenTextBoxes(final List<StolenTextBox> boxes) {
+        stolenTextBoxes = Lists.newArrayList(boxes);
+    }
+    public void addStolenTextBox(final StolenTextBox box) {
+        stolenTextBoxes.add(box);
+    }
+
+    /** Rules text of all this card's text boxes as one (Phoebe rulings), in Oracle form. */
+    public String getTextBoxOracle() {
+        final List<String> parts = Lists.newArrayList();
+        if (!textBoxStolen && StringUtils.isNotEmpty(getOracleText())) {
+            parts.add(getOracleText());
+        }
+        for (final StolenTextBox box : stolenTextBoxes) {
+            if (StringUtils.isNotEmpty(box.oracle())) {
+                parts.add(box.oracle());
+            }
+        }
+        return String.join("\\n", parts);
     }
 
     /**
@@ -6982,8 +7040,25 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
      * printing's face (the Unstable FAQ's Silver Rule), read off the card image; one that couldn't be read isn't wordy.
      */
     public boolean isWordy() {
+        return getPrintedRulesLines() >= 4;
+    }
+
+    /** Lines of rules text as printed, all text boxes together (Phoebe); -1 when they couldn't be read. */
+    public int getPrintedRulesLines() {
         final PrintingTraits.Traits t = getPrintingTraits();
-        return t != null && t.getRulesLines(isBackSide()) >= 4;
+        final int own = textBoxStolen ? 0 : t == null ? -1 : t.getRulesLines(isBackSide());
+        return addStolenLines(own, true);
+    }
+
+    private int addStolenLines(final int own, final boolean rules) {
+        if (stolenTextBoxes.isEmpty()) {
+            return own;
+        }
+        int total = Math.max(0, own);
+        for (final StolenTextBox box : stolenTextBoxes) {
+            total += Math.max(0, rules ? box.rulesLines() : box.textLines());
+        }
+        return total;
     }
 
     /**
@@ -6993,7 +7068,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
      */
     public int getPrintedTextLines() {
         final PrintingTraits.Traits t = getPrintingTraits();
-        return t == null ? -1 : t.getTextLines(isBackSide());
+        final int own = textBoxStolen ? 0 : t == null ? -1 : t.getTextLines(isBackSide());
+        return addStolenLines(own, false);
     }
 
     /**
@@ -8494,8 +8570,16 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
      * cards with no paper printing have none.
      */
     public String getFlavorText() {
+        final List<String> parts = Lists.newArrayList();
         final IPaperCard pc = getPaperCard();
-        return pc == null ? "" : CardFlavorText.get(pc.getEdition(), pc.getCollectorNumber());
+        if (!textBoxStolen && pc != null) {
+            parts.add(StringUtils.defaultString(CardFlavorText.get(pc.getEdition(), pc.getCollectorNumber())));
+        }
+        for (final StolenTextBox box : stolenTextBoxes) {
+            parts.add(box.flavor());
+        }
+        parts.removeIf(StringUtils::isEmpty);
+        return String.join("\n", parts);
     }
 
     /** Everything printed in this card's text box: rules text and flavor text together. */
@@ -8503,7 +8587,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         final String flavor = getFlavorText();
         // Oracle paragraphs are split by a literal backslash-n; left in, it glues an "n" onto each
         // paragraph's first word ("Two" reads as "ntwo")
-        final String oracle = StringUtils.defaultString(getOracleText()).replace("\\n", "\n");
+        final String oracle = getTextBoxOracle().replace("\\n", "\n");
         return flavor.isEmpty() ? oracle : oracle + "\n" + flavor;
     }
     public void setOracleText(final String oracleText) {

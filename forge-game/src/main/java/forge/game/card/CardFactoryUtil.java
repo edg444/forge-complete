@@ -4307,7 +4307,7 @@ public class CardFactoryUtil {
      * and neither does Forge's own "STATION 8+" line, which Oracle writes as just "8+ |".
      */
     public static int getCapitalLetterCount(final Card card) {
-        final String rules = StringUtils.defaultString(card.getOracleText()).replace("\\n", "\n")
+        final String rules = card.getTextBoxOracle().replace("\\n", "\n")
                 .replaceAll("\\([^)]*\\)", " ").replaceAll("\\{[^}]*\\}", " ")
                 .replaceAll("(?m)^STATION \\d+\\+$", " ");
         int count = 0;

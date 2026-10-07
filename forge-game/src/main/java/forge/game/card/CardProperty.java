@@ -162,12 +162,8 @@ public class CardProperty {
         } else if (property.equals("hasFlavorText")) {
             // My First Tome asks you to say a card's flavor text, so a card without any isn't a
             // legal choice - the guess it sets up would be impossible rather than merely hard.
-            final forge.item.IPaperCard fpc = card.getPaperCard();
-            if (fpc == null) {
-                return false;
-            }
-            final String flavor = forge.card.CardFlavorText.get(fpc.getEdition(), fpc.getCollectorNumber());
-            if (flavor == null || flavor.isEmpty()) {
+            // Phoebe: a stolen text box takes its flavor text along
+            if (card.getFlavorText().isEmpty()) {
                 return false;
             }
         } else if (property.startsWith("PrintingIs ")) {
@@ -353,12 +349,13 @@ public class CardProperty {
                 return false;
             }
         } else if (property.equals("Watermarked")) {
-            if (card.getWatermark() == null) {
+            if (card.getWatermarks().isEmpty()) {
                 return false;
             }
         } else if (property.startsWith("Watermark_")) {
             // Scryfall's watermark names, e.g. Watermark_orderofthewidget (Knight of the Widget)
-            if (!property.substring(10).equalsIgnoreCase(card.getWatermark())) {
+            final String wanted = property.substring(10);
+            if (card.getWatermarks().stream().noneMatch(w -> w.equalsIgnoreCase(wanted))) {
                 return false;
             }
         } else if (property.equals("everBannedOrRestricted")) {
@@ -476,7 +473,7 @@ public class CardProperty {
             // Kindly Cognician: the word or its plural in the rules text. Reminder text, the name, the type
             // line and flavor text don't count (Unstable ruling), and whole words only - "nonartifact" isn't it
             final String word = property.substring("rulesTextHasWord_".length());
-            String rules = StringUtils.defaultString(card.getOracleText()).replace("\\n", "\n")
+            String rules = card.getTextBoxOracle().replace("\\n", "\n")
                     .replaceAll("\\([^)]*\\)", " ");
             if (!card.getName().isEmpty()) {
                 rules = rules.replace(card.getName(), " ");

@@ -235,6 +235,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     creatures of two different players (ruling allows it; the rows don't meet).
   - AI aims at the best opposing creature the dice could plausibly kill, otherwise its own best creature.
   - `OlBuzzbarkTest` (4). Suite: 1030 run, 0 failed, 6 skipped.
+- **Phoebe, Head of S.N.E.A.K.** (ust/135; not scripted upstream).
+  - New `AB$ StealTextBox` (`StealTextBoxEffect`, `StealTextBoxAi`): the target loses its intrinsic (text-box)
+    abilities and keywords - not ones granted by other effects - and the thief gains copies, as changed traits on
+    each object, so a zone change ends it for that side only (rulings). Copied statics carry the theft's timestamp,
+    so contradicting boxes resolve most-recent-first (rulings). Stealing from a Phoebe takes her stolen boxes too.
+  - **Text boxes as data**: `Card.isTextBoxStolen` / `getStolenTextBoxes` (`StolenTextBox`: name, Oracle text,
+    flavor text, watermarks, printed line counts), carried into LKI copies and AI game copies. `getTextBoxOracle`,
+    `getFlavorText`, `getWatermarks`, `getTextBoxContents`, `getPrintedRulesLines` (wordy) and
+    `getPrintedTextLines` (Lexivore) now read all of a card's text boxes as one and see nothing on a robbed one;
+    `hasFlavorText`, `Watermarked`, `Watermark_`, `rulesTextHasWord_` and capital-letter counts use them.
+  - AI steals from the best opposing creature that has a text box.
+  - `PhoebeTest` (6). Suite: 1036 run, 0 failed, 6 skipped.
 
 ### 2026-10-03 (deployed: desktop, Android, GitHub) — upstream merge (2 commits, data only); Unstable green complete and multicolor through Grusilda; audit of upstream Unstable scripts; open-ended die results; artists as people; tree-in-art; just a second; whole-card combination
 

@@ -1,0 +1,7 @@
+Name:Phoebe, Head of S.N.E.A.K.
+ManaCost:1 U B
+Types:Legendary Creature Human Spy
+PT:2/3
+S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.hasFlavorText | Description$ CARDNAME can't be blocked by creatures with flavor text.
+A:AB$ StealTextBox | Cost$ 2 U B | ValidTgts$ Creature | TgtPrompt$ Select target creature | SpellDescription$ CARDNAME permanently steals target creature's text box. (That creature loses all rules text, flavor text, and watermarks. This creature gains them.)
+Oracle:Phoebe can't be blocked by creatures with flavor text.\n{2}{U}{B}: Phoebe permanently steals target creature's text box. (That creature loses all rules text, flavor text, and watermarks. This creature gains them.)

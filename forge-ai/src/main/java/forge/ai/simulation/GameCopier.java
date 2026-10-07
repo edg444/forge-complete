@@ -430,6 +430,8 @@ public class GameCopier {
                 newCard.setChosenPlayer(playerMap.get(c.getChosenPlayer()));
             }
             newCard.setHatInArtClaim(c.getHatInArtClaim());
+            newCard.setTextBoxStolen(c.isTextBoxStolen());
+            newCard.setStolenTextBoxes(c.getStolenTextBoxes());
             if (c.hasChosenType()) {
                 newCard.setChosenType(c.getChosenType());
                 if (c.hasGuessableWord()) {
