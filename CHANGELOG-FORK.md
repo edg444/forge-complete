@@ -259,6 +259,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - AI (`AILogic$ SneakIntoOpponentsHand`): at an opponent's end step, into the fullest hand, once it has five
     mana sources for the follow-up.
   - `XTest` (3). Suite: 1039 run, 0 failed, 6 skipped.
+- **Urza, Academy Headmaster** (ust/136, upstream) audited against the official tables (Wizards Un-resources
+  page and Urza-bilities_DARupdate.pdf, the PDF taking precedence). Fixed:
+  - −6 #20 (gain 7 life, draw seven, put up to seven permanents) was scripted but missing from the random table,
+    so −6 picked from 19 outcomes instead of 20.
+  - −6 #19 gave one extra turn however many of the five coins came up heads; it now gives one per heads.
+  - −6 #11 now forgets stale remembered objects before destroying, as Sorin, Lord of Innistrad's identical −6 does.
+  - Description wording brought in line with the PDF on −1 #9 and −6 #7, #13, #17, #19.
 
 ### 2026-10-03 (deployed: desktop, Android, GitHub) — upstream merge (2 commits, data only); Unstable green complete and multicolor through Grusilda; audit of upstream Unstable scripts; open-ended die results; artists as people; tree-in-art; just a second; whole-card combination
 
