@@ -159,6 +159,13 @@ public class CardProperty {
             if (!forge.game.GameAction.isAlsoInGraveyard(card)) {
                 return false;
             }
+        } else if (property.equals("inOwnersOpponentsHand")) {
+            // X (Unstable): in a hand, and that hand's player is one of the card's owner's opponents
+            final Zone zone = card.getZone();
+            if (zone == null || !zone.is(ZoneType.Hand) || zone.getPlayer() == null
+                    || !zone.getPlayer().isOpponentOf(card.getOwner())) {
+                return false;
+            }
         } else if (property.equals("hasFlavorText")) {
             // My First Tome asks you to say a card's flavor text, so a card without any isn't a
             // legal choice - the guess it sets up would be impossible rather than merely hard.

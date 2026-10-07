@@ -480,7 +480,9 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
      *            a {@link forge.game.spellability.SpellAbility} object.
      */
     private void changeKnownOriginResolve(final SpellAbility sa) {
-        CardCollectionView tgtCards = getTargetCards(sa);
+        // a targeted player says where the Defined cards go, not which (X: "Put X into target opponent's hand")
+        CardCollectionView tgtCards = sa.hasParam("Defined") && sa.usesTargeting() && sa.getTargets().getTargetCards().isEmpty()
+                && sa.getTargets().isTargetingAnyPlayer() ? getDefinedCardsOrTargeted(sa) : getTargetCards(sa);
         final Player activator = sa.getActivatingPlayer();
         final Card hostCard = sa.getHostCard();
         final Game game = activator.getGame();

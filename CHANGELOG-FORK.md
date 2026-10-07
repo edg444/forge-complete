@@ -247,6 +247,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     `hasFlavorText`, `Watermarked`, `Watermark_`, `rulesTextHasWord_` and capital-letter counts use them.
   - AI steals from the best opposing creature that has a text box.
   - `PhoebeTest` (6). Suite: 1036 run, 0 failed, 6 skipped.
+- Urza, Academy Headmaster (ust/136) already scripted upstream; card fields and Oracle checked against Scryfall.
+- **X** (ust/137; not scripted upstream). Script on the HandOf$ idiom (the holder controls a card in their hand
+  that isn't theirs, so "that opponent" is `You`); statics from the hand let its owner cast it, stop the holder
+  from casting it, and reveal the holder's hand while it's in an opponent's hand.
+  - Card property `inOwnersOpponentsHand`.
+  - ChangeZone (known origin): when an ability with `Defined$` targets only players, the targets say where the
+    Defined cards go rather than replacing them ("Put X into target opponent's hand").
+  - The free play uses `DB$ Play` from the hand X is in, activatable only by its owner from there; lands only on
+    your turn with a land play left (ruling, PlayEffect's own check). X itself is in that hand and fair game.
+  - AI (`AILogic$ SneakIntoOpponentsHand`): at an opponent's end step, into the fullest hand, once it has five
+    mana sources for the follow-up.
+  - `XTest` (3). Suite: 1039 run, 0 failed, 6 skipped.
 
 ### 2026-10-03 (deployed: desktop, Android, GitHub) — upstream merge (2 commits, data only); Unstable green complete and multicolor through Grusilda; audit of upstream Unstable scripts; open-ended die results; artists as people; tree-in-art; just a second; whole-card combination
 

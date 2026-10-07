@@ -279,6 +279,34 @@ public class ChangeZoneAi extends SpellAbilityAi {
         return true;
     }
 
+    /**
+     * X (Unstable): it goes into an opponent's hand so that next turn it can cast a card from there for free. Do it
+     * at the end of an opponent's turn, into the fullest hand, once there's mana for that next ability.
+     */
+    private static AiAbilityDecision doSneakIntoOpponentsHandLogic(final Player ai, final SpellAbility sa) {
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        if (ph.isPlayerTurn(ai) || !ph.is(PhaseType.END_OF_TURN)) {
+            return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
+        }
+        final int sources = CardLists.count(ai.getCardsIn(ZoneType.Battlefield), c -> !c.getManaAbilities().isEmpty());
+        if (sources < 5) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantAfford);
+        }
+        Player best = null;
+        for (final Player opp : ai.getOpponents()) {
+            if (sa.canTarget(opp) && !opp.getCardsIn(ZoneType.Hand).isEmpty()
+                    && (best == null || opp.getCardsIn(ZoneType.Hand).size() > best.getCardsIn(ZoneType.Hand).size())) {
+                best = opp;
+            }
+        }
+        if (best == null) {
+            return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
+        }
+        sa.resetTargets();
+        sa.getTargets().add(best);
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
     @Override
     protected AiAbilityDecision checkApiLogic(Player aiPlayer, SpellAbility sa) {
         multipleCardsToChoose.clear();
@@ -292,6 +320,8 @@ public class ChangeZoneAi extends SpellAbilityAi {
                 return doSacAndReturnFromGraveLogic(aiPlayer, sa);
             } else if (aiLogic.equals("ExileAndRetFromGrave")) { // "Rumors of My Death . . ."
                 return doExileAndReturnFromGraveLogic(aiPlayer, sa);
+            } else if (aiLogic.equals("SneakIntoOpponentsHand")) { // X (Unstable)
+                return doSneakIntoOpponentsHandLogic(aiPlayer, sa);
             } else if (aiLogic.equals("Necropotence")) {
                 return SpecialCardAi.Necropotence.consider(aiPlayer, sa);
             } else if (aiLogic.equals("ReanimateAll")) {

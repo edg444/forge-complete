@@ -1,0 +1,13 @@
+Name:X
+ManaCost:U B
+Types:Legendary Creature Human Spy
+PT:2/2
+# The holder controls a card in their hand that isn't theirs (HandOf$, as Five-Finger Discount), so "That opponent"
+# is You and Card.YouCtrl is their hand while X sits in it.
+S:Mode$ Continuous | EffectZone$ Hand | Affected$ Card.Self | AffectedZone$ Hand | MayPlay$ True | MayPlayPlayer$ CardOwner | IsPresent$ Card.Self+inOwnersOpponentsHand | PresentZone$ Hand | Description$ As long as CARDNAME is in CARDNAME's owner's opponent's hand, CARDNAME's owner may cast CARDNAME and activate CARDNAME's abilities. That opponent can't cast CARDNAME and plays with their hand revealed.
+S:Mode$ CantBeCast | EffectZone$ Hand | ValidCard$ Card.Self | Caster$ You | IsPresent$ Card.Self+inOwnersOpponentsHand | PresentZone$ Hand
+S:Mode$ Continuous | EffectZone$ Hand | Affected$ Card.YouCtrl | AffectedZone$ Hand | MayLookAt$ Player | IsPresent$ Card.Self+inOwnersOpponentsHand | PresentZone$ Hand
+A:AB$ ChangeZone | Cost$ U B T | ValidTgts$ Opponent | TgtPrompt$ Select target opponent | Defined$ Self | Origin$ Battlefield | Destination$ Hand | HandOf$ Targeted | AILogic$ SneakIntoOpponentsHand | SpellDescription$ Put CARDNAME into target opponent's hand.
+# Only its owner, only from an opponent's hand: on the battlefield X isn't in a hand, so there's nothing to play
+A:AB$ Play | Cost$ 3 U B | AdditionalActivationZone$ Hand | Activator$ Player.CardOwner | IsPresent$ Card.Self+inOwnersOpponentsHand | PresentZone$ Hand | Valid$ Card.sharesControllerWith | ValidZone$ Hand | Controller$ You | Optional$ True | WithoutManaCost$ True | SpellDescription$ You may play a land or cast a spell from the hand CARDNAME is in. If you cast a spell this way, you cast it without paying its mana cost.
+Oracle:As long as X is in X's owner's opponent's hand, X's owner may cast X and activate X's abilities. That opponent can't cast X and plays with their hand revealed.\n{U}{B}, {T}: Put X into target opponent's hand.\n{3}{U}{B}: You may play a land or cast a spell from the hand X is in. If you cast a spell this way, you cast it without paying its mana cost.
