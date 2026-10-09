@@ -284,6 +284,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   aggressive against them (no land or spells, every creature attacks every combat, the best cards discarded and
   sacrificed when forced). `PlayerControllerOutsidePerson`, built by an `OutsidePlayers` factory FModel registers; the
   log names the person and their kind. `KindslaverTest` (3).
+- **Krark's Other Thumb** (ust/151; not scripted upstream). Static `Mode$ RollTwoKeepOne | ValidPlayer$ You`: every
+  die its controller rolls - each one of several, every reroll (Wall of Fortune), the planar die - is rolled as two
+  and they choose which counts (rulings); the ignored roll never happened (only the kept one counts as rolled, so
+  "whenever you roll" triggers and roll counts don't see it). A second Thumb (Mirror Gallery) applies to each of the
+  first's dice. `RollDiceEffect.rollCountedDie`, `PlanarDice.rollFace`. The AI now ignores the lowest roll and a
+  blank planar face instead of a random one (`PlayerControllerAi.chooseRollToIgnore`/`choosePDRollToIgnore`).
+  `KrarksOtherThumbTest` (3).
+- Labro Bot (ust/152), Lobe Lobber (153), Mad Science Fair Project (154) already scripted upstream; checked against
+  Scryfall.
 
 ### 2026-10-09 (deployed: desktop, Android, GitHub) — upstream merge (94 commits, incl. dice and flip animations); The Grand Calcutron; Hot Fix; Ol' Buzzbark; Phoebe, Head of S.N.E.A.K.; X; Urza, Academy Headmaster audit
 

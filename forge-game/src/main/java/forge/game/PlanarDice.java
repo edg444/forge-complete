@@ -20,6 +20,18 @@ public enum PlanarDice {
     Chaos,
     Blank;
 
+    /** One planar die's face - with Krark's Other Thumb, the kept one of two (any die you roll, rulings). */
+    private static PlanarDice rollFace(final Player roller, final int thumbs) {
+        if (thumbs <= 0) {
+            final int i = forge.util.MyRandom.getRandom().nextInt(6);
+            return i == 0 ? Planeswalk : i == 1 ? Chaos : Blank;
+        }
+        final PlanarDice first = rollFace(roller, thumbs - 1);
+        final PlanarDice second = rollFace(roller, thumbs - 1);
+        final PlanarDice ignored = roller.getController().choosePDRollToIgnore(Lists.newArrayList(first, second));
+        return ignored == first ? second : first;
+    }
+
     public static PlanarDice roll(Player roller, PlanarDice riggedResult) {
         final Game game = roller.getGame();
         int rolls = 1;
@@ -40,22 +52,18 @@ public enum PlanarDice {
         }
 
         List<PlanarDice> results = Lists.newArrayList();
+        final int thumbs = forge.game.ability.effects.RollDiceEffect.rollTwoKeepOneCount(roller);
         for (int r = 0; r < rolls; r++) {
-            PlanarDice thisRoll = Blank;
-            int i = forge.util.MyRandom.getRandom().nextInt(6);
+            PlanarDice thisRoll = rollFace(roller, thumbs);
             roller.roll();
             // Wall of Fortune can have the planar die rerolled too (Unstable ruling)
             while (riggedResult == null && forge.game.ability.effects.RollDiceEffect.tapWallToReroll(roller, -1, 6,
-                    (i == 0 ? "Planeswalk" : i == 1 ? "Chaos" : "Blank") + " on the planar die")) {
-                i = forge.util.MyRandom.getRandom().nextInt(6);
+                    thisRoll + " on the planar die")) {
+                thisRoll = rollFace(roller, thumbs);
                 roller.roll();
             }
             if (riggedResult != null)
                 thisRoll = riggedResult;
-            else if (i == 0)
-                thisRoll = Planeswalk;
-            else if (i == 1)
-                thisRoll = Chaos;
             results.add(thisRoll);
         }
 

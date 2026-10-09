@@ -600,16 +600,51 @@ public class RollDiceEffect extends SpellAbilityEffect {
     // rolled collects the face each die finally lands on, for the dice animation — after any Wall of Fortune
     // rerolls, but before an installed result replaces it, since that number never came up on a die.
     private static int rollPhysicalDie(final Player player, final int sides, final List<Integer> rolled) {
-        int roll = MyRandom.getRandom().nextInt(sides) + 1;
-        player.getGame().fireEvent(new GameEventRollDie(sides, roll));
+        int roll = rollCountedDie(player, sides);
         player.roll();
         while (tapWallToReroll(player, roll, sides, roll + " on a " + sides + "-sided die")) {
-            roll = MyRandom.getRandom().nextInt(sides) + 1;
-            player.getGame().fireEvent(new GameEventRollDie(sides, roll));
+            roll = rollCountedDie(player, sides);
             player.roll();
         }
         rolled.add(roll);
         return useInstalledResult(player, roll);
+    }
+
+    /** Krark's Other Thumb: how many of its "roll two, ignore one" replacements apply to this player's dice. */
+    public static int rollTwoKeepOneCount(final Player roller) {
+        int count = 0;
+        for (final Card ca : roller.getGame().getCardsIn(ZoneType.STATIC_ABILITIES_SOURCE_ZONES)) {
+            for (final StaticAbility stAb : ca.getStaticAbilities()) {
+                if (stAb.checkConditions(StaticAbilityMode.RollTwoKeepOne) && stAb.matchesValidParam("ValidPlayer", roller)) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
+     * One die's worth of rolling - the die that counts. Krark's Other Thumb: "If you would roll a die, instead roll two
+     * of those dice and ignore one of those results" - for each die, rerolls included, and the roller picks (rulings).
+     * The ignored roll never happened as far as anything else is concerned, so only the kept one is counted by the
+     * caller. A second Thumb applies to each of the two dice the first one rolls, and so on.
+     */
+    private static int rollCountedDie(final Player player, final int sides) {
+        return rollCountedDie(player, sides, rollTwoKeepOneCount(player));
+    }
+    private static int rollCountedDie(final Player player, final int sides, final int thumbs) {
+        if (thumbs <= 0) {
+            final int roll = MyRandom.getRandom().nextInt(sides) + 1;
+            player.getGame().fireEvent(new GameEventRollDie(sides, roll));
+            return roll;
+        }
+        final int first = rollCountedDie(player, sides, thumbs - 1);
+        final int second = rollCountedDie(player, sides, thumbs - 1);
+        final Integer ignored = player.getController().chooseRollToIgnore(Lists.newArrayList(first, second));
+        final int kept = ignored != null && ignored == first ? second : first;
+        player.getGame().getGameLog().add(GameLogEntryType.INFORMATION, player + " rolled " + first + " and " + second
+                + " and ignored the " + (kept == second ? first : second) + ".");
+        return kept;
     }
 
     /**

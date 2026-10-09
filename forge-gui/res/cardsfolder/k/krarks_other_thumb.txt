@@ -1,0 +1,6 @@
+Name:Krark's Other Thumb
+ManaCost:2
+Types:Legendary Artifact
+# Per die, rerolls and the planar die included; you choose which of each pair counts (rulings). RollDiceEffect/PlanarDice.
+S:Mode$ RollTwoKeepOne | ValidPlayer$ You | Description$ If you would roll a die, instead roll two of those dice and ignore one of those results.
+Oracle:If you would roll a die, instead roll two of those dice and ignore one of those results.

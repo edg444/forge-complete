@@ -784,14 +784,14 @@ public class PlayerControllerAi extends PlayerController {
 
     @Override
     public PlanarDice choosePDRollToIgnore(List<PlanarDice> rolls) {
-        //TODO create AI logic for this
-        return Aggregates.random(rolls);
+        // a blank does nothing, so it's the one to lose (Krark's Other Thumb, Pixie Guide-likes on the planar die)
+        return rolls.contains(PlanarDice.Blank) ? PlanarDice.Blank : Aggregates.random(rolls);
     }
 
     @Override
     public Integer chooseRollToIgnore(List<Integer> rolls) {
-        //TODO create AI logic for this
-        return Aggregates.random(rolls);
+        // nearly every die effect rewards rolling high, so the low one goes (Krark's Other Thumb keeps the other)
+        return rolls.isEmpty() ? null : java.util.Collections.min(rolls);
     }
 
     @Override

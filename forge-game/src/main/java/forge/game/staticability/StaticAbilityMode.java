@@ -15,6 +15,8 @@ public enum StaticAbilityMode {
     TapToIncreaseRoll,
     // Squirrel-Powered Scheme - Amount$ added to each die result a ValidPlayer$ rolls (RollDiceEffect)
     IncreaseRollResult,
+    // Krark's Other Thumb - a ValidPlayer$ who'd roll a die rolls two and ignores one (RollDiceEffect, PlanarDice)
+    RollTwoKeepOne,
 
     // StaticAbility
     CantAttackUnless,
