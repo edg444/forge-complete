@@ -277,6 +277,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - AI won't make one when no hand it can count on is free (`TokenAi`). Not modeled: a hand choosing to stop
     representing its token.
   - `HandyDandyCloneMachineTest` (2).
+- **Kindslaver** (ust/150; not scripted upstream). `ControlPlayer | OutsidePerson$ True`: when the target's next turn
+  begins, a person from outside the game takes over their decisions for that turn - an AI that's neither the caster
+  nor the target, one of three kinds at random (user): aggressive in the target's interest (the AI on its Reckless
+  profile), a novice who just says "go" (no land, no spells, no attacks, forced choices at random; rulings), or
+  aggressive against them (no land or spells, every creature attacks every combat, the best cards discarded and
+  sacrificed when forced). `PlayerControllerOutsidePerson`, built by an `OutsidePlayers` factory FModel registers; the
+  log names the person and their kind. `KindslaverTest` (3).
 
 ### 2026-10-09 (deployed: desktop, Android, GitHub) — upstream merge (94 commits, incl. dice and flip animations); The Grand Calcutron; Hot Fix; Ol' Buzzbark; Phoebe, Head of S.N.E.A.K.; X; Urza, Academy Headmaster audit
 

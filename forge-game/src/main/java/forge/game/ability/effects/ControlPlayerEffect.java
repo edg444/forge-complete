@@ -5,7 +5,10 @@ import java.util.List;
 import forge.game.Game;
 import forge.game.ability.AbilityUtils;
 import forge.game.ability.SpellAbilityEffect;
+import forge.game.GameLogEntryType;
+import forge.game.player.OutsidePlayers;
 import forge.game.player.Player;
+import forge.util.Aggregates;
 import forge.game.spellability.SpellAbility;
 import forge.util.Lang;
 import forge.util.TextUtil;
@@ -19,6 +22,9 @@ public class ControlPlayerEffect extends SpellAbilityEffect {
     @Override
     protected String getStackDescription(SpellAbility sa) {
         List<Player> tgtPlayers = getTargetPlayers(sa);
+        if (sa.hasParam("OutsidePerson")) {
+            return TextUtil.concatWithSpace("A person outside the game controls", Lang.joinHomogenous(tgtPlayers), "during their next turn");
+        }
         return TextUtil.concatWithSpace(sa.getActivatingPlayer().toString(), "controls", Lang.joinHomogenous(tgtPlayers), "during their next turn");
     }
 
@@ -28,6 +34,21 @@ public class ControlPlayerEffect extends SpellAbilityEffect {
         final Player controller = AbilityUtils.getDefinedPlayers(sa.getHostCard(), sa.getParam("Controller"), sa).get(0);
         final Game game = controller.getGame();
         final boolean combat = sa.hasParam("Combat");
+
+        // Kindslaver: someone from outside the game, of a kind chosen at random (OutsidePlayers.Style; user, 2026-10-09)
+        if (sa.hasParam("OutsidePerson")) {
+            for (final Player pTarget : getTargetPlayers(sa)) {
+                game.getCleanup().addUntil(pTarget, () -> {
+                    final OutsidePlayers.Style style = Aggregates.random(OutsidePlayers.Style.values());
+                    final long ts = game.getNextTimestamp();
+                    pTarget.addController(ts, pTarget, OutsidePlayers.newOutsideController(pTarget, style), true);
+                    game.getGameLog().add(GameLogEntryType.INFORMATION, pTarget.getController().getLobbyPlayer().getName()
+                            + ", " + style.getDescription() + ", controls " + pTarget + " this turn.");
+                    game.getCleanup().addUntil(() -> pTarget.removeController(ts));
+                });
+            }
+            return;
+        }
 
         for (final Player pTarget: getTargetPlayers(sa)) {
             // before next untap gain control

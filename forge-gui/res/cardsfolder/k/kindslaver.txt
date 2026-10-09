@@ -1,0 +1,8 @@
+Name:Kindslaver
+ManaCost:5
+Types:Legendary Artifact
+# The person is played by the AI, one of three kinds at random - aggressive for the target, a novice who says "go",
+# or aggressive against them (OutsidePlayers.Style; user, 2026-10-09). Nobody in the game advises it.
+A:AB$ ControlPlayer | Cost$ 5 T Sac<1/CARDNAME> | ValidTgts$ Player | OutsidePerson$ True | SpellDescription$ A person outside the game controls target player during that player's next turn. Neither player may advise that person until the end of that turn.
+AI:RemoveDeck:All
+Oracle:{5}, {T}, Sacrifice Kindslaver: A person outside the game controls target player during that player's next turn. Neither player may advise that person until the end of that turn.

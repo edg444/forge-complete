@@ -25,6 +25,7 @@ import forge.CardStorageReader.ProgressObserver;
 import forge.ai.AiProfileUtil;
 import forge.ai.ComputerUtilCard;
 import forge.ai.LobbyPlayerAi;
+import forge.ai.PlayerControllerOutsidePerson;
 import forge.card.BannedOrRestricted;
 import forge.card.CardFlavorText;
 import forge.card.CardRulesPredicates;
@@ -286,6 +287,17 @@ public final class FModel {
         CardThreat.setEvaluator(ComputerUtilCard::evaluateCardImpact);
         OutsidePlayers.setAiFactory(usedNames -> new LobbyPlayerAi(
                 NameGenerator.getRandomName("Any", "Any", new ArrayList<>(usedNames)), null));
+        OutsidePlayers.setControllerFactory((controlled, style) -> {
+            final List<String> used = new ArrayList<>();
+            for (final forge.game.player.Player p : controlled.getGame().getRegisteredPlayers()) {
+                used.add(p.getName());
+            }
+            final LobbyPlayerAi person = new LobbyPlayerAi(NameGenerator.getRandomName("Any", "Any", used), null);
+            if (style == OutsidePlayers.Style.HELPFUL) {
+                person.setAiProfile("Reckless");
+            }
+            return new PlayerControllerOutsidePerson(controlled.getGame(), controlled, person, style);
+        });
 
         // Generate Deck Gen matrix
         if(getPreferences().getPrefBoolean(FPref.DECKGEN_CARDBASED) && !loadCardsLazily) {
