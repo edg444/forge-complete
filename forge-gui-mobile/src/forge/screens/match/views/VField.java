@@ -78,6 +78,10 @@ public class VField extends FContainer {
                     ? battlefield.threadSafeIterable() : battlefield;
 
             for (CardView card : model) {
+                // Entirely Normal Armchair: a hidden permanent isn't drawn for the players it's hidden from
+                if (card.isHiddenFromAll(MatchController.instance.getLocalPlayers())) {
+                    continue;
+                }
                 CardAreaPanel cardPanel = CardAreaPanel.get(card);
                 cardPanel.updateCard(card);
                 // Clear all stacks since they will be rebuilt in the loop below.

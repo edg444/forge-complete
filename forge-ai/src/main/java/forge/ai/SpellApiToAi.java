@@ -123,6 +123,8 @@ public enum SpellApiToAi {
             .put(ApiType.GainLife, LifeGainAi.class)
             .put(ApiType.GainTeammate, GainTeammateAi.class)
             .put(ApiType.Switch, SwitchAi.class)
+            .put(ApiType.Hide, HideAi.class)
+            .put(ApiType.SeekHidden, SeekHiddenAi.class)
             .put(ApiType.GainOwnership, CannotPlayAi.class)
             .put(ApiType.GameDrawn, CannotPlayAi.class)
             .put(ApiType.GenericChoice, ChooseGenericAi.class)

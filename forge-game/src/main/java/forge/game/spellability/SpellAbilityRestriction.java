@@ -570,6 +570,10 @@ public class SpellAbilityRestriction extends SpellAbilityVariables {
             sa.setActivatingPlayer(activator);
             System.out.println(c.getName() + " Did not have activator set in SpellAbilityRestriction.canPlay()");
         }
+        // Entirely Normal Armchair: a player can't use what they can't see
+        if (c.isHiddenFrom(activator)) {
+            return false;
+        }
 
         if (!sa.canCastTiming(c, activator) && !StaticAbilityCastWithFlash.anyWithFlashNeedsInfo(sa, c, activator)) {
             return false;

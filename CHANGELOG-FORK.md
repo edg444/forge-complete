@@ -253,6 +253,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   Fixed: `BorderColor<color>` (Border Guardian) and `BlackBordered` (Knight of the Kitchen Sink) read the physical
   border, so an acorn spell counted as black-bordered; they now go through `Card.bordersAs()`, which treats acorn
   cards as silver like `SilverBordered` already did (user: acorn = silver-bordered, everywhere). `BorderGuardianTest` (1).
+- **Entirely Normal Armchair** (ust/146; not scripted upstream).
+  - **Hidden permanents** (`ST$ Hide`, a special action from hand during your turn): it's on the battlefield behind one
+    of your permanents or in plain sight (you choose; pointing at yourself = plain sight), and its controller's
+    opponents don't see it - it isn't drawn for them (desktop `PlayArea`, mobile `VField`), `CardView.canBeShownTo`
+    says no, they can't target it and can't activate its abilities (`Card.isHiddenFrom`, checked in
+    `Card.canBeTargetedBy` and `SpellAbilityRestriction.canPlay`). If what it's behind leaves, it's in plain sight.
+  - **Finding it** (user: a hidden spot to guess): each opponent gets a "Something Hidden" command-zone effect with
+    `ST$ SeekHidden`, once each turn - point at one of the hider's permanents or at them. Right: it's found (no longer
+    hidden, the effects go) and they may return it at once with its {0} ability; wrong: nothing. The effects exile
+    themselves when it leaves the battlefield.
+  - AI: hides it in its second main phase at a random spot (`HideAi`); seeks once a turn at a uniformly random spot,
+    never using what it knows of the game (`SeekHiddenAi`), and returns it when found.
+  - `EntirelyNormalArmchairTest` (4).
 
 ### 2026-10-09 (deployed: desktop, Android, GitHub) — upstream merge (94 commits, incl. dice and flip animations); The Grand Calcutron; Hot Fix; Ol' Buzzbark; Phoebe, Head of S.N.E.A.K.; X; Urza, Academy Headmaster audit
 

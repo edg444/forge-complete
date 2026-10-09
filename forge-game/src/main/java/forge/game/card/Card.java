@@ -6216,6 +6216,29 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         unearthed = b;
     }
 
+    // Entirely Normal Armchair: where it's hidden on the battlefield - a permanent of its controller's it's behind, or
+    // its controller for "in plain sight" - or null when it isn't hidden. Opponents don't see a hidden permanent: they
+    // can't target it or activate its abilities until they find it (SeekHiddenEffect)
+    private GameEntity hiddenSpot = null;
+
+    public final GameEntity getHiddenSpot() {
+        if (hiddenSpot instanceof Card spot && (!spot.isInPlay() || spot.getController() != getController())) {
+            // what it was behind is gone (or went across the table), which leaves it in plain sight
+            return getController();
+        }
+        return hiddenSpot;
+    }
+    public final void setHiddenSpot(final GameEntity spot) {
+        hiddenSpot = spot;
+        view.updateHiddenOnBattlefield(this);
+    }
+    public final boolean isHiddenOnBattlefield() {
+        return hiddenSpot != null && isInPlay();
+    }
+    public final boolean isHiddenFrom(final Player p) {
+        return isHiddenOnBattlefield() && p != null && p.isOpponentOf(getController());
+    }
+
     public final boolean isPhasedOut() {
         return phasedOut != null;
     }
@@ -7760,6 +7783,11 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         }
 
         if (isPhasedOut()) {
+            return false;
+        }
+
+        // Entirely Normal Armchair: nobody can target what they don't know is there
+        if (isHiddenFrom(sa.getActivatingPlayer())) {
             return false;
         }
 

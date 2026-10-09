@@ -1,0 +1,10 @@
+Name:Entirely Normal Armchair
+ManaCost:no cost
+Types:Artifact
+# Hiding is a special action; while hidden, opponents can't see it - they point at where it is (SeekHiddenEffect),
+# and only once they've found it can they use the {0} ability (a hidden card's abilities can't be activated by
+# players it's hidden from). User, 2026-10-09: a hidden spot to guess.
+A:ST$ Hide | Cost$ 0 | ActivationZone$ Hand | PlayerTurn$ True | SpellDescription$ During your turn, if this card is in your hand, you may hide it on the battlefield.
+A:AB$ ChangeZone | Cost$ 0 | Defined$ Self | Origin$ Battlefield | Destination$ Hand | Activator$ Opponent | SpellDescription$ Return this artifact to its owner's hand. Only your opponents may activate this ability and only if they see this artifact.
+A:AB$ Destroy | Cost$ 2 Sac<1/CARDNAME> | ValidTgts$ Creature.attacking | TgtPrompt$ Select target attacking creature | SpellDescription$ Destroy target attacking creature.
+Oracle:During your turn, if this card is in your hand, you may hide it on the battlefield.\n{0}: Return this artifact to its owner's hand. Only your opponents may activate this ability and only if they see this artifact.\n{2}, Sacrifice this artifact: Destroy target attacking creature.

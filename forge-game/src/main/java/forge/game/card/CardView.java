@@ -269,6 +269,31 @@ public class CardView extends GameEntityView {
         set(TrackableProperty.Blocking, combat != null && combat.isBlocking(c));
     }
 
+    public boolean isHiddenOnBattlefield() {
+        return get(TrackableProperty.HiddenOnBattlefield);
+    }
+    void updateHiddenOnBattlefield(Card c) {
+        set(TrackableProperty.HiddenOnBattlefield, c.isHiddenOnBattlefield());
+    }
+    /** Entirely Normal Armchair: hidden on the battlefield, so its controller's opponents don't see it at all. */
+    public boolean isHiddenFrom(final PlayerView viewer) {
+        final PlayerView controller = getController();
+        return isHiddenOnBattlefield() && viewer != null && controller != null && controller.isOpponentOf(viewer);
+    }
+    public boolean isHiddenFromAll(final Iterable<PlayerView> viewers) {
+        if (viewers == null || !isHiddenOnBattlefield()) {
+            return false;
+        }
+        boolean any = false;
+        for (final PlayerView v : viewers) {
+            if (!isHiddenFrom(v)) {
+                return false;
+            }
+            any = true;
+        }
+        return any;
+    }
+
     public boolean isPhasedOut() {
         return get(TrackableProperty.PhasedOut);
     }
@@ -707,6 +732,9 @@ public class CardView extends GameEntityView {
         if (zone == null) { return true; } //cards outside any zone are visible to all
 
         final PlayerView controller = getController();
+        if (zone == ZoneType.Battlefield && isHiddenFrom(viewer)) {
+            return false;
+        }
         switch (zone) {
         case Ante:
         case Command:

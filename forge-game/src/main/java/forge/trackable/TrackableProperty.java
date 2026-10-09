@@ -59,6 +59,7 @@ public enum TrackableProperty {
     Attacking(TrackableTypes.BooleanType),
     Blocking(TrackableTypes.BooleanType),
     PhasedOut(TrackableTypes.BooleanType),
+    HiddenOnBattlefield(TrackableTypes.BooleanType),
     Sickness(TrackableTypes.BooleanType),
     Tapped(TrackableTypes.BooleanType),
     Token(TrackableTypes.BooleanType),

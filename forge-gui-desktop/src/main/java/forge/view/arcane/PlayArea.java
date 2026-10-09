@@ -968,6 +968,8 @@ public class PlayArea extends CardPanelContainer implements CardPanelMouseListen
         synchronized (model) {
             modelCopy = Lists.newArrayList(model.getCards(zone));
         }
+        // Entirely Normal Armchair: a hidden permanent isn't drawn for the players it's hidden from
+        modelCopy.removeIf(c -> c.isHiddenFromAll(getMatchUI().getLocalPlayers()));
 
         final List<CardView> oldCards = Lists.newArrayList();
         for (final CardPanel cpa : getCardPanels()) {
