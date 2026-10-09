@@ -247,6 +247,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - AI (`SwitchAi`): the best value swing - upgrading its own Killbot or taking an opponent's Mary for its weakest
     Killbot - after blockers on its turn or at an opponent's end step.
   - `MaryOKillTest` (3).
+- Angelic Rocket (ust/139) and **Border Guardian** (ust/140) already scripted upstream; checked against Scryfall.
+  Fixed: `BorderColor<color>` (Border Guardian) and `BlackBordered` (Knight of the Kitchen Sink) read the physical
+  border, so an acorn spell counted as black-bordered; they now go through `Card.bordersAs()`, which treats acorn
+  cards as silver like `SilverBordered` already did (user: acorn = silver-bordered, everywhere). `BorderGuardianTest` (1).
 
 ### 2026-10-09 (deployed: desktop, Android, GitHub) — upstream merge (94 commits, incl. dice and flip animations); The Grand Calcutron; Hot Fix; Ol' Buzzbark; Phoebe, Head of S.N.E.A.K.; X; Urza, Academy Headmaster audit
 

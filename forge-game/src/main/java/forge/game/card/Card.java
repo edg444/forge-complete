@@ -6947,6 +6947,15 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return t != null && t.getBorder() != null ? t.getBorder() : borderColor();
     }
 
+    /**
+     * The border for rules that ask about it: the printed one, except that an acorn-stamped card is silver-bordered
+     * (user, 2026-09-25: acorn = silver-bordered, everywhere) though physically black. Null for a face-down card.
+     */
+    public CardEdition.BorderColor bordersAs() {
+        final CardEdition.BorderColor printed = printedBorderColor();
+        return printed != null && isSilverBorderedOrAcorn() ? CardEdition.BorderColor.SILVER : printed;
+    }
+
     /** Watermark of the face this card is showing, or null - also null once Phoebe has stolen its text box. */
     public String getWatermark() {
         if (textBoxStolen) {

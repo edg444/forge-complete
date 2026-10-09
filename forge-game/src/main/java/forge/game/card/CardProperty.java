@@ -100,8 +100,9 @@ public class CardProperty {
                 }
             }
         } else if (property.startsWith("BorderColor")) {
-            // Border Guardian: the printed border, so a borderless printing is none of black/silver/white
-            final CardEdition.BorderColor printed = card.printedBorderColor();
+            // Border Guardian: the printed border, so a borderless printing is none of black/silver/white - with
+            // acorn cards silver, not black (Card.bordersAs)
+            final CardEdition.BorderColor printed = card.bordersAs();
             if (printed == null || !property.toUpperCase().contains(printed.toString())) {
                 return false;
             }
@@ -340,8 +341,9 @@ public class CardProperty {
                 return false;
             }
         } else if (property.equals("BlackBordered")) {
-            // Knight of the Kitchen Sink. The printed border, so borderless printings don't count.
-            if (card.printedBorderColor() != CardEdition.BorderColor.BLACK) {
+            // Knight of the Kitchen Sink. The printed border, so borderless printings don't count, and acorn cards
+            // are silver (Card.bordersAs)
+            if (card.bordersAs() != CardEdition.BorderColor.BLACK) {
                 return false;
             }
         } else if (property.equals("WhiteBordered")) {
