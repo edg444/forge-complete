@@ -132,6 +132,10 @@ public class TokenAi extends SpellAbilityAi {
 
     @Override
     protected AiAbilityDecision checkApiLogic(final Player ai, final SpellAbility sa) {
+        // Handy Dandy Clone Machine: a token nobody's hand can hold ceases to exist at once
+        if (sa.hasParam("RepresentedByHand") && !forge.game.player.Hands.aiCanRepresent(ai)) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
         final Game game = ai.getGame();
         final Player opp = ai.getWeakestOpponent();
 

@@ -6233,6 +6233,29 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         view.updateHiddenOnBattlefield(this);
         refreshHiddenMarker();
     }
+    // Handy Dandy Clone Machine: a token represented by a real hand (Hands) - whose, or null for someone outside the game
+    private boolean representedByHand = false;
+    private Player handLender = null;
+
+    public final boolean isRepresentedByHand() {
+        return representedByHand;
+    }
+    public final Player getHandLender() {
+        return handLender;
+    }
+    public final void setHandLender(final Player lender) {
+        representedByHand = true;
+        handLender = lender;
+        view.updateMarkerText(this);
+    }
+    /** The reminder of whose hand represents this token, or null. */
+    public final String getHandLabel() {
+        if (!representedByHand) {
+            return null;
+        }
+        return handLender == null ? "someone outside the game" : handLender.getName();
+    }
+
     /** What a hidden permanent's controller is reminded of - where they hid it - or null. */
     public final String getHiddenSpotLabel() {
         if (!isHiddenOnBattlefield()) {

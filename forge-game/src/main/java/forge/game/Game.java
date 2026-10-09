@@ -1042,6 +1042,8 @@ public class Game {
     public void onPlayerLost(Player p) {
         //set for Avatar
         p.setHasLost(true);
+        // the hands they lent go with them (Handy Dandy Clone Machine)
+        Hands.playerLeft(p);
         // CR 800.4 Losing a Multiplayer game
         CardCollectionView cards = this.getCardsInGame();
         boolean planarControllerLost = false;

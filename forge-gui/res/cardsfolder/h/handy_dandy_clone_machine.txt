@@ -1,0 +1,8 @@
+Name:Handy Dandy Clone Machine
+ManaCost:3
+Types:Artifact
+# RepresentedByHand$: each token takes a real hand - its controller's, a lent one, or someone outside the game's - or
+# ceases to exist (Hands; user, 2026-10-09)
+A:AB$ Token | Cost$ 2 T | TokenScript$ c_2_2_homunculus | RepresentedByHand$ True | SpellDescription$ Create a 2/2 colorless Homunculus creature token. It must be represented by a unique hand and two fingers at all times, or it ceases to exist.
+DeckHas:Ability$Token
+Oracle:{2}, {T}: Create a 2/2 colorless Homunculus creature token. It must be represented by a unique hand and two fingers at all times, or it ceases to exist.

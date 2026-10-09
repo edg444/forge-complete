@@ -268,6 +268,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - AI: hides it in its second main phase at a random spot (`HideAi`); seeks once a turn at a uniformly random spot,
     never using what it knows of the game (`SeekHiddenAi`), and returns it when found.
   - `EntirelyNormalArmchairTest` (4).
+- **Handy Dandy Clone Machine** (ust/149; not scripted upstream).
+  - **Tokens held by real hands** (Token `RepresentedByHand$ True`, `forge.game.player.Hands`; user: track hands): every
+    player has two; a new token takes its controller's free hand, else other players in turn order are asked to lend
+    one (AI opponents decline, AI teammates agree), else its controller is asked whether someone outside the game will
+    (honor; the AI says no); with none it ceases to exist (FAQ). A hand frees up when its token is gone; a player
+    leaving the game takes their hands with them (`Game.onPlayerLost`). Each token shows a "Hand: <whose>" marker.
+  - AI won't make one when no hand it can count on is free (`TokenAi`). Not modeled: a hand choosing to stop
+    representing its token.
+  - `HandyDandyCloneMachineTest` (2).
 
 ### 2026-10-09 (deployed: desktop, Android, GitHub) — upstream merge (94 commits, incl. dice and flip animations); The Grand Calcutron; Hot Fix; Ol' Buzzbark; Phoebe, Head of S.N.E.A.K.; X; Urza, Academy Headmaster audit
 

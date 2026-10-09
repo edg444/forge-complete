@@ -644,6 +644,11 @@ public class CardView extends GameEntityView {
         }
         // Entirely Normal Armchair: a reminder of where it's hidden. Only its controller's side ever draws a hidden
         // card, so this tells opponents nothing
+        // Handy Dandy Clone Machine: whose hand is representing this token
+        if (c.getHandLabel() != null) {
+            markerItems.add("Hand:");
+            markerItems.add(c.getHandLabel());
+        }
         if (c.getHiddenSpotLabel() != null) {
             markerItems.add("Hidden:");
             markerItems.add(c.getHiddenSpotLabel());

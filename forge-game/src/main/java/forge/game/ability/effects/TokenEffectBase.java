@@ -222,6 +222,14 @@ public abstract class TokenEffectBase extends SpellAbilityEffect {
         if (sa.hasParam("AtEOT")) {
             registerDelayedTrigger(sa, sa.getParam("AtEOT"), allTokens);
         }
+        // Handy Dandy Clone Machine: each one needs a hand to represent it, or it ceases to exist
+        if (sa.hasParam("RepresentedByHand")) {
+            for (final Card tok : allTokens) {
+                if (tok.isInPlay()) {
+                    forge.game.player.Hands.assign(tok, sa);
+                }
+            }
+        }
         return tokenTable;
     }
 
