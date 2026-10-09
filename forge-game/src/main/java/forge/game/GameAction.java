@@ -2325,7 +2325,8 @@ public class GameAction {
             // then the rest have lost!
             reason = GameEndReason.WinsGameSpellEffect;
             for (Player pl : allPlayers) {
-                if (pl.equals(p)) {
+                // CR 810.8a: a Two-Headed Giant team wins together
+                if (pl.equals(p) || pl.sharesTurnWith(p)) {
                     continue;
                 }
 
@@ -2353,6 +2354,15 @@ public class GameAction {
         }
 
         if (losers != null) {
+            // CR 810.8a: if either player on a Two-Headed Giant team loses the game, the team loses
+            for (Player p : Lists.newArrayList(losers)) {
+                for (Player mate : p.getGiantTeam()) {
+                    if (!losers.contains(mate) && !mate.hasLost()
+                            && mate.loseConditionMet(p.getOutcome().lossState, p.getOutcome().loseConditionSpell)) {
+                        losers.add(mate);
+                    }
+                }
+            }
             for (Player p : losers) {
                 game.onPlayerLost(p);
             }

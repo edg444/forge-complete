@@ -248,9 +248,16 @@ public abstract class GameLobby implements IHasGameType {
         switch (variant) {
         case Archenemy:
             data.appliedVariants.remove(GameType.ArchenemyRumble);
+            data.appliedVariants.remove(GameType.TwoHeadedGiant);
             break;
         case ArchenemyRumble:
             data.appliedVariants.remove(GameType.Archenemy);
+            data.appliedVariants.remove(GameType.TwoHeadedGiant);
+            break;
+        case TwoHeadedGiant:
+            // both decide the teams their own way
+            data.appliedVariants.remove(GameType.Archenemy);
+            data.appliedVariants.remove(GameType.ArchenemyRumble);
             break;
         case Commander:
             data.appliedVariants.remove(GameType.Oathbreaker);
@@ -336,6 +343,36 @@ public abstract class GameLobby implements IHasGameType {
         return data.appliedVariants;
     }
 
+    /**
+     * The team each slot plays on in a Two-Headed Giant game, or null if they can't make one. Lobby teams are used
+     * when they form at least two equal teams of two or more (CR 810.1, 810.11); with every slot on its own team -
+     * the lobby's default - seats pair up in order, 1+2 against 3+4.
+     */
+    private static Map<LobbySlot, Integer> getGiantTeams(final List<LobbySlot> slots) {
+        final Map<Integer, Integer> sizes = Maps.newLinkedHashMap();
+        for (final LobbySlot slot : slots) {
+            sizes.merge(slot.getTeam(), 1, Integer::sum);
+        }
+        final Map<LobbySlot, Integer> teams = Maps.newLinkedHashMap();
+        if (sizes.size() == slots.size()) {
+            if (slots.size() < 4 || slots.size() % 2 != 0) {
+                return null;
+            }
+            for (int i = 0; i < slots.size(); i++) {
+                teams.put(slots.get(i), i / 2);
+            }
+            return teams;
+        }
+        final int size = sizes.values().iterator().next();
+        if (sizes.size() < 2 || size < 2 || sizes.values().stream().anyMatch(n -> n != size)) {
+            return null;
+        }
+        for (final LobbySlot slot : slots) {
+            teams.put(slot, slot.getTeam());
+        }
+        return teams;
+    }
+
     private boolean isEnoughTeams() {
         int lastTeam = -1;
         final boolean useArchenemyTeams = data.appliedVariants.contains(GameType.Archenemy);
@@ -387,12 +424,17 @@ public abstract class GameLobby implements IHasGameType {
             return null;
         }
 
-        if (!isEnoughTeams()) {
+        final Set<GameType> variantTypes = data.appliedVariants;
+
+        final Map<LobbySlot, Integer> giantTeams = variantTypes.contains(GameType.TwoHeadedGiant) ? getGiantTeams(activeSlots) : null;
+        if (variantTypes.contains(GameType.TwoHeadedGiant) && giantTeams == null) {
+            SOptionPane.showMessageDialog(Localizer.getInstance().getMessage("lblTwoHeadedGiantTeams"));
+            return null;
+        }
+        if (giantTeams == null && !isEnoughTeams()) {
             SOptionPane.showMessageDialog(Localizer.getInstance().getMessage("lblNotEnoughTeams"));
             return null;
         }
-
-        final Set<GameType> variantTypes = data.appliedVariants;
 
         GameType autoGenerateVariant = null;
         boolean isCommanderMatch = false;
@@ -451,7 +493,7 @@ public abstract class GameLobby implements IHasGameType {
             final int avatar = slot.getAvatarIndex();
             final int sleeve = slot.getSleeveIndex();
             final boolean isArchenemy = slot.isArchenemy();
-            final int team = slot.getTeam();
+            final int team = giantTeams != null ? giantTeams.get(slot) : slot.getTeam();
             final Set<AIOption> aiOptions = slot.getAiOptions(); // TODO: could AiOptions carry the choice of which AI is selected to play against?
 
             final boolean isAI = slot.getType() == LobbySlotType.AI;
@@ -543,6 +585,22 @@ public abstract class GameLobby implements IHasGameType {
 
         if (!legalityProblems.isEmpty() && !confirmIgnoreDeckLegality(legalityProblems)) {
             return null;
+        }
+
+        if (giantTeams != null) {
+            // CR 805.1: shared team turns need each team in adjacent seats, and seat order is turn order
+            final List<RegisteredPlayer> seated = new ArrayList<>();
+            for (final RegisteredPlayer rp : players) {
+                if (!seated.contains(rp)) {
+                    for (final RegisteredPlayer mate : players) {
+                        if (mate.getTeamNumber() == rp.getTeamNumber()) {
+                            seated.add(mate);
+                        }
+                    }
+                }
+            }
+            players.clear();
+            players.addAll(seated);
         }
 
         //if above checks succeed, return runnable that can be used to finish starting game

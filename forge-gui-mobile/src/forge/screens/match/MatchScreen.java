@@ -324,6 +324,28 @@ public class MatchScreen extends FScreen {
         return playerPanelsList;
     }
 
+    /**
+     * A player joined the game in progress (Better Than One). The list runs top to bottom in turn order with the bottom
+     * player last, so the newcomer goes right after seatedAfter - or just above the bottom player if that's who it is.
+     */
+    public void addPlayerPanel(final PlayerView player, final PlayerView seatedAfter, final boolean showHand) {
+        if (playerPanels.containsKey(player)) {
+            return;
+        }
+        final VPlayerPanel panel = new VPlayerPanel(player, showHand, playerPanels.size() + 1);
+        panel.setFlipped(true);
+        playerPanels.put(player, scroller.add(panel));
+        final VPlayerPanel after = playerPanels.get(seatedAfter);
+        int at = playerPanelsList.indexOf(after);
+        if (at < 0 || after == bottomPlayerPanel) {
+            at = playerPanelsList.indexOf(bottomPlayerPanel);
+        } else {
+            at++;
+        }
+        playerPanelsList.add(Math.max(0, at), panel);
+        scroller.revalidate();
+    }
+
     @Override
     public void onClose(Consumer<Boolean> canCloseCallback) {
         MatchController.writeMatchPreferences();

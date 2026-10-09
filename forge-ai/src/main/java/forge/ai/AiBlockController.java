@@ -162,14 +162,15 @@ public class AiBlockController {
         // defend battles with fewer defense counters before battles with more defense counters,
         // if planeswalker/battle will be too difficult to defend don't even bother
         for (GameEntity defender : defenders) {
-            if ((defender instanceof Card card1 && card1.getController().equals(ai))
-                    || (defender instanceof Card card2 && card2.isBattle() && card2.getProtectingPlayer().equals(ai))) {
+            // on a Two-Headed Giant team, blocks protect the teammate too (CR 805.10d) - it's one life total
+            if ((defender instanceof Card card1 && ai.sharesTurnWith(card1.getController()))
+                    || (defender instanceof Card card2 && card2.isBattle() && ai.sharesTurnWith(card2.getProtectingPlayer()))) {
                 final CardCollection ccAttackers = combat.getAttackersOf(defender);
                 // Begin with the attackers that pose the biggest threat
                 CardLists.sortByPowerDesc(ccAttackers);
                 sortedAttackers.addAll(ccAttackers);
-            } else if (defender instanceof Player && defender.equals(ai)) {
-                firstAttacker = combat.getAttackersOf(defender);
+            } else if (defender instanceof Player p && ai.sharesTurnWith(p)) {
+                firstAttacker.addAll(combat.getAttackersOf(defender));
                 CardLists.sortByPowerDesc(firstAttacker);
             }
         }

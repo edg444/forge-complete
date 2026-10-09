@@ -119,6 +119,7 @@ public enum ApiType {
     GainControlVariant (ControlGainVariantEffect.class),
     GainLife (LifeGainEffect.class),
     GainOwnership (OwnershipGainEffect.class),
+    GainTeammate (GainTeammateEffect.class),
     GameDrawn (GameDrawEffect.class),
     GenericChoice (ChooseGenericEffect.class),
     Gerrymander (GerrymanderEffect.class),

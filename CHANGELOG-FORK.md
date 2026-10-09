@@ -166,6 +166,31 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   `PlayerController.chooseFiniteForInfinite`; the AI picks `PlayerControllerAi.FINITE_FOR_INFINITE`, 30). Drawing
   infinitely many draws the library and then fails the draw that loses.
 
+### Two-Headed Giant
+
+- **Giant teams** (`Game.formGiantTeam`, `Game.isGiantTeam`, `Player.isOnGiantTeam`/`sharesTurnWith`/`getGiantTeam`)
+  — CR 805 shared team turns and 810, for every team in a `GameType.TwoHeadedGiant` game or the team Better Than One
+  forms mid-game. One turn: `PhaseHandler.isPlayerTurn` is true for every head, `getActivePlayers()` lists them
+  (primary first), and each head untaps, draws, plays a land, discards to hand size, and gets its "that player"
+  phase triggers (`TriggerPhase`/`TriggerTurnBegin` fire triggers naming no player once, on the primary's run).
+  Turn hand-off skips teammates (`nextTurnAfter`); a skip or added step one head gets, the team gets (805.8).
+- **Shared life** — teammates hold one `Player.LifeTotal` (`joinLifeTotal`, `getLifeSharers`), so gains, losses and
+  payments still happen to each player (triggers, replacements, life lost this turn) while the total is the team's.
+  Can't-gain/can't-lose-life (810.9g/h) and can't-lose/can't-win the game (810.8a) are team-wide.
+- **Shared poison** — counters stay on each player; `getPoisonCounters()` is the team's sum, removals come off
+  teammates when needed (810.10b), `getOpponentsTotalPoisonCounters` counts a team once, and a team of n loses at
+  `getPoisonCountersToLose()` = 5n + 5.
+- **Team combat** — each head declares into one combined attack (805.10b); a defender may block creatures attacking
+  any player on their team (805.10d, `CombatUtil.canBeBlocked`). AI blocks and danger checks count attackers aimed
+  at teammates (`ComputerUtilCombat.getAttackersOfTeam`).
+- **Team wins and losses** — a head losing takes the team with them, a head winning doesn't make teammates lose
+  (`GameAction.checkGameOverCondition`). Teammates see each other's hands (810.5, `PlayerView.isGiantTeammateOf`).
+- **Lobby variant** (desktop and mobile): equal lobby teams of 2+, or seats 1+2 vs 3+4 when every slot is on its
+  own team; teammates are seated together; 30 life (+15 per head beyond two); the starting team skips its first draw.
+- **Players joining mid-game** (`Game.addOutsidePlayer`, `OutsidePlayers` factory plugged in by FModel) — an AI player
+  seated beside a team, appended to the registered players (which match registrations by position) with their own
+  `RegisteredPlayer`; `GameEventPlayerAdded` gives them a field on desktop and a panel on mobile.
+
 ### Other
 
 - `DB$ RememberNumber` — writes a number into the remembered set (which is a `Set`, so repeats
@@ -189,6 +214,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 ## Log
 
 ### Unreleased
+
+- **Two-Headed Giant** (CR 805, 810; rules checked against the 2026-09-25 Comprehensive Rules). See the engine
+  capabilities section for what it covers. Fixed on the way: a human who is a team's second head used the first
+  head's phase stops and would have auto-passed through their own main phase; their own stops now apply.
+  `TwoHeadedGiantTest` (8).
+- **Better Than One** (ust/128; previously deferred, not scripted upstream). `SP$ GainTeammate`: the caster picks
+  hand cards, a number of cards from the top of their library and permanents; an AI-played person from outside the
+  game (user ruling) joins beside the caster's team, owns those cards (set directly, not as an ante ownership change -
+  the FAQ says they're still yours after the game) and the caster's side becomes a Two-Headed Giant team with the
+  caster's life total (FAQ: the teammate brings none), or a Three-Headed one if it already had two heads. AI
+  (`GainTeammateAi`) casts it with 20+ cards in library, giving half its library and half the lands in its hand.
+  `BetterThanOneTest` (3).
 
 ### 2026-10-09 (deployed: desktop, Android, GitHub) — upstream merge (94 commits, incl. dice and flip animations); The Grand Calcutron; Hot Fix; Ol' Buzzbark; Phoebe, Head of S.N.E.A.K.; X; Urza, Academy Headmaster audit
 

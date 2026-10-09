@@ -79,10 +79,16 @@ public class Player extends GameEntity implements Comparable<Player> {
             ZoneType.Sideboard, ZoneType.PlanarDeck, ZoneType.SchemeDeck, ZoneType.AttractionDeck, ZoneType.ContraptionDeck,
             ZoneType.Junkyard, ZoneType.StickerSheets, ZoneType.Merged, ZoneType.Subgame, ZoneType.None));
 
-    private int life = 20;
-    // the fraction of a life point beyond the whole number, in hundredths: 50 is Bosom Buddy's 1/2, 86 is what Just
-    // Desserts leaves of 20 life ("use 3.14", rulings)
-    private int lifeHundredths = 0;
+    // CR 810.4: a Two-Headed Giant team has one life total. Teammates hold the same LifeTotal, so every gain, loss and
+    // payment still happens to each player individually (810.9 - triggers, replacements, life lost this turn) while
+    // the number they move is the team's.
+    private static final class LifeTotal {
+        private int life = 20;
+        // the fraction of a life point beyond the whole number, in hundredths: 50 is Bosom Buddy's 1/2, 86 is what Just
+        // Desserts leaves of 20 life ("use 3.14", rulings)
+        private int hundredths = 0;
+    }
+    private LifeTotal lifeTotal = new LifeTotal();
     private int startingLife = 20;
     private int lifeStartedThisTurnWith = startingLife;
     private int lifeLostThisTurn;
@@ -309,6 +315,43 @@ public class Player extends GameEntity implements Comparable<Player> {
         teamNumber = iTeam;
     }
 
+    /** Whether this player's team plays under Two-Headed Giant rules (CR 810): shared turn, life total and poison. */
+    public final boolean isOnGiantTeam() {
+        return game != null && game.isGiantTeam(teamNumber);
+    }
+
+    /** CR 805.4: whether the two players take their turns together - always true of a player and themselves. */
+    public final boolean sharesTurnWith(final Player other) {
+        return other == this || (other != null && isOnGiantTeam() && sameTeam(other));
+    }
+
+    /**
+     * This player's Two-Headed Giant team still in the game, this player included, in seat order starting from the
+     * team's primary player (CR 805.2) - or just this player when not on such a team.
+     */
+    public final PlayerCollection getGiantTeam() {
+        final PlayerCollection team = new PlayerCollection();
+        if (!isOnGiantTeam()) {
+            team.add(this);
+            return team;
+        }
+        for (final Player p : game.getPlayers()) {
+            if (sharesTurnWith(p)) {
+                team.add(p);
+            }
+        }
+        if (!team.contains(this)) {
+            team.add(this);
+        }
+        return team;
+    }
+
+    /** CR 810.8d/810.11: a lone player loses at the game's usual count, a team of n at 5n + 5 (15 for two heads). */
+    public final int getPoisonCountersToLose() {
+        final int heads = getGiantTeam().size();
+        return heads < 2 ? game.getRules().getPoisonCountersToLose() : 5 * heads + 5;
+    }
+
     public boolean isArchenemy() {
         return getZone(ZoneType.SchemeDeck).size() > 0; //Only the archenemy has schemes.
     }
@@ -384,7 +427,15 @@ public class Player extends GameEntity implements Comparable<Player> {
      * Get the total number of poison counters amongst this player's opponents.
      */
     public final int getOpponentsTotalPoisonCounters() {
-        return Aggregates.sum(getOpponents(), Player::getPoisonCounters);
+        // a Two-Headed Giant team's poison is one shared count (CR 810.10a), so count it once per team
+        final Set<Integer> countedTeams = Sets.newHashSet();
+        int total = 0;
+        for (final Player p : getOpponents()) {
+            if (!p.isOnGiantTeam() || countedTeams.add(p.getTeam())) {
+                total += p.getPoisonCounters();
+            }
+        }
+        return total;
     }
 
     /**
@@ -455,19 +506,19 @@ public class Player extends GameEntity implements Comparable<Player> {
         final boolean hadHalf = hasFractionalLife();
         // Infinity Elemental: "If an effect sets your life total to a specific number, it will be that number, even if
         // you previously had infinite life" - but losing or gaining from infinity changes nothing, so set it outright
-        if (Infinity.isEitherInfinite(life) && !Infinity.isEitherInfinite(newLife)) {
-            final int oldLife = life;
-            life = newLife;
-            view.updateLife(this);
-            game.fireEvent(new GameEventPlayerLivesChanged(this, oldLife, life));
+        if (Infinity.isEitherInfinite(lifeTotal.life) && !Infinity.isEitherInfinite(newLife)) {
+            final int oldLife = lifeTotal.life;
+            lifeTotal.life = newLife;
+            updateLifeViews();
+            game.fireEvent(new GameEventPlayerLivesChanged(this, oldLife, lifeTotal.life));
             setHalfLife(0);
             return true;
         }
         // rule 119.5
-        if (life > newLife) {
-            change = loseLife(life - newLife, false, false, sa) > 0;
-        } else if (newLife > life) {
-            change = gainLife(newLife - life, sa == null ? null : sa.getHostCard(), sa);
+        if (lifeTotal.life > newLife) {
+            change = loseLife(lifeTotal.life - newLife, false, false, sa) > 0;
+        } else if (newLife > lifeTotal.life) {
+            change = gainLife(newLife - lifeTotal.life, sa == null ? null : sa.getHostCard(), sa);
         }
         else { // life == newLife
             change = false;
@@ -491,8 +542,8 @@ public class Player extends GameEntity implements Comparable<Player> {
     public final void setStartingLife(final int startLife) {
         //Should only be called from newGame().
         startingLife = startLife;
-        life = startLife;
-        view.updateLife(this);
+        lifeTotal.life = startLife;
+        updateLifeViews();
     }
 
     /** The number of cards in this player's main deck (not counting Commander/Sideboard/etc.) at game start. */
@@ -501,7 +552,41 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
 
     public final int getLife() {
-        return life;
+        return lifeTotal.life;
+    }
+
+    /** The players sharing this player's life total - just this player unless on a Two-Headed Giant team. */
+    public final PlayerCollection getLifeSharers() {
+        final PlayerCollection sharers = new PlayerCollection();
+        sharers.add(this);
+        if (game != null) {
+            for (final Player p : game.getRegisteredPlayers()) {
+                if (p.lifeTotal == lifeTotal) {
+                    sharers.add(p);
+                }
+            }
+        }
+        return sharers;
+    }
+
+    /** CR 810.4: from now on this player's life total is the given team life total, set to the given value. */
+    public final void joinLifeTotal(final Player holder, final int teamLife) {
+        lifeTotal = holder.lifeTotal;
+        lifeTotal.life = teamLife;
+        updateLifeViews();
+    }
+
+    // every head of a Two-Headed Giant team shows the shared total, and only the player whose life moved gets a
+    // life event, so the others are told their stats changed
+    private void updateLifeViews() {
+        final PlayerCollection sharers = getLifeSharers();
+        for (final Player p : sharers) {
+            p.view.updateLife(p);
+            p.view.updateHalfLife(p);
+        }
+        if (sharers.size() > 1 && game != null) {
+            game.fireEvent(new GameEventPlayerStatsChanged(sharers.filter(p -> p != this)));
+        }
     }
 
     // Un-set half life (Bosom Buddy and friends). Life itself stays a whole number everywhere -
@@ -510,27 +595,27 @@ public class Player extends GameEntity implements Comparable<Player> {
     // and the 704.5a check needs to know it exists, because every non-Un effect moves life in whole
     // numbers and therefore leaves the fraction untouched.
     public final boolean hasHalfLife() {
-        return lifeHundredths == 50;
+        return lifeTotal.hundredths == 50;
     }
     /** The fraction counted in halves, rounding down - 1 for a 1/2, and for anything else from .50 to .99. */
     public final int getHalfLife() {
-        return lifeHundredths / 50;
+        return lifeTotal.hundredths / 50;
     }
     public final boolean hasFractionalLife() {
-        return lifeHundredths > 0;
+        return lifeTotal.hundredths > 0;
     }
     public final int getLifeHundredths() {
-        return lifeHundredths;
+        return lifeTotal.hundredths;
     }
     private void setHalfLife(final int h) {
         setLifeHundredths(h * 50);
     }
     private void setLifeHundredths(final int h) {
-        if (lifeHundredths == h) {
+        if (lifeTotal.hundredths == h) {
             return;
         }
-        lifeHundredths = h;
-        view.updateHalfLife(this);
+        lifeTotal.hundredths = h;
+        updateLifeViews();
         // The life panel only repaints on a life event, so losing just the half - 19 1/2 down to 19,
         // where the whole part never moves - would leave the old total on screen.
         if (game != null) {
@@ -565,7 +650,7 @@ public class Player extends GameEntity implements Comparable<Player> {
         if (hundredths == 0) {
             return false;
         }
-        final int total = hundredths + lifeHundredths;
+        final int total = hundredths + lifeTotal.hundredths;
         // floorDiv/floorMod so a loss that lands on a fraction borrows from the whole part correctly
         final int whole = Math.floorDiv(total, 100);
         final int remainder = Math.floorMod(total, 100);
@@ -624,10 +709,10 @@ public class Player extends GameEntity implements Comparable<Player> {
             return false;
         }
 
-        int oldLife = life;
+        int oldLife = lifeTotal.life;
         // infinite life gained (Infinity Elemental with lifelink) is infinite life; at infinite life a gain changes nothing
-        life = Infinity.add(life, lifeGain);
-        view.updateLife(this);
+        lifeTotal.life = Infinity.add(lifeTotal.life, lifeGain);
+        updateLifeViews();
         boolean firstGain = lifeGainedTimesThisTurn == 0;
         lifeGainedThisTurn = Infinity.add(lifeGainedThisTurn, lifeGain);
         lifeGainedTimesThisTurn++;
@@ -644,12 +729,13 @@ public class Player extends GameEntity implements Comparable<Player> {
         runParams.put(AbilityKey.FirstTime, firstGain);
         game.getTriggerHandler().runTrigger(TriggerType.LifeGained, runParams, false);
 
-        game.fireEvent(new GameEventPlayerLivesChanged(this, oldLife, life));
+        game.fireEvent(new GameEventPlayerLivesChanged(this, oldLife, lifeTotal.life));
         return true;
     }
 
     public final boolean canGainLife() {
-        return isInGame() && !StaticAbilityCantGainLosePayLife.anyCantGainLife(this);
+        // CR 810.9g: if a player can't gain life, no player on their Two-Headed Giant team can
+        return isInGame() && !getGiantTeam().anyMatch(StaticAbilityCantGainLosePayLife::anyCantGainLife);
     }
 
     public final int loseLife(int toLose, final boolean damage, final boolean manaBurn, final SpellAbility cause) {
@@ -665,7 +751,7 @@ public class Player extends GameEntity implements Comparable<Player> {
         if (toLose < 0 || (toLose == 0 && !fractional) || !canLoseLife()) {
             return 0;
         }
-        int oldLife = life;
+        int oldLife = lifeTotal.life;
 
         final Map<AbilityKey, Object> repParams = AbilityKey.mapFromAffected(this);
         repParams.put(AbilityKey.Amount, toLose);
@@ -691,12 +777,12 @@ public class Player extends GameEntity implements Comparable<Player> {
         }
 
         // at infinite life a loss changes nothing, even an infinite one; an infinite loss from a finite total is -∞
-        life = Infinity.subtract(life, toLose);
-        view.updateLife(this);
+        lifeTotal.life = Infinity.subtract(lifeTotal.life, toLose);
+        updateLifeViews();
         if (manaBurn) {
             game.fireEvent(new GameEventManaBurn(PlayerView.get(this), true, toLose));
         } else {
-            game.fireEvent(new GameEventPlayerLivesChanged(this, oldLife, life));
+            game.fireEvent(new GameEventPlayerLivesChanged(this, oldLife, lifeTotal.life));
         }
 
         boolean firstLost = lifeLostThisTurn == 0;
@@ -714,12 +800,13 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
 
     public final boolean canLoseLife() {
-        return isInGame() && !StaticAbilityCantGainLosePayLife.anyCantLoseLife(this);
+        // CR 810.9h: likewise for losing life
+        return isInGame() && !getGiantTeam().anyMatch(StaticAbilityCantGainLosePayLife::anyCantLoseLife);
     }
 
     public final boolean canPayLife(final int lifePayment, final boolean effect, SpellAbility cause) {
         // any amount of life can be paid from infinite life (Infinity Elemental rulings)
-        if (lifePayment > 0 && life < lifePayment && !Infinity.isInfinite(life)) {
+        if (lifePayment > 0 && lifeTotal.life < lifePayment && !Infinity.isInfinite(lifeTotal.life)) {
             return false;
         }
         return lifePayment <= 0 || !StaticAbilityCantGainLosePayLife.anyCantPayLife(this, effect, cause);
@@ -978,11 +1065,11 @@ public class Player extends GameEntity implements Comparable<Player> {
         // half-life carry the life gain cards use
         // and Just Desserts' leftover .14 per π, the same way
         if (simultaneousHalfDamage > 0 || simultaneousHundredthsDamage > 0) {
-            final int before = life;
+            final int before = lifeTotal.life;
             changeLifeByHundredths(-(simultaneousHalfDamage * 50 + simultaneousHundredthsDamage), null, null, false);
             simultaneousHalfDamage = 0;
             simultaneousHundredthsDamage = 0;
-            lost += before - life;
+            lost += before - lifeTotal.life;
         }
         return lost;
     }
@@ -1148,8 +1235,13 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
 
     // TODO Merge These calls into the primary counter calls
+    /** CR 810.10a: on a Two-Headed Giant team this is the team's shared count; the counters themselves stay per player. */
     public final int getPoisonCounters() {
-        return getCounters(CounterEnumType.POISON);
+        int total = 0;
+        for (final Player p : getGiantTeam()) {
+            total += p.getCounters(CounterEnumType.POISON);
+        }
+        return total;
     }
     public final void setPoisonCounters(final int num, Player source) {
         setCounters(CounterEnumType.POISON, num, source, true);
@@ -1158,7 +1250,22 @@ public class Player extends GameEntity implements Comparable<Player> {
         addCounter(CounterEnumType.POISON, num, source, table);
     }
     public final void removePoisonCounters(final int num, final Player source) {
-        subtractCounter(CounterEnumType.POISON, num, source);
+        if (!isOnGiantTeam()) {
+            subtractCounter(CounterEnumType.POISON, num, source);
+            return;
+        }
+        // CR 810.10b: the team loses that many, so whatever this player doesn't have comes off teammates
+        final PlayerCollection order = new PlayerCollection();
+        order.add(this);
+        order.addAll(getGiantTeam());
+        int left = num;
+        for (final Player p : order) {
+            final int here = Math.min(left, p.getCounters(CounterEnumType.POISON));
+            if (here > 0) {
+                p.subtractCounter(CounterEnumType.POISON, here, source);
+                left -= here;
+            }
+        }
     }
     // ================ POISON Merged =================================
     public final void addChangedKeywords(final List<String> addKeywords, final List<String> removeKeywords, final Long timestamp, final long staticId) {
@@ -2246,6 +2353,16 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
 
     public final boolean cantLoseCheck(final GameLossReason state) {
+        // CR 810.8a: if an effect says a player can't lose the game, that player's team can't lose it
+        for (final Player p : getGiantTeam()) {
+            if (p.cantLoseCheckSelf(state)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean cantLoseCheckSelf(final GameLossReason state) {
         if ((state == GameLossReason.LifeReachedZero || state == GameLossReason.Milled
                 || state == GameLossReason.Poisoned || state == GameLossReason.CommanderDamage)
                 && StaticAbilityIgnoreStateBasedActions.ignoresStateBasedActions(this)) {
@@ -2257,7 +2374,13 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
 
     public final boolean cantWin() {
-        return game.getReplacementHandler().cantHappenCheck(ReplacementType.GameWin, AbilityKey.mapFromAffected(this));
+        // CR 810.8a: nor can the team win if one of its players can't
+        for (final Player p : getGiantTeam()) {
+            if (game.getReplacementHandler().cantHappenCheck(ReplacementType.GameWin, AbilityKey.mapFromAffected(p))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public final boolean checkLoseCondition() {
@@ -2293,7 +2416,7 @@ public class Player extends GameEntity implements Comparable<Player> {
 
         // Rule 704.5c - If a player has ten or more poison counters, he or she loses the game.
         // 704.6b In a Two-Headed Giant game, if a team has fifteen or more poison counters, that team loses the game. See rule 810, “Two-Headed Giant Variant.”
-        if (getCounters(CounterEnumType.POISON) >= 10 && loseConditionMet(GameLossReason.Poisoned, null)) {
+        if (getPoisonCounters() >= getPoisonCountersToLose() && loseConditionMet(GameLossReason.Poisoned, null)) {
             return true;
         }
 
@@ -2636,7 +2759,21 @@ public class Player extends GameEntity implements Comparable<Player> {
         return controller.getLobbyPlayer();
     }
 
+    // a player who joined mid-game (Better Than One) was never registered for the match, so carries their own
+    private RegisteredPlayer outsideRegistration = null;
+
+    public final void setOutsideRegistration(final RegisteredPlayer registration) {
+        outsideRegistration = registration;
+    }
+
+    public final boolean joinedMidGame() {
+        return outsideRegistration != null;
+    }
+
     public final RegisteredPlayer getRegisteredPlayer() {
+        if (outsideRegistration != null) {
+            return outsideRegistration;
+        }
         return game.getMatch().getPlayers().get(game.getRegisteredPlayers().indexOf(this));
     }
 

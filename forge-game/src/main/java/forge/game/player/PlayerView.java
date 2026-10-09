@@ -113,11 +113,20 @@ public class PlayerView extends GameEntityView {
         set(TrackableProperty.CurrentPlane, plane);
     }
 
+    /** The rest of this player's Two-Headed Giant team, who may look at their hand (CR 810.5). */
+    public boolean isGiantTeammateOf(final PlayerView other) {
+        final List<PlayerView> mates = get(TrackableProperty.GiantTeammates);
+        return mates != null && mates.contains(other);
+    }
+
     public List<PlayerView> getOpponents() {
         return Objects.requireNonNullElse(get(TrackableProperty.Opponents), List.of());
     }
     void updateOpponents(Player p) {
         set(TrackableProperty.Opponents, PlayerView.getCollection(p.getOpponents()));
+        final PlayerCollection mates = p.getGiantTeam();
+        mates.remove(p);
+        set(TrackableProperty.GiantTeammates, PlayerView.getCollection(mates));
     }
 
     public boolean isOpponentOf(final PlayerView other) {

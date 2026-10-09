@@ -34,6 +34,7 @@ import forge.game.cost.CostEnlist;
 import forge.game.cost.CostExert;
 import forge.game.event.*;
 import forge.game.player.Player;
+import forge.game.player.PlayerCollection;
 import forge.game.player.PlayerView;
 import forge.game.replacement.ReplacementResult;
 import forge.game.replacement.ReplacementType;
@@ -136,8 +137,29 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         return turn;
     }
 
+    /** CR 805.4: on a Two-Headed Giant team it's every teammate's turn too. */
     public final boolean isPlayerTurn(final Player player) {
-        return player.equals(playerTurn);
+        return player.equals(playerTurn) || (playerTurn != null && playerTurn.sharesTurnWith(player));
+    }
+
+    /**
+     * The players taking this turn: the active player alone, or their whole Two-Headed Giant team with the active
+     * (primary) player first and the rest in seat order (CR 805.4, 805.6).
+     */
+    public final PlayerCollection getActivePlayers() {
+        final PlayerCollection active = new PlayerCollection();
+        if (playerTurn == null) {
+            return active;
+        }
+        active.add(playerTurn);
+        if (playerTurn.isOnGiantTeam()) {
+            for (final Player p : game.getPlayersInTurnOrder(playerTurn)) {
+                if (playerTurn.sharesTurnWith(p)) {
+                    active.add(p);
+                }
+            }
+        }
+        return active;
     }
 
     public final Player getPlayerTurn() {
@@ -211,24 +233,33 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 game.updateTurnForView();
                 game.fireEvent(new GameEventTurnBegan(PlayerView.get(playerTurn), turn));
 
-                // Tokens starting game in play should suffer from Sum. Sickness
-                for (final Card c : playerTurn.getCardsIn(ZoneType.Battlefield, false)) {
-                    if (playerTurn.getTurn() > 0 || !c.isStartsGameInPlay()) {
-                        c.setSickness(false);
+                for (final Player active : getActivePlayers()) {
+                    // Tokens starting game in play should suffer from Sum. Sickness
+                    for (final Card c : active.getCardsIn(ZoneType.Battlefield, false)) {
+                        if (active.getTurn() > 0 || !c.isStartsGameInPlay()) {
+                            c.setSickness(false);
+                        }
                     }
-                }
-                playerTurn.incrementTurn();
+                    active.incrementTurn();
 
-                final int lands = CardLists.count(playerTurn.getLandsInPlay(), CardPredicates.UNTAPPED);
-                playerTurn.setNumPowerSurgeLands(lands);
+                    final int lands = CardLists.count(active.getLandsInPlay(), CardPredicates.UNTAPPED);
+                    active.setNumPowerSurgeLands(lands);
+                }
             }
 
             // before BeginPhase replacements, so "skip your untap step" asks whoever's untap step it now is
             beginStolenPhase();
 
-            final Map<AbilityKey, Object> repRunParams = AbilityKey.mapFromAffected(playerTurn);
-            repRunParams.put(AbilityKey.Phase, phase);
-            ReplacementResult repres = game.getReplacementHandler().run(ReplacementType.BeginPhase, repRunParams);
+            // CR 805.8: a step or phase one player on the active team skips, the whole team skips
+            ReplacementResult repres = ReplacementResult.NotReplaced;
+            for (final Player active : getActivePlayers()) {
+                final Map<AbilityKey, Object> repRunParams = AbilityKey.mapFromAffected(active);
+                repRunParams.put(AbilityKey.Phase, phase);
+                repres = game.getReplacementHandler().run(ReplacementType.BeginPhase, repRunParams);
+                if (repres != ReplacementResult.NotReplaced) {
+                    break;
+                }
+            }
             if (repres != ReplacementResult.NotReplaced) {
                 // Currently there is no effect to skip entire beginning phase
                 // If in the future that kind of effect is added, need to handle it too.
@@ -254,11 +285,12 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     private boolean isSkippingPhase(final PhaseType phase) {
         switch (phase) {
             case DRAW:
-                return turn == 1 && game.getPlayers().size() == 2;
+                // CR 810.6: in Two-Headed Giant the team who plays first skips its first draw step too
+                return turn == 1 && (game.getPlayers().size() == 2 || game.getRules().hasAppliedVariant(GameType.TwoHeadedGiant));
 
             case COMBAT_BEGIN:
             case COMBAT_DECLARE_ATTACKERS:
-                return playerTurn.isSkippingCombat();
+                return getActivePlayers().anyMatch(Player::isSkippingCombat);
 
             case COMBAT_DECLARE_BLOCKERS:
                 skipDamageSteps = !inCombat() || combat.getAttackers().isEmpty();
@@ -294,8 +326,10 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     game.getUpkeep().executeUntil(playerTurn);
                     game.getUpkeep().executeAt();
 
-                    if (playerTurn.getCardsIn(ZoneType.Battlefield).anyMatch(Card::isContraption)) {
-                        playerTurn.advanceCrankCounter();
+                    for (final Player active : getActivePlayers()) {
+                        if (active.getCardsIn(ZoneType.Battlefield).anyMatch(Card::isContraption)) {
+                            active.advanceCrankCounter();
+                        }
                     }
 
                     break;
@@ -304,7 +338,10 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     for (Player p : game.getPlayers()) {
                         p.resetNumDrawnThisDrawStep();
                     }
-                    playerTurn.drawCard();
+                    // CR 805.4b: each player on the active team draws, in seat order (805.6a)
+                    for (final Player active : getActivePlayers()) {
+                        active.drawCard();
+                    }
                     break;
 
                 case MAIN1:
@@ -316,16 +353,20 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
                     GameEntityCounterTable table = new GameEntityCounterTable();
                     // CR 703.4f
-                    for (Card c : playerTurn.getCardsIn(ZoneType.Battlefield)) {
-                        if (c.isSaga() && c.hasChapter()) {
-                            c.addCounter(CounterEnumType.LORE, 1, playerTurn, table);
+                    for (final Player active : getActivePlayers()) {
+                        for (Card c : active.getCardsIn(ZoneType.Battlefield)) {
+                            if (c.isSaga() && c.hasChapter()) {
+                                c.addCounter(CounterEnumType.LORE, 1, active, table);
+                            }
                         }
                     }
                     table.replaceCounterEffect(game, null);
 
                     // CR 703.4g
-                    if (playerTurn.getCardsIn(ZoneType.Battlefield).anyMatch(Card::isAttraction)) {
-                        playerTurn.rollToVisitAttractions();
+                    for (final Player active : getActivePlayers()) {
+                        if (active.getCardsIn(ZoneType.Battlefield).anyMatch(Card::isAttraction)) {
+                            active.rollToVisitAttractions();
+                        }
                     }
 
                     break;
@@ -396,39 +437,17 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 case END_OF_TURN:
                     nEndOfTurnsThisTurn++;
                     game.getEndOfTurn().executeUntil(playerTurn);
-                    playerTurn.getController().resetAtEndOfTurn();
+                    for (final Player active : getActivePlayers()) {
+                        active.getController().resetAtEndOfTurn();
+                    }
 
                     game.getEndOfTurn().executeAt();
                     break;
 
                 case CLEANUP:
-                    // CR 514.1
-                    final int handSize = playerTurn.getZone(ZoneType.Hand).size();
-                    final int max = playerTurn.getMaxHandSize();
-                    int numDiscard = playerTurn.isUnlimitedHandSize() || handSize <= max || handSize == 0 ? 0 : handSize - max;
-
-                    if (numDiscard > 0) {
-                        final CardZoneTable zoneMovements = new CardZoneTable(game.getLastStateBattlefield(), game.getLastStateGraveyard());
-                        Map<AbilityKey, Object> moveParams = AbilityKey.newMap();
-                        AbilityKey.addCardZoneTableParams(moveParams, zoneMovements);
-
-                        final CardCollection discarded = new CardCollection();
-                        List<Card> discardedBefore = Lists.newArrayList(playerTurn.getDiscardedThisTurn());
-                        for (Card c : playerTurn.getController().chooseCardsToDiscardToMaximumHandSize(numDiscard)) {
-                            Card moved = playerTurn.discard(c, null, false, moveParams);
-                            if (moved != null) {
-                                discarded.add(moved);
-                            }
-                        }
-                        zoneMovements.triggerChangesZoneAll(game, null);
-
-                        if (!discarded.isEmpty()) {
-                            final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(playerTurn);
-                            runParams.put(AbilityKey.Cards, discarded);
-                            runParams.put(AbilityKey.Cause, null);
-                            runParams.put(AbilityKey.DiscardedBefore, discardedBefore);
-                            game.getTriggerHandler().runTrigger(TriggerType.DiscardedAll, runParams, false);
-                        }
+                    // CR 514.1, for each player on the active team (805.6)
+                    for (final Player active : getActivePlayers()) {
+                        discardToMaximumHandSize(active);
                     }
 
                     // CR 514.2
@@ -478,10 +497,12 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         }
 
         if (!skipped) {
-            // Run triggers if phase isn't being skipped
-            final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(playerTurn);
-            //runParams.put(AbilityKey.Phase, phase.nameForScripts);
-            game.getTriggerHandler().runTrigger(TriggerType.Phase, runParams, false);
+            // Run triggers if phase isn't being skipped - once for each player on the active team (CR 805.4d; see
+            // TriggerPhase for the triggers that still go off only once)
+            for (final Player active : getActivePlayers()) {
+                final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(active);
+                game.getTriggerHandler().runTrigger(TriggerType.Phase, runParams, false);
+            }
         }
 
         // This line fixes Combat Damage triggers not going off when they should
@@ -491,6 +512,37 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         if (phase == PhaseType.CLEANUP && (!game.getStack().isEmpty() || game.getStack().hasSimultaneousStackEntries())) {
             bRepeatCleanup = true;
             givePriorityToPlayer = true;
+        }
+    }
+
+    private void discardToMaximumHandSize(final Player active) {
+        final int handSize = active.getZone(ZoneType.Hand).size();
+        final int max = active.getMaxHandSize();
+        final int numDiscard = active.isUnlimitedHandSize() || handSize <= max || handSize == 0 ? 0 : handSize - max;
+        if (numDiscard <= 0) {
+            return;
+        }
+
+        final CardZoneTable zoneMovements = new CardZoneTable(game.getLastStateBattlefield(), game.getLastStateGraveyard());
+        Map<AbilityKey, Object> moveParams = AbilityKey.newMap();
+        AbilityKey.addCardZoneTableParams(moveParams, zoneMovements);
+
+        final CardCollection discarded = new CardCollection();
+        List<Card> discardedBefore = Lists.newArrayList(active.getDiscardedThisTurn());
+        for (Card c : active.getController().chooseCardsToDiscardToMaximumHandSize(numDiscard)) {
+            Card moved = active.discard(c, null, false, moveParams);
+            if (moved != null) {
+                discarded.add(moved);
+            }
+        }
+        zoneMovements.triggerChangesZoneAll(game, null);
+
+        if (!discarded.isEmpty()) {
+            final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(active);
+            runParams.put(AbilityKey.Cards, discarded);
+            runParams.put(AbilityKey.Cause, null);
+            runParams.put(AbilityKey.DiscardedBefore, discardedBefore);
+            game.getTriggerHandler().runTrigger(TriggerType.DiscardedAll, runParams, false);
         }
     }
 
@@ -573,8 +625,10 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     handleMultiplayerEffects();
 
                     // "Trigger" for begin turn to get around a phase skipping
-                    final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(playerTurn);
-                    game.getTriggerHandler().runTrigger(TriggerType.TurnBegin, runParams, false);
+                    for (final Player active : getActivePlayers()) {
+                        final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(active);
+                        game.getTriggerHandler().runTrigger(TriggerType.TurnBegin, runParams, false);
+                    }
                 }
                 planarDiceSpecialActionThisTurn = 0;
                 // Play the End Turn sound
@@ -585,18 +639,83 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     }
 
     private void declareAttackersTurnBasedAction() {
-        final Player whoDeclares = Objects.requireNonNullElse(playerTurn.getDeclaresAttackers(), playerTurn);
-        // Over My Dead Bodies: creature cards in the attacker's graveyard can be declared too
-        final CardCollection fromGraveyard = game.getAction().enlistGraveyardCombatants(playerTurn);
+        // CR 805.10b: a Two-Headed Giant team makes one combined attack - each player declares their own creatures
+        // into the same combat, and the whole set has to be legal
+        for (final Player active : getActivePlayers()) {
+            if (game.isGameOver()) {
+                return;
+            }
+            declareAttackersFor(active);
+        }
 
-        if (CombatUtil.canAttack(playerTurn)) {
+        if (game.isGameOver()) { // they just like to close window at any moment
+            return;
+        }
+        declareOpponentsTurnAttackers();
+        if (game.isGameOver()) {
+            return;
+        }
+        // Goblin Haberdasher: a hat gives menace, which matters from here on
+        game.getAction().askHatInArt(combat.getAttackers());
+
+        // Reset all active Triggers
+        game.getTriggerHandler().resetActiveTriggers();
+
+        // Prepare and fire event 'attackers declared'
+        Multimap<GameEntity, Card> attackersMap = ArrayListMultimap.create();
+        for (GameEntity ge : combat.getDefenders()) {
+            attackersMap.putAll(ge, combat.getAttackersOf(ge));
+        }
+        game.fireEvent(new GameEventAttackersDeclared(playerTurn, attackersMap));
+
+        // fire AttackersDeclared trigger, once for each player who attacked - the active player, and anyone attacking
+        // during their turn with Party Crasher
+        for (final Player attackingPlayer : game.getPlayersInTurnOrder(playerTurn)) {
+            final CardCollection theirAttackers = CardLists.filterControlledBy(combat.getAttackers(), attackingPlayer);
+            if (theirAttackers.isEmpty()) {
+                continue;
+            }
+            List<GameEntity> attackedTarget = new ArrayList<>();
+            for (GameEntity ge : combat.getDefenders()) {
+                final CardCollection attackersOfGe = CardLists.filterControlledBy(combat.getAttackersOf(ge), attackingPlayer);
+                if (!attackersOfGe.isEmpty()) {
+                    final Map<AbilityKey, Object> runParams = AbilityKey.newMap();
+                    runParams.put(AbilityKey.Attackers, attackersOfGe);
+                    runParams.put(AbilityKey.AttackingPlayer, attackingPlayer);
+                    runParams.put(AbilityKey.AttackedTarget, Collections.singletonList(ge));
+                    attackedTarget.add(ge);
+                    game.getTriggerHandler().runTrigger(TriggerType.AttackersDeclaredOneTarget, runParams, false);
+                }
+            }
+            final Map<AbilityKey, Object> runParams = AbilityKey.newMap();
+            runParams.put(AbilityKey.Attackers, theirAttackers);
+            runParams.put(AbilityKey.AttackingPlayer, attackingPlayer);
+            runParams.put(AbilityKey.AttackedTarget, attackedTarget);
+            game.getTriggerHandler().runTrigger(TriggerType.AttackersDeclared, runParams, false);
+        }
+
+        for (final Card c : combat.getAttackers()) {
+            CombatUtil.checkDeclaredAttacker(game, c, combat, true);
+        }
+
+        game.getTriggerHandler().resetActiveTriggers();
+        game.updateCombatForView();
+        game.fireEvent(new GameEventCombatChanged());
+    }
+
+    private void declareAttackersFor(final Player active) {
+        final Player whoDeclares = Objects.requireNonNullElse(active.getDeclaresAttackers(), active);
+        // Over My Dead Bodies: creature cards in the attacker's graveyard can be declared too
+        final CardCollection fromGraveyard = game.getAction().enlistGraveyardCombatants(active);
+
+        if (CombatUtil.canAttack(active)) {
             boolean success = false;
             do {
                 if (game.isGameOver()) { // they just like to close window at any moment
                     return;
                 }
 
-                whoDeclares.getController().declareAttackers(playerTurn, combat);
+                whoDeclares.getController().declareAttackers(active, combat);
                 combat.removeAbsentCombatants();
 
                 success = CombatUtil.validateAttackers(combat);
@@ -665,60 +784,6 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
             }
         }
         game.getAction().dismissGraveyardCombatants(CardLists.filter(fromGraveyard, c -> !combat.isAttacking(c)));
-
-        if (game.isGameOver()) { // they just like to close window at any moment
-            return;
-        }
-        declareOpponentsTurnAttackers();
-        if (game.isGameOver()) {
-            return;
-        }
-        // Goblin Haberdasher: a hat gives menace, which matters from here on
-        game.getAction().askHatInArt(combat.getAttackers());
-
-        // Reset all active Triggers
-        game.getTriggerHandler().resetActiveTriggers();
-
-        // Prepare and fire event 'attackers declared'
-        Multimap<GameEntity, Card> attackersMap = ArrayListMultimap.create();
-        for (GameEntity ge : combat.getDefenders()) {
-            attackersMap.putAll(ge, combat.getAttackersOf(ge));
-        }
-        game.fireEvent(new GameEventAttackersDeclared(playerTurn, attackersMap));
-
-        // fire AttackersDeclared trigger, once for each player who attacked - the active player, and anyone attacking
-        // during their turn with Party Crasher
-        for (final Player attackingPlayer : game.getPlayersInTurnOrder(playerTurn)) {
-            final CardCollection theirAttackers = CardLists.filterControlledBy(combat.getAttackers(), attackingPlayer);
-            if (theirAttackers.isEmpty()) {
-                continue;
-            }
-            List<GameEntity> attackedTarget = new ArrayList<>();
-            for (GameEntity ge : combat.getDefenders()) {
-                final CardCollection attackersOfGe = CardLists.filterControlledBy(combat.getAttackersOf(ge), attackingPlayer);
-                if (!attackersOfGe.isEmpty()) {
-                    final Map<AbilityKey, Object> runParams = AbilityKey.newMap();
-                    runParams.put(AbilityKey.Attackers, attackersOfGe);
-                    runParams.put(AbilityKey.AttackingPlayer, attackingPlayer);
-                    runParams.put(AbilityKey.AttackedTarget, Collections.singletonList(ge));
-                    attackedTarget.add(ge);
-                    game.getTriggerHandler().runTrigger(TriggerType.AttackersDeclaredOneTarget, runParams, false);
-                }
-            }
-            final Map<AbilityKey, Object> runParams = AbilityKey.newMap();
-            runParams.put(AbilityKey.Attackers, theirAttackers);
-            runParams.put(AbilityKey.AttackingPlayer, attackingPlayer);
-            runParams.put(AbilityKey.AttackedTarget, attackedTarget);
-            game.getTriggerHandler().runTrigger(TriggerType.AttackersDeclared, runParams, false);
-        }
-
-        for (final Card c : combat.getAttackers()) {
-            CombatUtil.checkDeclaredAttacker(game, c, combat, true);
-        }
-
-        game.getTriggerHandler().resetActiveTriggers();
-        game.updateCombatForView();
-        game.fireEvent(new GameEventCombatChanged());
     }
 
     /**
@@ -795,7 +860,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     fromGraveyard = game.getAction().enlistGraveyardCombatants(p);
                 }
             }
-            if (combat.isPlayerAttacked(p)) {
+            // CR 805.10d: on a Two-Headed Giant team a player blocks for the whole defending team
+            final boolean teamAttacked = p.getGiantTeam().anyMatch(combat::isPlayerAttacked);
+            if (teamAttacked) {
                 if (CombatUtil.canBlock(p, combat)) {
                     // Replacement effects (for Camouflage)
                     final Map<AbilityKey, Object> repRunParams = AbilityKey.mapFromAffected(p);
@@ -999,7 +1066,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
     private Player getNextActivePlayer() {
         ExtraTurn extraTurn = !extraTurns.isEmpty() ? extraTurns.pop() : null;
-        Player nextPlayer = extraTurn != null ? extraTurn.getPlayer() : game.getNextPlayerAfter(playerTurn);
+        Player nextPlayer = extraTurn != null ? extraTurn.getPlayer() : nextTurnAfter(playerTurn);
         // The bottom of the extra turn stack is the normal turn
         boolean isExtraTurn = !extraTurns.isEmpty();
 
@@ -1037,9 +1104,18 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         return phase == phase0;
     }
 
+    /** The player whose turn follows this player's, passing over the rest of a Two-Headed Giant team (CR 805.4). */
+    public final Player nextTurnAfter(final Player p) {
+        Player next = game.getNextPlayerAfter(p);
+        for (int i = 0; i < game.getRegisteredPlayers().size() && next != null && next != p && p.sharesTurnWith(next); i++) {
+            next = game.getNextPlayerAfter(next);
+        }
+        return next;
+    }
+
     public final Player getNextTurn() {
         if (extraTurns.isEmpty()) {
-            return game.getNextPlayerAfter(getActualTurnPlayer());
+            return nextTurnAfter(getActualTurnPlayer());
         }
         return extraTurns.peek().getPlayer();
     }
@@ -1048,7 +1124,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         Player previous = null;
         // use a stack to handle extra turns, make sure the bottom of the stack restores original turn order
         if (extraTurns.isEmpty()) {
-            extraTurns.push(new ExtraTurn(game.getNextPlayerAfter(getActualTurnPlayer())));
+            extraTurns.push(new ExtraTurn(nextTurnAfter(getActualTurnPlayer())));
         } else {
             previous = extraTurns.peek().getPlayer();
         }

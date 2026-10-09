@@ -4113,9 +4113,15 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
         yieldController.setDisableAutoTriggers(disable);
     }
 
-    public boolean isUiSetToSkipPhase(final PlayerView turnPlayer, final PhaseType phase) {
+    public boolean isUiSetToSkipPhase(PlayerView turnPlayer, final PhaseType phase) {
         if (macros != null && macros.isReplaying()) {
             return false;
+        }
+        // a Two-Headed Giant team's turn is reported as its primary player's, but it's every head's turn (CR 805.4),
+        // so a second head's own phase stops are the ones that apply - otherwise they'd sail past their main phase
+        final PlayerView me = getLocalPlayerView();
+        if (me != null && turnPlayer != null && turnPlayer.isGiantTeammateOf(me)) {
+            turnPlayer = me;
         }
         if (isRemoteClient()) {
             return yieldController.isSkippingPhase(turnPlayer, phase);

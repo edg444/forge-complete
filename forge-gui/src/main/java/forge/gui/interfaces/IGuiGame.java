@@ -90,6 +90,9 @@ public interface IGuiGame {
 
     /** Plays a coin flip animation and blocks until it finishes. No-op by default. */
     default void showCoinFlip(boolean heads, String caption, boolean waitForTap) {}
+    /** A player joined the game in progress (Better Than One), seated after seatedAfter - give them a place on screen. */
+    default void addPlayerView(PlayerView player, PlayerView seatedAfter) {}
+
     default void showFlipOntoBattlefield(CardView flipped, CardView target, List<CardView> hit, List<CardView> battlefield, int timesFlipped) {}
     default void endFlipOntoBattlefield(CardView flipped) {}
 

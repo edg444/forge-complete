@@ -725,8 +725,9 @@ public class CardView extends GameEntityView {
             }
             break;
         case Hand:
-            // The Grand Calcutron's programs are rows of revealed cards
-            if (controller.equals(viewer) || controller.hasProgram()) {
+            // The Grand Calcutron's programs are rows of revealed cards; Two-Headed Giant teammates may review each
+            // other's hands (CR 810.5)
+            if (controller.equals(viewer) || controller.hasProgram() || controller.isGiantTeammateOf(viewer)) {
                 return true;
             }
             break;

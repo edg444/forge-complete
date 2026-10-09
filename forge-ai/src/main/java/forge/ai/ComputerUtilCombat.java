@@ -276,6 +276,18 @@ public class ComputerUtilCombat {
      *            a {@link forge.game.combat.Combat} object.
      * @return a boolean.
      */
+    /**
+     * The attackers coming at this player's life total: the ones attacking them, or on a Two-Headed Giant team the
+     * ones attacking any teammate, since the team shares one life total and poison count (CR 810.4, 810.10).
+     */
+    public static CardCollection getAttackersOfTeam(final Player ai, final Combat combat) {
+        final CardCollection attackers = new CardCollection();
+        for (final Player p : ai.getGiantTeam()) {
+            attackers.addAll(combat.getAttackersOf(p));
+        }
+        return attackers;
+    }
+
     public static boolean wouldLoseLife(final Player ai, final Combat combat) {
         return lifeThatWouldRemain(ai, combat) < ai.getLife();
     }
@@ -294,7 +306,7 @@ public class ComputerUtilCombat {
         int damage = 0;
 
         if (ai.canLoseLife()) {
-            final List<Card> attackers = combat.getAttackersOf(ai);
+            final List<Card> attackers = getAttackersOfTeam(ai, combat);
             final List<Card> unblocked = Lists.newArrayList();
 
             for (final Card attacker : attackers) {
@@ -335,7 +347,7 @@ public class ComputerUtilCombat {
 
         int poison = 0;
 
-        final List<Card> attackers = combat.getAttackersOf(ai);
+        final List<Card> attackers = getAttackersOfTeam(ai, combat);
         final List<Card> unblocked = Lists.newArrayList();
 
         for (final Card attacker : attackers) {
@@ -388,7 +400,7 @@ public class ComputerUtilCombat {
     public static boolean lifeInDanger(final Player ai, final Combat combat, final int payment) {
         // life in danger only cares about the player's life. Not Planeswalkers' life
         // Party Crasher can attack the active player
-        if (ai.cantLose() || combat == null || combat.getAttackingPlayer() == ai && !combat.isPlayerAttacked(ai)) {
+        if (ai.cantLose() || combat == null || combat.getAttackingPlayer().sharesTurnWith(ai) && getAttackersOfTeam(ai, combat).isEmpty()) {
             return false;
         }
 
@@ -405,7 +417,7 @@ public class ComputerUtilCombat {
         }
 
         // check for creatures that must be blocked
-        final List<Card> attackers = combat.getAttackersOf(ai);
+        final List<Card> attackers = getAttackersOfTeam(ai, combat);
 
         final List<Card> threateningCommanders = getLifeThreateningCommanders(ai, combat);
 
@@ -471,7 +483,7 @@ public class ComputerUtilCombat {
         final List<Card> threateningCommanders = getLifeThreateningCommanders(ai, combat);
 
         // check for creatures that must be blocked
-        final List<Card> attackers = combat.getAttackersOf(ai);
+        final List<Card> attackers = getAttackersOfTeam(ai, combat);
 
         for (final Card attacker : attackers) {
             final List<Card> blockers = combat.getBlockers(attacker);
@@ -486,7 +498,7 @@ public class ComputerUtilCombat {
             }
         }
 
-        if (resultingPoison(ai, combat) >= ai.getGame().getRules().getPoisonCountersToLose()) {
+        if (resultingPoison(ai, combat) >= ai.getPoisonCountersToLose()) {
             return true;
         }
 
@@ -2562,7 +2574,7 @@ public class ComputerUtilCombat {
         }
 
         int life = ai.getLife();
-        int poisonLife = 10 - ai.getPoisonCounters();
+        int poisonLife = ai.getPoisonCountersToLose() - ai.getPoisonCounters();
         double percentLife = life * 1.0 / damageScore;
         double percentPoison = poisonLife * 1.0 / poisonScore;
 

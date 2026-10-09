@@ -17,6 +17,8 @@
  */
 package forge.game;
 
+import forge.LobbyPlayer;
+import forge.deck.Deck;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Lists;
@@ -35,6 +37,7 @@ import forge.game.event.Event;
 import forge.game.event.GameEventDayTimeChanged;
 import forge.game.event.GameEventAddLog;
 import forge.game.event.GameEventGameOutcome;
+import forge.game.event.GameEventPlayerAdded;
 import forge.game.phase.Phase;
 import forge.game.phase.PhaseHandler;
 import forge.game.phase.PhaseType;
@@ -76,6 +79,9 @@ public class Game {
     private final GameRules rules;
     private final PlayerCollection allPlayers = new PlayerCollection();
     private final PlayerCollection ingamePlayers = new PlayerCollection();
+    // CR 805/810: teams playing under Two-Headed Giant rules - every team in a Two-Headed Giant game, or the one
+    // team Better Than One makes of "your side of the game" (Unstable FAQ) while everyone else plays on as before
+    private final Set<Integer> giantTeams = Sets.newHashSet();
     private final PlayerCollection lostPlayers = new PlayerCollection();
     private GameEntityViewMap<Player, PlayerView> playerCache = new GameEntityViewMap<Player, PlayerView>();
 
@@ -434,6 +440,16 @@ public class Game {
 
         sbaCheckedCommandList = new ArrayList<>();
 
+        if (rules.hasAppliedVariant(GameType.TwoHeadedGiant)) {
+            for (final Player pl : allPlayers) {
+                if (!giantTeams.contains(pl.getTeam())) {
+                    final PlayerCollection team = allPlayers.filter(p -> p.getTeam() == pl.getTeam());
+                    // CR 103.4a/810.11: 30, and 15 more for each head beyond the second
+                    formGiantTeam(team, 30 + 15 * Math.max(0, team.size() - 2));
+                }
+            }
+        }
+
         view.updatePlayers(this);
 
         subscribeToEvents(gameLog.getEventVisitor());
@@ -441,6 +457,69 @@ public class Game {
 
     public GameView getView() {
         return view;
+    }
+
+    /**
+     * Seats a new, AI-played player right after the given one and the rest of their team - Better Than One's person
+     * from outside the game. They start with nothing; the caller hands them cards and a team.
+     */
+    public Player addOutsidePlayer(final Player seatedAfter) {
+        final Set<String> usedNames = Sets.newHashSet();
+        int id = 0;
+        for (final Player p : allPlayers) {
+            usedNames.add(p.getName());
+            id = Math.max(id, p.getId() + 1);
+        }
+        final LobbyPlayer lobbyPlayer = OutsidePlayers.newAiPlayer(usedNames);
+        final Player pl = ((IGameEntitiesFactory) lobbyPlayer).createIngamePlayer(this, id);
+        pl.setOutsideRegistration(new RegisteredPlayer(new Deck()).setPlayer(lobbyPlayer));
+        pl.setTeam(seatedAfter.getTeam());
+        pl.setStartingHandSize(seatedAfter.getStartingHandSize());
+
+        // registrations are matched to players by position (Player.getRegisteredPlayer), so the new player goes at
+        // the end of that list - seat and turn order is ingamePlayers, where they sit beside their team (CR 805.1)
+        allPlayers.add(pl);
+        int seat = ingamePlayers.indexOf(seatedAfter) + 1;
+        while (seat < ingamePlayers.size() && ingamePlayers.get(seat).sameTeam(seatedAfter)) {
+            seat++;
+        }
+        ingamePlayers.add(seat, pl);
+        playerCache.put(pl);
+
+        view.updatePlayers(this);
+        for (final Player p : allPlayers) {
+            p.updateOpponentsForView();
+        }
+        fireEvent(new GameEventPlayerAdded(pl, seatedAfter));
+        return pl;
+    }
+
+    public boolean isGiantTeam(final int team) {
+        return giantTeams.contains(team);
+    }
+
+    public boolean hasGiantTeams() {
+        return !giantTeams.isEmpty();
+    }
+
+    /**
+     * Puts the given players - all on one team - under Two-Headed Giant rules from now on: one turn, one life total
+     * at the given value, and one poison count (CR 810.4, 810.10).
+     */
+    public void formGiantTeam(final Iterable<Player> team, final int teamLife) {
+        Player holder = null;
+        for (final Player p : team) {
+            giantTeams.add(p.getTeam());
+            if (holder == null) {
+                holder = p;
+            }
+            p.joinLifeTotal(holder, teamLife);
+        }
+        if (holder != null) {
+            for (final Player p : allPlayers) {
+                p.updateOpponentsForView();
+            }
+        }
     }
 
     public Tracker getTracker() {

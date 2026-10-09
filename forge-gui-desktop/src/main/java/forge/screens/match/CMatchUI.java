@@ -411,6 +411,49 @@ public final class CMatchUI
         screen.setCloseButtonTooltip(getConcedeCaption() + " Game");
     }
 
+    @Override
+    public void addPlayerView(final PlayerView player, final PlayerView seatedAfter) {
+        FThreads.invokeInEdtNowOrLater(() -> {
+            if (sortedPlayers == null || sortedPlayers.contains(player) || sortedPlayers.size() >= EDocID.Fields.length) {
+                return;
+            }
+            final int i = sortedPlayers.size();
+            final FCollection<PlayerView> players = new FCollection<>(sortedPlayers);
+            players.add(player);
+            sortedPlayers = players;
+
+            final EDocID fieldDoc = EDocID.Fields[i];
+            final VField field = new VField(this, fieldDoc, player, !isLocalPlayer(player));
+            myDocs.put(fieldDoc, field);
+            field.setAvatar(getPlayerAvatar(player, 1));
+            field.getLayoutControl().initialize();
+            final List<VField> fields = new ArrayList<>(view.getFieldViews());
+            fields.add(field);
+            view.setFieldViews(fields);
+
+            // they join the team seatedAfter is on, and teammates may review each other's hands (CR 810.5) - the
+            // team itself is formed after this, so whose team it is decides
+            boolean teamOfLocal = false;
+            for (final PlayerView local : getLocalPlayers()) {
+                teamOfLocal |= local.equals(seatedAfter) || seatedAfter.isGiantTeammateOf(local);
+            }
+            if (allHands || teamOfLocal) {
+                final EDocID handDoc = EDocID.Hands[i];
+                final VHand hand = new VHand(this, handDoc, player);
+                hand.getLayoutControl().initialize();
+                myDocs.put(handDoc, hand);
+                final List<VHand> hands = new ArrayList<>(view.getHands());
+                hands.add(hand);
+                view.setHandViews(hands);
+            }
+
+            registerDocs();
+            view.populate();
+            view.relayoutMultiplayerFields();
+            refreshAllViews();
+        });
+    }
+
     private void initHandViews() {
         final List<VHand> hands = new ArrayList<>();
         final Iterable<PlayerView> localPlayers = getLocalPlayers();

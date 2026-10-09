@@ -24,6 +24,7 @@ import forge.*;
 import forge.CardStorageReader.ProgressObserver;
 import forge.ai.AiProfileUtil;
 import forge.ai.ComputerUtilCard;
+import forge.ai.LobbyPlayerAi;
 import forge.card.BannedOrRestricted;
 import forge.card.CardFlavorText;
 import forge.card.CardRulesPredicates;
@@ -36,6 +37,7 @@ import forge.error.ExceptionHandler;
 import forge.game.GameFormat;
 import forge.game.GameType;
 import forge.game.card.CardThreat;
+import forge.game.player.OutsidePlayers;
 import forge.game.card.CardUtil;
 import forge.game.spellability.Spell;
 import forge.gamemodes.gauntlet.GauntletData;
@@ -68,6 +70,7 @@ import forge.util.storage.IStorage;
 import forge.util.storage.StorageBase;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiPredicate;
@@ -281,6 +284,8 @@ public final class FModel {
         AiProfileUtil.loadAllProfiles(ForgeConstants.AI_PROFILE_DIR);
         AiProfileUtil.setAiSideboardingMode(AiProfileUtil.AISideboardingMode.normalizedValueOf(getPreferences().getPref(FPref.MATCH_AI_SIDEBOARDING_MODE)));
         CardThreat.setEvaluator(ComputerUtilCard::evaluateCardImpact);
+        OutsidePlayers.setAiFactory(usedNames -> new LobbyPlayerAi(
+                NameGenerator.getRandomName("Any", "Any", new ArrayList<>(usedNames)), null));
 
         // Generate Deck Gen matrix
         if(getPreferences().getPrefBoolean(FPref.DECKGEN_CARDBASED) && !loadCardsLazily) {

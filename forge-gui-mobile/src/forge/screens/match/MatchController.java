@@ -331,6 +331,21 @@ public class MatchController extends NetworkGuiGame {
     }
 
     @Override
+    public void addPlayerView(final PlayerView player, final PlayerView seatedAfter) {
+        // they join seatedAfter's team, and teammates may review each other's hands (CR 810.5)
+        boolean teamOfLocal = false;
+        for (final PlayerView local : getLocalPlayers()) {
+            teamOfLocal |= local.equals(seatedAfter) || seatedAfter.isGiantTeammateOf(local);
+        }
+        final boolean showHand = teamOfLocal || !hasLocalPlayers();
+        FThreads.invokeInEdtLater(() -> {
+            if (view != null) {
+                view.addPlayerPanel(player, seatedAfter, showHand);
+            }
+        });
+    }
+
+    @Override
     public void showFlipOntoBattlefield(CardView flipped, CardView target, List<CardView> hit, List<CardView> battlefield, int timesFlipped) {
         if (!FModel.getPreferences().getPrefBoolean(FPref.UI_ANIMATED_CARD_TAPUNTAP)) {
             return;

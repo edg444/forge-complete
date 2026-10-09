@@ -18,6 +18,11 @@ public class TriggerTurnBegin extends Trigger {
         if (!matchesValidParam("ValidPlayer", runParams.get(AbilityKey.Player))) {
             return false;
         }
+        // CR 805.4d: a Two-Headed Giant team's turn runs this once per active player, but only a trigger about "that
+        // player" goes off for each of them - one that names no player goes off once, for the primary player's
+        if (!hasParam("ValidPlayer") && runParams.get(AbilityKey.Player) != getHostCard().getGame().getPhaseHandler().getPlayerTurn()) {
+            return false;
+        }
         return true;
     }
 

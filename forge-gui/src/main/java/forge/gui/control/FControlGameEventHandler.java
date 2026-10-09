@@ -286,6 +286,12 @@ public class FControlGameEventHandler extends IGameEventVisitor.Base<Void> {
     }
 
     @Override
+    public Void visit(final GameEventPlayerAdded ev) {
+        matchController.addPlayerView(ev.player(), ev.seatedAfter());
+        return null;
+    }
+
+    @Override
     public Void visit(final GameEventFlipOntoBattlefield ev) {
         if (ev.finished()) {
             matchController.endFlipOntoBattlefield(ev.flipped());

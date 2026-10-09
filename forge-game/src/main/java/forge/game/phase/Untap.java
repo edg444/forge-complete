@@ -35,6 +35,7 @@ import forge.game.card.CardZoneTable;
 import forge.game.keyword.Keyword;
 import forge.game.keyword.KeywordInterface;
 import forge.game.player.Player;
+import forge.game.player.PlayerCollection;
 import forge.game.player.PlayerController.BinaryChoiceType;
 import forge.game.spellability.SpellAbility;
 import forge.game.staticability.StaticAbilityCantPhase;
@@ -70,7 +71,10 @@ public class Untap extends Phase {
     public void executeAt() {
         super.executeAt();
 
-        doPhasing(game.getPhaseHandler().getPlayerTurn());
+        // CR 805.4: everything below happens for each player on an active Two-Headed Giant team
+        for (final Player active : game.getPhaseHandler().getActivePlayers()) {
+            doPhasing(active);
+        }
         doDayTime(game.getPhaseHandler().getPreviousPlayerTurn());
 
         game.getAction().checkStaticAbilities();
@@ -84,8 +88,17 @@ public class Untap extends Phase {
      * </p>
      */
     private void doUntap() {
-        final Player active = game.getPhaseHandler().getPlayerTurn();
         Map<Player, CardCollection> untapMap = Maps.newHashMap();
+        for (final Player active : game.getPhaseHandler().getActivePlayers()) {
+            doUntap(active, untapMap);
+        }
+
+        final Map<AbilityKey, Object> runParams = AbilityKey.newMap();
+        runParams.put(AbilityKey.Map, untapMap);
+        game.getTriggerHandler().runTrigger(TriggerType.UntapAll, runParams, false);
+    }
+
+    private void doUntap(final Player active, final Map<Player, CardCollection> untapMap) {
 
         CardCollection untapList = new CardCollection(active.getCardsIn(ZoneType.Battlefield));
 
@@ -148,7 +161,7 @@ public class Untap extends Phase {
             }
         }
 
-        for (final Card c : active.getAllOtherPlayers().getCardsIn(ZoneType.Battlefield)) {
+        for (final Card c : active.getAllOtherPlayers().filter(p -> !p.sharesTurnWith(active)).getCardsIn(ZoneType.Battlefield)) {
             if (c.isTapped() && StaticAbilityUntapOtherPlayer.untap(c, active) && c.untap(active)) {
                 untapMap.computeIfAbsent(c.getController(), i -> new CardCollection()).add(c);
             }
@@ -165,10 +178,6 @@ public class Untap extends Phase {
         for (final Card c : game.getCardsIn(ZoneType.Battlefield)) {
             c.removeExertedBy(active);
         }
-
-        final Map<AbilityKey, Object> runParams = AbilityKey.newMap();
-        runParams.put(AbilityKey.Map, untapMap);
-        game.getTriggerHandler().runTrigger(TriggerType.UntapAll, runParams, false);
     }
 
     private static boolean optionalUntap(final Card c, Player phase) {
@@ -255,9 +264,11 @@ public class Untap extends Phase {
         final Game game = previous.getGame();
         List<Card> casted = game.getStack().getSpellsCastLastTurn();
 
-        if (game.isDay() && casted.stream().noneMatch(CardPredicates.isController(previous))) {
+        // CR 502.2a: with shared team turns it's the whole previous active team that counts
+        final PlayerCollection previousTeam = previous.getGiantTeam();
+        if (game.isDay() && casted.stream().noneMatch(CardPredicates.isControlledByAnyOf(previousTeam))) {
             game.setDayTime(true);
-        } else if (game.isNight() && CardLists.count(casted, CardPredicates.isController(previous)) > 1) {
+        } else if (game.isNight() && previousTeam.anyMatch(p -> CardLists.count(casted, CardPredicates.isController(p)) > 1)) {
             game.setDayTime(false);
         }
     }
