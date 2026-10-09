@@ -190,6 +190,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-09 (deployed: desktop, Android, GitHub) — upstream merge (94 commits, incl. dice and flip animations); The Grand Calcutron; Hot Fix; Ol' Buzzbark; Phoebe, Head of S.N.E.A.K.; X; Urza, Academy Headmaster audit
+
 - **Upstream merge** (94 commits: dice and coin-flip animations, FlipOntoBattlefield corner hits and a mobile flip
   animation, AI paying for mana abilities that cost mana (Signets, filter lands), simultaneous-entry fix, netplay
   host fixes, TRK/TRC cards, edition and net-deck updates). Conflicts:
