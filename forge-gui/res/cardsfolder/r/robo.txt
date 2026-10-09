@@ -1,0 +1,11 @@
+Name:Robo-
+ManaCost:no cost
+Types:Artifact Creature Construct
+PT:+1/+1
+K:Augment:2
+# An augment's triggers are unfinished conditions with no Execute - combining with a host completes them with
+# the host's effect (CardFactory.getAugmentedCloneStates). On their own they never do anything.
+# Augmenting isn't entering the battlefield (the host carries on), so Robo- itself never meets the condition.
+T:Mode$ Phase | Phase$ End of Turn | TriggerZones$ Battlefield | CheckSVar$ RoboArtifactEntered | SVarCompare$ GE1 | TriggerDescription$ At the beginning of each end step, if an artifact entered the battlefield under your control this turn,
+SVar:RoboArtifactEntered:Count$ThisTurnEntered_Battlefield_Artifact.YouCtrl
+Oracle:At the beginning of each end step, if an artifact entered the battlefield under your control this turn,\nAugment {2} ({2}, Reveal this card from your hand: Combine it with target host. Augment only as a sorcery.)

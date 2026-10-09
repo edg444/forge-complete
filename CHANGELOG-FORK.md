@@ -309,6 +309,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   included - a RollDice/RollPlanarDice ability anywhere (sub-abilities, triggers, replacements, script it grants, like
   Lobe Lobber's), Wall of Fortune's reroll permission, Krark's Other Thumb - but not cards that only care about results
   (Snickering Squirrel, Squirrel-Powered Scheme; rulings). `ProperLaboratoryAttireTest` (1).
+- **Robo-** (ust/157; not scripted upstream). Script only: the Half-Orc shape (intervening-if end step, uniquely named
+  `RoboArtifactEntered` SVar so it can't clash with a host's). Augmenting isn't an artifact entering - the host carries
+  on, as with mutate (user ruling; the augment rulings don't say) - so Robo- never meets its own condition.
+  `RoboTest` (3).
 
 ### 2026-10-09 (deployed: desktop, Android, GitHub) — upstream merge (94 commits, incl. dice and flip animations); The Grand Calcutron; Hot Fix; Ol' Buzzbark; Phoebe, Head of S.N.E.A.K.; X; Urza, Academy Headmaster audit
 
