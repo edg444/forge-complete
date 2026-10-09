@@ -304,6 +304,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     Chosen: it gains the keyword for good. Not in time: it loses all keyword abilities, ones gained other ways too.
   - AI: never short of time; takes the best keyword it hasn't used today (flying, double strike, indestructible, ...).
   - `ModularMonstrosityTest` (3).
+- **Proper Laboratory Attire** (ust/156; not scripted upstream). Protection from die rolls = `Protection:Card.RollsDice:die
+  rolls`; card property `RollsDice` (`Card.rollsDice`): anything that allows or requires someone to roll a die, rerolls
+  included - a RollDice/RollPlanarDice ability anywhere (sub-abilities, triggers, replacements, script it grants, like
+  Lobe Lobber's), Wall of Fortune's reroll permission, Krark's Other Thumb - but not cards that only care about results
+  (Snickering Squirrel, Squirrel-Powered Scheme; rulings). `ProperLaboratoryAttireTest` (1).
 
 ### 2026-10-09 (deployed: desktop, Android, GitHub) — upstream merge (94 commits, incl. dice and flip animations); The Grand Calcutron; Hot Fix; Ol' Buzzbark; Phoebe, Head of S.N.E.A.K.; X; Urza, Academy Headmaster audit
 

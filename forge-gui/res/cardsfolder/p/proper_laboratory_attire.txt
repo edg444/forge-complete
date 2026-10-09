@@ -1,0 +1,7 @@
+Name:Proper Laboratory Attire
+ManaCost:1
+Types:Artifact Equipment
+K:Equip:2
+# "Die rolls" = anything that allows or requires someone to roll a die, rerolls included (Card.rollsDice, rulings)
+S:Mode$ Continuous | Affected$ Creature.EquippedBy | AddPower$ 2 | AddToughness$ 1 | AddKeyword$ Protection:Card.RollsDice:die rolls | Description$ Equipped creature gets +2/+1 and has protection from die rolls. (Nothing that lets a player roll a die can block, target, deal damage to, or attach to equipped creature.)
+Oracle:Equipped creature gets +2/+1 and has protection from die rolls. (Nothing that lets a player roll a die can block, target, deal damage to, or attach to equipped creature.)\nEquip {2}

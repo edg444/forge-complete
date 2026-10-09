@@ -6256,6 +6256,57 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return handLender == null ? "someone outside the game" : handLender.getName();
     }
 
+    /**
+     * Proper Laboratory Attire's "die rolls": whether this allows or requires someone to roll a die - any die, rerolls
+     * included - as opposed to only caring about results, like Snickering Squirrel (rulings). Its abilities (sub-abilities,
+     * trigger and replacement abilities, and script it grants others, such as Lobe Lobber's) are searched for a roll,
+     * and Wall of Fortune's reroll permission and Krark's Other Thumb count too.
+     */
+    public final boolean rollsDice() {
+        for (final SpellAbility sa : getSpellAbilities()) {
+            if (rollsDice(sa)) {
+                return true;
+            }
+        }
+        for (final forge.game.trigger.Trigger t : getTriggers()) {
+            if (rollsDice(t.getOverridingAbility())) {
+                return true;
+            }
+        }
+        for (final forge.game.replacement.ReplacementEffect re : getReplacementEffects()) {
+            if (rollsDice(re.getOverridingAbility())) {
+                return true;
+            }
+        }
+        for (final forge.game.staticability.StaticAbility st : getStaticAbilities()) {
+            if (st.checkMode(forge.game.staticability.StaticAbilityMode.RerollWithWall)
+                    || st.checkMode(forge.game.staticability.StaticAbilityMode.RollTwoKeepOne)) {
+                return true;
+            }
+        }
+        for (final String svar : getSVars().values()) {
+            if (svar.contains("$ RollDice") || svar.contains("$ RollPlanarDice")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean rollsDice(SpellAbility sa) {
+        while (sa != null) {
+            if (sa.getApi() == forge.game.ability.ApiType.RollDice || sa.getApi() == forge.game.ability.ApiType.RollPlanarDice) {
+                return true;
+            }
+            for (final SpellAbility extra : sa.getAdditionalAbilities().values()) {
+                if (rollsDice(extra)) {
+                    return true;
+                }
+            }
+            sa = sa.getSubAbility();
+        }
+        return false;
+    }
+
     /** What a hidden permanent's controller is reminded of - where they hid it - or null. */
     public final String getHiddenSpotLabel() {
         if (!isHiddenOnBattlefield()) {

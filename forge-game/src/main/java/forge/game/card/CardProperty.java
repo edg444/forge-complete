@@ -340,6 +340,11 @@ public class CardProperty {
             if (card.getGamePieceType() != forge.card.GamePieceType.LIBRARY) {
                 return false;
             }
+        } else if (property.equals("RollsDice")) {
+            // Proper Laboratory Attire: protection from die rolls
+            if (!card.rollsDice()) {
+                return false;
+            }
         } else if (property.equals("BlackBordered")) {
             // Knight of the Kitchen Sink. The printed border, so borderless printings don't count, and acorn cards
             // are silver (Card.bordersAs)
