@@ -14,13 +14,16 @@ import forge.game.GameRules;
 import forge.game.GameStage;
 import forge.game.GameType;
 import forge.game.Match;
+import forge.game.ability.AbilityUtils;
 import forge.game.card.Card;
 import forge.game.card.CounterEnumType;
 import forge.game.combat.Combat;
 import forge.game.combat.CombatUtil;
+import forge.game.mulligan.MulliganService;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
 import forge.game.player.RegisteredPlayer;
+import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 
 /**
@@ -149,6 +152,35 @@ public class TwoHeadedGiantTest extends AITest {
         AssertJUnit.assertTrue(a2.hasLost());
         AssertJUnit.assertTrue(game.isGameOver());
         AssertJUnit.assertFalse(b2.hasLost());
+    }
+
+    @Test
+    public void proliferateGivesTheTeamOnePoison() {
+        final Game game = createTwoHeadedGiantGame();
+        final Player a1 = player(game, 0), a2 = player(game, 1), b1 = player(game, 2);
+        a1.setPoisonCounters(3, b1);
+        a2.setPoisonCounters(2, b1);
+
+        final Card spell = addCardToZone("Steady Progress", b1, ZoneType.Hand);
+        final SpellAbility sa = spell.getFirstSpellAbility();
+        sa.setActivatingPlayer(b1);
+        AbilityUtils.resolve(sa);
+
+        // b1's AI proliferates both poisoned heads, but they share one count (CR 701.34b)
+        AssertJUnit.assertEquals(6, a1.getPoisonCounters());
+    }
+
+    @Test
+    public void teamMulligansFinish() {
+        final Game game = createTwoHeadedGiantGame();
+        for (final Player p : game.getPlayers()) {
+            p.drawCards(7);
+        }
+        new MulliganService(player(game, 0)).perform();
+        for (final Player p : game.getPlayers()) {
+            AssertJUnit.assertTrue(p.getCardsIn(ZoneType.Hand).size() <= 7);
+            AssertJUnit.assertFalse(p.getCardsIn(ZoneType.Hand).isEmpty());
+        }
     }
 
     @Test

@@ -2864,7 +2864,9 @@ public class GameAction {
             }
         }
         goesFirst = goesFirst.getController().chooseStartingPlayer(isFirstGame);
-        return goesFirst;
+        // CR 103.1a: with shared team turns there's a starting team, whose turn is its primary player's (805.2) -
+        // that also puts the whole team first in seat order for mulligans and opening-hand actions (805.3)
+        return goesFirst.getGiantTeam().get(0);
     }
 
     private void runPreOpeningHandActions(final Player first) {
@@ -2925,7 +2927,8 @@ public class GameAction {
                     if (kw.startsWith("MayEffectFromOpeningHand")) {
                         String[] split = kw.split(":");
                         final String effName = split[1];
-                        if (split.length > 2 && split[2].equalsIgnoreCase("!PlayFirst") && first == takesAction) {
+                        // CR 103.1a: on a starting Two-Headed Giant team, every head counts as the starting player
+                        if (split.length > 2 && split[2].equalsIgnoreCase("!PlayFirst") && first.sharesTurnWith(takesAction)) {
                             continue;
                         }
 
@@ -2955,7 +2958,7 @@ public class GameAction {
             takesAction = game.getNextPlayerAfter(takesAction);
         } while (takesAction != first);
         // state effects are checked only when someone gets priority
-        return newFirst;
+        return newFirst.getGiantTeam().get(0);
     }
 
     // Invokes given runnable in Game thread pool - used to start game and perform actions from UI (when game-0 waits for input)

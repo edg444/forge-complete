@@ -183,6 +183,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Team combat** — each head declares into one combined attack (805.10b); a defender may block creatures attacking
   any player on their team (805.10d, `CombatUtil.canBeBlocked`). AI blocks and danger checks count attackers aimed
   at teammates (`ComputerUtilCombat.getAttackersOfTeam`).
+- **Starting team** — whoever starts, their team's primary player takes the first turn (103.1a, 805.2); mulligans
+  are declared by everyone, starting team first, then taken together (`MulliganService.runTeamMulligans`, 805.3a).
+- **Proliferate** — one poison counter per team however many heads are chosen (701.34b); heads count their team's
+  poison as theirs (810.10d).
 - **Team wins and losses** — a head losing takes the team with them, a head winning doesn't make teammates lose
   (`GameAction.checkGameOverCondition`). Teammates see each other's hands (810.5, `PlayerView.isGiantTeammateOf`).
 - **Lobby variant** (desktop and mobile): equal lobby teams of 2+, or seats 1+2 vs 3+4 when every slot is on its
@@ -218,7 +222,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Two-Headed Giant** (CR 805, 810; rules checked against the 2026-09-25 Comprehensive Rules). See the engine
   capabilities section for what it covers. Fixed on the way: a human who is a team's second head used the first
   head's phase stops and would have auto-passed through their own main phase; their own stops now apply.
-  `TwoHeadedGiantTest` (8).
+  Follow-ups: every head's field (desktop) / panel (mobile) lights up in the phase display; proliferate gives a
+  team one poison counter however many heads are chosen, the proliferating player picking which (701.34b), and a
+  head whose partner is poisoned can be chosen (810.10d); the starting player is normalized to their team's primary,
+  so the starting team goes first for mulligans and opening-hand actions, "if you're not the starting player" means
+  the starting team (103.1a), and team games declare every mulligan before any is taken (805.3a).
+  `TwoHeadedGiantTest` (10).
 - **Better Than One** (ust/128; previously deferred, not scripted upstream). `SP$ GainTeammate`: the caster picks
   hand cards, a number of cards from the top of their library and permanents; an AI-played person from outside the
   game (user ruling) joins beside the caster's team, owns those cards (set directly, not as an ante ownership change -

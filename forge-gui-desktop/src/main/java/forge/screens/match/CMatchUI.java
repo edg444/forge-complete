@@ -989,6 +989,16 @@ public final class CMatchUI
         if (lbl != null) {
             lbl.setActive(true);
         }
+        // it's every head's turn on a Two-Headed Giant team (CR 805.4), so their fields light up too
+        if (p != null && ph != null) {
+            for (final PlayerView mate : sortedPlayers) {
+                final VField field = p.isGiantTeammateOf(mate) ? getFieldViewFor(mate) : null;
+                final PhaseLabel mateLbl = field == null ? null : field.getPhaseIndicator().getLabelFor(ph);
+                if (mateLbl != null) {
+                    mateLbl.setActive(true);
+                }
+            }
+        }
 
         if (openAbilityMenu != null) { //ensure ability menu can't remain open between phases
             openAbilityMenu.setVisible(false);

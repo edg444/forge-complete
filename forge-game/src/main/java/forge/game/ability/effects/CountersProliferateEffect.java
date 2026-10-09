@@ -1,7 +1,10 @@
 package forge.game.ability.effects;
 
 import java.util.List;
+import java.util.Set;
 import java.util.Map;
+
+import com.google.common.collect.Sets;
 
 import forge.game.Game;
 import forge.game.GameEntity;
@@ -57,16 +60,46 @@ public class CountersProliferateEffect extends SpellAbilityEffect {
         for (int i = 0; i < num; i++) {
             FCollection<GameEntity> list = new FCollection<>();
 
-            list.addAll(game.getPlayers().filter(PlayerPredicates.hasCounters()));
+            // CR 810.10d: a Two-Headed Giant head has every kind of counter their team has, so a teammate is
+            // "poisoned" - and can be chosen - on their partner's poison alone
+            list.addAll(game.getPlayers().filter(PlayerPredicates.hasCounters().or(pl -> pl.getPoisonCounters() > 0)));
             list.addAll(CardLists.filter(game.getCardsIn(ZoneType.Battlefield), CardPredicates.hasCounters()));
 
             List<GameEntity> result = pc.chooseEntitiesForEffect(list, 0, list.size(), null, sa,
                     Localizer.getInstance().getMessage("lblChooseProliferateTarget"), p, null);
 
+            // CR 701.34b: the team's poison is shared, so if more than one head of a team is chosen, only one of them
+            // gets another poison counter - the proliferating player picks which
+            final Set<Player> poisonedHeads = Sets.newHashSet();
+            final Set<Integer> teamsDone = Sets.newHashSet();
+            for (final GameEntity ge : result) {
+                if (!(ge instanceof Player pl) || pl.getPoisonCounters() <= 0) {
+                    continue;
+                }
+                if (!pl.isOnGiantTeam()) {
+                    poisonedHeads.add(pl);
+                } else if (teamsDone.add(pl.getTeam())) {
+                    final FCollection<Player> heads = new FCollection<>();
+                    for (final GameEntity other : result) {
+                        if (other instanceof Player op && op.sharesTurnWith(pl)) {
+                            heads.add(op);
+                        }
+                    }
+                    poisonedHeads.add(heads.size() == 1 ? pl : pc.chooseSingleEntityForEffect(heads, sa,
+                            "Choose which player on that team gets the poison counter", null));
+                }
+            }
+
             GameEntityCounterTable table = new GameEntityCounterTable();
             for (final GameEntity ge : result) {
+                final boolean isPlayer = ge instanceof Player;
                 for (final CounterType ct : ge.getCounters().elementSet()) {
-                    ge.addCounter(ct, 1, p, table);
+                    if (!isPlayer || !ct.is(CounterEnumType.POISON)) {
+                        ge.addCounter(ct, 1, p, table);
+                    }
+                }
+                if (isPlayer && poisonedHeads.contains(ge)) {
+                    ge.addCounter(CounterEnumType.POISON, 1, p, table);
                 }
             }
             table.replaceCounterEffect(game, sa);

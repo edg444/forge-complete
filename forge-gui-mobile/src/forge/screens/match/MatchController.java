@@ -382,16 +382,17 @@ public class MatchController extends NetworkGuiGame {
                 lastPlayer = getGameView().getPlayerTurn();
             //reset phase labels
             view.resetAllPhaseButtons();
-            if (lastPlayer != null && PhaseType.CLEANUP.equals(ph)) {
-                //set phaselabel
-                final VPhaseIndicator.PhaseLabel phaseLabel = view.getPlayerPanel(lastPlayer).getPhaseIndicator().getLabel(ph);
-                if (phaseLabel != null)
-                    phaseLabel.setActive(true);
-            } else if (getGameView().getPlayerTurn() != null) {
-                //set phaselabel
-                final VPhaseIndicator.PhaseLabel phaseLabel = view.getPlayerPanel(getGameView().getPlayerTurn()).getPhaseIndicator().getLabel(ph);
-                if (phaseLabel != null)
-                    phaseLabel.setActive(true);
+            final PlayerView turnPlayer = lastPlayer != null && PhaseType.CLEANUP.equals(ph) ? lastPlayer : getGameView().getPlayerTurn();
+            if (turnPlayer != null) {
+                // it's every head's turn on a Two-Headed Giant team (CR 805.4), so their panels light up too
+                for (final PlayerView p : getGameView().getPlayers()) {
+                    if (p.equals(turnPlayer) || turnPlayer.isGiantTeammateOf(p)) {
+                        final VPlayerPanel panel = view.getPlayerPanel(p);
+                        final VPhaseIndicator.PhaseLabel phaseLabel = panel == null ? null : panel.getPhaseIndicator().getLabel(ph);
+                        if (phaseLabel != null)
+                            phaseLabel.setActive(true);
+                    }
+                }
             }
         }
 

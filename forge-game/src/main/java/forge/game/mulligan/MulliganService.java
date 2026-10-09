@@ -66,6 +66,10 @@ public class MulliganService {
     }
 
     private void runPlayerMulligans() {
+        if (game.hasGiantTeams()) {
+            runTeamMulligans();
+            return;
+        }
         boolean allKept;
         do {
             allKept = true;
@@ -96,6 +100,40 @@ public class MulliganService {
                 mulligan.mulligan();
             }
         } while (!allKept);
+    }
+
+    /**
+     * CR 805.3a, for shared team turns: the starting team's players declare first, then each other team in turn order
+     * (seat order from the starting team's primary player gives exactly that), and only once everyone has declared
+     * are the mulligans taken, all at the same time. Each player decides for themselves, so one can mulligan after a
+     * teammate keeps.
+     */
+    private void runTeamMulligans() {
+        while (true) {
+            final List<AbstractMulligan> taking = Lists.newArrayList();
+            for (AbstractMulligan mulligan : mulligans) {
+                if (mulligan.hasKept()) {
+                    continue;
+                }
+                final boolean keep = !mulligan.canMulligan()
+                        || mulligan.getPlayer().getController().mulliganKeepHand(firstPlayer, mulligan.tuckCardsDuringMulligan());
+                if (game.isGameOver()) {
+                    // conceded during mulligan prompt
+                    return;
+                }
+                if (keep) {
+                    mulligan.keep();
+                } else {
+                    taking.add(mulligan);
+                }
+            }
+            if (taking.isEmpty()) {
+                return;
+            }
+            for (AbstractMulligan mulligan : taking) {
+                mulligan.mulligan();
+            }
+        }
     }
 
     private void runPostMulligans() {
