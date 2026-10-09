@@ -2956,11 +2956,12 @@ public class ComputerUtil {
     }
 
     public static int getDamageForPlaying(final Player player, final SpellAbility sa) {
-        // check for bad spell cast triggers
+        // check for bad spell cast or ability activation triggers (e.g. Burning-Tree Shaman)
         int damage = 0;
         final Game game = player.getGame();
         final Card card = sa.getHostCard();
         final FCollection<Trigger> theTriggers = new FCollection<>();
+        final TriggerType mode = sa.isActivatedAbility() ? TriggerType.AbilityCast : TriggerType.SpellCast;
 
         for (Card c : game.getCardsIn(ZoneType.Battlefield)) {
             theTriggers.addAll(c.getTriggers());
@@ -2968,7 +2969,10 @@ public class ComputerUtil {
         for (Trigger trigger : theTriggers) {
             final Card source = trigger.getHostCard();
 
-            if (trigger.getMode() != TriggerType.SpellCast) {
+            if (trigger.getMode() != mode) {
+                continue;
+            }
+            if (mode == TriggerType.AbilityCast && !trigger.matchesValidParam("ValidSA", sa)) {
                 continue;
             }
             if (!trigger.zonesCheck(game.getZoneOf(source))) {
