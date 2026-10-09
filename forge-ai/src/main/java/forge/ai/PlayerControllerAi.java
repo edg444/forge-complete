@@ -788,6 +788,37 @@ public class PlayerControllerAi extends PlayerController {
         return rolls.contains(PlanarDice.Blank) ? PlanarDice.Blank : Aggregates.random(rolls);
     }
 
+    // Modular Monstrosity: the AI is never short of time, so it takes the best keyword it hasn't used today - the plain
+    // form, as printed, when there is one - and otherwise whatever's left
+    private static final List<forge.game.keyword.Keyword> KEYWORD_PREFERENCE = List.of(
+            forge.game.keyword.Keyword.FLYING, forge.game.keyword.Keyword.DOUBLE_STRIKE, forge.game.keyword.Keyword.INDESTRUCTIBLE,
+            forge.game.keyword.Keyword.HEXPROOF, forge.game.keyword.Keyword.LIFELINK, forge.game.keyword.Keyword.TRAMPLE,
+            forge.game.keyword.Keyword.DEATHTOUCH, forge.game.keyword.Keyword.FIRST_STRIKE, forge.game.keyword.Keyword.VIGILANCE,
+            forge.game.keyword.Keyword.MENACE, forge.game.keyword.Keyword.WARD, forge.game.keyword.Keyword.REACH,
+            forge.game.keyword.Keyword.HASTE, forge.game.keyword.Keyword.SHROUD, forge.game.keyword.Keyword.PROTECTION);
+
+    @Override
+    public String chooseKeywordInTime(final List<String> keywords, final int seconds, final SpellAbility sa) {
+        for (final forge.game.keyword.Keyword wanted : KEYWORD_PREFERENCE) {
+            String fallback = null;
+            for (final String k : keywords) {
+                if (forge.game.keyword.PrintedCreatureKeywords.keyword(k) != wanted) {
+                    continue;
+                }
+                if (!k.contains(":") && !k.contains(" ")) {
+                    return k;
+                }
+                if (fallback == null) {
+                    fallback = k;
+                }
+            }
+            if (fallback != null) {
+                return fallback;
+            }
+        }
+        return keywords.isEmpty() ? null : Aggregates.random(keywords);
+    }
+
     @Override
     public Integer chooseRollToIgnore(List<Integer> rolls) {
         // nearly every die effect rewards rolling high, so the low one goes (Krark's Other Thumb keeps the other)

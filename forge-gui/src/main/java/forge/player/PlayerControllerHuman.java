@@ -3895,6 +3895,18 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
     }
 
     @Override
+    public String chooseKeywordInTime(final List<String> keywords, final int seconds, final SpellAbility sa) {
+        // shown as they read on cards; the engine wants the keyword line back
+        final Map<String, String> byTitle = new java.util.LinkedHashMap<>();
+        for (final String k : keywords) {
+            byTitle.putIfAbsent(forge.game.keyword.PrintedCreatureKeywords.title(k), k);
+        }
+        final String title = getGui().chooseStringInTime("Choose a keyword for " + sa.getHostCard().getName()
+                + " - you have " + seconds + " seconds!", new ArrayList<>(byTitle.keySet()), seconds);
+        return title == null ? null : byTitle.get(title);
+    }
+
+    @Override
     public Pair<CardCollectionView, Boolean> rearrangeInTime(final CardCollectionView cards, final int seconds, final SpellAbility sa) {
         final GameEntityViewMap<Card, CardView> gameCache = GameEntityView.getMap(cards);
         tempShowCards(cards);

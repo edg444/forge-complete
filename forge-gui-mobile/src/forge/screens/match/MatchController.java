@@ -800,6 +800,25 @@ public class MatchController extends NetworkGuiGame {
     }
 
     @Override
+    public String chooseStringInTime(final String title, final List<String> options, final int seconds) {
+        return new WaitCallback<String>() {
+            @Override
+            public void run() {
+                final WaitCallback<String> done = this;
+                final forge.toolbox.ListChooser<String> chooser = new forge.toolbox.ListChooser<>(title, 0, 1, options, null,
+                        chosen -> done.accept(chosen == null || chosen.isEmpty() ? null : chosen.get(0)));
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        chooser.timeOut();
+                    }
+                }, seconds);
+                chooser.show();
+            }
+        }.invokeAndWait();
+    }
+
+    @Override
     public TimedArrangement rearrangeInTime(final String title, final List<CardView> cards, final int seconds) {
         return new WaitCallback<TimedArrangement>() {
             @Override

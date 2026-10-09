@@ -1,0 +1,9 @@
+Name:Modular Monstrosity
+ManaCost:7
+Types:Artifact Creature Construct
+PT:3/3
+# Real five-second clock; keywords as printed on creature cards (PrintedCreatureKeywords); "today" is the calendar day,
+# across every Monstrosity and every game (KeywordDayLog, kept in the user folder).
+T:Mode$ SpellCast | ValidActivatingPlayer$ Opponent | TriggerZones$ Battlefield | Execute$ TrigChoose | TriggerDescription$ Whenever an opponent casts a spell, you have five seconds to choose a keyword you haven't chosen for a card named Modular Monstrosity today that's been printed on a creature card. If you do, this creature gains that ability. Otherwise, this creature loses all keyword abilities.
+SVar:TrigChoose:DB$ ChooseKeywordInTime | Seconds$ 5
+Oracle:Whenever an opponent casts a spell, you have five seconds to choose a keyword you haven't chosen for a card named Modular Monstrosity today that's been printed on a creature card. If you do, this creature gains that ability. Otherwise, this creature loses all keyword abilities.

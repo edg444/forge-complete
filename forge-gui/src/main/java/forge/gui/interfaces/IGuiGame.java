@@ -261,6 +261,11 @@ public interface IGuiGame {
     // show a list of cards and allow some of them to be moved around and return new list
     List<CardView> manipulateCardList(String title, final Iterable<CardView> cards, final Iterable<CardView> manipulable, boolean toTop, boolean toBottom, boolean toAnywhere);
 
+    /** Modular Monstrosity: choose one of these within the given seconds, or null if time runs out. Untimed where a UI has no clock. */
+    default String chooseStringInTime(String title, List<String> options, int seconds) {
+        return oneOrNone(title, options);
+    }
+
     /** Hot Fix: rearrange cards (first = top) until the given seconds run out. Untimed where a UI has no clock. */
     default TimedArrangement rearrangeInTime(String title, List<CardView> cards, int seconds) {
         return new TimedArrangement(manipulateCardList(title, cards, cards, true, true, true), false);

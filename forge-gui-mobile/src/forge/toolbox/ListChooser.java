@@ -199,6 +199,15 @@ public class ListChooser<T> extends FContainer {
         }
     }
 
+    /** Closes the chooser with nothing chosen, if it's still open (Modular Monstrosity's clock running out). */
+    public void timeOut() {
+        if (called) {
+            called = false;
+            optionPane.hide();
+            callback.accept(new ArrayList<>());
+        }
+    }
+
     public void show() {
         show(null, false);
     }

@@ -56,6 +56,7 @@ public enum ApiType {
     ChooseColor (ChooseColorEffect.class),
     ChooseDirection (ChooseDirectionEffect.class),
     ChooseEvenOdd (ChooseEvenOddEffect.class),
+    ChooseKeywordInTime (ChooseKeywordInTimeEffect.class),
     ChooseNumber (ChooseNumberEffect.class),
     ChoosePlayer (ChoosePlayerEffect.class),
     ChooseSector (ChooseSectorEffect.class),

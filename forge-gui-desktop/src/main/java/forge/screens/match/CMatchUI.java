@@ -1422,6 +1422,11 @@ public final class CMatchUI
     }
 
     @Override
+    public String chooseStringInTime(final String title, final List<String> options, final int seconds) {
+        return GuiChoose.oneInTime(title, options, seconds);
+    }
+
+    @Override
     public TimedArrangement rearrangeInTime(final String title, final List<CardView> cards, final int seconds) {
         return GuiChoose.rearrangeInTime(this, title, cards, seconds);
     }

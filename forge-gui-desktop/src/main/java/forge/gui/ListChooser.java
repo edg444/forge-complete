@@ -252,6 +252,33 @@ public class ListChooser<T> {
     }
 
     /**
+     * Shows the dialog for at most the given seconds, counting down in its title; when time runs out it closes with
+     * nothing chosen (Modular Monstrosity). Must be called on the EDT, as show() is.
+     */
+    public boolean showTimed(final int seconds) {
+        final String title = optionPane.getTitle();
+        final int[] left = {seconds};
+        final javax.swing.Timer timer = new javax.swing.Timer(1000, null);
+        timer.addActionListener(e -> {
+            left[0]--;
+            if (left[0] > 0) {
+                optionPane.setTitle(title + " (" + left[0] + ")");
+                return;
+            }
+            timer.stop();
+            lstChoices.clearSelection();
+            optionPane.setResult(1);
+        });
+        optionPane.setTitle(title + " (" + seconds + ")");
+        timer.start();
+        try {
+            return show();
+        } finally {
+            timer.stop();
+        }
+    }
+
+    /**
      * Shows the dialog and returns after the dialog was closed.
      */
     public boolean show(final Collection<T> item) {

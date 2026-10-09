@@ -440,6 +440,14 @@ public abstract class PlayerController {
         return Pair.of(cards, false);
     }
 
+    /**
+     * Modular Monstrosity: pick one of these keyword lines within the given seconds, or null for no choice in time.
+     * Untimed wherever a controller has no clock.
+     */
+    public String chooseKeywordInTime(final java.util.List<String> keywords, final int seconds, final SpellAbility sa) {
+        return null;
+    }
+
     /** The Grand Calcutron: where in this player's program (0 = first) a card put into their hand goes. */
     public int chooseProgramPosition(final Card card, final CardCollectionView program) {
         return program.size();

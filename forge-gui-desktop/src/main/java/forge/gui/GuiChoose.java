@@ -272,6 +272,21 @@ public class GuiChoose {
         return new OrderResult<>(null, false);
     }
 
+    /** Modular Monstrosity: one of these within the given seconds, or null when time runs out. */
+    public static String oneInTime(final String title, final List<String> options, final int seconds) {
+        final FutureTask<String> ft = new FutureTask<>(() -> {
+            final ListChooser<String> chooser = new ListChooser<>(title, 0, 1, options, null);
+            return chooser.showTimed(seconds) ? chooser.getSelectedValue() : null;
+        });
+        FThreads.invokeInEdtAndWait(ft);
+        try {
+            return ft.get();
+        } catch (final Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static IGuiGame.TimedArrangement rearrangeInTime(final CMatchUI gui, final String title, final List<CardView> cards, final int seconds) {
         final FutureTask<IGuiGame.TimedArrangement> ft = new FutureTask<>(() -> {
             final ListCardArea area = ListCardArea.showTimed(gui, title, cards, seconds);

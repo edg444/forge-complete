@@ -287,6 +287,37 @@ public final class FModel {
         CardThreat.setEvaluator(ComputerUtilCard::evaluateCardImpact);
         OutsidePlayers.setAiFactory(usedNames -> new LobbyPlayerAi(
                 NameGenerator.getRandomName("Any", "Any", new ArrayList<>(usedNames)), null));
+        // Modular Monstrosity: "today" is the calendar day, so the keywords chosen survive between sessions
+        forge.game.player.KeywordDayLog.setStore(new forge.game.player.KeywordDayLog.Store() {
+            private final java.io.File file = new java.io.File(ForgeConstants.USER_DIR, "modular-monstrosity-keywords.txt");
+            @Override
+            public java.util.Set<String> chosen(final String person, final String day) {
+                final java.util.Set<String> result = new java.util.HashSet<>();
+                if (file.exists()) {
+                    // plain java.io: this runs on Android too
+                    try (java.io.BufferedReader in = new java.io.BufferedReader(new java.io.FileReader(file))) {
+                        String line;
+                        while ((line = in.readLine()) != null) {
+                            final String[] parts = line.split("	");
+                            if (parts.length == 3 && parts[0].equals(day) && parts[1].equals(person)) {
+                                result.add(parts[2]);
+                            }
+                        }
+                    } catch (final java.io.IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return result;
+            }
+            @Override
+            public void add(final String person, final String day, final String keyword) {
+                try (java.io.FileWriter out = new java.io.FileWriter(file, true)) {
+                    out.write(day + "	" + person + "	" + keyword + System.lineSeparator());
+                } catch (final java.io.IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         OutsidePlayers.setControllerFactory((controlled, style) -> {
             final List<String> used = new ArrayList<>();
             for (final forge.game.player.Player p : controlled.getGame().getRegisteredPlayers()) {

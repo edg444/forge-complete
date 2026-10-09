@@ -293,6 +293,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   `KrarksOtherThumbTest` (3).
 - Labro Bot (ust/152), Lobe Lobber (153), Mad Science Fair Project (154) already scripted upstream; checked against
   Scryfall.
+- **Modular Monstrosity** (ust/155; not scripted upstream). `DB$ ChooseKeywordInTime | Seconds$ 5`:
+  - **The keyword list** (`PrintedCreatureKeywords`): every keyword line on a creature face in the card database, by
+    title, so only printed forms - flying, annihilator 2, protection from Demons - never annihilator 500 (rulings).
+  - **"Today"** (`KeywordDayLog`): the calendar day, per person, across every Monstrosity and every game; a keyword
+    counts as used whatever its modifier (protection is protection). FModel keeps it in
+    `<user dir>/modular-monstrosity-keywords.txt`.
+  - **Five real seconds**: `PlayerController.chooseKeywordInTime` -> `IGuiGame.chooseStringInTime` (desktop
+    `ListChooser.showTimed` counts down in the title; mobile `ListChooser.timeOut` on a gdx Timer; untimed elsewhere).
+    Chosen: it gains the keyword for good. Not in time: it loses all keyword abilities, ones gained other ways too.
+  - AI: never short of time; takes the best keyword it hasn't used today (flying, double strike, indestructible, ...).
+  - `ModularMonstrosityTest` (3).
 
 ### 2026-10-09 (deployed: desktop, Android, GitHub) — upstream merge (94 commits, incl. dice and flip animations); The Grand Calcutron; Hot Fix; Ol' Buzzbark; Phoebe, Head of S.N.E.A.K.; X; Urza, Academy Headmaster audit
 
