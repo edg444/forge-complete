@@ -1,0 +1,5 @@
+Name:Better Than One
+ManaCost:G W
+Types:Sorcery
+A:SP$ GainTeammate | SpellDescription$ A person outside the game becomes your teammate. (Choose any number of cards in your hand, on top of your library, or on the battlefield under your control. Those cards become your teammate's hand, library, and permanents, respectively.)
+Oracle:A person outside the game becomes your teammate. (Choose any number of cards in your hand, on top of your library, or on the battlefield under your control. Those cards become your teammate's hand, library, and permanents, respectively.)
