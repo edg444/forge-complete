@@ -1824,6 +1824,7 @@ public class GameAction {
             PlayerCollection spaceSculptors = new PlayerCollection();
             for (final Card c : game.getCardsIn(ZoneType.Battlefield)) {
                 boolean checkAgainCard = false;
+                c.refreshHiddenMarker();
                 if (c.hasKeyword(Keyword.SPACE_SCULPTOR)) {
                     spaceSculptors.add(c.getController());
                 }

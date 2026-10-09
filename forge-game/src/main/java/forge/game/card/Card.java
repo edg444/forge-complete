@@ -6231,6 +6231,24 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public final void setHiddenSpot(final GameEntity spot) {
         hiddenSpot = spot;
         view.updateHiddenOnBattlefield(this);
+        refreshHiddenMarker();
+    }
+    /** What a hidden permanent's controller is reminded of - where they hid it - or null. */
+    public final String getHiddenSpotLabel() {
+        if (!isHiddenOnBattlefield()) {
+            return null;
+        }
+        final GameEntity spot = getHiddenSpot();
+        return spot instanceof Card c ? "behind " + c.getName() : "in plain sight";
+    }
+    // the label last shown, so the marker only changes when the spot does (what it was behind leaving, say)
+    private String hiddenMarkerShown = null;
+    public final void refreshHiddenMarker() {
+        final String label = getHiddenSpotLabel();
+        if (!java.util.Objects.equals(label, hiddenMarkerShown)) {
+            hiddenMarkerShown = label;
+            view.updateMarkerText(this);
+        }
     }
     public final boolean isHiddenOnBattlefield() {
         return hiddenSpot != null && isInPlay();

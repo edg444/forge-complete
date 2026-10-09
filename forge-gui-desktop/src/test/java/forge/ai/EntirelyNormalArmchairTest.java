@@ -102,9 +102,13 @@ public class EntirelyNormalArmchairTest extends AITest {
         final Card forest = addCard("Forest", me);
         chair.setHiddenSpot(forest);
         AssertJUnit.assertEquals(forest, chair.getHiddenSpot());
+        // the reminder its controller sees
+        AssertJUnit.assertTrue(chair.getView().getMarkerText().contains("behind Forest"));
         game.getAction().destroy(forest, null, true, null);
         AssertJUnit.assertEquals(me, chair.getHiddenSpot());
         AssertJUnit.assertTrue(chair.isHiddenOnBattlefield());
+        game.getAction().checkStateEffects(true);
+        AssertJUnit.assertTrue(chair.getView().getMarkerText().contains("in plain sight"));
     }
 
     @Test
@@ -121,6 +125,7 @@ public class EntirelyNormalArmchairTest extends AITest {
         AbilityUtils.resolve(seek);
 
         AssertJUnit.assertFalse(chair.isHiddenOnBattlefield());
+        AssertJUnit.assertNull(chair.getView().getMarkerText());
         AssertJUnit.assertNull(seekEffect(opp));
         // now that they see it, the AI returns it with its own {0} ability, on the stack
         AssertJUnit.assertFalse(game.getStack().isEmpty());

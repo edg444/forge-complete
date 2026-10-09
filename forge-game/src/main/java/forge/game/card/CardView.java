@@ -642,6 +642,12 @@ public class CardView extends GameEntityView {
         if(getRingLevel() > 0) {
             markerItems.add("RL:" + getRingLevel());
         }
+        // Entirely Normal Armchair: a reminder of where it's hidden. Only its controller's side ever draws a hidden
+        // card, so this tells opponents nothing
+        if (c.getHiddenSpotLabel() != null) {
+            markerItems.add("Hidden:");
+            markerItems.add(c.getHiddenSpotLabel());
+        }
 
         if(StringUtils.isNotEmpty(c.getOverlayText())) {
             set(TrackableProperty.OverlayText, c.getOverlayText());

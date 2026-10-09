@@ -263,6 +263,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     `ST$ SeekHidden`, once each turn - point at one of the hider's permanents or at them. Right: it's found (no longer
     hidden, the effects go) and they may return it at once with its {0} ability; wrong: nothing. The effects exile
     themselves when it leaves the battlefield.
+  - Its controller sees a reminder marker on it - "Hidden: behind <permanent>" or "Hidden: in plain sight" - kept
+    current by state-based checks (`Card.refreshHiddenMarker`); only their side ever draws it.
   - AI: hides it in its second main phase at a random spot (`HideAi`); seeks once a turn at a uniformly random spot,
     never using what it knows of the game (`SeekHiddenAi`), and returns it when found.
   - `EntirelyNormalArmchairTest` (4).
