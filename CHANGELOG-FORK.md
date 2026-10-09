@@ -190,6 +190,23 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Upstream merge** (94 commits: dice and coin-flip animations, FlipOntoBattlefield corner hits and a mobile flip
+  animation, AI paying for mana abilities that cost mana (Signets, filter lands), simultaneous-entry fix, netplay
+  host fixes, TRK/TRC cards, edition and net-deck updates). Conflicts:
+  - `AiController.saSideEffects`: took upstream's reordering; the Maro-style `HandSizeAi` check stays right after
+    the spells-and-lands gate.
+  - `CardView` power/toughness and `Player.loseLife`: kept both sides (half P/T flags and `Infinity.add` alongside
+    upstream's lethal-damage refresh and trigger-repeat clearing).
+  - `RollDiceEffect`: the fork's dice loop (The Big Idea, Wall of Fortune rerolls, installed results) stays;
+    `rollPhysicalDie` now fires upstream's `GameEventRollDie(sides, roll)` and collects each die's final face for
+    `GameEventRollDice`. An installed result isn't a face that came up, so the animation shows the die.
+  - `FlipOntoBattlefieldEffect`: rebuilt on upstream's version with the fork's empty-battlefield guard, `Thrown$`
+    and protected `getNeighboringCard` (Goblin Sleigh Ride's `SlideOntoBattlefieldEffect`). A throw reports
+    `TimesFlipped` 0 but animates as one tumble: the mobile board picks real hits only for a card that flew
+    (`wanted = flew ? hit.size() : 0`), so a 0 there would have made Slaying Mantis miss everything on Android.
+  - Ashling's Prerogative, Demonic Pact: upstream's param fixes with the fork's self-reference wording.
+  - Oracle sync afterwards: Accident-Prone Apprentice, Agent of Raffine (Scryfall retemplates).
+  - Suite after the merge: 1055 run, 0 failed, 6 skipped.
 - **The Grand Calcutron** (ust/131; previously deferred, not scripted upstream).
   - **Programs**: `DB$ ReorderZone | Zone$ Hand | Program$ True` has each player order their hand and records the
     host (id + timestamp) on the player (`Player.addProgramSource` / `hasProgram`); the program lasts while that
