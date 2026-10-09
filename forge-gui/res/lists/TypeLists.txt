@@ -181,6 +181,7 @@ Juggernaut:Juggernauts
 Kangaroo:Kangaroos
 Kavu:Kavu
 Kelpien:Kelpiens
+Killbot:Killbots
 Kirin:Kirins
 Kithkin:Kithkin
 Klingon:Klingons

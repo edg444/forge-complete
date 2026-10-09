@@ -235,6 +235,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   caster's life total (FAQ: the teammate brings none), or a Three-Headed one if it already had two heads. AI
   (`GainTeammateAi`) casts it with 20+ cards in library, giving half its library and half the lands in its hand.
   `BetterThanOneTest` (3).
+- **Mary O'Kill** (ust/138; not scripted upstream).
+  - **Switching a card in hand with a permanent** (`AB$ Switch | HandValid$ | BattlefieldValid$`): the permanent object
+    stays put and the two objects trade printed cards (`CardCopyService.swapPrintedCards`; `Card.paperCard` is no
+    longer final for it), so tapped/attacking/blocking status, attachments, counters, damage, effects on it and
+    anything targeting it carry over and nothing enters or leaves (rulings, FAQ: "pulls off a mask").
+  - "One on the battlefield" is any player's (user): that permanent keeps its controller; the card that leaves it
+    goes to your hand still owned by its owner, held by you as Five-Finger Discount holds a card.
+  - Activatable from hand too (`AdditionalActivationZone$ Hand`, rulings). New creature type **Killbot** in
+    `TypeLists.txt` (it was missing, so Killbot checks matched nothing; changelings now count).
+  - AI (`SwitchAi`): the best value swing - upgrading its own Killbot or taking an opponent's Mary for its weakest
+    Killbot - after blockers on its turn or at an opponent's end step.
+  - `MaryOKillTest` (3).
 
 ### 2026-10-09 (deployed: desktop, Android, GitHub) — upstream merge (94 commits, incl. dice and flip animations); The Grand Calcutron; Hot Fix; Ol' Buzzbark; Phoebe, Head of S.N.E.A.K.; X; Urza, Academy Headmaster audit
 

@@ -1,0 +1,7 @@
+Name:Mary O'Kill
+ManaCost:5 B/R
+Types:Legendary Creature Human Villain
+PT:5/5
+# Rulings: it can be activated from your hand too. "One on the battlefield" is anyone's (user, 2026-10-09).
+A:AB$ Switch | Cost$ 1 B/R | AdditionalActivationZone$ Hand | HandValid$ Card.Killbot,Card.namedMary O'Kill | BattlefieldValid$ Permanent.Killbot,Permanent.namedMary O'Kill | SpellDescription$ Switch a Killbot or Mary O'Kill in your hand with one on the battlefield. (If a creature is tapped, the switched creature is tapped. The same is true for untapped, attacking, blocking, enchanted, equipped, and targeted. Any counters on a creature are on the switched creature instead.)
+Oracle:{1}{B/R}: Switch a Killbot or Mary O'Kill in your hand with one on the battlefield. (If a creature is tapped, the switched creature is tapped. The same is true for untapped, attacking, blocking, enchanted, equipped, and targeted. Any counters on a creature are on the switched creature instead.)

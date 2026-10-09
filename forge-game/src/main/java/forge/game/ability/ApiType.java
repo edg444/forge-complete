@@ -225,6 +225,7 @@ public enum ApiType {
     StoreSVar (StoreSVarEffect.class),
     Subgame (SubgameEffect.class),
     Surveil (SurveilEffect.class),
+    Switch (SwitchEffect.class),
     SwitchBlock (SwitchBlockEffect.class),
     TakeInitiative (TakeInitiativeEffect.class),
     Tap (TapEffect.class),

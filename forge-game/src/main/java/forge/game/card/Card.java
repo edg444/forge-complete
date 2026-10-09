@@ -94,7 +94,8 @@ import static java.lang.Math.max;
  */
 public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITranslatable {
     private Game game;
-    private final IPaperCard paperCard;
+    // not final only for Mary O'Kill's switch, where an object becomes a different printed card (CardCopyService.swapPrintedCards)
+    private IPaperCard paperCard;
 
     private final Map<CardStateName, CardState> states = Maps.newEnumMap(CardStateName.class);
     private CardState currentState;
@@ -8510,6 +8511,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public void setChangedArtist(final String artist) {
         changedArtist = artist;
         updateAbilityTextForView();
+    }
+
+    void setPaperCard(final IPaperCard paperCard0) {
+        paperCard = paperCard0;
     }
 
     public IPaperCard getPaperCard() {

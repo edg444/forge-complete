@@ -118,6 +118,36 @@ public class CardCopyService {
         toCharacteristics.copyFrom(fromCharacteristics, false);
     }
 
+    /**
+     * Mary O'Kill's switch: the two objects trade the printed cards they are - printing, faces, name, text - while each
+     * keeps everything about its own situation: zone, tapped and combat status, counters, damage, attachments, effects
+     * on it and what's targeting it (FAQ: "as if Mary O'Kill or one of the Killbots pulls off a mask"). Owners and
+     * controllers are the caller's business.
+     */
+    public static void swapPrintedCards(final Card a, final Card b) {
+        final Card aCard = copyStats(a, a.getOwner(), false);
+        final Card bCard = copyStats(b, b.getOwner(), false);
+        adoptPrintedCard(a, bCard);
+        adoptPrintedCard(b, aCard);
+    }
+
+    private static void adoptPrintedCard(final Card to, final Card from) {
+        to.setPaperCard(from.getPaperCard());
+        to.setSetCode(from.getSetCode());
+        for (final CardStateName state : Lists.newArrayList(to.getStates())) {
+            if (state != CardStateName.Original && !from.getStates().contains(state)) {
+                to.clearStates(state, false);
+            }
+        }
+        for (final CardStateName state : from.getStates()) {
+            copyState(from, state, to, state, false);
+        }
+        to.setState(from.getCurrentStateName(), false);
+        to.setBackSide(from.isBackSide());
+        to.updateRulesView();
+        to.updateStateForView();
+    }
+
     public static Card copyStats(final Card in, final Player newOwner, boolean assignNewId) {
         int id = in.getId();
         if (assignNewId) {
