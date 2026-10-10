@@ -332,6 +332,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     `PlayerController.chooseLibrary` labels each option with its size and visible top card; the AI draws the top
     that helps most (a land when short) and otherwise picks the biggest.
   - `SplitScreenTest` (7).
+- **Staff of the Letter Magus** (ust/159; not scripted upstream). Script: the letter choice as it enters (ChooseType
+  letter) and a SpellCast trigger gaining `TriggeredCard$ChosenLetterInName` life. Y counts as a consonant, every Y
+  included (user ruling; no Scryfall rulings). New `AILogic$ MostCommonInName`: the letter appearing most often in the
+  names of the AI's own nonland cards outside the battlefield. `StaffOfTheLetterMagusTest` (3).
 
 ### 2026-10-09 (deployed: desktop, Android, GitHub) — upstream merge (94 commits, incl. dice and flip animations); The Grand Calcutron; Hot Fix; Ol' Buzzbark; Phoebe, Head of S.N.E.A.K.; X; Urza, Academy Headmaster audit
 

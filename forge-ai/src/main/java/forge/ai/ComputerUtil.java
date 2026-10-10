@@ -2713,6 +2713,29 @@ public class ComputerUtil {
                     }
                 }
             }
+            // Staff of the Letter Magus: life for each time it shows up in a spell's name, so the letter that
+            // turns up most often in the names of the spells this player will cast
+            if ("MostCommonInName".equals(logic)) {
+                final Map<String, Integer> counts = Maps.newHashMap();
+                for (final Card c : ai.getAllCards()) {
+                    if (c.isLand() || c.isInPlay()) {
+                        continue;
+                    }
+                    for (final char ch : c.getDisplayName().toUpperCase().toCharArray()) {
+                        final String letter = String.valueOf(ch);
+                        if (validTypes.contains(letter)) {
+                            counts.merge(letter, 1, Integer::sum);
+                        }
+                    }
+                }
+                int best = 0;
+                for (final Map.Entry<String, Integer> e : counts.entrySet()) {
+                    if (e.getValue() > best) {
+                        best = e.getValue();
+                        chosen = e.getKey();
+                    }
+                }
+            }
             if (StringUtils.isEmpty(chosen) && !validTypes.isEmpty()) {
                 chosen = Aggregates.random(validTypes);
             }
