@@ -1,5 +1,7 @@
 package forge.ai;
 
+import java.util.Random;
+
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
@@ -10,6 +12,7 @@ import forge.game.keyword.Keyword;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
+import forge.util.MyRandom;
 
 /**
  * Slaying Mantis (Unstable) - Oracle text, the seven Scryfall rulings and the Unstable FAQ entry checked 2026-10-03.
@@ -68,16 +71,23 @@ public class SlayingMantisTest extends AITest {
         AssertJUnit.assertEquals(6, big.getNetToughness());
         AssertJUnit.assertEquals(9, huge.getNetToughness());
         int touchedBig = 0;
-        for (int i = 0; i < 40; i++) {
-            Card mantis = addCardToZone("Slaying Mantis", ai, ZoneType.Hand);
-            Card entered = game.getAction().moveToPlay(mantis, ai, null, null);
-            // aimed at the Dreadmaw, it lands on it or a neighbor - never on its own side
-            AssertJUnit.assertFalse(entered.isRemembered(bears));
-            if (entered.isRemembered(big)) {
-                touchedBig++;
+        // seeded: unseeded, ~40% landings over 40 throws dipped to 10 often enough to fail the suite now and then
+        Random before = MyRandom.getRandom();
+        MyRandom.setRandom(new Random(20261010));
+        try {
+            for (int i = 0; i < 40; i++) {
+                Card mantis = addCardToZone("Slaying Mantis", ai, ZoneType.Hand);
+                Card entered = game.getAction().moveToPlay(mantis, ai, null, null);
+                // aimed at the Dreadmaw, it lands on it or a neighbor - never on its own side
+                AssertJUnit.assertFalse(entered.isRemembered(bears));
+                if (entered.isRemembered(big)) {
+                    touchedBig++;
+                }
+                entered.clearRemembered();
+                game.getAction().moveToGraveyard(entered, null, null);
             }
-            entered.clearRemembered();
-            game.getAction().moveToGraveyard(entered, null, null);
+        } finally {
+            MyRandom.setRandom(before);
         }
         AssertJUnit.assertTrue("touched the Dreadmaw " + touchedBig + " of 40", touchedBig > 10);
     }
