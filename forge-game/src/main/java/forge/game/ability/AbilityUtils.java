@@ -2980,6 +2980,10 @@ public class AbilityUtils {
             return doXMath(game.getPhaseHandler().getTurn(), expr, c, ctb);
         }
 
+        // spells and abilities on the stack (Priority Avenger's "unless a spell or ability is on the stack")
+        if (sq[0].equals("StackSize")) {
+            return doXMath(game.getStack().size(), expr, c, ctb);
+        }
         if (sq[0].equals("MaxDistinctOnStack")) {
             return doXMath(game.getStack().getMaxDistinctSources(), expr, c, ctb);
         }

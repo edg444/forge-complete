@@ -274,6 +274,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   needed more than 10 to touch the Dreadmaw (about 40% each), so it failed now and then (10 of 40 on 2026-10-10).
   The throws now run on a seeded `MyRandom`, restored afterward: 22 of 40 every run.
 
+- **Priority Avenger** (CMB1 #9): new count `Count$StackSize` (spells and abilities on the stack).
 - **Metagamer** (CMB1 #8), with #6 Frontier Explorer and #7 Imaginary Friends (upstream) verified. User rulings: the
   latest Pro Tour (only), kept current. Today that's Pro Tour Marvel Super Heroes, whose finals were a draft, so the
   deck is Yuuki Ichikawa's 40-card draft deck (names checked against Scryfall).

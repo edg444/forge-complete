@@ -1,0 +1,8 @@
+Name:Priority Avenger
+ManaCost:3 W
+Types:Creature Bird Wizard
+PT:3/4
+K:Flying
+S:Mode$ CantBeCast | ValidCard$ Instant | CheckSVar$ X | SVarCompare$ EQ0 | Description$ Players can't cast instant spells unless a spell or ability is on the stack.
+SVar:X:Count$StackSize
+Oracle:Flying\nPlayers can't cast instant spells unless a spell or ability is on the stack.
