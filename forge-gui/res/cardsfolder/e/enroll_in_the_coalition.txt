@@ -1,0 +1,6 @@
+Name:Enroll in the Coalition
+ManaCost:3 W
+Types:Enchantment
+S:Mode$ PlayerType | Affected$ You | Type$ Flagbearer | Description$ You are a Flagbearer.
+S:Mode$ MustTarget | ValidSA$ Spell.OppCtrl,Activated.OppCtrl | ValidTarget$ Flagbearer | ValidZone$ Battlefield | IncludePlayers$ True | Description$ While choosing targets as part of casting a spell or activating an ability, your opponents must choose at least one Flagbearer if able.
+Oracle:You are a Flagbearer.\nWhile choosing targets as part of casting a spell or activating an ability, your opponents must choose at least one Flagbearer if able.

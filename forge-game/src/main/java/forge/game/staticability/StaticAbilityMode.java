@@ -42,6 +42,9 @@ public enum StaticAbilityMode {
     // StaticAbilityMustTarget
     MustTarget,
 
+    // StaticAbilityPlayerType
+    PlayerType,
+
     // StaticAbilityCantAttackBlock
     CantAttack,
     CanAttackDefender,

@@ -243,6 +243,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Toy colors** (`Protection | Gains$ ToyColors`, Rarity): a human picks the colors at resolution (pink and gold in
   a silver-bordered game); `PlayerController.getKnownToyColors` gives the AI's toy, fixed per game
   (`SpellAbilityAi.gameSeed`).
+- **Players with a subtype** (`S:Mode$ PlayerType | Affected$ You | Type$ Flagbearer`,
+  `StaticAbilityPlayerType.hasType`). **MustTarget `IncludePlayers$ True`**: such players meet the requirement too;
+  requirements for the same type and zone merge. The human targeting input keeps allowed players clickable
+  (`InputSelectTargets.setMustTargetPlayers`), and `StaticAbilityMustTarget.filterMustTargets` filters players too.
 - **Vanguard requirements** (`VanguardRequirement:Instant,Sorcery,Land`, Ral's Vanguard): every starting-deck card
   (the main deck, not the sideboard) must have one of the types, or the vanguard is left out at game start with a
   log line (`RegisteredPlayer.getUnmetVanguardAvatars`).
@@ -261,6 +265,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   needed more than 10 to touch the Dreadmaw (about 40% each), so it failed now and then (10 of 40 on 2026-10-10).
   The throws now run on a seeded `MyRandom`, restored afterward: 22 of 40 every run.
 
+- **Enroll in the Coalition** (CMB1 #4): you're a Flagbearer (not a creature); with Coalition Honor Guards out,
+  opponents may target you or any Flagbearer creature (ruling). Honor Guard on its own still means creatures.
 - **Baneslayer Aspirant** (CMB1 #3): only your own emblems count.
 - **Ral's Vanguard** (Mystery Booster playtest, CMB1 #1): first of the set's 60 unscripted cards. Copies don't draw
   or deal extra (ruling); the requirement is checked as the game begins.

@@ -39,7 +39,11 @@ public final class InputSelectTargets extends InputSyncronizedBase {
     private final boolean mandatory;
     private Predicate<GameObject> filter;
     private boolean mustTargetFiltered;
+    private List<Player> mustTargetPlayers = new ArrayList<>();
     private static final long serialVersionUID = -1091595663541356356L;
+
+    /** The players a must-target requirement still allows (a Flagbearer player); others can't be chosen once it filters. */
+    public void setMustTargetPlayers(List<Player> players) { mustTargetPlayers = players; }
 
     public boolean hasCancelled() { return bCancel; }
     public boolean hasPressedOk() { return bOk; }
@@ -341,7 +345,7 @@ public final class InputSelectTargets extends InputSyncronizedBase {
             showMessage(sa.getHostCard() + " - Cannot enchant this player (Hexproof? Protection? Restrictions?).");
             return;
         }
-        if (!sa.canTarget(player) || mustTargetFiltered) {
+        if (!sa.canTarget(player) || mustTargetFiltered && !mustTargetPlayers.contains(player)) {
             showMessage(sa.getHostCard() + " - Cannot target this player (Hexproof? Protection? Restrictions?).");
             return;
         }
@@ -407,7 +411,7 @@ public final class InputSelectTargets extends InputSyncronizedBase {
             this.done();
         } else {
             // If selected one card that is must target, finish this selection, then populate target list again from caller.
-            if (ge instanceof Card && mustTargetFiltered) {
+            if ((ge instanceof Card || ge instanceof Player) && mustTargetFiltered) {
                 this.done();
             } else {
                 this.showMessage();

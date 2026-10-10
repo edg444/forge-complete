@@ -23,6 +23,7 @@ import forge.game.card.Card;
 import forge.game.card.CardCollection;
 import forge.game.card.CardUtil;
 import forge.game.card.CardView;
+import forge.game.player.Player;
 import forge.game.player.PlayerCollection;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.SpellAbilityStackInstance;
@@ -138,8 +139,15 @@ public class TargetSelection {
 
         List<Card> validTargets = CardUtil.getValidCardsToTarget(ability);
         boolean mustTargetFiltered = false;
+        // the players still allowed once must-target requirements filter the choices (a Flagbearer player)
+        final List<Player> mustTargetPlayers = new ArrayList<>();
         if (canFilterMustTarget) {
-            mustTargetFiltered = StaticAbilityMustTarget.filterMustTargetCards(controller.getPlayer(), validTargets, ability);
+            for (GameEntity e : tgt.getAllCandidates(this.ability, true)) {
+                if (e instanceof Player p) {
+                    mustTargetPlayers.add(p);
+                }
+            }
+            mustTargetFiltered = StaticAbilityMustTarget.filterMustTargets(controller.getPlayer(), validTargets, mustTargetPlayers, ability);
         }
         if (filter != null) {
             validTargets = new CardCollection(IterableUtil.filter(validTargets, filter));
@@ -147,14 +155,15 @@ public class TargetSelection {
 
         if (validTargets.isEmpty()) {
             // If all targets are filtered after applying MustTarget static ability, the spell can't be cast or the ability can't be activated
-            if (mustTargetFiltered) {
+            if (mustTargetFiltered && mustTargetPlayers.isEmpty()) {
                 return false;
             }
             //if no valid cards to target and only one valid non-card, auto-target the non-card
             //this handles "target opponent" cards, along with any other cards that can only target a single non-card game entity
             //note that we don't handle auto-targeting cards this way since it's possible that the result will be undesirable
             if (minTargets != 0) {
-                List<GameEntity> nonCardTargets = tgt.getAllCandidates(this.ability, true);
+                List<GameEntity> nonCardTargets = mustTargetFiltered ? new ArrayList<>(mustTargetPlayers)
+                        : tgt.getAllCandidates(this.ability, true);
                 if (nonCardTargets.size() == 1) {
                     return ability.getTargets().add(nonCardTargets.get(0));
                 }
@@ -174,6 +183,7 @@ public class TargetSelection {
         }
         if (!zones.contains(ZoneType.Stack)) {
             InputSelectTargets inp = new InputSelectTargets(controller, validTargets, ability, mandatory, numTargets, divisionValues, filter, mustTargetFiltered);
+            inp.setMustTargetPlayers(mustTargetPlayers);
             inp.showAndWait();
             choiceResult = !inp.hasCancelled();
             bTargetingDone = inp.hasPressedOk();
