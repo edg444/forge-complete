@@ -366,6 +366,12 @@ public class CardProperty {
             if (card.getWatermarks().isEmpty()) {
                 return false;
             }
+        } else if (property.equals("sharesWatermarkWith")) {
+            // Secret Base: "a spell that shares a watermark with this land"
+            final List<String> theirs = source.getWatermarks();
+            if (card.getWatermarks().stream().noneMatch(w -> theirs.stream().anyMatch(w::equalsIgnoreCase))) {
+                return false;
+            }
         } else if (property.equals("withChosenWatermark")) {
             // Stamp of Approval: the watermark chosen on the source, by name
             if (!source.hasChosenType()) {

@@ -345,6 +345,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   (`AugmentCondition$ True`, `Cost$ 5`), so the host's effect becomes "{5}: ...". `SteamPoweredTest` (1).
 - Unstable 162-164 (Steel Squirrel, Sword of Dungeons & Dragons, Voracious Vacuum) were scripted upstream; checked
   against Scryfall's Oracle text and rulings (gold monocolored Dragon token, repeat on a 20) - no changes needed.
+- **Secret Base** (ust/165a-e; not scripted upstream). One script for all five printings; each printing's faction
+  watermark comes from the printing data. The any-color ability is `RestrictValid$ Spell.sharesWatermarkWith`, a new
+  card property (any watermark in common with the source). No rulings. `SecretBaseTest` (2).
 
 ### 2026-10-09 (deployed: desktop, Android, GitHub) — upstream merge (94 commits, incl. dice and flip animations); The Grand Calcutron; Hot Fix; Ol' Buzzbark; Phoebe, Head of S.N.E.A.K.; X; Urza, Academy Headmaster audit
 
