@@ -1,0 +1,6 @@
+Name:Five Kids in a Trenchcoat
+ManaCost:2 W
+Types:Creature Human Citizen
+PT:1/5
+S:Mode$ CountsAsCreatures | Amount$ 5 | Description$ CARDNAME counts as five creatures for spells and effects that count the number of creatures you control.
+Oracle:Five Kids in a Trenchcoat counts as five creatures for spells and effects that count the number of creatures you control.

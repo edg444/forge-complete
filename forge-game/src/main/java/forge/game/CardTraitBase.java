@@ -16,6 +16,7 @@ import forge.card.MagicColor;
 import forge.card.mana.ManaAtom;
 import forge.game.ability.AbilityUtils;
 import forge.game.card.Card;
+import forge.game.card.CountsAsCreatures;
 import forge.game.card.CardCollection;
 import forge.game.card.CardLists;
 import forge.game.card.CardPredicates;
@@ -425,7 +426,7 @@ public abstract class CardTraitBase implements GameObject, IHasCardView, IHasSVa
 
             final String rightString = presentCompare.substring(2);
             int right = AbilityUtils.calculateAmount(getHostCard(), rightString, this);
-            final int left = list.size();
+            final int left = CountsAsCreatures.count(list, sIsPresent, hostController, getHostCard(), this);
 
             if (!Expressions.compare(left, presentCompare, right)) {
                 return false;
@@ -449,7 +450,7 @@ public abstract class CardTraitBase implements GameObject, IHasCardView, IHasSVa
 
             final String rightString = presentCompare.substring(2);
             int right = AbilityUtils.calculateAmount(getHostCard(), rightString, this);
-            final int left = list.size();
+            final int left = CountsAsCreatures.count(list, sIsPresent, hostController, getHostCard(), this);
 
             if (!Expressions.compare(left, presentCompare, right)) {
                 return false;

@@ -25,6 +25,7 @@ import forge.game.GameObjectPredicates;
 import forge.game.GameType;
 import forge.game.ability.AbilityUtils;
 import forge.game.card.Card;
+import forge.game.card.CountsAsCreatures;
 import forge.game.phase.PhaseHandler;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
@@ -363,7 +364,7 @@ public class SpellAbilityCondition extends SpellAbilityVariables {
             }
 
             Predicate<GameObject> restriction = GameObjectPredicates.restriction(getIsPresent().split(","), activator, host, sa);
-            final int left = (int) list.stream().filter(restriction).count();
+            final int left = CountsAsCreatures.count(list.stream().filter(restriction).toList(), getIsPresent(), activator, host, sa);
 
             final String rightString = this.getPresentCompare().substring(2);
             int right = AbilityUtils.calculateAmount(host, rightString, sa);
@@ -391,7 +392,7 @@ public class SpellAbilityCondition extends SpellAbilityVariables {
             }
 
             Predicate<GameObject> restriction = GameObjectPredicates.restriction(getIsPresent2().split(","), activator, host, sa);
-            final int left = (int) list.stream().filter(restriction).count();
+            final int left = CountsAsCreatures.count(list.stream().filter(restriction).toList(), getIsPresent2(), activator, host, sa);
 
             final String rightString = this.getPresentCompare2().substring(2);
             int right = AbilityUtils.calculateAmount(host, rightString, sa);

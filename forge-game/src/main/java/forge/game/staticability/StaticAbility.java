@@ -33,6 +33,7 @@ import forge.game.IIdentifiable;
 import forge.game.ability.AbilityFactory;
 import forge.game.ability.AbilityUtils;
 import forge.game.card.Card;
+import forge.game.card.CountsAsCreatures;
 import forge.game.card.CardCollection;
 import forge.game.card.CardCollectionView;
 import forge.game.card.CardLists;
@@ -448,7 +449,7 @@ public class StaticAbility extends CardTraitBase implements IIdentifiable, Clone
             int right = 1;
             final String rightString = compare.substring(2);
             right = AbilityUtils.calculateAmount(hostCard, rightString, this);
-            final int left = list.size();
+            final int left = CountsAsCreatures.count(list, present, controller, hostCard, this);
 
             if (!Expressions.compare(left, compare, right)) {
                 return false;

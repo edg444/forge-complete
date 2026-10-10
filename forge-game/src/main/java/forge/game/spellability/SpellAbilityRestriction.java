@@ -439,7 +439,7 @@ public class SpellAbilityRestriction extends SpellAbilityVariables {
             }
 
             Predicate<GameObject> restriction = GameObjectPredicates.restriction(getIsPresent().split(","), activator, c, sa);
-            final int left = (int) list.stream().filter(restriction).count();
+            final int left = CountsAsCreatures.count(list.stream().filter(restriction).toList(), getIsPresent(), activator, c, sa);
 
             final String rightString = this.getPresentCompare().substring(2);
             int right = AbilityUtils.calculateAmount(c, rightString, sa);

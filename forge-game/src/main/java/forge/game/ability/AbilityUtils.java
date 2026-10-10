@@ -1669,6 +1669,8 @@ public class AbilityUtils {
         sq = l[0].split("\\.");
         String[] paidparts = l[0].split("\\$", 2);
         Iterable<Card> someCards = null;
+        // the restriction someCards was matched with, so creature-control counts can weigh Five Kids in a Trenchcoat
+        String countRestriction = null;
         final Game game = c.getGame();
 
         if (ctb != null) {
@@ -1902,6 +1904,7 @@ public class AbilityUtils {
                         }
                     }
                     someCards = CardLists.getValidCards(someCards, k[1], player, c, sa);
+                    countRestriction = k[1];
                 }
 
                 if (sq[0].startsWith("LastStateGraveyard")) {
@@ -2059,6 +2062,7 @@ public class AbilityUtils {
             }
 
             someCards = CardLists.getValidCards(cardsInZones, lparts[1], player, c, ctb);
+            countRestriction = lparts[1];
         }
 
         if (sq[0].startsWith("RememberedSize")) {
@@ -3109,7 +3113,8 @@ public class AbilityUtils {
             num = handlePaid(someCards, paidparts[1], c, ctb);
         }
         if (num == null) {
-            num = Iterables.size(someCards);
+            num = countRestriction != null ? CountsAsCreatures.count(someCards, countRestriction, player, c, ctb)
+                    : Iterables.size(someCards);
         }
 
         return doXMath(num, expr, c, ctb);
@@ -3729,7 +3734,8 @@ public class AbilityUtils {
         // count valid cards on the battlefield
         if (l[0].startsWith("Valid ")) {
             final String restrictions = l[0].substring(6);
-            int num = CardLists.getValidCardCount(game.getCardsIn(ZoneType.Battlefield), restrictions, player, source, ctb);
+            int num = CountsAsCreatures.count(CardLists.getValidCards(game.getCardsIn(ZoneType.Battlefield), restrictions, player, source, ctb),
+                    restrictions, player, source, ctb);
             return doXMath(num, m, source, ctb);
         }
 
@@ -3738,7 +3744,8 @@ public class AbilityUtils {
             String[] lparts = l[0].split(" ", 2);
             final List<ZoneType> vZone = ZoneType.listValueOf(lparts[0].split("Valid")[1]);
             String restrictions = TextUtil.fastReplace(l[0], TextUtil.addSuffix(lparts[0]," "), "");
-            int num = CardLists.getValidCardCount(game.getCardsIn(vZone), restrictions, player, source, ctb);
+            int num = CountsAsCreatures.count(CardLists.getValidCards(game.getCardsIn(vZone), restrictions, player, source, ctb),
+                    restrictions, player, source, ctb);
             return doXMath(num, m, source, ctb);
         }
 
@@ -3809,7 +3816,7 @@ public class AbilityUtils {
             return doXMath(player.getCardsIn(ZoneType.Battlefield).size(), m, source, ctb);
         }
         if (value.contains("CreaturesInPlay")) {
-            return doXMath(player.getCreaturesInPlay().size(), m, source, ctb);
+            return doXMath(CountsAsCreatures.count(player.getCreaturesInPlay()), m, source, ctb);
         }
 
         if (value.contains("StartingLife")) {

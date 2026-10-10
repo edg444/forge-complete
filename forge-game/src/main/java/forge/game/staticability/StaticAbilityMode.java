@@ -45,6 +45,9 @@ public enum StaticAbilityMode {
     // StaticAbilityPlayerType
     PlayerType,
 
+    // CountsAsCreatures (Five Kids in a Trenchcoat)
+    CountsAsCreatures,
+
     // StaticAbilityCantAttackBlock
     CantAttack,
     CanAttackDefender,
