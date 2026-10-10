@@ -2863,12 +2863,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
                 // ensure prompt updated if needed
                 currentInput.showMessageInitial();
             }
-            if (getGui().isNetGame()) {
-                // Flush events to remote clients — the undo modifies game state
-                // (untaps lands, etc.) after the prompt is shown, and without this
-                // the updated state sits in the forwarder buffer until the next action.
-                inputQueue.updateObservers();
-            }
+            sendToRemoteClients();
             return true;
         }
         return false;
@@ -2938,6 +2933,13 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
     @Override
     public boolean canPlayUnlimitedLands() {
         return canPlayUnlimitedLands;
+    }
+
+    /** Sends a change made outside the game's loop, such as an undo or a cheat, which would otherwise wait in the forwarder's buffer for the next action. */
+    private void sendToRemoteClients() {
+        if (getGui().isNetGame()) {
+            inputQueue.updateObservers();
+        }
     }
 
     private IDevModeCheats cheats;
@@ -3018,6 +3020,13 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
         private DevModeCheats() {
         }
 
+        private void invokeThenSend(final Runnable change) {
+            getGame().getAction().invoke(() -> {
+                change.run();
+                sendToRemoteClients();
+            });
+        }
+
         /*
          * (non-Javadoc)
          *
@@ -3060,7 +3069,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
             final Map<String, String> produced = Maps.newHashMap();
             produced.put("Produced", "W W W W W W W U U U U U U U B B B B B B B G G G G G G G R R R R R R R 7");
             final AbilityManaPart abMana = new AbilityManaPart(dummy, produced);
-            getGame().getAction().invoke(() -> abMana.produceMana(null));
+            invokeThenSend(() -> abMana.produceMana(null));
         }
 
         @Override
@@ -3168,7 +3177,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
                 return;
             }
 
-            getGame().getAction().invoke(() -> getGame().getAction().moveToHand(card, null));
+            invokeThenSend(() -> getGame().getAction().moveToHand(card, null));
         }
 
         /*
@@ -3220,6 +3229,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
             } else {
                 card.addCounterInternal(counter, count, card.getController(), false, null, null);
             }
+            sendToRemoteClients();
         }
 
         /*
@@ -3229,7 +3239,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
          */
         @Override
         public void tapPermanents() {
-            getGame().getAction().invoke(() -> {
+            invokeThenSend(() -> {
                 final CardCollectionView untapped = CardLists.filter(getGame().getCardsIn(ZoneType.Battlefield),
                         CardPredicates.UNTAPPED);
                 final InputSelectCardsFromList inp = new InputSelectCardsFromList(PlayerControllerHuman.this, 0,
@@ -3258,7 +3268,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
          */
         @Override
         public void untapPermanents() {
-            getGame().getAction().invoke(() -> {
+            invokeThenSend(() -> {
                 final CardCollectionView tapped = CardLists.filter(getGame().getCardsIn(ZoneType.Battlefield),
                         CardPredicates.TAPPED);
                 final InputSelectCardsFromList inp = new InputSelectCardsFromList(PlayerControllerHuman.this, 0,
@@ -3303,6 +3313,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
             }
 
             player.setLife(life, null);
+            sendToRemoteClients();
         }
 
         /*
@@ -3408,7 +3419,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
             final int qty = q != null ? q : 1;
             final PaperToken paperToken = tokenDb.getToken(scriptNames.get(chosen));
 
-            getGame().getAction().invoke(() -> {
+            invokeThenSend(() -> {
                 boolean summoningSickness = true;
                 for (int i = 0; i < qty; i++) {
                     final Card token = CardFactory.getCard(paperToken, p, getGame());
@@ -3549,7 +3560,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
             }
             final PaperCard chosenPrinting = printing;
 
-            getGame().getAction().invoke(() -> {
+            invokeThenSend(() -> {
                 boolean askPrompts = !repeatLast;
                 for (int q = 0; q < quantity; q++) {
                     PaperCard c = chosenPrinting != null ? chosenPrinting : carddb.getUniqueByName(f.displayName());
@@ -3692,6 +3703,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
                     getGame().getGameLog().add(GameLogEntryType.INFORMATION, "DISCARD CHEAT ERROR");
                 }
             }
+            sendToRemoteClients();
         }
 
         /*
@@ -3731,6 +3743,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
                     getGame().getGameLog().add(GameLogEntryType.INFORMATION, "EXILE FROM PLAY CHEAT ERROR");
                 }
             }
+            sendToRemoteClients();
         }
 
         /*
@@ -3770,6 +3783,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
                 sb.append(p).append(" removes ").append(c).append(" from game due to Dev Cheats.");
                 getGame().getGameLog().add(GameLogEntryType.ZONE_CHANGE, sb.toString());
             }
+            sendToRemoteClients();
         }
 
         /*
@@ -3794,7 +3808,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
 
             System.out.println("Rigging planar dice roll: " + res.toString());
 
-            getGame().getAction().invoke(() -> PlanarDice.roll(player, res));
+            invokeThenSend(() -> PlanarDice.roll(player, res));
         }
 
         /*
@@ -3824,7 +3838,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
             }
             final Card forgeCard = Card.fromPaperCard(c, p);
 
-            getGame().getAction().invoke(() -> {
+            invokeThenSend(() -> {
                 getGame().getAction().changeZone(null, p.getZone(ZoneType.PlanarDeck), forgeCard, 0, null);
                 PlanarDice.roll(p, PlanarDice.Planeswalk);
             });
