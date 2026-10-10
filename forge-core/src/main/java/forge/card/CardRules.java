@@ -518,6 +518,20 @@ public final class CardRules implements ICardCharacteristics {
         return tokens;
     }
 
+    // "Requirement — Your starting deck contains only ..." (Ral's Vanguard): the card types every starting-deck card
+    // needs one of, or empty when the vanguard has no requirement
+    private List<String> vanguardRequirement = Collections.emptyList();
+
+    /** Whether a starting deck (the cards shuffled into the library - not the sideboard) meets this vanguard's requirement. */
+    public boolean vanguardRequirementMetBy(final Iterable<CardRules> startingDeck) {
+        for (final CardRules card : startingDeck) {
+            if (vanguardRequirement.stream().noneMatch(t -> card.getType().hasStringType(t))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public int getHand() { return deltaHand; }
     public int getLife() { return deltaLife; }
     public void setVanguardProperties(String pt) {
@@ -643,6 +657,7 @@ public final class CardRules implements ICardCharacteristics {
         private String partnerType = "";
         private int setColorID = 0;
         private String handLife = null;
+        private String vanguardRequirement = null;
         private String normalizedName = "";
         private Set<String> supportedFunctionalVariants = null;
         private Map<Integer, String> placeholderFaces = null;
@@ -673,6 +688,7 @@ public final class CardRules implements ICardCharacteristics {
             this.faces[6] = null;
 
             this.handLife = null;
+            this.vanguardRequirement = null;
             this.altMode = CardSplitType.None;
 
             this.removedFromAIDecks = false;
@@ -721,6 +737,8 @@ public final class CardRules implements ICardCharacteristics {
             }
             if (StringUtils.isNotBlank(handLife))
                 result.setVanguardProperties(handLife);
+            if (StringUtils.isNotBlank(vanguardRequirement))
+                result.vanguardRequirement = Arrays.asList(vanguardRequirement.split(","));
             result.supportedFunctionalVariants = this.supportedFunctionalVariants;
             result.placeholderFaces = this.placeholderFaces;
             return result;
@@ -929,7 +947,9 @@ public final class CardRules implements ICardCharacteristics {
                     break;
 
                 case 'V':
-                    if ("Variant".equals(key)) {
+                    if ("VanguardRequirement".equals(key)) {
+                        vanguardRequirement = value;
+                    } else if ("Variant".equals(key)) {
                         if (value == null) value = "";
                         colonPos = value.indexOf(':');
                         if(colonPos <= 0) throw new IllegalArgumentException("Missing variant name");

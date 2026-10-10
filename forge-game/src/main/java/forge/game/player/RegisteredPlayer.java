@@ -10,6 +10,9 @@ import forge.game.GameType;
 import forge.item.IPaperCard;
 import forge.item.PaperCard;
 
+import forge.card.CardRules;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -200,13 +203,34 @@ public class RegisteredPlayer {
     public List<PaperCard> getVanguardAvatars() {
         return vanguardAvatars;
     }
+    private List<PaperCard> unmetVanguardAvatars = new ArrayList<>();
+    /** The player's vanguards left out because their deck doesn't meet the vanguard's requirement. */
+    public List<PaperCard> getUnmetVanguardAvatars() {
+        return unmetVanguardAvatars;
+    }
     public void assignVanguardAvatar() {
         CardPool section = currentDeck.get(DeckSection.Avatar);
         setVanguardAvatars(section == null ? null : section.toFlatList());
     }
     private void setVanguardAvatars(List<PaperCard> vanguardAvatars0) {
         vanguardAvatars = vanguardAvatars0;
+        unmetVanguardAvatars = new ArrayList<>();
         if (vanguardAvatars == null) { return; }
+        // "A vanguard with a requirement can't be your vanguard unless its requirement is met as the game begins."
+        // (Ral's Vanguard ruling). The starting deck is what becomes the library, not the sideboard.
+        final List<CardRules> startingDeck = new ArrayList<>();
+        if (currentDeck != null) {
+            for (PaperCard pc : currentDeck.getMain().toFlatList()) {
+                startingDeck.add(pc.getRules());
+            }
+        }
+        vanguardAvatars = new ArrayList<>(vanguardAvatars);
+        for (PaperCard avatar : vanguardAvatars0) {
+            if (!avatar.getRules().vanguardRequirementMetBy(startingDeck)) {
+                vanguardAvatars.remove(avatar);
+                unmetVanguardAvatars.add(avatar);
+            }
+        }
         for (PaperCard avatar: vanguardAvatars) {
             setStartingLife(getStartingLife() + avatar.getRules().getLife());
             setStartingHand(getStartingHand() + avatar.getRules().getHand());

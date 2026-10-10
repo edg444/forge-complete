@@ -29,6 +29,10 @@ public class SpellAbilityProperty {
     public static boolean hasProperty(SpellAbility sa, Player sourceController, Card source, String property, CardTraitBase spellAbility) {
         if (property.equals("MakesToken")) {
             return makesToken(sa);
+        } else if (property.equals("CastSpell")) {
+            // a spell that was cast, not a copy (Ral's Vanguard ruling: copies don't count)
+            final SpellAbility root = sa.getRootAbility();
+            return root.isSpell() && !root.isCopied() && !root.getHostCard().isCopiedSpell();
         } else if (property.equals("ManaAbility")) {
             return sa.isManaAbility();
         } else if (property.equals("withoutXCost")) {

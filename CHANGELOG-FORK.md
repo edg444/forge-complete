@@ -243,6 +243,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Toy colors** (`Protection | Gains$ ToyColors`, Rarity): a human picks the colors at resolution (pink and gold in
   a silver-bordered game); `PlayerController.getKnownToyColors` gives the AI's toy, fixed per game
   (`SpellAbilityAi.gameSeed`).
+- **Vanguard requirements** (`VanguardRequirement:Instant,Sorcery,Land`, Ral's Vanguard): every starting-deck card
+  (the main deck, not the sideboard) must have one of the types, or the vanguard is left out at game start with a
+  log line (`RegisteredPlayer.getUnmetVanguardAvatars`).
+- **Cause of a draw**: DrawCards replacements get the drawing ability as `Cause`, so `ValidCause$` works on them.
+  Ability property `CastSpell` = a spell that was cast, not a copy.
 - **Everypony wins**: `WinsGame | Defined$ Player` no longer turns the other winners into losers; GameWinAi skips a
   win whose condition doesn't hold.
 
@@ -251,6 +256,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 ## Log
 
 ### Unreleased
+
+- **Ral's Vanguard** (Mystery Booster playtest, CMB1 #1): first of the set's 60 unscripted cards. Copies don't draw
+  or deal extra (ruling); the requirement is checked as the game begins.
 
 - **Ponies: The Galloping** (new edition PTG, silver-bordered): Nightmare Moon // Princess Luna, Princess Twilight
   Sparkle, Rarity. New creature types Alicorn and Pony. User rulings: nighttime = real local clock 6 PM to 6 AM;

@@ -1454,6 +1454,9 @@ public class Player extends GameEntity implements Comparable<Player> {
         if (gameStarted) {
             final Map<AbilityKey, Object> repRunParams = AbilityKey.mapFromAffected(this);
             repRunParams.put(AbilityKey.Number, n);
+            if (cause != null) {
+                repRunParams.put(AbilityKey.Cause, cause);
+            }
             if (params != null) {
                 repRunParams.putAll(params);
             }
@@ -3502,6 +3505,10 @@ public class Player extends GameEntity implements Comparable<Player> {
         PlayerZone com = getZone(ZoneType.Command);
 
         // Vanguard
+        for (PaperCard avatar : registeredPlayer.getUnmetVanguardAvatars()) {
+            game.fireEvent(new GameEventAddLog(GameLogEntryType.INFORMATION, this + "'s deck doesn't meet "
+                    + avatar.getName() + "'s requirement, so it isn't " + this + "'s vanguard."));
+        }
         if (registeredPlayer.getVanguardAvatars() != null) {
             for (PaperCard avatar:registeredPlayer.getVanguardAvatars()) {
                 Card c = Card.fromPaperCard(avatar, this);

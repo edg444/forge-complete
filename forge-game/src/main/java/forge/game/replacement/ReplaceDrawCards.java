@@ -48,6 +48,9 @@ public class ReplaceDrawCards extends ReplacementEffect {
         if (!matchesValidParam("ValidPlayer", runParams.get(AbilityKey.Affected))) {
             return false;
         }
+        if (!matchesValidParam("ValidCause", runParams.get(AbilityKey.Cause))) {
+            return false;
+        }
         if (hasParam("Number")) {
             final int n = (Integer)runParams.get(AbilityKey.Number);
             String comparator = getParam("Number");

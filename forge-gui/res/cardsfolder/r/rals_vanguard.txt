@@ -1,0 +1,11 @@
+Name:Ral's Vanguard
+ManaCost:no cost
+Types:Vanguard
+HandLifeModifier:+1/-5
+VanguardRequirement:Instant,Sorcery,Land
+Text:Requirement — Your starting deck contains only instant, sorcery, and land cards.
+R:Event$ DrawCards | ActiveZones$ Command | ValidPlayer$ You | ValidCause$ Instant.YouCtrl+CastSpell,Sorcery.YouCtrl+CastSpell | ReplaceWith$ DrawPlusOne | Description$ If an instant or sorcery spell you cast would cause you to draw one or more cards, draw an additional card.
+SVar:DrawPlusOne:DB$ Draw | Defined$ You | NumCards$ ReplaceCount$Number/Plus.1
+R:Event$ DamageDone | ActiveZones$ Command | ValidSource$ Card.Instant,Card.Sorcery | ValidCause$ Instant.YouCtrl+CastSpell,Sorcery.YouCtrl+CastSpell | CauseIsSource$ True | ValidTarget$ Permanent,Player | ReplaceWith$ DmgPlus1 | Description$ If an instant or sorcery spell you cast would deal damage to a permanent or player, it deals 1 additional damage to that permanent or player.
+SVar:DmgPlus1:DB$ ReplaceEffect | VarName$ DamageAmount | VarValue$ ReplaceCount$DamageAmount/Plus.1
+Oracle:Requirement — Your starting deck contains only instant, sorcery, and land cards.\nStarting hand size +1 Starting life total -5\nIf an instant or sorcery spell you cast would cause you to draw one or more cards, draw an additional card. If an instant or sorcery spell you cast would deal damage to a permanent or player, it deals 1 additional damage to that permanent or player.
