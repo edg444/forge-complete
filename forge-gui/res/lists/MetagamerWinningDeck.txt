@@ -1,0 +1,31 @@
+# Metagamer (Mystery Booster playtest card): the main deck that won the latest Pro Tour - the deck played in the
+# finals, so a draft deck when the Top 8 was a draft (ruling). Forge refreshes this daily from magic.gg into the user
+# folder (forge.model.MetagamerDeckLoader); this copy is the offline fallback. Names checked against Scryfall 2026-10-10.
+Event=Pro Tour Magic: The Gathering® | Marvel Super Heroes (July 17–19, 2026)
+Winner=Yuuki Ichikawa
+Source=https://magic.gg/decklists/pro-tour-marvel-super-heroes-top-8-draft-decks
+HULK SMASH!
+Loki Laufeyson
+Repulsor Blast
+Team Tactics
+Ant-Man's Army
+Go Nuts!
+Guerrilla Gorilla
+Hercules, Prince of Power
+Ka-Zar of the Savage Land
+Knight of Wundagore
+Mister Hyde, Monster Within
+Pet Avengers
+Rapid Rescue
+Savage Land Dinosaur
+She-Hulk, Jade Defender
+Undercover Skrull
+Bullseye, Death Dealer
+Hulk, Gamma Goliath
+The Ruinous Wrecking Crew
+The Vision
+Los Diablos Missile Base
+Subterranean Cavern
+Swamp
+Mountain
+Forest

@@ -455,6 +455,11 @@ public class CardProperty {
             if (!card.hasKnownTreeInArt()) {
                 return false;
             }
+        } else if (property.equals("InLatestWinningDeck")) {
+            // Metagamer: shares a name with a card in the latest Pro Tour's winning deck
+            if (!forge.card.WinningDeck.contains(card.getName())) {
+                return false;
+            }
         } else if (property.equals("KnownMoonInArt")) {
             if (!card.hasKnownMoonInArt()) {
                 return false;

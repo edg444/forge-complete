@@ -243,6 +243,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Toy colors** (`Protection | Gains$ ToyColors`, Rarity): a human picks the colors at resolution (pink and gold in
   a silver-bordered game); `PlayerController.getKnownToyColors` gives the AI's toy, fixed per game
   (`SpellAbilityAi.gameSeed`).
+- **Latest Pro Tour winning deck** (`forge.card.WinningDeck`, card property `InLatestWinningDeck`): filled by
+  `forge.model.MetagamerDeckLoader` at startup from the user-folder cache (`metagamer-winning-deck.txt`) or the
+  shipped `res/lists/MetagamerWinningDeck.txt`, then refreshed at most daily in the background from magic.gg: the
+  event archive's newest finished "Pro Tour" (players are listed in finishing order, so the first is the winner),
+  that event's Top 8 deck page (the finals' format), and the winner's `<main-deck>`. Offline keeps the old deck.
 - **Counts as N creatures** (`S:Mode$ CountsAsCreatures | Amount$ 5`, `CountsAsCreatures.count`): weighs the card
   in counts whose valid restriction is creatures restricted to a controller (`Count$Valid`, per-player `Valid`
   counts, `CreaturesInPlay`, and the IsPresent checks of triggers, statics, conditions and restrictions). Java-coded
@@ -269,6 +274,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   needed more than 10 to touch the Dreadmaw (about 40% each), so it failed now and then (10 of 40 on 2026-10-10).
   The throws now run on a seeded `MyRandom`, restored afterward: 22 of 40 every run.
 
+- **Metagamer** (CMB1 #8), with #6 Frontier Explorer and #7 Imaginary Friends (upstream) verified. User rulings: the
+  latest Pro Tour (only), kept current. Today that's Pro Tour Marvel Super Heroes, whose finals were a draft, so the
+  deck is Yuuki Ichikawa's 40-card draft deck (names checked against Scryfall).
 - **Five Kids in a Trenchcoat** (CMB1 #5). User rulings: five creatures in anyone's count of the creatures you
   control, filtered counts and thresholds included; counts of all creatures see one.
 - **Enroll in the Coalition** (CMB1 #4): you're a Flagbearer (not a creature); with Coalition Honor Guards out,

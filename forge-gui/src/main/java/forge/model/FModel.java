@@ -287,6 +287,8 @@ public final class FModel {
         CardThreat.setEvaluator(ComputerUtilCard::evaluateCardImpact);
         OutsidePlayers.setAiFactory(usedNames -> new LobbyPlayerAi(
                 NameGenerator.getRandomName("Any", "Any", new ArrayList<>(usedNames)), null));
+        // Metagamer: the latest Pro Tour's winning deck, refreshed from magic.gg in the background
+        MetagamerDeckLoader.init();
         // Modular Monstrosity: "today" is the calendar day, so the keywords chosen survive between sessions
         forge.game.player.KeywordDayLog.setStore(new forge.game.player.KeywordDayLog.Store() {
             private final java.io.File file = new java.io.File(ForgeConstants.USER_DIR, "modular-monstrosity-keywords.txt");

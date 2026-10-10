@@ -1,0 +1,6 @@
+Name:Metagamer
+ManaCost:W W
+Types:Creature Human Advisor
+PT:2/2
+S:Mode$ RaiseCost | ValidCard$ Card.InLatestWinningDeck | Type$ Spell | Amount$ 1 | Description$ Cards in the winning deck(s) of the latest Mythic Championship cost {1} more to cast.
+Oracle:Cards in the winning deck(s) of the latest Mythic Championship cost {1} more to cast.
