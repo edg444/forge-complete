@@ -243,6 +243,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Toy colors** (`Protection | Gains$ ToyColors`, Rarity): a human picks the colors at resolution (pink and gold in
   a silver-bordered game); `PlayerController.getKnownToyColors` gives the AI's toy, fixed per game
   (`SpellAbilityAi.gameSeed`).
+- **Scrycast** (`K:Scrycast:<cost>`, Biting Remark): in `GameAction.scry`, after the cards are seen and before they're
+  arranged, each Scrycast card may be cast for its cost (a Play effect, so the AI decides like any free cast); the rest
+  are scried as usual and no further card is looked at (ruling).
 - **Auras on spells, casting from the battlefield** (Animate Spell): an Aura spell can target a spell on the stack
   (`SVar:AuraSpell` with `TgtZone$ Stack`; AttachEffect attaches to a targeted spell's card). ChangeZone
   `AllowNonPermanent$ True` puts an instant or sorcery onto the battlefield when a card says so (101.1 over 304.4).
@@ -281,6 +284,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Biting Remark** (CMB1 #17): new keyword Scrycast. AI: a permanent spell cast by an effect no longer waits for
+  main phase 2 (it's now or never).
 - **Animate Spell** (CMB1 #16): an Aura on a spell; the card becomes a creature on the battlefield and its owner casts it
   or sacrifices it when the Aura leaves (rulings: P/T from the mana value on the stack, X included; the Aura's enchant
   ability swaps to the permanent; no cast if the creature left first or at the same time).

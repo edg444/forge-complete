@@ -34,8 +34,9 @@ public class PermanentAi extends SpellAbilityAi {
             return false;
         }
 
-        // Wait for Main2 if possible
-        return !ph.is(PhaseType.MAIN1) || !ph.isPlayerTurn(ai) || sa.hasParam("WithoutManaCost") || ComputerUtil.castPermanentInMain1(ai, sa);
+        // Wait for Main2 if possible - but a spell cast by an effect (Scrycast, cascade-likes) is now or never
+        return !ph.is(PhaseType.MAIN1) || !ph.isPlayerTurn(ai) || sa.hasParam("WithoutManaCost") || sa.isCastFromPlayEffect()
+                || ComputerUtil.castPermanentInMain1(ai, sa);
     }
 
     /**

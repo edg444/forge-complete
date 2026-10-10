@@ -173,6 +173,7 @@ public enum Keyword {
     RIOT("Riot", SimpleKeyword.class, false, "This creature enters with your choice of a +1/+1 counter or haste."),
     RIPPLE("Ripple", KeywordWithAmount.class, false, "When you cast this spell, you may reveal the top {%d:card} of your library. You may cast any of those cards with the same name as this spell without paying their mana costs. Put the rest on the bottom of your library in any order."),
     SADDLE("Saddle", KeywordWithAmount.class, false, "Tap any number of other creatures you control with total power %1$d or more: This Mount becomes saddled until end of turn. Saddle only as a sorcery."),
+    SCRYCAST("Scrycast", KeywordWithCost.class, false, "If you see this card while scrying, you may reveal it and cast it by paying %s."),
     SCAVENGE("Scavenge", KeywordWithCost.class, false, "%s, Exile this card from your graveyard: Put a number of +1/+1 counters equal to this card's power on target creature. Scavenge only as a sorcery."),
     SHADOW("Shadow", SimpleKeyword.class, true, "This creature can block or be blocked by only creatures with shadow."),
     SHROUD("Shroud", SimpleKeyword.class, true, "This can't be the target of spells or abilities."),

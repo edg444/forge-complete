@@ -2761,7 +2761,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                     sbLong.append("\r\n");
                 } else if (keyword.startsWith("Escape") || keyword.startsWith("Foretell:")
                         || keyword.startsWith("Madness:") || keyword.startsWith("Reconfigure")
-                        || keyword.startsWith("Miracle") || keyword.startsWith("Offspring")) {
+                        || keyword.startsWith("Miracle") || keyword.startsWith("Offspring") || keyword.startsWith("Scrycast")) {
                     String[] k = keyword.split(":");
                     sbLong.append(k[0]);
                     if (k.length > 1) {

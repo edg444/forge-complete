@@ -1,0 +1,7 @@
+Name:Biting Remark
+ManaCost:3 U
+Types:Creature Elemental
+PT:3/3
+K:Scrycast:0
+K:Flying
+Oracle:Scrycast {0} (If you see this card while scrying, you may reveal it and cast it by paying {0}.)\nFlying

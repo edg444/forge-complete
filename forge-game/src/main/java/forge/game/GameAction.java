@@ -3039,6 +3039,28 @@ public class GameAction {
         game.getTriggerHandler().runTrigger(TriggerType.TakesInitiative, runParams, false);
     }
 
+    /**
+     * Scrycast (Biting Remark): "If you see this card while scrying, you may reveal it and cast it by paying [cost]." The
+     * card is cast mid-scry; the rest of what was seen is scried as usual, and no further card is looked at (ruling).
+     */
+    private void scrycast(final Player p, final CardCollection seen) {
+        for (final Card c : new CardCollection(seen)) {
+            for (final KeywordInterface ki : c.getKeywords(Keyword.SCRYCAST)) {
+                final String cost = ki.getOriginal().split(":", 2)[1];
+                final SpellAbility play = AbilityFactory.getAbility("DB$ Play | Defined$ Self | Optional$ True | PlayCost$ "
+                        + cost, c);
+                play.setActivatingPlayer(p);
+                AbilityUtils.resolve(play);
+                final Card now = game.getCardState(c, null);
+                if (now == null || !now.isInZone(ZoneType.Library)) {
+                    game.getGameLog().add(GameLogEntryType.STACK_ADD, p + " revealed " + c + " while scrying and cast it (scrycast).");
+                    seen.remove(c);
+                    break;
+                }
+            }
+        }
+    }
+
     public void scry(final List<Player> players, int numScry, SpellAbility cause) {
         if (numScry <= 0) {
             // CR 701.22b If a player is instructed to scry 0, no scry event occurs.
@@ -3079,6 +3101,11 @@ public class GameAction {
         for (final Map.Entry<Player, Integer> e : actualPlayers.entrySet()) {
             final Player p = e.getKey();
             final CardCollection topN = new CardCollection(p.getCardsIn(ZoneType.Library, e.getValue()));
+            scrycast(p, topN);
+            if (topN.isEmpty()) {
+                // everything seen was cast: nothing's left to finish scrying (Biting Remark ruling)
+                continue;
+            }
             ImmutablePair<CardCollection, CardCollection> decision = p.getController().arrangeForScry(topN);
             decisions.put(p, decision);
             int numToTop = decision.getLeft() == null ? 0 : decision.getLeft().size();
