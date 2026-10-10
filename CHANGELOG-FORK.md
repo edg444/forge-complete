@@ -284,6 +284,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Command the Chaff** (CMB1 #18, upstream script): fixed - it could play a land from the sideboard (ruling: you
+  can't); now only spells (`ValidSA$ Spell`).
 - **Biting Remark** (CMB1 #17): new keyword Scrycast. AI: a permanent spell cast by an effect no longer waits for
   main phase 2 (it's now or never).
 - **Animate Spell** (CMB1 #16): an Aura on a spell; the card becomes a creature on the battlefield and its owner casts it
