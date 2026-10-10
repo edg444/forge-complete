@@ -257,6 +257,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Baneslayer Aspirant** (CMB1 #3): only your own emblems count.
 - **Ral's Vanguard** (Mystery Booster playtest, CMB1 #1): first of the set's 60 unscripted cards. Copies don't draw
   or deal extra (ruling); the requirement is checked as the game begins.
 

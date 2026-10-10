@@ -1,0 +1,6 @@
+Name:Baneslayer Aspirant
+ManaCost:1 W
+Types:Creature Human Soldier
+PT:2/2
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ 3 | AddToughness$ 3 | AddKeyword$ Flying & First Strike & Lifelink | IsPresent$ Emblem.YouCtrl | PresentZone$ Command | Description$ CARDNAME gets +3/+3 and has flying, first strike, and lifelink as long as you have one or more emblems.
+Oracle:Baneslayer Aspirant gets +3/+3 and has flying, first strike, and lifelink as long as you have one or more emblems.
