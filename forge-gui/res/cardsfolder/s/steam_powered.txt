@@ -1,0 +1,9 @@
+Name:Steam-Powered
+ManaCost:no cost
+Types:Artifact Creature Construct
+PT:+0/+4
+K:Augment:4
+# An activated condition: never usable on its own (an augment card can't be on the battlefield by itself);
+# combining with a host replaces it with the host's effect for this cost (CardFactory.getAugmentedCloneStates).
+A:AB$ Pump | Cost$ 5 | Defined$ Self | AugmentCondition$ True | SpellDescription$
+Oracle:{5}:\nAugment {4} ({4}, Reveal this card from your hand: Combine it with target host. Augment only as a sorcery.)

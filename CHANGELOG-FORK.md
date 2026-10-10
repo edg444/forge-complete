@@ -341,6 +341,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   "Agents of S.N.E.A.K."), the human's own cards' watermarks listed first; card property `withChosenWatermark`.
   Scryfall calls every set-symbol watermark "set" without saying which set, so "Set symbol" is one choice covering
   them all (user ruling). AI: the watermark most of its creatures have. `StampOfApprovalTest` (3).
+- **Steam-Powered** (ust/161; not scripted upstream). Script only: Zombified's activated-condition augment shape
+  (`AugmentCondition$ True`, `Cost$ 5`), so the host's effect becomes "{5}: ...". `SteamPoweredTest` (1).
+- Unstable 162-164 (Steel Squirrel, Sword of Dungeons & Dragons, Voracious Vacuum) were scripted upstream; checked
+  against Scryfall's Oracle text and rulings (gold monocolored Dragon token, repeat on a 20) - no changes needed.
 
 ### 2026-10-09 (deployed: desktop, Android, GitHub) — upstream merge (94 commits, incl. dice and flip animations); The Grand Calcutron; Hot Fix; Ol' Buzzbark; Phoebe, Head of S.N.E.A.K.; X; Urza, Academy Headmaster audit
 
