@@ -34,6 +34,7 @@ import forge.game.ability.effects.DetachedCardEffect;
 import forge.game.ability.effects.RollDiceEffect;
 import forge.game.card.*;
 import forge.game.event.*;
+import forge.game.card.perpetual.PerpetualTypes;
 import forge.game.keyword.*;
 import forge.game.mana.ManaPool;
 import forge.game.phase.PhaseHandler;
@@ -3325,6 +3326,24 @@ public class Player extends GameEntity implements Comparable<Player> {
         return effect == null || effect.getZone() == null ? null : mapper.apply(effect);
     }
 
+    /** Legendary partner: "The other one is promoted to legendary." - for the whole game, in every zone. */
+    public void promoteLegendaryPartners() {
+        if (commanders.size() != 2 || commanders.stream().noneMatch(c -> c.hasKeyword(Keyword.LEGENDARY_PARTNER))) {
+            return;
+        }
+        for (Card c : commanders) {
+            if (c.getType().isLegendary()) {
+                continue;
+            }
+            long ts = game.getNextTimestamp();
+            CardType legendary = new CardType(true);
+            legendary.add("Legendary");
+            PerpetualTypes p = new PerpetualTypes(ts, legendary, new CardType(true), EnumSet.noneOf(RemoveType.class));
+            c.addPerpetual(p);
+            p.applyEffect(c);
+        }
+    }
+
     public void addCommander(Card commander) {
         assert(this.equals(commander.getOwner())); //Making someone else's card your commander isn't currently supported.
         if(this.commanders.contains(commander))
@@ -3508,6 +3527,7 @@ public class Player extends GameEntity implements Comparable<Player> {
                 com.add(cmd);
                 this.addCommander(cmd);
             }
+            promoteLegendaryPartners();
         }
         else if (registeredPlayer.getPlaneswalker() != null) { // Planeswalker
             Card cmd = Card.fromPaperCard(registeredPlayer.getPlaneswalker(), this);

@@ -1,0 +1,8 @@
+Name:Optimus Prime, Inspiring Leader
+ManaCost:3 R W
+Types:Legendary Artifact Creature Autobot
+PT:4/5
+A:AB$ SetState | Cost$ 1 | ValidTgts$ Permanent.YouCtrl | TgtPrompt$ Select target permanent you control | Mode$ OtherFace | SpellDescription$ Turn target permanent you control to its other face.
+A:AB$ Animate | Cost$ 1 | Defined$ Self | Types$ Construct | RemoveCreatureTypes$ True | Power$ 6 | Toughness$ 6 | SubAbility$ DBPumpAll | SpellDescription$ Until end of turn, CARDNAME becomes a Construct with base power and toughness 6/6 and creatures you control gain trample.
+SVar:DBPumpAll:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Trample
+Oracle:{1}: Turn target permanent you control to its other face.\n{1}: Until end of turn, Optimus Prime, Inspiring Leader becomes a Construct with base power and toughness 6/6 and creatures you control gain trample.

@@ -2517,6 +2517,12 @@ public class CardProperty {
             if (!card.isCommander()) {
                 return false;
             }
+        } else if (property.equals("IsPartner")) {
+            // "its partner" (Teamwork): the source's owner's other commander
+            if (card.equals(source) || !card.isCommander() || !source.isCommander()
+                    || !card.getOwner().equals(source.getOwner())) {
+                return false;
+            }
         } else if (property.startsWith("NotedFor")) {
             final String key = property.substring("NotedFor".length());
             for (String note : sourceController.getNotesForName(key)) {

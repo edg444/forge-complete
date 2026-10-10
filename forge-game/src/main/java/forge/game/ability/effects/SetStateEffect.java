@@ -30,7 +30,10 @@ public class SetStateEffect extends SpellAbilityEffect {
         final StringBuilder sb = new StringBuilder();
         boolean specialize = sa.getParam("Mode").equals("Specialize");
 
-        if ("TurnOver".equals(sa.getParam("Mode"))) {
+        if ("OtherFace".equals(sa.getParam("Mode"))) {
+            sb.append("Turn ").append(Lang.joinHomogenous(getTargetCards(sa))).append(" to its other face.");
+            return sb.toString();
+        } else if ("TurnOver".equals(sa.getParam("Mode"))) {
             sb.append("Turn over ");
         } else if (sa.hasParam("Flip")) {
             sb.append("Flip ");
@@ -90,8 +93,21 @@ public class SetStateEffect extends SpellAbilityEffect {
 
             // Very Cryptic Command's "turn over": a face-down card turns face up, a double-faced card transforms,
             // and anything else turns face down as a 2/2 (Unstable ruling)
-            final String cardMode = !"TurnOver".equals(mode) ? mode : gameCard.isFaceDown() ? "TurnFaceUp"
-                    : gameCard.isTransformable() ? "Transform" : "TurnFaceDown";
+            // Optimus Prime, Inspiring Leader's "turn to its other face": a face-down permanent turns face up
+            // (user ruling), anything else converts (701.28a), which does nothing to a single-faced card
+            final String cardMode;
+            if ("OtherFace".equals(mode)) {
+                if (gameCard.isFaceDown()) {
+                    cardMode = "TurnFaceUp";
+                } else if (gameCard.isTransformable() || gameCard.hasMergedCard()) {
+                    cardMode = "Transform";
+                } else {
+                    continue;
+                }
+            } else {
+                cardMode = !"TurnOver".equals(mode) ? mode : gameCard.isFaceDown() ? "TurnFaceUp"
+                        : gameCard.isTransformable() ? "Transform" : "TurnFaceDown";
+            }
 
             // Cards which are not on the battlefield should not be able to transform.
             // TurnFace should be allowed in other zones like Exile too

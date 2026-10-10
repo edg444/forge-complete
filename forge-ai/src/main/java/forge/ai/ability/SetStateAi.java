@@ -27,6 +27,11 @@ public class SetStateAi extends SpellAbilityAi {
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
 
+        // targets are judged one by one in checkPhaseRestrictions
+        if ("OtherFace".equals(mode)) {
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
+
         // Prevent transform into legendary creature if copy already exists
         if (!isSafeToTransformIntoLegendary(aiPlayer, source)) {
             return new AiAbilityDecision(0, AiPlayDecision.WouldDestroyLegend);
@@ -82,6 +87,21 @@ public class SetStateAi extends SpellAbilityAi {
 
                 return sa.isMinTargetChosen();
             }
+        } else if ("OtherFace".equals(mode)) {
+            if (!sa.usesTargeting()) {
+                CardCollection list = AbilityUtils.getDefinedCards(source, sa.getParam("Defined"), sa);
+                return !list.isEmpty() && (otherFaceIsBetter(list.get(0), ai, ph, sa) || "Always".equals(logic));
+            }
+            sa.resetTargets();
+            for (final Card c : CardUtil.getValidCardsToTarget(sa)) {
+                if (otherFaceIsBetter(c, ai, ph, sa) || "Always".equals(logic)) {
+                    sa.getTargets().add(c);
+                    if (sa.isMaxTargetChosen()) {
+                        break;
+                    }
+                }
+            }
+            return sa.isMinTargetChosen();
         } else if ("TurnFaceUp".equals(mode) || "TurnFaceDown".equals(mode)) {
             if (sa.usesTargeting()) {
                 sa.resetTargets();
@@ -127,6 +147,22 @@ public class SetStateAi extends SpellAbilityAi {
         // TODO: compareCards assumes that a creature will transform into a creature. Need to improve this
         // for other things potentially transforming.
         return compareCards(card, transformed, ai, ph);
+    }
+
+    private boolean otherFaceIsBetter(Card card, Player ai, PhaseHandler ph, SpellAbility sa) {
+        if (card.isFaceDown()) {
+            return shouldTurnFace(card, ai, ph, "TurnFaceUp");
+        }
+        if (!card.isCreature() || card.hasMergedCard() || !card.canTransform(sa) || !card.hasAlternateState()
+                || !isSafeToTransformIntoLegendary(ai, card)) {
+            return false;
+        }
+        Card transformed = CardCopyService.getLKICopy(card);
+        transformed.getCurrentState().copyFrom(card.getAlternateState(), true);
+        transformed.updateStateForView();
+        // strictly better, so a repeatable ability doesn't flip a card back and forth
+        return compareCards(card, transformed, ai, ph)
+                && ComputerUtilCard.evaluateCreature(transformed) > ComputerUtilCard.evaluateCreature(card);
     }
 
     private boolean shouldTurnFace(Card card, final Player ai, PhaseHandler ph, String mode) {

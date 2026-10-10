@@ -1,0 +1,12 @@
+Name:Sol, Advocate Eternal
+ManaCost:G W U B
+Types:Legendary Creature Dragon Angel
+PT:4/4
+K:Legendary partner
+K:Flying
+K:Vigilance
+T:Mode$ AttackersDeclared | AttackingPlayer$ You | ValidAttackers$ Card.Self,Card.IsPartner+YouCtrl | ValidAttackersAmount$ EQ2 | NoResolvingCheck$ True | TriggerZones$ Battlefield | Execute$ TrigSupport | TriggerDescription$ Teamwork — Whenever you attack or block with both CARDNAME and its partner, support 4 and investigate four times.
+T:Mode$ BlockersDeclared | IsPresent$ Card.Self+blocking | IsPresent2$ Card.IsPartner+blocking+YouCtrl | NoResolvingCheck$ True | TriggerZones$ Battlefield | Execute$ TrigSupport | Secondary$ True | TriggerDescription$ Teamwork — Whenever you attack or block with both CARDNAME and its partner, support 4 and investigate four times.
+SVar:TrigSupport:DB$ PutCounter | Support$ 4 | SubAbility$ DBInvestigate
+SVar:DBInvestigate:DB$ Investigate | Num$ 4
+Oracle:Legendary partner (You can have two commanders if this is one of them. The other one is promoted to legendary.)\nFlying, vigilance\nTeamwork — Whenever you attack or block with both Sol, Advocate Eternal and its partner, support 4 and investigate four times.

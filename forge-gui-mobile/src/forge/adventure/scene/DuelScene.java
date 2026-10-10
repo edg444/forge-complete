@@ -715,7 +715,7 @@ public class DuelScene extends ForgeScene {
         }
         if (!commanders.isEmpty()) {
             PaperCard mainCommander = commanders.get(0);
-            if (!format.isLegalCommander(mainCommander.getRules()))
+            if (!format.isLegalCommanderWith(mainCommander.getRules(), commanders))
                 removals.add(mainCommander);
             if (commanders.size() > 1) {
                 PaperCard partnerCommander = commanders.get(1);

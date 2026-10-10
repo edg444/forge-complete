@@ -222,12 +222,23 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **K: lines keep upstream's text.** The engine parses a K: line's head into a `Keyword` and looks sentence
   keywords up by their exact text, so Oracle wording for them is display-only, from
   `CardFactoryUtil.keywordAsPrinted`. `KeywordScriptTextTest` enforces it.
+- **"Turn to its other face"** (`SetState | Mode$ OtherFace`, Optimus Prime, Inspiring Leader): a face-down
+  permanent turns face up, a double-faced one (MDFCs included) converts under 701.28a, anything else is skipped.
+- **Legendary partner** (`K:Legendary partner`, Sol, Advocate Eternal): the other commander only has to be a
+  would-be commander (`CardRules.canBeCommanderIfLegendary`, `DeckFormat.isLegalCommanderWith`) and is made
+  perpetually legendary at game start (`Player.promoteLegendaryPartners`). Card property `IsPartner` = the
+  source's owner's other commander ("its partner").
 
 ---
 
 ## Log
 
 ### Unreleased
+
+- **Optimus Prime, Inspiring Leader** and **Sol, Advocate Eternal** (2018 Heroes of the Realm). User rulings:
+  Optimus's "turn to its other face" is convert (any double-faced permanent, MDFCs included) and also turns a
+  face-down permanent face up; Sol's partner can be anything that could be a commander if it were legendary,
+  and it's legendary all game in every zone. Desktop and mobile deck editors accept the nonlegendary partner.
 
 ### 2026-10-10 (deployed: desktop, Android, GitHub) — Two-Headed Giant seating and team scoring; ∞ on mobile; AI twin-trigger targets; Arena Promos
 

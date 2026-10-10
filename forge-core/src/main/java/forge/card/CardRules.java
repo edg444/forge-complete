@@ -356,19 +356,31 @@ public final class CardRules implements ICardCharacteristics {
         if (mainPart.getOracleText().contains("can be your commander") || canBeBackground()) {
             return true;
         }
-        CardType type = mainPart.getType();
-        if (!type.isLegendary()) {
+        if (!mainPart.getType().isLegendary()) {
             return false;
         }
-        if (canBeCreature() || type.isVehicle() || (
-                type.isSpacecraft() && getPower() != null)) {
-            // Spacecraft need printed PT
+        return canBeCommanderIfLegendary();
+    }
+
+    /** The commander requirements minus "legendary" - what a legendary partner's other commander must meet. */
+    public boolean canBeCommanderIfLegendary() {
+        if (mainPart.getOracleText().contains("can be your commander")) {
             return true;
         }
-        return false;
+        CardType type = mainPart.getType();
+        // Spacecraft need printed PT
+        return canBeCreature() || type.isVehicle() || (type.isSpacecraft() && getPower() != null);
+    }
+
+    public boolean hasLegendaryPartner() {
+        return hasKeyword("Legendary partner");
     }
 
     public boolean canBePartnerCommanders(CardRules b) {
+        if (hasLegendaryPartner() && canBeCommander() && b.canBeCommanderIfLegendary()
+                || b.hasLegendaryPartner() && b.canBeCommander() && canBeCommanderIfLegendary()) {
+            return true; // the other one is promoted to legendary
+        }
         if (!(canBePartnerCommander() && b.canBePartnerCommander())) {
             return false;
         }
@@ -401,7 +413,7 @@ public final class CardRules implements ICardCharacteristics {
         if (!canBeCommander()) {
             return false;
         }
-        return hasKeyword("Partner") || !this.partnerWith.isEmpty() || !this.partnerType.isEmpty() ||
+        return hasKeyword("Partner") || !this.partnerWith.isEmpty() || !this.partnerType.isEmpty() || hasLegendaryPartner() ||
                 hasKeyword("Choose a Background") || hasKeyword("Doctor's companion") || isDoctor();
     }
 

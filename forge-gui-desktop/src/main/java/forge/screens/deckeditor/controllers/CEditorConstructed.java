@@ -226,7 +226,7 @@ public final class CEditorConstructed extends CDeckEditor<Deck> {
                     }
                 }
                 else { //replace existing commander unless new commander is valid partner commander
-                    if (count == 1 && newCard.getRules().canBePartnerCommander()) { //replace existing partners regardless
+                    if (count == 1) { //replace existing partners regardless
                         PaperCard commander = editor.getDeckManager().getPool().toFlatList().get(0);
                         if (!commander.getRules().canBePartnerCommanders(newCard.getRules())) {
                             editor.getDeckManager().removeAllItems();
@@ -484,13 +484,19 @@ public final class CEditorConstructed extends CDeckEditor<Deck> {
     }
 
     private static String commanderSlotKey(CardRules rules, DeckFormat df) {
-        if (df.isLegalCommander(rules)) {
+        if (df.isLegalCommanderWith(rules, currentCommanders())) {
             return df.hasSignatureSpell() ? "lblasoathbreaker" : "lblascommander";
         }
         if (df.hasSignatureSpell() && rules.canBeSignatureSpell()) {
             return "lblassignaturespell";
         }
         return null;
+    }
+
+    private static List<PaperCard> currentCommanders() {
+        ACEditorBase<?, ?> editor = CDeckEditorUI.SINGLETON_INSTANCE.getCurrentEditorController();
+        if (!(editor instanceof CEditorConstructed ce) || ce.controller.getModel() == null) { return Collections.emptyList(); }
+        return ce.controller.getModel().getCommanders();
     }
 
     private static void placeSelectedAsCommander(PaperCard card, boolean isAdd) {
@@ -521,8 +527,8 @@ public final class CEditorConstructed extends CDeckEditor<Deck> {
             }
         } else if (dest.countAll() > 0) {
             List<PaperCard> existing = dest.toFlatList();
+            // canBePartnerCommanders checks both sides; a legendary partner's other commander has no partner ability
             boolean keepAsPartner = existing.size() == 1
-                    && card.getRules().canBePartnerCommander()
                     && existing.get(0).getRules().canBePartnerCommanders(card.getRules());
             if (!keepAsPartner) {
                 deck.getMain().addAll(dest);

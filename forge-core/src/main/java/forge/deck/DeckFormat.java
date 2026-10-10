@@ -466,7 +466,7 @@ public enum DeckFormat {
             }
 
             for (PaperCard pc : commanders) {
-                if (!isLegalCommander(pc.getRules())) {
+                if (!isLegalCommanderWith(pc.getRules(), commanders)) {
                     return "has an illegal commander";
                 }
                 cmdCI |= pc.getRules().getColorIdentity().getColor();
@@ -693,6 +693,23 @@ public enum DeckFormat {
             return rules.canBeTinyLeadersCommander();
         }
         return rules.canBeCommander();
+    }
+
+    /** Like {@link #isLegalCommander}, but a nonlegendary card also qualifies beside a legendary partner commander. */
+    public boolean isLegalCommanderWith(CardRules rules, List<PaperCard> commanders) {
+        if (isLegalCommander(rules)) {
+            return true;
+        }
+        if (this == DeckFormat.Oathbreaker || cardPoolFilter != null && !cardPoolFilter.test(rules)
+                || !rules.canBeCommanderIfLegendary()) {
+            return false;
+        }
+        for (PaperCard other : commanders) {
+            if (other.getRules() != rules && other.getRules().hasLegendaryPartner() && isLegalCommander(other.getRules())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Predicate<Deck> isLegalDeckPredicate() {
