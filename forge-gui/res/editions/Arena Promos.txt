@@ -18,3 +18,74 @@ ScryfallCode=PANA
 103 M The Gitrog Monster @Jason Kang
 104 R Bladewing the Risen @Kev Walker
 105 R Hanna, Ship's Navigator @Dave Dorman
+201 C Plains @Noah Bradley
+202 C Island @Noah Bradley
+203 C Swamp @Noah Bradley
+204 C Mountain @Noah Bradley
+205 C Forest @Noah Bradley
+206 C Plains @John Avon
+207 C Island @John Avon
+208 C Swamp @John Avon
+209 C Mountain @John Avon
+210 C Forest @John Avon
+211 C Plains @Jonas De Ro
+212 C Island @Jonas De Ro
+213 C Swamp @Jonas De Ro
+214 C Mountain @Jonas De Ro
+215 C Forest @Titus Lunter
+216 C Plains @Tom Wänerstrand
+217 C Island @Douglas Shuler
+218 C Swamp @Bob Eggleton
+219 C Mountain @John Avon
+220 C Forest @Tony Roberts
+221 C Plains @John Avon
+222 C Island @Vincent Proce
+223 C Swamp @Véronique Meignaud
+224 C Mountain @James Paick
+225 C Forest @Jung Park
+226 C Plains @Sam Burley
+227 C Island @John Avon
+228 C Swamp @Mike Bierek
+229 C Mountain @Rob Alexander
+230 C Forest @Mark Poole
+231 C Plains @Adam Paquette
+232 C Island @Adam Paquette
+233 C Swamp @Adam Paquette
+234 C Mountain @Adam Paquette
+235 C Forest @Adam Paquette
+236 R Plains @Lars Grant-West
+237 R Island @Jonas De Ro
+238 R Swamp @Lucas Graciano
+239 R Mountain @Grzegorz Rutkowski
+240 R Forest @Ravenna Tran
+241 C Plains @John Avon
+242 C Island @John Avon
+243 C Swamp @John Avon
+244 C Mountain @John Avon
+245 C Forest @John Avon
+246 C Plains @Bob Ross
+247 C Plains @Bob Ross
+248 C Island @Bob Ross
+249 C Island @Bob Ross
+250 C Swamp @Bob Ross
+251 C Swamp @Bob Ross
+252 C Mountain @Bob Ross
+253 C Mountain @Bob Ross
+254 C Forest @Bob Ross
+255 C Forest @Bob Ross
+256 R Evolving Wilds @Bob Ross
+257 C Snow-Covered Plains @Titus Lunter
+258 C Snow-Covered Island @Titus Lunter
+259 C Snow-Covered Swamp @Titus Lunter
+260 C Snow-Covered Mountain @Titus Lunter
+261 C Snow-Covered Forest @Titus Lunter
+262 R Plains @Donato Giancola
+263 R Island @Yeong-Hao Han
+264 R Swamp @Jonas De Ro
+265 R Mountain @Grzegorz Rutkowski
+266 R Forest @Andreas Rocha
+267 C Plains @Daren Bader
+268 C Island @Shahab Alizadeh
+269 C Swamp @Daren Bader
+270 C Mountain @Shahab Alizadeh
+271 C Forest @Alayna Danner

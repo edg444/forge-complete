@@ -219,6 +219,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Arena Promos (PANA)**: the card list now has all 83 of Scryfall's printings. Upstream had 12 (CNs 1-7, 101-105);
+  the 71 added are CNs 201-271, mostly basic lands, including Bob Ross's and Evolving Wilds. Rarities follow Scryfall,
+  as `Magic Online Promos.txt` does. The fork owns this file: `.git/info/attributes` sets it to `merge=ours` (with
+  `git config merge.ours.driver true`), so an upstream merge that also changes it keeps the fork's version. Both
+  settings are local to this clone; set them again on a fresh clone.
+
 ### 2026-10-09, third deploy (desktop, Android, GitHub) — Everythingamajig
 
 - Full suite 1128 run, 0 failed, 6 skipped. Unstable: 223 printings in the card database (Scryfall's 268 minus
