@@ -219,6 +219,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-09, second deploy (desktop, Android, GitHub) — upstream merge (1 commit); Two-Headed Giant; Unstable complete (Better Than One, Mary O'Kill through Watermarket)
+
+- **Upstream merge** (1 commit: GameEventForwarder and its tests). Clean; full suite 1119 run, 0 failed, 6 skipped.
+
 - **Two-Headed Giant** (CR 805, 810; rules checked against the 2026-09-25 Comprehensive Rules). See the engine
   capabilities section for what it covers. Fixed on the way: a human who is a team's second head used the first
   head's phase stops and would have auto-passed through their own main phase; their own stops now apply.
