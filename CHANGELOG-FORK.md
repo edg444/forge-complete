@@ -219,6 +219,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-09, third deploy (desktop, Android, GitHub) — Everythingamajig
+
+- Full suite 1128 run, 0 failed, 6 skipped. Unstable: 223 printings in the card database (Scryfall's 268 minus
+  the 45 Contraptions, which load separately).
+
 - **Everythingamajig** (ust/147a-f; upstream had only C). All six printings, each with its own three abilities;
   D costs {6} and F {8}. Oracle text and rulings checked against Scryfall, plus the Unstable FAQ. Most abilities
   are other Un-cards' (Giant Fan, My First Tome, Zuran Orb, Ashnod's Altar, Urza's Hot Tub, Mirror Mirror), so
