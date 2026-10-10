@@ -999,6 +999,10 @@ public class AbilityUtils {
             for (final SpellAbility s : getDefinedSpellAbilities(card, "Targeted", sa)) {
                 players.add(s.getActivatingPlayer());
             }
+        } else if (defined.startsWith("AttachedBy ") && (defined.endsWith("Owner") || defined.endsWith("Controller"))) {
+            // "enchanted card's owner" after the Aura is gone (Animate Spell): AttachedBy TriggeredCardLKICopyOwner
+            final String cards = defined.substring(0, defined.length() - (defined.endsWith("Owner") ? 5 : 10));
+            addPlayer(getDefinedCards(card, cards, sa), defined, players);
         } else if (defined.startsWith("Remembered")) {
             addPlayer(card.getRemembered(), defined, players);
         } else if (defined.startsWith("Imprinted")) {
@@ -3215,6 +3219,13 @@ public class AbilityUtils {
         return getSpellsFromPlayEffect(tgtCard, controller, CardStateName.Original, false, null);
     }
     public static final List<SpellAbility> getSpellsFromPlayEffect(final Card tgtCard, final Player controller, CardStateName state, boolean withAltCost, Predicate<SpellAbility> validSA) {
+        return getSpellsFromPlayEffect(tgtCard, controller, state, withAltCost, validSA, false);
+    }
+    /**
+     * @param fromBattlefield a card on the battlefield may be cast (Animate Spell: "unless they cast it"). It stops being a
+     * creature as it moves to the stack (ruling), so the creature-spell ability an animated instant picked up isn't used.
+     */
+    public static final List<SpellAbility> getSpellsFromPlayEffect(final Card tgtCard, final Player controller, CardStateName state, boolean withAltCost, Predicate<SpellAbility> validSA, boolean fromBattlefield) {
         List<SpellAbility> sas = new ArrayList<>();
         List<SpellAbility> list = new ArrayList<>();
         collectSpellsForPlayEffect(list, tgtCard.getState(tgtCard.getCurrentStateName()), controller, withAltCost);
@@ -3246,9 +3257,13 @@ public class AbilityUtils {
                     sas.add(s);
                 }
             } else {
+                if (fromBattlefield && tgtCard.isInPlay() && s instanceof SpellPermanent && (tgtCard.isInstant() || tgtCard.isSorcery())) {
+                    continue;
+                }
                 final Spell newSA = (Spell) s.copy(controller);
                 newSA.getRestrictions().setZone(null);
                 newSA.setCastFromPlayEffect(true);
+                newSA.setCastFromBattlefield(fromBattlefield);
                 // extra timing restrictions still apply
                 Card newHost = newSA.canPlayFromHost();
                 if (newHost != null) {

@@ -243,6 +243,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Toy colors** (`Protection | Gains$ ToyColors`, Rarity): a human picks the colors at resolution (pink and gold in
   a silver-bordered game); `PlayerController.getKnownToyColors` gives the AI's toy, fixed per game
   (`SpellAbilityAi.gameSeed`).
+- **Auras on spells, casting from the battlefield** (Animate Spell): an Aura spell can target a spell on the stack
+  (`SVar:AuraSpell` with `TgtZone$ Stack`; AttachEffect attaches to a targeted spell's card). ChangeZone
+  `AllowNonPermanent$ True` puts an instant or sorcery onto the battlefield when a card says so (101.1 over 304.4).
+  Play `CastFromBattlefield$ True` casts a card that's on the battlefield (`SpellAbility.setCastFromBattlefield`,
+  honored by `Spell.canPlayFromHost` and the zone check); an animated instant isn't cast as a creature spell. Player
+  definition `AttachedBy <cards>Owner/Controller`.
 - **Combat damage on the stack** (`S:Mode$ CombatDamageUsesStack`, `forge.game.combat.CombatDamageOnStack`): while a
   permanent with it is on the battlefield, each damage step's assignment goes on the stack as one object controlled
   by no player (`MagicStack.addCombatDamage`: no cast triggers, not counted as activated) and is dealt when it
@@ -274,6 +280,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 ## Log
 
 ### Unreleased
+
+- **Animate Spell** (CMB1 #16): an Aura on a spell; the card becomes a creature on the battlefield and its owner casts it
+  or sacrifices it when the Aura leaves (rulings: P/T from the mana value on the stack, X included; the Aura's enchant
+  ability swaps to the permanent; no cast if the creature left first or at the same time).
 
 ### 2026-10-10, second deploy (desktop, Android, GitHub) — 2018 Heroes of the Realm (Optimus Prime, Sol); Ponies: The Galloping; Mystery Booster playtest cards #1–15
 

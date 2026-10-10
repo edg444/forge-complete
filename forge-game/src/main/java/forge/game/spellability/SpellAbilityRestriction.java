@@ -223,7 +223,7 @@ public class SpellAbilityRestriction extends SpellAbilityVariables {
                 }
             }
             // Not a Spell, or on Battlefield, return false
-            if (!sa.isSpell() || (cardZone != null && ZoneType.Battlefield.equals(cardZone.getZoneType()))
+            if (!sa.isSpell() || (cardZone != null && ZoneType.Battlefield.equals(cardZone.getZoneType()) && !sa.isCastFromBattlefield())
                     || (this.getZone() != null && !this.getZone().equals(ZoneType.Hand))) {
                 return false;
             }

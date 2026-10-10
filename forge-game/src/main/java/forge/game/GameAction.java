@@ -155,8 +155,8 @@ public class GameAction {
         }
 
         // Rules 304.4, 307.4: instants, sorceries can't enter the battlefield and remain
-        // in their previous zone
-        if (toBattlefield && (c.isInstant() || c.isSorcery())) {
+        // in their previous zone - unless a card says to put one there (Animate Spell; 101.1, the card wins)
+        if (toBattlefield && (c.isInstant() || c.isSorcery()) && (cause == null || !cause.hasParam("AllowNonPermanent"))) {
             return c;
         }
 

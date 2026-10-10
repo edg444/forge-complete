@@ -75,7 +75,7 @@ public abstract class Spell extends SpellAbility implements java.io.Serializable
 
     public Card canPlayFromHost() {
         Card card = this.getHostCard();
-        if (card.isInPlay()) {
+        if (card.isInPlay() && !isCastFromBattlefield()) {
             return null;
         }
 

@@ -1794,6 +1794,15 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
         return false;
     }
 
+    // a Play effect may cast a card that's on the battlefield (Animate Spell: "unless they cast it")
+    private boolean castFromBattlefield = false;
+    public boolean isCastFromBattlefield() {
+        return castFromBattlefield;
+    }
+    public void setCastFromBattlefield(final boolean b) {
+        castFromBattlefield = b;
+    }
+
     public boolean isCastFromPlayEffect() {
         return isCastFromPlayEffect;
     }

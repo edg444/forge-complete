@@ -109,6 +109,12 @@ public class AttachEffect extends SpellAbilityEffect {
             attachTo = chooser.getController().chooseSingleEntityForEffect(choices, sa, title, params);
         } else {
             FCollection<GameEntity> targets = new FCollection<>(getDefinedEntitiesOrTargeted(sa, "Defined"));
+            // a spell on the stack is targeted as its ability (Animate Spell); the Aura attaches to its card
+            if (sa.usesTargeting() && !sa.hasParam("Defined")) {
+                for (final SpellAbility spell : sa.getTargets().getTargetSpells()) {
+                    targets.add(spell.getHostCard());
+                }
+            }
             if (targets.isEmpty()) {
                 return;
             }

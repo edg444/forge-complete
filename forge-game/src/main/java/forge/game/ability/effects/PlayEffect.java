@@ -195,7 +195,7 @@ public class PlayEffect extends SpellAbilityEffect {
         Predicate<SpellAbility> validSA;
         if (sa.hasParam("ValidSA")) {
             validSA = SpellAbilityPredicates.isValid(sa.getParam("ValidSA").split(","), controller, source, sa);
-            tgtCards.removeIf(c -> AbilityUtils.getSpellsFromPlayEffect(c, controller, CardStateName.Original, false, validSA).isEmpty());
+            tgtCards.removeIf(c -> AbilityUtils.getSpellsFromPlayEffect(c, controller, CardStateName.Original, false, validSA, sa.hasParam("CastFromBattlefield")).isEmpty());
             if (tgtCards.isEmpty()) {
                 return;
             }
@@ -294,7 +294,7 @@ public class PlayEffect extends SpellAbilityEffect {
                 state = CardStateName.Backside;
             }
 
-            List<SpellAbility> sas = AbilityUtils.getSpellsFromPlayEffect(tgtCard, controller, state, !altCost, validSA);
+            List<SpellAbility> sas = AbilityUtils.getSpellsFromPlayEffect(tgtCard, controller, state, !altCost, validSA, sa.hasParam("CastFromBattlefield"));
 
             if (altCostManaCost) {
                 sas.removeIf(sp -> sp.getPayCosts().getCostMana().getMana().isNoCost());

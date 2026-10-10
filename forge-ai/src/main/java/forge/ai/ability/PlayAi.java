@@ -166,7 +166,7 @@ public class PlayAi extends SpellAbilityAi {
         List<Card> tgtCards = CardLists.filter(options, c -> {
             // TODO needs to be aligned for MDFC along with getAbilityToPlay so the knowledge
             // of which spell was the reason for the choice can be used there
-            for (SpellAbility s : AbilityUtils.getSpellsFromPlayEffect(c, ai, state, false, validSA)) {
+            for (SpellAbility s : AbilityUtils.getSpellsFromPlayEffect(c, ai, state, false, validSA, sa.hasParam("CastFromBattlefield"))) {
                 if (s.isLandAbility()) {
                     // might want to run some checks here but it's rare anyway
                     return true;

@@ -1,0 +1,22 @@
+Name:Animate Spell
+ManaCost:U
+Types:Enchantment Aura
+K:Flash
+K:Enchant:Instant.inZoneStack,Sorcery.inZoneStack:instant or sorcery spell on the stack
+SVar:AuraSpell:SP$ Attach | ValidTgts$ Card.CanBeEnchantedBy | TgtZone$ Stack | TgtPrompt$ Select target instant or sorcery spell | ValidTgtsDesc$ instant or sorcery spell on the stack
+T:Mode$ Attached | ValidSource$ Card.Self | ValidTarget$ Instant,Sorcery | TriggerZones$ Battlefield | Execute$ TrigStore | TriggerDescription$ When CARDNAME becomes attached to an instant or sorcery, put that card onto the battlefield under its owner's control. It's a creature in addition to its other types with power and toughness each equal to its converted mana cost.
+# its mana value on the stack, where an X counts (ruling)
+SVar:TrigStore:DB$ StoreSVar | SVar$ AnimatedMV | Type$ Calculate | Expression$ EnchantedMV | SubAbility$ TrigPut
+SVar:EnchantedMV:Enchanted$CardManaCost
+SVar:AnimatedMV:Number$0
+SVar:TrigPut:DB$ ChangeZone | Defined$ Enchanted | Origin$ Stack | Destination$ Battlefield | AllowNonPermanent$ True | RememberChanged$ True | SubAbility$ DBCreature
+SVar:DBCreature:DB$ Animate | Defined$ Remembered | Types$ Creature | Power$ AnimatedMV | Toughness$ AnimatedMV | Duration$ Permanent | SubAbility$ DBEnchant
+# ruling: it loses "enchant instant or sorcery spell on the stack" and gains "enchant permanent put onto the battlefield with Animate Spell"
+SVar:DBEnchant:DB$ Animate | Defined$ Self | Keywords$ Enchant:Card.IsRemembered:permanent put onto the battlefield with CARDNAME | RemoveKeywords$ Enchant:Instant.inZoneStack,Sorcery.inZoneStack:instant or sorcery spell on the stack | Duration$ Permanent | SubAbility$ DBAttach
+SVar:DBAttach:DB$ Attach | Defined$ Remembered
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigCast | TriggerDescription$ When CARDNAME leaves the battlefield, enchanted card's owner sacrifices it unless they cast it.
+SVar:TrigCast:DB$ Play | Defined$ AttachedBy TriggeredCardLKICopy | Controller$ AttachedBy TriggeredCardLKICopyOwner | ValidSA$ Spell | CastFromBattlefield$ True | Optional$ True | RememberPlayed$ True | ConditionDefined$ AttachedBy TriggeredCardLKICopy | ConditionPresent$ Card.inRealZoneBattlefield | SubAbility$ DBSacrifice
+SVar:DBSacrifice:DB$ SacrificeAll | Defined$ AttachedBy TriggeredCardLKICopy | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ EQ0 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ DBCleanup | Static$ True
+Oracle:Flash\nEnchant instant or sorcery spell on the stack\nWhen Animate Spell becomes attached to an instant or sorcery, put that card onto the battlefield under its owner's control. It's a creature in addition to its other types with power and toughness each equal to its converted mana cost.\nWhen Animate Spell leaves the battlefield, enchanted card's owner sacrifices it unless they cast it.
