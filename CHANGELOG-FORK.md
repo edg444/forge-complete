@@ -275,6 +275,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-10, second deploy (desktop, Android, GitHub) — 2018 Heroes of the Realm (Optimus Prime, Sol); Ponies: The Galloping; Mystery Booster playtest cards #1–15
+
 - Flaky test fixed: `SlayingMantisTest.testThrowAlwaysLandsAndAimsAtWhatItKills` threw 40 unseeded Mantises and
   needed more than 10 to touch the Dreadmaw (about 40% each), so it failed now and then (10 of 40 on 2026-10-10).
   The throws now run on a seeded `MyRandom`, restored afterward: 22 of 40 every run.
