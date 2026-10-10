@@ -3,6 +3,7 @@ package forge.ai;
 import com.google.common.collect.*;
 import forge.LobbyPlayer;
 import forge.StaticData;
+import forge.ai.ability.GuessNameAi;
 import forge.ai.ability.GuessWordAi;
 import forge.ai.ability.ProtectAi;
 import forge.ai.ability.PutStickerAi;
@@ -1648,6 +1649,9 @@ public class PlayerControllerAi extends PlayerController {
         // name is wrong every single time, which is no guess at all.
         if (sa != null && sa.getApi() == ApiType.GuessWord) {
             return GuessWordAi.guessWord(player, sa.getHostCard());
+        }
+        if (sa != null && sa.getApi() == ApiType.GuessName) {
+            return GuessNameAi.guessName(player, sa);
         }
         final boolean wantsArtist = sa != null && sa.getApi() == ApiType.GuessArtist;
 

@@ -29,6 +29,10 @@ public class CountersMoveEffect extends SpellAbilityEffect {
 
     @Override
     protected String getStackDescription(SpellAbility sa) {
+        // nothing is chosen until it resolves, so there's no source or destination to name yet
+        if (sa.hasParam("ChooseOnResolution")) {
+            return sa.getParamOrDefault("SpellDescription", "Move a counter from one permanent onto another.");
+        }
         final StringBuilder sb = new StringBuilder();
 
         final List<Card> tgtCards = getDefinedCardsOrTargeted(sa);
@@ -100,9 +104,11 @@ public class CountersMoveEffect extends SpellAbilityEffect {
 
         GameEntityCounterTable table = new GameEntityCounterTable();
 
-        // uses for multi sources -> one defined/target
-        // this needs given counter type
-        if (sa.hasParam("ValidSource")) {
+        if (sa.hasParam("ChooseOnResolution")) {
+            moveChosenCounter(sa, table);
+        } else if (sa.hasParam("ValidSource")) {
+            // uses for multi sources -> one defined/target
+            // this needs given counter type
             CardCollectionView srcCards = CardLists.getValidCards(game.getCardsIn(ZoneType.Battlefield), sa.getParam("ValidSource"), activator, host, sa);
             List<Card> tgtCards = getDefinedCardsOrTargeted(sa);
 
@@ -265,7 +271,7 @@ public class CountersMoveEffect extends SpellAbilityEffect {
                     }
 
                     final CounterType convertType = sa.hasParam("ConvertToDestinationType")
-                            ? determineConvertedCounterType(cur) : null;
+                            ? chooseConvertedCounterType(sa, cur) : null;
 
                     Multiset<CounterType> countersToAdd = HashMultiset.create();
                     if ("All".equals(counterName)) {
@@ -324,26 +330,106 @@ public class CountersMoveEffect extends SpellAbilityEffect {
         table.replaceCounterEffect(game, sa);
     } // moveCounterResolve
 
-    // Giant Fan: "If the second permanent refers to any kind of counter, the moved counter becomes
-    // one of those counters. Otherwise, it becomes a +1/+1 counter." No existing Forge card converts
-    // a counter's type based on what the destination's own text refers to (only same-type moves
-    // exist), so this inspects the destination's actual printed oracle text for a counter-type name;
-    // planeswalkers/battles are checked directly since loyalty/defense counters aren't spelled out
-    // in their ability text as "loyalty counter"/"defense counter".
-    private static CounterType determineConvertedCounterType(final Card dest) {
+    /**
+     * Giant Fan and Everythingamajig: "Move a counter from one permanent onto another." No target
+     * is named, so both permanents are chosen as it resolves - hexproof, shroud and protection
+     * don't stop it. Rule 122.5 covers the rest: if the counter can't come off the first or go on
+     * the second, nothing moves.
+     */
+    private void moveChosenCounter(final SpellAbility sa, final GameEntityCounterTable table) {
+        final Player activator = sa.getActivatingPlayer();
+        final PlayerController pc = activator.getController();
+        final Game game = activator.getGame();
+
+        final CardCollectionView withCounters = CardLists.filter(game.getCardsIn(ZoneType.Battlefield),
+                CardPredicates.hasCounters());
+        if (withCounters.isEmpty()) {
+            return;
+        }
+        Map<String, Object> params = Maps.newHashMap();
+        params.put("MoveRole", "Source");
+        final Card source = pc.chooseSingleEntityForEffect(withCounters, sa,
+                "Choose the permanent to move a counter from", params);
+        if (source == null) {
+            return;
+        }
+
+        final CardCollectionView others = CardLists.filter(game.getCardsIn(ZoneType.Battlefield),
+                c -> !c.equals(source));
+        if (others.isEmpty()) {
+            return;
+        }
+        params = Maps.newHashMap();
+        params.put("MoveRole", "Destination");
+        params.put("Source", source);
+        final Card dest = pc.chooseSingleEntityForEffect(others, sa,
+                "Choose the permanent to move the counter from " + source.getName() + " onto", params);
+        if (dest == null) {
+            return;
+        }
+
+        final List<CounterType> kinds = Lists.newArrayList(source.getCounters().elementSet());
+        kinds.removeIf(ct -> !source.canRemoveCounters(ct));
+        if (kinds.isEmpty()) {
+            return;
+        }
+        params = Maps.newHashMap();
+        params.put("MoveRole", "Remove");
+        params.put("Source", source);
+        params.put("Target", dest);
+        final CounterType removed = pc.chooseCounterType(kinds, sa,
+                Localizer.getInstance().getMessage("lblSelectRemoveCounterType"), params);
+
+        final CounterType becomes = sa.hasParam("ConvertToDestinationType")
+                ? chooseConvertedCounterType(sa, dest) : removed;
+
+        final Multiset<CounterType> countersToAdd = HashMultiset.create();
+        removeCounter(sa, source, dest, removed, becomes, "1", countersToAdd);
+        if (!countersToAdd.isEmpty()) {
+            dest.addCounter(becomes, countersToAdd.size(), activator, table);
+            game.updateLastStateForCard(dest);
+        }
+        game.updateLastStateForCard(source);
+    }
+
+    // "If the second permanent refers to any kind of counter, the moved counter becomes one of those
+    // counters. Otherwise, it becomes a +1/+1 counter." When it names several kinds, the player picks.
+    private static CounterType chooseConvertedCounterType(final SpellAbility sa, final Card dest) {
+        final List<CounterType> referred = referredCounterTypes(dest);
+        if (referred.isEmpty()) {
+            return CounterEnumType.P1P1;
+        }
+        final Map<String, Object> params = Maps.newHashMap();
+        params.put("MoveRole", "Becomes");
+        params.put("Target", dest);
+        return sa.getActivatingPlayer().getController().chooseCounterType(referred, sa,
+                "Choose the kind of counter it becomes on " + dest.getName(), params);
+    }
+
+    /**
+     * The kinds of counter a permanent's text refers to: each kind named as "... counter(s)" in its
+     * text box (stolen boxes count, see Card.getTextBoxOracle), plus loyalty for a planeswalker -
+     * the Unstable FAQ says its loyalty costs are symbols that refer to loyalty counters - and
+     * defense for a battle, whose defense is counted the same way.
+     */
+    public static List<CounterType> referredCounterTypes(final Card dest) {
+        final java.util.Set<CounterType> found = new java.util.LinkedHashSet<>();
         if (dest.isPlaneswalker()) {
-            return CounterEnumType.LOYALTY;
+            found.add(CounterEnumType.LOYALTY);
         }
         if (dest.isBattle()) {
-            return CounterEnumType.DEFENSE;
+            found.add(CounterEnumType.DEFENSE);
         }
-        final String text = dest.getOracleText().toLowerCase();
+        final String text = dest.getTextBoxOracle().toLowerCase();
         for (final CounterType ct : CounterType.getValues()) {
-            if (text.contains(ct.getName().toLowerCase() + " counter")) {
-                return ct;
+            final String name = ct.getName().toLowerCase().replace('_', ' ');
+            // whole word only, so "age counter" isn't found inside "page counter"
+            if (java.util.regex.Pattern.compile("(?<![\\p{L}\\p{N}])" + java.util.regex.Pattern.quote(name) + " counter")
+                    .matcher(text).find()) {
+                found.add(ct);
             }
         }
-        return CounterEnumType.P1P1;
+        return Lists.newArrayList(found);
     }
 
     protected void removeCounter(SpellAbility sa, final Card src, final Card dest, CounterType cType, String counterNum, Multiset<CounterType> countersToAdd) {

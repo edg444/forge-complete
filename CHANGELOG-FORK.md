@@ -219,6 +219,26 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Everythingamajig** (ust/147a-f; upstream had only C). All six printings, each with its own three abilities;
+  D costs {6} and F {8}. Oracle text and rulings checked against Scryfall, plus the Unstable FAQ. Most abilities
+  are other Un-cards' (Giant Fan, My First Tome, Zuran Orb, Ashnod's Altar, Urza's Hot Tub, Mirror Mirror), so
+  the fixes below reach those cards too. `EverythingamajigTest` (9).
+  - C's coin flip is now a mana ability (CR 605.1a), which upstream's script missed: it went on the stack.
+  - "Move a counter from one permanent onto another" (A, Giant Fan) names no target, so both permanents are now
+    chosen as it resolves (`ChooseOnResolution$ True`): hexproof and protection no longer stop it. The moved
+    counter can become any kind the second permanent's text box names, the player's choice, rather than the first
+    one found; a planeswalker's loyalty counts (FAQ). AI: pulls a -1/-1 counter off its own creature or a +1/+1 or
+    loyalty counter off an opponent's, onto its best creature.
+  - Complete words in a name (E, Urza's Hot Tub) split on spaces only. A hyphenated word is one word (FAQ: Five-Finger
+    Discount doesn't find Five-Alarm Fire), and "Urza's" no longer leaves a word "s" that every possessive shared.
+  - Exchanging libraries and graveyards (F, Mirror Mirror) keeps each pile's order instead of shuffling (ruling:
+    "slide your library over as-is").
+  - Saying flavor text (D, My First Tome) reads the text box, so a stolen one counts, and "in your hand" means the
+    cards you hold. The AI guessing the name (user's ruling): 35% of the time it recognizes the flavor text and
+    names a card that prints it; otherwise it names a card it has seen the sayer play. It used to guess from its
+    own cards, and couldn't activate either card at all (`GuessName` had no AI).
+  - A functional variant with its own mana cost now takes its color from that cost, not the base face's.
+
 ### 2026-10-09, second deploy (desktop, Android, GitHub) — upstream merge (1 commit); Two-Headed Giant; Unstable complete (Better Than One, Mary O'Kill through Watermarket)
 
 - **Upstream merge** (1 commit: GameEventForwarder and its tests). Clean; full suite 1119 run, 0 failed, 6 skipped.

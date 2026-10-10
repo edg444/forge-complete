@@ -1,14 +1,61 @@
 Name:Everythingamajig
 ManaCost:5
 Types:Artifact
-AI:RemoveDeck:All
+AI:RemoveDeck:Random
 Oracle:<Unsupported Variant>
 
-# --- VARIANT C ---
+# --- VARIANTS ---
+# Six printings (147a-f), each with its own three abilities. D and F cost more than the rest.
 
-Variant:C:A:AB$ FlipCoin | Cost$ 1 | WinSubAbility$ DBAddMana | InstantSpeed$ True | SpellDescription$ Flip a coin. If you win the flip, add {C}{C}.
+# Giant Fan's ability: both permanents are chosen as it resolves, since neither is a target.
+Variant:A:A:AB$ MoveCounter | Cost$ 2 T | ChooseOnResolution$ True | CounterType$ Any | CounterNum$ 1 | ConvertToDestinationType$ True | SpellDescription$ Move a counter from one permanent onto another. If the second permanent refers to any kind of counter, the moved counter becomes one of those counters. Otherwise, it becomes a +1/+1 counter.
+Variant:A:A:AB$ PutCounter | Cost$ 3 T | ValidTgts$ Creature | TgtPrompt$ Select target creature | CounterType$ P1P1 | CounterNum$ 1 | SpellDescription$ Put a +1/+1 counter on target creature.
+Variant:A:A:AB$ Proliferate | Cost$ 4 T | SpellDescription$ Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
+Variant:A:Oracle:{2}, {T}: Move a counter from one permanent onto another. If the second permanent refers to any kind of counter, the moved counter becomes one of those counters. Otherwise, it becomes a +1/+1 counter.\n{3}, {T}: Put a +1/+1 counter on target creature.\n{4}, {T}: Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
+
+Variant:B:A:AB$ Draw | Cost$ 2 T | NumCards$ 1 | Activation$ Hellbent | SpellDescription$ Draw a card. Activate only if you have no cards in hand.
+Variant:B:A:AB$ GainLife | Cost$ 8 T | LifeAmount$ 10 | SpellDescription$ You gain 10 life.
+# SilverBordered counts acorn cards too (Card.isSilverBorderedOrAcorn)
+Variant:B:A:AB$ ChangeZone | Cost$ 4 T Sac<1/CARDNAME/this artifact> | Origin$ Hand | Destination$ Battlefield | ChangeType$ Permanent.SilverBordered | ChangeTypeDesc$ silver-bordered or acorn permanent card | ChangeNum$ 1 | SpellDescription$ You may put a silver-bordered or acorn permanent card from your hand onto the battlefield.
+Variant:B:Oracle:{2}, {T}: Draw a card. Activate only if you have no cards in hand.\n{8}, {T}: You gain 10 life.\n{4}, {T}, Sacrifice this artifact: You may put a silver-bordered or acorn permanent card from your hand onto the battlefield.
+
+# Mana Screw's shape: the zero-mana sub-ability keeps the flip a mana ability (CR 605.1a - no
+# target, could add mana), and InstantSpeed keeps it out of mana payments.
+Variant:C:A:AB$ FlipCoin | Cost$ 1 | WinSubAbility$ DBAddMana | SubAbility$ DBAdd0 | InstantSpeed$ True | SpellDescription$ Flip a coin. If you win the flip, add {C}{C}. Activate only as an instant.
 Variant:C:SVar:DBAddMana:DB$ Mana | Produced$ C | Amount$ 2
-Variant:C:A:AB$ Discard | Cost$ 3 T | ValidTgts$ Player | NumCards$ 1 | Mode$ TgtChoose | PlayerTurn$ True | SpellDescription$ Target player discards a card.
-Variant:C:A:AB$ Animate | Cost$ X | Defined$ Self | Power$ X | Toughness$ X | Types$ Creature,Artifact,Construct | RemoveCreatureTypes$ True | SpellDescription$ CARDNAME becomes an X/X Construct artifact creature until end of turn.
+Variant:C:SVar:DBAdd0:DB$ Mana | Produced$ C | Amount$ 0
+Variant:C:A:AB$ Discard | Cost$ 3 T | ValidTgts$ Player | NumCards$ 1 | Mode$ TgtChoose | PlayerTurn$ True | SpellDescription$ Target player discards a card. Activate only during your turn.
+Variant:C:A:AB$ Animate | Cost$ X | Defined$ Self | Power$ X | Toughness$ X | Types$ Creature,Artifact,Construct | RemoveCreatureTypes$ True | SpellDescription$ This artifact becomes an X/X Construct artifact creature until end of turn.
 Variant:C:SVar:X:Count$xPaid
-Variant:C:Oracle:{1}: Flip a coin. If you win the flip, add {C}{C}. Activate only as an instant.\n{3}, {T}: Target player discards a card. Activate only during your turn.\n{X}: Everythingamajig becomes an X/X Construct artifact creature until end of turn.
+Variant:C:Oracle:{1}: Flip a coin. If you win the flip, add {C}{C}. Activate only as an instant.\n{3}, {T}: Target player discards a card. Activate only during your turn.\n{X}: This artifact becomes an X/X Construct artifact creature until end of turn.
+
+# My First Tome's ability. The card must have flavor text (ruling), and "in your hand" means the cards you hold,
+# so a card you hold for its owner (Five-Finger Discount) counts and one of yours someone else holds doesn't.
+Variant:D:ManaCost:6
+Variant:D:A:AB$ Mana | Cost$ T | Produced$ Any | SpellDescription$ Add one mana of any color.
+Variant:D:A:AB$ ChooseCard | Cost$ 1 T | Defined$ You | Choices$ Card.YouCtrl+hasFlavorText | ChoiceZone$ Hand | Amount$ 1 | Mandatory$ True | ChoiceTitle$ Choose the card whose flavor text you'll say | ValidTgts$ Opponent | TgtPrompt$ Select target opponent | IsPresent$ Card.YouCtrl+hasFlavorText | PresentZone$ Hand | SubAbility$ DBGuess | SpellDescription$ Say the flavor text on a card in your hand. Target opponent guesses that card's name. You may reveal that card. If you do and your opponent guessed wrong, draw a card.
+Variant:D:SVar:DBGuess:DB$ GuessName | DefinedCard$ ChosenCard | Defined$ Targeted | GuessWrong$ DBReveal | SubAbility$ DBCleanup
+Variant:D:SVar:DBReveal:DB$ Reveal | Defined$ You | RevealValid$ Card.ChosenCard | Optional$ True | RememberRevealed$ True | SubAbility$ DBDraw
+Variant:D:SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1 | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ GE1
+Variant:D:SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True | ClearRemembered$ True
+Variant:D:A:AB$ DealDamage | Cost$ 8 T | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumDmg$ 12 | SpellDescription$ This artifact deals 12 damage to target creature.
+Variant:D:Oracle:{T}: Add one mana of any color.\n{1}, {T}: Say the flavor text on a card in your hand. Target opponent guesses that card's name. You may reveal that card. If you do and your opponent guessed wrong, draw a card.\n{8}, {T}: This artifact deals 12 damage to target creature.
+
+# Zuran Orb, Ashnod's Altar and Urza's Hot Tub.
+Variant:E:A:AB$ GainLife | Cost$ Sac<1/Land> | LifeAmount$ 2 | AILogic$ CriticalOnly | SpellDescription$ You gain 2 life.
+Variant:E:A:AB$ Mana | Cost$ Sac<1/Creature> | Produced$ C | Amount$ 2 | SpellDescription$ Add {C}{C}.
+Variant:E:A:AB$ ChangeZone | Cost$ 2 Discard<1/Card/card> | Origin$ Library | Destination$ Hand | ChangeType$ Card.sharesWordInNameWith Discarded | ChangeTypeDesc$ card that shares a complete word in its name with the discarded card | ChangeNum$ 1 | Reveal$ True | SpellDescription$ Search your library for a card that shares a complete word in its name with the name of the discarded card, reveal it, put it into your hand, then shuffle.
+Variant:E:Oracle:Sacrifice a land: You gain 2 life.\nSacrifice a creature: Add {C}{C}.\n{2}, Discard a card: Search your library for a card that shares a complete word in its name with the name of the discarded card, reveal it, put it into your hand, then shuffle.
+
+# Mirror Mirror's ability. Libraries and graveyards change hands in their own order (ruling).
+Variant:F:ManaCost:8
+Variant:F:A:AB$ Scry | Cost$ 1 T | ScryNum$ 2 | SpellDescription$ Scry 2.
+Variant:F:A:AB$ Token | Cost$ 1 T PayLife<1> | TokenScript$ w_0_1_goat | SpellDescription$ Create a 0/1 white Goat creature token.
+Variant:F:A:AB$ DelayedTrigger | Cost$ 7 T Sac<1/CARDNAME/this artifact> | ValidTgts$ Player | TgtPrompt$ Select target player | Mode$ Phase | Phase$ End of Turn | RememberObjects$ Targeted & You | Execute$ TrigLife | SpellDescription$ Choose target player. At the beginning of the next end step, exchange life totals with that player, exchange control of all permanents you and that player control, and exchange cards in your hands, cards in your libraries, and cards in your graveyards.
+Variant:F:SVar:TrigLife:DB$ ExchangeLife | Defined$ DelayTriggerRemembered | SubAbility$ TrigControl
+Variant:F:SVar:TrigControl:DB$ ExchangeControlVariant | Defined$ DelayTriggerRemembered | Zone$ Battlefield | All$ True | SubAbility$ TrigHand
+Variant:F:SVar:TrigHand:DB$ ExchangeZoneAll | Defined$ DelayTriggerRemembered | Zone$ Hand | SubAbility$ TrigLibrary
+Variant:F:SVar:TrigLibrary:DB$ ExchangeZoneAll | Defined$ DelayTriggerRemembered | Zone$ Library | SubAbility$ TrigGraveyard
+Variant:F:SVar:TrigGraveyard:DB$ ExchangeZoneAll | Defined$ DelayTriggerRemembered | Zone$ Graveyard | SubAbility$ DBCleanup
+Variant:F:SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Variant:F:Oracle:{1}, {T}: Scry 2.\n{1}, {T}, Pay 1 life: Create a 0/1 white Goat creature token.\n{7}, {T}, Sacrifice this artifact: Choose target player. At the beginning of the next end step, exchange life totals with that player, exchange control of all permanents you and that player control, and exchange cards in your hands, cards in your libraries, and cards in your graveyards.

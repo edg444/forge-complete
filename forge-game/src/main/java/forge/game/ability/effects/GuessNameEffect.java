@@ -5,10 +5,8 @@ import java.util.List;
 import forge.game.ability.AbilityUtils;
 import forge.game.ability.SpellAbilityEffect;
 import forge.game.card.Card;
-import forge.card.CardFlavorText;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
-import forge.item.IPaperCard;
 
 /**
  * My First Tome. The flavor text is shown to the guesser rather than described, because the point of
@@ -43,9 +41,9 @@ public class GuessNameEffect extends SpellAbilityEffect {
         }
         final Player guesser = guessers.get(0);
 
-        final IPaperCard pc = hidden.getPaperCard();
-        String flavor = pc == null ? "" : CardFlavorText.get(pc.getEdition(), pc.getCollectorNumber());
-        if (flavor == null || flavor.isEmpty()) {
+        // the text box's flavor, so a stolen box (Phoebe) says the thief's lines
+        String flavor = hidden.getFlavorText();
+        if (flavor.isEmpty()) {
             flavor = "(this card has no flavor text)";
         }
 

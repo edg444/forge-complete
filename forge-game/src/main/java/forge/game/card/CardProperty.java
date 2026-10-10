@@ -2690,18 +2690,29 @@ public class CardProperty {
     }
 
     private static boolean sharesCompleteWord(final Card a, final Card b) {
-        final Set<String> words = new java.util.HashSet<>();
-        for (final String w : a.getDisplayName().toLowerCase().split("[^\\p{L}\\p{N}]+")) {
-            if (!w.isEmpty()) {
-                words.add(w);
-            }
-        }
-        for (final String w : b.getDisplayName().toLowerCase().split("[^\\p{L}\\p{N}]+")) {
-            if (!w.isEmpty() && words.contains(w)) {
+        final Set<String> words = completeWords(a.getDisplayName());
+        for (final String w : completeWords(b.getDisplayName())) {
+            if (words.contains(w)) {
                 return true;
             }
         }
         return false;
+    }
+
+    // Words are split on spaces only: a hyphenated word is one complete word (Unstable FAQ,
+    // Everythingamajig: Five-Finger Discount doesn't find Five-Alarm Fire), and so is a possessive -
+    // splitting "Urza's" at the apostrophe made a word "s" that every other possessive shared.
+    // Punctuation at the edges (the comma in "Ral, Izzet Viceroy", a split card's "//") isn't part
+    // of a word.
+    public static Set<String> completeWords(final String name) {
+        final Set<String> words = new java.util.HashSet<>();
+        for (final String token : name.toLowerCase().replace('’', '\'').split("\\s+")) {
+            final String w = token.replaceAll("^[^\\p{L}\\p{N}]+|[^\\p{L}\\p{N}]+$", "");
+            if (!w.isEmpty()) {
+                words.add(w);
+            }
+        }
+        return words;
     }
 
     private static int countLetters(final String name) {

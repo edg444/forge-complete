@@ -3,12 +3,12 @@ package forge.game.ability.effects;
 import java.util.List;
 
 import forge.game.Game;
-import forge.game.ability.AbilityKey;
 import forge.game.ability.SpellAbilityEffect;
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
+import forge.game.zone.Zone;
 import forge.game.zone.ZoneType;
 
 // Mirror Mirror: "...exchange cards in your hands, cards in your libraries, and cards in your
@@ -40,21 +40,27 @@ public class ZoneExchangeAllEffect extends SpellAbilityEffect {
         final Game game = player1.getGame();
         final ZoneType zone = ZoneType.smartValueOf(sa.getParamOrDefault("Zone", "Hand"));
 
-        final CardCollection list1 = new CardCollection(player1.getCardsIn(zone));
-        final CardCollection list2 = new CardCollection(player2.getCardsIn(zone));
+        // The physical zone, not getCardsIn: that one answers for whoever holds the graveyard
+        // (Graveyard Busybody) and isn't in pile order.
+        final CardCollection list1 = new CardCollection(player1.getZone(zone).getCards());
+        final CardCollection list2 = new CardCollection(player2.getZone(zone).getCards());
 
-        for (final Card c : list1) {
-            player2.changeOwnership(c);
-            game.getAction().moveTo(zone, c, sa, AbilityKey.newMap());
-        }
-        for (final Card c : list2) {
-            player1.changeOwnership(c);
-            game.getAction().moveTo(zone, c, sa, AbilityKey.newMap());
-        }
+        // Each pile slides across as-is (Everythingamajig/Mirror Mirror rulings: "don't change the
+        // order"), so every card goes to the far end of its new zone in its old order. The other
+        // player's cards are still in that zone ahead of them while this runs and leave next.
+        moveAcross(game, list1, player2, zone, sa);
+        moveAcross(game, list2, player1, zone, sa);
+    }
 
-        if (zone == ZoneType.Library) {
-            player1.shuffle(sa);
-            player2.shuffle(sa);
+    private static void moveAcross(final Game game, final CardCollection cards, final Player newOwner,
+            final ZoneType zone, final SpellAbility sa) {
+        for (final Card c : cards) {
+            newOwner.changeOwnership(c);
+            final Zone to = newOwner.getZone(zone);
+            // a hand has no pile order, and leaving its position open lets a programmed hand
+            // (The Grand Calcutron) place the card
+            final Integer position = zone == ZoneType.Hand ? null : to.size();
+            game.getAction().changeZone(game.getZoneOf(c), to, c, position, sa);
         }
     }
 }

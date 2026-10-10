@@ -21,7 +21,11 @@ public class CountersMoveAi extends SpellAbilityAi {
     @Override
     protected AiAbilityDecision checkApiLogic(final Player ai, final SpellAbility sa) {
         AiAbilityDecision decision = new AiAbilityDecision(100, AiPlayDecision.WillPlay);
-        if (sa.usesTargeting()) {
+        if (sa.hasParam("ChooseOnResolution")) {
+            if (chosenMoveSource(ai) == null || chosenMoveDestination(ai, null) == null) {
+                return new AiAbilityDecision(0, AiPlayDecision.MissingNeededCards);
+            }
+        } else if (sa.usesTargeting()) {
             sa.resetTargets();
             decision = moveTgtAI(ai, sa);
             if (!decision.willingToPlay()) {
@@ -463,6 +467,23 @@ public class CountersMoveAi extends SpellAbilityAi {
     @Override
     protected Card chooseSingleCard(Player ai, SpellAbility sa, Iterable<Card> options, boolean isOptional,
             Player targetedPlayer, Map<String, Object> params) {
+        if (params != null && "Source".equals(params.get("MoveRole"))) {
+            final Card src = chosenMoveSource(ai);
+            if (src != null && Iterables.contains(options, src)) {
+                return src;
+            }
+            // the board changed since it was activated: take a counter it can best spare
+            final List<Card> opp = CardLists.filterControlledBy(options, ai.getOpponents());
+            return opp.isEmpty() ? Iterables.getFirst(options, null) : ComputerUtilCard.getBestAI(opp);
+        }
+        if (params != null && "Destination".equals(params.get("MoveRole"))) {
+            final Card dest = chosenMoveDestination(ai, (Card) params.get("Source"));
+            if (dest != null && Iterables.contains(options, dest)) {
+                return dest;
+            }
+            final List<Card> mine = CardLists.filterControlledBy(options, ai);
+            return mine.isEmpty() ? Iterables.getFirst(options, null) : ComputerUtilCard.getBestAI(mine);
+        }
         if (sa.hasParam("AILogic")) {
             String logic = sa.getParam("AILogic");
 
@@ -490,7 +511,51 @@ public class CountersMoveAi extends SpellAbilityAi {
 
     @Override
     public CounterType chooseCounterType(List<CounterType> options, SpellAbility sa, Map<String, Object> params) {
-        // TODO
+        final Object role = params == null ? null : params.get("MoveRole");
+        final Player ai = sa.getActivatingPlayer();
+        if ("Remove".equals(role)) {
+            // off its own permanent, shed a harmful counter; off an opponent's, take a helpful one
+            final boolean own = ((Card) params.get("Source")).getController().equals(ai);
+            return preferCategory(options, own ? CounterAiCategory.Negative : CounterAiCategory.Positive);
+        }
+        if ("Becomes".equals(role)) {
+            final Card dest = (Card) params.get("Target");
+            final boolean own = dest.getController().equals(ai);
+            if (own && options.contains(CounterEnumType.P1P1)) {
+                return CounterEnumType.P1P1;
+            }
+            return preferCategory(options, own ? CounterAiCategory.Positive : CounterAiCategory.Negative);
+        }
         return super.chooseCounterType(options, sa, params);
+    }
+
+    private static CounterType preferCategory(final List<CounterType> options, final CounterAiCategory wanted) {
+        for (final CounterType ct : options) {
+            if (ct.getAiCategory() == wanted) {
+                return ct;
+            }
+        }
+        return options.get(0);
+    }
+
+    // "Move a counter from one permanent onto another" chosen as it resolves (Giant Fan,
+    // Everythingamajig): worth it to pull a -1/-1 counter off its own creature, or a +1/+1 or
+    // loyalty counter off an opponent's creature or planeswalker.
+    private static Card chosenMoveSource(final Player ai) {
+        final CardCollectionView board = ai.getGame().getCardsIn(ZoneType.Battlefield);
+        final List<Card> ownHurt = CardLists.filter(board, c -> c.getController().equals(ai)
+                && c.isCreature() && c.getCounters(CounterEnumType.M1M1) > 0);
+        if (!ownHurt.isEmpty()) {
+            return ComputerUtilCard.getBestCreatureAI(ownHurt);
+        }
+        final List<Card> theirs = CardLists.filter(board, c -> c.getController().isOpponentOf(ai)
+                && (c.isCreature() && c.getCounters(CounterEnumType.P1P1) > 0
+                    || c.isPlaneswalker() && c.getCounters(CounterEnumType.LOYALTY) > 0));
+        return theirs.isEmpty() ? null : ComputerUtilCard.getBestAI(theirs);
+    }
+
+    private static Card chosenMoveDestination(final Player ai, final Card source) {
+        final List<Card> mine = CardLists.filter(ai.getCreaturesInPlay(), c -> !c.equals(source));
+        return mine.isEmpty() ? null : ComputerUtilCard.getBestCreatureAI(mine);
     }
 }
