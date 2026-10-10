@@ -1,0 +1,6 @@
+Name:Watermarket
+ManaCost:no cost
+Types:Land
+# any watermark a printing has (PrintingTraits), set symbols included; no rulings
+A:AB$ Mana | Cost$ T | Produced$ C | Amount$ 2 | RestrictValid$ Spell.Watermarked | SpellDescription$ Add {C}{C}. Spend this mana only to cast spells with watermarks.
+Oracle:{T}: Add {C}{C}. Spend this mana only to cast spells with watermarks.

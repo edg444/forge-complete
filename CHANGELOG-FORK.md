@@ -348,6 +348,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Secret Base** (ust/165a-e; not scripted upstream). One script for all five printings; each printing's faction
   watermark comes from the printing data. The any-color ability is `RestrictValid$ Spell.sharesWatermarkWith`, a new
   card property (any watermark in common with the source). No rulings. `SecretBaseTest` (2).
+- **Watermarket** (ust/166; not scripted upstream). Script only: `RestrictValid$ Spell.Watermarked` on its {C}{C}.
+  No rulings. `WatermarketTest` (1). **Every Unstable card is now scripted** (name diff against
+  `editions/Unstable.txt`).
 
 ### 2026-10-09 (deployed: desktop, Android, GitHub) — upstream merge (94 commits, incl. dice and flip animations); The Grand Calcutron; Hot Fix; Ol' Buzzbark; Phoebe, Head of S.N.E.A.K.; X; Urza, Academy Headmaster audit
 
