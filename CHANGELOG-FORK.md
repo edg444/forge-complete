@@ -243,6 +243,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Toy colors** (`Protection | Gains$ ToyColors`, Rarity): a human picks the colors at resolution (pink and gold in
   a silver-bordered game); `PlayerController.getKnownToyColors` gives the AI's toy, fixed per game
   (`SpellAbilityAi.gameSeed`).
+- **Combat damage on the stack** (`S:Mode$ CombatDamageUsesStack`, `forge.game.combat.CombatDamageOnStack`): while a
+  permanent with it is on the battlefield, each damage step's assignment goes on the stack as one object controlled
+  by no player (`MagicStack.addCombatDamage`: no cast triggers, not counted as activated) and is dealt when it
+  resolves. A source that left deals its damage as it last existed; damage to a permanent that left or stopped being
+  a creature/planeswalker/battle isn't dealt (rulings).
 - **Latest Pro Tour winning deck** (`forge.card.WinningDeck`, card property `InLatestWinningDeck`): filled by
   `forge.model.MetagamerDeckLoader` at startup from the user-folder cache (`metagamer-winning-deck.txt`) or the
   shipped `res/lists/MetagamerWinningDeck.txt`, then refreshed at most daily in the background from magic.gg: the
@@ -274,6 +279,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   needed more than 10 to touch the Dreadmaw (about 40% each), so it failed now and then (10 of 40 on 2026-10-10).
   The throws now run on a seeded `MyRandom`, restored afterward: 22 of 40 every run.
 
+- **Stack of Paperwork** (CMB1 #13), with #11 Sarah's Wings and #12 Scaled Destruction (upstream) verified; Scaled
+  Destruction's modes-in-order ruling now has a test.
 - **Ruff, Underdog Champ** (CMB1 #10): "All Hounds are Dogs" is already true in Forge (no Hound type left), so it's
   text only. New count `Count$YouLostAGameThisMatch` (`GameOutcome.isLoser`: a drawn game has no loser).
 - **Priority Avenger** (CMB1 #9): new count `Count$StackSize` (spells and abilities on the stack).

@@ -1,0 +1,7 @@
+Name:Stack of Paperwork
+ManaCost:W
+Types:Enchantment
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When CARDNAME enters, draw a card.
+SVar:TrigDraw:DB$ Draw
+S:Mode$ CombatDamageUsesStack | Description$ Combat damage uses the stack. (Combat damage assignment can be responded to before damage is dealt. You know, like it used to.)
+Oracle:When Stack of Paperwork enters, draw a card.\nCombat damage uses the stack. (Combat damage assignment can be responded to before damage is dealt. You know, like it used to.)

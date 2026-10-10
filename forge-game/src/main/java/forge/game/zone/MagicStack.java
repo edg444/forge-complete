@@ -194,6 +194,14 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
     public final void add(SpellAbility sp) {
         add(sp, null, SpellAbilityStackInstance.nextId());
     }
+
+    /**
+     * Stack of Paperwork's combat damage on the stack: nobody cast or activated it, so none of add()'s casting
+     * bookkeeping or cast triggers apply - it's just pushed, and priority goes to the active player.
+     */
+    public final void addCombatDamage(final forge.game.combat.CombatDamageOnStack damage) {
+        push(damage, null, SpellAbilityStackInstance.nextId());
+    }
     public final void add(SpellAbility sp, int id) {
         add(sp, null, id);
     }

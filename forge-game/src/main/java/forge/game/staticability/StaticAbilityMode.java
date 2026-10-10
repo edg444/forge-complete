@@ -48,6 +48,9 @@ public enum StaticAbilityMode {
     // CountsAsCreatures (Five Kids in a Trenchcoat)
     CountsAsCreatures,
 
+    // CombatDamageOnStack (Stack of Paperwork)
+    CombatDamageUsesStack,
+
     // StaticAbilityCantAttackBlock
     CantAttack,
     CanAttackDefender,

@@ -996,6 +996,17 @@ public class Combat {
         }
     }
 
+    /**
+     * Stack of Paperwork: the damage just assigned goes on the stack instead of being dealt now; the turn-based
+     * damage map is emptied, since the stack object carries it.
+     */
+    public void putAssignedDamageOnStack(final Card host) {
+        final Game game = playerWhoAttacks.getGame();
+        final CombatDamageOnStack damage = new CombatDamageOnStack(host, game.getPhaseHandler().getPlayerTurn(), damageMap.get());
+        damageMap.get().clear();
+        game.getStack().addCombatDamage(damage);
+    }
+
     public void dealAssignedDamage() {
         final Game game = playerWhoAttacks.getGame();
         game.copyLastState();

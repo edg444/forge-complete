@@ -114,6 +114,16 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     // Unstable's last strike: the combat damage step is followed by another one, for creatures with last strike
     private boolean lastStrikeDamageStep = false;
 
+    // Stack of Paperwork: combat damage uses the stack while it's on the battlefield
+    private void dealOrStackCombatDamage() {
+        final Card paperwork = forge.game.combat.CombatDamageOnStack.usesStackHost(game);
+        if (paperwork != null) {
+            combat.putAssignedDamageOnStack(paperwork);
+        } else {
+            combat.dealAssignedDamage();
+        }
+    }
+
     /** The need to next phase. */
     private boolean givePriorityToPlayer = false;
 
@@ -403,7 +413,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     if (!combat.assignCombatDamage(true)) {
                         givePriorityToPlayer = false;
                     } else {
-                        combat.dealAssignedDamage();
+                        dealOrStackCombatDamage();
                     }
                     break;
 
@@ -415,7 +425,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     if (!(lastStrikeDamageStep ? combat.assignLastStrikeCombatDamage() : combat.assignCombatDamage(false))) {
                         givePriorityToPlayer = false;
                     } else {
-                        combat.dealAssignedDamage();
+                        dealOrStackCombatDamage();
                     }
                     break;
 
