@@ -1,0 +1,5 @@
+Name:Do-Over
+ManaCost:1 U
+Types:Instant
+A:SP$ RestartTurn | SpellDescription$ Restart the turn, except with CARDNAME in exile. (First, return all cards to where they were as the turn began. For information from hidden zones like the hand, reconstruct as best you can, and do the rest at random.)
+Oracle:Restart the turn, except with Do-Over in exile. (First, return all cards to where they were as the turn began. For information from hidden zones like the hand, reconstruct as best you can, and do the rest at random.)

@@ -127,6 +127,10 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     /** The need to next phase. */
     private boolean givePriorityToPlayer = false;
 
+    // Do-Over: the game as it stood when this turn began, and a restart asked for by a resolving spell
+    private transient TurnRestart turnStart = null;
+    private transient Card pendingRestart = null;
+
     private final transient Game game;
 
 
@@ -227,6 +231,10 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 setPhase(nextPhase);
             } else {
                 turnEnded = PhaseType.isLast(phase, isTopsy);
+                if (turnEnded) {
+                    // Do-Over restarts a turn from here: everything as it stood between the turns
+                    turnStart = TurnRestart.anyCanRestart(game) ? TurnRestart.capture(game) : null;
+                }
                 setPhase(PhaseType.getNext(phase, isTopsy));
             }
 
@@ -1491,6 +1499,37 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     // just to avoid exposing variable to outer classes
     public void onStackResolved() {
         givePriorityToPlayer = true;
+    }
+
+    /** Whether this turn's start was kept, so the turn can be restarted. */
+    public boolean canRestartTurn() {
+        return turnStart != null;
+    }
+
+    /** Do-Over: the turn restarts once the spell finishes resolving, with that card in exile. */
+    public void requestTurnRestart(final Card exiled) {
+        pendingRestart = exiled;
+    }
+
+    /** Restarts the turn if a resolving spell asked to (called once the stack has finished resolving it). */
+    public void runPendingTurnRestart() {
+        final Card exiled = pendingRestart;
+        if (exiled == null) {
+            return;
+        }
+        pendingRestart = null;
+        if (turnStart == null) {
+            // the turn's start wasn't kept (the game had no card that could restart a turn until now)
+            game.getGameLog().add(GameLogEntryType.STACK_RESOLVE, "The turn can't be restarted: how it began wasn't recorded.");
+            if (!exiled.isCopiedSpell() && !exiled.isToken()) {
+                game.getAction().exile(game.getCardState(exiled), null, null);
+            }
+            return;
+        }
+        turnStart.restore(game, exiled);
+        game.getGameLog().add(GameLogEntryType.TURN, "The turn restarts (" + exiled.getName() + ").");
+        advanceToNextPhase();
+        onPhaseBegin();
     }
 
     public void endCombat() {

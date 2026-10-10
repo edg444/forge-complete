@@ -202,6 +202,7 @@ public enum ApiType {
     ReplaceToken (ReplaceTokenEffect.class),
     ReplaceSplitDamage (ReplaceSplitDamageEffect.class),
     RestartGame (RestartGameEffect.class),
+    RestartTurn (RestartTurnEffect.class),
     Reveal (RevealEffect.class),
     RevealHand (RevealHandEffect.class),
     ReverseTurnOrder (ReverseTurnOrderEffect.class),

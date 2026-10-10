@@ -529,6 +529,41 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         view.updateState(this);
     }
 
+    /** Refreshes everything the view shows of this card, for when Do-Over puts the turn back. */
+    public void updateAllForView() {
+        view.updateState(this);
+        view.updateZone(this);
+        view.updateOwner(this);
+        view.updateController(this);
+        view.updateTapped(this);
+        view.updateSickness(this);
+        view.updateCounters(this);
+        view.updateDamage(this);
+        view.updateAssignedDamage(this);
+        view.updatePhasedOut(this);
+        view.updateAttachedTo(this);
+        updateAttachedCards();
+        view.updateAttacking(this);
+        view.updateBlocking(this);
+        view.updateExertedThisTurn(this, exertThisTurn > 0);
+        view.updateDetained(this);
+        view.updateRemembered(this);
+        view.updateChosenType(this);
+        view.updateChosenColors(this);
+        view.updateChosenPlayer(this);
+        view.updateNamedCard(this);
+        view.updateMustBlockCards(this);
+        view.updateShieldCount(this);
+        view.updateMarkerText(this);
+        view.updateClassLevel(this);
+        view.updateIntensity(this);
+        view.updateCommander(this);
+        view.updateRingBearer(this);
+        view.updateHiddenOnBattlefield(this);
+        view.updateChangedTypes(this);
+        view.updateNonAbilityText(this);
+    }
+
     public CardState getCurrentState() {
         return currentState;
     }

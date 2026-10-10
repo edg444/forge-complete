@@ -243,6 +243,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Toy colors** (`Protection | Gains$ ToyColors`, Rarity): a human picks the colors at resolution (pink and gold in
   a silver-bordered game); `PlayerController.getKnownToyColors` gives the AI's toy, fixed per game
   (`SpellAbilityAi.gameSeed`).
+- **Restart the turn** (`SP$ RestartTurn`, Do-Over): `forge.game.TurnRestart` keeps the game as it stood between
+  the last turn and this one (only in a game with a card that can restart a turn) and puts it back: the same card and
+  player objects, field by field, so effects from before the turn that refer to them still work. A restart waits for
+  the spell to finish resolving (`PhaseHandler.requestTurnRestart`, run at the end of `MagicStack.resolveStack`),
+  exiles the card, then begins the turn again with its untap step. Nothing triggers while the turn is undone.
 - **Scrycast** (`K:Scrycast:<cost>`, Biting Remark): in `GameAction.scry`, after the cards are seen and before they're
   arranged, each Scrycast card may be cast for its cost (a Play effect, so the AI decides like any free cast); the rest
   are scried as usual and no further card is looked at (ruling).
@@ -284,6 +289,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Do-Over** (CMB1 #20): restarts the turn, back to exactly how it began. Every card goes back where it was, as
+  it was (the engine knows every hidden card, so nothing is left to chance). Tokens, copies and effects made this
+  turn are gone; effects and delayed triggers from before the turn still apply, and life totals and turn counts go
+  back. AI: it casts Do-Over when the turn has cost it clearly more than its opponents, in life and permanents.
 - **Command the Chaff** (CMB1 #18, upstream script): fixed - it could play a land from the sideboard (ruling: you
   can't); now only spells (`ValidSA$ Spell`).
 - **Biting Remark** (CMB1 #17): new keyword Scrycast. AI: a permanent spell cast by an effect no longer waits for

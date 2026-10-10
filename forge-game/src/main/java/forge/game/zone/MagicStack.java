@@ -690,6 +690,9 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
             // assuming that if the stack is empty, no reason to hold on to old LKI data (everything is a new object)
             game.clearChangeZoneLKIInfo();
         }
+
+        // Do-Over: the turn restarts once the spell is done resolving
+        game.getPhaseHandler().runPendingTurnRestart();
     }
 
     private void finishResolving(final SpellAbility sa, final boolean fizzle) {

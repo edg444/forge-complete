@@ -1730,6 +1730,32 @@ public class Player extends GameEntity implements Comparable<Player> {
         }
     }
 
+    /** Every zone this player has: each of several libraries, and any extra zones too. */
+    public final List<PlayerZone> getAllZones() {
+        final Set<PlayerZone> all = new LinkedHashSet<>(zones.values());
+        if (libraries != null) {
+            all.addAll(libraries);
+        }
+        all.addAll(staticLibraries.values());
+        if (extraZones != null) {
+            all.addAll(extraZones);
+        }
+        return new ArrayList<>(all);
+    }
+
+    /** Refreshes everything the view shows of this player, for when Do-Over puts the turn back. */
+    public final void updateAllForView() {
+        updateLifeViews();
+        view.updateCounters(this);
+        view.updateMana(this);
+        view.updateKeywords(this);
+        view.updateNumLandThisTurn(this);
+        view.updateNumDrawnThisTurn(this);
+        view.updateMaxHandSize(this);
+        view.updateCommanderDamage(this);
+        updateAllZonesForView();
+    }
+
     public final List<PlayerZone> getExtraZones() {
         return extraZones;
     }
