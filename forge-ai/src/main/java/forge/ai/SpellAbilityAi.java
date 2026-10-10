@@ -541,6 +541,12 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
             Cost fullCost = opt.getCost().copy().add(costSoFar);
             SpellAbility fullCostSa = chosen.copyWithDefinedCost(fullCost);
 
+            // buyback only returns a spell that would go to the graveyard as it resolves (CR 702.27a), and a
+            // permanent spell enters the battlefield instead (Innocuous Insect)
+            if (opt.getType() == OptionalCost.Buyback && chosen.getHostCard().isPermanent()) {
+                continue;
+            }
+
             if (opt.getType() == OptionalCost.Kicker1 || opt.getType() == OptionalCost.Kicker2) {
                 SpellAbility kickedSaCopy = fullCostSa.copy();
                 kickedSaCopy.addOptionalCost(opt.getType());

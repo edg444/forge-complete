@@ -1,0 +1,10 @@
+Name:Innocuous Insect
+ManaCost:1 U U
+Types:Creature Eldrazi Insect
+PT:2/1
+K:Buyback:1 U
+K:Flash
+K:Flying
+T:Mode$ SpellCast | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When you cast this spell, draw a card.
+SVar:TrigDraw:DB$ Draw
+Oracle:Buyback {1}{U} (You may pay an additional {1}{U} as you cast this spell. If you do, put this card into your hand as it resolves.)\nFlash\nFlying\nWhen you cast this spell, draw a card.

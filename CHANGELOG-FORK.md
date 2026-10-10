@@ -294,6 +294,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Innocuous Insect** (CMB1 #23): script only. Its ruling says a bought-back permanent spell goes to your hand
+  instead of the battlefield, but the current rules (CR 702.27a) only return a spell that would go to the graveyard
+  as it resolves, so buyback does nothing and the Insect enters the battlefield (rules over rulings). AI: it never
+  pays buyback on a permanent spell, or holds one back hoping to.
 - **Form of the Mulldrifter** (CMB1 #22): creature cards in your hand can be cast as Mulldrifter, or evoked as one.
   On the stack and the battlefield they are Mulldrifters, and stay that way if the Form leaves.
 - **Do-Over** (CMB1 #20): restarts the turn, back to exactly how it began. Every card goes back where it was, as
