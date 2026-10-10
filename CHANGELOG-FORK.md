@@ -221,8 +221,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 - **Arena Promos (PANA)**: the card list now has all 83 of Scryfall's printings. Upstream had 12 (CNs 1-7, 101-105);
   the 71 added are CNs 201-271, mostly basic lands, including Bob Ross's and Evolving Wilds. Rarities follow Scryfall,
-  as `Magic Online Promos.txt` does. The fork owns this file: `.git/info/attributes` sets it to `merge=ours` (with
-  `git config merge.ours.driver true`), so an upstream merge that also changes it keeps the fork's version. Both
+  as `Magic Online Promos.txt` does. The fork owns this file: `.git/info/attributes` gives it the
+  `edition-add-only` merge driver (`_tools/edition-add-only-merge.js`, registered as
+  `git config merge.edition-add-only.driver`). Upstream can add cards (a CN new to both the base and ours) and
+  metadata keys, but every line of ours stays as written, and a card the fork deleted stays deleted. Both
   settings are local to this clone; set them again on a fresh clone.
 
 ### 2026-10-09, third deploy (desktop, Android, GitHub) — Everythingamajig
