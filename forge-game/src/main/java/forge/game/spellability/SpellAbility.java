@@ -1794,6 +1794,15 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
         return false;
     }
 
+    // the card this spell is cast as though it were (Form of the Mulldrifter), or null
+    private String castAs = null;
+    public String getCastAs() {
+        return castAs;
+    }
+    public void setCastAs(final String name) {
+        castAs = name;
+    }
+
     // a Play effect may cast a card that's on the battlefield (Animate Spell: "unless they cast it")
     private boolean castFromBattlefield = false;
     public boolean isCastFromBattlefield() {

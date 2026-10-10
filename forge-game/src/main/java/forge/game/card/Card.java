@@ -8483,6 +8483,12 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         if (sa.isBestow()) {
             animateBestow();
         }
+        if (sa.getCastAs() != null && !isCloned()) {
+            // cast as though it were that card: it is that card, copiable values and all
+            addCloneState(CardFactory.getCloneStates(StaticAbilityCastAs.template(game, sa.getCastAs(), getOwner()), this, sa),
+                    game.getNextTimestamp());
+            updateStateForView();
+        }
         if (sa.hasParam("Prototype") && prototypeTimestamp == -1) {
             long next = game.getNextTimestamp();
             addCloneState(CardFactory.getCloneStates(this, this, sa), next);
@@ -8595,6 +8601,11 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                     abilities.add(oState.getCloakUp());
                 }
             }
+        }
+
+        // Form of the Mulldrifter: cast as though it were another card
+        if (player != null && !isInPlay()) {
+            abilities.addAll(StaticAbilityCastAs.getCastAsSpells(this, player));
         }
 
         final Collection<SpellAbility> toRemove = Lists.newArrayListWithCapacity(abilities.size());

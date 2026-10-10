@@ -1,0 +1,7 @@
+Name:Form of the Mulldrifter
+ManaCost:4 U
+Types:Kindred Enchantment Elemental
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When CARDNAME enters, draw two cards.
+SVar:TrigDraw:DB$ Draw | NumCards$ 2
+S:Mode$ CastAs | ValidCard$ Creature.YouOwn | Activator$ You | AffectedZone$ Hand | CastAs$ Mulldrifter | Description$ You may cast creature cards from your hand as though they were the card Mulldrifter. (You can still evoke this way. They're Mulldrifters.)
+Oracle:When Form of the Mulldrifter enters, draw two cards.\nYou may cast creature cards from your hand as though they were the card Mulldrifter. (You can still evoke this way. They're Mulldrifters.)

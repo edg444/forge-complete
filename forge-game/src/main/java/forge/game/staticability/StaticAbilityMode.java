@@ -48,6 +48,9 @@ public enum StaticAbilityMode {
     // CountsAsCreatures (Five Kids in a Trenchcoat)
     CountsAsCreatures,
 
+    // StaticAbilityCastAs (Form of the Mulldrifter)
+    CastAs,
+
     // CombatDamageOnStack (Stack of Paperwork)
     CombatDamageUsesStack,
 

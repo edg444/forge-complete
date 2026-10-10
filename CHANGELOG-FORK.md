@@ -243,6 +243,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Toy colors** (`Protection | Gains$ ToyColors`, Rarity): a human picks the colors at resolution (pink and gold in
   a silver-bordered game); `PlayerController.getKnownToyColors` gives the AI's toy, fixed per game
   (`SpellAbilityAi.gameSeed`).
+- **Cast as though it were another card** (`S:Mode$ CastAs | ValidCard$ … | Activator$ … | AffectedZone$ Hand |
+  CastAs$ <name>`, Form of the Mulldrifter): each matching card gets the named card's spells, alternative costs
+  included (`SpellAbility.getCastAs`). Cast that way, it takes on the named card's copiable values as it goes on the
+  stack (a clone state, like Prototype), so they last until it leaves the stack other than by resolving or leaves the
+  battlefield.
 - **Restart the turn** (`SP$ RestartTurn`, Do-Over): `forge.game.TurnRestart` keeps the game as it stood between
   the last turn and this one (only in a game with a card that can restart a turn) and puts it back: the same card and
   player objects, field by field, so effects from before the turn that refer to them still work. A restart waits for
@@ -289,6 +294,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Form of the Mulldrifter** (CMB1 #22): creature cards in your hand can be cast as Mulldrifter, or evoked as one.
+  On the stack and the battlefield they are Mulldrifters, and stay that way if the Form leaves.
 - **Do-Over** (CMB1 #20): restarts the turn, back to exactly how it began. Every card goes back where it was, as
   it was (the engine knows every hidden card, so nothing is left to chance). Tokens, copies and effects made this
   turn are gone; effects and delayed triggers from before the turn still apply, and life totals and turn counts go
