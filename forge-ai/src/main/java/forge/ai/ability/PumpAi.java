@@ -503,6 +503,12 @@ public class PumpAi extends PumpAiBase {
         // Filter AI-specific targets if provided
         list = ComputerUtil.filterAITgts(sa, ai, list, true);
 
+        if (attack == 0 && defense == 0 && !keywords.isEmpty()) {
+            // granting the same keywords twice is wasted (an earlier trigger of this ability may already target it)
+            final CardCollection twinned = ComputerUtil.targetedByPendingTwins(ai, sa);
+            list = CardLists.filter(list, c -> !twinned.contains(c));
+        }
+
         if (list.isEmpty() && (mandatory || ComputerUtil.activateForCost(sa, ai))) {
             return pumpMandatoryTarget(ai, sa);
         }

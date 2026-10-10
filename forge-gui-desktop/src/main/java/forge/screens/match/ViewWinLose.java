@@ -213,7 +213,7 @@ public class ViewWinLose implements IWinLoseView<FButton> {
         if (winner == null || winner.isEmpty()) {
             return localizer.getMessage("lblItsADraw");
         } else if (winningTeam != -1) {
-            return localizer.getMessage("lblTeamWon").replace("%s", String.valueOf(winningTeam));
+            return localizer.getMessage("lblTeamWon").replace("%s", String.valueOf(winningTeam + 1)); // lobbies number teams from 1
         } else {
             return localizer.getMessage("lblWinnerWon").replace("%s", winner);
         }

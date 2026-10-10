@@ -158,7 +158,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   change an infinite value, a set value replaces it), life (gains and losses don't change infinite life, any amount
   can be paid from it, setting it works), damage, counters (removing some of infinitely many leaves infinitely many
   but counts as removed; removing infinitely many empties them; per-counter triggers fire once for an infinite batch)
-  and display (P/T, life, damage, counters, the damage assignment dialogs, desktop and mobile).
+  and display (P/T, life, damage, counters, the damage assignment dialogs, desktop and mobile). Mobile fonts are baked
+  from a fixed character list, so ∞ is added to it (`FSkinFont.getCharacterSet`, `Assets.COUNTER_FONT_CHARS`); the
+  font-cache marker is `v2-inf`, so fonts cached without it regenerate once.
 - **X = ∞** — offered when unbounded mana that can pay X is floating, or a source of it (Mox Lotus) can still be
   activated (`ManaPool.canPayInfiniteX`).
 - **Infinitely many objects or repetitions** — tokens, copies, "do this X times", dice, coin flips, Clues, explores,
@@ -189,6 +191,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   poison as theirs (810.10d).
 - **Team wins and losses** — a head losing takes the team with them, a head winning doesn't make teammates lose
   (`GameAction.checkGameOverCondition`). Teammates see each other's hands (810.5, `PlayerView.isGiantTeammateOf`).
+  Every player on the winning side scores the game (`GameOutcome.getWinningPlayers`; `Match` tallies use `isWinner`).
+- **Table layout** — each team sits in one half of the screen: on mobile the local player's teammates are the panels
+  just above them (`MatchController.seatGiantTeamsTogether`); on desktop the local team's fields go in the bottom cell
+  and the others' in the top cell whatever the multiplayer-layout preference (`CMatchUI.sortPlayersForGiantTeams`,
+  `VMatchUI.giantSide`), though fields can still be moved by hand.
 - **Lobby variant** (desktop and mobile): equal lobby teams of 2+, or seats 1+2 vs 3+4 when every slot is on its
   own team; teammates are seated together; 30 life (+15 per head beyond two); the starting team skips its first draw.
 - **Players joining mid-game** (`Game.addOutsidePlayer`, `OutsidePlayers` factory plugged in by FModel) — an AI player
@@ -209,6 +216,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   physical die.
 - **Last strike** (`K:Last Strike`, Unstable) — a further combat damage step after the regular one, run as a
   repeat of `COMBAT_DAMAGE` rather than a new `PhaseType`.
+- **AI: no doubling up on pending twins** (`ComputerUtil.targetedByPendingTwins`) — simultaneous triggers are
+  targeted one at a time with the earlier ones already on the stack, so effects that set rather than add (Animate,
+  keyword-only Pump) skip cards an identical pending ability of the AI's already targets.
 - **K: lines keep upstream's text.** The engine parses a K: line's head into a `Keyword` and looks sentence
   keywords up by their exact text, so Oracle wording for them is display-only, from
   `CardFactoryUtil.keywordAsPrinted`. `KeywordScriptTextTest` enforces it.
@@ -218,6 +228,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 ## Log
 
 ### Unreleased
+
+- **Two-Headed Giant layout**: teammates now sit together. On mobile, seats 1+2 vs 3+4 used to stack as teammate,
+  opponent, opponent, you; on desktop the teammate's field went in the top cell with an opponent. Now your team is the
+  bottom half and the other team the top half on both (desktop still lets you move fields).
+- **Team wins score for every winner**: the match tally ("Evan: 1 Eva: 0 ...") credited only the first winner it
+  found. Every winner now counts, in the summary, match-over check, Ghazban Ogress's and Gus's counts, and the AI's
+  sideboarding (which no longer dereferences a missing winner after a drawn game). The win screen's "Team 0 won!"
+  now uses the lobby's numbering (Team 1).
+- **∞ on mobile**: the life, counter and mana ∞ rendered as nothing because the generated fonts didn't include it.
+- **AI targets with twin triggers**: two Voices of the Vermin attacking both made the same creature 4/4. Effects that
+  set something (Animate, keyword-only pumps) now pick a different target from an identical trigger already on the
+  stack when there is one. `PendingTwinTargetsTest`, `GiantTeamSeatingTest`, `TwoHeadedGiantTest` (11).
 
 - **Arena Promos (PANA)**: the card list now has all 83 of Scryfall's printings. Upstream had 12 (CNs 1-7, 101-105);
   the 71 added are CNs 201-271, mostly basic lands, including Bob Ross's and Evolving Wilds. Rarities follow Scryfall,

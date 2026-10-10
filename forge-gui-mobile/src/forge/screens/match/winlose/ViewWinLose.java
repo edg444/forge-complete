@@ -129,7 +129,7 @@ public class ViewWinLose extends FOverlay implements IWinLoseView<FButton> {
         if (winner == null) {
             return Forge.getLocalizer().getMessage("lblItsADraw");
         } else if (winningTeam != -1) {
-            return Forge.getLocalizer().getMessage("lblTeamWon").replace("%s", String.valueOf(winningTeam));
+            return Forge.getLocalizer().getMessage("lblTeamWon").replace("%s", String.valueOf(winningTeam + 1)); // lobbies number teams from 1
         } else {
             return Forge.getLocalizer().getMessage("lblWinnerWon").replace("%s", winner);
         }

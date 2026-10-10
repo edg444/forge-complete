@@ -196,6 +196,10 @@ public class VField implements IVDoc<CField> {
         return this.parentCell;
     }
 
+    public PlayerView getPlayer() {
+        return player;
+    }
+
     public PlayArea getTabletop() {
         return this.tabletop;
     }

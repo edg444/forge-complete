@@ -1675,6 +1675,30 @@ public class ComputerUtil {
     }
 
     /**
+     * Cards the AI's own pending copies of this effect already target. Simultaneous triggers of the same ability (two
+     * Voices of the Vermin attacking) choose targets one at a time while the earlier ones wait on the stack, and for
+     * an effect that sets rather than adds - a base P/T, a keyword - a second copy on the same card does nothing.
+     */
+    public static CardCollection targetedByPendingTwins(final Player ai, final SpellAbility sa) {
+        final CardCollection targeted = new CardCollection();
+        for (final SpellAbilityStackInstance si : ai.getGame().getStack()) {
+            if (!ai.equals(si.getActivatingPlayer())) {
+                continue;
+            }
+            SpellAbility s = si.getSpellAbility();
+            if (s.isWrapper()) {
+                s = ((WrappedAbility) s).getWrappedAbility();
+            }
+            for (; s != null; s = s.getSubAbility()) {
+                if (s != sa && s.getApi() == sa.getApi() && s.getMapParams().equals(sa.getMapParams())) {
+                    targeted.addAll(s.getTargets().getTargetCards());
+                }
+            }
+        }
+        return targeted;
+    }
+
+    /**
      * Overload of predictThreatenedObjects that evaluates the full stack
      */
     public static List<GameObject> predictThreatenedObjects(final Player ai, final SpellAbility sa) {

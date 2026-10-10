@@ -2653,13 +2653,10 @@ public class AbilityUtils {
                 for (final Player opp : player.getOpponents()) {
                     int streak = 0;
                     for (int i = outcomes.size() - 1; i >= 0; i--) {
-                        final RegisteredPlayer winner = outcomes.get(i).getWinningPlayer();
-                        if (winner == null) {
-                            continue;
-                        }
-                        if (winner.equals(player.getRegisteredPlayer())) {
+                        final GameOutcome outcome = outcomes.get(i);
+                        if (outcome.isWinner(player.getRegisteredPlayer())) {
                             break;
-                        } else if (winner.equals(opp.getRegisteredPlayer())) {
+                        } else if (outcome.isWinner(opp.getRegisteredPlayer())) {
                             streak++;
                         }
                     }

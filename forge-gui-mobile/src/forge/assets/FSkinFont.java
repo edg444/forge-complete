@@ -311,6 +311,7 @@ public class FSkinFont {
         }
         StringBuilder characters = new StringBuilder(FreeTypeFontGenerator.DEFAULT_CHARS);
         characters.append("•").append("—");//add bullet and long dash to default characters
+        characters.append("∞"); // infinite life, counters, damage and mana (Infinity Elemental, Mox Lotus)
         IntSet characterSet = new IntSet();
         for (int offset = 0; offset < FreeTypeFontGenerator.DEFAULT_CHARS.length();) {
             final int codePoint = FreeTypeFontGenerator.DEFAULT_CHARS.codePointAt(offset);

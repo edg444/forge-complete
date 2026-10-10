@@ -173,6 +173,16 @@ public final class GameOutcome implements Iterable<Entry<RegisteredPlayer, Playe
         return null;
     }
 
+    public List<RegisteredPlayer> getWinningPlayers() {
+        final List<RegisteredPlayer> winners = Lists.newArrayList();
+        for (Entry<RegisteredPlayer, PlayerStatistics> pair : playerRating.entrySet()) {
+            if (pair.getValue().getOutcome().hasWon()) {
+                winners.add(pair.getKey());
+            }
+        }
+        return winners;
+    }
+
     public int getWinningTeam() {
         return winningTeam;
     }

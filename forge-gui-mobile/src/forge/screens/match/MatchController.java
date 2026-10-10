@@ -218,6 +218,23 @@ public class MatchController extends NetworkGuiGame {
         return FModel.getPreferences().getPrefBoolean(FPref.MATCH_HOT_SEAT_MODE);
     }
 
+    /**
+     * Two-Headed Giant: MatchScreen shows panels top to bottom in list order with the first one moved to the bottom,
+     * so seat order alone can put a teammate at the top and split the team around the opponents. Moving the bottom
+     * player's teammates to the end keeps each team in one half of the screen.
+     */
+    private static void seatGiantTeamsTogether(final List<VPlayerPanel> playerPanels) {
+        final PlayerView bottom = playerPanels.get(0).getPlayer();
+        final List<VPlayerPanel> mates = new ArrayList<>();
+        for (final VPlayerPanel panel : playerPanels) {
+            if (bottom.isGiantTeammateOf(panel.getPlayer())) {
+                mates.add(panel);
+            }
+        }
+        playerPanels.removeAll(mates);
+        playerPanels.addAll(mates);
+    }
+
     @Override
     public void openView(final TrackableCollection<PlayerView> myPlayers) {
         final boolean noHumans = !hasLocalPlayers();
@@ -242,6 +259,7 @@ public class MatchController extends NetworkGuiGame {
                     playerPanel.setBottomPlayer(true);
             }
         }
+        seatGiantTeamsTogether(playerPanels);
         view = new MatchScreen(playerPanels);
         DiceOverlay.getInstance().attach(getGameView().getGame()); // mobile-only dice animations
         if(GuiBase.isNetPlay(this))

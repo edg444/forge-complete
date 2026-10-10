@@ -105,7 +105,7 @@ public class Assets implements Disposable {
     private boolean isDisposed = false;
     private int miniMapID;
     private static final String COUNTER_FONT_FILE = "Roboto-Bold.ttf";
-    private static final String COUNTER_FONT_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890./-+:'!—";
+    private static final String COUNTER_FONT_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890./-+:'!—∞"; // ∞: infinite counters (Infinity Elemental)
 
     private FileHandle counterFontHandle; // cached
 

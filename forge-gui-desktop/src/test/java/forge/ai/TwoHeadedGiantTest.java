@@ -19,6 +19,7 @@ import forge.game.card.Card;
 import forge.game.card.CounterEnumType;
 import forge.game.combat.Combat;
 import forge.game.combat.CombatUtil;
+import forge.game.event.GameEventGameOutcome;
 import forge.game.mulligan.MulliganService;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
@@ -181,6 +182,25 @@ public class TwoHeadedGiantTest extends AITest {
             AssertJUnit.assertTrue(p.getCardsIn(ZoneType.Hand).size() <= 7);
             AssertJUnit.assertFalse(p.getCardsIn(ZoneType.Hand).isEmpty());
         }
+    }
+
+    @Test
+    public void bothWinningHeadsScoreTheGame() {
+        final Game game = createTwoHeadedGiantGame();
+        final Player a2 = player(game, 1), b1 = player(game, 2), b2 = player(game, 3);
+        a2.getZone(ZoneType.Library).removeAllCards(true);
+        a2.drawCard();
+        game.getAction().checkStateEffects(true);
+        AssertJUnit.assertTrue(game.isGameOver());
+
+        final Match match = game.getMatch();
+        match.addGamePlayed(game);
+        AssertJUnit.assertEquals(1, match.getGamesWon().count(b1.getRegisteredPlayer()));
+        AssertJUnit.assertEquals(1, match.getGamesWon().count(b2.getRegisteredPlayer()));
+        AssertJUnit.assertEquals(0, match.getGamesWon().count(a2.getRegisteredPlayer()));
+        AssertJUnit.assertEquals(1, match.getGamesWonBy(b2.getLobbyPlayer()));
+        final String summary = new GameEventGameOutcome(game.getOutcome(), match.getOutcomes()).matchSummary();
+        AssertJUnit.assertTrue(summary, summary.contains("b1: 1") && summary.contains("b2: 1") && summary.contains("a1: 0"));
     }
 
     @Test

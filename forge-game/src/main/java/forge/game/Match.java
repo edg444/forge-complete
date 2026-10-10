@@ -166,10 +166,9 @@ public class Match {
     public boolean isMatchOver() {
         int[] victories = new int[players.size()];
         for (GameOutcome go : getOutcomes()) {
-            LobbyPlayer winner = go.getWinningLobbyPlayer();
             int i = 0;
             for (RegisteredPlayer p : players) {
-                if (p.getPlayer().equals(winner)) {
+                if (go.isWinner(p)) {
                     victories[i]++;
                     if (victories[i] >= rules.getGamesToWinMatch()) {
                         return true;
@@ -186,12 +185,13 @@ public class Match {
     public int getGamesWonBy(LobbyPlayer questPlayer) {
         int sum = 0;
         for (GameOutcome go : getOutcomes()) {
-            if (questPlayer.equals(go.getWinningLobbyPlayer())) {
+            if (go.isWinner(questPlayer)) {
                 sum++;
             }
         }
         return sum;
     }
+    // every winner counts - a team win is a win for each player on the team
     public Multiset<RegisteredPlayer> getGamesWon() {
         final Multiset<RegisteredPlayer> won = HashMultiset.create(players.size());
         for (final GameOutcome go : getOutcomes()) {
@@ -199,7 +199,7 @@ public class Match {
                 // Game hasn't finished yet. Exit early.
                 return won;
             }
-            won.add(go.getWinningPlayer());
+            won.addAll(go.getWinningPlayers());
         }
         return won;
     }

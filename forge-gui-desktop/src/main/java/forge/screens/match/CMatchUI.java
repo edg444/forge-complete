@@ -1286,7 +1286,10 @@ public final class CMatchUI
         }
         // Multiplayer: sort by turn order with local player first
         final String layout = FModel.getPreferences().getPref(FPref.UI_MULTIPLAYER_FIELD_LAYOUT);
-        if (players.size() > 2 && myPlayers != null && myPlayers.size() >= 1
+        final PlayerView anchor = myPlayers != null && !myPlayers.isEmpty() ? myPlayers.get(0) : players.get(0);
+        if (hasGiantTeammates(players)) {
+            players = new FCollection<>(sortPlayersForGiantTeams(players, anchor));
+        } else if (players.size() > 2 && myPlayers != null && myPlayers.size() >= 1
                 && !"OFF".equals(layout)) {
             players = new FCollection<>(sortPlayersForMultiplayer(players, myPlayers.get(0), "ROWS".equals(layout)));
         }
@@ -1305,6 +1308,40 @@ public final class CMatchUI
             FView.SINGLETON_INSTANCE.getPnlInsets().setForegroundImage(FSkin.getIcon(FSkinProp.BG_MATCH), true);
         else
             FView.SINGLETON_INSTANCE.getPnlInsets().setForegroundImage((Image)null);
+    }
+
+    static boolean hasGiantTeammates(final Iterable<PlayerView> players) {
+        for (final PlayerView p : players) {
+            for (final PlayerView q : players) {
+                if (p.isGiantTeammateOf(q)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Two-Headed Giant: the anchor (local) player first and an opponent second, so they hold the bottom and top
+     * cells, then the anchor's teammates and the other opponents. Whatever the layout preference, VMatchUI seats the
+     * anchor's team in the bottom cell and everyone else in the top one, so no team is split across the table.
+     */
+    static List<PlayerView> sortPlayersForGiantTeams(final FCollectionView<PlayerView> players, final PlayerView anchor) {
+        final List<PlayerView> mates = new ArrayList<>();
+        final List<PlayerView> others = new ArrayList<>();
+        for (final PlayerView p : players) {
+            if (p != anchor) {
+                (anchor.isGiantTeammateOf(p) ? mates : others).add(p);
+            }
+        }
+        final List<PlayerView> result = new ArrayList<>();
+        result.add(anchor);
+        if (!others.isEmpty()) {
+            result.add(others.remove(0));
+        }
+        result.addAll(mates);
+        result.addAll(others);
+        return result;
     }
 
     /**

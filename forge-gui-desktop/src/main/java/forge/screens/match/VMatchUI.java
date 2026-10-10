@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.swing.SwingUtilities;
 
 import forge.Singletons;
+import forge.game.player.PlayerView;
 import forge.gui.framework.DragCell;
 import forge.gui.framework.EDocID;
 import forge.gui.framework.FScreen;
@@ -201,7 +202,7 @@ public class VMatchUI implements IVTopLevelUI {
                 }
             } else {
                 // Extra players: add to corresponding base field's cell
-                DragCell baseFieldCell = lstFields.get(i % 2).getParentCell();
+                DragCell baseFieldCell = lstFields.get(giantSide(i, i % 2)).getParentCell();
                 if (baseFieldCell != null) {
                     baseFieldCell.addDoc(vField);
                 }
@@ -326,7 +327,7 @@ public class VMatchUI implements IVTopLevelUI {
         final boolean preferTop = !rowsMode && (lstFields.size() % 2 == 1);
         final Map<Integer, List<VField>> fieldsByCell = new LinkedHashMap<>();
         for (int i = 2; i < lstFields.size(); i++) {
-            final int target = rowsMode ? 1 : (preferTop ? ((i + 1) % 2) : (i % 2));
+            final int target = giantSide(i, rowsMode ? 1 : (preferTop ? ((i + 1) % 2) : (i % 2)));
             fieldsByCell.computeIfAbsent(target, k -> new ArrayList<>()).add(lstFields.get(i));
         }
 
@@ -364,6 +365,21 @@ public class VMatchUI implements IVTopLevelUI {
         if (splitMode || rearrangedRows) {
             SResizingUtil.resizeWindow();
         }
+    }
+
+    /**
+     * Two-Headed Giant: the bottom cell (0) for field 0's team and the top cell (1) for everyone else, so teammates
+     * sit together whatever the layout preference; any other game keeps the layout's own choice.
+     */
+    private int giantSide(final int fieldIndex, final int layoutChoice) {
+        final List<PlayerView> players = new ArrayList<>();
+        for (final VField f : lstFields) {
+            players.add(f.getPlayer());
+        }
+        if (!CMatchUI.hasGiantTeammates(players)) {
+            return layoutChoice;
+        }
+        return players.get(0).isGiantTeammateOf(players.get(fieldIndex)) ? 0 : 1;
     }
 
     /**

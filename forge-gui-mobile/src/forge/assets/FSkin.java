@@ -131,13 +131,14 @@ public class FSkin {
         Forge.hdbuttons = false;
         Forge.hdstart = false;
         // TODO: the "v2" string should be a property of the default skin.
+        // The fork's "v2-inf" marker regenerates fonts cached before ∞ joined the character set.
         // iOS: the bundle is read-only, so the marker file lives in writable local storage
         FileHandle v2File;
         if (GuiBase.isIOS()) {
-            v2File = Gdx.files.local("fonts/v2");
+            v2File = Gdx.files.local("fonts/v2-inf");
         } else {
             // Other platforms: the standard location
-            v2File = Forge.getAssets().getFileHandle(ForgeConstants.FONTS_DIR + "v2");
+            v2File = Forge.getAssets().getFileHandle(ForgeConstants.FONTS_DIR + "v2-inf");
         }
 
         if (v2File == null || !v2File.exists()) {

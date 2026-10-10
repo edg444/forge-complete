@@ -295,6 +295,11 @@ public class AnimateAi extends SpellAbilityAi {
                     list = ownChoices;
                 }
             }
+            final CardCollection twinned = ComputerUtil.targetedByPendingTwins(aiPlayer, sa);
+            final List<Card> fresh = CardLists.filter(list, c -> !twinned.contains(c));
+            if (!fresh.isEmpty()) {
+                list = fresh;
+            }
             Card toAnimate = ComputerUtilCard.getWorstAI(list);
             rememberAnimatedThisTurn(aiPlayer, toAnimate);
             sa.getTargets().add(toAnimate);
@@ -328,6 +333,8 @@ public class AnimateAi extends SpellAbilityAi {
         CardCollection list = CardLists.getTargetableCards(game.getCardsIn(ZoneType.Battlefield), sa);
 
         list = ComputerUtil.filterAITgts(sa, ai, list, false);
+        final CardCollection twinned = ComputerUtil.targetedByPendingTwins(ai, sa);
+        list = CardLists.filter(list, c -> !twinned.contains(c));
 
         // list is empty, no possible targets
         if (list.isEmpty() && !alwaysActivatePWAbility) {
