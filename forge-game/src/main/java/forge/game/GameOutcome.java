@@ -136,6 +136,11 @@ public final class GameOutcome implements Iterable<Entry<RegisteredPlayer, Playe
         return false;
     }
 
+    /** Whether this player lost: the game had a winner and it wasn't them (CR 104.4a: a draw has no loser). */
+    public boolean isLoser(final RegisteredPlayer who) {
+        return playerRating.containsKey(who) && !isDraw() && !isWinner(who);
+    }
+
     public boolean isWinner(final RegisteredPlayer who) {
         for (Entry<RegisteredPlayer, PlayerStatistics> pv : playerRating.entrySet())
             if (pv.getValue().getOutcome().hasWon() && pv.getKey().equals(who))

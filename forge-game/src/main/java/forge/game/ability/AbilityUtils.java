@@ -2490,6 +2490,16 @@ public class AbilityUtils {
         }
         // Avatar of Me. Height and shoe size are counted in halves so the card can round to the
         // nearest 1/2 as printed; age is plain years.
+        // Ruff, Underdog Champ: "If you've lost a game this match" - a drawn game has no loser (ruling)
+        if (sq[0].equals("YouLostAGameThisMatch")) {
+            boolean lost = false;
+            if (game.getMatch() != null) {
+                for (final GameOutcome o : game.getMatch().getOutcomes()) {
+                    lost |= o.isLoser(player.getRegisteredPlayer());
+                }
+            }
+            return doXMath(lost ? 1 : 0, expr, c, ctb);
+        }
         if (sq[0].equals("YourAge")) {
             // asked here rather than on resolution because the cost needs it while it's being paid
             return doXMath(player.askPersonalFact("Age", "Choose your age in years", 0, 120), expr, c, ctb);

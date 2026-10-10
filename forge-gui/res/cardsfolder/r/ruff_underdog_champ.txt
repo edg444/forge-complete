@@ -1,0 +1,10 @@
+Name:Ruff, Underdog Champ
+ManaCost:2 W W
+Types:Legendary Creature Dog Soldier
+PT:3/2
+Text:All Hounds are Dogs. (We'll errata this to be true.)
+K:First Strike
+K:Lifelink
+S:Mode$ Continuous | Affected$ Creature.Self,Creature.Dog+Other+YouCtrl | AddPower$ 1 | AddToughness$ 1 | CheckSVar$ X | SVarCompare$ GE1 | Description$ Underdog — If you've lost a game this match, CARDNAME and other Dogs you control get +1/+1.
+SVar:X:Count$YouLostAGameThisMatch
+Oracle:All Hounds are Dogs. (We'll errata this to be true.)\nFirst strike, lifelink\nUnderdog — If you've lost a game this match, Ruff, Underdog Champ and other Dogs you control get +1/+1.
