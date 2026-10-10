@@ -229,6 +229,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-10 (deployed: desktop, Android, GitHub) — Two-Headed Giant seating and team scoring; ∞ on mobile; AI twin-trigger targets; Arena Promos
+
 - **Two-Headed Giant layout**: teammates now sit together. On mobile, seats 1+2 vs 3+4 used to stack as teammate,
   opponent, opponent, you; on desktop the teammate's field went in the top cell with an opponent. Now your team is the
   bottom half and the other team the top half on both (desktop still lets you move fields).
