@@ -1,0 +1,9 @@
+Name:Stamp of Approval
+ManaCost:3
+Types:Artifact
+# Any watermark a printing has (PrintingTraits); "Set symbol" covers every set-symbol watermark, since Scryfall's
+# data doesn't say which set's (user, 2026-10-09)
+K:ETBReplacement:Other:DBChooseWatermark
+SVar:DBChooseWatermark:DB$ ChooseType | Type$ Watermark | Chooser$ You | ChoiceTitle$ Choose a watermark | SpellDescription$ As this artifact enters, choose a watermark.
+S:Mode$ Continuous | Affected$ Creature.YouCtrl+withChosenWatermark | AddPower$ 1 | AddToughness$ 1 | Description$ Creatures you control with the chosen watermark get +1/+1.
+Oracle:As this artifact enters, choose a watermark.\nCreatures you control with the chosen watermark get +1/+1.

@@ -1390,6 +1390,15 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
         final List<String> types = Lists.newArrayList(validTypes);
         if (kindOfType.equals("Creature")) {
             sortCreatureTypes(types);
+        } else if (kindOfType.equals("Watermark")) {
+            // Stamp of Approval: the watermarks on this player's own cards first, most common first
+            final Map<String, Integer> inDeck = Maps.newHashMap();
+            for (final Card c : player.getAllCards()) {
+                for (final String w : c.getWatermarks()) {
+                    inDeck.merge(forge.card.PrintingTraits.watermarkName(w), 1, Integer::sum);
+                }
+            }
+            types.sort((a, b) -> Integer.compare(inDeck.getOrDefault(b, 0), inDeck.getOrDefault(a, 0)));
         }
         if (isOptional) {
             return getGui().oneOrNone(localizer.getMessage("lblChooseATargetType", kindOfType.toLowerCase()), types);

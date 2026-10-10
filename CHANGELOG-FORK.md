@@ -336,6 +336,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   letter) and a SpellCast trigger gaining `TriggeredCard$ChosenLetterInName` life. Y counts as a consonant, every Y
   included (user ruling; no Scryfall rulings). New `AILogic$ MostCommonInName`: the letter appearing most often in the
   names of the AI's own nonland cards outside the battlefield. `StaffOfTheLetterMagusTest` (3).
+- **Stamp of Approval** (ust/160; not scripted upstream). `ChooseType | Type$ Watermark` offers every watermark in the
+  printing data by name (`PrintingTraits.allWatermarkNames`/`watermarkName`/`watermarkId`: "Goblin Explosioneers",
+  "Agents of S.N.E.A.K."), the human's own cards' watermarks listed first; card property `withChosenWatermark`.
+  Scryfall calls every set-symbol watermark "set" without saying which set, so "Set symbol" is one choice covering
+  them all (user ruling). AI: the watermark most of its creatures have. `StampOfApprovalTest` (3).
 
 ### 2026-10-09 (deployed: desktop, Android, GitHub) — upstream merge (94 commits, incl. dice and flip animations); The Grand Calcutron; Hot Fix; Ol' Buzzbark; Phoebe, Head of S.N.E.A.K.; X; Urza, Academy Headmaster audit
 

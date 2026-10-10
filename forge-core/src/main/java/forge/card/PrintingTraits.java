@@ -100,6 +100,7 @@ public final class PrintingTraits {
     public static synchronized void setSource(final Supplier<List<String>> lineSource) {
         source = lineSource;
         table = null;
+        watermarks = null;
     }
 
     private static synchronized Map<String, Traits> table() {
@@ -166,6 +167,64 @@ public final class PrintingTraits {
             table.put(parts[0].toUpperCase() + "|" + parts[1], t);
         }
         return table;
+    }
+
+    // Scryfall's watermark ids run words together; these are the ones a plain capital doesn't read right
+    private static final Map<String, String> WATERMARK_NAMES = Map.ofEntries(
+            Map.entry("set", "Set symbol"), Map.entry("wotc", "WotC"), Map.entry("fnm", "FNM"), Map.entry("dci", "DCI"),
+            Map.entry("mps", "MPS"), Map.entry("wpn", "WPN"), Map.entry("mtg", "MTG"), Map.entry("mtg10", "MTG 10"),
+            Map.entry("mtg15", "MTG 15"), Map.entry("d&d", "D&D"), Map.entry("colorpie", "Color Pie"),
+            Map.entry("firenation", "Fire Nation"), Map.entry("earthkingdom", "Earth Kingdom"),
+            Map.entry("watertribe", "Water Tribe"), Map.entry("airnomads", "Air Nomads"),
+            Map.entry("leagueofdastardlydoom", "League of Dastardly Doom"), Map.entry("orderofthewidget", "Order of the Widget"),
+            Map.entry("agentsofsneak", "Agents of S.N.E.A.K."), Map.entry("goblinexplosioneers", "Goblin Explosioneers"),
+            Map.entry("crossbreedlabs", "Crossbreed Labs"), Map.entry("judgeacademy", "Judge Academy"),
+            Map.entry("japanjunior", "Japan Junior"), Map.entry("grandprix", "Grand Prix"), Map.entry("junioreurope", "Junior Europe"),
+            Map.entry("juniorapac", "Junior APAC"), Map.entry("protour", "Pro Tour"), Map.entry("magicfest", "MagicFest"),
+            Map.entry("corocoro", "CoroCoro"), Map.entry("dengekimaoh", "Dengeki Maoh"), Map.entry("trumpkatsumai", "Trump Katsumai"),
+            Map.entry("herospath", "Hero's Path"));
+
+    /** A watermark id as people read it: "Goblin Explosioneers", "Set symbol". */
+    public static String watermarkName(final String id) {
+        if (id == null || id.isEmpty()) {
+            return id;
+        }
+        final String known = WATERMARK_NAMES.get(id.toLowerCase());
+        return known != null ? known : Character.toUpperCase(id.charAt(0)) + id.substring(1);
+    }
+
+    /** Back from {@link #watermarkName} (or an id) to the id. */
+    public static String watermarkId(final String name) {
+        if (name == null) {
+            return null;
+        }
+        for (final Map.Entry<String, String> e : WATERMARK_NAMES.entrySet()) {
+            if (e.getValue().equalsIgnoreCase(name)) {
+                return e.getKey();
+            }
+        }
+        return name.toLowerCase();
+    }
+
+    private static List<String> watermarks = null;
+
+    /**
+     * Every watermark any printing has, by name (Stamp of Approval). Scryfall calls every set-symbol watermark "set",
+     * whichever set it shows, so "Set symbol" is one choice covering them all (user, 2026-10-09).
+     */
+    public static synchronized List<String> allWatermarkNames() {
+        if (watermarks == null) {
+            final java.util.TreeSet<String> names = new java.util.TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+            for (final Traits t : table().values()) {
+                for (final String w : new String[] {t.watermark, t.backWatermark}) {
+                    if (w != null && !w.isEmpty()) {
+                        names.add(watermarkName(w));
+                    }
+                }
+            }
+            watermarks = List.copyOf(names);
+        }
+        return watermarks;
     }
 
     /** Traits of this printing, or null when it has none worth recording. */

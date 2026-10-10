@@ -366,6 +366,15 @@ public class CardProperty {
             if (card.getWatermarks().isEmpty()) {
                 return false;
             }
+        } else if (property.equals("withChosenWatermark")) {
+            // Stamp of Approval: the watermark chosen on the source, by name
+            if (!source.hasChosenType()) {
+                return false;
+            }
+            final String wanted = forge.card.PrintingTraits.watermarkId(source.getChosenType());
+            if (card.getWatermarks().stream().noneMatch(w -> w.equalsIgnoreCase(wanted))) {
+                return false;
+            }
         } else if (property.startsWith("Watermark_")) {
             // Scryfall's watermark names, e.g. Watermark_orderofthewidget (Knight of the Widget)
             final String wanted = property.substring(10);

@@ -88,6 +88,10 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
             case "Planeswalker":
                 validTypes.addAll(CardType.getAllWalkerTypes());
                 break;
+            case "Watermark":
+                // Stamp of Approval: every watermark a printing has
+                validTypes.addAll(forge.card.PrintingTraits.allWatermarkNames());
+                break;
             case "CreatureInTargetedDeck":
                 for (final Player p : tgtPlayers) {
                     for (Card c : p.getAllCards()) {

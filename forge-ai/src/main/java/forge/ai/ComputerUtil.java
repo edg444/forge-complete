@@ -2686,6 +2686,31 @@ public class ComputerUtil {
             // Hangman: any word from the list is as good as another, as long as it can't be predicted
             chosen = Aggregates.random(validTypes);
         }
+        else if (kindOfType.equals("Watermark")) {
+            // Stamp of Approval: the watermark most of this player's creatures have
+            final Map<String, Integer> counts = Maps.newHashMap();
+            for (final Card c : ai.getAllCards()) {
+                if (!c.isCreature()) {
+                    continue;
+                }
+                for (final String w : c.getWatermarks()) {
+                    final String name = forge.card.PrintingTraits.watermarkName(w);
+                    if (validTypes.contains(name)) {
+                        counts.merge(name, 1, Integer::sum);
+                    }
+                }
+            }
+            int best = 0;
+            for (final Map.Entry<String, Integer> e : counts.entrySet()) {
+                if (e.getValue() > best) {
+                    best = e.getValue();
+                    chosen = e.getKey();
+                }
+            }
+            if (StringUtils.isEmpty(chosen) && !validTypes.isEmpty()) {
+                chosen = Aggregates.random(validTypes);
+            }
+        }
         else if (kindOfType.equals("letter")) {
             // Monkey Monkey Monkey pays off names that START with the letter, so it wants the most
             // common initial. When Fluffy Bunnies Attack cares about occurrences anywhere instead,
