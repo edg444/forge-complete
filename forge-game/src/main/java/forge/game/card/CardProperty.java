@@ -455,6 +455,10 @@ public class CardProperty {
             if (!card.hasKnownTreeInArt()) {
                 return false;
             }
+        } else if (property.equals("KnownMoonInArt")) {
+            if (!card.hasKnownMoonInArt()) {
+                return false;
+            }
         } else if (property.equals("ArtFiguresUnknown")) {
             if (card.getArtFigures() != 0) {
                 return false;

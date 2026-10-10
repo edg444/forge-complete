@@ -1,0 +1,26 @@
+Name:Nightmare Moon
+ManaCost:4 B B
+Types:Legendary Creature Alicorn
+PT:6/6
+K:Flying
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ 2 | AddToughness$ 2 | AddKeyword$ Menace | CheckSVar$ Nighttime | SVarCompare$ EQ1 | Description$ As long as it's nighttime, CARDNAME gets +2/+2 and has menace.
+SVar:Nighttime:Count$RealWorldNighttime
+A:AB$ SetState | Cost$ 6 | Defined$ Self | Mode$ Transform | Activator$ Player | AnyPlayerHelpsPay$ True | BecomeFriend$ True | SpellDescription$ Transform CARDNAME. Anypony may activate this ability or help pay the cost. When they do, they become your friend.
+AlternateMode:DoubleFaced
+Oracle:Flying\nAs long as it's nighttime, Nightmare Moon gets +2/+2 and has menace.\n{6}: Transform Nightmare Moon. Anypony may activate this ability or help pay the cost. When they do, they become your friend.
+
+ALTERNATE
+
+Name:Princess Luna
+ManaCost:no cost
+Colors:black
+Types:Legendary Creature Alicorn
+PT:4/4
+K:Flying
+T:Mode$ Transformed | ValidCard$ Card.Self | Execute$ TrigExile | TriggerDescription$ When this creature transforms into CARDNAME, choose up to six cards you own from outside the game with a moon in their art, then exile those cards. As long as those cards remain exiled, you may cast them, and your friends may cast them with your permission. (Gifts are appreciated.)
+SVar:TrigExile:DB$ ChangeZone | Origin$ Sideboard | Destination$ Exile | ChangeType$ Card.YouOwn+KnownMoonInArt | ChangeTypeDesc$ card you own from outside the game with a moon in its art | ChangeNum$ 6 | Hidden$ True | RememberChanged$ True | SubAbility$ DBEffect
+SVar:DBEffect:DB$ Effect | RememberObjects$ Remembered | StaticAbilities$ MayCast,FriendsMayCast | ForgetOnMoved$ Exile | Duration$ Permanent | ConditionDefined$ Remembered | ConditionPresent$ Card | SubAbility$ DBCleanup
+SVar:MayCast:Mode$ Continuous | MayPlay$ True | ValidSA$ Spell | EffectZone$ Command | Affected$ Card.IsRemembered | AffectedZone$ Exile | Description$ As long as these cards remain exiled, you may cast them.
+SVar:FriendsMayCast:Mode$ Continuous | MayPlay$ True | MayPlayPlayer$ Player.Friend | MayPlayWithPermission$ You | ValidSA$ Spell | EffectZone$ Command | Affected$ Card.IsRemembered | AffectedZone$ Exile | Description$ As long as these cards remain exiled, your friends may cast them with your permission.
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Flying\nWhen this creature transforms into Princess Luna, choose up to six cards you own from outside the game with a moon in their art, then exile those cards. As long as those cards remain exiled, you may cast them, and your friends may cast them with your permission. (Gifts are appreciated.)

@@ -47,6 +47,7 @@ import forge.game.replacement.ReplacementEffect;
 import forge.game.replacement.ReplacementLayer;
 import forge.game.replacement.ReplacementType;
 import forge.game.spellability.AbilitySub;
+import forge.game.spellability.MayPlayPermission;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.SpellAbilityStackInstance;
 import forge.game.spellability.TargetRestrictions;
@@ -88,6 +89,9 @@ public class ComputerUtil {
         final Game game = source.getGame();
         final Card host = sa.getHostCard();
         final Zone hz = host.isCopiedSpell() ? null : host.getZone();
+        if (!MayPlayPermission.ask(sa)) {
+            return false;
+        }
         source.setSplitStateToPlayAbility(sa);
 
         if (sa.isSpell() && !source.isCopiedSpell()) {

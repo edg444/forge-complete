@@ -1,0 +1,12 @@
+[metadata]
+Code=PTG
+Date=2019-10-22
+Name=Ponies: The Galloping
+Type=Funny
+ScryfallCode=PTG
+Border=Silver
+
+[cards]
+1 M Nightmare Moon @John Thacker
+2 M Princess Twilight Sparkle @Jennifer L. Meyer
+3 M Rarity @Andrea Radeck

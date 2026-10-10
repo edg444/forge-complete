@@ -319,6 +319,10 @@ public class CostAdjustment {
             }
         }
 
+        if (sa.hasParam("AnyPlayerHelpsPay") && !test) {
+            helpPayByAnyPlayer(cost, sa);
+        }
+
         if (sa.hasParam("TapCreaturesForMana")) {
             adjustCostByConvokeOrImprovise(cost, sa, activator, false, true, test);
         }
@@ -355,6 +359,26 @@ public class CostAdjustment {
         int requestedAmount = genericLeft;
         // TODO: Nice to have. Ask the player how much mana you are hoping someone will pay.
         return assistant.getController().helpPayForAssistSpell(cost, sa, genericLeft, requestedAmount);
+    }
+
+    // Nightmare Moon's "Anypony may ... help pay the cost": Assist's way of paying (702.132a), but every other player is
+    // offered in turn order, not one the activator picks
+    private static void helpPayByAnyPlayer(ManaCostBeingPaid cost, final SpellAbility sa) {
+        Player activator = sa.getActivatingPlayer();
+        sa.getPaymentHelpers().clear();
+        for (Player p : activator.getGame().getPlayersInTurnOrder(activator)) {
+            int genericLeft = cost.getUnpaidShards(ManaCostShard.GENERIC);
+            if (genericLeft == 0) {
+                return;
+            }
+            if (p.equals(activator)) {
+                continue;
+            }
+            p.getController().helpPayForAssistSpell(cost, sa, genericLeft, genericLeft);
+            if (cost.getUnpaidShards(ManaCostShard.GENERIC) < genericLeft) {
+                sa.addPaymentHelper(p);
+            }
+        }
     }
 
     private static void adjustCostByWaterbend(ManaCostBeingPaid cost, SpellAbility sa, Player payer, boolean test) {

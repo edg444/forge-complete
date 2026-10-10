@@ -11,6 +11,7 @@ import com.google.common.collect.Lists;
 
 import forge.GameCommand;
 import forge.card.CardType;
+import forge.card.ColorSet;
 import forge.card.MagicColor;
 import forge.game.Game;
 import forge.game.ability.AbilityUtils;
@@ -116,6 +117,20 @@ public class ProtectEffect extends SpellAbilityEffect {
                 return;
             gains.add(choice);
             game.getAction().notifyOfValue(sa, choser, Lang.joinHomogenous(gains), choser);
+        } else if (sa.getParam("Gains").equals("ToyColors")) {
+            // Rarity: the colors of a real toy, which only its owner can see (honor system)
+            final Player owner = sa.getActivatingPlayer();
+            final List<String> options = toyColorOptions(sa);
+            List<String> colors = owner.getController().getKnownToyColors(options);
+            if (colors == null) {
+                colors = new ArrayList<>();
+                for (final MagicColor.Color c : owner.getController().chooseColors(
+                        "Choose each color in your toy's coat, mane, and outfit", sa, 0, options.size(), ColorSet.fromNames(options))) {
+                    colors.add(c.getName());
+                }
+            }
+            gains.addAll(colors);
+            game.getAction().notifyOfValue(sa, owner, gains.isEmpty() ? "no color" : Lang.joinHomogenous(gains), owner);
         } else if (sa.getParam("Gains").equals("ChosenColor")) {
             for (final String color : host.getChosenColors()) {
                 gains.add(color.toLowerCase());
@@ -177,11 +192,25 @@ public class ProtectEffect extends SpellAbilityEffect {
         }
     }
 
+    private static List<String> toyColorOptions(final SpellAbility sa) {
+        final List<String> options = new ArrayList<>(MagicColor.Constant.ONLY_COLORS);
+        if (sa.getHostCard().getGame().isSilverBorderedGame()) {
+            options.addAll(MagicColor.Constant.SILVER_BORDER_COLORS);
+        }
+        return options;
+    }
+
     public static List<String> getProtectionList(final SpellAbility sa) {
         final List<String> gains = new ArrayList<>();
 
         final String gainStr = sa.getParam("Gains");
-        if (gainStr.equals("Choice")) {
+        if (gainStr.equals("ToyColors")) {
+            // what the AI's own toy shows, or every color a toy might have
+            final List<String> options = toyColorOptions(sa);
+            final Player owner = sa.getActivatingPlayer();
+            final List<String> known = owner == null ? null : owner.getController().getKnownToyColors(options);
+            gains.addAll(known != null ? known : options);
+        } else if (gainStr.equals("Choice")) {
             String choices = sa.getParam("Choices");
 
             // Replace AnyColor with the 5 colors

@@ -562,7 +562,9 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
     @Override
     public boolean helpPayForAssistSpell(ManaCostBeingPaid cost, SpellAbility sa, int max, int requested) {
         // This is like a mini-announce X
-        String title = String.format("%s trying to cast (%s) How much would you like to help pay for Assist? (Max: %s)", sa.getActivatingPlayer(), sa, max);
+        String title = sa.isSpell()
+                ? String.format("%s trying to cast (%s) How much would you like to help pay for Assist? (Max: %s)", sa.getActivatingPlayer(), sa, max)
+                : String.format("%s is activating (%s) How much of its cost would you like to help pay? (Max: %s)", sa.getActivatingPlayer(), sa, max);
         int willPay = chooseNumber(sa, title, 0, max);
 
         if (willPay <= 0) {

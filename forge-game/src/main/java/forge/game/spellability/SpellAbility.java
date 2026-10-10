@@ -1273,6 +1273,17 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
         basicSpell = basicSpell0;
     }
 
+    // players other than the activator who paid part of the cost (AnyPlayerHelpsPay$)
+    private final List<Player> paymentHelpers = Lists.newArrayList();
+    public List<Player> getPaymentHelpers() {
+        return paymentHelpers;
+    }
+    public void addPaymentHelper(Player p) {
+        if (!paymentHelpers.contains(p)) {
+            paymentHelpers.add(p);
+        }
+    }
+
     public CardPlayOption getMayPlayOption() {
         return mayPlay;
     }

@@ -356,6 +356,15 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
                 game.getTriggerHandler().runTrigger(TriggerType.AbilityCast, runParams, true);
             }
 
+            // Nightmare Moon: "Anypony may activate this ability or help pay the cost. When they do, they become your friend."
+            if (sp.hasParam("BecomeFriend")) {
+                source.getController().addFriend(activator);
+                for (Player helper : sp.getPaymentHelpers()) {
+                    source.getController().addFriend(helper);
+                }
+                sp.getPaymentHelpers().clear();
+            }
+
             if (sp.getMaxWaterbend() != null) {
                 activator.triggerElementalBend(TriggerType.Waterbend);
             }

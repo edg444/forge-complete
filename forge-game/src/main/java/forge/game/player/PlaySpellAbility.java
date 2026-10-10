@@ -35,6 +35,7 @@ import forge.game.mana.ManaCostBeingPaid;
 import forge.game.mana.ManaPool;
 import forge.game.mana.ManaRefundService;
 import forge.game.spellability.OptionalCostValue;
+import forge.game.spellability.MayPlayPermission;
 import forge.game.spellability.SpellAbility;
 import forge.game.staticability.StaticAbilityManaConvert;
 import forge.game.zone.Zone;
@@ -96,7 +97,7 @@ public class PlaySpellAbility {
         boolean flippedToCast = sa.isSpell() && source.isFaceDown();
 
         sa = chooseOptionalAdditionalCosts(p, sa);
-        if (sa == null) {
+        if (sa == null || !MayPlayPermission.ask(sa)) {
             return false;
         }
 

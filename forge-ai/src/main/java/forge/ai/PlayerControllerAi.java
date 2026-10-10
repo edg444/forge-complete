@@ -1201,6 +1201,23 @@ public class PlayerControllerAi extends PlayerController {
     }
 
     @Override
+    public List<String> getKnownToyColors(List<String> options) {
+        // Rarity: the AI's My Little Pony toy, the same one all game. Coat, mane and outfit each come out a random
+        // color, and some toy colors aren't Magic colors at all.
+        final Random r = new Random(SpellAbilityAi.gameSeed(player, player.getGame(), "MLPToyColors"));
+        final List<String> palette = new ArrayList<>(options);
+        palette.addAll(Arrays.asList("purple", "orange", "teal"));
+        final Set<String> colors = new LinkedHashSet<>();
+        for (int i = 0; i < 3; i++) {
+            final String c = palette.get(r.nextInt(palette.size()));
+            if (options.contains(c)) {
+                colors.add(c);
+            }
+        }
+        return new ArrayList<>(colors);
+    }
+
+    @Override
     public ColorSet chooseColors(String message, SpellAbility sa, int min, int max, ColorSet options) {
         return ColorSet.fromNames(ComputerUtilCard.chooseColor(sa, min, max, options.stream().map(MagicColor.Color::getName).collect(Collectors.toList())));
     }

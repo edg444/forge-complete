@@ -2348,8 +2348,9 @@ public class GameAction {
             // then the rest have lost!
             reason = GameEndReason.WinsGameSpellEffect;
             for (Player pl : allPlayers) {
-                // CR 810.8a: a Two-Headed Giant team wins together
-                if (pl.equals(p) || pl.sharesTurnWith(p)) {
+                // CR 810.8a: a Two-Headed Giant team wins together; and when everypony wins
+                // (Princess Twilight Sparkle), the other winners don't lose
+                if (pl.equals(p) || pl.sharesTurnWith(p) || pl.hasWon()) {
                     continue;
                 }
 

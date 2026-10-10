@@ -1,0 +1,9 @@
+Name:Princess Twilight Sparkle
+ManaCost:W U
+Types:Legendary Creature Alicorn
+PT:2/2
+K:Flying
+S:Mode$ Continuous | Affected$ Creature.Alicorn+Other+YouCtrl,Creature.Horse+Other+YouCtrl,Creature.Pegasus+Other+YouCtrl,Creature.Pony+Other+YouCtrl,Creature.Unicorn+Other+YouCtrl | AddPower$ 1 | AddToughness$ 1 | Description$ Other Alicorns, Horses, Pegasi, Ponies, and Unicorns you control get +1/+1.
+A:AB$ WinsGame | Cost$ W U B R G | Defined$ Player | ConditionCheckSVar$ X | ConditionSVarCompare$ EQ5 | SpellDescription$ If you control Applejack, Fluttershy, Pinkie Pie, Rainbow Dash, and Rarity, everypony wins the game.
+SVar:X:Count$Valid Permanent.YouCtrl+namedApplejack,Permanent.YouCtrl+namedFluttershy,Permanent.YouCtrl+namedPinkie_Pie,Permanent.YouCtrl+namedRainbow_Dash,Permanent.YouCtrl+namedRarity$DifferentCardNames
+Oracle:Flying\nOther Alicorns, Horses, Pegasi, Ponies, and Unicorns you control get +1/+1.\n{W}{U}{B}{R}{G}: If you control Applejack, Fluttershy, Pinkie Pie, Rainbow Dash, and Rarity, everypony wins the game.

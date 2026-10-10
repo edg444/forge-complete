@@ -228,12 +228,35 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   would-be commander (`CardRules.canBeCommanderIfLegendary`, `DeckFormat.isLegalCommanderWith`) and is made
   perpetually legendary at game start (`Player.promoteLegendaryPartners`). Card property `IsPartner` = the
   source's owner's other commander ("its partner").
+- **Friends** (Nightmare Moon): `Player.addFriend` (mutual, all game, logged), player property `Friend`, copied by
+  GameCopier. `BecomeFriend$ True` on an ability makes its activator and payment helpers the host controller's
+  friends when it goes on the stack.
+- **Anyone helps pay** (`AnyPlayerHelpsPay$ True`): Assist's payment (702.132a) offered to every other player in
+  turn order, for activated abilities too; helpers are recorded on the ability (`SpellAbility.getPaymentHelpers`).
+- **Play with permission** (`MayPlayWithPermission$ <players>` on a MayPlay static, Princess Luna):
+  `MayPlayPermission.ask` asks them as a human or AI starts casting; a refusal holds for the turn. AI lends to
+  non-opponents only.
+- **Real-world nighttime**: `Count$RealWorldNighttime` (6 PM to 6 AM local); `AbilityUtils.realWorldTime` is the
+  clock (tests replace it, `CurrentHour` reads it too).
+- **Moon in the art**: printing trait `moon`/`backmoon` (Tagger's moon tree plus lunar eclipse), card property
+  `KnownMoonInArt`.
+- **Toy colors** (`Protection | Gains$ ToyColors`, Rarity): a human picks the colors at resolution (pink and gold in
+  a silver-bordered game); `PlayerController.getKnownToyColors` gives the AI's toy, fixed per game
+  (`SpellAbilityAi.gameSeed`).
+- **Everypony wins**: `WinsGame | Defined$ Player` no longer turns the other winners into losers; GameWinAi skips a
+  win whose condition doesn't hold.
 
 ---
 
 ## Log
 
 ### Unreleased
+
+- **Ponies: The Galloping** (new edition PTG, silver-bordered): Nightmare Moon // Princess Luna, Princess Twilight
+  Sparkle, Rarity. New creature types Alicorn and Pony. User rulings: nighttime = real local clock 6 PM to 6 AM;
+  friendship is mutual; the AI owns a pony toy half the time, with colors fixed for the game; only Tagger-confirmed
+  moons can be chosen for Luna. `PrintingTraits.txt` regenerated (moons, PTG, and Arena Promos/@FRA printings the
+  last run predated); no existing line lost a trait.
 
 - **Optimus Prime, Inspiring Leader** and **Sol, Advocate Eternal** (2018 Heroes of the Realm). User rulings:
   Optimus's "turn to its other face" is convert (any double-faced permanent, MDFCs included) and also turns a

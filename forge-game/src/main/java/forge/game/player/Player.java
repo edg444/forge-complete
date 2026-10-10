@@ -3326,6 +3326,24 @@ public class Player extends GameEntity implements Comparable<Player> {
         return effect == null || effect.getZone() == null ? null : mapper.apply(effect);
     }
 
+    // Nightmare Moon: "they become your friend". Mutual (user ruling), and for the rest of the game.
+    private final PlayerCollection friends = new PlayerCollection();
+
+    public final PlayerCollection getFriends() {
+        return friends;
+    }
+    public final boolean isFriendOf(Player other) {
+        return friends.contains(other);
+    }
+    public final void addFriend(Player other) {
+        if (other == null || other.equals(this) || friends.contains(other)) {
+            return;
+        }
+        friends.add(other);
+        other.friends.add(this);
+        game.fireEvent(new GameEventAddLog(GameLogEntryType.INFORMATION, this + " and " + other + " became friends."));
+    }
+
     /** Legendary partner: "The other one is promoted to legendary." - for the whole game, in every zone. */
     public void promoteLegendaryPartners() {
         if (commanders.size() != 2 || commanders.stream().noneMatch(c -> c.hasKeyword(Keyword.LEGENDARY_PARTNER))) {

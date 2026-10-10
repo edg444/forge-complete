@@ -46,6 +46,8 @@ public final class PrintingTraits {
         private boolean backHat = false;
         private boolean tree = false;
         private boolean backTree = false;
+        private boolean moon = false;
+        private boolean backMoon = false;
 
         /** The border as printed, or null when the edition data already has it right. */
         public CardEdition.BorderColor getBorder() {
@@ -88,6 +90,11 @@ public final class PrintingTraits {
         /** A tree in the artwork (Selfie Preservation), per Scryfall Tagger; false can still mean untagged. */
         public boolean hasTree(final boolean backFace) {
             return backFace ? backTree : tree;
+        }
+
+        /** A moon in the artwork (Princess Luna), per Scryfall Tagger; false can still mean untagged. */
+        public boolean hasMoon(final boolean backFace) {
+            return backFace ? backMoon : moon;
         }
 
         /** Printed lines in the whole text box, flavor text included (Lexivore); -1 when they couldn't be read. */
@@ -158,6 +165,10 @@ public final class PrintingTraits {
                     t.tree = true;
                 } else if (trait.equals("backtree")) {
                     t.backTree = true;
+                } else if (trait.equals("moon")) {
+                    t.moon = true;
+                } else if (trait.equals("backmoon")) {
+                    t.backMoon = true;
                 } else if (trait.startsWith("textlines=")) {
                     t.textLines = Integer.parseInt(trait.substring(10));
                 } else if (trait.startsWith("backtextlines=")) {

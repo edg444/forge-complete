@@ -1294,6 +1294,10 @@ public class AiController {
             // Snickering Squirrel: a higher result is what the roller wants, so only its own rolls
             return "own".equals(logic.split(":")[1]);
         }
+        if (logic != null && logic.startsWith("MayPlayPermission:")) {
+            // Princess Luna: lend the exiled cards to friends on its side, never to an opponent
+            return !"opponent".equals(logic.split(":")[1]);
+        }
         if ("HatInArt".equals(logic)) {
             // Goblin Haberdasher's honor question: the AI can't look at the art, so it never claims a hat
             return false;

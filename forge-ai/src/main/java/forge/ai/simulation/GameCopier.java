@@ -120,6 +120,12 @@ public class GameCopier {
             playerMap.put(origPlayer, newPlayer);
         }
 
+        for (Player origPlayer : playerMap.keySet()) {
+            for (Player friend : origPlayer.getFriends()) {
+                playerMap.get(origPlayer).addFriend(playerMap.get(friend));
+            }
+        }
+
         PhaseHandler origPhaseHandler = origGame.getPhaseHandler();
         Player newPlayerTurn = playerMap.get(origPhaseHandler.getPlayerTurn());
         newGame.getPhaseHandler().devModeSet(origPhaseHandler.getPhase(), newPlayerTurn, origPhaseHandler.getTurn());

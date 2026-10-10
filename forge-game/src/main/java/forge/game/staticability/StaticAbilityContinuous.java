@@ -1065,6 +1065,11 @@ public final class StaticAbilityContinuous {
                 PlayerCollection mayPlayPlayers = params.containsKey("MayPlayPlayer") ?
                     AbilityUtils.getDefinedPlayers(affectedCard, params.get("MayPlayPlayer"), stAb) :
                     new PlayerCollection(controller);
+                if (params.containsKey("MayPlayWithPermission")) {
+                    final int turn = game.getPhaseHandler().getTurn();
+                    mayPlayPlayers = new PlayerCollection(mayPlayPlayers);
+                    mayPlayPlayers.removeIf(p -> affectedCard.wasRefusedPlayPermission(p, turn));
+                }
                 affectedCard.setMayPlay(mayPlayPlayers, mayPlayWithoutManaCost,
                         mayPlayAltCost != null ? new Cost(mayPlayAltCost, false, affectedCard.equals(hostCard)) : null, mayPlayWithFlash,
                         mayPlayGrantZonePermissions, stAb);

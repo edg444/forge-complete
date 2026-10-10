@@ -1,0 +1,7 @@
+Name:Rarity
+ManaCost:1 W U
+Types:Legendary Creature Unicorn
+PT:2/2
+S:Mode$ ReduceCost | ValidCard$ Card.RarityRare,Card.RarityMythicRare | Type$ Spell | Activator$ You | Amount$ 1 | Description$ Rare and mythic rare spells you cast cost {1} less to cast.
+A:AB$ Protection | Cost$ 1 T FlavorAction<Reveal a My Little Pony® toy you own/Revealed!> | ValidTgts$ Creature.Other | TgtPrompt$ Select another target creature | Gains$ ToyColors | AILogic$ GameChance.50.MLPToy | StackDescription$ SpellDescription | SpellDescription$ Until end of turn, another target creature gains protection from each color in that toy's coat, mane, and outfit.
+Oracle:Rare and mythic rare spells you cast cost {1} less to cast.\n{1}, {T}, Reveal a My Little Pony® toy you own: Until end of turn, another target creature gains protection from each color in that toy's coat, mane, and outfit.

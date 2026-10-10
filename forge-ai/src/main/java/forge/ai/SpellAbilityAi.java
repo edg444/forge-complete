@@ -246,19 +246,23 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         if (host == null || host.getGame() == null || host.getGame().getMatch() == null) {
             return MyRandom.percentTrue(pct);
         }
-        final Game game = host.getGame();
+        return Math.floorMod(gameSeed(ai, host.getGame(), key), 100L) < pct;
+    }
+
+    /** A number fixed for this AI player, this game and this key - for facts about the AI that hold all game. */
+    public static long gameSeed(final Player ai, final Game game, final String key) {
         // The match object's identity hash makes the roll differ between matches (plain ids restart
         // at 1 every launch, so every first game would roll the same), and the finished-game count
         // makes each game of a match its own roll. Both survive the AI's simulated game copies.
+        final int games = game.getMatch() == null ? 0 : game.getMatch().getOutcomes().size();
         long z = System.identityHashCode(game.getMatch()) * 2654435761L
-                + game.getMatch().getOutcomes().size() * 40503L
+                + games * 40503L
                 + ai.getName().hashCode() * 0x632BE59BD9B4E019L
                 + key.hashCode()
                 + 0x9E3779B97F4A7C15L;
         z = (z ^ (z >>> 30)) * 0xBF58476D1CE4E5B9L;
         z = (z ^ (z >>> 27)) * 0x94D049BB133111EBL;
-        z = z ^ (z >>> 31);
-        return Math.floorMod(z, 100L) < pct;
+        return z ^ (z >>> 31);
     }
 
     /** One of an effect's labeled options (see PlayerController.chooseStringForEffect); the first by default. */

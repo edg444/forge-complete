@@ -20,6 +20,7 @@ Urza's
 [CreatureTypes]
 Advisor:Advisors
 Aetherborn:Aetherborn
+Alicorn:Alicorns
 Alien:Aliens
 Ally:Allies
 Andorian:Andorians
@@ -262,6 +263,7 @@ Pincher:Pinchers
 Pirate:Pirates
 Plant:Plants
 Platypus:Platypuses
+Pony:Ponies
 Porcupine:Porcupines
 Possum:Possums
 Praetor:Praetors

@@ -1195,6 +1195,16 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public final boolean isBackSide() {
         return backside;
     }
+
+    // MayPlayPermission: who was refused permission to play this card, and on which turn
+    private final Map<Player, Integer> playPermissionRefused = Maps.newHashMap();
+    public final void refusePlayPermission(Player p, int turn) {
+        playPermissionRefused.put(p, turn);
+    }
+    public final boolean wasRefusedPlayPermission(Player p, int turn) {
+        Integer refused = playPermissionRefused.get(p);
+        return refused != null && refused == turn;
+    }
     public final void setBackSide(boolean value) {
         backside = value;
     }
@@ -7846,6 +7856,12 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public boolean hasKnownTreeInArt() {
         final PrintingTraits.Traits t = getPrintingTraits();
         return t != null && t.hasTree(isBackSide());
+    }
+
+    /** A moon the printing data confirms in the art (Princess Luna); false can still mean untagged. */
+    public boolean hasKnownMoonInArt() {
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t != null && t.hasMoon(isBackSide());
     }
 
     public boolean isDisplacedFromLibrary() {

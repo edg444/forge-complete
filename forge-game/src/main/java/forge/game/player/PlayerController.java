@@ -150,6 +150,14 @@ public abstract class PlayerController {
     public abstract boolean confirmBidAction(SpellAbility sa, PlayerActionConfirmMode bidlife, String string, int bid, Player winner);
     public abstract boolean confirmReplacementEffect(ReplacementEffect replacementEffect, SpellAbility effectSA, GameEntity affected, String question);
     public abstract boolean confirmStaticApplication(Card hostCard, PlayerActionConfirmMode mode, String message, String logic);
+
+    /**
+     * Rarity: the colors on a real toy this player owns, when the controller already knows them (the AI's toy is
+     * fixed for the game); null when the player has to be asked.
+     */
+    public List<String> getKnownToyColors(List<String> options) {
+        return null;
+    }
     public abstract boolean confirmTrigger(WrappedAbility sa);
 
     public abstract List<Card> exertAttackers(List<Card> attackers);

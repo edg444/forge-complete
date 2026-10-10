@@ -55,6 +55,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class AbilityUtils {
+    /** The real-world local time, for cards that read the clock. Tests replace it. */
+    public static java.util.function.Supplier<LocalTime> realWorldTime = LocalTime::now;
+
     private final static ImmutableList<String> cmpList = ImmutableList.of("LT", "LE", "EQ", "GE", "GT", "NE");
 
     // should the three getDefined functions be merged into one? Or better to
@@ -2192,8 +2195,13 @@ public class AbilityUtils {
         // Elvish House Party reads the real-world clock. Twelve-hour system, so midnight and noon
         // are 12 rather than 0 - the card is never a 0/0 and never dies to the clock alone.
         if (sq[0].equals("CurrentHour")) {
-            final int hour = LocalTime.now().getHour() % 12;
+            final int hour = realWorldTime.get().getHour() % 12;
             return doXMath(hour == 0 ? 12 : hour, expr, c, ctb);
+        }
+        // Nightmare Moon's "as long as it's nighttime": the real-world local clock, 6 PM to 6 AM (user ruling)
+        if (sq[0].equals("RealWorldNighttime")) {
+            final int hour = realWorldTime.get().getHour();
+            return doXMath(hour >= 18 || hour < 6 ? 1 : 0, expr, c, ctb);
         }
         // Some Disassembly Required asks whether it is December. 1-12, like the calendar.
         if (sq[0].equals("CurrentMonth")) {

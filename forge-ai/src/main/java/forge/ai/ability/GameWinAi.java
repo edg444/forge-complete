@@ -19,7 +19,10 @@ public class GameWinAi extends SpellAbilityAi {
         // If the AI can win the game, it should play this ability.
         // This is a special case where the AI should always play the ability if it can win.
 
-        // TODO Check conditions are met on card (e.g. Coalition Victory)
+        // a win that hinges on a resolution condition (Princess Twilight Sparkle) is mana thrown away until it holds
+        if (!sa.metConditions()) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
 
         // TODO Consider likelihood of SA getting countered
 
