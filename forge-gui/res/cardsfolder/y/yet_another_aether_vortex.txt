@@ -2,7 +2,8 @@ Name:Yet Another Aether Vortex
 ManaCost:3 R R
 Types:Enchantment
 S:Mode$ Continuous | Affected$ Creature | AddKeyword$ Haste | Description$ All creatures have haste.
-S:Mode$ Continuous | Affected$ Card.TopLibrary | AffectedZone$ Library | MayLookAt$ Player | Description$ Players play with the top card of their libraries revealed.
+# "their libraries": every library, so Split Screen never asks which one this reveals
+S:Mode$ Continuous | Affected$ Card.TopLibrary | AffectedZone$ Library | MayLookAt$ Player | AllLibraries$ True | Description$ Players play with the top card of their libraries revealed.
 S:Mode$ TopLibraryPermanentsOnBattlefield | Description$ Noninstant, nonsorcery cards on top of a library are on the battlefield under their owner's control in addition to being in that library.
 AI:RemoveDeck:All
 Oracle:All creatures have haste.\nPlayers play with the top card of their libraries revealed.\nNoninstant, nonsorcery cards on top of a library are on the battlefield under their owner's control in addition to being in that library.

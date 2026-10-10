@@ -267,6 +267,22 @@ public abstract class PlayerController {
         return options.isEmpty() ? null : options.get(0);
     }
 
+    /**
+     * Split Screen: which of this player's libraries something refers to ("draw" for a draw, otherwise what's asking).
+     * Each option says how big the library is and its top card, if this player can see it.
+     */
+    public forge.game.zone.PlayerZone chooseLibrary(final List<forge.game.zone.PlayerZone> libraries, final String purpose,
+            final SpellAbility sa) {
+        final List<String> labels = new java.util.ArrayList<>();
+        for (final forge.game.zone.PlayerZone z : libraries) {
+            labels.add(Libraries.label(player, z, player));
+        }
+        final String prompt = "draw".equals(purpose) ? "Draw from which library?" : "Choose one of your libraries for " + purpose;
+        final String picked = chooseStringForEffect(labels, sa, prompt);
+        final int i = labels.indexOf(picked);
+        return i < 0 ? libraries.get(0) : libraries.get(i);
+    }
+
     public final String chooseSomeType(String kindOfType, SpellAbility sa, Collection<String> validTypes) {
         return chooseSomeType(kindOfType, sa, validTypes, false);
     }

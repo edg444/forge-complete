@@ -35,7 +35,7 @@ public class AnimateLibraryEffect extends SpellAbilityEffect {
         final Game game = p.getGame();
 
         // a second Animate Library enchants the library that's already a permanent
-        final Card existing = findLibraryPermanent(p);
+        final Card existing = findLibraryPermanent(p, p.getZone(ZoneType.Library));
         final Card library = existing != null ? existing : createLibraryPermanent(p);
 
         final CardZoneTable table = new CardZoneTable();
@@ -67,6 +67,8 @@ public class AnimateLibraryEffect extends SpellAbilityEffect {
         // a library has no name, mana cost or color; what it is comes from Animate Library
         lib.setName("");
         lib.setOwner(owner);
+        // Split Screen rulings: Animate Library is on only one of the libraries
+        lib.setRepresentedLibrary(owner.getZone(ZoneType.Library));
         lib.setType(CardType.parse("Artifact Creature", false));
         lib.setColor(ColorSet.C);
         lib.setBasePower(0);
@@ -83,8 +85,13 @@ public class AnimateLibraryEffect extends SpellAbilityEffect {
     }
 
     public static Card findLibraryPermanent(final Player owner) {
+        return findLibraryPermanent(owner, null);
+    }
+    /** The library permanent that is this library (any, for null). */
+    public static Card findLibraryPermanent(final Player owner, final forge.game.zone.PlayerZone library) {
         for (final Card c : owner.getGame().getCardsIn(ZoneType.Battlefield)) {
-            if (c.getGamePieceType() == GamePieceType.LIBRARY && c.getOwner().equals(owner)) {
+            if (c.getGamePieceType() == GamePieceType.LIBRARY && c.getOwner().equals(owner)
+                    && (library == null || c.getRepresentedLibrary() == null || c.getRepresentedLibrary() == library)) {
                 return c;
             }
         }

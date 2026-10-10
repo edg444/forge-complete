@@ -167,6 +167,11 @@ public class Player extends GameEntity implements Comparable<Player> {
 
     private final Map<ZoneType, PlayerZone> zones = Maps.newEnumMap(ZoneType.class);
     private List<PlayerZone> extraZones = null;
+    // Split Screen: every library when there's more than one (the first is the one they started with), null otherwise;
+    // zones.get(Library) is the one "your library" means right now. See Libraries.
+    private List<PlayerZone> libraries = null;
+    private final Map<String, PlayerZone> staticLibraries = Maps.newHashMap();
+    private final Set<Card> libraryTopsMarked = Sets.newHashSet();
 
     private final Map<Long, Integer> adjustLandPlays = Maps.newHashMap();
     private final Set<Long> adjustLandPlaysInfinite = Sets.newHashSet();
@@ -1456,7 +1461,7 @@ public class Player extends GameEntity implements Comparable<Player> {
 
         // drawing infinitely many cards draws the library and then fails the draw that loses the game (Infinity
         // Elemental rulings) - one attempt past the end is all an infinite draw can do
-        final int draws = Infinity.isInfinite(n) ? (libraryOf != null ? libraryOf : this).getZone(ZoneType.Library).size() + 1 : n;
+        final int draws = Infinity.isInfinite(n) ? (libraryOf != null ? libraryOf : this).getCardsInAllLibraries().size() + 1 : n;
         for (int i = 0; i < draws; i++) {
             if (gameStarted && !canDraw()) {
                 return drawn;
@@ -1484,7 +1489,9 @@ public class Player extends GameEntity implements Comparable<Player> {
     private CardCollectionView doDraw(Map<Player, CardCollection> revealed, SpellAbility sa, Map<AbilityKey, Object> params, PlayerZone hand,
             final Player libraryOf) {
         CardCollection drawn = new CardCollection();
-        final PlayerZone library = libraryOf.getZone(ZoneType.Library);
+        // Split Screen: each card drawn can come from any of its owner's libraries
+        final PlayerZone library = libraryOf.hasSeveralLibraries() ? Libraries.forDraw(libraryOf, sa)
+                : libraryOf.getZone(ZoneType.Library);
 
         SpellAbility cause = sa;
         if (cause != null && cause.isReplacementAbility()) {
@@ -1604,10 +1611,109 @@ public class Player extends GameEntity implements Comparable<Player> {
      * Returns PlayerZone corresponding to the given zone of game.
      */
     public final PlayerZone getZone(final ZoneType zone) {
+        if (libraries != null && zone == ZoneType.Library) {
+            Libraries.referTo(this);
+        }
         return zones.get(zone);
     }
     public void updateZoneForView(PlayerZone zone) {
+        if (libraries != null && zone.is(ZoneType.Library)) {
+            updateLibrariesForView();
+            return;
+        }
         view.updateZone(zone);
+        if (zone.is(ZoneType.Library) && !libraryTopsMarked.isEmpty()) {
+            refreshLibraryMarkers();
+        }
+    }
+
+    public final boolean hasSeveralLibraries() {
+        return libraries != null;
+    }
+    /** Every one of this player's libraries, in order; just the one usually. Never asks which. */
+    public final List<PlayerZone> getLibraryZones() {
+        return libraries != null ? Collections.unmodifiableList(libraries) : List.of(zones.get(ZoneType.Library));
+    }
+    /** The library "your library" means right now, without asking. */
+    public final PlayerZone getCurrentLibrary() {
+        return zones.get(ZoneType.Library);
+    }
+    public final void setCurrentLibrary(final PlayerZone lib) {
+        if (lib != null && lib.is(ZoneType.Library) && lib.getPlayer() == this) {
+            zones.put(ZoneType.Library, lib);
+        }
+    }
+    public final CardCollectionView getCardsInAllLibraries() {
+        if (libraries == null) {
+            return zones.get(ZoneType.Library).getCards();
+        }
+        final CardCollection all = new CardCollection();
+        for (final PlayerZone z : libraries) {
+            all.addAll(z.getCards());
+        }
+        return all;
+    }
+    /** Libraries.split: one library becomes several, in its place. */
+    final void replaceLibrary(final PlayerZone lib, final List<PlayerZone> with) {
+        if (libraries == null) {
+            libraries = new ArrayList<>(List.of(zones.get(ZoneType.Library)));
+        }
+        final int at = Math.max(0, libraries.indexOf(lib));
+        libraries.remove(lib);
+        libraries.addAll(at, with);
+    }
+    /** Libraries.merge: back to one. */
+    final void mergeLibraries(final PlayerZone base) {
+        libraries = null;
+        staticLibraries.clear();
+        zones.put(ZoneType.Library, base);
+    }
+    /** Each permanent's library for its continuous effects (Libraries.chooseForStatics). */
+    final Map<String, PlayerZone> getStaticLibraries() {
+        return staticLibraries;
+    }
+    /** All libraries show as one pile: each top card first (they're revealed), then the rest, library by library. */
+    public final void updateLibrariesForView() {
+        if (libraries == null) {
+            view.updateZone(zones.get(ZoneType.Library));
+        } else {
+            final CardCollection shown = new CardCollection();
+            for (final PlayerZone z : libraries) {
+                if (!z.isEmpty()) {
+                    shown.add(z.get(0));
+                }
+            }
+            for (final PlayerZone z : libraries) {
+                for (final Card c : z.getCards()) {
+                    if (!shown.contains(c)) {
+                        shown.add(c);
+                    }
+                }
+            }
+            view.updateLibraries(this, shown);
+        }
+        refreshLibraryMarkers();
+    }
+    /** "Library 2 of 4: 13 cards" on each library's top card (Card.getLibraryLabel). */
+    private void refreshLibraryMarkers() {
+        final Set<Card> tops = Sets.newHashSet();
+        if (libraries != null) {
+            for (final PlayerZone z : libraries) {
+                if (!z.isEmpty()) {
+                    tops.add(z.get(0));
+                }
+            }
+        }
+        for (final Card c : Lists.newArrayList(libraryTopsMarked)) {
+            if (!tops.contains(c)) {
+                c.refreshLibraryMarker();
+            }
+        }
+        libraryTopsMarked.clear();
+        for (final Card c : tops) {
+            c.refreshLibraryMarker();
+            libraryTopsMarked.add(c);
+        }
     }
 
     public void updateAllZonesForView() {
@@ -1709,7 +1815,9 @@ public class Player extends GameEntity implements Comparable<Player> {
 
         cl.addAll(getZone(ZoneType.Graveyard).getCardsPlayerCanActivate(this));
         cl.addAll(getZone(ZoneType.Exile).getCardsPlayerCanActivate(this));
-        cl.addAll(getZone(ZoneType.Library).getCardsPlayerCanActivate(this));
+        for (final PlayerZone lib : getLibraryZones()) {
+            cl.addAll(lib.getCardsPlayerCanActivate(this));
+        }
         if (includeCommandZone) {
             cl.addAll(getZone(ZoneType.Command).getCardsPlayerCanActivate(this));
             cl.addAll(getZone(ZoneType.Sideboard).getCardsPlayerCanActivate(this));
@@ -1719,7 +1827,9 @@ public class Player extends GameEntity implements Comparable<Player> {
         for (final Player other : getAllOtherPlayers()) {
             cl.addAll(other.getZone(ZoneType.Exile).getCardsPlayerCanActivate(this));
             cl.addAll(other.getZone(ZoneType.Graveyard).getCardsPlayerCanActivate(this));
-            cl.addAll(other.getZone(ZoneType.Library).getCardsPlayerCanActivate(this));
+            for (final PlayerZone lib : other.getLibraryZones()) {
+                cl.addAll(lib.getCardsPlayerCanActivate(this));
+            }
             cl.addAll(other.getZone(ZoneType.Hand).getCardsPlayerCanActivate(this));
         }
         cl.addAll(getGame().getCardsPlayerCanActivateInStack());
@@ -1727,6 +1837,14 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
 
     public final CardCollectionView getAllCards() {
+        if (libraries != null) {
+            // every library, without asking which
+            final CardCollection all = new CardCollection();
+            for (final ZoneType z : Player.ALL_ZONES) {
+                all.addAll(z == ZoneType.Library ? getCardsInAllLibraries() : getCardsIn(z));
+            }
+            return CardCollection.combine(all, getCardsIn(ZoneType.Stack), inboundTokens);
+        }
         return CardCollection.combine(getCardsIn(Player.ALL_ZONES), getCardsIn(ZoneType.Stack), inboundTokens);
     }
 
@@ -2852,6 +2970,11 @@ public class Player extends GameEntity implements Comparable<Player> {
         }
         for (final PlayerZone pz : zones.values()) {
             pz.resetCardsAddedThisTurn();
+        }
+        if (libraries != null) {
+            for (final PlayerZone pz : libraries) {
+                pz.resetCardsAddedThisTurn();
+            }
         }
         setNumDrawnLastTurn(getNumDrawnThisTurn());
         resetNumDrawnThisTurn();

@@ -313,6 +313,25 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   `RoboArtifactEntered` SVar so it can't clash with a host's). Augmenting isn't an artifact entering - the host carries
   on, as with mutate (user ruling; the augment rulings don't say) - so Robo- never meets its own condition.
   `RoboTest` (3).
+- **Split Screen** (ust/158; not scripted upstream). Several libraries per player (`forge.game.player.Libraries`):
+  - A player's libraries are Library `PlayerZone`s (`Player.getLibraryZones`); `getZone(Library)` is the one "your
+    library" means right now. `SplitLibrary` API: `Amount$ 4` shuffles and deals the library into four in its place
+    (a second Split Screen splits one of them again - seven, rulings); `Merge$ True` shuffles them all back together.
+  - "If anything refers to your library, choose one of your libraries for it." The user chose (2026-10-09):
+    - One choice per resolving ability that mentions a library (`AbilityUtils.resolve` -> `Libraries.begin`): asked the
+      first time it touches that player's library, kept for the rest of it (search, then shuffle the same one).
+    - One per card drawn (rulings: any library; an empty one only loses if you draw from it).
+    - One per permanent for continuous effects (Future Sight, Courser), asked at the next state-based check; the
+      `TopLibrary` property uses it. Costs and anything else use the library chosen last.
+    - Never asked while statics are being worked out (`GameAction.isCheckingStaticAbilities`).
+  - Game-wide card lists, lookups and the external-zone activation list see every library. `TopOfItsLibrary` property:
+    the top of whichever library a card is in. `AllLibraries$ True` on a static means "every library" (Split Screen's
+    own reveal, Yet Another Aether Vortex's), and Vortex puts every library's top permanent onto the battlefield.
+  - Animate Library is on only one (`Card.getRepresentedLibrary`; rulings); its size counts that library.
+  - View: one library pile with every top card first; each top card has a "Library 2 of 4, 13 cards" marker.
+    `PlayerController.chooseLibrary` labels each option with its size and visible top card; the AI draws the top
+    that helps most (a land when short) and otherwise picks the biggest.
+  - `SplitScreenTest` (7).
 
 ### 2026-10-09 (deployed: desktop, Android, GitHub) — upstream merge (94 commits, incl. dice and flip animations); The Grand Calcutron; Hot Fix; Ol' Buzzbark; Phoebe, Head of S.N.E.A.K.; X; Urza, Academy Headmaster audit
 

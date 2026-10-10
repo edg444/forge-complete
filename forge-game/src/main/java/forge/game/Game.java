@@ -739,6 +739,12 @@ public class Game {
         }
     }
 
+    private final transient forge.game.player.Libraries.State libraryState = new forge.game.player.Libraries.State();
+    /** Split Screen: the abilities resolving right now that refer to libraries (Libraries). */
+    public forge.game.player.Libraries.State getLibraryState() {
+        return libraryState;
+    }
+
     public Zone getZoneOf(final Card card) {
         return card == null ? null : card.getLastKnownZone();
     }
@@ -770,6 +776,14 @@ public class Game {
         if (zone == ZoneType.Stack) {
             return getStackZone().getCards();
         }
+        if (zone == ZoneType.Library) {
+            // every library of every player (Split Screen), without asking anyone which
+            final CardCollection cards = new CardCollection();
+            for (final Player p : getPlayers()) {
+                cards.addAll(p.getCardsInAllLibraries());
+            }
+            return cards;
+        }
         return getPlayers().getCardsIn(zone);
     }
 
@@ -780,7 +794,7 @@ public class Game {
 
         CardCollection cards = new CardCollection();
         for (final Player p : getPlayers()) {
-            cards.addAll(p.getCardsIn(zone, false));
+            cards.addAll(zone == ZoneType.Library ? p.getCardsInAllLibraries() : p.getCardsIn(zone, false));
         }
         return cards;
     }
@@ -794,7 +808,7 @@ public class Game {
             }
             // adding each player's zone to the result directly avoids building a collection per zone
             for (final Player p : getPlayers()) {
-                cards.addAll(p.getCardsIn(z));
+                cards.addAll(z == ZoneType.Library ? p.getCardsInAllLibraries() : p.getCardsIn(z));
             }
         }
         return cards;
@@ -889,7 +903,11 @@ public class Game {
         } else if (view.getController() != null && view.getZone() != null) {
             Player p = getPlayer(view.getController());
             if (p != null) {
-                visit.visitAll(p.getZone(view.getZone()));
+                if (ZoneType.Library.equals(view.getZone())) {
+                    visit.visitAll(p.getCardsInAllLibraries());
+                } else {
+                    visit.visitAll(p.getZone(view.getZone()));
+                }
             }
         }
         // Zone-specific search may miss if the view has stale zone info
@@ -924,7 +942,7 @@ public class Game {
             if (!visitor.visitAll(player.getZone(ZoneType.Hand).getCards())) {
                 return;
             }
-            if (!visitor.visitAll(player.getZone(ZoneType.Library).getCards())) {
+            if (!visitor.visitAll(player.getCardsInAllLibraries())) {
                 return;
             }
             if (!visitor.visitAll(player.getZone(ZoneType.Battlefield).getCards(false))) {

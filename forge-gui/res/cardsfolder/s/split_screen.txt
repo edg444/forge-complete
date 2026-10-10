@@ -1,0 +1,11 @@
+Name:Split Screen
+ManaCost:4
+Types:Artifact
+# Several libraries per player (forge.game.player.Libraries): anything referring to "your library" makes its owner
+# choose one - once per resolving ability, once per card drawn, once per permanent for continuous effects.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSplit | TriggerDescription$ When this artifact enters, shuffle your library and deal it into four libraries. If anything refers to your library, choose one of your libraries for it.
+SVar:TrigSplit:DB$ SplitLibrary | Defined$ You | Amount$ 4
+S:Mode$ Continuous | Affected$ Card.TopOfItsLibrary+YouOwn | AffectedZone$ Library | MayLookAt$ Player | AllLibraries$ True | Description$ Play with your libraries' top cards revealed.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigMerge | TriggerDescription$ When this artifact leaves the battlefield, shuffle your libraries together.
+SVar:TrigMerge:DB$ SplitLibrary | Defined$ You | Merge$ True
+Oracle:When this artifact enters, shuffle your library and deal it into four libraries. If anything refers to your library, choose one of your libraries for it.\nPlay with your libraries' top cards revealed.\nWhen this artifact leaves the battlefield, shuffle your libraries together.

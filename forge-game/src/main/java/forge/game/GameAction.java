@@ -1183,7 +1183,10 @@ public class GameAction {
         return moveToLibrary(c, libPosition, cause, null);
     }
     public final Card moveToLibrary(Card c, int libPosition, SpellAbility cause, Map<AbilityKey, Object> params) {
-        final PlayerZone library = c.getOwner().getZone(ZoneType.Library);
+        return moveToLibrary(c, c.getOwner().getZone(ZoneType.Library), libPosition, cause, params);
+    }
+    /** Into one particular library of its owner's (Split Screen). */
+    public final Card moveToLibrary(Card c, final PlayerZone library, int libPosition, SpellAbility cause, Map<AbilityKey, Object> params) {
         if (libPosition == -1 || libPosition > library.size()) {
             libPosition = library.size();
         }
@@ -1383,7 +1386,22 @@ public class GameAction {
     public final void checkStaticAbilities(final boolean runEvents, final Set<Card> affectedCards, final CardCollectionView preList) {
         checkStaticAbilities(runEvents, affectedCards, preList, null);
     }
+    // Split Screen: no one is asked which library while continuous effects are being worked out
+    private int checkingStaticAbilities = 0;
+    public final boolean isCheckingStaticAbilities() {
+        return checkingStaticAbilities > 0;
+    }
+
     public final void checkStaticAbilities(final boolean runEvents, final Set<Card> affectedCards, final CardCollectionView preList, final Set<Card> enteringWith) {
+        checkingStaticAbilities++;
+        try {
+            checkStaticAbilitiesNow(runEvents, affectedCards, preList, enteringWith);
+        } finally {
+            checkingStaticAbilities--;
+        }
+    }
+
+    private void checkStaticAbilitiesNow(final boolean runEvents, final Set<Card> affectedCards, final CardCollectionView preList, final Set<Card> enteringWith) {
         if (isCheckingStaticAbilitiesOnHold()) {
             return;
         }
@@ -1721,46 +1739,47 @@ public class GameAction {
 
         boolean changed = false;
         for (final Player p : game.getPlayers()) {
-            final Zone library = p.getZone(ZoneType.Library);
-
-            Card wanted = null;
-            if (StaticAbilityTopLibraryOnBattlefield.appliesTo(p) && !library.isEmpty()) {
-                final Card top = library.get(0);
-                if (StaticAbilityTopLibraryOnBattlefield.qualifies(top)) {
-                    wanted = top;
+            // "a library": with Split Screen, every one of them (rulings)
+            for (final PlayerZone library : p.getLibraryZones()) {
+                Card wanted = null;
+                if (StaticAbilityTopLibraryOnBattlefield.appliesTo(p) && !library.isEmpty()) {
+                    final Card top = library.get(0);
+                    if (StaticAbilityTopLibraryOnBattlefield.qualifies(top)) {
+                        wanted = top;
+                    }
                 }
-            }
 
-            // scan every battlefield, not just this player's: another player may have taken control.
-            // More than one card can be shadowed here in passing, so collect them all rather than
-            // trusting the first hit - anything that isn't the current top card has to go home.
-            final CardCollection stale = new CardCollection();
-            for (final Card c : game.getCardsIn(ZoneType.Battlefield)) {
-                if (c.getShadowZone() == library && c != wanted) {
-                    stale.add(c);
+                // scan every battlefield, not just this player's: another player may have taken control.
+                // More than one card can be shadowed here in passing, so collect them all rather than
+                // trusting the first hit - anything that isn't the current top card has to go home.
+                final CardCollection stale = new CardCollection();
+                for (final Card c : game.getCardsIn(ZoneType.Battlefield)) {
+                    if (c.getShadowZone() == library && c != wanted) {
+                        stale.add(c);
+                    }
                 }
-            }
 
-            if (!stale.isEmpty()) {
-                for (final Card c : stale) {
-                    // put it back where the library already lists it, then let it leave the
-                    // battlefield properly; the new top card is picked up on the next pass
-                    final int index = Math.max(0, library.getCards().indexOf(c));
-                    library.remove(c);
-                    moveToLibrary(c, index, null, params);
+                if (!stale.isEmpty()) {
+                    for (final Card c : stale) {
+                        // put it back where the library already lists it, then let it leave the
+                        // battlefield properly; the new top card is picked up on the next pass
+                        final int index = Math.max(0, library.getCards().indexOf(c));
+                        library.remove(c);
+                        moveToLibrary(c, library, index, null, params);
+                    }
+                    changed = true;
+                    continue;
                 }
-                changed = true;
-                continue;
-            }
 
-            if (wanted == null || wanted.getShadowZone() == library) {
-                continue;
-            }
+                if (wanted == null || wanted.getShadowZone() == library) {
+                    continue;
+                }
 
-            final Card inPlay = moveToPlay(wanted, wanted.getOwner(), null, params);
-            if (inPlay != null && inPlay.isInPlay()) {
-                library.addShadow(inPlay, 0);
-                changed = true;
+                final Card inPlay = moveToPlay(wanted, wanted.getOwner(), null, params);
+                if (inPlay != null && inPlay.isInPlay()) {
+                    library.addShadow(inPlay, 0);
+                    changed = true;
+                }
             }
         }
         return changed;
@@ -1776,6 +1795,9 @@ public class GameAction {
         for (final Player p : game.getPlayers()) {
             p.updateProgramForView();
         }
+
+        // Split Screen: a library for each permanent whose continuous effects refer to one
+        forge.game.player.Libraries.chooseForStatics(game);
 
         final boolean refreeze = game.getStack().isFrozen();
         game.getStack().setFrozen(true);

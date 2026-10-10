@@ -218,6 +218,7 @@ public enum ApiType {
     SetLife (LifeSetEffect.class),
     SetState (SetStateEffect.class),
     Shuffle (ShuffleEffect.class),
+    SplitLibrary (SplitLibraryEffect.class),
     SkipPhase (SkipPhaseEffect.class),
     SkipTurn (SkipTurnEffect.class),
     StealPhase (StealPhaseEffect.class),

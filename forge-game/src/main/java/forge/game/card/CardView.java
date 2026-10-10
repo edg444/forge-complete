@@ -653,6 +653,11 @@ public class CardView extends GameEntityView {
             markerItems.add("Hidden:");
             markerItems.add(c.getHiddenSpotLabel());
         }
+        // Split Screen: which library this top card is on
+        if (c.getLibraryLabel() != null) {
+            markerItems.add("Library");
+            markerItems.add(c.getLibraryLabel());
+        }
 
         if(StringUtils.isNotEmpty(c.getOverlayText())) {
             set(TrackableProperty.OverlayText, c.getOverlayText());

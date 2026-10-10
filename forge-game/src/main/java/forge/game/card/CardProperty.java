@@ -974,8 +974,15 @@ public class CardProperty {
             if (cards.isEmpty() || !card.equals(cards.get(0))) {
                 return false;
             }
+        } else if (property.equals("TopOfItsLibrary")) {
+            // Split Screen: "your libraries' top cards" - the top of whichever library it's in
+            final Zone z = card.getZone();
+            if (z == null || !z.is(ZoneType.Library) || z.isEmpty() || z.get(0) != card) {
+                return false;
+            }
         } else if (property.startsWith("TopLibrary") || property.startsWith("BottomLibrary")) {
-            CardCollectionView cards = card.getOwner().getCardsIn(ZoneType.Library);
+            // with several libraries (Split Screen), the one chosen for this
+            CardCollectionView cards = forge.game.player.Libraries.cardsFor(card.getOwner(), source);
             if (!property.equals("TopLibrary")) {
                 if (property.contains("_")) cards = CardLists.getValidCards(cards, property.split("_")[1],
                         sourceController, source, spellAbility);

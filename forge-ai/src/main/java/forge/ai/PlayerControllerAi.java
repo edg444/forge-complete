@@ -797,6 +797,40 @@ public class PlayerControllerAi extends PlayerController {
             forge.game.keyword.Keyword.MENACE, forge.game.keyword.Keyword.WARD, forge.game.keyword.Keyword.REACH,
             forge.game.keyword.Keyword.HASTE, forge.game.keyword.Keyword.SHROUD, forge.game.keyword.Keyword.PROTECTION);
 
+    /**
+     * Split Screen: draw from the library whose (revealed) top card helps most - a land when short of them, else the
+     * best spell; for anything else, the biggest library.
+     */
+    @Override
+    public PlayerZone chooseLibrary(final List<PlayerZone> libraries, final String purpose, final SpellAbility sa) {
+        PlayerZone best = null;
+        int bestScore = Integer.MIN_VALUE;
+        final boolean wantsLand = CardLists.filter(player.getCardsIn(ZoneType.Hand), CardPredicates.LANDS).isEmpty()
+                && CardLists.filter(player.getCardsIn(ZoneType.Battlefield), CardPredicates.LANDS).size() < 6;
+        for (final PlayerZone z : libraries) {
+            int score;
+            if (z.isEmpty()) {
+                score = Integer.MIN_VALUE + 1;
+            } else if (!"draw".equals(purpose)) {
+                score = z.size();
+            } else {
+                final Card top = z.get(0);
+                if (top.isLand()) {
+                    score = wantsLand ? 10000 : 50;
+                } else if (top.isCreature()) {
+                    score = ComputerUtilCard.evaluateCreature(top);
+                } else {
+                    score = 100 + 10 * top.getCMC();
+                }
+            }
+            if (best == null || score > bestScore) {
+                best = z;
+                bestScore = score;
+            }
+        }
+        return best;
+    }
+
     @Override
     public String chooseKeywordInTime(final List<String> keywords, final int seconds, final SpellAbility sa) {
         for (final forge.game.keyword.Keyword wanted : KEYWORD_PREFERENCE) {

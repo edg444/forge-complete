@@ -535,6 +535,12 @@ public class PlayerView extends GameEntityView {
         }
     }
 
+    /** Split Screen: all of a player's libraries, shown as one (Player.updateLibrariesForView). */
+    void updateLibraries(Player p, Iterable<Card> cards) {
+        set(TrackableProperty.Library, CardView.getCollection(cards));
+        updateFlashback(p);
+    }
+
     void updateFlashback(Player p) {
         set(TrackableProperty.Flashback, CardView.getCollection(p.getCardsIn(ZoneType.Flashback)));
     }

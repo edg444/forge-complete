@@ -1338,7 +1338,16 @@ public class AbilityUtils {
         if (sa == null) {
             return;
         }
+        // Split Screen: "If anything refers to your library, choose one of your libraries for it"
+        final forge.game.player.Libraries.Reference libraries = sa.getParent() == null ? forge.game.player.Libraries.begin(sa) : null;
+        try {
+            resolveNow(sa);
+        } finally {
+            forge.game.player.Libraries.end(libraries);
+        }
+    }
 
+    private static void resolveNow(final SpellAbility sa) {
         Player pl = sa.getActivatingPlayer();
         final Game game = pl.getGame();
 
@@ -4097,9 +4106,15 @@ public class AbilityUtils {
             someCards.addAll(cc.getCardsIn(ZoneType.Library));
         }
 
-        // Animate Library: the library creature's size is its owner's library, whoever controls it
+        // Animate Library: the library creature's size is its owner's library, whoever controls it - the one it is,
+        // when Split Screen has made several
         if (sq[0].contains("InOwnersLibrary")) {
-            someCards.addAll(c.getOwner().getCardsIn(ZoneType.Library));
+            final Card lib = c.getEnchantingCard();
+            if (lib != null && lib.getRepresentedLibrary() != null) {
+                someCards.addAll(lib.getRepresentedLibrary().getCards());
+            } else {
+                someCards.addAll(c.getOwner().getCardsIn(ZoneType.Library));
+            }
         }
 
         if (sq[0].contains("InYourHand")) {

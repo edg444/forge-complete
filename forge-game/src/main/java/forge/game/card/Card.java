@@ -6317,6 +6317,34 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
     // the label last shown, so the marker only changes when the spot does (what it was behind leaving, say)
     private String hiddenMarkerShown = null;
+
+    // Animate Library: which of its owner's libraries this library permanent is (Split Screen can make several)
+    private forge.game.zone.PlayerZone representedLibrary = null;
+    public final forge.game.zone.PlayerZone getRepresentedLibrary() {
+        return representedLibrary;
+    }
+    public final void setRepresentedLibrary(final forge.game.zone.PlayerZone lib) {
+        representedLibrary = lib;
+    }
+
+    /** Split Screen: on each library's top card, which library it is and how big - or null. */
+    public final String getLibraryLabel() {
+        final Zone z = getZone();
+        if (z == null || !z.is(ZoneType.Library) || !(z instanceof forge.game.zone.PlayerZone pz)
+                || !pz.getPlayer().hasSeveralLibraries() || z.isEmpty() || z.get(0) != this) {
+            return null;
+        }
+        final java.util.List<forge.game.zone.PlayerZone> libs = pz.getPlayer().getLibraryZones();
+        return (libs.indexOf(pz) + 1) + " of " + libs.size() + ", " + z.size() + (z.size() == 1 ? " card" : " cards");
+    }
+    private String libraryMarkerShown = null;
+    public final void refreshLibraryMarker() {
+        final String label = getLibraryLabel();
+        if (!java.util.Objects.equals(label, libraryMarkerShown)) {
+            libraryMarkerShown = label;
+            view.updateMarkerText(this);
+        }
+    }
     public final void refreshHiddenMarker() {
         final String label = getHiddenSpotLabel();
         if (!java.util.Objects.equals(label, hiddenMarkerShown)) {
