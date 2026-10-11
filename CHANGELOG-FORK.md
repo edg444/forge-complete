@@ -305,6 +305,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **The Grand Tour** (CMB1 #30, upstream script): fixed. A nontoken permanent never finished the tour; it stayed in
+  exile, because each step looked for the object from before its last move. Each step now follows the card's newest
+  object. It can also target tokens now (ruling: a token stops at exile).
 - **Squidnapper** (CMB1 #29): takes an opponent's creature until it leaves the battlefield or that player pays the
   ransom ({6} and 2 life, any time they have priority, without using the stack).
 - **Loopy Lobster** (CMB1 #26): new keyword four-faced; each stage's stats and abilities come from its own static.
