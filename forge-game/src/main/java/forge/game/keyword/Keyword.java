@@ -24,6 +24,7 @@ public enum Keyword {
     BACKUP("Backup", KeywordWithAmount.class, false, "When this creature enters, put {%1$d:+1/+1 counter} on target creature. If that's another creature, it gains the following ability until end of turn."),
     BANDING("Banding", SimpleKeyword.class, true, "Any creatures with banding, and up to one without, can attack in a band. Bands are blocked as a group. If any creatures with banding you control are blocking or being blocked by a creature, you divide that creature's combat damage, not its controller, among any of the creatures it's being blocked by or is blocking."),
     BANDSWITH("Bands with other", KeywordWithType.class, true, "can attack in a band with another %s"),
+    BANK("Bank", SimpleKeyword.class, true, "If you cast CARDNAME from your hand, exile it until the end of the match. You may cast it from exile during another game this match. It still counts toward your deck minimum."),
     BARGAIN("Bargain", SimpleKeyword.class, false, "You may sacrifice an artifact, enchantment, or token as you cast this spell."),
     BATTLE_CRY("Battle cry", SimpleKeyword.class, false, "Whenever this creature attacks, each other attacking creature gets +1/+0 until end of turn."),
     BEAM_ME_UP("Beam me up", KeywordWithCost.class, false, "You may cast this card from your graveyard for %s if you also return a creature you control to its owner's hand. Then exile this spell."),

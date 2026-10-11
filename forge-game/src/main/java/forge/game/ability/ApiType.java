@@ -67,6 +67,7 @@ public enum ApiType {
     ClassLevelUp (ClassLevelUpEffect.class),
     AdvanceStage (AdvanceStageEffect.class),
     Ransom (RansomEffect.class),
+    Bank (BankEffect.class),
     Cleanup (CleanUpEffect.class),
     Cloak (CloakEffect.class),
     Clone (CloneEffect.class),

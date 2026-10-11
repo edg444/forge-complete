@@ -639,6 +639,9 @@ public class CardView extends GameEntityView {
         if(c.isClassCard() && c.isInZone(ZoneType.Battlefield)) {
             markerItems.add("CL:" + c.getClassLevel());
         }
+        if (c.getBank() > 0 && c.isInZone(ZoneType.Exile)) {
+            markerItems.add("Banked");
+        }
         if (c.isInZone(ZoneType.Battlefield) && c.getStage() > 0) {
             markerItems.add("Stage " + c.getStage());
         }

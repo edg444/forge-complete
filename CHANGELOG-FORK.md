@@ -243,6 +243,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Toy colors** (`Protection | Gains$ ToyColors`, Rarity): a human picks the colors at resolution (pink and gold in
   a silver-bordered game); `PlayerController.getKnownToyColors` gives the AI's toy, fixed per game
   (`SpellAbilityAi.gameSeed`).
+- **Bank** (`K:Bank`, Memory Bank): resolving after its owner cast it from their hand (`ValidLKI$` on the move
+  replacement, since the moving card is already the new object), it's exiled and marked banked (`Card.getBank`). When
+  a game ends, `Match.recordBank` notes what bank still has exiled; the next game starts those cards in exile
+  (`Match.startBanked`), castable from there by their owner, and once cast they're ordinary spells.
 - **Ransom** (Squidnapper): GainControl `LoseControl$ Ransom` records whose creature it took
   (`Card.addRansom`); `ST$ Ransom | Activator$ Player.HeldForRansom` is the special action that player takes to pay
   and end those control effects (`Card.payRansom`). The AI pays when the creature is worth it and the life can be
@@ -305,6 +309,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Memory Bank** (CMB1 #27): new keyword bank. Cast from your hand, it's exiled for the rest of the match instead of
+  going to the graveyard (not if countered); each later game of the match starts with it in exile, where you may
+  cast it.
 - **The Grand Tour** (CMB1 #30, upstream script): fixed. A nontoken permanent never finished the tour; it stayed in
   exile, because each step looked for the object from before its last move. Each step now follows the card's newest
   object. It can also target tokens now (ruling: a token stops at exile).

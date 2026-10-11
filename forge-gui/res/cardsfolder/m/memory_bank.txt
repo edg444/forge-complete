@@ -1,0 +1,6 @@
+Name:Memory Bank
+ManaCost:1 U
+Types:Sorcery
+A:SP$ Draw | SpellDescription$ Draw a card.
+K:Bank
+Oracle:Draw a card.\nBank (If you cast Memory Bank from your hand, exile it until the end of the match. You may cast it from exile during another game this match. It still counts toward your deck minimum.)

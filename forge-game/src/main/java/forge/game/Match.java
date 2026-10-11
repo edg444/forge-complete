@@ -64,6 +64,9 @@ public class Match {
 
     // Time Machine. Unlike the Double Dip family this carries specific cards and a specific turn of
     // the next game, so it is a list of entries rather than a running total.
+    // Bank (Memory Bank): each player's cards still exiled by bank when the last game ended
+    private final Map<RegisteredPlayer, List<PaperCard>> banked = Maps.newHashMap();
+
     public record TimeMachineReturn(int turn, List<String> cardNames) { }
     private final Map<RegisteredPlayer, List<TimeMachineReturn>> pendingTimeMachine = Maps.newHashMap();
 
@@ -119,6 +122,8 @@ public class Match {
 
         game.getAction().startGame(this.lastOutcome, startGameHook);
 
+        recordBank(game);
+
         // Typically ante, but also tearing up a blacker lotus
         executeOwnershipChanges(game);
 
@@ -137,6 +142,7 @@ public class Match {
 
     public void clearGamesPlayed() {
         gameOutcomes.clear();
+        banked.clear();
         for (RegisteredPlayer p : players) {
             p.restoreDeck();
         }
@@ -510,6 +516,7 @@ public class Match {
             player.initVariantsZones(psc);
 
             player.shuffle(null);
+            startBanked(game, player, psc);
 
             if (isFirstGame) {
                 Map<DeckSection, List<? extends PaperCard>> cardsComplained = player.getController().complainCardsCantPlayWell(myDeck.getLeft());
@@ -541,6 +548,55 @@ public class Match {
 
         if (!unsupported.isEmpty()) {
             game.getAction().revealUnsupported(unsupported);
+        }
+    }
+
+    /** Bank: what each player has banked is whatever bank still has exiled as the game ends. */
+    public void recordBank(final Game finished) {
+        banked.clear();
+        for (final Player p : finished.getRegisteredPlayers()) {
+            final List<PaperCard> theirs = Lists.newArrayList();
+            for (final Player any : finished.getRegisteredPlayers()) {
+                for (final Card c : any.getCardsIn(ZoneType.Exile)) {
+                    if (c.getBank() > 0 && c.getOwner() == p && c.getPaperCard() instanceof PaperCard pc) {
+                        theirs.add(pc);
+                    }
+                }
+            }
+            if (!theirs.isEmpty()) {
+                banked.put(p.getRegisteredPlayer(), theirs);
+            }
+        }
+    }
+
+    /** Bank: banked cards begin this game in exile, where their owner may cast them (they still count toward the deck). */
+    public void startBanked(final Game game, final Player player, final RegisteredPlayer psc) {
+        final List<PaperCard> theirs = banked.get(psc);
+        if (theirs == null) {
+            return;
+        }
+        for (final PaperCard pc : theirs) {
+            Card inLibrary = null;
+            for (final Card c : player.getCardsIn(ZoneType.Library)) {
+                if (pc.equals(c.getPaperCard())) {
+                    inLibrary = c;
+                    break;
+                }
+            }
+            if (inLibrary == null) {
+                for (final Card c : player.getCardsIn(ZoneType.Library)) {
+                    if (pc.getName().equals(c.getName())) {
+                        inLibrary = c;
+                        break;
+                    }
+                }
+            }
+            if (inLibrary == null) {
+                continue; // sideboarded out
+            }
+            final Card exiled = game.getAction().moveTo(ZoneType.Exile, inLibrary, null, AbilityKey.newMap());
+            exiled.setBank(2);
+            game.fireEvent(new GameEventAddLog(GameLogEntryType.ZONE_CHANGE, player + " begins the game with banked " + exiled + " in exile."));
         }
     }
 

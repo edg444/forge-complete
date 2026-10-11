@@ -2156,6 +2156,16 @@ public class CardFactoryUtil {
             }
 
             inst.addReplacement(re);
+        } else if (keyword.equals("Bank")) {
+            // as it resolves (not countered: no Fizzle flag then), and only if its owner cast it from their hand
+            final String repStr = "Event$ Moved | ValidCard$ Card.Self | ValidLKI$ Card.wasCastFromYourHandByYou | Origin$ Stack"
+                    + " | Destination$ Graveyard | Fizzle$ False | ValidStackSa$ Spell | Secondary$ True"
+                    + " | Description$ Bank (" + inst.getReminderText() + ")";
+            final ReplacementEffect re = ReplacementHandler.parseReplacement(repStr, host, intrinsic, card);
+            final SpellAbility bank = AbilityFactory.getAbility("DB$ Bank", card);
+            bank.setIntrinsic(intrinsic);
+            re.setOverridingAbility(bank);
+            inst.addReplacement(re);
         } else if (keyword.startsWith("Buyback")) {
             final String[] k = keyword.split(":");
             final Cost cost = new Cost(k[1], false);
@@ -4084,6 +4094,11 @@ public class CardFactoryUtil {
         } else if (keyword.equals("Undaunted")) {
             String effect = "Mode$ ReduceCost | ValidCard$ Card.Self | Type$ Spell | Secondary$ True"
                     + "| Amount$ Undaunted | EffectZone$ All | Description$ Undaunted (" + inst.getReminderText() + ")";
+            inst.addStaticAbility(StaticAbility.create(effect, state.getCard(), state, intrinsic));
+        } else if (keyword.equals("Bank")) {
+            // banked in an earlier game of the match: castable from exile
+            String effect = "Mode$ Continuous | EffectZone$ Exile | Affected$ Card.Self+BankedEarlier | AffectedZone$ Exile"
+                    + " | MayPlay$ True | Secondary$ True | Description$ Bank (" + inst.getReminderText() + ")";
             inst.addStaticAbility(StaticAbility.create(effect, state.getCard(), state, intrinsic));
         } else if (keyword.equals("Vigilance")) {
             String effect = "Mode$ AttackVigilance | ValidCard$ Card.Self | Secondary$ True | Description$ Vigilance (" + inst.getReminderText() + ")";

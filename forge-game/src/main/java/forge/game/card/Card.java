@@ -7762,6 +7762,17 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return now != null && now.isInPlay() && now.equalsWithGameTimestamp(r.held()) && now.getController() != r.from();
     }
 
+    // Bank (Memory Bank): 1 once banked this game, 2 if banked in an earlier game (castable from exile then); a status
+    // of the exiled object, so it's gone once the card leaves exile
+    private int bank = 0;
+    public int getBank() {
+        return bank;
+    }
+    public void setBank(final int b) {
+        bank = b;
+        view.updateMarkerText(this);
+    }
+
     // Four-faced (Loopy Lobster): the stage this permanent is at - a status of the object, so a new object starts
     // over and a copy keeps its own; a four-faced permanent that hasn't moved yet is at stage 1
     private int stage = 0;

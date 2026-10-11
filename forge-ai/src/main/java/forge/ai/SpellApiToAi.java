@@ -70,6 +70,7 @@ public enum SpellApiToAi {
             .put(ApiType.ClassLevelUp, ClassLevelUpAi.class)
             .put(ApiType.AdvanceStage, AlwaysPlayAi.class)
             .put(ApiType.Ransom, RansomAi.class)
+            .put(ApiType.Bank, AlwaysPlayAi.class)
             .put(ApiType.Cleanup, AlwaysPlayAi.class)
             .put(ApiType.Cloak, CloakAi.class)
             .put(ApiType.Clone, CloneAi.class)
