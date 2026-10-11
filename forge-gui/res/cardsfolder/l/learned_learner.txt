@@ -1,0 +1,7 @@
+Name:Learned Learner
+ManaCost:U
+Types:Creature Octopus Wizard
+PT:0/3
+S:Mode$ Continuous | Affected$ Card.Self | AddAbility$ ABDraw | CheckDefinedPlayer$ You.maxHandSize NE7 | Description$ As long as you have a maximum hand size other than 7, CARDNAME has "{T}: Draw a card."
+SVar:ABDraw:AB$ Draw | Cost$ T | SpellDescription$ Draw a card.
+Oracle:As long as you have a maximum hand size other than 7, Learned Learner has "{T}: Draw a card."

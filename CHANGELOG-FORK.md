@@ -243,6 +243,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Toy colors** (`Protection | Gains$ ToyColors`, Rarity): a human picks the colors at resolution (pink and gold in
   a silver-bordered game); `PlayerController.getKnownToyColors` gives the AI's toy, fixed per game
   (`SpellAbilityAi.gameSeed`).
+- **Maximum hand size as a condition** (Learned Learner): player property `maxHandSize <cmp><n>` (no maximum counts
+  as larger than any number), worked out from the hand-size effects themselves
+  (`StaticAbilityContinuous.projectedMaxHandSize`), since a condition checked in an earlier layer would otherwise see
+  them half-applied. Static abilities now take `CheckDefinedPlayer$`, as triggers and abilities already did.
 - **Cast as though it were another card** (`S:Mode$ CastAs | ValidCard$ … | Activator$ … | AffectedZone$ Hand |
   CastAs$ <name>`, Form of the Mulldrifter): each matching card gets the named card's spells, alternative costs
   included (`SpellAbility.getCastAs`). Cast that way, it takes on the named card's copiable values as it goes on the
@@ -294,6 +298,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Learned Learner** (CMB1 #25): has "{T}: Draw a card." while your maximum hand size isn't 7; no maximum hand
+  size counts (user's call). Its Cephalid type is Octopus, as real Cephalids now are.
 - **Innocuous Insect** (CMB1 #23): script only. Its ruling says a bought-back permanent spell goes to your hand
   instead of the battlefield, but the current rules (CR 702.27a) only return a spell that would go to the graveyard
   as it resolves, so buyback does nothing and the Insect enters the battlefield (rules over rulings). AI: it never

@@ -11,6 +11,7 @@ import forge.game.card.CardLists;
 import forge.game.card.CardPredicates;
 import forge.game.card.CounterType;
 import forge.game.spellability.SpellAbility;
+import forge.game.staticability.StaticAbilityContinuous;
 import forge.game.zone.ZoneType;
 import forge.util.Expressions;
 import forge.util.TextUtil;
@@ -206,6 +207,19 @@ public class PlayerProperty {
                 value = AbilityUtils.calculateAmount(source, rightString, spellAbility);
             }
             if (!Expressions.compare(player.getLifeLostThisTurn(), comparator, value)) {
+                return false;
+            }
+        } else if (property.startsWith("maxHandSize ")) {
+            // "maxHandSize NE7" (Learned Learner); no maximum hand size counts as larger than any number
+            final String compareAndValue = property.split(" ")[1];
+            final String comparator = compareAndValue.substring(0, 2);
+            final int value = AbilityUtils.calculateAmount(source, compareAndValue.substring(2), spellAbility);
+            final int max = StaticAbilityContinuous.projectedMaxHandSize(player);
+            if (max < 0) {
+                if (!comparator.equals("NE") && !comparator.equals("GT") && !comparator.equals("GE")) {
+                    return false;
+                }
+            } else if (!Expressions.compare(max, comparator, value)) {
                 return false;
             }
         } else if (property.equals("TappedLandForManaThisTurn")) {

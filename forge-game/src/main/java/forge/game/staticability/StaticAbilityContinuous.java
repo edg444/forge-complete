@@ -1182,6 +1182,38 @@ public final class StaticAbilityContinuous {
         return cards;
     }
 
+    /**
+     * A player's maximum hand size as the continuous effects make it, -1 for no maximum. Worked out from the effects
+     * rather than read off the player, who is mid-recalculation while effects apply: a condition checked in an
+     * earlier layer (Learned Learner's) would see the rules-layer effects that set it not yet applied.
+     */
+    public static int projectedMaxHandSize(final Player p) {
+        final List<StaticAbility> effects = new ArrayList<>();
+        for (final Card ca : p.getGame().getCardsIn(ZoneType.STATIC_ABILITIES_SOURCE_ZONES)) {
+            for (final StaticAbility st : ca.getStaticAbilities()) {
+                if ((st.hasParam("SetMaxHandSize") || st.hasParam("RaiseMaxHandSize"))
+                        && st.checkConditions(StaticAbilityMode.Continuous) && getAffectedPlayers(st).contains(p)) {
+                    effects.add(st);
+                }
+            }
+        }
+        effects.sort(java.util.Comparator.comparingLong(StaticAbility::getTimestamp).thenComparingInt(StaticAbility::getId));
+        int size = p.getStartingHandSize();
+        boolean unlimited = false;
+        for (final StaticAbility st : effects) {
+            if (st.hasParam("SetMaxHandSize")) {
+                unlimited = st.getParam("SetMaxHandSize").equals("Unlimited");
+                if (!unlimited) {
+                    size = AbilityUtils.calculateAmount(st.getHostCard(), st.getParam("SetMaxHandSize"), st);
+                }
+            }
+            if (st.hasParam("RaiseMaxHandSize")) {
+                size += AbilityUtils.calculateAmount(st.getHostCard(), st.getParam("RaiseMaxHandSize"), st);
+            }
+        }
+        return unlimited ? -1 : size;
+    }
+
     private static List<Player> getAffectedPlayers(final StaticAbility stAb) {
         final Map<String, String> params = stAb.getMapParams();
         final Card hostCard = stAb.getHostCard();

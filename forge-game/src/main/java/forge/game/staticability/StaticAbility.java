@@ -473,6 +473,16 @@ public class StaticAbility extends CardTraitBase implements IIdentifiable, Clone
             }
         }
 
+        // as triggers and abilities have it (Learned Learner: "CheckDefinedPlayer$ You.maxHandSize NE7")
+        if (hasParam("CheckDefinedPlayer")) {
+            final int players = AbilityUtils.getDefinedPlayers(this.hostCard, getParam("CheckDefinedPlayer"), this).size();
+            final String comparator = getParamOrDefault("DefinedPlayerCompare", "GE1");
+            final int operandValue = AbilityUtils.calculateAmount(this.hostCard, comparator.substring(2), this);
+            if (!Expressions.compare(players, comparator.substring(0, 2), operandValue)) {
+                return false;
+            }
+        }
+
         if (hasParam("CheckSVar")) {
             final int sVar = AbilityUtils.calculateAmount(this.hostCard, getParam("CheckSVar"), this);
             final String comparator = getParamOrDefault("SVarCompare", "GE1");
