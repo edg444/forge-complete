@@ -309,6 +309,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-10, third deploy (desktop, Android, GitHub) — upstream merge (11 commits); Mystery Booster playtest cards #16–30
+
+- **Upstream merge** (11 commits, through 5222f05e569: mobile card zoom/match screen/command zone layout, simultaneous
+  entry, MDD spoilers): conflicts kept both sides. Phyrexian Adapter takes upstream's `AddType$` fix with the Oracle
+  wording; the mobile life labels keep the fork's hundredths and fitting on upstream's single life font; the pay-life
+  prompt keeps the fork's half-life affordability check with upstream's `confirmPayment`.
 - **Memory Bank** (CMB1 #27): new keyword bank. Cast from your hand, it's exiled for the rest of the match instead of
   going to the graveyard (not if countered); each later game of the match starts with it in exile, where you may
   cast it.
