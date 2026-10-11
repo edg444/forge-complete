@@ -68,6 +68,7 @@ public enum SpellApiToAi {
             .put(ApiType.ClaimThePrize, AlwaysPlayAi.class)
             .put(ApiType.Clash, ClashAi.class)
             .put(ApiType.ClassLevelUp, ClassLevelUpAi.class)
+            .put(ApiType.AdvanceStage, AlwaysPlayAi.class)
             .put(ApiType.Cleanup, AlwaysPlayAi.class)
             .put(ApiType.Cloak, CloakAi.class)
             .put(ApiType.Clone, CloneAi.class)

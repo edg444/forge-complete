@@ -1,0 +1,12 @@
+Name:Loopy Lobster
+ManaCost:2 U
+Types:Creature Lobster
+PT:0/0
+K:Four-faced
+S:Mode$ Continuous | Affected$ Card.Self | Stage$ 1 | SetPower$ 1 | SetToughness$ 4 | Description$ Stage 1 — (1/4)
+S:Mode$ Continuous | Affected$ Card.Self | Stage$ 2 | SetPower$ 4 | SetToughness$ 1 | AddKeyword$ Evolve | Description$ Stage 2 — (4/1) Evolve
+S:Mode$ Continuous | Affected$ Card.Self | Stage$ 3 | SetPower$ 2 | SetToughness$ 4 | AddAbility$ ABPump | Description$ Stage 3 — (2/4) {U}: CARDNAME gets +1/-1 until end of turn.
+SVar:ABPump:AB$ Pump | Cost$ U | Defined$ Self | NumAtt$ +1 | NumDef$ -1 | SpellDescription$ CARDNAME gets +1/-1 until end of turn.
+S:Mode$ Continuous | Affected$ Card.Self | Stage$ 4 | SetPower$ 4 | SetToughness$ 4 | AddKeyword$ Vigilance | AddAbility$ ABDraw | Description$ Stage 4 — (4/4) Vigilance. {T}: Draw 2 cards.
+SVar:ABDraw:AB$ Draw | Cost$ T | NumCards$ 2 | SpellDescription$ Draw 2 cards.
+Oracle:Four-faced (Whenever this becomes tapped, move it to the next stage, or to stage 1 if it's at stage 4.)\nStage 1 — (1/4)\nStage 2 — (4/1) Evolve\nStage 3 — (2/4) {U}: Loopy Lobster gets +1/-1 until end of turn.\nStage 4 — (4/4) Vigilance. {T}: Draw 2 cards.

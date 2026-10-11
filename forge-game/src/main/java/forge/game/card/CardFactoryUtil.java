@@ -995,6 +995,12 @@ public class CardFactoryUtil {
             trigger.setOverridingAbility(AbilityFactory.getAbility(effect, card));
 
             inst.addTrigger(trigger);
+        } else if (keyword.equals("Four-faced")) {
+            final String trigStr = "Mode$ Taps | ValidCard$ Card.Self | TriggerZones$ Battlefield | Secondary$ True"
+                    + " | TriggerDescription$ Four-faced (" + inst.getReminderText() + ")";
+            final Trigger trigger = TriggerHandler.parseTrigger(trigStr, card, intrinsic);
+            trigger.setOverridingAbility(AbilityFactory.getAbility("DB$ AdvanceStage", card));
+            inst.addTrigger(trigger);
         } else if (keyword.equals("Exalted")) {
             final String trig = "Mode$ Attacks | ValidCard$ Creature.YouCtrl | Alone$ True | "
                     + "TriggerZones$ Battlefield | Secondary$ True | TriggerDescription$ "

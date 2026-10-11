@@ -639,6 +639,9 @@ public class CardView extends GameEntityView {
         if(c.isClassCard() && c.isInZone(ZoneType.Battlefield)) {
             markerItems.add("CL:" + c.getClassLevel());
         }
+        if (c.isInZone(ZoneType.Battlefield) && c.getStage() > 0) {
+            markerItems.add("Stage " + c.getStage());
+        }
         if(getRingLevel() > 0) {
             markerItems.add("RL:" + getRingLevel());
         }

@@ -465,6 +465,11 @@ public class StaticAbility extends CardTraitBase implements IIdentifiable, Clone
             return isRelevantStage;
         }
 
+        // Four-faced: this stage only
+        if (hasParam("Stage") && this.hostCard.getStage() != Integer.parseInt(getParam("Stage"))) {
+            return false;
+        }
+
         if (hasParam("ClassLevel")) {
             final int level = this.hostCard.getClassLevel();
             final int levelMin = Integer.parseInt(getParam("ClassLevel"));

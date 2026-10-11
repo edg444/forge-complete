@@ -7726,6 +7726,23 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public final int getClassLevel() {
         return classLevel;
     }
+    // Four-faced (Loopy Lobster): the stage this permanent is at - a status of the object, so a new object starts
+    // over and a copy keeps its own; a four-faced permanent that hasn't moved yet is at stage 1
+    private int stage = 0;
+    public int getStage() {
+        if (stage > 0) {
+            return stage;
+        }
+        return isInPlay() && hasKeyword(Keyword.FOUR_FACED) ? 1 : 0;
+    }
+    /** Moves a four-faced permanent to its next stage, or back to stage 1 from stage 4. */
+    public void advanceStage() {
+        final int now = getStage();
+        stage = now >= 4 ? 1 : now + 1;
+        view.updateMarkerText(this);
+        updateAbilityTextForView();
+    }
+
     public void setClassLevel(int level) {
         classLevel = level;
         view.updateClassLevel(this);
