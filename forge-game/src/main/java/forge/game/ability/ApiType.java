@@ -66,6 +66,7 @@ public enum ApiType {
     Clash (ClashEffect.class),
     ClassLevelUp (ClassLevelUpEffect.class),
     AdvanceStage (AdvanceStageEffect.class),
+    Ransom (RansomEffect.class),
     Cleanup (CleanUpEffect.class),
     Cloak (CloakEffect.class),
     Clone (CloneEffect.class),

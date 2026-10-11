@@ -7726,6 +7726,42 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public final int getClassLevel() {
         return classLevel;
     }
+    // Ransom (Squidnapper): control effects that end when the player each creature was taken from pays the ransom
+    private record Ransom(Player from, Card held, GameCommand release) { }
+    private final List<Ransom> ransoms = Lists.newArrayList();
+    public void addRansom(final Player from, final Card held, final GameCommand release) {
+        ransoms.add(new Ransom(from, held, release));
+    }
+    /** Whether this holds a creature of {@code p}'s that a ransom would get back. */
+    public boolean holdsForRansom(final Player p) {
+        return ransoms.stream().anyMatch(r -> r.from() == p && stillHeld(r));
+    }
+    /** The creatures of {@code p}'s this holds that a ransom would get back. */
+    public CardCollection getHeldForRansom(final Player p) {
+        final CardCollection held = new CardCollection();
+        for (final Ransom r : ransoms) {
+            if (r.from() == p && stillHeld(r)) {
+                held.add(game.getCardState(r.held()));
+            }
+        }
+        return held;
+    }
+    /** {@code p} paid the ransom: every control effect holding a creature of theirs ends. */
+    public void payRansom(final Player p) {
+        for (final Ransom r : Lists.newArrayList(ransoms)) {
+            if (r.from() == p) {
+                ransoms.remove(r);
+                if (stillHeld(r)) {
+                    r.release().run();
+                }
+            }
+        }
+    }
+    private boolean stillHeld(final Ransom r) {
+        final Card now = game.getCardState(r.held(), null);
+        return now != null && now.isInPlay() && now.equalsWithGameTimestamp(r.held()) && now.getController() != r.from();
+    }
+
     // Four-faced (Loopy Lobster): the stage this permanent is at - a status of the object, so a new object starts
     // over and a copy keeps its own; a four-faced permanent that hasn't moved yet is at stage 1
     private int stage = 0;

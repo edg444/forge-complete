@@ -209,6 +209,11 @@ public class PlayerProperty {
             if (!Expressions.compare(player.getLifeLostThisTurn(), comparator, value)) {
                 return false;
             }
+        } else if (property.equals("HeldForRansom")) {
+            // Squidnapper: the source holds a creature of this player's
+            if (source == null || !source.holdsForRansom(player)) {
+                return false;
+            }
         } else if (property.startsWith("maxHandSize ")) {
             // "maxHandSize NE7" (Learned Learner); no maximum hand size counts as larger than any number
             final String compareAndValue = property.split(" ")[1];

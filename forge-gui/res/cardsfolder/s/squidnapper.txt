@@ -1,0 +1,8 @@
+Name:Squidnapper
+ManaCost:3 U U
+Types:Creature Squid Pirate
+PT:3/4
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGainControl | TriggerDescription$ When CARDNAME enters, gain control of target creature an opponent controls until CARDNAME leaves the battlefield or that player pays the ransom.
+SVar:TrigGainControl:DB$ GainControl | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls | LoseControl$ LeavesPlay,Ransom
+A:ST$ Ransom | Cost$ 6 PayLife<2> | Activator$ Player.HeldForRansom | SpecialAction$ True | CostDesc$ Ransom — | SpellDescription$ {6} and 2 life
+Oracle:When Squidnapper enters, gain control of target creature an opponent controls until Squidnapper leaves the battlefield or that player pays the ransom.\nRansom — {6} and 2 life

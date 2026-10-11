@@ -243,6 +243,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Toy colors** (`Protection | Gains$ ToyColors`, Rarity): a human picks the colors at resolution (pink and gold in
   a silver-bordered game); `PlayerController.getKnownToyColors` gives the AI's toy, fixed per game
   (`SpellAbilityAi.gameSeed`).
+- **Ransom** (Squidnapper): GainControl `LoseControl$ Ransom` records whose creature it took
+  (`Card.addRansom`); `ST$ Ransom | Activator$ Player.HeldForRansom` is the special action that player takes to pay
+  and end those control effects (`Card.payRansom`). The AI pays when the creature is worth it and the life can be
+  spared.
 - **Four-faced** (`K:Four-faced`, Loopy Lobster): a permanent's stage (`Card.getStage`, 1 until it first moves; a status of
   the object, so a new object starts over and a copy keeps its own). Becoming tapped triggers `DB$ AdvanceStage`
   (1→2→3→4→1). Static abilities take `Stage$ N` for that stage only, and the stage shows on the card's marker line.
@@ -301,6 +305,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Squidnapper** (CMB1 #29): takes an opponent's creature until it leaves the battlefield or that player pays the
+  ransom ({6} and 2 life, any time they have priority, without using the stack).
 - **Loopy Lobster** (CMB1 #26): new keyword four-faced; each stage's stats and abilities come from its own static.
 - **Learned Learner** (CMB1 #25): has "{T}: Draw a card." while your maximum hand size isn't 7; no maximum hand
   size counts (user's call). Its Cephalid type is Octopus, as real Cephalids now are.

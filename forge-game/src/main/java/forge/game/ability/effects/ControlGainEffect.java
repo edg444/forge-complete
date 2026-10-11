@@ -149,6 +149,7 @@ public class ControlGainEffect extends SpellAbilityEffect {
                 source.addGainControlTarget(tgtC);
             }
 
+            final Player before = tgtC.getController();
             long tStamp = game.getNextTimestamp();
             tgtC.addTempController(newController, tStamp);
 
@@ -192,6 +193,10 @@ public class ControlGainEffect extends SpellAbilityEffect {
                     String leftVar = sa.getSVar(sa.getParam("StaticCommandCheckSVar"));
                     String rightVar = sa.getParam("StaticCommandSVarCompare");
                     source.addStaticCommandList(new Object[]{leftVar, rightVar, tgtC, loseControl});
+                }
+                if (lose.contains("Ransom")) {
+                    // Squidnapper: until the player it was taken from pays the ransom
+                    source.addRansom(before, tgtC, loseControl);
                 }
                 if (lose.contains("UntilSourceUnattached")) {
                     Card attachment = (Card) sa.getTriggeringObject(AbilityKey.Source);
