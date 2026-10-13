@@ -309,6 +309,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-13, fourth deploy (desktop, Android, GitHub) — Mystery Booster playtest cards #31–50; zone tabs on the left; deck-gen and AI fixes
+
 - **Witty Demon** (CMB1 #50): new count `Count$MinimumDeckSize` (the format's minimum main deck); the starting deck
   is `YourStartingLibrarySize`, which counts the whole main deck as its ruling asks (Buried Ogre and Memory Bank
   included). **Underdark Beholder** (CMB1 #49, upstream script) fixed: it revealed until a card with mana value up to
