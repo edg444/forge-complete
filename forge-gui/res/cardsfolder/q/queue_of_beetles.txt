@@ -1,0 +1,8 @@
+Name:Queue of Beetles
+ManaCost:3 R
+Types:Creature Insect
+PT:3/3
+K:Haste
+S:Mode$ StackFirstInFirstOut | Description$ The stack is now first in, first out instead of last in, first out. (The first spell or ability on the stack is the first one to resolve.)
+AI:RemoveDeck:Random
+Oracle:Haste\nThe stack is now first in, first out instead of last in, first out. (The first spell or ability on the stack is the first one to resolve.)

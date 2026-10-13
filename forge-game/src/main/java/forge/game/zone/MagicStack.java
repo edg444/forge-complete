@@ -28,6 +28,7 @@ import forge.game.ability.effects.PlayEffect;
 import forge.game.card.Card;
 import forge.game.card.CardCloneStates;
 import forge.game.staticability.StaticAbilityRandomTargets;
+import forge.game.staticability.StaticAbilityStackFirstInFirstOut;
 import forge.game.card.CardCopyService;
 import forge.game.event.*;
 import forge.game.keyword.Keyword;
@@ -627,7 +628,7 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
 
         // The SpellAbility isn't removed from the Stack until it finishes resolving
         // temporarily reverted removing SAs after resolution
-        final SpellAbility sa = peekAbility();
+        final SpellAbility sa = nextToResolve().getSpellAbility();
 
         // abilities already on stack won't get changed text from host
         if (sa.isSpell()) {
@@ -823,6 +824,11 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
 
     public final SpellAbilityStackInstance peek() {
         return stack.peekFirst();
+    }
+
+    /** The object that resolves if all players pass: the top one, or the bottom one under Queue of Beetles. */
+    public final SpellAbilityStackInstance nextToResolve() {
+        return StaticAbilityStackFirstInFirstOut.applies(game) ? stack.peekLast() : stack.peekFirst();
     }
 
     public final SpellAbility peekAbility() {

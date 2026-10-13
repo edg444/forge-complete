@@ -39,6 +39,10 @@ public class CounterAi extends SpellAbilityAi {
         if (game.getStack().isEmpty()) {
             return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
         }
+        // Queue of Beetles: whatever is already on the stack resolves before the counterspell would
+        if (forge.game.staticability.StaticAbilityStackFirstInFirstOut.applies(game)) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
 
         if ("Force of Will".equals(sourceName)) {
             if (!SpecialCardAi.ForceOfWill.consider(ai, sa)) {

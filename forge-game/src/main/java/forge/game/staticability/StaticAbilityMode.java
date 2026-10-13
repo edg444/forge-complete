@@ -192,6 +192,8 @@ public enum StaticAbilityMode {
     IgnoreStateBasedActions,
     // StaticAbilityRandomTargets (High Troller) - targets of ValidSA$ spells and abilities are chosen at random
     RandomTargets,
+    // StaticAbilityStackFirstInFirstOut (Queue of Beetles) - the bottom object of the stack resolves first
+    StackFirstInFirstOut,
 
     // StaticAbilityMaxCounter
     MaxCounter,

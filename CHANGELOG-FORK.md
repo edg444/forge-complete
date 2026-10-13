@@ -309,6 +309,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Queue of Beetles** (CMB1 #61). New static mode `StackFirstInFirstOut`; `MagicStack.resolveStack` resolves
+  `nextToResolve()` (the bottom object while one applies, per its ruling); nothing else about the stack changes.
+  CounterAi doesn't counter under it, since the target always resolves first.
 - **Problematic Volcano** (CMB1 #60), with #59 Planequake (upstream) verified: no one has the "Uncovered Cavern"
   plot booster, and its ruling says that part is then ignored. New `ChooseSide` effect: `AllPlayers$ True` (each player
   in turn order from you picks which of their creatures go left, the rest go right, logged so later players see it),
