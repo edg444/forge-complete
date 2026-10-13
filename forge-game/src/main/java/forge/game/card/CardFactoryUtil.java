@@ -3160,6 +3160,20 @@ public class CardFactoryUtil {
             SpellAbility morphUp = abilityTurnFaceUp(card, withCost.getCost(), "MorphUp", "Morph", "morph");
             morphUp.setIntrinsic(intrinsic);
             inst.addSpellAbility(morphUp);
+        } else if (keyword.startsWith("Spellmorph") && inst instanceof KeywordWithCost withCost) {
+            // a morph variant (Mystery Booster playtest): cast face down like morph, but instead of turning face up,
+            // the face-down permanent is cast as this card's own spell, from the battlefield, any time
+            final SpellAbility faceDown = abilityCastFaceDown(card, intrinsic, "Spellmorph");
+            faceDown.putParam("Secondary", "True"); // the keyword line carries the reminder text
+            inst.addSpellAbility(faceDown);
+            final SpellAbility cast = card.getFirstSpellAbilityWithFallback().copyWithDefinedCost(withCost.getCost());
+            cast.putParam("Spellmorph", "True");
+            cast.putParam("Secondary", "True");
+            cast.getRestrictions().setZone(ZoneType.Battlefield);
+            cast.getRestrictions().setInstantSpeed(true);
+            cast.setCastFromBattlefield(true);
+            cast.setIntrinsic(intrinsic);
+            inst.addSpellAbility(cast);
         } else if (keyword.startsWith("Megamorph") && inst instanceof KeywordWithCost withCost) {
             inst.addSpellAbility(abilityCastFaceDown(card, intrinsic, "Morph"));
             SpellAbility morphUp = abilityTurnFaceUp(card, withCost.getCost(), "MorphUp", "Megamorph", "morph");

@@ -498,7 +498,7 @@ public class SpellAbilityRestriction extends SpellAbilityVariables {
 
         // CR 702.37e / 702.168b
         // If the permanent wouldn't have a morph / disguise cost if it were face up, it can't be turned face up this way.
-        if ((sa.isMorphUp() || sa.isDisguiseUp()) && c.isInPlay()) {
+        if ((sa.isMorphUp() || sa.isDisguiseUp() || sa.hasParam("Spellmorph")) && c.isInPlay()) {
             Card cp = c;
             if (!c.isLKI()) {
                 cp = CardCopyService.getLKICopy(c);

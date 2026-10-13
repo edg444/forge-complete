@@ -309,6 +309,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Spellmorph Raise Dead** (CMB1 #46): new keyword spellmorph. Cast face down for {3} like morph; while face down,
+  the permanent can be cast as the card's own spell, from the battlefield, at instant speed, for its spellmorph cost
+  (a copy of its spell, `Spellmorph$`, offered alongside morph's turn-face-up abilities). It can't be cast once the
+  card has lost the ability (the morph check, CR 702.37e). Any instant or sorcery that something tries to turn face
+  up on the battlefield is revealed and stays face down (its ruling; manifest's 701.40c).
+- **Largepox** (CMB1 #44, upstream script) fixed: it sacrificed type by type, so an artifact creature given up as the
+  artifact could spare a second artifact. Now one `SacEachValid$` sacrifice like Catch // Release, which has to give
+  up as many as possible (Release's ruling). #45 One with Death (upstream) verified.
 - **Gunk Slug** (CMB1 #43), with #42 Frogkin Kidnapper (upstream) verified. New `MakeCard` param `TokenScript$`
   builds a token card that has no real card behind it from a token script (`c_s_gunk`: colorless Gunk sorcery,
   no mana cost, cycling {4}; Gunk added to the spell types). Judgment call, following the user's design-intent rulings (over CR 111.2/400.3): the

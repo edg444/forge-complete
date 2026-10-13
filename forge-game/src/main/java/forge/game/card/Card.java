@@ -956,6 +956,12 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         if (!isFaceDown() || !canBeTurnedFaceUp()) {
             return false;
         }
+        // An instant or sorcery can't be face up on the battlefield: it's revealed and stays face down, and nothing
+        // that triggers on turning face up does (Spellmorph Raise Dead's ruling; manifest's 701.40c)
+        if (isInPlay() && !isLKI() && !getState(CardStateName.Original).getType().isPermanent()) {
+            game.getAction().reveal(new CardCollection(this), getController(), true, getController() + " reveals ");
+            return false;
+        }
 
         CardCollectionView cards = hasMergedCard() ? getMergedCards() : new CardCollection(this);
         boolean retResult = false;
@@ -3583,7 +3589,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.startsWith("Escape") || keyword.startsWith("Foretell:")
                         || keyword.startsWith("Disturb") || keyword.startsWith("Overload")
                         || keyword.startsWith("Plot") || keyword.startsWith("Mayhem")
-                        || keyword.startsWith("Splice")) {
+                        || keyword.startsWith("Splice") || keyword.startsWith("Spellmorph")) {
                     sbAfter.append(titleAsPrinted(inst)).append(" (").append(inst.getReminderText()).append(")");
                     sbAfter.append("\r\n");
                 } else if (keyword.equals("Gift")) {
@@ -8652,6 +8658,12 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
             if (getCurrentStateName() == CardStateName.FaceDown) {
                 for (SpellAbility sa : oState.getNonManaAbilities()) {
                     if (sa.isTurnFaceUp()) {
+                        abilities.add(sa);
+                    }
+                }
+                // spellmorph: the face-down permanent is cast as its own spell instead of turning face up
+                for (SpellAbility sa : oState.getSpellAbilities()) {
+                    if (sa.hasParam("Spellmorph")) {
                         abilities.add(sa);
                     }
                 }
