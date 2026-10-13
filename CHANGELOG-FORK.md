@@ -309,6 +309,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Bombardment** (CMB1 #53), with #51 Xyru Specter and #52 Yawgmoth's Testament (upstream) verified. Script only
+  plus AI: an effect remembers the cards you own that weren't on the battlefield as it resolved (its ruling) and makes
+  them red Missile sorceries ({R}, 2 damage to any target) in every zone; a card is forgotten when it changes zones
+  other than by being cast, or when its library is shuffled. A granted spell needs its own `Cost$` or it keeps the
+  card's printed mana cost. AI: `AILogic$ Bombardment` casts it only when the Missiles it can then afford are lethal.
+  Not covered: casting it while another spell is on the stack doesn't turn that spell into a target-less Missile
+  (ruling 5), and the Missile characteristics are a continuous effect rather than copiable values (ruling 6).
 ### 2026-10-13, fourth deploy (desktop, Android, GitHub) — Mystery Booster playtest cards #31–50; zone tabs on the left; deck-gen and AI fixes
 
 - **Witty Demon** (CMB1 #50): new count `Count$MinimumDeckSize` (the format's minimum main deck); the starting deck
