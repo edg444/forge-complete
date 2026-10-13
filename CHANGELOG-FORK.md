@@ -309,6 +309,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Siege Elemental** (CMB1 #64). Script only: `CantBlock` on untapped creatures plus Masako's `BlockTapped` for
+  tapped ones, which overlooks only being tapped (its rulings).
 - **Seasoned Weaponsmith** (CMB1 #63). New keyword `Tasty`: opponents' tasty creatures are among the defenders
   (`CombatUtil.getAllPossibleDefenders`, and the attack UI already lets you click a defender card); an attacked one
   can block only creatures attacking it (`CombatUtil.canBlock`); an unblocked attacker deals its damage to the

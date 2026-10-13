@@ -1,0 +1,8 @@
+Name:Siege Elemental
+ManaCost:4 R R
+Types:Creature Elemental
+PT:6/6
+K:Trample
+S:Mode$ CantBlock | ValidCard$ Creature.untapped | Description$ Untapped creatures can't block.
+S:Mode$ BlockTapped | ValidCard$ Creature.tapped | Description$ Tapped creatures can block.
+Oracle:Trample\nUntapped creatures can't block.\nTapped creatures can block.
