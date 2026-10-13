@@ -826,6 +826,24 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
         return stack.peekFirst();
     }
 
+    /**
+     * Puts {@code newSa} where {@code si} is on the stack, as the same stack object (Red Herring exchanged in for a
+     * spell). Returns the new instance, or null if {@code si} isn't on the stack.
+     */
+    public final SpellAbilityStackInstance replaceInPlace(final SpellAbilityStackInstance si, final SpellAbility newSa) {
+        final List<SpellAbilityStackInstance> items = Lists.newArrayList(stack);
+        final int i = items.indexOf(si);
+        if (i < 0) {
+            return null;
+        }
+        final SpellAbilityStackInstance replacement = new SpellAbilityStackInstance(newSa, si.getId());
+        items.set(i, replacement);
+        stack.clear();
+        stack.addAll(items);
+        game.updateStackForView();
+        return replacement;
+    }
+
     /** The object that resolves if all players pass: the top one, or the bottom one under Queue of Beetles. */
     public final SpellAbilityStackInstance nextToResolve() {
         return StaticAbilityStackFirstInFirstOut.applies(game) ? stack.peekLast() : stack.peekFirst();

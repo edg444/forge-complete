@@ -28,6 +28,9 @@ public class SwitchAi extends SpellAbilityAi {
     private static final int MIN_GAIN = 30;
 
     private static int value(final Card c) {
+        if (c.isInZone(ZoneType.Stack) && !c.isCreature()) {
+            return c.getCMC() * 30;
+        }
         return c.isCreature() ? ComputerUtilCard.evaluateCreature(c) : ComputerUtilCard.evaluatePermanentList(new CardCollection(c));
     }
 
@@ -50,8 +53,41 @@ public class SwitchAi extends SpellAbilityAi {
         return best;
     }
 
+    /**
+     * Red Herring: the most valuable permanent or spell of ours an opponent's spell or ability is targeting; to be worth
+     * activating, worth more than Red Herring itself.
+     */
+    private static Card herringTarget(final Player ai, final SpellAbility sa, final boolean worthIt) {
+        final Card host = sa.getHostCard();
+        final CardCollection ours = CardLists.getValidCards(ai.getGame().getCardsIn(ZoneType.Battlefield), sa.getParam("BattlefieldValid"), ai, host, sa);
+        if (sa.hasParam("StackValid")) {
+            ours.addAll(CardLists.getValidCards(ai.getGame().getCardsIn(ZoneType.Stack), sa.getParam("StackValid"), ai, host, sa));
+        }
+        Card best = null;
+        int bestValue = worthIt ? value(host) : Integer.MIN_VALUE;
+        for (final forge.game.spellability.SpellAbilityStackInstance si : ai.getGame().getStack()) {
+            if (!ai.isOpponentOf(si.getActivatingPlayer())) {
+                continue;
+            }
+            for (SpellAbility part = si.getSpellAbility(); part != null; part = part.getSubAbility()) {
+                for (final forge.game.GameObject o : part.getTargets()) {
+                    final Card c = o instanceof Card card ? card : o instanceof SpellAbility tsa && tsa.isSpell() ? tsa.getHostCard() : null;
+                    if (c != null && ours.contains(c) && value(c) > bestValue) {
+                        best = c;
+                        bestValue = value(c);
+                    }
+                }
+            }
+        }
+        return best;
+    }
+
     @Override
     protected AiAbilityDecision checkApiLogic(final Player ai, final SpellAbility sa) {
+        if ("RedHerring".equals(sa.getParam("AILogic"))) {
+            return herringTarget(ai, sa, true) != null ? new AiAbilityDecision(100, AiPlayDecision.WillPlay)
+                    : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
         final PhaseHandler ph = ai.getGame().getPhaseHandler();
         final boolean goodTime = ph.isPlayerTurn(ai) ? ph.is(PhaseType.COMBAT_DECLARE_BLOCKERS) : ph.is(PhaseType.END_OF_TURN);
         if (!goodTime) {
@@ -66,6 +102,14 @@ public class SwitchAi extends SpellAbilityAi {
     @Override
     protected Card chooseSingleCard(final Player ai, final SpellAbility sa, final Iterable<Card> options, final boolean isOptional,
             final Player targetedPlayer, final Map<String, Object> params) {
+        if ("RedHerring".equals(sa.getParam("AILogic"))) {
+            final Card target = herringTarget(ai, sa, false);
+            for (final Card c : options) {
+                if (c == target || c == sa.getHostCard()) {
+                    return c;
+                }
+            }
+        }
         final Pair<Card, Card> best = bestSwitch(ai, sa);
         Card first = null;
         for (final Card c : options) {

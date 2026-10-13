@@ -309,6 +309,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Red Herring** (CMB1 #62), scripted as `P-Red Herring` (upstream's convention for playtest cards sharing a name
+  with a real card; Murders at Karlov Manor's Red Herring is untouched). The Switch effect gains `StackValid$`: with
+  a permanent, the two objects trade printed cards as for Mary O'Kill, so counters, attachments, combat, tapped status
+  and targets all stay (its rulings); with a spell, the stack object becomes the hand card's own spell in the same
+  place (`MagicStack.replaceInPlace`), and whatever targeted the old spell is changed to the new one if that's a
+  legal target, otherwise it keeps the old, now-gone target. SwitchAi `AILogic$ RedHerring` exchanges with the most
+  valuable thing of its own an opponent is targeting, when that's worth more than Red Herring.
 - **Queue of Beetles** (CMB1 #61). New static mode `StackFirstInFirstOut`; `MagicStack.resolveStack` resolves
   `nextToResolve()` (the bottom object while one applies, per its ruling); nothing else about the stack changes.
   CounterAi doesn't counter under it, since the target always resolves first.

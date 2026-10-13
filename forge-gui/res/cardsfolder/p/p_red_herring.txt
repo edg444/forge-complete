@@ -1,0 +1,6 @@
+Name:P-Red Herring
+ManaCost:1 R
+Types:Creature Fish
+PT:2/2
+A:AB$ Switch | Cost$ 1 U | ActivationZone$ Hand | HandValid$ Card.Self | BattlefieldValid$ Permanent.YouCtrl | StackValid$ Card.YouCtrl+!copiedSpell | AILogic$ RedHerring | SpellDescription$ Exchange CARDNAME from your hand with a permanent you control on the battlefield or a spell you control on the stack. If that permanent or spell was the target of a spell or ability, change that target to CARDNAME.
+Oracle:{1}{U}: Exchange Red Herring from your hand with a permanent you control on the battlefield or a spell you control on the stack. If that permanent or spell was the target of a spell or ability, change that target to Red Herring.
