@@ -309,6 +309,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Sunimret** (CMB1 #47): new keyword reverse miracle. As you begin searching your library, before any card moves,
+  its bottom card may be cast for its reverse miracle cost (`ChangeZoneEffect.handleCastWhileSearching`, alongside
+  Panglacial Wurm). AI: new confirm mode `CastFromSearch` answers with its usual "would I cast this now" judgment;
+  ChangeZoneAll's mass-exile logic no longer waits for main 2 or rolls its 80% chance for a spell cast by an effect,
+  which is now or never.
 - **Spellmorph Raise Dead** (CMB1 #46): new keyword spellmorph. Cast face down for {3} like morph; while face down,
   the permanent can be cast as the card's own spell, from the battlefield, at instant speed, for its spellmorph cost
   (a copy of its spell, `Spellmorph$`, offered alongside morph's turn-face-up abilities). It can't be cast once the

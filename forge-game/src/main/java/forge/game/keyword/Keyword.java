@@ -171,6 +171,7 @@ public enum Keyword {
     REINFORCE("Reinforce", KeywordWithCostAndAmount.class, false, "%s, Discard this card: Put {%d:+1/+1 counter} on target creature."),
     RENOWN("Renown", KeywordWithAmount.class, false, "When this creature deals combat damage to a player, if it isn't renowned, put {%d:+1/+1 counter} on it and it becomes renowned."),
     REPLICATE("Replicate", KeywordWithCost.class, false, "As an additional cost to cast this spell, you may pay %s any number of times. If you do, copy it that many times. You may choose new targets for the copies."),
+    REVERSE_MIRACLE("Reverse miracle", KeywordWithCost.class, false, "If this card is on the bottom of your library as you begin searching it, you may cast it by paying its reverse miracle cost."),
     RETRACE("Retrace", SimpleKeyword.class, false, "You may cast this card from your graveyard by discarding a land card in addition to paying its other costs."),
     RIOT("Riot", SimpleKeyword.class, false, "This creature enters with your choice of a +1/+1 counter or haste."),
     RIPPLE("Ripple", KeywordWithAmount.class, false, "When you cast this spell, you may reveal the top {%d:card} of your library. You may cast any of those cards with the same name as this spell without paying their mana costs. Put the rest on the bottom of your library in any order."),

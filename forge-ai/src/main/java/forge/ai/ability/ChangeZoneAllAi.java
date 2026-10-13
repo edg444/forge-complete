@@ -168,7 +168,8 @@ public class ChangeZoneAllAi extends SpellAbilityAi {
                     .evaluatePermanentList(oppType)) {
                 return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
             }
-            if (game.getPhaseHandler().is(PhaseType.MAIN1, ai) && !aiLogic.equals("Main1")) {
+            // a spell cast by an effect (reverse miracle) is now or never
+            if (game.getPhaseHandler().is(PhaseType.MAIN1, ai) && !aiLogic.equals("Main1") && !sa.isCastFromPlayEffect()) {
                 return new AiAbilityDecision(0, AiPlayDecision.TimingRestrictions);
             }
         } else if (origin.equals(ZoneType.Graveyard)) {
@@ -232,7 +233,7 @@ public class ChangeZoneAllAi extends SpellAbilityAi {
                 }
             }
         }
-        boolean result = ((MyRandom.getRandom().nextFloat() < .8) || sa.isTrigger()) && chance;
+        boolean result = ((MyRandom.getRandom().nextFloat() < .8) || sa.isTrigger() || sa.isCastFromPlayEffect()) && chance;
         return result ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
     }
 

@@ -15,6 +15,8 @@ import forge.game.card.*;
 import forge.game.event.GameEventAddLog;
 import forge.game.event.GameEventCombatChanged;
 import forge.game.keyword.Keyword;
+import forge.game.keyword.KeywordInterface;
+import forge.game.keyword.KeywordWithCost;
 import forge.game.player.*;
 import forge.game.player.PlayerController.FullControlFlag;
 import forge.game.replacement.ReplacementEffect;
@@ -1558,6 +1560,32 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
     }
 
     private void handleCastWhileSearching(final CardCollection fetchList, final Player decider) {
+        // Reverse miracle (Sunimret): as the search begins, before any card in the library moves, its bottom card may
+        // be cast for its reverse miracle cost
+        final CardCollectionView library = decider.getCardsIn(ZoneType.Library);
+        if (!library.isEmpty()) {
+            final Card bottom = library.getLast();
+            for (final KeywordInterface ki : bottom.getKeywords(Keyword.REVERSE_MIRACLE)) {
+                if (!(ki instanceof KeywordWithCost withCost)) {
+                    continue;
+                }
+                final List<SpellAbility> sas = AbilityUtils.getSpellsFromPlayEffect(bottom, decider, CardStateName.Original, false, null);
+                if (sas.isEmpty()) {
+                    break;
+                }
+                SpellAbility tgtSA = decider.getController().getAbilityToPlay(bottom, sas);
+                tgtSA = tgtSA.copyWithManaCostReplaced(decider, withCost.getCost());
+                decider.getController().tempShowCards(new CardCollection(bottom));
+                final boolean cast = decider.getController().confirmAction(tgtSA, PlayerActionConfirmMode.CastFromSearch,
+                        Localizer.getInstance().getMessage("lblDoYouWantPlayCard", bottom.getTranslatedName()), null);
+                decider.getController().endTempShowCards();
+                if (cast && decider.getController().playSaFromPlayEffect(tgtSA)) {
+                    fetchList.remove(bottom);
+                }
+                break;
+            }
+        }
+
         // Panglacial Wurm
         CardCollection canCastWhileSearching = CardLists.getKeyword(fetchList,
                 "While you're searching your library, you may cast CARDNAME from your library.");

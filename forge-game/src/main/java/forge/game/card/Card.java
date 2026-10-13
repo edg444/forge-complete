@@ -3589,7 +3589,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.startsWith("Escape") || keyword.startsWith("Foretell:")
                         || keyword.startsWith("Disturb") || keyword.startsWith("Overload")
                         || keyword.startsWith("Plot") || keyword.startsWith("Mayhem")
-                        || keyword.startsWith("Splice") || keyword.startsWith("Spellmorph")) {
+                        || keyword.startsWith("Splice") || keyword.startsWith("Spellmorph")
+                        || keyword.startsWith("Reverse miracle")) {
                     sbAfter.append(titleAsPrinted(inst)).append(" (").append(inst.getReminderText()).append(")");
                     sbAfter.append("\r\n");
                 } else if (keyword.equals("Gift")) {

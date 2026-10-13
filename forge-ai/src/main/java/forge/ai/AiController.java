@@ -1262,6 +1262,9 @@ public class AiController {
                     mode, sa == null ? "SA" : "API");
             throw new IllegalArgumentException(exMsg);
         }
+        if (mode == PlayerActionConfirmMode.CastFromSearch) {
+            return canPlaySa(sa) == AiPlayDecision.WillPlay;
+        }
         return SpellApiToAi.Converter.get(api).confirmAction(player, sa, mode, message, params);
     }
 

@@ -13,7 +13,9 @@ public enum PlayerActionConfirmMode {
     BidLife,
     OptionalChoose,
     Tribute,
-    AlternativeDamageAssignment
+    AlternativeDamageAssignment,
+    // casting a card from the library mid-search (reverse miracle): the AI weighs it like casting it now
+    CastFromSearch
     // Ripple;
     ;
     
