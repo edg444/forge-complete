@@ -1,0 +1,7 @@
+Name:High Troller
+ManaCost:3 R
+Types:Creature Troll Shaman
+PT:4/1
+S:Mode$ ReduceCost | ValidCard$ Card | ValidSpell$ SpellAbility.numTargets GE1 | Amount$ 2 | Description$ All targeted spells and abilities cost {2} less and have their targets chosen randomly.
+S:Mode$ RandomTargets | ValidSA$ SpellAbility | Secondary$ True | Description$ All targeted spells and abilities cost {2} less and have their targets chosen randomly.
+Oracle:All targeted spells and abilities cost {2} less and have their targets chosen randomly.

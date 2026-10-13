@@ -27,6 +27,7 @@ import forge.game.ability.ApiType;
 import forge.game.ability.effects.PlayEffect;
 import forge.game.card.Card;
 import forge.game.card.CardCloneStates;
+import forge.game.staticability.StaticAbilityRandomTargets;
 import forge.game.card.CardCopyService;
 import forge.game.event.*;
 import forge.game.keyword.Keyword;
@@ -221,6 +222,12 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
             System.out.println(source.getName() + " - activatingPlayer not set before adding to stack.");
         }
         Player activator = sp.getActivatingPlayer();
+
+        // High Troller: targets are chosen at random. The controller's choices only decided how many there are; costs
+        // depended only on having targets, so picking them here, before anything sees them, comes to the same thing
+        if (si == null && !sp.isManaAbility() && !sp.isCopied() && StaticAbilityRandomTargets.applies(sp)) {
+            StaticAbilityRandomTargets.randomizeTargets(sp);
+        }
 
         // Stop infinite loop. E.g. Scalelord Reckoner mirrormatch with only triggering targets is a draw.
         // CR 104.4b the same goes for a mandatory trigger that keeps coming back before the stack clears

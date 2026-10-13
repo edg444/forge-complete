@@ -309,6 +309,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **High Troller** (CMB1 #54). Cost: `ReduceCost` with `ValidSpell$ SpellAbility.numTargets GE1` (costs are set after
+  targets, so having any target is what counts). Targets: new static mode `RandomTargets`
+  (`StaticAbilityRandomTargets`); `MagicStack.add` re-picks every target at random among legal ones before anything
+  sees them, keeping how many there are (the controller's choice, per its rulings), in order, never leaving a later
+  target with nothing legal; copies keep their targets. Human players instead choose how many and get random targets
+  in `TargetSelection`.
 - **Bombardment** (CMB1 #53), with #51 Xyru Specter and #52 Yawgmoth's Testament (upstream) verified. Every card
   you own off the battlefield as it resolves becomes a Missile as a copiable value (ruling 6): `Clone` with new
   `CopyItself$` (each target copies itself, with the changes) and clone param `RemoveAllAbilities$`

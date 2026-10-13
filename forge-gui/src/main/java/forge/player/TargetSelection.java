@@ -29,6 +29,7 @@ import forge.game.spellability.SpellAbility;
 import forge.game.spellability.SpellAbilityStackInstance;
 import forge.game.spellability.StackItemView;
 import forge.game.spellability.TargetRestrictions;
+import forge.game.staticability.StaticAbilityRandomTargets;
 import forge.game.staticability.StaticAbilityMustTarget;
 import forge.game.zone.Zone;
 import forge.game.zone.ZoneType;
@@ -121,12 +122,17 @@ public class TargetSelection {
         }
 
         final boolean choiceResult;
-        if (tgt.isRandomTarget() && numTargets == null) {
+        // High Troller: its controller chooses how many targets, then they're random (its rulings)
+        final boolean trollerRandom = StaticAbilityRandomTargets.applies(ability);
+        if ((tgt.isRandomTarget() || trollerRandom) && numTargets == null) {
             List<GameEntity> choices = new ArrayList<>();
             // currently, only cards that target randomly use a random number of targets
             int top = Math.min(candidates.size(), maxTargets); // prevents choosing more targets than possible
             int bot = minTargets > 0 ? minTargets : 1; // prevents randomly choosing zero targets
             int num = tgt.isRandomNumTargets() ? Aggregates.randomInt(bot, top) : minTargets;
+            if (trollerRandom && !tgt.isRandomTarget() && top > minTargets) {
+                num = controller.chooseNumber(ability, "How many targets? (chosen at random)", minTargets, top);
+            }
             for (int i=0; i<num; i++) {
                 final GameEntity choice = Aggregates.random(candidates);
                 if (choice != null) {

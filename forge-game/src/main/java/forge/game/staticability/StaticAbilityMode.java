@@ -190,6 +190,8 @@ public enum StaticAbilityMode {
     IgnorePlaneswalkerZeroLoyaltyRule,
     // StaticAbilityIgnoreStateBasedActions
     IgnoreStateBasedActions,
+    // StaticAbilityRandomTargets (High Troller) - targets of ValidSA$ spells and abilities are chosen at random
+    RandomTargets,
 
     // StaticAbilityMaxCounter
     MaxCounter,
