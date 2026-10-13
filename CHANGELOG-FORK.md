@@ -309,6 +309,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Lightning Colt** (CMB1 #57). Script only: an Instant Creature, so it resolves onto the battlefield under the
+  Visitor from Planet Q ruling; the AI's flash timing logic already casts it at instant speed.
 - **Lazier Goblin** (CMB1 #56), with #55 Impatient Iguana (upstream) verified. New keyword `K:Motivate:cost`: a
   sorcery-speed special action (`ST$ Motivate`, offered only until you've paid) that records the payer on the object
   (`Card.addMotivatedBy`, card properties `MotivatedByYou`/`MotivatedByController`), plus `CantAttack,CantBlock`

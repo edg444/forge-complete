@@ -1,0 +1,7 @@
+Name:Lightning Colt
+ManaCost:3 R R
+Types:Instant Creature Horse
+PT:3/3
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDamage | TriggerDescription$ When CARDNAME enters, it deals 3 damage to any target.
+SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 3
+Oracle:When Lightning Colt enters, it deals 3 damage to any target.
