@@ -309,6 +309,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Zone tabs on the left again (mobile, landscape).** Upstream #12199 (in the 2026-10-10 merge) made the right-edge
+  Hand/Library/Graveyard/Exile column the default and removed the *Alternate Player Zone Layout* setting. New fork
+  setting of that name (`UI_ZONE_TABS_LEFT`, off by default) puts those tabs back in the left column with the rest.
+- **Watchwing Scarecrow, Wingrattle Scarecrow, Gearsmith Guardian:** `DeckNeeds:Color$`, so random color decks
+  without their colors skip them (Watchwing turned up in mono-black). Random commander decks now honor the same hint
+  (`DeckGeneratorBase.meetsColorNeeds` is shared).
+- **Call from the Grave AI:** the self-damage (`Remembered$CardManaCost`) reads 0 while the AI decides, so it cast it at
+  2 life and died. `DamageDealAi` now plans for the costliest card the parent ChangeZone could move.
+
 ### 2026-10-10, third deploy (desktop, Android, GitHub) — upstream merge (11 commits); Mystery Booster playtest cards #16–30
 
 - **Upstream merge** (11 commits, through 5222f05e569: mobile card zoom/match screen/command zone layout, simultaneous

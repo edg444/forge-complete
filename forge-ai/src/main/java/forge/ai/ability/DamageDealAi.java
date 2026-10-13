@@ -86,12 +86,36 @@ public class DamageDealAi extends DamageAiBase {
                 dmg = ComputerUtilCost.setMaxXValue(sa, ai, sa.isTrigger());
             } else if (sa.getSVar(damage).equals("Count$CardsInYourHand") && source.isInZone(ZoneType.Hand)) {
                 dmg--; // the card will be spent casting the spell, so actual damage is 1 less
+            } else if (sa.getSVar(damage).equals("Remembered$CardManaCost")) {
+                dmg = Math.max(dmg, maxManaValueParentCouldMove(ai, sa));
             }
         }
         if (damageTargetAI(ai, sa, dmg, true)) {
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
         return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
+    }
+
+    // Nothing is remembered yet while the AI decides, so the amount reads as 0. Call from the Grave puts a random
+    // creature from a random graveyard onto the battlefield and deals its mana value to you: plan for the costliest
+    // card the parent could move, so a low-life AI doesn't gamble its life on the pick.
+    private static int maxManaValueParentCouldMove(Player ai, SpellAbility sa) {
+        final SpellAbility parent = sa.getParent();
+        if (parent == null || parent.getApi() != ApiType.ChangeZone || !parent.hasParam("Origin")) {
+            return 0;
+        }
+        CardCollectionView pool;
+        if (parent.usesTargeting()) {
+            pool = new CardCollection(parent.getTargets().getTargetCards());
+        } else {
+            pool = ai.getGame().getCardsIn(ZoneType.listValueOf(parent.getParam("Origin")));
+            pool = CardLists.getValidCards(pool, parent.getParamOrDefault("ChangeType", "Card"), ai, sa.getHostCard(), parent);
+        }
+        int max = 0;
+        for (Card c : pool) {
+            max = Math.max(max, c.getCMC());
+        }
+        return max;
     }
 
     @Override

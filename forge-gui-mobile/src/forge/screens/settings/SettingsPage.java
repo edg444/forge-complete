@@ -301,6 +301,17 @@ public class SettingsPage extends TabPage<SettingsScreen> {
                         MatchController.instance.resetPlayerPanels();
                 }
             }, 1);
+        lstSettings.addItem(new BooleanSetting(FPref.UI_ZONE_TABS_LEFT,
+            Forge.getLocalizer().getMessageorUseDefault("lblZoneTabsLeft", "Alternate Player Zone Layout (Landscape Mode)"),
+            Forge.getLocalizer().getMessageorUseDefault("nlZoneTabsLeft", "Shows the Hand, Library, Graveyard and Exile tabs in the left column with the other tabs, instead of along the right edge.")) {
+                @Override
+                public void select() {
+                    super.select();
+                    Forge.zoneTabsLeft = FModel.getPreferences().getPrefBoolean(FPref.UI_ZONE_TABS_LEFT);
+                    if (MatchController.instance != null)
+                        MatchController.instance.resetPlayerPanels();
+                }
+            }, 1);
         lstSettings.addItem(new BooleanSetting(FPref.UI_HIDE_PHASESTOP,
             Forge.getLocalizer().getMessageorUseDefault("lblHidePhaseStop", "Hide Phase stop (Landscape Mode)"),
             Forge.getLocalizer().getMessageorUseDefault("nlHidePhaseStop", "When enabled, Phase stop is covered by Phase name label. Tap the label to access Phase stop.")) {

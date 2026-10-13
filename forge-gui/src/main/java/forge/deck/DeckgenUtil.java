@@ -724,7 +724,7 @@ public class DeckgenUtil {
             Iterable<PaperCard> colorList = IterableUtil.filter(format.getCardPool(cardDb).getAllCards(),
                     format.isLegalCardPredicate().and(PaperCardPredicates.fromRules(
                             new CardThemedDeckBuilder.MatchColorIdentity(commander.getRules().getColorIdentity())
-                                    .or(DeckGeneratorBase.COLORLESS_CARDS))));
+                                    .or(DeckGeneratorBase.COLORLESS_CARDS.and(c -> DeckGeneratorBase.meetsColorNeeds(c, commander.getRules().getColorIdentity()))))));
             if (format == DeckFormat.Brawl) {
                 // add additional filterprinted rule to remove old reprints for a consistent look
                 colorList = IterableUtil.filter(colorList,FModel.getFormats().getStandard().getFilterPrinted());

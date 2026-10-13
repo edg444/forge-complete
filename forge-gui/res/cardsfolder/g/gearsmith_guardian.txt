@@ -4,5 +4,6 @@ Types:Artifact Creature Construct
 PT:3/5
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 2 | IsPresent$ Creature.YouCtrl+Blue | Description$ This creature gets +2/+0 as long as you control a blue creature.
 SVar:BuffedBy:Creature.Blue
+DeckNeeds:Color$Blue
 DeckHints:Color$Blue
 Oracle:This creature gets +2/+0 as long as you control a blue creature.

@@ -557,7 +557,7 @@ public class VPlayerPanel extends FContainer {
             boolean show = tab.isTabShown();
             tab.setVisible(show);
             if (!show) { continue; }
-            (tab.isCommonZone() ? right : left).add(tab);
+            (tab.isCommonZone() && !Forge.zoneTabsLeft ? right : left).add(tab);
         }
         commonTabWidth = right.isEmpty() ? 0 : tabWidth;
 

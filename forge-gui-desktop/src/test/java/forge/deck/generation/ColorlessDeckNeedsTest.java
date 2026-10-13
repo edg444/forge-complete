@@ -27,5 +27,8 @@ public class ColorlessDeckNeedsTest extends AITest {
         AssertJUnit.assertFalse(inPool("red", "black", "Kefnet's Monument"));
         AssertJUnit.assertTrue(inPool("blue", "red", "Kefnet's Monument"));
         AssertJUnit.assertTrue(inPool("red", "black", "Mind Stone"));
+        // Watchwing Scarecrow: flying with a blue creature, vigilance with a white one; a vanilla 2/4 for 4 otherwise
+        AssertJUnit.assertFalse(inPool("black", "red", "Watchwing Scarecrow"));
+        AssertJUnit.assertTrue(inPool("white", "black", "Watchwing Scarecrow"));
     }
 }

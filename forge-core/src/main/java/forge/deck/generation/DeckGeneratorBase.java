@@ -406,13 +406,13 @@ public abstract class DeckGeneratorBase {
         Predicate<CardRules> canUseInFormat = c -> !c.getAiHints().getRemNonCommanderDecks() || format.hasCommander();
 
         if (useArtifacts) {
-            hasColor = hasColor.or(COLORLESS_CARDS.and(this::meetsColorNeeds));
+            hasColor = hasColor.or(COLORLESS_CARDS.and(c -> meetsColorNeeds(c, colors)));
         }
         return IterableUtil.filter(pool.getAllCards(), PaperCardPredicates.fromRules(canPlay.and(hasColor).and(canUseInFormat)));
     }
 
     // A colorless card that needs a color (Kefnet's Monument: blue creatures) is dead weight in a deck without it.
-    private boolean meetsColorNeeds(CardRules c) {
+    public static boolean meetsColorNeeds(CardRules c, ColorSet colors) {
         final DeckHints needs = c.getAiHints().getDeckNeeds();
         if (needs == null || !needs.isValid()) {
             return true;
