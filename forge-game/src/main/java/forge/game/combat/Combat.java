@@ -670,7 +670,8 @@ public class Combat {
                 }
             }
             if (ee.getKey() instanceof Card c) {
-                if (!c.isBattle() && !c.isPlaneswalker()) {
+                // a tasty creature stays attacked while it's a creature on the battlefield
+                if (!c.isBattle() && !c.isPlaneswalker() && !(c.isCreature() && c.isInPlay())) {
                     missingCombatants.add(c);
                 }
             }
@@ -727,6 +728,13 @@ public class Combat {
     private boolean assignBlockersDamage(boolean firstStrikeDamage) {
         // Assign damage by Blockers
         final CardCollection blockers = getAllBlockers();
+        // Tasty (Seasoned Weaponsmith's rulings): an attacked creature deals its combat damage to the unblocked
+        // creatures attacking it as a blocker would, whether or not it's blocking
+        for (final GameEntity d : attackableEntries.get()) {
+            if (d instanceof Card attacked && !blockers.contains(attacked) && !unblockedAttackersOf(attacked).isEmpty()) {
+                blockers.add(attacked);
+            }
+        }
         boolean assignedDamage = false;
 
         for (final Card blocker : blockers) {
@@ -742,6 +750,15 @@ public class Combat {
             blocker.getGame().getReplacementHandler().run(ReplacementType.AssignDealDamage, AbilityKey.mapFromAffected(blocker));
 
             CardCollection attackers = attackersOrderedForDamageAssignment.get().get(blocker);
+            final CardCollection attackingIt = unblockedAttackersOf(blocker);
+            if (!attackingIt.isEmpty()) {
+                attackers = attackers == null ? new CardCollection() : new CardCollection(attackers);
+                for (final Card a : attackingIt) {
+                    if (!attackers.contains(a)) {
+                        attackers.add(a);
+                    }
+                }
+            }
 
             final int damage = blocker.getNetCombatDamage();
 
@@ -784,6 +801,20 @@ public class Combat {
             }
         }
         return assignedDamage;
+    }
+
+    /** Tasty: the unblocked creatures attacking a creature, which it deals combat damage to. */
+    private CardCollection unblockedAttackersOf(final Card attacked) {
+        final CardCollection result = new CardCollection();
+        if (!attacked.isCreature() || !attacked.isInPlay() || !attackedByBands.get().containsKey(attacked)) {
+            return result;
+        }
+        for (final AttackingBand band : attackedByBands.get().get(attacked)) {
+            if (!Boolean.TRUE.equals(band.isBlocked())) {
+                result.addAll(band.getAttackers());
+            }
+        }
+        return result;
     }
 
     private boolean assignAttackersDamage(boolean firstStrikeDamage) {

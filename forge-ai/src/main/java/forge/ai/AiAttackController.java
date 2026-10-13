@@ -1379,10 +1379,41 @@ public class AiAttackController {
             }
         }
 
+        attackTastyCreatures(combat, left);
         pruneLostAloneEvasion(combat);
         pruneSupportOnlyAttackers(combat);
 
         return aiAggression;
+    }
+
+    /**
+     * Tasty creatures (Seasoned Weaponsmith) can be attacked directly. A creature not needed at home that isn't attacking
+     * goes after one it kills and survives, if it can't be blocked profitably on the way.
+     */
+    private void attackTastyCreatures(final Combat combat, final List<Card> candidates) {
+        for (final Card attacker : candidates) {
+            if (combat.isAttacking(attacker)) {
+                continue;
+            }
+            Card best = null;
+            for (final GameEntity d : combat.getDefenders()) {
+                if (!(d instanceof Card tasty) || !tasty.isCreature() || !tasty.hasKeyword(Keyword.TASTY)
+                        || !canAttackWrapper(attacker, tasty)) {
+                    continue;
+                }
+                if (ComputerUtilCombat.damageIfUnblocked(attacker, tasty, combat, false) < ComputerUtilCombat.getDamageToKill(tasty, false)
+                        || tasty.getNetCombatDamage() >= ComputerUtilCombat.getDamageToKill(attacker, false)
+                        || ComputerUtilCard.canBeBlockedProfitably(tasty.getController(), attacker, false)) {
+                    continue;
+                }
+                if (best == null || ComputerUtilCard.evaluateCreature(tasty) > ComputerUtilCard.evaluateCreature(best)) {
+                    best = tasty;
+                }
+            }
+            if (best != null) {
+                combat.addAttacker(attacker, best);
+            }
+        }
     }
 
     /**

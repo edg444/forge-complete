@@ -309,6 +309,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Seasoned Weaponsmith** (CMB1 #63). New keyword `Tasty`: opponents' tasty creatures are among the defenders
+  (`CombatUtil.getAllPossibleDefenders`, and the attack UI already lets you click a defender card); an attacked one
+  can block only creatures attacking it (`CombatUtil.canBlock`); an unblocked attacker deals its damage to the
+  creature it attacks (the planeswalker path), so trample has nowhere further to go, and the attacked creature deals
+  its combat damage to every unblocked creature attacking it as a blocker would (`Combat.assignBlockersDamage`),
+  blocking or not (its rulings). `removeAbsentCombatants` keeps an attacked creature while it's a creature on the
+  battlefield. AI: creatures it doesn't need at home and isn't attacking with go after a tasty creature they kill and
+  survive, when they can't be blocked profitably.
 - **Red Herring** (CMB1 #62), scripted as `P-Red Herring` (upstream's convention for playtest cards sharing a name
   with a real card; Murders at Karlov Manor's Red Herring is untouched). The Switch effect gains `StackValid$`: with
   a permanent, the two objects trade printed cards as for Mary O'Kill, so counters, attachments, combat, tapped status

@@ -1,0 +1,6 @@
+Name:Seasoned Weaponsmith
+ManaCost:2 R
+Types:Creature Bird Warrior
+PT:5/2
+K:Tasty
+Oracle:Tasty (This creature can be attacked directly. If it is attacked, it can't block creatures that didn't attack it.)

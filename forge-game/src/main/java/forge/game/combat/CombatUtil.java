@@ -25,6 +25,7 @@ import forge.game.ability.AbilityKey;
 import forge.game.card.*;
 import forge.game.cost.Cost;
 import forge.game.cost.CostPart;
+import forge.game.keyword.Keyword;
 import forge.game.keyword.KeywordInterface;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
@@ -61,6 +62,12 @@ public class CombatUtil {
         for (final Player defender : playerWhoAttacks.getOpponents()) {
             defenders.add(defender);
             defenders.addAll(defender.getPlaneswalkersInPlay());
+            // Seasoned Weaponsmith: tasty creatures can be attacked directly
+            for (final Card c : defender.getCreaturesInPlay()) {
+                if (c.hasKeyword(Keyword.TASTY)) {
+                    defenders.add(c);
+                }
+            }
         }
 
         // Evil Presents: a creature that attacks its own controller needs that controller offered as
@@ -922,6 +929,10 @@ public class CombatUtil {
             return false;
         }
         if (combat != null && combat.isBlocking(blocker, attacker)) { // Can't block if already blocking the attacker
+            return false;
+        }
+        // Tasty: an attacked creature can't block creatures that didn't attack it
+        if (combat != null && !combat.getAttackersOf(blocker).isEmpty() && !combat.isAttacking(attacker, blocker)) {
             return false;
         }
 
