@@ -203,6 +203,7 @@ Licid:Licids
 Lizard:Lizards
 Llama:Llamas
 Lobster:Lobsters
+Locus:Loci
 Manticore:Manticores
 Masticore:Masticores
 Mercenary:Mercenaries

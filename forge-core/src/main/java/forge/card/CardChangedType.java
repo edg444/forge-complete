@@ -71,7 +71,8 @@ public record CardChangedType(CardTypeView addType, CardTypeView removeType, boo
                 newType.subtypes.removeIf(CardType::isALandType);
             }
             if (isRemoveCreatureTypes()) {
-                newType.subtypes.removeIf(CardType::isACreatureType);
+                // Locus is both (Swarm of Locus): a land keeps its land type
+                newType.subtypes.removeIf(t -> CardType.isACreatureType(t) && !(newType.isLand() && CardType.isALandType(t)));
                 // need to remove AllCreatureTypes too when removing creature Types
                 newType.allCreatureTypes = false;
             }

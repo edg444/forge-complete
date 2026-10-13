@@ -278,7 +278,8 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
         if (!isCreature() && !isKindred()) {
             return false;
         }
-        boolean changed = subtypes.removeIf(CardType::isACreatureType);
+        // Locus is both (Swarm of Locus): a land keeps its land type
+        boolean changed = subtypes.removeIf(t -> isACreatureType(t) && !(isLand() && isALandType(t)));
         // need to remove AllCreatureTypes too when setting Creature Type
         if (allCreatureTypes) {
             changed = true;

@@ -309,6 +309,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Swarm of Locus** (CMB1 #48). Per its ruling, Locus is a creature type here as well as a land type, the Swarm
+  counts both, and cards that refer to one don't see the other. Locus added to the creature types; removing creature
+  types (RemoveCreatureTypes, setting creature types) leaves a land its land type Locus; Cloudpost, Glimmerpost and
+  Monument to Perfection count Locus lands only.
 - **Sunimret** (CMB1 #47): new keyword reverse miracle. As you begin searching your library, before any card moves,
   its bottom card may be cast for its reverse miracle cost (`ChangeZoneEffect.handleCastWhileSearching`, alongside
   Panglacial Wurm). AI: new confirm mode `CastFromSearch` answers with its usual "would I cast this now" judgment;

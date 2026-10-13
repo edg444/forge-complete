@@ -1,0 +1,10 @@
+Name:Swarm of Locus
+ManaCost:1 B
+Types:Creature Insect Locus
+PT:1/1
+K:Flying
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ Whenever CARDNAME attacks, it gets +1/+0 until end of turn for each Locus you control.
+SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +X
+SVar:X:Count$Valid Locus.YouCtrl
+SVar:HasAttackEffect:TRUE
+Oracle:Flying\nWhenever Swarm of Locus attacks, it gets +1/+0 until end of turn for each Locus you control.
