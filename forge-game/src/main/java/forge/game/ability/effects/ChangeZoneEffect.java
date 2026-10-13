@@ -575,7 +575,8 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
                 hostCard.addRemembered(CardCopyService.getLKICopy(gameCard));
             }
 
-            final String prompt = TextUtil.concatWithSpace(Localizer.getInstance().getMessage("lblDoYouWantMoveTargetFromOriToDest", gameCard.getTranslatedName(), Lang.joinHomogenous(origin, ZoneType::getTranslatedName), destination.getTranslatedName()));
+            final String prompt = sa.hasParam("OptionalPrompt") ? sa.getParam("OptionalPrompt").replace("CARDNAME", gameCard.getTranslatedName())
+                    : TextUtil.concatWithSpace(Localizer.getInstance().getMessage("lblDoYouWantMoveTargetFromOriToDest", gameCard.getTranslatedName(), Lang.joinHomogenous(origin, ZoneType::getTranslatedName), destination.getTranslatedName()));
             if (optional && !chooser.getController().confirmAction(sa, null, prompt, null)) {
                 continue;
             }

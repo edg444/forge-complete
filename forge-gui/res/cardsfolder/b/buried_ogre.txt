@@ -1,0 +1,10 @@
+Name:Buried Ogre
+ManaCost:1 B B B
+Types:Creature Zombie Ogre
+PT:6/4
+K:MayEffectFromOpeningDeck:DBBury
+SVar:DBBury:DB$ ChangeZone | Defined$ Self | Origin$ Library | Destination$ Graveyard | Optional$ True | OptionalPrompt$ Begin the game with CARDNAME in your graveyard? If you do, you lose 1 life. | AILogic$ IfDeckReanimates | RememberChanged$ True | SubAbility$ DBLoseLife | SpellDescription$ You may begin the game with CARDNAME in your graveyard. If you do, you lose 1 life.
+SVar:DBLoseLife:DB$ LoseLife | Defined$ You | LifeAmount$ 1 | ConditionDefined$ Remembered | ConditionPresent$ Card.Self | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+DeckHas:Ability$Graveyard
+Oracle:You may begin the game with Buried Ogre in your graveyard. If you do, you lose 1 life.

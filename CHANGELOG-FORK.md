@@ -309,6 +309,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Buried Ogre** (CMB1 #36), with #35 Bone Rattler (upstream) verified. Uses `MayEffectFromOpeningDeck`, which runs
+  before the library is shuffled and after starting life is set (both per its ruling); life lost there no longer counts
+  as lost "this turn" on turn 1. ChangeZone's `OptionalPrompt$` now also applies to a defined card. AI:
+  `AILogic$ IfDeckReanimates` buries it only when another card in its library returns creature cards from a
+  graveyard to the battlefield.
 - **Blood Poet** (CMB1 #34): new keyword spark and player counter type `SPARK`. Spark abilities take `Spark$ True`
   (plus `SorcerySpeed$`); `SpellAbilityRestriction` allows one per turn from among everything you control (counted
   from `getAbilityActivatedThisTurn`, so a source that has left still counts) and none from a card without spark.

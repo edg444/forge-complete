@@ -3669,6 +3669,8 @@ public class Player extends GameEntity implements Comparable<Player> {
                 }
             }
         }
+        // Life lost before the game (Buried Ogre) wasn't lost during any turn - not "this turn" for spectacle and the like
+        setLifeLostThisTurn(0);
     }
 
     public void initCommanderColor(Card cmd) {

@@ -1930,8 +1930,34 @@ public class ChangeZoneAi extends SpellAbilityAi {
      */
     @Override
     public boolean confirmAction(Player player, SpellAbility sa, PlayerActionConfirmMode mode, String message, Map<String, Object> params) {
+        if ("IfDeckReanimates".equals(sa.getParam("AILogic"))) {
+            // Buried Ogre: a creature that starts in the graveyard is only worth it to a deck that can bring it back
+            return deckReanimates(player, sa.getHostCard());
+        }
         // AI was never asked
         return true;
+    }
+
+    /** Whether any other card in the library puts a creature card from a graveyard onto the battlefield. */
+    private static boolean deckReanimates(final Player ai, final Card except) {
+        for (final Card c : ai.getCardsIn(ZoneType.Library)) {
+            if (c == except) {
+                continue;
+            }
+            for (final SpellAbility sa : c.getAllSpellAbilities()) {
+                for (SpellAbility part = sa; part != null; part = part.getSubAbility()) {
+                    if ((part.getApi() == ApiType.ChangeZone || part.getApi() == ApiType.ChangeZoneAll)
+                            && part.getParamOrDefault("Origin", "").contains("Graveyard")
+                            && "Battlefield".equals(part.getParam("Destination"))) {
+                        final String what = part.getParamOrDefault("ValidTgts", part.getParamOrDefault("ChangeType", ""));
+                        if (what.contains("Creature") || what.contains("Permanent") || what.startsWith("Card")) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     @Override
