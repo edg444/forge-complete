@@ -2454,6 +2454,10 @@ public class AbilityUtils {
         if (sq[0].equals("YourStartingLibrarySize")) {
             return doXMath(player.getStartingLibrarySize(), expr, c, ctb);
         }
+        // the format's minimum main deck (60 Constructed, 40 Limited) - Witty Demon's "cards over the minimum"
+        if (sq[0].equals("MinimumDeckSize")) {
+            return doXMath(player.getGame().getMatch().getRules().getGameType().getDeckFormat().getMainRange().getMinimum(), expr, c, ctb);
+        }
 
         if (sq[0].equals("YourLifeTotal")) {
             return doXMath(player.getLife(), expr, c, ctb);

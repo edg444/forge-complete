@@ -1,0 +1,11 @@
+Name:Witty Demon
+ManaCost:1 B B
+Types:Creature Demon
+PT:4/3
+K:Flying
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSearch | TriggerDescription$ When CARDNAME enters, if your starting library had at least 13 cards over the minimum, search your library for a card and put that card into your hand, then shuffle your library. Otherwise, CARDNAME deals 4 damage to you.
+SVar:TrigSearch:DB$ ChangeZone | Origin$ Library | Destination$ Hand | ChangeType$ Card | ChangeNum$ 1 | Mandatory$ True | ConditionCheckSVar$ X | ConditionSVarCompare$ GE13 | SubAbility$ DBDamage
+SVar:DBDamage:DB$ DealDamage | Defined$ You | NumDmg$ 4 | ConditionCheckSVar$ X | ConditionSVarCompare$ LT13
+SVar:X:Count$YourStartingLibrarySize/Minus.M
+SVar:M:Count$MinimumDeckSize
+Oracle:Flying\nWhen Witty Demon enters, if your starting library had at least 13 cards over the minimum, search your library for a card and put that card into your hand, then shuffle your library. Otherwise, Witty Demon deals 4 damage to you.

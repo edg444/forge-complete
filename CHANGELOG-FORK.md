@@ -309,6 +309,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Witty Demon** (CMB1 #50): new count `Count$MinimumDeckSize` (the format's minimum main deck); the starting deck
+  is `YourStartingLibrarySize`, which counts the whole main deck as its ruling asks (Buried Ogre and Memory Bank
+  included). **Underdark Beholder** (CMB1 #49, upstream script) fixed: it revealed until a card with mana value up to
+  the eyestalk count; the card says less than (`cmcLTZ`).
 - **Swarm of Locus** (CMB1 #48). Per its ruling, Locus is a creature type here as well as a land type, the Swarm
   counts both, and cards that refer to one don't see the other. Locus added to the creature types; removing creature
   types (RemoveCreatureTypes, setting creature types) leaves a land its land type Locus; Cloudpost, Glimmerpost and
