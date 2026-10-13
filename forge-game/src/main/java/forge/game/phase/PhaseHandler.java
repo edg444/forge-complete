@@ -113,6 +113,12 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     private boolean bRepeatCleanup = false;
     // Unstable's last strike: the combat damage step is followed by another one, for creatures with last strike
     private boolean lastStrikeDamageStep = false;
+    // Throat Wolf's firstest strike: the first-strike damage step happens twice, first for firstest strike
+    private boolean firstestStrikeDamageStep = false;
+    // Throat Wolf: how many combat phases each player has had as the active player this turn, and the creature that
+    // alone may attack during a combat phase it added
+    private final transient Map<Player, Integer> combatsAsActiveThisTurn = Maps.newHashMap();
+    private transient Card onlyAttacker = null;
 
     // Stack of Paperwork: combat damage uses the stack while it's on the battlefield
     private void dealOrStackCombatDamage() {
@@ -215,8 +221,14 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
             bRepeatCleanup = false;
         } else if (phase == PhaseType.COMBAT_DAMAGE && !lastStrikeDamageStep && inCombat() && combat.needsLastStrikeDamageStep()) {
             lastStrikeDamageStep = true;
+        } else if (phase == PhaseType.COMBAT_FIRST_STRIKE_DAMAGE && firstestStrikeDamageStep) {
+            // the step happens again, now for first strike
+            firstestStrikeDamageStep = false;
         } else {
             lastStrikeDamageStep = false;
+            if (phase == PhaseType.COMBAT_END) {
+                addCombatsAfterOpponentsFirst();
+            }
             // If the phase that's ending has a stack of additional phases
             // Take the LIFO one and move to that instead of the normal one
             ExtraPhase extraPhase = null;
@@ -267,6 +279,11 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
             // before BeginPhase replacements, so "skip your untap step" asks whoever's untap step it now is
             beginStolenPhase();
+            if (extraPhase != null && extraPhase.getOwner() != null) {
+                beginOwnedCombat(extraPhase);
+            }
+            // CR-style ruling for firstest strike: decided as the declare blockers step ends
+            firstestStrikeDamageStep = phase == PhaseType.COMBAT_FIRST_STRIKE_DAMAGE && inCombat() && combat.hasFirstestStrikers();
 
             // CR 805.8: a step or phase one player on the active team skips, the whole team skips
             ReplacementResult repres = ReplacementResult.NotReplaced;
@@ -296,7 +313,8 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
             }
         }
 
-        String phaseType = lastStrikeDamageStep && phase == PhaseType.COMBAT_DAMAGE ? "Last strike: " : oldPhase == phase ? "Repeat" : phase == PhaseType.getNext(oldPhase, isTopsy) ? "" : "Additional";
+        String phaseType = lastStrikeDamageStep && phase == PhaseType.COMBAT_DAMAGE ? "Last strike: "
+                : firstestStrikeDamageStep && phase == PhaseType.COMBAT_FIRST_STRIKE_DAMAGE ? "Firstest strike: " : oldPhase == phase ? "Repeat" : phase == PhaseType.getNext(oldPhase, isTopsy) ? "" : "Additional";
         game.fireEvent(new GameEventTurnPhase(playerTurn, phase, phaseType));
     }
 
@@ -391,6 +409,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
                 case COMBAT_BEGIN:
                     nCombatsThisTurn++;
+                    combatsAsActiveThisTurn.merge(playerTurn, 1, Integer::sum);
                     combat = new Combat(playerTurn);
                     game.getBeginOfCombat().executeUntil(playerTurn);
                     //PhaseUtil.verifyCombat();
@@ -418,7 +437,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     }
 
                     // no first strikers, skip this step
-                    if (!combat.assignCombatDamage(true)) {
+                    if (!(firstestStrikeDamageStep ? combat.assignFirstestStrikeCombatDamage() : combat.assignCombatDamage(true))) {
                         givePriorityToPlayer = false;
                     } else {
                         dealOrStackCombatDamage();
@@ -495,6 +514,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
                     nUpkeepsThisTurn = 0;
                     nCombatsThisTurn = 0;
+                    combatsAsActiveThisTurn.clear();
                     nMainsThisTurn = 0;
                     nEndOfTurnsThisTurn = 0;
                     game.getStack().resetMaxDistinctSources();
@@ -1617,7 +1637,56 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 + stolenPhaseLabel(steal.phaseIndex()) + ".");
     }
 
+    /**
+     * Throat Wolf: as a combat phase ends that was its active player's first this turn, each Throat Wolf an opponent of
+     * that player controls adds a combat phase right after it for its controller. Added in reverse turn order from the
+     * player whose turn it is, so the nearest player's comes first (500.8: the most recently added happens first),
+     * which gives its rulings' order when several players have one.
+     */
+    private void addCombatsAfterOpponentsFirst() {
+        final Player combatPlayer = playerTurn;
+        if (combatPlayer == null || combatsAsActiveThisTurn.getOrDefault(combatPlayer, 0) != 1) {
+            return;
+        }
+        final List<Player> order = Lists.newArrayList(game.getPlayersInTurnOrder(getActualTurnPlayer()));
+        java.util.Collections.reverse(order);
+        for (final Player p : order) {
+            if (!p.isOpponentOf(combatPlayer)) {
+                continue;
+            }
+            for (final Card wolf : p.getCardsIn(ZoneType.Battlefield)) {
+                for (final forge.game.staticability.StaticAbility st : wolf.getStaticAbilities()) {
+                    if (st.checkConditions(forge.game.staticability.StaticAbilityMode.CombatAfterOpponentsFirst)) {
+                        final ExtraPhase added = addExtraPhase(PhaseType.COMBAT_END, PhaseType.PHASE_GROUPS.get(2),
+                                PhaseType.getNext(PhaseType.COMBAT_END, combatPlayer.isPhasesReversed()));
+                        added.setOwner(p, wolf);
+                    }
+                }
+            }
+        }
+    }
+
+    /** A combat phase a Throat Wolf added: its controller is the active and attacking player until it ends. */
+    private void beginOwnedCombat(final ExtraPhase extra) {
+        final Player owner = extra.getOwner();
+        if (!owner.isInGame() || owner.equals(playerTurn)) {
+            return;
+        }
+        phaseStolenFrom = playerTurn;
+        stolenPhaseSteps = STEALABLE_PHASES.get(2);
+        setPlayerTurn(owner);
+        onlyAttacker = extra.getOnlyAttacker();
+        game.getGameLog().add(GameLogEntryType.PHASE, owner + " has a combat phase during " + phaseStolenFrom + "'s turn ("
+                + extra.getOnlyAttacker() + ").");
+    }
+
+    /** During a combat phase a Throat Wolf added, the only creature that can attack - otherwise null. */
+    public final Card getOnlyAttacker() {
+        return onlyAttacker;
+    }
+
     private void endStolenPhase() {
+        onlyAttacker = null;
         if (phaseStolenFrom == null) {
             return;
         }

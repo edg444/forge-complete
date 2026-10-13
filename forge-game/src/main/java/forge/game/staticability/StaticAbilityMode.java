@@ -194,6 +194,8 @@ public enum StaticAbilityMode {
     RandomTargets,
     // StaticAbilityStackFirstInFirstOut (Queue of Beetles) - the bottom object of the stack resolves first
     StackFirstInFirstOut,
+    // Throat Wolf - after each opponent's first combat phase of each turn, its controller has a combat phase
+    CombatAfterOpponentsFirst,
 
     // StaticAbilityMaxCounter
     MaxCounter,

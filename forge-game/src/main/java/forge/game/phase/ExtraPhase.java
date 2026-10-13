@@ -18,6 +18,20 @@ public class ExtraPhase {
         return phase;
     }
 
+    // Throat Wolf: a combat phase that belongs to another player, in which only one creature can attack
+    private forge.game.player.Player owner = null;
+    private forge.game.card.Card onlyAttacker = null;
+    public void setOwner(final forge.game.player.Player owner, final forge.game.card.Card onlyAttacker) {
+        this.owner = owner;
+        this.onlyAttacker = onlyAttacker;
+    }
+    public forge.game.player.Player getOwner() {
+        return owner;
+    }
+    public forge.game.card.Card getOnlyAttacker() {
+        return onlyAttacker;
+    }
+
     public void addTrigger(Trigger deltrigger) {
         this.delTrig.add(deltrigger);
     }

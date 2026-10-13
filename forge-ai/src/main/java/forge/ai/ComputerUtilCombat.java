@@ -2376,6 +2376,10 @@ public class ComputerUtilCombat {
      * against a creature without it, or anything against a creature that only has Unstable's last strike.
      */
     public final static boolean dealsDamageBefore(final Card first, final Card second, final boolean withoutAbilities, final Combat combat) {
+        // Throat Wolf's firstest strike comes before even first strike
+        if (first.hasFirstestStrike() != second.hasFirstestStrike()) {
+            return first.hasFirstestStrike();
+        }
         if (dealsFirstStrikeDamage(first, withoutAbilities, combat)) {
             return !dealsFirstStrikeDamage(second, withoutAbilities, combat);
         }

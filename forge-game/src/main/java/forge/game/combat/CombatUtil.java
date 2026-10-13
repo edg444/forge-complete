@@ -224,6 +224,12 @@ public class CombatUtil {
             return false;
         }
 
+        // Throat Wolf: during the combat phase it added, only it can attack
+        final Card only = game.getPhaseHandler().getOnlyAttacker();
+        if (!forNextTurn && only != null && !attacker.equalsWithGameTimestamp(only)) {
+            return false;
+        }
+
         // Goad logic
         // a goaded creature does need to attack a player which does not goaded her
         // or if not possible a planeswalker or a player which does goaded her

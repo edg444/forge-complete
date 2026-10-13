@@ -309,6 +309,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Throat Wolf** (CMB1 #65; "Summon Wolf" is a creature, per its ruling). Castable during an opponent's combat
+  (`CastWithFlash` with `Phases$`/`PlayerTurn$ Opponent`). New keyword `Firstest strike`: when a combat has one,
+  the first-strike damage step happens twice, first as a firstest strike step where only those creatures deal damage
+  (`Combat.assignFirstestStrikeCombatDamage`; they then count as having dealt first-strike damage, so with first
+  strike they hit again in that step and with double strike in all three). New static mode
+  `CombatAfterOpponentsFirst`: as a combat phase ends that was its active player's first that turn
+  (`PhaseHandler.combatsAsActiveThisTurn`), each opponent's Throat Wolf adds a combat phase right after
+  (`ExtraPhase.setOwner`), added in reverse turn order so the rulings' multi-Wolf order comes out; that player is
+  the active and attacking player for it like a Clocknapper-stolen phase (still the opponent's turn for
+  `getActualTurnPlayer`), and only that Wolf can attack (`PhaseHandler.getOnlyAttacker`, checked in
+  `CombatUtil.canAttack`). AI damage order knows firstest strike comes first.
 - **Siege Elemental** (CMB1 #64). Script only: `CantBlock` on untapped creatures plus Masako's `BlockTapped` for
   tapped ones, which overlooks only being tapped (its rulings).
 - **Seasoned Weaponsmith** (CMB1 #63). New keyword `Tasty`: opponents' tasty creatures are among the defenders

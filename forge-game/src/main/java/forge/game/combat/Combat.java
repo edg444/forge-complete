@@ -77,6 +77,8 @@ public class Combat {
     // and so deal their damage in the step after it
     private final Supplier<CardCollection> combatantsWaitingForLastStrikeDamage = Suppliers.memoize(CardCollection::new);
     private boolean lastStrikeDamage = false;
+    // Throat Wolf's firstest strike: a damage step before first strike's, for creatures with it
+    private boolean firstestStrikeDamage = false;
 
     public Combat(final Player attacker) {
         playerWhoAttacks = attacker;
@@ -971,6 +973,9 @@ public class Combat {
         if (lastStrikeDamage) {
             return combatant.hasLastStrike() || combatantsWaitingForLastStrikeDamage.get().contains(combatant);
         }
+        if (firstestStrikeDamage) {
+            return combatant.hasFirstestStrike();
+        }
         if (combatant.hasDoubleStrike()) {
             return true;
         }
@@ -985,6 +990,34 @@ public class Combat {
             return false;
         }
         return true;
+    }
+
+    /** Whether a creature in this combat has firstest strike, so a firstest strike damage step comes first. */
+    public final boolean hasFirstestStrikers() {
+        for (final Card c : getAttackers()) {
+            if (c.hasFirstestStrike()) {
+                return true;
+            }
+        }
+        for (final Card c : getAllBlockers()) {
+            if (c.hasFirstestStrike()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * The firstest strike damage step: only creatures with firstest strike deal damage, and they count as having dealt
+     * first-strike damage, so they don't deal regular damage unless they have double strike (its rulings).
+     */
+    public final boolean assignFirstestStrikeCombatDamage() {
+        firstestStrikeDamage = true;
+        try {
+            return assignCombatDamage(true);
+        } finally {
+            firstestStrikeDamage = false;
+        }
     }
 
     public final boolean assignCombatDamage(boolean firstStrikeDamage) {

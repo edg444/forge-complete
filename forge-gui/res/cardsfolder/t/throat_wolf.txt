@@ -1,0 +1,8 @@
+Name:Throat Wolf
+ManaCost:1 R R
+Types:Creature Wolf
+PT:3/1
+S:Mode$ CastWithFlash | ValidCard$ Card.Self | ValidSA$ Spell | EffectZone$ All | Caster$ You | Phases$ BeginCombat->EndCombat | PlayerTurn$ Opponent | Description$ You may cast CARDNAME during an opponent's combat phase.
+K:Firstest strike
+S:Mode$ CombatAfterOpponentsFirst | Description$ After each opponent's first combat phase of each turn, there is an additional combat phase. Only CARDNAME can attack during that combat phase.
+Oracle:You may cast Throat Wolf during an opponent's combat phase.\nFirstest strike (This creature deals combat damage to creatures before creatures with first strike.)\nAfter each opponent's first combat phase of each turn, there is an additional combat phase. Only Throat Wolf can attack during that combat phase.
