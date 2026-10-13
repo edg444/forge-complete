@@ -155,8 +155,10 @@ public class GameAction {
         }
 
         // Rules 304.4, 307.4: instants, sorceries can't enter the battlefield and remain
-        // in their previous zone - unless a card says to put one there (Animate Spell; 101.1, the card wins)
-        if (toBattlefield && (c.isInstant() || c.isSorcery()) && (cause == null || !cause.hasParam("AllowNonPermanent"))) {
+        // in their previous zone - unless a card says to put one there (Animate Spell; 101.1, the card wins).
+        // One that also has a permanent type does enter (user ruling, Visitor from Planet Q's instant creatures)
+        if (toBattlefield && (c.isInstant() || c.isSorcery()) && !c.getType().isPermanent()
+                && (cause == null || !cause.hasParam("AllowNonPermanent"))) {
             return c;
         }
 

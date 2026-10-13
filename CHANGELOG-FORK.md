@@ -309,6 +309,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Visitor from Planet Q** (CMB1 #33), an Instant Creature. CR 304.4 keeps instants off the battlefield, so by the
+  rules it (and the flash creatures it makes instants) could never resolve as a permanent. User rulings: an instant or
+  sorcery that also has a permanent type enters the battlefield (`GameAction`, token copies too), and "creature cards
+  you own" covers the stack and battlefield as well. On the battlefield such a card isn't a spell (`Card.isSpell`) and
+  shows its permanent abilities.
 - **Truth or Dare** (CMB1 #32), with #31 Time Sidewalk (upstream) verified. "Target opponent chooses one": modes come
   before targets (CR 601.2b), so the caster picks which opponent chooses (CR 700.2e) and that opponent is the only
   legal target (new player property `ModeChooser`). `CharmEffect.makeChoices` now settles the chooser before working

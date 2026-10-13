@@ -3178,7 +3178,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
         if (plotted) sb.append("Plotted\r\n");
 
-        if (type.isInstant() || type.isSorcery()) {
+        if ((type.isInstant() || type.isSorcery()) && !type.isPermanent()) {
             sb.append(abilityTextInstantSorcery(state));
 
             if (haunting != null) {
@@ -6189,7 +6189,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
 
     public final boolean isSpell() {
-        return isInstant() || isSorcery() || (isAura() && !isInZone(ZoneType.Battlefield));
+        return ((isInstant() || isSorcery()) && !isInZone(ZoneType.Battlefield)) || (isAura() && !isInZone(ZoneType.Battlefield));
     }
 
     public final boolean hasPlayableLandFace() { return isLand() || (isModal() && getState(CardStateName.Backside).getType().isLand()); }

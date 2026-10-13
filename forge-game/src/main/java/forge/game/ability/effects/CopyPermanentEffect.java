@@ -240,7 +240,7 @@ public class CopyPermanentEffect extends TokenEffectBase {
                 // 111.5. Similarly, if an effect would create a token that is a copy of an instant or sorcery card, no token is created.
                 // instant and sorcery can't enter the battlefield
                 // and it can't be replaced by other tokens
-                if (c.isInstant() || c.isSorcery()) {
+                if ((c.isInstant() || c.isSorcery()) && !c.getType().isPermanent()) {
                     continue;
                 }
 

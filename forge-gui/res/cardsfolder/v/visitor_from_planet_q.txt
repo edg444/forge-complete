@@ -1,0 +1,9 @@
+Name:Visitor from Planet Q
+ManaCost:1 U
+Types:Instant Creature Alien
+PT:0/4
+S:Mode$ Continuous | Affected$ Creature.YouOwn+withFlash | AffectedZone$ Hand,Library,Graveyard,Exile,Command,Stack,Battlefield | AddType$ Instant | Description$ All creature cards you own with flash are instants in addition to their other types.
+T:Mode$ SpellCast | ValidCard$ Card.Other+numTypesGE2 | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDraw | OptionalDecider$ You | TriggerDescription$ Whenever you cast another spell with two or more card types, you may draw a card, then discard a card.
+SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1 | SubAbility$ DBDiscard
+SVar:DBDiscard:DB$ Discard | Defined$ You | NumCards$ 1 | Mode$ TgtChoose
+Oracle:All creature cards you own with flash are instants in addition to their other types.\nWhenever you cast another spell with two or more card types, you may draw a card, then discard a card.
