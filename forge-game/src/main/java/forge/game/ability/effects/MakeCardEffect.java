@@ -3,6 +3,7 @@ package forge.game.ability.effects;
 import com.google.common.collect.Lists;
 import forge.StaticData;
 import forge.card.CardEdition;
+import forge.card.GamePieceType;
 import forge.card.ICardFace;
 import forge.game.Game;
 import forge.game.GameEntityCounterTable;
@@ -10,6 +11,7 @@ import forge.game.ability.AbilityKey;
 import forge.game.ability.AbilityUtils;
 import forge.game.ability.SpellAbilityEffect;
 import forge.game.card.*;
+import forge.game.card.token.TokenInfo;
 import forge.game.player.Player;
 import forge.game.player.PlayerCollection;
 import forge.game.spellability.SpellAbility;
@@ -226,6 +228,21 @@ public class MakeCardEffect extends SpellAbilityEffect {
                             card.setTapped(true);
                         }
                     }
+                }
+            }
+
+            // A token card with no real card behind it (Gunk Slug's Gunk) is built from a token script, but it's a
+            // card that stays in the game wherever it goes, like the token cards made from real names above
+            if (sa.hasParam("TokenScript")) {
+                for (int i = 0; i < amount; i++) {
+                    final Card card = TokenInfo.getProtoType(sa.getParam("TokenScript"), sa, player);
+                    if (card == null) {
+                        break;
+                    }
+                    card.setGamePieceType(GamePieceType.CARD);
+                    card.setTokenCard(true);
+                    game.getAction().moveTo(ZoneType.None, card, sa, moveParams);
+                    cards.add(card);
                 }
             }
 

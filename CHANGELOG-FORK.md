@@ -309,6 +309,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Gunk Slug** (CMB1 #43), with #42 Frogkin Kidnapper (upstream) verified. New `MakeCard` param `TokenScript$`
+  builds a token card that has no real card behind it from a token script (`c_s_gunk`: colorless Gunk sorcery,
+  no mana cost, cycling {4}; Gunk added to the spell types). Judgment call, following the user's design-intent rulings (over CR 111.2/400.3): the
+  targeted opponent owns the Gunk shuffled into their library, so it cycles into their graveyard.
 - **Everlasting Lich** (CMB1 #41), with #37 Celestine Cave Witch, #38 Chimney Goyf, #39 Corrupted Key and #40
   Cyclopean Titan (upstream) verified; the Cave Witch keeps upstream's intended curse (as printed, its reminder text
   would drain its own controller). "Can't die" per its reminder text: indestructible, `CantSacrifice`, and new

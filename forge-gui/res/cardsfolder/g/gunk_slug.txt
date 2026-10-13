@@ -1,0 +1,7 @@
+Name:Gunk Slug
+ManaCost:2 B
+Types:Creature Slug
+PT:2/3
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGunk | TriggerDescription$ When CARDNAME enters, create three Gunk token cards and shuffle them into target opponent's library. (Gunk is a colorless sorcery card with no mana cost that has cycling {4}.)
+SVar:TrigGunk:DB$ MakeCard | ValidTgts$ Opponent | Defined$ Targeted | TokenScript$ c_s_gunk | Amount$ 3 | Zone$ Library | IsCurse$ True
+Oracle:When Gunk Slug enters, create three Gunk token cards and shuffle them into target opponent's library. (Gunk is a colorless sorcery card with no mana cost that has cycling {4}.)

@@ -1,0 +1,6 @@
+Name:Gunk
+ManaCost:no cost
+Colors:colorless
+Types:Sorcery Gunk
+K:Cycling:4
+Oracle:Cycling {4} ({4}, Discard this card: Draw a card.)
