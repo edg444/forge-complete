@@ -233,9 +233,9 @@ public class SettingsPage extends TabPage<SettingsScreen> {
                     AiProfileUtil.setAiSideboardingMode(AiProfileUtil.AISideboardingMode.normalizedValueOf(newValue));
                 }
             }, 1);
-        lstSettings.addItem(new BooleanSetting(FPref.MATCH_EXPERIMENTAL_RESTORE,
+        /*lstSettings.addItem(new BooleanSetting(FPref.MATCH_EXPERIMENTAL_RESTORE,
             Forge.getLocalizer().getMessage("cbExperimentalRestore"),
-            Forge.getLocalizer().getMessage("nlExperimentalRestore")), 1);
+            Forge.getLocalizer().getMessage("nlExperimentalRestore")), 1);*/
         lstSettings.addItem(new CustomSelectSetting(FPref.MATCH_AI_TIMEOUT, Forge.getLocalizer().getMessage("cbAITimeout"),
             Forge.getLocalizer().getMessage("nlAITimeout"),
             Lists.newArrayList("5", "10", "60", "120", "240", "300", "600")), 1);
@@ -276,6 +276,12 @@ public class SettingsPage extends TabPage<SettingsScreen> {
             new String[] {
                 ForgeConstants.GRAVEYARD_ORDERING_NEVER, ForgeConstants.GRAVEYARD_ORDERING_OWN_CARDS,
                 ForgeConstants.GRAVEYARD_ORDERING_ALWAYS
+            }), 1);
+        lstSettings.addItem(new CustomSelectSetting(FPref.UI_UNDO_MODE,
+            Forge.getLocalizer().getMessage("cbUndoMode"),
+            Forge.getLocalizer().getMessage("nlUndoMode"),
+            new String[] {
+                ForgeConstants.UNDO_MODE_OFF, ForgeConstants.UNDO_MODE_SINGLE, ForgeConstants.UNDO_MODE_FREE
             }), 1);
         lstSettings.addItem(new CustomSelectSetting(FPref.UI_AUTO_DECISION_MODE,
             Forge.getLocalizer().getMessage("lblAutoYieldsAndTriggers"),

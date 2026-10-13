@@ -51,6 +51,7 @@ import forge.game.staticability.StaticAbilityCantChangeDayTime;
 import forge.game.staticability.StaticAbilityMode;
 import forge.game.trigger.TriggerHandler;
 import forge.game.trigger.TriggerType;
+import forge.game.undo.UndoManager;
 import forge.game.zone.*;
 import forge.trackable.Tracker;
 import forge.util.*;
@@ -205,6 +206,7 @@ public class Game {
     private final Game maingame;
     private final GameView view;
     private final Tracker tracker = new Tracker();
+    private final UndoManager undoManager = new UndoManager();
 
     /**
      * Gets the id.
@@ -259,6 +261,10 @@ public class Game {
     }
     public CardCollectionView getLastStateGraveyard() {
         return lastStateGraveyard;
+    }
+
+    public UndoManager getUndoManager() {
+        return undoManager;
     }
 
     public void stashGameState() {

@@ -536,7 +536,7 @@ public abstract class AbstractGuiGame implements IGuiGame, IMayViewCards {
     private TimerTask awaitNextInputTask;
 
     @Override
-    public final void awaitNextInput() {
+    public void awaitNextInput() {
         checkAwaitNextInputTimer();
         //delay updating prompt to await next input briefly so buttons don't flicker disabled then enabled
         awaitNextInputTask = new TimerTask() {
@@ -587,7 +587,7 @@ public abstract class AbstractGuiGame implements IGuiGame, IMayViewCards {
         return waitingForName;
     }
 
-    private String currentYieldMessage() {
+    protected String currentYieldMessage() {
         YieldController yielding = null;
         for (IGameController c : gameControllers.values()) {
             YieldController yc = c.getYieldController();
@@ -611,8 +611,7 @@ public abstract class AbstractGuiGame implements IGuiGame, IMayViewCards {
         return null;
     }
 
-    @Override
-    public void showWaitingTimer(final PlayerView forPlayer, final String waitingForPlayerName) {
+    private void showWaitingTimer(final PlayerView forPlayer, final String waitingForPlayerName) {
         cancelWaitingTimer();
         if (waitingForPlayerName == null) {
             return;
@@ -688,6 +687,7 @@ public abstract class AbstractGuiGame implements IGuiGame, IMayViewCards {
 
     @Override
     public final void cancelAwaitNextInput() {
+        cancelWaitingTimer();
         if (awaitNextInputTimer == null) {
             return;
         }
@@ -700,11 +700,10 @@ public abstract class AbstractGuiGame implements IGuiGame, IMayViewCards {
                 awaitNextInputTask = null;
             }
         }
-        cancelWaitingTimer();
     }
 
     @Override
-    public final void updateAutoPassPrompt() {
+    public void updateAutoPassPrompt() {
         String message = currentYieldMessage();
         if (message == null) return;
         cancelAwaitNextInput();
@@ -721,6 +720,8 @@ public abstract class AbstractGuiGame implements IGuiGame, IMayViewCards {
         if (update instanceof YieldUpdate.ClearMarker u) pv = u.player();
         else if (update instanceof YieldUpdate.StackYield u) pv = u.player();
         else if (update instanceof YieldUpdate.SetAutoPassUntilEndOfTurn u) pv = u.player();
+        // SetMarker carries the phase owner, not who is yielding. It only reaches a client, for its own player
+        else if (update instanceof YieldUpdate.SetMarker) pv = getCurrentPlayer();
         else return;
         IGameController c = getGameController(pv);
         if (c != null) c.applyYieldUpdate(update);
@@ -922,6 +923,7 @@ public abstract class AbstractGuiGame implements IGuiGame, IMayViewCards {
 
     @Override
     public void afterGameEnd() {
+        cancelWaitingTimer();
         if (awaitNextInputTimer != null) {
             awaitNextInputTimer.cancel();
             awaitNextInputTimer = null;

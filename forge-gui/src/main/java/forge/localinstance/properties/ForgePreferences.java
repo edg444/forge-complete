@@ -152,6 +152,7 @@ public class ForgePreferences extends AbstractPreferences<ForgePreferences.FPref
         UI_LOAD_NONLEGAL_CARDS("true"),
         ALLOW_CUSTOM_CARDS_IN_DECKS_CONFORMANCE("false"),
         UI_ALLOW_ORDER_GRAVEYARD_WHEN_NEEDED ("Never"),
+        UI_UNDO_MODE (ForgeConstants.UNDO_MODE_FREE),
         UI_DEFAULT_FONT_SIZE("12"),
         UI_CARD_ART_FORMAT("Full"),
         UI_SELECT_FROM_CARD_DISPLAYS("true"),
@@ -204,7 +205,7 @@ public class ForgePreferences extends AbstractPreferences<ForgePreferences.FPref
         MATCH_AI_SIDEBOARDING_MODE("Human For AI"),
         MATCH_AI_TIMEOUT("5"),
         UI_ENABLE_AI_CHEATS ("false"),
-        MATCH_EXPERIMENTAL_RESTORE("false"),
+        //MATCH_EXPERIMENTAL_RESTORE("false"),
 
         ENFORCE_DECK_LEGALITY ("true"),
         PERFORMANCE_MODE ("false"),
