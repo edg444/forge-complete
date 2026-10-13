@@ -309,6 +309,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Tibalt the Chaotic** (CMB1 #66, upstream) verified, with a fix: `Play | RandomCopied$` threw away a random pick
+  the AI's decks exclude (`RemAIDecks`) after picking it, so an AI Tibalt's +1 cast nothing whenever it rolled
+  Ignorant Bliss; the cast is mandatory (its rulings), so that skip now applies only when the AI gets a choice
+  (`Optional$`/`ChoiceNum$`, the Vanguard avatars).
 - **Throat Wolf** (CMB1 #65; "Summon Wolf" is a creature, per its ruling). Castable during an opponent's combat
   (`CastWithFlash` with `Phases$`/`PlayerTurn$ Opponent`). New keyword `Firstest strike`: when a combat has one,
   the first-strike damage step happens twice, first as a firstest strike step where only those creatures deal damage

@@ -142,7 +142,8 @@ public class PlayEffect extends SpellAbilityEffect {
                 int nCopied = AbilityUtils.calculateAmount(source, num, sa);
                 for (PaperCard cp : cards.collect(StreamUtil.random(nCopied))) {
                     final Card possibleCard = Card.fromPaperCard(cp, sa.getActivatingPlayer());
-                    if (sa.getActivatingPlayer().isAI() && possibleCard.getRules() != null && possibleCard.getRules().getAiHints().getRemAIDecks())
+                    // only when the AI gets a choice: a card it must cast is cast all the same (Tibalt the Chaotic)
+                    if ((sa.hasParam("Optional") || sa.hasParam("ChoiceNum")) && sa.getActivatingPlayer().isAI() && possibleCard.getRules() != null && possibleCard.getRules().getAiHints().getRemAIDecks())
                         continue;
                     // Need to temporarily set the Owner so the Game is set
                     possibleCard.setOwner(sa.getActivatingPlayer());
