@@ -309,6 +309,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Truth or Dare** (CMB1 #32), with #31 Time Sidewalk (upstream) verified. "Target opponent chooses one": modes come
+  before targets (CR 601.2b), so the caster picks which opponent chooses (CR 700.2e) and that opponent is the only
+  legal target (new player property `ModeChooser`). `CharmEffect.makeChoices` now settles the chooser before working
+  out which modes are legal, and only offers opponents with enough legal modes; Charm takes `ChooserDescription$`
+  for the rules text. AI: as chooser it takes Truth unless Dare would mill nothing; as caster it holds the card when
+  every opponent is down to ten; once another player has chosen, the AI picks the chosen mode's targets then (any
+  legal one if its own targeting declines).
 - **Zone tabs on the left again (mobile, landscape).** Upstream #12199 (in the 2026-10-10 merge) made the right-edge
   Hand/Library/Graveyard/Exile column the default and removed the *Alternate Player Zone Layout* setting. New fork
   setting of that name (`UI_ZONE_TABS_LEFT`, off by default) puts those tabs back in the left column with the rest.

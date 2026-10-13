@@ -116,7 +116,7 @@ public class CharmEffect extends SpellAbilityEffect {
         sb.append(sa.getCostDescription());
 
         if (!spree && !tiered) {
-            sb.append(oppChooses ? "An opponent chooses " : "Choose ");
+            sb.append(oppChooses ? sa.getParamOrDefault("ChooserDescription", "An opponent") + " chooses " : "Choose ");
             if (isX) {
                 sb.append(sa.hasParam("MinCharmNum") && min == 0 ? "up to " : "").append("X");
             } else if (num == min || num == Integer.MAX_VALUE) {
@@ -230,6 +230,42 @@ public class CharmEffect extends SpellAbilityEffect {
         // reset all previous choices
         sa.setSubAbility(null);
 
+        final Card source = sa.getHostCard();
+        final Player activator = sa.getActivatingPlayer();
+
+        boolean canRepeat = sa.hasParam("CanRepeatModes");
+        int num = AbilityUtils.calculateAmount(source, sa.getParamOrDefault("CharmNum", "1"), sa);
+        final int min = sa.hasParam("MinCharmNum") ? AbilityUtils.calculateAmount(source, sa.getParam("MinCharmNum"), sa) : num;
+
+        // The chooser comes first: a mode can target whoever chooses (Truth or Dare), so which modes are legal
+        // depends on who that is
+        Player chooser = activator;
+        if (sa.hasParam("Chooser")) {
+            // Three modal cards require you to choose a player to make the modal choice'
+            // Two of these also reference the chosen player during the spell effect
+
+            if ("Opponent".equals(sa.getParam("Chooser"))) {
+                FCollection<Player> opponents = new FCollection<>();
+                for (Player opp : activator.getOpponents()) {
+                    sa.setChoosingPlayer(opp);
+                    if (canRepeat || makePossibleOptions(sa).size() >= min) {
+                        opponents.add(opp);
+                    }
+                }
+                if (opponents.isEmpty()) {
+                    sa.setChoosingPlayer(null);
+                    return false;
+                }
+                chooser = activator.getController().chooseSingleEntityForEffect(opponents, sa, "Choose an opponent", null);
+            } else {
+                // anything else names the player directly, so a trigger can hand the choice to
+                // whoever caused it rather than to the card's controller
+                chooser = Iterables.getFirst(
+                        AbilityUtils.getDefinedPlayers(source, sa.getParam("Chooser"), sa), chooser);
+            }
+            sa.setChoosingPlayer(chooser);
+        }
+
         List<AbilitySub> choices = makePossibleOptions(sa);
 
         // Entwine does use all Choices
@@ -237,13 +273,6 @@ public class CharmEffect extends SpellAbilityEffect {
             chainAbilities(sa, choices);
             return true;
         }
-
-        final Card source = sa.getHostCard();
-        final Player activator = sa.getActivatingPlayer();
-
-        boolean canRepeat = sa.hasParam("CanRepeatModes");
-        int num = AbilityUtils.calculateAmount(source, sa.getParamOrDefault("CharmNum", "1"), sa);
-        final int min = sa.hasParam("MinCharmNum") ? AbilityUtils.calculateAmount(source, sa.getParam("MinCharmNum"), sa) : num;
 
         if (!canRepeat) {
             // not enough choices
@@ -275,24 +304,6 @@ public class CharmEffect extends SpellAbilityEffect {
                 }
                 return true;
             }
-        }
-
-        Player chooser = sa.getActivatingPlayer();
-
-        if (sa.hasParam("Chooser")) {
-            // Three modal cards require you to choose a player to make the modal choice'
-            // Two of these also reference the chosen player during the spell effect
-
-            if ("Opponent".equals(sa.getParam("Chooser"))) {
-                FCollection<Player> opponents = activator.getOpponents();
-                chooser = activator.getController().chooseSingleEntityForEffect(opponents, sa, "Choose an opponent", null);
-            } else {
-                // anything else names the player directly, so a trigger can hand the choice to
-                // whoever caused it rather than to the card's controller
-                chooser = Iterables.getFirst(
-                        AbilityUtils.getDefinedPlayers(source, sa.getParam("Chooser"), sa), chooser);
-            }
-            sa.setChoosingPlayer(chooser);
         }
 
         List<AbilitySub> chosen = chooser.getController().chooseModeForAbility(sa, choices, min, num, canRepeat);

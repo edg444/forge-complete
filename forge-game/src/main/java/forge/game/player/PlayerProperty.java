@@ -290,6 +290,12 @@ public class PlayerProperty {
             if (source.getChosenPlayer() == null || !source.getChosenPlayer().equals(player)) {
                 return false;
             }
+        } else if (property.equals("ModeChooser")) {
+            // "Target opponent chooses one": the mode is chosen before targets (CR 601.2b), so the caster picks the
+            // opponent who chooses (CR 700.2e) and that opponent is then the only legal target.
+            if (!(spellAbility instanceof SpellAbility sa) || !player.equals(sa.getRootAbility().getChoosingPlayer())) {
+                return false;
+            }
         } else if (property.equals("NotedDefender")) {
             String tracker = player.getDraftNotes().getOrDefault("Cogwork Tracker", "");
 

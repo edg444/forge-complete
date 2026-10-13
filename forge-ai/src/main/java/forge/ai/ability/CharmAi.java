@@ -12,6 +12,7 @@ import forge.game.spellability.AbilitySub;
 import forge.game.spellability.OptionalCost;
 import forge.game.spellability.OptionalCostValue;
 import forge.game.spellability.SpellAbility;
+import forge.game.zone.ZoneType;
 import forge.util.Aggregates;
 import forge.util.MyRandom;
 import forge.util.collect.FCollection;
@@ -24,6 +25,16 @@ import java.util.Optional;
 public class CharmAi extends SpellAbilityAi {
     @Override
     protected AiAbilityDecision checkApiLogic(Player ai, SpellAbility sa) {
+        if (ai.equals(sa.getActivatingPlayer()) && "TruthOrDare".equals(sa.getParam("AILogic"))) {
+            // the target opponent chooses and either mode helps; no chosen list, or the opponent's AI would reuse it.
+            // Targets are set once they've chosen (ComputerUtil.handlePlayingSpellAbility)
+            // (an opponent down to ten cards would just take Dare for free)
+            sa.setChosenList(null);
+            sa.setSubAbility(null);
+            return ai.getOpponents().stream().anyMatch(o -> o.getCardsIn(ZoneType.Library).size() > 10)
+                    ? new AiAbilityDecision(100, AiPlayDecision.WillPlay)
+                    : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
         final Card source = sa.getHostCard();
         List<AbilitySub> choices = CharmEffect.makePossibleOptions(sa);
 
@@ -44,7 +55,12 @@ public class CharmAi extends SpellAbilityAi {
         sa.setSubAbility(null);
         List<AbilitySub> chosenList;
 
-        if (choiceForOpp) {
+        if (choiceForOpp && "TruthOrDare".equals(sa.getParam("AILogic"))) {
+            // Dare (mill all but the bottom ten) is free once the library is down to ten; otherwise a revealed hand
+            // costs far less than ten turns' clock
+            boolean dareIsFree = ai.getCardsIn(ZoneType.Library).size() <= 10;
+            chosenList = Lists.newArrayList(choices.get(dareIsFree ? 1 : 0));
+        } else if (choiceForOpp) {
             // This branch is for "An Opponent chooses" Charm spells from Alliances
             // Current just choose the first available spell, which seem generally less disastrous for the AI.
             chosenList = choices.subList(1, choices.size());

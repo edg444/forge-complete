@@ -121,6 +121,24 @@ public class ComputerUtil {
             // 603.3c If no mode is chosen, the ability is removed from the stack.
             return false;
         }
+        if (sa.getApi() == ApiType.Charm && sa.hasParam("Chooser")) {
+            // Another player chose the modes, so targets the AI picked while deciding may belong to a mode that
+            // wasn't chosen, or may not exist yet (Truth or Dare's target is whoever chose)
+            for (AbilitySub sub = sa.getSubAbility(); sub != null; sub = sub.getSubAbility()) {
+                if (sub.usesTargeting() && !sub.isTargetNumberValid()) {
+                    sub.resetTargets();
+                    SpellApiToAi.Converter.get(sub).doTrigger(ai, sub, true);
+                    // the spell has to be finished once another player chose its mode, even if the AI's own targeting
+                    // turns the only legal target down (Dare with nothing left to mill)
+                    for (GameEntity e : sub.getTargetRestrictions().getAllCandidates(sub)) {
+                        if (sub.isTargetNumberValid()) {
+                            break;
+                        }
+                        sub.getTargets().add(e);
+                    }
+                }
+            }
+        }
         if (chooseTargets != null) {
             chooseTargets.accept(sa);
             if (!sa.isTargetNumberValid()) {
