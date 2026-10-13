@@ -75,6 +75,10 @@ public class ReplaceManaEffect extends SpellAbilityEffect {
             replaced = StringUtils.repeat(replaced, " ", Integer.parseInt(sa.getParam("ReplaceAmount")));
         }
         params.put(AbilityKey.Mana, replaced);
+        if (sa.hasParam("AllPlayers")) {
+            // Mana Abundance: every player adds the mana, whatever it ends up as after other replacements
+            params.put(AbilityKey.ManaForAllPlayers, true);
+        }
         // effect was updated
         params.put(AbilityKey.ReplacementResult, ReplacementResult.Updated);
     }

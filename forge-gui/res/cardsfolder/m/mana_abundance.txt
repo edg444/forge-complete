@@ -1,0 +1,7 @@
+Name:Mana Abundance
+ManaCost:2 R
+Types:World Enchantment
+R:Event$ ProduceMana | ActiveZones$ Battlefield | ValidPlayer$ Player | ValidSA$ SpellAbility | ReplaceWith$ AllPlayersAdd | Description$ If a player would add mana, instead all players add that mana.
+SVar:AllPlayersAdd:DB$ ReplaceMana | AllPlayers$ True
+AI:RemoveDeck:Random
+Oracle:If a player would add mana, instead all players add that mana.

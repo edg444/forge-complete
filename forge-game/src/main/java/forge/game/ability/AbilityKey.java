@@ -91,6 +91,7 @@ public enum AbilityKey {
     LoseReason("LoseReason"),
     Map("Map"),
     Mana("Mana"),
+    ManaForAllPlayers("ManaForAllPlayers"),
     MergedCards("MergedCards"),
     Mode("Mode"),
     NaturalResult("NaturalResult"),

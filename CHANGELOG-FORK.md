@@ -309,6 +309,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Mana Abundance** (CMB1 #58). `ReplaceMana | AllPlayers$ True` flags the produce-mana event
+  (`AbilityKey.ManaForAllPlayers`); `AbilityManaPart.produceMana` then adds the final mana to every player's pool from
+  the same mana ability (same source and riders, "you" = whoever adds it, per its rulings) and runs ManaAdded for
+  each. Any mana counts, spells too (`ValidSA$ SpellAbility`); `ValidPlayer$ Player` keeps it out of the AI's
+  mana-color predictions, which leave the player unset, since it never changes what the producer gets.
 - **Lightning Colt** (CMB1 #57). Script only: an Instant Creature, so it resolves onto the battlefield under the
   Visitor from Planet Q ruling; the AI's flash timing logic already casts it at instant speed.
 - **Lazier Goblin** (CMB1 #56), with #55 Impatient Iguana (upstream) verified. New keyword `K:Motivate:cost`: a

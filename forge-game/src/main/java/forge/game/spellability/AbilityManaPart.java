@@ -162,9 +162,9 @@ public class AbilityManaPart implements java.io.Serializable {
 
     public final String produceMana(final String produced, final Player player, SpellAbility sa) {
         final Card source = this.getSourceCard();
-        final ManaPool manaPool = player.getManaPool();
         final Game game = player.getGame();
         String afterReplace = produced;
+        boolean forAllPlayers = false;
 
         SpellAbility root = sa == null ? null : sa.getRootAbility();
 
@@ -180,6 +180,7 @@ public class AbilityManaPart implements java.io.Serializable {
                 break;
             case Updated:
                 afterReplace = (String) repParams.get(AbilityKey.Mana);
+                forAllPlayers = repParams.containsKey(AbilityKey.ManaForAllPlayers);
                 break;
             default:
                 return "";
@@ -188,6 +189,22 @@ public class AbilityManaPart implements java.io.Serializable {
 
         //clear lastProduced
         this.lastManaProduced.clear();
+        addProduced(afterReplace, player, root, this.lastManaProduced);
+        if (forAllPlayers) {
+            // Mana Abundance's rulings: the same mana, with the same riders and from the same source, for each player
+            for (final Player other : game.getPlayersInTurnOrder()) {
+                if (other != player) {
+                    addProduced(afterReplace, other, root, HashMultiset.create());
+                }
+            }
+        }
+        return afterReplace;
+    }
+
+    private void addProduced(final String afterReplace, final Player player, final SpellAbility root, final Multiset<Mana> into) {
+        final Card source = this.getSourceCard();
+        final ManaPool manaPool = player.getManaPool();
+        final Game game = player.getGame();
 
         // TODO use MagicColor
         Map<Byte, Mana> manaHolder = Maps.newHashMap();
@@ -195,7 +212,7 @@ public class AbilityManaPart implements java.io.Serializable {
         // loop over mana produced string
         for (final String c : afterReplace.split(" ")) {
             if (StringUtils.isNumeric(c)) {
-                this.lastManaProduced.add(manaHolder.computeIfAbsent((byte) ManaAtom.COLORLESS, b -> new Mana(b, source, this, player)), Integer.parseInt(c));
+                into.add(manaHolder.computeIfAbsent((byte) ManaAtom.COLORLESS, b -> new Mana(b, source, this, player)), Integer.parseInt(c));
             } else if ("Infinity".equals(c)) {
                 // Mox Lotus. Unbounded rather than a big pile, so it can't be spent dry.
                 manaPool.addInfiniteColorless(source, this);
@@ -210,7 +227,7 @@ public class AbilityManaPart implements java.io.Serializable {
                 // they are folded together on arrival rather than left stranded in the pool.
                 final byte half = halfColorProduced(c);
                 if (manaPool.payHalfManaExact(half)) {
-                    this.lastManaProduced.add(manaHolder.computeIfAbsent(half, b -> new Mana(b, source, this, player)));
+                    into.add(manaHolder.computeIfAbsent(half, b -> new Mana(b, source, this, player)));
                 } else {
                     manaPool.addHalfMana(half);
                 }
@@ -220,11 +237,11 @@ public class AbilityManaPart implements java.io.Serializable {
                     attemptedMana = (byte)ManaAtom.COLORLESS;
                 }
 
-                this.lastManaProduced.add(manaHolder.computeIfAbsent(attemptedMana, b -> new Mana(b, source, this, player)));
+                into.add(manaHolder.computeIfAbsent(attemptedMana, b -> new Mana(b, source, this, player)));
             }
         }
 
-        manaPool.addMana(this.lastManaProduced);
+        manaPool.addMana(into);
 
         final Map<AbilityKey, Object> runParams = AbilityKey.mapFromCard(source);
         runParams.put(AbilityKey.Player, player);
@@ -233,8 +250,6 @@ public class AbilityManaPart implements java.io.Serializable {
         runParams.put(AbilityKey.Activator, root == null ? null : root.getActivatingPlayer());
 
         game.getTriggerHandler().runTrigger(TriggerType.ManaAdded, runParams, false);
-
-        return afterReplace;
     }
 
     public void tapsForMana(final SpellAbility root, String mana) {
