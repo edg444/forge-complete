@@ -1861,7 +1861,7 @@ public class GameAction {
                 if (c.isCreature() && !ignoresSBA) {
                     // Rule 704.5f - Put into grave (no regeneration) for toughness <= 0
                     // (1/2 toughness is above 0, so Little Girl doesn't die on arrival)
-                    if (c.getNetToughnessInHalves() <= 0) {
+                    if (c.getNetToughnessInHalves() <= 0 && !StaticAbilityIgnoreStateBasedActions.ignoresZeroToughness(c)) {
                         noRegCreats.add(c);
                         checkAgainCard = true;
                     } else if (c.hasKeyword(Keyword.INDESTRUCTIBLE)) {

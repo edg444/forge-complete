@@ -64,6 +64,7 @@ import forge.game.replacement.ReplacementEffect;
 import forge.game.replacement.ReplacementLayer;
 import forge.game.spellability.SpellAbility;
 import forge.game.staticability.StaticAbility;
+import forge.game.staticability.StaticAbilityIgnoreStateBasedActions;
 import forge.game.staticability.StaticAbilityMode;
 import forge.game.trigger.Trigger;
 import forge.game.trigger.TriggerType;
@@ -1985,7 +1986,7 @@ public class ComputerUtilCard {
         }
         final Card copy = CardCopyService.getLKICopy(c);
         applyStaticContPT(c.getGame(), copy, null);
-        return copy.getNetToughness() <= 0;
+        return copy.getNetToughness() <= 0 && !StaticAbilityIgnoreStateBasedActions.exemptsItselfFromZeroToughness(c);
     }
 
     /**

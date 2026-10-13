@@ -309,6 +309,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Everlasting Lich** (CMB1 #41), with #37 Celestine Cave Witch, #38 Chimney Goyf, #39 Corrupted Key and #40
+  Cyclopean Titan (upstream) verified; the Cave Witch keeps upstream's intended curse (as printed, its reminder text
+  would drain its own controller). "Can't die" per its reminder text: indestructible, `CantSacrifice`, and new
+  `IgnoreStateBasedActions` param `Rule$ ZeroToughness`, which exempts only from 704.5f (counters still cancel, the
+  legend rule still applies). AI: `wouldDieToStaticPT` honors a card's own exemption, so it casts the 4/0.
 - **Buried Ogre** (CMB1 #36), with #35 Bone Rattler (upstream) verified. Uses `MayEffectFromOpeningDeck`, which runs
   before the library is shuffled and after starting life is set (both per its ruling); life lost there no longer counts
   as lost "this turn" on turn 1. ChangeZone's `OptionalPrompt$` now also applies to a defined card. AI:
