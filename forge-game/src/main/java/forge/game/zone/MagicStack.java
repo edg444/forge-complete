@@ -26,6 +26,7 @@ import forge.game.ability.AbilityUtils;
 import forge.game.ability.ApiType;
 import forge.game.ability.effects.PlayEffect;
 import forge.game.card.Card;
+import forge.game.card.CardCloneStates;
 import forge.game.card.CardCopyService;
 import forge.game.event.*;
 import forge.game.keyword.Keyword;
@@ -633,6 +634,17 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
         curResolvingCard = source;
 
         boolean thisHasFizzled = hasFizzled(sa, null);
+
+        // A spell that became a Missile on the stack (Bombardment) now has the Missile's spell ability, with no target
+        // chosen for it, so it doesn't resolve (its ruling). One cast as a Missile has that ability's targets.
+        if (!thisHasFizzled && sa.isSpell() && sa.getCloneCauseWhenCast() == null) {
+            for (final CardCloneStates states : source.getCloneStates().values()) {
+                if (states.getSource() != null && states.getSource().hasParam("ReplacesSpellAbility")) {
+                    thisHasFizzled = true;
+                    break;
+                }
+            }
+        }
 
         if (!thisHasFizzled) {
             game.copyLastState();

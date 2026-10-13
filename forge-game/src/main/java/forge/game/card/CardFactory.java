@@ -684,6 +684,10 @@ public class CardFactory {
                 }
             }
 
+            if (cause.hasParam("RemoveAllAbilities")) {
+                state.clearAllAbilities();
+            }
+
             // abilities to add to clone
             if (cause.hasParam("AddAbilities") || cause.hasParam("GainTextAbilities")) {
                 final String str = cause.getParamOrDefault("GainTextAbilities", cause.getParam("AddAbilities"));
@@ -692,6 +696,10 @@ public class CardFactory {
                         final String actualAbility = origSVars.get(s);
                         final SpellAbility grantedAbility = AbilityFactory.getAbility(actualAbility, out);
                         grantedAbility.setIntrinsic(true);
+                        if (cause.hasParam("KeepWhenCast")) {
+                            // cast this way, the card stays what this made it (a Missile is still one on the stack)
+                            grantedAbility.setCloneCauseWhenCast(cause);
+                        }
                         state.addSpellAbility(grantedAbility);
                     }
                 }

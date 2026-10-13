@@ -21,6 +21,15 @@ public class CloneAi extends SpellAbilityAi {
 
     @Override
     protected AiAbilityDecision checkApiLogic(Player ai, SpellAbility sa) {
+        if ("Bombardment".equals(sa.getParam("AILogic"))) {
+            // every other card in hand becomes a 2-damage Missile for {R}: worth trading the hand only for lethal
+            int redLeft = CardLists.count(ai.getCardsIn(ZoneType.Battlefield), c -> c.isUntapped()
+                    && c.getManaAbilities().anyMatch(m -> m.canProduce("R"))) - 1;
+            int missiles = Math.min(ai.getCardsIn(ZoneType.Hand).size() - 1, redLeft);
+            Player weakest = ai.getWeakestOpponent();
+            boolean lethal = weakest != null && missiles > 0 && weakest.canLoseLife() && weakest.getLife() <= 2 * missiles;
+            return lethal ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
         final Card source = sa.getHostCard();
         final Game game = source.getGame();
 
@@ -239,6 +248,9 @@ public class CloneAi extends SpellAbilityAi {
      * @see forge.ai.SpellAbilityAi#checkPhaseRestrictions(forge.game.player.Player, forge.game.spellability.SpellAbility, forge.game.phase.PhaseHandler)
      */
     protected boolean checkPhaseRestrictions(final Player ai, final SpellAbility sa, final PhaseHandler ph) {
+        if ("Bombardment".equals(sa.getParam("AILogic"))) {
+            return true; // a sorcery: the lethal check in checkApiLogic is the whole decision
+        }
         // don't use instant speed clone abilities outside computers
         // Combat_Begin step
         if (!ph.is(PhaseType.COMBAT_BEGIN)

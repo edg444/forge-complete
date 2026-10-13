@@ -2102,6 +2102,16 @@ public class Player extends GameEntity implements Comparable<Player> {
 
         getZone(ZoneType.Library).setCards(getController().cheatShuffle(list));
 
+        // A randomized library's cards are new objects (Bombardment's ruling): Missiles made of them there are gone
+        for (final Card c : list) {
+            for (final Map.Entry<Long, CardCloneStates> e : Lists.newArrayList(c.getCloneStates().entrySet())) {
+                if (e.getValue().getSource() != null && e.getValue().getSource().hasParam("EndsWhenShuffled")) {
+                    c.removeCloneState(e.getKey());
+                    c.updateStateForView();
+                }
+            }
+        }
+
         // Always Run triggers (701.20e)
         final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(this);
         runParams.put(AbilityKey.Source, sa);

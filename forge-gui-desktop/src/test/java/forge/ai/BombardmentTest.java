@@ -115,4 +115,66 @@ public class BombardmentTest extends AITest {
             AssertJUnit.assertEquals("opponent at " + oppLife, oppLife <= 4, will);
         }
     }
+
+    @Test
+    public void legendaryStaysLegendaryAndCopiesOfAMissileAreMissiles() {
+        Game game = initAndCreateGame();
+        Player ai = game.getPlayers().get(1);
+        Player opp = game.getPlayers().get(0);
+        addCards("Mountain", 3, ai);
+        addCards("Island", 2, ai);
+        fillLibrary(ai, 3);
+        Card isamaru = addCardToZone("Isamaru, Hound of Konda", ai, ZoneType.Hand);
+        Card wurm = addCardToZone("Craw Wurm", ai, ZoneType.Hand);
+        Card twincast = addCardToZone("Twincast", ai, ZoneType.Hand);
+        Card bomb = addCardToZone("Bombardment", ai, ZoneType.Hand);
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN1, ai);
+        game.getAction().checkStateEffects(true);
+        SpellAbility sa = bomb.getFirstSpellAbility();
+        sa.setActivatingPlayer(ai);
+        AssertJUnit.assertTrue(ComputerUtil.handlePlayingSpellAbility(ai, sa, null));
+        resolveAll(game);
+
+        Card legend = game.getCardState(isamaru);
+        AssertJUnit.assertEquals("Missile", legend.getName());
+        AssertJUnit.assertTrue("supertypes stay (ruling 4)", legend.getType().isLegendary());
+        AssertJUnit.assertTrue("a copiable value (ruling 6)", legend.isCloned());
+
+        SpellAbility missile = castable(game.getCardState(wurm), ai);
+        missile.resetTargets();
+        missile.getTargets().add(opp);
+        AssertJUnit.assertTrue(ComputerUtil.handlePlayingSpellAbility(ai, missile, null));
+        // Twincast is a Missile too; copy the Missile spell with a real copy effect instead
+        SpellAbility copy = forge.game.ability.AbilityFactory.getAbility(
+                "DB$ CopySpellAbility | Defined$ ValidStack Spell", bomb);
+        copy.setActivatingPlayer(ai);
+        forge.game.ability.AbilityUtils.resolve(copy);
+        resolveAll(game);
+        AssertJUnit.assertEquals("the Missile and its copy", 16, opp.getLife());
+    }
+
+    @Test
+    public void aSpellAlreadyOnTheStackBecomesAMissileAndDoesntResolve() {
+        Game game = initAndCreateGame();
+        Player ai = game.getPlayers().get(1);
+        Player opp = game.getPlayers().get(0);
+        addCards("Mountain", 2, ai);
+        fillLibrary(ai, 3);
+        Card bolt = addCardToZone("Lightning Bolt", ai, ZoneType.Hand);
+        Card bomb = addCardToZone("Bombardment", ai, ZoneType.Hand);
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN1, ai);
+        game.getAction().checkStateEffects(true);
+        SpellAbility boltSa = bolt.getFirstSpellAbility();
+        boltSa.setActivatingPlayer(ai);
+        boltSa.getTargets().add(opp);
+        AssertJUnit.assertTrue(ComputerUtil.handlePlayingSpellAbility(ai, boltSa, null));
+        // Bombardment resolving with the Bolt still on the stack (as if cast with flash)
+        SpellAbility sa = bomb.getFirstSpellAbility();
+        sa.setActivatingPlayer(ai);
+        forge.game.ability.AbilityUtils.resolve(sa);
+        AssertJUnit.assertEquals("Missile", game.getCardState(bolt).getName());
+        resolveAll(game);
+        AssertJUnit.assertEquals("it didn't resolve", 20, opp.getLife());
+        AssertJUnit.assertTrue(game.getCardState(bolt).isInZone(ZoneType.Graveyard));
+    }
 }

@@ -355,14 +355,6 @@ public class EffectAi extends SpellAbilityAi {
             } else if (logic.equals("Burn")) {
                 SpellAbility burn = sa.getSubAbility();
                 return SpellApiToAi.Converter.get(burn).canPlayWithSubs(ai, burn).willingToPlay() ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
-            } else if (logic.equals("Bombardment")) {
-                // every other card in hand becomes a 2-damage Missile for {R}: worth trading the hand only for lethal
-                int redLeft = CardLists.count(ai.getCardsIn(ZoneType.Battlefield), c -> c.isUntapped()
-                        && c.getManaAbilities().anyMatch(m -> m.canProduce("R"))) - 1;
-                int missiles = Math.min(ai.getCardsIn(ZoneType.Hand).size() - 1, redLeft);
-                Player weakest = ai.getWeakestOpponent();
-                boolean lethal = weakest != null && missiles > 0 && weakest.canLoseLife() && weakest.getLife() <= 2 * missiles;
-                return lethal ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
             } else if (logic.equals("YawgmothsWill")) {
                 return SpecialCardAi.YawgmothsWill.consider(ai, sa) ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
             } else if (logic.startsWith("NeedCreatures")) {

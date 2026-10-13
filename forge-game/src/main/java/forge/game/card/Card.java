@@ -8559,6 +8559,11 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                     game.getNextTimestamp());
             updateStateForView();
         }
+        if (sa.getCloneCauseWhenCast() != null && !isCloned()) {
+            // cast as a Missile (Bombardment): it is still one on the stack, rebuilt from its own copiable values
+            addCloneState(CardFactory.getCloneStates(this, this, sa.getCloneCauseWhenCast()), game.getNextTimestamp());
+            updateStateForView();
+        }
         if (sa.hasParam("Prototype") && prototypeTimestamp == -1) {
             long next = game.getNextTimestamp();
             addCloneState(CardFactory.getCloneStates(this, this, sa), next);

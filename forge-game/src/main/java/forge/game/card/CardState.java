@@ -461,6 +461,16 @@ public class CardState implements GameObject, IHasSVars, ITranslatable {
         return changed;
     }
 
+    /** "Loses all abilities" as a copiable value (Bombardment's Missiles): nothing printed is left. */
+    public final void clearAllAbilities() {
+        abilities.clear();
+        triggers.clear();
+        replacementEffects.clear();
+        staticAbilities.clear();
+        intrinsicKeywords.clear();
+        card.updateKeywordsCache(this);
+    }
+
     public final boolean removeIntrinsicKeyword(final String s) {
         return intrinsicKeywords.remove(s);
     }

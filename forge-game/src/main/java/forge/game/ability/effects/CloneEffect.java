@@ -109,7 +109,9 @@ public class CloneEffect extends SpellAbilityEffect {
             String name = host.getNamedCard();
             cardToCopy = Card.fromPaperCard(StaticData.instance().getCommonCards().getUniqueByName(name), activator);
         }
-        if (cardToCopy == null) {
+        // each target copies its own copiable values, with the changes this makes (Bombardment's Missiles)
+        final boolean copyItself = sa.hasParam("CopyItself");
+        if (cardToCopy == null && !copyItself) {
             return;
         }
 
@@ -148,7 +150,7 @@ public class CloneEffect extends SpellAbilityEffect {
 
             game.getTriggerHandler().clearActiveTriggers(tgtCard, null);
 
-            tgtCard.addCloneState(CardFactory.getCloneStates(cardToCopy, tgtCard, sa), ts);
+            tgtCard.addCloneState(CardFactory.getCloneStates(copyItself ? tgtCard : cardToCopy, tgtCard, sa), ts);
             tgtCard.updateRooms();
 
             // set ETB tapped of clone
@@ -180,7 +182,10 @@ public class CloneEffect extends SpellAbilityEffect {
 
                     @Override
                     public void run() {
-                        if (cloneCard.removeCloneState(ts)) {
+                        if (copyItself && cloneCard.removeCloneState(ts)) {
+                            cloneCard.updateStateForView();
+                            game.fireEvent(new GameEventCardStatsChanged(cloneCard));
+                        } else if (!copyItself && cloneCard.removeCloneState(ts)) {
                             // remove values gained while being cloned
                             cloneCard.clearImprintedCards();
                             cloneCard.clearRemembered();
@@ -197,15 +202,17 @@ public class CloneEffect extends SpellAbilityEffect {
                 addUntilCommand(sa, unclone);
             }
 
-            // now we can also cleanup in case target was another card
-            tgtCard.clearRemembered();
-            tgtCard.clearImprintedCards();
+            if (!copyItself) {
+                // now we can also cleanup in case target was another card
+                tgtCard.clearRemembered();
+                tgtCard.clearImprintedCards();
 
-            if (sa.hasParam("RememberCloneOrigin")) {
-                tgtCard.addRemembered(cardToCopy);
+                if (sa.hasParam("RememberCloneOrigin")) {
+                    tgtCard.addRemembered(cardToCopy);
+                }
+                // spire
+                tgtCard.setMarkedColors(cardToCopy.getMarkedColors());
             }
-            // spire
-            tgtCard.setMarkedColors(cardToCopy.getMarkedColors());
 
             game.fireEvent(new GameEventCardStatsChanged(tgtCard));
         }

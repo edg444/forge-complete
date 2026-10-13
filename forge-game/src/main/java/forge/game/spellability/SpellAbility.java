@@ -1803,6 +1803,16 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
         castAs = name;
     }
 
+    // a spell a clone effect granted (Bombardment's Missile): casting it keeps that clone effect on the stack, where the
+    // move to the stack would otherwise drop it
+    private CardTraitBase cloneCauseWhenCast = null;
+    public CardTraitBase getCloneCauseWhenCast() {
+        return cloneCauseWhenCast;
+    }
+    public void setCloneCauseWhenCast(final CardTraitBase cause) {
+        cloneCauseWhenCast = cause;
+    }
+
     // a Play effect may cast a card that's on the battlefield (Animate Spell: "unless they cast it")
     private boolean castFromBattlefield = false;
     public boolean isCastFromBattlefield() {
