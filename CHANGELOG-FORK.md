@@ -309,6 +309,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-13, fifth deploy (desktop, Android, GitHub) — upstream merge (41 commits); Mystery Booster playtest cards #51–66
+
+- **Upstream merge** (41 commits). Conflicts: `CardRules.canBePartnerCommanders` keeps Legendary partner and takes upstream's implied partnership; `PhaseHandler.declareAttackersFor` takes upstream's undo barrier and keeps the fork's `active` player; `GameLobby` Archenemy keeps removing Two-Headed Giant and applies upstream's Archenemy teams; The Earth Crystal and Summitfest Closing Ceremony take upstream's scripts (Covercast now works outside the stack, as "this card intensifies" reads). Upstream's counting `MyRandom` wrapper only forwarded `next(bits)`, so a Random given to `setRandom` lost its own `nextInt(bound)`/`nextDouble`/`nextGaussian`; it now forwards each public method (still counting), which the fork's fixed-dice tests rely on.
 - **Tibalt the Chaotic** (CMB1 #66, upstream) verified, with a fix: `Play | RandomCopied$` threw away a random pick
   the AI's decks exclude (`RemAIDecks`) after picking it, so an AI Tibalt's +1 cast nothing whenever it rolled
   Ignorant Bliss; the cast is mandatory (its rulings), so that skip now applies only when the AI gets a choice

@@ -46,6 +46,16 @@ public class MyRandom {
         @Override public void setSeed(long seed) {
             if (delegate != null) delegate.setSeed(seed);   // null during super(0)
         }
+        // Forwarded whole rather than through next(bits), so a Random handed to setRandom keeps its own behavior
+        // (tests that fix die faces or a landing spot override these)
+        @Override public int nextInt() { calls.incrementAndGet(); return delegate.nextInt(); }
+        @Override public int nextInt(int bound) { calls.incrementAndGet(); return delegate.nextInt(bound); }
+        @Override public long nextLong() { calls.incrementAndGet(); return delegate.nextLong(); }
+        @Override public boolean nextBoolean() { calls.incrementAndGet(); return delegate.nextBoolean(); }
+        @Override public float nextFloat() { calls.incrementAndGet(); return delegate.nextFloat(); }
+        @Override public double nextDouble() { calls.incrementAndGet(); return delegate.nextDouble(); }
+        @Override public double nextGaussian() { calls.incrementAndGet(); return delegate.nextGaussian(); }
+        @Override public void nextBytes(byte[] bytes) { calls.incrementAndGet(); delegate.nextBytes(bytes); }
     }
     /** Number of random draws made so far. Used by undo to detect that randomness was consumed. */
     public static long callCount() { return calls.get(); }
