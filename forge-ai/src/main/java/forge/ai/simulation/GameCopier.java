@@ -394,6 +394,9 @@ public class GameCopier {
                     newCard.setCloaked(c.getCloakedSA());
                 }
             }
+            for (Player p : c.getMotivatedBy()) {
+                newCard.addMotivatedBy(playerMap.get(p));
+            }
             if (c.isMonstrous()) {
                 newCard.setMonstrous(true);
             }

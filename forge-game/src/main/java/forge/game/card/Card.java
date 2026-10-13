@@ -2790,7 +2790,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.startsWith("Mayhem") || keyword.startsWith("Recover")
                         || keyword.startsWith("Sneak") || keyword.startsWith("Squad")
                         || keyword.startsWith("Emerge") || keyword.startsWith("More Than Meets the Eye")
-                        || keyword.startsWith("Level up") || keyword.startsWith("Plot")
+                        || keyword.startsWith("Level up") || keyword.startsWith("Plot") || keyword.startsWith("Motivate")
                         || keyword.startsWith("Impending") || keyword.equals("Suspend")) {
                     sbLong.append(inst.getTitle());
                     // Oracle ends a keyword with a non-mana cost like a sentence: "Buyback—Sacrifice a land."
@@ -7731,6 +7731,17 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     public final int getClassLevel() {
         return classLevel;
+    }
+    // Motivate (Lazier Goblin): the players who have paid its motivate cost, for as long as this object stays
+    private final Set<Player> motivatedBy = Sets.newHashSet();
+    public void addMotivatedBy(final Player p) {
+        motivatedBy.add(p);
+    }
+    public boolean isMotivatedBy(final Player p) {
+        return motivatedBy.contains(p);
+    }
+    public Set<Player> getMotivatedBy() {
+        return motivatedBy;
     }
     // Ransom (Squidnapper): control effects that end when the player each creature was taken from pays the ransom
     private record Ransom(Player from, Card held, GameCommand release) { }

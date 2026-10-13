@@ -3442,6 +3442,14 @@ public class CardFactoryUtil {
 
             newSA.setIntrinsic(intrinsic);
             inst.addSpellAbility(newSA);
+        } else if (keyword.startsWith("Motivate") && inst instanceof KeywordWithCost motivate) {
+            // a special action (Lazier Goblin's ruling), so it never uses the stack
+            String str = "ST$ Motivate | Cost$ " + motivate.getCostString() + " | SorcerySpeed$ True"
+                    + " | IsPresent$ Card.Self+!MotivatedByYou | PrecostDesc$ Motivate | Secondary$ True"
+                    + " | SpellDescription$ (" + inst.getReminderText() + ")";
+            SpellAbility sa = AbilityFactory.getAbility(str, card);
+            sa.setIntrinsic(intrinsic);
+            inst.addSpellAbility(sa);
         } else if (keyword.startsWith("Reconfigure")) {
             if (!keyword.contains(":")) {
                 System.err.println("Malformed Reconfigure entry! - Card: " + card.toString());
@@ -3841,6 +3849,11 @@ public class CardFactoryUtil {
             String effect = "Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.ArtFiguresSolo,"
                     + "Creature.ArtFiguresUnknown+ControlledByAI | Secondary$ True"
                     + " | Description$ Art menace (" + inst.getReminderText() + ")";
+            inst.addStaticAbility(StaticAbility.create(effect, state.getCard(), state, intrinsic));
+        } else if (keyword.startsWith("Motivate")) {
+            // motivated for whoever controls it now: a new controller has to pay again (Lazier Goblin's ruling)
+            String effect = "Mode$ CantAttack,CantBlock | ValidCard$ Card.Self+!MotivatedByController | Secondary$ True"
+                    + " | Description$ Motivate (" + inst.getReminderText() + ")";
             inst.addStaticAbility(StaticAbility.create(effect, state.getCard(), state, intrinsic));
         } else if (keyword.startsWith("Blitz")) {
             final String[] k = keyword.split(":");

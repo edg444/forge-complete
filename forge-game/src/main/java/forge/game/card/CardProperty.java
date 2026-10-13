@@ -340,6 +340,14 @@ public class CardProperty {
             if (card.getGamePieceType() != forge.card.GamePieceType.LIBRARY) {
                 return false;
             }
+        } else if (property.equals("MotivatedByController")) {
+            if (!card.isMotivatedBy(card.getController())) {
+                return false;
+            }
+        } else if (property.equals("MotivatedByYou")) {
+            if (!card.isMotivatedBy(sourceController)) {
+                return false;
+            }
         } else if (property.equals("RollsDice")) {
             // Proper Laboratory Attire: protection from die rolls
             if (!card.rollsDice()) {

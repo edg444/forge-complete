@@ -309,6 +309,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Lazier Goblin** (CMB1 #56), with #55 Impatient Iguana (upstream) verified. New keyword `K:Motivate:cost`: a
+  sorcery-speed special action (`ST$ Motivate`, offered only until you've paid) that records the payer on the object
+  (`Card.addMotivatedBy`, card properties `MotivatedByYou`/`MotivatedByController`), plus `CantAttack,CantBlock`
+  unless its current controller has paid, so a new controller pays again and you're still motivated if you get it
+  back (its rulings). A new object (zone change) starts unmotivated. AI motivates before combat when it could attack.
 - **High Troller** (CMB1 #54). Cost: `ReduceCost` with `ValidSpell$ SpellAbility.numTargets GE1` (costs are set after
   targets, so having any target is what counts). Targets: new static mode `RandomTargets`
   (`StaticAbilityRandomTargets`); `MagicStack.add` re-picks every target at random among legal ones before anything
