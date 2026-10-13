@@ -200,6 +200,7 @@ public enum SpellApiToAi {
             .put(ApiType.ReplaceToken, AlwaysPlayAi.class)
             .put(ApiType.RestartGame, RestartGameAi.class)
             .put(ApiType.RestartTurn, RestartTurnAi.class)
+            .put(ApiType.ChooseSide, ChooseSideAi.class)
             .put(ApiType.Motivate, MotivateAi.class)
             .put(ApiType.Reveal, RevealAi.class)
             .put(ApiType.RevealHand, RevealHandAi.class)

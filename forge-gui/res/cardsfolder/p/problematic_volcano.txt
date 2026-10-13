@@ -1,0 +1,13 @@
+Name:Problematic Volcano
+ManaCost:1 R R
+Types:World Enchantment
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDamage | TriggerDescription$ When CARDNAME enters, it deals 4 damage to any target. Then, starting with you, each player assigns their creatures to the left or right of the volcano.
+SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 4 | SubAbility$ DBAssign
+SVar:DBAssign:DB$ ChooseSide | AllPlayers$ True | AILogic$ Volcano
+K:ETBReplacement:Other:DBSide:Mandatory:Battlefield:Creature
+SVar:DBSide:DB$ ChooseSide | Defined$ ReplacedCard | AILogic$ Volcano | SpellDescription$ Creatures enter to the left or right of the volcano.
+S:Mode$ CantBlockBy | ValidAttacker$ Creature | ValidBlockerRelative$ Creature.OtherSideOfVolcano | Description$ Creatures can't block creatures on the other side of the volcano.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Static$ True | Execute$ DBClear | Secondary$ True | TriggerDescription$ The sides stop mattering when it leaves.
+SVar:DBClear:DB$ ChooseSide | Clear$ True
+AI:RemoveDeck:Random
+Oracle:When Problematic Volcano enters, it deals 4 damage to any target. Then, starting with you, each player assigns their creatures to the left or right of the volcano. Creatures enter to the left or right of the volcano.\nCreatures can't block creatures on the other side of the volcano.

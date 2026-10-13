@@ -66,6 +66,7 @@ public enum ApiType {
     Clash (ClashEffect.class),
     ClassLevelUp (ClassLevelUpEffect.class),
     AdvanceStage (AdvanceStageEffect.class),
+    ChooseSide (ChooseSideEffect.class),
     Motivate (MotivateEffect.class),
     Ransom (RansomEffect.class),
     Bank (BankEffect.class),

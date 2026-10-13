@@ -309,6 +309,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Problematic Volcano** (CMB1 #60), with #59 Planequake (upstream) verified: no one has the "Uncovered Cavern"
+  plot booster, and its ruling says that part is then ignored. New `ChooseSide` effect: `AllPlayers$ True` (each player
+  in turn order from you picks which of their creatures go left, the rest go right, logged so later players see it),
+  `Defined$` (each card's controller picks; used as an `ETBReplacement:Other` for every entering creature),
+  `Clear$ True` (when it leaves). Sides are kept per volcano object (`Card.setVolcanoSide`, id + game timestamp, per
+  its rulings), shown as a "Side:" marker; card property `OtherSideOfVolcano` (relative to the attacker) drives a
+  `CantBlockBy` with `ValidBlockerRelative$`, so a creature with no side blocks and is blocked by either. AI
+  (`AILogic$ Volcano`) goes to the side with more opposing power, to block.
 - **Mana Abundance** (CMB1 #58). `ReplaceMana | AllPlayers$ True` flags the produce-mana event
   (`AbilityKey.ManaForAllPlayers`); `AbilityManaPart.produceMana` then adds the final mana to every player's pool from
   the same mana ability (same source and riders, "you" = whoever adds it, per its rulings) and runs ManaAdded for

@@ -658,6 +658,11 @@ public class CardView extends GameEntityView {
             markerItems.add("Hidden:");
             markerItems.add(c.getHiddenSpotLabel());
         }
+        // Problematic Volcano
+        if (c.getVolcanoSideLabel() != null) {
+            markerItems.add("Side:");
+            markerItems.add(c.getVolcanoSideLabel());
+        }
         // Split Screen: which library this top card is on
         if (c.getLibraryLabel() != null) {
             markerItems.add("Library");

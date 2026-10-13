@@ -7732,6 +7732,39 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public final int getClassLevel() {
         return classLevel;
     }
+    // Problematic Volcano: the side of each volcano a creature is on (true = left), by volcano object, since its
+    // designations only matter for that one volcano
+    private final Map<String, Boolean> volcanoSides = Maps.newHashMap();
+    private static String volcanoKey(final Card volcano) {
+        return volcano.getId() + ":" + volcano.getGameTimestamp();
+    }
+    public final void setVolcanoSide(final Card volcano, final Boolean left) {
+        if (left == null) {
+            volcanoSides.remove(volcanoKey(volcano));
+        } else {
+            volcanoSides.put(volcanoKey(volcano), left);
+        }
+        view.updateMarkerText(this);
+    }
+    public final Boolean getVolcanoSide(final Card volcano) {
+        return volcanoSides.get(volcanoKey(volcano));
+    }
+    public final Map<String, Boolean> getVolcanoSides() {
+        return volcanoSides;
+    }
+    /** "left of Problematic Volcano" while that volcano is on the battlefield, or null. */
+    public final String getVolcanoSideLabel() {
+        if (volcanoSides.isEmpty() || getGame() == null) {
+            return null;
+        }
+        for (final Card v : getGame().getCardsIn(ZoneType.Battlefield)) {
+            final Boolean left = volcanoSides.get(volcanoKey(v));
+            if (left != null) {
+                return (left ? "left of " : "right of ") + v.getName();
+            }
+        }
+        return null;
+    }
     // Motivate (Lazier Goblin): the players who have paid its motivate cost, for as long as this object stays
     private final Set<Player> motivatedBy = Sets.newHashSet();
     public void addMotivatedBy(final Player p) {

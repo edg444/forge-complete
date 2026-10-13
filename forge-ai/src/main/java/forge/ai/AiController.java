@@ -2103,6 +2103,9 @@ public class AiController {
             max = AbilityUtils.calculateAmount(sa.getHostCard(), sa.getParam("AIMaxAmount"), sa);
         }
         switch (sa.getApi()) {
+            case ChooseSide:
+                // Problematic Volcano: the creatures put to the left; all on one side
+                return forge.ai.ability.ChooseSideAi.preferLeft(player, sa.getHostCard()) ? new CardCollection(pool) : result;
             case TwoPiles:
                 // TODO: improve AI
                 Card biggest = null;
@@ -2254,6 +2257,9 @@ public class AiController {
             throw new UnsupportedOperationException();
         }
         // Left:True; Right:False
+        if ("Volcano".equals(sa.getParam("AILogic"))) {
+            return forge.ai.ability.ChooseSideAi.preferLeft(player, sa.getHostCard());
+        }
         if ("GainControl".equals(sa.getParam("AILogic")) && game.getPlayers().size() > 2) {
             CardCollection creats = CardLists.getType(game.getCardsIn(ZoneType.Battlefield), "Creature");
             CardCollection left = CardLists.filterControlledBy(creats, game.getNextPlayerAfter(player, Direction.Left));

@@ -340,6 +340,17 @@ public class CardProperty {
             if (card.getGamePieceType() != forge.card.GamePieceType.LIBRARY) {
                 return false;
             }
+        } else if (property.equals("OtherSideOfVolcano")) {
+            // Problematic Volcano, relative to the attacker (source); the static's host is the volcano. A creature
+            // with no side is on neither, so it blocks and is blocked by either (its ruling)
+            if (spellAbility == null || source == null) {
+                return false;
+            }
+            final Boolean mine = card.getVolcanoSide(spellAbility.getHostCard());
+            final Boolean theirs = source.getVolcanoSide(spellAbility.getHostCard());
+            if (mine == null || theirs == null || mine.equals(theirs)) {
+                return false;
+            }
         } else if (property.equals("MotivatedByController")) {
             if (!card.isMotivatedBy(card.getController())) {
                 return false;

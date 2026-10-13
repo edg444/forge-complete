@@ -394,6 +394,7 @@ public class GameCopier {
                     newCard.setCloaked(c.getCloakedSA());
                 }
             }
+            newCard.getVolcanoSides().putAll(c.getVolcanoSides());
             for (Player p : c.getMotivatedBy()) {
                 newCard.addMotivatedBy(playerMap.get(p));
             }
