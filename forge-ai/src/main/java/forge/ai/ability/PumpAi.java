@@ -10,6 +10,7 @@ import forge.game.ability.ApiType;
 import forge.game.card.*;
 import forge.game.combat.CombatUtil;
 import forge.game.cost.Cost;
+import forge.game.cost.CostRemoveCounterYou;
 import forge.game.cost.CostTapType;
 import forge.game.keyword.Keyword;
 import forge.game.phase.PhaseHandler;
@@ -131,6 +132,19 @@ public class PumpAi extends PumpAiBase {
 
         if ("Pummeler".equals(aiLogic)) {
             return SpecialCardAi.ElectrostaticPummeler.consider(ai, sa);
+        } else if ("SparkBuild".equals(aiLogic)) {
+            // Blood Poet's +1 banks a spark counter, worth taking every turn - except when a spark ability that
+            // spends them is ready, since only one spark ability can be activated a turn
+            for (final SpellAbility other : source.getSpellAbilities()) {
+                if (other != sa && other.hasParam("Spark") && other.getPayCosts().hasSpecificCostType(CostRemoveCounterYou.class)) {
+                    other.setActivatingPlayer(ai);
+                    if (other.canPlay() && ComputerUtilCost.canPayCost(other, ai, false)
+                            && ((PlayerControllerAi) ai.getController()).getAi().canPlaySa(other) == AiPlayDecision.WillPlay) {
+                        return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+                    }
+                }
+            }
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         } else if (aiLogic.startsWith("AristocratCounters")) {
             // the preconditions to this are already tested in checkAiLogic
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);

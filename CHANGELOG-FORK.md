@@ -309,6 +309,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Blood Poet** (CMB1 #34): new keyword spark and player counter type `SPARK`. Spark abilities take `Spark$ True`
+  (plus `SorcerySpeed$`); `SpellAbilityRestriction` allows one per turn from among everything you control (counted
+  from `getAbilityActivatedThisTurn`, so a source that has left still counts) and none from a card without spark.
+  New cost `SubCounterYou<N/TYPE>` (`CostRemoveCounterYou`) spends your own counters; "+1:"/"−3:" via `CostDesc$`.
+  AI: PumpAi `AILogic$ SparkBuild` takes the +1 unless a spark ability that spends counters is ready; the −3 discard
+  uses `AnyPhase`, since discard AI otherwise waits for main 2 and the turn's one spark activation would go to +1.
 - **Visitor from Planet Q** (CMB1 #33), an Instant Creature. CR 304.4 keeps instants off the battlefield, so by the
   rules it (and the flash creatures it makes instants) could never resolve as a permanent. User rulings: an instant or
   sorcery that also has a permanent type enters the battlefield (`GameAction`, token copies too), and "creature cards

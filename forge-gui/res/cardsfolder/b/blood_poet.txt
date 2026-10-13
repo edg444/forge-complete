@@ -1,0 +1,11 @@
+Name:Blood Poet
+ManaCost:2 B
+Types:Creature Vampire Cleric
+PT:3/2
+K:Spark
+A:AB$ Pump | Cost$ AddCounterYou<1/SPARK> | CostDesc$ +1: | Defined$ Self | KW$ Lifelink | Spark$ True | SorcerySpeed$ True | AILogic$ SparkBuild | SpellDescription$ CARDNAME gains lifelink until end of turn.
+A:AB$ Discard | Cost$ SubCounterYou<3/SPARK> | CostDesc$ −3: | ValidTgts$ Opponent | NumCards$ 1 | Mode$ TgtChoose | RememberDiscarded$ True | Spark$ True | SorcerySpeed$ True | AILogic$ AnyPhase | SubAbility$ DBGainLife | SpellDescription$ Target opponent discards a card. You gain life equal to its converted mana cost.
+SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ X | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:X:Remembered$CardManaCost
+Oracle:Spark (Activate spark abilities by spending or giving yourself spark counters. Activate only one spark ability per turn, and only as a sorcery.)\n+1: Blood Poet gains lifelink until end of turn.\n−3: Target opponent discards a card. You gain life equal to its converted mana cost.

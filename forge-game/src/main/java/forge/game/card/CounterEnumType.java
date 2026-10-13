@@ -514,6 +514,9 @@ public enum CounterEnumType implements CounterType {
 
     RAD("RAD", CounterAiCategory.Neutral),
 
+    // Blood Poet's spark abilities spend and give these
+    SPARK("SPARK", CounterAiCategory.Positive),
+
     TICKET("TICKET", CounterAiCategory.Positive),
 
     ;

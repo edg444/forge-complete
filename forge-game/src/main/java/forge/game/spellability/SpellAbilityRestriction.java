@@ -364,6 +364,19 @@ public class SpellAbilityRestriction extends SpellAbilityVariables {
     public final boolean checkOtherRestrictions(final Card c, final SpellAbility sa, final Player activator) {
         final Game game = activator.getGame();
 
+        // Spark (Blood Poet): one spark ability per turn from among everything you control, and none from a card that
+        // lost spark. Activations are kept as LKI, so one whose source has since left still counts
+        if (sa.hasParam("Spark")) {
+            if (!c.hasKeyword(Keyword.SPARK)) {
+                return false;
+            }
+            for (final SpellAbility done : game.getStack().getAbilityActivatedThisTurn()) {
+                if (done.hasParam("Spark") && activator.equals(done.getActivatingPlayer())) {
+                    return false;
+                }
+            }
+        }
+
         // 205.4e. Any instant or sorcery spell with the supertype "legendary" is subject to a casting restriction
         if ((c.isSorcery() || c.isInstant()) && c.getType().isLegendary() && CardLists.getValidCardCount(
                 activator.getCardsIn(ZoneType.Battlefield),

@@ -475,6 +475,12 @@ public class AiCostDecision extends CostDecisionMakerBase {
     }
 
     @Override
+    public PaymentDecision visit(CostRemoveCounterYou cost) {
+        int c = cost.getAbilityAmount(ability);
+        return player.getCounters(cost.getCounter()) >= c ? PaymentDecision.number(c) : null;
+    }
+
+    @Override
     public PaymentDecision visit(CostTap cost) {
         return PaymentDecision.number(0);
     }

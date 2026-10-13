@@ -39,6 +39,7 @@ public interface ICostVisitor<T> {
     T visit(CostRemoveCounter cost);
     T visit(CostPutCounter cost);
     T visit(CostPutCounterYou cost);
+    T visit(CostRemoveCounterYou cost);
     T visit(CostUntapType cost);
     T visit(CostUntap cost);
     T visit(CostUnattach cost);
@@ -194,6 +195,10 @@ public interface ICostVisitor<T> {
         }
         @Override
         public T visit(CostPutCounterYou cost) {
+            return null;
+        }
+        @Override
+        public T visit(CostRemoveCounterYou cost) {
             return null;
         }
         @Override

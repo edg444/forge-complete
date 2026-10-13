@@ -185,6 +185,7 @@ public enum Keyword {
     SOULSHIFT("Soulshift", KeywordWithAmount.class, false, "When this creature dies, you may return target Spirit card with mana value %d or less from your graveyard to your hand."),
     SPACE_SCULPTOR("Space sculptor", SimpleKeyword.class, true, "CARDNAME divides the battlefield into alpha, beta, and gamma sectors. If a creature isn't assigned to a sector, its controller assigns it to one. Opponents assign first."),
     SPECIALIZE("Specialize", KeywordWithCost.class, false, "%s, Choose a color, discard a card of that color or associated basic land type: This card perpetually specializes into that color. Activate only as a sorcery."),
+    SPARK("Spark", SimpleKeyword.class, true, "Activate spark abilities by spending or giving yourself spark counters. Activate only one spark ability per turn, and only as a sorcery."),
     SPECTACLE("Spectacle", KeywordWithCost.class, false, "You may cast this spell for its spectacle cost rather than its mana cost if an opponent lost life this turn."),
     SPLICE("Splice", KeywordWithCostAndType.class, false, "As you cast an %2$s spell, you may reveal this card from your hand and pay its splice cost. If you do, add this card's effects to that spell."),
     SPLIT_SECOND("Split second", SimpleKeyword.class, true, "As long as this spell is on the stack, players can't cast other spells or activate abilities that aren't mana abilities."),
