@@ -229,6 +229,8 @@ public class CloneEffect extends SpellAbilityEffect {
                 }
                 // spire
                 tgtCard.setMarkedColors(cardToCopy.getMarkedColors());
+                // a word blank's value is copied (legacy's ruling)
+                tgtCard.setLegacyWord(cardToCopy.getLegacyWord());
             }
 
             game.fireEvent(new GameEventCardStatsChanged(tgtCard));

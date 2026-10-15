@@ -551,6 +551,39 @@ public class Match {
         }
     }
 
+    /** Saves a deck whose cards were written on (legacy); the GUI sets it, so a stored deck file keeps the word. */
+    public interface DeckWrittenOnListener {
+        /** {@code deck} (maybe a copy of a stored deck) had one {@code before} replaced with {@code after}. */
+        void written(Deck deck, PaperCard before, PaperCard after);
+    }
+    private static DeckWrittenOnListener deckWrittenOn = null;
+    public static void setDeckWrittenOnListener(final DeckWrittenOnListener listener) {
+        deckWrittenOn = listener;
+    }
+
+    /**
+     * Legacy: the word is written on the physical card, for good (its rulings), so one copy of that card in its
+     * owner's deck becomes a copy with the word, and the deck is saved.
+     */
+    public void writeLegacyWord(final Card c, final String word) {
+        if (!(c.getPaperCard() instanceof PaperCard pc) || c.getOwner() == null) {
+            return;
+        }
+        final Deck deck = c.getOwner().getRegisteredPlayer().getDeck();
+        final PaperCard written = pc.copyWithLegacyWord(word);
+        for (final Entry<DeckSection, CardPool> part : deck) {
+            if (part.getValue().count(pc) > 0) {
+                part.getValue().remove(pc, 1);
+                part.getValue().add(written, 1);
+                c.setPaperCard(written);
+                if (deckWrittenOn != null) {
+                    deckWrittenOn.written(deck, pc, written);
+                }
+                return;
+            }
+        }
+    }
+
     /** Bank: what each player has banked is whatever bank still has exiled as the game ends. */
     public void recordBank(final Game finished) {
         banked.clear();

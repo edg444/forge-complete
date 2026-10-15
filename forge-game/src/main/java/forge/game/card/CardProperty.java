@@ -359,6 +359,11 @@ public class CardProperty {
             if (!card.isMotivatedBy(sourceController)) {
                 return false;
             }
+        } else if (property.equals("HasLegacyWord")) {
+            // Inspirational Antelope: has the keyword or ability word written in the source's legacy blank
+            if (source.getLegacyWord() == null || !card.hasKeywordOrAbilityWord(source.getLegacyWord())) {
+                return false;
+            }
         } else if (property.equals("RollsDice")) {
             // Proper Laboratory Attire: protection from die rolls
             if (!card.rollsDice()) {

@@ -198,6 +198,16 @@ public class PaperCard implements Comparable<IPaperCard>, InventoryItemFromSet, 
             return this;
         return new PaperCard(this, this.flags.withMarkedColors(colors));
     }
+    public PaperCard copyWithLegacyWord(String word) {
+        if(Objects.equals(word, this.flags.legacyWord))
+            return this;
+        return new PaperCard(this, this.flags.withLegacyWord(word));
+    }
+    /** The word written in this card's legacy word blank, or null while it's blank. */
+    @Override
+    public String getLegacyWord() {
+        return this.flags.legacyWord;
+    }
     @Override
     public String getItemType() {
         final Localizer localizer = Localizer.getInstance();
@@ -581,6 +591,11 @@ public class PaperCard implements Comparable<IPaperCard>, InventoryItemFromSet, 
          * Removes the sell value of the card in Adventure mode.
          */
         public final boolean noSellValue;
+        /**
+         * The word written in a legacy word blank (Inspirational Antelope). It stays with the physical card, so it
+         * stays in the deck file.
+         */
+        public final String legacyWord;
 
         //TODO: Could probably move foil here.
 
@@ -592,6 +607,7 @@ public class PaperCard implements Comparable<IPaperCard>, InventoryItemFromSet, 
             else
                 markedColors = null;
             noSellValue = flags.containsKey("noSellValue");
+            legacyWord = flags.get("legacy");
         }
 
         //Copy constructor. There are some better ways to do this, and they should be explored once we have more than 4
@@ -604,6 +620,17 @@ public class PaperCard implements Comparable<IPaperCard>, InventoryItemFromSet, 
                 markedColors = null;
             this.markedColors = markedColors;
             this.noSellValue = noSellValue != null ? noSellValue : copyFrom.noSellValue;
+            this.legacyWord = copyFrom.legacyWord;
+        }
+
+        private PaperCardFlags(PaperCardFlags copyFrom, String legacyWord) {
+            this.markedColors = copyFrom.markedColors;
+            this.noSellValue = copyFrom.noSellValue;
+            this.legacyWord = legacyWord;
+        }
+
+        public PaperCardFlags withLegacyWord(String legacyWord) {
+            return new PaperCardFlags(this, legacyWord);
         }
 
         public PaperCardFlags withMarkedColors(ColorSet markedColors) {
@@ -625,6 +652,8 @@ public class PaperCard implements Comparable<IPaperCard>, InventoryItemFromSet, 
                 out.put("markedColors", markedColors.toString());
             if(noSellValue)
                 out.put("noSellValue", "true");
+            if(legacyWord != null)
+                out.put("legacy", legacyWord);
             asMap = out;
             return out;
         }
@@ -639,12 +668,13 @@ public class PaperCard implements Comparable<IPaperCard>, InventoryItemFromSet, 
         @Override
         public boolean equals(Object o) {
             if (!(o instanceof PaperCardFlags that)) return false;
-            return noSellValue == that.noSellValue && Objects.equals(markedColors, that.markedColors);
+            return noSellValue == that.noSellValue && Objects.equals(markedColors, that.markedColors)
+                    && Objects.equals(legacyWord, that.legacyWord);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(markedColors, noSellValue);
+            return Objects.hash(markedColors, noSellValue, legacyWord);
         }
     }
 }

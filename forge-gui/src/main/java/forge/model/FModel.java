@@ -429,6 +429,8 @@ public final class FModel {
         // flavor text, so the 55k-entry table stays unbuilt unless one of them is actually played
         CardFlavorText.setSource(() -> FileUtil.readFile(ForgeConstants.FLAVOR_TEXT_FILE));
         PrintingTraits.setSource(() -> FileUtil.readFile(ForgeConstants.PRINTING_TRAITS_FILE));
+        forge.card.LegacyWords.setSource(() -> FileUtil.readFile(ForgeConstants.LEGACY_WORDS_FILE));
+        forge.game.Match.setDeckWrittenOnListener(FModel::saveWrittenOnDeck);
         WordList.setSource(() -> FileUtil.readFile(ForgeConstants.WORD_LIST_FILE));
         BannedOrRestricted.setSource(() -> FileUtil.readFile(ForgeConstants.BANNED_OR_RESTRICTED_FILE));
 
@@ -487,6 +489,48 @@ public final class FModel {
 
     public static GauntletMini getGauntletMini() {
         return gauntletMini.get();
+    }
+
+    /**
+     * Legacy writes on a physical card: the stored deck of that name gets the same copy swapped (the game may have
+     * had a copy of it) and is saved, so the word is still there next game.
+     */
+    private static void saveWrittenOnDeck(final forge.deck.Deck deck, final forge.item.PaperCard before,
+            final forge.item.PaperCard after) {
+        if (deck.getName() == null || deck.getName().isEmpty()) {
+            return;
+        }
+        for (final forge.util.storage.IStorage<forge.deck.Deck> root : java.util.List.of(getDecks().getConstructed(),
+                getDecks().getCommander(), getDecks().getOathbreaker(), getDecks().getTinyLeaders(), getDecks().getBrawl())) {
+            if (saveWrittenOnDeck(root, deck, before, after)) {
+                return;
+            }
+        }
+    }
+    private static boolean saveWrittenOnDeck(final forge.util.storage.IStorage<forge.deck.Deck> folder,
+            final forge.deck.Deck deck, final forge.item.PaperCard before, final forge.item.PaperCard after) {
+        final forge.deck.Deck stored = folder.get(deck.getName());
+        if (stored != null) {
+            if (stored != deck) {
+                for (final java.util.Map.Entry<forge.deck.DeckSection, forge.deck.CardPool> part : stored) {
+                    if (part.getValue().count(before) > 0) {
+                        part.getValue().remove(before, 1);
+                        part.getValue().add(after, 1);
+                        break;
+                    }
+                }
+            }
+            folder.add(stored);
+            return true;
+        }
+        if (folder.getFolders() != null) {
+            for (final forge.util.storage.IStorage<forge.deck.Deck> sub : folder.getFolders()) {
+                if (saveWrittenOnDeck(sub, deck, before, after)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public static CardCollections getDecks() {

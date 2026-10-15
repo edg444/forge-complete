@@ -347,6 +347,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   unions the colors every mana-producing ability on the object could make (ignoring conditions and costs); a mana's
   source is its LKI card. Drawn {Z} symbol, a disc of five color wedges, on desktop (`CardFaceSymbols`, symbol cache
   `Z.png`) and mobile (`FDrawnSymbol` wedge constructor).
+- **Inspirational Antelope** (CMB1 #78). New keyword `Legacy`: before the game starts (with Cryptic Spires' marking
+  in `GameAction`), its owner writes a keyword ability or ability word in its blank. The word is written on the
+  physical card for good (its rulings), so it's a PaperCard flag, `legacy=<word>`, saved in the deck file like
+  Spires' marked colors: `Match.writeLegacyWord` swaps that one copy in the owner's registered deck, and FModel's
+  listener applies the same swap to the stored deck of that name (any folder of constructed, commander,
+  oathbreaker, tiny leaders, brawl) and saves it. `Card.legacyWord` comes from the PaperCard, survives zone changes,
+  and is copied by clones and token copies (its ruling); card detail shows "(Written: <word>)". The words on offer
+  (`GameAction.legacyWordChoices`): CR 702's keyword abilities and 207.2c's ability words
+  (`res/lists/LegacyWords.txt`, from the 2026-09-25 rules) plus the engine's own keywords (Legacy itself, Aggressive,
+  ...). `Card.hasKeywordOrAbilityWord`: a keyword by name, any modifier; an ability word as a line of rules text that
+  starts with it. Property `HasLegacyWord` (vs. the source's word) for the ReduceCost. The AI writes the word the
+  most of its nonland cards have.
 
 ### 2026-10-13, fifth deploy (desktop, Android, GitHub) — upstream merge (41 commits); Mystery Booster playtest cards #51–66
 

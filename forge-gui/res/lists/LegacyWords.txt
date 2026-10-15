@@ -1,0 +1,260 @@
+# Legacy (Inspirational Antelope): the words that can be written in a word blank.
+# From the Comprehensive Rules effective September 25, 2026: 702 (keyword abilities) and 207.2c (ability words).
+[KeywordAbilities]
+Deathtouch
+Defender
+Double Strike
+Enchant
+Equip
+First Strike
+Flash
+Flying
+Haste
+Hexproof
+Indestructible
+Intimidate
+Landwalk
+Lifelink
+Protection
+Reach
+Shroud
+Trample
+Vigilance
+Ward
+Banding
+Rampage
+Cumulative Upkeep
+Flanking
+Phasing
+Buyback
+Shadow
+Cycling
+Echo
+Horsemanship
+Fading
+Kicker
+Flashback
+Madness
+Fear
+Morph
+Amplify
+Provoke
+Storm
+Affinity
+Entwine
+Modular
+Sunburst
+Bushido
+Soulshift
+Splice
+Offering
+Ninjutsu
+Epic
+Convoke
+Dredge
+Transmute
+Bloodthirst
+Haunt
+Replicate
+Forecast
+Graft
+Recover
+Ripple
+Split Second
+Suspend
+Vanishing
+Absorb
+Aura Swap
+Delve
+Fortify
+Frenzy
+Gravestorm
+Poisonous
+Transfigure
+Champion
+Changeling
+Evoke
+Hideaway
+Prowl
+Reinforce
+Conspire
+Persist
+Wither
+Retrace
+Devour
+Exalted
+Unearth
+Cascade
+Annihilator
+Level Up
+Rebound
+Umbra Armor
+Infect
+Battle Cry
+Living Weapon
+Undying
+Miracle
+Soulbond
+Overload
+Scavenge
+Unleash
+Cipher
+Evolve
+Extort
+Fuse
+Bestow
+Tribute
+Dethrone
+Hidden Agenda
+Outlast
+Prowess
+Dash
+Exploit
+Menace
+Renown
+Awaken
+Devoid
+Ingest
+Myriad
+Surge
+Skulk
+Emerge
+Escalate
+Melee
+Crew
+Fabricate
+Partner
+Undaunted
+Improvise
+Aftermath
+Embalm
+Eternalize
+Afflict
+Ascend
+Assist
+Jump-Start
+Mentor
+Afterlife
+Riot
+Spectacle
+Escape
+Companion
+Mutate
+Encore
+Boast
+Foretell
+Demonstrate
+Daybound
+Nightbound
+Disturb
+Decayed
+Cleave
+Training
+Compleated
+Reconfigure
+Blitz
+Casualty
+Enlist
+Read Ahead
+Ravenous
+Squad
+Space Sculptor
+Visit
+Prototype
+Living Metal
+More Than Meets the Eye
+For Mirrodin!
+Toxic
+Backup
+Bargain
+Craft
+Disguise
+Solved
+Plot
+Saddle
+Spree
+Freerunning
+Gift
+Offspring
+Impending
+Exhaust
+Max Speed
+Start Your Engines!
+Harmonize
+Mobilize
+Job Select
+Tiered
+Station
+Warp
+∞
+Mayhem
+Web-slinging
+Firebending
+Sneak
+Increment
+Paradigm
+Power-up
+Teamwork
+Storied
+[AbilityWords]
+adamant
+addendum
+alliance
+battalion
+bloodrush
+celebration
+channel
+chroma
+cohort
+constellation
+converge
+council’s dilemma
+coven
+delirium
+descend 4
+descend 8
+disappear
+domain
+eerie
+eminence
+enrage
+fateful hour
+fathomless descent
+ferocious
+flurry
+formidable
+grandeur
+hellbent
+heroic
+imprint
+infusion
+inspired
+join forces
+kinship
+landfall
+lieutenant
+magecraft
+metalcraft
+morbid
+opus
+pack tactics
+paradox
+parley
+radiance
+raid
+rally
+renew
+repartee
+revolt
+secret council
+spell mastery
+strive
+survival
+sweep
+tempting offer
+threshold
+undergrowth
+valiant
+vivid
+void
+will of the council

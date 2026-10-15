@@ -630,6 +630,9 @@ public class GameAction {
         if (c.hasMarkedColor()) {
             copied.setMarkedColors(c.getMarkedColors());
         }
+        if (c.getLegacyWord() != null) {
+            copied.setLegacyWord(c.getLegacyWord());
+        }
 
         copied.updateStateForView();
 
@@ -2934,8 +2937,65 @@ public class GameAction {
                     }
                 }
             }
+            for (Card c : all) {
+                if (c.hasKeyword(Keyword.LEGACY) && c.getLegacyWord() == null && !c.isInZone(ZoneType.Sideboard)) {
+                    writeLegacyWord(takesAction, c, all);
+                }
+            }
             takesAction = game.getNextPlayerAfter(takesAction);
         } while (takesAction != first);
+    }
+
+    /** Every word a legacy blank takes: the rules' keyword abilities and ability words, and the engine's own keywords. */
+    public static List<String> legacyWordChoices() {
+        final Map<String, String> words = new java.util.LinkedHashMap<>();
+        for (final String k : forge.card.LegacyWords.getKeywordAbilities()) {
+            words.putIfAbsent(k.toLowerCase(java.util.Locale.ROOT), k);
+        }
+        for (final Keyword k : Keyword.values()) {
+            if (k != Keyword.UNDEFINED) {
+                words.putIfAbsent(k.toString().toLowerCase(java.util.Locale.ROOT), k.toString());
+            }
+        }
+        final List<String> keywords = Lists.newArrayList(words.values());
+        keywords.sort(String.CASE_INSENSITIVE_ORDER);
+        final List<String> result = Lists.newArrayList(keywords);
+        for (final String w : forge.card.LegacyWords.getAbilityWords()) {
+            if (words.putIfAbsent(w.toLowerCase(java.util.Locale.ROOT), w) == null) {
+                result.add(w);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Legacy, before the game starts: its owner writes a keyword or ability word in the blank, and it stays written on
+     * the physical card (the deck copy), never to be changed. The AI writes whichever word the most of its cards have.
+     */
+    public void writeLegacyWord(final Player owner, final Card c, final CardCollectionView theirs) {
+        final List<String> choices = legacyWordChoices();
+        String word;
+        if (owner.isAI()) {
+            word = choices.get(0);
+            int best = -1;
+            for (final String w : choices) {
+                final int n = CardLists.count(theirs, x -> !x.isLand() && x.hasKeywordOrAbilityWord(w));
+                if (n > best) {
+                    best = n;
+                    word = w;
+                }
+            }
+        } else {
+            final SpellAbility sa = new SpellAbility.EmptySa(ApiType.ChooseType, c, owner);
+            word = owner.getController().chooseSomeType(c.getTranslatedName() + ": write a keyword or ability word",
+                    sa, choices);
+        }
+        if (word == null) {
+            return;
+        }
+        c.setLegacyWord(word);
+        game.getMatch().writeLegacyWord(c, word);
+        game.getGameLog().add(GameLogEntryType.INFORMATION, owner + " writes \"" + word + "\" on " + c + ".");
     }
 
     // Returns the new player to go first

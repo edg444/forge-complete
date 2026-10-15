@@ -1,0 +1,7 @@
+Name:Inspirational Antelope
+ManaCost:1 G
+Types:Creature Antelope
+PT:1/3
+K:Legacy
+S:Mode$ ReduceCost | ValidCard$ Card.HasLegacyWord | Type$ Spell | Activator$ You | Amount$ 1 | Description$ Spells with __________ you cast cost {1} less to cast.
+Oracle:Legacy — Before the game starts, choose a keyword or ability word and write it below.\nSpells with __________ you cast cost {1} less to cast.

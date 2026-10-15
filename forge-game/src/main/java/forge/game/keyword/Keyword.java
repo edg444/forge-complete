@@ -123,6 +123,7 @@ public enum Keyword {
     JUMP_START("Jump-start", SimpleKeyword.class, false, "You may cast this card from your graveyard by discarding a card in addition to paying its other costs. Then exile this card."),
     LANDWALK("Landwalk", Landwalk.class, true, "This creature is unblockable as long as defending player controls {1:%s}."),
     LAST_STRIKE("Last Strike", SimpleKeyword.class, true, "This creature deals combat damage after creatures without last strike."),
+    LEGACY("Legacy", SimpleKeyword.class, true, "Before the game starts, choose a keyword or ability word and write it below."),
     LEGENDARY_PARTNER("Legendary partner", SimpleKeyword.class, true, "You can have two commanders if this is one of them. The other one is promoted to legendary."),
     // Unstable: double strike + last strike (FAQ), which is how Card.hasDoubleStrike and hasLastStrike treat it
     TRIPLE_STRIKE("Triple strike", SimpleKeyword.class, true, "This creature deals first-strike, regular, and last-strike combat damage."),

@@ -337,6 +337,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     private List<String> notedTypes = new ArrayList<>();
     private List<String> chosenColors;
     private ColorSet markedColor;
+    private String legacyWord;
     private List<String> chosenName = new ArrayList<>();
     private Integer chosenNumber;
     private Player chosenPlayer;
@@ -471,6 +472,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         view.updateDraftAction(this);
         if (paperCard != null) {
             setMarkedColors(paperCard.getMarkedColors());
+            setLegacyWord(paperCard.getLegacyWord());
             setPaperFoil(paperCard.isFoil());
         }
     }
@@ -2582,6 +2584,41 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
     public boolean hasMarkedColor() {
         return markedColor != null && !markedColor.isColorless();
+    }
+
+    /** The word written in this card's legacy word blank (Inspirational Antelope), or null while it's blank. */
+    public final String getLegacyWord() {
+        return legacyWord;
+    }
+    public final void setLegacyWord(final String word) {
+        legacyWord = word;
+        view.updateLegacyWord(this);
+    }
+
+    /**
+     * Whether this has the keyword ability or ability word {@code word}, ignoring any modifier ("cycling" is any
+     * cycling cost, "landwalk" any landwalk). Ability words are only in rules text, at the start of a line.
+     */
+    public boolean hasKeywordOrAbilityWord(final String word) {
+        final String w = word.toLowerCase(java.util.Locale.ROOT);
+        for (final KeywordInterface inst : getKeywords()) {
+            final Keyword k = inst.getKeyword();
+            if (k != null && k != Keyword.UNDEFINED && k.toString().toLowerCase(java.util.Locale.ROOT).equals(w)) {
+                return true;
+            }
+            final String original = inst.getOriginal().toLowerCase(java.util.Locale.ROOT);
+            if (original.equals(w) || original.startsWith(w + ":") || original.startsWith(w + " ")) {
+                return true;
+            }
+        }
+        // Oracle text keeps its line breaks escaped
+        for (final String line : getOracleText().split("\\\\n|\\n")) {
+            final String l = line.trim().toLowerCase(java.util.Locale.ROOT);
+            if (l.startsWith(w + " —") || l.startsWith(w + " -")) {
+                return true;
+            }
+        }
+        return false;
     }
     public final Card getChosenCard() {
         return getChosenCards().getFirst();
@@ -8883,7 +8920,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         updateAbilityTextForView();
     }
 
-    void setPaperCard(final IPaperCard paperCard0) {
+    public void setPaperCard(final IPaperCard paperCard0) {
         paperCard = paperCard0;
     }
 

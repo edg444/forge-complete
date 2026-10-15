@@ -22,6 +22,10 @@ public interface IPaperCard extends InventoryItem, Serializable {
     String getCollectorNumber();
     String getFunctionalVariant();
     ColorSet getMarkedColors();
+    /** The word written in a legacy word blank (Inspirational Antelope); only a real card can have one. */
+    default String getLegacyWord() {
+        return null;
+    }
     int getArtIndex();
     boolean isFoil();
     boolean isToken();

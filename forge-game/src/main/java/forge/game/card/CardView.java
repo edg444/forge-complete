@@ -540,6 +540,13 @@ public class CardView extends GameEntityView {
     void updateMarkedColors(Card c) {
         set(TrackableProperty.MarkedColors, c.getMarkedColors());
     }
+
+    public String getLegacyWord() {
+        return get(TrackableProperty.LegacyWord);
+    }
+    void updateLegacyWord(Card c) {
+        set(TrackableProperty.LegacyWord, c.getLegacyWord());
+    }
     public FCollectionView<CardView> getMergedCardsCollection() {
         return Objects.requireNonNullElse(get(TrackableProperty.MergedCardsCollection), FCollection.getEmpty());
     }

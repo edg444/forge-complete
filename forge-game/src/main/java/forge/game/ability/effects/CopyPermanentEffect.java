@@ -305,6 +305,7 @@ public class CopyPermanentEffect extends TokenEffectBase {
         }
         // spire
         copy.setMarkedColors(original.getMarkedColors());
+        copy.setLegacyWord(original.getLegacyWord());
 
         copy.setTokenSpawningAbility(sa);
         copy.setGamePieceType(GamePieceType.TOKEN);
