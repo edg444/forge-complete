@@ -3246,6 +3246,10 @@ public class Player extends GameEntity implements Comparable<Player> {
      * Then runs triggers.
      */
     public void planeswalk(SpellAbility sa) {
+        // with no planar deck (outside Planechase) there's nowhere new to go - "You're totally lost"
+        if (getZone(ZoneType.PlanarDeck).isEmpty()) {
+            return;
+        }
         planeswalkTo(sa, new CardCollection(getZone(ZoneType.PlanarDeck).get(0)));
     }
 
@@ -3280,7 +3284,11 @@ public class Player extends GameEntity implements Comparable<Player> {
 
         for (final Card plane : currentPlanes) {
             plane.clearControllers();
-            game.getAction().moveTo(ZoneType.PlanarDeck, plane, -1, null, AbilityKey.newMap());
+            if (plane.hasSVar("NotAPlaneCard")) {
+                game.getAction().ceaseToExist(plane, true);
+            } else {
+                game.getAction().moveTo(ZoneType.PlanarDeck, plane, -1, null, AbilityKey.newMap());
+            }
         }
         currentPlanes.clear();
     }

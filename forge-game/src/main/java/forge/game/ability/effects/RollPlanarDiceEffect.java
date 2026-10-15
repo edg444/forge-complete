@@ -1,6 +1,7 @@
 package forge.game.ability.effects;
 
 import forge.game.Game;
+import forge.game.GameType;
 import forge.game.PlanarDice;
 import forge.game.ability.SpellAbilityEffect;
 import forge.game.event.GameEventRollDie;
@@ -32,5 +33,11 @@ public class RollPlanarDiceEffect extends SpellAbilityEffect {
         game.fireEvent(new GameEventRollDie(result));
         String message = Localizer.getInstance().getMessage("lblPlanarDiceResult", result.toString());
         game.getAction().notifyOfValue(sa, activator, message, null);
+        // Fractured Powerstone outside Planechase: you planeswalk away, but there's no planar deck to go to
+        if (result == PlanarDice.Planeswalk && !game.getRules().hasAppliedVariant(GameType.Planechase)) {
+            for (Player p : game.getPlayers()) {
+                p.leaveCurrentPlane();
+            }
+        }
     }
 }

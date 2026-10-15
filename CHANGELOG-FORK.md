@@ -317,6 +317,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   modes' `Pawprint$` values must total exactly `Pawprint$`, shown as "[n]". The human chooser only offers a mode that
   leaves the rest fillable; CharmAi fills the total greedily from the costliest mode it wants (the -2/-2 against a
   board of x/2s, otherwise Snakes and counters). Modes resolve in printed order (its ruling).
+- **Seek Bolas's Counsel** (CMB1 #98). Planeswalk `PlaneName$`: reaches a named plane even outside Planechase; that
+  plane isn't a real plane card (SVar `NotAPlaneCard`) and stops existing when it's left. Planes reached that way pass
+  to each active player like Planechase planes; outside Planechase a Planeswalk roll (Fractured Powerstone) leaves
+  the plane with nowhere new to go, and `Player.planeswalk` with an empty planar deck does nothing. Random charms
+  read "Choose one at random —" before their modes.
 ### 2026-10-15, sixth deploy (desktop, Android, GitHub) — upstream merge (5 commits); Mystery Booster playtest cards #67–94; Innkeeper's Talent AI
 
 - **Upstream merge** (5 commits, incl. Realm of Legends 1.077, restored alternate landscape layout on mobile,

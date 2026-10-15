@@ -1107,7 +1107,8 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
         game.setMonarchBeginTurn(game.getMonarch());
 
-        if (game.getRules().hasAppliedVariant(GameType.Planechase)) {
+        // a plane reached outside Planechase (Seek Bolas's Counsel) changes hands the same way
+        if (game.getActivePlanes() != null) {
             for (Card p :game.getActivePlanes()) {
                 if (p != null) {
                     p.setController(next, 0);

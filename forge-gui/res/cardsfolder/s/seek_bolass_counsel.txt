@@ -1,0 +1,17 @@
+Name:Seek Bolas's Counsel
+ManaCost:U B R
+Types:Sorcery
+A:SP$ Charm | Choices$ DBUpkeepEmblem,DBDiscard,DBPlaneswalk,DBDig,DBDestroyAll,DBSideboardEmblem | Random$ True
+SVar:DBUpkeepEmblem:DB$ Effect | Name$ Emblem — Seek Bolas's Counsel (upkeep) | Triggers$ EmblemUpkeep | Duration$ Permanent | SpellDescription$ You get an emblem with "At the beginning of your upkeep, pay {U}{B}{R}. If you don't, you lose the game."
+SVar:EmblemUpkeep:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Command | Execute$ TrigLoseGame | TriggerDescription$ At the beginning of your upkeep, pay {U}{B}{R}. If you don't, you lose the game.
+SVar:TrigLoseGame:DB$ LosesGame | UnlessCost$ U B R | UnlessPayer$ You | Defined$ You
+SVar:DBDiscard:DB$ Discard | Defined$ Player | Mode$ Hand | SpellDescription$ Each player discards their hand.
+SVar:DBPlaneswalk:DB$ Planeswalk | PlaneName$ Pools of Becoming | SpellDescription$ Planeswalk to Pools of Becoming. (Once there, you can roll the planar die only if you're playing Planechase.)
+SVar:DBDig:DB$ DigUntil | Defined$ Player.Opponent | Valid$ Card.nonLand | ValidDescription$ nonland | FoundDestination$ Exile | RevealedDestination$ Exile | RememberFound$ True | SubAbility$ DBPlay | SpellDescription$ For each opponent, exile cards from the top of their library until you exile a nonland card. You may cast those cards without paying their mana costs.
+SVar:DBPlay:DB$ Play | Defined$ Remembered | ValidSA$ Spell | Controller$ You | WithoutManaCost$ True | Optional$ True | Amount$ All | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:DBDestroyAll:DB$ DestroyAll | ValidCards$ Creature,Planeswalker.nonBolas | SpellDescription$ Destroy all creatures and non-Bolas planeswalkers.
+SVar:DBSideboardEmblem:DB$ Effect | Name$ Emblem — Seek Bolas's Counsel (sideboard) | StaticAbilities$ CastSideboard | Duration$ Permanent | SpellDescription$ You get an emblem with "You can cast nonland cards from your sideboard."
+SVar:CastSideboard:Mode$ Continuous | Affected$ Card.nonLand+YouOwn | MayPlay$ True | AffectedZone$ Sideboard | EffectZone$ Command | Description$ You can cast nonland cards from your sideboard.
+AI:RemoveDeck:Random
+Oracle:Choose one at random —\n• You get an emblem with "At the beginning of your upkeep, pay {U}{B}{R}. If you don't, you lose the game."\n• Each player discards their hand.\n• Planeswalk to Pools of Becoming. (Once there, you can roll the planar die only if you're playing Planechase.)\n• For each opponent, exile cards from the top of their library until you exile a nonland card. You may cast those cards without paying their mana costs.\n• Destroy all creatures and non-Bolas planeswalkers.\n• You get an emblem with "You can cast nonland cards from your sideboard."

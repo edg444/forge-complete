@@ -177,7 +177,8 @@ public class CharmEffect extends SpellAbilityEffect {
         }
 
         if (random) {
-            sb.append(" at random.");
+            // "Choose one at random —" when the modes follow
+            sb.append(includeChosen && !list.isEmpty() ? " at random" : " at random.");
         }
         if (repeat) {
             sb.append(". You may choose the same mode more than once.");
