@@ -309,6 +309,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-15, sixth deploy (desktop, Android, GitHub) — upstream merge (5 commits); Mystery Booster playtest cards #67–94; Innkeeper's Talent AI
+
+- **Upstream merge** (5 commits, incl. Realm of Legends 1.077, restored alternate landscape layout on mobile,
+  targetable stack). Conflicts: Cavalier of Gales and Riverwise Augur take upstream's `Reorder$ True` and keep the
+  fork's text; mobile Settings keeps both the fork's "zone tabs on the left" option and upstream's restored
+  "Alternate Zone Layout" (a wide bottom row) - they're separate options.
 - **AI: creatures that can't attack or block are useless** (reported with Innkeeper's Talent). `isUselessCreature`
   only knew the old "can't attack or block" keyword, but Pacifism and its kin are `CantAttack`/`CantBlock` statics,
   so the AI put +1/+1 counters on a pacified creature. It now also counts a creature that can block nothing and

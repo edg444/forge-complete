@@ -4,11 +4,15 @@ import forge.game.card.CardView;
 import forge.game.card.IHasCardView;
 import forge.game.keyword.Keyword;
 import forge.game.player.PlayerView;
+import forge.game.zone.MagicStack;
 import forge.trackable.TrackableCollection;
 import forge.trackable.TrackableObject;
 import forge.trackable.Tracker;
 import forge.trackable.TrackableProperty;
 import forge.util.collect.FCollectionView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StackItemView extends TrackableObject implements IHasCardView {
     private static final long serialVersionUID = 6733415646691356052L;
@@ -37,6 +41,7 @@ public class StackItemView extends TrackableObject implements IHasCardView {
         updateActivatingPlayer(si);
         updateTargetCards(si);
         updateTargetPlayers(si);
+        updateTargetStackItems(si);
         updateAbility(si);
         updateOptionalTrigger(si);
         updateSubInstance(si);
@@ -158,6 +163,26 @@ public class StackItemView extends TrackableObject implements IHasCardView {
     }
     void updateTargetPlayers(SpellAbilityStackInstance si) {
         set(TrackableProperty.TargetPlayers, PlayerView.getCollection(si.getTargetChoices().getTargetPlayers()));
+    }
+
+    /** Other stack items (e.g. a spell a counterspell is aimed at) this item targets; null when it targets none. */
+    public FCollectionView<StackItemView> getTargetStackItems() {
+        return get(TrackableProperty.TargetStackItems);
+    }
+    void updateTargetStackItems(SpellAbilityStackInstance si) {
+        if (!si.getTargetChoices().isTargetingAnySpell()) {
+            set(TrackableProperty.TargetStackItems, null); // nearly every item: nothing to look up, nothing to sync
+            return;
+        }
+        final MagicStack stack = si.getSourceCard().getGame().getStack();
+        final List<SpellAbilityStackInstance> targeted = new ArrayList<>();
+        for (final SpellAbility sa : si.getTargetChoices().getTargetSpells()) {
+            final SpellAbilityStackInstance other = stack.getInstanceMatchingSpellAbilityID(sa);
+            if (other != null && other != si) {
+                targeted.add(other);
+            }
+        }
+        set(TrackableProperty.TargetStackItems, getCollection(targeted));
     }
 
     public boolean isAbility() {
