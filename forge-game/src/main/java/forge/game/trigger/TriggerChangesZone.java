@@ -195,6 +195,8 @@ public class TriggerChangesZone extends Trigger {
         } else {
             sa.setTriggeringObjectsFrom(runParams, AbilityKey.Card, AbilityKey.CardLKI);
         }
+        // the spell that left the stack (Trial and Error copies itself when it fizzles)
+        sa.setTriggeringObjectsFrom(runParams, AbilityKey.StackSa);
     }
 
     @Override

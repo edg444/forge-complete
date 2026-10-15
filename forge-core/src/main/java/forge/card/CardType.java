@@ -57,7 +57,10 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
         Scheme(false, "schemes", "lblScheme"),
         Sorcery(false, "sorceries", "lblSorcery"),
         Stickers(false, "stickers", "lblStickers"),
-        Vanguard(false, "vanguards", "lblVanguard");
+        Vanguard(false, "vanguards", "lblVanguard"),
+        // Trial and Error's "Elemental" card type, printed as Elemental; scripts say ElementalCard so that "Elemental"
+        // keeps meaning the creature type (its ruling: an effect that refers to an Elemental means the creature type)
+        ElementalCard(false, "elemental cards", "lblElementalCard");
 
         public final boolean isPermanent;
         public final String pluralName;
@@ -637,8 +640,19 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
         for (final Supertype st : supertypes) {
             types.add(st.name());
         }
+        // Elemental is printed after Kindred and before every other card type ("Elemental Instant")
         for (final CoreType ct : coreTypes) {
-            types.add(ct.name());
+            if (ct == CoreType.Kindred) {
+                types.add(ct.name());
+            }
+        }
+        if (coreTypes.contains(CoreType.ElementalCard)) {
+            types.add("Elemental");
+        }
+        for (final CoreType ct : coreTypes) {
+            if (ct != CoreType.Kindred && ct != CoreType.ElementalCard) {
+                types.add(ct.name());
+            }
         }
         return types;
     }
@@ -699,6 +713,9 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
         }
         if (isPlane()) {
             allowedTypes = allowedTypes.or(CardType::isAPlanarType);
+        }
+        if (hasType(CoreType.ElementalCard)) {
+            allowedTypes = allowedTypes.or(CardType::isAnElementalType);
         }
 
         subtypes.removeIf(allowedTypes.negate());
@@ -879,6 +896,7 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
         public static final Set<String> DUNGEON_TYPES = Sets.newHashSet();
         public static final Set<String> BATTLE_TYPES = Sets.newHashSet();
         public static final Set<String> PLANAR_TYPES = Sets.newHashSet();
+        public static final Set<String> ELEMENTAL_TYPES = Sets.newHashSet();
 
         public static final Set<String> MultiwordTypes = Sets.newHashSet();
 
@@ -933,6 +951,7 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
             tmp.addAll(Constant.DUNGEON_TYPES);
             tmp.addAll(Constant.BATTLE_TYPES);
             tmp.addAll(Constant.PLANAR_TYPES);
+            tmp.addAll(Constant.ELEMENTAL_TYPES);
             sortedSubTypes = ImmutableList.copyOf(tmp);
         }
         return sortedSubTypes;
@@ -1003,6 +1022,9 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
     public static boolean isAPlanarType(final String cardType) {
         return Constant.PLANAR_TYPES.contains(cardType);
     }
+    public static boolean isAnElementalType(final String cardType) {
+        return Constant.ELEMENTAL_TYPES.contains(cardType);
+    }
     /**
      * If the input is a plural type, return the corresponding singular form.
      * Otherwise, simply return the input.
@@ -1065,6 +1087,9 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
                     break;
                 case "PlanarTypes":
                     addToSection = CardType.Constant.PLANAR_TYPES;
+                    break;
+                case "ElementalTypes":
+                    addToSection = CardType.Constant.ELEMENTAL_TYPES;
                     break;
             }
 

@@ -615,3 +615,5 @@ Wildfire
 Xerex
 Zendikar
 Zhalfir
+[ElementalTypes]
+Fire

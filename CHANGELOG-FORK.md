@@ -322,6 +322,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   BecomesTarget triggers run for what's chosen. With none it doesn't resolve. After it resolves the card leaves with
   its own characteristics. CloneAi `AILogic$ Transcantation`: an opponent's spell of mana value 3+ on top of the
   stack, unless a Bolt at the AI would be lethal.
+- **Trial and Error** (CMB1 #68). New card type **Elemental**: `CoreType.ElementalCard`, written `ElementalCard` in
+  scripts and printed "Elemental" (after Kindred, before the other card types), so "Elemental" in scripts and Valid
+  strings keeps meaning the creature type, as its ruling says. Elemental types are a new `[ElementalTypes]` section
+  of TypeLists.txt (Fire). "Is countered" is `Mode$ Countered` with no TriggerZones (CR 113.6k: it works from
+  wherever the card goes); "fizzles" is `Mode$ ChangesZone | Origin$ Stack | Fizzle$ True`, whose triggered
+  `StackSa` (`Defined$ TriggeredStackSa`) is the spell that fizzled. A human choosing new targets for a copy that has
+  none left (it fizzled) now gets a normal target prompt instead of keeping zero targets.
 
 ### 2026-10-13, fifth deploy (desktop, Android, GitHub) — upstream merge (41 commits); Mystery Booster playtest cards #51–66
 

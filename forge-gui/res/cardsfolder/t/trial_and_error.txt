@@ -1,0 +1,9 @@
+Name:Trial and Error
+ManaCost:R R
+Types:ElementalCard Instant Fire
+T:Mode$ Countered | ValidCard$ Card.Self | Execute$ TrigCopy | TriggerDescription$ Whenever CARDNAME is countered or fizzles, you may copy it and choose new targets for the copy.
+T:Mode$ ChangesZone | Origin$ Stack | Destination$ Any | ValidCard$ Card.Self | Fizzle$ True | Execute$ TrigCopyFizzled | Secondary$ True | TriggerDescription$ Whenever CARDNAME is countered or fizzles, you may copy it and choose new targets for the copy.
+SVar:TrigCopy:DB$ CopySpellAbility | Defined$ TriggeredSpellAbility | Optional$ True | MayChooseTarget$ True
+SVar:TrigCopyFizzled:DB$ CopySpellAbility | Defined$ TriggeredStackSa | Optional$ True | MayChooseTarget$ True
+A:SP$ DealDamage | ValidTgts$ Any | NumDmg$ 3 | SpellDescription$ CARDNAME deals 3 damage to any target.
+Oracle:Whenever Trial and Error is countered or fizzles, you may copy it and choose new targets for the copy.\nTrial and Error deals 3 damage to any target.

@@ -2667,7 +2667,8 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
         final TargetChoices oldTarget = sa.getTargets();
         final TargetSelection select = new TargetSelection(this, sa);
         sa.clearTargets();
-        if (select.chooseTargets(oldTarget.size(), sa.isDividedAsYouChoose() ? Lists.newArrayList(oldTarget.getDividedValues()) : null, filter, optional, false)) {
+        // no targets left (a copy of a spell that fizzled): choose them fresh rather than "the same number", which is none
+        if (select.chooseTargets(oldTarget.isEmpty() ? null : oldTarget.size(), sa.isDividedAsYouChoose() ? Lists.newArrayList(oldTarget.getDividedValues()) : null, filter, optional, false)) {
             return sa.getTargets();
         } else {
             sa.setTargets(oldTarget);
