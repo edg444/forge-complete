@@ -595,6 +595,13 @@ public class PlayerControllerAi extends PlayerController {
             return cards;
         }
 
+        if (source != null && source.getApi() == ApiType.RevealUntilStop) {
+            // Zyym's opponent reveals in this order until told to stop: any pattern could be read, so none
+            final CardCollection shuffled = new CardCollection(cards);
+            Collections.shuffle(shuffled, MyRandom.getRandom());
+            return shuffled;
+        }
+
         if (destinationZone == ZoneType.Hand) {
             // The Grand Calcutron's program
             return AiProgram.idealOrder(player, cards);

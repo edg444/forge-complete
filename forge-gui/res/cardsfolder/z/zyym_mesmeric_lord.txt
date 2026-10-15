@@ -1,0 +1,10 @@
+Name:Zyym, Mesmeric Lord
+ManaCost:1 U B B
+Types:Legendary Creature Vampire Wizard
+PT:3/4
+K:Flying
+K:Deathtouch
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigReveal | TriggerDescription$ When CARDNAME enters the battlefield, target opponent chooses an order for the cards in their hand, then reveals them one by one until you say stop. That player then discards the most recently revealed card.
+SVar:TrigReveal:DB$ RevealUntilStop | ValidTgts$ Opponent | TgtPrompt$ Select target opponent
+DeckHas:Ability$Discard
+Oracle:Flying, deathtouch\nWhen Zyym, Mesmeric Lord enters the battlefield, target opponent chooses an order for the cards in their hand, then reveals them one by one until you say stop. That player then discards the most recently revealed card.

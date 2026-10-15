@@ -327,6 +327,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   the real Smelt and Saw. New creature type Half; tokens `g_2_2_elk`, `r_1_2_half`.
 - **P-Start // P-Fire** (CMB1 #101). Script only; both faces take the P- prefix since Start // Finish and
   Fire // Ice already own those face names.
+- **Zyym, Mesmeric Lord** (CMB1 #104). New API `RevealUntilStop`: the target player orders their hand (an AI
+  shuffles it, so no pattern can be read), reveals one card at a time and waits for the activator's stop, then
+  discards the last card revealed. The AI stops as in the secretary problem: let the first n/e cards go by, then take
+  the first nonland better than all of them.
 ### 2026-10-15, sixth deploy (desktop, Android, GitHub) — upstream merge (5 commits); Mystery Booster playtest cards #67–94; Innkeeper's Talent AI
 
 - **Upstream merge** (5 commits, incl. Realm of Legends 1.077, restored alternate landscape layout on mobile,
