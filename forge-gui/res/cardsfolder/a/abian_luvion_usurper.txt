@@ -1,0 +1,12 @@
+Name:Abian, Luvion Usurper
+ManaCost:5 R G
+Types:Legendary Planeswalker Abian
+Loyalty:5
+S:Mode$ ControllerBecomesThis | Description$ As CARDNAME enters, you become CARDNAME. (Your life total becomes equal to their loyalty. You can activate the loyalty abilities by spending or gaining life.)
+A:AB$ Discard | Cost$ AddCounter<3/LOYALTY> | Planeswalker$ True | Defined$ You | Mode$ Hand | SubAbility$ DBDraw | SpellDescription$ Discard your hand, then draw cards equal to the greatest power among creatures you control.
+SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ Y
+SVar:Y:Count$Valid Creature.YouCtrl$GreatestCardPower
+A:AB$ Token | Cost$ AddCounter<1/LOYALTY> | Planeswalker$ True | TokenScript$ rg_3_2_spirit | SpellDescription$ Create a 3/2 red and green Spirit creature token.
+A:AB$ DealDamage | Cost$ SubCounter<X/LOYALTY> | Planeswalker$ True | ValidTgts$ Any | NumDmg$ X | SpellDescription$ You deal X damage to any target.
+SVar:X:Count$xPaid
+Oracle:As Abian, Luvion Usurper enters, you become Abian. (Your life total becomes equal to their loyalty. You can activate the loyalty abilities by spending or gaining life.)\n[+3]: Discard your hand, then draw cards equal to the greatest power among creatures you control.\n[+1]: Create a 3/2 red and green Spirit creature token.\n[-X]: You deal X damage to any target.

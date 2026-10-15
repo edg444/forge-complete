@@ -660,6 +660,12 @@ public class GameAction {
         // update static abilities after etb counters have been placed
         checkStaticAbilities();
 
+        // Abian, Luvion Usurper: as it enters, with its loyalty on it, its controller becomes it
+        if (toBattlefield && copied.isInPlay() && copied.getStaticAbilities().anyMatch(
+                st -> st.checkMode(StaticAbilityMode.ControllerBecomesThis))) {
+            becomeCard(copied.getController(), copied);
+        }
+
         // CR 603.6b
         if (toBattlefield && !unnoticed) {
             zoneTo.saveLKI(copied, lastKnownInfo);
@@ -833,7 +839,35 @@ public class GameAction {
         }
     }
 
+    /**
+     * Abian, Luvion Usurper: the player becomes the permanent - their life total becomes its loyalty, and from then on
+     * each follows the other (its rulings) until it leaves the battlefield, when they're just a player again.
+     */
+    public void becomeCard(final Player p, final Card c) {
+        if (p.getEmbodied() != null && p.getEmbodied() != c) {
+            p.getEmbodied().setEmbodiedBy(null);
+        }
+        p.setEmbodied(c);
+        p.setLife(c.getCounters(CounterEnumType.LOYALTY), null);
+        c.setEmbodiedBy(p);
+        c.syncLoyaltyToLife();
+        game.getGameLog().add(GameLogEntryType.INFORMATION, p + " becomes " + c + ".");
+    }
+
+    private static void leaveEmbodiment(final Card c) {
+        final Player p = c.getEmbodiedBy();
+        if (p != null) {
+            if (p.getEmbodied() != null && p.getEmbodied().equals(c)) {
+                p.setEmbodied(null);
+            }
+            c.setEmbodiedBy(null);
+        }
+    }
+
     private static void unattachCardLeavingBattlefield(final Card copied, final Card old) {
+        // Abian, Luvion Usurper: leaving the battlefield, you're just a player again; your life stays
+        leaveEmbodiment(old);
+        leaveEmbodiment(copied);
         // remove attachments from creatures
         copied.unAttachAllCards(old);
 

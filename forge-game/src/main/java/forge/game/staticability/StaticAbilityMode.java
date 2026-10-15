@@ -150,6 +150,8 @@ public enum StaticAbilityMode {
     CantExile,
     // StaticAbilityCantDestroy (A Good Thing)
     CantDestroy,
+    // Abian, Luvion Usurper - as it enters, its controller becomes it
+    ControllerBecomesThis,
 
     // StaticAbilityCantPhase
     CantPhaseIn,

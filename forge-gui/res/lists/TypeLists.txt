@@ -441,6 +441,7 @@ Treasure:Treasures
 Vehicle:Vehicles
 Vibranium
 [WalkerTypes]
+Abian
 Ajani
 Aminatou
 Angrath

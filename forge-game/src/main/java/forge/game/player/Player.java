@@ -603,7 +603,19 @@ public class Player extends GameEntity implements Comparable<Player> {
 
     // every head of a Two-Headed Giant team shows the shared total, and only the player whose life moved gets a
     // life event, so the others are told their stats changed
+    // Abian, Luvion Usurper: the permanent this player became
+    private Card embodied = null;
+    public final Card getEmbodied() {
+        return embodied;
+    }
+    public final void setEmbodied(final Card c) {
+        embodied = c;
+    }
+
     private void updateLifeViews() {
+        if (embodied != null) {
+            embodied.syncLoyaltyToLife();
+        }
         final PlayerCollection sharers = getLifeSharers();
         for (final Player p : sharers) {
             p.view.updateLife(p);

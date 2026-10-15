@@ -713,6 +713,11 @@ public class ComputerUtilCost {
 
         val = ObjectUtils.min(val, abCost.getMaxForNonManaX(root, ai, effect));
 
+        // Abian, Luvion Usurper: its loyalty is your life, so spending all of it loses the game before anything resolves
+        if (val != null && ai.equals(source.getEmbodiedBy()) && abCost.hasSpecificCostType(CostRemoveCounter.class)) {
+            val = Math.min(val, Math.max(0, ai.getLife() - 1));
+        }
+
         if (val != null && val > 0) {
             // filter cost parts for preferences, don't choose X > than possible preferences
             for (final CostPart part : abCost.getCostParts()) {

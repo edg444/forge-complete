@@ -398,6 +398,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   Fixed on the way: SetLife reads a life-total amount in halves, and `Count$YourLifeTotalHalves` didn't exist, so
   "double your life total" from `Count$YourLifeTotal` set it to 0 - Revival // Revenge and Angelic Enforcer did
   that too.
+- **Abian, Luvion Usurper** (CMB1 #87). Static `Mode$ ControllerBecomesThis`: as it enters (after its loyalty
+  counters are on it) its controller becomes it (`GameAction.becomeCard`, `Card.getEmbodiedBy` /
+  `Player.getEmbodied`). Their life total becomes its loyalty - set the CR 119.5 way, so from 20 that's losing 15 -
+  then each follows the other (its rulings): loyalty counters put on or removed, by costs or damage to it, are life
+  gained or lost, and any life change resets its loyalty to match. Leaving the battlefield, you're just a player
+  again and your life stays. Spending loyalty can't exceed your life (ruling), and the AI's X stops one short of it.
+  New planeswalker type Abian; new token rg_3_2_spirit. Not modeled: you also being a red and green legendary
+  planeswalker player, and the -X damage coming from you rather than from Abian.
 
 ### 2026-10-13, fifth deploy (desktop, Android, GitHub) — upstream merge (41 commits); Mystery Booster playtest cards #51–66
 

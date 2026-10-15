@@ -1971,6 +1971,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
             setCounters(counterType, newValue);
             getGame().addCounterAddedThisTurn(source, counterType, this, addAmount);
             view.updateCounters(this);
+            loyaltyChangedForEmbodied(counterType, newValue - oldValue);
 
             //fire card stats changed event if p/t bonuses or loyalty changed from added counters
             if (powerBonusBefore != getPowerBonusFromCounters() || toughnessBonusBefore != getToughnessBonusFromCounters() || loyaltyBefore != getCurrentLoyalty()) {
@@ -2100,6 +2101,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
         setCounters(counterName, newValue);
         view.updateCounters(this);
+        loyaltyChangedForEmbodied(counterName, -delta);
 
         if (newValue <= 0 && (counterName.is(CounterEnumType.MANABOND) || counterName.isKeywordCounter())) {
             updateKeywords();
@@ -4311,6 +4313,45 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
     public final boolean isAttachedToEntity() {
         return entityAttachedTo != null;
+    }
+
+    // Abian, Luvion Usurper: the player who became this permanent - its loyalty is their life total, both ways
+    private Player embodiedBy = null;
+    private boolean syncingEmbodiedLife = false;
+    public final Player getEmbodiedBy() {
+        return embodiedBy;
+    }
+    public final void setEmbodiedBy(final Player p) {
+        embodiedBy = p;
+    }
+    /** Loyalty counters put on or removed: the player it is gains or loses that much life (its rulings). */
+    private void loyaltyChangedForEmbodied(final CounterType type, final int delta) {
+        if (embodiedBy == null || syncingEmbodiedLife || delta == 0 || !type.is(CounterEnumType.LOYALTY)) {
+            return;
+        }
+        syncingEmbodiedLife = true;
+        try {
+            if (delta > 0) {
+                embodiedBy.gainLife(delta, this, null);
+            } else {
+                embodiedBy.loseLife(-delta, false, false, null);
+            }
+        } finally {
+            syncingEmbodiedLife = false;
+        }
+        syncLoyaltyToLife();
+    }
+    /** Life gained or lost: that many loyalty counters are put on or removed, so the two stay equal (its rulings). */
+    public final void syncLoyaltyToLife() {
+        if (embodiedBy == null || syncingEmbodiedLife) {
+            return;
+        }
+        final int life = Math.max(0, embodiedBy.getLife());
+        if (getCounters(CounterEnumType.LOYALTY) != life) {
+            setCounters(CounterEnumType.LOYALTY, life);
+            view.updateCounters(this);
+            getGame().fireEvent(new GameEventCardStatsChanged(this));
+        }
     }
 
     // Soulmates ("enchant two creatures"): what this is attached to besides entityAttachedTo
