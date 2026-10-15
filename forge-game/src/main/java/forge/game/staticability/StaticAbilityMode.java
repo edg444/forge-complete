@@ -148,6 +148,8 @@ public enum StaticAbilityMode {
 
     // StaticAbilityCantExile
     CantExile,
+    // StaticAbilityCantDestroy (A Good Thing)
+    CantDestroy,
 
     // StaticAbilityCantPhase
     CantPhaseIn,

@@ -2468,6 +2468,10 @@ public class AbilityUtils {
         if (sq[0].equals("YourLifeTotal")) {
             return doXMath(player.getLife(), expr, c, ctb);
         }
+        // SetLife reads life-total amounts in halves; without this "double your life total" set it to 0
+        if (sq[0].equals("YourLifeTotalHalves")) {
+            return doXMath(player.getLife() * 2 + player.getHalfLife(), expr, c, ctb);
+        }
         // Bloodletter. The largest group of nonland permanents whose names share a first letter,
         // across the whole battlefield - the card doesn't care who controls them.
         if (sq[0].equals("MostSharedInitial")) {

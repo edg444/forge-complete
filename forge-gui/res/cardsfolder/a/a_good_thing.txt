@@ -1,0 +1,14 @@
+Name:A Good Thing
+ManaCost:4 W B
+Types:Enchantment
+S:Mode$ CantDestroy | ValidCard$ Card.Self | ValidCause$ SpellAbility.YouCtrl | Description$ Spells and abilities you control can't destroy, exile, target, or cause you to sacrifice CARDNAME.
+S:Mode$ CantExile | ValidCard$ Card.Self | ValidCause$ SpellAbility.YouCtrl | Secondary$ True | Description$ Spells and abilities you control can't exile CARDNAME.
+S:Mode$ CantTarget | ValidTarget$ Card.Self | Activator$ You | Secondary$ True | Description$ Spells and abilities you control can't target CARDNAME.
+S:Mode$ CantSacrifice | ValidCard$ Card.Self | ValidCause$ SpellAbility.YouCtrl | Secondary$ True | Description$ Spells and abilities you control can't cause you to sacrifice CARDNAME.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDouble | TriggerDescription$ At the beginning of your upkeep, double your life total. Then, if you have 1,000 or more life, you lose the game.
+SVar:TrigDouble:DB$ SetLife | Defined$ You | LifeAmount$ X | SubAbility$ DBLose
+SVar:DBLose:DB$ LosesGame | Defined$ You | ConditionCheckSVar$ Life | ConditionSVarCompare$ GE1000
+SVar:X:Count$YourLifeTotal/Doubled
+SVar:Life:Count$YourLifeTotal
+AI:RemoveDeck:All
+Oracle:Spells and abilities you control can't destroy, exile, target, or cause you to sacrifice A Good Thing.\nAt the beginning of your upkeep, double your life total. Then, if you have 1,000 or more life, you lose the game.

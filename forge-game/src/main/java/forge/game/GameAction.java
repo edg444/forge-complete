@@ -44,6 +44,7 @@ import forge.game.replacement.ReplacementResult;
 import forge.game.replacement.ReplacementType;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.SpellPermanent;
+import forge.game.staticability.StaticAbilityCantDestroy;
 import forge.game.staticability.StaticAbility;
 import forge.game.staticability.StaticAbilityCountersRemain;
 import forge.game.staticability.StaticAbilityContinuous;
@@ -2602,7 +2603,7 @@ public class GameAction {
     }
 
     public final boolean destroy(final Card c, final SpellAbility sa, final boolean regenerate, Map<AbilityKey, Object> params) {
-        if (!c.canBeDestroyed()) {
+        if (!c.canBeDestroyed() || StaticAbilityCantDestroy.cantDestroy(c, sa)) {
             return false;
         }
 

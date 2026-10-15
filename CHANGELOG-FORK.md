@@ -390,6 +390,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   enchants, for "destroy the other". State-based actions treat it as no longer enchanting when either creature is
   gone or can't be enchanted by it, so it's put into the graveyard (its ruling) and lets go of both. AttachAi keeps
   choosing targets for an AttachToAll Aura until it has enough.
+- **A Good Thing** (CMB1 #86). New static `Mode$ CantDestroy` (`ValidCard$`, `ValidCause$`;
+  `StaticAbilityCantDestroy`, checked in `GameAction.destroy` - only a destroy a spell or ability causes), with the
+  existing CantExile / CantTarget (`Activator$ You`) / CantSacrifice (costs included) for the rest of "your spells
+  and abilities can't get rid of it". Upkeep: SetLife to `Count$YourLifeTotal/Doubled` - a gain or loss of the
+  difference, as its ruling says, so Boon Reflection and Maro's Gone Nuts apply - then you lose at 1,000 or more.
+  Fixed on the way: SetLife reads a life-total amount in halves, and `Count$YourLifeTotalHalves` didn't exist, so
+  "double your life total" from `Count$YourLifeTotal` set it to 0 - Revival // Revenge and Angelic Enforcer did
+  that too.
 
 ### 2026-10-13, fifth deploy (desktop, Android, GitHub) — upstream merge (41 commits); Mystery Booster playtest cards #51–66
 
