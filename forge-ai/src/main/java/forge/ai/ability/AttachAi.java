@@ -1031,6 +1031,18 @@ public class AttachAi extends SpellAbilityAi {
         }
 
         sa.getTargets().add(o);
+        // Soulmates: an Aura that enchants two - the next best, then the next, until it has them all
+        while (sa.hasParam("AttachToAll") && sa.canAddMoreTarget()) {
+            final GameObject next = attachToCardAIPreferences(sa.getActivatingPlayer(), sa, mandatory);
+            if (next == null || sa.getTargets().contains(next)) {
+                break;
+            }
+            sa.getTargets().add(next);
+        }
+        if (!sa.isTargetNumberValid()) {
+            sa.resetTargets();
+            return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
+        }
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
 

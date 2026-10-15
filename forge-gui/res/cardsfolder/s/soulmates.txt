@@ -1,0 +1,9 @@
+Name:Soulmates
+ManaCost:2 G
+Types:Enchantment Aura
+K:Enchant:Creature:two creatures
+SVar:AuraSpell:SP$ Attach | ValidTgts$ Creature.CanBeEnchantedBy | TgtPrompt$ Select two target creatures | TargetMin$ 2 | TargetMax$ 2 | AttachToAll$ True | AILogic$ Pump | SpellDescription$ Enchant two creatures
+S:Mode$ Continuous | Affected$ Creature.EnchantedBy | AddPower$ 1 | AddToughness$ 1 | AddKeyword$ Hexproof | Description$ Enchanted creatures each get +1/+1 and have hexproof.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Creature.EnchantedBy | TriggerZones$ Battlefield | Execute$ TrigDestroy | TriggerDescription$ When one of the enchanted creatures dies, destroy the other.
+SVar:TrigDestroy:DB$ Destroy | Defined$ Remembered
+Oracle:Enchant two creatures\nEnchanted creatures each get +1/+1 and have hexproof.\nWhen one of the enchanted creatures dies, destroy the other.

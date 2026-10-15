@@ -4312,6 +4312,26 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public final boolean isAttachedToEntity() {
         return entityAttachedTo != null;
     }
+
+    // Soulmates ("enchant two creatures"): what this is attached to besides entityAttachedTo
+    private final List<GameEntity> alsoAttachedTo = Lists.newArrayList();
+    public final List<GameEntity> getAlsoAttachedTo() {
+        return alsoAttachedTo;
+    }
+    public final void attachAlsoTo(final GameEntity entity) {
+        if (entity == null || entity.equals(entityAttachedTo) || alsoAttachedTo.contains(entity)) {
+            return;
+        }
+        alsoAttachedTo.add(entity);
+        entity.addAttachedCard(this);
+        getGame().fireEvent(new GameEventCardAttachment(this, null, entity));
+    }
+    public final void unattachFromAllAlso() {
+        for (final GameEntity e : alsoAttachedTo) {
+            e.removeAttachedCard(this);
+        }
+        alsoAttachedTo.clear();
+    }
     public final boolean isAttachedToEntity(final GameEntity e) {
         return (entityAttachedTo == e);
     }

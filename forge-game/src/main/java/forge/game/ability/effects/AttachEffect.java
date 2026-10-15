@@ -118,6 +118,10 @@ public class AttachEffect extends SpellAbilityEffect {
             if (targets.isEmpty()) {
                 return;
             }
+            if (sa.hasParam("AttachToAll")) {
+                attachToAll(sa, source, targets);
+                return;
+            }
             String title = Localizer.getInstance().getMessage("lblChoose");
             Map<String, Object> params = Maps.newHashMap();
             params.put("Attachments", attachments);
@@ -177,6 +181,40 @@ public class AttachEffect extends SpellAbilityEffect {
             }
             table.triggerChangesZoneAll(game, sa);
         }
+    }
+
+    /**
+     * Soulmates ("enchant two creatures"): the Aura spell attaches to every target. With fewer targets left than it
+     * enchants, its enchant ability isn't satisfied, so it goes to the graveyard instead of the battlefield (its
+     * ruling). The Aura remembers what it enchants, for "destroy the other".
+     */
+    private static void attachToAll(final SpellAbility sa, final Card source, final FCollection<GameEntity> targets) {
+        final Game game = source.getGame();
+        if (!(source.isAura() && sa.isSpell())) {
+            return;
+        }
+        if (targets.size() < sa.getMinTargets()) {
+            game.getAction().moveToGraveyard(source, sa);
+            return;
+        }
+        source.attachToEntity(targets.getFirst(), sa);
+        source.setController(sa.getActivatingPlayer(), 0);
+        final CardZoneTable table = new CardZoneTable();
+        final ZoneType previousZone = source.getZone().getZoneType();
+        final Map<AbilityKey, Object> moveParams = AbilityKey.newMap();
+        moveParams.put(AbilityKey.LastStateBattlefield, game.copyLastStateBattlefield());
+        moveParams.put(AbilityKey.LastStateGraveyard, game.copyLastStateGraveyard());
+        final Card c = game.getAction().moveToPlay(source, source.getController(), sa, moveParams);
+        if (c.isInPlay()) {
+            for (final GameEntity t : targets) {
+                c.attachAlsoTo(t);
+                c.addRemembered(t);
+            }
+        }
+        if (c.getZone().getZoneType() != previousZone) {
+            table.put(previousZone, c.getZone().getZoneType(), c);
+        }
+        table.triggerChangesZoneAll(game, sa);
     }
 
     @Override

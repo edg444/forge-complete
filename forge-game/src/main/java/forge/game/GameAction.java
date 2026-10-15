@@ -840,6 +840,9 @@ public class GameAction {
         if (copied.isAttachedToEntity()) {
             copied.unattachFromEntity(copied.getEntityAttachedTo());
         }
+        // Soulmates: and the other creature it enchants
+        old.unattachFromAllAlso();
+        copied.unattachFromAllAlso();
     }
 
     public final Card moveTo(final Zone zoneTo, Card c, SpellAbility cause) {
@@ -2191,6 +2194,16 @@ public class GameAction {
             if (c.isCreature() || c.isBattle() || !ge.canBeAttached(c, null, true)) {
                 unAttachList.add(c);
                 checkAgain = true;
+            }
+            // Soulmates: if either creature it enchants is gone or can't be enchanted by it, it isn't enchanting two
+            for (final GameEntity also : c.getAlsoAttachedTo()) {
+                final boolean gone = also instanceof Card ac
+                        && (!ac.isInPlay() || !ac.equalsWithGameTimestamp(game.getCardState(ac)));
+                if (gone || !also.canBeAttached(c, null, true)) {
+                    unAttachList.add(c);
+                    checkAgain = true;
+                    break;
+                }
             }
         }
 

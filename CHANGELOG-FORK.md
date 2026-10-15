@@ -383,6 +383,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   player's Two-Headed Giant teammate, who takes that first turn with them (CR 805.4, as Gemstone Caverns already
   had it): `Player.isStartingPlayer` uses `sharesTurnWith`, which also affects Desert Cenote and the other
   `Count$StartingPlayer` cards in Two-Headed Giant games.
+- **Soulmates** (CMB1 #84). Auras that enchant two creatures: `Card.attachAlsoTo` / `getAlsoAttachedTo` - attached to
+  its main object as usual and also to the rest, which list it among their attachments, so `EnchantedBy` and
+  "enchanted creatures" cover all of them. Its `AuraSpell` targets two with Attach `AttachToAll$ True`: with fewer
+  legal targets left it goes to the graveyard instead of the battlefield (its ruling), and it remembers what it
+  enchants, for "destroy the other". State-based actions treat it as no longer enchanting when either creature is
+  gone or can't be enchanted by it, so it's put into the graveyard (its ruling) and lets go of both. AttachAi keeps
+  choosing targets for an AttachToAll Aura until it has enough.
 
 ### 2026-10-13, fifth deploy (desktop, Android, GitHub) — upstream merge (41 commits); Mystery Booster playtest cards #51–66
 
