@@ -1,0 +1,6 @@
+Name:Half Token
+ManaCost:no cost
+Colors:red
+Types:Creature Half
+PT:1/2
+Oracle:

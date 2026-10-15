@@ -151,6 +151,7 @@ Gremlin:Gremlins
 Griffin:Griffins
 Guest:Guests
 Hag:Hags
+Half:Halves
 Halfling:Halflings
 Hamster:Hamsters
 Harpy:Harpies

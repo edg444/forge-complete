@@ -1,0 +1,23 @@
+Name:P-Smelt
+ManaCost:R
+Types:Instant
+A:SP$ Destroy | ValidTgts$ Artifact | TgtPrompt$ Select target artifact | SpellDescription$ Destroy target artifact.
+AlternateMode:Split
+Oracle:Destroy target artifact.
+
+ALTERNATE
+
+Name:Herd
+ManaCost:5 G
+Types:Sorcery
+A:SP$ Token | TokenAmount$ 3 | TokenScript$ g_2_2_elk | TokenOwner$ You | SpellDescription$ Create three 2/2 green Elk creature tokens.
+Oracle:Create three 2/2 green Elk creature tokens.
+
+ALTERNATE
+
+Name:P-Saw
+ManaCost:1 B
+Types:Sorcery
+A:SP$ Destroy | ValidTgts$ Creature | TgtPrompt$ Select target creature | SubAbility$ DBToken | SpellDescription$ Destroy target creature. Its controller creates two 1/2 red Half creature tokens.
+SVar:DBToken:DB$ Token | TokenAmount$ 2 | TokenScript$ r_1_2_half | TokenOwner$ TargetedController
+Oracle:Destroy target creature. Its controller creates two 1/2 red Half creature tokens.

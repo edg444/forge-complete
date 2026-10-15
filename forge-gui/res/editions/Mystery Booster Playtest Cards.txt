@@ -106,7 +106,7 @@ ScryfallCode=CMB1
 97 R P-Pick Your Poison @Corey Bowen
 98 R Seek Bolas's Counsel @Matt Warren
 99 R Sliv-Mizzet, Hivemind @Jeff Stewart
-100 R Smelt // Herd // Saw @Alli Steele
+100 R P-Smelt // Herd // P-Saw @Alli Steele
 101 R Start // Fire @Nelson Brown
 102 R Slivdrazi Monstrosity @Justin Cornell
 103 R Wrath of Sod @Chad Kanotz
