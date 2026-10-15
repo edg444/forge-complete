@@ -1,0 +1,5 @@
+Name:Transcantation
+ManaCost:1 R
+Types:Instant
+A:SP$ Clone | TargetType$ Spell | ValidTgts$ Instant,Sorcery | TgtPrompt$ Select target instant or sorcery spell | CopyCardName$ Lightning Bolt | CloneTarget$ TargetedSource | ReplaceSpell$ True | AILogic$ Transcantation | SpellDescription$ Target instant or sorcery spell becomes a copy of Lightning Bolt. Its controller may choose new targets for it.
+Oracle:Target instant or sorcery spell becomes a copy of Lightning Bolt. Its controller may choose new targets for it.

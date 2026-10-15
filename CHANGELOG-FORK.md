@@ -314,6 +314,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   so the AI put +1/+1 counters on a pacified creature. It now also counts a creature that can block nothing and
   attack no one (next-turn checks, so summoning sickness and tapping don't count), and +1/+1 counter targeting
   prefers creatures that aren't useless.
+- **Transcantation** (CMB1 #67). `Clone` takes `CopyCardName$ <name>` (copy a card by name, from the same per-game
+  template cast-as uses) and `ReplaceSpell$ True`: a spell on the stack that became a copy gets the copy's spell
+  ability in its place on the stack (`MagicStack.replaceInPlace`), with no targets and none of the old ability's
+  buyback/flashback/kicker (its rulings). It's the same object, so anything that targeted it now targets the new
+  ability unconditionally; then its controller may choose targets (`chooseTargetsFor`, cancelable for a human), and
+  BecomesTarget triggers run for what's chosen. With none it doesn't resolve. After it resolves the card leaves with
+  its own characteristics. CloneAi `AILogic$ Transcantation`: an opponent's spell of mana value 3+ on top of the
+  stack, unless a Bolt at the AI would be lethal.
 
 ### 2026-10-13, fifth deploy (desktop, Android, GitHub) — upstream merge (41 commits); Mystery Booster playtest cards #51–66
 

@@ -2,6 +2,7 @@ package forge.ai.ability;
 
 import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
+import forge.ai.ComputerUtilAbility;
 import forge.ai.ComputerUtilCard;
 import forge.ai.SpellAbilityAi;
 import forge.game.Game;
@@ -12,6 +13,8 @@ import forge.game.phase.PhaseType;
 import forge.game.player.Player;
 import forge.game.player.PlayerActionConfirmMode;
 import forge.game.spellability.SpellAbility;
+import forge.game.spellability.SpellAbilityStackInstance;
+import forge.game.staticability.StaticAbilityStackFirstInFirstOut;
 import forge.game.zone.ZoneType;
 
 import java.util.List;
@@ -29,6 +32,9 @@ public class CloneAi extends SpellAbilityAi {
             Player weakest = ai.getWeakestOpponent();
             boolean lethal = weakest != null && missiles > 0 && weakest.canLoseLife() && weakest.getLife() <= 2 * missiles;
             return lethal ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        if ("Transcantation".equals(sa.getParam("AILogic"))) {
+            return transcantation(ai, sa);
         }
         final Card source = sa.getHostCard();
         final Game game = source.getGame();
@@ -90,8 +96,44 @@ public class CloneAi extends SpellAbilityAi {
                 : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
     }
 
+    /**
+     * Turn an opponent's spell into a Lightning Bolt they then aim: worth it when the spell does more than a Bolt would
+     * (mana value 3 or more) and a Bolt at us wouldn't finish us off.
+     */
+    private static AiAbilityDecision transcantation(final Player ai, final SpellAbility sa) {
+        final Game game = ai.getGame();
+        if (game.getStack().isEmpty() || StaticAbilityStackFirstInFirstOut.applies(game)
+                || (ai.canLoseLife() && ai.getLife() <= 3)) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final SpellAbility top = ComputerUtilAbility.getTopSpellAbilityOnStack(game, sa);
+        if (top == null || !top.isSpell() || ai.getYourTeam().contains(top.getActivatingPlayer())
+                || top.getHostCard().getCMC() < 3 || "Lightning Bolt".equals(top.getHostCard().getName())) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        sa.resetTargets();
+        if (!sa.canTargetSpellAbility(top)) {
+            return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
+        }
+        sa.getTargets().add(top);
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
     @Override
     protected AiAbilityDecision doTriggerNoCost(Player aiPlayer, SpellAbility sa, boolean mandatory) {
+        if ("Transcantation".equals(sa.getParam("AILogic"))) {
+            AiAbilityDecision decision = transcantation(aiPlayer, sa);
+            if (decision.willingToPlay() || !mandatory) {
+                return decision;
+            }
+            for (final SpellAbilityStackInstance si : aiPlayer.getGame().getStack()) {
+                if (sa.canTargetSpellAbility(si.getSpellAbility())) {
+                    sa.getTargets().add(si.getSpellAbility());
+                    return new AiAbilityDecision(50, AiPlayDecision.MandatoryPlay);
+                }
+            }
+            return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
+        }
         Card host = sa.getHostCard();
         boolean chance = true;
 
@@ -248,8 +290,8 @@ public class CloneAi extends SpellAbilityAi {
      * @see forge.ai.SpellAbilityAi#checkPhaseRestrictions(forge.game.player.Player, forge.game.spellability.SpellAbility, forge.game.phase.PhaseHandler)
      */
     protected boolean checkPhaseRestrictions(final Player ai, final SpellAbility sa, final PhaseHandler ph) {
-        if ("Bombardment".equals(sa.getParam("AILogic"))) {
-            return true; // a sorcery: the lethal check in checkApiLogic is the whole decision
+        if ("Bombardment".equals(sa.getParam("AILogic")) || "Transcantation".equals(sa.getParam("AILogic"))) {
+            return true; // the logic in checkApiLogic is the whole decision
         }
         // don't use instant speed clone abilities outside computers
         // Combat_Begin step

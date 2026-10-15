@@ -1,15 +1,22 @@
 package forge.game.ability.effects;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import forge.GameCommand;
 import forge.StaticData;
 import forge.game.Game;
+import forge.game.GameObject;
+import forge.game.ability.AbilityKey;
 import forge.game.ability.AbilityUtils;
 import forge.game.ability.SpellAbilityEffect;
 import forge.game.card.*;
 import forge.game.event.GameEventCardStatsChanged;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
+import forge.game.spellability.SpellAbilityStackInstance;
+import forge.game.spellability.TargetChoices;
+import forge.game.staticability.StaticAbilityCastAs;
+import forge.game.trigger.TriggerType;
 import forge.game.zone.ZoneType;
 import forge.util.IterableUtil;
 import forge.util.Localizer;
@@ -18,6 +25,8 @@ import forge.util.collect.FCollection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class CloneEffect extends SpellAbilityEffect {
 
@@ -33,6 +42,8 @@ public class CloneEffect extends SpellAbilityEffect {
             if (!cloneSources.isEmpty()) {
                 cardToCopy = cloneSources.get(0);
             }
+        } else if (sa.hasParam("CopyCardName")) {
+            cardToCopy = null;
         } else if (sa.usesTargeting()) {
             cardToCopy = sa.getTargetCard();
         }
@@ -43,7 +54,7 @@ public class CloneEffect extends SpellAbilityEffect {
         }
 
         sb.append(tgtCard);
-        sb.append(" becomes a copy of ").append(cardToCopy).append(".");
+        sb.append(" becomes a copy of ").append(cardToCopy == null ? sa.getParam("CopyCardName") : cardToCopy).append(".");
 
         return sb.toString();
     }
@@ -103,6 +114,8 @@ public class CloneEffect extends SpellAbilityEffect {
             if (!cloneSources.isEmpty()) {
                 cardToCopy = cloneSources.get(0);
             }
+        } else if (sa.hasParam("CopyCardName")) {
+            cardToCopy = StaticAbilityCastAs.template(game, sa.getParam("CopyCardName"), activator);
         } else if (sa.usesTargeting()) {
             cardToCopy = sa.getTargetCard();
         } else if (sa.hasParam("CopyFromChosenName")) {
@@ -165,6 +178,10 @@ public class CloneEffect extends SpellAbilityEffect {
 
             tgtCard.updateStateForView();
 
+            if (sa.hasParam("ReplaceSpell") && tgtCard.isInZone(ZoneType.Stack)) {
+                replaceSpell(game, tgtCard);
+            }
+
             // when clone is itself, cleanup from old abilities
             if (host.equals(tgtCard) && !sa.hasParam("ImprintRememberedNoCleanup")) {
                 tgtCard.clearImprintedCards();
@@ -216,5 +233,85 @@ public class CloneEffect extends SpellAbilityEffect {
 
             game.fireEvent(new GameEventCardStatsChanged(tgtCard));
         }
+    }
+
+    /**
+     * Transcantation: a spell that becomes a copy of another card has that card's spell ability and no targets (its
+     * rulings), and nothing from how it was cast - buyback, flashback, kicker - since those belonged to the old ability.
+     * It's still the same object, so whatever targeted it still does. Its controller may then choose targets.
+     */
+    private static void replaceSpell(final Game game, final Card spell) {
+        SpellAbilityStackInstance si = null;
+        for (final SpellAbilityStackInstance s : game.getStack()) {
+            if (s.isSpell() && s.getSourceCard() == spell) {
+                si = s;
+                break;
+            }
+        }
+        final SpellAbility newSa = spell.getFirstSpellAbility();
+        if (si == null || newSa == null || !newSa.isSpell()) {
+            return;
+        }
+        final SpellAbility oldSa = si.getSpellAbility();
+        final Player controller = oldSa.getActivatingPlayer();
+        newSa.setActivatingPlayer(controller);
+        newSa.setCopied(oldSa.isCopied());
+        for (SpellAbility part = newSa; part != null; part = part.getSubAbility()) {
+            part.resetTargets();
+        }
+        final SpellAbilityStackInstance replacement = game.getStack().replaceInPlace(si, newSa);
+        if (replacement == null) {
+            return;
+        }
+
+        for (final SpellAbilityStackInstance other : game.getStack()) {
+            final TargetChoices oldTC = other.getTargetChoices().clone();
+            boolean changed = false;
+            for (SpellAbility part = other.getSpellAbility(); part != null; part = part.getSubAbility()) {
+                if (part.usesTargeting() && part.getTargets().contains(oldSa)) {
+                    final Integer divided = part.isDividedAsYouChoose() ? part.getTargets().getDividedValue(oldSa) : null;
+                    part.getTargets().remove(oldSa);
+                    part.getTargets().add(newSa);
+                    if (divided != null) {
+                        part.getTargets().addDividedAllocation(newSa, divided);
+                    }
+                    changed = true;
+                }
+            }
+            if (changed) {
+                other.updateTarget(oldTC, Sets.newHashSet());
+            }
+        }
+
+        final Set<GameObject> chosen = Sets.newHashSet();
+        for (SpellAbility part = newSa; part != null; part = part.getSubAbility()) {
+            if (part.usesTargeting() && !controller.getController().chooseTargetsFor(part)) {
+                part.resetTargets();
+            }
+        }
+        replacement.updateTarget(new TargetChoices(), chosen);
+        for (final GameObject tgt : chosen) {
+            final Map<AbilityKey, Object> runParams = AbilityKey.newMap();
+            runParams.put(AbilityKey.SourceSA, newSa);
+            runParams.put(AbilityKey.Target, tgt);
+            if (tgt instanceof Card c) {
+                if (!c.hasBecomeTargetThisTurn()) {
+                    runParams.put(AbilityKey.FirstTime, null);
+                }
+                if (c.isValiant(controller)) {
+                    runParams.put(AbilityKey.Valiant, null);
+                }
+                c.addTargetFromThisTurn(controller);
+            }
+            game.getTriggerHandler().runTrigger(TriggerType.BecomesTarget, runParams, false);
+        }
+        if (!chosen.isEmpty()) {
+            final Map<AbilityKey, Object> runParams = AbilityKey.newMap();
+            runParams.put(AbilityKey.SourceSA, newSa);
+            runParams.put(AbilityKey.Targets, chosen);
+            game.getTriggerHandler().runTrigger(TriggerType.BecomesTargetOnce, runParams, false);
+        }
+        game.getAction().checkStaticAbilities();
+        game.getTriggerHandler().resetActiveTriggers();
     }
 }
