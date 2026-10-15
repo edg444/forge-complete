@@ -18,6 +18,7 @@
 package forge.game.phase;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
@@ -41,9 +42,11 @@ import forge.game.replacement.ReplacementResult;
 import forge.game.replacement.ReplacementType;
 
 import forge.game.spellability.SpellAbility;
+import forge.game.staticability.StaticAbility;
 import forge.game.staticability.StaticAbilityAttackDuringOpponentsTurn;
 import forge.game.staticability.StaticAbilityAttacksItsController;
 import forge.game.staticability.StaticAbilityNoCleanupDamage;
+import forge.game.staticability.StaticAbilityMode;
 import forge.game.staticability.StaticAbilityStayingPower;
 import forge.game.trigger.Trigger;
 import forge.game.trigger.TriggerType;
@@ -104,6 +107,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     private final transient List<StolenPhase> stolenPhases = Lists.newArrayList();
     private transient Player phaseStolenFrom = null;
     private transient List<PhaseType> stolenPhaseSteps = null;
+    private transient boolean upkeepSwitched = false;
 
     // priority player
 
@@ -161,7 +165,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
     /** CR 805.4: on a Two-Headed Giant team it's every teammate's turn too. */
     public final boolean isPlayerTurn(final Player player) {
-        return player.equals(playerTurn) || (playerTurn != null && playerTurn.sharesTurnWith(player));
+        // a switched upkeep's player is active, but it's still the other player's turn (Chronobot's rulings)
+        final Player turnPlayer = upkeepSwitched ? phaseStolenFrom : playerTurn;
+        return player.equals(turnPlayer) || (turnPlayer != null && turnPlayer.sharesTurnWith(player));
     }
 
     /**
@@ -284,6 +290,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
             // before BeginPhase replacements, so "skip your untap step" asks whoever's untap step it now is
             beginStolenPhase();
+            beginSwitchedUpkeep();
             if (extraPhase != null && extraPhase.getOwner() != null) {
                 beginOwnedCombat(extraPhase);
             }
@@ -1086,6 +1093,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         stolenPhases.clear();
         phaseStolenFrom = null;
         stolenPhaseSteps = null;
+        upkeepSwitched = false;
         turn = 0;
     }
 
@@ -1485,6 +1493,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     public final void devModeSet(final PhaseType phase0, final Player player0, boolean endCombat, int cturn) {
         phaseStolenFrom = null;
         stolenPhaseSteps = null;
+        upkeepSwitched = false;
         if (phase0 != null) {
             setPhase(phase0);
         }
@@ -1729,8 +1738,50 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         return onlyAttacker;
     }
 
+    /**
+     * Chronobot: whose upkeep this is, following the turn player's upkeep through each switch in timestamp order
+     * (the same pair switching twice switches back). Settled as the step begins, so a Chronobot entering or leaving
+     * during an upkeep doesn't change that one (its rulings). Its player is the active player until it ends.
+     */
+    private void beginSwitchedUpkeep() {
+        if (phase != PhaseType.UPKEEP || phaseStolenFrom != null || playerTurn == null) {
+            return;
+        }
+        final List<StaticAbility> switches = Lists.newArrayList();
+        for (final Card c : game.getCardsIn(ZoneType.Command)) {
+            for (final StaticAbility st : c.getStaticAbilities()) {
+                if (st.checkConditions(StaticAbilityMode.SwitchUpkeep)) {
+                    switches.add(st);
+                }
+            }
+        }
+        switches.sort(java.util.Comparator.comparingLong(st -> st.getHostCard().getLayerTimestamp()));
+        Player owner = playerTurn;
+        for (final StaticAbility st : switches) {
+            final Player you = st.getHostCard().getController();
+            final Player other = Iterables.getFirst(Iterables.filter(st.getHostCard().getRemembered(), Player.class), null);
+            if (other == null) {
+                continue;
+            }
+            if (owner.equals(you)) {
+                owner = other;
+            } else if (owner.equals(other)) {
+                owner = you;
+            }
+        }
+        if (owner.equals(playerTurn) || !owner.isInGame()) {
+            return;
+        }
+        phaseStolenFrom = playerTurn;
+        stolenPhaseSteps = List.of(PhaseType.UPKEEP);
+        upkeepSwitched = true;
+        setPlayerTurn(owner);
+        game.getGameLog().add(GameLogEntryType.PHASE, owner + " takes their upkeep during " + phaseStolenFrom + "'s turn.");
+    }
+
     private void endStolenPhase() {
         onlyAttacker = null;
+        upkeepSwitched = false;
         if (phaseStolenFrom == null) {
             return;
         }
@@ -1766,6 +1817,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         }
         phaseStolenFrom = from.phaseStolenFrom == null ? null : map.apply(from.phaseStolenFrom);
         stolenPhaseSteps = from.stolenPhaseSteps;
+        upkeepSwitched = from.upkeepSwitched;
     }
 
     private void handleMultiplayerEffects() {

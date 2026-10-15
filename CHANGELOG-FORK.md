@@ -331,6 +331,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   shuffles it, so no pattern can be read), reveals one card at a time and waits for the activator's stop, then
   discards the last card revealed. The AI stops as in the secretary problem: let the first n/e cards go by, then take
   the first nonland better than all of them.
+- **Chronobot** (CMB1 #105). Static mode `SwitchUpkeep` on an effect lasting while it's on the battlefield. As each
+  upkeep begins, `PhaseHandler.beginSwitchedUpkeep` follows the turn player's upkeep through the switches in
+  timestamp order (the same pair twice switches back) and makes that step's player active, reusing the stolen-phase
+  hand-off. Unlike a stolen phase, `isPlayerTurn` still answers with the real turn's player (its rulings); untap and
+  draw steps don't move, and one entering or leaving mid-upkeep doesn't change that upkeep.
 ### 2026-10-15, sixth deploy (desktop, Android, GitHub) — upstream merge (5 commits); Mystery Booster playtest cards #67–94; Innkeeper's Talent AI
 
 - **Upstream merge** (5 commits, incl. Realm of Legends 1.077, restored alternate landscape layout on mobile,

@@ -200,6 +200,8 @@ public enum StaticAbilityMode {
     StackFirstInFirstOut,
     // Throat Wolf - after each opponent's first combat phase of each turn, its controller has a combat phase
     CombatAfterOpponentsFirst,
+    // Chronobot - its controller and the remembered player switch upkeep steps
+    SwitchUpkeep,
     // StaticAbilityDoubleDoubling (Maro's Gone Nuts) - effects that double multiply by twice as much
     DoubleDoubling,
 

@@ -1,0 +1,8 @@
+Name:Chronobot
+ManaCost:2
+Types:Artifact Creature Construct
+PT:2/2
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSwitch | TriggerDescription$ When CARDNAME enters, switch upkeep steps with target opponent for as long as it remains on the battlefield. (You take your upkeep on their turn, and they take their upkeep on your turn.)
+SVar:TrigSwitch:DB$ Effect | ValidTgts$ Opponent | TgtPrompt$ Select target opponent | RememberObjects$ Targeted | StaticAbilities$ SwitchUpkeep | Duration$ UntilHostLeavesPlay | AILogic$ Always
+SVar:SwitchUpkeep:Mode$ SwitchUpkeep | EffectZone$ Command | Description$ You and that opponent switch upkeep steps.
+Oracle:When Chronobot enters, switch upkeep steps with target opponent for as long as it remains on the battlefield. (You take your upkeep on their turn, and they take their upkeep on your turn.)
