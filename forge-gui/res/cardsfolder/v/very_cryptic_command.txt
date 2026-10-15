@@ -45,7 +45,7 @@ Variant:D:SVar:VD2:DB$ Draw | Defined$ You | NumCards$ 2 | SubAbility$ VD2Discar
 Variant:D:SVar:VD2Discard:DB$ Discard | Defined$ You | NumCards$ 1 | Mode$ TgtChoose
 Variant:D:SVar:VD3:DB$ ChangeTargets | TargetType$ Spell.singleTarget | ValidTgts$ Card | TgtPrompt$ Select target spell with a single target | SpellDescription$ Change the target of target spell with a single target.
 # face down turns face up, double-faced transforms, anything else turns face down as a 2/2 (Unstable ruling)
-Variant:D:SVar:VD4:DB$ SetState | ValidTgts$ Creature.nonToken | TgtPrompt$ Select target nontoken creature | Mode$ TurnOver | SpellDescription$ Turn over target nontoken creature.
+Variant:D:SVar:VD4:DB$ SetState | ValidTgts$ Creature.!token | TgtPrompt$ Select target nontoken creature | Mode$ TurnOver | SpellDescription$ Turn over target nontoken creature.
 Variant:D:Oracle:Choose two —\n• Return target permanent to its controller's hand.\n• Draw two cards, then discard a card.\n• Change the target of target spell with a single target.\n• Turn over target nontoken creature.
 
 Variant:E:A:SP$ Charm | CharmNum$ 2 | Choices$ VE1,VE2,VE3,VE4

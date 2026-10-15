@@ -8,5 +8,5 @@ PT:*/*
 # that entered most recently wins; any other is 0/0, its controller having no graveyards at all.
 S:Mode$ AllGraveyardsYours | Description$ All graveyards are also your graveyards.
 S:Mode$ Continuous | EffectZone$ All | CharacteristicDefining$ True | SetPower$ X | SetToughness$ X | Description$ CARDNAME's power and toughness are each equal to the number of cards with flavor text in your graveyards.
-SVar:X:Count$ValidGraveyard Card.YouOwn+hasFlavorText+nonToken
+SVar:X:Count$ValidGraveyard Card.YouOwn+hasFlavorText+!token
 Oracle:All graveyards are also your graveyards.\nGraveyard Busybody's power and toughness are each equal to the number of cards with flavor text in your graveyards.
