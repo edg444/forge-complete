@@ -6,7 +6,7 @@ SVar:AnthemPump:DB$ Pump | Defined$ TriggeredAttackerLKICopy | NumAtt$ +2 | SubA
 SVar:RakdosBurn:DB$ DealDamage | Defined$ You | NumDmg$ 1
 R:Event$ DamageDone | ActiveZones$ Battlefield | ValidSource$ Card.YouCtrl,Emblem.YouCtrl | ValidTarget$ Permanent,Player | Hellbent$ True | ReplaceWith$ DmgTwice | Description$ Hellbent — As long as you have no cards in hand, if a source you control would deal damage to a permanent or player, it deals double that damage to that permanent or player instead.
 SVar:DmgTwice:DB$ ReplaceEffect | VarName$ DamageAmount | VarValue$ X
-SVar:X:ReplaceCount$DamageAmount/Twice
+SVar:X:ReplaceCount$DamageAmount/Doubled
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Card
 DeckHints:Ability$Discard

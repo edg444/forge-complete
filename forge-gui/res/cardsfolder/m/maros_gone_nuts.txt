@@ -1,0 +1,5 @@
+Name:Maro's Gone Nuts
+ManaCost:G G
+Types:Enchantment
+S:Mode$ DoubleDoubling | Description$ Double any effect that doubles. (It quadruples.)
+Oracle:Double any effect that doubles. (It quadruples.)

@@ -26,6 +26,6 @@ S:Mode$ Continuous | CharacteristicDefining$ True | SetPower$ X | SetToughness$ 
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigDoubleLife | TriggerDescription$ Whenever this creature attacks, double your life total.
 SVar:TrigDoubleLife:DB$ SetLife | LifeAmount$ Y
 SVar:X:Count$YourLifeTotal
-SVar:Y:Count$YourLifeTotal/Twice
+SVar:Y:Count$YourLifeTotal/Doubled
 SVar:HasAttackEffect:TRUE
 Oracle:Flying\nYou have hexproof.\nAngelic Enforcer's power and toughness are each equal to your life total.\nWhenever this creature attacks, double your life total.

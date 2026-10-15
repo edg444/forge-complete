@@ -2,6 +2,7 @@ package forge.game.ability.effects;
 
 import com.google.common.collect.Multiset;
 
+import forge.game.staticability.StaticAbilityDoubleDoubling;
 import forge.game.Game;
 import forge.game.GameEntity;
 import forge.game.GameEntityCounterTable;
@@ -43,7 +44,10 @@ public class CountersMultiplyEffect extends SpellAbilityEffect {
         final Player player = sa.getActivatingPlayer();
 
         final CounterType counterType = getCounterType(sa);
-        final int n = Integer.parseInt(sa.getParamOrDefault("Multiplier", "2")) - 1;
+        // doubling (the default) is an effect that doubles, for Maro's Gone Nuts
+        final int multiplier = sa.hasParam("Multiplier") && !"2".equals(sa.getParam("Multiplier"))
+                ? Integer.parseInt(sa.getParam("Multiplier")) : StaticAbilityDoubleDoubling.factor(sa.getHostCard().getGame());
+        final int n = multiplier - 1;
 
         GameEntityCounterTable table = new GameEntityCounterTable();
         for (GameEntity ge : getTargetEntities(sa)) {

@@ -9,6 +9,6 @@ SVar:TrigChange:DB$ ChangeZone | Destination$ Library | Shuffle$ True | Defined$
 SVar:X:Count$xPaid
 SVar:AltCostPaid:Count$AltCost.5.X
 SVar:Y:Count$Compare AltCostPaid LT5.AltCostPaid.Z
-SVar:Z:SVar$AltCostPaid/Twice
+SVar:Z:SVar$AltCostPaid/Doubled
 DeckHas:Ability$Counters
 Oracle:You may pay {W}{U}{B}{R}{G} rather than pay this spell's mana cost. If you do, X is 5.\nBringer of Green Zenith's Twilight enters the battlefield with X +1/+1 counters on it. If X was 5 or greater, it enters with twice that many counters instead.\nWhen Bringer of Green Zenith's Twilight dies, shuffle it into its owner's library.

@@ -18,5 +18,5 @@ Types:Legendary Creature Avatar Wizard
 PT:4/6
 R:Event$ DamageDone | ActiveZones$ Battlefield | ValidSource$ Wizard.YouCtrl | ValidTarget$ Permanent,Player | ReplaceWith$ DmgTwice | Description$ Flare Star — If a Wizard you control would deal damage to a permanent or player, it deals double that damage instead.
 SVar:DmgTwice:DB$ ReplaceEffect | VarName$ DamageAmount | VarValue$ X
-SVar:X:ReplaceCount$DamageAmount/Twice
+SVar:X:ReplaceCount$DamageAmount/Doubled
 Oracle:Flare Star — If a Wizard you control would deal damage to a permanent or player, it deals double that damage instead.

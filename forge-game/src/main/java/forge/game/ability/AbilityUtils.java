@@ -11,6 +11,7 @@ import forge.card.MagicColor;
 import forge.card.mana.ManaAtom;
 import forge.card.mana.ManaCost;
 import forge.card.mana.ManaCostShard;
+import forge.game.staticability.StaticAbilityDoubleDoubling;
 import forge.game.*;
 import forge.game.ability.AbilityFactory.AbilityRecordType;
 import forge.game.card.*;
@@ -2321,6 +2322,11 @@ public class AbilityUtils {
             return doXMath(count, expr, c, ctb);
         }
 
+        // Maro's Gone Nuts: what an effect that doubles multiplies by
+        if (sq[0].equals("DoublingFactor")) {
+            return doXMath(StaticAbilityDoubleDoubling.factor(c.getGame()), expr, c, ctb);
+        }
+
         // Count$wasCastFrom<Zone>.<true>.<false>
         if (sq[0].startsWith("wasCastFrom")) {
             boolean your = sq[0].contains("Your");
@@ -3567,6 +3573,12 @@ public class AbilityUtils {
             return secondaryNum - num;
         } else if (s[0].contains("Minus")) {
             return num - secondaryNum;
+        } else if (s[0].equals("DoubledExtra")) {
+            // "double it" scripted as adding as much again: the extra part (Maro's Gone Nuts)
+            return num * (StaticAbilityDoubleDoubling.factor(c != null ? c.getGame() : ctb.getHostCard().getGame()) - 1);
+        } else if (s[0].equals("Doubled")) {
+            // an effect that doubles: 2x, or more with Maro's Gone Nuts out
+            return num * StaticAbilityDoubleDoubling.factor(c != null ? c.getGame() : ctb.getHostCard().getGame());
         } else if (s[0].contains("Twice")) {
             return num * 2;
         } else if (s[0].contains("Thrice")) {

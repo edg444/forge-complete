@@ -5,7 +5,7 @@ PT:5/5
 K:First Strike
 R:Event$ DamageDone | ActiveZones$ Battlefield | ValidSource$ Card,Emblem | ValidTarget$ Opponent | ReplaceWith$ DmgTwice | Description$ If a source would deal damage to an opponent, it deals double that damage to that player instead.
 SVar:DmgTwice:DB$ ReplaceEffect | VarName$ DamageAmount | VarValue$ X
-SVar:X:ReplaceCount$DamageAmount/Twice
+SVar:X:ReplaceCount$DamageAmount/Doubled
 SVar:PlayMain1:TRUE
 AI:RemoveDeck:Random
 Oracle:First strike (This creature deals combat damage before creatures without first strike.)\nIf a source would deal damage to an opponent, it deals double that damage to that player instead.

@@ -6,6 +6,7 @@ K:Starting intensity:1
 T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigLoseLife | TriggerDescription$ At the beginning of your upkeep, you lose 1 life and draw a card. Then, double the amount of life you lose and cards you draw for the rest of the game from this ability. (This is true even if this leaves the battlefield and returns.)
 SVar:TrigLoseLife:DB$ LoseLife | Defined$ You | LifeAmount$ X | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ X | SubAbility$ DBIntensify
-SVar:DBIntensify:DB$ Intensify | Amount$ X
+SVar:DBIntensify:DB$ Intensify | Amount$ Y
 SVar:X:Count$Intensity
+SVar:Y:Count$Intensity/DoubledExtra
 Oracle:At the beginning of your upkeep, you lose 1 life and draw a card. Then, double the amount of life you lose and cards you draw for the rest of the game from this ability. (This is true even if this leaves the battlefield and returns.)

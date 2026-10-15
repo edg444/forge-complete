@@ -4,5 +4,5 @@ Types:Creature Vampire Demon
 PT:2/4
 K:Flying
 R:Event$ LifeReduced | ValidPlayer$ Opponent | PlayerTurn$ True | ReplaceWith$ LoseTwice | ActiveZones$ Battlefield | Description$ If an opponent would lose life during your turn, they lose twice that much life instead. (Damage causes loss of life.)
-SVar:LoseTwice:DB$ ReplaceEffect | VarName$ Amount | VarValue$ ReplaceCount$Amount/Twice
+SVar:LoseTwice:DB$ ReplaceEffect | VarName$ Amount | VarValue$ ReplaceCount$Amount/Doubled
 Oracle:Flying\nIf an opponent would lose life during your turn, they lose twice that much life instead. (Damage causes loss of life.)

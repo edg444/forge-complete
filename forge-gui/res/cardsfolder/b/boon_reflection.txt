@@ -3,7 +3,7 @@ ManaCost:4 W
 Types:Enchantment
 R:Event$ GainLife | ActiveZones$ Battlefield | ValidPlayer$ You | ReplaceWith$ GainDouble | AILogic$ DoubleLife | Description$ If you would gain life, you gain twice that much life instead.
 SVar:GainDouble:DB$ ReplaceEffect | VarName$ LifeGained | VarValue$ X
-SVar:X:ReplaceCount$LifeGained/Twice
+SVar:X:ReplaceCount$LifeGained/Doubled
 SVar:PlayMain1:True
 DeckHints:Keyword$Lifelink
 DeckNeeds:Ability$LifeGain

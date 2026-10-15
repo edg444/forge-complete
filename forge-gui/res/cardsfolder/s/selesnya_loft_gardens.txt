@@ -5,7 +5,7 @@ R:Event$ CreateToken | ActiveZones$ Command | ReplaceWith$ DoubleToken | EffectO
 SVar:DoubleToken:DB$ ReplaceToken | Type$ Amount
 R:Event$ AddCounter | ActiveZones$ Command | ValidCard$ Permanent.inZoneBattlefield | EffectOnly$ True | ReplaceWith$ DoubleCounters | Description$ If an effect would put one or more counters on a permanent, it puts twice that many of those counters on that permanent instead.
 SVar:DoubleCounters:DB$ ReplaceCounter | Amount$ Z
-SVar:Z:ReplaceCount$CounterNum/Twice
+SVar:Z:ReplaceCount$CounterNum/Doubled
 T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, until end of turn, whenever you tap a land for mana, add one mana of any type that land produced.
 SVar:RolledChaos:DB$ Effect | AILogic$ Always | Triggers$ TrigTapForMana
 SVar:TrigTapForMana:Mode$ TapsForMana | TriggerZones$ Command | ValidCard$ Land | Activator$ You | Execute$ TrigMana | Static$ True | TriggerDescription$ Whenever you tap a land for mana, add one mana of any type that land produced.

@@ -3,6 +3,6 @@ ManaCost:2 R R R
 Types:Enchantment
 R:Event$ DamageDone | ActiveZones$ Battlefield | ValidSource$ Creature.YouCtrl+inZoneBattlefield | ValidTarget$ Permanent,Player | ReplaceWith$ DmgTwice | Description$ If a creature you control would deal damage to a permanent or player, it deals double that damage instead.
 SVar:DmgTwice:DB$ ReplaceEffect | VarName$ DamageAmount | VarValue$ X
-SVar:X:ReplaceCount$DamageAmount/Twice
+SVar:X:ReplaceCount$DamageAmount/Doubled
 SVar:PlayMain1:TRUE
 Oracle:If a creature you control would deal damage to a permanent or player, it deals double that damage instead.

@@ -369,6 +369,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   show it as another field (`GameEventPlayerAdded`, as for Better Than One's teammate). New API `JoinAttack`
   (`Defenders$`, `Chooser$`): a creature becomes attacking without being declared - no attack triggers, and
   can't-attack effects don't stop it; the attacking player chooses the defender when there's more than one.
+- **Maro's Gone Nuts** (CMB1 #81). Static `Mode$ DoubleDoubling`; `StaticAbilityDoubleDoubling.factor(game)` is what an
+  effect that doubles multiplies by: 2, 4 with one out, 8 with two (its rulings; anyone's counts). Applied where the
+  engine doubles: MultiplyCounter's default multiplier, Pump `NumAtt$/NumDef$ Double`, ReplaceToken's default
+  `Amount`, ReplaceMana `ReplaceAmount$ 2`. Scripts: new math `Doubled` (x factor) and `DoubledExtra` (x factor-1,
+  for doubling written as adding as much again), and `Count$DoublingFactor`. `/Twice` stays plain x2, since 217
+  cards that don't double use it: 76 doubling cards ("double that damage", "twice that many ... instead", "double
+  your life total", "double the value of X") now use `/Doubled` instead, plus Increasing Confusion and The Keeper of
+  Dark Pacts. Left at x2, as making twice as many of something isn't doubling (ruling 3): Borborygmos and Fblthp,
+  Fangorn, Galloping Lizrog, Lulu, Struggle for Project Purity, Tainted Adversary, Unassuming Gelatinous Serpent,
+  devour 2.
 
 ### 2026-10-13, fifth deploy (desktop, Android, GitHub) — upstream merge (41 commits); Mystery Booster playtest cards #51–66
 

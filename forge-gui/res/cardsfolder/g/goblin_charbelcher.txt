@@ -6,6 +6,6 @@ SVar:DBBelch:DB$ DealDamage | ValidTgts$ Any | NumDmg$ X | ConditionCheckSVar$ F
 SVar:DBDoubleBelch:DB$ DealDamage | Defined$ Targeted | NumDmg$ DoubleX | SubAbility$ DBCleanup | ConditionCheckSVar$ FoundMountain | ConditionSVarCompare$ EQ1 | StackDescription$ None
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Valid Card.nonLand
-SVar:DoubleX:Remembered$Valid Card.nonLand/Times.2
+SVar:DoubleX:Remembered$Valid Card.nonLand/Doubled
 SVar:FoundMountain:Remembered$Valid Card.Mountain
 Oracle:{3}, {T}: Reveal cards from the top of your library until you reveal a land card. This artifact deals damage equal to the number of nonland cards revealed this way to any target. If the revealed land card was a Mountain, this artifact deals double that damage instead. Put the revealed cards on the bottom of your library in any order.

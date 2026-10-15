@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.google.common.collect.Lists;
 
 import forge.GameCommand;
+import forge.game.staticability.StaticAbilityDoubleDoubling;
 import forge.game.Game;
 import forge.game.GameEntity;
 import forge.game.ability.AbilityUtils;
@@ -481,11 +482,13 @@ public class PumpEffect extends SpellAbilityEffect {
                 }).collect(Collectors.toList());
             }
 
+            // doubling adds as much again - more with Maro's Gone Nuts out
+            final int extra = StaticAbilityDoubleDoubling.factor(game) - 1;
             if (sa.hasParam("NumAtt") && sa.getParam("NumAtt").equals("Double")) {
-                a = tgtC.getNetPower();
+                a = tgtC.getNetPower() * extra;
             }
             if (sa.hasParam("NumDef") && sa.getParam("NumDef").equals("Double")) {
-                d = tgtC.getNetToughness();
+                d = tgtC.getNetToughness() * extra;
             }
 
             if (sa.hasParam("NumAtt") && sa.getParam("NumAtt").equals("Triple")) {

@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import forge.card.ColorSet;
 import forge.card.MagicColor;
+import forge.game.staticability.StaticAbilityDoubleDoubling;
 import forge.game.ability.AbilityKey;
 import forge.game.ability.SpellAbilityEffect;
 import forge.game.card.Card;
@@ -72,7 +73,12 @@ public class ReplaceManaEffect extends SpellAbilityEffect {
             }
         } else if (sa.hasParam("ReplaceAmount")) {
             // replace amount = multiples
-            replaced = StringUtils.repeat(replaced, " ", Integer.parseInt(sa.getParam("ReplaceAmount")));
+            int times = Integer.parseInt(sa.getParam("ReplaceAmount"));
+            if (times == 2) {
+                // "twice as much" is an effect that doubles (Maro's Gone Nuts)
+                times = StaticAbilityDoubleDoubling.factor(sa.getHostCard().getGame());
+            }
+            replaced = StringUtils.repeat(replaced, " ", times);
         }
         params.put(AbilityKey.Mana, replaced);
         if (sa.hasParam("AllPlayers")) {

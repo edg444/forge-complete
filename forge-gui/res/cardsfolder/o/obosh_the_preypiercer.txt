@@ -5,6 +5,6 @@ PT:3/5
 K:Companion:Card.cmcM21,Land:Your starting deck contains only cards with odd mana values and land cards.
 R:Event$ DamageDone | ActiveZones$ Battlefield | ValidSource$ Card.YouCtrl+cmcM21 | ValidTarget$ Permanent,Player | ReplaceWith$ DmgTwice | Description$ If a source you control with an odd mana value would deal damage to a permanent or player, it deals double that damage to that permanent or player instead.
 SVar:DmgTwice:DB$ ReplaceEffect | VarName$ DamageAmount | VarValue$ Y
-SVar:Y:ReplaceCount$DamageAmount/Twice
+SVar:Y:ReplaceCount$DamageAmount/Doubled
 SVar:PlayMain1:TRUE
 Oracle:Companion — Your starting deck contains only cards with odd mana values and land cards. (If this card is your chosen companion, you may put it into your hand from outside the game for {3} as a sorcery.)\nIf a source you control with an odd mana value would deal damage to a permanent or player, it deals double that damage to that permanent or player instead.

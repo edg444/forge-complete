@@ -49,7 +49,8 @@ public class ReplaceTokenEffect extends SpellAbilityEffect {
                 (Map<AbilityKey, Object>) repSA.getReplacingObject(AbilityKey.OriginalParams);
 
         if ("Amount".equals(sa.getParam("Type"))) {
-            final String mod = sa.getParamOrDefault("Amount", "Twice");
+            // "twice that many" is an effect that doubles (Maro's Gone Nuts)
+            final String mod = sa.hasParam("Amount") && !"Twice".equals(sa.getParam("Amount")) ? sa.getParam("Amount") : "Doubled";
             for (Map.Entry<Card, Integer> e : table.row(affected).entrySet()) {
                 if (!re.matchesValidParam("ValidToken", e.getKey())) {
                     continue;

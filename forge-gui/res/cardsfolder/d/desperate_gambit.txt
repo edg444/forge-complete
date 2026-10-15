@@ -7,7 +7,7 @@ SVar:CoinFlip:DB$ FlipCoin | WinSubAbility$ CreateWinEffect | LoseSubAbility$ Cr
 SVar:CreateWinEffect:DB$ Effect | Name$ Desperate Gambit's Effect — Won The Flip | ReplacementEffects$ EventWinDamageDone | RememberObjects$ Remembered
 SVar:EventWinDamageDone:Event$ DamageDone | ValidSource$ Card.IsRemembered,Emblem.IsRemembered | ReplaceWith$ DmgTwice | Description$ The next time source would deal damage this turn, it deals double that damage instead.
 SVar:DmgTwice:DB$ ReplaceEffect | VarName$ DamageAmount | VarValue$ WinX | SubAbility$ ExileEffect
-SVar:WinX:ReplaceCount$DamageAmount/Twice
+SVar:WinX:ReplaceCount$DamageAmount/Doubled
 # Losing Effect
 SVar:CreateLossEffect:DB$ Effect | Name$ Desperate Gambit's Effect — Lost The Flip | ReplacementEffects$ EventLossDamageDone | RememberObjects$ Remembered
 SVar:EventLossDamageDone:Event$ DamageDone | ValidSource$ Card.IsRemembered,Emblem.IsRemembered | ReplaceWith$ ExileEffect | PreventionEffect$ True | Description$ The next time it would deal damage this turn, prevent that damage.

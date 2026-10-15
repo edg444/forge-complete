@@ -7,7 +7,7 @@ SVar:TrigImmediate:AB$ ImmediateTrigger | Cost$ Sac<1/Creature.Other/another cre
 SVar:TrigDamage:DB$ DealDamage | ConditionDefined$ DelayTriggerRememberedLKI | ConditionPresent$ Giant | ConditionCompare$ EQ0 | ValidTgts$ Any | NumDmg$ X | SubAbility$ DBGiantDamage
 SVar:DBGiantDamage:DB$ DealDamage | ConditionDefined$ DelayTriggerRememberedLKI | ConditionPresent$ Giant | ConditionCompare$ GE1 | Defined$ Targeted | NumDmg$ Y
 SVar:X:TriggerRemembered$CardPower
-SVar:Y:TriggerRemembered$CardPower/Times.2
+SVar:Y:TriggerRemembered$CardPower/Doubled
 SVar:AIPreferenceParams:CreatureEvalThreshold$ 200
 SVar:HasAttackEffect:TRUE
 DeckHas:Ability$Sacrifice

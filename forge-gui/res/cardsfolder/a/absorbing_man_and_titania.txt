@@ -4,6 +4,6 @@ Types:Legendary Creature Human Villain
 PT:4/5
 R:Event$ DamageDone | ActiveZones$ Battlefield | ValidSource$ Creature.YouCtrl | ValidTarget$ Permanent,Player | ReplaceWith$ DmgTwice | Description$ Double all damage that creature sources you control would deal.
 SVar:DmgTwice:DB$ ReplaceEffect | VarName$ DamageAmount | VarValue$ X
-SVar:X:ReplaceCount$DamageAmount/Twice
+SVar:X:ReplaceCount$DamageAmount/Doubled
 SVar:PlayMain1:TRUE
 Oracle:Double all damage that creature sources you control would deal.

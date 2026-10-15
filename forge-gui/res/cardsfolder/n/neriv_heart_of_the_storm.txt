@@ -5,6 +5,6 @@ PT:4/5
 K:Flying
 R:Event$ DamageDone | ActiveZones$ Battlefield | ValidSource$ Creature.YouCtrl+ThisTurnEntered | ValidTarget$ Permanent,Player | ReplaceWith$ DmgTwice | Description$ If a creature you control that entered this turn would deal damage, it deals twice that much damage instead.
 SVar:DmgTwice:DB$ ReplaceEffect | VarName$ DamageAmount | VarValue$ X
-SVar:X:ReplaceCount$DamageAmount/Twice
+SVar:X:ReplaceCount$DamageAmount/Doubled
 SVar:PlayMain1:TRUE
 Oracle:Flying\nIf a creature you control that entered this turn would deal damage, it deals twice that much damage instead.
