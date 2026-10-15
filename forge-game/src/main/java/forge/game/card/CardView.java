@@ -547,6 +547,15 @@ public class CardView extends GameEntityView {
     void updateLegacyWord(Card c) {
         set(TrackableProperty.LegacyWord, c.getLegacyWord());
     }
+
+    /** Bucket List: the types on its tracker list with counters over them, or null. */
+    public String getTrackerCovered() {
+        return get(TrackableProperty.TrackerCovered);
+    }
+    void updateTrackerCovered(Card c) {
+        set(TrackableProperty.TrackerCovered, c.getCoveredTrackerTypes().isEmpty() ? null
+                : String.join(", ", c.getCoveredTrackerTypes()));
+    }
     public FCollectionView<CardView> getMergedCardsCollection() {
         return Objects.requireNonNullElse(get(TrackableProperty.MergedCardsCollection), FCollection.getEmpty());
     }

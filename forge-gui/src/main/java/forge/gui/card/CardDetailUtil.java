@@ -510,6 +510,11 @@ public class CardDetailUtil {
             area.append(")");
         }
 
+        // Bucket List's tracker list
+        if (card.getTrackerCovered() != null) {
+            area.append("\n(Covered: ").append(card.getTrackerCovered()).append(")");
+        }
+
         // legacy's word blank
         if (card.getLegacyWord() != null) {
             area.append("\n(Written: ").append(card.getLegacyWord()).append(")");

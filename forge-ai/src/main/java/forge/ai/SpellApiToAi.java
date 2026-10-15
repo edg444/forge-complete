@@ -188,6 +188,7 @@ public enum SpellApiToAi {
             .put(ApiType.RemoveCounterAll, CannotPlayAi.class)
             .put(ApiType.RemoveFromCombat, RemoveFromCombatAi.class)
             .put(ApiType.JoinAttack, JoinAttackAi.class)
+            .put(ApiType.TrackerCover, AlwaysPlayAi.class)
             .put(ApiType.RemoveFromGame, AlwaysPlayAi.class)
             .put(ApiType.RemoveFromMatch, AlwaysPlayAi.class)
             .put(ApiType.ReorderZone, AlwaysPlayAi.class)

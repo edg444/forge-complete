@@ -2322,6 +2322,11 @@ public class AbilityUtils {
             return doXMath(count, expr, c, ctb);
         }
 
+        // Bucket List: how many types on its tracker list have counters over them
+        if (sq[0].equals("TrackerCovered")) {
+            return doXMath(c.getCoveredTrackerTypes().size(), expr, c, ctb);
+        }
+
         // Maro's Gone Nuts: what an effect that doubles multiplies by
         if (sq[0].equals("DoublingFactor")) {
             return doXMath(StaticAbilityDoubleDoubling.factor(c.getGame()), expr, c, ctb);

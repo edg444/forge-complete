@@ -359,6 +359,11 @@ public class CardProperty {
             if (!card.isMotivatedBy(sourceController)) {
                 return false;
             }
+        } else if (property.equals("TypeShowingOnSource")) {
+            // Bucket List: a spell of a type showing (not yet covered) on the source's tracker list
+            if (!source.hasTypeShowingOnTracker(card)) {
+                return false;
+            }
         } else if (property.equals("HasLegacyWord")) {
             // Inspirational Antelope: has the keyword or ability word written in the source's legacy blank
             if (source.getLegacyWord() == null || !card.hasKeywordOrAbilityWord(source.getLegacyWord())) {

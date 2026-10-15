@@ -4315,6 +4315,30 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return entityAttachedTo != null;
     }
 
+    // Bucket List: its tracker list - the types printed on it (SVar TrackerTypes) with counters over some. It belongs
+    // to this object, isn't copied, and goes when the object does (its rulings).
+    private final Set<String> coveredTrackerTypes = Sets.newLinkedHashSet();
+    public final List<String> getTrackerTypes() {
+        return hasSVar("TrackerTypes") ? Arrays.asList(getSVar("TrackerTypes").split(",")) : List.of();
+    }
+    public final Set<String> getCoveredTrackerTypes() {
+        return coveredTrackerTypes;
+    }
+    public final void coverTrackerType(final String type) {
+        if (coveredTrackerTypes.add(type)) {
+            view.updateTrackerCovered(this);
+        }
+    }
+    /** Whether {@code c} has a type still showing on this card's tracker list. */
+    public final boolean hasTypeShowingOnTracker(final Card c) {
+        for (final String type : getTrackerTypes()) {
+            if (!coveredTrackerTypes.contains(type) && c.getType().hasStringType(type)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // Abian, Luvion Usurper: the player who became this permanent - its loyalty is their life total, both ways
     private Player embodiedBy = null;
     private boolean syncingEmbodiedLife = false;

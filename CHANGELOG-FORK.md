@@ -406,6 +406,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   again and your life stays. Spending loyalty can't exceed your life (ruling), and the AI's X stops one short of it.
   New planeswalker type Abian; new token rg_3_2_spirit. Not modeled: you also being a red and green legendary
   planeswalker player, and the -X damage coming from you rather than from Abian.
+- **Bucket List** (CMB1 #89). Tracker lists: the types a card prints (`SVar:TrackerTypes`) and which have counters
+  over them (`Card.getCoveredTrackerTypes`), kept on the object but not counters on it, not copied, and gone with the
+  object (its rulings). New API `TrackerCover` (covers each showing type the defined cards have), property
+  `TypeShowingOnSource` (a type not yet covered - only those trigger it), `Count$TrackerCovered`; card detail shows
+  "(Covered: ...)". The extra card is drawn before the sacrifice, while the tracker list still exists to check.
 
 ### 2026-10-13, fifth deploy (desktop, Android, GitHub) — upstream merge (41 commits); Mystery Booster playtest cards #51–66
 

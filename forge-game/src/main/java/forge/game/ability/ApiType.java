@@ -196,6 +196,7 @@ public enum ApiType {
     RemoveCounterAll (CountersRemoveAllEffect.class),
     RemoveFromCombat (RemoveFromCombatEffect.class),
     JoinAttack (JoinAttackEffect.class),
+    TrackerCover (TrackerCoverEffect.class),
     RemoveFromGame (RemoveFromGameEffect.class),
     RemoveFromMatch (RemoveFromMatchEffect.class),
     ReorderZone (ReorderZoneEffect.class),
