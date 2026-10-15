@@ -325,6 +325,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **P-Smelt // Herd // P-Saw** (CMB1 #100). A three-face split card on the Who // What // When // Where // Why
   support; the Smelt and Saw faces take the P- prefix because Forge indexes cards by face name and both would shadow
   the real Smelt and Saw. New creature type Half; tokens `g_2_2_elk`, `r_1_2_half`.
+- **P-Start // P-Fire** (CMB1 #101). Script only; both faces take the P- prefix since Start // Finish and
+  Fire // Ice already own those face names.
 ### 2026-10-15, sixth deploy (desktop, Android, GitHub) — upstream merge (5 commits); Mystery Booster playtest cards #67–94; Innkeeper's Talent AI
 
 - **Upstream merge** (5 commits, incl. Realm of Legends 1.077, restored alternate landscape layout on mobile,
