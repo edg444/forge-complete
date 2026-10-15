@@ -33,6 +33,7 @@ import forge.game.combat.CombatUtil;
 import forge.game.cost.CostEnlist;
 import forge.game.cost.CostExert;
 import forge.game.event.*;
+import forge.game.keyword.Keyword;
 import forge.game.player.Player;
 import forge.game.player.PlayerCollection;
 import forge.game.player.PlayerView;
@@ -119,6 +120,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     // alone may attack during a combat phase it added
     private final transient Map<Player, Integer> combatsAsActiveThisTurn = Maps.newHashMap();
     private transient Card onlyAttacker = null;
+    private transient boolean aggressiveCombat = false;
 
     // Stack of Paperwork: combat damage uses the stack while it's on the battlefield
     private void dealOrStackCombatDamage() {
@@ -227,7 +229,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         } else {
             lastStrikeDamageStep = false;
             if (phase == PhaseType.COMBAT_END) {
+                aggressiveCombat = false;
                 addCombatsAfterOpponentsFirst();
+                addAggressiveCombat();
             }
             // If the phase that's ending has a stack of additional phases
             // Take the LIFO one and move to that instead of the normal one
@@ -260,6 +264,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
             if (turnEnded) {
                 turn++;
                 extraPhases.clear();
+                aggressiveCombat = false;
                 game.updateTurnForView();
                 game.fireEvent(new GameEventTurnBegan(PlayerView.get(playerTurn), turn));
 
@@ -281,6 +286,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
             beginStolenPhase();
             if (extraPhase != null && extraPhase.getOwner() != null) {
                 beginOwnedCombat(extraPhase);
+            }
+            if (extraPhase != null && extraPhase.isAggressive()) {
+                aggressiveCombat = true;
             }
             // CR-style ruling for firstest strike: decided as the declare blockers step ends
             firstestStrikeDamageStep = phase == PhaseType.COMBAT_FIRST_STRIKE_DAMAGE && inCombat() && combat.hasFirstestStrikers();
@@ -1678,6 +1686,27 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 }
             }
         }
+    }
+
+    /**
+     * Aggressive: as the active player's first combat phase of their own turn ends, if they control a creature with
+     * aggressive then, they get one more combat phase right after it (its rulings: one, however many have it, and
+     * gaining one later in the turn is too late). Added after the Throat Wolves' so it happens first.
+     */
+    private void addAggressiveCombat() {
+        final Player p = playerTurn;
+        if (p == null || phaseStolenFrom != null || combatsAsActiveThisTurn.getOrDefault(p, 0) != 1
+                || !p.getCreaturesInPlay().anyMatch(c -> c.hasKeyword(Keyword.AGGRESSIVE))) {
+            return;
+        }
+        addExtraPhase(PhaseType.COMBAT_END, PhaseType.PHASE_GROUPS.get(2),
+                PhaseType.getNext(PhaseType.COMBAT_END, p.isPhasesReversed())).setAggressive(true);
+        game.getGameLog().add(GameLogEntryType.PHASE, p + " gets an aggressive combat phase.");
+    }
+
+    /** During an aggressive combat phase only creatures with aggressive can attack. */
+    public final boolean isAggressiveCombat() {
+        return aggressiveCombat;
     }
 
     /** A combat phase a Throat Wolf added: its controller is the active and attacking player until it ends. */

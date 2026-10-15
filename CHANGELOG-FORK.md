@@ -336,6 +336,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   the dig zone before revealing; `MayStop$ True` reveals one card at a time and asks after each whether to reveal
   another ("until you reveal X or choose to stop"). AI `AILogic$ Whammy`: plans its target for 2 damage, then stops
   once the damage kills its target, keeps going while that's at least even odds, and otherwise stops at 2.
+- **Bear with Set's Mechanic** (CMB1 #71). New keyword `Aggressive`: as the active player's first combat phase of
+  their own turn ends, if they control a creature with aggressive, one more combat phase follows it
+  (`PhaseHandler.addAggressiveCombat`, an `ExtraPhase` marked aggressive, added after Throat Wolf's so it comes
+  first), and during it `CombatUtil.canAttack` refuses creatures without aggressive (`isAggressiveCombat`). One extra
+  combat however many creatures have it; gaining one later in the turn is too late (its rulings).
 
 ### 2026-10-13, fifth deploy (desktop, Android, GitHub) — upstream merge (41 commits); Mystery Booster playtest cards #51–66
 

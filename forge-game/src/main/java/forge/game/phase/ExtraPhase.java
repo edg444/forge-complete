@@ -32,6 +32,15 @@ public class ExtraPhase {
         return onlyAttacker;
     }
 
+    // an aggressive combat phase: only creatures with aggressive can attack
+    private boolean aggressive = false;
+    public void setAggressive(final boolean aggressive) {
+        this.aggressive = aggressive;
+    }
+    public boolean isAggressive() {
+        return aggressive;
+    }
+
     public void addTrigger(Trigger deltrigger) {
         this.delTrig.add(deltrigger);
     }

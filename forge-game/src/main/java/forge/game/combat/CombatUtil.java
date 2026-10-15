@@ -229,6 +229,9 @@ public class CombatUtil {
         if (!forNextTurn && only != null && !attacker.equalsWithGameTimestamp(only)) {
             return false;
         }
+        if (!forNextTurn && game.getPhaseHandler().isAggressiveCombat() && !attacker.hasKeyword(Keyword.AGGRESSIVE)) {
+            return false;
+        }
 
         // Goad logic
         // a goaded creature does need to attack a player which does not goaded her

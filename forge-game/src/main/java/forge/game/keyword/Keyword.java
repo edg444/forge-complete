@@ -12,6 +12,7 @@ public enum Keyword {
     AFFINITY("Affinity", Affinity.class, false, "This spell costs {1} less to cast for each %s you control."),
     AFFLICT("Afflict", KeywordWithAmount.class, false, "Whenever this creature becomes blocked, defending player loses %d life."),
     AFTERLIFE("Afterlife", KeywordWithAmount.class, false, "When this creature dies, create {%1$d:1/1 white and black Spirit creature token} with flying."),
+    AGGRESSIVE("Aggressive", SimpleKeyword.class, true, "During your turn, there is an additional combat phase after the first, and only creatures with aggressive may attack during it."),
     AFTERMATH("Aftermath", SimpleKeyword.class, false, "Cast this spell only from your graveyard. Then exile it."),
     AMPLIFY("Amplify", Amplify.class, false, "As this creature enters, put {%d:+1/+1 counter} on it for each %s card you reveal in your hand."),
     ANNIHILATOR("Annihilator", KeywordWithAmount.class, false, "Whenever this creature attacks, defending player sacrifices {%d:permanent}."),
