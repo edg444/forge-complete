@@ -359,6 +359,11 @@ public class CardProperty {
             if (!card.isMotivatedBy(sourceController)) {
                 return false;
             }
+        } else if (property.equals("Haunted")) {
+            // Kaya, Ghost Haunter: haunted by anything (her ruling)
+            if (card.getHauntedBy().isEmpty()) {
+                return false;
+            }
         } else if (property.equals("TypeShowingOnSource")) {
             // Bucket List: a spell of a type showing (not yet covered) on the source's tracker list
             if (!source.hasTypeShowingOnTracker(card)) {

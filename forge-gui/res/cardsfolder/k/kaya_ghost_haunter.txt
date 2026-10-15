@@ -1,0 +1,15 @@
+Name:Kaya, Ghost Haunter
+ManaCost:2 W B
+Types:Legendary Planeswalker Kaya
+Loyalty:3
+A:AB$ Haunt | Cost$ AddCounter<0/LOYALTY> | Planeswalker$ True | ValidTgts$ Creature | ReturnWhenHauntedLeaves$ True | TgtPrompt$ Select target creature | SpellDescription$ Exile CARDNAME haunting target creature for as long as that creature remains on the battlefield.
+A:AB$ Effect | Cost$ SubCounter<1/LOYALTY> | Planeswalker$ True | Name$ Emblem — Kaya, Ghost Haunter (damage) | Triggers$ EmblemUpkeepDamage | Duration$ Permanent | AILogic$ Always | SpellDescription$ You get an emblem with "At the beginning of your upkeep, this emblem deals 3 damage to the owner of target haunted creature."
+SVar:EmblemUpkeepDamage:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | Execute$ EmblemDamage | TriggerDescription$ At the beginning of your upkeep, this emblem deals 3 damage to the owner of target haunted creature.
+SVar:EmblemDamage:DB$ Pump | ValidTgts$ Creature.Haunted | TgtPrompt$ Select target haunted creature | SubAbility$ DBOwnerDamage
+SVar:DBOwnerDamage:DB$ DealDamage | Defined$ TargetedOwner | NumDmg$ 3
+A:AB$ Effect | Cost$ SubCounter<2/LOYALTY> | Planeswalker$ True | Name$ Emblem — Kaya, Ghost Haunter (control) | Triggers$ EmblemUpkeepSteal | Duration$ Permanent | AILogic$ Always | SpellDescription$ You get an emblem with "At the beginning of your upkeep, gain control of target haunted creature for as long as it remains haunted."
+SVar:EmblemUpkeepSteal:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | Execute$ EmblemSteal | TriggerDescription$ At the beginning of your upkeep, gain control of target haunted creature for as long as it remains haunted.
+SVar:EmblemSteal:DB$ GainControl | ValidTgts$ Creature.Haunted | TgtPrompt$ Select target haunted creature | LoseControl$ StaticCommandCheck | StaticCommandCheckSVar$ StillHaunted | StaticCommandSVarCompare$ EQ0
+# The hostcard of SVar StillHaunted is the controlled card
+SVar:StillHaunted:Count$Valid Card.Self+Haunted
+Oracle:[0]: Exile Kaya, Ghost Haunter haunting target creature for as long as that creature remains on the battlefield.\n[-1]: You get an emblem with, "At the beginning of your upkeep, this emblem deals 3 damage to the owner of target haunted creature."\n[-2]: You get an emblem with, "At the beginning of your upkeep, gain control of target haunted creature for as long as it remains haunted."

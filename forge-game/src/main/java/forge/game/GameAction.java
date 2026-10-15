@@ -660,6 +660,12 @@ public class GameAction {
         // update static abilities after etb counters have been placed
         checkStaticAbilities();
 
+        // CR 702.55c: a card stops haunting when it leaves exile (and Kaya, Ghost Haunter's ruling)
+        if (zoneFrom != null && zoneFrom.is(ZoneType.Exile) && c.getHaunting() != null) {
+            c.getHaunting().removeHauntedBy(c);
+            c.setHaunting(null);
+        }
+
         // Abian, Luvion Usurper: as it enters, with its loyalty on it, its controller becomes it
         if (toBattlefield && copied.isInPlay() && copied.getStaticAbilities().anyMatch(
                 st -> st.checkMode(StaticAbilityMode.ControllerBecomesThis))) {

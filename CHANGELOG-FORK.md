@@ -411,6 +411,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   object (its rulings). New API `TrackerCover` (covers each showing type the defined cards have), property
   `TypeShowingOnSource` (a type not yet covered - only those trigger it), `Count$TrackerCovered`; card detail shows
   "(Covered: ...)". The extra card is drawn before the sacrifice, while the tracker list still exists to check.
+- **Kaya, Ghost Haunter** (CMB1 #94). Her 0 is `Haunt` with new `ReturnWhenHauntedLeaves$ True`: she's exiled
+  haunting the creature, and a leaves-play command on it brings her straight back (a new object with her starting
+  loyalty, her rulings) if she's still haunting it from exile. Property `Haunted` (haunted by anything - her emblems
+  can target those, ruling 4). Emblems: 3 damage to a haunted creature's owner (targeted through a Pump, since a
+  targeting DealDamage hits its target); control of a haunted creature for as long as it stays haunted
+  (StaticCommandCheck on `Card.Self+Haunted`). Fixed: a card now stops haunting whenever it leaves exile
+  (CR 702.55c, in `GameAction.changeZone`) - the Haunt keyword's static unhaunt trigger looked at the new object,
+  which never had the haunting, so creatures stayed haunted.
 
 ### 2026-10-13, fifth deploy (desktop, Android, GitHub) — upstream merge (41 commits); Mystery Booster playtest cards #51–66
 
