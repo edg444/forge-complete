@@ -90,6 +90,11 @@ public record Mana(byte color, Card sourceCard, AbilityManaPart manaAbility, Pla
         return this.sourceCard.isSnow();
     }
 
+    /** Can pay {Z}: its source could produce two or more colors of mana. */
+    public boolean isFromMultiColorSource() {
+        return this.sourceCard.couldProduceTwoOrMoreColors();
+    }
+
     public boolean isRestricted() {
         return this.manaAbility != null && (!manaAbility.getManaRestrictions().isEmpty() || !manaAbility.getExtraManaRestriction().isEmpty());
     }

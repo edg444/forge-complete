@@ -72,6 +72,7 @@ public enum ManaCostShard {
 
     // Snow and colorless
     S(ManaAtom.IS_SNOW, "S"),
+    Z(ManaAtom.IS_MULTI_SOURCE, "Z"),
     GENERIC(ManaAtom.GENERIC, "1"),
 
     /* Phyrexian */
@@ -221,6 +222,7 @@ public enum ManaCostShard {
                 case 'G': atoms |= ManaAtom.GREEN;          break;
                 case 'P': atoms |= ManaAtom.OR_2_LIFE;      break;
                 case 'S': atoms |= ManaAtom.IS_SNOW;        break;
+                case 'Z': atoms |= ManaAtom.IS_MULTI_SOURCE; break;
                 case 'X': atoms |= ManaAtom.IS_X;           break;
                 case 'C': atoms |= ManaAtom.COLORLESS;      break;
                 case 'H': atoms |= ManaAtom.IS_HALF;        break;
@@ -313,6 +315,11 @@ public enum ManaCostShard {
         return isOfKind(ManaAtom.IS_SNOW);
     }
 
+    /** {Z}: paid with one mana from any source that could produce two or more colors of mana. */
+    public boolean isMultiColorSource() {
+        return isOfKind(ManaAtom.IS_MULTI_SOURCE);
+    }
+
     /** True for an Unhinged half shard such as Little Girl's {HW}. */
     public boolean isHalf() {
         return isOfKind(ManaAtom.IS_HALF);
@@ -343,7 +350,7 @@ public enum ManaCostShard {
 
 
     public boolean isGeneric() {
-    	return isOfKind(ManaAtom.GENERIC) || isOfKind(ManaAtom.IS_X) || this.isSnow() || this.isOr2Generic();
+    	return isOfKind(ManaAtom.GENERIC) || isOfKind(ManaAtom.IS_X) || this.isSnow() || this.isMultiColorSource() || this.isOr2Generic();
     }
     public boolean isOr2Generic() {
         return isOfKind(ManaAtom.OR_2_GENERIC);

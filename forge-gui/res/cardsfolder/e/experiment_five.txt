@@ -1,0 +1,6 @@
+Name:Experiment Five
+ManaCost:G
+Types:Creature Bear Snake Mutant
+PT:1/1
+A:AB$ PutCounter | Cost$ 1 Z | Defined$ Self | CounterType$ P1P2 | CounterNum$ 1 | SpellDescription$ Put a +1/+2 counter on CARDNAME. ({Z} is paid with one mana from any source that could produce two or more colors of mana.)
+Oracle:{1}{Z}: Put a +1/+2 counter on Experiment Five. ({Z} is paid with one mana from any source that could produce two or more colors of mana.)

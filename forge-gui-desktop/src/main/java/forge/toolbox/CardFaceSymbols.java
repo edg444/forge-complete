@@ -67,6 +67,24 @@ public class CardFaceSymbols {
         return SkinImage.fromImage(img);
     }
 
+    /** Experiment Five's {Z}: no art for it anywhere, so a disc of the five colors, one wedge each. */
+    static SkinImage multiColorSourcePlaceholder() {
+        final java.awt.image.BufferedImage img = new java.awt.image.BufferedImage(
+                DRAWN_SYMBOL_SIZE, DRAWN_SYMBOL_SIZE, java.awt.image.BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = startSymbol(img, new Color(203, 198, 193), new Color(90, 84, 80));
+        final Color[] wedges = { new Color(248, 231, 185), new Color(14, 104, 171), new Color(80, 70, 66),
+                new Color(211, 32, 42), new Color(0, 115, 62) };
+        for (int i = 0; i < wedges.length; i++) {
+            g.setColor(wedges[i]);
+            g.fillArc(2, 2, DRAWN_SYMBOL_SIZE - 4, DRAWN_SYMBOL_SIZE - 4, 90 - i * 72, -72);
+        }
+        g.setColor(new Color(90, 84, 80));
+        g.setStroke(new BasicStroke(2f));
+        g.drawOval(1, 1, DRAWN_SYMBOL_SIZE - 2, DRAWN_SYMBOL_SIZE - 2);
+        g.dispose();
+        return SkinImage.fromImage(img);
+    }
+
     static SkinImage genericNumberSymbol(final int n) {
         final java.awt.image.BufferedImage img = new java.awt.image.BufferedImage(
                 DRAWN_SYMBOL_SIZE, DRAWN_SYMBOL_SIZE, java.awt.image.BufferedImage.TYPE_INT_ARGB);
@@ -118,6 +136,7 @@ public class CardFaceSymbols {
         MANA_IMAGES.put("K", pinkPlaceholder());
         // gold (the Sword of Dungeons & Dragons Dragon) likewise has no symbol of its own
         MANA_IMAGES.put("O", goldPlaceholder());
+        MANA_IMAGES.put("Z", multiColorSourcePlaceholder());
         for (final int n : OVERSIZED_GENERIC) {
             MANA_IMAGES.put(String.valueOf(n), genericNumberSymbol(n));
         }

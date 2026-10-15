@@ -24,6 +24,7 @@ import forge.StaticData;
 import forge.card.*;
 import forge.card.CardDb.CardArtPreference;
 import forge.card.CardType.Supertype;
+import forge.card.mana.ManaAtom;
 import forge.card.mana.ManaCost;
 import forge.card.mana.ManaCostParser;
 import forge.deck.DeckRule;
@@ -8591,6 +8592,28 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
     public void setMoveToCommandZone(boolean b) {
         canMoveToCommandZone = b;
+    }
+
+    /**
+     * Experiment Five's {Z}: whether this object could produce two or more colors of mana between all its abilities
+     * that add mana (a dual land, a Signet, Birds of Paradise, a Treasure), whatever they'd cost or need right now.
+     */
+    public boolean couldProduceTwoOrMoreColors() {
+        int colors = 0;
+        for (final SpellAbility sa : Iterables.concat(getSpellAbilities(), getManaAbilities())) {
+            for (SpellAbility part = sa; part != null; part = part.getSubAbility()) {
+                final AbilityManaPart mp = part.getManaPart();
+                if (mp == null) {
+                    continue;
+                }
+                for (final byte color : ManaAtom.MANACOLORS) {
+                    if (mp.canProduce(MagicColor.toShortString(color), part)) {
+                        colors |= color;
+                    }
+                }
+            }
+        }
+        return Integer.bitCount(colors) >= 2;
     }
 
     public void setSplitStateToPlayAbility(final SpellAbility sa) {

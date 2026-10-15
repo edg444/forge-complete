@@ -18,11 +18,20 @@ public class FDrawnSymbol implements FSkinImageInterface {
     private static final int SIZE = 64;
 
     private final Color fill, rim;
+    private final Color[] wedges;
     private TextureRegion textureRegion;
 
     public FDrawnSymbol(Color fill0, Color rim0) {
         fill = fill0;
         rim = rim0;
+        wedges = null;
+    }
+
+    /** A disc split into equal wedges clockwise from the top, one per color. */
+    public FDrawnSymbol(Color[] wedges0, Color rim0) {
+        fill = wedges0[0];
+        rim = rim0;
+        wedges = wedges0;
     }
 
     private TextureRegion region() {
@@ -34,6 +43,24 @@ public class FDrawnSymbol implements FSkinImageInterface {
             pixmap.setBlending(Pixmap.Blending.SourceOver);
             pixmap.setColor(fill);
             pixmap.fillCircle(SIZE / 2, SIZE / 2, SIZE / 2 - 2);
+            if (wedges != null) {
+                final float r = SIZE / 2f - 2;
+                for (int y = 0; y < SIZE; y++) {
+                    for (int x = 0; x < SIZE; x++) {
+                        final float dx = x + 0.5f - SIZE / 2f, dy = y + 0.5f - SIZE / 2f;
+                        if (dx * dx + dy * dy > r * r) {
+                            continue;
+                        }
+                        // clockwise from 12 o'clock, y growing downward
+                        double angle = Math.toDegrees(Math.atan2(dx, -dy));
+                        if (angle < 0) {
+                            angle += 360;
+                        }
+                        pixmap.setColor(wedges[Math.min(wedges.length - 1, (int) (angle / (360.0 / wedges.length)))]);
+                        pixmap.drawPixel(x, y);
+                    }
+                }
+            }
             pixmap.setColor(rim);
             pixmap.drawCircle(SIZE / 2, SIZE / 2, SIZE / 2 - 2);
             final Texture texture = new Texture(pixmap);

@@ -26,6 +26,8 @@ public abstract class ManaAtom {
     public static final int IS_SNOW = 1 << 11;
     // Unhinged half mana, as printed on Little Girl's {HW}
     public static final int IS_HALF = 1 << 12;
+    // Experiment Five's {Z}: one mana from a source that could produce two or more colors
+    public static final int IS_MULTI_SOURCE = 1 << 13;
 
     public static byte fromName(final char c) {
         switch (Character.toLowerCase(c)) {

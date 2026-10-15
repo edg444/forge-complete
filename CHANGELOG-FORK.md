@@ -341,6 +341,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   (`PhaseHandler.addAggressiveCombat`, an `ExtraPhase` marked aggressive, added after Throat Wolf's so it comes
   first), and during it `CombatUtil.canAttack` refuses creatures without aggressive (`isAggressiveCombat`). One extra
   combat however many creatures have it; gaining one later in the turn is too late (its rulings).
+- **Experiment Five** (CMB1 #73). New mana symbol **{Z}**, "paid with one mana from any source that could produce
+  two or more colors of mana": `ManaAtom.IS_MULTI_SOURCE`, `ManaCostShard.Z`, handled wherever snow's {S} is (pool
+  payment, `CostPayment`, AI source grouping and shard matching, never by convoke). `Card.couldProduceTwoOrMoreColors()`
+  unions the colors every mana-producing ability on the object could make (ignoring conditions and costs); a mana's
+  source is its LKI card. Drawn {Z} symbol, a disc of five color wedges, on desktop (`CardFaceSymbols`, symbol cache
+  `Z.png`) and mobile (`FDrawnSymbol` wedge constructor).
 
 ### 2026-10-13, fifth deploy (desktop, Android, GitHub) — upstream merge (41 commits); Mystery Booster playtest cards #51–66
 

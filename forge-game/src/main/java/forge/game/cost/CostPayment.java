@@ -295,6 +295,9 @@ public class CostPayment extends ManaConversionMatrix {
             if (shard.isSnow() && !thisMana.isSnow()) {
                 continue;
             }
+            if (shard.isMultiColorSource() && !thisMana.isFromMultiColorSource()) {
+                continue;
+            }
 
             if (thisMana.getManaAbility() != null && !thisMana.getManaAbility().meetsSpellAndShardRestrictions(saBeingPaidFor, shard, thisMana.getColor())) {
                 continue;

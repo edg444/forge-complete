@@ -73,6 +73,11 @@ public class CardFaceSymbols {
         // gold (the Sword of Dungeons & Dragons Dragon) is in the same position
         Forge.getAssets().manaImages().put("O",
                 new FDrawnSymbol(new Color(0.973f, 0.859f, 0.333f, 1f), new Color(0.588f, 0.463f, 0.078f, 1f)));
+        // Experiment Five's {Z}: a disc of the five colors, one wedge each
+        Forge.getAssets().manaImages().put("Z", new FDrawnSymbol(new Color[] {
+                new Color(0.973f, 0.906f, 0.725f, 1f), new Color(0.055f, 0.408f, 0.671f, 1f),
+                new Color(0.314f, 0.275f, 0.259f, 1f), new Color(0.827f, 0.125f, 0.165f, 1f),
+                new Color(0f, 0.451f, 0.243f, 1f) }, new Color(0.353f, 0.329f, 0.314f, 1f)));
         for (final int n : new int[] { 100, 1000000 }) {
             Forge.getAssets().manaImages().put(String.valueOf(n),
                     new FDrawnSymbol(new Color(0.796f, 0.776f, 0.757f, 1f), new Color(0.47f, 0.439f, 0.416f, 1f)));
