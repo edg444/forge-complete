@@ -309,6 +309,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-15, seventh deploy (desktop, Android, GitHub) — upstream merge (4 commits); Mystery Booster playtest cards #95–119 (CMB1 complete); nontoken filter fixes
+
+- **Upstream merge** (4 commits, incl. Adventure-spell offers for Bilbo and nine more, Play effects' type filters
+  moved from `Valid$` to `ValidSA$`). Conflicts: Jeleva, Ken, Skyway Robber and Tetsuo take upstream's filters and keep
+  the fork's Scryfall-checked wording. Upstream inlined `MagicStack.push()` into `add()`; it stays as a private
+  helper for Stack of Paperwork's `addCombatDamage`.
 - **Louvaq, the Aberrant** (CMB1 #95). Property `ModifiedFromPrinted` (`Card.isModifiedFromPrinted`), its reminder
   text's "modified": a power/toughness counter, any boost or set-P/T effect (not one that only defines *), gained or
   lost abilities or changed text, or a copy whose P/T or abilities differ from the printed card - not a change of
