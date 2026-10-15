@@ -115,6 +115,7 @@ public enum Keyword {
     INDESTRUCTIBLE("Indestructible", SimpleKeyword.class, true, "Effects that say \"destroy\" don't destroy this."),
     INFECT("Infect", SimpleKeyword.class, true, "This creature deals damage to creatures in the form of -1/-1 counters and to players in the form of poison counters."),
     INGEST("Ingest", SimpleKeyword.class, false, "Whenever this creature deals combat damage to a player, that player exiles the top card of their library."),
+    INTERPLANAR("Interplanar", SimpleKeyword.class, true, "This creature enters onto the interplanar battlefield. Players can't control creatures on the interplanar battlefield."),
     INTIMIDATE("Intimidate", SimpleKeyword.class, true, "This creature can't be blocked except by artifact creatures and/or creatures that share a color with it."),
     KICKER("Kicker", Kicker.class, false, "You may pay an additional %s as you cast this spell."),
     JOB_SELECT("Job select", SimpleKeyword.class, false, "When this Equipment enters, create a 1/1 colorless Hero creature token, then attach this to it."),

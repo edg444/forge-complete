@@ -188,6 +188,15 @@ public class Player extends GameEntity implements Comparable<Player> {
     private int numManaShards;
 
     private int teamNumber = -1;
+    private boolean interplanar = false;
+
+    /** Whether this is the stand-in that holds the interplanar battlefield - not a player, seated nowhere. */
+    public final boolean isInterplanar() {
+        return interplanar;
+    }
+    public final void setInterplanar(final boolean b) {
+        interplanar = b;
+    }
 
     private PlayerController controller;
     private final Game game;
@@ -497,6 +506,10 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
 
     public boolean isOpponentOf(Player other) {
+        // the interplanar battlefield's holder controls for no one: nobody's opponent (Interplanar Brushwagg's rulings)
+        if (interplanar || (other != null && other.interplanar)) {
+            return false;
+        }
         return other != this && other != null && (other.teamNumber < 0 || other.teamNumber != teamNumber);
     }
     public boolean isOpponentOf(String other) {

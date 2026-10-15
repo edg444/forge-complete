@@ -500,6 +500,35 @@ public class Game {
         return pl;
     }
 
+    private Player interplanarPlayer = null;
+
+    /**
+     * Interplanar Brushwagg: the interplanar battlefield is held by a stand-in player, made the first time something
+     * enters it. It isn't seated, takes no turns, can't win or lose, and is nobody's opponent, so a permanent there is
+     * one you don't control but not one an opponent controls. Its cards count as on the battlefield.
+     */
+    public Player getInterplanarPlayer() {
+        if (interplanarPlayer == null) {
+            final Set<String> usedNames = Sets.newHashSet();
+            for (final Player p : allPlayers) {
+                usedNames.add(p.getName());
+            }
+            final LobbyPlayer lobbyPlayer = OutsidePlayers.newAiPlayer(usedNames);
+            final Player pl = ((IGameEntitiesFactory) lobbyPlayer).createIngamePlayer(this, 1000);
+            pl.setName("Interplanar");
+            pl.setInterplanar(true);
+            pl.setOutsideRegistration(new RegisteredPlayer(new Deck()).setPlayer(lobbyPlayer));
+            playerCache.put(pl);
+            interplanarPlayer = pl;
+            final Player seat = getPhaseHandler().getPlayerTurn() != null ? getPhaseHandler().getPlayerTurn() : ingamePlayers.getFirst();
+            fireEvent(new GameEventPlayerAdded(pl, seat));
+        }
+        return interplanarPlayer;
+    }
+    public Player getInterplanarPlayerIfAny() {
+        return interplanarPlayer;
+    }
+
     public boolean isGiantTeam(final int team) {
         return giantTeams.contains(team);
     }
@@ -790,6 +819,9 @@ public class Game {
             }
             return cards;
         }
+        if (zone == ZoneType.Battlefield && interplanarPlayer != null) {
+            return CardCollection.combine(getPlayers().getCardsIn(zone), interplanarPlayer.getCardsIn(zone));
+        }
         return getPlayers().getCardsIn(zone);
     }
 
@@ -801,6 +833,9 @@ public class Game {
         CardCollection cards = new CardCollection();
         for (final Player p : getPlayers()) {
             cards.addAll(zone == ZoneType.Library ? p.getCardsInAllLibraries() : p.getCardsIn(zone, false));
+        }
+        if (zone == ZoneType.Battlefield && interplanarPlayer != null) {
+            cards.addAll(interplanarPlayer.getCardsIn(zone, false));
         }
         return cards;
     }
@@ -815,6 +850,9 @@ public class Game {
             // adding each player's zone to the result directly avoids building a collection per zone
             for (final Player p : getPlayers()) {
                 cards.addAll(z == ZoneType.Library ? p.getCardsInAllLibraries() : p.getCardsIn(z));
+            }
+            if (z == ZoneType.Battlefield && interplanarPlayer != null) {
+                cards.addAll(interplanarPlayer.getCardsIn(z));
             }
         }
         return cards;
@@ -966,6 +1004,9 @@ public class Game {
             if (!visitor.visitAll(player.getInboundTokens())) {
                 return;
             }
+        }
+        if (interplanarPlayer != null && !visitor.visitAll(interplanarPlayer.getZone(ZoneType.Battlefield).getCards(false))) {
+            return;
         }
         visitor.visitAll(getStackZone().getCards());
     }

@@ -359,6 +359,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   ...). `Card.hasKeywordOrAbilityWord`: a keyword by name, any modifier; an ability word as a line of rules text that
   starts with it. Property `HasLegacyWord` (vs. the source's word) for the ReduceCost. The AI writes the word the
   most of its nonland cards have.
+- **Interplanar Brushwagg** (CMB1 #79). New keyword `Interplanar` and the **interplanar battlefield**: a stand-in
+  player (`Game.getInterplanarPlayer`, made the first time something enters it, `Player.isInterplanar`) that isn't
+  seated, takes no turns, can't win or lose, and is nobody's opponent, so a permanent on its battlefield is one you
+  don't control but not one an opponent controls (its rulings). A card with interplanar entering the battlefield goes
+  there instead (`GameAction.changeZone`); `Card.getController` is always that stand-in there, so gaining control of it
+  doesn't happen. `Game.getCardsIn(Battlefield)` and the other whole-game card lists include its battlefield, so
+  "all creatures" effects see it. Its triggers go on the stack after every player's, so they resolve first. The UIs
+  show it as another field (`GameEventPlayerAdded`, as for Better Than One's teammate). New API `JoinAttack`
+  (`Defenders$`, `Chooser$`): a creature becomes attacking without being declared - no attack triggers, and
+  can't-attack effects don't stop it; the attacking player chooses the defender when there's more than one.
 
 ### 2026-10-13, fifth deploy (desktop, Android, GitHub) — upstream merge (41 commits); Mystery Booster playtest cards #51–66
 

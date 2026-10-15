@@ -1,0 +1,10 @@
+Name:Interplanar Brushwagg
+ManaCost:3 G
+Types:Creature Brushwagg
+PT:6/4
+K:Interplanar
+K:Vigilance
+K:Haste
+T:Mode$ AttackersDeclared | ValidAttackers$ Creature.powerGE4 | TriggerZones$ Battlefield | Execute$ TrigJoin | TriggerDescription$ Whenever a player attacks with a creature with power 4 or greater, CARDNAME also attacks the player or planeswalker that creature is attacking.
+SVar:TrigJoin:DB$ JoinAttack | Defined$ Self | Defenders$ TriggeredAttackedTarget | Chooser$ TriggeredAttackingPlayer
+Oracle:Interplanar (This creature enters onto the interplanar battlefield. Players can't control creatures on the interplanar battlefield.)\nVigilance, haste\nWhenever a player attacks with a creature with power 4 or greater, Interplanar Brushwagg also attacks the player or planeswalker that creature is attacking.

@@ -140,6 +140,11 @@ public class GameAction {
             return c;
         }
 
+        // Interplanar: it enters onto the interplanar battlefield instead, whoever would have controlled it
+        if (zoneTo.is(ZoneType.Battlefield) && (zoneFrom == null || !zoneFrom.is(ZoneType.Battlefield))
+                && c.hasKeyword(Keyword.INTERPLANAR)) {
+            zoneTo = game.getInterplanarPlayer().getZone(ZoneType.Battlefield);
+        }
         boolean toBattlefield = zoneTo.is(ZoneType.Battlefield) || zoneTo.is(ZoneType.Merged);
         boolean fromBattlefield = zoneFrom != null && zoneFrom.is(ZoneType.Battlefield);
         boolean fromGraveyard = zoneFrom != null && zoneFrom.is(ZoneType.Graveyard);

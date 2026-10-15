@@ -941,6 +941,12 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
         for (Player p : players) {
             result |= chooseOrderOfSimultaneousStackEntry(p, true);
         }
+        // interplanar permanents' triggers have no controller and go on after everyone's, so they resolve first
+        final Player interplanar = game.getInterplanarPlayerIfAny();
+        if (interplanar != null) {
+            result |= chooseOrderOfSimultaneousStackEntry(interplanar, false);
+            result |= chooseOrderOfSimultaneousStackEntry(interplanar, true);
+        }
 
         return result;
     }

@@ -4110,6 +4110,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
 
     public final Player getController() {
+        // an interplanar permanent: no player can control it, whatever tries to give them control (its rulings)
+        if (currentZone != null && currentZone.getPlayer() != null && currentZone.getPlayer().isInterplanar()) {
+            return currentZone.getPlayer();
+        }
         Entry<Long, Player> lastEntry = tempControllers.lastEntry();
         if (lastEntry != null) {
             final long lastTimestamp = lastEntry.getKey();
