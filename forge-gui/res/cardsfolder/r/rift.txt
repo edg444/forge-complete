@@ -1,0 +1,9 @@
+Name:Rift
+ManaCost:no cost
+Types:Legendary Land
+K:MayEffectFromOpeningDeck:DBStart
+SVar:DBStart:DB$ ChangeZone | Defined$ Self | Origin$ Library | Destination$ Hand | Optional$ True | OptionalPrompt$ Start the game with CARDNAME in your opening hand? If you do, you draw one fewer card. | SpellDescription$ Before drawing your hand, you may start the game with CARDNAME in your opening hand. If you do, draw one fewer card. (Mulligans continue as normal.)
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ CARDNAME enters tapped.
+SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
+A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
+Oracle:Before drawing your hand, you may start the game with Rift in your opening hand. If you do, draw one fewer card. (Mulligans continue as normal.)\nRift enters tapped.\n{T}: Add {C}.

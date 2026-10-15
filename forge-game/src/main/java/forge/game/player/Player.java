@@ -2800,6 +2800,21 @@ public class Player extends GameEntity implements Comparable<Player> {
         view.updateUnlimitedHandSize(this);
     }
 
+    /**
+     * Rift: cards a player started the game with in their opening hand. Each takes the place of a card drawn for the
+     * opening hand and for each mulligan, and stays in hand through mulligans (its rulings).
+     */
+    private CardCollection openingHandStarters = new CardCollection();
+    public void setOpeningHandStarters(final Iterable<Card> cards) {
+        openingHandStarters = new CardCollection(cards);
+    }
+    public boolean isOpeningHandStarter(final Card c) {
+        return openingHandStarters.contains(c);
+    }
+    public int getOpeningHandStartersInHand() {
+        return CardLists.count(getCardsIn(ZoneType.Hand), openingHandStarters::contains);
+    }
+
     public int getStartingHandSize() {
         return startingHandSize;
     }

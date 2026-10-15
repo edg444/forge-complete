@@ -353,6 +353,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   written into the deck file like a legacy word (`Match.writeMarkedNodes`); new API `MarkNode`, `Count$UnmarkedNodes`.
   A token or another card copying it has no nodes, so its cost can't be paid (its rulings). Shown as "(Marked nodes:
   1 of 5)".
+- **Rift** (CMB1 #119), the last unscripted Mystery Booster playtest card. Pre-game `MayEffectFromOpeningDeck` puts it in
+  hand; whatever is in hand as the opening hand is drawn is recorded (`Player.setOpeningHandStarters`) and takes the
+  place of a draw for the opening hand and each mulligan, and mulligans don't shuffle it back (its rulings).
 ### 2026-10-15, sixth deploy (desktop, Android, GitHub) — upstream merge (5 commits); Mystery Booster playtest cards #67–94; Innkeeper's Talent AI
 
 - **Upstream merge** (5 commits, incl. Realm of Legends 1.077, restored alternate landscape layout on mobile,

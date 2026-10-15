@@ -35,7 +35,7 @@ public class OriginalMulligan extends AbstractMulligan {
     }
 
     public void mulliganDraw() {
-        player.drawCards(handSizeAfterNextMulligan());
+        player.drawCards(Math.max(0, handSizeAfterNextMulligan() - player.getOpeningHandStartersInHand()));
     }
 
     public int handSizeAfterNextMulligan() {

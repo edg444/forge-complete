@@ -32,6 +32,8 @@ public abstract class AbstractMulligan {
     public void mulligan() {
         CardCollection toMulligan = new CardCollection(player.getCardsIn(ZoneType.Hand));
         if (toMulligan.isEmpty()) return;
+        // a card that started the game in hand (Rift) isn't shuffled back
+        toMulligan.removeIf(player::isOpeningHandStarter);
         revealPreMulligan(toMulligan);
         for (final Card c : toMulligan) {
             player.getGame().getAction().moveToLibrary(c, null);
@@ -58,7 +60,7 @@ public abstract class AbstractMulligan {
     public void revealPreMulligan(CardCollection toMulligan) {}
 
     public void mulliganDraw() {
-        player.drawCards(handSizeAfterNextMulligan());
+        player.drawCards(Math.max(0, handSizeAfterNextMulligan() - player.getOpeningHandStartersInHand()));
     }
 
     public void afterMulligan() {

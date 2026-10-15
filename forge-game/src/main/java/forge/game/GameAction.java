@@ -2802,7 +2802,7 @@ public class GameAction {
         if (getHandScore(hand1, averageLandRatio) > getHandScore(hand2, averageLandRatio)) {
             p1.getZone(ZoneType.Library).setCards(shuffledCards);
         }
-        p1.drawCards(p1.getMaxHandSize());
+        p1.drawCards(p1.getMaxHandSize() - p1.getOpeningHandStartersInHand());
     }
 
     private float getLandRatio(List<Card> deck) {
@@ -2847,11 +2847,13 @@ public class GameAction {
 
             game.setAge(GameStage.Mulligan);
             for (final Player p1 : game.getPlayers()) {
+                // anything already in hand started the game there (Rift)
+                p1.setOpeningHandStarters(p1.getCardsIn(ZoneType.Hand));
                 // Choose starting hand for each player with multiple hands
                 if (StaticData.instance().getFilteredHandsEnabled() ) {
                     drawStartingHand(p1);
                 } else {
-                    p1.drawCards(p1.getStartingHandSize());
+                    p1.drawCards(p1.getStartingHandSize() - p1.getOpeningHandStartersInHand());
                 }
 
                 BackupPlanService backupPlans = new BackupPlanService(p1);
