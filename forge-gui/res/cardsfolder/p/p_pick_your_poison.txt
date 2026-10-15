@@ -1,0 +1,9 @@
+Name:P-Pick Your Poison
+ManaCost:3 B G
+Types:Sorcery
+A:SP$ Charm | Choices$ DBPutCounter,DBToken,DBPumpAll | CharmNum$ 4 | MinCharmNum$ 1 | CanRepeatModes$ True | Pawprint$ 4 | PawprintExact$ True
+SVar:DBPutCounter:DB$ PutCounter | Pawprint$ 1 | ValidTgts$ Creature | TgtPrompt$ Select target creature | CounterType$ P1P1 | CounterNum$ 1 | SpellDescription$ Put a +1/+1 counter on target creature.
+SVar:DBToken:DB$ Token | Pawprint$ 2 | TokenAmount$ 1 | TokenScript$ b_1_1_snake_deathtouch | TokenOwner$ You | SpellDescription$ Create a 1/1 black Snake creature token with deathtouch.
+SVar:DBPumpAll:DB$ PumpAll | Pawprint$ 4 | ValidCards$ Creature | NumAtt$ -2 | NumDef$ -2 | IsCurse$ True | SpellDescription$ All creatures get -2/-2 until end of turn.
+DeckHas:Ability$Counters|Token & Type$Snake
+Oracle:Choose any number of modes that total exactly 4. You may choose the same mode more than once.\n[1] Put a +1/+1 counter on target creature.\n[2] Create a 1/1 black Snake creature token with deathtouch.\n[4] All creatures get -2/-2 until end of turn.

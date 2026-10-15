@@ -72,6 +72,34 @@ public class CharmEffect extends SpellAbilityEffect {
         return choices;
     }
 
+    public static int pawprintValue(final AbilitySub sub) {
+        return AbilityUtils.calculateAmount(sub.getHostCard(), sub.getParamOrDefault("Pawprint", "0"), sub);
+    }
+
+    /** Whether modes worth these values can add up to exactly {@code total} (Pick Your Poison's PawprintExact). */
+    public static boolean canTotalExactly(final List<Integer> values, final int total, final boolean repeat) {
+        if (total < 0) {
+            return false;
+        }
+        final boolean[] reach = new boolean[total + 1];
+        reach[0] = true;
+        for (final int v : values) {
+            if (v <= 0 || v > total) {
+                continue;
+            }
+            if (repeat) {
+                for (int t = v; t <= total; t++) {
+                    reach[t] |= reach[t - v];
+                }
+            } else {
+                for (int t = total; t >= v; t--) {
+                    reach[t] |= reach[t - v];
+                }
+            }
+        }
+        return reach[total];
+    }
+
     public static String makeFormatedDescription(SpellAbility sa) {
         return makeFormatedDescription(sa, true);
     }
@@ -111,11 +139,14 @@ public class CharmEffect extends SpellAbilityEffect {
         boolean oppChooses = "Opponent".equals(sa.getParam("Chooser"));
         boolean spree = source.hasKeyword(Keyword.SPREE);
         boolean tiered = source.hasKeyword(Keyword.TIERED);
+        boolean exact = sa.hasParam("PawprintExact");
 
         StringBuilder sb = new StringBuilder();
         sb.append(sa.getCostDescription());
 
-        if (!spree && !tiered) {
+        if (exact) {
+            sb.append("Choose any number of modes that total exactly ").append(sa.getParam("Pawprint"));
+        } else if (!spree && !tiered) {
             sb.append(oppChooses ? sa.getParamOrDefault("ChooserDescription", "An opponent") + " chooses " : "Choose ");
             if (isX) {
                 sb.append(sa.hasParam("MinCharmNum") && min == 0 ? "up to " : "").append("X");
@@ -130,7 +161,7 @@ public class CharmEffect extends SpellAbilityEffect {
             }
         }
 
-        if (sa.hasParam("Pawprint")) {
+        if (sa.hasParam("Pawprint") && !exact) {
             sb.append(" {P} worth of modes");
         }
 
@@ -182,7 +213,9 @@ public class CharmEffect extends SpellAbilityEffect {
         }
 
         if (!includeChosen) {
-            sb.append(num == 1 ? " mode." : " modes.");
+            if (!exact) {
+                sb.append(num == 1 ? " mode." : " modes.");
+            }
         } else if (!list.isEmpty()) {
             if (!spree && !tiered) {
                 if (!repeat && !additionalDesc && !limit && !gameLimit) {
@@ -196,6 +229,8 @@ public class CharmEffect extends SpellAbilityEffect {
                 } else if (tiered) {
                     sb.append("\u2022 ").append(sub.getParam("PrecostDesc")).append(" \u2014 ");
                     sb.append(new Cost(sub.getParam("ModeCost"), false).toSimpleString() + " \u2014 ");
+                } else if (exact) {
+                    sb.append("[").append(sub.getParam("Pawprint")).append("] ");
                 } else if (sub.hasParam("Pawprint")) {
                     sb.append(StringUtils.repeat("{P}", Integer.parseInt(sub.getParam("Pawprint"))) + " \u2014 ");
                 } else {
@@ -280,6 +315,11 @@ public class CharmEffect extends SpellAbilityEffect {
                 return false;
             }
             num = Math.min(num, choices.size());
+        }
+
+        if (sa.hasParam("PawprintExact") && !canTotalExactly(choices.stream().map(CharmEffect::pawprintValue).toList(),
+                AbilityUtils.calculateAmount(source, sa.getParam("Pawprint"), sa), canRepeat)) {
+            return false;
         }
 
         boolean isOptional = sa.hasParam("Optional");

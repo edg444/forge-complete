@@ -64,6 +64,8 @@ public class CharmAi extends SpellAbilityAi {
             // This branch is for "An Opponent chooses" Charm spells from Alliances
             // Current just choose the first available spell, which seem generally less disastrous for the AI.
             chosenList = choices.subList(1, choices.size());
+        } else if (sa.hasParam("PawprintExact")) {
+            chosenList = chooseExactTotal(sa, choices, ai);
         } else if ("Triskaidekaphobia".equals(ComputerUtilAbility.getAbilitySourceName(sa))) {
             chosenList = chooseTriskaidekaphobia(choices, ai);
         } else if (choices.stream().anyMatch(c -> c.hasParam("AIPreferred"))) {
@@ -126,6 +128,51 @@ public class CharmAi extends SpellAbilityAi {
         }
 
         return super.checkApiLogic(ai, sa);
+    }
+
+    /**
+     * Pick Your Poison: modes worth exactly the total. Fills greedily from the costliest mode (usually the strongest),
+     * first with modes worth playing on their own, then with ones merely acceptable as an add-on.
+     */
+    private List<AbilitySub> chooseExactTotal(SpellAbility sa, List<AbilitySub> choices, final Player ai) {
+        final int total = AbilityUtils.calculateAmount(sa.getHostCard(), sa.getParam("Pawprint"), sa);
+        final boolean repeat = sa.hasParam("CanRepeatModes");
+        final List<AbilitySub> byValue = Lists.newArrayList(choices);
+        byValue.sort((a, b) -> CharmEffect.pawprintValue(b) - CharmEffect.pawprintValue(a));
+        final List<AbilitySub> good = Lists.newArrayList();
+        final List<AbilitySub> acceptable = Lists.newArrayList();
+        for (AbilitySub sub : byValue) {
+            sub.setActivatingPlayer(ai);
+            if (SpellApiToAi.Converter.get(sub).canPlayWithSubs(ai, sub).willingToPlay()) {
+                good.add(sub);
+                acceptable.add(sub);
+            } else if (SpellApiToAi.Converter.get(sub).chkDrawbackWithSubs(ai, sub).willingToPlay()) {
+                acceptable.add(sub);
+            }
+        }
+        for (List<AbilitySub> pool : List.of(good, acceptable)) {
+            final List<AbilitySub> chosen = Lists.newArrayList();
+            int left = total;
+            for (int i = 0; i < pool.size() && left > 0; i++) {
+                final AbilitySub sub = pool.get(i);
+                final int v = CharmEffect.pawprintValue(sub);
+                final List<Integer> rest = Lists.newArrayList();
+                for (int j = repeat ? i : i + 1; j < pool.size(); j++) {
+                    rest.add(CharmEffect.pawprintValue(pool.get(j)));
+                }
+                while (v <= left && CharmEffect.canTotalExactly(rest, left - v, repeat)) {
+                    chosen.add(sub);
+                    left -= v;
+                    if (!repeat) {
+                        break;
+                    }
+                }
+            }
+            if (left == 0 && !chosen.isEmpty()) {
+                return chosen;
+            }
+        }
+        return Lists.newArrayList();
     }
 
     private List<AbilitySub> chooseOptionsAi(SpellAbility sa, List<AbilitySub> choices, final Player ai, boolean isTrigger, int num, int min) {

@@ -19,6 +19,7 @@ import forge.game.*;
 import forge.game.ability.AbilityKey;
 import forge.game.ability.AbilityUtils;
 import forge.game.ability.ApiType;
+import forge.game.ability.effects.CharmEffect;
 import forge.game.ability.effects.RollDiceEffect;
 import forge.game.card.*;
 import forge.game.card.sticker.Sticker;
@@ -2098,15 +2099,35 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
         }
         final List<AbilitySub> chosen = Lists.newArrayListWithCapacity(num);
         int chosenPawprint = 0;
+        final boolean exact = sa.hasParam("PawprintExact");
+        final int exactTotal = exact ? AbilityUtils.calculateAmount(sa.getHostCard(), sa.getParam("Pawprint"), sa) : 0;
         for (int i = 0; i < num; i++) {
-            if (sa.hasParam("Pawprint")) {
+            if (exact) {
+                if (chosenPawprint == exactTotal) {
+                    break;
+                }
+            } else if (sa.hasParam("Pawprint")) {
                 final int tmpPaw = chosenPawprint;
                 spellViewCache.values().removeIf(ab -> Integer.parseInt(ab.getParam("Pawprint")) > num - tmpPaw);
             }
             final List<SpellAbilityView> choices = Lists.newArrayList(spellViewCache.keySet());
+            if (exact) {
+                // only offer a mode that still leaves the rest fillable, so the total can't overshoot or strand
+                final int left = exactTotal - chosenPawprint;
+                choices.removeIf(v -> {
+                    final AbilitySub sub = spellViewCache.get(v);
+                    final List<Integer> rest = Lists.newArrayList();
+                    for (final AbilitySub other : spellViewCache.values()) {
+                        if (allowRepeat || other != sub) {
+                            rest.add(CharmEffect.pawprintValue(other));
+                        }
+                    }
+                    return !CharmEffect.canTotalExactly(rest, left - CharmEffect.pawprintValue(sub), allowRepeat);
+                });
+            }
 
             SpellAbilityView a;
-            if (i < min) {
+            if (i < min || exact) {
                 a = getGui().one(modeTitle, choices);
             } else {
                 a = getGui().oneOrNone(modeTitle, choices);
