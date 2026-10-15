@@ -3,6 +3,7 @@ package forge.ai;
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
+import forge.card.CardStateName;
 import forge.game.Game;
 import forge.game.ability.AbilityUtils;
 import forge.game.card.Card;
@@ -34,8 +35,11 @@ public class SummonThePackTest extends AITest {
                     continue;
                 }
                 creatures++;
-                AssertJUnit.assertTrue(c.getName(), c.isCreature());
-                AssertJUnit.assertTrue(c.getName(), c.getType().hasCreatureType("Zombie"));
+                AssertJUnit.assertTrue(c.getName(), c.getOriginalState(CardStateName.Original).getType().isCreature());
+                // a card can stop being a creature by its own text (Arixmethes is a land while it slumbers)
+                if (c.isCreature()) {
+                    AssertJUnit.assertTrue(c.getName(), c.getType().hasCreatureType("Zombie"));
+                }
                 AssertJUnit.assertEquals(c.getName(), me, c.getOwner());
             }
         }

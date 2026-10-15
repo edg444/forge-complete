@@ -6,6 +6,7 @@ Mountain:Mountains
 Forest:Forests
 [LandTypes]
 Cave:Caves
+Cloud:Clouds
 Desert:Deserts
 Gate:Gates
 Lair
