@@ -1561,6 +1561,16 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return false;
     }
 
+    /** A card whose printed text has upgrade (Weaponized Scrap). */
+    public final boolean isUpgradeCard() {
+        for (final KeywordInterface k : getOriginalState(CardStateName.Original).getIntrinsicKeywords()) {
+            if (k.getKeyword() == Keyword.UPGRADE) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /** Unstable: an augment combined with this creature - mutate's merge plumbing, augment's characteristics. */
     /**
      * Grusilda's combined creature: its power and toughness are their total, and it has their names, mana costs,

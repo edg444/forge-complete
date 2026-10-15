@@ -207,6 +207,7 @@ public enum SpellApiToAi {
             .put(ApiType.Reveal, RevealAi.class)
             .put(ApiType.RevealHand, RevealHandAi.class)
             .put(ApiType.RevealUntilStop, RevealUntilStopAi.class)
+            .put(ApiType.Upgrade, UpgradeAi.class)
             .put(ApiType.ReverseTurnOrder, AlwaysPlayAi.class)
             .put(ApiType.RingTemptsYou, AlwaysPlayAi.class)
             .put(ApiType.RollDice, RollDiceAi.class)

@@ -213,6 +213,7 @@ public enum ApiType {
     Reveal (RevealEffect.class),
     RevealHand (RevealHandEffect.class),
     RevealUntilStop (RevealUntilStopEffect.class),
+    Upgrade (UpgradeEffect.class),
     ReverseTurnOrder (ReverseTurnOrderEffect.class),
     RingTemptsYou (RingTemptsYouEffect.class),
     RollDice (RollDiceEffect.class),

@@ -343,6 +343,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Fixed "nontoken" filters** on Very Cryptic Command (turn over target nontoken creature), Time Machine and
   Graveyard Busybody: `nonToken` reads as "doesn't have the card type Token", which tokens pass too; now `!token`.
   `NonTokenFilterTest` keeps it out of every script.
+- **Weaponized Scrap** (CMB1 #111). `K:Upgrade` with a move-to-battlefield replacement running new API `Upgrade`:
+  it covers another artifact you control through mutate's merge plumbing (the artifact carries on - tapped, counters,
+  no enters triggers) or is exiled if it can't. `CardFactory.getUpgradedCloneStates`: only the top card counts, plus
+  haste. The AI covers a token or its weakest artifact and won't cast it with nothing to cover.
 ### 2026-10-15, sixth deploy (desktop, Android, GitHub) — upstream merge (5 commits); Mystery Booster playtest cards #67–94; Innkeeper's Talent AI
 
 - **Upstream merge** (5 commits, incl. Realm of Legends 1.077, restored alternate landscape layout on mobile,

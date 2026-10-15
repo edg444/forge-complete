@@ -185,6 +185,11 @@ public class PermanentCreatureAi extends PermanentAi {
 
         final Card card = sa.getHostCard();
 
+        // with nothing to cover, a card with upgrade is just exiled
+        if (card.isUpgradeCard() && !UpgradeAi.hasArtifactToCover(ai, card)) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+
         /*
          * Checks if the creature will have non-positive toughness after
          * applying static effects. Exceptions: 1. has "etbCounter" keyword (eg.

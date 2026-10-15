@@ -222,6 +222,7 @@ public enum Keyword {
     UNDYING("Undying", SimpleKeyword.class, false, "When this creature dies, if it had no +1/+1 counters on it, return it to the battlefield under its owner's control with a +1/+1 counter on it."),
     UNEARTH("Unearth", KeywordWithCost.class, false, "%s: Return this card from your graveyard to the battlefield. It gains haste. Exile it at the beginning of the next end step or if it would leave the battlefield. Unearth only as a sorcery."),
     UNLEASH("Unleash", SimpleKeyword.class, false, "You may have this creature enter with a +1/+1 counter on it. It can't block as long as it has a +1/+1 counter on it."),
+    UPGRADE("Upgrade", SimpleKeyword.class, true, "This creature enters covering another artifact you control. If it can't, exile it. Ignore the artifact it's covering. Anywhere this card goes, cards underneath it also go. It has haste."),
     VANISHING("Vanishing", Vanishing.class, false, "This permanent enters with {%d:time counter} on it. At the beginning of your upkeep, remove a time counter from it. When the last is removed, sacrifice it."),
     VIGILANCE("Vigilance", SimpleKeyword.class, true, "Attacking doesn't cause this creature to tap."),
     WARD("Ward", Ward.class, false, "Whenever this permanent becomes the target of a spell or ability an opponent controls, counter it unless that player %s."),

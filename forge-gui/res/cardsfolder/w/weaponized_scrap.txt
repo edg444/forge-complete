@@ -1,0 +1,8 @@
+Name:Weaponized Scrap
+ManaCost:4
+Types:Artifact Creature Construct
+PT:6/6
+K:Upgrade
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplaceWith$ DBUpgrade | Secondary$ True | Description$ This creature enters covering another artifact you control. If it can't, exile it.
+SVar:DBUpgrade:DB$ Upgrade
+Oracle:Upgrade (This creature enters covering another artifact you control. If it can't, exile it. Ignore the artifact it's covering. Anywhere this card goes, cards underneath it also go. It has haste.)

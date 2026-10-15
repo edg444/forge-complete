@@ -807,6 +807,9 @@ public class CardFactory {
     }
 
     public static CardCloneStates getMutatedCloneStates(final Card card, final CardTraitBase sa) {
+        if (card.getTopMergedCard() != card && card.getTopMergedCard().isUpgradeCard()) {
+            return getUpgradedCloneStates(card, sa);
+        }
         if (card.isAugmentCombined()) {
             return getAugmentedCloneStates(card, sa);
         }
@@ -839,6 +842,20 @@ public class CardFactory {
             result.add(top.getState(CardStateName.Original).copy(card, sa));
         }
 
+        return result;
+    }
+
+    /** Upgrade: "Ignore the artifact it's covering" - only the card on top counts, and "it has haste." */
+    public static CardCloneStates getUpgradedCloneStates(final Card card, final CardTraitBase sa) {
+        final Card top = card.getTopMergedCard();
+        final CardStateName state = top.getCurrentStateName();
+        final CardState ret = (top.isCloned() ? top.getState(state) : top.getOriginalState(state)).copy(card, sa);
+        ret.addIntrinsicKeyword("Haste", true);
+        final CardCloneStates result = new CardCloneStates(top, sa);
+        result.put(state, ret);
+        if (state != CardStateName.Original) {
+            result.add(top.getState(CardStateName.Original).copy(card, sa));
+        }
         return result;
     }
 
