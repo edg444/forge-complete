@@ -548,6 +548,14 @@ public class CardView extends GameEntityView {
         set(TrackableProperty.LegacyWord, c.getLegacyWord());
     }
 
+    /** "2 of 5" for a card with nodes, empty otherwise. */
+    public String getNodes() {
+        return get(TrackableProperty.Nodes);
+    }
+    void updateNodes(Card c) {
+        set(TrackableProperty.Nodes, c.getNodeCount() > 0 ? c.getMarkedNodes() + " of " + c.getNodeCount() : "");
+    }
+
     /** Bucket List: the types on its tracker list with counters over them, or null. */
     public String getTrackerCovered() {
         return get(TrackableProperty.TrackerCovered);

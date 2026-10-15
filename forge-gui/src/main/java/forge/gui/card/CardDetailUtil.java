@@ -523,6 +523,9 @@ public class CardDetailUtil {
         if (card.getLegacyWord() != null) {
             area.append("\n(Written: ").append(card.getLegacyWord()).append(")");
         }
+        if (!StringUtils.isEmpty(card.getNodes())) {
+            area.append("\n(Marked nodes: ").append(card.getNodes()).append(")");
+        }
 
         // chosen spire
         if (card.getMarkedColors() != null && !card.getMarkedColors().isColorless()) {

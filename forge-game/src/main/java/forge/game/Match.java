@@ -566,11 +566,20 @@ public class Match {
      * owner's deck becomes a copy with the word, and the deck is saved.
      */
     public void writeLegacyWord(final Card c, final String word) {
-        if (!(c.getPaperCard() instanceof PaperCard pc) || c.getOwner() == null) {
+        writeOnCard(c, pc -> pc.copyWithLegacyWord(word));
+    }
+
+    /** Gold Mine: a marked node stays marked on the physical card, so it's written into the deck like a legacy word. */
+    public void writeMarkedNodes(final Card c, final int nodes) {
+        writeOnCard(c, pc -> pc.copyWithMarkedNodes(nodes));
+    }
+
+    private void writeOnCard(final Card c, final java.util.function.UnaryOperator<PaperCard> change) {
+        if (!(c.getPaperCard() instanceof PaperCard pc) || c.getOwner() == null || c.getOwner().getRegisteredPlayer() == null) {
             return;
         }
         final Deck deck = c.getOwner().getRegisteredPlayer().getDeck();
-        final PaperCard written = pc.copyWithLegacyWord(word);
+        final PaperCard written = change.apply(pc);
         for (final Entry<DeckSection, CardPool> part : deck) {
             if (part.getValue().count(pc) > 0) {
                 part.getValue().remove(pc, 1);

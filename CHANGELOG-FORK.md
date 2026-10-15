@@ -349,6 +349,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   haste. The AI covers a token or its weakest artifact and won't cast it with nothing to cover.
 - **Barry's Land** (CMB1 #113). Script only: a basic land with the new land type Cloud, which has no mana ability of
   its own (the card's text gives {C}).
+- **Gold Mine** (CMB1 #116). Nodes: `SVar:Nodes:5` on the card, marks on the physical card as PaperCard flag `nodes=`,
+  written into the deck file like a legacy word (`Match.writeMarkedNodes`); new API `MarkNode`, `Count$UnmarkedNodes`.
+  A token or another card copying it has no nodes, so its cost can't be paid (its rulings). Shown as "(Marked nodes:
+  1 of 5)".
 ### 2026-10-15, sixth deploy (desktop, Android, GitHub) — upstream merge (5 commits); Mystery Booster playtest cards #67–94; Innkeeper's Talent AI
 
 - **Upstream merge** (5 commits, incl. Realm of Legends 1.077, restored alternate landscape layout on mobile,

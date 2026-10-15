@@ -1,0 +1,9 @@
+Name:Gold Mine
+ManaCost:no cost
+Types:Land
+A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
+A:AB$ Mana | Cost$ T | Produced$ Any | CheckSVar$ X | SVarCompare$ GE1 | SubAbility$ DBMark | PrecostDesc$ Legacy — | CostDesc$ {T}, Mark one of Gold Mine's unmarked nodes: | SpellDescription$ Add one mana of any color.
+SVar:DBMark:DB$ MarkNode
+SVar:X:Count$UnmarkedNodes
+SVar:Nodes:5
+Oracle:{T}: Add {C}.\nLegacy — {T}, Mark one of Gold Mine's unmarked nodes: Add one mana of any color.\n☐, ☐, ☐, ☐, ☐

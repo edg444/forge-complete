@@ -45,9 +45,19 @@ public class SeekBolassCounselTest extends AITest {
         AssertJUnit.assertEquals(6, CharmEffect.makePossibleOptions(sa).size());
         String text = CharmEffect.makeFormatedDescription(sa);
         AssertJUnit.assertTrue(text, text.startsWith("Choose one at random —"));
+        java.util.Set<String> modes = new java.util.HashSet<>();
+        for (SpellAbility mode : CharmEffect.makePossibleOptions(sa)) {
+            modes.add(mode.getParam("SpellDescription"));
+        }
         AssertJUnit.assertTrue(CharmEffect.makeChoices(sa));
-        AssertJUnit.assertNotNull(sa.getSubAbility());
-        AssertJUnit.assertNull(sa.getSubAbility().getSubAbility());
+        int chosen = 0;
+        // a mode can have its own sub-abilities (the exile-and-cast one), so count the modes in the chain
+        for (SpellAbility sub = sa.getSubAbility(); sub != null; sub = sub.getSubAbility()) {
+            if (modes.contains(sub.getParam("SpellDescription"))) {
+                chosen++;
+            }
+        }
+        AssertJUnit.assertEquals(1, chosen);
     }
 
     @Test

@@ -2322,6 +2322,11 @@ public class AbilityUtils {
             return doXMath(count, expr, c, ctb);
         }
 
+        // Gold Mine: the nodes on this physical card not yet marked
+        if (sq[0].equals("UnmarkedNodes")) {
+            return doXMath(Math.max(0, c.getNodeCount() - c.getMarkedNodes()), expr, c, ctb);
+        }
+
         // Bucket List: how many types on its tracker list have counters over them
         if (sq[0].equals("TrackerCovered")) {
             return doXMath(c.getCoveredTrackerTypes().size(), expr, c, ctb);

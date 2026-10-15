@@ -338,6 +338,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     private List<String> chosenColors;
     private ColorSet markedColor;
     private String legacyWord;
+    private int markedNodes;
     private List<String> chosenName = new ArrayList<>();
     private Integer chosenNumber;
     private Player chosenPlayer;
@@ -473,6 +474,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         if (paperCard != null) {
             setMarkedColors(paperCard.getMarkedColors());
             setLegacyWord(paperCard.getLegacyWord());
+            setMarkedNodes(paperCard.getMarkedNodes());
             setPaperFoil(paperCard.isFoil());
         }
     }
@@ -2605,6 +2607,25 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public final void setLegacyWord(final String word) {
         legacyWord = word;
         view.updateLegacyWord(this);
+    }
+
+    /**
+     * Gold Mine: the nodes printed on this physical card - none for a token or another card copying one, whose
+     * "mark a node" cost then can't be paid (its rulings).
+     */
+    public final int getNodeCount() {
+        if (isToken()) {
+            return 0;
+        }
+        final CardState printed = getOriginalState(CardStateName.Original);
+        return printed == null || !printed.hasSVar("Nodes") ? 0 : Integer.parseInt(printed.getSVar("Nodes"));
+    }
+    public final int getMarkedNodes() {
+        return markedNodes;
+    }
+    public final void setMarkedNodes(final int n) {
+        markedNodes = n;
+        view.updateNodes(this);
     }
 
     /**

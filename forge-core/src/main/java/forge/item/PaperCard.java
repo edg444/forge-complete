@@ -208,6 +208,15 @@ public class PaperCard implements Comparable<IPaperCard>, InventoryItemFromSet, 
     public String getLegacyWord() {
         return this.flags.legacyWord;
     }
+    public PaperCard copyWithMarkedNodes(int nodes) {
+        if (nodes == this.flags.markedNodes)
+            return this;
+        return new PaperCard(this, this.flags.withMarkedNodes(nodes));
+    }
+    @Override
+    public int getMarkedNodes() {
+        return this.flags.markedNodes;
+    }
     @Override
     public String getItemType() {
         final Localizer localizer = Localizer.getInstance();
@@ -596,6 +605,8 @@ public class PaperCard implements Comparable<IPaperCard>, InventoryItemFromSet, 
          * stays in the deck file.
          */
         public final String legacyWord;
+        /** How many nodes are marked on the physical card (Gold Mine) - for good, so it's in the deck file too. */
+        public final int markedNodes;
 
         //TODO: Could probably move foil here.
 
@@ -608,6 +619,7 @@ public class PaperCard implements Comparable<IPaperCard>, InventoryItemFromSet, 
                 markedColors = null;
             noSellValue = flags.containsKey("noSellValue");
             legacyWord = flags.get("legacy");
+            markedNodes = flags.containsKey("nodes") ? Integer.parseInt(flags.get("nodes")) : 0;
         }
 
         //Copy constructor. There are some better ways to do this, and they should be explored once we have more than 4
@@ -621,16 +633,22 @@ public class PaperCard implements Comparable<IPaperCard>, InventoryItemFromSet, 
             this.markedColors = markedColors;
             this.noSellValue = noSellValue != null ? noSellValue : copyFrom.noSellValue;
             this.legacyWord = copyFrom.legacyWord;
+            this.markedNodes = copyFrom.markedNodes;
         }
 
-        private PaperCardFlags(PaperCardFlags copyFrom, String legacyWord) {
+        private PaperCardFlags(PaperCardFlags copyFrom, String legacyWord, int markedNodes) {
             this.markedColors = copyFrom.markedColors;
             this.noSellValue = copyFrom.noSellValue;
             this.legacyWord = legacyWord;
+            this.markedNodes = markedNodes;
         }
 
         public PaperCardFlags withLegacyWord(String legacyWord) {
-            return new PaperCardFlags(this, legacyWord);
+            return new PaperCardFlags(this, legacyWord, markedNodes);
+        }
+
+        public PaperCardFlags withMarkedNodes(int markedNodes) {
+            return new PaperCardFlags(this, legacyWord, markedNodes);
         }
 
         public PaperCardFlags withMarkedColors(ColorSet markedColors) {
@@ -654,6 +672,8 @@ public class PaperCard implements Comparable<IPaperCard>, InventoryItemFromSet, 
                 out.put("noSellValue", "true");
             if(legacyWord != null)
                 out.put("legacy", legacyWord);
+            if(markedNodes > 0)
+                out.put("nodes", Integer.toString(markedNodes));
             asMap = out;
             return out;
         }
@@ -669,12 +689,12 @@ public class PaperCard implements Comparable<IPaperCard>, InventoryItemFromSet, 
         public boolean equals(Object o) {
             if (!(o instanceof PaperCardFlags that)) return false;
             return noSellValue == that.noSellValue && Objects.equals(markedColors, that.markedColors)
-                    && Objects.equals(legacyWord, that.legacyWord);
+                    && Objects.equals(legacyWord, that.legacyWord) && markedNodes == that.markedNodes;
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(markedColors, noSellValue, legacyWord);
+            return Objects.hash(markedColors, noSellValue, legacyWord, markedNodes);
         }
     }
 }

@@ -26,6 +26,10 @@ public interface IPaperCard extends InventoryItem, Serializable {
     default String getLegacyWord() {
         return null;
     }
+    /** How many of this card's nodes are marked (Gold Mine); only a real card can have any. */
+    default int getMarkedNodes() {
+        return 0;
+    }
     int getArtIndex();
     boolean isFoil();
     boolean isToken();

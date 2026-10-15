@@ -639,6 +639,9 @@ public class GameAction {
         if (c.getLegacyWord() != null) {
             copied.setLegacyWord(c.getLegacyWord());
         }
+        if (c.getMarkedNodes() > 0) {
+            copied.setMarkedNodes(c.getMarkedNodes());
+        }
 
         copied.updateStateForView();
 
