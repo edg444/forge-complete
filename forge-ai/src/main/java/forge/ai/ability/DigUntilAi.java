@@ -19,6 +19,9 @@ public class DigUntilAi extends SpellAbilityAi {
     protected AiAbilityDecision checkApiLogic(Player ai, SpellAbility sa) {
         Card source = sa.getHostCard();
         final String logic = sa.getParamOrDefault("AILogic", "");
+        if ("Whammy".equals(logic)) {
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay); // the damage it leads to decides
+        }
         double chance = .4; // 40 percent chance with instant speed stuff
         if (isSorcerySpeed(sa, ai)) {
             chance = .667; // 66.7% chance for sorcery speed (since it will
@@ -114,6 +117,41 @@ public class DigUntilAi extends SpellAbilityAi {
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
 
+    /**
+     * Whammy Burn: one Island hides among the unrevealed cards. Stop once the damage is enough for its target; keep
+     * going while reaching that is at least even odds, or while one more card is worth the risk on average (only at 1).
+     */
+    private static boolean whammyRevealAnother(final SpellAbility sa, final int revealed, final int remaining) {
+        if (remaining <= 1) {
+            return false; // the last card is the Island
+        }
+        int needed = Integer.MAX_VALUE;
+        final SpellAbility dmg = sa.getSubAbility();
+        if (dmg != null && dmg.usesTargeting()) {
+            final Card c = dmg.getTargetCard();
+            final Player p = dmg.getTargets().getFirstTargetedPlayer();
+            if (c != null) {
+                if (sa.getActivatingPlayer().equals(c.getController())) {
+                    return false;
+                }
+                needed = Math.max(1, ComputerUtilCombat.getEnoughDamageToKill(c, 99, sa.getHostCard(), false, false));
+            } else if (p != null) {
+                if (sa.getActivatingPlayer().equals(p)) {
+                    return false;
+                }
+                needed = p.getLife();
+            }
+        }
+        if (revealed >= needed) {
+            return false;
+        }
+        final int more = needed - revealed;
+        if (more < remaining && (remaining - more) * 2 >= remaining) {
+            return true; // the Island is past the cards still needed at least half the time
+        }
+        return revealed < 2;
+    }
+
     /* (non-Javadoc)
      * @see forge.card.ability.SpellAbilityAi#confirmAction(forge.card.spellability.SpellAbility, forge.game.player.PlayerActionConfirmMode, java.lang.String)
      */
@@ -121,6 +159,9 @@ public class DigUntilAi extends SpellAbilityAi {
     public boolean confirmAction(Player player, SpellAbility sa, PlayerActionConfirmMode mode, String message, Map<String, Object> params) {
         if (sa.hasParam("AILogic")) {
             final String logic = sa.getParam("AILogic");
+            if ("Whammy".equals(logic) && params != null && params.containsKey("Revealed")) {
+                return whammyRevealAnother(sa, (Integer) params.get("Revealed"), (Integer) params.get("Remaining"));
+            }
             if ("OathOfDruids".equals(logic)) {
                 final List<Card> creaturesInLibrary =
                         CardLists.filter(player.getCardsIn(ZoneType.Library), CardPredicates.CREATURES);

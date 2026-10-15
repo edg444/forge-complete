@@ -143,6 +143,8 @@ public class DigUntilEffect extends SpellAbilityEffect {
         boolean shuffle = sa.hasParam("Shuffle");
         final boolean optional = sa.hasParam("Optional");
         final boolean optionalFound = sa.hasParam("OptionalFoundMove");
+        // "reveal cards until you reveal X or choose to stop": one card at a time, asking after each
+        final boolean mayStop = sa.hasParam("MayStop");
         boolean sequential = digSite == ZoneType.Library && revealedDest != null && revealedDest.equals(foundDest);
 
         CardZoneTable table = new CardZoneTable(game.copyLastStateBattlefield(), game.copyLastStateGraveyard());
@@ -164,7 +166,14 @@ public class DigUntilEffect extends SpellAbilityEffect {
             CardCollection moved = new CardCollection();
             Integer restCMC = totalCMC;
 
-            final PlayerZone library = p.getZone(digSite);
+            final PlayerZone library = digSite == ZoneType.WhammyDeck ? p.getWhammyDeck() : p.getZone(digSite);
+            if (sa.hasParam("ShuffleFirst")) {
+                if (digSite == ZoneType.Library) {
+                    p.shuffle(sa);
+                } else {
+                    library.shuffle();
+                }
+            }
             int maxToDig = library.size();
             if (maxRevealed != null) {
                 maxToDig = Math.min(maxRevealed, maxToDig);
@@ -173,6 +182,9 @@ public class DigUntilEffect extends SpellAbilityEffect {
             for (int i = 0; i < maxToDig; i++) {
                 final Card c = library.get(i);
                 revealed.add(c);
+                if (mayStop) {
+                    game.getAction().reveal(new CardCollection(c), p, false);
+                }
                 if (restCMC != null) {
                     restCMC -= c.getCMC();
                     if (restCMC <= 0) {
@@ -193,6 +205,10 @@ public class DigUntilEffect extends SpellAbilityEffect {
                         break;
                     }
                 }
+                if (mayStop && i + 1 < maxToDig && !p.getController().confirmAction(sa, null,
+                        "Reveal another card?", Map.<String, Object>of("Revealed", revealed.size(), "Remaining", maxToDig - revealed.size()))) {
+                    break;
+                }
             }
 
             if (shuffle && sa.hasParam("ShuffleCondition")) {
@@ -201,7 +217,7 @@ public class DigUntilEffect extends SpellAbilityEffect {
                 }
             }
 
-            if (revealed.size() > 0) {
+            if (revealed.size() > 0 && !mayStop) {
                 game.getAction().reveal(revealed, p, false);
             }
 

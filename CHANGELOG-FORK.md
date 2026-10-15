@@ -329,6 +329,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   wherever the card goes); "fizzles" is `Mode$ ChangesZone | Origin$ Stack | Fizzle$ True`, whose triggered
   `StackSa` (`Defined$ TriggeredStackSa`) is the spell that fizzled. A human choosing new targets for a copy that has
   none left (it fizzled) now gets a normal target prompt instead of keeping zero targets.
+- **Whammy Burn** (CMB1 #70). New zone `ZoneType.WhammyDeck`, created for every player but kept out of
+  `Player.ALL_ZONES`, so nothing but whammy effects sees its cards (its ruling: effects on cards you own not on the
+  battlefield don't reach it). `Player.getWhammyDeck()` forms it from a Plains, Island, Swamp, Mountain, and Forest
+  from outside the game the first time it's needed. DigUntil: `DigZone$ WhammyDeck`; `ShuffleFirst$ True` shuffles
+  the dig zone before revealing; `MayStop$ True` reveals one card at a time and asks after each whether to reveal
+  another ("until you reveal X or choose to stop"). AI `AILogic$ Whammy`: plans its target for 2 damage, then stops
+  once the damage kills its target, keeps going while that's at least even odds, and otherwise stops at 2.
 
 ### 2026-10-13, fifth deploy (desktop, Android, GitHub) — upstream merge (41 commits); Mystery Booster playtest cards #51–66
 

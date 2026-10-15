@@ -88,6 +88,9 @@ public class DamageDealAi extends DamageAiBase {
                 dmg--; // the card will be spent casting the spell, so actual damage is 1 less
             } else if (sa.getSVar(damage).equals("Remembered$CardManaCost")) {
                 dmg = Math.max(dmg, maxManaValueParentCouldMove(ai, sa));
+            } else if (sa.getParent() != null && "Whammy".equals(sa.getParent().getParam("AILogic"))) {
+                // Whammy Burn: nothing is revealed while deciding; 2 is where pushing its luck stops paying off
+                dmg = 2;
             }
         }
         if (damageTargetAI(ai, sa, dmg, true)) {

@@ -1,0 +1,9 @@
+Name:Whammy Burn
+ManaCost:R
+Types:Instant
+A:SP$ DigUntil | DigZone$ WhammyDeck | ShuffleFirst$ True | Valid$ Card.Island | ValidDescription$ Island | MayStop$ True | NoMoveRevealed$ True | RememberRevealed$ True | AILogic$ Whammy | SubAbility$ DBDamage | StackDescription$ SpellDescription | SpellDescription$ Shuffle your whammy deck, then reveal cards from the top of your whammy deck until you reveal an Island or choose to stop. Then, if no Islands were revealed this way, CARDNAME deals X damage to any target, where X is the number of cards revealed. (A whammy deck consists of a Plains, Island, Swamp, Mountain, and Forest.)
+SVar:DBDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ X | ConditionCheckSVar$ Y | ConditionSVarCompare$ EQ0 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:X:Remembered$Amount
+SVar:Y:Remembered$Valid Card.Island
+Oracle:Shuffle your whammy deck, then reveal cards from the top of your whammy deck until you reveal an Island or choose to stop. Then, if no Islands were revealed this way, Whammy Burn deals X damage to any target, where X is the number of cards revealed. (A whammy deck consists of a Plains, Island, Swamp, Mountain, and Forest.)

@@ -275,6 +275,8 @@ public class Player extends GameEntity implements Comparable<Player> {
             final PlayerZone toPut = z == ZoneType.Battlefield ? new PlayerZoneBattlefield(z, this) : new PlayerZone(z, this);
             zones.put(z, toPut);
         }
+        // kept out of ALL_ZONES so nothing but whammy effects finds its cards
+        zones.put(ZoneType.WhammyDeck, new PlayerZone(ZoneType.WhammyDeck, this));
 
         view = new PlayerView(id0, game.getTracker());
         view.updateMaxHandSize(this);
@@ -2096,6 +2098,21 @@ public class Player extends GameEntity implements Comparable<Player> {
         }
 
         return topCards;
+    }
+
+    /**
+     * The whammy deck, formed first if there isn't one: a Plains, Island, Swamp, Mountain, and Forest from outside the
+     * game, shuffled (Whammy Burn's ruling: immediately before any part of the effect that refers to it).
+     */
+    public final PlayerZone getWhammyDeck() {
+        final PlayerZone whammy = getZone(ZoneType.WhammyDeck);
+        if (whammy.isEmpty()) {
+            for (final String basic : new String[] {"Plains", "Island", "Swamp", "Mountain", "Forest"}) {
+                whammy.add(Card.fromPaperCard(StaticData.instance().getCommonCards().getUniqueByName(basic), this));
+            }
+            whammy.shuffle();
+        }
+        return whammy;
     }
 
     public final void shuffle(final SpellAbility sa) {

@@ -33,7 +33,9 @@ public enum ZoneType implements ITranslatable {
     Subgame(true, "lblSubgameZone"),
     // ExtraHand is used for Backup Plan for temporary extra hands
     ExtraHand(true, "lblHandZone"),
-    None(true, "lblNoneZone");
+    None(true, "lblNoneZone"),
+    // Whammy Burn: an additional deck zone that only whammy effects can see or touch (its rulings)
+    WhammyDeck(true, "lblWhammyDeckZone");
 
     public static final EnumSet<ZoneType> STATIC_ABILITIES_SOURCE_ZONES = EnumSet.of(Battlefield, Graveyard, Exile, Command, Stack/*, Hand*/);
     public static final EnumSet<ZoneType> PART_OF_COMMAND_ZONE = EnumSet.of(Command, SchemeDeck, PlanarDeck, AttractionDeck, ContraptionDeck, Junkyard, StickerSheets);
