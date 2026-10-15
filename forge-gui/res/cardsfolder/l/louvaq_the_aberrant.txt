@@ -1,0 +1,8 @@
+Name:Louvaq, the Aberrant
+ManaCost:2 G U
+Types:Legendary Creature Mutant
+PT:3/4
+K:Protection:Creature.ModifiedFromPrinted:modified creatures
+T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ Player | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigPutCounter | TriggerDescription$ At the beginning of each player's end step, you may put a +1/+1 counter on target creature that player controls.
+SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Creature.ControlledBy TriggeredPlayer | TgtPrompt$ Select target creature that player controls | CounterType$ P1P1 | CounterNum$ 1
+Oracle:Protection from modified creatures (Modified creatures have a power, toughness, or ability different than their printed versions.)\nAt the beginning of each player's end step, you may put a +1/+1 counter on target creature that player controls.

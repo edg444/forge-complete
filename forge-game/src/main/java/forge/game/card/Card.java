@@ -4315,6 +4315,56 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return entityAttachedTo != null;
     }
 
+    /**
+     * Louvaq, the Aberrant: "Modified creatures have a power, toughness, or ability different than their printed
+     * versions." A counter or an effect has set or changed its power or toughness, or it has gained or lost
+     * abilities or had its text changed - but defining * by an ability, changing controller, color or types, a
+     * face-down 2/2 and a card's other faces don't count, and a copy only counts if it ends up different (its rulings).
+     */
+    public final boolean isModifiedFromPrinted() {
+        if (getPowerBonusFromCounters() != 0 || getToughnessBonusFromCounters() != 0) {
+            return true;
+        }
+        if (!getPTBoostTable().isEmpty() || !newPT.isEmpty() || !newPTText.isEmpty()) {
+            return true;
+        }
+        if (!getChangedCardKeywords().isEmpty() || !getChangedCardTraits().isEmpty()
+                || !getChangedCardKeywordsByText().isEmpty()
+                || !getChangedTextColorWords().isEmpty() || !getChangedTextTypeWords().isEmpty()) {
+            return true;
+        }
+        if (isCloned() && !isFaceDown()) {
+            final CardState now = getState(getCurrentStateName());
+            final CardState printed = getOriginalState(getCurrentStateName());
+            if (printed != null && now != printed && (now.getBasePower() != printed.getBasePower()
+                    || now.getBaseToughness() != printed.getBaseToughness()
+                    || !abilitiesSignature(now).equals(abilitiesSignature(printed)))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static List<String> abilitiesSignature(final CardState state) {
+        final List<String> sig = Lists.newArrayList();
+        for (final KeywordInterface k : state.getIntrinsicKeywords()) {
+            sig.add("K:" + k.getOriginal());
+        }
+        for (final SpellAbility sa : state.getSpellAbilities()) {
+            if (!sa.isSpell()) {
+                sig.add("A:" + sa.getParamOrDefault("SpellDescription", sa.getApi() == null ? "" : sa.getApi().name()));
+            }
+        }
+        for (final Trigger t : state.getTriggers()) {
+            sig.add("T:" + t.getParamOrDefault("TriggerDescription", t.getMode().name()));
+        }
+        for (final StaticAbility st : state.getStaticAbilities()) {
+            sig.add("S:" + st.getParamOrDefault("Description", st.getMode().toString()));
+        }
+        Collections.sort(sig);
+        return sig;
+    }
+
     // Bucket List: its tracker list - the types printed on it (SVar TrackerTypes) with counters over some. It belongs
     // to this object, isn't copied, and goes when the object does (its rulings).
     private final Set<String> coveredTrackerTypes = Sets.newLinkedHashSet();

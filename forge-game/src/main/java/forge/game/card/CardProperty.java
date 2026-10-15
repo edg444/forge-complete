@@ -359,6 +359,11 @@ public class CardProperty {
             if (!card.isMotivatedBy(sourceController)) {
                 return false;
             }
+        } else if (property.equals("ModifiedFromPrinted")) {
+            // Louvaq, the Aberrant: different from its printed power, toughness or abilities
+            if (!card.isModifiedFromPrinted()) {
+                return false;
+            }
         } else if (property.equals("Haunted")) {
             // Kaya, Ghost Haunter: haunted by anything (her ruling)
             if (card.getHauntedBy().isEmpty()) {

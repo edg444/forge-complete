@@ -309,6 +309,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Louvaq, the Aberrant** (CMB1 #95). Property `ModifiedFromPrinted` (`Card.isModifiedFromPrinted`), its reminder
+  text's "modified": a power/toughness counter, any boost or set-P/T effect (not one that only defines *), gained or
+  lost abilities or changed text, or a copy whose P/T or abilities differ from the printed card - not a change of
+  controller, color or type, a face-down 2/2, or a card's other faces (its rulings). Not the NEO "modified".
 ### 2026-10-15, sixth deploy (desktop, Android, GitHub) — upstream merge (5 commits); Mystery Booster playtest cards #67–94; Innkeeper's Talent AI
 
 - **Upstream merge** (5 commits, incl. Realm of Legends 1.077, restored alternate landscape layout on mobile,
