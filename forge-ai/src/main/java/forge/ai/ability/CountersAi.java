@@ -95,7 +95,8 @@ public abstract class CountersAi extends SpellAbilityAi {
 
         if (counterType.is(CounterEnumType.P1P1)) {
             // TODO look for modified
-            choice = ComputerUtilCard.getBestCreatureAI(list);
+            CardCollection useful = CardLists.filter(list, c -> c.isCreature() && !ComputerUtilCard.isUselessCreature(c.getController(), c));
+            choice = ComputerUtilCard.getBestCreatureAI(useful.isEmpty() ? list : useful);
 
             if (choice == null) {
                 // We'd only get here if list isn't empty, maybe we're trying to animate a land?

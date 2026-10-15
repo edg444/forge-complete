@@ -177,4 +177,29 @@ public class AiPlayReportsTest extends AITest {
         }
         AssertJUnit.assertEquals(AiPlayDecision.WillPlay, decide(ai, aura));
     }
+
+    // Innkeeper's Talent, reported 2026-10-14: the AI put the counter on a creature under Pacifism
+    @Test
+    public void testCountersSkipACreatureThatCantAttackOrBlock() {
+        Game game = initAndCreateGame();
+        Player ai = game.getPlayers().get(1);
+        Player opp = game.getPlayers().get(0);
+        Card talent = addCard("Innkeeper's Talent", ai);
+        Card angel = addCard("Serra Angel", ai);
+        Card bears = addCard("Grizzly Bears", ai);
+        addCard("Pacifism", opp).attachToEntity(angel, null);
+        game.getPhaseHandler().devModeSet(PhaseType.COMBAT_BEGIN, ai);
+        game.getAction().checkStateEffects(true);
+        AssertJUnit.assertTrue(ComputerUtilCard.isUselessCreature(ai, angel));
+
+        SpellAbility put = null;
+        for (Trigger t : talent.getTriggers()) {
+            if (t.ensureAbility() != null && t.ensureAbility().getApi() == ApiType.PutCounter) {
+                put = t.ensureAbility().copy(ai);
+            }
+        }
+        put.resetTargets();
+        SpellApiToAi.Converter.get(put).doTriggerNoCostWithSubs(ai, put, true);
+        AssertJUnit.assertEquals(bears, put.getTargetCard());
+    }
 }

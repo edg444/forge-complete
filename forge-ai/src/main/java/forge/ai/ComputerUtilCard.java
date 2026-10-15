@@ -2098,6 +2098,11 @@ public class ComputerUtilCard {
         if (c.hasKeyword("CARDNAME can't attack or block.")) {
             return true;
         }
+        // most "can't attack or block" effects are CantAttack/CantBlock statics now, not the keyword (Pacifism)
+        if (!CombatUtil.canBlock(c, true)
+                && !CombatUtil.getAllPossibleDefenders(c.getController()).anyMatch(d -> CombatUtil.canAttackNextTurn(c, d))) {
+            return true;
+        }
         if (c.getOwner() == ai && ai.getOpponents().contains(c.getController())) {
             return true;
         }

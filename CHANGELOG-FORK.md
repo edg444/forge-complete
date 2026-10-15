@@ -309,6 +309,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **AI: creatures that can't attack or block are useless** (reported with Innkeeper's Talent). `isUselessCreature`
+  only knew the old "can't attack or block" keyword, but Pacifism and its kin are `CantAttack`/`CantBlock` statics,
+  so the AI put +1/+1 counters on a pacified creature. It now also counts a creature that can block nothing and
+  attack no one (next-turn checks, so summoning sickness and tapping don't count), and +1/+1 counter targeting
+  prefers creatures that aren't useless.
+
 ### 2026-10-13, fifth deploy (desktop, Android, GitHub) — upstream merge (41 commits); Mystery Booster playtest cards #51–66
 
 - **Upstream merge** (41 commits). Conflicts: `CardRules.canBePartnerCommanders` keeps Legendary partner and takes upstream's implied partnership; `PhaseHandler.declareAttackersFor` takes upstream's undo barrier and keeps the fork's `active` player; `GameLobby` Archenemy keeps removing Two-Headed Giant and applies upstream's Archenemy teams; The Earth Crystal and Summitfest Closing Ceremony take upstream's scripts (Covercast now works outside the stack, as "this card intensifies" reads). Upstream's counting `MyRandom` wrapper only forwarded `next(bits)`, so a Random given to `setRandom` lost its own `nextInt(bound)`/`nextDouble`/`nextGaussian`; it now forwards each public method (still counting), which the fork's fixed-dice tests rely on.
