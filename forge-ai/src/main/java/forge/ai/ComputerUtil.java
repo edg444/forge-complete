@@ -2732,6 +2732,23 @@ public class ComputerUtil {
             // Hangman: any word from the list is as good as another, as long as it can't be predicted
             chosen = Aggregates.random(validTypes);
         }
+        else if (kindOfType.equals("KeywordOrAbilityWord")) {
+            // Pithing Spyglass: the word on the most of the opponents' known cards, net of the AI's own
+            int best = Integer.MIN_VALUE;
+            for (final String w : validTypes) {
+                int score = 0;
+                for (final Player o : ai.getOpponents()) {
+                    score += CardLists.count(o.getCardsIn(Arrays.asList(ZoneType.Battlefield, ZoneType.Graveyard, ZoneType.Exile)),
+                            c -> c.hasKeywordOrAbilityWord(w));
+                }
+                score -= CardLists.count(ai.getCardsIn(Arrays.asList(ZoneType.Battlefield, ZoneType.Hand, ZoneType.Graveyard)),
+                        c -> c.hasKeywordOrAbilityWord(w));
+                if (score > best) {
+                    best = score;
+                    chosen = w;
+                }
+            }
+        }
         else if (kindOfType.equals("Watermark")) {
             // Stamp of Approval: the watermark most of this player's creatures have
             final Map<String, Integer> counts = Maps.newHashMap();

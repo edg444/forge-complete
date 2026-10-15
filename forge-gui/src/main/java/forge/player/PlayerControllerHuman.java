@@ -1408,10 +1408,12 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
             }
             types.sort((a, b) -> Integer.compare(inDeck.getOrDefault(b, 0), inDeck.getOrDefault(a, 0)));
         }
+        final String title = "KeywordOrAbilityWord".equals(kindOfType) ? "Name a keyword ability or ability word"
+                : localizer.getMessage("lblChooseATargetType", kindOfType.toLowerCase());
         if (isOptional) {
-            return getGui().oneOrNone(localizer.getMessage("lblChooseATargetType", kindOfType.toLowerCase()), types);
+            return getGui().oneOrNone(title, types);
         }
-        return getGui().one(localizer.getMessage("lblChooseATargetType", kindOfType.toLowerCase()), types);
+        return getGui().one(title, types);
     }
 
     // sort creature types such that those most prevalent in player's deck are

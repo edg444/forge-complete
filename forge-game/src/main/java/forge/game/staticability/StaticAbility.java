@@ -167,7 +167,7 @@ public class StaticAbility extends CardTraitBase implements IIdentifiable, Clone
                 || hasParam("AddTrigger") || hasParam("AddReplacementEffect")
                 || hasParam("AddStaticAbility") || hasParam("AddSVar")
                 || hasParam("CantHaveKeyword") || hasParam("ShareRememberedKeywords")
-                || hasParam("RemoveKeyword")) {
+                || hasParam("RemoveKeyword") || hasParam("LoseKeywordOrAbilityWord")) {
             layers.add(StaticAbilityLayer.ABILITIES);
         }
 

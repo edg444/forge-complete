@@ -97,6 +97,10 @@ public class KeywordCollection implements ICardTraitChanges, Iterable<KeywordInt
         return map.remove(keyword.getKeyword(), keyword);
     }
 
+    public boolean removeMatching(java.util.function.Predicate<KeywordInterface> matches) {
+        return map.values().removeIf(matches);
+    }
+
     public boolean removeAll(Keyword kenum) {
         return !map.removeAll(kenum).isEmpty();
     }

@@ -41,6 +41,8 @@ public class KeywordsChange implements ICardTraitChanges, IKeywordsChange, Clone
     private KeywordCollection removeKeywordInterfaces = new KeywordCollection();
     private List<String> removeKeywords = Lists.newArrayList();
     private boolean removeAllKeywords;
+    // Pithing Spyglass: keywords removed by what they are, not by a text prefix ("Flash" mustn't take Flashback)
+    private java.util.function.Predicate<KeywordInterface> removeMatching;
 
     /**
      *
@@ -112,13 +114,19 @@ public class KeywordsChange implements ICardTraitChanges, IKeywordsChange, Clone
         return this.removeAllKeywords;
     }
 
+    public final KeywordsChange setRemoveMatching(final java.util.function.Predicate<KeywordInterface> matches) {
+        this.removeMatching = matches;
+        return this;
+    }
+
     /**
      * @return whether this KeywordsChange doesn't have any effect.
      */
     public final boolean isEmpty() {
         return !this.removeAllKeywords
                 && this.keywords.isEmpty()
-                && this.removeKeywords.isEmpty();
+                && this.removeKeywords.isEmpty()
+                && this.removeMatching == null;
     }
 
     public void setHostCard(final Card host) {
@@ -164,6 +172,9 @@ public class KeywordsChange implements ICardTraitChanges, IKeywordsChange, Clone
         }
 
         list.removeInstances(getRemovedKeywordInstances());
+        if (removeMatching != null) {
+            list.removeMatching(removeMatching);
+        }
 
         if (getKeywords() != null) {
             list.insertAll(getKeywords());

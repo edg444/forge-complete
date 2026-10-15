@@ -266,7 +266,7 @@ public class StaticEffect {
             if (layers.contains(StaticAbilityLayer.ABILITIES)) {
                 // remove keywords
                 boolean abilitiesChanged = false;
-                if (hasParam("AddKeyword") || hasParam("RemoveKeyword")
+                if (hasParam("AddKeyword") || hasParam("RemoveKeyword") || hasParam("LoseKeywordOrAbilityWord")
                         || hasParam("ShareRememberedKeywords") || hasParam("RemoveAllAbilities") || hasParam("RemoveNonManaAbilities")) {
                     abilitiesChanged |= affectedCard.removeChangedCardKeywords(getTimestamp(), ability.getId(), false);
                 }
@@ -276,7 +276,7 @@ public class StaticEffect {
                         || hasParam("GainsAbilitiesOfDefined") || hasParam("GainsTriggerAbsOf")
                         || hasParam("AddTrigger") || hasParam("AddStaticAbility")
                         || hasParam("AddReplacementEffect") || hasParam("RemoveAllAbilities") || hasParam("RemoveNonManaAbilities")
-                        ) {
+                        || hasParam("LoseKeywordOrAbilityWord")) {
                     abilitiesChanged |= affectedCard.removeChangedCardTraits(getTimestamp(), ability.getId());
                 }
 

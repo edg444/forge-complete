@@ -1,0 +1,7 @@
+Name:Pithing Spyglass
+ManaCost:2
+Types:Artifact
+K:ETBReplacement:Other:ChooseWord
+SVar:ChooseWord:DB$ ChooseType | Defined$ You | Type$ KeywordOrAbilityWord | SpellDescription$ As CARDNAME enters, name a keyword ability or ability word.
+S:Mode$ Continuous | Affected$ Card.!token | AffectedZone$ Battlefield,Hand,Graveyard,Library,Exile,Stack,Command | LoseKeywordOrAbilityWord$ ChosenType | Description$ All cards in all zones lose that keyword ability or ability word and all text tied to that ability.
+Oracle:As Pithing Spyglass enters, name a keyword ability or ability word.\nAll cards in all zones lose that keyword ability or ability word and all text tied to that ability.

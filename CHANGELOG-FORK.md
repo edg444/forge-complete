@@ -336,6 +336,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   timestamp order (the same pair twice switches back) and makes that step's player active, reusing the stolen-phase
   hand-off. Unlike a stolen phase, `isPlayerTurn` still answers with the real turn's player (its rulings); untap and
   draw steps don't move, and one entering or leaving mid-upkeep doesn't change that upkeep.
+- **Pithing Spyglass** (CMB1 #108). ChooseType `Type$ KeywordOrAbilityWord` (Legacy's word list; the AI names the
+  word on the most of its opponents' known cards, net of its own) and continuous `LoseKeywordOrAbilityWord$`: the
+  keyword is removed by what it is (`Card.keywordMatchesWord`, so Flash isn't Flashback) and an ability word takes
+  the abilities it introduces (`Card.traitHasAbilityWord`). Every zone, cards only (`!token`).
 ### 2026-10-15, sixth deploy (desktop, Android, GitHub) — upstream merge (5 commits); Mystery Booster playtest cards #67–94; Innkeeper's Talent AI
 
 - **Upstream merge** (5 commits, incl. Realm of Legends 1.077, restored alternate landscape layout on mobile,

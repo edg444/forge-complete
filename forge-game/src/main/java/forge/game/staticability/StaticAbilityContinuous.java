@@ -133,6 +133,8 @@ public final class StaticAbilityContinuous {
         String[] addTriggers = null;
         String[] addStatics = null;
         Predicate<CardTraitBase> removeAbilities = null;
+        String loseWord = null;
+        Predicate<CardTraitBase> removeTiedAbilities = null;
         boolean addAllCreatureTypes = false;
         Set<RemoveType> remove = EnumSet.noneOf(RemoveType.class);
 
@@ -393,6 +395,17 @@ public final class StaticAbilityContinuous {
         }
 
         if (layer == StaticAbilityLayer.ABILITIES) {
+            // Pithing Spyglass: the named keyword ability, or the abilities an ability word introduces
+            if (params.containsKey("LoseKeywordOrAbilityWord")) {
+                final String w = params.get("LoseKeywordOrAbilityWord");
+                loseWord = "ChosenType".equals(w) ? hostCard.getChosenType() : w;
+                if (StringUtils.isEmpty(loseWord)) {
+                    loseWord = null;
+                } else {
+                    final String lost = loseWord;
+                    removeTiedAbilities = t -> Card.traitHasAbilityWord(t, lost);
+                }
+            }
             if (params.containsKey("RemoveAllAbilities")) {
                 removeAbilities = e -> true;
             } else if (params.containsKey("RemoveNonManaAbilities")) {
@@ -1012,12 +1025,18 @@ public final class StaticAbilityContinuous {
                     }
                 }
 
+                final Predicate<CardTraitBase> removeTraits = removeTiedAbilities == null ? removeAbilities
+                        : removeAbilities == null ? removeTiedAbilities : removeAbilities.or(removeTiedAbilities);
                 if (!addedAbilities.isEmpty() || !addedTrigger.isEmpty() || addReplacements != null || addStatics != null
                     || !addedReplacementEffects.isEmpty() || !addedStaticAbility.isEmpty()
-                    || removeAbilities != null) {
+                    || removeTraits != null) {
                     affectedCard.addChangedCardTraits(
-                        addedAbilities, addedTrigger, addedReplacementEffects, addedStaticAbility, removeAbilities, se.getTimestamp(), stAb.getId(), false
+                        addedAbilities, addedTrigger, addedReplacementEffects, addedStaticAbility, removeTraits, se.getTimestamp(), stAb.getId(), false
                     );
+                }
+                if (loseWord != null) {
+                    final String lost = loseWord;
+                    affectedCard.addChangedCardKeywordsRemoving(k -> Card.keywordMatchesWord(k, lost), se.getTimestamp(), stAb);
                 }
 
                 if (cantHaveKeyword != null) {

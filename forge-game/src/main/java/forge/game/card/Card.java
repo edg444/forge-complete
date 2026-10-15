@@ -2601,6 +2601,38 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
      * Whether this has the keyword ability or ability word {@code word}, ignoring any modifier ("cycling" is any
      * cycling cost, "landwalk" any landwalk). Ability words are only in rules text, at the start of a line.
      */
+    /** Pithing Spyglass: whether this keyword is the named keyword ability - by what it is, so Flash isn't Flashback. */
+    public static boolean keywordMatchesWord(final KeywordInterface inst, final String word) {
+        final String w = word.toLowerCase(java.util.Locale.ROOT);
+        final Keyword k = inst.getKeyword();
+        if (k != null && k != Keyword.UNDEFINED) {
+            return k.toString().toLowerCase(java.util.Locale.ROOT).equals(w);
+        }
+        final String original = inst.getOriginal().toLowerCase(java.util.Locale.ROOT);
+        return original.equals(w) || original.startsWith(w + ":") || original.startsWith(w + " ");
+    }
+
+    /** Pithing Spyglass: whether this ability is the text an ability word introduces ("Landfall — Whenever ..."). */
+    public static boolean traitHasAbilityWord(final CardTraitBase trait, final String word) {
+        final String w = word.toLowerCase(java.util.Locale.ROOT);
+        for (final String key : new String[] {"PrecostDesc", "TriggerDescription", "SpellDescription", "Description"}) {
+            if (trait.hasParam(key)) {
+                final String d = trait.getParam(key).trim().toLowerCase(java.util.Locale.ROOT);
+                if (d.startsWith(w + " —") || d.startsWith(w + " -")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public final void addChangedCardKeywordsRemoving(final java.util.function.Predicate<KeywordInterface> matches,
+            final long timestamp, final StaticAbility st) {
+        changedCardKeywords.put(timestamp, st == null ? 0L : st.getId(),
+                new KeywordsChange((Iterable<KeywordInterface>) null, (Collection<String>) null, false).setRemoveMatching(matches));
+        updateKeywords();
+    }
+
     public boolean hasKeywordOrAbilityWord(final String word) {
         final String w = word.toLowerCase(java.util.Locale.ROOT);
         for (final KeywordInterface inst : getKeywords()) {

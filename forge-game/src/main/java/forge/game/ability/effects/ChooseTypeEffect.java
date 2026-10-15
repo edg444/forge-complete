@@ -88,6 +88,10 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
             case "Planeswalker":
                 validTypes.addAll(CardType.getAllWalkerTypes());
                 break;
+            case "KeywordOrAbilityWord":
+                // Pithing Spyglass names from the same list Legacy writes from
+                validTypes.addAll(forge.game.GameAction.legacyWordChoices());
+                break;
             case "Watermark":
                 // Stamp of Approval: every watermark a printing has
                 validTypes.addAll(forge.card.PrintingTraits.allWatermarkNames());
