@@ -1,0 +1,7 @@
+Name:Patient Turtle
+ManaCost:2 G G
+Types:Creature Turtle
+PT:3/3
+K:etbCounter:P1P1:2:CheckSVar$ WentFirst | SVarCompare$ EQ0:This creature enters with two +1/+1 counters on it if you didn't go first this game.
+SVar:WentFirst:Count$StartingPlayer.1.0
+Oracle:Patient Turtle enters with two +1/+1 counters on it if you didn't go first this game.

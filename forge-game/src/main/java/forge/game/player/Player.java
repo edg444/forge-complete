@@ -4076,8 +4076,9 @@ public class Player extends GameEntity implements Comparable<Player> {
         paidForStack.clear();
     }
 
+    /** Whether this player went first - a Two-Headed Giant team takes that first turn together (CR 805.4). */
     public boolean isStartingPlayer() {
-        return equals(game.getStartingPlayer());
+        return sharesTurnWith(game.getStartingPlayer());
     }
 
     public boolean isMonarch() {

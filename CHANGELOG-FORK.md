@@ -379,6 +379,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   Dark Pacts. Left at x2, as making twice as many of something isn't doubling (ruling 3): Borborygmos and Fblthp,
   Fangorn, Galloping Lizrog, Lulu, Struggle for Project Purity, Tainted Adversary, Unassuming Gelatinous Serpent,
   devour 2.
+- **Patient Turtle** (CMB1 #82), script only (`Count$StartingPlayer`). "Went first" now includes the starting
+  player's Two-Headed Giant teammate, who takes that first turn with them (CR 805.4, as Gemstone Caverns already
+  had it): `Player.isStartingPlayer` uses `sharesTurnWith`, which also affects Desert Cenote and the other
+  `Count$StartingPlayer` cards in Two-Headed Giant games.
 
 ### 2026-10-13, fifth deploy (desktop, Android, GitHub) — upstream merge (41 commits); Mystery Booster playtest cards #51–66
 
