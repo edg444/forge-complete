@@ -351,6 +351,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   `ArtUntagged` (also true with no printing data). Only untagged art asks the caster (honor; AI says no). {A} =
   player ACORN counters, `SubCounterYou<X/ACORN>` + `Announce$ X`. New drawn {A} acorn symbol on desktop
   (`CardFaceSymbols.acornSymbol`, symbol cache A.png) and mobile (`FDrawnSymbol.acorn()`).
+- **Bat- (UND #32).** Checked against Scryfall and its 2 rulings 2026-10-20. Script only (augment condition on
+  `PlayerCountRegisteredOpponents$HighestLifeLostThisTurn`, so an opponent who left the game still counts).
 
 ### 2026-10-19, ninth deploy (desktop, Android, GitHub) — Secret Lair Showcase Planes; info panel fix
 
