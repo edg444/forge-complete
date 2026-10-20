@@ -1,0 +1,11 @@
+Name:Surgeon General Commander
+ManaCost:3 G
+Types:Legendary Creature Wombat Bat Chameleon
+PT:3/3
+# "Enchant" here is the verb, not the keyword: an Aura you control becoming attached to a creature you control.
+T:Mode$ Augments | ValidCard$ Creature.YouCtrl | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDraw | TriggerDescription$ Whenever you augment, enchant, or mutate a creature you control, draw a card.
+T:Mode$ Attached | ValidSource$ Aura.YouCtrl | ValidTarget$ Creature.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigDraw | Secondary$ True | TriggerDescription$ Whenever you augment, enchant, or mutate a creature you control, draw a card.
+T:Mode$ Mutates | ValidCard$ Creature.YouCtrl | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDraw | Secondary$ True | TriggerDescription$ Whenever you augment, enchant, or mutate a creature you control, draw a card.
+SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
+A:AB$ Mana | Cost$ T | Produced$ Combo W U B R G | SpellDescription$ Add {W}, {U}, {B}, {R}, or {G}.
+Oracle:Whenever you augment, enchant, or mutate a creature you control, draw a card.\n{T}: Add {W}, {U}, {B}, {R}, or {G}.

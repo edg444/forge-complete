@@ -385,6 +385,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   low-precision formula; tested within 30 minutes of the USNO's 2026 equinoxes and solstices), swapped south of the
   equator by the time zone city's latitude (`SunTimes.coordinatesOf`, now public). `Count$RealWorldSeason` (1 spring
   ... 4 winter), clock `AbilityUtils.realWorldNow`.
+- **Surgeon General Commander (UND #72).** Checked against Scryfall and its 2 rulings 2026-10-20 (five-color
+  identity from its mana ability - tested). New trigger mode `Augments` (run by AugmentEffect with Card + Player);
+  `Mutates` now also passes the mutating player (`ValidPlayer$`). "Enchant" is the verb: an Aura you control becoming
+  attached to a creature you control (`Mode$ Attached`). New creature type Chameleon.
 
 ### 2026-10-19, ninth deploy (desktop, Android, GitHub) — Secret Lair Showcase Planes; info panel fix
 

@@ -162,6 +162,7 @@ public enum TriggerType {
     Vote(TriggerVote.class),
     WordGuessed(TriggerWordGuessed.class),
     DiceStackFell(TriggerDiceStackFell.class),
+    Augments(TriggerAugments.class),
     Waterbend(TriggerElementalbend.class)          
     ;
 

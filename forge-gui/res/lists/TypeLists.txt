@@ -73,6 +73,7 @@ Caribou:Caribous
 Carrier:Carriers
 Cat:Cats
 Centaur:Centaurs
+Chameleon:Chameleons
 Chicken:Chickens
 Chimera:Chimeras
 Child:Children

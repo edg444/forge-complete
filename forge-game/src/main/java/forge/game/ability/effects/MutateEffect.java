@@ -1,6 +1,7 @@
 package forge.game.ability.effects;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import com.google.common.collect.Lists;
 
@@ -97,7 +98,10 @@ public class MutateEffect extends SpellAbilityEffect {
             target.updateCommanderView();
         }
 
-        game.getTriggerHandler().runTrigger(TriggerType.Mutates, AbilityKey.mapFromCard(target), false);
+        // Surgeon General Commander: who mutated it (ValidPlayer$)
+        final Map<AbilityKey, Object> runParams = AbilityKey.mapFromCard(target);
+        runParams.put(AbilityKey.Player, sa.getActivatingPlayer());
+        game.getTriggerHandler().runTrigger(TriggerType.Mutates, runParams, false);
     }
 
 }

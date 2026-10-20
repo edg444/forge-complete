@@ -101,6 +101,11 @@ public class AugmentEffect extends SpellAbilityEffect {
         game.getTriggerHandler().clearActiveTriggers(target, null);
         game.getTriggerHandler().registerActiveTrigger(target, false);
 
+        // Surgeon General Commander: "Whenever you augment ... a creature you control"
+        final java.util.Map<forge.game.ability.AbilityKey, Object> runParams = forge.game.ability.AbilityKey.mapFromCard(target);
+        runParams.put(forge.game.ability.AbilityKey.Player, sa.getActivatingPlayer());
+        game.getTriggerHandler().runTrigger(forge.game.trigger.TriggerType.Augments, runParams, false);
+
         game.getAction().moveTo(augment.getOwner().getZone(ZoneType.Merged), augment, sa);
 
         augment.setTapped(target.isTapped());

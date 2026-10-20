@@ -16,6 +16,9 @@ public class TriggerMutates extends Trigger {
         if (!matchesValidParam("ValidCard", runParams.get(AbilityKey.Card))) {
             return false;
         }
+        if (!matchesValidParam("ValidPlayer", runParams.get(AbilityKey.Player))) {
+            return false;
+        }
 
         return true;
     }
