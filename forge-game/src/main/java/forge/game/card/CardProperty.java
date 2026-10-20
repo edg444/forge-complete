@@ -489,6 +489,10 @@ public class CardProperty {
             if (n < 0 || n > 9 || !CardFactoryUtil.hasNumeral(card, Character.forDigit(n, 10))) {
                 return false;
             }
+        } else if (property.equals("IsDie")) {
+            if (!card.isDie()) {
+                return false;
+            }
         } else if (property.startsWith("NameInitialOf ")) {
             // Stet: its name begins with the same letter as the defined card's (nothing nameless does)
             boolean same = false;

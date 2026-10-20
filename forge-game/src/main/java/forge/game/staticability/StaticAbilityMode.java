@@ -198,6 +198,8 @@ public enum StaticAbilityMode {
     RandomTargets,
     // StaticAbilityStackFirstInFirstOut (Queue of Beetles) - the bottom object of the stack resolves first
     StackFirstInFirstOut,
+    // Pippa, Duchess of Dice - after any die roll, pay Cost$ to reroll it (RollDiceEffect.payToRerollAnyDie)
+    RerollAnyDie,
     // Throat Wolf - after each opponent's first combat phase of each turn, its controller has a combat phase
     CombatAfterOpponentsFirst,
     // Chronobot - its controller and the remembered player switch upkeep steps

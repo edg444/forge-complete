@@ -131,6 +131,7 @@ public enum SpellApiToAi {
             .put(ApiType.NoteArtistInitials, AlwaysPlayAi.class)
             .put(ApiType.StackDice, AlwaysPlayAi.class)
             .put(ApiType.DeleteFirstLetter, AlwaysPlayAi.class)
+            .put(ApiType.RerollDie, RerollDieAi.class)
             .put(ApiType.Hide, HideAi.class)
             .put(ApiType.SeekHidden, SeekHiddenAi.class)
             .put(ApiType.GainOwnership, CannotPlayAi.class)

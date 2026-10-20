@@ -1435,6 +1435,14 @@ public class PlayerControllerAi extends PlayerController {
         return false;
     }
 
+    @Override
+    public boolean payRerollCost(final Cost cost, final SpellAbility sa) {
+        if (!ComputerUtilCost.canPayCost(cost, sa, player, true)) {
+            return false;
+        }
+        return new CostPayment(cost, sa).payComputerCosts(new AiCostDecision(player, sa, true));
+    }
+
     public boolean payCostDuringRoll(final Cost cost, final SpellAbility sa) {
         // TODO logic for AI to pay rerolls and modification costs
         return false;

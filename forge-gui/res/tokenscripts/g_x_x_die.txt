@@ -1,0 +1,8 @@
+Name:Die Token
+ManaCost:no cost
+Colors:green
+Types:Creature Die
+PT:*/*
+S:Mode$ Continuous | EffectZone$ All | CharacteristicDefining$ True | SetPower$ X | SetToughness$ X | Description$ (This creature's power and toughness are each equal to the result showing on its die.)
+SVar:X:Count$CardDieFace
+Oracle:

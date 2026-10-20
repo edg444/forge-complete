@@ -405,6 +405,11 @@ public abstract class PlayerController {
     public abstract boolean payCostToPreventEffect(Cost cost, SpellAbility sa, boolean alreadyPaid, FCollectionView<Player> allPayers);
     public abstract boolean payCostDuringRoll(Cost cost, SpellAbility sa);
 
+    /** Pippa, Duchess of Dice: pay to reroll a die just rolled, once this player has chosen to. */
+    public boolean payRerollCost(final Cost cost, final SpellAbility sa) {
+        return payCostDuringRoll(cost, sa);
+    }
+
     public abstract boolean payCombatCost(Card card, Cost cost, SpellAbility sa, String prompt);
 
     public final boolean payManaCost(CostPartMana costPartMana, SpellAbility sa, String prompt, ManaConversionMatrix matrix, boolean effect) {

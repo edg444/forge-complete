@@ -61,6 +61,7 @@ public enum ApiType {
     NoteArtistInitials (NoteArtistInitialsEffect.class),
     StackDice (StackDiceEffect.class),
     DeleteFirstLetter (DeleteFirstLetterEffect.class),
+    RerollDie (RerollDieEffect.class),
     ChooseNumber (ChooseNumberEffect.class),
     ChoosePlayer (ChoosePlayerEffect.class),
     ChooseSector (ChooseSectorEffect.class),

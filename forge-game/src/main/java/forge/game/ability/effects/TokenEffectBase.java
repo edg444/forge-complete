@@ -137,6 +137,12 @@ public abstract class TokenEffectBase extends SpellAbilityEffect {
                     continue;
                 }
 
+                // Pippa: the die just rolled becomes the token, showing that face
+                if (sa.hasParam("DieFace")) {
+                    tok.setDieFace(AbilityUtils.calculateAmount(host, sa.getParam("DieFace"), sa),
+                            AbilityUtils.calculateAmount(host, sa.getParamOrDefault("DieSides", "6"), sa));
+                }
+
                 if (sa.hasParam("WithCountersType")) {
                     CounterType cType = CounterType.getType(sa.getParam("WithCountersType"));
                     int cAmount = AbilityUtils.calculateAmount(host, sa.getParamOrDefault("WithCountersAmount", "1"), sa);

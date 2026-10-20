@@ -1,0 +1,14 @@
+Name:Pippa, Duchess of Dice
+ManaCost:2 G
+Types:Legendary Creature Human Noble
+PT:2/2
+# The rolled die is the token (Card.dieFace); rerolling a Die creature changes its power and toughness (rulings).
+A:AB$ RollDice | Cost$ 2 G T | Sides$ 6 | ResultSVar$ Result | SubAbility$ DBToken | SpellDescription$ Roll a six-sided die. It becomes a green Die creature token with power and toughness each equal to its result.
+SVar:DBToken:DB$ Token | TokenScript$ g_x_x_die | TokenOwner$ You | DieFace$ Result | DieSides$ 6
+SVar:Result:Number$0
+# "Any time it makes sense": a Die on the battlefield any time (this ability), and any player's roll as it's made
+# (the RerollAnyDie static, offered with the same cost during the roll - RollDiceEffect.payToRerollAnyDie).
+A:AB$ RerollDie | Cost$ 2 U T | IsPresent$ Card.IsDie | SpellDescription$ Reroll any die. (Activate only any time it makes sense.)
+S:Mode$ RerollAnyDie | Cost$ 2 U T
+DeckHas:Ability$Token
+Oracle:{2}{G}, {T}: Roll a six-sided die. It becomes a green Die creature token with power and toughness each equal to its result.\n{2}{U}, {T}: Reroll any die. (Activate only any time it makes sense.)

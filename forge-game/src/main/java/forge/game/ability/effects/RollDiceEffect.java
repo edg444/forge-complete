@@ -602,9 +602,30 @@ public class RollDiceEffect extends SpellAbilityEffect {
     private static int rollPhysicalDie(final Player player, final int sides, final List<Integer> rolled) {
         int roll = rollCountedDie(player, sides);
         player.roll();
-        while (tapWallToReroll(player, roll, sides, roll + " on a " + sides + "-sided die")) {
-            roll = rollCountedDie(player, sides);
-            player.roll();
+        while (true) {
+            final String what = roll + " on a " + sides + "-sided die";
+            Player reroller = null;
+            if (tapWallToReroll(player, roll, sides, what)) {
+                reroller = player;
+            } else {
+                reroller = payToRerollAnyDie(player, roll, sides, what);
+            }
+            if (reroller == null) {
+                break;
+            }
+            roll = rollCountedDie(reroller, sides);
+            reroller.roll();
+            if (!reroller.equals(player)) {
+                // Pippa's ruling: the reroll still counts for what the roller rolled for, but the reroller's
+                // "whenever you roll a die" abilities trigger
+                final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(reroller);
+                runParams.put(AbilityKey.Sides, sides);
+                runParams.put(AbilityKey.Result, roll);
+                runParams.put(AbilityKey.NaturalResult, roll);
+                runParams.put(AbilityKey.RolledToVisitAttractions, false);
+                runParams.put(AbilityKey.Number, reroller.getNumRollsThisTurn());
+                reroller.getGame().getTriggerHandler().runTrigger(TriggerType.RolledDie, runParams, false);
+            }
         }
         rolled.add(roll);
         return useInstalledResult(player, roll);
@@ -689,6 +710,41 @@ public class RollDiceEffect extends SpellAbilityEffect {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Pippa, Duchess of Dice: "{2}{U}, {T}: Reroll any die. (Activate only any time it makes sense.)" Offered after any
+     * player's die roll (ruling: anyone's roll) to each player in turn order with a permanent whose static
+     * RerollAnyDie carries the cost, paid right then the way Goblin Bookie's is. Returns who rerolls, or null.
+     */
+    public static Player payToRerollAnyDie(final Player roller, final int value, final int sides, final String rolled) {
+        final Game game = roller.getGame();
+        for (final Player p : game.getPlayersInTurnOrder(game.getPhaseHandler().getPlayerTurn())) {
+            for (final Card c : p.getCardsIn(ZoneType.Battlefield)) {
+                for (final StaticAbility st : c.getStaticAbilities()) {
+                    if (!st.checkConditions(StaticAbilityMode.RerollAnyDie)) {
+                        continue;
+                    }
+                    final Cost cost = new Cost(st.getParam("Cost"), true);
+                    final SpellAbility payFor = new SpellAbility.EmptySa(c, p);
+                    if (!cost.canPay(payFor, p, false)) {
+                        continue;
+                    }
+                    final String who = p.equals(roller) ? "You" : roller.getName();
+                    if (!p.getController().confirmStaticApplication(c, null, who + " rolled " + rolled + ". Pay "
+                            + cost.toSimpleString() + " (" + c.getName() + ") to reroll it?",
+                            "WallReroll:" + (p.equals(roller) ? "own" : "opp") + ":" + value + ":" + sides)) {
+                        continue;
+                    }
+                    if (p.getController().payRerollCost(cost, payFor)) {
+                        game.getGameLog().add(GameLogEntryType.INFORMATION, p + " uses " + c.getName() + " to reroll "
+                                + (p.equals(roller) ? "their" : roller + "'s") + " " + rolled + ".");
+                        return p;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     /** Squirrel-Powered Scheme: "Increase the result of each die you roll by 2." Every such static adds its own. */

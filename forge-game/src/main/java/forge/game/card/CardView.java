@@ -493,6 +493,12 @@ public class CardView extends GameEntityView {
         set(TrackableProperty.InstalledResults, c.getInstalledResults().isEmpty() ? ""
                 : c.getInstalledResults().toString().replace("[", "").replace("]", ""));
     }
+    public int getDieFace() {
+        return get(TrackableProperty.DieFace);
+    }
+    void updateDieFace(Card c) {
+        set(TrackableProperty.DieFace, c.getDieFace());
+    }
     public int getStackedDice() {
         return get(TrackableProperty.StackedDice);
     }

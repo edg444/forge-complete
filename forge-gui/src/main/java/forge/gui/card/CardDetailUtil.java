@@ -550,6 +550,14 @@ public class CardDetailUtil {
             area.append(Lang.joinHomogenous(card.getChosenCards())).append(")");
         }
 
+        // a Die creature (Pippa): the face it shows
+        if (card.getDieFace() > 0) {
+            if (area.length() != 0) {
+                area.append("\n");
+            }
+            area.append("(die showing ").append(card.getDieFace()).append(")");
+        }
+
         // Boomstacker's stack of dice
         if (card.getStackedDice() > 0) {
             if (area.length() != 0) {

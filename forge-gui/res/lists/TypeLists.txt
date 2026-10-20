@@ -97,6 +97,7 @@ Demigod:Demigods
 Demon:Demons
 Deserter:Deserters
 Devil:Devils
+Die:Dice
 Dinosaur:Dinosaurs
 Djinn:Djinns
 Doctor:Doctors

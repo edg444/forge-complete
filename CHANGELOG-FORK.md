@@ -373,6 +373,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   with no letter). Reflexive trigger objects are `DelayTriggerRemembered`, not `Remembered`. ChangeZoneAi
   `StetInitial`: exile the card whose initial lets 4 damage kill the best opposing creature/planeswalker, else hit an
   opponent; declines otherwise.
+- **Pippa, Duchess of Dice (UND #68).** Checked against Scryfall and its 4 rulings 2026-10-20. Dice as permanents:
+  `Card.dieFace`/`dieSides` (shown in the card details), Token `DieFace$`/`DieSides$`, token script `g_x_x_die` (CDA
+  P/T = `Count$CardDieFace`), property `IsDie`, creature type Die. "Reroll any die": API `RerollDie` for a Die on the
+  battlefield (RerollDieAi: own below-average die, opponent's above-average one), and static `RerollAnyDie | Cost$`
+  offered after any player's roll (`RollDiceEffect.payToRerollAnyDie`, Wall of Fortune's AI logic); the reroller rolls,
+  and their "whenever you roll" triggers fire (ruling). `PlayerController.payRerollCost` (AI really pays; upstream's
+  `payCostDuringRoll` is left as it was).
 
 ### 2026-10-19, ninth deploy (desktop, Android, GitHub) — Secret Lair Showcase Planes; info panel fix
 

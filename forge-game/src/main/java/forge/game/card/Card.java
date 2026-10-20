@@ -4881,6 +4881,26 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         view.updateInstalledResults(this);
     }
 
+    // Pippa, Duchess of Dice: this permanent is a die (a Die creature), showing dieFace on a dieSides-sided die. Its
+    // power and toughness are that face (the token's CDA); rerolling it changes them. 0 = not a die.
+    private int dieFace = 0;
+    private int dieSides = 0;
+
+    public final int getDieFace() {
+        return dieFace;
+    }
+    public final int getDieSides() {
+        return dieSides;
+    }
+    public final boolean isDie() {
+        return dieSides > 0;
+    }
+    public final void setDieFace(final int face, final int sides) {
+        dieFace = face;
+        dieSides = sides;
+        view.updateDieFace(this);
+    }
+
     // Boomstacker: real dice stacked on top of this permanent - not counters. The stack is simulated (user ruling):
     // each die placed and each turning of the card (tapped or untapped, "the fun part") may topple it, more likely
     // the taller it is (DiceStack). A new object starts with no stack.

@@ -79,6 +79,7 @@ public enum TrackableProperty {
     ChosenNumberLabel(TrackableTypes.StringType),
     InstalledResults(TrackableTypes.StringType),
     StackedDice(TrackableTypes.IntegerType),
+    DieFace(TrackableTypes.IntegerType),
     StoredRolls(TrackableTypes.StringListType),
     ChosenPlayer(TrackableTypes.PlayerViewType),
     PromisedGift(TrackableTypes.PlayerViewType),
