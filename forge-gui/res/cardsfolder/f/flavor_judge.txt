@@ -1,0 +1,11 @@
+Name:Flavor Judge
+ManaCost:1 W
+Types:Creature Bird Advisor
+PT:2/2
+# Honor system for a human: they tell a real person the story and enter the answer. The AI has no one to ask, so a
+# simulated person says no half the time (AILogic$ FlavorJudge also picks the AI's target).
+A:AB$ GenericChoice | Cost$ T | TargetType$ Spell,Activated,Triggered | TgtPrompt$ Select target spell or ability that targets a permanent you control | ValidTgts$ Card,Emblem | TargetValidTargeting$ Permanent.YouCtrl+inRealZoneBattlefield | Defined$ You | Choices$ MakesSense,NoSense | ChoicePrompt$ Ask a person outside the game if the story of what will happen makes sense | ShowChoice$ ExceptSelf | AILogic$ FlavorJudge | SpellDescription$ Choose target spell or ability that targets a permanent you control. Then ask a person outside the game if the story of what will happen makes sense. If they say no, sacrifice this creature and counter that spell or ability.
+SVar:MakesSense:DB$ Pump | SpellDescription$ They said it makes sense (or there was no one to ask)
+SVar:NoSense:DB$ Sacrifice | Defined$ Self | SubAbility$ DBCounter | SpellDescription$ They said no
+SVar:DBCounter:DB$ Counter | Defined$ Targeted
+Oracle:{T}: Choose target spell or ability that targets a permanent you control. Then ask a person outside the game if the story of what will happen makes sense. If they say no, sacrifice this creature and counter that spell or ability.

@@ -38,8 +38,29 @@ public class ChooseGenericAi extends SpellAbilityAi {
             }
         } else if ("Always".equals(aiLogic)) {
             return true;
+        } else if ("FlavorJudge".equals(aiLogic)) {
+            return chooseFlavorJudgeTarget(ai, sa);
         }
         return false;
+    }
+
+    private static boolean chooseFlavorJudgeTarget(final Player ai, final SpellAbility sa) {
+        final Game game = ai.getGame();
+        if (game.getStack().isEmpty()
+                || forge.game.staticability.StaticAbilityStackFirstInFirstOut.applies(game)) {
+            return false;
+        }
+        final SpellAbility topSA = ComputerUtilAbility.getTopSpellAbilityOnStack(game, sa);
+        if (topSA == null || ai.getYourTeam().contains(topSA.getActivatingPlayer())
+                || (topSA.isSpell() && !topSA.isCounterableBy(sa))) {
+            return false;
+        }
+        sa.resetTargets();
+        if (!sa.canTargetSpellAbility(topSA)) {
+            return false;
+        }
+        sa.getTargets().add(topSA);
+        return true;
     }
 
     @Override
@@ -125,6 +146,10 @@ public class ChooseGenericAi extends SpellAbilityAi {
                 return Aggregates.random(spells.subList(1, spells.size()));
             }
             return spells.get(0);
+        } else if ("FlavorJudge".equals(logic)) {
+            // the AI has no real person to ask, so a simulated one finds the story nonsense half the time;
+            // spells.get(1) is the "no" answer
+            return spells.size() > 1 && MyRandom.percentTrue(50) ? spells.get(1) : spells.get(0);
         } else if ("StealPhase".equals(logic)) {
             return chooseStolenPhase(player, sa, spells);
         } else if ("HinderAttacker".equals(logic)) {

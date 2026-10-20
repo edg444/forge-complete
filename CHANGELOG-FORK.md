@@ -313,6 +313,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   be cast right now from a random order of the choices its deck builder isn't told to leave out (`AI:RemoveDeck:All`),
   kept for the turn, as ordinary cast-as spells its usual logic weighs. For the chaos free cast, `PlayAi.chooseCardName`
   tries the choices in random order (up to 30) and takes the first whose spell it would cast.
+- **Flavor Judge (UND #4).** Checked against Scryfall and its 2 rulings 2026-10-20. Honor system for a human (they ask
+  a real person and enter the answer); the AI's simulated person says no half the time (user ruling). GenericChoice
+  `AILogic$ FlavorJudge` targets the top opponent spell or ability that targets an AI permanent. A targeted
+  GenericChoice needs `Defined$ You`, or it looks for its chooser among the targets and silently does nothing.
 
 ### 2026-10-19, ninth deploy (desktop, Android, GitHub) — Secret Lair Showcase Planes; info panel fix
 
