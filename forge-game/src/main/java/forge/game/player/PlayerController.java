@@ -472,6 +472,14 @@ public abstract class PlayerController {
         return null;
     }
 
+    /**
+     * Rings a Bell: the sayer just said the word - does this player ring or imitate a bell within the given seconds?
+     * No by default, wherever a controller can't hear it.
+     */
+    public boolean ringBellInTime(final Player sayer, final String word, final int seconds, final SpellAbility sa) {
+        return false;
+    }
+
     /** The Grand Calcutron: where in this player's program (0 = first) a card put into their hand goes. */
     public int chooseProgramPosition(final Card card, final CardCollectionView program) {
         return program.size();

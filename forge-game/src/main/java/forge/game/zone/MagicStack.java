@@ -299,6 +299,11 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
         }
 
         if (sp instanceof AbilityStatic || (sp.isTrigger() && sp.getTrigger().getOverridingAbility() instanceof AbilityStatic)) {
+            // a special action isn't an activated ability, but one with a limit (Rings a Bell, a hidden armchair's
+            // guess) needs its uses counted on the card or ActivationLimit$ never bites
+            if (!sp.isTrigger() && (sp.hasParam("ActivationLimit") || sp.hasParam("GameActivationLimit"))) {
+                source.addAbilityActivated(sp);
+            }
             AbilityUtils.resolve(sp);
             // AbilityStatic should do nothing below
             return;

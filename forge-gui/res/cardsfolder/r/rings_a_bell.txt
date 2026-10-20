@@ -1,0 +1,13 @@
+Name:Rings a Bell
+ManaCost:2 U U
+Types:Enchantment
+K:ETBReplacement:Other:DBChooseWord
+SVar:DBChooseWord:DB$ ChooseType | Type$ word | Chooser$ You | FreeInput$ True | MinLetters$ 4 | WordList$ True | AILogic$ Random | ChoiceTitle$ Choose a word with four or more letters | SpellDescription$ As this enchantment enters, choose a word with four or more letters.
+# Saying the word is a special action (Forge can't hear you), offered once a turn since only the first time counts.
+# Opponents share one real five-second window to ring; the AI rings 75% of the time (user ruling).
+A:ST$ RingBell | Cost$ 0 | ActivationLimit$ 1 | Seconds$ 5 | AIChance$ 75 | RememberRingers$ True | SubAbility$ DBReflexive | SpellDescription$ After you say the chosen word for the first time each turn, an opponent may ring or imitate a bell within five seconds. When no opponent does, draw a card.
+SVar:DBReflexive:DB$ ImmediateTrigger | Execute$ TrigDraw | ConditionCheckSVar$ Rang | ConditionSVarCompare$ EQ0 | SubAbility$ DBCleanup | TriggerDescription$ When no opponent does, draw a card.
+SVar:TrigDraw:DB$ Draw
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:Rang:Count$RememberedSize
+Oracle:As this enchantment enters, choose a word with four or more letters.\nAfter you say the chosen word for the first time each turn, an opponent may ring or imitate a bell within five seconds. When no opponent does, draw a card.

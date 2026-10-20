@@ -3995,6 +3995,13 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
     }
 
     @Override
+    public boolean ringBellInTime(final Player sayer, final String word, final int seconds, final SpellAbility sa) {
+        final String ring = "Ring (or imitate) a bell";
+        return getGui().chooseStringInTime(sayer + " said \"" + word + "\" - ring or imitate a bell within " + seconds
+                + (seconds == 1 ? " second!" : " seconds!"), List.of(ring), seconds) != null;
+    }
+
+    @Override
     public String chooseKeywordInTime(final List<String> keywords, final int seconds, final SpellAbility sa) {
         // shown as they read on cards; the engine wants the keyword line back
         final Map<String, String> byTitle = new java.util.LinkedHashMap<>();

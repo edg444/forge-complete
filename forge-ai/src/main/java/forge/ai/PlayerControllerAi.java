@@ -840,6 +840,12 @@ public class PlayerControllerAi extends PlayerController {
     }
 
     @Override
+    public boolean ringBellInTime(final Player sayer, final String word, final int seconds, final SpellAbility sa) {
+        // a listener who's paying attention but not perfect (user ruling: AIChance$, 75% on Rings a Bell)
+        return forge.util.MyRandom.percentTrue(Integer.parseInt(sa.getParamOrDefault("AIChance", "75")));
+    }
+
+    @Override
     public String chooseKeywordInTime(final List<String> keywords, final int seconds, final SpellAbility sa) {
         for (final forge.game.keyword.Keyword wanted : KEYWORD_PREFERENCE) {
             String fallback = null;

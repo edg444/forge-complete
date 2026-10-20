@@ -338,6 +338,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   word sits outside parentheses (full-width ones too); an unclosed "(" is ignored, a stray ")" leaves earlier lines
   counted. 18,027 printings changed; wordy (Frazzled Editor, Garbage Elemental) now matches fewer cards, e.g.
   Garbage Elemental B and Paradise Druid aren't wordy. Lexivore's `textlines=` is unchanged.
+- **Rings a Bell (UND #27).** Checked against Scryfall and its 3 rulings 2026-10-20. Saying the word = special action
+  `ST$ RingBell` (once a turn); opponents share one real five-second window (`PlayerController.ringBellInTime`, human
+  via `chooseStringInTime`, AI rings `AIChance$` 75% - user ruling; AI listeners answer first), whoever rang is
+  remembered, and a reflexive trigger draws when nobody did. The word: ChooseType `MinLetters$ 4`, AI from Words.txt.
+- **Fix: `ActivationLimit$` on special actions never applied.** `MagicStack.add` resolved an `AbilityStatic` without
+  counting the use, so a limited special action could be taken again and again (the hidden armchair's once-a-turn
+  guess included). Now counted on the card when the action has an activation limit.
 
 ### 2026-10-19, ninth deploy (desktop, Android, GitHub) — Secret Lair Showcase Planes; info panel fix
 
