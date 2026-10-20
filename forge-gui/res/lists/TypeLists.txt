@@ -31,6 +31,7 @@ Ape:Apes
 Archer:Archers
 Archon:Archons
 Armadillo:Armadillos
+Art:Arts
 Artificer:Artificers
 Army:Armies
 Assassin:Assassins

@@ -1,0 +1,9 @@
+Name:Abstract Iguanart
+ManaCost:1 R
+Types:Creature Art Lizard
+PT:1/1
+# Letters are noted on this creature (shown with it); each artist a spell credits gives one (rulings).
+T:Mode$ SpellCast | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigNote | TriggerDescription$ Whenever you cast a spell, note the first letter of its artist's name. If that letter wasn't already noted, put a +1/+1 counter on this creature.
+SVar:TrigNote:DB$ NoteArtistInitials | Defined$ TriggeredCard
+DeckHas:Ability$Counters
+Oracle:Whenever you cast a spell, note the first letter of its artist's name. If that letter wasn't already noted, put a +1/+1 counter on this creature.

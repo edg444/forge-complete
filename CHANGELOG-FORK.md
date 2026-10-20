@@ -358,6 +358,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   so one card counts once a turn; cleared at cleanup), count `Count$YouRevealedThisTurn`. Showing cards that isn't
   the reveal keyword action now goes through new `GameAction.revealForDisplay`: command-zone cards going to hand,
   transformed-card notices, the suspend notice and discover's exiled cards. New creature type Grandchild.
+- **Abstract Iguanart (UND #47).** Checked against Scryfall and its 4 rulings 2026-10-20. API `NoteArtistInitials`:
+  the first character of each artist the spell credits (`ArtistCredit.individuals`), kept as the card's noted values,
+  a +1/+1 counter per new letter. New creature type Art.
 
 ### 2026-10-19, ninth deploy (desktop, Android, GitHub) — Secret Lair Showcase Planes; info panel fix
 
