@@ -1173,7 +1173,7 @@ public class HumanCostDecision extends CostDecisionMakerBase {
 
             counterTable.put(null, c, cType, 1);
 
-            onSelectStateChanged(c, true);
+            showSelection();
             refresh();
             return true;
         }
