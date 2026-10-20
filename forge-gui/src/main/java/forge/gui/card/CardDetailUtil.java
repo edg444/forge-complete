@@ -515,12 +515,12 @@ public class CardDetailUtil {
         }
 
         // Bucket List's tracker list
-        if (card.getTrackerCovered() != null) {
+        if (!StringUtils.isEmpty(card.getTrackerCovered())) {
             area.append("\n(Covered: ").append(card.getTrackerCovered()).append(")");
         }
 
         // legacy's word blank
-        if (card.getLegacyWord() != null) {
+        if (!StringUtils.isEmpty(card.getLegacyWord())) {
             area.append("\n(Written: ").append(card.getLegacyWord()).append(")");
         }
         if (!StringUtils.isEmpty(card.getNodes())) {

@@ -2239,6 +2239,14 @@ public class AbilityUtils {
         if (sq[0].equals("CardBaseToughness")) {
             return doXMath(c.getCurrentToughness(), expr, c, ctb);
         }
+        // what's printed on the card, before copy effects (a token's come from the effect that made it)
+        if (sq[0].equals("CardPrintedPower") || sq[0].equals("CardPrintedToughness")) {
+            CardState printed = c.getOriginalState(c.getCurrentStateName());
+            if (printed == null) {
+                printed = c.getState(c.getCurrentStateName());
+            }
+            return doXMath(sq[0].endsWith("Power") ? printed.getBasePower() : printed.getBaseToughness(), expr, c, ctb);
+        }
         if (sq[0].equals("CardSumPT")) {
             return doXMath(c.getNetPower() + c.getNetToughness(), expr, c, ctb);
         }
@@ -2558,6 +2566,9 @@ public class AbilityUtils {
 
         if (sq[0].equals("YouRollThisTurn")) {
             return doXMath(player.getNumRollsThisTurn(), expr, c, ctb);
+        }
+        if (sq[0].equals("YouRollPlanarDieThisTurn")) {
+            return doXMath(player.getNumPlanarDieRollsThisTurn(), expr, c, ctb);
         }
         if (sq[0].startsWith("YouRolledThisTurn")) {
             int n = calculateAmount(c, sq[0].substring(17), ctb);

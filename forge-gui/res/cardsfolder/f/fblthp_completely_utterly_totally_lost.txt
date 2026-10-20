@@ -1,0 +1,13 @@
+Name:Fblthp: Completely, Utterly, Totally Lost
+ManaCost:no cost
+Types:Plane Secret Lair
+T:Mode$ PlaneswalkedTo | ValidCard$ Card.Self | TriggerZones$ Command | Execute$ TrigMap | TriggerDescription$ When you planeswalk to this plane and at the beginning of your upkeep, create a Map token. (It's an artifact with "{1}, {T}, Sacrifice this token: Target creature you control explores. Activate only as a sorcery.")
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Command | Execute$ TrigMap | Secondary$ True | TriggerDescription$ When you planeswalk to this plane and at the beginning of your upkeep, create a Map token. (It's an artifact with "{1}, {T}, Sacrifice this token: Target creature you control explores. Activate only as a sorcery.")
+SVar:TrigMap:DB$ Token | TokenScript$ c_a_map_sac_explore
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, draw two cards, then discard two cards. Untap up to three lands.
+SVar:RolledChaos:DB$ Draw | NumCards$ 2 | SubAbility$ DBDiscard
+SVar:DBDiscard:DB$ Discard | Defined$ You | NumCards$ 2 | Mode$ TgtChoose | SubAbility$ DBUntap
+SVar:DBUntap:DB$ Untap | UntapUpTo$ True | UntapType$ Land | Amount$ 3
+SVar:AIRollPlanarDieParams:Mode$ Always | RollInMain1$ True
+DeckHas:Ability$Token|Discard & Type$Artifact|Map
+Oracle:When you planeswalk to this plane and at the beginning of your upkeep, create a Map token. (It's an artifact with "{1}, {T}, Sacrifice this token: Target creature you control explores. Activate only as a sorcery.")\nWhenever chaos ensues, draw two cards, then discard two cards. Untap up to three lands.

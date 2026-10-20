@@ -111,7 +111,18 @@ public class DrawEffect extends SpellAbilityEffect {
             // FromLibraryOf$: draw from that player's library instead (Spy Eye)
             final Player libraryOf = sa.hasParam("FromLibraryOf")
                     ? AbilityUtils.getDefinedPlayers(source, sa.getParam("FromLibraryOf"), sa).getFirst() : p;
-            final CardCollectionView drawn = p.drawCards(actualNum, sa, moveParams, p.getZone(ZoneType.Hand), libraryOf);
+            final boolean fromBottom = sa.hasParam("FromBottom");
+            if (fromBottom) {
+                p.setDrawingFromBottom(true);
+            }
+            final CardCollectionView drawn;
+            try {
+                drawn = p.drawCards(actualNum, sa, moveParams, p.getZone(ZoneType.Hand), libraryOf);
+            } finally {
+                if (fromBottom) {
+                    p.setDrawingFromBottom(false);
+                }
+            }
             if (sa.hasParam("Reveal")) {
                 p.getGame().getAction().reveal(drawn, p, !sa.getParam("Reveal").equals("All"));
             }

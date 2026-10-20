@@ -13,6 +13,7 @@ import forge.util.*;
 import org.apache.commons.lang3.StringUtils;
 
 import forge.StaticData;
+import forge.game.staticability.StaticAbilityCastAs;
 import forge.card.CardRulesPredicates;
 import forge.game.Game;
 import forge.game.ability.AbilityFactory;
@@ -36,6 +37,7 @@ import forge.game.replacement.ReplacementHandler;
 import forge.game.replacement.ReplacementLayer;
 import forge.game.spellability.AlternativeCost;
 
+import forge.game.spellability.Spell;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.SpellAbilityPredicates;
 import forge.game.zone.Zone;
@@ -296,6 +298,17 @@ public class PlayEffect extends SpellAbilityEffect {
             }
 
             List<SpellAbility> sas = AbilityUtils.getSpellsFromPlayEffect(tgtCard, controller, state, !altCost, validSA, sa.hasParam("CastFromBattlefield"));
+
+            // Imaginary Friends (Plane): "but only as another card" - its own spells are out
+            if (sa.hasParam("CastAsAnother")) {
+                sas.clear();
+                final SpellAbility another = StaticAbilityCastAs.chooseAnotherCard(tgtCard, controller, sa);
+                if (another instanceof Spell spell) {
+                    spell.getRestrictions().setZone(null);
+                    spell.setCastFromPlayEffect(true);
+                    sas.add(spell);
+                }
+            }
 
             if (altCostManaCost) {
                 sas.removeIf(sp -> sp.getPayCosts().getCostMana().getMana().isNoCost());

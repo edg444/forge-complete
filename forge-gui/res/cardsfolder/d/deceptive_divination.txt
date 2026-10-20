@@ -1,0 +1,8 @@
+Name:Deceptive Divination
+ManaCost:no cost
+Types:Plane Secret Lair
+S:Mode$ Continuous | EffectZone$ Command | Affected$ Card.Sorcery | AffectedZone$ All | ChangeTypeWordFrom$ Sorcery | ChangeTypeWordTo$ Instant | Description$ Change the text of each sorcery spell and sorcery card not on the stack by replacing "sorcery" with "instant."
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, choose two target players. Each of them searches their library for a card, then shuffles and puts that card on top.
+SVar:RolledChaos:DB$ ChangeZone | ValidTgts$ Player | TargetMin$ 2 | TargetMax$ 2 | TgtPrompt$ Choose two target players | Origin$ Library | Destination$ Library | LibraryPosition$ 0 | ChangeType$ Card | ChangeNum$ 1 | DefinedPlayer$ Targeted | Chooser$ Targeted | Mandatory$ True
+SVar:AIRollPlanarDieParams:Mode$ Always | RollInMain1$ True
+Oracle:Change the text of each sorcery spell and sorcery card not on the stack by replacing "sorcery" with "instant."\nWhenever chaos ensues, choose two target players. Each of them searches their library for a card, then shuffles and puts that card on top.

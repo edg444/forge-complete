@@ -1806,6 +1806,15 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
         castAs = name;
     }
 
+    // Imaginary Friends (Plane): a stand-in that asks which card to cast this one as before it's cast
+    private boolean castAsAnother = false;
+    public boolean isCastAsAnother() {
+        return castAsAnother;
+    }
+    public void setCastAsAnother(final boolean b) {
+        castAsAnother = b;
+    }
+
     // a spell a clone effect granted (Bombardment's Missile): casting it keeps that clone effect on the stack, where the
     // move to the stack would otherwise drop it
     private CardTraitBase cloneCauseWhenCast = null;

@@ -56,11 +56,13 @@ public enum PlanarDice {
         for (int r = 0; r < rolls; r++) {
             PlanarDice thisRoll = rollFace(roller, thumbs);
             roller.roll();
+            roller.rollPlanarDie();
             // Wall of Fortune can have the planar die rerolled too (Unstable ruling)
             while (riggedResult == null && forge.game.ability.effects.RollDiceEffect.tapWallToReroll(roller, -1, 6,
                     thisRoll + " on the planar die")) {
                 thisRoll = rollFace(roller, thumbs);
                 roller.roll();
+                roller.rollPlanarDie();
             }
             if (riggedResult != null)
                 thisRoll = riggedResult;

@@ -1,0 +1,11 @@
+Name:Imaginary Friends (Plane)
+ManaCost:no cost
+Types:Plane Secret Lair
+S:Mode$ CastAs | EffectZone$ Command | ValidCard$ Card.nonLand | Activator$ Player | AffectedZone$ Hand | CastAs$ AnotherCard | Description$ Players may cast spells as though they were other cards legal in this game's format with the same type and mana cost. (Mana cost includes color.)
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, exile cards from the top of your library until you reveal a nonland card. You may cast that card without paying its mana cost, but only as another card following this plane's first ability. Put the rest on the bottom of your library in a random order.
+SVar:RolledChaos:DB$ DigUntil | Defined$ You | Valid$ Card.nonLand | ValidDescription$ nonland | FoundDestination$ Exile | RevealedDestination$ Exile | ImprintFound$ True | RememberRevealed$ True | SubAbility$ DBPlay
+SVar:DBPlay:DB$ Play | Defined$ Imprinted | ValidSA$ Spell | WithoutManaCost$ True | Optional$ True | CastAsAnother$ True | SubAbility$ DBChange
+SVar:DBChange:DB$ ChangeZoneAll | ChangeType$ Card.IsRemembered | Origin$ Exile | Destination$ Library | RandomOrder$ True | LibraryPosition$ -1 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearImprinted$ True
+SVar:AIRollPlanarDieParams:Mode$ Always | RollInMain1$ True
+Oracle:Players may cast spells as though they were other cards legal in this game's format with the same type and mana cost. (Mana cost includes color.)\nWhenever chaos ensues, exile cards from the top of your library until you reveal a nonland card. You may cast that card without paying its mana cost, but only as another card following this plane's first ability. Put the rest on the bottom of your library in a random order.

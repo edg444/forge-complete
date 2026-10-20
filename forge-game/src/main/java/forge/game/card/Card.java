@@ -6345,6 +6345,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public final void addChangedTextTypeWord(final String originalWord, final String newWord, final Long timestamp, final long staticId) {
         changedTextTypes.add(timestamp, staticId, originalWord, newWord);
         changedCardTypesByText.put(timestamp, staticId, new WordChangedType(originalWord, newWord));
+        updateTypeCache();
         updateChangedText();
     }
 

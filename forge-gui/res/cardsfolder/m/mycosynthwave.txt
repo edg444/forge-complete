@@ -1,0 +1,11 @@
+Name:Mycosynthwave
+ManaCost:no cost
+Types:Plane Secret Lair
+S:Mode$ Continuous | EffectZone$ Command | Affected$ Permanent | AddType$ Artifact | Description$ All permanents are artifacts in addition to their other types.
+S:Mode$ Continuous | EffectZone$ Command | Affected$ Card | SetColor$ Colorless | AffectedZone$ All | Description$ All cards that aren't on the battlefield, spells, and permanents are colorless.
+S:Mode$ ManaConvert | EffectZone$ Command | ManaConversion$ AnyType->AnyColor | Description$ Players may spend mana as though it were mana of any color.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, the next spell you cast this turn has affinity for artifacts.
+SVar:RolledChaos:DB$ Effect | StaticAbilities$ GrantAffinity | ForgetOnCast$ Card.YouCtrl
+SVar:GrantAffinity:Mode$ Continuous | Affected$ Card.YouCtrl | AffectedZone$ Stack | AddKeyword$ Affinity:Artifact | Description$ The next spell you cast this turn has affinity for artifacts. (It costs {1} less to cast for each artifact you control.)
+SVar:AIRollPlanarDieParams:Mode$ Always | RollInMain1$ True
+Oracle:All permanents are artifacts in addition to their other types.\nAll cards that aren't on the battlefield, spells, and permanents are colorless.\nPlayers may spend mana as though it were mana of any color.\nWhenever chaos ensues, the next spell you cast this turn has affinity for artifacts.

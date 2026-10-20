@@ -1,0 +1,5 @@
+Name:Li'l Giri
+ManaCost:no cost
+Types:Legendary Artifact Creature Food Warrior
+PT:1/1
+Oracle:

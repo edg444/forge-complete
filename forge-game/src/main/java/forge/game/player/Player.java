@@ -1914,9 +1914,18 @@ public class Player extends GameEntity implements Comparable<Player> {
 
     public final void resetNumRollsThisTurn() {
         numRollsThisTurn = 0;
+        numPlanarDieRollsThisTurn = 0;
     }
     public final int getNumRollsThisTurn() {
         return numRollsThisTurn;
+    }
+    // "the number of times you've rolled the planar die this turn" - any roll, not just the special action
+    private int numPlanarDieRollsThisTurn;
+    public final int getNumPlanarDieRollsThisTurn() {
+        return numPlanarDieRollsThisTurn;
+    }
+    public void rollPlanarDie() {
+        numPlanarDieRollsThisTurn++;
     }
     public void roll() {
         numRollsThisTurn++;
@@ -3066,7 +3075,12 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
 
     public boolean drawsFromBottom() {
-        return StaticAbilityDrawFromBottom.drawsFromBottom(this);
+        return drawingFromBottom || StaticAbilityDrawFromBottom.drawsFromBottom(this);
+    }
+    // set while a "draw a card from the bottom of your library" effect draws (Finally! Left-Handed Magic Cards)
+    private boolean drawingFromBottom;
+    public void setDrawingFromBottom(final boolean b) {
+        drawingFromBottom = b;
     }
 
     public void onCleanupPhase() {

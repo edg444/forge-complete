@@ -1,0 +1,12 @@
+Name:We Hope You Like Squirrels
+ManaCost:no cost
+Types:Plane Secret Lair
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ Player | TriggerZones$ Command | Execute$ TrigUpkeepToken | TriggerDescription$ At the beginning of each player's upkeep and whenever a player casts a spell, that player creates a 1/1 green Squirrel creature token.
+SVar:TrigUpkeepToken:DB$ Token | TokenScript$ g_1_1_squirrel | TokenOwner$ TriggeredPlayer
+T:Mode$ SpellCast | ValidCard$ Card | TriggerZones$ Command | Execute$ TrigCastToken | Secondary$ True | TriggerDescription$ At the beginning of each player's upkeep and whenever a player casts a spell, that player creates a 1/1 green Squirrel creature token.
+SVar:TrigCastToken:DB$ Token | TokenScript$ g_1_1_squirrel | TokenOwner$ TriggeredActivator
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, put a +1/+1 counter on each Squirrel you control.
+SVar:RolledChaos:DB$ PutCounterAll | ValidCards$ Squirrel.YouCtrl | CounterType$ P1P1 | CounterNum$ 1
+SVar:AIRollPlanarDieParams:Mode$ Always | RollInMain1$ True
+DeckHas:Ability$Token|Counters & Type$Squirrel
+Oracle:At the beginning of each player's upkeep and whenever a player casts a spell, that player creates a 1/1 green Squirrel creature token.\nWhenever chaos ensues, put a +1/+1 counter on each Squirrel you control.

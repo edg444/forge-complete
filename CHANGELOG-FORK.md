@@ -309,6 +309,23 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Secret Lair Showcase Planes (PSSC)**, all ten (the edition file already listed them; none had scripts, so the
+  Deck Editor's Planes section never showed them). Checked against Scryfall 2026-10-19; none have rulings. New
+  "Secret Lair" planar type. Engine additions:
+  - `CastAs$ AnotherCard` (Imaginary Friends): one stand-in spell per card in hand; choosing it asks which card -
+    legal in the game's format (a Commander variant's, else the game type's), other name, same card types and mana
+    cost, split cards left out - and that card's spell is cast (`StaticAbilityCastAs.chooseAnotherCard`, from
+    `PlaySpellAbility`). The AI isn't offered it. `Play | CastAsAnother$ True` for the chaos ability's free cast.
+  - `ChangeTypeWordFrom$`/`ChangeTypeWordTo$` continuous text change (Deceptive Divination); `WordChangedType` now
+    swaps a card type word (Sorcery to Instant) on the type line, not only subtypes, and the existing text-change
+    path rewrites the card's abilities ("instant or sorcery" becomes "instant or instant").
+  - `Count$CardPrintedPower`/`CardPrintedToughness` (Finally!): the original state's values, before copy effects.
+  - `Count$YouRollPlanarDieThisTurn` (Li'l Giri, sAnS mERcY): every planar die roll by that player, including
+    Wall of Fortune rerolls and rolls from other effects, not only the {X} special action.
+  - `Draw | FromBottom$ True` (Finally!).
+- **Info panel**: "(Covered: )" and "(Written: )" no longer show on every card - unset string view properties read
+  back as "", not null.
+
 ### 2026-10-19, eighth deploy (desktop, Android, GitHub) — upstream merge (26 commits)
 
 - **Upstream merge** (26 commits, incl. the AI timeout tracker, mobile compact landscape layout, local replay,

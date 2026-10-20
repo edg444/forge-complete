@@ -1,0 +1,14 @@
+Name:Happy Yargle Day!
+ManaCost:no cost
+Types:Plane Secret Lair
+T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ Player | TriggerZones$ Command | CheckSVar$ YargleCount | SVarCompare$ EQ0 | Execute$ TrigChoose | TriggerDescription$ At the beginning of each player's end step, if that player doesn't control a creature named Yargle, Glutton of Urborg, that player puts a bargle counter on a creature they control. It becomes a copy of Yargle, Glutton of Urborg, except it isn't legendary.
+SVar:YargleCount:Count$Valid Creature.namedYargle;_Glutton_of_Urborg+ControlledBy TriggeredPlayer
+SVar:TrigChoose:DB$ ChooseCard | Defined$ TriggeredPlayer | Choices$ Creature | ControlledByPlayer$ Chooser | Mandatory$ True | ChoiceTitle$ Choose a creature you control to put a bargle counter on | SubAbility$ DBCounter
+SVar:DBCounter:DB$ PutCounter | Defined$ ChosenCard | CounterType$ BARGLE | CounterNum$ 1 | Placer$ TriggeredPlayer | SubAbility$ DBClone
+SVar:DBClone:DB$ Clone | CopyCardName$ Yargle, Glutton of Urborg | CloneTarget$ ChosenCard | NonLegendary$ True | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, choose Swords to Plowshares, Opt, Fatal Push, Anger of the Gods, or Explore at random. Copy the chosen card. You may cast the copy without paying its mana cost.
+SVar:RolledChaos:DB$ NameCard | Defined$ You | ChooseFromList$ Swords to Plowshares,Opt,Fatal Push,Anger of the Gods,Explore | AtRandom$ True | SubAbility$ DBCast
+SVar:DBCast:DB$ Play | CopyFromChosenName$ True | ValidSA$ Spell | WithoutManaCost$ True | Optional$ True
+SVar:AIRollPlanarDieParams:Mode$ Always | RollInMain1$ True
+Oracle:At the beginning of each player's end step, if that player doesn't control a creature named Yargle, Glutton of Urborg, that player puts a bargle counter on a creature they control. It becomes a copy of Yargle, Glutton of Urborg, except it isn't legendary.\nWhenever chaos ensues, choose Swords to Plowshares, Opt, Fatal Push, Anger of the Gods, or Explore at random. Copy the chosen card. You may cast the copy without paying its mana cost.

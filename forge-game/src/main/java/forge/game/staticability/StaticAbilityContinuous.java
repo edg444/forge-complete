@@ -788,6 +788,11 @@ public final class StaticAbilityContinuous {
                         affectedCard.addChangedTextColorWord(stAb.getParamOrDefault("ChangeColorWordsFrom", "Any"), colorName, se.getTimestamp(), stAb.getId());
                     }
                 }
+
+                // Change type words (Deceptive Divination: "sorcery" to "instant")
+                if (params.containsKey("ChangeTypeWordTo")) {
+                    affectedCard.addChangedTextTypeWord(params.get("ChangeTypeWordFrom"), params.get("ChangeTypeWordTo"), se.getTimestamp(), stAb.getId());
+                }
             }
 
             // set P/T

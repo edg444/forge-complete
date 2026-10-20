@@ -1,0 +1,12 @@
+Name:Li'l Giri Saves the Day
+ManaCost:no cost
+Types:Plane Secret Lair
+S:Mode$ Continuous | EffectZone$ Command | Affected$ Food.token+Legendary+YouCtrl | AddKeyword$ Hexproof & Indestructible | Description$ Legendary Food tokens you control have hexproof and indestructible.
+T:Mode$ PlaneswalkedTo | ValidCard$ Card.Self | TriggerZones$ Command | Execute$ TrigToken | TriggerDescription$ When you planeswalk to this plane, create Li'l Giri, a legendary 1/1 colorless Food Warrior artifact creature token.
+SVar:TrigToken:DB$ Token | TokenScript$ lil_giri
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, put X +1/+1 counters on target legendary artifact creature you control, where X is the number of times you've rolled the planar die this turn.
+SVar:RolledChaos:DB$ PutCounter | ValidTgts$ Creature.Artifact+Legendary+YouCtrl | TgtPrompt$ Select target legendary artifact creature you control | CounterType$ P1P1 | CounterNum$ X
+SVar:X:Count$YouRollPlanarDieThisTurn
+SVar:AIRollPlanarDieParams:Mode$ Always | RollInMain1$ True
+DeckHas:Ability$Token|Counters & Type$Artifact|Food|Warrior
+Oracle:Legendary Food tokens you control have hexproof and indestructible.\nWhen you planeswalk to this plane, create Li'l Giri, a legendary 1/1 colorless Food Warrior artifact creature token.\nWhenever chaos ensues, put X +1/+1 counters on target legendary artifact creature you control, where X is the number of times you've rolled the planar die this turn.

@@ -37,6 +37,7 @@ import forge.game.mana.ManaRefundService;
 import forge.game.spellability.OptionalCostValue;
 import forge.game.spellability.MayPlayPermission;
 import forge.game.spellability.SpellAbility;
+import forge.game.staticability.StaticAbilityCastAs;
 import forge.game.staticability.StaticAbilityManaConvert;
 import forge.game.zone.Zone;
 import forge.game.zone.ZoneType;
@@ -85,6 +86,15 @@ public class PlaySpellAbility {
 
         Card source = sa.getHostCard();
         sa.setActivatingPlayer(p);
+
+        // Imaginary Friends (Plane): the card it's cast as is chosen first - that card's spell is the one cast
+        if (sa.isCastAsAnother()) {
+            sa = StaticAbilityCastAs.chooseAnotherCard(source, p, sa);
+            if (sa == null) {
+                return false;
+            }
+            sa.setActivatingPlayer(p);
+        }
 
         if (sa.isLandAbility()) {
             if (sa.canPlay()) {

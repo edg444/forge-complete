@@ -224,6 +224,10 @@ public class StaticEffect {
                     affectedCard.removeChangedTextColorWord(getTimestamp(), ability.getId());
                     addCard(affectedPerLayer, StaticAbilityLayer.TEXT, affectedCard);
                 }
+                if (hasParam("ChangeTypeWordTo")) {
+                    affectedCard.removeChangedTextTypeWord(getTimestamp(), ability.getId());
+                    addCard(affectedPerLayer, StaticAbilityLayer.TEXT, affectedCard);
+                }
 
                 // remove changed name
                 if (hasParam("SetName") || hasParam("AddNames")) {

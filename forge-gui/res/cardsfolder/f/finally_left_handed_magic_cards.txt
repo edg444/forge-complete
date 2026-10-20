@@ -1,0 +1,11 @@
+Name:Finally! Left-Handed Magic Cards
+ManaCost:no cost
+Types:Plane Secret Lair
+S:Mode$ Continuous | EffectZone$ Command | Affected$ Creature | SetPower$ AffectedPrintedToughness | Description$ Each creature's base power is equal to its printed toughness.
+S:Mode$ Continuous | EffectZone$ Command | Affected$ Creature | SetToughness$ AffectedPrintedPower | Description$ Each creature's base toughness is equal to its printed power.
+SVar:AffectedPrintedToughness:Count$CardPrintedToughness
+SVar:AffectedPrintedPower:Count$CardPrintedPower
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, draw a card from the bottom of your library.
+SVar:RolledChaos:DB$ Draw | FromBottom$ True
+SVar:AIRollPlanarDieParams:Mode$ Always | RollInMain1$ True
+Oracle:Each creature's base power is equal to its printed toughness.\nEach creature's base toughness is equal to its printed power.\nWhenever chaos ensues, draw a card from the bottom of your library.
