@@ -309,6 +309,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-19, ninth deploy (desktop, Android, GitHub) — Secret Lair Showcase Planes; info panel fix
+
 - **Secret Lair Showcase Planes (PSSC)**, all ten (the edition file already listed them; none had scripts, so the
   Deck Editor's Planes section never showed them). Checked against Scryfall 2026-10-19; none have rulings. New
   "Secret Lair" planar type. Engine additions:
