@@ -32,6 +32,15 @@ public class PlayerProperty {
             if (!player.equals(sourceController)) {
                 return false;
             }
+        } else if (property.startsWith("NameInitialOf ")) {
+            // Stet: their name (as it is now) begins with the same letter as the defined card's
+            boolean same = false;
+            for (final Card r : forge.game.ability.AbilityUtils.getDefinedCards(source, property.substring("NameInitialOf ".length()), spellAbility)) {
+                same |= forge.game.card.NameLetters.sameInitial(player.getName(), game.getCardState(r).getDisplayName());
+            }
+            if (!same) {
+                return false;
+            }
         } else if (property.equals("Opponent")) {
             if (player.equals(sourceController) || !player.isOpponentOf(sourceController)) {
                 return false;

@@ -1,0 +1,13 @@
+Name:Stet, Draconic Proofreader
+ManaCost:4 R R
+Types:Legendary Creature Dragon Bureaucrat
+PT:4/4
+K:Flying
+# A name with no letter at the start (face down, blank, fully deleted) begins with no letter (rulings).
+T:Mode$ Attacks | ValidCard$ Card.Self | OptionalDecider$ You | Execute$ TrigExile | TriggerDescription$ Whenever CARDNAME attacks, you may exile a card from your graveyard. When you do, CARDNAME deals 4 damage to any target whose name begins with the same letter as the exiled card.
+SVar:TrigExile:DB$ ChangeZone | Origin$ Graveyard | Destination$ Exile | ChangeType$ Card.YouOwn | ChangeTypeDesc$ card from your graveyard | ChangeNum$ 1 | Hidden$ True | Mandatory$ True | RememberChanged$ True | ForgetOtherRemembered$ True | AILogic$ StetInitial | SubAbility$ DBImmediate
+SVar:DBImmediate:DB$ ImmediateTrigger | Execute$ TrigDamage | RememberObjects$ Remembered | ConditionDefined$ Remembered | ConditionPresent$ Card | SubAbility$ DBCleanup | TriggerDescription$ When you do, CARDNAME deals 4 damage to any target whose name begins with the same letter as the exiled card.
+SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Creature.NameInitialOf DelayTriggerRemembered,Planeswalker.NameInitialOf DelayTriggerRemembered,Battle.NameInitialOf DelayTriggerRemembered,Player.NameInitialOf DelayTriggerRemembered | TgtPrompt$ Select any target whose name begins with the same letter as the exiled card | NumDmg$ 4
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+A:AB$ DeleteFirstLetter | Cost$ W | ValidTgts$ Permanent,Player | TgtPrompt$ Select target permanent or player | AILogic$ Never | SpellDescription$ Delete the first letter of target permanent or player's name until end of turn.
+Oracle:Flying\nWhenever Stet attacks, you may exile a card from your graveyard. When you do, Stet deals 4 damage to any target whose name begins with the same letter as the exiled card.\n{W}: Delete the first letter of target permanent or player's name until end of turn.

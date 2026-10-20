@@ -60,6 +60,7 @@ public enum ApiType {
     RingBell (RingBellEffect.class),
     NoteArtistInitials (NoteArtistInitialsEffect.class),
     StackDice (StackDiceEffect.class),
+    DeleteFirstLetter (DeleteFirstLetterEffect.class),
     ChooseNumber (ChooseNumberEffect.class),
     ChoosePlayer (ChoosePlayerEffect.class),
     ChooseSector (ChooseSectorEffect.class),

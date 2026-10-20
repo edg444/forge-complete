@@ -489,6 +489,15 @@ public class CardProperty {
             if (n < 0 || n > 9 || !CardFactoryUtil.hasNumeral(card, Character.forDigit(n, 10))) {
                 return false;
             }
+        } else if (property.startsWith("NameInitialOf ")) {
+            // Stet: its name begins with the same letter as the defined card's (nothing nameless does)
+            boolean same = false;
+            for (final Card r : AbilityUtils.getDefinedCards(source, property.substring("NameInitialOf ".length()), spellAbility)) {
+                same |= NameLetters.sameInitial(card.getDisplayName(), game.getCardState(r).getDisplayName());
+            }
+            if (!same) {
+                return false;
+            }
         } else if (property.equals("KnownSquirrelInArt")) {
             if (!card.hasKnownSquirrelInArt()) {
                 return false;

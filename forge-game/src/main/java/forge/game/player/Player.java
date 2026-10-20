@@ -3083,6 +3083,21 @@ public class Player extends GameEntity implements Comparable<Player> {
         drawingFromBottom = b;
     }
 
+    // Stet, Draconic Proofreader: the name this player had before letters were deleted from it this turn
+    private String nameBeforeDeletions = null;
+    public void deleteFirstLetterOfName() {
+        if (nameBeforeDeletions == null) {
+            nameBeforeDeletions = getName();
+        }
+        setName(forge.game.card.NameLetters.deleteFirstLetter(getName()));
+    }
+    public void restoreDeletedName() {
+        if (nameBeforeDeletions != null) {
+            setName(nameBeforeDeletions);
+            nameBeforeDeletions = null;
+        }
+    }
+
     // Infernius Spawnington III, Esq.: the cards this player has revealed this turn (GameAction.reveal). Kept as a set,
     // so a card shown again by the same effect (a dig revealing its pick a second time) isn't counted twice.
     private final Set<Integer> revealedThisTurn = new HashSet<>();

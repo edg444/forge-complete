@@ -366,6 +366,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   `Count$CardStackedDice`, trigger mode `DiceStackFell`. `forge.game.card.DiceStack` odds: a die placed topples the
   stack with 0.006 x height², each tap or untap 0.01 x height² (2-die stack: 2.4% / 4%; 8 dice: 38% / 64%; capped 95%);
   a fall leaves a random 0..height-1 dice standing and a die that knocks it over isn't added.
+- **Stet, Draconic Proofreader (UND #57).** Checked against Scryfall and its 2 rulings 2026-10-20. API
+  `DeleteFirstLetter` (until end of turn: a permanent gets a timestamped name change, a player's in-game name changes
+  and is restored at end of turn - `Player.deleteFirstLetterOfName`/`restoreDeletedName`); `forge.game.card.NameLetters`;
+  card and player property `NameInitialOf <Defined>` (a nameless thing, or one beginning with a non-letter, begins
+  with no letter). Reflexive trigger objects are `DelayTriggerRemembered`, not `Remembered`. ChangeZoneAi
+  `StetInitial`: exile the card whose initial lets 4 damage kill the best opposing creature/planeswalker, else hit an
+  opponent; declines otherwise.
 
 ### 2026-10-19, ninth deploy (desktop, Android, GitHub) — Secret Lair Showcase Planes; info panel fix
 

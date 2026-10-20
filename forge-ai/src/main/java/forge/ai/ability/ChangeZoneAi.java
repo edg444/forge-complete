@@ -396,6 +396,9 @@ public class ChangeZoneAi extends SpellAbilityAi {
 
         if ("Always".equals(aiLogic)) {
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        } else if ("StetInitial".equals(aiLogic)) {
+            final boolean worth = stetInitialChoice(aiPlayer, aiPlayer.getCardsIn(ZoneType.Graveyard)) != null;
+            return new AiAbilityDecision(worth ? 100 : 0, worth ? AiPlayDecision.WillPlay : AiPlayDecision.CantPlayAi);
         } else if ("IfNotBuffed".equals(aiLogic)) {
             if (ComputerUtilCard.isUselessCreature(aiPlayer, sa.getHostCard())) {
                 return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
@@ -445,6 +448,40 @@ public class ChangeZoneAi extends SpellAbilityAi {
      *            a {@link forge.game.spellability.SpellAbility} object.
      * @return a boolean.
      */
+    /**
+     * Stet, Draconic Proofreader: the card to exile is the one whose initial lets the 4 damage do the most - killing
+     * the best opposing creature or planeswalker it can, else hitting an opponent whose name starts with that letter.
+     */
+    private static Card stetInitialChoice(final Player ai, final Iterable<Card> cards) {
+        Card best = null;
+        int bestValue = 0;
+        for (final Card c : cards) {
+            final String name = c.getDisplayName();
+            int value = 0;
+            for (final Player opp : ai.getOpponents()) {
+                if (forge.game.card.NameLetters.sameInitial(opp.getName(), name)) {
+                    value = Math.max(value, 60);
+                }
+                for (final Card t : opp.getCardsIn(ZoneType.Battlefield)) {
+                    if (!forge.game.card.NameLetters.sameInitial(t.getDisplayName(), name)) {
+                        continue;
+                    }
+                    if (t.isCreature() && ComputerUtilCombat.getDamageToKill(t, false) <= 4
+                            && !ComputerUtil.canRegenerate(t.getController(), t)) {
+                        value = Math.max(value, ComputerUtilCard.evaluateCreature(t));
+                    } else if (t.isPlaneswalker() && t.getCurrentLoyalty() <= 4) {
+                        value = Math.max(value, 200);
+                    }
+                }
+            }
+            if (value > bestValue) {
+                bestValue = value;
+                best = c;
+            }
+        }
+        return best;
+    }
+
     private static AiAbilityDecision hiddenOriginCanPlayAI(final Player ai, final SpellAbility sa) {
         // Fetching should occur fairly often as it helps cast more spells, and have access to more mana
         final Card source = sa.getHostCard();
@@ -1739,6 +1776,11 @@ public class ChangeZoneAi extends SpellAbilityAi {
                 }
             } else if ("WorstCard".equals(logic)) {
                 return ComputerUtilCard.getWorstAI(fetchList);
+            } else if ("StetInitial".equals(logic)) {
+                final Card c = stetInitialChoice(decider, fetchList);
+                if (c != null) {
+                    return c;
+                }
             } else if ("BestCard".equals(logic)) {
                 if (keycardFound != null) return keycardFound;
 
