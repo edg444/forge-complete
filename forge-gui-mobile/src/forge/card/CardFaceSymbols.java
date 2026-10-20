@@ -78,6 +78,7 @@ public class CardFaceSymbols {
                 new Color(0.973f, 0.906f, 0.725f, 1f), new Color(0.055f, 0.408f, 0.671f, 1f),
                 new Color(0.314f, 0.275f, 0.259f, 1f), new Color(0.827f, 0.125f, 0.165f, 1f),
                 new Color(0f, 0.451f, 0.243f, 1f) }, new Color(0.353f, 0.329f, 0.314f, 1f)));
+        Forge.getAssets().manaImages().put("A", FDrawnSymbol.acorn());
         for (final int n : new int[] { 100, 1000000 }) {
             Forge.getAssets().manaImages().put(String.valueOf(n),
                     new FDrawnSymbol(new Color(0.796f, 0.776f, 0.757f, 1f), new Color(0.47f, 0.439f, 0.416f, 1f)));
@@ -128,6 +129,7 @@ public class CardFaceSymbols {
 
         Forge.getAssets().symbolLookup().put("E", FSkinImage.ENERGY);
         Forge.getAssets().symbolLookup().put("TK", FSkinImage.TICKET);
+        Forge.getAssets().symbolLookup().put("A", Forge.getAssets().manaImages().get("A"));
         Forge.getAssets().symbolLookup().put("AE", FSkinImage.AETHER_SHARD);
         Forge.getAssets().symbolLookup().put("PW", FSkinImage.PW_BADGE_COMMON);
         Forge.getAssets().symbolLookup().put("CS", FSkinImage.QUEST_COINSTACK);

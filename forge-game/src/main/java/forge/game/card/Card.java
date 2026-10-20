@@ -8252,6 +8252,18 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return t != null && t.hasTree(isBackSide());
     }
 
+    /** A squirrel Scryfall Tagger confirms in the art of the face showing (Acornelia). */
+    public boolean hasKnownSquirrelInArt() {
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t != null && t.hasSquirrel(isBackSide());
+    }
+
+    /** Nothing is known about this face's art: no printing data, or art Scryfall Tagger hasn't tagged at all. */
+    public boolean isArtUntagged() {
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t == null || t.isArtUntagged(isBackSide());
+    }
+
     /** A moon the printing data confirms in the art (Princess Luna); false can still mean untagged. */
     public boolean hasKnownMoonInArt() {
         final PrintingTraits.Traits t = getPrintingTraits();

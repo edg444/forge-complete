@@ -489,6 +489,15 @@ public class CardProperty {
             if (n < 0 || n > 9 || !CardFactoryUtil.hasNumeral(card, Character.forDigit(n, 10))) {
                 return false;
             }
+        } else if (property.equals("KnownSquirrelInArt")) {
+            if (!card.hasKnownSquirrelInArt()) {
+                return false;
+            }
+        } else if (property.equals("ArtUntagged")) {
+            // Acornelia asks about these: no Tagger tags at all, so a missing squirrel tag proves nothing
+            if (!card.isArtUntagged()) {
+                return false;
+            }
         } else if (property.equals("KnownTreeInArt")) {
             // tagged by Scryfall Tagger; an untagged art may still have one, so scripts ask about the rest
             if (!card.hasKnownTreeInArt()) {

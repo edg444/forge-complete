@@ -85,6 +85,35 @@ public class CardFaceSymbols {
         return SkinImage.fromImage(img);
     }
 
+    /** Acornelia's {A} (an acorn counter): no art for it in any skin, so an acorn drawn on a clear ground. */
+    static SkinImage acornSymbol() {
+        final java.awt.image.BufferedImage img = new java.awt.image.BufferedImage(
+                DRAWN_SYMBOL_SIZE, DRAWN_SYMBOL_SIZE, java.awt.image.BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = img.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        final Color rim = new Color(70, 40, 15);
+        g.setStroke(new BasicStroke(2f));
+        // the nut, under the cap
+        g.setColor(new Color(196, 128, 56));
+        g.fillOval(10, 12, 20, 26);
+        g.setColor(rim);
+        g.drawOval(10, 12, 20, 26);
+        // the cap
+        g.setColor(new Color(120, 78, 36));
+        g.fillArc(6, 6, 28, 20, 0, 180);
+        g.fillRect(6, 15, 28, 4);
+        g.setColor(rim);
+        g.drawArc(6, 6, 28, 20, 0, 180);
+        g.drawLine(6, 16, 6, 19);
+        g.drawLine(34, 16, 34, 19);
+        g.drawLine(6, 19, 34, 19);
+        // the stem
+        g.setStroke(new BasicStroke(3f));
+        g.drawLine(20, 6, 22, 1);
+        g.dispose();
+        return SkinImage.fromImage(img);
+    }
+
     static SkinImage genericNumberSymbol(final int n) {
         final java.awt.image.BufferedImage img = new java.awt.image.BufferedImage(
                 DRAWN_SYMBOL_SIZE, DRAWN_SYMBOL_SIZE, java.awt.image.BufferedImage.TYPE_INT_ARGB);
@@ -137,6 +166,7 @@ public class CardFaceSymbols {
         // gold (the Sword of Dungeons & Dragons Dragon) likewise has no symbol of its own
         MANA_IMAGES.put("O", goldPlaceholder());
         MANA_IMAGES.put("Z", multiColorSourcePlaceholder());
+        MANA_IMAGES.put("A", acornSymbol());
         for (final int n : OVERSIZED_GENERIC) {
             MANA_IMAGES.put(String.valueOf(n), genericNumberSymbol(n));
         }

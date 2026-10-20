@@ -48,6 +48,10 @@ public final class PrintingTraits {
         private boolean backTree = false;
         private boolean moon = false;
         private boolean backMoon = false;
+        private boolean squirrel = false;
+        private boolean backSquirrel = false;
+        private boolean untaggedArt = false;
+        private boolean backUntaggedArt = false;
 
         /** The border as printed, or null when the edition data already has it right. */
         public CardEdition.BorderColor getBorder() {
@@ -95,6 +99,16 @@ public final class PrintingTraits {
         /** A moon in the artwork (Princess Luna), per Scryfall Tagger; false can still mean untagged. */
         public boolean hasMoon(final boolean backFace) {
             return backFace ? backMoon : moon;
+        }
+
+        /** A squirrel in the artwork (Acornelia), per Scryfall Tagger. */
+        public boolean hasSquirrel(final boolean backFace) {
+            return backFace ? backSquirrel : squirrel;
+        }
+
+        /** Scryfall Tagger hasn't tagged this artwork at all, so its other art traits being absent says nothing. */
+        public boolean isArtUntagged(final boolean backFace) {
+            return backFace ? backUntaggedArt : untaggedArt;
         }
 
         /** Printed lines in the whole text box, flavor text included (Lexivore); -1 when they couldn't be read. */
@@ -169,6 +183,14 @@ public final class PrintingTraits {
                     t.moon = true;
                 } else if (trait.equals("backmoon")) {
                     t.backMoon = true;
+                } else if (trait.equals("squirrel")) {
+                    t.squirrel = true;
+                } else if (trait.equals("backsquirrel")) {
+                    t.backSquirrel = true;
+                } else if (trait.equals("untaggedart")) {
+                    t.untaggedArt = true;
+                } else if (trait.equals("backuntaggedart")) {
+                    t.backUntaggedArt = true;
                 } else if (trait.startsWith("textlines=")) {
                     t.textLines = Integer.parseInt(trait.substring(10));
                 } else if (trait.startsWith("backtextlines=")) {

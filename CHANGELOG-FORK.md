@@ -345,6 +345,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Fix: `ActivationLimit$` on special actions never applied.** `MagicStack.add` resolved an `AbilityStatic` without
   counting the use, so a limited special action could be taken again and again (the hidden armchair's once-a-turn
   guess included). Now counted on the card when the action has an activation limit.
+- **Acornelia, Fashionable Filcher (UND #31).** Checked against Scryfall and its 2 rulings 2026-10-20. New printing
+  traits `squirrel` (Tagger's squirrel tree + secret-squirrel; 411 printings, every Squirrel creature's art among
+  them) and `untaggedart` (art Tagger hasn't tagged at all, 52 printings); properties `KnownSquirrelInArt` and
+  `ArtUntagged` (also true with no printing data). Only untagged art asks the caster (honor; AI says no). {A} =
+  player ACORN counters, `SubCounterYou<X/ACORN>` + `Announce$ X`. New drawn {A} acorn symbol on desktop
+  (`CardFaceSymbols.acornSymbol`, symbol cache A.png) and mobile (`FDrawnSymbol.acorn()`).
 
 ### 2026-10-19, ninth deploy (desktop, Android, GitHub) — Secret Lair Showcase Planes; info panel fix
 

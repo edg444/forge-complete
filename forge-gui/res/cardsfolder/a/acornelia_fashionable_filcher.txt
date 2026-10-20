@@ -1,0 +1,21 @@
+Name:Acornelia, Fashionable Filcher
+ManaCost:3 B
+Types:Legendary Creature Squirrel
+PT:3/3
+# A squirrel Scryfall Tagger confirms in the spell's art (PrintingTraits) needs no question. Art Tagger hasn't tagged at
+# all is asked about (honor system, the caster can see it); the AI can't look, so it answers no.
+T:Mode$ SpellCast | ValidCard$ Card.KnownSquirrelInArt,Card.ArtUntagged | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigKnown | TriggerDescription$ Whenever you cast a spell with a squirrel in its art, you get {A} (an acorn counter).
+SVar:TrigKnown:DB$ PutCounter | Defined$ You | CounterType$ ACORN | CounterNum$ 1 | ConditionDefined$ TriggeredCard | ConditionPresent$ Card.KnownSquirrelInArt | SubAbility$ DBAsk
+SVar:DBAsk:DB$ GenericChoice | Defined$ You | Choices$ NoSquirrel,Squirrel | ChoicePrompt$ Is there a squirrel in the art of the spell you cast? | ConditionDefined$ TriggeredCard | ConditionPresent$ Card.!KnownSquirrelInArt
+SVar:NoSquirrel:DB$ Pump | SpellDescription$ No squirrel
+SVar:Squirrel:DB$ PutCounter | Defined$ You | CounterType$ ACORN | CounterNum$ 1 | SpellDescription$ There's a squirrel: you get an acorn counter
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Permanent.Squirrel+YouCtrl | TriggerZones$ Battlefield | Execute$ TrigAcorn | TriggerDescription$ Whenever a Squirrel you control enters or dies, you get {A}.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Creature.Squirrel+YouCtrl | TriggerZones$ Battlefield | Execute$ TrigAcorn | Secondary$ True | TriggerDescription$ Whenever a Squirrel you control enters or dies, you get {A}.
+SVar:TrigAcorn:DB$ PutCounter | Defined$ You | CounterType$ ACORN | CounterNum$ 1
+A:AB$ Pump | Cost$ 2 B SubCounterYou<X/ACORN> | CostDesc$ {2}{B}, Pay X {A}: | Announce$ X | XMax$ Acorns | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumAtt$ -X | NumDef$ -X | IsCurse$ True | SpellDescription$ Target creature gets -X/-X until end of turn.
+A:AB$ Pump | Cost$ G SubCounterYou<X/ACORN> | CostDesc$ {G}, Pay X {A}: | Announce$ X | XMax$ Acorns | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumAtt$ +X | NumDef$ +X | SpellDescription$ Target creature gets +X/+X until end of turn.
+SVar:X:Count$xPaid
+SVar:Acorns:Count$YourCountersACORN
+DeckHints:Type$Squirrel
+DeckHas:Ability$Counters
+Oracle:Whenever you cast a spell with a squirrel in its art, you get {A} (an acorn counter).\nWhenever a Squirrel you control enters or dies, you get {A}.\n{2}{B}, Pay X {A}: Target creature gets -X/-X until end of turn.\n{G}, Pay X {A}: Target creature gets +X/+X until end of turn.
