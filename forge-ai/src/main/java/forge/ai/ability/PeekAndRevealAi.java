@@ -3,6 +3,8 @@ package forge.ai.ability;
 import forge.ai.*;
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
+import forge.game.card.CardLists;
+import forge.game.phase.PhaseHandler;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
 import forge.game.player.PlayerActionConfirmMode;
@@ -24,6 +26,9 @@ public class PeekAndRevealAi extends SpellAbilityAi {
     @Override
     protected AiAbilityDecision checkApiLogic(Player aiPlayer, SpellAbility sa) {
         String logic = sa.getParamOrDefault("AILogic", "");
+        if ("FightAfterReveal".equals(logic)) {
+            return fightAfterReveal(aiPlayer, sa);
+        }
         if ("Main2".equals(logic)) {
             if (aiPlayer.getGame().getPhaseHandler().getPhase().isBefore(PhaseType.MAIN2)) {
                 return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
@@ -70,6 +75,35 @@ public class PeekAndRevealAi extends SpellAbilityAi {
             }
         }
 
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    /**
+     * Alexander Clamilton: it gets +X/+0 for the revealed card's lines of rules text, then fights the target. Without
+     * a look at the top card the AI counts on 2 lines, and only picks a fight it wins and survives on that count.
+     */
+    private static AiAbilityDecision fightAfterReveal(final Player ai, final SpellAbility sa) {
+        final Card host = sa.getHostCard();
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        if (ai.getCardsIn(ZoneType.Library).isEmpty()
+                || !(ph.is(PhaseType.MAIN2, ai) || (ph.is(PhaseType.END_OF_TURN) && ph.getNextTurn() == ai))) {
+            return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
+        }
+        int bonus = 2;
+        final Card top = ai.getCardsIn(ZoneType.Library).getFirst();
+        if (top.mayPlayerLook(ai) && top.getPrintedRulesLines() >= 0) {
+            bonus = top.getPrintedRulesLines();
+        }
+        final int power = host.getNetPower() + bonus;
+        final int toughnessLeft = host.getNetToughness() - host.getDamage();
+        final CardCollection prey = CardLists.filter(CardLists.getTargetableCards(ai.getOpponents().getCreaturesInPlay(), sa),
+                c -> c.getNetToughness() - c.getDamage() <= power && c.getNetPower() < toughnessLeft
+                        && !ComputerUtilCombat.combatantCantBeDestroyed(c.getController(), c));
+        if (prey.isEmpty()) {
+            return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
+        }
+        sa.resetTargets();
+        sa.getTargets().add(ComputerUtilCard.getBestCreatureAI(prey));
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
 

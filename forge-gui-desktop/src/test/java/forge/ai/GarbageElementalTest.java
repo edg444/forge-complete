@@ -109,17 +109,18 @@ public class GarbageElementalTest extends AITest {
         Player me = game.getPlayers().get(1);
         Player opp = game.getPlayers().get(0);
         Card a = elemental("a", me);
-        // four printed lines of rules text (reminder text included), three
-        Card druid = printing("Paradise Druid", "WOC", "129", opp);
+        // five printed lines of rules text; three
+        Card rats = printing("Relentless Rats", "M10", "108", opp);
         Card servant = printing("Air Servant", "W16", "4", opp);
         game.getAction().checkStateEffects(true);
 
-        AssertJUnit.assertTrue(druid.isWordy());
+        AssertJUnit.assertTrue(rats.isWordy());
         AssertJUnit.assertFalse(servant.isWordy());
-        AssertJUnit.assertFalse(CombatUtil.canBlock(a, druid));
+        AssertJUnit.assertFalse(CombatUtil.canBlock(a, rats));
         AssertJUnit.assertTrue(CombatUtil.canBlock(a, servant));
-        // every Garbage Elemental is wordy itself (6 to 9 lines)
-        AssertJUnit.assertFalse(CombatUtil.canBlock(a, elemental("b", opp)));
+        // D is wordy itself (five lines besides its cascade reminder text); B isn't (three, the rest is reminder text)
+        AssertJUnit.assertFalse(CombatUtil.canBlock(a, elemental("d", opp)));
+        AssertJUnit.assertTrue(CombatUtil.canBlock(a, elemental("b", opp)));
     }
 
     @Test

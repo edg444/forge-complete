@@ -328,6 +328,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   `_tools/time-zone-coordinates/generate.js`); zones without a city fall back to 6 AM - 6 PM. Counts
   `Count$RealWorldSunUp` / `RealWorldSunDown`, both true on the exact minute (rulings); clock swappable via
   `AbilityUtils.realWorldNow`.
+- **Alexander Clamilton (UND #16).** Checked against Scryfall and its 6 rulings 2026-10-20. Count
+  `Card$CardRulesLines` (printed rules lines, -1 unread); when the revealed card couldn't be read the activator counts
+  (ChooseNumber; AI `RememberedRulesLines` = one per Oracle paragraph with rules text, a floor it can stand behind).
+  PeekAndRevealAi `FightAfterReveal`: assumes 2 lines unless it can see the top card, fights only what it kills and
+  survives.
+- **Rules lines no longer count lines that are only reminder text** (CR 207.2; Clamilton's rulings; the Unstable FAQ
+  on Kindly Cognician). `rulelines=` in PrintingTraits.txt regenerated from the stored OCR rows: a line counts if any
+  word sits outside parentheses (full-width ones too); an unclosed "(" is ignored, a stray ")" leaves earlier lines
+  counted. 18,027 printings changed; wordy (Frazzled Editor, Garbage Elemental) now matches fewer cards, e.g.
+  Garbage Elemental B and Paradise Druid aren't wordy. Lexivore's `textlines=` is unchanged.
 
 ### 2026-10-19, ninth deploy (desktop, Android, GitHub) — Secret Lair Showcase Planes; info panel fix
 

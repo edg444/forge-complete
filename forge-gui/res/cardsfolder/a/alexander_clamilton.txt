@@ -1,0 +1,18 @@
+Name:Alexander Clamilton
+ManaCost:2 U
+Types:Legendary Creature Clamfolk Advisor Rebel
+PT:0/4
+T:Mode$ SpellCast | ValidCard$ Card.wordy | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigScry | TriggerDescription$ Whenever you cast a wordy spell, scry 2. (A spell is wordy if it has four or more lines of rules text.)
+SVar:TrigScry:DB$ Scry | ScryNum$ 2
+# Lines of rules text as printed on the revealed card's printing, read off its image; lines that are only reminder
+# text don't count (rulings). When the image couldn't be read, the activator counts them (the AI counts at least one
+# per Oracle paragraph).
+A:AB$ PeekAndReveal | Cost$ 1 R T | ValidTgts$ Creature.YouDontCtrl | TgtPrompt$ Select target creature you don't control | Defined$ You | PeekAmount$ 1 | NoPeek$ True | RememberRevealed$ True | AILogic$ FightAfterReveal | SubAbility$ DBCount | StackDescription$ SpellDescription | SpellDescription$ Choose target creature you don't control. Reveal the top card of your library. CARDNAME gets +X/+0 until end of turn, where X is the number of lines of rules text of the revealed card. CARDNAME fights that creature.
+SVar:DBCount:DB$ ChooseNumber | Defined$ You | Min$ 0 | Max$ 30 | ListTitle$ lines of rules text on the revealed card | AILogic$ RememberedRulesLines | ConditionCheckSVar$ Lines | ConditionSVarCompare$ LT0 | SubAbility$ DBPump
+SVar:DBPump:DB$ Pump | Defined$ Self | NumAtt$ +X | SubAbility$ DBFight
+SVar:DBFight:DB$ Fight | Defined$ Self & Targeted | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:Lines:Remembered$CardRulesLines
+SVar:Counted:Count$ChosenNumber
+SVar:X:Count$Compare Lines GE0.Lines.Counted
+Oracle:Whenever you cast a wordy spell, scry 2. (A spell is wordy if it has four or more lines of rules text.)\n{1}{R}, {T}: Choose target creature you don't control. Reveal the top card of your library. Alexander Clamilton gets +X/+0 until end of turn, where X is the number of lines of rules text of the revealed card. Alexander Clamilton fights that creature.

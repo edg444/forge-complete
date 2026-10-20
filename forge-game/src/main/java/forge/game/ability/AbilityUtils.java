@@ -2202,6 +2202,10 @@ public class AbilityUtils {
         if (sq[0].equals("CardPunctuationMarks")) {
             return doXMath(CardFactoryUtil.getPunctuationMarkCount(c), expr, c, ctb);
         }
+        // Alexander Clamilton: printed lines of rules text, read off the card image; -1 when it couldn't be read
+        if (sq[0].equals("CardRulesLines")) {
+            return doXMath(c.getPrintedRulesLines(), expr, c, ctb);
+        }
         if (sq[0].equals("CardCapitalLetters")) {
             return doXMath(CardFactoryUtil.getCapitalLetterCount(c), expr, c, ctb);
         }

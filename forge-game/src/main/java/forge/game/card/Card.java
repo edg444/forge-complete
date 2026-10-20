@@ -7494,7 +7494,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return getPrintedRulesLines() >= 4;
     }
 
-    /** Lines of rules text as printed, all text boxes together (Phoebe); -1 when they couldn't be read. */
+    /** Lines of rules text as printed, all text boxes together (Phoebe), not counting lines that are only reminder text
+     *  (CR 207.2, Alexander Clamilton's rulings); -1 when they couldn't be read. */
     public int getPrintedRulesLines() {
         final PrintingTraits.Traits t = getPrintingTraits();
         final int own = textBoxStolen ? 0 : t == null ? -1 : t.getRulesLines(isBackSide());

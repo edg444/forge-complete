@@ -2016,6 +2016,20 @@ public class AiController {
             }
         } else if ("Min".equals(logic)) {
             return min;
+        } else if ("RememberedRulesLines".equals(logic)) {
+            // Alexander Clamilton, when the revealed card's lines couldn't be read off its image: each Oracle
+            // paragraph with rules text is at least one printed line, so that's a count the AI can stand behind
+            int lines = 0;
+            for (final Object o : source.getRemembered()) {
+                if (o instanceof Card c) {
+                    for (final String paragraph : c.getOracleText().split("\\\\n|\n")) {
+                        if (paragraph.replaceAll("\\([^)]*\\)", "").matches(".*[A-Za-z0-9].*")) {
+                            lines++;
+                        }
+                    }
+                }
+            }
+            return Math.max(min, Math.min(max, lines));
         } else if ("MostCommonNameWordCount".equals(logic)) {
             // Ineffable Blessing: the word count most of the creature cards still to come share
             final Map<Integer, Integer> counts = new HashMap<>();
