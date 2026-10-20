@@ -1,0 +1,8 @@
+Name:Underdome
+ManaCost:no cost
+Types:Land
+A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
+# Un-costs: any cost a silver-bordered (or acorn) card imposes - casting it, activating its abilities, its triggers and
+# special actions (ruling).
+A:AB$ Mana | Cost$ T | Produced$ Any | RestrictValid$ SpellAbility.SilverBordered | SpellDescription$ Add one mana of any color. Spend this mana only to pay Un-costs.
+Oracle:{T}: Add {C}.\n{T}: Add one mana of any color. Spend this mana only to pay Un-costs.

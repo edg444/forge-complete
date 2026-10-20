@@ -389,6 +389,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   identity from its mana ability - tested). New trigger mode `Augments` (run by AugmentEffect with Card + Player);
   `Mutates` now also passes the mutating player (`ValidPlayer$`). "Enchant" is the verb: an Aura you control becoming
   attached to a creature you control (`Mode$ Attached`). New creature type Chameleon.
+- **Underdome (UND #86).** Checked against Scryfall and its ruling 2026-10-20. Script only: `RestrictValid$
+  SpellAbility.SilverBordered` (spells and every kind of ability of a silver-bordered or acorn card). Known gap: Forge
+  never lets restricted mana pay a cost demanded while something resolves (unless costs), so neither can this.
+  **Unsanctioned is complete** (und/75 Who // What // When // Where // Why was already scripted from Unhinged).
 
 ### 2026-10-19, ninth deploy (desktop, Android, GitHub) — Secret Lair Showcase Planes; info panel fix
 
