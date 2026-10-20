@@ -493,6 +493,12 @@ public class CardView extends GameEntityView {
         set(TrackableProperty.InstalledResults, c.getInstalledResults().isEmpty() ? ""
                 : c.getInstalledResults().toString().replace("[", "").replace("]", ""));
     }
+    public int getStackedDice() {
+        return get(TrackableProperty.StackedDice);
+    }
+    void updateStackedDice(Card c) {
+        set(TrackableProperty.StackedDice, c.getStackedDice());
+    }
     public String getChosenNumberLabel() {
         return get(TrackableProperty.ChosenNumberLabel);
     }

@@ -361,6 +361,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Abstract Iguanart (UND #47).** Checked against Scryfall and its 4 rulings 2026-10-20. API `NoteArtistInitials`:
   the first character of each artist the spell credits (`ArtistCredit.individuals`), kept as the card's noted values,
   a +1/+1 counter per new letter. New creature type Art.
+- **Boomstacker (UND #49).** Checked against Scryfall and its 5 rulings 2026-10-20. Simulated dice stack (user
+  ruling): `Card.stackedDice` (dice, not counters; shown in the card details), API `StackDice`, count
+  `Count$CardStackedDice`, trigger mode `DiceStackFell`. `forge.game.card.DiceStack` odds: a die placed topples the
+  stack with 0.006 x height², each tap or untap 0.01 x height² (2-die stack: 2.4% / 4%; 8 dice: 38% / 64%; capped 95%);
+  a fall leaves a random 0..height-1 dice standing and a die that knocks it over isn't added.
 
 ### 2026-10-19, ninth deploy (desktop, Android, GitHub) — Secret Lair Showcase Planes; info panel fix
 

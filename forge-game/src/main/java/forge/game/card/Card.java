@@ -4881,6 +4881,39 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         view.updateInstalledResults(this);
     }
 
+    // Boomstacker: real dice stacked on top of this permanent - not counters. The stack is simulated (user ruling):
+    // each die placed and each turning of the card (tapped or untapped, "the fun part") may topple it, more likely
+    // the taller it is (DiceStack). A new object starts with no stack.
+    private int stackedDice = 0;
+
+    public final int getStackedDice() {
+        return stackedDice;
+    }
+    /** Stacks dice one at a time; a die that knocks the stack over isn't part of it (rulings). */
+    public final void stackDice(final int amount) {
+        for (int i = 0; i < amount; i++) {
+            if (DiceStack.fallsWhenPlacing(stackedDice + 1)) {
+                diceStackFalls();
+                return;
+            }
+            stackedDice++;
+            view.updateStackedDice(this);
+        }
+    }
+    private void jostleDiceStack() {
+        if (stackedDice > 0 && isInPlay() && DiceStack.fallsWhenTurned(stackedDice)) {
+            diceStackFalls();
+        }
+    }
+    private void diceStackFalls() {
+        final int before = stackedDice;
+        stackedDice = DiceStack.diceLeftStanding(before);
+        view.updateStackedDice(this);
+        getGame().getGameLog().add(forge.game.GameLogEntryType.INFORMATION, "The dice stack on " + this + " falls ("
+                + (before - stackedDice) + " of " + before + " dice fall).");
+        getGame().getTriggerHandler().runTrigger(TriggerType.DiceStackFell, AbilityKey.mapFromCard(this), false);
+    }
+
     // More or Less: numbers printed on this object that read differently until end of turn. A new object
     // (any zone change, CR 400.7) starts without them.
     private final List<NumberNudge> numberNudges = Lists.newArrayList();
@@ -5609,6 +5642,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         setTapped(true);
         view.updateNeedsTapAnimation(tapAnimation);
         getGame().fireEvent(new GameEventCardTapped(this, true));
+        jostleDiceStack();
         return true;
     }
 
@@ -5646,6 +5680,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         setTapped(false);
         view.updateNeedsUntapAnimation(true);
         getGame().fireEvent(new GameEventCardTapped(this, false));
+        jostleDiceStack();
         return true;
     }
 

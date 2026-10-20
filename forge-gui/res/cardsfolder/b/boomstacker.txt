@@ -1,0 +1,16 @@
+Name:Boomstacker
+ManaCost:2 R
+Types:Creature Goblin Artificer
+PT:0/0
+# The dice stack is simulated (user ruling; forge.game.card.DiceStack): each die placed and each time this card is
+# tapped or untapped may topple it, more likely the taller it is.
+K:ETBReplacement:Other:DBStackEnter
+SVar:DBStackEnter:DB$ StackDice | Defined$ Self | Amount$ 2 | SpellDescription$ As this creature enters and whenever it attacks, stack two dice on top of it. (All dice must be stacked vertically, one on top of another.)
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigStack | Secondary$ True | TriggerDescription$ As this creature enters and whenever it attacks, stack two dice on top of it.
+SVar:TrigStack:DB$ StackDice | Defined$ Self | Amount$ 2
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | AddToughness$ X | Description$ This creature gets +1/+1 for each die in its stack.
+SVar:X:Count$CardStackedDice
+K:CARDNAME attacks each combat if able.
+T:Mode$ DiceStackFell | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigSac | TriggerDescription$ When the stack falls, sacrifice this creature.
+SVar:TrigSac:DB$ Sacrifice | Defined$ Self
+Oracle:As this creature enters and whenever it attacks, stack two dice on top of it. (All dice must be stacked vertically, one on top of another.)\nThis creature gets +1/+1 for each die in its stack.\nThis creature attacks each combat if able.\nWhen the stack falls, sacrifice this creature.

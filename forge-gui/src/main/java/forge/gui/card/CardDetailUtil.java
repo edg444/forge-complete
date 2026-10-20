@@ -550,6 +550,14 @@ public class CardDetailUtil {
             area.append(Lang.joinHomogenous(card.getChosenCards())).append(")");
         }
 
+        // Boomstacker's stack of dice
+        if (card.getStackedDice() > 0) {
+            if (area.length() != 0) {
+                area.append("\n");
+            }
+            area.append("(dice stacked on it: ").append(card.getStackedDice()).append(")");
+        }
+
         // chosen number
         // Socketed Sprocketer's dice sitting on it
         if (card.getInstalledResults() != null && !card.getInstalledResults().isEmpty()) {

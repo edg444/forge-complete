@@ -59,6 +59,7 @@ public enum ApiType {
     ChooseKeywordInTime (ChooseKeywordInTimeEffect.class),
     RingBell (RingBellEffect.class),
     NoteArtistInitials (NoteArtistInitialsEffect.class),
+    StackDice (StackDiceEffect.class),
     ChooseNumber (ChooseNumberEffect.class),
     ChoosePlayer (ChoosePlayerEffect.class),
     ChooseSector (ChooseSectorEffect.class),
