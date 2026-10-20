@@ -309,6 +309,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Imaginary Friends (Plane) AI.** No strategy, just random: from hand it's offered the first three cards that can
+  be cast right now from a random order of the choices its deck builder isn't told to leave out (`AI:RemoveDeck:All`),
+  kept for the turn, as ordinary cast-as spells its usual logic weighs. For the chaos free cast, `PlayAi.chooseCardName`
+  tries the choices in random order (up to 30) and takes the first whose spell it would cast.
+
 ### 2026-10-19, ninth deploy (desktop, Android, GitHub) — Secret Lair Showcase Planes; info panel fix
 
 - **Secret Lair Showcase Planes (PSSC)**, all ten (the edition file already listed them; none had scripts, so the

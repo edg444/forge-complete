@@ -1,6 +1,7 @@
 package forge.game.staticability;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,8 @@ import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 import forge.item.PaperCard;
+import forge.util.MyRandom;
+import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * Form of the Mulldrifter's "You may cast creature cards from your hand as though they were the card Mulldrifter.":
@@ -40,6 +43,11 @@ public class StaticAbilityCastAs {
     private static final Map<Game, Map<String, Card>> TEMPLATES = new WeakHashMap<>();
     // the cards a spell with these types and mana cost may be cast as, worked out once per game
     private static final Map<Game, Map<String, List<ICardFace>>> ANOTHER_CARDS = new WeakHashMap<>();
+    // how many cards the AI weighs casting one card as, and how far down its random order it looks for them
+    private static final int AI_PICKS = 3;
+    private static final int AI_LOOK = 15;
+    // a random order kept for the turn, so what the AI is weighing doesn't change every time it looks at its hand
+    private static final Map<Card, Pair<Integer, List<String>>> AI_ORDER_BY_CARD = new WeakHashMap<>();
 
     public static synchronized Card template(final Game game, final String name, final Player owner) {
         return TEMPLATES.computeIfAbsent(game, g -> new HashMap<>()).computeIfAbsent(name,
@@ -62,8 +70,26 @@ public class StaticAbilityCastAs {
                 }
                 final String name = stAb.getParam("CastAs");
                 if (ANOTHER_CARD.equals(name)) {
-                    // the AI can't weigh a card it isn't holding
-                    if (!activator.getController().isAI() && !anotherCardChoices(card).isEmpty()) {
+                    if (activator.getController().isAI()) {
+                        // no strategy: the first few cards in a random order that can be cast right now (some have
+                        // their own timing, "only during combat"), offered as ordinary spells for its usual logic
+                        int found = 0;
+                        int looked = 0;
+                        for (final String pick : aiOrder(card)) {
+                            if (found >= AI_PICKS || ++looked > AI_LOOK) {
+                                break;
+                            }
+                            final List<SpellAbility> spells = castAsSpells(card, activator, pick);
+                            spells.removeIf(s -> {
+                                s.setActivatingPlayer(activator);
+                                return !s.canPlay(true);
+                            });
+                            if (!spells.isEmpty()) {
+                                result.addAll(spells);
+                                found++;
+                            }
+                        }
+                    } else if (!anotherCardChoices(card).isEmpty()) {
                         for (final SpellAbility sa : card.getSpellAbilities()) {
                             if (sa.isSpell()) {
                                 final SpellAbility standIn = sa.copy(card, activator, false);
@@ -76,20 +102,50 @@ public class StaticAbilityCastAs {
                     }
                     continue;
                 }
-                for (final SpellAbility sa : template(game, name, activator).getSpellAbilities()) {
-                    if (!sa.isSpell()) {
-                        continue;
-                    }
-                    final SpellAbility copy = sa.copy(card, activator, false);
-                    copy.setCastAs(name);
-                    copy.setDescription(sa.getAlternativeCost() == null
-                            ? "Cast as " + name + " (" + sa.getPayCosts().toSimpleString() + ")"
-                            : "Cast as " + name + ": " + sa.getDescription());
-                    result.add(copy);
-                }
+                result.addAll(castAsSpells(card, activator, name));
             }
         }
         return result;
+    }
+
+    private static List<SpellAbility> castAsSpells(final Card card, final Player activator, final String name) {
+        final List<SpellAbility> result = new ArrayList<>();
+        for (final SpellAbility sa : template(card.getGame(), name, activator).getSpellAbilities()) {
+            if (!sa.isSpell()) {
+                continue;
+            }
+            final SpellAbility copy = sa.copy(card, activator, false);
+            copy.setCastAs(name);
+            copy.setDescription(sa.getAlternativeCost() == null
+                    ? "Cast as " + name + " (" + sa.getPayCosts().toSimpleString() + ")"
+                    : "Cast as " + name + ": " + sa.getDescription());
+            result.add(copy);
+        }
+        return result;
+    }
+
+    /** The choices for this card the AI knows how to play: none its deck builder is told to leave out. */
+    public static List<String> aiPlayableChoices(final Card card) {
+        final List<String> result = new ArrayList<>();
+        for (final ICardFace face : anotherCardChoices(card)) {
+            final PaperCard pc = StaticData.instance().getCommonCards().getUniqueByName(face.getName());
+            if (pc != null && !pc.getRules().getAiHints().getRemAIDecks()) {
+                result.add(face.getName());
+            }
+        }
+        return result;
+    }
+
+    private static synchronized List<String> aiOrder(final Card card) {
+        final int turn = card.getGame().getPhaseHandler().getTurn();
+        final Pair<Integer, List<String>> kept = AI_ORDER_BY_CARD.get(card);
+        if (kept != null && kept.getLeft() == turn) {
+            return kept.getRight();
+        }
+        final List<String> names = aiPlayableChoices(card);
+        Collections.shuffle(names, MyRandom.getRandom());
+        AI_ORDER_BY_CARD.put(card, Pair.of(turn, names));
+        return names;
     }
 
     /** The cards legal in this game's format, other than this one, with this card's card types and mana cost. */

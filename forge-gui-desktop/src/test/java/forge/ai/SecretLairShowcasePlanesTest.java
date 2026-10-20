@@ -226,7 +226,7 @@ public class SecretLairShowcasePlanesTest extends AITest {
         AssertJUnit.assertTrue(choices.stream().anyMatch(f -> f.getName().equals("Burst Lightning")));
         AssertJUnit.assertTrue(choices.stream().noneMatch(f -> f.getName().equals("Lightning Bolt")));
         AssertJUnit.assertTrue("same type", choices.stream().noneMatch(f -> f.getName().equals("Firebolt")));
-        // the AI isn't offered the stand-in, it can't weigh a card it isn't holding
+        // the AI gets a few real choices instead of the stand-in that asks
         AssertJUnit.assertTrue(bolt.getAllPossibleAbilities(ai, true).stream().noneMatch(SpellAbility::isCastAsAnother));
 
         SpellAbility as = StaticAbilityCastAs.chooseAnotherCard(bolt, ai, bolt.getFirstSpellAbility());
@@ -257,5 +257,37 @@ public class SecretLairShowcasePlanesTest extends AITest {
         AssertJUnit.assertTrue("back: " + back.getZone(), back.isInZone(ZoneType.Battlefield));
         AssertJUnit.assertTrue(back.isTapped());
         AssertJUnit.assertTrue(game.getCombat() != null && game.getCombat().isAttacking(back));
+    }
+
+    @Test
+    public void aiWeighsAFewRandomCardsEachTurn() {
+        Game game = start();
+        Player ai = game.getPlayers().get(1);
+        addCard("Mountain", ai);
+        Card bolt = addCardToZone("Lightning Bolt", ai, ZoneType.Hand);
+        planeswalk(game, ai, "Imaginary Friends (Plane)");
+        List<String> names = bolt.getAllPossibleAbilities(ai, false).stream().map(SpellAbility::getCastAs)
+                .filter(java.util.Objects::nonNull).distinct().toList();
+        AssertJUnit.assertEquals(names.toString(), 3, names.size());
+        List<String> playable = StaticAbilityCastAs.aiPlayableChoices(bolt);
+        AssertJUnit.assertTrue(playable.containsAll(names));
+        List<String> again = bolt.getAllPossibleAbilities(ai, false).stream().map(SpellAbility::getCastAs)
+                .filter(java.util.Objects::nonNull).distinct().toList();
+        AssertJUnit.assertEquals("same picks all turn", names, again);
+    }
+
+    @Test
+    public void aiCastsTheChaosCardAsAnother() {
+        Game game = start();
+        Player opp = game.getPlayers().get(0);
+        Player ai = game.getPlayers().get(1);
+        addCard("Grizzly Bears", opp);
+        planeswalk(game, ai, "Imaginary Friends (Plane)");
+        Card bolt = addCardToZone("Lightning Bolt", ai, ZoneType.Library);
+        addCardToZone("Mountain", ai, ZoneType.Library);
+        chaos(game, ai);
+        Card after = game.getCardState(bolt);
+        AssertJUnit.assertTrue("cast, not left in exile or put back: " + after.getZone(), after.isInZone(ZoneType.Graveyard));
+        AssertJUnit.assertEquals("back to itself once it resolved", "Lightning Bolt", after.getName());
     }
 }

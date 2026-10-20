@@ -1,7 +1,9 @@
 package forge.ai.ability;
 
 import forge.ai.*;
+import forge.StaticData;
 import forge.card.CardStateName;
+import forge.card.ICardFace;
 import forge.card.CardTypeView;
 import forge.game.Game;
 import forge.game.GameType;
@@ -15,10 +17,13 @@ import forge.game.spellability.Spell;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.SpellAbilityPredicates;
 import forge.game.spellability.SpellPermanent;
+import forge.game.staticability.StaticAbilityCastAs;
 import forge.game.zone.ZoneType;
 import forge.util.IterableUtil;
 import forge.util.MyRandom;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -262,4 +267,47 @@ public class PlayAi extends SpellAbilityAi {
         return cards;
     }
 
+
+    /**
+     * Imaginary Friends (Plane)'s free cast "only as another card": no real strategy - try the choices in random order
+     * and take the first whose spell the AI would cast (it has targets, isn't pointless right now).
+     */
+    @Override
+    public String chooseCardName(final Player ai, final SpellAbility sa, final List<ICardFace> faces) {
+        if (!sa.hasParam("CastAsAnother")) {
+            return super.chooseCardName(ai, sa, faces);
+        }
+        final List<Card> defined = AbilityUtils.getDefinedCards(sa.getHostCard(), sa.getParam("Defined"), sa);
+        final Card host = defined.isEmpty() ? null : defined.get(0);
+        final List<ICardFace> order = new ArrayList<>(faces);
+        Collections.shuffle(order, MyRandom.getRandom());
+        String fallback = "";
+        int tried = 0;
+        for (final ICardFace face : order) {
+            final String name = face.getName();
+            final forge.item.PaperCard pc = StaticData.instance().getCommonCards().getUniqueByName(name);
+            if (pc == null || pc.getRules().getAiHints().getRemAIDecks()) {
+                continue;
+            }
+            if (fallback.isEmpty()) {
+                fallback = name;
+            }
+            // building and judging a spell isn't free, and one good enough choice is all it needs
+            if (host == null || ++tried > 30) {
+                break;
+            }
+            for (final SpellAbility spell : StaticAbilityCastAs.template(ai.getGame(), name, ai).getSpellAbilities()) {
+                if (!spell.isSpell()) {
+                    continue;
+                }
+                final SpellAbility copy = spell.copy(host, ai, false);
+                final boolean willing = SpellApiToAi.Converter.get(copy).canPlayWithSubs(ai, copy).willingToPlay();
+                copy.resetTargets();
+                if (willing) {
+                    return name;
+                }
+            }
+        }
+        return fallback;
+    }
 }
