@@ -1,0 +1,14 @@
+Name:Spirit of the Season
+ManaCost:1 G G
+Types:Creature Treefolk Spirit
+PT:3/3
+# The season is the real one where the player is: astronomical seasons at the time zone's reference city, swapped
+# south of the equator (user ruling; forge.util.Seasons). 1 spring, 2 summer, 3 autumn, 4 winter.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigHaste | TriggerDescription$ When this creature enters, it gains haste if it's summer. Put a +1/+1 counter on it if it's autumn. You gain 5 life if it's winter. If it's spring, search your library for a basic land card, reveal it, put it into your hand, then shuffle.
+SVar:TrigHaste:DB$ Pump | Defined$ Self | KW$ Haste | Duration$ Permanent | ConditionCheckSVar$ Season | ConditionSVarCompare$ EQ2 | SubAbility$ DBCounter
+SVar:DBCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1 | ConditionCheckSVar$ Season | ConditionSVarCompare$ EQ3 | SubAbility$ DBLife
+SVar:DBLife:DB$ GainLife | Defined$ You | LifeAmount$ 5 | ConditionCheckSVar$ Season | ConditionSVarCompare$ EQ4 | SubAbility$ DBSearch
+SVar:DBSearch:DB$ ChangeZone | Origin$ Library | Destination$ Hand | ChangeType$ Land.Basic | ChangeTypeDesc$ basic land card | ChangeNum$ 1 | ConditionCheckSVar$ Season | ConditionSVarCompare$ EQ1
+SVar:Season:Count$RealWorldSeason
+DeckHas:Ability$Counters|LifeGain
+Oracle:When this creature enters, it gains haste if it's summer. Put a +1/+1 counter on it if it's autumn. You gain 5 life if it's winter. If it's spring, search your library for a basic land card, reveal it, put it into your hand, then shuffle.

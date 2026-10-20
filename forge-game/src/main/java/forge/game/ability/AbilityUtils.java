@@ -2230,6 +2230,10 @@ public class AbilityUtils {
         if (sq[0].equals("RealWorldSunUp")) {
             return doXMath(forge.util.SunTimes.isSunUp(realWorldNow.get()) ? 1 : 0, expr, c, ctb);
         }
+        // Spirit of the Season: 1 spring, 2 summer, 3 autumn, 4 winter where the player is (forge.util.Seasons)
+        if (sq[0].equals("RealWorldSeason")) {
+            return doXMath(forge.util.Seasons.seasonAt(realWorldNow.get()).ordinal() + 1, expr, c, ctb);
+        }
         if (sq[0].equals("RealWorldSunDown")) {
             return doXMath(forge.util.SunTimes.isSunDown(realWorldNow.get()) ? 1 : 0, expr, c, ctb);
         }

@@ -30,7 +30,7 @@ public final class SunTimes {
         coordinates = null;
     }
 
-    static synchronized double[] coordinatesOf(final String zone) {
+    public static synchronized double[] coordinatesOf(final String zone) {
         if (coordinates == null) {
             coordinates = new HashMap<>();
             if (source != null) {

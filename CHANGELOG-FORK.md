@@ -380,6 +380,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   offered after any player's roll (`RollDiceEffect.payToRerollAnyDie`, Wall of Fortune's AI logic); the reroller rolls,
   and their "whenever you roll" triggers fire (ruling). `PlayerController.payRerollCost` (AI really pays; upstream's
   `payCostDuringRoll` is left as it was).
+- **Spirit of the Season (UND #70).** Checked against Scryfall and its 3 rulings 2026-10-20. Real astronomical
+  seasons (user ruling): `forge.util.Seasons` from the Sun's apparent ecliptic longitude (Astronomical Almanac
+  low-precision formula; tested within 30 minutes of the USNO's 2026 equinoxes and solstices), swapped south of the
+  equator by the time zone city's latitude (`SunTimes.coordinatesOf`, now public). `Count$RealWorldSeason` (1 spring
+  ... 4 winter), clock `AbilityUtils.realWorldNow`.
 
 ### 2026-10-19, ninth deploy (desktop, Android, GitHub) — Secret Lair Showcase Planes; info panel fix
 
