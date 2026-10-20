@@ -1,0 +1,13 @@
+Name:Strutting Turkey
+ManaCost:3 W
+Types:Host Creature Bird
+PT:2/2
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigExile | TriggerDescription$ When this creature enters, exile target creature card with mana value 2 or less from your graveyard. If it has augment, combine it with a host you control. Otherwise, put it onto the battlefield.
+SVar:TrigExile:DB$ ChangeZone | Origin$ Graveyard | Destination$ Exile | ValidTgts$ Creature.cmcLE2+YouOwn | TgtPrompt$ Select target creature card with mana value 2 or less from your graveyard | RememberChanged$ True | SubAbility$ DBChooseHost
+# ruling: with no host to combine with, a card with augment stays in exile
+SVar:DBChooseHost:DB$ ChooseCard | Choices$ Card.Host+YouCtrl | ChoiceZone$ Battlefield | ChoiceTitle$ Choose a host you control | Mandatory$ True | ConditionDefined$ Remembered | ConditionPresent$ Card.withAugment | SubAbility$ DBAugment
+SVar:DBAugment:DB$ Augment | Defined$ ChosenCard | AugmentCard$ Remembered | FromZone$ Exile | ConditionDefined$ Remembered | ConditionPresent$ Card.withAugment | SubAbility$ DBReturn
+SVar:DBReturn:DB$ ChangeZone | Defined$ Remembered | Origin$ Exile | Destination$ Battlefield | ConditionDefined$ Remembered | ConditionPresent$ Card.!withAugment | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
+DeckHints:Ability$Graveyard
+Oracle:When this creature enters,\nexile target creature card with mana value 2 or less from your graveyard. If it has augment, combine it with a host you control. Otherwise, put it onto the battlefield.

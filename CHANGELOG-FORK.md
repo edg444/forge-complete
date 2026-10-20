@@ -317,6 +317,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   a real person and enter the answer); the AI's simulated person says no half the time (user ruling). GenericChoice
   `AILogic$ FlavorJudge` targets the top opponent spell or ability that targets an AI permanent. A targeted
   GenericChoice needs `Defined$ You`, or it looks for its chooser among the targets and silently does nothing.
+- **Strutting Turkey (UND #14).** Checked against Scryfall and its 2 rulings 2026-10-20. Script plus Augment
+  `AugmentCard$ <defined>`: a defined card combines instead of the ability's host (here the remembered exiled card,
+  `FromZone$ Exile`), looked up by its current state since Remembered holds the pre-move object.
 
 ### 2026-10-19, ninth deploy (desktop, Android, GitHub) — Secret Lair Showcase Planes; info panel fix
 

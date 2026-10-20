@@ -8,6 +8,7 @@ import com.google.common.collect.Lists;
 
 import forge.card.CardType;
 import forge.game.Game;
+import forge.game.ability.AbilityUtils;
 import forge.game.ability.SpellAbilityEffect;
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
@@ -25,6 +26,7 @@ import forge.game.zone.ZoneType;
  * <p>
  * With {@code ChangeType$}, the augment card is instead searched for in the activator's library (Teacher's Pet).
  * With {@code FromZone$}, the card combines from that zone instead of the hand (Zombified, from the graveyard).
+ * With {@code AugmentCard$}, that defined card combines instead of the ability's host (Strutting Turkey, from exile).
  */
 public class AugmentEffect extends SpellAbilityEffect {
 
@@ -71,9 +73,15 @@ public class AugmentEffect extends SpellAbilityEffect {
             }
             shuffleAfter = searchedLibrary && sa.hasParam("Shuffle");
         } else {
-            augment = sa.getHostCard();
+            if (sa.hasParam("AugmentCard")) {
+                // a remembered card is the object from before it moved, so look up where it is now
+                final Card defined = AbilityUtils.getDefinedCards(sa.getHostCard(), sa.getParam("AugmentCard"), sa).getFirst();
+                augment = defined == null ? null : defined.getGame().getCardState(defined);
+            } else {
+                augment = sa.getHostCard();
+            }
             // ruling: if the card with augment has left your hand (or the zone it combines from), nothing happens
-            if (!augment.isInZone(ZoneType.smartValueOf(sa.getParamOrDefault("FromZone", "Hand")))) {
+            if (augment == null || !augment.isInZone(ZoneType.smartValueOf(sa.getParamOrDefault("FromZone", "Hand")))) {
                 return;
             }
         }
