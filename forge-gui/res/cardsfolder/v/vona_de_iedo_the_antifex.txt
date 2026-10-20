@@ -10,4 +10,4 @@ SVar:DBAnimate:DB$ Animate | Defined$ Imprinted | staticAbilities$ SpendAnyMana 
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearImprinted$ True
 SVar:SpendAnyMana:Mode$ ManaConvert | EffectZone$ Stack | ValidPlayer$ You | ValidCard$ Card.Self | ValidSA$ Spell | ManaConversion$ AnyType->AnyType | Description$ Mana of any type can be spent to cast this spell.
 DeckHas:Ability$Discard
-Oracle:Menace\nWhen Vona de Iedo enters, destroy target nonland, nontoken permanent an opponent controls. Then you may discard a card. If you do, conjure a duplicate of that permanent into your hand, and the duplicate perpetually gains "Mana of any type can be spent to cast this spell."
+Oracle:Menace\nWhen Vona de Iedo enters, destroy target nonland, nontoken permanent an opponent controls. Then you may discard a card. If you do, conjure a duplicate of that permanent into your hand, and the duplicate perpetually gains prismatic.

@@ -7,4 +7,4 @@ SVar:SpendAnyMana:Mode$ ManaConvert | EffectZone$ Stack | ValidPlayer$ You | Val
 SVar:DBPutFromHand:DB$ ChangeZone | Origin$ Hand | Destination$ Battlefield | ChangeType$ Card.IsRemembered | Optional$ True | ChangeNum$ 1 | ConditionCheckSVar$ X | ConditionSVarCompare$ GE5 | SubAbility$ DBCleanup | StackDescription$ SpellDescription | SpellDescription$ If X is 5 or more, you may put one of them from your hand onto the battlefield.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Count$xPaid
-Oracle:Conjure a duplicate of each of X target nontoken permanents into your hand. Those cards perpetually gain "You may spend mana as though it were mana of any color to cast this spell." If X is 5 or more, you may put one of them from your hand onto the battlefield.
+Oracle:Conjure a duplicate of each of X target nontoken permanents into your hand. Those cards perpetually gain prismatic. If X is 5 or more, you may put one of them from your hand onto the battlefield.

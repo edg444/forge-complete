@@ -6,4 +6,4 @@ SVar:TrigConjure:DB$ MakeCard | Conjure$ True | ConditionDefined$ Remembered | C
 SVar:DBAnimate:DB$ Animate | Defined$ Remembered | staticAbilities$ SpendAnyMana | Duration$ Perpetual | SubAbility$ DBCleanup | StackDescription$ SpellDescription | SpellDescription$ That duplicate perpetually gains "You may spend mana as though it were mana of any color to cast this spell."
 SVar:SpendAnyMana:Mode$ ManaConvert | EffectZone$ Stack | ValidPlayer$ You | ValidCard$ Card.Self | ValidSA$ Spell | ManaConversion$ AnyType->AnyColor | Description$ You may spend mana as though it were mana of any color to cast this spell.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-Oracle:Target opponent sacrifices a nontoken creature. If that creature had mana value 2 or less, conjure a duplicate of it into your hand. That duplicate perpetually gains "You may spend mana as though it were mana of any color to cast this spell."
+Oracle:Target opponent sacrifices a nontoken creature of their choice. If that creature had mana value 2 or less, conjure a duplicate of it into your hand. That duplicate perpetually gains prismatic.

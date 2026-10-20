@@ -1141,7 +1141,7 @@ public class Player extends GameEntity implements Comparable<Player> {
         return Aggregates.max(game.getRegisteredPlayers(), GameEntity::getAssignedCombatDamage);
     }
 
-    public final boolean canReceiveCounters(final CounterType type) {
+    public final boolean canReceiveCounters(final CounterType type, Map<AbilityKey, Object> params) {
         if (!isInGame()) {
             return false;
         }
@@ -1160,9 +1160,8 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
 
     @Override
-    public void addCounterInternal(final CounterType counterType, final int n, final Player source, final boolean fireEvents, GameEntityCounterTable table, Map<AbilityKey, Object> params) {
-        int addAmount = n;
-        if (addAmount <= 0 || !canReceiveCounters(counterType)) {
+    public void addCounterInternal(final CounterType counterType, final int addAmount, final Player source, final boolean fireEvents, GameEntityCounterTable table, Map<AbilityKey, Object> params) {
+        if (addAmount <= 0) {
             // As per rule 107.1b
             return;
         }

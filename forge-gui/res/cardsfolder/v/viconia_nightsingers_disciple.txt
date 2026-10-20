@@ -21,7 +21,7 @@ SVar:SpendAnyMana:Mode$ ManaConvert | EffectZone$ Stack | ValidPlayer$ You | Val
 SVar:DBChangeZone:DB$ ChangeZone | Optional$ True | Origin$ Hand | Destination$ Battlefield | Defined$ Remembered | ConditionDefined$ Remembered | ConditionPresent$ Card.cmcLE3 | ConditionCompare$ GE1 | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 A:AB$ ChangeZone | Cost$ 1 | Origin$ Graveyard | Destination$ Exile | TgtPrompt$ Choose target card in a graveyard | ValidTgts$ Card | SpellDescription$ Exile target card from a graveyard.
-Oracle:When this creature specializes, conjure a duplicate of target creature card exiled with this creature into your hand. The duplicate perpetually gains "You may spend mana as though it were mana of any color to cast this spell." If it has mana value 3 or less, you may put it onto the battlefield.\n{1}: Exile target card from a graveyard.
+Oracle:When this creature specializes, conjure a duplicate of target creature card exiled with this creature into your hand. The duplicate perpetually gains prismatic. If it has mana value 3 or less, you may put it onto the battlefield.\n{1}: Exile target card from a graveyard.
 
 SPECIALIZE:BLUE
 
@@ -37,7 +37,7 @@ SVar:PerpetualAbility:Mode$ Continuous | AddStaticAbility$ SpendAnyMana | Affect
 SVar:SpendAnyMana:Mode$ ManaConvert | EffectZone$ Stack | ValidPlayer$ You | ValidCard$ Card.Self | ValidSA$ Spell | ManaConversion$ AnyType->AnyColor | Description$ You may spend mana as though it were mana of any color to cast this spell.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 A:AB$ ChangeZone | Cost$ 1 | Origin$ Graveyard | Destination$ Exile | TgtPrompt$ Choose target card in a graveyard | ValidTgts$ Card | SpellDescription$ Exile target card from a graveyard.
-Oracle:When this creature specializes, choose up to one target creature card and up to one target instant or sorcery card from among cards exiled with this creature. Conjure a duplicate of each of those cards into your hand. The duplicates perpetually gain "You may spend mana as though it were mana of any color to cast this spell."\n{1}: Exile target card from a graveyard.
+Oracle:When this creature specializes, choose up to one target creature card and up to one target instant or sorcery card from among cards exiled with this creature. Conjure a duplicate of each of those cards into your hand. The duplicates perpetually gain prismatic.\n{1}: Exile target card from a graveyard.
 
 SPECIALIZE:BLACK
 
@@ -56,7 +56,7 @@ SVar:DBGainLife:DB$ GainLife | LifeAmount$ 2
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 A:AB$ ChangeZone | Cost$ 1 | Origin$ Graveyard | Destination$ Exile | TgtPrompt$ Choose target card in a graveyard | ValidTgts$ Card | SpellDescription$ Exile target card from a graveyard.
 DeckHas:Ability$LifeGain
-Oracle:When this creature specializes, conjure a duplicate of target creature card exiled with this creature into your hand. The duplicate perpetually gains "You may spend mana as though it were mana of any color to cast this spell" and "When this creature enters, each opponent loses 2 life and you gain 2 life."\n{1}: Exile target card from a graveyard.
+Oracle:When this creature specializes, conjure a duplicate of target creature card exiled with this creature into your hand. The duplicate perpetually gains prismatic and "When this creature enters, each opponent loses 2 life and you gain 2 life."\n{1}: Exile target card from a graveyard.
 
 SPECIALIZE:RED
 
@@ -71,7 +71,7 @@ SVar:PerpetualAbility:Mode$ Continuous | AddPower$ 1 | AddKeyword$ Haste | AddSt
 SVar:SpendAnyMana:Mode$ ManaConvert | EffectZone$ Stack | ValidPlayer$ You | ValidCard$ Card.Self | ValidSA$ Spell | ManaConversion$ AnyType->AnyColor | Description$ You may spend mana as though it were mana of any color to cast this spell.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 A:AB$ ChangeZone | Cost$ 1 | Origin$ Graveyard | Destination$ Exile | TgtPrompt$ Choose target card in a graveyard | ValidTgts$ Card | SpellDescription$ Exile target card from a graveyard.
-Oracle:When this creature specializes, conjure a duplicate of target creature card exiled with this creature into your hand. The duplicate perpetually gets +1/+0 and gains haste and "You may spend mana as though it were mana of any color to cast this spell."\n{1}: Exile target card from a graveyard.
+Oracle:When this creature specializes, conjure a duplicate of target creature card exiled with this creature into your hand. The duplicate perpetually gets +1/+0 and gains haste and prismatic.\n{1}: Exile target card from a graveyard.
 
 SPECIALIZE:GREEN
 
@@ -86,4 +86,4 @@ SVar:PerpetualAbility:Mode$ Continuous | AddPower$ 2 | AddToughness$ 2 | AddStat
 SVar:SpendAnyMana:Mode$ ManaConvert | EffectZone$ Stack | ValidPlayer$ You | ValidCard$ Card.Self | ValidSA$ Spell | ManaConversion$ AnyType->AnyColor | Description$ You may spend mana as though it were mana of any color to cast this spell.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 A:AB$ ChangeZone | Cost$ 1 | Origin$ Graveyard | Destination$ Exile | TgtPrompt$ Choose target card in a graveyard | ValidTgts$ Card | SpellDescription$ Exile target card from a graveyard.
-Oracle:When this creature specializes, conjure a duplicate of target creature card exiled with this creature into your hand. The duplicate perpetually gets +2/+2 and gains "You may spend mana as though it were mana of any color to cast this spell."\n{1}: Exile target card from a graveyard.
+Oracle:When this creature specializes, conjure a duplicate of target creature card exiled with this creature into your hand. The duplicate perpetually gets +2/+2 and gains prismatic.\n{1}: Exile target card from a graveyard.

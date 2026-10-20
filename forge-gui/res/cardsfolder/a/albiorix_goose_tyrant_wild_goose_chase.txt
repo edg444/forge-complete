@@ -10,7 +10,7 @@ SVar:TrigPump:DB$ Pump | PumpZone$ Battlefield,Exile | NumAtt$ +1 | NumDef$ +1 |
 DeckHas:Ability$Discard|Token & Type$Food
 DeckHints:Ability$Token & Type$Treasure|Food|Clue
 AlternateMode:Adventure
-Oracle:Flying, Trample, Ward {1}\nWhenever you sacrifice a token, Albiorix perpetually gets +1/+1. This ability also triggers if Albiorix is in exile.
+Oracle:Flying, Trample, Ward {1}\nWhenever you sacrifice a token, Albiorix perpetually gets +1/+1. This ability also triggers if this card is in exile.
 
 ALTERNATE
 
