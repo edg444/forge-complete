@@ -309,6 +309,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-19, eighth deploy (desktop, Android, GitHub) — upstream merge (26 commits)
+
+- **Upstream merge** (26 commits, incl. the AI timeout tracker, mobile compact landscape layout, local replay,
+  software sound mixing, Karn Liberated restart keeping a commander castable). Conflicts:
+  - `AiAttackController.declareAttackers` now runs inside upstream's `AITimeoutTracker` try/finally (whole body
+    re-indented); the fork's battle fallback, Lexivore check, battle rotation and the tasty/alone-evasion/support-only
+    pruning were re-applied inside it.
+  - Mobile settings: the fork's `UI_ZONE_TABS_LEFT` sits beside upstream's `UI_COMPACT_*` prefs. It only affects the
+    non-compact landscape layout; upstream's compact layout (default "Left") lays out its own tab column.
+  - `TrackableProperty` (`HasPrintedPT`/`AugmentPT`) and `VAvatar` imports kept from both sides.
+
 ### 2026-10-15, seventh deploy (desktop, Android, GitHub) — upstream merge (4 commits); Mystery Booster playtest cards #95–119 (CMB1 complete); nontoken filter fixes
 
 - **Upstream merge** (4 commits, incl. Adventure-spell offers for Bilbo and nine more, Play effects' type filters
