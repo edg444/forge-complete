@@ -208,6 +208,8 @@ public enum StaticAbilityMode {
     // StaticAbilityMaxCounter
     MaxCounter,
 
+    // StaticAbilityLifelinkDamage (Syr Cadian) - damage from ValidSource$ also gains its controller that much life
+    LifelinkDamage,
     // StaticAbilityInfectDamage
     InfectDamage,
     // StaticAbilityWitherDamage

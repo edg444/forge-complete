@@ -58,6 +58,7 @@ import java.util.stream.IntStream;
 public class AbilityUtils {
     /** The real-world local time, for cards that read the clock. Tests replace it. */
     public static java.util.function.Supplier<LocalTime> realWorldTime = LocalTime::now;
+    public static java.util.function.Supplier<java.time.ZonedDateTime> realWorldNow = java.time.ZonedDateTime::now;
 
     private final static ImmutableList<String> cmpList = ImmutableList.of("LT", "LE", "EQ", "GE", "GT", "NE");
 
@@ -2214,6 +2215,13 @@ public class AbilityUtils {
         if (sq[0].equals("RealWorldNighttime")) {
             final int hour = realWorldTime.get().getHour();
             return doXMath(hour >= 18 || hour < 6 ? 1 : 0, expr, c, ctb);
+        }
+        // Syr Cadian: from sunrise to sunset / sunset to sunrise where the player is (forge.util.SunTimes)
+        if (sq[0].equals("RealWorldSunUp")) {
+            return doXMath(forge.util.SunTimes.isSunUp(realWorldNow.get()) ? 1 : 0, expr, c, ctb);
+        }
+        if (sq[0].equals("RealWorldSunDown")) {
+            return doXMath(forge.util.SunTimes.isSunDown(realWorldNow.get()) ? 1 : 0, expr, c, ctb);
         }
         // Some Disassembly Required asks whether it is December. 1-12, like the calendar.
         if (sq[0].equals("CurrentMonth")) {

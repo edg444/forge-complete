@@ -461,6 +461,7 @@ public final class FModel {
         forge.game.Match.setDeckWrittenOnListener(FModel::saveWrittenOnDeck);
         WordList.setSource(() -> FileUtil.readFile(ForgeConstants.WORD_LIST_FILE));
         BannedOrRestricted.setSource(() -> FileUtil.readFile(ForgeConstants.BANNED_OR_RESTRICTED_FILE));
+        forge.util.SunTimes.setSource(() -> FileUtil.readFile(ForgeConstants.TIME_ZONE_COORDINATES_FILE));
 
         if (!keywordsLoaded) {
             final List<String> nskwListFile = FileUtil.readFile(ForgeConstants.KEYWORD_LIST_FILE);

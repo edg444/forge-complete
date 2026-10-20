@@ -47,6 +47,7 @@ import forge.game.spellability.SpellPermanent;
 import forge.game.staticability.StaticAbilityCantDestroy;
 import forge.game.staticability.StaticAbility;
 import forge.game.staticability.StaticAbilityCountersRemain;
+import forge.game.staticability.StaticAbilityLifelinkDamage;
 import forge.game.staticability.StaticAbilityContinuous;
 import forge.game.staticability.StaticAbilityGraveyardCombat;
 import forge.game.staticability.StaticAbilityIgnoreStateBasedActions;
@@ -3402,7 +3403,7 @@ public class GameAction {
             }
 
             // CR 702.15e
-            if (sum > 0 && sourceLKI.hasKeyword(Keyword.LIFELINK)) {
+            if (sum > 0 && (sourceLKI.hasKeyword(Keyword.LIFELINK) || StaticAbilityLifelinkDamage.isLifelinkDamage(sourceLKI))) {
                 sourceLKI.getController().gainLife(sum, sourceLKI, cause);
             }
         }

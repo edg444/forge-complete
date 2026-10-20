@@ -1,0 +1,14 @@
+Name:Syr Cadian, Knight Owl
+ManaCost:3 W W
+Types:Legendary Creature Bird Knight
+PT:4/4
+S:Mode$ LifelinkDamage | ValidSource$ Knight.YouCtrl | Description$ Knightlifelink (Damage dealt by Knights you control also causes you to gain that much life.)
+# Sunrise and sunset at the reference city of the computer's time zone (user ruling; forge.util.SunTimes). On the exact
+# minute of either, both abilities work (rulings).
+A:AB$ Pump | Cost$ W | Defined$ Self | KW$ Vigilance | CheckSVar$ SunUp | SVarCompare$ EQ1 | SpellDescription$ CARDNAME gains vigilance until end of turn. Activate only from sunrise to sunset.
+A:AB$ Pump | Cost$ B | Defined$ Self | KW$ Flying | CheckSVar$ SunDown | SVarCompare$ EQ1 | SpellDescription$ CARDNAME gains flying until end of turn. Activate only from sunset to sunrise.
+SVar:SunUp:Count$RealWorldSunUp
+SVar:SunDown:Count$RealWorldSunDown
+DeckHints:Type$Knight
+DeckHas:Ability$LifeGain
+Oracle:Knightlifelink (Damage dealt by Knights you control also causes you to gain that much life.)\n{W}: Syr Cadian gains vigilance until end of turn. Activate only from sunrise to sunset.\n{B}: Syr Cadian gains flying until end of turn. Activate only from sunset to sunrise.

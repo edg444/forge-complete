@@ -320,6 +320,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Strutting Turkey (UND #14).** Checked against Scryfall and its 2 rulings 2026-10-20. Script plus Augment
   `AugmentCard$ <defined>`: a defined card combines instead of the ability's host (here the remembered exiled card,
   `FromZone$ Exile`), looked up by its current state since Remembered holds the pre-move object.
+- **Syr Cadian, Knight Owl (UND #15).** Checked against Scryfall and its 5 rulings 2026-10-20. Knightlifelink = new
+  static `Mode$ LifelinkDamage | ValidSource$` (damage also gains its controller life, without granting the keyword;
+  a source with lifelink gains once). Real sunrise/sunset: `forge.util.SunTimes` (NOAA general solar position
+  equations) at the reference city of the computer's time zone (user ruling), from new
+  `res/lists/TimeZoneCoordinates.txt` (IANA tzdata 2026e zone1970.tab + zone.tab + backward links, public domain;
+  `_tools/time-zone-coordinates/generate.js`); zones without a city fall back to 6 AM - 6 PM. Counts
+  `Count$RealWorldSunUp` / `RealWorldSunDown`, both true on the exact minute (rulings); clock swappable via
+  `AbilityUtils.realWorldNow`.
 
 ### 2026-10-19, ninth deploy (desktop, Android, GitHub) — Secret Lair Showcase Planes; info panel fix
 
