@@ -309,6 +309,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-20, tenth deploy (desktop, Android, GitHub) — Unsanctioned complete; 22-commit upstream merge
+
+- **Upstream merge** (22 commits, 85888fdfa0a): 11 card-script conflicts resolved keeping the fork's Scryfall wording
+  and taking upstream's fixes; Oracle lines re-synced to Scryfall 2026-10-20 (26 cards: Alchemy "perpetually gains
+  prismatic" rewording, spark costs as "[+1]:"). Tests: 1454 run, 0 failed, 7 skipped.
 - **Imaginary Friends (Plane) AI.** No strategy, just random: from hand it's offered the first three cards that can
   be cast right now from a random order of the choices its deck builder isn't told to leave out (`AI:RemoveDeck:All`),
   kept for the turn, as ordinary cast-as spells its usual logic weighs. For the chaos free cast, `PlayAi.chooseCardName`
