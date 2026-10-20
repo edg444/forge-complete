@@ -1,0 +1,15 @@
+Name:Infernius Spawnington III, Esq.
+ManaCost:10 B
+Types:Creature Demon Beast Grandchild
+PT:9/9
+K:Flying
+K:First Strike
+K:Trample
+K:Haste
+# Counted reveals are the keyword action only (ruling): GameAction.reveal records them; information-only showings go
+# through revealForDisplay. Each card counts once a turn.
+S:Mode$ ReduceCost | ValidCard$ Card.Self | Type$ Spell | Amount$ X | EffectZone$ All | Description$ This spell costs {3} less to cast for each card you've revealed this turn.
+SVar:X:Count$YouRevealedThisTurn/Times.3
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDamage | TriggerDescription$ When this creature enters, you may say "I'm here." If you do, it deals 3 damage to target player.
+SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Player | TgtPrompt$ Select target player | NumDmg$ 3 | UnlessCost$ FlavorAction<Say "I'm here."/I'm here!> | UnlessPayer$ You | UnlessSwitched$ True
+Oracle:Flying, first strike, trample, haste\nThis spell costs {3} less to cast for each card you've revealed this turn.\nWhen this creature enters, you may say "I'm here." If you do, it deals 3 damage to target player.

@@ -2649,6 +2649,10 @@ public class AbilityUtils {
             return doXMath(player.getBloodthirstAmount(), expr, c, ctb);
         }
 
+        // Infernius Spawnington III, Esq.: cards you've revealed this turn
+        if (sq[0].equals("YouRevealedThisTurn")) {
+            return doXMath(player.getNumRevealedThisTurn(), expr, c, ctb);
+        }
         if (sq[0].startsWith("YourCounters")) {
             // "YourCountersExperience" or "YourCountersPoison"
             String counterType = sq[0].substring(12);

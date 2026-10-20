@@ -74,7 +74,8 @@ public class DiscoverEffect extends SpellAbilityEffect {
                 rest.add(c);
             }
 
-            game.getAction().reveal(exiled, p, false);
+            // discover exiles, it doesn't reveal: this only shows what was exiled
+            game.getAction().revealForDisplay(exiled, p, false, null);
 
             changeZone(exiled, ZoneType.Exile, game, sa);
 

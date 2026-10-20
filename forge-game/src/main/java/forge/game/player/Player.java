@@ -3083,7 +3083,20 @@ public class Player extends GameEntity implements Comparable<Player> {
         drawingFromBottom = b;
     }
 
+    // Infernius Spawnington III, Esq.: the cards this player has revealed this turn (GameAction.reveal). Kept as a set,
+    // so a card shown again by the same effect (a dig revealing its pick a second time) isn't counted twice.
+    private final Set<Integer> revealedThisTurn = new HashSet<>();
+    public void addRevealedThisTurn(final Iterable<Card> cards) {
+        for (final Card c : cards) {
+            revealedThisTurn.add(c.getId());
+        }
+    }
+    public int getNumRevealedThisTurn() {
+        return revealedThisTurn.size();
+    }
+
     public void onCleanupPhase() {
+        revealedThisTurn.clear();
         for (Card c : getCardsIn(ZoneType.Hand)) {
             c.setDrawnThisTurn(false);
         }

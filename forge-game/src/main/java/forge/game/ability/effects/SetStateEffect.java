@@ -242,7 +242,7 @@ public class SetStateEffect extends SpellAbilityEffect {
             }
         }
         if (!transformedCards.isEmpty()) {
-            game.getAction().reveal(transformedCards, p, true, "Transformed cards in ");
+            game.getAction().revealForDisplay(transformedCards, p, true, "Transformed cards in ");
         }
     }
 }

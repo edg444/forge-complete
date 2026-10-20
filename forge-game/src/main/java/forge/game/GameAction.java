@@ -2744,6 +2744,23 @@ public class GameAction {
         reveal(cards, zt, cardOwner, dontRevealToOwner, messagePrefix, true);
     }
     public void reveal(CardCollectionView cards, ZoneType zt, Player cardOwner, boolean dontRevealToOwner, String messagePrefix, boolean msgAddSuffix) {
+        // the keyword action (Infernius Spawnington III, Esq. counts these); showing cards for information goes
+        // through revealForDisplay instead
+        if (cardOwner != null) {
+            cardOwner.addRevealedThisTurn(cards);
+        }
+        revealForDisplay(cards, zt, cardOwner, dontRevealToOwner, messagePrefix, msgAddSuffix);
+    }
+
+    /** Shows cards to the players without it being a reveal (booster openings, notices about what happened). */
+    public void revealForDisplay(CardCollectionView cards, Player cardOwner, boolean dontRevealToOwner, String messagePrefix) {
+        final Card firstCard = Iterables.getFirst(cards, null);
+        if (firstCard != null) {
+            revealForDisplay(cards, game.getZoneOf(firstCard).getZoneType(), cardOwner, dontRevealToOwner, messagePrefix, true);
+        }
+    }
+
+    public void revealForDisplay(CardCollectionView cards, ZoneType zt, Player cardOwner, boolean dontRevealToOwner, String messagePrefix, boolean msgAddSuffix) {
         for (Player p : game.getPlayers()) {
             if (dontRevealToOwner && cardOwner == p) {
                 continue;

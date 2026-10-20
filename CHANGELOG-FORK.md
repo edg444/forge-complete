@@ -353,6 +353,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   (`CardFaceSymbols.acornSymbol`, symbol cache A.png) and mobile (`FDrawnSymbol.acorn()`).
 - **Bat- (UND #32).** Checked against Scryfall and its 2 rulings 2026-10-20. Script only (augment condition on
   `PlayerCountRegisteredOpponents$HighestLifeLostThisTurn`, so an opponent who left the game still counts).
+- **Infernius Spawnington III, Esq. (UND #40).** Checked against Scryfall and its ruling 2026-10-20. Cards revealed
+  this turn: `GameAction.reveal` records them on the revealing player (`Player.addRevealedThisTurn`, a per-turn set,
+  so one card counts once a turn; cleared at cleanup), count `Count$YouRevealedThisTurn`. Showing cards that isn't
+  the reveal keyword action now goes through new `GameAction.revealForDisplay`: command-zone cards going to hand,
+  transformed-card notices, the suspend notice and discover's exiled cards. New creature type Grandchild.
 
 ### 2026-10-19, ninth deploy (desktop, Android, GitHub) — Secret Lair Showcase Planes; info panel fix
 

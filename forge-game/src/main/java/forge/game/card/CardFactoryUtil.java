@@ -3664,7 +3664,7 @@ public class CardFactoryUtil {
                     String sb = TextUtil.concatWithSpace(getActivatingPlayer().toString(),"has suspended", c.getDisplayName(), "with", String.valueOf(counters),"time counters on it.");
                     game.fireEvent(new GameEventAddLog(GameLogEntryType.STACK_RESOLVE, sb));
                     //reveal suspended card
-                    game.getAction().reveal(new CardCollection(c), c.getOwner(), true, c.getDisplayName() + " is suspended with " + counters + " time counters in ");
+                    game.getAction().revealForDisplay(new CardCollection(c), c.getOwner(), true, c.getDisplayName() + " is suspended with " + counters + " time counters in ");
                 }
             };
             final StringBuilder sbDesc = new StringBuilder();

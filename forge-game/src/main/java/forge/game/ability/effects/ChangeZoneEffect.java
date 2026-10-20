@@ -873,7 +873,7 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
 
         //reveal command cards that changes zone from command zone to player's hand
         if (!commandCards.isEmpty()) {
-            game.getAction().reveal(commandCards, activator, true, "Revealed cards in ");
+            game.getAction().revealForDisplay(commandCards, activator, true, "Revealed cards in ");
         }
 
         triggerList.triggerChangesZoneAll(game, sa);

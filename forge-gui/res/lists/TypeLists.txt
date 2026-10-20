@@ -147,6 +147,7 @@ God:Gods
 Golem:Golems
 Gorgon:Gorgons
 Gorn:Gorns
+Grandchild:Grandchildren
 Graveborn:Graveborn
 Gremlin:Gremlins
 Griffin:Griffins
