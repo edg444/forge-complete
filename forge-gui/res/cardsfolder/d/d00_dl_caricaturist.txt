@@ -1,0 +1,21 @@
+Name:D00-DL, Caricaturist
+ManaCost:6
+Types:Legendary Artifact Creature Robot
+PT:1/1
+# The drawing is the player's, on whatever represents the token, timed by someone at the table; then they say what it
+# has (honor system - an outside person settles disagreements, per the rulings). The AI's drawing has a few features
+# at random (AILogic$ Sketch).
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSketch | TriggerDescription$ When CARDNAME enters, create a 4/4 colorless Sketch creature token, which you have fifteen seconds to draw. The token has flying if it has wings in its art. The same is true for first strike and a sword, vigilance and a shield, menace and mean eyes, trample and horns, deathtouch and claws, lifelink and fangs, and haste and footwear.
+SVar:TrigSketch:DB$ Token | TokenScript$ c_4_4_sketch | TokenOwner$ You | RememberTokens$ True | SubAbility$ DBDrawing
+SVar:DBDrawing:DB$ GenericChoice | Defined$ You | Choices$ DBWings,DBSword,DBShield,DBMeanEyes,DBHorns,DBClaws,DBFangs,DBFootwear | ChoiceAmount$ 8 | MinChoiceAmount$ 0 | AILogic$ Sketch | ChoicePrompt$ You have fifteen seconds to draw the Sketch token - go! Then choose everything your drawing has. | SubAbility$ DBCleanup
+SVar:DBWings:DB$ Animate | Defined$ Remembered | Keywords$ Flying | Duration$ Permanent | SpellDescription$ Wings (flying)
+SVar:DBSword:DB$ Animate | Defined$ Remembered | Keywords$ First Strike | Duration$ Permanent | SpellDescription$ A sword (first strike)
+SVar:DBShield:DB$ Animate | Defined$ Remembered | Keywords$ Vigilance | Duration$ Permanent | SpellDescription$ A shield (vigilance)
+SVar:DBMeanEyes:DB$ Animate | Defined$ Remembered | Keywords$ Menace | Duration$ Permanent | SpellDescription$ Mean eyes (menace)
+SVar:DBHorns:DB$ Animate | Defined$ Remembered | Keywords$ Trample | Duration$ Permanent | SpellDescription$ Horns (trample)
+SVar:DBClaws:DB$ Animate | Defined$ Remembered | Keywords$ Deathtouch | Duration$ Permanent | SpellDescription$ Claws (deathtouch)
+SVar:DBFangs:DB$ Animate | Defined$ Remembered | Keywords$ Lifelink | Duration$ Permanent | SpellDescription$ Fangs (lifelink)
+SVar:DBFootwear:DB$ Animate | Defined$ Remembered | Keywords$ Haste | Duration$ Permanent | SpellDescription$ Footwear (haste)
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+DeckHas:Ability$Token & Type$Sketch
+Oracle:When D00-DL, Caricaturist enters, create a 4/4 colorless Sketch creature token, which you have fifteen seconds to draw. The token has flying if it has wings in its art. The same is true for first strike and a sword, vigilance and a shield, menace and mean eyes, trample and horns, deathtouch and claws, lifelink and fangs, and haste and footwear.

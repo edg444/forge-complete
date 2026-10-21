@@ -1,0 +1,15 @@
+Name:Souvenir T-Shirt
+ManaCost:3
+Types:Artifact Equipment
+# The Magic-branded items are the player's own, counted as it enters (honor system; a pair counts once - rulings). The
+# AI's simulated wardrobe usually has none, now and then one or two (AILogic$ MagicItems). Which result goes to power
+# and which to toughness is the player's choice (rulings).
+K:ETBReplacement:Other:DBGearUp
+SVar:DBGearUp:DB$ ChooseNumber | Defined$ You | Min$ 0 | Max$ 20 | ListTitle$ How many Magic-branded items are you wearing? (Clothing or accessories with a Magic logo, symbol or art - a pair counts once.) | AILogic$ MagicItems | SubAbility$ DBRoll | SpellDescription$ Gear Up, sponsored by Wizards of the Coast — As this Equipment enters, roll two six-sided dice. For each Magic-branded item you're wearing, roll an additional six-sided die. Choose two of those results.
+SVar:DBRoll:DB$ RollDice | Amount$ N | Sides$ 6 | ChosenSVar$ ShirtX | SecondChosenSVar$ ShirtY | ChosenOnHost$ True
+SVar:N:Count$ChosenNumber/Plus.2
+SVar:ShirtX:Number$0
+SVar:ShirtY:Number$0
+S:Mode$ Continuous | Affected$ Creature.EquippedBy | AddPower$ ShirtX | AddToughness$ ShirtY | Description$ Equipped creature gets +X/+Y, where X is the first chosen result and Y is the second.
+K:Equip:4
+Oracle:Gear Up, sponsored by Wizards of the Coast — As this Equipment enters, roll two six-sided dice. For each Magic-branded item you're wearing, roll an additional six-sided die. Choose two of those results.\nEquipped creature gets +X/+Y, where X is the first chosen result and Y is the second.\nEquip {4}

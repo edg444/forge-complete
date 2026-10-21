@@ -1,0 +1,7 @@
+Name:Park Map
+ManaCost:1
+Types:Artifact
+# The same art is the same illustration by the same artist, whatever the frame or printing; an art sticker makes a
+# card's art its own (rulings). A land printing whose illustration Forge doesn't know counts as different.
+A:AB$ ChangeZone | Cost$ 1 Sac<1/CARDNAME/this artifact> | Origin$ Library | Destination$ Hand | ChangeType$ Land.!sameArtAsPermanentYouCtrl | ChangeNum$ 1 | Reveal$ True | Shuffle$ True | StackDescription$ SpellDescription | SpellDescription$ Search your library for a land card that doesn't have the same art as a permanent you control, reveal it, put it into your hand, then shuffle.
+Oracle:{1}, Sacrifice this artifact: Search your library for a land card that doesn't have the same art as a permanent you control, reveal it, put it into your hand, then shuffle.

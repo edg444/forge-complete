@@ -99,7 +99,11 @@ public class ChooseGenericEffect extends SpellAbilityEffect {
                     }
                 }
             } else if (!availableSA.isEmpty()) {
-                chosenSAs = p.getController().chooseSpellAbilitiesForEffect(availableSA, sa, prompt, amount, ImmutableMap.of());
+                // MinChoiceAmount: up to ChoiceAmount of them (D00-DL's drawing has whichever features it has)
+                final java.util.Map<String, Object> params = sa.hasParam("MinChoiceAmount")
+                        ? ImmutableMap.<String, Object>of("MinChoiceAmount", AbilityUtils.calculateAmount(host, sa.getParam("MinChoiceAmount"), sa))
+                        : ImmutableMap.<String, Object>of();
+                chosenSAs = p.getController().chooseSpellAbilitiesForEffect(availableSA, sa, prompt, amount, params);
             }
 
             List<Object> oldRem = Lists.newArrayList(IterableUtil.filter(host.getRemembered(), Player.class));

@@ -318,6 +318,7 @@ Sheep:Sheep
 Shi'ar:Shi'ar
 Siren:Sirens
 Skeleton:Skeletons
+Sketch:Sketches
 Skrull:Skrulls
 Skunk:Skunks
 Slith:Sliths

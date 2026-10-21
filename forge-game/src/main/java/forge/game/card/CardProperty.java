@@ -1446,6 +1446,12 @@ public class CardProperty {
             if (!card.sharesNameWith(source)) {
                 return false;
             }
+        } else if (property.equals("sameArtAsPermanentYouCtrl")) {
+            // Park Map: the same illustration as a permanent the searching player controls
+            final String art = card.getKnownArt();
+            if (art == null || !sourceController.getCardsIn(ZoneType.Battlefield).anyMatch(c -> art.equals(c.getKnownArt()))) {
+                return false;
+            }
         } else if (property.startsWith("sharesExpansionWith ")) {
             // Meet and Greet "Sisay": the same expansion symbol, whatever its rarity color (rulings)
             final String set = card.getSetCode();

@@ -206,6 +206,9 @@ public class ChooseGenericAi extends SpellAbilityAi {
             return best;
         } else if ("Random".equals(logic)) {
             return Aggregates.random(spells);
+        } else if ("Sketch".equals(logic)) {
+            // D00-DL: the AI's fifteen-second drawing - each pick a feature more, until it stops
+            return MyRandom.percentTrue(55) ? Aggregates.random(spells) : null;
         } else if ("Phasing".equals(logic)) { // Teferi's Realm : keep aggressive
             List<SpellAbility> filtered = spells.stream()
                     .filter(sp -> !sp.getDescription().contains("Creature") && !sp.getDescription().contains("Land"))

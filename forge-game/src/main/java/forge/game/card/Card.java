@@ -8393,6 +8393,18 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         counterTokens = n;
     }
 
+    /**
+     * Park Map: the illustration this card shows, as the printing data has it for lands; null when unknown, or when an
+     * art sticker has made it art of its own (rulings).
+     */
+    public String getKnownArt() {
+        if (getStickers().stream().anyMatch(s -> s.getKind() == forge.game.card.sticker.StickerKind.ART)) {
+            return null;
+        }
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t == null ? null : t.getArt(isBackSide());
+    }
+
     /** The named characters the printing data finds on this printed card (Vorthos). */
     public Set<String> getKnownCharacterSlugs() {
         final PrintingTraits.Traits t = getPrintingTraits();

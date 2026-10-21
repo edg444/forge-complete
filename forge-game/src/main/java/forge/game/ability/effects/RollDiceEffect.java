@@ -925,6 +925,24 @@ public class RollDiceEffect extends SpellAbilityEffect {
             String message = Localizer.getInstance().getMessage("lblPlayerChooseValue", player, chosen);
             player.getGame().getAction().notifyOfValue(sa, player, message, player);
             sa.setSVar(sa.getParam("ChosenSVar"), Integer.toString(chosen));
+            // Souvenir T-Shirt: the results it keeps are its own, for its static ability to read
+            if (sa.hasParam("ChosenOnHost")) {
+                sa.getHostCard().setSVar(sa.getParam("ChosenSVar"), "Number$" + chosen);
+            }
+            if (sa.hasParam("SecondChosenSVar")) {
+                // Souvenir T-Shirt: a second result, from the ones left
+                final List<Integer> left = Lists.newArrayList(rolls);
+                left.remove(Integer.valueOf(chosen));
+                if (!left.isEmpty()) {
+                    final int second = player.getController().chooseNumber(sa, Localizer.getInstance().getMessage("lblChooseAResult"), left, player);
+                    player.getGame().getAction().notifyOfValue(sa, player,
+                            Localizer.getInstance().getMessage("lblPlayerChooseValue", player, second), player);
+                    sa.setSVar(sa.getParam("SecondChosenSVar"), Integer.toString(second));
+                    if (sa.hasParam("ChosenOnHost")) {
+                        sa.getHostCard().setSVar(sa.getParam("SecondChosenSVar"), "Number$" + second);
+                    }
+                }
+            }
             if (sa.hasParam("OtherSVar")) {
                 int other = rolls.get(0);
                 for (int i = 1; i < rolls.size(); ++i) {

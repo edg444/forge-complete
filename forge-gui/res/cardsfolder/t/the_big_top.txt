@@ -1,0 +1,7 @@
+Name:The Big Top
+ManaCost:no cost
+Types:Land
+# The colors on your top are yours to see (honor system): any garment others can see counts, and in an Un- game any
+# color can be added at all (rulings), so the choice is the player's.
+A:AB$ Mana | Cost$ T | Produced$ Any | SpellDescription$ Add one mana of any color that appears on your top. (A top is an outerwear garment worn on the upper body.)
+Oracle:{T}: Add one mana of any color that appears on your top. (A top is an outerwear garment worn on the upper body.)

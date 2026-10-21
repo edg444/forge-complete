@@ -312,6 +312,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: The Big Top (UNF #197).** Any color, chosen by the player (honor system; in an Un- game any color can be
+  added - rulings). No engine change.
+- **Unfinity: Souvenir T-Shirt (UNF #192).** New RollDice parameters `SecondChosenSVar` (a second result from the rest)
+  and `ChosenOnHost` (kept on the card for its static ability).
+  - The Magic-branded items worn are counted as it enters (honor system).
+  - **AI:** its simulated wardrobe usually has none.
+- **Unfinity: Park Map (UNF #190).** Land printings' illustrations are now in `PrintingTraits.txt` (`art=`); an art
+  sticker makes a card's art its own (rulings). New `sameArtAsPermanentYouCtrl` property.
+- **Unfinity: D00-DL, Caricaturist (UNF #187).** New Sketch token and creature type.
+  - New GenericChoice parameter `MinChoiceAmount` for "up to" choices: the player chooses every feature their
+    drawing has (honor system).
+  - **AI:** its drawing has a few features at random.
 - **Unfinity: Blue Ribbon (UNF #184).** The person outside the game is simulated: they pick at random, likelier the more
   impactful the creature (user ruling, as for Defective Detective).
   - Best in show is a trigger the equipped creature gains.

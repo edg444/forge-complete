@@ -65,6 +65,8 @@ public final class PrintingTraits {
         private boolean boosterFun = false;
         private String universe = null;
         private java.util.Set<String> characters = java.util.Collections.emptySet();
+        private String art = null;
+        private String backArt = null;
 
         /** The border as printed, or null when the edition data already has it right. */
         public CardEdition.BorderColor getBorder() {
@@ -126,6 +128,11 @@ public final class PrintingTraits {
 
         public java.util.Set<String> getCharacters() {
             return characters;
+        }
+
+        /** The illustration a land printing's face shows (Park Map), or null where it isn't recorded. */
+        public String getArt(final boolean backFace) {
+            return backFace ? backArt : art;
         }
 
         /** A tree in the artwork (Selfie Preservation), per Scryfall Tagger; false can still mean untagged. */
@@ -284,6 +291,10 @@ public final class PrintingTraits {
                     t.fourLegs = true;
                 } else if (trait.equals("backfourlegs")) {
                     t.backFourLegs = true;
+                } else if (trait.startsWith("art=")) {
+                    t.art = trait.substring(4);
+                } else if (trait.startsWith("backart=")) {
+                    t.backArt = trait.substring(8);
                 } else if (trait.startsWith("characters=")) {
                     t.characters = new java.util.HashSet<>(java.util.Arrays.asList(trait.substring(11).split(",")));
                 } else if (trait.startsWith("flavorlines=")) {

@@ -1,0 +1,5 @@
+Name:Sketch Token
+ManaCost:no cost
+Types:Creature Sketch
+PT:4/4
+Oracle:

@@ -781,7 +781,8 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
         }
 
         //override generic
-        List<SpellAbilityView> chosen = getGui().getChoices(title, num, num, Lists.newArrayList(spellViewCache.keySet()));
+        final int min = params != null && params.get("MinChoiceAmount") instanceof Integer i ? Math.min(i, num) : num;
+        List<SpellAbilityView> chosen = getGui().getChoices(title, min, num, Lists.newArrayList(spellViewCache.keySet()));
 
         for (SpellAbilityView view : chosen) {
             if (spellViewCache.containsKey(view)) {

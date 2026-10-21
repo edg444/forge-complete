@@ -2154,6 +2154,10 @@ public class AiController {
                 }
             }
             return Math.min(max, best);
+        } else if ("MagicItems".equals(logic)) {
+            // Souvenir T-Shirt: a simulated wardrobe - mostly nothing Magic-branded, now and then an item or two
+            final int roll = MyRandom.getRandom().nextInt(100);
+            return Math.min(max, Math.max(min, roll < 70 ? 0 : roll < 90 ? 1 : 2));
         } else if ("Signers".equals(logic)) {
             // Autograph Book: a simulated book - signed by a person or two, now and then a few more
             final int roll = MyRandom.getRandom().nextInt(100);
