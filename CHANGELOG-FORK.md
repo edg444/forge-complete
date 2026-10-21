@@ -312,6 +312,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Underdog Racer, Unclaimed Tanadon, Take the High Ground, Tarkir Omenpath, Unknown Event Shores,
+  Command Mine, Command Power Plant, Fear of Going 0-2 Drop, Aggressive Detective, Join the Winning Team (UNK
+  CG05a-CR03d).**
+  - **Scoreboard (user ruling):** new `ScorePoint` effect. The match keeps the Mirran and Phyrexian teams' points;
+    you're behind when your team has fewer (`Count$YourTeamBehind`).
+  - **Teams:** a deck with a card that cares about a team (`SVar:AsksTeam`) joins one as the game begins, if it hasn't
+    this match, so team-based costs and abilities work from the start. Race teams (Cloudspire, Speed Demons) work the
+    same way (`Teams$ Race`, `Count$RaceTeam.Cloudspire`).
+  - **Event record (user ruling):** `Count$EventLosses` counts the matches lost in a gauntlet or tournament (only draft
+    and sealed gauntlets go on after a loss), and otherwise the games lost this match.
+  - **Fix:** a static that sets a card's mana cost (`ManaCost$`, `Incorporate$`, `SetColoredSymbolsTo$`) now gives the
+    cost back when it stops applying. Before, Celestial Dawn's symbols stayed white after it left.
 - **Unknown Event: Joraga Peach, Naturalize the Phyresis, That's No Moonmist, Growing Detective, Investi-Gate, Merfolk
   Surveyor, Fear of Unsleeved Decks (UNK CG01-CG04).**
   - **Explore-clash:** new `ExploreClash` effect (`WinSubAbility$`); the AI decides about its own revealed card as it

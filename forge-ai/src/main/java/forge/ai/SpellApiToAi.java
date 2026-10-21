@@ -162,6 +162,7 @@ public enum SpellApiToAi {
             .put(ApiType.ResetCommanderTax, AlwaysPlayAi.class)
             .put(ApiType.ChooseTeam, ChooseTeamAi.class)
             .put(ApiType.ExploreClash, ExploreAi.class)
+            .put(ApiType.ScorePoint, AlwaysPlayAi.class)
             .put(ApiType.SeekHidden, SeekHiddenAi.class)
             .put(ApiType.PutHiddenTokens, AlwaysPlayAi.class)
             .put(ApiType.GainOwnership, CannotPlayAi.class)

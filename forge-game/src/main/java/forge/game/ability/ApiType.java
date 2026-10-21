@@ -160,6 +160,7 @@ public enum ApiType {
     ResetCommanderTax (ResetCommanderTaxEffect.class),
     ChooseTeam (ChooseTeamEffect.class),
     ExploreClash (ExploreClashEffect.class),
+    ScorePoint (ScorePointEffect.class),
     GameDrawn (GameDrawEffect.class),
     GenericChoice (ChooseGenericEffect.class),
     Gerrymander (GerrymanderEffect.class),

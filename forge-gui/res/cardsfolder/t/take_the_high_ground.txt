@@ -1,0 +1,9 @@
+Name:Take the High Ground
+ManaCost:G
+Types:Sorcery
+SVar:AsksTeam:Team
+A:SP$ Pump | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | SubAbility$ DBFight | StackDescription$ None | SpellDescription$ Target creature you control fights target creature you don't control. Score one point for your team.
+SVar:DBFight:DB$ Fight | Defined$ ParentTarget | ValidTgts$ Creature.YouDontCtrl | TgtPrompt$ Select target creature you don't control | SubAbility$ DBScore
+SVar:DBScore:DB$ ScorePoint | Defined$ You | SubAbility$ ExileMe
+SVar:ExileMe:DB$ ChangeZone | Defined$ Self | Origin$ Stack | Destination$ Exile | StackDescription$ None | SpellDescription$ Exile CARDNAME.
+Oracle:Target creature you control fights target creature you don't control. Score one point for your team.\nExile Take the High Ground.

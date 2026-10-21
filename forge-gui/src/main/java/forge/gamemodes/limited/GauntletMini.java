@@ -140,7 +140,7 @@ public class GauntletMini {
      */
     private void startRound() {
         final List<RegisteredPlayer> starter = new ArrayList<>();
-        final RegisteredPlayer human = new RegisteredPlayer(humanDeck).setPlayer(GamePlayerUtil.getGuiPlayer());
+        final RegisteredPlayer human = new RegisteredPlayer(humanDeck).setPlayer(GamePlayerUtil.getGuiPlayer()).setEventLosses(losses);
         starter.add(human);
         starter.add(aiOpponents.get(currentRound - 1).setPlayer(GamePlayerUtil.createAiPlayer()));
 

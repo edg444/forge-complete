@@ -131,6 +131,17 @@ public class RegisteredPlayer {
     public int getTeamNumber() {
         return teamNumber;
     }
+
+    // matches lost so far in the gauntlet or tournament this match is part of, or -1 outside one (Fear of Going 0-2 Drop)
+    private int eventLosses = -1;
+
+    public int getEventLosses() {
+        return eventLosses;
+    }
+    public RegisteredPlayer setEventLosses(final int losses) {
+        eventLosses = losses;
+        return this;
+    }
     public void setTeamNumber(int teamNumber0) {
         this.teamNumber = teamNumber0;
     }

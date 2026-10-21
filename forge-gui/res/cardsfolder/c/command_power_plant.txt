@@ -1,0 +1,16 @@
+Name:Command Power Plant
+ManaCost:no cost
+Types:Land
+A:AB$ Mana | Cost$ T | Produced$ Combo ColorIdentity | Amount$ X | SpellDescription$ Add one mana of any color in your commander's color identity. If you control a Command Tower and a Command Mine, add two mana of any color in your commander's color identity instead.
+SVar:X:Count$Compare Both GE2.2.1
+SVar:Both:SVar$Tower/Plus.Mine
+SVar:Tower:Count$Valid Card.namedCommand Tower+YouCtrl/LimitMax.1
+SVar:Mine:Count$Valid Card.namedCommand Mine+YouCtrl/LimitMax.1
+S:Mode$ Continuous | Affected$ Card.namedCommand Tower+YouCtrl | AddAbility$ TowerMana | Description$ Command Towers you control have, "{T}: If you control a Command Mine and a Command Power Plant, add three mana of any color in your commander's color identity."
+SVar:TowerMana:AB$ Mana | Cost$ T | Produced$ Combo ColorIdentity | Amount$ Three | SpellDescription$ If you control a Command Mine and a Command Power Plant, add three mana of any color in your commander's color identity.
+SVar:Three:Count$Compare TronBoth GE2.3.0
+SVar:TronBoth:SVar$TronMine/Plus.TronPlant
+SVar:TronMine:Count$Valid Card.namedCommand Mine+YouCtrl/LimitMax.1
+SVar:TronPlant:Count$Valid Card.namedCommand Power Plant+YouCtrl/LimitMax.1
+AI:RemoveDeck:NonCommander
+Oracle:{T}: Add one mana of any color in your commander's color identity. If you control a Command Tower and a Command Mine, add two mana of any color in your commander's color identity instead.\nCommand Towers you control have, "{T}: If you control a Command Mine and a Command Power Plant, add three mana of any color in your commander's color identity."

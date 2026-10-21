@@ -125,6 +125,8 @@ public class TournamentData {
     }
 
     public void startRound(final List<RegisteredPlayer> players, final RegisteredPlayer human) {
+        // a tournament ends at a lost match, so whoever is still in it hasn't lost one
+        human.setEventLosses(0);
         hostedMatch = GuiBase.getInterface().hostMatch();
         hostedMatch.startMatch(GameType.Tournament, null, players, human, GuiBase.getInterface().getNewGuiGame());
     }

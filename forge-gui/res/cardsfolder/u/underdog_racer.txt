@@ -1,0 +1,11 @@
+Name:Underdog Racer
+ManaCost:4 G
+Types:Creature Dog Pilot
+PT:5/5
+# The scoreboard is the match's: points scored for the Mirran and Phyrexian teams (user ruling 2026-10-21).
+SVar:AsksTeam:Team
+S:Mode$ ReduceCost | ValidCard$ Card.Self | Type$ Spell | Amount$ 1 | EffectZone$ All | CheckSVar$ Behind | SVarCompare$ EQ1 | Description$ This spell costs {1} less to cast if your team is currently behind. (If neither player can see the scoreboard or easily verify, that means it's Schrödinger's race and you're in a quantum superposition of maybe losing and so this costs {1} less.)
+SVar:Behind:Count$YourTeamBehind
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDestroy | TriggerDescription$ When this creature enters, destroy target artifact an opponent controls.
+SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Artifact.OppCtrl | TgtPrompt$ Select target artifact an opponent controls
+Oracle:This spell costs {1} less to cast if your team is currently behind. (If neither player can see the scoreboard or easily verify, that means it's Schrödinger's race and you're in a quantum superposition of maybe losing and so this costs {1} less.)\nWhen this creature enters, destroy target artifact an opponent controls.

@@ -3042,6 +3042,8 @@ public class GameAction {
                     c.setMarkedColors(takesAction.getController().chooseColors(prompt, sa, n, n, ColorSet.WUBRG));
                 }
             }
+            // Unknown Event: a deck with a card that cares about a team joins one now, if not already this match
+            forge.game.ability.effects.ChooseTeamEffect.chooseForDeck(takesAction, all);
             // Common Curve Filler: a number written in during deckbuilding is chosen now and kept all game
             // (user ruling 2026-10-21); the AI fills the emptiest slot of its curve from two to five
             for (Card c : all) {

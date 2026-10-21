@@ -142,6 +142,8 @@ public final class GauntletData {
     }
 
     public void startRound(final List<RegisteredPlayer> players, final RegisteredPlayer human) {
+        // a gauntlet ends at a lost match, so whoever is still in it hasn't lost one
+        human.setEventLosses(0);
         hostedMatch = GuiBase.getInterface().hostMatch();
         hostedMatch.startMatch(isCommanderGauntlet ? GameType.CommanderGauntlet : GameType.Gauntlet, isCommanderGauntlet ? Collections.singleton(GameType.Commander) : null , players, human, GuiBase.getInterface().getNewGuiGame());
     }

@@ -1,0 +1,11 @@
+Name:Fear of Going 0-2 Drop
+ManaCost:1 R
+Types:Enchantment Creature Nightmare
+PT:0/2
+T:Mode$ SpellCast | ValidCard$ Card.nonCreature | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDamage | TriggerDescription$ Whenever you cast a noncreature spell, this creature deals 1 damage to each opponent.
+SVar:TrigDamage:DB$ DealDamage | Defined$ Player.Opponent | NumDmg$ 1
+# The event is a gauntlet or tournament: the matches lost in it so far. Otherwise it is this match: the games lost
+# (user ruling 2026-10-21). Gauntlets and tournaments end at a lost match, so only a draft or sealed gauntlet goes on.
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ 2 | CheckSVar$ Losses | SVarCompare$ EQ1 | Description$ As long as you have exactly one loss in the event you're playing, this creature gets +2/+0. (For example, if your record is 0-1, this creature gets +2/+0.)
+SVar:Losses:Count$EventLosses
+Oracle:Whenever you cast a noncreature spell, this creature deals 1 damage to each opponent.\nAs long as you have exactly one loss in the event you're playing, this creature gets +2/+0. (For example, if your record is 0-1, this creature gets +2/+0.)

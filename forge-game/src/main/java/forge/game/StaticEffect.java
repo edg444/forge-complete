@@ -236,6 +236,15 @@ public class StaticEffect {
                     }
                 }
 
+                // a mana cost a static set (Unclaimed Tanadon, Celestial Dawn) goes back when it stops applying
+                if (hasParam("ManaCost") || hasParam("SetColoredSymbolsTo")) {
+                    affectedCard.removeChangedManaCost(getTimestamp(), ability.getId());
+                }
+                if (hasParam("Incorporate")) {
+                    affectedCard.removeChangedManaCost(getTimestamp(), ability.getId());
+                    affectedCard.removeColorByText(getTimestamp(), ability.getId());
+                }
+
                 if (hasParam("GainTextOf")) {
                     affectedCard.removeChangedName(getTimestamp(), ability.getId(), false);
                     affectedCard.removeChangedManaCost(getTimestamp(), ability.getId());

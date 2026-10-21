@@ -2280,6 +2280,29 @@ public class AbilityUtils {
             return doXMath(sq[1].equals((player != null ? player : c.getController()).getMatchNote(
                     forge.game.ability.effects.ChooseTeamEffect.NOTE)) ? 1 : 0, expr, c, ctb);
         }
+        // Fear of Going 0-2 Drop: matches lost in the gauntlet or tournament, else games lost this match (user ruling)
+        if (sq[0].equals("EventLosses")) {
+            final Player you = player != null ? player : c.getController();
+            final forge.game.player.RegisteredPlayer rp = you.getRegisteredPlayer();
+            int losses = 0;
+            if (rp != null && rp.getEventLosses() >= 0) {
+                losses = rp.getEventLosses();
+            } else if (game.getMatch() != null) {
+                for (final forge.game.GameOutcome o : game.getMatch().getOutcomes()) {
+                    if (!o.isDraw() && rp != null && !o.isWinner(rp)) {
+                        losses++;
+                    }
+                }
+            }
+            return doXMath(losses, expr, c, ctb);
+        }
+        if (sq[0].equals("YourTeamBehind")) {
+            return doXMath(forge.game.ability.effects.ChooseTeamEffect.isBehind(player != null ? player : c.getController()) ? 1 : 0, expr, c, ctb);
+        }
+        if (sq[0].equals("RaceTeam") && sq.length > 1) {
+            final String team = forge.game.ability.effects.ChooseTeamEffect.teamOf(player != null ? player : c.getController(), true);
+            return doXMath(team != null && team.replace(" ", "").equals(sq[1]) ? 1 : 0, expr, c, ctb);
+        }
         if (sq[0].equals("YouAreSleeved")) {
             return doXMath((player != null ? player : c.getController()).isSleeved() ? 1 : 0, expr, c, ctb);
         }
