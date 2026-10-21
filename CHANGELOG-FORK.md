@@ -312,6 +312,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Hat Trick (UNF #13).** A hat Forge already knows of counts without asking: one tagged as worn in
+  single-figure art, or one the controller already claimed (`Card.HatInArt`, Goblin Haberdasher's).
+  - Otherwise the caster is asked. "Has" is wider than "wearing" (rulings): a held hat counts, and so does a hat,
+    wig or headband art sticker. Forge's art stickers don't record what they show, so this has to be asked.
+  - "You have a hat" is honor system, and it's asked only once the creature has one.
+  - Triple strike requires both hats. A creature that already had double strike from elsewhere doesn't count; only
+    the one that got double strike from Hat Trick is remembered for this.
+  - The AI can't see the art and has no head, so it answers no to both questions.
+  - No engine change.
 - **Unfinity: Gobsmacked (UNF #11).** Whether you can see the chosen person is the Aura's chosen mode (Visible or
   Hidden), so the card's detail panel shows it; the lock (Arrest's, on any nonland permanent) applies only while Visible.
   - As it enters, you choose a person and say whether you can see them from your seat; the AI picks someone it can see.
