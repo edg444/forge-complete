@@ -363,11 +363,16 @@ public class MatchController extends NetworkGuiGame {
 
     @Override
     public void showFlipOntoBattlefield(CardView flipped, CardView target, List<CardView> hit, List<CardView> battlefield, int timesFlipped) {
+        showFlipOntoBattlefield(flipped, target, hit, battlefield, timesFlipped, forge.game.event.TossStyle.CARD);
+    }
+
+    @Override
+    public void showFlipOntoBattlefield(CardView flipped, CardView target, List<CardView> hit, List<CardView> battlefield, int timesFlipped, forge.game.event.TossStyle style) {
         if (!FModel.getPreferences().getPrefBoolean(FPref.UI_ANIMATED_CARD_TAPUNTAP)) {
             return;
         }
         final CountDownLatch done = new CountDownLatch(1);
-        Gdx.app.postRunnable(() -> new FlipOntoBattlefieldAnimation(flipped, target, hit, battlefield, timesFlipped, done::countDown).start());
+        Gdx.app.postRunnable(() -> new FlipOntoBattlefieldAnimation(flipped, target, hit, battlefield, timesFlipped, style, done::countDown).start());
         try {
             done.await(6, java.util.concurrent.TimeUnit.SECONDS);
         } catch (InterruptedException ignored) {

@@ -2713,7 +2713,17 @@ public class ComputerUtil {
         }
         else if (kindOfType.equals("Land")) {
             if (logic != null) {
-                if (logic.equals("ChosenLandwalk")) {
+                if (logic.equals("MostProminentComputerControls")) {
+                    // Landfill: the land type the AI itself has the most of
+                    int most = 0;
+                    for (final String t : validTypes) {
+                        final int n = CardLists.count(ai.getLandsInPlay(), c -> c.getType().hasSubtype(t));
+                        if (n > most) {
+                            most = n;
+                            chosen = t;
+                        }
+                    }
+                } else if (logic.equals("ChosenLandwalk")) {
                     for (Card c : AiAttackController.choosePreferredDefenderPlayer(ai).getLandsInPlay()) {
                         for (String t : c.getType().getLandTypes()) {
                             if (validTypes.contains(t)) {

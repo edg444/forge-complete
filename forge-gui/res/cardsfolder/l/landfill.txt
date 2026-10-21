@@ -1,10 +1,11 @@
 Name:Landfill
 ManaCost:4 R
 Types:Sorcery
-A:SP$ ChooseType | Defined$ You | Type$ Land | SubAbility$ DBExile | SpellDescription$ Choose a land type. Exile all lands you control of that type. Drop those cards, one at a time, onto the playing area from a height of at least one foot. Destroy each permanent completely covered by those cards. Then return the cards you dropped to the battlefield tapped.
+A:SP$ ChooseType | Defined$ You | Type$ Land | AILogic$ MostProminentComputerControls | SubAbility$ DBExile | SpellDescription$ Choose a land type. Exile all lands you control of that type. Drop those cards, one at a time, onto the playing area from a height of at least one foot. Destroy each permanent completely covered by those cards. Then return the cards you dropped to the battlefield tapped.
 SVar:DBExile:DB$ ChangeZoneAll | Origin$ Battlefield | Destination$ Exile | ChangeType$ Land.ChosenType+YouCtrl | SubAbility$ DBRepeat
-SVar:DBRepeat:DB$ RepeatEach | RepeatCards$ Land.ChosenType+YouOwn | Zone$ Exile | RepeatSubAbility$ DBFlipOne | SubAbility$ DBReturn
-SVar:DBFlipOne:DB$ FlipOntoBattlefield | SubAbility$ DBDestroyHit
+SVar:DBRepeat:DB$ RepeatEach | RepeatCards$ Land.ChosenType+YouOwn | Zone$ Exile | UseImprinted$ True | RepeatSubAbility$ DBFlipOne | SubAbility$ DBReturn
+SVar:DBFlipOne:DB$ FlipOntoBattlefield | FlipCard$ Imprinted | SubAbility$ DBDestroyHit
 SVar:DBDestroyHit:DB$ DestroyAll | ValidCards$ Card.IsRemembered+!token
-SVar:DBReturn:DB$ ChangeZoneAll | Origin$ Exile | Destination$ Battlefield | ChangeType$ Land.ChosenType+YouOwn | Tapped$ True
+SVar:DBReturn:DB$ ChangeZoneAll | Origin$ Exile | Destination$ Battlefield | ChangeType$ Land.ChosenType+YouOwn | Tapped$ True | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 Oracle:Choose a land type. Exile all lands you control of that type. Drop those cards, one at a time, onto the playing area from a height of at least one foot. Destroy each permanent completely covered by those cards. Then return the cards you dropped to the battlefield tapped.

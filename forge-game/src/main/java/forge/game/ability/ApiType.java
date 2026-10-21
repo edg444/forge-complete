@@ -63,6 +63,7 @@ public enum ApiType {
     StackDice (StackDiceEffect.class),
     DeleteFirstLetter (DeleteFirstLetterEffect.class),
     RerollDie (RerollDieEffect.class),
+    TossCard (TossCardEffect.class),
     ChooseNumber (ChooseNumberEffect.class),
     ChoosePlayer (ChoosePlayerEffect.class),
     ChooseSector (ChooseSectorEffect.class),

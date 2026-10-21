@@ -2,9 +2,11 @@ package forge.game.ability.effects;
 
 import com.google.common.collect.Lists;
 import forge.game.Game;
+import forge.game.ability.AbilityUtils;
 import forge.game.ability.SpellAbilityEffect;
 import forge.game.card.*;
 import forge.game.event.GameEventFlipOntoBattlefield;
+import forge.game.event.TossStyle;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
@@ -33,10 +35,22 @@ public class FlipOntoBattlefieldEffect extends SpellAbilityEffect {
         final Game game = host.getGame();
 
         // TODO: allow to make a bounding box of sorts somehow, ideally - upgrade to a full system allowing to actually target by location
-        CardCollectionView tgtBox = p.getController().chooseCardsForEffect(game.getCardsIn(ZoneType.Battlefield), sa, Localizer.getInstance().getMessage("lblChooseDesiredLocation"), 1, 1, sa.hasParam("AllowRandom"), null);
+        // Chaos Confetti tears itself up before its pieces fly, so it isn't on the table to be aimed at or hit
+        final CardCollection aimable = new CardCollection(game.getCardsIn(ZoneType.Battlefield));
+        if (sa.hasParam("Pieces")) {
+            aimable.remove(host);
+        }
+        CardCollectionView tgtBox = aimable.isEmpty() ? new CardCollection()
+                : p.getController().chooseCardsForEffect(aimable, sa, Localizer.getInstance().getMessage("lblChooseDesiredLocation"), 1, 1, sa.hasParam("AllowRandom"), null);
 
-        // nothing on the battlefield to aim at (Slaying Mantis can be the first permanent): it touches nothing
+        // nothing on the battlefield to aim at (Slaying Mantis can be the first permanent, Landfill's last land can
+        // fall on an empty table): it touches nothing, but the throw is still shown
         if (tgtBox.isEmpty()) {
+            final CardView shown = shownView(sa, host);
+            final TossStyle emptyStyle = sa.hasParam("Pieces") ? TossStyle.piece(MyRandom.getRandom().nextInt(4)) : TossStyle.CARD;
+            final List<CardView> none = new CopyOnWriteArrayList<>();
+            game.fireEvent(new GameEventFlipOntoBattlefield(shown, null, none, 1, false, emptyStyle));
+            game.fireEvent(new GameEventFlipOntoBattlefield(shown, null, none, 1, true, emptyStyle));
             return;
         }
         Card tgtLoc = tgtBox.getFirst();
@@ -51,6 +65,9 @@ public class FlipOntoBattlefieldEffect extends SpellAbilityEffect {
         randChoices.add(tgtLoc);
         if (lhsNeighbor != null && lhsNeighbor != tgtLoc) randChoices.add(lhsNeighbor);
         if (rhsNeighbor != null && rhsNeighbor != tgtLoc) randChoices.add(rhsNeighbor);
+        if (sa.hasParam("Pieces")) {
+            randChoices.remove(host);
+        }
 
         // TODO: would be fun to add a small chance (e.g. 3-5%) to land unpredictably on some random target?
         // Slaying Mantis is thrown, not flipped: it lands no matter what, so only where it lands is left to chance
@@ -86,18 +103,21 @@ public class FlipOntoBattlefieldEffect extends SpellAbilityEffect {
                 if (hit.size() < wanted && !hit.contains(c)) hit.add(c);
             }
             for (Card c : tgtLoc.getController().getCardsIn(ZoneType.Battlefield)) {
-                if (hit.size() < wanted && !hit.contains(c)) hit.add(c);
+                if (hit.size() < wanted && !hit.contains(c) && !(sa.hasParam("Pieces") && c.equals(host))) hit.add(c);
             }
         }
 
-        final CardView hostView = host.getView();
+        // what the animation shows flying: a dropped land (Landfill, FlipCard$) rather than the spell, or a torn-off
+        // piece of the source (Chaos Confetti, Pieces$)
+        final CardView hostView = shownView(sa, host);
+        final TossStyle style = sa.hasParam("Pieces") ? TossStyle.piece(MyRandom.getRandom().nextInt(4)) : TossStyle.CARD;
         final CardView tgtView = tgtLoc.getView();
         // thread-safe: the board UI may rewrite it from the render thread while this thread waits
         final List<CardView> hitViews = new CopyOnWriteArrayList<>();
         for (Card c : hit) { hitViews.add(c.getView()); }
 
         // first event (animation starts; with the mobile UI this returns once the orb has landed)
-        game.fireEvent(new GameEventFlipOntoBattlefield(hostView, tgtView, hitViews, animatedFlips, false));
+        game.fireEvent(new GameEventFlipOntoBattlefield(hostView, tgtView, hitViews, animatedFlips, false, style));
 
         // a board that knows the real layout may have replaced the list with the cards the orb touched
         if (flipped) {
@@ -110,7 +130,7 @@ public class FlipOntoBattlefieldEffect extends SpellAbilityEffect {
 
         if (!flipped) {
             game.getAction().notifyOfValue(sa, host, Localizer.getInstance().getMessage("lblDidNotFlipOver"), null);
-            game.fireEvent(new GameEventFlipOntoBattlefield(hostView, tgtView, hitViews, 0, true));
+            game.fireEvent(new GameEventFlipOntoBattlefield(hostView, tgtView, hitViews, 0, true, style));
             return;
         }
         if (!thrown) {
@@ -126,7 +146,18 @@ public class FlipOntoBattlefieldEffect extends SpellAbilityEffect {
             game.getAction().notifyOfValue(sa, host, Localizer.getInstance().getMessage("lblDidNotLandOnCards"), null);
         }
         host.addRemembered(hit);
-        game.fireEvent(new GameEventFlipOntoBattlefield(hostView, tgtView, hitViews, animatedFlips, true));
+        game.fireEvent(new GameEventFlipOntoBattlefield(hostView, tgtView, hitViews, animatedFlips, true, style));
+    }
+
+    /** What the animation shows flying: a dropped land (Landfill, FlipCard$) rather than the spell. */
+    private static CardView shownView(final SpellAbility sa, final Card host) {
+        if (sa.hasParam("FlipCard")) {
+            final CardCollection shown = AbilityUtils.getDefinedCards(host, sa.getParam("FlipCard"), sa);
+            if (!shown.isEmpty()) {
+                return shown.getFirst().getView();
+            }
+        }
+        return host.getView();
     }
 
     @Override

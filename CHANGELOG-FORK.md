@@ -309,6 +309,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Throw animations for the funny cards that throw** (upstream's mobile Chaos Orb / Falling Star animation, #12183).
+  `GameEventFlipOntoBattlefield` gained a `TossStyle` (5-arg constructor kept for upstream calls); the mobile
+  `FlipOntoBattlefieldAnimation` draws a torn quarter of the card (Chaos Confetti, FlipOntoBattlefield `Pieces$`), a
+  die showing its result landing on exactly what DiceLanding touched (Ol' Buzzbark, one throw per die), the dropped
+  land itself (Landfill, `FlipCard$ Imprinted`), or the card tossed up and back onto its own spot, face down for a
+  bad drop (new API `TossCard` - Orcish Paratroopers, Clay Pigeon). Slaying Mantis already used it. Desktop has no
+  throw animation upstream either. Fixes found on the way: a throw onto an empty table is still shown (it returned
+  early); Chaos Confetti's pieces can no longer hit Chaos Confetti itself (it destroyed itself mid-throws); Landfill's
+  AI picks the land type it has most of (`AILogic$ MostProminentComputerControls` for land types; it always chose
+  Island).
 ### 2026-10-20, tenth deploy (desktop, Android, GitHub) — Unsanctioned complete; 22-commit upstream merge
 
 - **Upstream merge** (22 commits, 85888fdfa0a): 11 card-script conflicts resolved keeping the fork's Scryfall wording

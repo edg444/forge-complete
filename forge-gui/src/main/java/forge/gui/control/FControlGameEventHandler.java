@@ -303,7 +303,7 @@ public class FControlGameEventHandler extends IGameEventVisitor.Base<Void> {
         for (PlayerView pv : matchController.getGameView().getPlayers()) {
             for (CardView cv : pv.getCards(ZoneType.Battlefield)) { battlefield.add(cv); }
         }
-        matchController.showFlipOntoBattlefield(ev.flipped(), ev.target(), ev.hit(), battlefield, ev.timesFlipped());
+        matchController.showFlipOntoBattlefield(ev.flipped(), ev.target(), ev.hit(), battlefield, ev.timesFlipped(), ev.style());
         return null;
     }
 

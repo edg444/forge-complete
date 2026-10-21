@@ -20,10 +20,13 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.BufferUtils;
 import forge.Forge;
 import forge.Graphics;
+import forge.assets.FSkinFont;
+import com.badlogic.gdx.utils.Align;
 import forge.assets.FImage;
 import forge.card.CardRenderer;
 import forge.card.CardRenderer.CardStackPosition;
 import forge.game.card.CardView;
+import forge.game.event.TossStyle;
 import forge.game.zone.ZoneType;
 import forge.screens.match.MatchController;
 import forge.screens.match.views.VCardDisplayArea;
@@ -44,6 +47,8 @@ public class FlipOntoBattlefieldAnimation extends ForgeAnimation {
     private float resolvedAt = -1f, goneAt = -1f;
 
     private final CardView flipped;
+    private final TossStyle style;
+    private final float drawW, drawH;   // what flies: the card, a quarter of it, or a die
     private final int timesFlipped;
     private final boolean flew;
     private final Runnable onFinished;
@@ -67,7 +72,13 @@ public class FlipOntoBattlefieldAnimation extends ForgeAnimation {
     private final IntBuffer vp = BufferUtils.newIntBuffer(16);
     public FlipOntoBattlefieldAnimation(CardView flipped, CardView target, List<CardView> hit,
                                         List<CardView> battlefield, int timesFlipped, Runnable onFinished) {
+        this(flipped, target, hit, battlefield, timesFlipped, TossStyle.CARD, onFinished);
+    }
+
+    public FlipOntoBattlefieldAnimation(CardView flipped, CardView target, List<CardView> hit,
+                                        List<CardView> battlefield, int timesFlipped, TossStyle style, Runnable onFinished) {
         this.flipped = flipped;
+        this.style = style == null ? TossStyle.CARD : style;
         this.timesFlipped = timesFlipped;
         this.flew = timesFlipped > 0;
         this.onFinished = onFinished;
@@ -80,6 +91,15 @@ public class FlipOntoBattlefieldAnimation extends ForgeAnimation {
         float h = clampHeight(tr != null ? Math.max(tr[2], tr[3]) - 2 * FCardPanel.PADDING : sh * 0.2f);
         cardH = Math.round(h);
         cardW = Math.round(h / CARD_RATIO);
+        if (this.style.dieFace() > 0) {
+            drawW = drawH = Math.round(cardW * 0.42f);
+        } else if (this.style.piece() >= 0) {
+            drawW = Math.round(cardW / 2f);
+            drawH = Math.round(cardH / 2f);
+        } else {
+            drawW = cardW;
+            drawH = cardH;
+        }
         float tcx = tr != null ? tr[0] + tr[2] / 2f : sw / 2f;
         float tcy = tr != null ? tr[1] + tr[3] / 2f : sh / 2f;
 
@@ -102,12 +122,16 @@ public class FlipOntoBattlefieldAnimation extends ForgeAnimation {
         final float ang = (float) (Math.random() - 0.5) * 50f;
         final int wanted = flew ? hit.size() : 0;   // how many cards the game says the orb hits
         float lx, ly;
-        if (wanted > 0 && tr != null && !obstacles.isEmpty()) {
+        if (this.style.returnHome()) {
+            // Clay Pigeon, Orcish Paratroopers: up and back down on its own spot, touching nothing
+            lx = startX;
+            ly = startY;
+        } else if (wanted > 0 && tr != null && !obstacles.isEmpty() && !this.style.keepHits()) {
             // The game rolled how many cards get hit; where the orb really lands decides which ones.
             // Try landing spots around the target and keep one that touches that many cards.
             final double rad = Math.toRadians(ang);
             final float cs = (float) Math.abs(Math.cos(rad)), sn = (float) Math.abs(Math.sin(rad));
-            final float bw = (cardW * cs + cardH * sn) * 0.85f, bh = (cardW * sn + cardH * cs) * 0.85f;
+            final float bw = (drawW * cs + drawH * sn) * 0.85f, bh = (drawW * sn + drawH * cs) * 0.85f;
 
             int bestDiff = Integer.MAX_VALUE;
             final List<float[]> pool = new ArrayList<>();
@@ -339,12 +363,14 @@ public class FlipOntoBattlefieldAnimation extends ForgeAnimation {
     private CardAreaPanel lastPanel;
 
     private void applyLeaveOrigin(CardAreaPanel p) {
+        if (style.piece() >= 0 || style.dieFace() > 0) { return; }   // the card itself never moved
         float pad = FCardPanel.PADDING;
         p.setLeaveOrigin(landX - cardW / 2f - pad, landY - cardH / 2f - pad,
                 cardW + 2 * pad, cardH + 2 * pad, landAngle);
     }
 
     private void hideSource() {
+        if (style.dieFace() > 0) { return; }   // a thrown die leaves its thrower where it is
         try {
             CardAreaPanel p = CardAreaPanel.get(flipped);
             if (p == null) { return; }
@@ -383,13 +409,15 @@ public class FlipOntoBattlefieldAnimation extends ForgeAnimation {
         float height = (float) Math.sin(Math.PI * t) * (flew ? 1f : 0.8f);
         float scale = 1f + 0.3f * height;   // was 0.6f
 
-        float flipAngle = (float) (2d * Math.PI * timesFlipped * Interpolation.sine.apply(t));
+        // a bad drop (Orcish Paratroopers) ends upside down: half a turn more
+        float flipAngle = (float) ((2d * timesFlipped + (style.landFaceDown() ? 1d : 0d)) * Math.PI * Interpolation.sine.apply(t));
         float c = (float) Math.cos(flipAngle);
         float tumble = flew ? Math.max(0.06f, Math.abs(c)) : 1f;
-        boolean showBack = flew && c < 0f;                       // far side of the flip = card back
+        boolean showBack = (flew || style.landFaceDown()) && c < 0f;   // far side of the flip = card back
+        if (style.landFaceDown()) { tumble = Math.max(0.06f, Math.abs(c)); }
 
         float rotation = landAngle + spinDir * (flew ? 240f : 90f) * (1f - u);
-        drawCardAt(g, x, y, cardW * scale, cardH * scale * tumble, rotation, height * cardH * 0.3f, showBack);
+        drawCardAt(g, x, y, drawW * scale, drawH * scale * tumble, rotation, height * drawH * 0.3f, showBack);
     }
 
     private void drawResting(Graphics g, float since) {
@@ -405,7 +433,7 @@ public class FlipOntoBattlefieldAnimation extends ForgeAnimation {
             }
         }
         float pop = since < SETTLE_TIME ? 0.12f * (float) Math.sin(Math.PI * since / SETTLE_TIME) : 0f;
-        drawCardAt(g, landX, landY, cardW * (1f + pop), cardH * (1f + pop), landAngle, cardH * 0.04f, false);
+        drawCardAt(g, landX, landY, drawW * (1f + pop), drawH * (1f + pop), landAngle, drawH * 0.04f, style.landFaceDown());
     }
 
     private void drawCardAt(Graphics g, float cx, float cy, float w, float h, float rotation, float shadow, boolean back) {
@@ -415,9 +443,18 @@ public class FlipOntoBattlefieldAnimation extends ForgeAnimation {
             g.setAlphaComposite(a);
             g.fillRect(SHADOW, cx - w / 2f + shadow, cy - h / 2f + shadow, w, h);
         }
-        if (back) {
+        if (style.dieFace() > 0) {
+            g.setAlphaComposite(a);
+            drawDie(g, cx - w / 2f, cy - h / 2f, w, h);
+        } else if (back) {
             g.setAlphaComposite(a);
             drawCardBack(g, cx - w / 2f, cy - h / 2f, w, h);
+        } else if (face != null && style.piece() >= 0) {
+            final SpriteBatch b = g.getBatch();
+            b.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE_MINUS_SRC_ALPHA);
+            g.setColorRGBA(a, a, a, a);
+            g.drawImage(piece(), cx - w / 2f, cy - h / 2f, w, h);
+            b.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         } else if (face != null) {
             final SpriteBatch b = g.getBatch();
             b.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -430,6 +467,28 @@ public class FlipOntoBattlefieldAnimation extends ForgeAnimation {
         }
         g.resetAlphaComposite();
         g.endTransform();
+    }
+
+    private TextureRegion pieceRegion;
+
+    /** Chaos Confetti: one torn-off quarter of the baked card face. */
+    private TextureRegion piece() {
+        if (pieceRegion == null) {
+            final int qw = face.getRegionWidth() / 2, qh = face.getRegionHeight() / 2;
+            final int q = style.piece() % 4;
+            pieceRegion = new TextureRegion(face.getTexture(), face.getRegionX() + (q % 2) * qw,
+                    face.getRegionY() + (q / 2) * qh, qw, qh);
+            pieceRegion.flip(false, true);   // the baked face is stored upside down, like face
+        }
+        return pieceRegion;
+    }
+
+    /** Ol' Buzzbark: a white die showing its result. */
+    private void drawDie(Graphics g, float x, float y, float w, float h) {
+        final float r = w * 0.18f;
+        g.fillRoundRect(Color.WHITE, x, y, w, h, r);
+        g.drawRoundRect(Math.max(1f, w * 0.05f), Color.BLACK, x, y, w, h, r);
+        g.drawText(String.valueOf(style.dieFace()), FSkinFont.forHeight(h * 0.6f), Color.BLACK, x, y, w, h, false, Align.center, true);
     }
 
     private void drawCardBack(Graphics g, float x, float y, float w, float h) {

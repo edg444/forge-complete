@@ -95,6 +95,10 @@ public interface IGuiGame {
     default void addPlayerView(PlayerView player, PlayerView seatedAfter) {}
 
     default void showFlipOntoBattlefield(CardView flipped, CardView target, List<CardView> hit, List<CardView> battlefield, int timesFlipped) {}
+    /** Fork: a throw drawn in a TossStyle (a torn piece, a die, a toss in place); a plain card throw otherwise. */
+    default void showFlipOntoBattlefield(CardView flipped, CardView target, List<CardView> hit, List<CardView> battlefield, int timesFlipped, forge.game.event.TossStyle style) {
+        showFlipOntoBattlefield(flipped, target, hit, battlefield, timesFlipped);
+    }
     default void endFlipOntoBattlefield(CardView flipped) {}
 
     void flashIncorrectAction();

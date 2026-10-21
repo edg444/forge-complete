@@ -3,7 +3,8 @@ ManaCost:3
 Types:Artifact Creature Bird
 PT:1/1
 K:Flying
-A:AB$ Effect | Cost$ 1 | AILogic$ Always | SubAbility$ DBChoice | SpellDescription$ Throw this creature into the air at least two feet above your head while seated: If you catch this creature with one hand, prevent all damage a source of your choice would deal to you this turn and tap this creature. Otherwise, sacrifice it.
+A:AB$ Effect | Cost$ 1 | AILogic$ Always | SubAbility$ DBToss | SpellDescription$ Throw this creature into the air at least two feet above your head while seated: If you catch this creature with one hand, prevent all damage a source of your choice would deal to you this turn and tap this creature. Otherwise, sacrifice it.
+SVar:DBToss:DB$ TossCard | Defined$ Self | Flips$ 2 | SubAbility$ DBChoice
 SVar:DBChoice:DB$ GenericChoice | Defined$ You | Choices$ DBDrop,DBCatch | ChoicePrompt$ Did you catch this creature with one hand? | AILogic$ Chance.20
 SVar:DBDrop:DB$ Sacrifice | Defined$ Self | SpellDescription$ No.
 SVar:DBCatch:DB$ ChooseSource | Choices$ Card,Emblem | AILogic$ NeedsPrevention | SubAbility$ DBPreventEffect | SpellDescription$ Yes.

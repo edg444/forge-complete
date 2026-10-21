@@ -864,6 +864,15 @@ public class RollDiceEffect extends SpellAbilityEffect {
         final SpellAbility each = sa.getAdditionalAbility("DieLandedSubAbility");
         for (int i = 0; i < rolls.size(); i++) {
             final CardCollection touched = landings.get(i);
+            // the throw animation, drawn as this die landing on what it touches (where DiceLanding put it)
+            final List<forge.game.card.CardView> touchedViews = new java.util.concurrent.CopyOnWriteArrayList<>();
+            for (final Card t : touched) {
+                touchedViews.add(t.getView());
+            }
+            final forge.game.card.CardView aimView = aim != null ? aim.getView() : host.getView();
+            final forge.game.event.TossStyle die = forge.game.event.TossStyle.die(rolls.get(i));
+            game.fireEvent(new forge.game.event.GameEventFlipOntoBattlefield(host.getView(), aimView, touchedViews, 2, false, die));
+            game.fireEvent(new forge.game.event.GameEventFlipOntoBattlefield(host.getView(), aimView, touchedViews, 2, true, die));
             final String where = touched.isEmpty() ? "comes to rest touching no creature"
                     : "comes to rest touching " + Lang.joinHomogenous(touched);
             final String message = "Die " + (i + 1) + " (" + rolls.get(i) + ") " + where + ".";
