@@ -312,6 +312,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **2020 Heroes of the Realm: The Secret Lair.** "Say the secret word" is a `FlavorAction` cost, because the card never
+  names the word. The ability that uses it is still a mana ability, since nothing in it targets (605.1a).
 - **The List audit against Scryfall (2026-10-20).** PLST matched Scryfall's 5,740 printings by collector number,
   names and artists, except three Judgment † variations, now added (JUD-78†, JUD-119†, JUD-127†). Not discrepancies:
   basic lands are `L` where Scryfall says common (Forge's convention), the Wicked // Cursed role token is two token
