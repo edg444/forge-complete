@@ -2321,6 +2321,29 @@ public class Player extends GameEntity implements Comparable<Player> {
         return maingameCardsMap.get(subgameCard);
     }
 
+    // Sole Performer's {T}s: not mana, but spent on {T} in costs and gone as each step ends, as mana is
+    private int tapSymbols = 0;
+
+    public int getTapSymbols() {
+        return tapSymbols;
+    }
+
+    public void addTapSymbols(final int n) {
+        tapSymbols += n;
+    }
+
+    public boolean spendTapSymbol() {
+        if (tapSymbols <= 0) {
+            return false;
+        }
+        tapSymbols--;
+        return true;
+    }
+
+    public void clearTapSymbols() {
+        tapSymbols = 0;
+    }
+
     public final ManaPool getManaPool() {
         return manaPool;
     }

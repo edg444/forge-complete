@@ -612,6 +612,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
             // clearPool empties them (they are never part of the cleared whole-mana list)
             final int halves = p.getManaPool().totalHalfMana();
             int burn = p.getManaPool().clearPool(true).size();
+            p.clearTapSymbols();
 
             if (p.getManaPool().hasBurn()) {
                 // half mana burns too, so this goes through the halves path rather than loseLife

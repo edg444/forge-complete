@@ -1472,9 +1472,17 @@ public class HumanCostDecision extends CostDecisionMakerBase {
 
     @Override
     public PaymentDecision visit(final CostTap cost) {
-        // if (!canPay(ability, source, ability.getActivatingPlayer(),
-        // payment.getCost()))
-        // return false;
+        // Sole Performer: a {T} from the pool instead of tapping - the only way, if it's tapped already
+        if (player.getTapSymbols() > 0) {
+            if (!source.canTap()) {
+                return PaymentDecision.number(CostTap.SPEND_TAP_SYMBOL);
+            }
+            final List<String> options = ImmutableList.of("Spend {T}", "Tap it");
+            if (controller.confirmAction(ability, PlayerActionConfirmMode.OptionalChoose, "You have "
+                    + player.getTapSymbols() + " {T} to spend. Spend one rather than tapping " + source + "?", options, null, null)) {
+                return PaymentDecision.number(CostTap.SPEND_TAP_SYMBOL);
+            }
+        }
         return PaymentDecision.number(1);
     }
 

@@ -1,0 +1,9 @@
+Name:Sole Performer
+ManaCost:2 G G
+Types:Creature Elf Performer
+PT:2/2
+# The {T}s aren't mana, so this isn't a mana ability; they're spent on {T} in activated abilities' costs instead of
+# tapping, even for a permanent that's already tapped, but not for a summoning-sick one, and empty from the pool as
+# steps and phases end (rulings; AddTapSymbolsEffect, CostTap).
+A:AB$ AddTapSymbols | Cost$ T | Amount$ 2 | ActivationLimit$ 1 | SpellDescription$ Add {T}{T}. Activate only once each turn. (While activating an ability, use {T} rather than tapping the permanent to pay for {T}.)
+Oracle:{T}: Add {T}{T}. Activate only once each turn. (While activating an ability, use {T} rather than tapping the permanent to pay for {T}.)

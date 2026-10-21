@@ -1,0 +1,14 @@
+Name:Tchotchke Elemental
+ManaCost:G
+Types:Creature Elemental
+PT:1/1
+# The unique item for each knickknack counter is the player's to find and put on the physical card (honor system);
+# the game keeps the counters.
+T:Mode$ TokenCreated | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigKnickknack | TriggerDescription$ Whenever you create a token or put a counter or a sticker on another permanent, put a knickknack counter on this creature. Use a unique item that completely fits on this creature for each knickknack counter.
+T:Mode$ CounterAddedOnce | ValidCard$ Permanent.Other | ValidSource$ You | TriggerZones$ Battlefield | Execute$ TrigKnickknack | Secondary$ True | TriggerDescription$ Whenever you create a token or put a counter or a sticker on another permanent, put a knickknack counter on this creature.
+T:Mode$ StickerPlaced | ValidCard$ Permanent.Other | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigKnickknack | Secondary$ True | TriggerDescription$ Whenever you create a token or put a counter or a sticker on another permanent, put a knickknack counter on this creature.
+SVar:TrigKnickknack:DB$ PutCounter | Defined$ Self | CounterType$ KNICKKNACK | CounterNum$ 1
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | AddToughness$ X | Description$ This creature gets +1/+1 for each knickknack counter on it.
+SVar:X:Count$CardCounters.KNICKKNACK
+DeckHints:Ability$Token|Counters|Sticker
+Oracle:Whenever you create a token or put a counter or a sticker on another permanent, put a knickknack counter on this creature. Use a unique item that completely fits on this creature for each knickknack counter.\nThis creature gets +1/+1 for each knickknack counter on it.

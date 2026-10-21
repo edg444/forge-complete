@@ -147,6 +147,7 @@ public enum SpellApiToAi {
             .put(ApiType.SpellWord, AlwaysPlayAi.class)
             .put(ApiType.StoreResult, AlwaysPlayAi.class)
             .put(ApiType.TriggerAbility, TriggerAbilityAi.class)
+            .put(ApiType.AddTapSymbols, AddTapSymbolsAi.class)
             .put(ApiType.SeekHidden, SeekHiddenAi.class)
             .put(ApiType.PutHiddenTokens, AlwaysPlayAi.class)
             .put(ApiType.GainOwnership, CannotPlayAi.class)

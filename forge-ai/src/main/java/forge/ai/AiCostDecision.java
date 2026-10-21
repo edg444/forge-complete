@@ -496,7 +496,8 @@ public class AiCostDecision extends CostDecisionMakerBase {
 
     @Override
     public PaymentDecision visit(CostTap cost) {
-        return PaymentDecision.number(0);
+        // Sole Performer's {T}s are gone when the step ends, and a permanent left untapped can still block
+        return PaymentDecision.number(player.getTapSymbols() > 0 ? CostTap.SPEND_TAP_SYMBOL : 0);
     }
 
     @Override

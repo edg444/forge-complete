@@ -312,6 +312,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Tchotchke Elemental (UNF #158).** Knickknack counters; the unique items on the physical card are the
+  player's to find (honor system). No engine change.
+- **Unfinity: Sole Performer (UNF #154).** New `AddTapSymbols` effect: a player's pool of {T}s.
+  - The pool empties as each step and phase ends, as mana does, but isn't mana.
+  - A {T} cost can be paid from it instead of tapping the permanent, so an already-tapped permanent's ability can be
+    activated too, but never a summoning-sick creature's (rulings).
+  - The player is asked whenever they could do either.
+  - **AI:** it activates Sole Performer only when it has another permanent with a non-mana {T} ability, and always
+    spends a {T} it has before tapping.
 - **Unfinity: Plot Armor (UNF #152).** Blockers need flavor text on their printing; stickers neither add nor remove it
   (rulings). No engine change.
 - **Unfinity: Pie-Eating Contest (UNF #151).** New cost `Gobble<N>`: the payer picks which Food tokens to sacrifice

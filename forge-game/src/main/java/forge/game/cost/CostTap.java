@@ -58,20 +58,38 @@ public class CostTap extends CostPart {
         return "{T}";
     }
 
+    /** A payment decision to spend one of the payer's {T}s (Sole Performer) rather than tap the permanent. */
+    public static final int SPEND_TAP_SYMBOL = 2;
+
+    private transient Player spentFrom = null;
+
     @Override
     public void refund(final Card source) {
+        if (spentFrom != null) {
+            spentFrom.addTapSymbols(1);
+            spentFrom = null;
+            return;
+        }
         source.setTapped(false);
     }
 
     @Override
     public boolean canPay(final SpellAbility ability, final Player payer, final boolean effect) {
         final Card source = ability.getHostCard();
-        return source.canTap() && !source.isAbilitySick();
+        // a {T} from the pool pays for a permanent that's tapped already, but never for a summoning-sick one (rulings)
+        return (source.canTap() || payer.getTapSymbols() > 0) && !source.isAbilitySick();
     }
 
     @Override
     public boolean payAsDecided(Player payer, PaymentDecision decision, SpellAbility ability, final boolean effect) {
         Card hostCard = ability.getHostCard();
+        spentFrom = null;
+        if ((decision != null && decision.c == SPEND_TAP_SYMBOL || !hostCard.canTap()) && payer.spendTapSymbol()) {
+            spentFrom = payer;
+            payer.getGame().getGameLog().add(forge.game.GameLogEntryType.MANA, payer + " spends {T} for " + hostCard
+                    + " rather than tapping it.");
+            return true;
+        }
         if (hostCard.tap(true, ability, payer)) {
             final Map<AbilityKey, Object> runParams = AbilityKey.newMap();
             runParams.put(AbilityKey.Cards, new CardCollection(hostCard));
