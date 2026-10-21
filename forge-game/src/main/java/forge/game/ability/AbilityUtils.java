@@ -1703,6 +1703,15 @@ public class AbilityUtils {
             // Count$WordsInName.<DefinedCards> - Bosom Buddy counts the words in a spell's name,
             // Wordmail in a static ability. Kept outside the SpellAbility-only block below, which a
             // static never enters. Split/double-faced names keep their "//" separator out of it.
+            // Count$SVarOfDefined.<Defined>.<SVar> - Octo Opus: an SVar of another card (Contortionist's folds), 0 for none
+            if (sq[0].equals("SVarOfDefined")) {
+                int value = 0;
+                for (Card card : getDefinedCards(c, sq[1], ctb)) {
+                    value = calculateAmount(card, sq[2], null);
+                    break;
+                }
+                return doXMath(value, expr, c, ctb);
+            }
             // Count$MostWordsInName.<Valid> - Busted!: the name with the most words among the valid permanents
             if (sq[0].startsWith("MostWordsInName")) {
                 int most = 0;

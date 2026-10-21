@@ -312,6 +312,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Octo Opus (UNF #54).** Its Contortionist token (`u_4_4_octopus_performer_contortionist`) keeps its fold
+  count in a `Folds` SVar. A characteristic-defining static halves its power and toughness per fold.
+  - **User ruling:** it folds only as far as the fork's half values go: 4/4, 2/2, 1/1, then 1/2 / 1/2.
+  - Sacrificing Octo Opus draws one card plus one per fold of a Contortionist you choose. With none, it draws one
+    (rulings). New count, `Count$SVarOfDefined.<Defined>.<SVar>`.
+  - **AI:** it folds only while it controls an Octo Opus (`StoreSVarAi`, `AILogic$ FoldWithOctoOpus`).
 - **Unfinity: How Is This a Par Three?! (UNF #49).** Whenever you cast a spell, you may have a player mill X, the
   number of words in the spell's name (`Count$WordsInName`).
   - Milling more cards than they have is an impossible option, so it can't be chosen (ruling). A condition on the

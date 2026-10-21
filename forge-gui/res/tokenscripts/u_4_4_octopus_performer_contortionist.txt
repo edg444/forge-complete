@@ -1,0 +1,13 @@
+Name:Contortionist
+ManaCost:no cost
+Colors:blue
+Types:Creature Octopus Performer
+PT:4/4
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | OptionalDecider$ You | CheckSVar$ Folds | SVarCompare$ LT3 | Execute$ TrigFold | TriggerDescription$ At the beginning of your upkeep, you may fold this token in half.
+SVar:TrigFold:DB$ StoreSVar | SVar$ Folds | Type$ CountSVar | Expression$ Folds/Plus.1 | AILogic$ FoldWithOctoOpus
+S:Mode$ Continuous | CharacteristicDefining$ True | Affected$ Card.Self | SetPowerHalves$ FoldedHalves | SetToughnessHalves$ FoldedHalves | Secondary$ True | Description$ Each fold halves its power and toughness. Half values are as small as it goes (user, 2026-10-21).
+SVar:Folds:Number$0
+SVar:FoldedHalves:Count$Compare Folds EQ0.8.FoldedHalves1
+SVar:FoldedHalves1:Count$Compare Folds EQ1.4.FoldedHalves2
+SVar:FoldedHalves2:Count$Compare Folds EQ2.2.1
+Oracle:At the beginning of your upkeep, you may fold this token in half.

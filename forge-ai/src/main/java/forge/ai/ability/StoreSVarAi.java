@@ -22,6 +22,11 @@ public class StoreSVarAi extends SpellAbilityAi {
 
     @Override
     protected AiAbilityDecision doTriggerNoCost(Player aiPlayer, SpellAbility sa, boolean mandatory) {
+        // Contortionist: a fold shrinks it, so only while an Octo Opus is there to turn the folds into cards
+        if ("FoldWithOctoOpus".equals(sa.getParam("AILogic")) && !mandatory
+                && aiPlayer.getCardsIn(forge.game.zone.ZoneType.Battlefield).stream().noneMatch(c -> c.getName().equals("Octo Opus"))) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
         if (sa instanceof WrappedAbility) {
             SpellAbility origSa = ((WrappedAbility)sa).getWrappedAbility();
             if (origSa.getHostCard().getName().equals("Maralen of the Mornsong Avatar")) {

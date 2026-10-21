@@ -1,0 +1,13 @@
+Name:Octo Opus
+ManaCost:3 U U
+Types:Enchantment
+# Contortionist's folds are its Folds SVar: each halves its power and toughness, down to 1/2 / 1/2 - as far as the half
+# values go (user, 2026-10-21). With several Contortionists, you choose whose folds count; with none, you draw one.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When this enchantment enters, create a 4/4 blue Octopus Performer creature token named Contortionist with "At the beginning of your upkeep, you may fold this token in half." (It becomes 2/2, then 1/1, 1/2 / 1/2, and so on.)
+SVar:TrigToken:DB$ Token | TokenScript$ u_4_4_octopus_performer_contortionist
+A:AB$ ChooseCard | Cost$ Sac<1/CARDNAME> | Defined$ You | Choices$ Creature.namedContortionist+YouCtrl | ChoiceTitle$ Choose a Contortionist whose folds count | Mandatory$ True | SubAbility$ DBDraw | SpellDescription$ Draw a card and an additional card for each of Contortionist's folds.
+SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ X | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+SVar:X:Count$SVarOfDefined.ChosenCard.Folds/Plus.1
+DeckHas:Ability$Token
+Oracle:When this enchantment enters, create a 4/4 blue Octopus Performer creature token named Contortionist with "At the beginning of your upkeep, you may fold this token in half." (It becomes 2/2, then 1/1, ½/½, and so on.)\nSacrifice this enchantment: Draw a card and an additional card for each of Contortionist's folds.
