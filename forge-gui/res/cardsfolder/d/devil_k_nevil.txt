@@ -1,0 +1,12 @@
+Name:Devil K. Nevil
+ManaCost:2 R
+Types:Legendary Creature Devil Performer
+PT:2/1
+K:Haste
+# The jump is simulated (user, 2026-10-21): any number of other creatures on the battlefield, cleared 85% of the time
+# over one and 12% less for each more (10% at worst), shown with the dexterity toss animation (JumpOverEffect).
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigJump | TriggerDescription$ When CARDNAME enters, jump it over any number of creatures. If it clears those creatures, put that many +1/+1 counters on it. (You can see a jumping demonstration at DevilKNevil.com.)
+SVar:TrigJump:DB$ JumpOver | Choices$ Creature.Other | SubAbility$ DBCounters
+SVar:DBCounters:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ Cleared | ConditionCheckSVar$ Cleared | ConditionSVarCompare$ GE1
+SVar:Cleared:Number$0
+Oracle:Haste\nWhen Devil K. Nevil enters, jump it over any number of creatures. If it clears those creatures, put that many +1/+1 counters on it. (You can see a jumping demonstration at DevilKNevil.com.)

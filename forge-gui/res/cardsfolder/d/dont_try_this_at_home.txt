@@ -1,0 +1,17 @@
+Name:Don't Try This at Home
+ManaCost:1 R
+Types:Enchantment
+# Hot: Scryfall Tagger's "hot" tree (fire, lava, explosions, steam...) plus the sun, torches, candles and volcanoes
+# (PrintingTraits, Card.HotInArt). Art Tagger hasn't tagged at all is asked about (user, 2026-10-21); the AI trusts the
+# tags. Hot stickers aren't seen: Forge's art stickers don't record what they show.
+R:Event$ DamageDone | ActiveZones$ Battlefield | ValidSource$ Card.YouCtrl+HotInArt | ReplaceWith$ DmgPlus1 | Description$ If a hot source you control would deal damage to a permanent or player, it deals that much damage plus 1 instead. (Something is hot if it has hot things in its art, like fire or explosions.)
+R:Event$ DamageDone | ActiveZones$ Battlefield | ValidSource$ Card.YouCtrl+ArtUntagged | ReplaceWith$ AskHot | Secondary$ True | Description$ If a hot source you control would deal damage to a permanent or player, it deals that much damage plus 1 instead.
+SVar:AskHot:DB$ GenericChoice | Defined$ You | Choices$ NotHot,IsHot | ChoicePrompt$ Is the source hot? (Hot things in its art, like fire or explosions.)
+SVar:NotHot:DB$ Pump | SpellDescription$ It isn't hot
+SVar:IsHot:DB$ ReplaceEffect | VarName$ DamageAmount | VarValue$ X | SpellDescription$ It's hot
+SVar:DmgPlus1:DB$ ReplaceEffect | VarName$ DamageAmount | VarValue$ X
+SVar:X:ReplaceCount$DamageAmount/Plus.1
+# it counts itself if it's still in the graveyard as this resolves (rulings) - its art is hot
+A:AB$ DealDamage | Cost$ 1 R Sac<1/CARDNAME> | ValidTgts$ Creature,Planeswalker | TgtPrompt$ Select target creature or planeswalker | NumDmg$ Y | SpellDescription$ It deals damage equal to twice the number of hot cards in your graveyard to target creature or planeswalker.
+SVar:Y:Count$ValidGraveyard Card.YouOwn+HotInArt/Twice
+Oracle:If a hot source you control would deal damage to a permanent or player, it deals that much damage plus 1 instead. (Something is hot if it has hot things in its art, like fire or explosions.)\n{1}{R}, Sacrifice this enchantment: It deals damage equal to twice the number of hot cards in your graveyard to target creature or planeswalker.

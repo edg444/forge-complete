@@ -1,0 +1,11 @@
+Name:Art Appreciation
+ManaCost:1 R
+Types:Sorcery
+# The permanent isn't targeted; it's chosen as this resolves (rulings). With no art sticker available, the person rates
+# the existing art. Honor system for the rating; the AI's simulated person rates 1 to 5 evenly (user, 2026-10-21).
+A:SP$ PutSticker | Kind$ Art | Choices$ Permanent.nonLand+YouOwn | ChoiceTitle$ Choose a nonland permanent you own to put an art sticker on | SubAbility$ DBRate | SpellDescription$ Put an art sticker on a nonland permanent you own. Then ask a person outside the game to rate its new art on a scale from 1 to 5, where 5 is the best. When they rate the art, up to that many target creatures can't block this turn.
+SVar:DBRate:DB$ ChooseNumber | Defined$ You | Min$ 1 | Max$ 5 | ListTitle$ Ask a person outside the game to rate its new art from 1 to 5 (5 is the best). What did they say? | AILogic$ Random | SubAbility$ DBRated
+SVar:DBRated:DB$ ImmediateTrigger | Execute$ TrigCantBlock | TriggerDescription$ When they rate the art, up to that many target creatures can't block this turn.
+SVar:TrigCantBlock:DB$ Pump | ValidTgts$ Creature | TgtPrompt$ Select up to that many target creatures | TargetMin$ 0 | TargetMax$ X | KW$ HIDDEN CARDNAME can't block. | IsCurse$ True
+SVar:X:Count$ChosenNumber
+Oracle:Put an art sticker on a nonland permanent you own. Then ask a person outside the game to rate its new art on a scale from 1 to 5, where 5 is the best. When they rate the art, up to that many target creatures can't block this turn.

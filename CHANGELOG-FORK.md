@@ -312,6 +312,25 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Don't Try This at Home (UNF #105).** New `hot` printing trait (`Card.HotInArt`).
+  - It comes from Scryfall Tagger's own hot tree ("things that are hot, like fire or explosions") plus the sun,
+    torches, candles and volcanoes: about 12,500 printings.
+  - **User ruling:** art Tagger hasn't tagged at all is asked about when it deals damage. The AI trusts the tags.
+  - A hot source you control deals 1 more damage, and the sacrifice ability counts hot cards in your graveyard.
+  - **Known gap:** a hot art sticker isn't seen, because Forge's art stickers don't record what they show.
+- **Unfinity: Devil K. Nevil (UNF #104).** New `JumpOver` effect.
+  - **User ruling:** the jump over any number of other creatures is simulated. It clears one creature 85% of the time,
+    12% less for each more, never under 10%, shown with the dexterity toss animation. Clearing them gives that many
+    +1/+1 counters.
+  - **AI:** it jumps the number of creatures with the best expected counters (four, given enough creatures).
+- **Unfinity: Carnival Barker (UNF #102).** Honor system: thirty seconds of lauding to real people, then you enter
+  how many applauded.
+  - It can be used once per object (`GameActivationLimit$ 1`, rulings).
+  - **AI:** the audience is simulated at zero to three people (user ruling), like Gimme Five's high fives.
+- **Unfinity: Art Appreciation (UNF #99).** You put an art sticker on a nonland permanent you own, chosen rather than
+  targeted. A person outside the game rates it 1 to 5, and a reflexive trigger stops up to that many creatures from
+  blocking.
+  - **AI:** its simulated person rates evenly from 1 to 5 (user ruling).
 - **Unfinity: Amped Up (UNF #98).** It costs {1} less per electrical socket you can see from your seat, announced as
   it's cast (`AnnounceType$ ChooseNumber`, as for Liquid Fire), with a reduce-cost static reading the number.
   - The announcement now shows its own prompt (`AnnounceTitle$`).

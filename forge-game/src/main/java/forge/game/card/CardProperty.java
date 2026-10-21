@@ -588,6 +588,10 @@ public class CardProperty {
             if (!same) {
                 return false;
             }
+        } else if (property.equals("HotInArt")) {
+            if (!card.hasKnownHotInArt()) {
+                return false;
+            }
         } else if (property.equals("KnownSquirrelInArt")) {
             if (!card.hasKnownSquirrelInArt()) {
                 return false;

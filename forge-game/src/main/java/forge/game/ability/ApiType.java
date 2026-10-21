@@ -142,6 +142,7 @@ public enum ApiType {
     Bluff (BluffEffect.class),
     Photocopy (PhotocopyEffect.class),
     ThrowCards (ThrowCardsEffect.class),
+    JumpOver (JumpOverEffect.class),
     GameDrawn (GameDrawEffect.class),
     GenericChoice (ChooseGenericEffect.class),
     Gerrymander (GerrymanderEffect.class),

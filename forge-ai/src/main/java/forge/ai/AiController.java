@@ -2111,6 +2111,18 @@ public class AiController {
         } else if ("HighFives".equals(logic)) {
             // Gimme Five: nobody high-fives a computer by the dozen - a few people near the screen at most
             return Math.min(max, Math.max(min, MyRandom.getRandom().nextInt(4)));
+        } else if (sa.getApi() == forge.game.ability.ApiType.JumpOver) {
+            // Devil K. Nevil: the number of creatures with the most counters to expect from the jump
+            int best = 0;
+            double bestValue = 0;
+            for (int n = 1; n <= max; n++) {
+                final double value = n * forge.game.ability.effects.JumpOverEffect.clearChance(n) / 100.0;
+                if (value > bestValue) {
+                    bestValue = value;
+                    best = n;
+                }
+            }
+            return Math.max(min, best);
         } else if ("Sockets".equals(logic)) {
             // Amped Up: the AI's simulated room - its sockets stay where they are all game. Outlets mostly have two.
             if (roomSockets < 0) {

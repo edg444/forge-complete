@@ -46,6 +46,8 @@ public final class PrintingTraits {
         private boolean backHat = false;
         private boolean tree = false;
         private boolean backTree = false;
+        private boolean hot = false;
+        private boolean backHot = false;
         private boolean moon = false;
         private boolean backMoon = false;
         private boolean squirrel = false;
@@ -93,6 +95,11 @@ public final class PrintingTraits {
         /** A hat on single-figure art (Goblin Haberdasher), so on the creature itself; false can still mean untagged. */
         public boolean hasHat(final boolean backFace) {
             return backFace ? backHat : hat;
+        }
+
+        /** Something hot in the artwork (Don't Try This at Home), per Scryfall Tagger; false can still mean untagged. */
+        public boolean hasHot(final boolean backFace) {
+            return backFace ? backHot : hot;
         }
 
         /** A tree in the artwork (Selfie Preservation), per Scryfall Tagger; false can still mean untagged. */
@@ -198,6 +205,10 @@ public final class PrintingTraits {
                     t.hat = true;
                 } else if (trait.equals("backhat")) {
                     t.backHat = true;
+                } else if (trait.equals("hot")) {
+                    t.hot = true;
+                } else if (trait.equals("backhot")) {
+                    t.backHot = true;
                 } else if (trait.equals("tree")) {
                     t.tree = true;
                 } else if (trait.equals("backtree")) {
