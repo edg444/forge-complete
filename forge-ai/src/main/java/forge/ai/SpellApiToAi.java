@@ -121,6 +121,7 @@ public enum SpellApiToAi {
             .put(ApiType.Augment, AugmentAi.class)
             .put(ApiType.Combine, CombineAi.class)
             .put(ApiType.AnimateLibrary, AnimateLibraryAi.class)
+            .put(ApiType.BecomeACard, AlwaysPlayAi.class)
             .put(ApiType.Fog, FogAi.class)
             .put(ApiType.GainControl, ControlGainAi.class)
             .put(ApiType.GainControlVariant, ControlGainVariantAi.class)

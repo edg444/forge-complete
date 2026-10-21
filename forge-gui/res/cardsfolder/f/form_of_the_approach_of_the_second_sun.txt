@@ -1,0 +1,16 @@
+Name:Form of the Approach of the Second Sun
+ManaCost:4 W
+Types:Enchantment
+# you become a planeswalker card with no other characteristics (rulings), gone once you leave your library or it's shuffled
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ When this enchantment enters, you gain 7 life. You become a card until you leave your library or that library is shuffled. Put yourself seventh from the top, balancing the cards on top of you on your head.
+SVar:TrigGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 7 | SubAbility$ DBBecome
+SVar:DBBecome:DB$ BecomeACard | LibraryPosition$ 6
+T:Mode$ Drawn | ValidCard$ Card.YourselfAsACard | TriggerZones$ Battlefield | Execute$ TrigWin | TriggerDescription$ When you draw yourself, you win the game.
+SVar:TrigWin:DB$ WinsGame | Defined$ You
+# "the cards on your head" are every card above you in your library. A human reports a fall with the action below (honor
+# system); the AI has no head, so its stack wobbles - a chance to fall each time it grows (user ruling, HeadBalance)
+T:Mode$ CardsFellOffHead | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigFall | TriggerDescription$ When one or more cards fall off your head, exile them and all cards on your head, then sacrifice this enchantment.
+SVar:TrigFall:DB$ ChangeZoneAll | ChangeType$ Card.OnYourHead | Origin$ Library | Destination$ Exile | SubAbility$ DBSacrifice
+SVar:DBSacrifice:DB$ Sacrifice | Defined$ Self
+A:ST$ ImmediateTrigger | Cost$ 0 | SpecialAction$ True | IsPresent$ Card.YourselfAsACard | PresentZone$ Library | Execute$ TrigFall | AILogic$ Never | TriggerDescription$ When one or more cards fall off your head, exile them and all cards on your head, then sacrifice this enchantment. | SpellDescription$ Cards fell off your head (honor system).
+Oracle:When this enchantment enters, you gain 7 life. You become a card until you leave your library or that library is shuffled. Put yourself seventh from the top, balancing the cards on top of you on your head.\nWhen you draw yourself, you win the game.\nWhen one or more cards fall off your head, exile them and all cards on your head, then sacrifice this enchantment.

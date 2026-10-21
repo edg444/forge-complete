@@ -2157,6 +2157,14 @@ public class Player extends GameEntity implements Comparable<Player> {
 
         getZone(ZoneType.Library).setCards(getController().cheatShuffle(list));
 
+        // Form of the Approach of the Second Sun: a player who is a card in this library stops being one when it's shuffled
+        for (final Card c : Lists.newArrayList(list)) {
+            if (c.getGamePieceType() == forge.card.GamePieceType.PERSON) {
+                game.getAction().ceaseToExist(c, true);
+                list.remove(c);
+            }
+        }
+
         // A randomized library's cards are new objects (Bombardment's ruling): Missiles made of them there are gone
         for (final Card c : list) {
             for (final Map.Entry<Long, CardCloneStates> e : Lists.newArrayList(c.getCloneStates().entrySet())) {

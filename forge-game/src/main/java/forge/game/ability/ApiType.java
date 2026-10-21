@@ -127,6 +127,7 @@ public enum ApiType {
     Augment (AugmentEffect.class),
     Combine (CombineEffect.class),
     AnimateLibrary (AnimateLibraryEffect.class),
+    BecomeACard (BecomeACardEffect.class),
     Fog (FogEffect.class),
     GainControl (ControlGainEffect.class),
     GainControlVariant (ControlGainVariantEffect.class),

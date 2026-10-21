@@ -135,6 +135,7 @@ public enum TriggerType {
     SeekAll(TriggerSeekAll.class),
     SetInMotion(TriggerSetInMotion.class),
     Shuffled(TriggerShuffled.class),
+    CardsFellOffHead(TriggerCardsFellOffHead.class),
     Specializes(TriggerSpecializes.class),
     SpellAbilityCast(TriggerSpellAbilityCastOrCopy.class),
     SpellAbilityCopy(TriggerSpellAbilityCastOrCopy.class),

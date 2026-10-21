@@ -382,6 +382,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     // CardCopyService: every zone change makes a copy, so the flag dies the moment Decorated Knight
     // draws the card back into the game, which is exactly when it should stop counting.
     private boolean displacedFromLibrary;
+    // Form of the Approach of the Second Sun: how many cards this person card last had above it (HeadBalance)
+    private int cardsOnHead;
     // Togglodyte. null means the card has no ON/OFF switch at all, so nothing is shown for it.
     private Boolean switchedOn;
     // World-Bottling Kit's bottled set
@@ -8369,6 +8371,12 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
     public void setDisplacedFromLibrary(final boolean d) {
         displacedFromLibrary = d;
+    }
+    public int getCardsOnHead() {
+        return cardsOnHead;
+    }
+    public void setCardsOnHead(final int n) {
+        cardsOnHead = n;
     }
     public void setShadowZone(Zone zone) {
         shadowZone = zone;

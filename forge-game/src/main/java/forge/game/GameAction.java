@@ -443,6 +443,12 @@ public class GameAction {
             ceaseToExist(c, true);
             return c;
         }
+        // Form of the Approach of the Second Sun: a player who is a card stops being one once they'd leave their library
+        // (drawn, tutored, milled...). Drawing still sees them drawn, so the win trigger works.
+        if (c.getGamePieceType() == GamePieceType.PERSON && !zoneTo.is(ZoneType.Library)) {
+            ceaseToExist(c, true);
+            return c;
+        }
 
         if (!zoneTo.is(ZoneType.Stack)) {
             // reset timestamp in changezone effects so they have same timestamp if ETB simultaneously
@@ -777,6 +783,9 @@ public class GameAction {
         // so a number More or Less changed on the spell doesn't carry over
         if (!suppress) {
             copied.clearNumberNudges();
+        }
+        if (zoneTo.is(ZoneType.Library) && zoneTo.getPlayer() != null) {
+            HeadBalance.cardsMayHaveGoneOnTop(zoneTo.getPlayer());
         }
 
         return copied;

@@ -312,6 +312,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Form of the Approach of the Second Sun (UNF #9).**
+  - **The card you become:** new `GamePieceType.PERSON`. Per the rulings it's a planeswalker card with no other
+    characteristics (no name), made by the new effect `BecomeACard` (`LibraryPosition$`; a player who's already a
+    card is moved).
+  - **When it ends:** it exists only in its owner's library. `GameAction` ends it when it would go anywhere else,
+    and it's still seen as drawn, so "when you draw yourself" works while tutoring yourself just ends it.
+    `Player.shuffle` ends it too.
+  - **New properties:** `YourselfAsACard`, and `OnYourHead` (the cards above you in your library).
+  - **Falling:** new trigger `CardsFellOffHead`, fired by `HeadBalance`. User rulings: a human reports a fall with an
+    honor-system special action, and the AI has no head, so its stack wobbles. Each time cards go on top of it, and
+    once when it first balances them, there's a 2%-per-card chance (at most 50%) that they fall.
+  - **Engine fix:** a planeswalker with no printed loyalty no longer gets the "enters with loyalty counters"
+    replacement, which used to crash on it.
 - **Unfinity: Far Out (UNF #8).** New static mode `ChooseAnyNumberOfModes` (`ValidPlayer$`,
   `StaticAbilityChooseAnyNumberOfModes`).
   - When it applies, CharmEffect offers its controller one or more different modes in place of the indicated

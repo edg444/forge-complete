@@ -519,6 +519,21 @@ public class CardProperty {
             if (!card.hasKnownSquirrelInArt()) {
                 return false;
             }
+        } else if (property.equals("YourselfAsACard")) {
+            // Form of the Approach of the Second Sun: the card the source's controller has become
+            if (card.getGamePieceType() != forge.card.GamePieceType.PERSON || !card.getOwner().equals(sourceController)) {
+                return false;
+            }
+        } else if (property.equals("OnYourHead")) {
+            // the cards above you in your library while you're a card in it
+            final Card self = forge.game.HeadBalance.personCard(sourceController);
+            if (self == null || !card.isInZone(ZoneType.Library) || !card.getOwner().equals(sourceController)) {
+                return false;
+            }
+            final CardCollectionView lib = sourceController.getCardsIn(ZoneType.Library);
+            if (lib.indexOf(card) >= lib.indexOf(self)) {
+                return false;
+            }
         } else if (property.equals("KnownArtifactCreatureInArt")) {
             if (!card.hasKnownArtifactCreatureInArt()) {
                 return false;

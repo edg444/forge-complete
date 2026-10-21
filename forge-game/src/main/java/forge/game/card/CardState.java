@@ -612,7 +612,9 @@ public class CardState implements GameObject, IHasSVars, ITranslatable {
             }
 
             CardTypeView type = state.getTypeWithChanges();
-            if (type.isPlaneswalker()) {
+            // a planeswalker with no printed loyalty has nothing to enter with (Form of the Approach of the Second Sun's
+            // card-you, which is never on the battlefield anyway)
+            if (type.isPlaneswalker() && !state.getBaseLoyalty().isEmpty()) {
                 list.add(state.getLoyaltyRep());
             }
             if (type.isBattle()) {

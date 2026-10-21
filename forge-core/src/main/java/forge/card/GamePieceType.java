@@ -59,6 +59,12 @@ public enum GamePieceType {
      */
     LIBRARY,
     /**
+     * A player who has become a card (Form of the Approach of the Second Sun): a planeswalker card with no other
+     * characteristics that exists only in its owner's library. Leaving that library, or that library being shuffled,
+     * ends it - the player just stops being a card.
+     */
+    PERSON,
+    /**
      * A sticker sheet, revealed at the start of the game.
      */
     STICKER_SHEET
