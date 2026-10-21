@@ -312,6 +312,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-21, twelfth deploy (desktop, Android, GitHub) — Unfinity complete; 24-commit upstream merge
+
+- **Upstream merge (24 commits).** Five card-script conflicts, resolved by keeping upstream's fixes with the fork's
+  Scryfall wording: Bell Borca, Spectral Sergeant (`CharacteristicDefining$`), Fear of Change (`Origin$ Battlefield`
+  on its dies trigger), Overclocked Electromancer (`CombatDamage$ True`); Disciple of Perdition and Urza, Academy
+  Headmaster kept the fork's text, upstream's change already being in it.
 - **Unfinity: Truss, Chief Engineer (UNF #181).** New `AdjustNumber` effect. It reaches power, toughness, loyalty, a
   spell's generic mana, and the literal numbers in the target's abilities (damage, cards, life, counters, tokens, dice
   and sides, pumps and the like - user ruling).
