@@ -25,6 +25,7 @@ Alicorn:Alicorns
 Alien:Aliens
 Ally:Allies
 Andorian:Andorians
+Android:Androids
 Angel:Angels
 Antelope:Antelopes
 Ape:Apes
