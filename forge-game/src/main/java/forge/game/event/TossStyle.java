@@ -10,7 +10,7 @@ package forge.game.event;
  * @param returnHome   it comes back down on its own spot (Clay Pigeon, Orcish Paratroopers)
  * @param landFaceDown it lands face down (Orcish Paratroopers' bad drop)
  */
-public record TossStyle(int piece, int dieFace, boolean keepHits, boolean returnHome, boolean landFaceDown) {
+public record TossStyle(int piece, int dieFace, boolean keepHits, boolean returnHome, boolean landFaceDown) implements java.io.Serializable {
     public static final TossStyle CARD = new TossStyle(-1, 0, false, false, false);
 
     public static TossStyle piece(final int piece) {
