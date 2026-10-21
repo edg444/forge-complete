@@ -312,6 +312,20 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Solaflora, Intergalactic Icon (UNF #27).** Her Auras, Equipment, counters and stickers affect your other
+  creatures. Those creatures never become enchanted, equipped, countered or stickered themselves (rulings).
+  - **Attachments:** new static mode, `ShareAttachments`, takes `ValidAttachment$` and `Affected$`
+    (`StaticAbilityShareAttachments`).
+    - The `EnchantedBy`, `EquippedBy` and `AttachedBy` card properties count a creature that shares one, and so do
+      `Defined$ Enchanted` and `Defined$ Equipped`. That covers attachments' statics, triggers and effects.
+    - "Is enchanted" and "is equipped" don't change, matching the ruling about "equipped creatures you control".
+    - Only her controller's attachments are shared: an opponent's Pacifism on her stays hers.
+  - **Counters:** new counts `Count$CounterPowerBonus` and `CounterToughnessBonus` handle P/T counters. A new
+    Continuous param, `GainsCounterKeywordsOfDefined$`, handles keyword counters.
+  - **Stickers:** ability stickers use the existing `GainsStickerAbilitiesOfDefined$`. Two new params cover the rest:
+    `GainsPTStickersOfDefined$` sets the newest P/T sticker's P/T, and `GainsNameStickersOfDefined$` puts each name
+    sticker's word into the other creature's name at the same spot (ruling), filling a blank if it has one.
+  - **Known gap:** other counter kinds (stun, shield and so on) aren't shared yet.
 - **Unfinity: Park Re-Entry (UNF #22).** It returns up to two target creature cards from your graveyard, each with
   mana value 3 or less or a hat.
   - Mana value 3 or less, or a hat Forge already knows of (`Card.HatInArt`), returns without asking.

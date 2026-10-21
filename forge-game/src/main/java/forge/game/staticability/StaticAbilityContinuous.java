@@ -175,6 +175,21 @@ public final class StaticAbilityContinuous {
                 setToughnessHalves = AbilityUtils.calculateAmount(hostCard, setT, stAb);
                 setToughness = Math.floorDiv(setToughnessHalves, 2);
             }
+            // Solaflora: the newest power/toughness sticker on the defined card, as though it were on the affected one
+            if (params.containsKey("GainsPTStickersOfDefined")) {
+                AppliedSticker newest = null;
+                for (final Card source : AbilityUtils.getDefinedCards(hostCard, params.get("GainsPTStickersOfDefined"), stAb)) {
+                    for (final AppliedSticker applied : source.getStickers()) {
+                        if (applied.getKind() == StickerKind.PT && (newest == null || applied.getTimestamp() > newest.getTimestamp())) {
+                            newest = applied;
+                        }
+                    }
+                }
+                if (newest != null) {
+                    setPower = newest.getSticker().getPower();
+                    setToughness = newest.getSticker().getToughness();
+                }
+            }
         }
 
         if (layer == StaticAbilityLayer.MODIFYPT) {
@@ -344,6 +359,24 @@ public final class StaticAbilityContinuous {
                 }
                 if (!kwToShare.isEmpty()) {
                     addKeywords = kwToShare;
+                }
+            }
+
+            // Solaflora: keyword counters on the defined card, as though they were on the affected one
+            if (params.containsKey("GainsCounterKeywordsOfDefined")) {
+                for (final Card source : AbilityUtils.getDefinedCards(hostCard, params.get("GainsCounterKeywordsOfDefined"), stAb)) {
+                    for (final CounterType ct : source.getCounters().elementSet()) {
+                        final int n = source.getCounters(ct);
+                        if (!ct.isKeywordCounter() || n <= 0) {
+                            continue;
+                        }
+                        if (addKeywords == null) {
+                            addKeywords = Lists.newArrayList();
+                        }
+                        final String kw = ct.toString();
+                        final boolean redundant = Keyword.smartValueOf(kw.split(":")[0]).isMultipleRedundant();
+                        addKeywords.addAll(Collections.nCopies(redundant ? 1 : n, kw));
+                    }
                 }
             }
 
@@ -758,6 +791,27 @@ public final class StaticAbilityContinuous {
 
                 if (stAb.hasParam("AddNames")) { // currently only for AllNonLegendaryCreatureNames
                     affectedCard.addChangedName(null, true, se.getTimestamp(), stAb.getId());
+                }
+                // Solaflora: each name sticker's word goes into the affected card's name at the same spot (rulings)
+                if (stAb.hasParam("GainsNameStickersOfDefined")) {
+                    final List<AppliedSticker> words = Lists.newArrayList();
+                    for (final Card source : AbilityUtils.getDefinedCards(hostCard, stAb.getParam("GainsNameStickersOfDefined"), stAb)) {
+                        for (final AppliedSticker applied : source.getStickers()) {
+                            if (applied.getKind() == StickerKind.NAME) {
+                                words.add(applied);
+                            }
+                        }
+                    }
+                    if (!words.isEmpty()) {
+                        words.sort(Comparator.comparingLong(AppliedSticker::getTimestamp));
+                        // the name before this effect, not one it already changed on an earlier pass
+                        affectedCard.removeChangedName(se.getTimestamp(), stAb.getId());
+                        String name = StringUtils.defaultString(affectedCard.getName());
+                        for (final AppliedSticker applied : words) {
+                            name = Card.addStickerWord(name, applied.getSticker().getWord(), applied.getNamePosition());
+                        }
+                        affectedCard.addChangedName(name, false, se.getTimestamp(), stAb.getId());
+                    }
                 }
                 if (stAb.hasParam("SetName")) {
                     String newName = stAb.getParam("SetName");

@@ -12,6 +12,7 @@ import forge.card.mana.ManaCost;
 import forge.card.mana.ManaCostShard;
 import forge.game.CardTraitBase;
 import forge.game.card.sticker.AppliedSticker;
+import forge.game.staticability.StaticAbilityShareAttachments;
 import forge.game.card.sticker.StickerKind;
 import forge.game.EvenOdd;
 import forge.game.Game;
@@ -975,7 +976,8 @@ public class CardProperty {
             }
         } else if (property.startsWith("EnchantedBy")) {
             if (property.equals("EnchantedBy")) {
-                if (!card.isEnchantedBy(source) && !card.equals(source.getEntityAttachedTo())) {
+                if (!card.isEnchantedBy(source) && !card.equals(source.getEntityAttachedTo())
+                        && !StaticAbilityShareAttachments.affectsAsAttached(card, source)) {
                     return false;
                 }
             } else {
@@ -1038,7 +1040,7 @@ public class CardProperty {
             if (!StringUtils.isBlank(prop)) {
                 boolean found = false;
                 for (final Card c : AbilityUtils.getDefinedCards(source, prop, spellAbility)) {
-                    if (card.hasCardAttachment(c)) {
+                    if (card.hasCardAttachment(c) || StaticAbilityShareAttachments.affectsAsAttached(card, c)) {
                         found = true;
                         break;
                     }
@@ -1046,7 +1048,7 @@ public class CardProperty {
                 if (!found) {
                     return false;
                 }
-            } else if (!card.hasCardAttachment(source)) {
+            } else if (!card.hasCardAttachment(source) && !StaticAbilityShareAttachments.affectsAsAttached(card, source)) {
                 return false;
             }
         } else if (property.startsWith("FortifiedBy")) {

@@ -11,6 +11,7 @@ import forge.card.MagicColor;
 import forge.card.mana.ManaAtom;
 import forge.card.mana.ManaCost;
 import forge.card.mana.ManaCostShard;
+import forge.game.staticability.StaticAbilityShareAttachments;
 import forge.game.staticability.StaticAbilityDoubleDoubling;
 import forge.game.*;
 import forge.game.ability.AbilityFactory.AbilityRecordType;
@@ -102,6 +103,7 @@ public class AbilityUtils {
             }
         } else if (defined.equals("Equipped")) {
             c = hostCard.getEquipping();
+            cards.addAll(StaticAbilityShareAttachments.sharers(hostCard));
         } else if (defined.startsWith("AttachedTo ")) {
             String v = defined.split(" ")[1];
             for (GameEntity ge : getDefinedEntities(hostCard, v, sa)) {
@@ -123,6 +125,7 @@ public class AbilityUtils {
             }
         } else if (defined.equals("Enchanted")) {
             c = hostCard.getEnchantingCard();
+            cards.addAll(StaticAbilityShareAttachments.sharers(hostCard));
         } else if (defined.equals("TopOfGraveyard")) {
             final CardCollectionView grave = player.getCardsIn(ZoneType.Graveyard);
 
@@ -2299,6 +2302,14 @@ public class AbilityUtils {
         // CardStickers[.<Kind>|.NameMinLetters.N|.NameMaxLetters.N|.NameLetter.x|.NameStartsWith.x]
         if (sq[0].startsWith("CardStickers")) {
             return doXMath(countStickers(c, sq), expr, c, ctb);
+        }
+
+        // Solaflora: what the P/T counters on the card add to its power or toughness
+        if (sq[0].equals("CounterPowerBonus")) {
+            return doXMath(c.getPowerBonusFromCounters(), expr, c, ctb);
+        }
+        if (sq[0].equals("CounterToughnessBonus")) {
+            return doXMath(c.getToughnessBonusFromCounters(), expr, c, ctb);
         }
 
         if (sq[0].startsWith("CardCounters")) {

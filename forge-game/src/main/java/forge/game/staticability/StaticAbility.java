@@ -143,7 +143,7 @@ public class StaticAbility extends CardTraitBase implements IIdentifiable, Clone
 
         if (hasParam("ChangeColorWordsTo") || hasParam("ChangeTypeWordTo") || hasParam("GainTextOf") || hasParam("AddNames") ||
                 hasParam("SetName") || hasParam("Incorporate") || hasParam("ManaCost") ||
-                hasParam("SetColoredSymbolsTo")) {
+                hasParam("SetColoredSymbolsTo") || hasParam("GainsNameStickersOfDefined")) {
             layers.add(StaticAbilityLayer.TEXT);
         }
 
@@ -163,6 +163,7 @@ public class StaticAbility extends CardTraitBase implements IIdentifiable, Clone
         if (hasParam("RemoveAllAbilities") || hasParam("RemoveNonManaAbilities") || hasParam("GainsAbilitiesOf")
                 || hasParam("GainsAbilitiesOfDefined") || hasParam("GainsTriggerAbsOf") || hasParam("GainsTextBoxOf")
                 || hasParam("GainsStickerAbilitiesOf") || hasParam("GainsStickerAbilitiesOfDefined")
+                || hasParam("GainsCounterKeywordsOfDefined")
                 || hasParam("AddKeyword") || hasParam("AddAbility")
                 || hasParam("AddTrigger") || hasParam("AddReplacementEffect")
                 || hasParam("AddStaticAbility") || hasParam("AddSVar")
@@ -172,7 +173,7 @@ public class StaticAbility extends CardTraitBase implements IIdentifiable, Clone
         }
 
         if (hasParam("SetPower") || hasParam("SetToughness")
-                || hasParam("SetPowerHalves") || hasParam("SetToughnessHalves")) {
+                || hasParam("SetPowerHalves") || hasParam("SetToughnessHalves") || hasParam("GainsPTStickersOfDefined")) {
             layers.add(isCharacteristicDefining() ? StaticAbilityLayer.CHARACTERISTIC :
                 StaticAbilityLayer.SETPT);
         }

@@ -19,6 +19,9 @@ public enum StaticAbilityMode {
     RollTwoKeepOne,
     // Far Out - a ValidPlayer$ may choose one or more modes rather than the indicated number (CharmEffect)
     ChooseAnyNumberOfModes,
+    // Solaflora - ValidAttachment$ attached to the host affects Affected$ as though attached to them (CardProperty
+    // EnchantedBy/EquippedBy/AttachedBy), without their being enchanted or equipped
+    ShareAttachments,
 
     // StaticAbility
     CantAttackUnless,
