@@ -2239,6 +2239,27 @@ public class CardProperty {
                 return false;
             }
         }
+        else if (property.equals("AlphaStrike")) {
+            // Jetpack Janitor: compared on the displayed name like Zzzyxas's Abyss; a nameless creature comes after nothing
+            if (null == combat) {
+                return false;
+            }
+            final String name = card.getDisplayName();
+            if (name == null || name.isEmpty()) {
+                return false;
+            }
+            final CardCollection opposing = combat.getBlockers(card);
+            opposing.addAll(combat.getAttackersBlockedBy(card));
+            boolean after = false;
+            for (final Card c : opposing) {
+                final String other = c.getDisplayName();
+                if (c.isCreature() && other != null && !other.isEmpty() && other.compareToIgnoreCase(name) > 0) {
+                    after = true;
+                    break;
+                }
+            }
+            return after;
+        }
         // Nex predicates refer to past combat and don't need a reference to actual combat
         else if (property.equals("blocked")) {
             return null != combat && combat.isBlocked(card);

@@ -1,0 +1,6 @@
+Name:Jetpack Janitor
+ManaCost:2 W
+Types:Creature Human Employee
+PT:3/2
+S:Mode$ Continuous | Affected$ Card.Self+AlphaStrike | AddKeyword$ First Strike | Description$ Alpha strike (This creature has first strike as long as it's blocking or being blocked by a creature that comes after it alphabetically.)
+Oracle:Alpha strike (This creature has first strike as long as it's blocking or being blocked by a creature that comes after it alphabetically.)

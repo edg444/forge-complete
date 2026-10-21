@@ -312,6 +312,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Jetpack Janitor (UNF #15).** Alpha strike is a static that grants first strike through a new card
+  property, `AlphaStrike`. It holds while the creature is in combat against a creature (one it blocks, or one blocking
+  it) whose displayed name comes later alphabetically.
+  - Names are compared case-insensitively, the same way as Zzzyxas's Abyss. A nameless creature (face down, say)
+    doesn't come after anything.
+  - The AI's combat prediction doesn't foresee the first strike.
 - **Unfinity: Impounding Lot-Bot (UNF #14).** Saying "INCARCERATE!" in a robot voice is an optional honor-system
   `FlavorAction` cost, paid when the trigger resolves. The exile is Banisher Priest's, so if the Lot-Bot has already
   left, nothing is exiled (rulings). The AI is a computer, so it always says it. No engine change.
