@@ -9,6 +9,8 @@ import forge.game.card.Card;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
+import forge.item.PaperCard;
+import forge.model.FModel;
 
 /**
  * Trigger Happy (UNF #125), Well Done (UNF #128) and Alpha Guard (UNF #129), checked against Scryfall and their
@@ -59,6 +61,24 @@ public class UnfinityRedGreenBatchTest extends AITest {
         AbilityUtils.resolve(sa);
         AssertJUnit.assertEquals(5, angel.getDamage());
         AssertJUnit.assertEquals(rare ? life - 3 : life, opp.getLife());
+    }
+
+    @Test
+    public void testWellDoneRoastsMythics() {
+        final Game game = initAndCreateGame();
+        final Player p = game.getPlayers().get(1);
+        final Player opp = game.getPlayers().get(0);
+        final PaperCard mythic = FModel.getMagicDb().getCommonCards().getCard("Baneslayer Angel", "M10");
+        AssertJUnit.assertEquals(forge.card.CardRarity.MythicRare, mythic.getRarity());
+        final Card angel = Card.fromPaperCard(mythic, opp);
+        opp.getZone(ZoneType.Battlefield).add(angel);
+        final Card spell = addCardToZone("Well Done", p, ZoneType.Hand);
+        final SpellAbility sa = spell.getFirstSpellAbility();
+        sa.setActivatingPlayer(p);
+        sa.getTargets().add(angel);
+        final int life = opp.getLife();
+        AbilityUtils.resolve(sa);
+        AssertJUnit.assertEquals("a mythic's controller takes 3 too", life - 3, opp.getLife());
     }
 
     @Test

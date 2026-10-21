@@ -139,7 +139,9 @@ public class Zone implements java.io.Serializable, Iterable<Card> {
 
         c.setZone(this);
 
-        if ((zoneType == ZoneType.Battlefield || !c.isToken() || c.getCurrentStateName() == CardStateName.PreparedSpell) || (zoneType == ZoneType.Stack && c.getCopiedPermanent() != null)) {
+        // Claire D'Loon: a token that is also a card stays wherever it goes
+        if ((zoneType == ZoneType.Battlefield || !c.isToken() || c.getCurrentStateName() == CardStateName.PreparedSpell) || (zoneType == ZoneType.Stack && c.getCopiedPermanent() != null)
+                || forge.game.staticability.StaticAbilityTokensAreCards.applies(c)) {
             if (index == null) {
                 cardList.add(c);
             } else {

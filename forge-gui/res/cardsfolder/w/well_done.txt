@@ -3,5 +3,5 @@ ManaCost:2 R R
 Types:Sorcery
 # the rarity of the actual printing being roasted (rulings), as Collectigull reads it
 A:SP$ DealDamage | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumDmg$ 5 | SubAbility$ DBRoast | SpellDescription$ CARDNAME deals 5 damage to target creature. If that creature is rare or mythic rare, CARDNAME deals 3 damage to that creature's controller.
-SVar:DBRoast:DB$ DealDamage | Defined$ TargetedController | NumDmg$ 3 | ConditionDefined$ Targeted | ConditionPresent$ Card.RarityRare,Card.RarityMythic
+SVar:DBRoast:DB$ DealDamage | Defined$ TargetedController | NumDmg$ 3 | ConditionDefined$ Targeted | ConditionPresent$ Card.RarityRare,Card.RarityMythicRare
 Oracle:Well Done deals 5 damage to target creature. If that creature is rare or mythic rare, Well Done deals 3 damage to that creature's controller.

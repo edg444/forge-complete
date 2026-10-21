@@ -3644,7 +3644,7 @@ public class AbilityUtils {
         sa.addSplicedCards(c);
     }
 
-    private static int wordsInName(final Card card) {
+    public static int wordsInName(final Card card) {
         int words = 0;
         for (String word : card.getDisplayName().split("\\s+")) {
             if (!word.isEmpty() && !word.equals("//")) {

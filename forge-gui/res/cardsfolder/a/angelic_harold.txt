@@ -1,0 +1,10 @@
+Name:Angelic Harold
+ManaCost:1 W U
+Types:Legendary Creature Angel Performer
+PT:2/2
+K:Flying
+# A token's name is its types plus the word "Token" (rulings), so a token with two creature types qualifies.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | OptionalDecider$ You | Execute$ TrigSticker | TriggerDescription$ When CARDNAME enters, you may put a name sticker on a nonland permanent you own.
+SVar:TrigSticker:DB$ PutSticker | Kind$ Name | Choices$ Permanent.nonLand+YouOwn | ChoiceTitle$ Choose a nonland permanent you own | Optional$ True
+S:Mode$ Continuous | Affected$ Creature.YouCtrl+wordsInNameGE3 | AddPower$ 1 | AddToughness$ 1 | Description$ Each creature you control with three or more words in its name gets +1/+1.
+Oracle:Flying\nWhen Angelic Harold enters, you may put a name sticker on a nonland permanent you own.\nEach creature you control with three or more words in its name gets +1/+1.

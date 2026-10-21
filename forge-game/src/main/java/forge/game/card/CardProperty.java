@@ -2080,7 +2080,7 @@ public class CardProperty {
                 || property.startsWith("totalPT") || property.startsWith("numColors")
                 || property.startsWith("basePower") || property.startsWith("baseToughness") || property.startsWith("numTypes")
                 || property.startsWith("numCreatureTypes") || property.startsWith("baseLoyalty")
-                || property.startsWith("flavorLines")) {
+                || property.startsWith("flavorLines") || property.startsWith("wordsInName")) {
             int x;
             int y = 0;
             String rhs = "";
@@ -2118,6 +2118,10 @@ public class CardProperty {
             } else if (property.startsWith("flavorLines")) {
                 rhs = property.substring(13);
                 y = card.getPrintedFlavorLines();
+            } else if (property.startsWith("wordsInName")) {
+                // Angelic Harold; a token's name ends in "Token" (CR 111.4)
+                rhs = property.substring(13);
+                y = AbilityUtils.wordsInName(card);
             }
             if (rhs.equals("Chosen")) {
                 if (!source.hasChosenNumber()) {

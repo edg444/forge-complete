@@ -23,6 +23,7 @@ public enum StaticAbilityMode {
     // EnchantedBy/EquippedBy/AttachedBy), without their being enchanted or equipped
     ShareAttachments,
     CountersAreTokens,
+    TokensAreCards,
 
     // StaticAbility
     CantAttackUnless,

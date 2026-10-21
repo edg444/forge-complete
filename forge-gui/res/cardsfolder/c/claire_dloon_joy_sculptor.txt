@@ -1,0 +1,12 @@
+Name:Claire D'Loon, Joy Sculptor
+ManaCost:W U
+Types:Legendary Creature Human Performer
+PT:2/3
+# The tokens go on existing in whatever zone they go to, as cards that are still tokens (rulings;
+# StaticAbilityTokensAreCards). Most have no mana cost, so one in hand can't be cast without an effect that skips it.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigTokensAreCards | TriggerDescription$ When CARDNAME enters, for the rest of the game, tokens you own become cards that are still tokens. (They continue to exist after they leave the battlefield.)
+SVar:TrigTokensAreCards:DB$ Effect | StaticAbilities$ STTokensAreCards | Duration$ Permanent
+SVar:STTokensAreCards:Mode$ TokensAreCards | ValidCard$ Card.token+YouOwn | EffectZone$ Command | Description$ For the rest of the game, tokens you own are cards that are still tokens. (They continue to exist after they leave the battlefield.)
+A:AB$ ChangeZone | Cost$ 1 W U T | Origin$ Graveyard,Hand | Destination$ Battlefield | ChangeType$ Card.token+YouOwn | ChangeNum$ 1 | Hidden$ True | Optional$ True | SpellDescription$ You may put a token from your graveyard or hand onto the battlefield.
+DeckHints:Ability$Token
+Oracle:When Claire D'Loon, Joy Sculptor enters, for the rest of the game, tokens you own become cards that are still tokens. (They continue to exist after they leave the battlefield.)\n{1}{W}{U}, {T}: You may put a token from your graveyard or hand onto the battlefield.

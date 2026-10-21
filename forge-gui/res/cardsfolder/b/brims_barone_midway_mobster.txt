@@ -1,0 +1,18 @@
+Name:"Brims" Barone, Midway Mobster
+ManaCost:3 W B
+Types:Legendary Creature Human Rogue
+PT:5/4
+# A hat Forge knows of (Card.HasHat) counts at once; the controller is asked about the rest, all in one choice, as
+# for Haberthrasher. The AI counts only known hats.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigAskHats | TriggerDescription$ When CARDNAME enters, put a +1/+1 counter on each other creature you control that has a hat.
+SVar:TrigAskHats:DB$ ChooseCard | Defined$ You | Choices$ Creature.Other+YouCtrl+!HasHat | MinAmount$ 0 | Amount$ X | AIMaxAmount$ 0 | ChoiceTitle$ Choose the other creatures you control that have a hat (one their art shows them with, worn or not, or a hat, wig or headband sticker - not a space helmet, a hood or a face mask, and not a background character's) | SubAbility$ DBCounters
+SVar:DBCounters:DB$ PutCounterAll | ValidCards$ Creature.Other+YouCtrl+HasHat,Creature.ChosenCard | CounterType$ P1P1 | CounterNum$ 1 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+SVar:X:Count$Valid Creature.Other+YouCtrl+!HasHat
+# Whether you're wearing a hat matters only as blockers are declared (rulings), so you're asked as it attacks (user,
+# 2026-10-21). The AI wears one half the time.
+T:Mode$ Attacks | ValidCard$ Card.Self | Static$ True | Execute$ TrigWearing | TriggerDescription$ CARDNAME has menace as long as you're wearing a hat. (You're asked as it attacks.)
+SVar:TrigWearing:DB$ GenericChoice | Defined$ You | Choices$ DBHat,DBNoHat | AILogic$ Random | ChoicePrompt$ Are you wearing a hat?
+SVar:DBHat:DB$ Pump | Defined$ Self | KW$ Menace | Duration$ UntilEndOfCombat | SpellDescription$ I'm wearing a hat
+SVar:DBNoHat:DB$ Cleanup | SpellDescription$ No hat
+Oracle:When "Brims" Barone, Midway Mobster enters, put a +1/+1 counter on each other creature you control that has a hat.\n"Brims" Barone, Midway Mobster has menace as long as you're wearing a hat.

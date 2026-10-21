@@ -312,6 +312,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Claire D'Loon, Joy Sculptor (UNF #165).** New static mode `TokensAreCards`: your tokens go on existing in
+  whatever zone they go to. The rule that a token can't move again once it has left the battlefield doesn't apply
+  either (rulings).
+- **Unfinity: "Brims" Barone, Midway Mobster (UNF #163).**
+  - **Counters:** creatures with a hat Forge knows of get theirs at once; you're asked about the rest in one choice.
+  - **Menace:** you're asked as it attacks whether you're wearing a hat (user ruling); that's when it matters.
+  - **AI:** it counts only known hats, and wears one half the time.
+- **Unfinity: Angelic Harold (UNF #162).** New `wordsInName` card property; a token's name ends in "Token" (CR 111.4).
+- **Fix: Well Done (UNF #128)** dealt its extra 3 damage for rares but not mythic rares.
 - **Unfinity: Tug of War (UNF #159).** New Subgame parameter `StartingPermanents$ N`.
   - Each player sets aside up to N permanent cards with different names from their library. Those go onto the
     subgame battlefield once mulligans are done, starting player first.
