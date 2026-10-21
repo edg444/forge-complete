@@ -1,0 +1,71 @@
+[metadata]
+Code=ULST
+Date=2022-10-07
+Name=The List (Unfinity Foil Edition)
+Type=Funny
+Border=Silver
+ScryfallCode=ULST
+
+[cards]
+1 R By Gnome Means @Sean Murray
+2 M Do-It-Yourself Seraph @David Sladek
+3 R Flavor Judge @Mike Burns
+4 R Frankie Peanuts @Thomas M. Baxa
+5 R Jackknight @Ben Wootten
+6 R Oddly Uneven @Ben Wootten
+7 R Rules Lawyer @Sean Murray
+8 R Staying Power @Richard Sardinha
+9 R Syr Cadian, Knight Owl @Andrea Radeck
+10 R Alexander Clamilton @Dmitry Burmak
+11 R Animate Library @Raymond Swanland
+12 R Avatar of Me @Greg Hildebrandt
+13 M B.O.B. (Bevy of Beebles) @Jeff Miracola
+14 R Clocknapper @Marco Teixeira
+15 R Graveyard Busybody @Bram Sels
+16 R Incite Insight @David Sladek
+17 R Richard Garfield, Ph.D. @Dave Dorman
+18 R Acornelia, Fashionable Filcher @Bram Sels
+19 R Enter the Dungeon @Luca Zontini
+20 R Infernal Spawn of Infernal Spawn of Evil @Ron Spencer
+21 R Infernius Spawnington III, Esq. @Ron Spencer
+22 R Masterful Ninja @Matt Gaser
+23 R Over My Dead Bodies @Even Amundsen
+24 R Spike, Tournament Grinder @Zoltan Boros
+25 M Summon the Pack @Matt Cavotta
+26 R The Big Idea @Bram Sels
+27 R Blast from the Past @Douglas Shuler
+28 R The Countdown Is at One @Jesper Ejsing
+29 M Infinity Elemental @Seb McKinnon
+30 R Steamflogger of the Month @Warren Mahy
+31 R Three-Headed Goblin @Mike Burns
+32 R Yet Another Aether Vortex @David Day
+33 R As Luck Would Have It @Milivoj Ćeran
+34 R B-I-N-G-O @Ron Spencer
+36 R Hydradoodle @Mathias Kollros
+37 R Ineffable Blessing @Milivoj Ćeran ${"variant": "C"}
+38 R Ineffable Blessing @Milivoj Ćeran ${"variant": "A"}
+39 R Old Fogey @Douglas Shuler
+40 R Pippa, Duchess of Dice @Simon Dominic
+41 R Serpentine @Kari Christensen
+42 M Surgeon General Commander @Simon Dominic
+43 M Baron Von Count @Jesper Ejsing
+44 R Better Than One @Alex Konstad
+45 R Cramped Bunker @Ben Wootten
+46 M Dr. Julius Jumblemorph @Simon Dominic
+47 M The Grand Calcutron @Sean Murray
+48 R Grusilda, Monster Masher @Mathias Kollros
+49 R Hot Fix @David Sladek
+50 R Mary O'Kill @Simon Dominic
+51 M Ol' Buzzbark @Wayne Reynolds
+52 M Phoebe, Head of S.N.E.A.K. @Ralph Horsley
+53 R X @Dmitry Burmak
+54 R Angelic Rocket @Carl Critchlow
+55 R Everythingamajig @Chris Seaman ${"variant": "A"}
+56 R Everythingamajig @Chris Seaman ${"variant": "F"}
+57 R Handy Dandy Clone Machine @Mike Burns
+58 R Kindslaver @Zoltan Boros
+59 R Modular Monstrosity @Alex Konstad
+60 R Split Screen @Simon Dominic
+61 M Sword of Dungeons & Dragons @Chris Rahn
+62 R Watermarket @Simon Dominic
+108 R Earl of Squirrel @Matt Cavotta

@@ -312,6 +312,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **The List audit against Scryfall (2026-10-20).** PLST matched Scryfall's 5,740 printings by collector number,
+  names and artists, except three Judgment † variations, now added (JUD-78†, JUD-119†, JUD-127†). Not discrepancies:
+  basic lands are `L` where Scryfall says common (Forge's convention), the Wicked // Cursed role token is two token
+  lines under TWOE-17 (as in WOE), and TDFT-14 Start Your Engines! // Max Speed is a helper card Forge doesn't model
+  (speed is player state). New edition **The List (Unfinity Foil Edition)** (ULST, 62 printings, fork-owned, under the
+  `edition-add-only` merge driver); its Ineffable Blessings are variants C and A and its Everythingamajigs A and F,
+  matched to Unstable by Oracle text. PrintingTraits regenerated for the new printings, with their printed lines
+  OCR'd; two dropped opening parentheses corrected by hand from the card images (ULST 23 Over My Dead Bodies, UST 135
+  Phoebe, Head of S.N.E.A.K.).
+
 - **2019 Heroes of the Realm: Collectigull // Only the Best, Keeper of the Secret Lair, Myntasha, Honored One.**
   Booster Fun is Scryfall's `boosterfun` promo type, now a PrintingTraits trait (`boosterfun`, 9,272 Forge
   printings; `generate.js` writes it), read by `Card.isBoosterFun()` / property `BoosterFun`. A Secret Lair spell is

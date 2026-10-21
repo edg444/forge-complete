@@ -2770,6 +2770,7 @@ JUD-72 U Stitch Together @Arnie Swekel
 JUD-76 C Treacherous Werewolf @Mark Tedin
 JUD-77 U Anger @John Avon
 JUD-78 C Arcane Teachings @Mark Brill
+JUD-78† C Arcane Teachings @Mark Brill
 JUD-84 R Dwarven Bloodboiler @Arnie Swekel
 JUD-88 U Firecat Blitz @David Martin
 JUD-89 C Flaring Pain @Glen Angus
@@ -2779,8 +2780,10 @@ JUD-97 U Planar Chaos @Ron Spencer
 JUD-101 U Swelter @Ben Thompson
 JUD-103 R Worldgorger Dragon @Wayne England
 JUD-119 U Grizzly Fate @Dave Dorman
+JUD-119† U Grizzly Fate @Dave Dorman
 JUD-120 C Harvester Druid @David Martin
 JUD-127 U Phantom Centaur @Carl Critchlow
+JUD-127† U Phantom Centaur @Carl Critchlow
 JUD-129 C Phantom Tiger @Brian Snõddy
 JUD-131 U Serene Sunset @David Martin
 KHC-19 U Banishing Light @Willian Murai
