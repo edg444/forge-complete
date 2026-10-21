@@ -1,0 +1,7 @@
+Name:Busted!
+ManaCost:1 U
+Types:Instant
+# X is counted as it resolves (rulings)
+A:SP$ Counter | TargetType$ Spell | TgtPrompt$ Select target spell | ValidTgts$ Card | UnlessCost$ X | SpellDescription$ Counter target spell unless its controller pays {X}, where X is the number of words in the name with the most words among permanents you control.
+SVar:X:Count$MostWordsInName.Permanent.YouCtrl
+Oracle:Counter target spell unless its controller pays {X}, where X is the number of words in the name with the most words among permanents you control.

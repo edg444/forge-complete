@@ -312,6 +312,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Busted! (UNF #41).** Mana Leak with X equal to the most words in a name among permanents you control,
+  counted as it resolves (ruling).
+  - New count, `Count$MostWordsInName.<Valid>`, which shares its word counting with Bosom Buddy's and Wordmail's
+    `WordsInName`.
 - **Unfinity: Blufferfish (UNF #39).** New effect, `Bluff`. An opponent tells you a statement about themselves and
   secretly notes whether it's true; you guess, and a right guess runs `GuessCorrect$` (+2/+0, can't be blocked this
   turn).

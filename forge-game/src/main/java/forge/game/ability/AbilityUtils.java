@@ -1703,14 +1703,19 @@ public class AbilityUtils {
             // Count$WordsInName.<DefinedCards> - Bosom Buddy counts the words in a spell's name,
             // Wordmail in a static ability. Kept outside the SpellAbility-only block below, which a
             // static never enters. Split/double-faced names keep their "//" separator out of it.
+            // Count$MostWordsInName.<Valid> - Busted!: the name with the most words among the valid permanents
+            if (sq[0].startsWith("MostWordsInName")) {
+                int most = 0;
+                for (Card card : CardLists.getValidCards(game.getCardsIn(ZoneType.Battlefield), sq[1],
+                        c.getController(), c, ctb)) {
+                    most = Math.max(most, wordsInName(card));
+                }
+                return doXMath(most, expr, c, ctb);
+            }
             if (sq[0].startsWith("WordsInName")) {
                 int words = 0;
                 for (Card card : getDefinedCards(c, sq[1], ctb)) {
-                    for (String word : card.getDisplayName().split("\\s+")) {
-                        if (!word.isEmpty() && !word.equals("//")) {
-                            words++;
-                        }
-                    }
+                    words += wordsInName(card);
                 }
                 return doXMath(words, expr, c, ctb);
             }
@@ -3611,6 +3616,16 @@ public class AbilityUtils {
         sa.getPayCosts().add(spliceCost);
         sa.setDescription(sa.getDescription() + " (Splicing " + c + " onto it)");
         sa.addSplicedCards(c);
+    }
+
+    private static int wordsInName(final Card card) {
+        int words = 0;
+        for (String word : card.getDisplayName().split("\\s+")) {
+            if (!word.isEmpty() && !word.equals("//")) {
+                words++;
+            }
+        }
+        return words;
     }
 
     public static int doXMath(final int num, final String operators, final Card c, CardTraitBase ctb) {
