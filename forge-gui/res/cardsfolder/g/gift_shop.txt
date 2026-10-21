@@ -1,0 +1,17 @@
+Name:Gift Shop
+ManaCost:no cost
+Types:Artifact Attraction
+K:Visit:TrigCharm
+SVar:TrigCharm:DB$ Charm | Choices$ DBBalloon,DBTeddy,DBFood,DBTickets,DBSticker | ChoiceRestriction$ ThisGame | AdditionalDescription$ that hasn't been chosen
+SVar:DBBalloon:DB$ Token | TokenScript$ r_1_1_balloon_flying | TokenOwner$ You | SpellDescription$ Create a 1/1 red Balloon creature token with flying.
+SVar:DBTeddy:DB$ Token | TokenScript$ c_2_2_teddy_bear | TokenOwner$ You | SpellDescription$ Create a 2/2 pink Teddy Bear creature token.
+SVar:DBFood:DB$ Token | TokenAmount$ 2 | TokenScript$ c_a_food_sac | TokenOwner$ You | SpellDescription$ Create two Food tokens.
+SVar:DBTickets:DB$ PutCounter | Defined$ You | CounterType$ TICKET | CounterNum$ 3 | SpellDescription$ You get {TK}{TK}{TK}.
+SVar:DBSticker:DB$ PutSticker | Choices$ Permanent.nonLand+YouOwn | ChoiceTitle$ Choose a nonland permanent you own | Optional$ True | SpellDescription$ You may put a sticker on a nonland permanent you own.
+DeckHas:Ability$Token|Sticker & Type$Balloon|Teddy|Bear|Food|Artifact
+Oracle:Visit — Choose one that hasn't been chosen.\n• Create a 1/1 red Balloon creature token with flying.\n• Create a 2/2 pink Teddy Bear creature token.\n• Create two Food tokens.\n• You get {TK}{TK}{TK}.\n• You may put a sticker on a nonland permanent you own.
+
+# --- VARIANTS ---
+
+Variant:A:Lights:2 3 6
+Variant:B:Lights:4 5 6

@@ -1,0 +1,14 @@
+Name:Centrifuge
+ManaCost:no cost
+Types:Artifact Attraction
+# A card drawn from another player's library is still that player's (rulings).
+K:Visit:TrigDraw
+SVar:TrigDraw:DB$ Draw | Defined$ Player | NumCards$ 1 | FromLibraryOf$ ToTheirRight | SubAbility$ DBTreasure | SpellDescription$ Each player draws a card from the library of the player to their right. You create three Treasure tokens.
+SVar:DBTreasure:DB$ Token | TokenAmount$ 3 | TokenScript$ c_a_treasure_sac | TokenOwner$ You
+DeckHas:Ability$Token & Type$Treasure|Artifact
+Oracle:Visit — Each player draws a card from the library of the player to their right. You create three Treasure tokens.
+
+# --- VARIANTS ---
+
+Variant:A:Lights:3 6
+Variant:B:Lights:4 6

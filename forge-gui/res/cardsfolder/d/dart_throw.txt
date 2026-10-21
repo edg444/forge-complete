@@ -1,0 +1,22 @@
+Name:Dart Throw
+ManaCost:no cost
+Types:Artifact Attraction
+# There's no table, so the throw is simulated with the dexterity toss animation: it touches the Attraction half the
+# time (user, 2026-10-21; ThrowCardsEffect).
+K:Visit:TrigThrow
+K:Prize:TrigPrize
+SVar:TrigThrow:DB$ ThrowCards | Throws$ 1 | Aim$ Card.Self | HitChance$ 50 | NoDamage$ True | SubAbility$ DBClaim | SpellDescription$ Throw a card you own from outside the game onto the playing area from a distance of three feet (about one meter). If that card touches this Attraction, claim the prize!
+SVar:DBClaim:DB$ ClaimThePrize | ConditionCheckSVar$ Hits | ConditionSVarCompare$ GE1
+SVar:Hits:Number$0
+SVar:TrigPrize:DB$ Token | TokenAmount$ 2 | TokenScript$ c_2_2_teddy_bear | TokenOwner$ You | SubAbility$ DBSac | SpellDescription$ Create two 2/2 pink Teddy Bear creature tokens. Sacrifice this Attraction, then open an Attraction.
+SVar:DBSac:DB$ Sacrifice | SacValid$ Self | SubAbility$ DBOpen
+SVar:DBOpen:DB$ OpenAttraction
+DeckHas:Ability$Token & Type$Teddy|Bear
+Oracle:Visit — Throw a card you own from outside the game onto the playing area from a distance of three feet (about one meter). If that card touches this Attraction, claim the prize!\nPrize — Create two 2/2 pink Teddy Bear creature tokens. Sacrifice this Attraction, then open an Attraction.
+
+# --- VARIANTS ---
+
+Variant:A:Lights:2 3 4 6
+Variant:B:Lights:2 3 5 6
+Variant:C:Lights:2 4 5 6
+Variant:D:Lights:3 4 5 6

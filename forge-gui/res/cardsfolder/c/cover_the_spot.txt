@@ -1,0 +1,22 @@
+Name:Cover the Spot
+ManaCost:no cost
+Types:Artifact Attraction
+# There's no table, so the drops are simulated with the dexterity toss animation: the three cards cover the Attraction
+# completely 15% of the time (user, 2026-10-21; ThrowCardsEffect CoverChance$).
+K:Visit:TrigDrop
+K:Prize:TrigPrize
+SVar:TrigDrop:DB$ ThrowCards | Throws$ 3 | Aim$ Card.Self | HitChance$ 50 | CoverChance$ 15 | SubAbility$ DBClaim | SpellDescription$ Drop three cards you own from outside the game one at a time onto the playing area from a height of at least one foot (about 0.3 meters). If those cards completely cover this Attraction, claim the prize!
+SVar:DBClaim:DB$ ClaimThePrize | ConditionCheckSVar$ Covered | ConditionSVarCompare$ GE1
+SVar:Covered:Number$0
+SVar:TrigPrize:DB$ PutCounter | Defined$ You | CounterType$ TICKET | CounterNum$ 4 | SubAbility$ DBSticker | SpellDescription$ You get {TK}{TK}{TK}{TK}, then you may put a sticker on a nonland permanent you own. Sacrifice this Attraction, then open an Attraction.
+SVar:DBSticker:DB$ PutSticker | Choices$ Permanent.nonLand+YouOwn | ChoiceTitle$ Choose a nonland permanent you own | Optional$ True | SubAbility$ DBSac
+SVar:DBSac:DB$ Sacrifice | SacValid$ Self | SubAbility$ DBOpen
+SVar:DBOpen:DB$ OpenAttraction
+Oracle:Visit — Drop three cards you own from outside the game one at a time onto the playing area from a height of at least one foot (about 0.3 meters). If those cards completely cover this Attraction, claim the prize!\nPrize — You get {TK}{TK}{TK}{TK}, then you may put a sticker on a nonland permanent you own. Sacrifice this Attraction, then open an Attraction.
+
+# --- VARIANTS ---
+
+Variant:A:Lights:2 3 4 6
+Variant:B:Lights:2 3 5 6
+Variant:C:Lights:2 4 5 6
+Variant:D:Lights:3 4 5 6

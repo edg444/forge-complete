@@ -28,6 +28,10 @@ import forge.util.MyRandom;
  * throw is aimed - the thrower picks one of the Aim$ permanents - and hits it HitChance$ percent of the time (user,
  * 2026-10-21), shown with the throw animation the other dexterity cards use. Hits are only assessed once every card is
  * thrown (rulings): each permanent then takes 1 damage from the source for each card touching it.
+ * <p>
+ * Dart Throw and Cover the Spot throw at an Attraction for its prize instead (user, 2026-10-21: 50% and 15%): NoDamage$
+ * leaves the host's Hits SVar saying how many cards touched, and CoverChance$ makes the throws one try at covering the
+ * aim completely - all of them land on it or the cover fails - leaving Covered as 1 or 0.
  */
 public class ThrowCardsEffect extends SpellAbilityEffect {
 
@@ -46,6 +50,9 @@ public class ThrowCardsEffect extends SpellAbilityEffect {
         // the game decides what each card touches; the board mustn't pick its own hits
         final TossStyle style = new TossStyle(-1, 0, true, false, false);
         final Map<Card, Integer> hits = Maps.newLinkedHashMap();
+        final boolean cover = sa.hasParam("CoverChance");
+        final boolean covered = cover && MyRandom.percentTrue(Integer.parseInt(sa.getParam("CoverChance")));
+        int touches = 0;
 
         for (int i = 1; i <= throwsLeft; i++) {
             final CardCollection aimable = CardLists.getValidCards(game.getCardsIn(ZoneType.Battlefield),
@@ -58,8 +65,11 @@ public class ThrowCardsEffect extends SpellAbilityEffect {
             }
             final Card aim = you.getController().chooseSingleEntityForEffect(aimable, sa,
                     "Throw " + i + " of " + throwsLeft + ": choose what to aim at", false, null);
-            final boolean hit = aim != null && MyRandom.percentTrue(hitChance);
+            // a failed cover still lands some cards on it, but never all of them
+            final boolean hit = aim != null && (cover ? covered || (i < throwsLeft || touches < i - 1) && MyRandom.percentTrue(hitChance)
+                    : MyRandom.percentTrue(hitChance));
             if (hit) {
+                touches++;
                 touched.add(aim.getView());
                 hits.merge(aim, 1, Integer::sum);
             }
@@ -70,6 +80,17 @@ public class ThrowCardsEffect extends SpellAbilityEffect {
                     : hit ? " lands touching " + aim + "." : " misses " + aim + "."));
         }
 
+        if (cover) {
+            host.setSVar("Covered", covered ? "Number$1" : "Number$0");
+        }
+        if (sa.hasParam("NoDamage") || cover) {
+            host.setSVar("Hits", "Number$" + touches);
+            if (cover) {
+                game.getGameLog().add(GameLogEntryType.INFORMATION, covered ? "The cards cover it completely!"
+                        : "The cards don't cover it completely.");
+            }
+            return;
+        }
         if (hits.isEmpty()) {
             return;
         }

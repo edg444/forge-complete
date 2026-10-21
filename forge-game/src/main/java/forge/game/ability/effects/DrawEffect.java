@@ -109,8 +109,11 @@ public class DrawEffect extends SpellAbilityEffect {
             }
 
             // FromLibraryOf$: draw from that player's library instead (Spy Eye)
-            final Player libraryOf = sa.hasParam("FromLibraryOf")
-                    ? AbilityUtils.getDefinedPlayers(source, sa.getParam("FromLibraryOf"), sa).getFirst() : p;
+            // Centrifuge: ToTheirRight - each drawer from the library of the player to their right
+            final Player libraryOf = !sa.hasParam("FromLibraryOf") ? p
+                    : "ToTheirRight".equals(sa.getParam("FromLibraryOf"))
+                    ? p.getGame().getNextPlayerAfter(p, forge.game.Direction.Right)
+                    : AbilityUtils.getDefinedPlayers(source, sa.getParam("FromLibraryOf"), sa).getFirst();
             final boolean fromBottom = sa.hasParam("FromBottom");
             if (fromBottom) {
                 p.setDrawingFromBottom(true);

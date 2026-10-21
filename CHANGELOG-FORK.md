@@ -312,6 +312,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity Attractions: Centrifuge, Cover the Spot, Dart Throw, Gift Shop (UNF #203, #207, #208, #214).**
+  - **Centrifuge:** Draw's `FromLibraryOf$ ToTheirRight` has each player draw from the library of the player to their
+    right; the card stays its owner's (rulings).
+  - **Dart Throw and Cover the Spot:** simulated with the dexterity toss animation (user ruling): one card touches
+    50% of the time, and three cards cover completely 15% of the time.
+  - **ThrowCards:** new `NoDamage` and `CoverChance` parameters for throws at a prize.
+  - **Gift Shop:** each mode once a game.
 - **Unfinity: Wicker Picker (UNF #196).** New `StickerKicker$` parameter on the OptionalCost static mode, one optional
   cost per Wicker Picker (up to four).
   - When it's paid, the caster gets {TK} and may put a sticker on the spell just before it's considered cast, so cast
