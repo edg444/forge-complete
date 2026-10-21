@@ -312,6 +312,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Truss, Chief Engineer (UNF #181).** New `AdjustNumber` effect. It reaches power, toughness, loyalty, a
+  spell's generic mana, and the literal numbers in the target's abilities (damage, cards, life, counters, tokens, dice
+  and sides, pumps and the like - user ruling).
+  - The change lasts until end of turn, never goes below 1, and can't touch an X (rulings).
+  - Names and collector numbers stay as printed.
+  - **AI:** before combat it adds its hack counters to its best attacker's power, or failing that takes them off an
+    opponent's best creature.
 - **Unfinity: It Came from Planet Glurg (UNF #169).** New `CloneCombined` effect: a copy of X creatures at once, merged
   in full (user ruling).
   - Total power and toughness, combined mana costs, and every type, color and ability.

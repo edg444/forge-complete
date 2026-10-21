@@ -156,6 +156,7 @@ public enum ApiType {
     HoldUntil (HoldUntilEffect.class),
     JumpInLog (JumpInLogEffect.class),
     CloneCombined (CloneCombinedEffect.class),
+    AdjustNumber (AdjustNumberEffect.class),
     GameDrawn (GameDrawEffect.class),
     GenericChoice (ChooseGenericEffect.class),
     Gerrymander (GerrymanderEffect.class),
