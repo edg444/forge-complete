@@ -312,6 +312,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Bar Entry (UNF #4).** Nothing records where heads are in card art, so the head-above-the-bar mode can
+  target any creature and the caster checks the two cards side by side (honor system, like Sly Spy's unknown facings).
+  The AI can't look, so that mode has `AILogic$ Never` and the AI only uses the power-4 mode.
 - **Unfinity: Assembled Ensemble (UNF #3).** New PrintingTraits trait `artifactcreature`, which gives
   `Card.hasKnownArtifactCreatureInArt()` and the property `KnownArtifactCreatureInArt`.
   - Tagger has no artifact-creature tag, so these count: the robot, construct, golem, thopter, servo, automaton,

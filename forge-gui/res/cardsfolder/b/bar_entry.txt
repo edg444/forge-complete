@@ -1,0 +1,9 @@
+Name:Bar Entry
+ManaCost:3 W
+Types:Instant
+A:SP$ Charm | Choices$ DBDestroyPower,DBDestroyHead
+SVar:DBDestroyPower:DB$ Destroy | ValidTgts$ Creature.powerGE4 | TgtPrompt$ Select target creature with power 4 or greater | SpellDescription$ Destroy target creature with power 4 or greater.
+# Nothing records where heads are in card art, so any creature can be chosen and the caster checks the two cards side by
+# side (honor system). The AI can't look, so it never uses this mode.
+SVar:DBDestroyHead:DB$ Destroy | ValidTgts$ Creature | TgtPrompt$ Select target creature with any part of its head higher than the bar (align the tops of both cards to check) | AILogic$ Never | SpellDescription$ Destroy target creature with any part of its head higher than the bar. (Align the tops of both cards to check.)
+Oracle:Choose one —\n• Destroy target creature with power 4 or greater.\n• Destroy target creature with any part of its head higher than the bar. (Align the tops of both cards to check.)
