@@ -1,0 +1,21 @@
+Name:Get Your Head in the Game
+ManaCost:2 W
+Types:Enchantment
+K:Flash
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigExile | TriggerDescription$ When this enchantment enters, exile target nonland permanent until it (this card) leaves the battlefield, then touch it (this card) to your head. When it (this card) stops touching it (your head), sacrifice it (the card, not your head).
+SVar:TrigExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | ValidTgts$ Permanent.nonLand | TgtPrompt$ Select target nonland permanent | Duration$ UntilHostLeavesPlay | SubAbility$ DBTouch
+SVar:DBTouch:DB$ StoreSVar | SVar$ OnHead | Type$ Number | Expression$ 1
+SVar:OnHead:Number$0
+# A human says when it stops touching their head (honor system). The AI has no head, so it slips: a 5% chance at each
+# of its upkeeps (user ruling).
+# the store comes first: an ImmediateTrigger carries its own ability's restrictions onto the trigger, and OnHead is 0 by then
+A:ST$ StoreSVar | Cost$ 0 | SpecialAction$ True | CheckSVar$ OnHead | SVarCompare$ EQ1 | SVar$ OnHead | Type$ Number | Expression$ 0 | AILogic$ Never | SubAbility$ DBStopped | SpellDescription$ CARDNAME stopped touching your head (honor system).
+SVar:DBStopped:DB$ ImmediateTrigger | Execute$ TrigSacrifice | TriggerDescription$ When CARDNAME stops touching your head, sacrifice it.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You.IsAI | TriggerZones$ Battlefield | CheckSVar$ OnHead | SVarCompare$ EQ1 | Static$ True | Secondary$ True | Execute$ TrigSlip | TriggerDescription$ (The AI's grip on CARDNAME may slip at its upkeep.)
+SVar:TrigSlip:DB$ StoreSVar | SVar$ Slipped | Type$ CountSVar | Expression$ SlipRoll | SubAbility$ DBSlip
+# rolled once and stored: the ImmediateTrigger keeps its own condition, which mustn't roll again
+SVar:DBSlip:DB$ ImmediateTrigger | ConditionCheckSVar$ Slipped | ConditionSVarCompare$ EQ1 | Execute$ TrigSacrifice | TriggerDescription$ When CARDNAME stops touching your head, sacrifice it.
+SVar:Slipped:Number$0
+SVar:SlipRoll:Count$Random.1.20
+SVar:TrigSacrifice:DB$ Sacrifice | Defined$ Self
+Oracle:Flash\nWhen this enchantment enters, exile target nonland permanent until it (this card) leaves the battlefield, then touch it (this card) to your head. When it (this card) stops touching it (your head), sacrifice it (the card, not your head).

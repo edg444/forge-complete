@@ -41,6 +41,11 @@ public class PlayerProperty {
             if (!same) {
                 return false;
             }
+        } else if (property.equals("IsAI")) {
+            // a computer player: physical-world cards simulate what an AI can't do (Get Your Head in the Game)
+            if (!player.getController().isAI()) {
+                return false;
+            }
         } else if (property.equals("Opponent")) {
             if (player.equals(sourceController) || !player.isOpponentOf(sourceController)) {
                 return false;

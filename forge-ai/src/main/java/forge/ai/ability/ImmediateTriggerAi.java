@@ -59,6 +59,10 @@ public class ImmediateTriggerAi extends SpellAbilityAi {
         if (logic.equals("Always")) {
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
+        // an honor-system action only a human can report (Form of the Approach of the Second Sun)
+        if (logic.equals("Never")) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
 
         SpellAbility trigsa = sa.getAdditionalAbility("Execute");
         if (trigsa == null) {

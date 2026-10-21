@@ -312,6 +312,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Get Your Head in the Game (UNF #10).** The ETB exile lasts until it leaves (`Duration$
+  UntilHostLeavesPlay`), and the card is then "touching your head" (SVar `OnHead`).
+  - User ruling: a human reports when contact breaks with an honor-system special action, and the AI's grip slips
+    with a 5% chance at each of its upkeeps. That needed a new player property, `IsAI`.
+  - The slip is rolled once and stored, because an ImmediateTrigger copies its own ability's restrictions onto the
+    trigger it makes. For the same reason, the honor action clears `OnHead` before its ImmediateTrigger runs.
+  - **AI fix:** `AILogic$ Never` is now honored by ImmediateTriggerAi and StoreSVarAi; both used to ignore it, so the
+    AI could have pressed a human's honor-system button. That also covers Form of the Approach of the Second Sun's.
 - **Unfinity: Form of the Approach of the Second Sun (UNF #9).**
   - **The card you become:** new `GamePieceType.PERSON`. Per the rulings it's a planeswalker card with no other
     characteristics (no name), made by the new effect `BecomeACard` (`LibraryPosition$`; a player who's already a

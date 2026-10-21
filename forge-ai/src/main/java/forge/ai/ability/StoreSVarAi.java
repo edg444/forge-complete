@@ -13,6 +13,10 @@ public class StoreSVarAi extends SpellAbilityAi {
 
     @Override
     protected AiAbilityDecision canPlay(Player ai, SpellAbility sa) {
+        // an honor-system action only a human can report (Get Your Head in the Game)
+        if ("Never".equals(sa.getParam("AILogic"))) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
 
