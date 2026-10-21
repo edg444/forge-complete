@@ -312,6 +312,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Blufferfish (UNF #39).** New effect, `Bluff`. An opponent tells you a statement about themselves and
+  secretly notes whether it's true; you guess, and a right guess runs `GuessCorrect$` (+2/+0, can't be blocked this
+  turn).
+  - A person makes up the statement and notes its truth (honor system).
+  - **User ruling:** the AI states a fact about its own hidden cards, false half the time, and notes the truth from
+    the game. Examples: "I have a land card in my hand", "I have exactly 2 creature cards in my hand", "The top
+    card of my library is a land".
+  - An AI guessing has nothing to go on, so it guesses at random.
+  - **AI:** it tries once in its first main phase when the Fish can attack (`BluffAi`).
 - **Unfinity: Bag Check (UNF #36).** Counters a spell, then asks a person outside the game if it looks dangerous,
   using Flavor Judge's idiom.
   - A human asks a real person and enters the answer (honor system).

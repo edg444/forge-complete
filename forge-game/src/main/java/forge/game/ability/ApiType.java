@@ -138,6 +138,7 @@ public enum ApiType {
     HidePrintedToken (HidePrintedTokenEffect.class),
     ClaimHat (ClaimHatEffect.class),
     AnimateObject (AnimateObjectEffect.class),
+    Bluff (BluffEffect.class),
     GameDrawn (GameDrawEffect.class),
     GenericChoice (ChooseGenericEffect.class),
     Gerrymander (GerrymanderEffect.class),
