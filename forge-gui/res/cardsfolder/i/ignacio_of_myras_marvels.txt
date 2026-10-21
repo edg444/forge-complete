@@ -1,0 +1,18 @@
+Name:Ignacio of Myra's Marvels
+ManaCost:2 R R
+Types:Legendary Creature Lizard Performer
+PT:4/3
+K:ETBReplacement:Other:DBChooseObject
+SVar:DBChooseObject:DB$ ChooseType | Type$ object | Chooser$ You | ChoiceTitle$ Choose an object | ValidTypes$ armor,blood,book,bottle,fang,fire,scroll,spear,sword,water | AILogic$ MostCommonArtObject | SpellDescription$ As CARDNAME enters, choose armor, blood, book, bottle, fang, fire, scroll, spear, sword, or water.
+# The objects come from Scryfall Tagger's tags of the same names (PrintingTraits artobjects, Card.ArtHasChosenObject):
+# fire is Tagger's fire tree, so lava and magma aren't fire (rulings). Art Tagger hasn't tagged at all is asked about,
+# as for Don't Try This at Home (user, 2026-10-21); the AI trusts the tags.
+T:Mode$ SpellCast | ValidActivatingPlayer$ You | ValidCard$ Card.ArtHasChosenObject | TriggerZones$ Battlefield | Execute$ TrigTreasure | TriggerDescription$ Whenever you cast a spell with the chosen object in its art, create two Treasure tokens.
+SVar:TrigTreasure:DB$ Token | TokenAmount$ 2 | TokenScript$ c_a_treasure_sac | TokenOwner$ You
+T:Mode$ SpellCast | ValidActivatingPlayer$ You | ValidCard$ Card.ArtUntagged | TriggerZones$ Battlefield | Execute$ TrigAsk | Secondary$ True | TriggerDescription$ Whenever you cast a spell with the chosen object in its art, create two Treasure tokens.
+SVar:TrigAsk:DB$ GenericChoice | Defined$ You | Choices$ NotInArt,InArt | ShowCurrentCard$ TriggeredCard | ChoicePrompt$ Is the chosen object in the art of the spell you cast?
+SVar:NotInArt:DB$ Pump | SpellDescription$ It isn't in the art
+SVar:InArt:DB$ Token | TokenAmount$ 2 | TokenScript$ c_a_treasure_sac | TokenOwner$ You | SpellDescription$ It's in the art
+K:Partner
+DeckHas:Ability$Token & Type$Treasure|Artifact
+Oracle:As Ignacio of Myra's Marvels enters, choose armor, blood, book, bottle, fang, fire, scroll, spear, sword, or water.\nWhenever you cast a spell with the chosen object in its art, create two Treasure tokens.\nPartner (You can have two commanders if both have partner.)

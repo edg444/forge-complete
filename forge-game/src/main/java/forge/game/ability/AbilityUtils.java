@@ -3103,6 +3103,11 @@ public class AbilityUtils {
             return doXMath(game.getStack().getMaxDistinctSources(), expr, c, ctb);
         }
 
+        // Goblin Girder Gang: how many results are stored on the card
+        if (sq[0].equals("StoredRollCount")) {
+            return doXMath(c.getStoredRolls() == null ? 0 : c.getStoredRolls().size(), expr, c, ctb);
+        }
+
         if (sq[0].equals("MaxSameStoredRolls")) {
             int max = 0;
             List<Integer> rolls = c.getStoredRolls();

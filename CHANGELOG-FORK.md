@@ -312,6 +312,23 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Juggletron (UNF #113).** Forge's stickers have no position, so each art sticker on it counts as an item
+  juggled clear of everything else (+3/+0 each). Name, ability and P/T stickers and counters don't count (rulings).
+- **Unfinity: Ignacio of Myra's Marvels (UNF #112).** New `artobjects=` printing trait (`Card.ArtHasChosenObject`),
+  from Scryfall Tagger's tags for the ten objects and everything under each: about 41,000 printings.
+  - Fire is Tagger's fire tree only, so lava and magma aren't fire (rulings).
+  - Untagged art is asked about, as for Don't Try This at Home.
+  - **AI:** it picks the object in the most of its remaining spells (`MostCommonArtObject`).
+- **Unfinity: Goblin Girder Gang (UNF #111).** New `StoreResult` effect: it stores a die result unless that result is
+  stored already, checked again as it resolves (rulings).
+  - A reflexive trigger pings any target without a hat: a creature with no known hat, or a player (honor system).
+  - New count, `Count$StoredRollCount`.
+- **Unfinity: Goblin Cruciverbalist (UNF #110).** It makes a vowel token named A, E, I, O or U.
+  - New `SpellWord` effect for the attack trigger. It uses the first letters of your permanents' names, each once, and
+    a word you haven't spelled this game (`Player.getSpelledWords`).
+  - A person types the word. The AI spells the longest common word it can, from a new list,
+    `res/lists/SpellingWords.txt`: 38,918 SCOWL common words from two letters up, through Words.txt's blocklist,
+    built by `_tools/wordlist/build-spelling.js`. Words.txt only has Hangman's six to eight letters.
 - **Unfinity: Don't Try This at Home (UNF #105).** New `hot` printing trait (`Card.HotInArt`).
   - It comes from Scryfall Tagger's own hot tree ("things that are hot, like fire or explosions") plus the sun,
     torches, candles and volcanoes: about 12,500 printings.

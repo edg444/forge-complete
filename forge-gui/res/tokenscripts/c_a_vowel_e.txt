@@ -1,0 +1,5 @@
+Name:E
+ManaCost:no cost
+Colors:colorless
+Types:Artifact
+Oracle:

@@ -1,0 +1,12 @@
+Name:Juggletron
+ManaCost:2 R
+Types:Artifact Creature Clown Robot
+PT:0/4
+K:Trample
+# Forge's stickers have no place on the card, so each art sticker on it counts as an item juggled clear of everything
+# else. Name, ability and power/toughness stickers and counters aren't items it juggles (rulings).
+T:Mode$ Attacks | ValidCard$ Card.Self | OptionalDecider$ You | Execute$ TrigSticker | TriggerDescription$ Whenever this creature attacks, you may put an art sticker on it.
+SVar:TrigSticker:DB$ PutSticker | Defined$ Self | Kind$ Art
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | Description$ This creature gets +3/+0 for each item in its art that's not touching Juggletron, another item, or the card frame.
+SVar:X:Count$CardStickers.Art/Times.3
+Oracle:Trample\nWhenever this creature attacks, you may put an art sticker on it.\nThis creature gets +3/+0 for each item in its art that's not touching Juggletron, another item, or the card frame.

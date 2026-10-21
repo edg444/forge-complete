@@ -1,0 +1,17 @@
+Name:Goblin Girder Gang
+ManaCost:3 R
+Types:Creature Goblin Employee
+PT:0/4
+K:Reach
+# StoreResult won't store a result that's already stored, checked as it resolves - so a result rolled twice is stored
+# once (rulings) - and leaves Stored at 1 only when it stored one, for the reflexive trigger
+T:Mode$ RolledDie | ValidPlayer$ You | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigStore | TriggerDescription$ Whenever you roll a die, if the result isn't stored on this creature, you may store that result on it. When you do, this creature deals 1 damage to any target without a hat.
+SVar:TrigStore:DB$ StoreResult | Amount$ Rolled | SubAbility$ DBStored
+SVar:DBStored:DB$ ImmediateTrigger | ConditionCheckSVar$ Stored | ConditionSVarCompare$ GE1 | Execute$ TrigPing | TriggerDescription$ When you do, this creature deals 1 damage to any target without a hat.
+# a target without a hat: a creature with no hat Forge knows of, or a player (honor system - don't target one in a hat)
+SVar:TrigPing:DB$ DealDamage | ValidTgts$ Creature.!HasHat,Planeswalker.!HasHat,Player | TgtPrompt$ Select any target without a hat | NumDmg$ 1
+SVar:Rolled:TriggerCount$Result
+SVar:Stored:Number$0
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | Description$ This creature gets +1/+0 for each result stored on it.
+SVar:X:Count$StoredRollCount
+Oracle:Reach\nWhenever you roll a die, if the result isn't stored on this creature, you may store that result on it. When you do, this creature deals 1 damage to any target without a hat.\nThis creature gets +1/+0 for each result stored on it.

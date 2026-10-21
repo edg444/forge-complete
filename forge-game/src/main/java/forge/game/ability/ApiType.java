@@ -143,6 +143,8 @@ public enum ApiType {
     Photocopy (PhotocopyEffect.class),
     ThrowCards (ThrowCardsEffect.class),
     JumpOver (JumpOverEffect.class),
+    SpellWord (SpellWordEffect.class),
+    StoreResult (StoreResultEffect.class),
     GameDrawn (GameDrawEffect.class),
     GenericChoice (ChooseGenericEffect.class),
     Gerrymander (GerrymanderEffect.class),

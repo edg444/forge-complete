@@ -48,6 +48,8 @@ public final class PrintingTraits {
         private boolean backTree = false;
         private boolean hot = false;
         private boolean backHot = false;
+        private java.util.Set<String> artObjects = java.util.Collections.emptySet();
+        private java.util.Set<String> backArtObjects = java.util.Collections.emptySet();
         private boolean moon = false;
         private boolean backMoon = false;
         private boolean squirrel = false;
@@ -95,6 +97,11 @@ public final class PrintingTraits {
         /** A hat on single-figure art (Goblin Haberdasher), so on the creature itself; false can still mean untagged. */
         public boolean hasHat(final boolean backFace) {
             return backFace ? backHat : hat;
+        }
+
+        /** Whether Scryfall Tagger tags this object in the artwork (Ignacio of Myra's Marvels); false can mean untagged. */
+        public boolean hasArtObject(final String object, final boolean backFace) {
+            return (backFace ? backArtObjects : artObjects).contains(object);
         }
 
         /** Something hot in the artwork (Don't Try This at Home), per Scryfall Tagger; false can still mean untagged. */
@@ -205,6 +212,10 @@ public final class PrintingTraits {
                     t.hat = true;
                 } else if (trait.equals("backhat")) {
                     t.backHat = true;
+                } else if (trait.startsWith("artobjects=")) {
+                    t.artObjects = new java.util.HashSet<>(java.util.Arrays.asList(trait.substring("artobjects=".length()).split(",")));
+                } else if (trait.startsWith("backartobjects=")) {
+                    t.backArtObjects = new java.util.HashSet<>(java.util.Arrays.asList(trait.substring("backartobjects=".length()).split(",")));
                 } else if (trait.equals("hot")) {
                     t.hot = true;
                 } else if (trait.equals("backhot")) {

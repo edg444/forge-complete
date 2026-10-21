@@ -1677,6 +1677,12 @@ public class Player extends GameEntity implements Comparable<Player> {
         return hiddenTokensAtCast;
     }
 
+    // Goblin Cruciverbalist: the words this player has spelled this game, for any game reason (rulings)
+    private final List<String> spelledWords = Lists.newArrayList();
+    public final List<String> getSpelledWords() {
+        return spelledWords;
+    }
+
     public final boolean hasSeveralLibraries() {
         return libraries != null;
     }

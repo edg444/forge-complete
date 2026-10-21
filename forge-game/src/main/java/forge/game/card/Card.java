@@ -8323,6 +8323,12 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return isWearingHatInArt() || Boolean.TRUE.equals(hasHatClaim);
     }
 
+    /** An object the printing data confirms in the art (Ignacio of Myra's Marvels); false can still mean untagged. */
+    public boolean hasKnownArtObject(final String object) {
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t != null && object != null && t.hasArtObject(object.toLowerCase(), isBackSide());
+    }
+
     /** Something hot the printing data confirms in the art (Don't Try This at Home); false can still mean untagged. */
     public boolean hasKnownHotInArt() {
         final PrintingTraits.Traits t = getPrintingTraits();

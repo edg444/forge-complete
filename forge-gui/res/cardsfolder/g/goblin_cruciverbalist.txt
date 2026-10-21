@@ -1,0 +1,20 @@
+Name:Goblin Cruciverbalist
+ManaCost:2 R
+Types:Creature Goblin Wizard Guest
+PT:1/4
+K:Haste
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigVowel | TriggerDescription$ When this creature enters, create a colorless artifact token named your choice of A, E, I, O, or U.
+SVar:TrigVowel:DB$ GenericChoice | Defined$ You | Choices$ TokE,TokA,TokI,TokO,TokU | ChoicePrompt$ Name the artifact token
+SVar:TokA:DB$ Token | TokenScript$ c_a_vowel_a | SpellDescription$ A
+SVar:TokE:DB$ Token | TokenScript$ c_a_vowel_e | SpellDescription$ E
+SVar:TokI:DB$ Token | TokenScript$ c_a_vowel_i | SpellDescription$ I
+SVar:TokO:DB$ Token | TokenScript$ c_a_vowel_o | SpellDescription$ O
+SVar:TokU:DB$ Token | TokenScript$ c_a_vowel_u | SpellDescription$ U
+# the first letters of your permanents' names (spaces and punctuation skipped), each used once per word; a word you
+# haven't spelled this game, for any reason (rulings). See SpellWordEffect.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigSpell | TriggerDescription$ Whenever this creature attacks, using the first letters of the names of permanents you control, spell a word you haven't spelled this game. It gets +1/+0 until end of turn for each letter in that word.
+SVar:TrigSpell:DB$ SpellWord | SubAbility$ DBPump
+SVar:DBPump:DB$ Pump | Defined$ Self | NumAtt$ +X
+SVar:X:Count$SVarOfDefined.Self.SpelledLetters
+SVar:SpelledLetters:Number$0
+Oracle:Haste\nWhen this creature enters, create a colorless artifact token named your choice of A, E, I, O, or U.\nWhenever this creature attacks, using the first letters of the names of permanents you control, spell a word you haven't spelled this game. It gets +1/+0 until end of turn for each letter in that word.

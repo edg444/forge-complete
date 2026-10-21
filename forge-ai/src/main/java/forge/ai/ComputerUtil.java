@@ -2852,6 +2852,20 @@ public class ComputerUtil {
                     }
                 }
             }
+            // Ignacio of Myra's Marvels: the object in the art of the most nonland cards it has yet to play
+            if ("MostCommonArtObject".equals(logic)) {
+                int best = 0;
+                for (final String object : validTypes) {
+                    int n = 0;
+                    for (final Card c : ai.getAllCards()) {
+                        n += !c.isLand() && !c.isInPlay() && c.hasKnownArtObject(object) ? 1 : 0;
+                    }
+                    if (n > best) {
+                        best = n;
+                        chosen = object;
+                    }
+                }
+            }
             // Gray Merchant of Alphabet: the letter in the names of the most creatures it controls
             if ("MostOwnCreatureNamesContaining".equals(logic)) {
                 int best = 0;

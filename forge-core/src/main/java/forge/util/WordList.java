@@ -99,4 +99,36 @@ public final class WordList {
         load();
         return word != null && common.contains(word.toUpperCase());
     }
+
+    // Goblin Cruciverbalist: common words of any length from two letters (res/lists/SpellingWords.txt), for the AI to
+    // spell with - Words.txt holds only Hangman's six to eight
+    private static Supplier<List<String>> spellingSource = null;
+    private static List<String> spelling = null;
+
+    public static synchronized void setSpellingSource(final Supplier<List<String>> lineSource) {
+        spellingSource = lineSource;
+        spelling = null;
+    }
+
+    /** The spelling words of at most this many letters, upper case. */
+    public static synchronized List<String> getSpelling(final int maxLetters) {
+        if (spelling == null) {
+            spelling = new ArrayList<>();
+            if (spellingSource != null) {
+                for (final String raw : spellingSource.get()) {
+                    final String line = raw.trim();
+                    if (!line.startsWith("#") && isPlainWord(line)) {
+                        spelling.add(line.toUpperCase());
+                    }
+                }
+            }
+        }
+        final List<String> result = new ArrayList<>();
+        for (final String w : spelling) {
+            if (w.length() <= maxLetters) {
+                result.add(w);
+            }
+        }
+        return result;
+    }
 }
