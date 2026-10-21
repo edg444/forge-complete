@@ -10,6 +10,7 @@ import forge.card.CardFacePredicates;
 import forge.card.CardRules;
 import forge.card.CardSplitType;
 import forge.card.ICardFace;
+import forge.game.GameFormat;
 import forge.game.ability.AbilityUtils;
 import forge.game.ability.SpellAbilityEffect;
 import forge.game.card.Card;
@@ -133,6 +134,12 @@ public class ChooseCardNameEffect extends SpellAbilityEffect {
                         final Predicate<ICardFace> innerCpp = cpp;
                         cpp = face -> innerCpp.test(face) && !host.getNamedCards().contains(face.getName());
                     }
+                }
+                if (sa.hasParam("LegalIn")) {
+                    // Standard Procedure: "currently legal in the Standard format", whatever format the game is
+                    final GameFormat format = "Standard".equals(sa.getParam("LegalIn")) ? GameFormat.currentStandard() : null;
+                    final Set<String> legal = format == null ? Set.of() : format.getLegalFrontFaceNames();
+                    cpp = cpp.and(f -> legal.contains(f.getName()));
                 }
                 if (sa.hasParam("ExcludeChosen")) {
                     // each Richard tracks its own list, which is what the named cards already are

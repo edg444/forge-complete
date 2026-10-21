@@ -100,9 +100,9 @@ public final class CardFacePredicates {
                         if (!hasManaCost(input, manaCost)) {
                             return false;
                         }
-                    } else if (m.contains("cmcEQ")) {
-                        int i = Integer.parseInt(m.substring(5));
-                        if (!hasCMC(input, i)) return false;
+                    } else if (m.matches("cmc(EQ|NE|LT|LE|GT|GE)\\d+")) {
+                        // every comparison, not just EQ (Standard Procedure names one with mana value 3 or less)
+                        if (!compareCMC(input, m.substring(3, 5), Integer.parseInt(m.substring(5)))) return false;
                     } else if (!hasProperty(input, m)) {
                         return false;
                     }
@@ -125,6 +125,22 @@ public final class CardFacePredicates {
         static protected boolean hasCMC(ICardFace input, final int value) {
             ManaCost cost = input.getManaCost();
             return cost != null && cost.getCMC() == value;
+        }
+
+        static protected boolean compareCMC(ICardFace input, final String op, final int value) {
+            final ManaCost cost = input.getManaCost();
+            if (cost == null) {
+                return false;
+            }
+            final int cmc = cost.getCMC();
+            return switch (op) {
+                case "EQ" -> cmc == value;
+                case "NE" -> cmc != value;
+                case "LT" -> cmc < value;
+                case "LE" -> cmc <= value;
+                case "GT" -> cmc > value;
+                default -> cmc >= value;
+            };
         }
 
     }

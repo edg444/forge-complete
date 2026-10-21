@@ -237,6 +237,33 @@ public class GameFormat implements Comparable<GameFormat> {
         return cards;
     }
 
+    // the formats are loaded by the GUI layer (FModel); a card that names a format (Standard Procedure) reaches the
+    // current one here
+    private static java.util.function.Supplier<GameFormat> standardSource = null;
+
+    public static void setStandardSource(final java.util.function.Supplier<GameFormat> source) {
+        standardSource = source;
+    }
+
+    /** The Standard format as Forge currently defines it, or null before the GUI layer has registered it. */
+    public static GameFormat currentStandard() {
+        return standardSource == null ? null : standardSource.get();
+    }
+
+    /**
+     * Names of the cards this format allows, by front face (what a player names); split cards are left out, since
+     * a half isn't a card on its own.
+     */
+    public Set<String> getLegalFrontFaceNames() {
+        final Set<String> names = new java.util.HashSet<>();
+        for (final PaperCard pc : getAllCards()) {
+            if (pc.getRules().getSplitType() != forge.card.CardSplitType.Split) {
+                names.add(pc.getRules().getMainPart().getName());
+            }
+        }
+        return names;
+    }
+
     public Predicate<PaperCard> getFilterRules() {
         return this.filterRules;
     }

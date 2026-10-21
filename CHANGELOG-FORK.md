@@ -312,6 +312,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Standard Procedure (UNF #1).** Its rulings say it isn't a copy effect: it *becomes* the chosen card
+  until end of turn even once cast or shuffled away.
+  - New Clone `FollowsCard$ True` adds a `PerpetualClone` (forge.game.card.perpetual). Every zone change rebuilds
+    the card from its printing, and this lays the clone on again each time. The duration's end removes it from
+    whatever object the card is by then (`game.getCardState`).
+  - `CloneZone$ Hand` covers "only if still in hand when it resolves".
+  - NameCard `LegalIn$ Standard` limits the names to Forge's current Standard (`GameFormat.currentStandard()`,
+    registered by FModel like the PrintingTraits source; `GameFormat.getLegalFrontFaceNames()` leaves out split cards).
+  - `CardFacePredicates` valid strings now take every mana-value comparison (`cmcLE3`, `cmcGE8`...), not just `cmcEQ`.
+    Until now anything else silently matched nothing. No existing NameCard script used one.
+  - AI (`SpecialCardAi.StandardProcedure`): activates in its own main phase only if, with the mana left after {1},
+    its own casting logic would cast some Standard instant or sorcery with mana value 3 or less. It names the most
+    expensive such spell, and checks once per turn and mana level.
 - **2021 Heroes of the Realm: Byode, Inverse Sun.** New card type **Universewalker**
   (`CoreType.Universewalker`, a permanent type; subtype list `[UniversewalkerTypes]` in TypeLists.txt). It isn't a
   planeswalker: loyalty is a planeswalker-only characteristic (CR 306.5), so Byode enters with no counters and isn't

@@ -1715,6 +1715,9 @@ public class PlayerControllerAi extends PlayerController {
 
     @Override
     public String chooseCardName(SpellAbility sa, Predicate<ICardFace> cpp, String valid, String message) {
+        if ("StandardProcedure".equals(sa.getParam("AILogic"))) {
+            return SpecialCardAi.StandardProcedure.chooseName(player, cpp);
+        }
         if (sa.hasParam("AILogic")) {
             CardCollectionView aiLibrary = player.getCardsIn(ZoneType.Library);
             CardCollectionView oppLibrary = player.getStrongestOpponent().getCardsIn(ZoneType.Library);

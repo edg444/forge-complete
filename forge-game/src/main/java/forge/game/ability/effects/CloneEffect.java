@@ -150,6 +150,8 @@ public class CloneEffect extends SpellAbilityEffect {
         }
 
         final long ts = game.getNextTimestamp();
+        // FollowsCard$: the card stays the clone in every zone it moves to until the duration ends (Standard Procedure)
+        final boolean followsCard = sa.hasParam("FollowsCard");
 
         for (Card tgtCard : cloneTargets) {
             if (sa.hasParam("CloneZone") &&
@@ -164,6 +166,9 @@ public class CloneEffect extends SpellAbilityEffect {
             game.getTriggerHandler().clearActiveTriggers(tgtCard, null);
 
             tgtCard.addCloneState(CardFactory.getCloneStates(copyItself ? tgtCard : cardToCopy, tgtCard, sa), ts);
+            if (followsCard) {
+                tgtCard.addPerpetual(new forge.game.card.perpetual.PerpetualClone(ts, copyItself ? tgtCard : cardToCopy, sa));
+            }
             tgtCard.updateRooms();
 
             // set ETB tapped of clone
@@ -189,7 +194,7 @@ public class CloneEffect extends SpellAbilityEffect {
             }
 
             if (sa.hasParam("Duration")) {
-                final Card cloneCard = tgtCard;
+                final Card clonedObject = tgtCard;
                 // if clone is temporary, target needs old values back after (keep Death-Mask Duplicant working)
                 final Iterable<Card> clonedImprinted = new CardCollection(tgtCard.getImprintedCards());
                 final Iterable<Object> clonedRemembered = new FCollection<>(tgtCard.getRemembered());
@@ -199,6 +204,11 @@ public class CloneEffect extends SpellAbilityEffect {
 
                     @Override
                     public void run() {
+                        // a clone that follows the card ends on whatever object the card is now
+                        final Card cloneCard = followsCard ? game.getCardState(clonedObject) : clonedObject;
+                        if (followsCard) {
+                            cloneCard.removePerpetual(ts);
+                        }
                         if (copyItself && cloneCard.removeCloneState(ts)) {
                             cloneCard.updateStateForView();
                             game.fireEvent(new GameEventCardStatsChanged(cloneCard));

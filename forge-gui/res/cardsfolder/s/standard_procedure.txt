@@ -1,0 +1,8 @@
+Name:Standard Procedure
+ManaCost:no cost
+Types:Instant
+# not a copy effect: it becomes the chosen card until end of turn wherever it goes, cast or shuffled away (rulings),
+# so the clone follows the card; it only happens if this is still in hand when the ability resolves
+A:AB$ NameCard | Cost$ 1 Reveal<1/CARDNAME> | ActivationZone$ Hand | Defined$ You | ValidCards$ Instant.cmcLE3,Sorcery.cmcLE3 | ValidDescription$ instant or sorcery card with mana value 3 or less currently legal in Standard | LegalIn$ Standard | AILogic$ StandardProcedure | SubAbility$ DBClone | SpellDescription$ Choose an instant or sorcery card with mana value 3 or less currently legal in the Standard format. CARDNAME becomes that card until end of turn.
+SVar:DBClone:DB$ Clone | CopyFromChosenName$ True | CloneTarget$ Self | CloneZone$ Hand | Duration$ UntilEndOfTurn | FollowsCard$ True
+Oracle:{1}, Reveal Standard Procedure from your hand: Choose an instant or sorcery card with mana value 3 or less currently legal in the Standard format. Standard Procedure becomes that card until end of turn.

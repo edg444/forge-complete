@@ -272,6 +272,68 @@ public class SpecialCardAi {
     }
 
     // Cursed Scroll
+    // Standard Procedure: name the Standard instant or sorcery the AI would actually cast with the mana it has left
+    public static class StandardProcedure {
+        // one look per turn and mana level: weighing every Standard spell is too slow to redo at each priority
+        private static final Map<String, String> considered = new HashMap<>();
+
+        public static java.util.function.Predicate<forge.card.ICardFace> candidates(final int maxCmc) {
+            final forge.game.GameFormat standard = forge.game.GameFormat.currentStandard();
+            final Set<String> legal = standard == null ? Set.of() : standard.getLegalFrontFaceNames();
+            return forge.card.CardFacePredicates.valid("Instant.cmcLE" + maxCmc)
+                    .or(forge.card.CardFacePredicates.valid("Sorcery.cmcLE" + maxCmc))
+                    .and(f -> legal.contains(f.getName()));
+        }
+
+        public static boolean consider(final Player ai, final SpellAbility sa) {
+            final Card host = sa.getHostCard();
+            final Game game = ai.getGame();
+            if (!host.isInZone(ZoneType.Hand) || !game.getStack().isEmpty() || !game.getPhaseHandler().isPlayerTurn(ai)
+                    || !game.getPhaseHandler().getPhase().isMain()) {
+                return false;
+            }
+            // what's left once the {1} is paid
+            final int budget = ComputerUtilMana.getAvailableManaEstimate(ai, false) - 1;
+            if (budget < 1) {
+                return false;
+            }
+            final String key = host.getId() + ":" + game.getPhaseHandler().getTurn() + ":" + budget;
+            return !considered.computeIfAbsent(key, k -> bestName(ai, candidates(Math.min(3, budget)), budget)).isEmpty();
+        }
+
+        public static String chooseName(final Player ai, final java.util.function.Predicate<forge.card.ICardFace> cpp) {
+            return bestName(ai, cpp, ComputerUtilMana.getAvailableManaEstimate(ai, false));
+        }
+
+        /** The most expensive affordable spell among the options that the AI's own casting logic would cast now. */
+        private static String bestName(final Player ai, final java.util.function.Predicate<forge.card.ICardFace> cpp, final int budget) {
+            forge.StaticData.instance().ensureAllCardsLoaded();
+            final forge.card.CardDb db = forge.StaticData.instance().getCommonCards();
+            final List<forge.card.ICardFace> options = db.streamAllFaces().filter(cpp)
+                    .filter(f -> f.getManaCost() != null && f.getManaCost().getCMC() <= budget)
+                    .sorted(Comparator.comparingInt((forge.card.ICardFace f) -> f.getManaCost().getCMC()).reversed())
+                    .collect(Collectors.toList());
+            final AiController aic = ((PlayerControllerAi) ai.getController()).getAi();
+            for (final forge.card.ICardFace face : options) {
+                final forge.item.PaperCard pc = db.getUniqueByName(face.getName());
+                if (pc == null) {
+                    continue;
+                }
+                final Card c = Card.fromPaperCard(pc, ai);
+                c.setZone(ai.getZone(ZoneType.Hand));
+                final SpellAbility spell = c.getFirstSpellAbility();
+                if (spell == null) {
+                    continue;
+                }
+                spell.setActivatingPlayer(ai);
+                if (aic.canPlaySa(spell) == AiPlayDecision.WillPlay) {
+                    return face.getName();
+                }
+            }
+            return "";
+        }
+    }
+
     public static class CursedScroll {
         public static boolean consider(final Player ai, final SpellAbility sa) {
             CardCollectionView hand = ai.getCardsIn(ZoneType.Hand);
