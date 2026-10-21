@@ -1398,6 +1398,16 @@ public class AiController {
                 limit = null;
                 block.completeRequiredBlocks(combat); // creatures that must block still do
             }
+            // Log Flume: a log is blocked whole or not at all, so a log only partly blocked goes unblocked
+            for (final Card attacker : combat.getAttackers()) {
+                if (!combat.getBlockers(attacker).isEmpty() && CombatUtil.unblockedLogmate(attacker, combat) != null) {
+                    for (final Card mate : attacker.getFlumeLog().getMembers()) {
+                        for (final Card blocker : Lists.newArrayList(combat.getBlockers(mate))) {
+                            combat.undoBlockingAssignment(blocker);
+                        }
+                    }
+                }
+            }
         } finally {
             if (limit != null) {
                 AITimeoutTracker.disarm(limit);

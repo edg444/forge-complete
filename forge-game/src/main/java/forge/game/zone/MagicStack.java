@@ -366,6 +366,7 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
         if (sp.isSpell() && !sp.isCopied()) {
             applyStickerKickers(sp);
         }
+        addLogmateTargets(sp);
 
         sp.getHostCard().getGame().getAction().checkStaticAbilities(false);
         sp.getHostCard().getGame().getTriggerHandler().resetActiveTriggers();
@@ -651,6 +652,29 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
 
     public final int size() {
         return stack.size();
+    }
+
+    /**
+     * Log Flume: a spell or ability that the log's player controls and that targets one creature in a log targets each of
+     * them (rulings) - before it's on the stack, so they all become targets.
+     */
+    private static void addLogmateTargets(final SpellAbility sp) {
+        for (SpellAbility part = sp; part != null; part = part.getSubAbility()) {
+            if (!part.usesTargeting()) {
+                continue;
+            }
+            for (final Card target : Lists.newArrayList(part.getTargets().getTargetCards())) {
+                final forge.game.card.FlumeLog log = target.getFlumeLog();
+                if (log == null || !log.getOwner().equals(sp.getActivatingPlayer())) {
+                    continue;
+                }
+                for (final Card mate : log.getMembers()) {
+                    if (!part.getTargets().contains(mate)) {
+                        part.getTargets().add(mate);
+                    }
+                }
+            }
+        }
     }
 
     /**

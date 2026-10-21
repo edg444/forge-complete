@@ -1,0 +1,15 @@
+Name:Log Flume
+ManaCost:no cost
+Types:Artifact Attraction
+# Logmates attacking can't be blocked unless they're all blocked; a creature that doesn't attack doesn't count. A spell
+# or ability you control that targets one targets each of them (rulings; FlumeLog, CombatUtil, MagicStack).
+K:Visit:TrigLog
+SVar:TrigLog:DB$ ChooseCard | Defined$ You | Choices$ Creature.YouCtrl | MinAmount$ 0 | Amount$ 4 | ChoiceTitle$ Choose up to four creatures you control to jump in a log | SubAbility$ DBLog | SpellDescription$ Choose up to four creatures you control. Those creatures jump in a log until end of turn. (Creatures in a log together can't be blocked unless they're all blocked. If a spell or ability you control targets one of them, it targets all of them.)
+SVar:DBLog:DB$ JumpInLog | Defined$ ChosenCard | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+Oracle:Visit — Choose up to four creatures you control. Those creatures jump in a log until end of turn. (Creatures in a log together can't be blocked unless they're all blocked. If a spell or ability you control targets one of them, it targets all of them.)
+
+# --- VARIANTS ---
+
+Variant:A:Lights:3 6
+Variant:B:Lights:5 6

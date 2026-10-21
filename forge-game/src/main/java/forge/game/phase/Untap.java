@@ -197,6 +197,12 @@ public class Untap extends Phase {
                 }
             }
             untap = c.getController().getController().chooseBinary(new SpellAbility.EmptySa(c, c.getController()), prompt.toString(), BinaryChoiceType.UntapOrLeaveTapped, defaultChoice);
+            // Grand Marshal Macie: what happens when it's left tapped, there in the untap step
+            if (!untap && c.hasSVar("NotUntapped")) {
+                final SpellAbility notUntapped = forge.game.ability.AbilityFactory.getAbility(c.getSVar("NotUntapped"), c);
+                notUntapped.setActivatingPlayer(c.getController());
+                forge.game.ability.AbilityUtils.resolve(notUntapped);
+            }
         }
         if (untap && !c.untap(phase)) {
             untap = false;

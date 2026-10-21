@@ -312,6 +312,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Log Flume (UNF #220).** New `JumpInLog` effect and `FlumeLog`.
+  - **Blocking:** attacking logmates are blocked all together or not at all; one that isn't attacking doesn't count
+    (CombatUtil.validateBlocks). The AI unblocks a log it has only partly blocked.
+  - **Targeting:** a spell or ability the log's player controls that targets one logmate targets each of them, from
+    before it's put on the stack (rulings).
+- **Unfinity: Grand Marshal Macie (UNF #168).** "Until end of turn" effects are now `PausableUntil`s that a tapped
+  Macie can hold (new `HoldUntil` effect).
+  - A held effect that reaches its end waits, and ends as soon as she untaps or leaves; if she untaps first, it goes
+    on to its usual end (rulings).
+  - Leaving her tapped in the untap step runs her `NotUntapped` SVar there: a pause counter, then life loss.
+  - **AI:** in its end step it holds an effect of its own, and stays tapped to keep holding while its life allows.
 - **Unfinity: Urza's Fun House (UNF #199).** The Fun House button picks one of Urza, Academy Headmaster's three outcome
   lists at 75/15/10, the page's own weights, then an outcome evenly within it.
   - Planeswalker-only outcomes are reworded as Wizards' page has them.

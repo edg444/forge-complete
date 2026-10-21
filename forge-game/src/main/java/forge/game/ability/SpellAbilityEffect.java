@@ -1062,7 +1062,10 @@ public abstract class SpellAbilityEffect {
         } else if ("UntilFacedown".equals(duration)) {
             host.addFacedownCommand(until);
         } else {
-            game.getEndOfTurn().addUntil(until);
+            // Grand Marshal Macie can choose an "until end of turn" effect and keep it from ending
+            final forge.game.PausableUntil pausable = new forge.game.PausableUntil(game, sa, until);
+            game.addPausableUntil(pausable);
+            game.getEndOfTurn().addUntil(pausable);
         }
     }
 

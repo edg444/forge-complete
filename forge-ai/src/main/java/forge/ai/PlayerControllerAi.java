@@ -1117,6 +1117,15 @@ public class PlayerControllerAi extends PlayerController {
                             return false;
                         case "StorageLand":
                             return shouldUntapStorageLand(source);
+                        case "HeldEffects":
+                            // Grand Marshal Macie: stay tapped to keep an effect of its own going, while life allows
+                            final int pauses = source.getCounters(forge.game.card.CounterType.getType("PAUSE")) + 1;
+                            for (final forge.game.PausableUntil e : source.getGame().getPausableUntils()) {
+                                if (e.isHeldBy(source) && player.equals(e.getController()) && player.getLife() > pauses * 3) {
+                                    return false;
+                                }
+                            }
+                            return true;
                         case "NothingRemembered":
                             if (!source.hasRemembered()) {
                                 return true;

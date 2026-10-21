@@ -8405,6 +8405,17 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return t == null ? null : t.getArt(isBackSide());
     }
 
+    // Log Flume: the log this creature jumped in, until end of turn
+    private FlumeLog flumeLog = null;
+
+    public FlumeLog getFlumeLog() {
+        return flumeLog;
+    }
+
+    public void setFlumeLog(final FlumeLog log) {
+        flumeLog = log;
+    }
+
     /** The named characters the printing data finds on this printed card (Vorthos). */
     public Set<String> getKnownCharacterSlugs() {
         final PrintingTraits.Traits t = getPrintingTraits();

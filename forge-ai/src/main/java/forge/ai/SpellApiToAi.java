@@ -154,6 +154,8 @@ public enum SpellApiToAi {
             .put(ApiType.TriviaContest, AlwaysPlayAi.class)
             .put(ApiType.MemoryTest, MemoryTestAi.class)
             .put(ApiType.ScavengerHunt, AlwaysPlayAi.class)
+            .put(ApiType.HoldUntil, HoldUntilAi.class)
+            .put(ApiType.JumpInLog, AlwaysPlayAi.class)
             .put(ApiType.SeekHidden, SeekHiddenAi.class)
             .put(ApiType.PutHiddenTokens, AlwaysPlayAi.class)
             .put(ApiType.GainOwnership, CannotPlayAi.class)

@@ -657,6 +657,22 @@ public class CombatUtil {
      *            a {@link forge.game.combat.Combat} object.
      * @return a boolean.
      */
+    /**
+     * Log Flume: an attacking creature in the same log as this one that isn't blocked. Creatures in a log can't be blocked
+     * unless they're all blocked; a logmate that isn't attacking doesn't count (rulings).
+     */
+    public static Card unblockedLogmate(final Card attacker, final Combat combat) {
+        if (attacker.getFlumeLog() == null) {
+            return null;
+        }
+        for (final Card mate : attacker.getFlumeLog().getMembers()) {
+            if (mate != attacker && combat.isAttacking(mate) && combat.getBlockers(mate).isEmpty()) {
+                return mate;
+            }
+        }
+        return null;
+    }
+
     public static String validateBlocks(final Combat combat, final Player defending) {
         final List<Card> defendersArmy = defending.getCreaturesInPlay();
         final List<Card> attackers = combat.getAttackers();
@@ -748,6 +764,11 @@ public class CombatUtil {
             // don't accept blocker amount for attackers with keyword defining valid blockers amount
             if (cntBlockers > 0 && !canAttackerBeBlockedWithAmount(attacker, cntBlockers, combat))
                 return TextUtil.concatWithSpace(attacker.toString(), "cannot be blocked with", String.valueOf(cntBlockers), "creatures you've assigned");
+            final Card unblockedLogmate = unblockedLogmate(attacker, combat);
+            if (cntBlockers > 0 && unblockedLogmate != null) {
+                return TextUtil.concatWithSpace(attacker.toString(), "is in a log with", unblockedLogmate.toString(),
+                        "- block all of the attacking creatures in it or none of them.");
+            }
         }
 
         return null;

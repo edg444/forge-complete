@@ -136,6 +136,21 @@ public class Game {
     private Player monarchBeginTurn;
     private Player startingPlayer;
 
+    // Grand Marshal Macie: the "until end of turn" effects not yet ended
+    private final List<PausableUntil> pausableUntils = new java.util.ArrayList<>();
+
+    public List<PausableUntil> getPausableUntils() {
+        return java.util.Collections.unmodifiableList(pausableUntils);
+    }
+
+    public void addPausableUntil(final PausableUntil p) {
+        pausableUntils.add(p);
+    }
+
+    public void removePausableUntil(final PausableUntil p) {
+        pausableUntils.remove(p);
+    }
+
     private Direction turnOrder = Direction.getDefaultDirection();
 
     private Boolean daytime = null;

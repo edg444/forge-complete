@@ -153,6 +153,8 @@ public enum ApiType {
     TriviaContest (TriviaContestEffect.class),
     MemoryTest (MemoryTestEffect.class),
     ScavengerHunt (ScavengerHuntEffect.class),
+    HoldUntil (HoldUntilEffect.class),
+    JumpInLog (JumpInLogEffect.class),
     GameDrawn (GameDrawEffect.class),
     GenericChoice (ChooseGenericEffect.class),
     Gerrymander (GerrymanderEffect.class),

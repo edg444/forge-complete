@@ -1,0 +1,16 @@
+Name:Grand Marshal Macie
+ManaCost:1 W B
+Types:Legendary Creature Human Performer
+PT:2/2
+# The pause counter and life loss happen in the untap step as she's left tapped (NotUntapped). An effect she holds
+# that's already past its end ends as soon as she untaps or leaves; one that isn't just goes on to its end; removing
+# pause counters doesn't untap her or end it (rulings; HoldUntilEffect, PausableUntil).
+K:You may choose not to untap CARDNAME during your untap step.
+SVar:NotUntapped:DB$ PutCounter | Defined$ Self | CounterType$ PAUSE | CounterNum$ 1 | SubAbility$ DBLoseLife
+SVar:DBLoseLife:DB$ LoseLife | Defined$ You | LifeAmount$ X
+SVar:X:Count$CardCounters.PAUSE
+T:Mode$ Untaps | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigRemove | TriggerDescription$ Whenever NICKNAME becomes untapped, remove all pause counters from it.
+SVar:TrigRemove:DB$ RemoveCounter | Defined$ Self | CounterType$ PAUSE | CounterNum$ All
+SVar:AIUntapPreference:HeldEffects
+A:AB$ HoldUntil | Cost$ 2 T | SpellDescription$ Choose an "until end of turn" or "this turn" effect. As long as NICKNAME remains tapped, that effect doesn't end.
+Oracle:You may choose not to untap Grand Marshal Macie during your untap step. If you do, put a pause counter on it, then you lose 1 life for each pause counter on it.\nWhenever Macie becomes untapped, remove all pause counters from it.\n{2}, {T}: Choose an "until end of turn" or "this turn" effect. As long as Macie remains tapped, that effect doesn't end.
