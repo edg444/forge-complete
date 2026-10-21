@@ -154,6 +154,12 @@ public class CardProperty {
             if (!CardPrintings.originallyPrintedIn(card, java.util.List.of(property.substring(20).split("_")))) {
                 return false;
             }
+        } else if (property.startsWith("backFaceType")) {
+            // Phyrexian Incubator: a double-faced card whose back face has the type (backFaceTypePhyrexian)
+            final String type = property.substring("backFaceType".length());
+            if (!card.hasState(forge.card.CardStateName.Backside) || !card.getState(forge.card.CardStateName.Backside).getType().hasStringType(type)) {
+                return false;
+            }
         } else if (property.equals("Playtest")) {
             if (!card.isPlaytestCard()) {
                 return false;

@@ -1,0 +1,9 @@
+Name:Bob the Claymore
+ManaCost:3
+Types:Legendary Artifact Equipment
+T:Mode$ AttackerBlocked | ValidCard$ Creature.EquippedBy | TriggerZones$ Battlefield | Execute$ TrigShrink | TriggerDescription$ Whenever equipped creature becomes blocked, each creature blocking it gets -5/-5 until end of turn.
+SVar:TrigShrink:DB$ PumpAll | ValidCards$ Creature.blockingTriggeredAttacker | NumAtt$ -5 | NumDef$ -5 | IsCurse$ True
+T:Mode$ DamageDone | ValidSource$ Creature.EquippedBy | ValidTarget$ Opponent | CombatDamage$ True | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigSearch | TriggerDescription$ Whenever equipped creature deals combat damage to an opponent, you may search your library for a Praetor card, reveal it, and put it into your hand. Then shuffle.
+SVar:TrigSearch:DB$ ChangeZone | Origin$ Library | Destination$ Hand | ChangeType$ Card.Praetor | ChangeNum$ 1
+K:Equip:3
+Oracle:Whenever equipped creature becomes blocked, each creature blocking it gets -5/-5 until end of turn.\nWhenever equipped creature deals combat damage to an opponent, you may search your library for a Praetor card, reveal it, and put it into your hand. Then shuffle.\nEquip {3}

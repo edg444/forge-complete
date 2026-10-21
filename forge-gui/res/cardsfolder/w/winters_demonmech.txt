@@ -1,0 +1,12 @@
+Name:Winter's Demonmech
+ManaCost:5
+Types:Artifact Creature Horror
+PT:4/4
+# A deck with this card is on Team Speed Demons: the race team it joins as the game begins can't be Cloudspire.
+SVar:AsksTeam:Race
+SVar:ForbiddenRaceTeam:Cloudspire
+Text:You can't include this card in your deck if you're on Team Cloudspire.
+K:Flying
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigCast | TriggerDescription$ Whenever this creature deals combat damage to a player, create a copy of one of the following, chosen at random: Early Winter, Plunge into Winter, Winterflame, Winter Sky, Winter's Grasp, or Winter's Intervention. You may cast the copy without paying its mana cost.
+SVar:TrigCast:DB$ Play | AnySupportedCard$ Names:Early Winter,Plunge into Winter,Winterflame,Winter Sky,Winter's Grasp,Winter's Intervention | RandomCopied$ True | RandomNum$ 1 | CopyCard$ True | WithoutManaCost$ True | Optional$ True | Controller$ You
+Oracle:You can't include this card in your deck if you're on Team Cloudspire.\nFlying\nWhenever this creature deals combat damage to a player, create a copy of one of the following, chosen at random: Early Winter, Plunge into Winter, Winterflame, Winter Sky, Winter's Grasp, or Winter's Intervention. You may cast the copy without paying its mana cost.

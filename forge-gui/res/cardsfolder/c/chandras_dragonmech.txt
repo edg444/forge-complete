@@ -1,0 +1,12 @@
+Name:Chandra's Dragonmech
+ManaCost:5
+Types:Artifact Creature Dragon
+PT:4/4
+# A deck with this card is on Team Cloudspire: the race team it joins as the game begins can't be Speed Demons.
+SVar:AsksTeam:Race
+SVar:ForbiddenRaceTeam:Speed Demons
+Text:You can't include this card in your deck if you're on Team Speed Demons.
+K:Flying
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigCast | TriggerDescription$ Whenever this creature deals combat damage to a player, create a copy of one of the following, chosen at random: Chandra's Fury, Chandra's Ignition, Chandra's Magmutt, Chandra's Regulator, Chandra's Spitfire, or Chandra's Outrage. You may cast the copy without paying its mana cost.
+SVar:TrigCast:DB$ Play | AnySupportedCard$ Names:Chandra's Fury,Chandra's Ignition,Chandra's Magmutt,Chandra's Regulator,Chandra's Spitfire,Chandra's Outrage | RandomCopied$ True | RandomNum$ 1 | CopyCard$ True | WithoutManaCost$ True | Optional$ True | Controller$ You
+Oracle:You can't include this card in your deck if you're on Team Speed Demons.\nFlying\nWhenever this creature deals combat damage to a player, create a copy of one of the following, chosen at random: Chandra's Fury, Chandra's Ignition, Chandra's Magmutt, Chandra's Regulator, Chandra's Spitfire, or Chandra's Outrage. You may cast the copy without paying its mana cost.

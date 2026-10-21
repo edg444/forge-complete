@@ -1,0 +1,12 @@
+Name:Platinum Persecutor
+ManaCost:5
+Types:Artifact Creature Angel Demon
+PT:5/5
+K:Flying
+R:Event$ GameLoss | ActiveZones$ Battlefield | ValidPlayer$ Player | Layer$ CantHappen | Description$ Players can't lose the game or win the game.
+R:Event$ GameWin | ActiveZones$ Battlefield | ValidPlayer$ Player | Layer$ CantHappen | Secondary$ True | Description$ Players can't lose the game or win the game.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | CheckSVar$ Stocked | SVarCompare$ EQ0 | Execute$ TrigSac | TriggerDescription$ At the beginning of your upkeep, if each player has an empty library, sacrifice CARDNAME and you win the game.
+SVar:TrigSac:DB$ Sacrifice | Defined$ Self | SubAbility$ DBWin
+SVar:DBWin:DB$ WinsGame | Defined$ You
+SVar:Stocked:Count$ValidLibrary Card
+Oracle:Flying\nPlayers can't lose the game or win the game.\nAt the beginning of your upkeep, if each player has an empty library, sacrifice Platinum Persecutor and you win the game.

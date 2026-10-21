@@ -1,0 +1,15 @@
+Name:The Mysterious Sphere
+ManaCost:5
+Types:Legendary Artifact
+A:AB$ Dig | Cost$ T | Defined$ You | DigNum$ 1 | ChangeNum$ All | DestinationZone$ Exile | SubAbility$ DBGainLife | PrecostDesc$ Advertising — | SpellDescription$ Exile the top card of your library. You gain 1 life.
+SVar:DBGainLife:DB$ GainLife | LifeAmount$ 1
+T:Mode$ Phase | Phase$ BeginCombat | ValidPlayer$ You | TriggerZones$ Battlefield | CheckSVar$ Exiled | SVarCompare$ GE3 | OptionalDecider$ You | Execute$ TrigShow | TriggerDescription$ Show — At the beginning of combat on your turn, if there are three or more cards exiled with CARDNAME, you may put them into your graveyard. If you do, create copies of each nonland card among them. You may cast the copies without paying their mana costs. If you cast a creature spell this way, it gains haste and "Sacrifice this creature at the beginning of your end step."
+SVar:TrigShow:DB$ ChangeZone | Defined$ ValidExile Card.ExiledWithSource | Origin$ Exile | Destination$ Graveyard | RememberChanged$ True | SubAbility$ DBCast
+SVar:DBCast:DB$ Play | Defined$ Remembered | Valid$ Card.nonLand | ValidSA$ Spell | ValidZone$ Graveyard | Amount$ All | CopyCard$ True | WithoutManaCost$ True | Optional$ True | ForgetRemembered$ True | RememberPlayed$ True | SubAbility$ DBHaste
+SVar:DBHaste:DB$ Effect | RememberObjects$ Remembered | StaticAbilities$ Haste | Duration$ Permanent | ForgetOnMoved$ Battlefield | SubAbility$ DBCleanup
+SVar:Haste:Mode$ Continuous | Affected$ Creature.IsRemembered | AddKeyword$ Haste | AddTrigger$ SacTrig | Description$ A creature cast this way has haste and "Sacrifice this creature at the beginning of your end step."
+SVar:SacTrig:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigSacSelf | TriggerDescription$ Sacrifice this creature at the beginning of your end step.
+SVar:TrigSacSelf:DB$ Sacrifice | Defined$ Self
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:Exiled:Count$ValidExile Card.ExiledWithSource
+Oracle:Advertising — {T}: Exile the top card of your library. You gain 1 life.\nShow — At the beginning of combat on your turn, if there are three or more cards exiled with The Mysterious Sphere, you may put them into your graveyard. If you do, create copies of each nonland card among them. You may cast the copies without paying their mana costs. If you cast a creature spell this way, it gains haste and "Sacrifice this creature at the beginning of your end step."

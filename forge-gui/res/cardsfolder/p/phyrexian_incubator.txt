@@ -1,0 +1,10 @@
+Name:Phyrexian Incubator
+ManaCost:5
+Types:Artifact
+A:AB$ ChangeZone | Cost$ 3 T Sac<1/CARDNAME> | Origin$ Library | Destination$ Exile | ChangeType$ Card.Phyrexian,Card.backFaceTypePhyrexian | ChangeNum$ X | Hidden$ True | RememberChanged$ True | SubAbility$ DBIncubate | SpellDescription$ Search your library for any number of Phyrexian cards or cards with phyrexian back faces, exile them, then incubate 2 that many times. Then shuffle.
+SVar:DBIncubate:DB$ Incubate | Amount$ 2 | Times$ Y | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:X:Count$ValidLibrary Card.YouOwn
+SVar:Y:Remembered$Amount
+DeckHas:Ability$Token
+Oracle:{3}, {T}, Sacrifice Phyrexian Incubator: Search your library for any number of Phyrexian cards or cards with phyrexian back faces, exile them, then incubate 2 that many times. Then shuffle.

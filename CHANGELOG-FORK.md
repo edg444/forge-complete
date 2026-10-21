@@ -312,6 +312,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Goblin Savant, Jitte and Divining Top, Bob the Claymore, Phyrexian Incubator, The Mysterious Sphere,
+  Oilskelion, Winter's Demonmech, Chandra's Dragonmech, Platinum Persecutor (UNK RA02a-RA06a).**
+  - New property `backFaceType<Type>` (a double-faced card whose back face has the type).
+  - **Race teams:** a deck with Winter's Demonmech is on Team Speed Demons, and one with Chandra's Dragonmech on Team
+    Cloudspire (`SVar:ForbiddenRaceTeam`); a deck with both chooses (honor system).
 - **Unknown Event: Delphia, Undecided, Gen, Confider of Ages, You, Magic Playtester, You, Iterative Playtester, The
   Unknown Wizard (UNK mythics).**
   - **Playtest cards:** a new `playtest` printing trait, from Scryfall's playtest promo type (property `Playtest`).

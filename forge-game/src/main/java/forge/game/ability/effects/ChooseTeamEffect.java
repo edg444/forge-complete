@@ -87,8 +87,21 @@ public class ChooseTeamEffect extends SpellAbilityEffect {
         if (team != null) {
             chooseIfNeeded(p, new SpellAbility.EmptySa(ApiType.ChooseTeam, team, p), false);
         }
-        if (race != null) {
-            chooseIfNeeded(p, new SpellAbility.EmptySa(ApiType.ChooseTeam, race, p), true);
+        if (race != null && teamOf(p, true) == null) {
+            // Winter's Demonmech, Chandra's Dragonmech: a deck with one is on the other race team; with both, it's
+            // the honor system and the player chooses
+            final java.util.Set<String> forbidden = new java.util.HashSet<>();
+            for (final Card c : cards) {
+                if (c.hasSVar("ForbiddenRaceTeam")) {
+                    forbidden.add(c.getSVar("ForbiddenRaceTeam"));
+                }
+            }
+            final SpellAbility sa = new SpellAbility.EmptySa(ApiType.ChooseTeam, race, p);
+            if (forbidden.size() == 1) {
+                join(p, true, forbidden.contains(CLOUDSPIRE) ? SPEED_DEMONS : CLOUDSPIRE, sa);
+            } else {
+                chooseIfNeeded(p, sa, true);
+            }
         }
     }
 
