@@ -312,6 +312,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Trapeze Artist (UNF #32).** Its entrance flip is simulated like Orcish Paratroopers' drop: a full
+  turn landing face up half the time, shown with the card-toss animation.
+  - The outcome is a random choice, not a die roll, so cards that care about rolling dice don't see it.
+  - It's a static trigger, so a botched flip sends the card back to its owner's hand before anyone can act
+    (rulings).
+  - No engine change.
 - **Unfinity: T.A.P.P.E.R. (UNF #31).** Its cost taps a creature you control that has a hat (`tapXType` with
   `Creature.HasHat`).
   - **New property `HasHat`:** a hat Forge knows of (a Tagger worn hat, or a "wearing" answer for Goblin Haberdasher)

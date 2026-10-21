@@ -1,0 +1,14 @@
+Name:Trapeze Artist
+ManaCost:W
+Types:Creature Human Performer
+PT:2/1
+K:Flying
+# The flip is simulated, as for Orcish Paratroopers: a clean full turn landing face up half the time. A random choice,
+# not a die roll, so nothing that cares about rolling dice sees it. Static, since no one gets to act before a botched
+# entrance sends it back (rulings).
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Static$ True | Execute$ TrigFlip | TriggerDescription$ This creature enters by being flipped from a height of at least one foot (about 0.3 meters). If it lands face down or didn't turn over completely at least once during the flip, return it to its owner's hand.
+SVar:TrigFlip:DB$ GenericChoice | Defined$ You | AtRandom$ True | Choices$ DBLanded,DBBotched
+SVar:DBLanded:DB$ TossCard | Defined$ Self | Flips$ 1 | NotifyMessage$ A full turn and a face-up landing - Trapeze Artist makes its entrance. | SpellDescription$ Landed
+SVar:DBBotched:DB$ TossCard | Defined$ Self | Flips$ 0 | LandFaceDown$ True | SubAbility$ DBReturn | SpellDescription$ Botched
+SVar:DBReturn:DB$ ChangeZone | Defined$ Self | Origin$ Battlefield | Destination$ Hand | NotifyMessage$ The flip went wrong - Trapeze Artist returns to its owner's hand.
+Oracle:Flying\nThis creature enters by being flipped from a height of at least one foot (about 0.3 meters). If it lands face down or didn't turn over completely at least once during the flip, return it to its owner's hand.
