@@ -23,6 +23,7 @@ import forge.game.spellability.SpellAbility;
 import forge.util.Aggregates;
 import forge.util.Lang;
 import forge.util.Localizer;
+import forge.game.staticability.StaticAbilityChooseAnyNumberOfModes;
 import forge.util.collect.FCollection;
 
 public class CharmEffect extends SpellAbilityEffect {
@@ -271,7 +272,7 @@ public class CharmEffect extends SpellAbilityEffect {
 
         boolean canRepeat = sa.hasParam("CanRepeatModes");
         int num = AbilityUtils.calculateAmount(source, sa.getParamOrDefault("CharmNum", "1"), sa);
-        final int min = sa.hasParam("MinCharmNum") ? AbilityUtils.calculateAmount(source, sa.getParam("MinCharmNum"), sa) : num;
+        int min = sa.hasParam("MinCharmNum") ? AbilityUtils.calculateAmount(source, sa.getParam("MinCharmNum"), sa) : num;
 
         // The chooser comes first: a mode can target whoever chooses (Truth or Dare), so which modes are legal
         // depends on who that is
@@ -328,6 +329,22 @@ public class CharmEffect extends SpellAbilityEffect {
             return false;
         }
 
+        // Far Out: rather than the indicated number, its controller may choose one or more modes, none more than once.
+        // Only asked when that changes anything; pawprint modes indicate a total, not a number of modes, so they're left
+        // alone. The AI always takes it: every mode it doesn't want, it can still leave out.
+        if (canChooseAnyNumberOfModes(sa, chooser, choices.size(), min, num, canRepeat)
+                && (activator.getController().isAI() || activator.getController().confirmAction(sa, null,
+                        "Use Far Out to choose one or more different modes for " + source.getTranslatedName() + "?", null))) {
+            canRepeat = false;
+            min = 1;
+            num = choices.size();
+            if (sa.hasParam("Random")) {
+                // the modes are still random (its rulings), so its controller picks only how many
+                num = activator.getController().isAI() ? choices.size()
+                        : activator.getController().chooseNumber(sa, "How many modes? (They're chosen at random.)", 1, choices.size());
+            }
+        }
+
         if (sa.hasParam("Random")) {
             boolean random = true;
             if (sa.getParam("Random").equals("Compare")) {
@@ -362,6 +379,15 @@ public class CharmEffect extends SpellAbilityEffect {
 
         // for spells and activated abilities it is possible to chose zero if minCharmNum allows it
         return true;
+    }
+
+    /** Far Out: whether the chooser may take one or more different modes here instead, and whether that changes anything. */
+    public static boolean canChooseAnyNumberOfModes(final SpellAbility sa, final Player chooser, final int choices, final int min,
+            final int num, final boolean canRepeat) {
+        final Player activator = sa.getActivatingPlayer();
+        return !sa.hasParam("Pawprint") && activator != null && activator.equals(chooser) && choices > 0
+                && !(min <= 1 && num >= choices && !canRepeat)
+                && StaticAbilityChooseAnyNumberOfModes.applies(activator);
     }
 
     public static void chainAbilities(SpellAbility sa, List<AbilitySub> chosen) {

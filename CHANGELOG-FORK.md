@@ -312,6 +312,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Far Out (UNF #8).** New static mode `ChooseAnyNumberOfModes` (`ValidPlayer$`,
+  `StaticAbilityChooseAnyNumberOfModes`).
+  - When it applies, CharmEffect offers its controller one or more different modes in place of the indicated
+    number. That means no repeats even on `CanRepeatModes` spells, and only modes with legal targets.
+  - It's asked only when that changes anything (`CharmEffect.canChooseAnyNumberOfModes`), and only when the
+    spell's controller is the one choosing.
+  - A random modal spell stays random, and its controller picks only how many modes (rulings).
+  - Pawprint spells indicate a total, not a number of modes, so they're left alone.
+  - The AI always takes it, and CharmAi picks every mode it wants.
+  - Known gap: Outlaws' Merriment's ruling combines all chosen modes into one token; Forge makes one token per mode.
 - **Unfinity: Bar Entry (UNF #4).** Nothing records where heads are in card art, so the head-above-the-bar mode can
   target any creature and the caster checks the two cards side by side (honor system, like Sly Spy's unknown facings).
   The AI can't look, so that mode has `AILogic$ Never` and the AI only uses the power-4 mode.

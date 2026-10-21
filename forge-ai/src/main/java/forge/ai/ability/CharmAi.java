@@ -38,8 +38,8 @@ public class CharmAi extends SpellAbilityAi {
         final Card source = sa.getHostCard();
         List<AbilitySub> choices = CharmEffect.makePossibleOptions(sa);
 
-        final int num;
-        final int min;
+        int num;
+        int min;
         if (sa.isEntwine()) {
             num = min = choices.size();
         } else {
@@ -49,6 +49,13 @@ public class CharmAi extends SpellAbilityAi {
 
         boolean timingRight = sa.isTrigger(); //is there a reason to play the charm now?
         boolean choiceForOpp = !ai.equals(sa.getActivatingPlayer());
+        // Far Out: CharmEffect lets the AI take one or more different modes, so it may pick every mode it wants
+        // (a random modal spell is chosen at random anyway)
+        if (!sa.isEntwine() && !choiceForOpp && !sa.hasParam("Random")
+                && CharmEffect.canChooseAnyNumberOfModes(sa, ai, choices.size(), min, num, sa.hasParam("CanRepeatModes"))) {
+            num = choices.size();
+            min = 1;
+        }
 
         // Reset the chosen list otherwise it will be locked in forever by earlier calls
         sa.setChosenList(null);

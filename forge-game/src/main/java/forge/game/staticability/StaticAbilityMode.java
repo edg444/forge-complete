@@ -17,6 +17,8 @@ public enum StaticAbilityMode {
     IncreaseRollResult,
     // Krark's Other Thumb - a ValidPlayer$ who'd roll a die rolls two and ignores one (RollDiceEffect, PlanarDice)
     RollTwoKeepOne,
+    // Far Out - a ValidPlayer$ may choose one or more modes rather than the indicated number (CharmEffect)
+    ChooseAnyNumberOfModes,
 
     // StaticAbility
     CantAttackUnless,

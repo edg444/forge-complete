@@ -1,0 +1,6 @@
+Name:Far Out
+ManaCost:2 W
+Types:Enchantment
+# a random modal spell (Outlaws' Merriment) stays random; its controller only picks how many (rulings)
+S:Mode$ ChooseAnyNumberOfModes | ValidPlayer$ You | Description$ Rather than choose the indicated number of modes for spells and abilities you control, you may choose one or more modes. You can't choose any mode more than once.
+Oracle:Rather than choose the indicated number of modes for spells and abilities you control, you may choose one or more modes. You can't choose any mode more than once.
