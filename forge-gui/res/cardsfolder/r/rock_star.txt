@@ -1,0 +1,14 @@
+Name:Rock Star
+ManaCost:4 R
+Types:Creature Elemental Performer
+PT:4/5
+K:Reach
+# The person outside the game picks (honor system: its controller enters their pick, and can't sway it). The AI has no
+# one to ask, so a simulated person picks at random (AILogic$ Random).
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | OptionalDecider$ You | Execute$ TrigReveal | TriggerDescription$ When this creature enters, you may discard a card. If you do, reveal the top five cards of your library. Ask a person outside the game to choose which of them is most like a rock band. Put that card into your hand and the rest on the bottom of your library in a random order.
+SVar:TrigReveal:AB$ PeekAndReveal | Cost$ Discard<1/Card> | Defined$ You | PeekAmount$ 5 | NoPeek$ True | RememberRevealed$ True | SubAbility$ DBBand
+SVar:DBBand:DB$ ChooseCard | Defined$ You | Choices$ Card.IsRemembered | ChoiceZone$ Library | ChoiceTitle$ Which did the person outside the game say is most like a rock band? | Mandatory$ True | AILogic$ Random | SubAbility$ DBToHand
+SVar:DBToHand:DB$ ChangeZone | Defined$ ChosenCard | Origin$ Library | Destination$ Hand | SubAbility$ DBRest
+SVar:DBRest:DB$ ChangeZoneAll | ChangeType$ Card.IsRemembered | Origin$ Library | Destination$ Library | LibraryPosition$ -1 | RandomOrder$ True | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
+Oracle:Reach\nWhen this creature enters, you may discard a card. If you do, reveal the top five cards of your library. Ask a person outside the game to choose which of them is most like a rock band. Put that card into your hand and the rest on the bottom of your library in a random order.

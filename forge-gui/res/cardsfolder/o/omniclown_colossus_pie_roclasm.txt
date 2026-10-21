@@ -1,0 +1,18 @@
+Name:Omniclown Colossus
+ManaCost:8 R R
+Types:Artifact Creature Clown Robot
+PT:7/7
+K:Affinity:Clown
+K:Trample
+AlternateMode:Adventure
+Oracle:Affinity for Clowns (This spell costs {1} less to cast for each Clown you control.)\nTrample
+
+ALTERNATE
+
+Name:Pie-roclasm
+ManaCost:3 R R
+Types:Sorcery Adventure
+# Pi is dealt as 3: Forge's damage counts in whole numbers (and its fractions in halves), so the smidgen over 3 is lost.
+# It only shows from four Pie-roclasms on, against a creature with toughness 12 1/2 (rulings).
+A:SP$ DamageAll | ValidCards$ Creature.nonClown | NumDmg$ 3 | ValidDescription$ each non-Clown creature | SpellDescription$ This creature deals π damage to each non-Clown creature. (How to calculate π isn't important. It's a smidgen more than 3.)
+Oracle:This creature deals π damage to each non-Clown creature. (How to calculate π isn't important. It's a smidgen more than 3.)

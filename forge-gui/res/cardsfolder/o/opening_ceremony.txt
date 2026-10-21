@@ -1,0 +1,17 @@
+Name:Opening Ceremony
+ManaCost:4 R R
+Types:Sorcery
+# The pack is a real booster of a set its caster picks, generated as draft and sealed do (OpenBoosterEffect, as for
+# Stocking Tiger). Its cards wait in exile to be cast this turn, cast from outside the game (rulings); the rest go back
+# outside the game at cleanup.
+A:SP$ Mana | Produced$ W U B R G C | SubAbility$ DBMayOpen | SpellDescription$ Add {W}{U}{B}{R}{G}{C}. You may open a sealed Magic booster pack. Until end of turn, you may cast spells from among the cards in that booster pack.
+SVar:DBMayOpen:DB$ GenericChoice | Defined$ You | Choices$ DBChoosePack,DBNoPack | ChoicePrompt$ Open a sealed Magic booster pack?
+SVar:DBChoosePack:DB$ ChooseExpansion | Defined$ You | WithBoosters$ True | SubAbility$ DBOpen | SpellDescription$ Open a booster pack
+SVar:DBNoPack:DB$ Pump | SpellDescription$ Don't open one
+SVar:DBOpen:DB$ OpenBooster | Defined$ You | Destination$ Exile | RememberOpened$ True | Reveal$ True | SubAbility$ DBMayCast
+SVar:DBMayCast:DB$ Effect | RememberObjects$ Remembered | StaticAbilities$ MayCastPack | ForgetOnMoved$ Exile | SubAbility$ DBBackOut
+SVar:MayCastPack:Mode$ Continuous | MayPlay$ True | ValidSA$ Spell | Affected$ Card.IsRemembered+nonLand | AffectedZone$ Exile | Description$ Until end of turn, you may cast spells from among the cards in that booster pack.
+SVar:DBBackOut:DB$ DelayedTrigger | Mode$ Phase | Phase$ Cleanup | ValidPlayer$ Player | RememberObjects$ Remembered | Execute$ TrigBackOut | SubAbility$ DBCleanup | TriggerDescription$ The rest of the booster pack goes back outside the game.
+SVar:TrigBackOut:DB$ ChangeZoneAll | ChangeType$ Card.IsTriggerRemembered | Origin$ Exile | Destination$ Sideboard
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Add {W}{U}{B}{R}{G}{C}. You may open a sealed Magic booster pack. Until end of turn, you may cast spells from among the cards in that booster pack.

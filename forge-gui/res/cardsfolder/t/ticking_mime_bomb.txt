@@ -1,0 +1,12 @@
+Name:Ticking Mime Bomb
+ManaCost:3 R
+Types:Artifact Creature Clown Robot Mime
+PT:2/2
+# Honor system: its controller pantomimes to a real person and enters the creature they chose. The AI can't pantomime,
+# so a simulated person picks one at random (AILogic$ Random). Robots are counted as it resolves, itself included.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPantomime | TriggerDescription$ When this creature enters, without speaking or indicating any specific creature, pantomime to a person outside the game, then they choose a creature you don't control. This creature deals damage equal to twice the number of Robots you control to the chosen creature.
+SVar:TrigPantomime:DB$ ChooseCard | Defined$ You | Choices$ Creature.YouDontCtrl | ChoiceTitle$ Pantomime to a person outside the game. Which creature you don't control did they choose? | Mandatory$ True | AILogic$ Random | SubAbility$ DBDamage
+SVar:DBDamage:DB$ DealDamage | Defined$ ChosenCard | NumDmg$ X | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+SVar:X:Count$Valid Robot.YouCtrl/Twice
+Oracle:When this creature enters, without speaking or indicating any specific creature, pantomime to a person outside the game, then they choose a creature you don't control. This creature deals damage equal to twice the number of Robots you control to the chosen creature.

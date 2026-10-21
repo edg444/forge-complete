@@ -51,7 +51,13 @@ public class OpenBoosterEffect extends SpellAbilityEffect {
                 final Map<AbilityKey, Object> moveParams = AbilityKey.newMap();
                 moveParams.put(AbilityKey.LastStateBattlefield, game.copyLastStateBattlefield());
                 moveParams.put(AbilityKey.LastStateGraveyard, game.copyLastStateGraveyard());
-                opened.add(game.getAction().moveTo(ZoneType.Hand, card, sa, moveParams));
+                // Opening Ceremony keeps the pack in exile to cast from (Destination$ Exile, RememberOpened$)
+                final ZoneType to = ZoneType.smartValueOf(sa.getParamOrDefault("Destination", "Hand"));
+                final Card moved = game.getAction().moveTo(to, card, sa, moveParams);
+                opened.add(moved);
+                if (sa.hasParam("RememberOpened")) {
+                    host.addRemembered(moved);
+                }
             }
             if (!opened.isEmpty() && sa.hasParam("Reveal")) {
                 game.getAction().reveal(opened, p, false,

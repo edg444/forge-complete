@@ -312,6 +312,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Ticking Mime Bomb (UNF #124).** A person outside the game picks a creature you don't control (honor
+  system: you enter their pick). It's dealt twice your Robots in damage, the Bomb included.
+  - **AI:** a simulated person picks at random, via a new ChooseCard logic, `Random`.
+- **Unfinity: Rock Star (UNF #122).** You may discard to reveal the top five. A person outside the game picks the most
+  rock-band-like card (honor system), it goes to your hand, and the rest go to the bottom in random order.
+  - **AI:** a simulated person picks at random.
+- **Unfinity: Opening Ceremony (UNF #118).** Adds {W}{U}{B}{R}{G}{C}. You may open a real generated booster of a set
+  you choose (Stocking Tiger's `OpenBooster`, now with `Destination$` and `RememberOpened$`).
+  - Its nonland cards can be cast from exile this turn, cast from outside the game (rulings).
+  - At cleanup the rest go back outside the game, to the sideboard.
+- **Unfinity: Omniclown Colossus // Pie-roclasm (UNF #116).** An Adventure card; the Colossus has affinity for Clowns.
+  - **Known gap:** Pie-roclasm deals π as 3. Forge's damage is whole numbers, so the smidgen only shows from four
+    Pie-roclasms against a creature with toughness 12½.
 - **Unfinity: Juggletron (UNF #113).** Forge's stickers have no position, so each art sticker on it counts as an item
   juggled clear of everything else (+3/+0 each). Name, ability and P/T stickers and counters don't count (rulings).
 - **Unfinity: Ignacio of Myra's Marvels (UNF #112).** New `artobjects=` printing trait (`Card.ArtHasChosenObject`),

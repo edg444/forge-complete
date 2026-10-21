@@ -284,6 +284,9 @@ public class ChooseCardAi extends SpellAbilityAi {
         } else if ("RandomNonLand".equals(logic)) {
             options = CardLists.getValidCards(options, "Card.nonLand", host.getController(), host, sa);
             choice = Aggregates.random(options);
+        } else if ("Random".equals(logic)) {
+            // a simulated person outside the game makes the pick (Rock Star, Ticking Mime Bomb)
+            choice = Aggregates.random(options);
         } else if ("NeedsPrevention".equals(logic)) {
             final Game game = ai.getGame();
             final Combat combat = game.getCombat();
