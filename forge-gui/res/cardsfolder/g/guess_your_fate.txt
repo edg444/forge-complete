@@ -1,0 +1,22 @@
+Name:Guess Your Fate
+ManaCost:no cost
+Types:Artifact Attraction
+# The clue and the guess are between the player and a real person outside the game, and the player says whether the
+# guess was in the card's name (user, 2026-10-21: honor system). The AI's simulated guesser is right 30% of the time.
+K:Visit:TrigLook
+K:Prize:TrigPrize
+SVar:TrigLook:DB$ Dig | DigNum$ 1 | FromBottom$ True | ChangeNum$ 0 | NoReveal$ True | DestinationZone2$ Library | LibraryPosition2$ -1 | SubAbility$ DBGuess | SpellDescription$ Look at the bottom card of your library, then give a person outside the game a one-word clue not on that card. They guess a word. If their guess appears in that card's name, claim the prize!
+SVar:DBGuess:DB$ GenericChoice | Defined$ You | Choices$ DBMissed,DBGuessed | AILogic$ Chance.30 | ChoicePrompt$ Give a person outside the game a one-word clue that isn't on that card. Did the word they guessed appear in its name?
+SVar:DBMissed:DB$ Cleanup | SpellDescription$ No
+SVar:DBGuessed:DB$ ClaimThePrize | SpellDescription$ Yes - claim the prize!
+SVar:TrigPrize:DB$ Dig | DigNum$ 1 | FromBottom$ True | ChangeNum$ All | DestinationZone$ Hand | Reveal$ True | SubAbility$ DBSac | SpellDescription$ Reveal the card, put it into your hand, then sacrifice this Attraction and open an Attraction.
+SVar:DBSac:DB$ Sacrifice | SacValid$ Self | SubAbility$ DBOpen
+SVar:DBOpen:DB$ OpenAttraction
+Oracle:Visit — Look at the bottom card of your library, then give a person outside the game a one-word clue not on that card. They guess a word. If their guess appears in that card's name, claim the prize!\nPrize — Reveal the card, put it into your hand, then sacrifice this Attraction and open an Attraction.
+
+# --- VARIANTS ---
+
+Variant:A:Lights:2 3 4 6
+Variant:B:Lights:2 3 5 6
+Variant:C:Lights:2 4 5 6
+Variant:D:Lights:3 4 5 6

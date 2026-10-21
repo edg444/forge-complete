@@ -2154,6 +2154,11 @@ public class AiController {
                 }
             }
             return Math.min(max, best);
+        } else if ("DiceStack".equals(logic)) {
+            // Squirrel Stack: a simulated five-second stack - most tries get three to six dice up
+            final int roll = MyRandom.getRandom().nextInt(100);
+            return Math.min(max, Math.max(min, roll < 10 ? 2 : roll < 30 ? 3 : roll < 50 ? 4 : roll < 72 ? 5 : roll < 88 ? 6
+                    : roll < 96 ? 7 : 8));
         } else if ("MagicItems".equals(logic)) {
             // Souvenir T-Shirt: a simulated wardrobe - mostly nothing Magic-branded, now and then an item or two
             final int roll = MyRandom.getRandom().nextInt(100);

@@ -1,0 +1,25 @@
+Name:Squirrel Stack
+ManaCost:no cost
+Types:Artifact Attraction
+# The dice are the player's own, stacked against a five-second count (honor system). The AI's simulated stack usually
+# tops out around four or five dice (AILogic$ DiceStack).
+K:Visit:TrigStack
+K:Prize:TrigPrize
+SVar:TrigStack:DB$ ChooseNumber | Defined$ You | Min$ 0 | Max$ 30 | ListTitle$ You have five seconds to stack dice on top of one another - go! How many did you stack? | AILogic$ DiceStack | SubAbility$ DBClaim | SpellDescription$ You have five seconds to stack dice on top of one another. If you stack at least five dice, claim the prize!
+SVar:DBClaim:DB$ ClaimThePrize | ConditionCheckSVar$ X | ConditionSVarCompare$ GE5
+SVar:X:Count$ChosenNumber
+SVar:TrigPrize:DB$ Token | TokenAmount$ Y | TokenScript$ g_1_1_squirrel | TokenOwner$ You | SubAbility$ DBSac | SpellDescription$ Create a 1/1 green Squirrel creature token for each die you stacked above the fourth, then sacrifice this Attraction and open an Attraction.
+SVar:Y:Count$ChosenNumber/Minus.4
+SVar:DBSac:DB$ Sacrifice | SacValid$ Self | SubAbility$ DBOpen
+SVar:DBOpen:DB$ OpenAttraction
+DeckHas:Ability$Token & Type$Squirrel
+Oracle:Visit — You have five seconds to stack dice on top of one another. If you stack at least five dice, claim the prize!\nPrize — Create a 1/1 green Squirrel creature token for each die you stacked above the fourth, then sacrifice this Attraction and open an Attraction.
+
+# --- VARIANTS ---
+
+Variant:A:Lights:2 3 6
+Variant:B:Lights:2 4 6
+Variant:C:Lights:2 5 6
+Variant:D:Lights:3 4 6
+Variant:E:Lights:3 5 6
+Variant:F:Lights:4 5 6

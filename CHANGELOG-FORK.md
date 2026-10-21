@@ -312,6 +312,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity Attractions: Guess Your Fate, Push Your Luck, Squirrel Stack (UNF #215, #224, #228).**
+  - **Guess Your Fate:** played for real with a person in the room; the player says whether the guess was in the
+    name (user ruling). The AI's simulated guesser is right 30% of the time.
+  - **Push Your Luck:** new `RevealLibraryUntilStop` effect. At least one card is revealed and X is 0 (rulings).
+    **AI:** it keeps going while its total is 4 or less.
+  - **Squirrel Stack:** the player's own dice, counted on the honor system. **AI:** its simulated stack is usually
+    three to six dice.
 - **Unfinity Attractions: Centrifuge, Cover the Spot, Dart Throw, Gift Shop (UNF #203, #207, #208, #214).**
   - **Centrifuge:** Draw's `FromLibraryOf$ ToTheirRight` has each player draw from the library of the player to their
     right; the card stays its owner's (rulings).

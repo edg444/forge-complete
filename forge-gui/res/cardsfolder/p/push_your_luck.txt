@@ -1,0 +1,24 @@
+Name:Push Your Luck
+ManaCost:no cost
+Types:Artifact Attraction
+# At least one card is revealed, if there are any, and X is 0 (rulings; RevealLibraryUntilStopEffect). The AI keeps going
+# while its total is 4 or less.
+K:Visit:TrigReveal
+K:Prize:TrigPrize
+SVar:TrigReveal:DB$ RevealLibraryUntilStop | SubAbility$ DBTeddy | SpellDescription$ Reveal cards from the top of your library until you decide to stop. If the total mana value of the cards revealed this way is 7 or less, create a 2/2 pink Teddy Bear creature token. If the total is exactly 7, claim the prize! Shuffle the revealed cards into your library.
+SVar:DBTeddy:DB$ Token | TokenScript$ c_2_2_teddy_bear | TokenOwner$ You | ConditionCheckSVar$ RevealedMV | ConditionSVarCompare$ LE7 | SubAbility$ DBClaim
+SVar:DBClaim:DB$ ClaimThePrize | ConditionCheckSVar$ RevealedMV | ConditionSVarCompare$ EQ7 | SubAbility$ DBShuffle
+SVar:DBShuffle:DB$ Shuffle | Defined$ You
+SVar:RevealedMV:Number$0
+SVar:TrigPrize:DB$ PutCounter | Choices$ Creature.Teddy Bear+YouCtrl | ChoiceTitle$ Choose a Teddy Bear you control | CounterType$ P1P1 | CounterNum$ 5 | RememberCards$ True | SubAbility$ DBHaste | SpellDescription$ Put five +1/+1 counters on a Teddy Bear you control. It gains haste. Sacrifice this Attraction and open an Attraction.
+SVar:DBHaste:DB$ Animate | Defined$ Remembered | Keywords$ Haste | Duration$ Permanent | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | SubAbility$ DBSac
+SVar:DBSac:DB$ Sacrifice | SacValid$ Self | SubAbility$ DBOpen
+SVar:DBOpen:DB$ OpenAttraction
+DeckHas:Ability$Token|Counters & Type$Teddy|Bear
+Oracle:Visit — Reveal cards from the top of your library until you decide to stop. If the total mana value of the cards revealed this way is 7 or less, create a 2/2 pink Teddy Bear creature token. If the total is exactly 7, claim the prize! Shuffle the revealed cards into your library.\nPrize — Put five +1/+1 counters on a Teddy Bear you control. It gains haste. Sacrifice this Attraction and open an Attraction.
+
+# --- VARIANTS ---
+
+Variant:A:Lights:2 3 6
+Variant:B:Lights:4 5 6
