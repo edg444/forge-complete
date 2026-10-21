@@ -1,0 +1,12 @@
+Name:Vorthos, Steward of Myth
+ManaCost:1 R
+Types:Legendary Creature Human Gamer
+PT:1/3
+# The characters are Scryfall Tagger's, every name each has gone by counting, and the printing data says which a
+# printed card names in its name or flavor text or shows in its art (rulings; _tools/printing-traits/characters.js).
+# A name hidden inside another word (Niv-Mizzet's Izzet Charm) isn't caught. The AI names the character on the most
+# of its spells.
+K:ETBReplacement:Other:ChooseCharacter
+SVar:ChooseCharacter:DB$ ChooseType | Defined$ You | Type$ Character | SpellDescription$ As CARDNAME enters, choose a named Magic character.
+S:Mode$ ReduceCost | ValidCard$ Card.HasChosenCharacter | Type$ Spell | Activator$ You | Amount$ 1 | Color$ W U B R G | IgnoreGeneric$ True | Description$ Each spell you cast with the chosen character in its name, flavor text, or art costs {W}{U}{B}{R}{G} less to cast. This effect reduces only the amount of colored mana you pay.
+Oracle:As Vorthos, Steward of Myth enters, choose a named Magic character.\nEach spell you cast with the chosen character in its name, flavor text, or art costs {W}{U}{B}{R}{G} less to cast. This effect reduces only the amount of colored mana you pay.

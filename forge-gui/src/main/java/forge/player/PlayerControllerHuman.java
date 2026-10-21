@@ -1398,6 +1398,9 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
     @Override
     public String chooseSomeType(final String kindOfType, final SpellAbility sa, final Collection<String> validTypes, final boolean isOptional) {
         final List<String> types = Lists.newArrayList(validTypes);
+        if (kindOfType.equals("Character")) {
+            return chooseCharacter(sa, types, isOptional);
+        }
         if (kindOfType.equals("Creature")) {
             sortCreatureTypes(types);
         } else if (kindOfType.equals("Watermark")) {
@@ -1416,6 +1419,45 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
             return getGui().oneOrNone(title, types);
         }
         return getGui().one(title, types);
+    }
+
+    /**
+     * Vorthos, Steward of Myth: thousands of characters, so the player types a name (any of its names, accents
+     * optional) and picks among the matches. Giving none shows the whole list, their own cards' characters first.
+     */
+    private String chooseCharacter(final SpellAbility sa, final List<String> all, final boolean isOptional) {
+        for (int attempt = 0; attempt < 10; attempt++) {
+            final String entered = SOptionPane.showInputDialog("Name a Magic character (leave empty to pick from a list)",
+                    sa.getHostCard().getName());
+            if (entered == null || entered.trim().isEmpty()) {
+                break;
+            }
+            final forge.card.PrintingTraits.MagicCharacter exact = forge.card.PrintingTraits.findCharacter(entered);
+            if (exact != null && all.contains(exact.name())) {
+                return exact.name();
+            }
+            final List<String> matches = forge.card.PrintingTraits.searchCharacterNames(entered);
+            matches.retainAll(all);
+            if (!matches.isEmpty()) {
+                final String pick = getGui().oneOrNone("Characters matching \"" + entered.trim() + "\"", matches);
+                if (pick != null) {
+                    return pick;
+                }
+            }
+        }
+        final List<Set<String>> own = Lists.newArrayList();
+        for (final Card c : player.getAllCards()) {
+            own.add(c.getKnownCharacterSlugs());
+        }
+        final List<String> ordered = Lists.newArrayList(forge.card.PrintingTraits.charactersByCount(own));
+        ordered.retainAll(all);
+        for (final String name : all) {
+            if (!ordered.contains(name)) {
+                ordered.add(name);
+            }
+        }
+        return isOptional ? getGui().oneOrNone("Choose a named Magic character", ordered)
+                : getGui().one("Choose a named Magic character", ordered);
     }
 
     // sort creature types such that those most prevalent in player's deck are

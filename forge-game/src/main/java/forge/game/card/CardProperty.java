@@ -592,6 +592,10 @@ public class CardProperty {
             if (!source.hasChosenType() || !card.hasKnownArtObject(source.getChosenType())) {
                 return false;
             }
+        } else if (property.equals("HasChosenCharacter")) {
+            if (!source.hasChosenType() || !card.hasKnownCharacter(source.getChosenType())) {
+                return false;
+            }
         } else if (property.equals("HotInArt")) {
             if (!card.hasKnownHotInArt()) {
                 return false;

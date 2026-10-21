@@ -312,6 +312,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Vorthos, Steward of Myth (UNF #126).** The named characters are Scryfall Tagger's (3,418), each with every
+  name it has gone by (rulings: Lim-Dûl on The Raven Man, Urza on Blind Seer).
+  - **Printing data:** `PrintingTraits.txt` now lists them and says which a printed card names in its name or flavor
+    text, possessive and derived forms included (Teferi's Protection, Avacynian Priest), or shows in its art
+    (`_tools/printing-traits/characters.js`).
+  - **Choosing:** the player types any of a character's names, accents optional, and picks among the matches; an
+    empty answer shows the whole list, the characters on their own cards first. The AI names the character on the
+    most of its spells.
+  - **Known gap:** a name hidden inside another word (Niv-Mizzet's Izzet Charm) isn't caught.
 - **Unfinity: Alpha Guard (UNF #129).** Untaps a permanent whose name starts with the chosen letter, skipping spaces
   and punctuation (`nameStartsWithChosenLetter`). No engine change.
 - **Unfinity: Well Done (UNF #128).** Uses the printed card's rarity, as Collectigull does (`RarityRare`,

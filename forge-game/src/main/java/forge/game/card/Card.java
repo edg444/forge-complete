@@ -8329,6 +8329,34 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return t != null && object != null && t.hasArtObject(object.toLowerCase(), isBackSide());
     }
 
+    /**
+     * Vorthos, Steward of Myth: the chosen character is in the printed card's name, flavor text or art, as the printing
+     * data has it. A card with no printing data (a custom card) goes by its name alone.
+     */
+    public boolean hasKnownCharacter(final String characterName) {
+        final PrintingTraits.MagicCharacter c = PrintingTraits.findCharacter(characterName);
+        if (c == null) {
+            return false;
+        }
+        final PrintingTraits.Traits t = getPrintingTraits();
+        if (t != null) {
+            return t.hasCharacter(c.slug());
+        }
+        final String name = getName().toLowerCase();
+        for (final String n : Iterables.concat(List.of(c.name()), c.otherNames())) {
+            if (java.util.regex.Pattern.compile("(^|[^\\p{L}])" + java.util.regex.Pattern.quote(n.toLowerCase())).matcher(name).find()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** The named characters the printing data finds on this printed card (Vorthos). */
+    public Set<String> getKnownCharacterSlugs() {
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t == null ? Set.of() : t.getCharacters();
+    }
+
     /** Something hot the printing data confirms in the art (Don't Try This at Home); false can still mean untagged. */
     public boolean hasKnownHotInArt() {
         final PrintingTraits.Traits t = getPrintingTraits();

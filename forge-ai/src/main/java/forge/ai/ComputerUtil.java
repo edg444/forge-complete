@@ -2560,6 +2560,21 @@ public class ComputerUtil {
             }
             return chosen.isEmpty() ? Iterables.getFirst(validTypes, "") : chosen;
         }
+        if (kindOfType.equals("Character")) {
+            // Vorthos: the character on the most of the spells it still has to cast
+            final List<java.util.Set<String>> spells = Lists.newArrayList();
+            for (final Card c : Iterables.concat(ai.getCardsIn(ZoneType.Library), ai.getCardsIn(ZoneType.Hand))) {
+                if (!c.isLand()) {
+                    spells.add(c.getKnownCharacterSlugs());
+                }
+            }
+            for (final String name : forge.card.PrintingTraits.charactersByCount(spells)) {
+                if (validTypes.contains(name)) {
+                    return name;
+                }
+            }
+            return Aggregates.random(validTypes);
+        }
         if (kindOfType.equals("Card")) {
             // TODO
             // computer will need to choose a type based on whether it needs a creature or land,

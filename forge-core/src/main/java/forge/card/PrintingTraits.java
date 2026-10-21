@@ -60,6 +60,7 @@ public final class PrintingTraits {
         private boolean backUntaggedArt = false;
         private boolean boosterFun = false;
         private String universe = null;
+        private java.util.Set<String> characters = java.util.Collections.emptySet();
 
         /** The border as printed, or null when the edition data already has it right. */
         public CardEdition.BorderColor getBorder() {
@@ -107,6 +108,15 @@ public final class PrintingTraits {
         /** Something hot in the artwork (Don't Try This at Home), per Scryfall Tagger; false can still mean untagged. */
         public boolean hasHot(final boolean backFace) {
             return backFace ? backHot : hot;
+        }
+
+        /** A named character this printing names in its name or flavor text, or shows in its art, on any face (Vorthos). */
+        public boolean hasCharacter(final String slug) {
+            return characters.contains(slug);
+        }
+
+        public java.util.Set<String> getCharacters() {
+            return characters;
         }
 
         /** A tree in the artwork (Selfie Preservation), per Scryfall Tagger; false can still mean untagged. */
@@ -159,6 +169,8 @@ public final class PrintingTraits {
         table = null;
         watermarks = null;
         universes = null;
+        characters = null;
+        characterNames = null;
     }
 
     private static synchronized Map<String, Traits> table() {
@@ -166,13 +178,20 @@ public final class PrintingTraits {
             return table;
         }
         table = Maps.newHashMapWithExpectedSize(30000);
+        characters = new java.util.LinkedHashMap<>();
         if (source == null) {
             return table;
         }
         for (final String line : source.get()) {
             // CODE|collector|trait|trait...
-            final String[] parts = line.split("\\|");
+            final String[] parts = line.split("\\|", -1);
             if (parts.length < 3) {
+                continue;
+            }
+            if ("!character".equals(parts[0])) {
+                // !character|slug|shown name|other names
+                final List<String> others = parts.length > 3 && !parts[3].isEmpty() ? List.of(parts[3].split(";")) : List.of();
+                characters.put(parts[1], new MagicCharacter(parts[1], parts[2], others));
                 continue;
             }
             final Traits t = new Traits();
@@ -244,6 +263,8 @@ public final class PrintingTraits {
                     t.boosterFun = true;
                 } else if (trait.startsWith("universe=")) {
                     t.universe = trait.substring(9);
+                } else if (trait.startsWith("characters=")) {
+                    t.characters = new java.util.HashSet<>(java.util.Arrays.asList(trait.substring(11).split(",")));
                 } else if (trait.startsWith("textlines=")) {
                     t.textLines = Integer.parseInt(trait.substring(10));
                 } else if (trait.startsWith("backtextlines=")) {
@@ -344,6 +365,94 @@ public final class PrintingTraits {
             watermarks = List.copyOf(names);
         }
         return watermarks;
+    }
+
+    /** A named Magic character (Vorthos, Steward of Myth): Scryfall Tagger's tag, its name as cards print it, and its other names. */
+    public record MagicCharacter(String slug, String name, List<String> otherNames) { }
+
+    private static Map<String, MagicCharacter> characters = null;
+    private static List<String> characterNames = null;
+
+    /** Every named character, by the name cards print, alphabetical. */
+    public static synchronized List<String> allCharacterNames() {
+        if (characterNames == null) {
+            table();
+            final java.util.TreeSet<String> names = new java.util.TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+            for (final MagicCharacter c : characters.values()) {
+                names.add(c.name());
+            }
+            characterNames = List.copyOf(names);
+        }
+        return characterNames;
+    }
+
+    private static String fold(final String s) {
+        return java.text.Normalizer.normalize(s, java.text.Normalizer.Form.NFD).replaceAll("\\p{M}", "")
+                .replace('\u2019', '\'').toLowerCase().trim();
+    }
+
+    public static synchronized MagicCharacter characterBySlug(final String slug) {
+        table();
+        return characters.get(slug);
+    }
+
+    /**
+     * The characters a player's cards name or show, most cards first (Vorthos's choice: the human sees their own
+     * deck's first, the AI takes the top one).
+     */
+    public static List<String> charactersByCount(final Iterable<java.util.Set<String>> cardsCharacters) {
+        final Map<String, Integer> counts = new java.util.HashMap<>();
+        for (final java.util.Set<String> slugs : cardsCharacters) {
+            for (final String slug : slugs) {
+                final MagicCharacter c = characterBySlug(slug);
+                if (c != null) {
+                    counts.merge(c.name(), 1, Integer::sum);
+                }
+            }
+        }
+        final List<String> names = new java.util.ArrayList<>(counts.keySet());
+        names.sort((a, b) -> counts.get(b) - counts.get(a) != 0 ? counts.get(b) - counts.get(a) : a.compareToIgnoreCase(b));
+        return names;
+    }
+
+    /** The character with this name or one of its other names, ignoring case and accents; null if there's none. */
+    public static synchronized MagicCharacter findCharacter(final String name) {
+        if (name == null) {
+            return null;
+        }
+        table();
+        final String want = fold(name);
+        for (final MagicCharacter c : characters.values()) {
+            if (fold(c.name()).equals(want)) {
+                return c;
+            }
+        }
+        for (final MagicCharacter c : characters.values()) {
+            for (final String other : c.otherNames()) {
+                if (fold(other).equals(want)) {
+                    return c;
+                }
+            }
+        }
+        return null;
+    }
+
+    /** Characters whose name or other names contain this text, ignoring case and accents. */
+    public static synchronized List<String> searchCharacterNames(final String text) {
+        table();
+        final String want = fold(text);
+        final List<String> result = new java.util.ArrayList<>();
+        for (final MagicCharacter c : characters.values()) {
+            boolean hit = fold(c.name()).contains(want);
+            for (final String other : c.otherNames()) {
+                hit |= fold(other).contains(want);
+            }
+            if (hit) {
+                result.add(c.name());
+            }
+        }
+        result.sort(String.CASE_INSENSITIVE_ORDER);
+        return result;
     }
 
     /** Traits of this printing, or null when it has none worth recording. */

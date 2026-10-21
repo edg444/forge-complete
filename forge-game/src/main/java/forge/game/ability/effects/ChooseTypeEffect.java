@@ -96,6 +96,10 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
                 // Stamp of Approval: every watermark a printing has
                 validTypes.addAll(forge.card.PrintingTraits.allWatermarkNames());
                 break;
+            case "Character":
+                // Vorthos, Steward of Myth: Scryfall Tagger's named characters
+                validTypes.addAll(forge.card.PrintingTraits.allCharacterNames());
+                break;
             case "Universe":
                 // Byode, Inverse Sun: Magic and every Universes Beyond franchise
                 validTypes.addAll(forge.card.PrintingTraits.allUniverses());
