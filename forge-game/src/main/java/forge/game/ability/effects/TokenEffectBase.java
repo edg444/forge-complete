@@ -143,6 +143,11 @@ public abstract class TokenEffectBase extends SpellAbilityEffect {
                             AbilityUtils.calculateAmount(host, sa.getParamOrDefault("DieSides", "6"), sa));
                 }
 
+                // Animate Object: stickers put on the object before it became a token come with it
+                if (prototype.isStickered()) {
+                    tok.setStickers(prototype);
+                }
+
                 if (sa.hasParam("WithCountersType")) {
                     CounterType cType = CounterType.getType(sa.getParam("WithCountersType"));
                     int cAmount = AbilityUtils.calculateAmount(host, sa.getParamOrDefault("WithCountersAmount", "1"), sa);

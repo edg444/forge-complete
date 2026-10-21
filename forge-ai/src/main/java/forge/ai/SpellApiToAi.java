@@ -138,6 +138,7 @@ public enum SpellApiToAi {
             .put(ApiType.Hide, HideAi.class)
             .put(ApiType.HidePrintedToken, HidePrintedTokenAi.class)
             .put(ApiType.ClaimHat, CannotPlayAi.class)
+            .put(ApiType.AnimateObject, AnimateObjectAi.class)
             .put(ApiType.SeekHidden, SeekHiddenAi.class)
             .put(ApiType.PutHiddenTokens, AlwaysPlayAi.class)
             .put(ApiType.GainOwnership, CannotPlayAi.class)

@@ -1,0 +1,6 @@
+Name:Inanimate Object Token
+ManaCost:no cost
+Colors:colorless
+Types:Creature
+PT:0/0
+Oracle:

@@ -312,6 +312,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Animate Object (UNF #33).** New effect, `AnimateObject`.
+  - You get seven tickets, through the normal counter route, so replacements apply.
+  - The object from outside the game means nothing to the game (rulings), so it's a blank, nameless, colorless
+    creature token (`c_0_0_inanimate_object`).
+  - Before it enters it gets a power/toughness sticker, then any of a name, an art and an ability sticker, each paid
+    for in tickets. So it never sits on the battlefield as a 0/0, and enters-the-battlefield effects see the
+    stickered creature.
+  - Created tokens now carry their prototype's stickers onto the battlefield (`TokenEffectBase`).
+  - **AI:** it casts this only when a power/toughness sticker will be affordable (`AnimateObjectAi`).
 - **Unfinity: Trapeze Artist (UNF #32).** Its entrance flip is simulated like Orcish Paratroopers' drop: a full
   turn landing face up half the time, shown with the card-toss animation.
   - The outcome is a random choice, not a die roll, so cards that care about rolling dice don't see it.

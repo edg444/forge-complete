@@ -1,0 +1,8 @@
+Name:Animate Object
+ManaCost:4 U
+Types:Sorcery
+# The object is real but means nothing to the game - its numbers, text and art are ignored (rulings) - so the token is
+# blank and nameless until its stickers say otherwise, and they go on before it enters (AnimateObjectEffect).
+A:SP$ AnimateObject | Tickets$ 7 | TokenScript$ c_0_0_inanimate_object | SpellDescription$ You get seven {TK}. Choose an inanimate object you own from outside the game. Put a power and toughness sticker on it. You may also put a name sticker, an art sticker, and/or an ability sticker on it. Put it onto the battlefield as a creature token.
+DeckHas:Ability$Token
+Oracle:You get seven {TK}. Choose an inanimate object you own from outside the game. Put a power and toughness sticker on it. You may also put a name sticker, an art sticker, and/or an ability sticker on it. Put it onto the battlefield as a creature token.
