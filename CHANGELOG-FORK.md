@@ -312,6 +312,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Knight in _____ Armor (UNF #17).** As it enters you may put a name sticker on it (an ETB replacement
+  running PutSticker on itself).
+  - Its protection uses `Protection:` with a new card property, `NameInitialOfSourceNameSticker`: a name that starts
+    with the same letter as any name sticker on the Knight.
+  - It uses `NameLetters.initial`, so spaces and punctuation are skipped (ruling): `_____ Goblin` starts with G.
 - **Unfinity: Katerina of Myra's Marvels (UNF #16).** You choose a letter as it enters (Monkey Monkey Monkey's
   ChooseType), and each spell you cast whose name begins with that letter makes a white 2/2 flying Cat. It has Partner.
   - **Ruling applied everywhere:** a name now begins with its first letter once spaces and punctuation, blank lines

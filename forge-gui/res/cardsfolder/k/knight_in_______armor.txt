@@ -1,0 +1,10 @@
+Name:Knight in _____ Armor
+ManaCost:1 W
+Types:Creature Human Knight Performer
+PT:2/1
+K:First Strike
+K:ETBReplacement:Other:DBSticker
+SVar:DBSticker:DB$ PutSticker | Defined$ Self | Kind$ Name | Optional$ True | SpellDescription$ As this creature enters, you may put a name sticker on it.
+# a name starts with its first letter once spaces and punctuation are skipped (rulings, NameLetters)
+K:Protection:Card.NameInitialOfSourceNameSticker:names that start with the same letter as a name sticker on it
+Oracle:First strike\nAs this creature enters, you may put a name sticker on it.\nThis creature has protection from names that start with the same letter as a name sticker on it.

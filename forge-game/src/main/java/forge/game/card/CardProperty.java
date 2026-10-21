@@ -11,6 +11,7 @@ import forge.card.MagicColor;
 import forge.card.mana.ManaCost;
 import forge.card.mana.ManaCostShard;
 import forge.game.CardTraitBase;
+import forge.game.card.sticker.AppliedSticker;
 import forge.game.card.sticker.StickerKind;
 import forge.game.EvenOdd;
 import forge.game.Game;
@@ -510,6 +511,17 @@ public class CardProperty {
             boolean same = false;
             for (final Card r : AbilityUtils.getDefinedCards(source, property.substring("NameInitialOf ".length()), spellAbility)) {
                 same |= NameLetters.sameInitial(card.getDisplayName(), game.getCardState(r).getDisplayName());
+            }
+            if (!same) {
+                return false;
+            }
+        } else if (property.equals("NameInitialOfSourceNameSticker")) {
+            // Knight in _____ Armor: its name starts with the same letter as a name sticker on the source
+            final int initial = NameLetters.initial(card.getDisplayName());
+            boolean same = false;
+            for (final AppliedSticker s : source.getStickers()) {
+                same |= initial != -1 && s.getKind() == StickerKind.NAME
+                        && initial == NameLetters.initial(s.getSticker().getWord());
             }
             if (!same) {
                 return false;
