@@ -2108,6 +2108,10 @@ public class AiController {
         } else if ("HighFives".equals(logic)) {
             // Gimme Five: nobody high-fives a computer by the dozen - a few people near the screen at most
             return Math.min(max, Math.max(min, MyRandom.getRandom().nextInt(4)));
+        } else if ("Mirrors".equals(logic)) {
+            // Now You See Me . . .: a simulated room - usually no mirror on the walls, now and then one or two
+            final int roll = MyRandom.getRandom().nextInt(100);
+            return Math.min(max, Math.max(min, roll < 50 ? 0 : roll < 85 ? 1 : 2));
         } else if ("Random".equals(logic)) {
             return MyRandom.getRandom().nextInt((max - min) + 1) + min;
         }

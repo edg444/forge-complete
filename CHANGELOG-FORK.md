@@ -312,6 +312,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Now You See Me . . . (UNF #20).** A flicker that returns the creature under its owner's control, with
+  X +1/+1 counters.
+  - X is an honor-system number: you're asked how many mirrors on walls you can see from your seat. The prompt notes
+    the rulings (real mirrors only; two facing each other count as two).
+  - **AI:** new ChooseNumber logic, `Mirrors`, simulates a room: no mirror half the time, one 35%, two 15%. That
+    follows Gimme Five's simulated high fives.
+  - The flicker records the exiled card as it resolves (`Imprint$`, Ordinary Pony's approach) rather than when it's
+    cast.
 - **Unfinity: Main Event Horizon (UNF #19).** The half of the alphabet is chosen as the spell is cast. It's scripted
   as two modes, so the choice is on the stack for everyone to see and a copy keeps it (rulings).
   - New card property `nameInitialIn A-M`. Spaces and punctuation are skipped; accents are dropped and Æ reads as A

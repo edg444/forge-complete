@@ -1,0 +1,11 @@
+Name:Now You See Me . . .
+ManaCost:W
+Types:Instant
+# The mirrors are counted by the caster from their seat (honor system; only real mirrors, two facing each other are two).
+# The AI has no room to look around, so a simulated one: usually none, now and then one or two (AILogic$ Mirrors).
+A:SP$ ChangeZone | ValidTgts$ Creature.YouCtrl | Origin$ Battlefield | Destination$ Exile | TgtPrompt$ Select target creature you control | Imprint$ True | SubAbility$ DBMirrors | SpellDescription$ Exile target creature you control, then return it to the battlefield under its owner's control with X +1/+1 counters on it, where X is the number of mirrors on walls you can see from your seat.
+SVar:DBMirrors:DB$ ChooseNumber | Defined$ You | Min$ 0 | Max$ 99 | ListTitle$ How many mirrors on walls can you see from your seat? (Real mirrors only - two facing each other are two.) | AILogic$ Mirrors | SubAbility$ DBReturn
+SVar:DBReturn:DB$ ChangeZone | Defined$ Imprinted | Origin$ Exile | Destination$ Battlefield | WithCountersType$ P1P1 | WithCountersAmount$ X | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearImprinted$ True
+SVar:X:Count$ChosenNumber
+Oracle:Exile target creature you control, then return it to the battlefield under its owner's control with X +1/+1 counters on it, where X is the number of mirrors on walls you can see from your seat.
