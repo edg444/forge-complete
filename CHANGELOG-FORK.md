@@ -312,6 +312,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Joraga Peach, Naturalize the Phyresis, That's No Moonmist, Growing Detective, Investi-Gate, Merfolk
+  Surveyor, Fear of Unsleeved Decks (UNK CG01-CG04).**
+  - **Explore-clash:** new `ExploreClash` effect (`WinSubAbility$`); the AI decides about its own revealed card as it
+    does when exploring. Each player whose revealed card was a nonland keeps it on top or bins it, as explore does.
+  - **Sleeves (user ruling):** Forge's sleeve choice decides. Built-in sleeve 0 is the plain Magic card back, so it's
+    unsleeved; any other built-in sleeve or a card-art sleeve counts as sleeved (`Player.isSleeved`,
+    `Count$YouAreSleeved`).
 - **Unknown Event: Unclaimed Blessing, Life at Stake, Mark Ritual, Long-Term Phyresis Study, Common Curve Filler,
   May the Mana Be with You (UNK CB11-CC03).**
   - **Teams (user ruling):** new `ChooseTeam` effect. A player joins the Mirran or Phyrexian team the first time a card

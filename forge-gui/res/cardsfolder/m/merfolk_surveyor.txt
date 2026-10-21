@@ -1,0 +1,9 @@
+Name:Merfolk Surveyor
+ManaCost:3 G
+Types:Creature Merfolk Scout
+PT:4/3
+# "Each player who didn't get a nonland" is read as each player whose revealed card was a nonland, as explore does.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigClash | TriggerDescription$ When CARDNAME enters the battlefield, explore-clash. If you win the explore-clash, gain 3 life. (To explore-clash, you and an opponent each reveal the top card of your respective libraries. Put any lands revealed this way into their owner's hands. Put a +1/+1 counter on this creature for each nonland card revealed this way. Then, each player who didn't get a nonland puts the card back or into their graveyard. You win the explore-clash if the mana value of your revealed card was higher.)
+SVar:TrigClash:DB$ ExploreClash | WinSubAbility$ DBGainLife
+SVar:DBGainLife:DB$ GainLife | LifeAmount$ 3
+Oracle:When Merfolk Surveyor enters the battlefield, explore-clash. If you win the explore-clash, gain 3 life. (To explore-clash, you and an opponent each reveal the top card of your respective libraries. Put any lands revealed this way into their owner's hands. Put a +1/+1 counter on this creature for each nonland card revealed this way. Then, each player who didn't get a nonland puts the card back or into their graveyard. You win the explore-clash if the mana value of your revealed card was higher.)

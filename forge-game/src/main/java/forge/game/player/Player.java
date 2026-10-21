@@ -3340,6 +3340,15 @@ public class Player extends GameEntity implements Comparable<Player> {
         view.setHasLost(false);
     }
 
+    /**
+     * Whether this player's deck is sleeved (user ruling 2026-10-21: Forge's sleeve choice). Built-in sleeve 0 is the
+     * plain Magic card back, so it's unsleeved; any other built-in sleeve or a card-art sleeve is a sleeve.
+     */
+    public boolean isSleeved() {
+        final forge.LobbyPlayer lp = getLobbyPlayer();
+        return lp != null && (!lp.getSleeveArtKey().isEmpty() || lp.getSleeveIndex() > 0);
+    }
+
     public void updateSleeve() {
         view.updateSleeveIndex(this);
         view.updateSleeveArtKey(this);

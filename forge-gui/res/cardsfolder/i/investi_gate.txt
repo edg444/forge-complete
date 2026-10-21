@@ -1,0 +1,17 @@
+Name:Investi-Gate
+ManaCost:3 G
+Types:Sorcery
+A:SP$ GenericChoice | Defined$ You | ChoiceAmount$ 2 | Choices$ Azorius,Orzhov,Dimir,Izzet,Rakdos,Golgari,Gruul,Boros,Selesnya,Simic | ChoicePrompt$ Name two Ravnica guilds | AILogic$ BestOption | SubAbility$ DBInvestigate | SpellDescription$ Name two Ravnica Guilds. Create two copies that are copies of their gates. (Ravnica guildgates are lands that enter the battlefield tapped and tap for the two colors of the guild.)
+SVar:Azorius:DB$ CopyPermanent | DefinedName$ Azorius Guildgate | SpellDescription$ Azorius (white and blue)
+SVar:Orzhov:DB$ CopyPermanent | DefinedName$ Orzhov Guildgate | SpellDescription$ Orzhov (white and black)
+SVar:Dimir:DB$ CopyPermanent | DefinedName$ Dimir Guildgate | SpellDescription$ Dimir (blue and black)
+SVar:Izzet:DB$ CopyPermanent | DefinedName$ Izzet Guildgate | SpellDescription$ Izzet (blue and red)
+SVar:Rakdos:DB$ CopyPermanent | DefinedName$ Rakdos Guildgate | SpellDescription$ Rakdos (black and red)
+SVar:Golgari:DB$ CopyPermanent | DefinedName$ Golgari Guildgate | SpellDescription$ Golgari (black and green)
+SVar:Gruul:DB$ CopyPermanent | DefinedName$ Gruul Guildgate | SpellDescription$ Gruul (red and green)
+SVar:Boros:DB$ CopyPermanent | DefinedName$ Boros Guildgate | SpellDescription$ Boros (red and white)
+SVar:Selesnya:DB$ CopyPermanent | DefinedName$ Selesnya Guildgate | SpellDescription$ Selesnya (green and white)
+SVar:Simic:DB$ CopyPermanent | DefinedName$ Simic Guildgate | SpellDescription$ Simic (green and blue)
+SVar:DBInvestigate:DB$ Investigate
+DeckHas:Ability$Investigate|Token
+Oracle:Name two Ravnica Guilds. Create two copies that are copies of their gates. (Ravnica guildgates are lands that enter the battlefield tapped and tap for the two colors of the guild.)\nInvestigate.

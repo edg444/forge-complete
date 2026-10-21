@@ -2277,11 +2277,14 @@ public class AbilityUtils {
         }
         // Unknown Event: 1 if the player has joined that team this match (ChooseTeam asks first; this never does)
         if (sq[0].equals("UnknownTeam") && sq.length > 1) {
-            return doXMath(sq[1].equals(player.getMatchNote(
+            return doXMath(sq[1].equals((player != null ? player : c.getController()).getMatchNote(
                     forge.game.ability.effects.ChooseTeamEffect.NOTE)) ? 1 : 0, expr, c, ctb);
         }
+        if (sq[0].equals("YouAreSleeved")) {
+            return doXMath((player != null ? player : c.getController()).isSleeved() ? 1 : 0, expr, c, ctb);
+        }
         if (sq[0].equals("AllCommandersRevealed")) {
-            return doXMath(player.allCommandersRevealed() ? 1 : 0, expr, c, ctb);
+            return doXMath((player != null ? player : c.getController()).allCommandersRevealed() ? 1 : 0, expr, c, ctb);
         }
         // Some Disassembly Required asks whether it is December. 1-12, like the calendar.
         if (sq[0].equals("CurrentMonth")) {
