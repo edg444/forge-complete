@@ -312,6 +312,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Urza's Fun House (UNF #199).** The Fun House button picks one of Urza, Academy Headmaster's three outcome
+  lists at 75/15/10, the page's own weights, then an outcome evenly within it.
+  - Planeswalker-only outcomes are reworded as Wizards' page has them.
+  - An outcome with no legal targets is clicked again (rulings).
+  - {∞} is colorless, once per object, with an Urza's Mine, Power-Plant and Tower (rulings). No engine change.
 - **Unfinity Attractions: Memory Test, Scavenger Hunt, The Superlatorium, Trivia Contest (UNF #221, #226, #230,
   #233).**
   - **Memory Test:** new `MemoryTest` effect. Five nonland cards are exiled from the bottom and turned face down; the
