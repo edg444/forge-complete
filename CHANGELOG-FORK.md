@@ -312,6 +312,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-20, eleventh deploy (desktop, Android, GitHub) — Heroes of the Realm 2019–2021; Unfinity #1–#10 begun; Universes and artifact-creature art data
+
+- **Build:** whole-reactor `android-debug` install; APK versionCode 2026102102. Tests before the build: 1498 run, 0 failed, 7 skipped. No upstream merge this time.
 - **Unfinity: Get Your Head in the Game (UNF #10).** The ETB exile lasts until it leaves (`Duration$
   UntilHostLeavesPlay`), and the card is then "touching your head" (SVar `OnHead`).
   - User ruling: a human reports when contact breaks with an honor-system special action, and the AI's grip slips
