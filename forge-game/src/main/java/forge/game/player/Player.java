@@ -1665,6 +1665,18 @@ public class Player extends GameEntity implements Comparable<Player> {
         }
     }
 
+    // Surprise Party: printed tokens hidden on the table, and which of them each cast Surprise Party may use (the ones
+    // hidden and unspotted as it was cast), keyed by its card id
+    private final List<HiddenPrintedToken> hiddenPrintedTokens = Lists.newArrayList();
+    private final Map<Integer, List<HiddenPrintedToken>> hiddenTokensAtCast = Maps.newHashMap();
+
+    public final List<HiddenPrintedToken> getHiddenPrintedTokens() {
+        return hiddenPrintedTokens;
+    }
+    public final Map<Integer, List<HiddenPrintedToken>> getHiddenTokensAtCast() {
+        return hiddenTokensAtCast;
+    }
+
     public final boolean hasSeveralLibraries() {
         return libraries != null;
     }

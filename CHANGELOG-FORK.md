@@ -312,6 +312,20 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Surprise Party (UNF #29).** Printed Clown Robot tokens hidden on the table, built on Entirely Normal
+  Armchair's hide-and-point idiom.
+  - **User ruling:** tokens can be hidden from the start of the game. A player whose deck has a card with a
+    `HidePrintedTokens` SVar starts with a command-zone "Printed Tokens" effect (`GameAction.createPrintedTokenHiding`).
+    Its special action (`HidePrintedToken`) hides one behind one of your permanents or in plain sight, one per spot,
+    since the tokens can't touch.
+  - The tokens aren't game objects yet (`Player.getHiddenPrintedTokens`, `HiddenPrintedToken`).
+  - Each opponent gets a "Hidden Tokens" effect: once each turn they point at a spot (`SeekHidden | PrintedTokensOf$`),
+    and a token there is spotted.
+  - As the Party is cast, a static trigger notes the hidden, unspotted tokens (`PutHiddenTokens | AtCast$`). When it
+    enters, "Surprise!" puts any number of those still hidden onto the battlefield, so tokens hidden later or spotted
+    earlier don't count.
+  - **AI (user ruling):** it hides and seeks. It hides a token at a random spot in its second main phase, up to
+    three (`HidePrintedTokenAi`), and points at a random spot once a turn, as it does for the Armchair.
 - **Unfinity: Solaflora, Intergalactic Icon (UNF #27).** Her Auras, Equipment, counters and stickers affect your other
   creatures. Those creatures never become enchanted, equipped, countered or stickered themselves (rulings).
   - **Attachments:** new static mode, `ShareAttachments`, takes `ValidAttachment$` and `Affected$`

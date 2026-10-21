@@ -7,10 +7,12 @@ import com.google.common.collect.Maps;
 import forge.game.Game;
 import forge.game.GameEntity;
 import forge.game.GameLogEntryType;
+import forge.game.ability.AbilityUtils;
 import forge.game.ability.ApiType;
 import forge.game.ability.SpellAbilityEffect;
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
+import forge.game.player.HiddenPrintedToken;
 import forge.game.player.Player;
 import forge.game.player.PlayerActionConfirmMode;
 import forge.game.player.PlayerCollection;
@@ -35,6 +37,12 @@ public class SeekHiddenEffect extends SpellAbilityEffect {
     public void resolve(final SpellAbility sa) {
         final Player seeker = sa.getActivatingPlayer();
         final Game game = seeker.getGame();
+        if (sa.hasParam("PrintedTokensOf")) {
+            for (final Player hider : AbilityUtils.getDefinedPlayers(sa.getHostCard(), sa.getParam("PrintedTokensOf"), sa)) {
+                seekPrintedTokens(sa, seeker, hider);
+            }
+            return;
+        }
         for (final Card chair : getDefinedCardsOrTargeted(sa)) {
             if (!chair.isHiddenFrom(seeker)) {
                 continue;
@@ -76,6 +84,46 @@ public class SeekHiddenEffect extends SpellAbilityEffect {
                     seeker.getController().playChosenSpellAbility(bounce);
                 }
                 break;
+            }
+        }
+    }
+
+    /**
+     * Surprise Party's hidden printed tokens: pointing at a spot with one there spots it - it's still on the table, but
+     * it can't come out for a Surprise Party cast after this. One look each turn, the same as for the Armchair.
+     */
+    private static void seekPrintedTokens(final SpellAbility sa, final Player seeker, final Player hider) {
+        final Game game = seeker.getGame();
+        final FCollection<GameEntity> spots = new FCollection<>();
+        for (final Card c : hider.getCardsIn(ZoneType.Battlefield)) {
+            if (!c.isHiddenFrom(seeker)) {
+                spots.add(c);
+            }
+        }
+        spots.add(hider);
+        final GameEntity guess = seeker.getController().chooseSingleEntityForEffect(spots, sa,
+                "Point at the permanent a token is hidden behind, or at " + hider + " for one in plain sight", null);
+        if (guess == null) {
+            return;
+        }
+        final String where = guess == hider ? "in plain sight" : "behind " + guess;
+        for (final HiddenPrintedToken t : hider.getHiddenPrintedTokens()) {
+            if (!t.isSpotted() && guess.equals(t.getSpot())) {
+                t.setSpotted();
+                game.getGameLog().add(GameLogEntryType.INFORMATION, seeker + " spotted a hidden token " + where + "!");
+                return;
+            }
+        }
+        game.getGameLog().add(GameLogEntryType.INFORMATION, seeker + " looked " + where + " and found nothing.");
+    }
+
+    /** Nothing of the hider's is hidden any more, so the "Hidden Tokens" effects pointing at them go. */
+    static void exileTokenSeekEffects(final Game game, final Player hider) {
+        for (final Player p : new PlayerCollection(game.getPlayers())) {
+            for (final Card eff : new CardCollection(p.getCardsIn(ZoneType.Command))) {
+                if (HidePrintedTokenEffect.SEEK_TOKENS_NAME.equals(eff.getName()) && eff.isRemembered(hider)) {
+                    game.getAction().exileEffect(eff);
+                }
             }
         }
     }

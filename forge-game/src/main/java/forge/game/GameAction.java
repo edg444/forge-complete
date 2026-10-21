@@ -2908,6 +2908,7 @@ public class GameAction {
             }
 
             first = runOpeningHandActions(first);
+            createPrintedTokenHiding();
             checkStateEffects(true); // why?
 
             // Run Trigger beginning of the game
@@ -3090,6 +3091,26 @@ public class GameAction {
         c.setLegacyWord(word);
         game.getMatch().writeLegacyWord(c, word);
         game.getGameLog().add(GameLogEntryType.INFORMATION, owner + " writes \"" + word + "\" on " + c + ".");
+    }
+
+    /**
+     * Surprise Party: printed tokens can be hidden on the table any time while the game is in progress, before the
+     * card that uses them is even drawn (rulings). So a player whose deck has a card with a HidePrintedTokens SVar (the
+     * token script) starts with a command-zone effect for hiding them, once per token kind (user, 2026-10-21).
+     */
+    public void createPrintedTokenHiding() {
+        for (final Player p : game.getPlayers()) {
+            final java.util.Set<String> scripts = new java.util.HashSet<>();
+            for (final Card c : p.getCardsIn(ImmutableList.of(ZoneType.Library, ZoneType.Hand))) {
+                if (!c.hasSVar("HidePrintedTokens") || !scripts.add(c.getSVar("HidePrintedTokens"))) {
+                    continue;
+                }
+                final Card eff = SpellAbilityEffect.createEffect(null, c, p, "Printed Tokens", null, game.getNextTimestamp());
+                eff.addSpellAbility(AbilityFactory.getAbility(c.getSVar("HidePrintedTokensAbility"), eff));
+                eff.updateStateForView();
+                moveToCommand(eff, null);
+            }
+        }
     }
 
     // Returns the new player to go first

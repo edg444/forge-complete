@@ -1,0 +1,16 @@
+Name:Surprise Party
+ManaCost:2 W
+Types:Enchantment
+# Printed Clown Robot tokens are hidden on the table from the start of the game, before this is drawn (rulings): a
+# deck with it gives its player a command-zone "Printed Tokens" effect for hiding them, one per spot since they can't
+# touch (GameAction.createPrintedTokenHiding, user 2026-10-21). Opponents point at spots to spot them, once each turn.
+# Which ones count is fixed as it's cast: hidden by then and not yet spotted.
+SVar:HidePrintedTokens:w_1_1_a_clown_robot
+SVar:HidePrintedTokensAbility:ST$ HidePrintedToken | Cost$ 0 | ActivationZone$ Command | TokenScript$ w_1_1_a_clown_robot | SpellDescription$ Hide a printed Clown Robot token on the battlefield: behind one of your permanents, or in plain sight. They can't touch, so one per spot. (Surprise Party)
+T:Mode$ SpellCast | ValidCard$ Card.Self | Static$ True | Secondary$ True | Execute$ TrigNoteHidden | TriggerDescription$ As this spell is cast, the hidden Clown Robot tokens that haven't been spotted are noted.
+SVar:TrigNoteHidden:DB$ PutHiddenTokens | AtCast$ True
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSurprise | TriggerDescription$ When this enchantment enters, yell "Surprise!" and put onto the battlefield any number of printed Clown Robot tokens that aren't touching each other, that you hid on the battlefield before you cast this enchantment, and that weren't spotted by an opponent before you cast this enchantment.
+SVar:TrigSurprise:DB$ PutHiddenTokens
+S:Mode$ Continuous | Affected$ Robot.YouCtrl | AddPower$ 1 | AddKeyword$ Vigilance | Description$ Robots you control get +1/+0 and have vigilance.
+DeckHas:Ability$Token & Type$Robot|Clown
+Oracle:When this enchantment enters, yell "Surprise!" and put onto the battlefield any number of printed Clown Robot tokens that aren't touching each other, that you hid on the battlefield before you cast this enchantment, and that weren't spotted by an opponent before you cast this enchantment.\nRobots you control get +1/+0 and have vigilance.
