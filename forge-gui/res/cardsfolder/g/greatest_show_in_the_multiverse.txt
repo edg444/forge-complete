@@ -1,0 +1,12 @@
+Name:Greatest Show in the Multiverse
+ManaCost:7
+Types:Artifact Enchantment Saga
+# Any instants and sorceries will do in an Un- game, not just a sideboard's (rulings; user, 2026-10-21: any card in Forge,
+# chosen by artist). A card not cast as its chapter resolves can't be cast later from that chapter (rulings).
+# CostExileFromOutside; the AI takes the artist with the biggest spells.
+S:Mode$ RaiseCost | ValidCard$ Card.Self | Activator$ You | Type$ Spell | Cost$ ExileOutside<5> | EffectZone$ All | Description$ As an additional cost to cast this spell, exile five instant and/or sorcery cards you own with the same artist and different names from outside the game.
+K:Chapter:3:DBShow,DBShow,DBShow
+SVar:DBShow:DB$ ChooseCard | Defined$ You | Choices$ Card.ExiledWithSource | ChoiceZone$ Exile | AtRandom$ True | Mandatory$ True | SubAbility$ DBCast | SpellDescription$ Choose one of the exiled cards at random. You may cast it without paying its mana cost.
+SVar:DBCast:DB$ Play | Defined$ ChosenCard | ValidZone$ Exile | WithoutManaCost$ True | Optional$ True | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+Oracle:(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)\nAs an additional cost to cast this spell, exile five instant and/or sorcery cards you own with the same artist and different names from outside the game.\nI, II, III — Choose one of the exiled cards at random. You may cast it without paying its mana cost.

@@ -428,6 +428,12 @@ public class Cost implements Serializable {
             return new CostOpenBooster(splitStr[0]);
         }
 
+        if (parse.startsWith("ExileOutside<")) {
+            // ExileOutside<Num> - Greatest Show in the Multiverse
+            final String[] splitStr = abCostParse(parse, 1);
+            return new CostExileFromOutside(splitStr[0]);
+        }
+
         if (parse.startsWith("Gobble<")) {
             // Gobble<Num> - Pie-Eating Contest
             final String[] splitStr = abCostParse(parse, 1);

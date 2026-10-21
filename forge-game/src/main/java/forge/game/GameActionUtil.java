@@ -440,6 +440,9 @@ public final class GameActionUtil {
 
         final CardCollection costSources = new CardCollection(source);
         costSources.addAll(game.getCardsIn(ZoneType.STATIC_ABILITIES_SOURCE_ZONES));
+        final OptionalCost[] stickerKickers = {OptionalCost.StickerKicker1, OptionalCost.StickerKicker2,
+                OptionalCost.StickerKicker3, OptionalCost.StickerKicker4};
+        int stickerKicker = 0;
         for (final Card ca : costSources) {
             for (final StaticAbility stAb : ca.getStaticAbilities()) {
                 if (!stAb.checkConditions(StaticAbilityMode.OptionalCost)) {
@@ -457,7 +460,11 @@ public final class GameActionUtil {
                 }
 
                 final Cost cost = new Cost(stAb.getParam("Cost"), false);
-                if (stAb.hasParam("ReduceColor")) {
+                if (stAb.hasParam("StickerKicker")) {
+                    if (stickerKicker < stickerKickers.length) {
+                        costs.add(new OptionalCostValue(stickerKickers[stickerKicker++], cost));
+                    }
+                } else if (stAb.hasParam("ReduceColor")) {
                     if (stAb.getParam("ReduceColor").equals("W")) {
                         costs.add(new OptionalCostValue(OptionalCost.ReduceW, cost));
                     } else if (stAb.getParam("ReduceColor").equals("U")) {

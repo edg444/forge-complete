@@ -1,0 +1,9 @@
+Name:Wicker Picker
+ManaCost:3
+Types:Artifact Creature Scarecrow Guest
+PT:2/3
+# Each Wicker Picker's sticker kicker can be paid once per spell; the {TK} and the sticker come just before the spell is
+# considered cast, so cast triggers see the sticker (rulings; MagicStack). It isn't kicker for "if it was kicked".
+S:Mode$ OptionalCost | ValidCard$ Creature | ValidSA$ Spell | Activator$ You | Cost$ 1 | StickerKicker$ True | Description$ Creature spells you cast have sticker kicker {1}. (You may pay an additional {1} as you cast a creature spell. If you do, you get {TK}, then you may put a sticker on it.)
+DeckHints:Ability$Sticker
+Oracle:Creature spells you cast have sticker kicker {1}. (You may pay an additional {1} as you cast a creature spell. If you do, you get {TK}, then you may put a sticker on it.)

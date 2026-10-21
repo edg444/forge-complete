@@ -661,6 +661,27 @@ public class HumanCostDecision extends CostDecisionMakerBase {
     }
 
     @Override
+    public PaymentDecision visit(final CostExileFromOutside cost) {
+        final int n = cost.getAbilityAmount(ability);
+        final Map<String, List<forge.item.PaperCard>> artists = CostExileFromOutside.artists(n);
+        final String artist = controller.getGui().oneOrNone("Choose an artist with " + n
+                + " instant and/or sorcery cards of different names", Lists.newArrayList(artists.keySet()));
+        if (artist == null) {
+            return null;
+        }
+        final List<forge.item.PaperCard> picks = controller.getGui().many("Choose " + n + " cards illustrated by " + artist
+                + " to exile from outside the game", "Exiled", n, n, artists.get(artist), null);
+        if (picks == null || picks.size() != n) {
+            return null;
+        }
+        final CardCollection cards = new CardCollection();
+        for (final forge.item.PaperCard pc : picks) {
+            cards.add(Card.fromPaperCard(pc, player));
+        }
+        return PaymentDecision.card(cards);
+    }
+
+    @Override
     public PaymentDecision visit(final CostGobble cost) {
         final int n = cost.getAbilityAmount(ability);
         if (n <= 0) {

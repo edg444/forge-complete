@@ -18,6 +18,7 @@ public interface ICostVisitor<T> {
     T visit(CostEnlist cost);
     T visit(CostFlavorAction cost);
     T visit(CostGobble cost);
+    T visit(CostExileFromOutside cost);
     T visit(CostOpenBooster cost);
     T visit(CostUninstall cost);
     T visit(CostFlipCoin cost);
@@ -117,6 +118,10 @@ public interface ICostVisitor<T> {
         }
         @Override
         public T visit(CostGobble cost) {
+            return null;
+        }
+        @Override
+        public T visit(CostExileFromOutside cost) {
             return null;
         }
         @Override

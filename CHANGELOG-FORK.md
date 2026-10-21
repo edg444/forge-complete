@@ -312,6 +312,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Wicker Picker (UNF #196).** New `StickerKicker$` parameter on the OptionalCost static mode, one optional
+  cost per Wicker Picker (up to four).
+  - When it's paid, the caster gets {TK} and may put a sticker on the spell just before it's considered cast, so cast
+    triggers see it (rulings).
+- **Unfinity: Greatest Show in the Multiverse (UNF #189).** New cost `ExileOutside<N>`: the player picks an artist, then
+  N of their instants and sorceries with different names from any card in Forge (user ruling, following the Un-
+  rulings). The cards come into the game in exile, exiled with the Saga.
+  - A card with several artists counts for each.
+  - **AI:** it takes the artist whose five biggest spells are biggest.
 - **Unfinity: The Big Top (UNF #197).** Any color, chosen by the player (honor system; in an Un- game any color can be
   added - rulings). No engine change.
 - **Unfinity: Souvenir T-Shirt (UNF #192).** New RollDice parameters `SecondChosenSVar` (a second result from the rest)

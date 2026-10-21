@@ -321,6 +321,33 @@ public class AiCostDecision extends CostDecisionMakerBase {
     }
 
     @Override
+    public PaymentDecision visit(CostExileFromOutside cost) {
+        // Greatest Show in the Multiverse: the artist whose five biggest spells are biggest, cast for free later
+        final int n = cost.getAbilityAmount(ability);
+        List<forge.item.PaperCard> best = null;
+        int bestValue = -1;
+        for (final List<forge.item.PaperCard> spells : CostExileFromOutside.artists(n).values()) {
+            final List<forge.item.PaperCard> sorted = Lists.newArrayList(spells);
+            sorted.sort((a, b) -> b.getRules().getManaCost().getCMC() - a.getRules().getManaCost().getCMC());
+            int value = 0;
+            for (int i = 0; i < n; i++) {
+                value += sorted.get(i).getRules().getManaCost().getCMC();
+            }
+            if (value > bestValue) {
+                bestValue = value;
+                best = sorted.subList(0, n);
+            }
+        }
+        final CardCollection cards = new CardCollection();
+        if (best != null) {
+            for (final forge.item.PaperCard pc : best) {
+                cards.add(Card.fromPaperCard(pc, player));
+            }
+        }
+        return PaymentDecision.card(cards);
+    }
+
+    @Override
     public PaymentDecision visit(CostGobble cost) {
         // every gobble a bite: the AI's Food tokens stay for their life
         return PaymentDecision.number(0);

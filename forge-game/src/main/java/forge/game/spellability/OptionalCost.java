@@ -22,6 +22,11 @@ public enum OptionalCost {
     ReduceG("(to reduce green mana)", "G"),
     AltCost("", ""),
     Flash("Flash", ""), // used for Pay Extra for Flash
+    // Wicker Picker's sticker kicker, one per instance (each Wicker Picker can be paid for once per spell)
+    StickerKicker1("Sticker kicker", ""),
+    StickerKicker2("Sticker kicker", ""),
+    StickerKicker3("Sticker kicker", ""),
+    StickerKicker4("Sticker kicker", ""),
     Generic("Generic", ""); // used by "Dragon Presence" and pseudo-kicker cards
 
     private String name;

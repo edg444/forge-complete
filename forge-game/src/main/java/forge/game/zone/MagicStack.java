@@ -363,6 +363,10 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
             game.getPhaseHandler().setPriority(sp.getActivatingPlayer());
         }
 
+        if (sp.isSpell() && !sp.isCopied()) {
+            applyStickerKickers(sp);
+        }
+
         sp.getHostCard().getGame().getAction().checkStaticAbilities(false);
         sp.getHostCard().getGame().getTriggerHandler().resetActiveTriggers();
 
@@ -647,6 +651,28 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
 
     public final int size() {
         return stack.size();
+    }
+
+    /**
+     * Wicker Picker's sticker kicker: for each one paid, the caster gets {TK}, then may put a sticker on the spell - just
+     * before it's considered cast, so cast triggers see it (rulings). Only on a spell they own (CR 123.3b).
+     */
+    private void applyStickerKickers(final SpellAbility sp) {
+        final Player caster = sp.getActivatingPlayer();
+        for (final forge.game.spellability.OptionalCost kicker : new forge.game.spellability.OptionalCost[] {
+                forge.game.spellability.OptionalCost.StickerKicker1, forge.game.spellability.OptionalCost.StickerKicker2,
+                forge.game.spellability.OptionalCost.StickerKicker3, forge.game.spellability.OptionalCost.StickerKicker4}) {
+            if (!sp.isOptionalCostPaid(kicker)) {
+                continue;
+            }
+            final forge.game.GameEntityCounterTable table = new forge.game.GameEntityCounterTable();
+            caster.addCounter(forge.game.card.CounterEnumType.TICKET, 1, caster, table);
+            table.replaceCounterEffect(game, sp);
+            final SpellAbility stick = forge.game.ability.AbilityFactory.getAbility(
+                    "DB$ PutSticker | Defined$ Self | Optional$ True", sp.getHostCard());
+            stick.setActivatingPlayer(caster);
+            forge.game.ability.AbilityUtils.resolve(stick);
+        }
     }
 
     public final boolean isEmpty() {
