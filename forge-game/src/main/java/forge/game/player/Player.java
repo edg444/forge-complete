@@ -368,7 +368,8 @@ public class Player extends GameEntity implements Comparable<Player> {
     /** CR 810.8d/810.11: a lone player loses at the game's usual count, a team of n at 5n + 5 (15 for two heads). */
     public final int getPoisonCountersToLose() {
         final int heads = getGiantTeam().size();
-        return heads < 2 ? game.getRules().getPoisonCountersToLose() : 5 * heads + 5;
+        final int base = heads < 2 ? game.getRules().getPoisonCountersToLose() : 5 * heads + 5;
+        return base + forge.game.staticability.StaticAbilityPoisonTolerance.additionalCounters(this);
     }
 
     public boolean isArchenemy() {

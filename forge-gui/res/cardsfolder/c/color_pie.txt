@@ -1,0 +1,9 @@
+Name:Color Pie
+ManaCost:1
+Types:Artifact Food
+A:AB$ GainLife | Cost$ 2 T Sac<1/CARDNAME/this artifact> | LifeAmount$ 3 | SubAbility$ DBDraw | SpellDescription$ You gain 3 life. Draw a card. Exile up to one target card from a graveyard. This artifact deals 1 damage to each opponent. Target player adds one mana of any color.
+SVar:DBDraw:DB$ Draw | NumCards$ 1 | SubAbility$ DBExile
+SVar:DBExile:DB$ ChangeZone | ValidTgts$ Card | TargetMin$ 0 | TargetMax$ 1 | Origin$ Graveyard | Destination$ Exile | TgtPrompt$ Select up to one target card in a graveyard | SubAbility$ DBDamage
+SVar:DBDamage:DB$ DealDamage | Defined$ Player.Opponent | NumDmg$ 1 | SubAbility$ DBMana
+SVar:DBMana:DB$ Mana | ValidTgts$ Player | TgtPrompt$ Select target player to add one mana of any color | Defined$ Targeted | Produced$ Any
+Oracle:{2}, {T}, Sacrifice this artifact: You gain 3 life. Draw a card. Exile up to one target card from a graveyard. This artifact deals 1 damage to each opponent. Target player adds one mana of any color.

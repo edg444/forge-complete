@@ -1,0 +1,8 @@
+Name:Melira's Snacks
+ManaCost:2
+Types:Artifact Food
+S:Mode$ PoisonTolerance | ValidPlayer$ You | Amount$ 3 | Description$ Poison Tolerance +3 (It takes three additional poison counters for you to lose the game to poison.)
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When CARDNAME enters the battlefield, draw a card.
+SVar:TrigDraw:DB$ Draw | NumCards$ 1
+A:AB$ GainLife | Cost$ 2 T Sac<1/CARDNAME> | LifeAmount$ 3 | SpellDescription$ You gain 3 life.
+Oracle:Poison Tolerance +3 (It takes three additional poison counters for you to lose the game to poison.)\nWhen Melira's Snacks enters the battlefield, draw a card.\n{2}, {T}, Sacrifice Melira's Snacks: You gain 3 life.

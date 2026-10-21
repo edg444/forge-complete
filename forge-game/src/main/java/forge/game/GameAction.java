@@ -3015,7 +3015,8 @@ public class GameAction {
 
             List<Card> ploys = CardLists.filter(takesAction.getCardsIn(ZoneType.Command), input -> input.getName().equals("Emissary's Ploy"));
             CardCollectionView all = CardLists.filterControlledBy(game.getCardsInGame(), takesAction);
-            List<Card> spires = CardLists.filter(all, input -> input.getName().equals("Cryptic Spires"));
+            // Cryptic Spires, Your Mana Rock: colors marked while building the deck (SETCOLORID)
+            List<Card> spires = CardLists.filter(all, input -> input.getRules() != null && input.getRules().getSetColorID() > 0);
 
             int chosen = 1;
             List<Integer> cmc = Lists.newArrayList(1, 2, 3);
@@ -3030,16 +3031,15 @@ public class GameAction {
                 c.setChosenNumber(chosen);
             }
             for (Card c : spires) {
-                // TODO: only do this for the AI, for the player part, get the encoded color from the deck file and pass
-                //  it to either player or the papercard object so it feels like rule based for the player side..
+                // colors not marked in the deck editor are chosen now, as the game begins, and kept all game
+                // (user ruling 2026-10-21); the AI picks its deck's most prominent ones
                 if (!c.hasMarkedColor()) {
-                    if (takesAction.isAI()) {
-                        String prompt = c.getTranslatedName() + ": " +
-                                Localizer.getInstance().getMessage("lblChooseNColors", Lang.getNumeral(2));
-                        SpellAbility sa = new SpellAbility.EmptySa(ApiType.ChooseColor, c, takesAction);
-                        sa.putParam("AILogic", "MostProminentInComputerDeck");
-                        c.setMarkedColors(takesAction.getController().chooseColors(prompt, sa, 2, 2, ColorSet.WUBRG));
-                    }
+                    final int n = c.getRules().getSetColorID();
+                    String prompt = c.getTranslatedName() + ": " +
+                            Localizer.getInstance().getMessage("lblChooseNColors", Lang.getNumeral(n));
+                    SpellAbility sa = new SpellAbility.EmptySa(ApiType.ChooseColor, c, takesAction);
+                    sa.putParam("AILogic", n == 2 ? "MostProminentDualInComputerDeck" : "MostProminentInComputerDeck");
+                    c.setMarkedColors(takesAction.getController().chooseColors(prompt, sa, n, n, ColorSet.WUBRG));
                 }
             }
             for (Card c : all) {

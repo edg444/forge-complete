@@ -1,0 +1,17 @@
+Name:Unicycling Automaton
+ManaCost:3
+Types:Creature Construct
+PT:3/2
+# Hand Backup: the revealed card is marked until it's cast from your hand and enters, however long that takes; the
+# ability it gains in your hand lasts until end of turn.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigReveal | TriggerDescription$ Hand Backup 1 (When this creature enters the battlefield, you may reveal a creature card from your hand. When it eventually comes into play, if you cast it from your hand, it enters with a +1/+1 counter. It also gains the following ability in your hand until end of turn.)
+SVar:TrigReveal:DB$ ChooseCard | Defined$ You | ChoiceZone$ Hand | Choices$ Creature.YouOwn | MinAmount$ 0 | Amount$ 1 | Reveal$ True | ChoiceTitle$ You may reveal a creature card from your hand | SubAbility$ DBBackup
+SVar:DBBackup:DB$ Effect | RememberObjects$ ChosenCard | ReplacementEffects$ BackupETB | Duration$ Permanent | ConditionDefined$ ChosenCard | ConditionPresent$ Card | SubAbility$ DBGains
+SVar:BackupETB:Event$ Moved | ValidCard$ Card.IsRemembered+wasCastFromYourHand | Destination$ Battlefield | ReplaceWith$ BackupCounter | ReplacementResult$ Updated | Description$ When the revealed card comes into play, if you cast it from your hand, it enters with a +1/+1 counter.
+SVar:BackupCounter:DB$ PutCounter | Defined$ ReplacedCard | CounterType$ P1P1 | CounterNum$ 1 | ETB$ True | SubAbility$ DBExileEffect
+SVar:DBExileEffect:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
+SVar:DBGains:DB$ Effect | RememberObjects$ ChosenCard | StaticAbilities$ BackupCycling | ForgetOnMoved$ Hand | ConditionDefined$ ChosenCard | ConditionPresent$ Card | SubAbility$ DBCleanup
+SVar:BackupCycling:Mode$ Continuous | Affected$ Card.IsRemembered | AffectedZone$ Hand | AddKeyword$ TypeCycling:Basic:1 | Description$ The revealed card has basic landcycling {1} in your hand until end of turn.
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+K:TypeCycling:Basic:1
+Oracle:Hand Backup 1 (When this creature enters the battlefield, you may reveal a creature card from your hand. When it eventually comes into play, if you cast it from your hand, it enters with a +1/+1 counter. It also gains the following ability in your hand until end of turn.)\nBasic Landcycling {1} ({1}, Discard this card: Search your library for a basic land card, reveal it, put it into your hand, then shuffle.)

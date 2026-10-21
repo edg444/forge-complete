@@ -1,0 +1,11 @@
+Name:Your Mana Rock
+ManaCost:2
+Types:Artifact
+# The two colors are marked in the deck editor like Cryptic Spires', or chosen as the game begins if they weren't
+# (user ruling 2026-10-21); the AI writes its deck's most prominent colors.
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ Your Mana Rock enters the battlefield tapped.
+SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
+Text:During deckbuilding, write two different colors on Your Mana Rock.
+A:AB$ Mana | Cost$ T | Produced$ Combo ColorID | SpellDescription$ Add one mana of a color written on Your Mana Rock.
+Oracle:Your Mana Rock enters the battlefield tapped.\nDuring deckbuilding, write two different colors on Your Mana Rock.\n{T}: Add one mana of a color written on Your Mana Rock.
+SETCOLORID:2

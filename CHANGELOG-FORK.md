@@ -312,6 +312,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Your Mana Rock, Unicycling Automaton, Color Pie, Melira's Snacks (UNK CA02b-CA12).**
+  - **Your Mana Rock:** its two colors are marked in the deck editor like Cryptic Spires', or chosen as the game
+    begins (user ruling). Any card with `SETCOLORID` now gets this, so an unmarked Cryptic Spires asks too instead of
+    making no mana. The AI's two colors are now its deck's two most prominent; before, it only ever marked one.
+  - **Hand Backup:** the revealed card is marked until it's cast from your hand and enters with its counter, and it
+    has basic landcycling in your hand until end of turn.
+  - **Poison Tolerance:** new `PoisonTolerance` static mode; each instance raises the poison counters it takes for you
+    to lose.
 - **Unknown Event: A Container of Booster Packs (UNK CA02).** `OpenBooster` gains `Container$ N`.
   - You name the container's N different sets (honor system), and a real booster of one of them at random is opened.
   - You keep one card in hand; the rest of the pack stays out of the game.

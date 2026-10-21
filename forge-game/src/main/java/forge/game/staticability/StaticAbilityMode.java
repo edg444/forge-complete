@@ -24,6 +24,7 @@ public enum StaticAbilityMode {
     ShareAttachments,
     CountersAreTokens,
     TokensAreCards,
+    PoisonTolerance,
 
     // StaticAbility
     CantAttackUnless,
