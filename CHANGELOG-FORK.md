@@ -312,6 +312,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Leading Performance (UNF #18).** Two letter choices, the second into `ChosenType2`.
+  - ChooseType's `InvalidTypes$` now accepts `ChosenType`, which takes out the letter already chosen, so the second
+    letter must differ (rulings).
+  - New card property, `nameStartsWithEitherChosenLetter`. It checks every name a combined creature has, and it's one
+    `PutCounterAll`, so a creature gets one counter however many letters match (rulings). Spaces and punctuation are
+    skipped (`NameLetters.initial`).
+  - **AI:** new ChooseType logic, `OwnCreatureInitials`. It picks the commonest initials among its own creatures, and
+    casts only if the two letters reach at least two creatures (`ComputerUtil.mostCommonInitial`).
+  - `CountersPutAllAi` now takes `AILogic$ Always`, for a sub-ability whose parent already decided before the letters
+    exist.
 - **Unfinity: Knight in _____ Armor (UNF #17).** As it enters you may put a name sticker on it (an ETB replacement
   running PutSticker on itself).
   - Its protection uses `Protection:` with a new card property, `NameInitialOfSourceNameSticker`: a name that starts

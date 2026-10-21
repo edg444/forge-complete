@@ -266,6 +266,20 @@ public class CardProperty {
             if (letter.isEmpty() || initial == -1 || initial != Character.toUpperCase(letter.codePointAt(0))) {
                 return false;
             }
+        } else if (property.equals("nameStartsWithEitherChosenLetter")) {
+            // Leading Performance: either of two chosen letters, on any of its names (rulings: a creature with
+            // several names gets one counter however many of them match)
+            boolean match = false;
+            for (final String n : card.isCombinedWhole() ? card.getNames() : Collections.singletonList(card.getDisplayName())) {
+                final int initial = NameLetters.initial(n);
+                for (final String letter : new String[] {source.getChosenType(), source.getChosenType2()}) {
+                    match |= initial != -1 && letter != null && !letter.isEmpty()
+                            && initial == Character.toUpperCase(letter.codePointAt(0));
+                }
+            }
+            if (!match) {
+                return false;
+            }
         } else if (property.equals("HasHalfSymbol")) {
             // Fraction Jackson: "a card with a 1/2 on it". In this pool that is one of three things -
             // a half in the printed power/toughness, a half shard in the mana cost, or a 1/2 written

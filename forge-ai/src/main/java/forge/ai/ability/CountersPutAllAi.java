@@ -44,6 +44,11 @@ public class CountersPutAllAi extends SpellAbilityAi {
             cList = CardLists.getValidCards(ai.getCardsIn(ZoneType.Battlefield), valid, source.getController(), source, sa);
         }
 
+        // the parent already judged it, e.g. on letters it hasn't chosen yet (Leading Performance)
+        if (logic.equals("Always")) {
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
+
         if (logic.equals("AtEOTOrBlock")) {
             if (!ai.getGame().getPhaseHandler().is(PhaseType.END_OF_TURN) && !ai.getGame().getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS)) {
                 return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);

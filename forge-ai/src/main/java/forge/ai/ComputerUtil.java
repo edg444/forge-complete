@@ -2817,6 +2817,11 @@ public class ComputerUtil {
                     }
                 }
             }
+            // Leading Performance: a +1/+1 counter on each of its creatures whose name begins with the letter; the
+            // second pick has the first one removed from validTypes
+            if ("OwnCreatureInitials".equals(logic)) {
+                chosen = mostCommonInitial(ai.getCreaturesInPlay(), validTypes);
+            }
             // Katerina of Myra's Marvels: a Cat for each spell cast whose name begins with the letter, so the most
             // common initial among the spells this player has yet to cast
             if ("MostCommonSpellInitial".equals(logic)) {
@@ -2863,6 +2868,26 @@ public class ComputerUtil {
             }
             if (StringUtils.isEmpty(chosen) && !validTypes.isEmpty()) {
                 chosen = Aggregates.random(validTypes);
+            }
+        }
+        return chosen;
+    }
+
+    /** The initial most of these cards' names begin with, among the allowed letters, or null if none does. */
+    public static String mostCommonInitial(final Iterable<Card> cards, final Collection<String> validTypes) {
+        final Map<String, Integer> initials = Maps.newHashMap();
+        for (final Card c : cards) {
+            final int initial = NameLetters.initial(c.getDisplayName());
+            if (initial != -1 && validTypes.contains(Character.toString(initial))) {
+                initials.merge(Character.toString(initial), 1, Integer::sum);
+            }
+        }
+        String chosen = null;
+        int best = 0;
+        for (final Map.Entry<String, Integer> e : initials.entrySet()) {
+            if (e.getValue() > best) {
+                best = e.getValue();
+                chosen = e.getKey();
             }
         }
         return chosen;

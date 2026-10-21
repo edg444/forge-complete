@@ -134,7 +134,10 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
         }
 
         if (sa.hasParam("InvalidTypes")) {
-            validTypes.removeAll(Arrays.asList(sa.getParam("InvalidTypes").split(",")));
+            for (final String invalid : sa.getParam("InvalidTypes").split(",")) {
+                // ChosenType: a second pick that must differ from the first (Leading Performance's two letters)
+                validTypes.remove("ChosenType".equals(invalid) ? card.getChosenType() : invalid);
+            }
         }
 
         if (sa.hasParam("Note") && card.hasAnyNotedType()) {

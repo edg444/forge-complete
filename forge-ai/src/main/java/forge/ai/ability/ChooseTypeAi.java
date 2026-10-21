@@ -1,6 +1,7 @@
 package forge.ai.ability;
 
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import forge.ai.*;
 import forge.card.CardType;
 import forge.game.ability.AbilityUtils;
@@ -14,6 +15,7 @@ import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 import forge.util.Aggregates;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -53,6 +55,22 @@ public class ChooseTypeAi extends SpellAbilityAi {
             }
             sa.setXManaCostPaid(best.getCMC());
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        } else if ("OwnCreatureInitials".equals(aiLogic)) {
+            // Leading Performance: two letters' worth of counters should reach at least two creatures
+            final List<String> letters = Lists.newArrayList(Arrays.asList(sa.getParam("ValidTypes").split(",")));
+            int reached = 0;
+            for (int i = 0; i < 2; i++) {
+                final String letter = ComputerUtil.mostCommonInitial(aiPlayer.getCreaturesInPlay(), letters);
+                if (letter == null) {
+                    break;
+                }
+                letters.remove(letter);
+                for (final Card c : aiPlayer.getCreaturesInPlay()) {
+                    reached += NameLetters.initial(c.getDisplayName()) == letter.codePointAt(0) ? 1 : 0;
+                }
+            }
+            return reached >= 2 ? new AiAbilityDecision(100, AiPlayDecision.WillPlay)
+                    : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         } else if ("MostProminentOppControls".equals(aiLogic)) {
             return !chooseType(sa, aiPlayer.getOpponents().getCardsIn(ZoneType.Battlefield)).isEmpty()
                     ? new AiAbilityDecision(100, AiPlayDecision.WillPlay)
