@@ -302,7 +302,14 @@ public class DeltaSyncManager implements IHasForgeLog {
      */
     private void preScanZoneCollections(GameView gameView) {
         if (gameView == null || gameView.getPlayers() == null) return;
-        for (PlayerView player : gameView.getPlayers()) {
+        // fork: Interplanar Brushwagg's unseated stand-in holds a battlefield too
+        final java.util.List<PlayerView> players = new java.util.ArrayList<>(gameView.getPlayers());
+        if (gameView.getUnseatedPlayers() != null) {
+            for (PlayerView unseated : gameView.getUnseatedPlayers()) {
+                players.add(unseated);
+            }
+        }
+        for (PlayerView player : players) {
             for (TrackableProperty zoneProp : ZONE_COLLECTIONS) {
                 if (((Map<TrackableProperty, Object>) player.getProps()).get(zoneProp) instanceof TrackableCollection<?> tc) {
                     for (Object item : tc) {

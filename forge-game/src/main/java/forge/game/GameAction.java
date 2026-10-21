@@ -1857,6 +1857,9 @@ public class GameAction {
         // Split Screen: a library for each permanent whose continuous effects refer to one
         forge.game.player.Libraries.chooseForStatics(game);
 
+        // Interplanar Brushwagg: an emptied interplanar battlefield comes off the screen
+        game.retireEmptyInterplanarZone();
+
         final boolean refreeze = game.getStack().isFrozen();
         game.getStack().setFrozen(true);
         game.getTracker().freeze(); //prevent views flickering during while updating for state-based effects

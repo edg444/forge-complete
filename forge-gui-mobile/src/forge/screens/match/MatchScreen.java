@@ -379,6 +379,18 @@ public class MatchScreen extends FScreen {
         scroller.revalidate();
     }
 
+    /** Takes a panel off the screen, as a defeated player's is (Interplanar Brushwagg's emptied battlefield). */
+    public void removePlayerPanel(final PlayerView player) {
+        final VPlayerPanel panel = playerPanels.remove(player);
+        if (panel == null) {
+            return;
+        }
+        panel.setVisible(false);
+        playerPanelsList.remove(panel);
+        scroller.remove(panel);
+        scroller.revalidate();
+    }
+
     @Override
     public void onClose(Consumer<Boolean> canCloseCallback) {
         MatchController.writeMatchPreferences();

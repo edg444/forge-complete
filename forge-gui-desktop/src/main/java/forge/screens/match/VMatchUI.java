@@ -107,7 +107,7 @@ public class VMatchUI implements IVTopLevelUI {
      * then restores base field cells to full width.
      * Idempotent — safe to call when no dynamic state exists.
      */
-    private void cleanupDynamicCells() {
+    void cleanupDynamicCells() {
         final DragCell c0 = lstFields.get(0).getParentCell();
         final DragCell c1 = lstFields.get(1).getParentCell();
 

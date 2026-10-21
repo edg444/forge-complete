@@ -309,6 +309,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Interplanar Brushwagg: the interplanar zone leaves the screen when empty, and replays no longer freeze.** Once
+  nothing is left on the interplanar battlefield (checked with state-based actions) `Game.retireEmptyInterplanarZone`
+  fires new `GameEventPlayerRemoved`, and both UIs take its place off the screen (`IGuiGame.removePlayerView`: mobile
+  `MatchScreen.removePlayerPanel`, desktop `CMatchUI.removePlayerView` taking the field and hand out of their cells
+  the way `register()` clears unused docs); it comes back if something interplanar enters again. The replay freeze
+  (phone log: `Could not resolve IdRef(tag=1, id=1000)` then an NPE in `MatchController.getPlayerAvatar`): the
+  stand-in player is in no player list, so state sync - what replays and netplay clients get - never sent it, and the
+  recorded "player added" event named a player the client didn't have. New GameView property `UnseatedPlayers`
+  (appended last, so recorded property numbers don't shift) makes the delta walk reach it and its battlefield
+  (`DeltaSyncManager.preScanZoneCollections` covers it too); `FControlGameEventHandler` skips add/remove events for a
+  player the client doesn't know, so replays recorded before this fix play on (without the interplanar field).
 - **Throw animations for the funny cards that throw** (upstream's mobile Chaos Orb / Falling Star animation, #12183).
   `GameEventFlipOntoBattlefield` gained a `TossStyle` (5-arg constructor kept for upstream calls); the mobile
   `FlipOntoBattlefieldAnimation` draws a torn quarter of the card (Chaos Confetti, FlipOntoBattlefield `Pieces$`), a

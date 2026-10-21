@@ -362,6 +362,15 @@ public class MatchController extends NetworkGuiGame {
     }
 
     @Override
+    public void removePlayerView(final PlayerView player) {
+        FThreads.invokeInEdtLater(() -> {
+            if (view != null) {
+                view.removePlayerPanel(player);
+            }
+        });
+    }
+
+    @Override
     public void showFlipOntoBattlefield(CardView flipped, CardView target, List<CardView> hit, List<CardView> battlefield, int timesFlipped) {
         showFlipOntoBattlefield(flipped, target, hit, battlefield, timesFlipped, forge.game.event.TossStyle.CARD);
     }

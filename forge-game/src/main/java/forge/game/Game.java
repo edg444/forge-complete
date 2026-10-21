@@ -520,10 +520,36 @@ public class Game {
             pl.setOutsideRegistration(new RegisteredPlayer(new Deck()).setPlayer(lobbyPlayer));
             playerCache.put(pl);
             interplanarPlayer = pl;
-            final Player seat = getPhaseHandler().getPlayerTurn() != null ? getPhaseHandler().getPlayerTurn() : ingamePlayers.getFirst();
-            fireEvent(new GameEventPlayerAdded(pl, seat));
+        }
+        if (!interplanarShown) {
+            showInterplanarZone();
         }
         return interplanarPlayer;
+    }
+
+    // whether the interplanar battlefield has a place on the match screen right now
+    private boolean interplanarShown = false;
+
+    private void showInterplanarZone() {
+        interplanarShown = true;
+        // on the view before the event, so state sync (netplay, replays) carries the player the event names
+        view.updateUnseatedPlayers(java.util.List.of(interplanarPlayer));
+        final Player seat = getPhaseHandler().getPlayerTurn() != null ? getPhaseHandler().getPlayerTurn() : ingamePlayers.getFirst();
+        fireEvent(new GameEventPlayerAdded(interplanarPlayer, seat));
+    }
+
+    /**
+     * Once nothing is left on the interplanar battlefield it comes off the match screen, the way a defeated player
+     * in a multiplayer game does; it comes back if something interplanar enters again. Checked with state-based
+     * actions, so it doesn't matter how the last card left.
+     */
+    public void retireEmptyInterplanarZone() {
+        if (interplanarPlayer == null || !interplanarShown || !interplanarPlayer.getZone(ZoneType.Battlefield).isEmpty()) {
+            return;
+        }
+        interplanarShown = false;
+        view.updateUnseatedPlayers(java.util.List.of());
+        fireEvent(new forge.game.event.GameEventPlayerRemoved(PlayerView.get(interplanarPlayer)));
     }
     public Player getInterplanarPlayerIfAny() {
         return interplanarPlayer;

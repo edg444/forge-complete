@@ -126,4 +126,47 @@ public class InterplanarBrushwaggTest extends AITest {
         runTurn(game, ai);
         AssertJUnit.assertEquals(17, opp.getLife());
     }
+
+    public static final class ScreenEvents {
+        final java.util.List<String> seen = new java.util.ArrayList<>();
+        @com.google.common.eventbus.Subscribe
+        public void added(final forge.game.event.GameEventPlayerAdded ev) { seen.add("added " + ev.player().getId()); }
+        @com.google.common.eventbus.Subscribe
+        public void removed(final forge.game.event.GameEventPlayerRemoved ev) { seen.add("removed " + ev.player().getId()); }
+    }
+
+    @Test
+    public void theZoneLeavesTheScreenWhenEmptyAndComesBack() {
+        Game game = initAndCreateGame();
+        Player opp = game.getPlayers().get(0);
+        Player ai = game.getPlayers().get(1);
+        ScreenEvents ev = new ScreenEvents();
+        game.subscribeToEvents(ev);
+        Card wagg = cast(game, ai, addCardToZone("Interplanar Brushwagg", ai, ZoneType.Hand), null);
+        final int id = wagg.getController().getId();
+        AssertJUnit.assertEquals(java.util.List.of("added " + id), ev.seen);
+        AssertJUnit.assertEquals(1, game.getView().getUnseatedPlayers().size());
+
+        addCards("Plains", 4, opp);
+        cast(game, opp, addCardToZone("Wrath of God", opp, ZoneType.Hand), null);
+        AssertJUnit.assertEquals(java.util.List.of("added " + id, "removed " + id), ev.seen);
+        AssertJUnit.assertTrue(game.getView().getUnseatedPlayers().isEmpty());
+
+        cast(game, ai, addCardToZone("Interplanar Brushwagg", ai, ZoneType.Hand), null);
+        AssertJUnit.assertEquals(java.util.List.of("added " + id, "removed " + id, "added " + id), ev.seen);
+    }
+
+    @Test
+    public void stateSyncCarriesTheInterplanarBattlefield() {
+        // what a netplay client or a replay receives: the stand-in and its battlefield, so the "player added" event
+        // names someone the client knows (the replay froze adding a place for an unknown player)
+        Game game = initAndCreateGame();
+        Player ai = game.getPlayers().get(1);
+        Card wagg = cast(game, ai, addCardToZone("Interplanar Brushwagg", ai, ZoneType.Hand), null);
+        forge.gamemodes.net.DeltaPacket packet = new forge.gamemodes.net.server.DeltaSyncManager().collectDeltas(game.getView());
+        AssertJUnit.assertTrue("the stand-in", packet.getNewObjects().containsKey(
+                forge.gamemodes.net.DeltaPacket.makeDeltaKey(wagg.getController().getView())));
+        AssertJUnit.assertTrue("the Brushwagg on its battlefield", packet.getNewObjects().containsKey(
+                forge.gamemodes.net.DeltaPacket.makeDeltaKey(wagg.getView())));
+    }
 }

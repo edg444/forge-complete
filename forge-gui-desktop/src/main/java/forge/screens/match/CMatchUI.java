@@ -461,6 +461,58 @@ public final class CMatchUI
         });
     }
 
+    @Override
+    public void removePlayerView(final PlayerView player) {
+        FThreads.invokeInEdtNowOrLater(() -> {
+            if (sortedPlayers == null || !sortedPlayers.contains(player)) {
+                return;
+            }
+            // extra fields come out of their cells first, the way the layout clears them before re-placing them
+            if (view.getFieldViews().size() > 2) {
+                view.cleanupDynamicCells();
+            }
+            final List<VField> fields = new ArrayList<>(view.getFieldViews());
+            for (final VField field : view.getFieldViews()) {
+                if (player.equals(field.getPlayer())) {
+                    takeOutOfCell(field);
+                    fields.remove(field);
+                    myDocs.remove(field.getDocumentID());
+                }
+            }
+            view.setFieldViews(fields);
+            final List<VHand> hands = new ArrayList<>(view.getHands());
+            for (final VHand hand : view.getHands()) {
+                if (player.equals(hand.getPlayer())) {
+                    takeOutOfCell(hand);
+                    hands.remove(hand);
+                    myDocs.remove(hand.getDocumentID());
+                }
+            }
+            view.setHandViews(hands);
+            final FCollection<PlayerView> players = new FCollection<>(sortedPlayers);
+            players.remove(player);
+            sortedPlayers = players;
+
+            registerDocs();
+            view.populate();
+            view.relayoutMultiplayerFields();
+            refreshAllViews();
+        });
+    }
+
+    // as register() does for a match's unused docs: out of its cell, and the doc ID left holding an empty doc
+    private static void takeOutOfCell(final IVDoc<? extends ICDoc> doc) {
+        final DragCell parent = doc.getParentCell();
+        if (parent != null) {
+            parent.removeDoc(doc);
+            doc.setParentCell(null);
+            if (!parent.getDocs().isEmpty()) {
+                parent.setSelected(parent.getDocs().get(0));
+            }
+        }
+        doc.getDocumentID().setDoc(new VEmptyDoc(doc.getDocumentID()));
+    }
+
     private void initHandViews() {
         final List<VHand> hands = new ArrayList<>();
         final Iterable<PlayerView> localPlayers = getLocalPlayers();

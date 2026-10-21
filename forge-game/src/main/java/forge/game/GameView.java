@@ -69,6 +69,14 @@ public class GameView extends TrackableObject {
         set(TrackableProperty.Players, PlayerView.getCollection(game.getPlayers()));
     }
 
+    /** Interplanar Brushwagg's stand-in, while its battlefield is shown: not a player, but its view has to be synced. */
+    public FCollectionView<PlayerView> getUnseatedPlayers() {
+        return get(TrackableProperty.UnseatedPlayers);
+    }
+    public void updateUnseatedPlayers(final Iterable<forge.game.player.Player> unseated) {
+        set(TrackableProperty.UnseatedPlayers, PlayerView.getCollection(unseated));
+    }
+
     public String getTitle() {
         return get(TrackableProperty.Title);
     }

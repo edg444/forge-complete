@@ -289,7 +289,18 @@ public class FControlGameEventHandler extends IGameEventVisitor.Base<Void> {
 
     @Override
     public Void visit(final GameEventPlayerAdded ev) {
-        matchController.addPlayerView(ev.player(), ev.seatedAfter());
+        // a client (netplay, a replay) that was never sent this player can't give them a place
+        if (ev.player() != null && ev.seatedAfter() != null) {
+            matchController.addPlayerView(ev.player(), ev.seatedAfter());
+        }
+        return null;
+    }
+
+    @Override
+    public Void visit(final forge.game.event.GameEventPlayerRemoved ev) {
+        if (ev.player() != null) {
+            matchController.removePlayerView(ev.player());
+        }
         return null;
     }
 

@@ -93,6 +93,8 @@ public interface IGuiGame {
     default void showCoinFlip(boolean heads, String caption, boolean waitForTap) {}
     /** A player joined the game in progress (Better Than One), seated after seatedAfter - give them a place on screen. */
     default void addPlayerView(PlayerView player, PlayerView seatedAfter) {}
+    /** Fork: the opposite of addPlayerView (Interplanar Brushwagg's emptied interplanar battlefield). */
+    default void removePlayerView(PlayerView player) {}
 
     default void showFlipOntoBattlefield(CardView flipped, CardView target, List<CardView> hit, List<CardView> battlefield, int timesFlipped) {}
     /** Fork: a throw drawn in a TossStyle (a torn piece, a die, a toss in place); a plain card throw otherwise. */
