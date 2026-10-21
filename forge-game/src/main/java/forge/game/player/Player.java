@@ -3055,6 +3055,16 @@ public class Player extends GameEntity implements Comparable<Player> {
     // match notes for a player outside any match (tests, puzzles) last as long as the game
     private final Map<String, Object> gameOnlyNotes = Maps.newHashMap();
 
+    // Pledge (Guildmark): the two-colored guild this player joined this game, or null
+    private String guild = null;
+
+    public String getGuild() {
+        return guild;
+    }
+    public void setGuild(final String guild0) {
+        guild = guild0;
+    }
+
     /** Something this player settled for the whole match, or null. */
     public Object getMatchNote(final String key) {
         if (game.getMatch() == null || getRegisteredPlayer() == null) {

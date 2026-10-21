@@ -1,0 +1,8 @@
+Name:Guildmark
+ManaCost:2
+Types:Artifact
+# Pledging happens as it enters: the guild is its controller's for the rest of the game.
+K:ETBReplacement:Other:DBPledge
+SVar:DBPledge:DB$ Pledge | Defined$ You | SpellDescription$ Pledge (Join a two-colored guild if you haven't already this game.)
+A:AB$ Mana | Cost$ T | Produced$ Combo GuildColors | SpellDescription$ Add one mana of your guild's colors.
+Oracle:Pledge (Join a two-colored guild if you haven't already this game.)\n{T}: Add one mana of your guild's colors.

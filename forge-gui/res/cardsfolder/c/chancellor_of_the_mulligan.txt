@@ -1,0 +1,23 @@
+Name:Chancellor of the Mulligan
+ManaCost:7
+Types:Artifact Creature Phyrexian Construct
+PT:7/7
+K:MayEffectFromOpeningHand:RevealCard
+SVar:RevealCard:DB$ Reveal | RevealDefined$ Self | SubAbility$ ShuffleOnUpkeep | SpellDescription$ You may reveal this card from your opening hand. If you do, at the beginning of the first upkeep, shuffle it into your library and draw a card.
+SVar:ShuffleOnUpkeep:DB$ Effect | Triggers$ TrigShuffle
+SVar:TrigShuffle:Mode$ Phase | Phase$ Upkeep | Execute$ DBShuffle | OneOff$ True | TriggerDescription$ At the beginning of the first upkeep, shuffle it into your library and draw a card.
+SVar:DBShuffle:DB$ ChangeZone | Defined$ EffectSource | Origin$ Hand | Destination$ Library | Shuffle$ True | SubAbility$ DBDraw
+SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1
+K:Menace
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When CARDNAME enters the battlefield, draw three cards. When you do, any number of target players mulligan. (They shuffle their hand into their library, then draw that many cards and put one of them on the bottom of their library.)
+SVar:TrigDraw:DB$ Draw | NumCards$ 3 | SubAbility$ DBImmediate
+SVar:DBImmediate:DB$ ImmediateTrigger | Execute$ TrigMulligan | TriggerDescription$ When you do, any number of target players mulligan.
+SVar:TrigMulligan:DB$ RepeatEach | ValidTgts$ Player | TargetMin$ 0 | TargetMax$ MaxTgts | TgtPrompt$ Select any number of target players to mulligan | RepeatPlayers$ Targeted | RepeatSubAbility$ DBMulligan | AILogic$ OpponentOnly
+SVar:DBMulligan:DB$ StoreSVar | SVar$ HandSize | Type$ CountSVar | Expression$ InHand | SubAbility$ DBShuffleHand
+SVar:DBShuffleHand:DB$ ChangeZoneAll | ChangeType$ Card.RememberedPlayerOwn | Origin$ Hand | Destination$ Library | Shuffle$ True | SubAbility$ DBRedraw
+SVar:DBRedraw:DB$ Draw | Defined$ Remembered | NumCards$ HandSize | SubAbility$ DBBottom
+SVar:DBBottom:DB$ ChangeZone | DefinedPlayer$ Remembered | Origin$ Hand | Destination$ Library | LibraryPosition$ -1 | ChangeType$ Card | ChangeNum$ 1 | Chooser$ Remembered | Mandatory$ True | Hidden$ True | ConditionCheckSVar$ HandSize | ConditionSVarCompare$ GE1
+SVar:HandSize:Number$0
+SVar:InHand:Count$ValidHand Card.RememberedPlayerOwn
+SVar:MaxTgts:PlayerCountPlayers$Amount
+Oracle:You may reveal this card from your opening hand. If you do, at the beginning of the first upkeep, shuffle it into your library and draw a card.\nMenace\nWhen Chancellor of the Mulligan enters the battlefield, draw three cards. When you do, any number of target players mulligan. (They shuffle their hand into their library, then draw that many cards and put one of them on the bottom of their library.)

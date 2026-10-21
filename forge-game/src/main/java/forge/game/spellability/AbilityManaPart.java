@@ -707,6 +707,19 @@ public class AbilityManaPart implements java.io.Serializable {
             String str = sa.getHostCard().getMarkedColors().stream().map(c -> c.getShortName()).collect(Collectors.joining(" "));
             origProduced = origProduced.replace("ColorID", str);
         }
+        // Guildmark: the colors of the guild its activator joined (none before they've pledged)
+        if (origProduced.contains("GuildColors")) {
+            final String guild = sa.getActivatingPlayer() == null ? null : sa.getActivatingPlayer().getGuild();
+            final String colors = guild == null ? null : forge.game.ability.effects.PledgeEffect.GUILDS.get(guild);
+            if (colors == null) {
+                return "";
+            }
+            final StringBuilder sb = new StringBuilder();
+            for (final String color : colors.split(" ")) {
+                sb.append(MagicColor.toShortString(color)).append(' ');
+            }
+            origProduced = origProduced.replace("GuildColors", sb.toString().trim());
+        }
         if (origProduced.contains("NotedColors")) {
             // Should only be used for Paliano, the High City
             if (sa.getActivatingPlayer() == null) {

@@ -1,0 +1,15 @@
+Name:Seer of the Bright Side
+ManaCost:1 B
+Types:Creature Human Assassin
+PT:4/4
+K:etbCounter:CAGE:2
+S:Mode$ CantAttack,CantBlock | ValidCard$ Card.Self+counters_GE1_CAGE | Description$ This creature can't attack or block as long as it has a cage counter on it.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigRemove | TriggerDescription$ At the beginning of your upkeep, remove a cage counter from this creature. When the last cage counter is removed this way, destroy target creature an opponent controls.
+SVar:TrigRemove:DB$ RemoveCounter | Defined$ Self | CounterType$ CAGE | CounterNum$ 1 | RememberRemoved$ True | SubAbility$ DBLast
+SVar:DBLast:DB$ ImmediateTrigger | Execute$ TrigDestroy | ConditionCheckSVar$ Last | ConditionSVarCompare$ GE1 | SubAbility$ DBCleanup | TriggerDescription$ When the last cage counter is removed this way, destroy target creature an opponent controls.
+SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:Last:SVar$Removed/Minus.Left
+SVar:Removed:Count$RememberedSize
+SVar:Left:Count$CardCounters.CAGE
+Oracle:This creature enters with two cage counters on it.\nThis creature can't attack or block as long as it has a cage counter on it.\nAt the beginning of your upkeep, remove a cage counter from this creature. When the last cage counter is removed this way, destroy target creature an opponent controls.

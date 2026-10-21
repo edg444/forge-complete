@@ -120,6 +120,10 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
                     || si.getSourceCard().hasKeyword(Keyword.JUST_A_SECOND))) {
                 return true;
             }
+            // Trampled Lotus: an ability with "splitter second"
+            if (!si.isSpell() && si.getSpellAbility() != null && si.getSpellAbility().hasParam("SplitSecond")) {
+                return true;
+            }
         }
         return false;
     }

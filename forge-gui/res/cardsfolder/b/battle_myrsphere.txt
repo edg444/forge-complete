@@ -1,0 +1,15 @@
+Name:Battle Myrsphere
+ManaCost:7
+Types:Artifact Creature Phyrexian Myr
+PT:4/7
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDig | TriggerDescription$ When CARDNAME enters the battlefield, reveal cards from the top of your library until you reveal a battle card. Put it onto the battlefield, and the rest on the bottom of your library in a random order.
+SVar:TrigDig:DB$ DigUntil | Valid$ Card.Battle | ValidDescription$ battle | FoundDestination$ Battlefield | RevealedDestination$ Library | RevealedLibraryPosition$ -1 | RevealRandomOrder$ True
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigTap | TriggerDescription$ Whenever CARDNAME attacks, you may tap X untapped battles you control (so they're oriented like a regular Magic card). If you do, CARDNAME gets +X/+0 until end of turn and deals X damage to the player or permanent.
+SVar:TrigTap:DB$ ChooseCard | Defined$ You | Choices$ Battle.untapped+YouCtrl | MinAmount$ 0 | Amount$ Battles | ChoiceTitle$ Choose any number of untapped battles you control to tap | AILogic$ AtLeast1 | SubAbility$ DBTap
+SVar:DBTap:DB$ TapAll | ValidCards$ Card.ChosenCard | RememberTapped$ True | SubAbility$ DBPump
+SVar:DBPump:DB$ Pump | Defined$ Self | NumAtt$ +X | ConditionCheckSVar$ X | ConditionSVarCompare$ GE1 | SubAbility$ DBDamage
+SVar:DBDamage:DB$ DealDamage | Defined$ TriggeredDefender | NumDmg$ X | ConditionCheckSVar$ X | ConditionSVarCompare$ GE1 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
+SVar:Battles:Count$Valid Battle.untapped+YouCtrl
+SVar:X:Count$RememberedSize
+Oracle:When Battle Myrsphere enters the battlefield, reveal cards from the top of your library until you reveal a battle card. Put it onto the battlefield, and the rest on the bottom of your library in a random order.\nWhenever Battle Myrsphere attacks, you may tap X untapped battles you control (so they're oriented like a regular Magic card). If you do, Battle Myrsphere gets +X/+0 until end of turn and deals X damage to the player or permanent.

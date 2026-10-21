@@ -312,6 +312,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Colorless Ultimatum, Battle Myrsphere, Chancellor of the Mulligan, Wurmcoil Broodmother, Mindslaver
+  Toolkit, Guildmark, Trampled Lotus, Seer of the Bright Side (UNK RA07-RB02).**
+  - **Pledge:** new `Pledge` effect; a player joins one of the ten guilds for the rest of the game, and mana can be
+    `Produced$ Combo GuildColors`. The AI joins the guild its deck's colors favor.
+  - **Tapping opponents' lands:** new `TapForMana` effect; you get one mana of a color each land could make.
+  - **Split second on abilities:** an ability with `SplitSecond$ True` ("splitter second") stops responses like a
+    split second spell.
 - **Unknown Event: Goblin Savant, Jitte and Divining Top, Bob the Claymore, Phyrexian Incubator, The Mysterious Sphere,
   Oilskelion, Winter's Demonmech, Chandra's Dragonmech, Platinum Persecutor (UNK RA02a-RA06a).**
   - New property `backFaceType<Type>` (a double-faced card whose back face has the type).

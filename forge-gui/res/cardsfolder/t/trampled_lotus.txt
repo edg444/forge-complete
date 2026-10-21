@@ -1,0 +1,5 @@
+Name:Trampled Lotus
+ManaCost:2
+Types:Artifact
+A:AB$ TapForMana | Cost$ T Sac<1/CARDNAME> | ValidCards$ Land.OppCtrl | Amount$ 3 | SplitSecond$ True | SpellDescription$ Tap up to three lands your opponents control for mana. This ability has splitter second. (It can't be responded to. By, like, anything.)
+Oracle:{T}, Sacrifice Trampled Lotus: Tap up to three lands your opponents control for mana. This ability has splitter second. (It can't be responded to. By, like, anything.)
