@@ -1,0 +1,11 @@
+Name:Questionable Cuisine
+ManaCost:3 B
+Types:Sorcery
+# The trash cans are counted by the caster from their seat (honor system; only ones native to the room whose main
+# purpose is storing garbage). The AI has no room to look around, so a simulated one (AILogic$ TrashCans).
+A:SP$ ChangeZone | ValidTgts$ Creature.YouOwn | TgtZone$ Graveyard | TargetMin$ 0 | TargetMax$ 2 | TgtPrompt$ Select up to two target creature cards in your graveyard | Origin$ Graveyard | Destination$ Hand | SubAbility$ DBTrashCans | SpellDescription$ Return up to two target creature cards from your graveyard to your hand. Create a Food token for each trash can you can see from your seat. (It's an artifact with "{2}, {T}, Sacrifice this token: You gain 3 life.")
+SVar:DBTrashCans:DB$ ChooseNumber | Defined$ You | Min$ 0 | Max$ 99 | ListTitle$ How many trash cans can you see from your seat? (Ones native to the room whose main purpose is storing garbage - not a bag by itself.) | AILogic$ TrashCans | SubAbility$ DBFood
+SVar:DBFood:DB$ Token | TokenAmount$ X | TokenScript$ c_a_food_sac | TokenOwner$ You
+SVar:X:Count$ChosenNumber
+DeckHas:Ability$Token|LifeGain & Type$Food|Artifact
+Oracle:Return up to two target creature cards from your graveyard to your hand. Create a Food token for each trash can you can see from your seat. (It's an artifact with "{2}, {T}, Sacrifice this token: You gain 3 life.")

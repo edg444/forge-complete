@@ -47,6 +47,8 @@ import java.util.function.Predicate;
  * @since 1.0.15
  */
 public class SpellAbilityCondition extends SpellAbilityVariables {
+    private String playerNotContains = null;
+
     // A class for handling SpellAbility Conditions. These restrictions include:
     // Zone, Phase, OwnTurn, Speed (instant/sorcery), Amount per Turn, Player,
     // Threshold, Metalcraft, LevelRange, etc
@@ -190,6 +192,9 @@ public class SpellAbilityCondition extends SpellAbilityVariables {
             this.setPlayerDefined(params.get("ConditionPlayerDefined"));
         }
 
+        if (params.containsKey("ConditionPlayerNotContains")) {
+            this.playerNotContains = params.get("ConditionPlayerNotContains");
+        }
         if (params.containsKey("ConditionPlayerContains")) {
             this.setPlayerContains(params.get("ConditionPlayerContains"));
         }
@@ -399,6 +404,17 @@ public class SpellAbilityCondition extends SpellAbilityVariables {
 
             if (!Expressions.compare(left, this.getPresentCompare2(), right)) {
                 return false;
+            }
+        }
+
+        // Exit Through the Grift Shop's "if you didn't win the bid": none of these players is among the defined ones
+        if (this.playerNotContains != null) {
+            final List<Player> list = this.getPlayerDefined() == null ? new ArrayList<>()
+                    : AbilityUtils.getDefinedPlayers(host, this.getPlayerDefined(), sa);
+            for (final Player p : AbilityUtils.getDefinedPlayers(host, this.playerNotContains, sa)) {
+                if (list.contains(p)) {
+                    return false;
+                }
             }
         }
 

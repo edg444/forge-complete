@@ -2738,6 +2738,35 @@ public class ComputerUtil {
                 chosen = "Island";
             }
         }
+        else if (kindOfType.equals("word") && "OwnSpellsRulesText".equals(logic)) {
+            // Nocturno of Myra's Marvels: the word (five letters or more) in the rules text of the most nonland cards
+            // it has yet to play - counted once per card
+            final Map<String, Integer> counts = Maps.newHashMap();
+            for (final Card c : ai.getAllCards()) {
+                if (c.isLand() || c.isInPlay()) {
+                    continue;
+                }
+                final java.util.Set<String> words = new java.util.HashSet<>();
+                for (final String w : c.getTextBoxOracle().replaceAll("\\([^)]*\\)", " ").toLowerCase().split("[^a-z]+")) {
+                    if (w.length() >= 5) {
+                        words.add(w);
+                    }
+                }
+                for (final String w : words) {
+                    counts.merge(w, 1, Integer::sum);
+                }
+            }
+            int best = 0;
+            for (final Map.Entry<String, Integer> e : counts.entrySet()) {
+                if (e.getValue() > best) {
+                    best = e.getValue();
+                    chosen = e.getKey();
+                }
+            }
+            if (StringUtils.isEmpty(chosen)) {
+                chosen = "creature";
+            }
+        }
         else if (kindOfType.equals("word") && "Random".equals(logic) && !validTypes.isEmpty()) {
             // Hangman: any word from the list is as good as another, as long as it can't be predicted
             chosen = Aggregates.random(validTypes);
@@ -2814,6 +2843,20 @@ public class ComputerUtil {
                     if (e.getValue() > best) {
                         best = e.getValue();
                         chosen = e.getKey();
+                    }
+                }
+            }
+            // Gray Merchant of Alphabet: the letter in the names of the most creatures it controls
+            if ("MostOwnCreatureNamesContaining".equals(logic)) {
+                int best = 0;
+                for (final String letter : validTypes) {
+                    int n = 0;
+                    for (final Card c : ai.getCreaturesInPlay()) {
+                        n += c.getDisplayName().toUpperCase().contains(letter) ? 1 : 0;
+                    }
+                    if (n > best) {
+                        best = n;
+                        chosen = letter;
                     }
                 }
             }

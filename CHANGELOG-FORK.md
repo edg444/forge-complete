@@ -312,6 +312,65 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Rat in the Hat (UNF #86).** Its target can be any creature card, as with Park Re-Entry.
+  - A known or claimed hat counts at once. Otherwise you're asked as it resolves; with no hat, the card can't be cast.
+  - **AI:** it targets only known hats (`AITgts$`).
+- **Unfinity: Questionable Cuisine (UNF #84).** One Food per trash can you can see from your seat (honor system).
+  - **AI:** it simulates a room (ChooseNumber `TrashCans`: usually one, sometimes none or two, rarely three).
+- **Unfinity: Photo Op (UNF #83).** Honor system: the posing picture is posted outside Forge before the game.
+  - If a reply guessed, you name that card and put a copy you own from outside the game into your hand (`MakeCard`).
+    Photo Op exiles itself either way.
+  - **AI:** it doesn't post pictures, so it never casts this.
+- **Unfinity: Nocturno of Myra's Marvels (UNF #82).** You choose a word of five or more letters (Rings a Bell's
+  `ChooseType`).
+  - New card property, `rulesTextHasChosenWord`: the exact word, so "attacks" isn't "attack" (rulings). It reads the
+    rules text the way Kindly Cognician does, without reminder text, name or flavor text.
+  - **AI:** new word logic, `OwnSpellsRulesText`, picks the word in the rules text of the most nonland cards it has yet
+    to play.
+- **Unfinity: Knife and Death (UNF #77).** It has Just a second (the existing keyword, as split second) and a new
+  `ThrowCards` effect.
+  - **User ruling:** throws are aimed. Each of the ten cards is aimed at a creature or planeswalker you don't control
+    and lands touching it half the time, shown with the dexterity throw animation.
+  - Damage is assessed after the tenth throw, 1 per card touching (rulings), and you gain that much life.
+  - **AI:** it aims at the best opposing permanent that a few hits could finish (`ThrowCardsAi`).
+- **Unfinity: Haberthrasher (UNF #76).** A creature with a known or claimed hat (`Card.HasHat`) drains at once.
+  - **User ruling:** otherwise you're asked whether the creature has a hat. For any art sticker put on a creature you
+    control, you're asked whether it was a hat, wig or headband sticker, since Forge's art stickers don't record what
+    they show.
+  - **AI:** it counts only known hats.
+- **Unfinity: Gray Merchant of Alphabet (UNF #75).** One life per creature with the chosen letter anywhere in its
+  name, however often it appears (rulings). New card property, `nameHasChosenLetter`.
+  - **AI:** new letter logic, `MostOwnCreatureNamesContaining`.
+- **Unfinity: Exit Through the Grift Shop (UNF #74).** You announce a nonland card in your graveyard; everyone bids
+  life (`BidLife`, starting at 0).
+  - The winner pays, then may cast a free copy (`Play | CopyCard$ | Controller$ Remembered`).
+  - If you didn't win, you gain the bid and that many Treasures. That uses a new condition,
+    `ConditionPlayerNotContains$`.
+- **Unfinity: Animate Graveyard (UNF #65).** It works the way Animate Library does.
+  - The Aura spell (`AnimateGraveyard`) makes your graveyard a permanent, a new `GamePieceType.GRAVEYARD`, and enters
+    attached to it. It's a creature with no name, color or creature types (rulings).
+  - Its base P/T equals the number of cards in it, and it has the text boxes of the creature cards in it
+    (`GainsTextBoxOf`).
+  - It's still a graveyard: cards still go there, and they aren't on the battlefield (rulings).
+  - It never enters or leaves. If it would leave, the Aura is exiled instead, and nothing dies. If another player gains
+    control of it, the Aura falls off (`YouOwn+YouCtrl`).
+  - **AI:** it casts this with at least four cards in its graveyard.
+- **Unfinity: Disemvowel (UNF #71).** Destroy, then the controller loses 1 life per unique vowel in the creature's
+  name (Y counts). New count, `Count$UniqueVowelsInName.<Defined>`.
+- **Unfinity: Treacherous Trapezist (UNF #60).** New card property, `Alliterative`: two or more capitalized words in
+  the name begin with the same letter. The same word twice counts, and sounds don't matter (rulings).
+- **Unfinity: Super-Duper Lost (UNF #59).** X is the number of doors you can see from your seat (honor system).
+  - **AI:** it simulates a room (ChooseNumber `Doors`: 0, 1, 2 or 3 doors), the same approach as Now You See Me's
+    mirrors, and targets the opponent's best creature.
+  - **Engine fix:** a ChooseNumber that targets a creature still has its `Defined$` chooser. It used to ask only
+    targeted players, so nobody chose.
+- **Unfinity: Mobile Clone (UNF #51).** New effect, `Photocopy`: a token photocopy of the printed creature, so copy
+  effects don't show in the picture (rulings). Everything in the shot is part of the copy and copiable:
+  - the P/T its counters give, and its keyword counters, as intrinsic keywords;
+  - its stickers;
+  - the statics and triggers of the Auras and Equipment on it. Their "enchanted/equipped creature" now means the
+    photocopy itself, so Bonesplitter's +2/+0 and a Pacifism come along.
+  - **Known gap:** other counters, such as stun or shield, aren't in the picture yet.
 - **Unfinity: Phone a Friend (UNF #55).** A Charm with a new `PhoneAFriend$` option (`CharmEffect.phoneAFriend`).
   - A person calls someone real and enters which legal mode they picked, or that nobody answered (honor system).
     Only legal modes can be picked (rulings).

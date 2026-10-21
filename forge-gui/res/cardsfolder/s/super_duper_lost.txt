@@ -1,0 +1,9 @@
+Name:Super-Duper Lost
+ManaCost:4 U
+Types:Instant
+# The doors are counted by the caster from their seat (honor system; doors built into walls only). The AI has no room to
+# look around, so a simulated one: usually a door or two (AILogic$ Doors).
+A:SP$ ChooseNumber | ValidTgts$ Creature | TgtPrompt$ Select target creature | Defined$ You | Min$ 0 | Max$ 99 | ListTitle$ How many doors can you see from your seat? (Doors built into walls - not cabinet or car doors.) | AILogic$ Doors | SubAbility$ DBTuck | SpellDescription$ Put target creature into its owner's library just beneath the top X cards of that library, where X is the number of doors you can see from your seat.
+SVar:DBTuck:DB$ ChangeZone | Defined$ Targeted | Origin$ Battlefield | Destination$ Library | LibraryPosition$ X
+SVar:X:Count$ChosenNumber
+Oracle:Put target creature into its owner's library just beneath the top X cards of that library, where X is the number of doors you can see from your seat.

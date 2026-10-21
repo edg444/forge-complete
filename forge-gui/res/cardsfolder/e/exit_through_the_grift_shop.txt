@@ -1,0 +1,15 @@
+Name:Exit Through the Grift Shop
+ManaCost:2 B
+Types:Sorcery
+# Every player can hear you. You start the bidding at 0; no one can bid more life than they have (rulings). The winner
+# casts the copy while this resolves, and a permanent copy enters as a token; stickers on the card aren't copied.
+A:SP$ ChooseCard | Defined$ You | Choices$ Card.nonLand+YouOwn | ChoiceZone$ Graveyard | ChoiceTitle$ Yell "Who wants a souvenir?" and announce the name of a nonland card in your graveyard | Mandatory$ True | AILogic$ AtLeast1 | SubAbility$ DBBid | SpellDescription$ Yell "Who wants a souvenir?" and announce the name of a nonland card in your graveyard. Each player in an Un-game who can hear you may bid life. You start the bidding at 0. The high bidder loses life equal to the high bid. They copy the card and may cast the copy without paying its mana cost. If you didn't win the bid, you gain life equal to the high bid and create that many Treasure tokens.
+SVar:DBBid:DB$ BidLife | AILogic$ Min | AIBidMax$ 6 | BidSubAbility$ DBLoseLife
+SVar:DBLoseLife:DB$ LoseLife | Defined$ Remembered | LifeAmount$ X | SubAbility$ DBCast
+SVar:DBCast:DB$ Play | Defined$ ChosenCard | CopyCard$ True | ValidSA$ Spell | WithoutManaCost$ True | Optional$ True | Controller$ Remembered | SubAbility$ DBGainLife
+SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ X | ConditionPlayerDefined$ Remembered | ConditionPlayerNotContains$ You | SubAbility$ DBTreasure
+SVar:DBTreasure:DB$ Token | TokenAmount$ X | TokenScript$ c_a_treasure_sac | TokenOwner$ You | ConditionPlayerDefined$ Remembered | ConditionPlayerNotContains$ You | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
+SVar:X:Count$ChosenNumber
+DeckHas:Ability$Token|LifeGain & Type$Treasure|Artifact
+Oracle:Yell "Who wants a souvenir?" and announce the name of a nonland card in your graveyard. Each player in an Un-game who can hear you may bid life. You start the bidding at 0. The high bidder loses life equal to the high bid. They copy the card and may cast the copy without paying its mana cost. If you didn't win the bid, you gain life equal to the high bid and create that many Treasure tokens.

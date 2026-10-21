@@ -7414,7 +7414,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         final IPaperCard pc = getPaperCard();
         // the printed border where Scryfall corrects the edition data: Steamflogger Boss is black-bordered
         // and Unstable's Contraptions and full-art basics are borderless, though their set is silver
-        final PrintingTraits.Traits t = pc == null || getGamePieceType() == GamePieceType.LIBRARY ? null
+        final PrintingTraits.Traits t = pc == null || getGamePieceType() == GamePieceType.LIBRARY
+                || getGamePieceType() == GamePieceType.GRAVEYARD ? null
                 : PrintingTraits.get(pc.getEdition(), pc.getCollectorNumber(), pc instanceof PaperToken);
         final CardEdition.BorderColor border = t != null && t.getBorder() != null ? t.getBorder() : borderColor();
         if (border == CardEdition.BorderColor.SILVER) {
@@ -7438,7 +7439,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
      */
     public CardEdition.BorderColor printedBorderColor() {
         // an animated library is a stack of cards, not a card with a border of its own
-        if (isFaceDown() || getGamePieceType() == GamePieceType.LIBRARY) {
+        if (isFaceDown() || getGamePieceType() == GamePieceType.LIBRARY || getGamePieceType() == GamePieceType.GRAVEYARD) {
             return null;
         }
         final PrintingTraits.Traits t = getPrintingTraits();

@@ -1,0 +1,11 @@
+Name:Knife and Death
+ManaCost:2 B B
+Types:Sorcery
+# no casting spells, activating abilities or moving permanents while it's on the stack (rulings), as split second
+K:Just a second
+# Aimed throws (user, 2026-10-21): each of the ten cards is aimed at a creature or planeswalker you don't control and
+# lands touching it half the time, with the throw animation. Damage is assessed after the tenth throw (ThrowCardsEffect).
+A:SP$ ThrowCards | Throws$ 10 | Aim$ Creature.YouDontCtrl,Planeswalker.YouDontCtrl | HitChance$ 50 | SubAbility$ DBGainLife | SpellDescription$ One at a time, throw ten cards you own from outside the game onto the playing area from a distance of at least three feet (about one meter). For each of those cards, CARDNAME deals 1 damage to each creature or planeswalker you don't control that card is touching. You gain life equal to the damage dealt this way.
+SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ Y
+SVar:Y:Count$TotalDamageDoneByThisTurn
+Oracle:Just a second (As long as this spell is on the stack, players can't move permanents.)\nOne at a time, throw ten cards you own from outside the game onto the playing area from a distance of at least three feet (about one meter). For each of those cards, Knife and Death deals 1 damage to each creature or planeswalker you don't control that card is touching. You gain life equal to the damage dealt this way.

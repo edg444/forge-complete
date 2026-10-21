@@ -59,6 +59,11 @@ public enum GamePieceType {
      */
     LIBRARY,
     /**
+     * A player's graveyard while Animate Graveyard makes it a creature on the battlefield - it's still a graveyard.
+     * Like the library, it just starts and stops being a permanent, without entering or leaving the battlefield.
+     */
+    GRAVEYARD,
+    /**
      * A player who has become a card (Form of the Approach of the Second Sun): a planeswalker card with no other
      * characteristics that exists only in its owner's library. Leaving that library, or that library being shuffled,
      * ends it - the player just stops being a card.

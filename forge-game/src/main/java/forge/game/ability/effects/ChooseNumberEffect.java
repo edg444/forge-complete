@@ -13,6 +13,7 @@ import forge.game.ability.SpellAbilityEffect;
 import forge.game.card.Card;
 import forge.game.card.CardFactoryUtil;
 import forge.game.player.Player;
+import forge.game.player.PlayerCollection;
 import forge.game.spellability.SpellAbility;
 import forge.util.Lang;
 import forge.util.Localizer;
@@ -58,7 +59,12 @@ public class ChooseNumberEffect extends SpellAbilityEffect {
         // may need future work to ensure chooser and guesser get same choices even in absence of RemoveChoices param
         List<Integer> choices = new ArrayList<>();
 
-        for (final Player p : getTargetPlayers(sa)) {
+        // a spell that targets something else still has its Defined$ chooser (Super-Duper Lost targets a creature)
+        PlayerCollection choosers = getTargetPlayers(sa);
+        if (choosers.isEmpty() && sa.usesTargeting()) {
+            choosers = getDefinedPlayersOrTargeted(sa);
+        }
+        for (final Player p : choosers) {
             if (!p.isInGame()) {
                 continue;
             }

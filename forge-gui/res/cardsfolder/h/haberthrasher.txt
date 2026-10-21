@@ -1,0 +1,18 @@
+Name:Haberthrasher
+ManaCost:1 B
+Types:Creature Human Hatificer Assassin
+PT:2/2
+K:Deathtouch
+# A hat Forge knows of (Card.HasHat) counts at once. Otherwise the controller is asked (user, 2026-10-21): "has" includes
+# a held hat, and Forge's art stickers don't record what they show, so whether one was a hat, wig or headband sticker
+# is asked too. The AI can't see the art, so it counts only known hats and no stickers.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.Other+YouCtrl | TriggerZones$ Battlefield | Execute$ TrigKnownHat | TriggerDescription$ Whenever another creature you control that has a hat enters or a hat sticker is put on a creature you control, each opponent loses 1 life.
+SVar:TrigKnownHat:DB$ LoseLife | Defined$ Opponent | LifeAmount$ 1 | ConditionDefined$ TriggeredCard | ConditionPresent$ Card.HasHat | SubAbility$ DBAskHat
+SVar:DBAskHat:DB$ GenericChoice | Defined$ You | Choices$ NoHat,HasHat | ShowCurrentCard$ TriggeredCard | ChoicePrompt$ Does the creature that entered have a hat? (One its art shows it with, worn or not, or a hat, wig or headband sticker. Not a space helmet, a hood or a face mask, and not a background character's.) | ConditionDefined$ TriggeredCard | ConditionPresent$ Card.HasHat | ConditionCompare$ EQ0
+SVar:NoHat:DB$ Pump | SpellDescription$ It doesn't have a hat
+SVar:HasHat:DB$ LoseLife | Defined$ Opponent | LifeAmount$ 1 | SpellDescription$ It has a hat
+T:Mode$ StickerPlaced | ValidCard$ Creature.YouCtrl | StickerKind$ Art | TriggerZones$ Battlefield | Execute$ TrigAskSticker | Secondary$ True | TriggerDescription$ Whenever another creature you control that has a hat enters or a hat sticker is put on a creature you control, each opponent loses 1 life.
+SVar:TrigAskSticker:DB$ GenericChoice | Defined$ You | Choices$ NotHatSticker,HatSticker | ChoicePrompt$ Was the art sticker just put on your creature a hat, wig or headband sticker?
+SVar:NotHatSticker:DB$ Pump | SpellDescription$ It wasn't a hat sticker
+SVar:HatSticker:DB$ LoseLife | Defined$ Opponent | LifeAmount$ 1 | SpellDescription$ It was a hat sticker
+Oracle:Deathtouch\nWhenever another creature you control that has a hat enters or a hat sticker is put on a creature you control, each opponent loses 1 life.

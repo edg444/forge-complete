@@ -437,9 +437,9 @@ public class GameAction {
             }
         }
 
-        // Animate Library: if the library permanent would still go somewhere once replacements have had their
-        // say, it doesn't - it just stops being a permanent and is a library again, never a card in a zone
-        if (c.getGamePieceType() == GamePieceType.LIBRARY && !toBattlefield) {
+        // Animate Library, Animate Graveyard: if the library or graveyard permanent would still go somewhere once
+        // replacements have had their say, it doesn't - it just stops being a permanent, never a card in a zone
+        if ((c.getGamePieceType() == GamePieceType.LIBRARY || c.getGamePieceType() == GamePieceType.GRAVEYARD) && !toBattlefield) {
             ceaseToExist(c, true);
             return c;
         }

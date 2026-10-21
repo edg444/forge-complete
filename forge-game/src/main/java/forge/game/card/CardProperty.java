@@ -267,6 +267,29 @@ public class CardProperty {
             if (letter.isEmpty() || initial == -1 || initial != Character.toUpperCase(letter.codePointAt(0))) {
                 return false;
             }
+        } else if (property.equals("nameHasChosenLetter")) {
+            // Gray Merchant of Alphabet: the chosen letter anywhere in the name, however many times (rulings)
+            final String letter = source.hasChosenType() ? source.getChosenType() : "";
+            if (letter.isEmpty() || !card.getDisplayName().toUpperCase().contains(letter.toUpperCase())) {
+                return false;
+            }
+        } else if (property.equals("Alliterative")) {
+            // Treacherous Trapezist: two or more capitalized words in the name begin with the same letter - the same
+            // word twice counts, and other words don't matter (rulings). Words are what spaces separate, as for Busted!
+            final java.util.Set<Character> initials = new java.util.HashSet<>();
+            boolean alliterative = false;
+            for (final String word : card.getDisplayName().split("\\s+")) {
+                for (int i = 0; i < word.length(); i++) {
+                    final char ch = word.charAt(i);
+                    if (Character.isLetter(ch)) {
+                        alliterative |= Character.isUpperCase(ch) && !initials.add(ch);
+                        break;
+                    }
+                }
+            }
+            if (!alliterative) {
+                return false;
+            }
         } else if (property.equals("firstWordHasChosenLetter")) {
             // Decisions, Decisions: the chosen letter anywhere in the first word of the name as printed, stickers and
             // all (rulings) - the displayed name, so a flavor name counts as printed too
@@ -378,6 +401,10 @@ public class CardProperty {
             // Heroes of the Realm and the playtest cards are Type=Funny but black-bordered, and every
             // acorn set also prints tournament-legal cards, so this goes by the printing.
             if (!card.isSilverBorderedOrAcorn()) {
+                return false;
+            }
+        } else if (property.equals("AnimatedGraveyard")) {
+            if (card.getGamePieceType() != forge.card.GamePieceType.GRAVEYARD) {
                 return false;
             }
         } else if (property.equals("AnimatedLibrary")) {
@@ -644,6 +671,18 @@ public class CardProperty {
             final String text = (card.getAbilityText() + " " + card.getTextBoxContents()).toLowerCase();
             if (word.isEmpty() || !java.util.regex.Pattern.compile("\\b" + java.util.regex.Pattern.quote(word) + "\\b")
                     .matcher(text).find()) {
+                return false;
+            }
+        } else if (property.equals("rulesTextHasChosenWord")) {
+            // Nocturno of Myra's Marvels: the chosen word, exactly - "attacks" isn't "attack" (rulings) - in the rules
+            // text, read as Kindly Cognician reads it below (no reminder text, name or flavor text)
+            final String word = source.hasChosenType() ? source.getChosenType().trim() : "";
+            String rules = card.getTextBoxOracle().replace("\\n", "\n").replaceAll("\\([^)]*\\)", " ");
+            if (!card.getName().isEmpty()) {
+                rules = rules.replace(card.getName(), " ");
+            }
+            if (word.isEmpty() || !java.util.regex.Pattern.compile("\\b" + java.util.regex.Pattern.quote(word) + "\\b",
+                    java.util.regex.Pattern.CASE_INSENSITIVE).matcher(rules).find()) {
                 return false;
             }
         } else if (property.startsWith("rulesTextHasWord_")) {

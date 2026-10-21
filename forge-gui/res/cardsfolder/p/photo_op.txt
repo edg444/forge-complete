@@ -1,0 +1,13 @@
+Name:Photo Op
+ManaCost:B
+Types:Sorcery
+# Honor system: the posing picture was posted before the game, outside Forge. If someone replied with a guess, its
+# caster names that card and puts a copy they own from outside the game into their hand. The AI posts no pictures.
+A:SP$ GenericChoice | Defined$ You | Choices$ DBNoReply,DBReveal | ChoicePrompt$ Reveal a reply posted today with a guess? | AILogic$ Never | SubAbility$ DBExile | SpellDescription$ Before the game begins, you may post a picture of yourself posing like the art of any Magic card with #GuessThatMagicCard and no other text. You may reveal a reply posted today with a guess and a card you own from outside the game with the same name as that guess. Put that card into your hand. Exile CARDNAME.
+SVar:DBNoReply:DB$ Pump | SpellDescription$ No reply to reveal
+SVar:DBReveal:DB$ NameCard | Defined$ You | ChoiceTitle$ Name the card the reply guessed | SubAbility$ DBMake | SpellDescription$ Reveal a reply with a guess and that card from outside the game
+SVar:DBMake:DB$ MakeCard | Name$ ChosenName | Zone$ Hand | SubAbility$ DBClearNamed
+SVar:DBClearNamed:DB$ Cleanup | ClearNamedCard$ True
+SVar:DBExile:DB$ ChangeZone | Origin$ Stack | Destination$ Exile | Defined$ Self
+AI:RemoveDeck:All
+Oracle:Before the game begins, you may post a picture of yourself posing like the art of any Magic card with #GuessThatMagicCard and no other text.\nYou may reveal a reply posted today with a guess and a card you own from outside the game with the same name as that guess. Put that card into your hand. Exile Photo Op.

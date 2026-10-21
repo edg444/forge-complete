@@ -1,0 +1,12 @@
+Name:Nocturno of Myra's Marvels
+ManaCost:2 B B
+Types:Legendary Creature Vampire Performer
+PT:2/2
+K:ETBReplacement:Other:DBChooseWord
+SVar:DBChooseWord:DB$ ChooseType | Type$ word | Chooser$ You | FreeInput$ True | MinLetters$ 5 | WordList$ True | AILogic$ OwnSpellsRulesText | ChoiceTitle$ Choose a word with five or more letters | SpellDescription$ As CARDNAME enters, choose a word with five or more letters.
+# only an exact match counts - "attacks" isn't "attack" (rulings) - in the rules text (Card.rulesTextHasChosenWord)
+T:Mode$ SpellCast | ValidActivatingPlayer$ You | ValidCard$ Card.rulesTextHasChosenWord | TriggerZones$ Battlefield | Execute$ TrigDraw | TriggerDescription$ Whenever you cast a spell with the chosen word in its rules text, you draw a card and you lose 2 life.
+SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1 | SubAbility$ DBLoseLife
+SVar:DBLoseLife:DB$ LoseLife | Defined$ You | LifeAmount$ 2
+K:Partner
+Oracle:As Nocturno of Myra's Marvels enters, choose a word with five or more letters.\nWhenever you cast a spell with the chosen word in its rules text, you draw a card and you lose 2 life.\nPartner (You can have two commanders if both have partner.)

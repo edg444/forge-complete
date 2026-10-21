@@ -1,0 +1,10 @@
+Name:Treacherous Trapezist
+ManaCost:1 U U
+Types:Creature Porcupine Performer
+PT:2/3
+K:Flying
+# Alliterative: two or more capitalized words in the name begin with the same letter (Card.Alliterative)
+T:Mode$ SpellCast | ValidActivatingPlayer$ You | ValidCard$ Card.Alliterative | TriggerZones$ Battlefield | Execute$ TrigScry | TriggerDescription$ Whenever you cast an alliterative spell, scry 2. (Anything with two or more capitalized words in its name that begin with the same letter is alliterative.)
+SVar:TrigScry:DB$ Scry | ScryNum$ 2
+S:Mode$ Continuous | Affected$ Creature.Other+YouCtrl+Alliterative | AddKeyword$ Flying | Description$ Other alliterative creatures you control have flying.
+Oracle:Flying\nWhenever you cast an alliterative spell, scry 2. (Anything with two or more capitalized words in its name that begin with the same letter is alliterative.)\nOther alliterative creatures you control have flying.

@@ -1,0 +1,13 @@
+Name:Animate Graveyard
+ManaCost:3 B B
+Types:Enchantment Aura
+# Your graveyard isn't an object on the battlefield until the spell resolves, so the Aura spell makes it one
+# (AnimateGraveyardEffect), as Animate Library does. It's still your graveyard, and its cards stay in it (rulings).
+# "Your": if another player gains control of it, the Aura is put into its owner's graveyard (rulings).
+K:Enchant:Card.AnimatedGraveyard+YouOwn+YouCtrl:your graveyard
+SVar:AuraSpell:SP$ AnimateGraveyard | SpellDescription$ Enchant your graveyard
+S:Mode$ Continuous | Affected$ Card.EnchantedBy | SetPower$ X | SetToughness$ X | GainsTextBoxOf$ Creature.YouOwn | GainsAbilitiesOfZones$ Graveyard | Description$ Enchanted graveyard is a creature on the battlefield with base power and toughness each equal to the number of cards in it. It has the text boxes of all creature cards in it. It's still a graveyard.
+SVar:X:Count$InYourYard
+R:Event$ Moved | ActiveZones$ Battlefield | ValidCard$ Card.EnchantedBy | Origin$ Battlefield | ExcludeDestination$ Battlefield | ReplaceWith$ ExileAura | Description$ If enchanted graveyard would leave the battlefield, instead exile this Aura.
+SVar:ExileAura:DB$ ChangeZone | Defined$ Self | Origin$ Battlefield | Destination$ Exile
+Oracle:Enchant your graveyard\nEnchanted graveyard is a creature on the battlefield with base power and toughness each equal to the number of cards in it. It has the text boxes of all creature cards in it. It's still a graveyard.\nIf enchanted graveyard would leave the battlefield, instead exile this Aura.

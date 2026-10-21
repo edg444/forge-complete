@@ -1,0 +1,13 @@
+Name:Rat in the Hat
+ManaCost:B
+Types:Creature Rat Rogue
+PT:1/2
+# A hat Forge knows of (Card.HasHat) counts at once. Any other creature card may be targeted on the controller's word,
+# and they're asked as it resolves; one without a hat isn't castable, as an illegal target would do nothing (as for
+# Park Re-Entry). The AI can't see the art, so it targets only known hats (AITgts).
+A:AB$ Effect | Cost$ T Sac<1/CARDNAME> | ValidTgts$ Creature.YouOwn | TgtZone$ Graveyard | TgtPrompt$ Select target creature card that has a hat in your graveyard | AITgts$ Card.HasHat | RememberObjects$ Targeted | StaticAbilities$ MayCast | ExileOnMoved$ Graveyard | ConditionDefined$ Targeted | ConditionPresent$ Card.HasHat | ConditionZone$ Graveyard | SubAbility$ DBAskHat | SpellDescription$ Until end of turn, you may cast target creature card that has a hat from your graveyard.
+SVar:DBAskHat:DB$ GenericChoice | Defined$ You | Choices$ NoHat,HatYes | ShowCurrentCard$ Targeted | ChoicePrompt$ Does that creature card have a hat? (One its art shows it with, worn or not, or a hat, wig or headband sticker. Not a space helmet, a hood or a face mask, and not a background character's.) | ConditionDefined$ Targeted | ConditionPresent$ Card.HasHat | ConditionCompare$ EQ0 | ConditionZone$ Graveyard
+SVar:NoHat:DB$ Pump | SpellDescription$ It doesn't have a hat
+SVar:HatYes:DB$ Effect | RememberObjects$ ParentTarget | StaticAbilities$ MayCast | ExileOnMoved$ Graveyard | SpellDescription$ It has a hat
+SVar:MayCast:Mode$ Continuous | MayPlay$ True | Affected$ Card.IsRemembered | AffectedZone$ Graveyard | Description$ Until end of turn, you may cast this card from your graveyard.
+Oracle:{T}, Sacrifice this creature: Until end of turn, you may cast target creature card that has a hat from your graveyard.

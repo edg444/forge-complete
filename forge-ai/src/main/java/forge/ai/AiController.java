@@ -2108,6 +2108,14 @@ public class AiController {
         } else if ("HighFives".equals(logic)) {
             // Gimme Five: nobody high-fives a computer by the dozen - a few people near the screen at most
             return Math.min(max, Math.max(min, MyRandom.getRandom().nextInt(4)));
+        } else if ("TrashCans".equals(logic)) {
+            // Questionable Cuisine: a simulated room - usually one trash can, sometimes none or two, rarely three
+            final int roll = MyRandom.getRandom().nextInt(100);
+            return Math.min(max, Math.max(min, roll < 25 ? 0 : roll < 75 ? 1 : roll < 95 ? 2 : 3));
+        } else if ("Doors".equals(logic)) {
+            // Super-Duper Lost: a simulated room - usually a door or two in its walls, now and then none or three
+            final int roll = MyRandom.getRandom().nextInt(100);
+            return Math.min(max, Math.max(min, roll < 15 ? 0 : roll < 60 ? 1 : roll < 90 ? 2 : 3));
         } else if ("Mirrors".equals(logic)) {
             // Now You See Me . . .: a simulated room - usually no mirror on the walls, now and then one or two
             final int roll = MyRandom.getRandom().nextInt(100);

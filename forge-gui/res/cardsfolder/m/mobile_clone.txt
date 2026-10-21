@@ -1,0 +1,8 @@
+Name:Mobile Clone
+ManaCost:2 U U
+Types:Sorcery
+# The picture is of the card on the table, so copy effects don't show; its counters, stickers and the Auras and
+# Equipment on it are in the shot and become part of the photocopy (rulings, PhotocopyEffect).
+A:SP$ Photocopy | ValidTgts$ Creature | TgtPrompt$ Select target creature | SpellDescription$ Using a mobile device, take a picture of target creature. That device enters as a token that's a photocopy of the pictured creature. (Photocopies include Auras, Equipment, counters, and stickers in the shot. Don't touch other people's phones without permission and be careful if you do.)
+DeckHas:Ability$Token
+Oracle:Using a mobile device, take a picture of target creature. That device enters as a token that's a photocopy of the pictured creature. (Photocopies include Auras, Equipment, counters, and stickers in the shot. Don't touch other people's phones without permission and be careful if you do.)

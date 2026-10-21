@@ -1703,6 +1703,18 @@ public class AbilityUtils {
             // Count$WordsInName.<DefinedCards> - Bosom Buddy counts the words in a spell's name,
             // Wordmail in a static ability. Kept outside the SpellAbility-only block below, which a
             // static never enters. Split/double-faced names keep their "//" separator out of it.
+            // Count$UniqueVowelsInName.<Defined> - Disemvowel: how many of A, E, I, O, U and Y are in the name
+            if (sq[0].equals("UniqueVowelsInName")) {
+                int vowels = 0;
+                for (Card card : getDefinedCards(c, sq[1], ctb)) {
+                    final String name = card.getDisplayName().toUpperCase();
+                    for (final char v : "AEIOUY".toCharArray()) {
+                        vowels += name.indexOf(v) >= 0 ? 1 : 0;
+                    }
+                    break;
+                }
+                return doXMath(vowels, expr, c, ctb);
+            }
             // Count$SVarOfDefined.<Defined>.<SVar> - Octo Opus: an SVar of another card (Contortionist's folds), 0 for none
             if (sq[0].equals("SVarOfDefined")) {
                 int value = 0;

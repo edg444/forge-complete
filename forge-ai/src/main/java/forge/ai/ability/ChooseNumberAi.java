@@ -13,6 +13,16 @@ public class ChooseNumberAi extends SpellAbilityAi {
 
         if (aiLogic.isEmpty()) {
             return new AiAbilityDecision(0, AiPlayDecision.MissingLogic);
+        } else if (aiLogic.equals("Doors") && sa.usesTargeting()) {
+            // Super-Duper Lost: tuck away the opposing creature most worth losing track of
+            sa.resetTargets();
+            final forge.game.card.Card best = ComputerUtilCard.getBestCreatureAI(forge.game.card.CardLists.getTargetableCards(
+                    aiPlayer.getOpponents().getCreaturesInPlay(), sa));
+            if (best == null) {
+                return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
+            }
+            sa.getTargets().add(best);
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         } else if (aiLogic.equals("SweepCreatures")) {
             int maxChoiceLimit = AbilityUtils.calculateAmount(sa.getHostCard(), sa.getParam("Max"), sa);
             int ownCreatureCount = aiPlayer.getCreaturesInPlay().size();
