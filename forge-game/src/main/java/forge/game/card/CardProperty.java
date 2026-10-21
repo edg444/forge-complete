@@ -263,8 +263,14 @@ public class CardProperty {
             // Monkey Monkey Monkey, Katerina of Myra's Marvels. Matched on the displayed name so a flavor name counts
             // as printed, the same way ChosenLetterInName does.
             final String letter = source.hasChosenType() ? source.getChosenType() : "";
-            final int initial = NameLetters.initial(card.getDisplayName());
-            if (letter.isEmpty() || initial == -1 || initial != Character.toUpperCase(letter.codePointAt(0))) {
+            // Glurg's first letters are each of its names' (rulings)
+            final List<String> names = card.hasCopiedNames() ? card.getNames() : List.of(card.getDisplayName());
+            boolean starts = false;
+            for (final String name : names) {
+                final int initial = NameLetters.initial(name);
+                starts |= !letter.isEmpty() && initial != -1 && initial == Character.toUpperCase(letter.codePointAt(0));
+            }
+            if (!starts) {
                 return false;
             }
         } else if (property.equals("nameHasChosenLetter")) {

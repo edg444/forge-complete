@@ -1,0 +1,11 @@
+Name:It Came from Planet Glurg
+ManaCost:X X G U
+Types:Legendary Creature Alien Ooze
+PT:0/0
+# Only what's printed on them (or what a copy or token of theirs copies) is copied - not counters, stickers, tapped
+# status, attachments or other effects (rulings). Every name counts for name checks (CloneCombinedEffect).
+K:ETBReplacement:Copy:DBCopy:Optional
+SVar:DBCopy:DB$ CloneCombined | Amount$ X | ETB$ True | Choices$ Creature.Other | SpellDescription$ You may have CARDNAME enter as a copy of X different creatures on the battlefield. (It has their total power, total toughness, combined mana costs, all text boxes, names, art, and so on.)
+SVar:X:Count$xPaid
+SVar:AIXMax:Count$Valid Creature
+Oracle:You may have It Came from Planet Glurg enter as a copy of X different creatures on the battlefield. (It has their total power, total toughness, combined mana costs, all text boxes, names, art, and so on.)

@@ -94,6 +94,14 @@ public class PermanentAi extends SpellAbilityAi {
             } else if (xPay <= 0) {
                 return new AiAbilityDecision(0, AiPlayDecision.CantAffordX);
             }
+            // a cap the card sets on its own X (It Came from Planet Glurg: no more than the creatures it could copy)
+            if (source.hasSVar("AIXMax")) {
+                final int cap = forge.game.ability.AbilityUtils.calculateAmount(source, source.getSVar("AIXMax"), sa);
+                if (cap <= 0) {
+                    return new AiAbilityDecision(0, AiPlayDecision.CantAffordX);
+                }
+                sa.setXManaCostPaid(Math.min(sa.getXManaCostPaid(), cap));
+            }
         } else if (mana.isZero()) {
             // if mana is zero, but card mana cost does have X, then something is wrong
             ManaCost cardCost = source.getManaCost();

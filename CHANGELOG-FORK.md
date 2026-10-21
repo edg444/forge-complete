@@ -312,6 +312,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: It Came from Planet Glurg (UNF #169).** New `CloneCombined` effect: a copy of X creatures at once, merged
+  in full (user ruling).
+  - Total power and toughness, combined mana costs, and every type, color and ability.
+  - Every name: `Card.getNames` and name sharing see each one, and so do the word-count and first-letter checks
+    (rulings).
+  - **AI:** it caps X at the creatures there are to copy (new `AIXMax` SVar for permanent spells).
 - **Unfinity: Log Flume (UNF #220).** New `JumpInLog` effect and `FlumeLog`.
   - **Blocking:** attacking logmates are blocked all together or not at all; one that isn't attacking doesn't count
     (CombatUtil.validateBlocks). The AI unblocks a log it has only partly blocked.

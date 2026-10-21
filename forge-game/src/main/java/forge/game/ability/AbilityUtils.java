@@ -3650,9 +3650,13 @@ public class AbilityUtils {
 
     public static int wordsInName(final Card card) {
         int words = 0;
-        for (String word : card.getDisplayName().split("\\s+")) {
-            if (!word.isEmpty() && !word.equals("//")) {
-                words++;
+        // Glurg's names are counted one by one (rulings), not as the display name that joins them
+        final List<String> names = card.hasCopiedNames() ? card.getNames() : List.of(card.getDisplayName());
+        for (final String name : names) {
+            for (String word : name.split("\\s+")) {
+                if (!word.isEmpty() && !word.equals("//")) {
+                    words++;
+                }
             }
         }
         return words;

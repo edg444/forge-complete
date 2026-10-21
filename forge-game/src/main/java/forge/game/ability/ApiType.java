@@ -155,6 +155,7 @@ public enum ApiType {
     ScavengerHunt (ScavengerHuntEffect.class),
     HoldUntil (HoldUntilEffect.class),
     JumpInLog (JumpInLogEffect.class),
+    CloneCombined (CloneCombinedEffect.class),
     GameDrawn (GameDrawEffect.class),
     GenericChoice (ChooseGenericEffect.class),
     Gerrymander (GerrymanderEffect.class),

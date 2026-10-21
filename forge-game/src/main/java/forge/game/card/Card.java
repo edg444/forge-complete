@@ -1588,8 +1588,22 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         combinedWhole = b;
     }
 
-    /** Every name this object has: one, or each of its cards' for Grusilda's combined creature. */
+    // It Came from Planet Glurg: the names of all the creatures it's a copy of
+    private List<String> copiedNames = null;
+
+    public final void setCopiedNames(final List<String> names) {
+        copiedNames = names == null ? null : List.copyOf(names);
+    }
+
+    public final boolean hasCopiedNames() {
+        return copiedNames != null && !copiedNames.isEmpty();
+    }
+
+    /** Every name this object has: one, each of its cards' for Grusilda's combined creature, or each copied one's for Glurg. */
     public final List<String> getNames() {
+        if (hasCopiedNames()) {
+            return Lists.newArrayList(copiedNames);
+        }
         if (!isCombinedWhole()) {
             return Lists.newArrayList(getName());
         }
@@ -6977,6 +6991,14 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                 return true;
             }
         }
+        if (c1.hasCopiedNames()) {
+            for (final String name : c1.getNames()) {
+                if (sharesNameWith(name)) {
+                    return true;
+                }
+            }
+            return false;
+        }
         return sharesNameWith(c1.getName());
     }
 
@@ -6986,7 +7008,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
             return false;
         }
 
-        boolean shares = getName().equals(name) || (isCombinedWhole() && getNames().contains(name));
+        boolean shares = getName().equals(name) || ((isCombinedWhole() || hasCopiedNames()) && getNames().contains(name));
 
         // Split cards has extra logic to check if it does share a name with
         if (!shares && !hasNameOverwrite()) {
