@@ -1,0 +1,12 @@
+Name:Unclaimed Blessing
+ManaCost:B
+Types:Instant
+# The team is the player's for the whole match: chosen the first time a card asks (user ruling 2026-10-21).
+A:SP$ ChooseTeam | ValidTgts$ Creature | TgtPrompt$ Choose target creature | Defined$ You | SubAbility$ DBMirranCounter | AILogic$ Pump | SpellDescription$ Choose target creature. If you're on the Mirran team, put a +1/+1 counter on that creature and it gains lifelink until end of turn. If you're on the Phyrexian team, put a -1/-1 counter on that creature and it gains deathtouch until end of turn.
+SVar:DBMirranCounter:DB$ PutCounter | Defined$ Targeted | CounterType$ P1P1 | CounterNum$ 1 | ConditionCheckSVar$ Mirran | ConditionSVarCompare$ EQ1 | SubAbility$ DBMirranPump
+SVar:DBMirranPump:DB$ Pump | Defined$ Targeted | KW$ Lifelink | ConditionCheckSVar$ Mirran | ConditionSVarCompare$ EQ1 | SubAbility$ DBPhyrexianCounter
+SVar:DBPhyrexianCounter:DB$ PutCounter | Defined$ Targeted | CounterType$ M1M1 | CounterNum$ 1 | ConditionCheckSVar$ Phyrexian | ConditionSVarCompare$ EQ1 | SubAbility$ DBPhyrexianPump
+SVar:DBPhyrexianPump:DB$ Pump | Defined$ Targeted | KW$ Deathtouch | ConditionCheckSVar$ Phyrexian | ConditionSVarCompare$ EQ1
+SVar:Mirran:Count$UnknownTeam.Mirran
+SVar:Phyrexian:Count$UnknownTeam.Phyrexian
+Oracle:Choose target creature. If you're on the Mirran team, put a +1/+1 counter on that creature and it gains lifelink until end of turn. If you're on the Phyrexian team, put a -1/-1 counter on that creature and it gains deathtouch until end of turn.

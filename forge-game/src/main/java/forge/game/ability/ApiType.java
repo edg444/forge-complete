@@ -158,6 +158,7 @@ public enum ApiType {
     CloneCombined (CloneCombinedEffect.class),
     AdjustNumber (AdjustNumberEffect.class),
     ResetCommanderTax (ResetCommanderTaxEffect.class),
+    ChooseTeam (ChooseTeamEffect.class),
     GameDrawn (GameDrawEffect.class),
     GenericChoice (ChooseGenericEffect.class),
     Gerrymander (GerrymanderEffect.class),

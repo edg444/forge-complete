@@ -312,6 +312,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Unclaimed Blessing, Life at Stake, Mark Ritual, Long-Term Phyresis Study, Common Curve Filler,
+  May the Mana Be with You (UNK CB11-CC03).**
+  - **Teams (user ruling):** new `ChooseTeam` effect. A player joins the Mirran or Phyrexian team the first time a card
+    asks, and stays on it for the whole match; every card reads the same team (`Count$UnknownTeam.Mirran`). The AI
+    joins at random, then picks its target to suit the team.
+  - **Match notes:** `Match` keeps per-player notes that last the whole match (`Player.getMatchNote`).
+  - **Mark Ritual (user ruling):** as the match begins, you're asked whether each copy is signed by a Magic card
+    designer. A signed copy is red, costs {1}{R}, and adds {R}{R}{R}. The AI's copies are unsigned.
+  - **Common Curve Filler (user ruling):** the number is chosen as the game begins and written into its mana cost,
+    power and toughness for the game. The AI fills the emptiest slot of its curve from two to five.
 - **Unknown Event: Reverse Ninja, Demon Detective, Syr Konrad's Squire, Fear // Loathing, May of the Machine, Shedding
   Snake (UNK CB02-CB05).**
   - **Ustujnin:** `ChangeZone` `Ustujnin$ True` puts the card onto the battlefield blocking the creature the returned

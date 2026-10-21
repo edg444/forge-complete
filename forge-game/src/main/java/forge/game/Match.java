@@ -70,6 +70,18 @@ public class Match {
     public record TimeMachineReturn(int turn, List<String> cardNames) { }
     private final Map<RegisteredPlayer, List<TimeMachineReturn>> pendingTimeMachine = Maps.newHashMap();
 
+    // what a player settled for the whole match (Unknown Event's team, which copies of Mark Ritual are signed)
+    private final Map<RegisteredPlayer, Map<String, Object>> notes = Maps.newHashMap();
+
+    public Object getNote(final RegisteredPlayer player, final String key) {
+        final Map<String, Object> theirs = notes.get(player);
+        return theirs == null ? null : theirs.get(key);
+    }
+
+    public void setNote(final RegisteredPlayer player, final String key, final Object value) {
+        notes.computeIfAbsent(player, p -> Maps.newHashMap()).put(key, value);
+    }
+
     public Match(final GameRules rules0, final List<RegisteredPlayer> players0, final String title) {
         players = Collections.unmodifiableList(Lists.newArrayList(players0));
         rules = rules0;

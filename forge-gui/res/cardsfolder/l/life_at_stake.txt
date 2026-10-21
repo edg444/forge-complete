@@ -1,0 +1,10 @@
+Name:Life at Stake
+ManaCost:B
+Types:Instant
+A:SP$ ChooseNumber | ValidTgts$ Creature | TgtPrompt$ Select target creature | Defined$ You & TargetedController | Secretly$ True | Min$ 0 | Highest$ DBLoseLife | RememberHighest$ True | AILogic$ HighestLoseLife | SubAbility$ DBExile | SpellDescription$ You and target creature's controller each secretly choose a number 0 or greater. Then, reveal the chosen numbers. If your number was highest or tied for the highest, exile that creature. Each player who chose the highest number loses that much life.
+SVar:DBLoseLife:DB$ LoseLife | Defined$ Remembered | LifeAmount$ X
+SVar:X:Count$ChosenNumber
+SVar:DBExile:DB$ ChangeZone | Defined$ Targeted | Origin$ Battlefield | Destination$ Exile | ConditionCheckSVar$ YouHighest | ConditionSVarCompare$ GE1 | SubAbility$ DBCleanup
+SVar:YouHighest:PlayerCountRemembered$HasPropertyYou
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenNumber$ True
+Oracle:You and target creature's controller each secretly choose a number 0 or greater. Then, reveal the chosen numbers. If your number was highest or tied for the highest, exile that creature. Each player who chose the highest number loses that much life.

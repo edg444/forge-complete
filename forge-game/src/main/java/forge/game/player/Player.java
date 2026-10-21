@@ -3052,6 +3052,25 @@ public class Player extends GameEntity implements Comparable<Player> {
         return outsideRegistration != null;
     }
 
+    // match notes for a player outside any match (tests, puzzles) last as long as the game
+    private final Map<String, Object> gameOnlyNotes = Maps.newHashMap();
+
+    /** Something this player settled for the whole match, or null. */
+    public Object getMatchNote(final String key) {
+        if (game.getMatch() == null || getRegisteredPlayer() == null) {
+            return gameOnlyNotes.get(key);
+        }
+        return game.getMatch().getNote(getRegisteredPlayer(), key);
+    }
+
+    public void setMatchNote(final String key, final Object value) {
+        if (game.getMatch() == null || getRegisteredPlayer() == null) {
+            gameOnlyNotes.put(key, value);
+            return;
+        }
+        game.getMatch().setNote(getRegisteredPlayer(), key, value);
+    }
+
     public final RegisteredPlayer getRegisteredPlayer() {
         if (outsideRegistration != null) {
             return outsideRegistration;

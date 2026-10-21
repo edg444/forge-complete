@@ -3042,6 +3042,46 @@ public class GameAction {
                     c.setMarkedColors(takesAction.getController().chooseColors(prompt, sa, n, n, ColorSet.WUBRG));
                 }
             }
+            // Common Curve Filler: a number written in during deckbuilding is chosen now and kept all game
+            // (user ruling 2026-10-21); the AI fills the emptiest slot of its curve from two to five
+            for (Card c : all) {
+                if (!c.hasSVar("DeckbuildingNumber") || c.isInZone(ZoneType.Sideboard)) {
+                    continue;
+                }
+                final String[] range = c.getSVar("DeckbuildingNumber").split("-");
+                final int lo = Integer.parseInt(range[0]), hi = Integer.parseInt(range[1]);
+                final int n;
+                if (takesAction.isAI()) {
+                    n = curveGap(takesAction, Math.max(lo, 2), Math.min(hi, 5));
+                } else {
+                    SpellAbility sa = new SpellAbility.EmptySa(ApiType.ChooseNumber, c, takesAction);
+                    n = takesAction.getController().chooseNumber(sa, c.getTranslatedName()
+                            + ": write a number from " + lo + " to " + hi + " in its mana cost, power, and toughness", lo, hi);
+                }
+                c.writeDeckbuildingNumber(n);
+            }
+            // Mark Ritual: whether each copy is signed by someone who has ever designed a Magic card is asked once,
+            // as the match begins (honor system); the AI's copies are unsigned (user ruling 2026-10-21)
+            final Map<String, Integer> copies = Maps.newHashMap();
+            final List<Card> rituals = CardLists.filter(all, x -> x.hasSVar("SignedByDesignerSwap"));
+            rituals.sort(java.util.Comparator.comparingInt(Card::getId));
+            for (Card c : rituals) {
+                final int copy = copies.merge(c.getName(), 1, Integer::sum);
+                if (takesAction.isAI() || c.isInZone(ZoneType.Sideboard)) {
+                    continue;
+                }
+                final String key = "SignedByDesigner:" + c.getName() + "#" + copy;
+                Object signed = takesAction.getMatchNote(key);
+                if (signed == null) {
+                    SpellAbility sa = new SpellAbility.EmptySa(ApiType.Mana, c, takesAction);
+                    signed = takesAction.getController().confirmAction(sa, null, "Is copy " + copy + " of "
+                            + c.getTranslatedName() + " in your deck signed by someone who has ever designed a Magic card?", null);
+                    takesAction.setMatchNote(key, signed);
+                }
+                if (Boolean.TRUE.equals(signed)) {
+                    c.signByDesigner();
+                }
+            }
             for (Card c : all) {
                 if (c.hasKeyword(Keyword.LEGACY) && c.getLegacyWord() == null && !c.isInZone(ZoneType.Sideboard)) {
                     writeLegacyWord(takesAction, c, all);
@@ -3049,6 +3089,20 @@ public class GameAction {
             }
             takesAction = game.getNextPlayerAfter(takesAction);
         } while (takesAction != first);
+    }
+
+    /** The mana value from lo to hi that the fewest of the player's nonland cards have, the lowest on a tie. */
+    private static int curveGap(final Player p, final int lo, final int hi) {
+        int best = lo, fewest = Integer.MAX_VALUE;
+        for (int cmc = lo; cmc <= hi; cmc++) {
+            final int value = cmc;
+            final int count = CardLists.count(p.getAllCards(), x -> !x.isLand() && !x.hasSVar("DeckbuildingNumber") && x.getCMC() == value);
+            if (count < fewest) {
+                fewest = count;
+                best = cmc;
+            }
+        }
+        return best;
     }
 
     /** Every word a legacy blank takes: the rules' keyword abilities and ability words, and the engine's own keywords. */

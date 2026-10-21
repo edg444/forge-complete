@@ -676,6 +676,14 @@ public class AbilityManaPart implements java.io.Serializable {
      * @return the origProduced
      */
     public String getOrigProduced() {
+        final String[] swap = sourceCard == null ? null : sourceCard.getDesignerColorSwap();
+        if (swap != null) {
+            final StringBuilder sb = new StringBuilder();
+            for (final String part : origProduced.split(" ")) {
+                sb.append(part.equals(swap[0]) ? swap[1] : part).append(' ');
+            }
+            return sb.toString().trim();
+        }
         return origProduced;
     }
 

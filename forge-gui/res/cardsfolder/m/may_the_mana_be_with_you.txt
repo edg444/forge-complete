@@ -1,0 +1,16 @@
+Name:May the Mana Be with You
+ManaCost:3
+Types:Sorcery
+K:Demonstrate
+A:SP$ GenericChoice | Defined$ You | Choices$ WU,WB,WR,WG,UB,UR,UG,BR,BG,RG | AILogic$ BestOption | SpellDescription$ Choose two basic land types. Create the appropriate Shockland token. (For example, if you choose Island and Swamp, you'd get a Watery Grave token.)
+SVar:WU:DB$ CopyPermanent | DefinedName$ Hallowed Fountain | SpellDescription$ Plains and Island (Hallowed Fountain)
+SVar:WB:DB$ CopyPermanent | DefinedName$ Godless Shrine | SpellDescription$ Plains and Swamp (Godless Shrine)
+SVar:WR:DB$ CopyPermanent | DefinedName$ Sacred Foundry | SpellDescription$ Plains and Mountain (Sacred Foundry)
+SVar:WG:DB$ CopyPermanent | DefinedName$ Temple Garden | SpellDescription$ Plains and Forest (Temple Garden)
+SVar:UB:DB$ CopyPermanent | DefinedName$ Watery Grave | SpellDescription$ Island and Swamp (Watery Grave)
+SVar:UR:DB$ CopyPermanent | DefinedName$ Steam Vents | SpellDescription$ Island and Mountain (Steam Vents)
+SVar:UG:DB$ CopyPermanent | DefinedName$ Breeding Pool | SpellDescription$ Island and Forest (Breeding Pool)
+SVar:BR:DB$ CopyPermanent | DefinedName$ Blood Crypt | SpellDescription$ Swamp and Mountain (Blood Crypt)
+SVar:BG:DB$ CopyPermanent | DefinedName$ Overgrown Tomb | SpellDescription$ Swamp and Forest (Overgrown Tomb)
+SVar:RG:DB$ CopyPermanent | DefinedName$ Stomping Ground | SpellDescription$ Mountain and Forest (Stomping Ground)
+Oracle:Demonstrate (When you cast this spell, you may copy it. If you do, choose an opponent to also copy it.)\nChoose two basic land types. Create the appropriate Shockland token. (For example, if you choose Island and Swamp, you'd get a Watery Grave token.)

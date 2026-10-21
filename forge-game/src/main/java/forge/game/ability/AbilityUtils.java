@@ -2275,6 +2275,11 @@ public class AbilityUtils {
             final java.time.ZonedDateTime now = realWorldNow.get();
             return doXMath(now.getMonthValue() * 100 + now.getDayOfMonth(), expr, c, ctb);
         }
+        // Unknown Event: 1 if the player has joined that team this match (ChooseTeam asks first; this never does)
+        if (sq[0].equals("UnknownTeam") && sq.length > 1) {
+            return doXMath(sq[1].equals(player.getMatchNote(
+                    forge.game.ability.effects.ChooseTeamEffect.NOTE)) ? 1 : 0, expr, c, ctb);
+        }
         if (sq[0].equals("AllCommandersRevealed")) {
             return doXMath(player.allCommandersRevealed() ? 1 : 0, expr, c, ctb);
         }

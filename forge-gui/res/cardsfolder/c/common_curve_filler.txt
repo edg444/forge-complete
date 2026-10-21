@@ -1,0 +1,9 @@
+Name:Common Curve Filler
+ManaCost:no cost
+Types:Creature Shapeshifter
+PT:*/*
+# The number is chosen as the game begins and written in for the rest of it (user ruling 2026-10-21); the AI fills
+# the emptiest slot of its curve from two to five.
+SVar:DeckbuildingNumber:1-9
+Text:During deckbuilding, choose a number from one to nine. Write that number in this card's mana cost, power, and toughness.
+Oracle:During deckbuilding, choose a number from one to nine. Write that number in this card's mana cost, power, and toughness.

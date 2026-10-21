@@ -8328,6 +8328,58 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         view.updateSigned(this);
     }
 
+    // Mark Ritual: signed by someone who has ever designed a Magic card, its mana symbols of one color are another's
+    private String[] designerColorSwap = null;
+
+    /** The color whose mana symbols are treated as another's, and that color, as short names (B, R), or null. */
+    public String[] getDesignerColorSwap() {
+        return designerColorSwap;
+    }
+
+    public void signByDesigner() {
+        if (!hasSVar("SignedByDesignerSwap")) {
+            return;
+        }
+        designerColorSwap = getSVar("SignedByDesignerSwap").trim().split("\\s+");
+        setSigned(true);
+        for (final CardStateName name : getStates()) {
+            final CardState state = getState(name);
+            final ManaCost cost = state.getManaCost();
+            if (cost == null || cost.isNoCost()) {
+                continue;
+            }
+            final StringBuilder sb = new StringBuilder();
+            if (cost.getGenericCost() > 0) {
+                sb.append(cost.getGenericCost()).append(' ');
+            }
+            for (final forge.card.mana.ManaCostShard shard : cost) {
+                final String part = shard.toString().replace("{", "").replace("}", "");
+                sb.append(part.equals(designerColorSwap[0]) ? designerColorSwap[1] : part).append(' ');
+            }
+            final ManaCost swapped = new ManaCost(new forge.card.mana.ManaCostParser(sb.toString().trim()));
+            state.setManaCost(swapped);
+            state.setColor(ColorSet.fromManaCost(swapped));
+        }
+        currentState.getView().updateManaCost(currentState);
+        currentState.getView().updateColors(currentState);
+    }
+
+    /** Common Curve Filler: a number written in during deckbuilding goes in its mana cost, power, and toughness. */
+    public void writeDeckbuildingNumber(final int n) {
+        setChosenNumber(n);
+        for (final CardStateName name : getStates()) {
+            final CardState state = getState(name);
+            state.setManaCost(ManaCost.get(n));
+            state.setBasePower(n);
+            state.setBaseToughness(n);
+            state.setBasePowerString(Integer.toString(n));
+            state.setBaseToughnessString(Integer.toString(n));
+        }
+        currentState.getView().updateManaCost(currentState);
+        currentState.getView().updatePower(currentState);
+        currentState.getView().updateToughness(currentState);
+    }
+
     /**
      * Goblin Haberdasher: what this card's controller answered when asked whether the creature it represents wears a
      * hat in its art (honor system, see GameAction.askHatInArt), or null if never asked. It's about the physical

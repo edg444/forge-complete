@@ -1,0 +1,9 @@
+Name:Mark Ritual
+ManaCost:1 B
+Types:Instant
+# Whether each copy is signed by someone who has ever designed a Magic card is asked as the match begins (honor
+# system); the AI's copies are unsigned (user ruling 2026-10-21). A signed copy's black mana symbols are red.
+SVar:SignedByDesignerSwap:B R
+A:SP$ Mana | Produced$ B | Amount$ 3 | SpellDescription$ Add {B}{B}{B}.
+Text:If this card is signed by someone who has ever designed a Magic card, treat all black mana symbols on this card as red mana symbols. (To be respectful of the color pie.)
+Oracle:Add {B}{B}{B}.\nIf this card is signed by someone who has ever designed a Magic card, treat all black mana symbols on this card as red mana symbols. (To be respectful of the color pie.)
