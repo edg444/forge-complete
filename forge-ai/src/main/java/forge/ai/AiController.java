@@ -2138,6 +2138,22 @@ public class AiController {
             // Super-Duper Lost: a simulated room - usually a door or two in its walls, now and then none or three
             final int roll = MyRandom.getRandom().nextInt(100);
             return Math.min(max, Math.max(min, roll < 15 ? 0 : roll < 60 ? 1 : roll < 90 ? 2 : 3));
+        } else if ("FlavorLines".equals(logic)) {
+            // Hardy of Myra's Marvels: the number paying the most counters over the spells it has left to cast
+            final int[] spells = new int[max + 1];
+            for (final Card c : com.google.common.collect.Iterables.concat(player.getCardsIn(ZoneType.Library), player.getCardsIn(ZoneType.Hand))) {
+                final int lines = c.isLand() || c == sa.getHostCard() ? -1 : c.getPrintedFlavorLines();
+                if (lines >= min && lines <= max) {
+                    spells[lines]++;
+                }
+            }
+            int best = Math.max(min, 1);
+            for (int n = Math.max(min, 1); n <= max; n++) {
+                if (n * spells[n] > best * spells[best]) {
+                    best = n;
+                }
+            }
+            return Math.min(max, best);
         } else if ("Mirrors".equals(logic)) {
             // Now You See Me . . .: a simulated room - usually no mirror on the walls, now and then one or two
             final int roll = MyRandom.getRandom().nextInt(100);

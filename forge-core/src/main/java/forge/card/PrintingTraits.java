@@ -42,6 +42,8 @@ public final class PrintingTraits {
         private int backRulesLines = -1;
         private int textLines = -1;
         private int backTextLines = -1;
+        private int flavorLines = 0;
+        private int backFlavorLines = 0;
         private boolean hat = false;
         private boolean backHat = false;
         private boolean tree = false;
@@ -157,6 +159,14 @@ public final class PrintingTraits {
             return universe;
         }
 
+        /** Printed lines of flavor text (Hardy of Myra's Marvels); -1 when the text box couldn't be read. */
+        public int getFlavorLines(final boolean backFace) {
+            if (getTextLines(backFace) < 0) {
+                return -1;
+            }
+            return backFace ? backFlavorLines : flavorLines;
+        }
+
         /** Printed lines in the whole text box, flavor text included (Lexivore); -1 when they couldn't be read. */
         public int getTextLines(final boolean backFace) {
             return backFace ? backTextLines : textLines;
@@ -265,6 +275,10 @@ public final class PrintingTraits {
                     t.universe = trait.substring(9);
                 } else if (trait.startsWith("characters=")) {
                     t.characters = new java.util.HashSet<>(java.util.Arrays.asList(trait.substring(11).split(",")));
+                } else if (trait.startsWith("flavorlines=")) {
+                    t.flavorLines = Integer.parseInt(trait.substring(12));
+                } else if (trait.startsWith("backflavorlines=")) {
+                    t.backFlavorLines = Integer.parseInt(trait.substring(16));
                 } else if (trait.startsWith("textlines=")) {
                     t.textLines = Integer.parseInt(trait.substring(10));
                 } else if (trait.startsWith("backtextlines=")) {

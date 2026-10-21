@@ -7586,6 +7586,27 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
 
     /**
+     * Hardy of Myra's Marvels: lines of flavor text, as printed on this printing and read off the card image; 0 for
+     * none (rulings). A printing whose text box couldn't be read is estimated at the 35 characters a flavor line
+     * usually holds, and so is a stolen text box's.
+     */
+    public int getPrintedFlavorLines() {
+        final String flavor = getFlavorText();
+        if (flavor.isEmpty()) {
+            return 0;
+        }
+        final PrintingTraits.Traits t = getPrintingTraits();
+        if (t != null && !textBoxStolen && stolenTextBoxes.isEmpty() && t.getFlavorLines(isBackSide()) >= 0) {
+            return t.getFlavorLines(isBackSide());
+        }
+        int lines = 0;
+        for (final String paragraph : flavor.split("\n")) {
+            lines += Math.max(1, (paragraph.length() + 34) / 35);
+        }
+        return lines;
+    }
+
+    /**
      * The number in this printing's collector number, or -1 when it has none: 12 for "12a", 123 for
      * The List's "ELD-123" and Alchemy's "A-123", 1 for Unfinity's "F1". The last run of digits is
      * the number, since prefixes name a set or variant and suffixes a version.

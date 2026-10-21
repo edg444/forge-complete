@@ -312,6 +312,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Hardy of Myra's Marvels (UNF #141).** Lines of flavor text as printed on each printing, read off the card
+  image, are now in `PrintingTraits.txt` (`flavorlines=`); no flavor text is 0 (rulings). New `flavorLines` card
+  property (`Card.flavorLinesEQChosen`).
+  - **Known gap:** a printing whose text box couldn't be read (about 2%) is estimated at 35 characters a line.
+  - **AI:** it chooses the number paying the most counters over the spells it has left.
 - **Unfinity: Vorthos, Steward of Myth (UNF #126).** The named characters are Scryfall Tagger's (3,418), each with every
   name it has gone by (rulings: Lim-Dûl on The Raven Man, Urza on Blind Seer).
   - **Printing data:** `PrintingTraits.txt` now lists them and says which a printed card names in its name or flavor

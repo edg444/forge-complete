@@ -2075,7 +2075,8 @@ public class CardProperty {
         } else if (property.startsWith("power") || property.startsWith("toughness") || property.startsWith("cmc")
                 || property.startsWith("totalPT") || property.startsWith("numColors")
                 || property.startsWith("basePower") || property.startsWith("baseToughness") || property.startsWith("numTypes")
-                || property.startsWith("numCreatureTypes") || property.startsWith("baseLoyalty")) {
+                || property.startsWith("numCreatureTypes") || property.startsWith("baseLoyalty")
+                || property.startsWith("flavorLines")) {
             int x;
             int y = 0;
             String rhs = "";
@@ -2110,6 +2111,9 @@ public class CardProperty {
             } else if (property.startsWith("baseLoyalty")) {
                 rhs = property.substring(13);
                 y = AbilityUtils.calculateAmount(card, card.getBaseLoyalty(), card.getCastSA());
+            } else if (property.startsWith("flavorLines")) {
+                rhs = property.substring(13);
+                y = card.getPrintedFlavorLines();
             }
             if (rhs.equals("Chosen")) {
                 if (!source.hasChosenNumber()) {

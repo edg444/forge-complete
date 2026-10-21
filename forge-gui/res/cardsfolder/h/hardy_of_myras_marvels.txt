@@ -1,0 +1,13 @@
+Name:Hardy of Myra's Marvels
+ManaCost:2 G G
+Types:Legendary Creature Elf Performer
+PT:4/4
+# Lines of flavor text as printed on the spell's printing, read off the card image (PrintingTraits); a spell with no
+# flavor text has 0 (rulings). Any number 0 or more may be chosen, so the list stops well past any printed card's.
+K:ETBReplacement:Other:ChooseNum
+SVar:ChooseNum:DB$ ChooseNumber | Defined$ You | Min$ 0 | Max$ 20 | AILogic$ FlavorLines | SpellDescription$ As CARDNAME enters, choose a number.
+T:Mode$ SpellCast | ValidCard$ Card.flavorLinesEQChosen | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ Whenever you cast a spell with the chosen number of lines of flavor text, put that many +1/+1 counters on target creature.
+SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Creature | TgtPrompt$ Select target creature | CounterType$ P1P1 | CounterNum$ X
+SVar:X:Count$ChosenNumber
+K:Partner
+Oracle:As Hardy of Myra's Marvels enters, choose a number.\nWhenever you cast a spell with the chosen number of lines of flavor text, put that many +1/+1 counters on target creature.\nPartner (You can have two commanders if both have partner.)
