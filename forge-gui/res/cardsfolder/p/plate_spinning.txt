@@ -1,0 +1,22 @@
+Name:Plate Spinning
+ManaCost:3 U U
+Types:Enchantment
+# Balancing is physical. A human reports a balanced card falling (or touching another card) with the honor-system
+# action below. The AI has no fingertips, so its cards wobble: each time it balances another, a 15% chance for each card
+# it's then balancing that they fall (user, 2026-10-21). Balanced counts the cards on your fingertips.
+T:Mode$ SpellCast | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCopy | TriggerDescription$ Whenever you cast a spell, copy it and you may choose new targets for the copy. Then balance a card from outside the game on one of your fingertips. When that card falls or touches another card, sacrifice this enchantment.
+SVar:TrigCopy:DB$ CopySpellAbility | Defined$ TriggeredSpellAbility | AILogic$ Always | MayChooseTarget$ True | SubAbility$ DBBalance
+SVar:DBBalance:DB$ StoreSVar | SVar$ Balanced | Type$ CountSVar | Expression$ Balanced/Plus.1
+T:Mode$ SpellCast | ValidActivatingPlayer$ You.IsAI | TriggerZones$ Battlefield | Static$ True | Secondary$ True | Execute$ TrigWobble | TriggerDescription$ (The AI's balanced cards may fall each time it balances another.)
+SVar:TrigWobble:DB$ StoreSVar | SVar$ WobbleRoll | Type$ Calculate | Expression$ D100 | SubAbility$ DBWobbleFall
+# the ImmediateTrigger keeps its own condition, so the roll is stored first and only compared there
+SVar:DBWobbleFall:DB$ ImmediateTrigger | ConditionCheckSVar$ WobbleFell | ConditionSVarCompare$ EQ1 | Execute$ TrigSac | TriggerDescription$ When that card falls or touches another card, sacrifice this enchantment.
+A:ST$ ImmediateTrigger | Cost$ 0 | SpecialAction$ True | CheckSVar$ Balanced | SVarCompare$ GE1 | Execute$ TrigSac | AILogic$ Never | TriggerDescription$ When that card falls or touches another card, sacrifice this enchantment. | SpellDescription$ A card you're balancing fell or touched another card (honor system).
+SVar:TrigSac:DB$ Sacrifice | Defined$ Self
+SVar:Balanced:Number$0
+SVar:WobbleRoll:Number$100
+SVar:D100:Count$Random.1.100
+SVar:BalancedNext:SVar$Balanced/Plus.1
+SVar:WobbleLimit:SVar$BalancedNext/Times.15
+SVar:WobbleFell:Count$Compare WobbleRoll LEWobbleLimit.1.0
+Oracle:Whenever you cast a spell, copy it and you may choose new targets for the copy. Then balance a card from outside the game on one of your fingertips. When that card falls or touches another card, sacrifice this enchantment.

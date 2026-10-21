@@ -1,0 +1,12 @@
+Name:Phone a Friend
+ManaCost:3 U U
+Types:Sorcery
+# The friend picks (CharmEffect.phoneAFriend): a person calls someone real and enters the answer (honor system); the AI's
+# friend is simulated - a random legal mode, unanswered one call in five (user, 2026-10-21). Unanswered, an opponent
+# chooses. Only legal modes can be chosen (rulings), and you choose the targets.
+A:SP$ Charm | Choices$ DBSteal,DBCopy,DBTurn,DBDraw | PhoneAFriend$ True | PrecostDesc$ Call someone and ask them to choose one. If they don't answer, an opponent chooses one. (Don't explain anything else. You choose targets.)
+SVar:DBSteal:DB$ GainControl | ValidTgts$ Creature.YouDontCtrl | TgtPrompt$ Select target creature you don't control | SpellDescription$ A — Gain control of target creature you don't control.
+SVar:DBCopy:DB$ CopyPermanent | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | NumCopies$ 2 | SpellDescription$ B — Choose target creature you control. Create two tokens that are each copies of it.
+SVar:DBTurn:DB$ AddTurn | Defined$ You | NumTurns$ 1 | SpellDescription$ C — Take an extra turn after this one.
+SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 7 | SpellDescription$ D — Draw seven cards.
+Oracle:Call someone and ask them to choose one. If they don't answer, an opponent chooses one. (Don't explain anything else. You choose targets.)\n• A — Gain control of target creature you don't control.\n• B — Choose target creature you control. Create two tokens that are each copies of it.\n• C — Take an extra turn after this one.\n• D — Draw seven cards.

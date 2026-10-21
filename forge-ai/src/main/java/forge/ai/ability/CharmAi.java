@@ -25,6 +25,15 @@ import java.util.Optional;
 public class CharmAi extends SpellAbilityAi {
     @Override
     protected AiAbilityDecision checkApiLogic(Player ai, SpellAbility sa) {
+        if (ai.equals(sa.getActivatingPlayer()) && sa.hasParam("PhoneAFriend")) {
+            // Phone a Friend: the friend picks (CharmEffect), so no chosen list. Every mode helps, but drawing seven
+            // from a short library could lose the game, and the friend might pick it
+            sa.setChosenList(null);
+            sa.setSubAbility(null);
+            return ai.getCardsIn(ZoneType.Library).size() > 10
+                    ? new AiAbilityDecision(100, AiPlayDecision.WillPlay)
+                    : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
         if (ai.equals(sa.getActivatingPlayer()) && "TruthOrDare".equals(sa.getParam("AILogic"))) {
             // the target opponent chooses and either mode helps; no chosen list, or the opponent's AI would reuse it.
             // Targets are set once they've chosen (ComputerUtil.handlePlayingSpellAbility)
@@ -67,6 +76,8 @@ public class CharmAi extends SpellAbilityAi {
             // costs far less than ten turns' clock
             boolean dareIsFree = ai.getCardsIn(ZoneType.Library).size() <= 10;
             chosenList = Lists.newArrayList(choices.get(dareIsFree ? 1 : 0));
+        } else if (choiceForOpp && sa.hasParam("PhoneAFriend")) {
+            chosenList = Lists.newArrayList(phoneAFriendForOpponent(ai, sa.getActivatingPlayer(), choices));
         } else if (choiceForOpp) {
             // This branch is for "An Opponent chooses" Charm spells from Alliances
             // Current just choose the first available spell, which seem generally less disastrous for the AI.
@@ -261,6 +272,37 @@ public class CharmAi extends SpellAbilityAi {
         }
         sa.setSubAbility(null);
         return chosen;
+    }
+
+    /**
+     * Phone a Friend, when nobody answered and the AI is the opponent who chooses: the mode that helps the caster least.
+     * Drawing seven from a library of six or fewer loses them the game; otherwise each mode is weighed roughly - a stolen
+     * creature by its value, two copies by twice theirs, and an extra turn and seven cards as big fixed amounts.
+     */
+    private static AbilitySub phoneAFriendForOpponent(final Player ai, final Player caster, final List<AbilitySub> choices) {
+        AbilitySub best = choices.get(0);
+        int lowest = Integer.MAX_VALUE;
+        for (final AbilitySub mode : choices) {
+            int value;
+            switch (mode.getApi()) {
+                case Draw -> value = caster.getCardsIn(ZoneType.Library).size() < 7 ? -1 : 700;
+                case GainControl -> {
+                    final Card mine = ComputerUtilCard.getBestCreatureAI(ai.getCreaturesInPlay());
+                    value = mine == null ? 0 : ComputerUtilCard.evaluateCreature(mine);
+                }
+                case CopyPermanent -> {
+                    final Card theirs = ComputerUtilCard.getBestCreatureAI(caster.getCreaturesInPlay());
+                    value = theirs == null ? 0 : 2 * ComputerUtilCard.evaluateCreature(theirs);
+                }
+                case AddTurn -> value = 500;
+                default -> value = 600;
+            }
+            if (value < lowest) {
+                lowest = value;
+                best = mode;
+            }
+        }
+        return best;
     }
 
     private List<AbilitySub> chooseTriskaidekaphobia(List<AbilitySub> choices, final Player ai) {

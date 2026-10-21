@@ -312,6 +312,21 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Phone a Friend (UNF #55).** A Charm with a new `PhoneAFriend$` option (`CharmEffect.phoneAFriend`).
+  - A person calls someone real and enters which legal mode they picked, or that nobody answered (honor system).
+    Only legal modes can be picked (rulings).
+  - **User ruling:** the AI's friend is simulated. It picks a random legal mode, and one call in five goes
+    unanswered.
+  - Unanswered, an opponent chooses. The AI as that opponent picks the mode that helps the caster least: draw seven
+    if they have fewer than seven cards in their library, otherwise a rough value per mode (`CharmAi`).
+  - The AI casts it only with more than ten cards in its library, and re-targets after the friend's pick.
+- **Unfinity: Plate Spinning (UNF #56).** Copies each spell you cast and counts the cards you're balancing
+  (`Balanced`).
+  - A human reports a balanced card falling, or touching another card, with an honor-system action. That triggers
+    the sacrifice.
+  - **User ruling:** the AI's cards wobble. Each time it balances another, the chance they fall is 15% per card it's
+    then balancing. This uses a static trigger on `ValidActivatingPlayer$ You.IsAI`.
+  - No engine change.
 - **Unfinity: Octo Opus (UNF #54).** Its Contortionist token (`u_4_4_octopus_performer_contortionist`) keeps its fold
   count in a `Folds` SVar. A characteristic-defining static halves its power and toughness per fold.
   - **User ruling:** it folds only as far as the fork's half values go: 4/4, 2/2, 1/1, then 1/2 / 1/2.

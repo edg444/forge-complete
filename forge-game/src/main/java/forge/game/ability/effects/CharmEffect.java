@@ -22,6 +22,7 @@ import forge.game.spellability.AbilitySub;
 import forge.game.spellability.SpellAbility;
 import forge.util.Aggregates;
 import forge.util.Lang;
+import forge.util.MyRandom;
 import forge.util.Localizer;
 import forge.game.staticability.StaticAbilityChooseAnyNumberOfModes;
 import forge.util.collect.FCollection;
@@ -345,6 +346,23 @@ public class CharmEffect extends SpellAbilityEffect {
             }
         }
 
+        if (sa.hasParam("PhoneAFriend")) {
+            List<AbilitySub> picked = phoneAFriend(sa, activator, choices);
+            if (picked == null) {
+                // nobody answered, so an opponent chooses one
+                final FCollection<Player> opps = new FCollection<>(activator.getOpponents());
+                if (opps.isEmpty()) {
+                    return false;
+                }
+                final Player opp = opps.size() == 1 ? opps.get(0)
+                        : activator.getController().chooseSingleEntityForEffect(opps, sa, "Choose an opponent to choose one", null);
+                sa.setChoosingPlayer(opp);
+                picked = opp.getController().chooseModeForAbility(sa, choices, 1, 1, false);
+            }
+            chainAbilities(sa, picked);
+            return picked != null && !picked.isEmpty();
+        }
+
         if (sa.hasParam("Random")) {
             boolean random = true;
             if (sa.getParam("Random").equals("Compare")) {
@@ -379,6 +397,30 @@ public class CharmEffect extends SpellAbilityEffect {
 
         // for spells and activated abilities it is possible to chose zero if minCharmNum allows it
         return true;
+    }
+
+    /**
+     * Phone a Friend: someone outside the game picks a mode, or null if nobody answered. A person calls a real friend and
+     * enters the answer (honor system); the friend may only pick a legal mode (rulings). The AI's friend is simulated:
+     * a random legal mode, and one call in five goes unanswered (user, 2026-10-21).
+     */
+    private static List<AbilitySub> phoneAFriend(final SpellAbility sa, final Player caller, final List<AbilitySub> choices) {
+        if (choices.isEmpty()) {
+            return null;
+        }
+        if (caller.getController().isAI()) {
+            return MyRandom.percentTrue(80) ? Lists.newArrayList(Aggregates.random(choices)) : null;
+        }
+        final List<String> labels = Lists.newArrayList();
+        for (final AbilitySub choice : choices) {
+            labels.add(choice.getDescription());
+        }
+        final String nobody = "Nobody answered (an opponent chooses)";
+        labels.add(nobody);
+        final String answer = caller.getController().chooseStringForEffect(labels, sa,
+                "Call someone and ask them to choose one - read them the modes and explain nothing else. What did they choose?");
+        final int i = labels.indexOf(answer);
+        return i < 0 || i >= choices.size() ? null : Lists.newArrayList(choices.get(i));
     }
 
     /** Far Out: whether the chooser may take one or more different modes here instead, and whether that changes anything. */

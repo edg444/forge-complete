@@ -121,8 +121,8 @@ public class ComputerUtil {
             // 603.3c If no mode is chosen, the ability is removed from the stack.
             return false;
         }
-        if (sa.getApi() == ApiType.Charm && sa.hasParam("Chooser")) {
-            // Another player chose the modes, so targets the AI picked while deciding may belong to a mode that
+        if (sa.getApi() == ApiType.Charm && (sa.hasParam("Chooser") || sa.hasParam("PhoneAFriend"))) {
+            // Another player chose the modes (Phone a Friend: or a simulated friend), so targets the AI picked while deciding may belong to a mode that
             // wasn't chosen, or may not exist yet (Truth or Dare's target is whoever chose)
             for (AbilitySub sub = sa.getSubAbility(); sub != null; sub = sub.getSubAbility()) {
                 if (sub.usesTargeting() && !sub.isTargetNumberValid()) {
