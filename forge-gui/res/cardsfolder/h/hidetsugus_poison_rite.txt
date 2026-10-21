@@ -1,0 +1,5 @@
+Name:Hidetsugu's Poison Rite
+ManaCost:3 B
+Types:Sorcery
+A:SP$ LosesGame | ValidTgts$ Player.poisonCountersEQ7 | TgtPrompt$ Select target player with exactly seven poison counters | Defined$ Targeted | SpellDescription$ Target player with exactly seven poison counters loses the game.
+Oracle:Target player with exactly seven poison counters loses the game.

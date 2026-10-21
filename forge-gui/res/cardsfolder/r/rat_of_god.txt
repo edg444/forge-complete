@@ -1,0 +1,8 @@
+Name:Rat of God
+ManaCost:3 B B
+Types:Kindred Sorcery Rat
+A:SP$ DestroyAll | ValidCards$ Creature.nonRat | NoRegen$ True | SubAbility$ DBAmass | SpellDescription$ Destroy all non-Rat creatures. They can't be regenerated, of course. Then each player amasses Rats X, where X is the number of Rats they control.
+SVar:DBAmass:DB$ RepeatEach | RepeatPlayers$ Player | RepeatSubAbility$ DBAmassEach
+SVar:DBAmassEach:DB$ Amass | Type$ Rat | Num$ X | Defined$ Remembered
+SVar:X:Count$Valid Rat.RememberedPlayerCtrl
+Oracle:Destroy all non-Rat creatures. They can't be regenerated, of course. Then each player amasses Rats X, where X is the number of Rats they control.

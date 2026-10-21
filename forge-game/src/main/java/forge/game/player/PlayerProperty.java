@@ -321,6 +321,13 @@ public class PlayerProperty {
             if (!Expressions.compare(life, property, amount)) {
                 return false;
             }
+        } else if (property.startsWith("poisonCounters")) {
+            // Hidetsugu's Poison Rite: poisonCountersEQ7
+            final String rest = property.substring("poisonCounters".length());
+            final int amount = AbilityUtils.calculateAmount(source, rest.substring(2), spellAbility);
+            if (!Expressions.compare(player.getPoisonCounters(), rest.substring(0, 2), amount)) {
+                return false;
+            }
         } else if (property.equals("IsPoisoned")) {
             if (player.getPoisonCounters() <= 0) {
                 return false;

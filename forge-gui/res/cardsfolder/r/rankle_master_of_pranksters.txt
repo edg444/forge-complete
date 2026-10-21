@@ -1,0 +1,12 @@
+Name:Rankle, Master of Pranksters
+ManaCost:2 B B
+Types:Legendary Creature Faerie Rogue
+PT:3/3
+K:Flying
+K:Haste
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigCharm | TriggerZones$ Battlefield | TriggerDescription$ Whenever CARDNAME deals combat damage to a player, choose one at random —
+SVar:TrigCharm:DB$ Charm | Random$ True | Choices$ DBGlen,DBPyretic,DBSpiteful
+SVar:DBGlen:DB$ CopyPermanent | DefinedName$ Glen Elendra Pranksters | Controller$ Player | SpellDescription$ Each player creates a token that's a copy of Glen Elendra Pranksters.
+SVar:DBPyretic:DB$ CopyPermanent | DefinedName$ Pyretic Prankster | Controller$ Player | SpellDescription$ Each player creates a token that's a copy of Pyretic Prankster.
+SVar:DBSpiteful:DB$ CopyPermanent | DefinedName$ Spiteful Prankster | Controller$ Player | SpellDescription$ Each player creates a token that's a copy of Spiteful Prankster.
+Oracle:Flying, haste\nWhenever Rankle, Master of Pranksters deals combat damage to a player, choose one at random —\n• Each player creates a token that's a copy of Glen Elendra Pranksters.\n• Each player creates a token that's a copy of Pyretic Prankster.\n• Each player creates a token that's a copy of Spiteful Prankster.

@@ -1,0 +1,9 @@
+Name:The Swamp Kitten
+ManaCost:3 B
+Types:Legendary Creature Cat
+PT:2/2
+S:Mode$ Continuous | Affected$ Creature.Land+YouCtrl,Creature.YouCtrl+withMenace | AddPower$ 1 | AddToughness$ 1 | Description$ Land creatures and/or creatures you control with menace get +1/+1.
+T:Mode$ Phase | Phase$ BeginCombat | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigAnimate | TriggerDescription$ At the beginning of combat on your turn, target Swamp you control becomes a 0/0 black land creature and gains menace. It's still a land. Put a +1/+1 counter on it. (It can't be blocked except by two or more creatures. It's dark and scary.)
+SVar:TrigAnimate:DB$ Animate | ValidTgts$ Swamp.YouCtrl | TgtPrompt$ Select target Swamp you control | Power$ 0 | Toughness$ 0 | Types$ Creature | Colors$ Black | OverwriteColors$ True | Keywords$ Menace | Duration$ Permanent | SubAbility$ DBCounter
+SVar:DBCounter:DB$ PutCounter | Defined$ Targeted | CounterType$ P1P1 | CounterNum$ 1
+Oracle:Land creatures and/or creatures you control with menace get +1/+1.\nAt the beginning of combat on your turn, target Swamp you control becomes a 0/0 black land creature and gains menace. It's still a land. Put a +1/+1 counter on it. (It can't be blocked except by two or more creatures. It's dark and scary.)

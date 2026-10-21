@@ -312,6 +312,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Old Way Phyrexian, Hidetsugu's Poison Rite, Invasion Specialist, Quest Compleated Beast, Rankle,
+  Master of Pranksters, The Swamp Kitten, Rat of God, Davvol's Birthdaymobile, Auntie Flint (UNK black rares).**
+  - New static mode `CantRemoveCounter` (players), player property `poisonCounters<op><n>`, and
+    `Count$DeckIdentityMono.<color>` for Mono Eminence (the deck is every nontoken card the player owns in the game).
 - **Unknown Event: Colorless Ultimatum, Battle Myrsphere, Chancellor of the Mulligan, Wurmcoil Broodmother, Mindslaver
   Toolkit, Guildmark, Trampled Lotus, Seer of the Bright Side (UNK RA07-RB02).**
   - **Pledge:** new `Pledge` effect; a player joins one of the ten guilds for the rest of the game, and mana can be

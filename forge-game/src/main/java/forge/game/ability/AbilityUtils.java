@@ -2316,6 +2316,18 @@ public class AbilityUtils {
             final String team = forge.game.ability.effects.ChooseTeamEffect.teamOf(player != null ? player : c.getController(), true);
             return doXMath(team != null && team.replace(" ", "").equals(sq[1]) ? 1 : 0, expr, c, ctb);
         }
+        // Mono Eminence (Auntie Flint): Count$DeckIdentityMono.<color> - 1 if the player's deck's color identity is that
+        // one color. The deck is every card the player owns in the game that isn't a token.
+        if (sq[0].equals("DeckIdentityMono") && sq.length > 1) {
+            final Player you = player != null ? player : c.getController();
+            byte identity = 0;
+            for (final Card each : you.getAllCards()) {
+                if (!each.isToken() && each.getRules() != null) {
+                    identity |= each.getRules().getColorIdentity().getColor();
+                }
+            }
+            return doXMath(identity == MagicColor.fromName(sq[1]) ? 1 : 0, expr, c, ctb);
+        }
         if (sq[0].equals("YouAreSleeved")) {
             return doXMath((player != null ? player : c.getController()).isSleeved() ? 1 : 0, expr, c, ctb);
         }

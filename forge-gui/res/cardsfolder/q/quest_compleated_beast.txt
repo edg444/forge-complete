@@ -1,0 +1,14 @@
+Name:Quest Compleated Beast
+ManaCost:2 B B
+Types:Legendary Creature Phyrexian Beast
+PT:4/4
+K:Menace
+K:Lifelink
+K:Toxic:2
+S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Permanent.token | Description$ CARDNAME can't be blocked by tokens.
+S:Mode$ CantGainLife | ValidPlayer$ Player.Opponent | Description$ Your opponent can't gain life or remove poison counters.
+S:Mode$ CantRemoveCounter | ValidPlayer$ Player.Opponent | CounterType$ POISON | Secondary$ True | Description$ Your opponent can't gain life or remove poison counters.
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Opponent | CombatDamage$ True | Execute$ TrigDamage | TriggerZones$ Battlefield | TriggerDescription$ Whenever CARDNAME deals combat damage to an opponent, it deals that much damage to target battle that player is protecting.
+SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Battle.ProtectedBy TriggeredTarget | TgtPrompt$ Select target battle that player is protecting | NumDmg$ X
+SVar:X:TriggerCount$DamageAmount
+Oracle:Menace, Lifelink, Toxic 2\nQuest Compleated Beast can't be blocked by tokens.\nYour opponent can't gain life or remove poison counters.\nWhenever Quest Compleated Beast deals combat damage to an opponent, it deals that much damage to target battle that player is protecting.

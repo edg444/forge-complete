@@ -1,0 +1,13 @@
+Name:Davvol's Birthdaymobile
+ManaCost:2 B
+Types:Artifact Vehicle
+PT:4/4
+S:Mode$ ReduceCost | ValidCard$ Card.Self | Type$ Spell | Amount$ 2 | EffectZone$ All | CheckSVar$ X | SVarCompare$ GE1 | Description$ This spell costs {2} less to cast if an Elf died this turn or a Soldier entered this turn.
+SVar:X:SVar$ElfDied/Plus.SoldierEntered
+SVar:ElfDied:Count$ThisTurnEntered_Graveyard_from_Battlefield_Creature.Elf
+SVar:SoldierEntered:Count$ThisTurnEntered_Battlefield_Card.Soldier
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ Whenever this Vehicle enters or attacks, target opponent creates a Carnival of Souls token.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigToken | Secondary$ True | TriggerDescription$ Whenever this Vehicle enters or attacks, target opponent creates a Carnival of Souls token.
+SVar:TrigToken:DB$ CopyPermanent | ValidTgts$ Opponent | TgtPrompt$ Select target opponent | DefinedName$ Carnival of Souls | Controller$ Targeted
+K:Crew:2
+Oracle:This spell costs {2} less to cast if an Elf died this turn or a Soldier entered this turn.\nWhenever this Vehicle enters or attacks, target opponent creates a Carnival of Souls token.\nCrew 2

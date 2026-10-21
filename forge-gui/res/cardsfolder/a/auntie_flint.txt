@@ -1,0 +1,11 @@
+Name:Auntie Flint
+ManaCost:2 B
+Types:Legendary Creature Goblin
+PT:2/2
+# The deck's color identity is that of every card the player owns in the game that isn't a token.
+S:Mode$ Continuous | Affected$ Creature.YouCtrl | AddPower$ 1 | EffectZone$ Battlefield,Command | CheckSVar$ MonoBlack | SVarCompare$ EQ1 | Description$ Mono Eminence — If CARDNAME is on the battlefield or in the command zone and your deck's color identity is mono-black, creatures you control get +1/+0.
+SVar:MonoBlack:Count$DeckIdentityMono.black
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigFear | TriggerDescription$ Whenever CARDNAME attacks, another target creature gains fear until end of turn.
+SVar:TrigFear:DB$ Pump | ValidTgts$ Creature.Other | TgtPrompt$ Select another target creature | KW$ Fear
+K:Partner
+Oracle:Mono Eminence — If Auntie Flint is on the battlefield or in the command zone and your deck's color identity is mono-black, creatures you control get +1/+0.\nWhenever Auntie Flint attacks, another target creature gains fear until end of turn.\nPartner (You can have two commanders if both have partner.)

@@ -1201,6 +1201,10 @@ public class Player extends GameEntity implements Comparable<Player> {
 
     @Override
     public int subtractCounter(CounterType counterName, int num, final Player remover) {
+        // Quest Compleated Beast: an opponent can't remove poison counters
+        if (forge.game.staticability.StaticAbilityCantRemoveCounter.applies(this, counterName)) {
+            return 0;
+        }
         int oldValue = getCounters(counterName);
         final boolean fromInfinite = Infinity.isInfinite(oldValue) && !Infinity.isInfinite(num);
         // removing infinitely many leaves none, from any number

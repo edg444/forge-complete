@@ -25,6 +25,7 @@ public enum StaticAbilityMode {
     CountersAreTokens,
     TokensAreCards,
     PoisonTolerance,
+    CantRemoveCounter,
 
     // StaticAbility
     CantAttackUnless,
