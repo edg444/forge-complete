@@ -117,6 +117,12 @@ public class ComputerUtil {
 
         sa = GameActionUtil.addExtraKeywordCost(sa);
 
+        // a number announced as it's cast (Amped Up's electrical sockets), which a cost may depend on
+        if (!sa.isCopied() && sa.getParamOrDefault("AnnounceType", "").contains("ChooseNumber")) {
+            sa.getHostCard().setChosenNumber(ai.getController().chooseNumber(sa, "",
+                    Integer.parseInt(sa.getParam("Min")), Integer.parseInt(sa.getParam("Max"))));
+        }
+
         if (sa.getApi() == ApiType.Charm && !CharmEffect.makeChoices(sa)) {
             // 603.3c If no mode is chosen, the ability is removed from the stack.
             return false;

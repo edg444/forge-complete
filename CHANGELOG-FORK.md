@@ -312,6 +312,21 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Amped Up (UNF #98).** It costs {1} less per electrical socket you can see from your seat, announced as
+  it's cast (`AnnounceType$ ChooseNumber`, as for Liquid Fire), with a reduce-cost static reading the number.
+  - The announcement now shows its own prompt (`AnnounceTitle$`).
+  - The AI now makes announcements too (`ComputerUtil`). Its simulated room keeps the same socket count all game
+    (`AILogic$ Sockets`).
+- **Unfinity: Aardwolf's Advantage (UNF #97).** +2/+0 and alpha strike (Jetpack Janitor's `Card.AlphaStrike`) for the
+  creatures you control as it resolves. No engine change.
+- **Unfinity: Scooch (UNF #91).** Four modes, each followed by a draw: +1 or -1 power with no duration (rulings), or 1
+  life gained or lost.
+  - **Known gap:** targeting a die roll mid-roll isn't supported; Forge has no window to cast spells while a roll is
+    being modified.
+- **Unfinity: A Real Handful (UNF #87).** You report how many hands are touching it with an honor-system action, and
+  its panel shows the count (`ChooseNumber`, `NumberLabel$ hands touching`).
+  - The +2/+2, menace and lifelink switch on and off with that number.
+  - **AI:** it has no hands, so its count is always zero.
 - **Unfinity: Rat in the Hat (UNF #86).** Its target can be any creature card, as with Park Re-Entry.
   - A known or claimed hat counts at once. Otherwise you're asked as it resolves; with no hat, the card can't be cast.
   - **AI:** it targets only known hats (`AITgts$`).

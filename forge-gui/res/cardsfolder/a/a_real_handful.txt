@@ -1,0 +1,13 @@
+Name:A Real Handful
+ManaCost:3 B
+Types:Creature Alien Child Guest
+PT:1/1
+# Hands touching it is physical and not a game action (rulings), so its controller reports the count whenever it changes
+# with the honor-system action below; the panel shows it. People's hands only, and only willing ones. The AI has no
+# hands to lay on it, so for the AI it's no hands.
+A:ST$ ChooseNumber | Cost$ 0 | SpecialAction$ True | Defined$ You | Min$ 0 | Max$ 20 | ListTitle$ How many hands are touching A Real Handful now? | NumberLabel$ hands touching | AILogic$ Never | SpellDescription$ Report how many hands are touching this creature (honor system).
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ 2 | AddToughness$ 2 | CheckSVar$ Hands | SVarCompare$ GE1 | Description$ As long as one or more hands are touching this creature, it gets +2/+2.
+S:Mode$ Continuous | Affected$ Card.Self | AddKeyword$ Menace | CheckSVar$ Hands | SVarCompare$ GE2 | Description$ As long as two or more hands are touching this creature, it has menace.
+S:Mode$ Continuous | Affected$ Card.Self | AddKeyword$ Lifelink | CheckSVar$ Hands | SVarCompare$ GE3 | Description$ As long as three or more hands are touching this creature, it has lifelink.
+SVar:Hands:Count$ChosenNumber
+Oracle:As long as one or more hands are touching this creature, it gets +2/+2.\nAs long as two or more hands are touching this creature, it has menace.\nAs long as three or more hands are touching this creature, it has lifelink.

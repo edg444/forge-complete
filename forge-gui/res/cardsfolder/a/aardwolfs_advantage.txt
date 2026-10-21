@@ -1,0 +1,8 @@
+Name:Aardwolf's Advantage
+ManaCost:2 R
+Types:Sorcery
+# alpha strike as Jetpack Janitor's (Card.AlphaStrike), on the creatures you control as it resolves
+A:SP$ PumpAll | ValidCards$ Creature.YouCtrl | NumAtt$ +2 | SubAbility$ DBAlphaStrike | SpellDescription$ Creatures you control get +2/+0 and gain alpha strike until end of turn. (A creature with alpha strike has first strike as long as it's blocking or being blocked by a creature that comes after it alphabetically.)
+SVar:DBAlphaStrike:DB$ Effect | RememberObjects$ Valid Creature.YouCtrl | StaticAbilities$ AlphaStrike | ForgetOnMoved$ Battlefield
+SVar:AlphaStrike:Mode$ Continuous | Affected$ Creature.IsRemembered+AlphaStrike | AddKeyword$ First Strike | Description$ Alpha strike (These creatures have first strike as long as they're blocking or being blocked by a creature that comes after them alphabetically.)
+Oracle:Creatures you control get +2/+0 and gain alpha strike until end of turn. (A creature with alpha strike has first strike as long as it's blocking or being blocked by a creature that comes after it alphabetically.)

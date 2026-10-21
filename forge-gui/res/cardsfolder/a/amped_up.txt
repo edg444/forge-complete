@@ -1,0 +1,11 @@
+Name:Amped Up
+ManaCost:5 R
+Types:Sorcery
+# The sockets are counted from your seat as it's cast (honor system, announced like Liquid Fire's number). The AI has no
+# room to look around, so a simulated one whose sockets stay put all game (AILogic$ Sockets).
+A:SP$ Untap | ValidTgts$ Creature | TgtPrompt$ Select target creature | AnnounceType$ ChooseNumber | Min$ 0 | Max$ 30 | AnnounceTitle$ How many electrical sockets in a wall or floor can you see from your seat? (Each one you could plug a device into; most outlets have two.) | AILogic$ Sockets | SubAbility$ DBChange | SpellDescription$ Gain control of target creature until end of turn. Untap that creature. Until end of turn, it gets +3/+0 and gains haste.
+SVar:DBChange:DB$ GainControl | Defined$ Targeted | AddKWs$ Haste | LoseControl$ EOT | SubAbility$ DBPump
+SVar:DBPump:DB$ Pump | Defined$ Targeted | NumAtt$ +3
+S:Mode$ ReduceCost | ValidCard$ Card.Self | Type$ Spell | Amount$ Sockets | EffectZone$ All | Description$ This spell costs {1} less to cast for each electrical socket in a wall or floor you can see from your seat.
+SVar:Sockets:Count$ChosenNumber
+Oracle:This spell costs {1} less to cast for each electrical socket in a wall or floor you can see from your seat.\nGain control of target creature until end of turn. Untap that creature. Until end of turn, it gets +3/+0 and gains haste.

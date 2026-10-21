@@ -815,8 +815,9 @@ public class PlaySpellAbility {
                 if ("ChooseNumber".equals(varName)) {
                     final int min = Integer.parseInt(ability.getParam("Min"));
                     final int max = Integer.parseInt(ability.getParam("Max"));
+                    // AnnounceTitle$: what the number is (Amped Up's electrical sockets)
                     final int i = ability.getActivatingPlayer().getController().chooseNumber(ability,
-                            Localizer.getInstance().getMessage("lblChooseNumber") , min, max);
+                            ability.getParamOrDefault("AnnounceTitle", Localizer.getInstance().getMessage("lblChooseNumber")), min, max);
                     ability.getHostCard().setChosenNumber(i);
                 }
                 if ("Opponent".equals(varName)) {

@@ -1,0 +1,12 @@
+Name:Scooch
+ManaCost:1 B
+Types:Instant
+# Adding to a creature's power has no duration (rulings). Targeting a die roll mid-roll isn't supported: Forge has no
+# window to cast spells while a die roll is being modified.
+A:SP$ Charm | Choices$ DBPowerUp,DBPowerDown,DBLifeUp,DBLifeDown | PrecostDesc$ Add or subtract 1 from target creature's power, target player's life total, or target die roll's result.
+SVar:DBPowerUp:DB$ Pump | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumAtt$ +1 | Duration$ Permanent | SubAbility$ DBDraw | SpellDescription$ Add 1 to target creature's power. Draw a card.
+SVar:DBPowerDown:DB$ Pump | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumAtt$ -1 | Duration$ Permanent | IsCurse$ True | SubAbility$ DBDraw | SpellDescription$ Subtract 1 from target creature's power. Draw a card.
+SVar:DBLifeUp:DB$ GainLife | ValidTgts$ Player | TgtPrompt$ Select target player | LifeAmount$ 1 | SubAbility$ DBDraw | SpellDescription$ Add 1 to target player's life total. Draw a card.
+SVar:DBLifeDown:DB$ LoseLife | ValidTgts$ Player | TgtPrompt$ Select target player | LifeAmount$ 1 | SubAbility$ DBDraw | SpellDescription$ Subtract 1 from target player's life total. Draw a card.
+SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1
+Oracle:Add or subtract 1 from target creature's power, target player's life total, or target die roll's result.\nDraw a card.

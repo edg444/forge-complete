@@ -87,6 +87,9 @@ import static java.lang.Math.max;
  * @version $Id$
  */
 public class AiController {
+    // Amped Up: the electrical sockets in the AI's simulated room, rolled once (-1 until then)
+    private int roomSockets = -1;
+
     private final Player player;
     private final Game game;
     private final AiCardMemory memory;
@@ -2108,6 +2111,13 @@ public class AiController {
         } else if ("HighFives".equals(logic)) {
             // Gimme Five: nobody high-fives a computer by the dozen - a few people near the screen at most
             return Math.min(max, Math.max(min, MyRandom.getRandom().nextInt(4)));
+        } else if ("Sockets".equals(logic)) {
+            // Amped Up: the AI's simulated room - its sockets stay where they are all game. Outlets mostly have two.
+            if (roomSockets < 0) {
+                final int roll = MyRandom.getRandom().nextInt(100);
+                roomSockets = roll < 10 ? 0 : roll < 40 ? 2 : roll < 75 ? 4 : roll < 95 ? 6 : 8;
+            }
+            return Math.min(max, Math.max(min, roomSockets));
         } else if ("TrashCans".equals(logic)) {
             // Questionable Cuisine: a simulated room - usually one trash can, sometimes none or two, rarely three
             final int roll = MyRandom.getRandom().nextInt(100);
