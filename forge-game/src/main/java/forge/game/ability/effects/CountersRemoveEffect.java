@@ -73,6 +73,19 @@ public class CountersRemoveEffect extends SpellAbilityEffect {
         final Player activator = sa.getActivatingPlayer();
 
         PlayerController pc = activator.getController();
+        // Unclaimed Bird: a counter of each kind already on each card
+        if (sa.hasParam("EachKind")) {
+            for (final Card c : getDefinedCardsOrTargeted(sa)) {
+                final Card gameCard = game.getCardState(c, null);
+                if (gameCard == null || !gameCard.isInPlay()) {
+                    continue;
+                }
+                for (final CounterType kind : new java.util.ArrayList<>(gameCard.getCounters().elementSet())) {
+                    gameCard.subtractCounter(kind, 1, activator);
+                }
+            }
+            return;
+        }
         final String type = sa.getParam("CounterType");
         final String num = sa.getParamOrDefault("CounterNum", "1");
 

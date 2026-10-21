@@ -1,0 +1,8 @@
+Name:Irrefutable Evidence
+ManaCost:1 U
+Types:Instant
+S:Mode$ Continuous | Affected$ Card.Self+YouOwn | AffectedZone$ Graveyard | EffectZone$ Graveyard | ManaCost$ 10 | Description$ Treat CARDNAME's mana value as 10 while it's in your graveyard.
+A:SP$ Draw | NumCards$ 1 | SpellDescription$ Draw a card.
+T:Mode$ CollectEvidence | ValidPlayer$ You | ValidCard$ Card.Self | TriggerZones$ Exile | Execute$ TrigDraw | TriggerDescription$ When you collect CARDNAME as evidence, draw a card.
+SVar:TrigDraw:DB$ Draw | NumCards$ 1
+Oracle:Treat Irrefutable Evidence's mana value as 10 while it's in your graveyard.\nDraw a card.\nWhen you collect Irrefutable Evidence as evidence, draw a card.

@@ -75,7 +75,9 @@ public class CostCollectEvidence extends CostPartWithList {
         AbilityKey.addCardZoneTableParams(moveParams, table);
         CardCollection moved = game.getAction().exile(new CardCollection(targetCards), ability, moveParams);
         SpellAbilityEffect.handleExiledWith(moved, ability);
-        game.getTriggerHandler().runTrigger(TriggerType.CollectEvidence, AbilityKey.mapFromPlayer(payer), false);
+        final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(payer);
+        runParams.put(AbilityKey.Cards, moved);
+        game.getTriggerHandler().runTrigger(TriggerType.CollectEvidence, runParams, false);
         return moved;
     }
 }

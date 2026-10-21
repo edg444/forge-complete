@@ -1606,7 +1606,8 @@ public class GameAction {
                     }
                     if (c.isCreature() && c.isPaired()) {
                         Card partner = c.getPairedWith();
-                        if (!partner.isCreature() || c.getController() != partner.getController() || !c.isInPlay()) {
+                        // a battlebonded battle stays paired for as long as its controller controls both
+                        if ((!partner.isCreature() && !partner.isBattle()) || c.getController() != partner.getController() || !c.isInPlay()) {
                             c.setPairedWith(null);
                             partner.setPairedWith(null);
                             affectedCards.add(c);

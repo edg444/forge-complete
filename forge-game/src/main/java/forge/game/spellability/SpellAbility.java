@@ -1687,6 +1687,19 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
         pipsToReduce.get().clear();
     }
 
+    // Untap Convoke: creatures untapped to pay, tapped again if the spell is backed out of
+    private CardCollection untappedForConvoke = null;
+
+    public CardCollection getUntappedForConvoke() {
+        return untappedForConvoke == null ? new CardCollection() : untappedForConvoke;
+    }
+    public void addUntappedForConvoke(final Card c) {
+        if (untappedForConvoke == null) {
+            untappedForConvoke = new CardCollection();
+        }
+        untappedForConvoke.add(c);
+    }
+
     public CardCollection getTappedForConvoke() {
         return tappedForConvoke.get();
     }
@@ -1695,6 +1708,7 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
     }
     public void clearTappedForConvoke() {
         tappedForConvoke.get().clear();
+        untappedForConvoke = null;
     }
 
     public boolean isEmerge() {

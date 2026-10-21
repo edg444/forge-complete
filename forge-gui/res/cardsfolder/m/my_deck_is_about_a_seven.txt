@@ -1,0 +1,8 @@
+Name:My Deck is About a Seven
+ManaCost:3 R
+Types:Instant
+A:SP$ ChooseNumber | ValidTgts$ Creature | TgtPrompt$ Select target creature | Defined$ You | Min$ 6 | Max$ 8 | ListTitle$ Choose a number between 6 and 8 | SubAbility$ DBDamage | SpellDescription$ Choose a number between 6 and 8. CARDNAME deals that much damage to target creature.
+SVar:DBDamage:DB$ DealDamage | Defined$ Targeted | NumDmg$ X | SubAbility$ DBCleanup
+SVar:X:Count$ChosenNumber
+SVar:DBCleanup:DB$ Cleanup | ClearChosenNumber$ True
+Oracle:Choose a number between 6 and 8. My Deck is About a Seven deals that much damage to target creature.

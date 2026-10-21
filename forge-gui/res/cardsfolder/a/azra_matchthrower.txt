@@ -1,0 +1,12 @@
+Name:Azra Matchthrower
+ManaCost:3 R
+Types:Creature Azra Warrior
+PT:4/4
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Battle.YouCtrl+!Paired | Execute$ TrigBondSelf | TriggerDescription$ Battlebond (You may pair this creature with an unpaired battle you control when either enters the battlefield. They remain paired for as long as you control both of them.)
+SVar:TrigBondSelf:DB$ Bond | Defined$ TriggeredCardLKICopy | ValidCards$ Battle.YouCtrl+!Paired | Battlebond$ True
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Battle.YouCtrl | TriggerZones$ Battlefield | IsPresent$ Card.Self+!Paired | Secondary$ True | Execute$ TrigBondOther | TriggerDescription$ When an unpaired battle you control enters, you may pair it with CARDNAME.
+SVar:TrigBondOther:DB$ Bond | Defined$ TriggeredCardLKICopy | ValidCards$ Card.Self+!Paired | Battlebond$ True
+S:Mode$ Continuous | Affected$ Card.Self+Paired,Battle.PairedWith | IsPresent$ Battle.PairedWith | AddTrigger$ DamagedTrig | Description$ As long as CARDNAME is paired with a battle, each of those permanents has "Whenever this permanent is dealt combat damage, this permanent deals 1 damage to any target."
+SVar:DamagedTrig:Mode$ DamageDoneOnce | ValidTarget$ Card.Self | CombatDamage$ True | Execute$ TrigDamage | TriggerZones$ Battlefield | TriggerDescription$ Whenever this permanent is dealt combat damage, this permanent deals 1 damage to any target.
+SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 1
+Oracle:Battlebond (You may pair this creature with an unpaired battle you control when either enters the battlefield. They remain paired for as long as you control both of them.)\nAs long as Azra Matchthrower is paired with a battle, each of those permanents has "Whenever this permanent is dealt combat damage, this permanent deals 1 damage to any target."

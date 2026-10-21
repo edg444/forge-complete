@@ -1,0 +1,16 @@
+Name:Unclaimed Bird
+ManaCost:3 U
+Types:Creature Bird
+PT:3/4
+K:Flying
+SVar:AsksTeam:Team
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigTeam | TriggerDescription$ When CARDNAME enters the battlefield, if you're on the Mirran team, choose any number of permanents, then remove from each a counter of each kind already there. If you're on the Phyrexian team, proliferate.
+SVar:TrigTeam:DB$ ChooseTeam | Defined$ You | SubAbility$ DBChoose
+SVar:DBChoose:DB$ ChooseCard | Defined$ You | Choices$ Permanent.HasCounters | MinAmount$ 0 | Amount$ Many | ChoiceTitle$ Choose any number of permanents to remove a counter of each kind from | AILogic$ RemoveCounters | ConditionCheckSVar$ Mirran | ConditionSVarCompare$ EQ1 | SubAbility$ DBRemove
+SVar:DBRemove:DB$ RemoveCounter | Defined$ ChosenCard | EachKind$ True | ConditionCheckSVar$ Mirran | ConditionSVarCompare$ EQ1 | SubAbility$ DBProliferate
+SVar:DBProliferate:DB$ Proliferate | ConditionCheckSVar$ Phyrexian | ConditionSVarCompare$ EQ1 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+SVar:Many:Count$Valid Permanent.HasCounters
+SVar:Mirran:Count$UnknownTeam.Mirran
+SVar:Phyrexian:Count$UnknownTeam.Phyrexian
+Oracle:Flying\nWhen Unclaimed Bird enters the battlefield, if you're on the Mirran team, choose any number of permanents, then remove from each a counter of each kind already there. If you're on the Phyrexian team, proliferate.

@@ -1,0 +1,7 @@
+Name:Establishing Shot
+ManaCost:R
+Types:Instant
+A:SP$ DealDamage | ValidTgts$ Any | NumDmg$ X | SpellDescription$ Establishing Shot deals 2 damage to any target. If this is the first spell you've cast this game, it deals 3 damage instead.
+SVar:X:Count$Compare Cast EQ1.3.2
+SVar:Cast:Count$YouCastThisGame
+Oracle:Establishing Shot deals 2 damage to any target. If this is the first spell you've cast this game, it deals 3 damage instead.

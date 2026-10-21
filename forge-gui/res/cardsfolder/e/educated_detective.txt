@@ -1,0 +1,8 @@
+Name:Educated Detective
+ManaCost:3 U
+Types:Creature Weird Detective
+PT:2/4
+A:AB$ Surveil | Cost$ 1 U T | Amount$ 1 | ConditionCheckSVar$ X | ConditionSVarCompare$ EQ0 | SubAbility$ DBDraw | SpellDescription$ Surveil 1. If all your commanders have been revealed, draw a card instead.
+SVar:DBDraw:DB$ Draw | NumCards$ 1 | ConditionCheckSVar$ X | ConditionSVarCompare$ GE1
+SVar:X:Count$AllCommandersRevealed
+Oracle:{1}{U}, {T}: Surveil 1. If all your commanders have been revealed, draw a card instead.

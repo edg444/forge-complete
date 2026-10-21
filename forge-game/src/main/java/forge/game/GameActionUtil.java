@@ -1026,6 +1026,9 @@ public final class GameActionUtil {
             for (Card c : ability.getTappedForConvoke()) {
                 c.setTapped(false);
             }
+            for (Card c : ability.getUntappedForConvoke()) {
+                c.setTapped(true);
+            }
         }
 
         if (ability.getApi() == ApiType.Charm) {

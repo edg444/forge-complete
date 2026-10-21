@@ -312,6 +312,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Azra Matchthrower, Establishing Shot, Now THIS Is Aether Racing, Burn the Phyresis, My Deck is
+  About a Seven, Irrefutable Evidence, Drake with Set's Mechanic, Unclaimed Bird, Educated Detective, Shadowmoor Draw
+  Spell, Wistful Puppeteer, Literal Delver of Secrets (UNK CR04a-CU06).**
+  - **Battlebond:** `Bond` `Battlebond$ True` pairs a creature with a battle, and the pair holds while you control both.
+  - **Race teams (user ruling):** each Aether Racing line is castable by its own team, or by a player on neither team
+    yet, who then joins that team.
+  - **Collect evidence:** the trigger now knows which cards were collected (`ValidCard$`).
+  - **Counters:** `RemoveCounter` `EachKind$ True` removes one counter of each kind; the AI picks opponents' permanents,
+    and its own only when all their counters are -1/-1.
+  - **Untap Convoke:** new keyword. Tapped creatures are untapped to pay, as convoke taps untapped ones; it counts as
+    convoke, and backing out of the spell taps them again. The AI uses every one that can pay.
+  - New Animated Role token.
 - **Unknown Event: Underdog Racer, Unclaimed Tanadon, Take the High Ground, Tarkir Omenpath, Unknown Event Shores,
   Command Mine, Command Power Plant, Fear of Going 0-2 Drop, Aggressive Detective, Join the Winning Team (UNK
   CG05a-CR03d).**

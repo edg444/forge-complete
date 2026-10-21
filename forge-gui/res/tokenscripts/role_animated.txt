@@ -1,0 +1,7 @@
+Name:Animated
+ManaCost:no cost
+Types:Enchantment Aura Role
+K:Enchant:Permanent
+SVar:AttachAILogic:Animate
+S:Mode$ Continuous | Affected$ Card.EnchantedBy | AddType$ Artifact & Creature | SetPower$ 4 | SetToughness$ 4 | Description$ Enchanted permanent is a 4/4 artifact creature.
+Oracle:Enchant permanent\nEnchanted permanent is a 4/4 artifact creature.

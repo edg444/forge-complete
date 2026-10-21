@@ -314,6 +314,9 @@ public class CostAdjustment {
             if (host.hasKeyword(Keyword.CONVOKE)) {
                 adjustCostByConvokeOrImprovise(cost, sa, activator, false, true, test);
             }
+            if (host.hasKeyword(Keyword.UNTAP_CONVOKE)) {
+                adjustCostByUntapConvoke(cost, sa, activator, test);
+            }
             if (host.hasKeyword(Keyword.IMPROVISE)) {
                 adjustCostByConvokeOrImprovise(cost, sa, activator, true, false, test);
             }
@@ -430,6 +433,51 @@ public class CostAdjustment {
             runParams.put(AbilityKey.Cards, tapped);
             payer.getGame().getTriggerHandler().runTrigger(TriggerType.TapAll, runParams, false);
         }
+    }
+
+    /** Shadowmoor Draw Spell: tapped creatures are untapped to pay, as convoke taps untapped ones; it counts as convoke. */
+    private static void adjustCostByUntapConvoke(ManaCostBeingPaid cost, final SpellAbility sa, final Player payer, boolean test) {
+        if (!sa.getHostCard().hasKeyword(Keyword.CONVOKE)) {
+            sa.clearTappedForConvoke();
+        }
+        final CardCollectionView tappedCreatures = CardLists.filter(payer.getCreaturesInPlay(), Card::isTapped);
+        if (tappedCreatures.isEmpty()) {
+            return;
+        }
+        // untapping costs the AI nothing, so it uses every tapped creature that still has something to pay
+        final Map<Card, ManaCostShard> convoked = payer.getController().isAI() ? untapConvokeAll(cost, tappedCreatures)
+                : payer.getController().chooseCardsForConvokeOrImprovise(sa, cost.toManaCost(), tappedCreatures, false, true, null);
+        for (final Entry<Card, ManaCostShard> conv : convoked.entrySet()) {
+            final Card c = conv.getKey();
+            sa.addTappedForConvoke(c);
+            cost.decreaseShard(conv.getValue(), 1);
+            if (!test) {
+                sa.addUntappedForConvoke(c);
+                c.untap();
+            }
+        }
+    }
+
+    private static Map<Card, ManaCostShard> untapConvokeAll(final ManaCostBeingPaid cost, final CardCollectionView creatures) {
+        final ManaCostBeingPaid left = new ManaCostBeingPaid(cost);
+        final Map<Card, ManaCostShard> result = new java.util.HashMap<>();
+        for (final Card c : creatures) {
+            ManaCostShard pays = null;
+            for (final ManaCostShard shard : left.getDistinctShards()) {
+                if (shard != ManaCostShard.GENERIC && c.getColor().hasAnyColor(shard.getColorMask())) {
+                    pays = shard;
+                    break;
+                }
+            }
+            if (pays == null && left.getUnpaidShards(ManaCostShard.GENERIC) > 0) {
+                pays = ManaCostShard.GENERIC;
+            }
+            if (pays != null) {
+                left.decreaseShard(pays, 1);
+                result.put(c, pays);
+            }
+        }
+        return result;
     }
 
     private static void adjustCostByOffering(final ManaCostBeingPaid cost, final SpellAbility sa) {

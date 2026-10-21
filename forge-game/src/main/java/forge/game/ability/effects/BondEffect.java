@@ -28,12 +28,16 @@ public class BondEffect extends SpellAbilityEffect {
             if (gameCard == null || !tgtC.equalsWithGameTimestamp(gameCard)) {
                 continue;
             }
-            if (gameCard.isPaired() || !gameCard.isCreature() || !gameCard.isInPlay() || gameCard.getController() != p) {
+            // Azra Matchthrower's battlebond pairs a creature with a battle, so either may be the one that entered
+            final boolean battlebond = sa.hasParam("Battlebond");
+            if (gameCard.isPaired() || (!gameCard.isCreature() && !(battlebond && gameCard.isBattle()))
+                    || !gameCard.isInPlay() || gameCard.getController() != p) {
                 continue;
             }
 
             // find list of valid cards to pair with
-            CardCollectionView cards = CardLists.getValidCards(p.getCreaturesInPlay(), sa.getParam("ValidCards"), p, source, sa);
+            CardCollectionView cards = CardLists.getValidCards(battlebond ? p.getCardsIn(forge.game.zone.ZoneType.Battlefield) : p.getCreaturesInPlay(),
+                    sa.getParam("ValidCards"), p, source, sa);
             if (cards.isEmpty()) {
                 continue;
             }

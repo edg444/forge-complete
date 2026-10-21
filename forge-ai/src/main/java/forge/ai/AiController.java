@@ -2292,6 +2292,16 @@ public class AiController {
         if (sa.hasParam("AIMaxAmount")) {
             max = AbilityUtils.calculateAmount(sa.getHostCard(), sa.getParam("AIMaxAmount"), sa);
         }
+        // Unclaimed Bird: take counters off opponents' permanents, and off its own only when they're all -1/-1 counters
+        if ("RemoveCounters".equals(sa.getParam("AILogic"))) {
+            for (final Card c : pool) {
+                final boolean onlyMinus = c.getCounters().elementSet().stream().allMatch(t -> t.is(forge.game.card.CounterEnumType.M1M1));
+                if (result.size() < max && (c.getController().isOpponentOf(player) ? !onlyMinus : onlyMinus)) {
+                    result.add(c);
+                }
+            }
+            return result;
+        }
         switch (sa.getApi()) {
             case ChooseSide:
                 // Problematic Volcano: the creatures put to the left; all on one side

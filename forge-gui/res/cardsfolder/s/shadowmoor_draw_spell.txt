@@ -1,0 +1,6 @@
+Name:Shadowmoor Draw Spell
+ManaCost:3 U
+Types:Instant
+K:Untap Convoke
+A:SP$ Draw | NumCards$ 2 | SpellDescription$ Draw two cards.
+Oracle:Untap Convoke (Each tapped creature that you untap while casting this spell pays for {1} or one mana of that creature's color. This counts as convoke.)\nDraw two cards.

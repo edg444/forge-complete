@@ -18,6 +18,18 @@ public class TriggerCollectEvidence extends Trigger {
         if (!matchesValidParam("ValidPlayer", runParams.get(AbilityKey.Player))) {
             return false;
         }
+        // Irrefutable Evidence: one of the cards collected
+        if (hasParam("ValidCard")) {
+            boolean found = false;
+            if (runParams.get(AbilityKey.Cards) instanceof Iterable<?> collected) {
+                for (final Object o : collected) {
+                    found |= o instanceof forge.game.card.Card c && matchesValidParam("ValidCard", c);
+                }
+            }
+            if (!found) {
+                return false;
+            }
+        }
 
         return true;
     }
