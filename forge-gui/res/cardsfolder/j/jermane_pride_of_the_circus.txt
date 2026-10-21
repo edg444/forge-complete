@@ -1,0 +1,15 @@
+Name:Jermane, Pride of the Circus
+ManaCost:G G
+Types:Legendary Creature Cat Performer
+PT:2/3
+# Legs are counted in the art, on the figure that is the creature (rulings). Art Scryfall Tagger tags with four or more
+# legs counts at once (Card.KnownFourLegs); for any other, the activator is asked as the ability resolves, and if it
+# doesn't have them the target was never legal and nothing happens. The AI targets only creatures known to have them.
+A:AB$ PutCounter | Cost$ G T | ValidTgts$ Creature | TgtPrompt$ Select target creature with four or more legs | AITgts$ Card.KnownFourLegs | CounterType$ P1P1 | CounterNum$ 2 | ConditionDefined$ Targeted | ConditionPresent$ Card.KnownFourLegs | SubAbility$ DBAskCounters | SpellDescription$ Put two +1/+1 counters on target creature with four or more legs.
+SVar:DBAskCounters:DB$ GenericChoice | Defined$ You | Choices$ NoLegs,LegsCounters | ShowCurrentCard$ Targeted | ChoicePrompt$ Does target creature have four or more legs? (Counted in its art, on the figure that is the creature. Legs it's known to have count even if they aren't all visible.) | ConditionDefined$ Targeted | ConditionPresent$ Card.KnownFourLegs | ConditionCompare$ EQ0
+SVar:LegsCounters:DB$ PutCounter | Defined$ Targeted | CounterType$ P1P1 | CounterNum$ 2 | SpellDescription$ It has four or more legs
+SVar:NoLegs:DB$ Pump | SpellDescription$ It doesn't
+A:AB$ Pump | Cost$ 1 G G T | ValidTgts$ Creature | TgtPrompt$ Select target creature with four or more legs | AITgts$ Card.KnownFourLegs | KW$ HIDDEN All creatures able to block CARDNAME do so. | ConditionDefined$ Targeted | ConditionPresent$ Card.KnownFourLegs | SubAbility$ DBAskLure | StackDescription$ All creatures able to block {c:Targeted} this turn do so. | SpellDescription$ Until end of turn, all creatures able to block target creature with four or more legs do so.
+SVar:DBAskLure:DB$ GenericChoice | Defined$ You | Choices$ NoLegs,LegsLure | ShowCurrentCard$ Targeted | ChoicePrompt$ Does target creature have four or more legs? (Counted in its art, on the figure that is the creature. Legs it's known to have count even if they aren't all visible.) | ConditionDefined$ Targeted | ConditionPresent$ Card.KnownFourLegs | ConditionCompare$ EQ0
+SVar:LegsLure:DB$ Pump | Defined$ Targeted | KW$ HIDDEN All creatures able to block CARDNAME do so. | SpellDescription$ It has four or more legs
+Oracle:{G}, {T}: Put two +1/+1 counters on target creature with four or more legs.\n{1}{G}{G}, {T}: Until end of turn, all creatures able to block target creature with four or more legs do so.

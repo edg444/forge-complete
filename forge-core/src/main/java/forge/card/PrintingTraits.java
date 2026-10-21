@@ -49,6 +49,8 @@ public final class PrintingTraits {
         private boolean tree = false;
         private boolean backTree = false;
         private boolean hot = false;
+        private boolean fourLegs = false;
+        private boolean backFourLegs = false;
         private boolean backHot = false;
         private java.util.Set<String> artObjects = java.util.Collections.emptySet();
         private java.util.Set<String> backArtObjects = java.util.Collections.emptySet();
@@ -110,6 +112,11 @@ public final class PrintingTraits {
         /** Something hot in the artwork (Don't Try This at Home), per Scryfall Tagger; false can still mean untagged. */
         public boolean hasHot(final boolean backFace) {
             return backFace ? backHot : hot;
+        }
+
+        /** Tagger tags the art's figure with four or more legs (Jermane, Pride of the Circus). */
+        public boolean hasFourLegs(final boolean backFace) {
+            return backFace ? backFourLegs : fourLegs;
         }
 
         /** A named character this printing names in its name or flavor text, or shows in its art, on any face (Vorthos). */
@@ -273,6 +280,10 @@ public final class PrintingTraits {
                     t.boosterFun = true;
                 } else if (trait.startsWith("universe=")) {
                     t.universe = trait.substring(9);
+                } else if (trait.equals("fourlegs")) {
+                    t.fourLegs = true;
+                } else if (trait.equals("backfourlegs")) {
+                    t.backFourLegs = true;
                 } else if (trait.startsWith("characters=")) {
                     t.characters = new java.util.HashSet<>(java.util.Arrays.asList(trait.substring(11).split(",")));
                 } else if (trait.startsWith("flavorlines=")) {

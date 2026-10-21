@@ -596,6 +596,10 @@ public class CardProperty {
             if (!source.hasChosenType() || !card.hasKnownCharacter(source.getChosenType())) {
                 return false;
             }
+        } else if (property.equals("KnownFourLegs")) {
+            if (!card.hasKnownFourLegs()) {
+                return false;
+            }
         } else if (property.equals("HotInArt")) {
             if (!card.hasKnownHotInArt()) {
                 return false;

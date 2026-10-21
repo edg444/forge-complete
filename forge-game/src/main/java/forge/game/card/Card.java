@@ -8399,6 +8399,12 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return t == null ? Set.of() : t.getCharacters();
     }
 
+    /** Four or more legs the printing data confirms in the art (Jermane); false can still mean untagged. */
+    public boolean hasKnownFourLegs() {
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t != null && t.hasFourLegs(isBackSide());
+    }
+
     /** Something hot the printing data confirms in the art (Don't Try This at Home); false can still mean untagged. */
     public boolean hasKnownHotInArt() {
         final PrintingTraits.Traits t = getPrintingTraits();

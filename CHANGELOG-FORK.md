@@ -312,6 +312,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Jermane, Pride of the Circus (UNF #144).** Legs are counted in the art, on the figure that is the
+  creature (rulings).
+  - **Printing data:** art Scryfall Tagger tags with four or more legs is now in `PrintingTraits.txt` (`fourlegs`,
+    `Card.KnownFourLegs`). Art with a rider is left out, since those legs are usually the mount's (Black Knight).
+  - For any other creature the activator is asked as the ability resolves; if it doesn't have them, nothing happens.
+  - **AI:** it targets only creatures known to have four or more legs.
 - **Unfinity: An Incident Has Occurred (UNF #143).** New Charm parameter `AfterModesAbility`: an instruction after the
   modes that happens whichever were chosen. Apologizing is honor system; the AI always apologizes.
 - **Unfinity: Icing Manipulator (UNF #142).** New static mode `CountersAreTokens`: each +1/+1 counter on a creature you
