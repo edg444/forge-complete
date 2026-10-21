@@ -710,11 +710,14 @@ public class CardFactoryUtil {
 
             inst.addTrigger(bushidoTrigger1);
             inst.addTrigger(bushidoTrigger2);
-        } else if (keyword.equals("Cascade")) {
+        } else if (keyword.equals("Cascade") || keyword.equals("Booster cascade")) {
+            // Myntasha, Honored One: booster cascade is cascade from the booster pile, back to the bottom of it
+            final boolean booster = keyword.equals("Booster cascade");
             final StringBuilder trigScript = new StringBuilder("Mode$ SpellCast | ValidCard$ Card.Self | TriggerZones$ Stack" +
-                    " | Secondary$ True | TriggerDescription$ Cascade - CARDNAME");
+                    " | Secondary$ True | TriggerDescription$ " + keyword + " - CARDNAME");
 
             final String abString = "DB$ DigUntil | Defined$ You | Amount$ 1 | Valid$ Card.nonLand+cmcLTCascadeX" +
+                    (booster ? " | DigZone$ BoosterPile" : "") +
                     " | FoundDestination$ Exile | RevealedDestination$ Exile | ImprintFound$ True" +
                     " | RememberRevealed$ True";
             SpellAbility dig = AbilityFactory.getAbility(abString, card);
@@ -726,7 +729,7 @@ public class CardFactoryUtil {
             dig.setSubAbility(cascadeCast);
 
             final String dbMoveToLib = "DB$ ChangeZoneAll | ChangeType$ Card.IsRemembered,Card.IsImprinted"
-                    + " | Origin$ Exile | Destination$ Library | RandomOrder$ True | LibraryPosition$ -1";
+                    + " | Origin$ Exile | Destination$ " + (booster ? "BoosterPile" : "Library") + " | RandomOrder$ True | LibraryPosition$ -1";
             AbilitySub moveToLib = (AbilitySub)AbilityFactory.getAbility(dbMoveToLib, card);
             cascadeCast.setSubAbility(moveToLib);
 

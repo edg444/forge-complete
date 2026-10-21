@@ -913,7 +913,7 @@ public class GameAction {
                 case Graveyard -> moveToGraveyard(c, cause, params);
                 case Exile -> !c.canExiledBy(cause, true) ? null : exile(c, cause, params);
                 case Stack -> moveToStack(c, cause, params);
-                case PlanarDeck, SchemeDeck, AttractionDeck, ContraptionDeck -> moveToVariantDeck(c, name, libPosition, cause, params);
+                case PlanarDeck, SchemeDeck, AttractionDeck, ContraptionDeck, BoosterPile -> moveToVariantDeck(c, name, libPosition, cause, params);
                 case Junkyard -> moveToJunkyard(c, cause, params);
                 // keeps the params so the move is recorded for "until" returns (Side Quest sends a creature
                 // out of the game until your next turn)

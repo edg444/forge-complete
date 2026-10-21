@@ -208,6 +208,7 @@ public class PlaySpellAbility {
                     || part instanceof CostDraw
                     || part instanceof CostGainLife
                     || part instanceof CostFlavorAction
+                    || part instanceof CostOpenBooster
                     || part instanceof CostFlipCoin
                     || part instanceof CostRollDice
                     || part instanceof CostDamage

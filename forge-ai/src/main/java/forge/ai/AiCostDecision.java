@@ -9,6 +9,7 @@ import forge.card.ColorSet;
 import forge.game.Game;
 import forge.game.GameEntityCounterTable;
 import forge.game.ability.AbilityUtils;
+import forge.game.ability.effects.OpenBoosterEffect;
 import forge.game.card.*;
 import forge.game.cost.*;
 import forge.game.keyword.Keyword;
@@ -310,6 +311,13 @@ public class AiCostDecision extends CostDecisionMakerBase {
     @Override
     public PaymentDecision visit(CostUninstall cost) {
         return PaymentDecision.number(1);
+    }
+
+    @Override
+    public PaymentDecision visit(CostOpenBooster cost) {
+        // any set will do: the booster pile is pure upside for booster cascade
+        final List<String> sets = OpenBoosterEffect.boosterSetCodes();
+        return sets.isEmpty() ? null : PaymentDecision.type(Aggregates.random(sets));
     }
 
     @Override

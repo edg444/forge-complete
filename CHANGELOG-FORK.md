@@ -94,6 +94,7 @@ A complete half-integer layer running parallel to the whole-number one.
 - **Trees in the art** (`tree`, Selfie Preservation) — Tagger's `tree` tag and its whole subtree (dead, fallen,
   Treefolk...) plus `bonsai-tree`; `tree-stump` isn't in it. Property `KnownTreeInArt`; untagged art is asked
   about where it matters.
+- **Booster Fun** (`boosterfun`, Collectigull) — Scryfall's promo type; property `BoosterFun`.
 
 ### Five-face split cards
 
@@ -127,6 +128,8 @@ Only Who // What // When // Where // Why has ever needed this.
 - **Programs** (The Grand Calcutron) — a hand that is an ordered row of revealed cards: `Player.hasProgram`,
   `ReorderZone | Program$ True`, `OnlyFirstOfProgram$` on CantBeCast/CantPlayLand, static `PlaceInProgram`,
   `PlayerController.chooseProgramPosition`.
+- **Booster pile** (Myntasha, Honored One) — `ZoneType.BoosterPile`, outside the game; filled by cost
+  `OpenBooster<1>`, dug by keyword `Booster cascade`.
 
 ### Pink, a sixth color
 
@@ -309,6 +312,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **2019 Heroes of the Realm: Collectigull // Only the Best, Keeper of the Secret Lair, Myntasha, Honored One.**
+  Booster Fun is Scryfall's `boosterfun` promo type, now a PrintingTraits trait (`boosterfun`, 9,272 Forge
+  printings; `generate.js` writes it), read by `Card.isBoosterFun()` / property `BoosterFun`. A Secret Lair spell is
+  one printed in an edition whose name starts with "Secret Lair" (SLD and the four products Scryfall files under it):
+  `Card.isSecretLair()` / property `SecretLair`. Protection from common is `K:Protection:Card.RarityCommon:common`.
+  Myntasha: new zone `ZoneType.BoosterPile` (made for every player like the whammy deck, outside `ALL_ZONES`, a
+  deck zone so random-order moves to it shuffle), new cost `OpenBooster<1>` (`CostOpenBooster`: choose a set that
+  makes boosters, a real pack from its template goes to the bottom of the pile in random order; AI picks a random
+  set), and keyword `Booster cascade` (cascade with `DigZone$ BoosterPile`, the rest back to the pile's bottom).
+  `OpenBoosterEffect.boosterSetCodes()` / `openPack()` are shared with Stocking Tiger's ChooseExpansion.
 - **Interplanar Brushwagg: the interplanar zone leaves the screen when empty, and replays no longer freeze.** Once
   nothing is left on the interplanar battlefield (checked with state-based actions) `Game.retireEmptyInterplanarZone`
   fires new `GameEventPlayerRemoved`, and both UIs take its place off the screen (`IGuiGame.removePlayerView`: mobile

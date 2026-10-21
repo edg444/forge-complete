@@ -422,6 +422,12 @@ public class Cost implements Serializable {
             return new CostUninstall(splitStr[0]);
         }
 
+        if (parse.startsWith("OpenBooster<")) {
+            // OpenBooster<Num> - Myntasha, Honored One
+            final String[] splitStr = abCostParse(parse, 1);
+            return new CostOpenBooster(splitStr[0]);
+        }
+
         if (parse.startsWith("FlavorAction<")) {
             // FlavorAction<Description/YesButtonText>
             final String[] splitStr = abCostParse(parse, 2);

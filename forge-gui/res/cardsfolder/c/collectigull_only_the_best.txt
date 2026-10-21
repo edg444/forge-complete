@@ -1,0 +1,21 @@
+Name:Collectigull
+ManaCost:2 W
+Types:Creature Bird
+PT:1/1
+K:Flying
+K:Protection:Card.RarityCommon:common
+# a Booster Fun card is a printing Scryfall gives the boosterfun promo type (PrintingTraits), so it rides on the
+# printing the deck holds
+T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigDig | TriggerDescription$ Whenever CARDNAME attacks, reveal the top card of your library. If it's a Booster Fun card, you may put it into your hand.
+SVar:TrigDig:DB$ Dig | DigNum$ 1 | Reveal$ True | Optional$ True | ChangeNum$ 1 | ChangeValid$ Card.BoosterFun | DestinationZone$ Hand | DestinationZone2$ Library | LibraryPosition2$ 0
+SVar:HasAttackEffect:TRUE
+AlternateMode:Adventure
+Oracle:Flying, protection from common\nWhenever Collectigull attacks, reveal the top card of your library. If it's a Booster Fun card, you may put it into your hand.
+
+ALTERNATE
+
+Name:Only the Best
+ManaCost:1 W
+Types:Sorcery Adventure
+A:SP$ ChangeZone | Origin$ Graveyard | Destination$ Hand | ValidTgts$ Card.BoosterFun+YouOwn | TgtPrompt$ Select target Booster Fun card in your graveyard | SpellDescription$ Return target Booster Fun card from your graveyard to your hand.
+Oracle:Return target Booster Fun card from your graveyard to your hand.

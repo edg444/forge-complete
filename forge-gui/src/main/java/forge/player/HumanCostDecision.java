@@ -12,6 +12,7 @@ import forge.card.ColorSet;
 import forge.card.MagicColor;
 import forge.game.*;
 import forge.game.ability.AbilityUtils;
+import forge.game.ability.effects.OpenBoosterEffect;
 import forge.game.card.*;
 import forge.game.cost.*;
 import forge.game.player.*;
@@ -665,6 +666,12 @@ public class HumanCostDecision extends CostDecisionMakerBase {
         boolean result = controller.confirmAction(ability, PlayerActionConfirmMode.OptionalChoose,
                 cost.getPrompt(ability) + "?", options, null, null);
         return result ? PaymentDecision.number(1) : null;
+    }
+
+    @Override
+    public PaymentDecision visit(final CostOpenBooster cost) {
+        final String set = controller.chooseSomeType("Magic set", ability, OpenBoosterEffect.boosterSetCodes(), true);
+        return set == null ? null : PaymentDecision.type(set);
     }
 
     @Override

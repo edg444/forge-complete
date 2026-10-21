@@ -52,6 +52,7 @@ public final class PrintingTraits {
         private boolean backSquirrel = false;
         private boolean untaggedArt = false;
         private boolean backUntaggedArt = false;
+        private boolean boosterFun = false;
 
         /** The border as printed, or null when the edition data already has it right. */
         public CardEdition.BorderColor getBorder() {
@@ -109,6 +110,11 @@ public final class PrintingTraits {
         /** Scryfall Tagger hasn't tagged this artwork at all, so its other art traits being absent says nothing. */
         public boolean isArtUntagged(final boolean backFace) {
             return backFace ? backUntaggedArt : untaggedArt;
+        }
+
+        /** A Booster Fun printing (Collectigull): Scryfall's boosterfun promo type, which is the whole card's, not a face's. */
+        public boolean isBoosterFun() {
+            return boosterFun;
         }
 
         /** Printed lines in the whole text box, flavor text included (Lexivore); -1 when they couldn't be read. */
@@ -191,6 +197,8 @@ public final class PrintingTraits {
                     t.untaggedArt = true;
                 } else if (trait.equals("backuntaggedart")) {
                     t.backUntaggedArt = true;
+                } else if (trait.equals("boosterfun")) {
+                    t.boosterFun = true;
                 } else if (trait.startsWith("textlines=")) {
                     t.textLines = Integer.parseInt(trait.substring(10));
                 } else if (trait.startsWith("backtextlines=")) {

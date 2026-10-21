@@ -30,13 +30,16 @@ public class ChooseExpansionEffect extends SpellAbilityEffect {
         for (final Player p : getDefinedPlayersOrTargeted(sa)) {
             // Stocking Tiger has to actually open the thing, so it asks for sets that can produce a
             // booster; World-Bottling Kit bottles any set at all and takes the unfiltered list.
-            final boolean needsBooster = sa.hasParam("WithBoosters");
             final Set<String> sets = Sets.newTreeSet();
-            final StaticData data = StaticData.instance();
-            if (data != null && data.getEditions() != null) {
-                for (final CardEdition e : data.getEditions().getOrderedEditions()) {
-                    if (!e.getCode().isEmpty() && (!needsBooster || e.getBoosterTemplate() != null)) {
-                        sets.add(e.getCode());
+            if (sa.hasParam("WithBoosters")) {
+                sets.addAll(OpenBoosterEffect.boosterSetCodes());
+            } else {
+                final StaticData data = StaticData.instance();
+                if (data != null && data.getEditions() != null) {
+                    for (final CardEdition e : data.getEditions().getOrderedEditions()) {
+                        if (!e.getCode().isEmpty()) {
+                            sets.add(e.getCode());
+                        }
                     }
                 }
             }

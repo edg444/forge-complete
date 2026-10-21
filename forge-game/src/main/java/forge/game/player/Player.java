@@ -286,6 +286,7 @@ public class Player extends GameEntity implements Comparable<Player> {
         }
         // kept out of ALL_ZONES so nothing but whammy effects finds its cards
         zones.put(ZoneType.WhammyDeck, new PlayerZone(ZoneType.WhammyDeck, this));
+        zones.put(ZoneType.BoosterPile, new PlayerZone(ZoneType.BoosterPile, this));
 
         view = new PlayerView(id0, game.getTracker());
         view.updateMaxHandSize(this);

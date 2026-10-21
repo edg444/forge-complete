@@ -143,6 +143,14 @@ public class CardProperty {
             if (!card.hasPaperFoil()) {
                 return false;
             }
+        } else if (property.equals("BoosterFun")) {
+            if (!card.isBoosterFun()) {
+                return false;
+            }
+        } else if (property.equals("SecretLair")) {
+            if (!card.isSecretLair()) {
+                return false;
+            }
         } else if (property.equals("PrintedTextActive")) {
             // R&D's Secret Lair is out, so this card plays as printed rather than as errata'd
             if (!forge.game.staticability.StaticAbilityIgnoreErrata.isActive(game)) {

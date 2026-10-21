@@ -35,12 +35,14 @@ public enum ZoneType implements ITranslatable {
     ExtraHand(true, "lblHandZone"),
     None(true, "lblNoneZone"),
     // Whammy Burn: an additional deck zone that only whammy effects can see or touch (its rulings)
-    WhammyDeck(true, "lblWhammyDeckZone");
+    WhammyDeck(true, "lblWhammyDeckZone"),
+    // Myntasha, Honored One: the cards of opened booster packs, outside the game until booster cascade digs into them
+    BoosterPile(true, "lblBoosterPileZone");
 
     public static final EnumSet<ZoneType> STATIC_ABILITIES_SOURCE_ZONES = EnumSet.of(Battlefield, Graveyard, Exile, Command, Stack/*, Hand*/);
     public static final EnumSet<ZoneType> PART_OF_COMMAND_ZONE = EnumSet.of(Command, SchemeDeck, PlanarDeck, AttractionDeck, ContraptionDeck, Junkyard, StickerSheets);
-    public static final EnumSet<ZoneType> DECK_ZONES = EnumSet.of(Library, SchemeDeck, PlanarDeck, AttractionDeck, ContraptionDeck);
-    public static final EnumSet<ZoneType> ORDERED_ZONES = EnumSet.of(Library, SchemeDeck, PlanarDeck, AttractionDeck, ContraptionDeck, Hand, Graveyard, Stack);
+    public static final EnumSet<ZoneType> DECK_ZONES = EnumSet.of(Library, SchemeDeck, PlanarDeck, AttractionDeck, ContraptionDeck, BoosterPile);
+    public static final EnumSet<ZoneType> ORDERED_ZONES = EnumSet.of(Library, SchemeDeck, PlanarDeck, AttractionDeck, ContraptionDeck, BoosterPile, Hand, Graveyard, Stack);
 
     private final boolean holdsHiddenInfo;
     private final String label;

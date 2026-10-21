@@ -3083,7 +3083,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         sb.append(" (").append(inst.getReminderText()).append(")");
                         printedKW.add(keyword);
                     }
-                } else if (keyword.equals("Cascade")) { // this could become a list for easy keywords that stack
+                } else if (keyword.equals("Cascade") || keyword.equals("Booster cascade")) { // this could become a list for easy keywords that stack
                     if (printedKW.contains(keyword)) {
                         continue;
                     }
@@ -3636,7 +3636,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.equals("Aftermath") || keyword.equals("Wither")
                         || keyword.equals("Convoke") || keyword.equals("Delve")
                         || keyword.equals("Improvise") || keyword.equals("Retrace")
-                        || keyword.equals("Undaunted") || keyword.equals("Cascade")
+                        || keyword.equals("Undaunted") || keyword.equals("Cascade") || keyword.equals("Booster cascade")
                         || keyword.equals("Devoid") ||  keyword.equals("Lifelink")
                         || keyword.equals("Bargain") || keyword.equals("Spree")
                         || keyword.equals("Tiered") || keyword.equals("Split second")
@@ -8325,6 +8325,25 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public boolean hasKnownMoonInArt() {
         final PrintingTraits.Traits t = getPrintingTraits();
         return t != null && t.hasMoon(isBackSide());
+    }
+
+    /** A Booster Fun printing (Collectigull), per Scryfall's boosterfun promo type. */
+    public boolean isBoosterFun() {
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t != null && t.isBoosterFun();
+    }
+
+    /**
+     * A Secret Lair printing (Keeper of the Secret Lair): Secret Lair Drop or one of the products Scryfall files under
+     * it (Promo, Countdown, Ultimate Edition, Showcase Planes), all of which carry the name.
+     */
+    public boolean isSecretLair() {
+        final IPaperCard pc = isFaceDown() ? null : getPaperCard();
+        if (pc == null || pc instanceof PaperToken) {
+            return false;
+        }
+        final CardEdition edition = StaticData.instance().getEditions().get(pc.getEdition());
+        return edition != null && edition.getName().startsWith("Secret Lair");
     }
 
     public boolean isDisplacedFromLibrary() {

@@ -1,0 +1,9 @@
+Name:Myntasha, Honored One
+ManaCost:2 G G
+Types:Legendary Snow Creature Elk
+PT:3/3
+# like Stocking Tiger, the sealed pack is a real booster generated from the set you choose; the booster pile is
+# its own zone outside the game (ZoneType.BoosterPile), and booster cascade digs there instead of the library
+S:Mode$ OptionalCost | EffectZone$ All | ValidCard$ Card.Self | ValidSA$ Spell | Cost$ OpenBooster<1> | Description$ As an additional cost to cast this spell, you may open a sealed Magic booster pack and put the cards on the bottom of your booster pile in a random order.
+S:Mode$ Continuous | Affected$ Card.YouCtrl | AffectedZone$ Stack | AddKeyword$ Booster cascade | Description$ Spells you cast have booster cascade. (It's like cascade, but use your booster pile rather than your library.)
+Oracle:As an additional cost to cast this spell, you may open a sealed Magic booster pack and put the cards on the bottom of your booster pile in a random order.\nSpells you cast have booster cascade. (It's like cascade, but use your booster pile rather than your library.)

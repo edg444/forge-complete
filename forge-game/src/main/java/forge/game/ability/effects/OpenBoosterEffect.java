@@ -2,6 +2,9 @@ package forge.game.ability.effects;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import com.google.common.collect.Sets;
 
 import forge.StaticData;
 import forge.card.CardEdition;
@@ -36,30 +39,8 @@ public class OpenBoosterEffect extends SpellAbilityEffect {
         final Card host = sa.getHostCard();
         final Game game = host.getGame();
         final String setCode = host.getChosenExpansion();
-        if (setCode.isEmpty()) {
-            return;
-        }
-        final StaticData data = StaticData.instance();
-        if (data == null || data.getEditions() == null) {
-            return;
-        }
-        final CardEdition edition = data.getEditions().get(setCode);
-        if (edition == null) {
-            return;
-        }
-        final SealedTemplate template = edition.getBoosterTemplate();
-        if (template == null) {
-            return;
-        }
-
-        final List<PaperCard> pack;
-        try {
-            pack = BoosterGenerator.getBoosterPack(template);
-        } catch (final Exception e) {
-            // a set can be listed with a booster template it can't actually fill
-            return;
-        }
-        if (pack == null || pack.isEmpty()) {
+        final List<PaperCard> pack = openPack(setCode);
+        if (pack.isEmpty()) {
             return;
         }
 
@@ -76,6 +57,43 @@ public class OpenBoosterEffect extends SpellAbilityEffect {
                 game.getAction().reveal(opened, p, false,
                         p + " opens a " + setCode + " booster pack: ");
             }
+        }
+    }
+
+    /** Codes of the sets that can produce a booster pack, in order. */
+    public static List<String> boosterSetCodes() {
+        final Set<String> sets = Sets.newTreeSet();
+        final StaticData data = StaticData.instance();
+        if (data != null && data.getEditions() != null) {
+            for (final CardEdition e : data.getEditions().getOrderedEditions()) {
+                if (!e.getCode().isEmpty() && e.getBoosterTemplate() != null) {
+                    sets.add(e.getCode());
+                }
+            }
+        }
+        return List.copyOf(sets);
+    }
+
+    /** A freshly generated booster pack of the set, or an empty list when the set can't produce one. */
+    public static List<PaperCard> openPack(final String setCode) {
+        if (setCode == null || setCode.isEmpty()) {
+            return List.of();
+        }
+        final StaticData data = StaticData.instance();
+        if (data == null || data.getEditions() == null) {
+            return List.of();
+        }
+        final CardEdition edition = data.getEditions().get(setCode);
+        final SealedTemplate template = edition == null ? null : edition.getBoosterTemplate();
+        if (template == null) {
+            return List.of();
+        }
+        try {
+            final List<PaperCard> pack = BoosterGenerator.getBoosterPack(template);
+            return pack == null ? List.of() : pack;
+        } catch (final Exception e) {
+            // a set can be listed with a booster template it can't actually fill
+            return List.of();
         }
     }
 }
