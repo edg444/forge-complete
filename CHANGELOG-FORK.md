@@ -312,6 +312,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Impounding Lot-Bot (UNF #14).** Saying "INCARCERATE!" in a robot voice is an optional honor-system
+  `FlavorAction` cost, paid when the trigger resolves. The exile is Banisher Priest's, so if the Lot-Bot has already
+  left, nothing is exiled (rulings). The AI is a computer, so it always says it. No engine change.
 - **Unfinity: Hat Trick (UNF #13).** A hat Forge already knows of counts without asking: one tagged as worn in
   single-figure art, or one the controller already claimed (`Card.HatInArt`, Goblin Haberdasher's).
   - Otherwise the caster is asked. "Has" is wider than "wearing" (rulings): a held hat counts, and so does a hat,

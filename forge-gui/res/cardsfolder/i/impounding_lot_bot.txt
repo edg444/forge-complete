@@ -1,0 +1,9 @@
+Name:Impounding Lot-Bot
+ManaCost:3 W
+Types:Artifact Creature Robot
+PT:3/4
+# Saying it is honor system. The AI is a computer, so it always has a robot voice to say it in.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigExile | TriggerDescription$ When this creature enters, you may say "INCARCERATE!" in a robot voice. If you do, exile another target artifact or enchantment until this creature leaves the battlefield.
+SVar:TrigExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | ValidTgts$ Artifact.Other,Enchantment.Other | TgtPrompt$ Select another target artifact or enchantment | Duration$ UntilHostLeavesPlay | UnlessCost$ FlavorAction<Say "INCARCERATE!" in a robot voice/INCARCERATE!> | UnlessPayer$ You | UnlessSwitched$ True | UnlessAI$ Chance.100
+SVar:PlayMain1:TRUE
+Oracle:When this creature enters, you may say "INCARCERATE!" in a robot voice. If you do, exile another target artifact or enchantment until this creature leaves the battlefield.
