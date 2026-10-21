@@ -1,0 +1,17 @@
+Name:Focused Funambulist
+ManaCost:1 U
+Types:Creature Human Performer
+PT:2/1
+K:Flash
+K:ETBReplacement:Other:DBSticker
+SVar:DBSticker:DB$ PutSticker | Defined$ Self | Kind$ Art | Optional$ True | SubAbility$ DBStorePlaced | SpellDescription$ As this creature enters, you may put an art sticker on the empty side of the balancing pole. When you do, ask a person outside the game "Does this look balanced?" If they say yes, you may tap or untap target creature.
+# No sticker, no question (rulings). Honor system for a human, who asks a real person and enters the answer; the AI has
+# no one to ask, so a simulated person says yes half the time (as for Flavor Judge).
+# stored on the card first: an ImmediateTrigger carries its own conditions onto the trigger, which can't see StickersPlaced
+SVar:DBStorePlaced:DB$ StoreSVar | SVar$ Placed | Type$ Calculate | Expression$ StickersPlaced | SubAbility$ DBBalanced
+SVar:DBBalanced:DB$ ImmediateTrigger | ConditionCheckSVar$ Placed | ConditionSVarCompare$ GE1 | Execute$ TrigAsk | TriggerDescription$ When you do, ask a person outside the game "Does this look balanced?" If they say yes, you may tap or untap target creature.
+SVar:TrigAsk:DB$ GenericChoice | ValidTgts$ Creature | TgtPrompt$ Select up to one target creature | TargetMin$ 0 | TargetMax$ 1 | Defined$ You | Choices$ Unbalanced,Balanced | ChoicePrompt$ Ask a person outside the game "Does this look balanced?" | ShowChoice$ ExceptSelf | AILogic$ AskThenTapOrUntap
+SVar:Unbalanced:DB$ Pump | SpellDescription$ They said no (or there was no one to ask)
+SVar:Balanced:DB$ TapOrUntap | Defined$ ParentTarget | SpellDescription$ They said it looks balanced
+SVar:Placed:Number$0
+Oracle:Flash\nAs this creature enters, you may put an art sticker on the empty side of the balancing pole. When you do, ask a person outside the game "Does this look balanced?" If they say yes, you may tap or untap target creature.

@@ -312,6 +312,25 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: How Is This a Par Three?! (UNF #49).** Whenever you cast a spell, you may have a player mill X, the
+  number of words in the spell's name (`Count$WordsInName`).
+  - Milling more cards than they have is an impossible option, so it can't be chosen (ruling). A condition on the
+    target's library size handles this.
+  - No engine change.
+- **Unfinity: Focused Funambulist (UNF #47).** As it enters you may put an art sticker on it. Only then a reflexive
+  trigger asks a person outside the game whether it looks balanced (rulings). A yes lets you tap or untap up to one
+  target creature.
+  - The sticker count is stored on the card first, because an ImmediateTrigger copies its conditions onto the
+    trigger.
+  - **AI:** new GenericChoice logic, `AskThenTapOrUntap`. It aims at an opponent's best untapped creature, or else
+    its own best tapped one, and its simulated person says yes half the time. The plain `Chance.50` logic made the
+    AI decline the trigger outright.
+- **Unfinity: Decisions, Decisions (UNF #44).** Reveals the top three cards, then you choose a consonant (Y counts).
+  Cards with that letter in the first word of their printed name, stickers included (rulings), go to your hand; the
+  rest go to the bottom.
+  - New card property, `firstWordHasChosenLetter`.
+  - **AI:** new letter logic, `FirstWordsOfRemembered`, picks the consonant that takes the most of the revealed
+    cards.
 - **Unfinity: Busted! (UNF #41).** Mana Leak with X equal to the most words in a name among permanents you control,
   counted as it resolves (ruling).
   - New count, `Count$MostWordsInName.<Valid>`, which shares its word counting with Bosom Buddy's and Wordmail's

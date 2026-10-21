@@ -117,6 +117,21 @@ public class ChooseGenericAi extends SpellAbilityAi {
             }
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
+        if ("AskThenTapOrUntap".equals(sa.getParam("AILogic"))) {
+            // Focused Funambulist: aim at the opposing creature most worth tapping, else one of its own to untap, and
+            // let the simulated person answer (chooseSingleSpellAbility)
+            sa.resetTargets();
+            final List<Card> theirs = CardLists.filter(CardLists.getTargetableCards(
+                    aiPlayer.getOpponents().getCreaturesInPlay(), sa), c -> c.isUntapped());
+            final List<Card> mine = CardLists.filter(CardLists.getTargetableCards(aiPlayer.getCreaturesInPlay(), sa),
+                    c -> c.isTapped());
+            final Card target = !theirs.isEmpty() ? ComputerUtilCard.getBestCreatureAI(theirs)
+                    : !mine.isEmpty() ? ComputerUtilCard.getBestCreatureAI(mine) : null;
+            if (target != null) {
+                sa.getTargets().add(target);
+            }
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
         if (ComputerUtilAbility.getAbilitySourceName(sa).equals("Deathmist Raptor")) {
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
@@ -146,6 +161,9 @@ public class ChooseGenericAi extends SpellAbilityAi {
                 return Aggregates.random(spells.subList(1, spells.size()));
             }
             return spells.get(0);
+        } else if ("AskThenTapOrUntap".equals(logic)) {
+            // Focused Funambulist: a simulated person thinks it looks balanced half the time; spells.get(1) is "yes"
+            return spells.size() > 1 && MyRandom.percentTrue(50) ? spells.get(1) : spells.get(0);
         } else if ("FlavorJudge".equals(logic)) {
             // the AI has no real person to ask, so a simulated one finds the story nonsense half the time;
             // spells.get(1) is the "no" answer

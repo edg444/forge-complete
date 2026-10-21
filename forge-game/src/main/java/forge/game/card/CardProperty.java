@@ -267,6 +267,14 @@ public class CardProperty {
             if (letter.isEmpty() || initial == -1 || initial != Character.toUpperCase(letter.codePointAt(0))) {
                 return false;
             }
+        } else if (property.equals("firstWordHasChosenLetter")) {
+            // Decisions, Decisions: the chosen letter anywhere in the first word of the name as printed, stickers and
+            // all (rulings) - the displayed name, so a flavor name counts as printed too
+            final String letter = source.hasChosenType() ? source.getChosenType() : "";
+            final String[] words = card.getDisplayName().trim().split("\\s+");
+            if (letter.isEmpty() || words.length == 0 || !words[0].toUpperCase().contains(letter.toUpperCase())) {
+                return false;
+            }
         } else if (property.equals("nameStartsWithEitherChosenLetter")) {
             // Leading Performance: either of two chosen letters, on any of its names (rulings: a creature with
             // several names gets one counter however many of them match)

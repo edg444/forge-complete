@@ -1,0 +1,10 @@
+Name:How Is This a Par Three?!
+ManaCost:2 U U
+Types:Enchantment
+T:Mode$ SpellCast | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigMill | TriggerDescription$ Whenever you cast a spell, you may have target player mill X cards, where X is the number of words in that spell's name.
+# milling more cards than the player has is an impossible option, so it can't be chosen (rulings)
+SVar:TrigMill:DB$ Mill | ValidTgts$ Player | TgtPrompt$ Select target player | NumCards$ X | ConditionCheckSVar$ TgtLibrary | ConditionSVarCompare$ GEX
+SVar:X:Count$WordsInName.TriggeredCard
+SVar:TgtLibrary:Count$ValidLibrary Card.TargetedPlayerOwn
+DeckHas:Ability$Mill
+Oracle:Whenever you cast a spell, you may have target player mill X cards, where X is the number of words in that spell's name.

@@ -2817,6 +2817,23 @@ public class ComputerUtil {
                     }
                 }
             }
+            // Decisions, Decisions: the letter in the first word of the most cards it just revealed (remembered)
+            if ("FirstWordsOfRemembered".equals(logic)) {
+                int best = 0;
+                for (final String letter : validTypes) {
+                    int n = 0;
+                    for (final Object o : sa.getHostCard().getRemembered()) {
+                        if (o instanceof Card c) {
+                            final String[] words = c.getDisplayName().trim().split("\\s+");
+                            n += words.length > 0 && words[0].toUpperCase().contains(letter) ? 1 : 0;
+                        }
+                    }
+                    if (n > best) {
+                        best = n;
+                        chosen = letter;
+                    }
+                }
+            }
             // Leading Performance: a +1/+1 counter on each of its creatures whose name begins with the letter; the
             // second pick has the first one removed from validTypes
             if ("OwnCreatureInitials".equals(logic)) {
