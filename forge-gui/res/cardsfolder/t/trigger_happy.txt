@@ -1,0 +1,8 @@
+Name:Trigger Happy
+ManaCost:1 R
+Types:Instant
+# Only abilities that start "When", "Whenever" or "At", keyword ones included - not reflexive or delayed triggers. The
+# trigger event is ignored, an intervening "if" is still checked as it resolves, and you choose its targets (rulings).
+# See TriggerAbilityEffect.
+A:SP$ TriggerAbility | ValidTgts$ Permanent | TgtPrompt$ Select target permanent | AILogic$ OwnBest | SpellDescription$ Choose a triggered ability of target permanent. It triggers. You control that ability.
+Oracle:Choose a triggered ability of target permanent. It triggers. You control that ability.

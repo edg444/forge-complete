@@ -145,6 +145,7 @@ public enum ApiType {
     JumpOver (JumpOverEffect.class),
     SpellWord (SpellWordEffect.class),
     StoreResult (StoreResultEffect.class),
+    TriggerAbility (TriggerAbilityEffect.class),
     GameDrawn (GameDrawEffect.class),
     GenericChoice (ChooseGenericEffect.class),
     Gerrymander (GerrymanderEffect.class),

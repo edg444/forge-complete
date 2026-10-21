@@ -312,6 +312,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Alpha Guard (UNF #129).** Untaps a permanent whose name starts with the chosen letter, skipping spaces
+  and punctuation (`nameStartsWithChosenLetter`). No engine change.
+- **Unfinity: Well Done (UNF #128).** Uses the printed card's rarity, as Collectigull does (`RarityRare`,
+  `RarityMythic`). No engine change.
+- **Unfinity: Trigger Happy (UNF #125).** New `TriggerAbility` effect: one of the target permanent's own triggered
+  abilities (keywords included) is wrapped like a real trigger and put on the stack under the caster's control.
+  - The trigger event is ignored, an intervening "if" is still checked as it resolves, and the caster chooses its
+    targets (rulings).
+  - **AI:** it retriggers the best enters-the-battlefield ability among its own permanents.
 - **Unfinity: Ticking Mime Bomb (UNF #124).** A person outside the game picks a creature you don't control (honor
   system: you enter their pick). It's dealt twice your Robots in damage, the Bomb included.
   - **AI:** a simulated person picks at random, via a new ChooseCard logic, `Random`.
