@@ -312,6 +312,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: T.A.P.P.E.R. (UNF #31).** Its cost taps a creature you control that has a hat (`tapXType` with
+  `Creature.HasHat`).
+  - **New property `HasHat`:** a hat Forge knows of (a Tagger worn hat, or a "wearing" answer for Goblin Haberdasher)
+    or one the controller has pointed out.
+  - **Pointing one out:** an honor-system special action (`ClaimHat`, `Card.setHasHatClaim`) says one of your creatures
+    has a hat. "Has" is wider than "wearing" (rulings): a held hat counts, as do hat, wig and headband stickers. The
+    claim follows the card, like Haberdasher's answer.
+  - Hat Trick and Park Re-Entry now read `HasHat` too, so a creature already pointed out isn't asked about again.
+  - **AI:** it can't see the art, so it only uses known hats and never makes a claim.
 - **Unfinity: Surprise Party (UNF #29).** Printed Clown Robot tokens hidden on the table, built on Entirely Normal
   Armchair's hide-and-point idiom.
   - **User ruling:** tokens can be hidden from the start of the game. A player whose deck has a card with a

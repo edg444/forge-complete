@@ -515,6 +515,10 @@ public class CardProperty {
             if (!card.isCombined()) {
                 return false;
             }
+        } else if (property.equals("HasHat")) {
+            if (!card.hasHat()) {
+                return false;
+            }
         } else if (property.equals("HatInArt")) {
             if (!card.isWearingHatInArt()) {
                 return false;

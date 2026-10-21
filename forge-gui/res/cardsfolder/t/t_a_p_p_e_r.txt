@@ -1,0 +1,10 @@
+Name:T.A.P.P.E.R.
+ManaCost:W
+Types:Artifact Creature Clown Robot
+PT:1/2
+# A hat Forge knows of, or one its controller has pointed out (honor system, the action below; the claim stays with the
+# card), counts: Card.HasHat. "Has" is wider than "wearing": a held hat counts, as do hat, wig and headband stickers
+# (rulings). The AI can't see the art, so it uses only known hats and points none out.
+A:AB$ Tap | Cost$ T tapXType<1/Creature.HasHat/creature you control that has a hat> | ValidTgts$ Creature | TgtPrompt$ Select target creature | SpellDescription$ Tap target creature.
+A:ST$ ClaimHat | Cost$ 0 | SpecialAction$ True | Choices$ Creature.YouCtrl+!HasHat | AILogic$ Never | SpellDescription$ Point out a creature you control that has a hat (honor system).
+Oracle:{T}, Tap an untapped creature you control that has a hat: Tap target creature.

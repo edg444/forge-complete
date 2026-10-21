@@ -1,13 +1,13 @@
 Name:Hat Trick
 ManaCost:1 W
 Types:Instant
-# A hat Forge already knows of (tagged worn in single-figure art, or the controller said so, Card.HatInArt) counts.
+# A hat Forge already knows of (tagged worn in single-figure art, or the controller said it wears or has one: Card.HasHat) counts.
 # Otherwise the caster is asked, since "has" is wider than "wearing": a held hat, or a hat, wig or headband art
 # sticker, counts too (rulings). "You have a hat" is honor system. The AI can't see the art and has no head, so it
 # answers no to both.
 A:SP$ Pump | ValidTgts$ Creature.YouCtrl+blocking,Creature.YouCtrl+blocked | TgtPrompt$ Select target blocking or blocked creature you control | NumAtt$ +1 | NumDef$ +1 | KW$ First Strike | SubAbility$ DBKnownHat | SpellDescription$ Target blocking or blocked creature you control gets +1/+1 and gains first strike until end of turn. If it has a hat, it gains double strike until end of turn. If you and that creature each have a hat, the creature gains triple strike until end of turn.
-SVar:DBKnownHat:DB$ Pump | Defined$ Targeted | KW$ Double Strike | RememberPumped$ True | ConditionDefined$ Targeted | ConditionPresent$ Card.HatInArt | SubAbility$ DBAskHat
-SVar:DBAskHat:DB$ GenericChoice | Defined$ You | Choices$ NoHat,HasHat | ShowCurrentCard$ Targeted | ChoicePrompt$ Does the creature have a hat? (One its art shows it with, worn or not, or a hat, wig or headband sticker. Not a space helmet, a hood or a face mask, and not a background character's.) | ConditionDefined$ Targeted | ConditionPresent$ Card.HatInArt | ConditionCompare$ EQ0 | SubAbility$ DBYourHat
+SVar:DBKnownHat:DB$ Pump | Defined$ Targeted | KW$ Double Strike | RememberPumped$ True | ConditionDefined$ Targeted | ConditionPresent$ Card.HasHat | SubAbility$ DBAskHat
+SVar:DBAskHat:DB$ GenericChoice | Defined$ You | Choices$ NoHat,HasHat | ShowCurrentCard$ Targeted | ChoicePrompt$ Does the creature have a hat? (One its art shows it with, worn or not, or a hat, wig or headband sticker. Not a space helmet, a hood or a face mask, and not a background character's.) | ConditionDefined$ Targeted | ConditionPresent$ Card.HasHat | ConditionCompare$ EQ0 | SubAbility$ DBYourHat
 SVar:NoHat:DB$ Pump | SpellDescription$ It doesn't have a hat
 SVar:HasHat:DB$ Pump | Defined$ ParentTarget | KW$ Double Strike | RememberPumped$ True | SpellDescription$ It has a hat
 # a creature that already had double strike from elsewhere still needs a hat, hence remembering the one that got it here

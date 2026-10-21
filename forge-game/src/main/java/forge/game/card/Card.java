@@ -378,6 +378,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     // else's library - which means it has to survive the copy every zone change makes.
     private boolean signed;
     private Boolean hatInArtClaim = null;
+    private Boolean hasHatClaim = null;
     // Present Arms pushed this out of the library into the sideboard. Deliberately NOT propagated by
     // CardCopyService: every zone change makes a copy, so the flag dies the moment Decorated Knight
     // draws the card back into the game, which is exactly when it should stop counting.
@@ -8303,6 +8304,22 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     public boolean isWearingHatInArt() {
         return hasKnownHatInArt() || Boolean.TRUE.equals(hatInArtClaim);
+    }
+
+    /**
+     * T.A.P.P.E.R.: its controller pointing out that the creature this card represents has a hat - worn or not, or a
+     * hat, wig or headband sticker (rulings) - honor system, so it follows the card like Goblin Haberdasher's answer.
+     */
+    public Boolean getHasHatClaim() {
+        return hasHatClaim;
+    }
+    public void setHasHatClaim(final Boolean claim) {
+        hasHatClaim = claim;
+    }
+
+    /** "Has a hat": one it's known or said to wear, or one it's been said to have. */
+    public boolean hasHat() {
+        return isWearingHatInArt() || Boolean.TRUE.equals(hasHatClaim);
     }
 
     /** A tree the printing data confirms in the art (Selfie Preservation); false can still mean untagged. */
