@@ -1,0 +1,8 @@
+Name:Tug of War
+ManaCost:4 G
+Types:Sorcery
+# Each player sets aside up to three permanent cards with different names from their library, which go onto the subgame
+# battlefield after mulligans, starting player first. The subgame winner puts one of them - the main-game card, wherever
+# its subgame copy ended up - onto the main-game battlefield; after a draw, no one does (rulings; SubgameEffect).
+A:SP$ Subgame | StartingLife$ 5 | StartingPermanents$ 3 | SpellDescription$ Players play a subgame starting at 5 life and with up to three permanent cards with different names from their main-game library on the battlefield. As the subgame ends, the winner chooses one of the cards they put onto the battlefield as the subgame began and puts it onto the battlefield rather than shuffling it into their library. | StackDescription$ SpellDescription
+Oracle:Players play a subgame starting at 5 life and with up to three permanent cards with different names from their main-game library on the battlefield. As the subgame ends, the winner chooses one of the cards they put onto the battlefield as the subgame began and puts it onto the battlefield rather than shuffling it into their library.

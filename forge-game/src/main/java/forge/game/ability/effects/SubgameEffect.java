@@ -2,8 +2,10 @@ package forge.game.ability.effects;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 import forge.game.Game;
 import forge.game.GameOutcome;
@@ -82,7 +84,33 @@ public class SubgameEffect extends SpellAbilityEffect {
         // 720.2 doesn't mention Conspiracy cards so I guess they don't move
     }
 
+    /**
+     * Tug of War: up to max permanent cards with different names from a player's main-game library, set aside to start
+     * the subgame on the battlefield.
+     */
+    private static forge.game.card.CardCollection chooseStartingPermanents(final Player p, final int max, final SpellAbility sa) {
+        final forge.game.card.CardCollection chosen = new forge.game.card.CardCollection();
+        for (int i = 0; i < max; i++) {
+            final forge.game.card.CardCollection options = forge.game.card.CardLists.filter(p.getCardsIn(ZoneType.Library),
+                    c -> c.isPermanent() && chosen.stream().noneMatch(x -> x.sharesNameWith(c)));
+            if (options.isEmpty()) {
+                break;
+            }
+            final Card c = p.getController().chooseSingleEntityForEffect(options, sa, "Choose a permanent card to start the "
+                    + "subgame on the battlefield (" + (max - i) + " more at most)", true, null);
+            if (c == null) {
+                break;
+            }
+            chosen.add(c);
+        }
+        return chosen;
+    }
+
     private void prepareAllZonesSubgame(final Game maingame, final Game subgame) {
+        prepareAllZonesSubgame(maingame, subgame, Maps.newHashMap());
+    }
+
+    private void prepareAllZonesSubgame(final Game maingame, final Game subgame, final Map<Player, forge.game.card.CardCollection> setAside) {
         final FCollectionView<Player> players = subgame.getPlayers();
         final FCollectionView<Player> maingamePlayers = maingame.getPlayers();
         final List<ZoneType> outsideZones = Arrays.asList(ZoneType.Hand, ZoneType.Battlefield,
@@ -92,8 +120,11 @@ public class SubgameEffect extends SpellAbilityEffect {
             final Player player = players.get(i);
             final Player maingamePlayer = maingamePlayers.get(i);
 
-            // Library
-            setCardsInZone(player, ZoneType.Library, maingamePlayer.getCardsIn(ZoneType.Library), false);
+            // Library, less any cards set aside to start on the battlefield
+            final forge.game.card.CardCollection aside = setAside.getOrDefault(maingamePlayer, new forge.game.card.CardCollection());
+            final forge.game.card.CardCollection library = new forge.game.card.CardCollection(maingamePlayer.getCardsIn(ZoneType.Library));
+            library.removeAll(aside);
+            setCardsInZone(player, ZoneType.Library, library, false);
 
             // Sideboard
             // 720.4
@@ -145,7 +176,26 @@ public class SubgameEffect extends SpellAbilityEffect {
         String startMessage = Localizer.getInstance().getMessage("lblSubgameStart", hostCard.getTranslatedName());
         maingame.getMatch().fireEvent(new GameEventSubgameStart(subgame, startMessage));
 
-        prepareAllZonesSubgame(maingame, subgame);
+        // Tug of War: each player's set-aside cards, and their subgame copies, which go onto the battlefield once
+        // mulligans are done, starting player first (rulings)
+        final Map<Player, forge.game.card.CardCollection> setAside = Maps.newHashMap();
+        if (sa.hasParam("StartingPermanents")) {
+            final int max = Integer.parseInt(sa.getParam("StartingPermanents"));
+            for (final Player p : maingame.getPlayersInTurnOrder(sa.getActivatingPlayer())) {
+                setAside.put(p, chooseStartingPermanents(p, max, sa));
+            }
+            subgame.setAfterMulligans(first -> {
+                for (final Player p : subgame.getPlayersInTurnOrder(first)) {
+                    final Player main = maingame.getPlayers().get(subgame.getPlayers().indexOf(p));
+                    for (final Card c : setAside.getOrDefault(main, new forge.game.card.CardCollection())) {
+                        final Card copy = Card.fromPaperCard(c.getPaperCard(), p);
+                        p.getZone(ZoneType.Sideboard).add(copy);
+                        subgame.getAction().moveToPlay(copy, p, null, AbilityKey.newMap());
+                    }
+                }
+            });
+        }
+        prepareAllZonesSubgame(maingame, subgame, setAside);
         subgame.getAction().startGame(null, null);
         subgame.clearCaches();
 
@@ -193,6 +243,20 @@ public class SubgameEffect extends SpellAbilityEffect {
             maingame.fireEvent(new GameEventZone(ZoneType.Graveyard, p, EventValueChangeType.ComplexUpdate, null));
             maingame.fireEvent(new GameEventZone(ZoneType.Exile, p, EventValueChangeType.ComplexUpdate, null));
             maingame.fireEvent(new GameEventZone(ZoneType.Command, p, EventValueChangeType.ComplexUpdate, null));
+        }
+
+        // Tug of War: the winner puts one of the cards they set aside onto the main-game battlefield instead
+        if (sa.hasParam("StartingPermanents") && winPlayers.size() == 1 && !outcome.isDraw()) {
+            final Player winner = winPlayers.get(0);
+            final forge.game.card.CardCollection options = forge.game.card.CardLists.filter(
+                    setAside.getOrDefault(winner, new forge.game.card.CardCollection()), c -> c.isInZone(ZoneType.Library));
+            if (!options.isEmpty()) {
+                final Card kept = winner.getController().chooseSingleEntityForEffect(options, sa,
+                        "Choose a card to put onto the battlefield", false, null);
+                if (kept != null) {
+                    maingame.getAction().moveToPlay(kept, winner, sa, AbilityKey.newMap());
+                }
+            }
         }
 
         // Setup maingame library

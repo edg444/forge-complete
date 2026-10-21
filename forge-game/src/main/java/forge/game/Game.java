@@ -217,6 +217,17 @@ public class Game {
         return this.id;
     }
 
+    // Tug of War: what a subgame does once mulligans are done, given its starting player
+    private java.util.function.Consumer<Player> afterMulligans = null;
+
+    public java.util.function.Consumer<Player> getAfterMulligans() {
+        return afterMulligans;
+    }
+
+    public void setAfterMulligans(final java.util.function.Consumer<Player> run) {
+        afterMulligans = run;
+    }
+
     public Player getStartingPlayer() {
         return startingPlayer;
     }

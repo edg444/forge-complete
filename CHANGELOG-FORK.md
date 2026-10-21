@@ -312,6 +312,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Tug of War (UNF #159).** New Subgame parameter `StartingPermanents$ N`.
+  - Each player sets aside up to N permanent cards with different names from their library. Those go onto the
+    subgame battlefield once mulligans are done, starting player first.
+  - The subgame's one winner puts one of their set-aside main-game cards onto the main-game battlefield; after a
+    draw, no one does (rulings).
+  - **AI:** subgame card choices take the best card.
+- **Unfinity: Spelling Bee (UNF #155).** New `SpellChosenWord` effect. The damaged player chooses any word from the
+  top card's name, type line or text box.
+  - The speller is shown the word, spells it out loud and says whether they got it right (user ruling: honor
+    system).
+  - **AI:** it chooses the longest, least common word, and spells by chance, less often the longer the word.
 - **Unfinity: Tchotchke Elemental (UNF #158).** Knickknack counters; the unique items on the physical card are the
   player's to find (honor system). No engine change.
 - **Unfinity: Sole Performer (UNF #154).** New `AddTapSymbols` effect: a player's pool of {T}s.

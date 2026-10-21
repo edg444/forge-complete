@@ -2909,6 +2909,9 @@ public class GameAction {
             }
 
             first = runOpeningHandActions(first);
+            if (game.getAfterMulligans() != null) {
+                game.getAfterMulligans().accept(first);
+            }
             createPrintedTokenHiding();
             checkStateEffects(true); // why?
 

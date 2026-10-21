@@ -1,0 +1,14 @@
+Name:Spelling Bee
+ManaCost:2 G
+Types:Creature Alien Insect
+PT:1/1
+K:Flying
+K:Deathtouch
+# Spelled out loud on the honor system: you're shown the word and say whether you got it right (user, 2026-10-21). The
+# AI chooses the longest word it can and spells by chance, less often the longer the word. SpellChosenWordEffect.
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | Execute$ TrigSpell | TriggerDescription$ Whenever this creature deals combat damage to a player, that player looks at the top card of your library and chooses a word on that card. You spell that word. If you spell it correctly, draw a card. Otherwise, scry 1.
+SVar:TrigSpell:DB$ SpellChosenWord | Chooser$ TriggeredTarget | SubAbility$ DBDraw
+SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1 | ConditionCheckSVar$ SpelledCorrectly | ConditionSVarCompare$ EQ1 | SubAbility$ DBScry
+SVar:DBScry:DB$ Scry | ScryNum$ 1 | ConditionCheckSVar$ SpelledCorrectly | ConditionSVarCompare$ EQ0
+SVar:SpelledCorrectly:Number$0
+Oracle:Flying, deathtouch\nWhenever this creature deals combat damage to a player, that player looks at the top card of your library and chooses a word on that card. You spell that word. If you spell it correctly, draw a card. Otherwise, scry 1.

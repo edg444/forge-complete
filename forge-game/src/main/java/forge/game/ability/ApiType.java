@@ -147,6 +147,7 @@ public enum ApiType {
     StoreResult (StoreResultEffect.class),
     TriggerAbility (TriggerAbilityEffect.class),
     AddTapSymbols (AddTapSymbolsEffect.class),
+    SpellChosenWord (SpellChosenWordEffect.class),
     GameDrawn (GameDrawEffect.class),
     GenericChoice (ChooseGenericEffect.class),
     Gerrymander (GerrymanderEffect.class),
