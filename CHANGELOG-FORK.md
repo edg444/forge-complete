@@ -312,6 +312,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Bag Check (UNF #36).** Counters a spell, then asks a person outside the game if it looks dangerous,
+  using Flavor Judge's idiom.
+  - A human asks a real person and enters the answer (honor system).
+  - The AI's simulated person says yes half the time (`AILogic$ Chance.50`).
+  - A yes means draw a card, then discard a card.
+  - No engine change.
 - **Unfinity: Astroquarium (UNF #34).** When it enters, you may put an art sticker on it.
   - Its ability turns a creature into a blue 4/4 Shark, or a blue 8/8 Octopus instead if the cracks are covered. Only
     its colors and creature types change (rulings).

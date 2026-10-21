@@ -1,0 +1,11 @@
+Name:Bag Check
+ManaCost:1 U U
+Types:Instant
+# Honor system for a human: they ask a real person and enter the answer. The AI has no one to ask, so a simulated person
+# says yes half the time (as for Flavor Judge).
+A:SP$ Counter | TargetType$ Spell | TgtPrompt$ Select target spell | ValidTgts$ Card | SubAbility$ DBAsk | SpellDescription$ Counter target spell, then ask a person outside the game if that spell looks dangerous to them. If they say yes, draw a card, then discard a card.
+SVar:DBAsk:DB$ GenericChoice | Defined$ You | Choices$ NotDangerous,Dangerous | ChoicePrompt$ Ask a person outside the game if that spell looks dangerous to them | ShowChoice$ ExceptSelf | AILogic$ Chance.50
+SVar:NotDangerous:DB$ Pump | SpellDescription$ They said no (or there was no one to ask)
+SVar:Dangerous:DB$ Draw | Defined$ You | NumCards$ 1 | SubAbility$ DBDiscard | SpellDescription$ They said it looks dangerous
+SVar:DBDiscard:DB$ Discard | Defined$ You | NumCards$ 1 | Mode$ TgtChoose
+Oracle:Counter target spell, then ask a person outside the game if that spell looks dangerous to them. If they say yes, draw a card, then discard a card.
