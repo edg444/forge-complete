@@ -1,0 +1,11 @@
+Name:Gen, Confider of Ages
+ManaCost:W U B R G
+Types:Legendary Creature Human Wizard
+PT:0/0
+# The year of release is each permanent's own printing's set.
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | AddToughness$ X | Description$ Gen gets +1/+1 for each different year of release among other nontoken permanents you control. (For example, if a card was released in 1993, that's one year of release. Specific editions matter.)
+SVar:X:Count$DifferentReleaseYears Permanent.!token+Other+YouCtrl
+T:Mode$ Attacks | ValidCard$ Card.Self | CheckSVar$ Power | SVarCompare$ GE30 | Execute$ TrigWin | TriggerDescription$ Whenever Gen attacks, if its power is 30 or greater, you win the game.
+SVar:TrigWin:DB$ WinsGame | Defined$ You
+SVar:Power:Count$CardPower
+Oracle:Gen gets +1/+1 for each different year of release among other nontoken permanents you control. (For example, if a card was released in 1993, that's one year of release. Specific editions matter.)\nWhenever Gen attacks, if its power is 30 or greater, you win the game.

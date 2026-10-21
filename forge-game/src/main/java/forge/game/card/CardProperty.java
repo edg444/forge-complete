@@ -149,6 +149,15 @@ public class CardProperty {
             if (!card.isBoosterFun()) {
                 return false;
             }
+        } else if (property.startsWith("originallyPrintedIn_")) {
+            // Delphia, Undecided: originallyPrintedIn_MBS_NPH, the sets this card's name was first printed in
+            if (!CardPrintings.originallyPrintedIn(card, java.util.List.of(property.substring(20).split("_")))) {
+                return false;
+            }
+        } else if (property.equals("Playtest")) {
+            if (!card.isPlaytestCard()) {
+                return false;
+            }
         } else if (property.equals("ChosenUniverse")) {
             // Byode, Inverse Sun: from the Universe the source chose
             if (!source.hasChosenType() || !source.getChosenType().equals(card.getUniverse())) {

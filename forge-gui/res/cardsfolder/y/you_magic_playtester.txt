@@ -1,0 +1,7 @@
+Name:You, Magic Playtester
+ManaCost:1 W
+Types:Legendary Creature Human Gamer
+PT:1/3
+A:AB$ AdjustNumber | Cost$ T | ValidTgts$ Card.Playtest | TgtZone$ Stack,Battlefield | TgtPrompt$ Select target playtest card | Amount$ 1 | WhileOnStackOrBattlefield$ True | SpellDescription$ Choose target playtest card. Increase or decrease a number of your choice on it by one for as long as it remains on the stack or battlefield.
+A:AB$ Dig | Cost$ W U B R G | DigNum$ 8 | ChangeNum$ All | ChangeValid$ Card.Playtest | DestinationZone$ Hand | Reveal$ True | RestRandomOrder$ True | SpellDescription$ Reveal the top 8 cards of your library. Put each playtest card among them into your hand, and the rest on the bottom of your library in a random order.
+Oracle:{T}: Choose target playtest card. Increase or decrease a number of your choice on it by one for as long as it remains on the stack or battlefield.\n{W}{U}{B}{R}{G}: Reveal the top 8 cards of your library. Put each playtest card among them into your hand, and the rest on the bottom of your library in a random order.

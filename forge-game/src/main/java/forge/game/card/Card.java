@@ -8538,6 +8538,18 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return t != null && t.hasMoon(isBackSide());
     }
 
+    /** A playtest card (The Unknown Wizard, You, Magic Playtester), per Scryfall's playtest promo type. */
+    public boolean isPlaytestCard() {
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t != null && t.isPlaytest();
+    }
+
+    /** The plane this card's printing's set is on (Minnea, Planar Tourist), or null for a set on several or none. */
+    public String getPrintingPlane() {
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t == null ? null : t.getPlane();
+    }
+
     /** A Booster Fun printing (Collectigull), per Scryfall's boosterfun promo type. */
     public boolean isBoosterFun() {
         final PrintingTraits.Traits t = getPrintingTraits();

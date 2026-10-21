@@ -1,0 +1,9 @@
+Name:The Unknown Wizard
+ManaCost:2 W U B R G
+Types:Legendary Creature Human Wizard
+PT:6/6
+S:Mode$ ReduceCost | ValidCard$ Card.Playtest+Other | Type$ Spell | Activator$ You | Amount$ 1 | EffectZone$ Battlefield,Command | Description$ Eminence — As long as The Unknown Wizard is in the command zone or on the battlefield, other playtest cards you cast cost {1} less to cast.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDig | TriggerDescription$ Whenever CARDNAME enters or attacks, look at the top ten cards of your library. You may put a legendary playtest card from among them onto the battlefield. Put the rest on the bottom in a random order.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigDig | Secondary$ True | TriggerDescription$ Whenever CARDNAME enters or attacks, look at the top ten cards of your library. You may put a legendary playtest card from among them onto the battlefield. Put the rest on the bottom in a random order.
+SVar:TrigDig:DB$ Dig | DigNum$ 10 | ChangeNum$ 1 | Optional$ True | ChangeValid$ Card.Legendary+Playtest | DestinationZone$ Battlefield | RestRandomOrder$ True
+Oracle:Eminence — As long as The Unknown Wizard is in the command zone or on the battlefield, other playtest cards you cast cost {1} less to cast.\nWhenever The Unknown Wizard enters or attacks, look at the top ten cards of your library. You may put a legendary playtest card from among them onto the battlefield. Put the rest on the bottom in a random order.

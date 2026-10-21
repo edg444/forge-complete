@@ -2324,6 +2324,18 @@ public class AbilityUtils {
             final Player you = player != null ? player : c.getController();
             return doXMath(you.getOpponents().stream().allMatch(Player::allCommandersRevealed) ? 1 : 0, expr, c, ctb);
         }
+        // Gen, Confider of Ages: Count$DifferentReleaseYears <valid>, by each card's own printing
+        if (l[0].startsWith("DifferentReleaseYears ")) {
+            final Set<Integer> years = Sets.newHashSet();
+            for (final Card each : CardLists.getValidCards(game.getCardsIn(ZoneType.Battlefield),
+                    l[0].substring("DifferentReleaseYears ".length()), player != null ? player : c.getController(), c, ctb)) {
+                final int year = forge.game.card.CardPrintings.releaseYear(each);
+                if (year > 0) {
+                    years.add(year);
+                }
+            }
+            return doXMath(years.size(), expr, c, ctb);
+        }
         if (sq[0].equals("AllCommandersRevealed")) {
             return doXMath((player != null ? player : c.getController()).allCommandersRevealed() ? 1 : 0, expr, c, ctb);
         }

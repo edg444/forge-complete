@@ -1,0 +1,7 @@
+Name:You, Iterative Playtester
+ManaCost:1 W
+Types:Legendary Creature Human Gamer
+PT:1/3
+A:AB$ AdjustNumber | Cost$ T | ValidTgts$ Card.Playtest+Other | TgtZone$ Stack,Battlefield | TgtPrompt$ Select another target playtest card | Amount$ 1 | WhileOnStackOrBattlefield$ True | SpellDescription$ Choose another target playtest card. Increase or decrease a number of your choice on it by 1 for as long as it remains on the stack or battlefield. (You can change numerals or number words.)
+A:AB$ Dig | Cost$ W U B R G | DigNum$ 8 | ChangeNum$ All | ChangeValid$ Card.Playtest | DestinationZone$ Hand | Reveal$ True | RestRandomOrder$ True | SpellDescription$ Reveal the top eight cards of your library. Put each playtest card among them into your hand. Put the rest on the bottom of your library in a random order.
+Oracle:{T}: Choose another target playtest card. Increase or decrease a number of your choice on it by 1 for as long as it remains on the stack or battlefield. (You can change numerals or number words.)\n{W}{U}{B}{R}{G}: Reveal the top eight cards of your library. Put each playtest card among them into your hand. Put the rest on the bottom of your library in a random order.

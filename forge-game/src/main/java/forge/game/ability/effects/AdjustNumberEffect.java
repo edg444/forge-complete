@@ -144,7 +144,21 @@ public class AdjustNumberEffect extends SpellAbilityEffect {
             }
             final int changed = adjust(number.value(), amount, add);
             apply(sa, c, number, changed);
-            game.getAction().notifyOfValue(sa, c, number.label() + " becomes " + changed + " until end of turn", null);
+            game.getAction().notifyOfValue(sa, c, number.label() + " becomes " + changed
+                    + (sa.hasParam("WhileOnStackOrBattlefield") ? " while it remains on the stack or battlefield" : " until end of turn"), null);
+        }
+    }
+
+    /**
+     * You, Magic Playtester: the change lasts while the card remains on the stack or battlefield. A permanent's goes when
+     * it leaves the battlefield; a spell that won't become a permanent keeps its change until end of turn, by when it's
+     * long gone from the stack.
+     */
+    private static void addRevert(final SpellAbility sa, final Card c, final forge.GameCommand revert) {
+        if (sa.hasParam("WhileOnStackOrBattlefield") && (c.isInPlay() || c.isPermanent())) {
+            c.addLeavesPlayCommand(revert);
+        } else {
+            addUntilCommand(sa, revert);
         }
     }
 
@@ -156,7 +170,7 @@ public class AdjustNumberEffect extends SpellAbilityEffect {
                 if (number.trait() == null) {
                     final boolean power = "Power".equals(number.param());
                     c.addNewPT(power ? changed : null, power ? null : changed, ts, 0);
-                    addUntilCommand(sa, () -> c.removeNewPT(ts, 0));
+                    addRevert(sa, c, () -> c.removeNewPT(ts, 0));
                     return;
                 }
             }
@@ -164,7 +178,7 @@ public class AdjustNumberEffect extends SpellAbilityEffect {
                 final CardState state = c.getState(CardStateName.Original);
                 final String old = state.getBaseLoyalty();
                 state.setBaseLoyalty(Integer.toString(changed));
-                addUntilCommand(sa, () -> state.setBaseLoyalty(old));
+                addRevert(sa, c, () -> state.setBaseLoyalty(old));
                 return;
             }
             case "ManaCost" -> {
@@ -175,7 +189,7 @@ public class AdjustNumberEffect extends SpellAbilityEffect {
                     cost.append(' ').append(shard.toString().replace("{", "").replace("}", ""));
                 }
                 state.setManaCost(new ManaCost(new ManaCostParser(cost.toString())));
-                addUntilCommand(sa, () -> state.setManaCost(old));
+                addRevert(sa, c, () -> state.setManaCost(old));
                 return;
             }
             default -> {
@@ -184,6 +198,6 @@ public class AdjustNumberEffect extends SpellAbilityEffect {
         final CardTraitBase trait = number.trait();
         final String old = trait.getParam(number.param());
         trait.putParam(number.param(), number.sign() + changed);
-        addUntilCommand(sa, () -> trait.putParam(number.param(), old));
+        addRevert(sa, c, () -> trait.putParam(number.param(), old));
     }
 }

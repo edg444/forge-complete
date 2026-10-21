@@ -63,6 +63,8 @@ public final class PrintingTraits {
         private boolean untaggedArt = false;
         private boolean backUntaggedArt = false;
         private boolean boosterFun = false;
+        private boolean playtest = false;
+        private String plane = null;
         private String universe = null;
         private java.util.Set<String> characters = java.util.Collections.emptySet();
         private String art = null;
@@ -165,6 +167,16 @@ public final class PrintingTraits {
             return boosterFun;
         }
 
+        /** A playtest card (The Unknown Wizard): Scryfall's playtest promo type. */
+        public boolean isPlaytest() {
+            return playtest;
+        }
+
+        /** Minnea, Planar Tourist: the plane of the printing's set, when that set is on one plane; null otherwise. */
+        public String getPlane() {
+            return plane;
+        }
+
         /**
          * The Universe a Universes Beyond printing is from (Byode, Inverse Sun): its umbrella franchise, from
          * {@code _tools/universes}. Null for every other printing, which is the Magic Universe.
@@ -193,6 +205,7 @@ public final class PrintingTraits {
         table = null;
         watermarks = null;
         universes = null;
+        planes = null;
         characters = null;
         characterNames = null;
     }
@@ -285,6 +298,10 @@ public final class PrintingTraits {
                     t.backUntaggedArt = true;
                 } else if (trait.equals("boosterfun")) {
                     t.boosterFun = true;
+                } else if (trait.equals("playtest")) {
+                    t.playtest = true;
+                } else if (trait.startsWith("plane=")) {
+                    t.plane = trait.substring(6);
                 } else if (trait.startsWith("universe=")) {
                     t.universe = trait.substring(9);
                 } else if (trait.equals("fourlegs")) {
@@ -351,6 +368,22 @@ public final class PrintingTraits {
 
     private static List<String> watermarks = null;
     private static List<String> universes = null;
+
+    private static List<String> planes = null;
+
+    /** Every plane some printing's set is on, alphabetical (Minnea, Planar Tourist). */
+    public static synchronized List<String> allPlanes() {
+        if (planes == null) {
+            final java.util.TreeSet<String> names = new java.util.TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+            for (final Traits t : table().values()) {
+                if (t.plane != null) {
+                    names.add(t.plane);
+                }
+            }
+            planes = List.copyOf(names);
+        }
+        return planes;
+    }
 
     /** The Universe of every printing that isn't Universes Beyond. */
     public static final String MAGIC_UNIVERSE = "Magic";

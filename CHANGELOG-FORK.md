@@ -312,6 +312,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Delphia, Undecided, Gen, Confider of Ages, You, Magic Playtester, You, Iterative Playtester, The
+  Unknown Wizard (UNK mythics).**
+  - **Playtest cards:** a new `playtest` printing trait, from Scryfall's playtest promo type (property `Playtest`).
+  - **Planes:** a new `plane=` printing trait, from the MTG Wiki's set infoboxes (`_tools/printing-traits/set-planes.json`;
+    sets on several planes are left out). It's ready for Minnea, Planar Tourist.
+  - **Delphia:** the Phyrexians won the February 18th, 2023 event (MTG Wiki), so its Phyrexian Victory sets apply.
+    New property `originallyPrintedIn_` (the set a card's name was first printed in).
+  - **Gen:** `Count$DifferentReleaseYears`, by each permanent's own printing.
+  - **Playtesters:** `AdjustNumber` `WhileOnStackOrBattlefield$`; a permanent keeps the change until it leaves the
+    battlefield.
 - **Unknown Event: Point to the Scoreboard, Chic // Ago, One Does Not, Illuminating Detective, Unclaimed Cat, Catch-Up
   Mechanic, Drive to Work, I'm Going On An Adventure!, Spare Changeling, Blended Twistling (UNK CU11-CZ03).**
   - New card property `sophisticated` (fifteen or more letters in the name), spell property `AdditionalCostPaid`
