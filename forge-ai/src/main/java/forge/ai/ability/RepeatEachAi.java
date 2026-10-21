@@ -84,6 +84,20 @@ public class RepeatEachAi extends SpellAbilityAi {
             } else {
                 return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
             }
+        } else if ("TargetBestCreatures".equals(logic)) {
+            // Park Re-Entry: the best creature cards it may target, limited to AITgts$ - the ones it can vouch for
+            // without seeing the art
+            sa.resetTargets();
+            final CardCollection options = CardLists.filter(CardLists.getTargetableCards(
+                    aiPlayer.getCardsIn(sa.getTargetRestrictions().getZone()), sa),
+                    c -> !sa.hasParam("AITgts") || c.isValid(sa.getParam("AITgts").split(","), aiPlayer, sa.getHostCard(), sa));
+            while (!options.isEmpty() && sa.canAddMoreTarget()) {
+                final Card best = ComputerUtilCard.getBestCreatureAI(options);
+                sa.getTargets().add(best);
+                options.remove(best);
+            }
+            return sa.getTargets().isEmpty() ? new AiAbilityDecision(0, AiPlayDecision.TargetingFailed)
+                    : new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         } else if ("EquipAll".equals(logic)) {
             if (aiPlayer.getGame().getPhaseHandler().is(PhaseType.MAIN1, aiPlayer)) {
                 final CardCollection unequipped = CardLists.filter(aiPlayer.getCardsIn(ZoneType.Battlefield), card -> card.isEquipment() && card.getAttachedTo() != sa.getHostCard());

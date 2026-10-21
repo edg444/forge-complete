@@ -312,6 +312,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Park Re-Entry (UNF #22).** It returns up to two target creature cards from your graveyard, each with
+  mana value 3 or less or a hat.
+  - Mana value 3 or less, or a hat Forge already knows of (`Card.HatInArt`), returns without asking.
+  - Any other creature card can be targeted on the caster's word. As the spell resolves, you're asked whether it has
+    a hat; if not, it stays in the graveyard, as an illegal target would.
+  - "Has" is wider than "wearing" (rulings): a held hat counts, as do hat, wig and headband stickers.
+  - **AI:** new RepeatEach logic, `TargetBestCreatures`. It picks the best targets but stays within `AITgts$`, so the
+    AI only targets cards it can vouch for without seeing the art: mana value 3 or less, or a known hat.
 - **Unfinity: Now You See Me . . . (UNF #20).** A flicker that returns the creature under its owner's control, with
   X +1/+1 counters.
   - X is an honor-system number: you're asked how many mirrors on walls you can see from your seat. The prompt notes

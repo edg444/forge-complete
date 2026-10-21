@@ -1,0 +1,13 @@
+Name:Park Re-Entry
+ManaCost:3 W W
+Types:Sorcery
+# A hat Forge knows of (Card.HatInArt) or mana value 3 or less needs no question. Any other creature card may be targeted
+# on the caster's word, and they're asked as it resolves; one without a hat stays put, as an illegal target would.
+# "Has" is wider than "wearing": a held hat counts, and so does a hat, wig or headband sticker (rulings). The AI can't
+# see the art, so it only targets cards it can vouch for (AITgts).
+A:SP$ RepeatEach | ValidTgts$ Creature.YouOwn | TgtZone$ Graveyard | TargetMin$ 0 | TargetMax$ 2 | TgtPrompt$ Select up to two target creature cards that each have a hat and/or mana value 3 or less from your graveyard | AITgts$ Card.cmcLE3,Card.HatInArt | AILogic$ TargetBestCreatures | DefinedCards$ Targeted | RepeatSubAbility$ DBReturnKnown | SpellDescription$ Return up to two target creature cards that each have a hat and/or mana value 3 or less from your graveyard to the battlefield.
+SVar:DBReturnKnown:DB$ ChangeZone | Defined$ Remembered | Origin$ Graveyard | Destination$ Battlefield | ConditionDefined$ Remembered | ConditionPresent$ Card.cmcLE3,Card.HatInArt | ConditionZone$ Graveyard | SubAbility$ DBAskHat
+SVar:DBAskHat:DB$ GenericChoice | Defined$ You | Choices$ NoHat,HasHat | ShowCurrentCard$ Remembered | ChoicePrompt$ Does this creature card have a hat? (One its art shows it with, worn or not, or a hat, wig or headband sticker. Not a space helmet, a hood or a face mask, and not a background character's.) | ConditionDefined$ Remembered | ConditionPresent$ Card.cmcGE4+!HatInArt | ConditionZone$ Graveyard
+SVar:NoHat:DB$ Pump | SpellDescription$ It doesn't have a hat
+SVar:HasHat:DB$ ChangeZone | Defined$ Remembered | Origin$ Graveyard | Destination$ Battlefield | SpellDescription$ It has a hat
+Oracle:Return up to two target creature cards that each have a hat and/or mana value 3 or less from your graveyard to the battlefield.
