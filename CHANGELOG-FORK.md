@@ -312,6 +312,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: A Container of Booster Packs (UNK CA02).** `OpenBooster` gains `Container$ N`.
+  - You name the container's N different sets (honor system), and a real booster of one of them at random is opened.
+  - You keep one card in hand; the rest of the pack stays out of the game.
+  - **AI:** its container holds sets at random; it opens it in its second main phase and keeps the best card (new
+    `OpenBoosterAi`; other pack-opening cards are still left alone).
 ### 2026-10-21, twelfth deploy (desktop, Android, GitHub) — Unfinity complete; 24-commit upstream merge
 
 - **Upstream merge (24 commits).** Five card-script conflicts, resolved by keeping upstream's fixes with the fork's

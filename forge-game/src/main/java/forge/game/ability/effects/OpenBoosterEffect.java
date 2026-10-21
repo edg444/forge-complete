@@ -29,6 +29,9 @@ public class OpenBoosterEffect extends SpellAbilityEffect {
 
     @Override
     protected String getStackDescription(SpellAbility sa) {
+        if (sa.hasParam("Container")) {
+            return sa.getHostCard() + " - you may reveal a container of booster packs and open one of them at random.";
+        }
         final String set = sa.getHostCard().getChosenExpansion();
         return sa.getHostCard() + " - open the chosen booster pack"
                 + (set.isEmpty() ? "" : " (" + set + ")") + ".";
@@ -36,6 +39,10 @@ public class OpenBoosterEffect extends SpellAbilityEffect {
 
     @Override
     public void resolve(SpellAbility sa) {
+        if (sa.hasParam("Container")) {
+            openFromContainer(sa);
+            return;
+        }
         final Card host = sa.getHostCard();
         final Game game = host.getGame();
         final String setCode = host.getChosenExpansion();
@@ -62,6 +69,57 @@ public class OpenBoosterEffect extends SpellAbilityEffect {
             if (!opened.isEmpty() && sa.hasParam("Reveal")) {
                 game.getAction().reveal(opened, p, false,
                         p + " opens a " + setCode + " booster pack: ");
+            }
+        }
+    }
+
+    /**
+     * A Container of Booster Packs: the player may reveal a container of Container$ different sealed packs - naming their
+     * sets, honor system; the AI's holds sets at random - then one at random is opened, and they put a card from it into
+     * their hand. The rest of the pack stays out of the game.
+     */
+    private static void openFromContainer(final SpellAbility sa) {
+        final Card host = sa.getHostCard();
+        final Game game = host.getGame();
+        final int size = Integer.parseInt(sa.getParam("Container"));
+        for (final Player p : getDefinedPlayersOrTargeted(sa)) {
+            // shown by name with the code, chosen by code
+            final Map<String, String> byLabel = new java.util.LinkedHashMap<>();
+            for (final String code : boosterSetCodes()) {
+                final CardEdition ed = StaticData.instance().getEditions().get(code);
+                byLabel.put((ed == null ? code : ed.getName()) + " (" + code + ")", code);
+            }
+            final List<String> sets = new java.util.ArrayList<>(byLabel.keySet());
+            if (sets.size() < size || !p.getController().confirmAction(sa, null,
+                    "Reveal a container holding at least " + size + " different sealed booster packs?", null)) {
+                continue;
+            }
+            final List<String> container = new java.util.ArrayList<>();
+            while (container.size() < size) {
+                final String set = p.getController().isAI() ? forge.util.Aggregates.random(sets)
+                        : p.getController().chooseSomeType("Magic set", sa, sets);
+                if (set == null) {
+                    break;
+                }
+                container.add(byLabel.get(set));
+                sets.remove(set);
+            }
+            if (container.size() < size) {
+                continue;
+            }
+            final String setCode = forge.util.Aggregates.random(container);
+            final CardCollection pack = new CardCollection();
+            for (final PaperCard pc : openPack(setCode)) {
+                pack.add(Card.fromPaperCard(pc, p));
+            }
+            game.getAction().notifyOfValue(sa, p, "the " + setCode + " pack, from " + String.join(", ", container), null);
+            if (pack.isEmpty()) {
+                continue;
+            }
+            final Card kept = p.getController().chooseSingleEntityForEffect(pack, sa,
+                    "Put a card from the " + setCode + " pack into your hand", false, null);
+            if (kept != null) {
+                game.getAction().moveTo(ZoneType.Hand, kept, sa, AbilityKey.newMap());
             }
         }
     }

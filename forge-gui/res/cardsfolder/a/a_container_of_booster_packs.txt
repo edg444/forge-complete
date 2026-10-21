@@ -1,0 +1,7 @@
+Name:A Container of Booster Packs
+ManaCost:2
+Types:Artifact
+# The container is the player's: they name its three different sets (honor system), and the pack opened is a real
+# booster of one of them at random, generated as draft and sealed do. The AI's container holds three sets at random.
+A:AB$ OpenBooster | Cost$ 1 T Exile<1/CARDNAME> | Defined$ You | Container$ 3 | SpellDescription$ You may reveal a container holding at least three different sealed booster packs. If you do, select one of those packs at random, open it, and put a card from it into your hand. (You're responsible for providing the booster packs and the container. Other cards from the opened pack remain out of the game.)
+Oracle:{1}, {T}, Exile this artifact: You may reveal a container holding at least three different sealed booster packs. If you do, select one of those packs at random, open it, and put a card from it into your hand. (You're responsible for providing the booster packs and the container. Other cards from the opened pack remain out of the game.)
