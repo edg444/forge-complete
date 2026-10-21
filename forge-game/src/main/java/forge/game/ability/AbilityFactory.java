@@ -65,7 +65,8 @@ public final class AbilityFactory {
             "GiftAbility", // for Promise Gift
             "VoteSubAbility", // for Vote with VoteCard
             "VoteTiedAbility", // for fallback to Choices
-            "DieLandedSubAbility" // RollDice OntoBattlefield, once per die (Ol' Buzzbark)
+            "DieLandedSubAbility", // RollDice OntoBattlefield, once per die (Ol' Buzzbark)
+            "AfterModesAbility" // Charm: an instruction after the modes, whichever were chosen (An Incident Has Occurred)
         );
 
     public enum AbilityRecordType {

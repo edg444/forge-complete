@@ -1,0 +1,13 @@
+Name:Icing Manipulator
+ManaCost:1 G
+Types:Creature Human Employee
+PT:1/3
+# Each counter has a stand-in Food linked to the creature it's on; the stand-ins start and stop being permanents
+# rather than entering or leaving, and one that leaves on its own takes its counter with it (rulings;
+# StaticAbilityCountersAreTokens).
+S:Mode$ CountersAreTokens | ValidCard$ Creature.YouCtrl | TokenScript$ c_a_food_sac | Description$ Each +1/+1 counter on a creature you control is also a Food token. (It's an artifact with "{2}, {T}, Sacrifice this token: You gain 3 life.")
+A:AB$ RollDice | Cost$ 3 G T | Amount$ 2 | Sides$ 6 | EvenOddResults$ True | SorcerySpeed$ True | SubAbility$ DBCounter1 | SpellDescription$ Roll two six-sided dice. For each odd result, put a +1/+1 counter on a creature of your choice. Activate only as a sorcery.
+SVar:DBCounter1:DB$ PutCounter | Choices$ Creature | ChoiceTitle$ Choose a creature to put a +1/+1 counter on | CounterType$ P1P1 | CounterNum$ 1 | ConditionCheckSVar$ OddResults | ConditionSVarCompare$ GE1 | SubAbility$ DBCounter2
+SVar:DBCounter2:DB$ PutCounter | Choices$ Creature | ChoiceTitle$ Choose a creature to put a +1/+1 counter on | CounterType$ P1P1 | CounterNum$ 1 | ConditionCheckSVar$ OddResults | ConditionSVarCompare$ GE2
+DeckHas:Ability$Counters|Food|LifeGain & Type$Food|Artifact
+Oracle:Each +1/+1 counter on a creature you control is also a Food token. (It's an artifact with "{2}, {T}, Sacrifice this token: You gain 3 life.")\n{3}{G}, {T}: Roll two six-sided dice. For each odd result, put a +1/+1 counter on a creature of your choice. Activate only as a sorcery.

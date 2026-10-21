@@ -1,0 +1,10 @@
+Name:An Incident Has Occurred
+ManaCost:1 G
+Types:Sorcery
+# Apologizing is honor system: whichever modes were chosen, and whether or not anyone accepts (rulings). The AI always
+# apologizes.
+A:SP$ Charm | MinCharmNum$ 1 | CharmNum$ 2 | Choices$ DBDestroyFlyer,DBDestroyAttraction | AfterModesAbility$ DBApologize
+SVar:DBDestroyFlyer:DB$ Destroy | ValidTgts$ Creature.withFlying | TgtPrompt$ Select target creature with flying | SpellDescription$ Destroy target creature with flying.
+SVar:DBDestroyAttraction:DB$ Destroy | ValidTgts$ Attraction | TgtPrompt$ Select target Attraction | SpellDescription$ Destroy target Attraction. (It's put into its owner's junkyard.)
+SVar:DBApologize:DB$ GainLife | Defined$ You | LifeAmount$ 3 | UnlessCost$ FlavorAction<Apologize/Sorry!> | UnlessPayer$ You | UnlessSwitched$ True | UnlessAI$ Chance.100 | SpellDescription$ You may apologize. If you do, you gain 3 life.
+Oracle:Choose one or both —\n• Destroy target creature with flying.\n• Destroy target Attraction. (It's put into its owner's junkyard.)\nYou may apologize. If you do, you gain 3 life.

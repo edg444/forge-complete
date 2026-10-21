@@ -22,6 +22,7 @@ public enum StaticAbilityMode {
     // Solaflora - ValidAttachment$ attached to the host affects Affected$ as though attached to them (CardProperty
     // EnchantedBy/EquippedBy/AttachedBy), without their being enchanted or equipped
     ShareAttachments,
+    CountersAreTokens,
 
     // StaticAbility
     CantAttackUnless,

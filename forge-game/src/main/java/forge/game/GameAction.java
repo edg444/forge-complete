@@ -1891,6 +1891,7 @@ public class GameAction {
 
             checkAgain |= checkTopLibraryPermanents(mapParams);
             checkAgain |= checkGraveyardCombatants();
+            checkAgain |= forge.game.staticability.StaticAbilityCountersAreTokens.sync(game);
 
             for (final Player p : game.getPlayers()) {
                 p.checkKeywordCard();

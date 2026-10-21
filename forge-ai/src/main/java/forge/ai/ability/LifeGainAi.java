@@ -100,6 +100,11 @@ public class LifeGainAi extends SpellAbilityAi {
             if (!ph.is(PhaseType.COMBAT_DECLARE_BLOCKERS)) { return false; }
         }
 
+        // Icing Manipulator: a Food that is also a +1/+1 counter costs the creature it's on that counter
+        if (sa.getHostCard() != null && sa.getHostCard().getCounterTokenHost() != null) {
+            return lifeCritical;
+        }
+
         // Sacrificing in response to something dangerous is generally good in any phase
         boolean isSacCost = sa.getPayCosts() != null && sa.getPayCosts().hasSpecificCostType(CostSacrifice.class);
 

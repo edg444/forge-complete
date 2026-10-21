@@ -312,6 +312,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: An Incident Has Occurred (UNF #143).** New Charm parameter `AfterModesAbility`: an instruction after the
+  modes that happens whichever were chosen. Apologizing is honor system; the AI always apologizes.
+- **Unfinity: Icing Manipulator (UNF #142).** New static mode `CountersAreTokens`: each +1/+1 counter on a creature you
+  control has a stand-in Food token linked to that creature, and the counter stays on it (rulings).
+  - The stand-ins start and stop being permanents as the counters come and go, without entering or leaving the
+    battlefield. One that leaves on its own (sacrificed, exiled, bounced) takes its counter with it.
+  - They're kept in step whenever state-based actions are checked.
+  - **AI:** it sacrifices one of these Foods for life only when its life is short.
 - **Unfinity: Hardy of Myra's Marvels (UNF #141).** Lines of flavor text as printed on each printing, read off the card
   image, are now in `PrintingTraits.txt` (`flavorlines=`); no flavor text is 0 (rulings). New `flavorLines` card
   property (`Card.flavorLinesEQChosen`).

@@ -242,6 +242,9 @@ public class CharmEffect extends SpellAbilityEffect {
                 sb.append(sub.getParam("SpellDescription"));
                 sb.append("\r\n");
             }
+            if (sa.getAdditionalAbility("AfterModesAbility") != null) {
+                sb.append(sa.getAdditionalAbility("AfterModesAbility").getParam("SpellDescription")).append("\r\n");
+            }
             sb.append("\r\n");
         }
         return sb.toString();
@@ -456,6 +459,10 @@ public class CharmEffect extends SpellAbilityEffect {
 
             // add Clone to Tail of sa
             sa.appendSubAbility(clone);
+        }
+        final SpellAbility afterModes = sa.getAdditionalAbility("AfterModesAbility");
+        if (afterModes != null) {
+            sa.appendSubAbility((AbilitySub) afterModes.copy(sa.getActivatingPlayer()));
         }
     }
 

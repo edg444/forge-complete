@@ -8372,6 +8372,27 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return false;
     }
 
+    // Icing Manipulator: a token that is one of a creature's +1/+1 counters (StaticAbilityCountersAreTokens), and on
+    // the creature, how many of its counters have one
+    private Card counterTokenHost = null;
+    private int counterTokens = 0;
+
+    public Card getCounterTokenHost() {
+        return counterTokenHost;
+    }
+
+    public void setCounterTokenHost(final Card host) {
+        counterTokenHost = host;
+    }
+
+    public int getCounterTokens() {
+        return counterTokens;
+    }
+
+    public void setCounterTokens(final int n) {
+        counterTokens = n;
+    }
+
     /** The named characters the printing data finds on this printed card (Vorthos). */
     public Set<String> getKnownCharacterSlugs() {
         final PrintingTraits.Traits t = getPrintingTraits();
