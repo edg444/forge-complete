@@ -2784,6 +2784,16 @@ public class ComputerUtil {
                 chosen = Aggregates.random(validTypes);
             }
         }
+        else if (kindOfType.equals("Universe")) {
+            // Byode, Inverse Sun: the Universe of the spell its -X was activated for
+            final Integer x = sa.getRootAbility().getXManaCostPaid();
+            final Card best = forge.ai.ability.ChooseTypeAi.byodeSpell(ai, sa.getHostCard(), x == null ? 0 : x);
+            if (best != null && validTypes.contains(best.getUniverse())) {
+                chosen = best.getUniverse();
+            } else if (!validTypes.isEmpty()) {
+                chosen = Aggregates.random(validTypes);
+            }
+        }
         else if (kindOfType.equals("letter")) {
             // Monkey Monkey Monkey pays off names that START with the letter, so it wants the most
             // common initial. When Fluffy Bunnies Attack cares about occurrences anywhere instead,

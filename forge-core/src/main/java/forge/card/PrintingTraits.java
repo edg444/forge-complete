@@ -53,6 +53,7 @@ public final class PrintingTraits {
         private boolean untaggedArt = false;
         private boolean backUntaggedArt = false;
         private boolean boosterFun = false;
+        private String universe = null;
 
         /** The border as printed, or null when the edition data already has it right. */
         public CardEdition.BorderColor getBorder() {
@@ -117,6 +118,14 @@ public final class PrintingTraits {
             return boosterFun;
         }
 
+        /**
+         * The Universe a Universes Beyond printing is from (Byode, Inverse Sun): its umbrella franchise, from
+         * {@code _tools/universes}. Null for every other printing, which is the Magic Universe.
+         */
+        public String getUniverse() {
+            return universe;
+        }
+
         /** Printed lines in the whole text box, flavor text included (Lexivore); -1 when they couldn't be read. */
         public int getTextLines(final boolean backFace) {
             return backFace ? backTextLines : textLines;
@@ -128,6 +137,7 @@ public final class PrintingTraits {
         source = lineSource;
         table = null;
         watermarks = null;
+        universes = null;
     }
 
     private static synchronized Map<String, Traits> table() {
@@ -199,6 +209,8 @@ public final class PrintingTraits {
                     t.backUntaggedArt = true;
                 } else if (trait.equals("boosterfun")) {
                     t.boosterFun = true;
+                } else if (trait.startsWith("universe=")) {
+                    t.universe = trait.substring(9);
                 } else if (trait.startsWith("textlines=")) {
                     t.textLines = Integer.parseInt(trait.substring(10));
                 } else if (trait.startsWith("backtextlines=")) {
@@ -248,6 +260,39 @@ public final class PrintingTraits {
     }
 
     private static List<String> watermarks = null;
+    private static List<String> universes = null;
+
+    /** The Universe of every printing that isn't Universes Beyond. */
+    public static final String MAGIC_UNIVERSE = "Magic";
+
+    /** Every Universe some printing is from, Magic first and the rest alphabetical (Byode's choice). */
+    public static synchronized List<String> allUniverses() {
+        if (universes == null) {
+            final java.util.TreeSet<String> names = new java.util.TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+            for (final Traits t : table().values()) {
+                if (t.universe != null) {
+                    names.add(t.universe);
+                }
+            }
+            final List<String> all = new java.util.ArrayList<>();
+            all.add(MAGIC_UNIVERSE);
+            all.addAll(names);
+            universes = List.copyOf(all);
+        }
+        return universes;
+    }
+
+    /** A printing's Universe: its franchise if it's Universes Beyond, otherwise Magic. */
+    public static String universeOf(final String edition, final String collectorNumber) {
+        final Traits t = get(edition, collectorNumber, false);
+        return t != null && t.universe != null ? t.universe : MAGIC_UNIVERSE;
+    }
+
+    /** A Universes Beyond printing (Byode's deck-building exemption): one with a franchise Universe. */
+    public static boolean isUniversesBeyond(final String edition, final String collectorNumber) {
+        final Traits t = get(edition, collectorNumber, false);
+        return t != null && t.universe != null;
+    }
 
     /**
      * Every watermark any printing has, by name (Stamp of Approval). Scryfall calls every set-symbol watermark "set",

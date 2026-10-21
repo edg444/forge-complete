@@ -312,6 +312,30 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **2021 Heroes of the Realm: Byode, Inverse Sun.** New card type **Universewalker**
+  (`CoreType.Universewalker`, a permanent type; subtype list `[UniversewalkerTypes]` in TypeLists.txt). It isn't a
+  planeswalker: loyalty is a planeswalker-only characteristic (CR 306.5), so Byode enters with no counters and isn't
+  put into the graveyard at 0, but its `Planeswalker$ True` abilities follow 606 (once a turn, sorcery speed).
+  - **Universes** (user ruling): a Universes Beyond printing's umbrella franchise (all Marvel is one Universe, The
+    Hobbit and The Lord of the Rings are Middle-earth, Warhammer 40,000 / Age of Sigmar / Blood Bowl are Warhammer),
+    and every other printing is the Magic Universe. Byode has the Universes Beyond stamp but no franchise, so it's a
+    Universe of its own.
+  - `_tools/universes/resolve.py` maps all 10,865 non-token Universes Beyond printings (Scryfall promo type
+    `universesbeyond`) to 50 Universes. Its sources, in order: the franchise's set and its parent sets, MTGJSON
+    Secret Lair drop names (`subsets`), the names of the MTGJSON sealed products a card comes in, then other
+    printings of the same card. The 72 printings with no data source are listed in `MANUAL` with the evidence
+    for each, taken from flavor names, flavor text, and the copyright lines on the card images.
+  - `printing-traits/generate.js` writes the result as the PrintingTraits trait `universe=<name>`. That gives
+    `PrintingTraits.universeOf` / `allUniverses` / `isUniversesBeyond`, `Card.getUniverse()`, and the property
+    `ChosenUniverse`.
+  - ChooseType `Type$ Universe` offers Magic plus every franchise. With `Note$` it handles "you haven't chosen this
+    way this game", and choosing from nothing is allowed. ChangeZone `DifferentUniverses$ True` adds a
+    one-at-a-time filter alongside `DifferentNames`.
+  - New commander deck rule `DeckRule:ColorIdentity:ExemptUniversesBeyond$ True`. It's a printing-level exemption
+    (`DeckRuleColorIdentity.allowsOffColorIdentity(PaperCard)`), used by both deck checks and the editor's legal-card
+    filter.
+  - AI: `ChooseTypeAi` `AILogic$ Byode` activates −X only for a spell in hand from an unchosen Universe, with X equal
+    to its mana value. `ComputerUtil.chooseSomeType("Universe")` then names that spell's Universe.
 - **2020 Heroes of the Realm: The Secret Lair.** "Say the secret word" is a `FlavorAction` cost, because the card never
   names the word. The ability that uses it is still a mana ability, since nothing in it targets (605.1a).
 - **The List audit against Scryfall (2026-10-20).** PLST matched Scryfall's 5,740 printings by collector number,

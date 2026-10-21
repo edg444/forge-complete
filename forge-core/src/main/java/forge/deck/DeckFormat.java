@@ -495,7 +495,7 @@ public enum DeckFormat {
                     continue;
                 }
             }
-            if (allowsOffColorIdentity(commanderCIRules, cp.getKey().getRules())) {
+            if (allowsOffColorIdentity(commanderCIRules, cp.getKey())) {
                 continue;
             }
             if (approvesAdditionalColor(commanderCIRules, cp.getKey().getRules(), cmdCI)) {
@@ -513,7 +513,7 @@ public enum DeckFormat {
         }
         if (deck.has(DeckSection.Sideboard)) {
             for (final Entry<PaperCard, Integer> cp : deck.get(DeckSection.Sideboard)) {
-                if (allowsOffColorIdentity(commanderCIRules, cp.getKey().getRules())) {
+                if (allowsOffColorIdentity(commanderCIRules, cp.getKey())) {
                     continue;
                 }
                 if (approvesAdditionalColor(commanderCIRules, cp.getKey().getRules(), cmdCI)) {
@@ -538,6 +538,16 @@ public enum DeckFormat {
     }
 
     /** True if any active commander DeckRule:ColorIdentity exempts this candidate card. */
+    /** Like {@link #allowsOffColorIdentity(List, CardRules)}, for exemptions that also look at the printing. */
+    public static boolean allowsOffColorIdentity(final List<DeckRuleColorIdentity> ciRules, final PaperCard candidate) {
+        for (final DeckRuleColorIdentity rule : ciRules) {
+            if (rule.allowsOffColorIdentity(candidate)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static boolean allowsOffColorIdentity(final List<DeckRuleColorIdentity> ciRules, final CardRules candidate) {
         for (final DeckRuleColorIdentity rule : ciRules) {
             if (rule.allowsOffColorIdentity(candidate)) {
@@ -777,6 +787,6 @@ public enum DeckFormat {
             // Notably, no partner ability or combination of partner abilities can ever let a player have more than two commanders.
             predicate = predicate.or(CardRulesPredicates.canBePartnerCommanderWith(commanders.get(0).getRules()));
         }
-        return PaperCardPredicates.fromRules(predicate);
+        return PaperCardPredicates.fromRules(predicate).or(pc -> allowsOffColorIdentity(ciRules, pc));
     }
 }

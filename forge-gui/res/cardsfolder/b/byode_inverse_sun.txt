@@ -1,0 +1,16 @@
+Name:Byode, Inverse Sun
+ManaCost:2 U B
+Types:Legendary Universewalker Byode
+# a Universewalker isn't a planeswalker: no printed loyalty, so it enters with no counters and isn't put into the
+# graveyard at 0 (CR 306.5, 704.5i); its loyalty abilities still follow 606
+Text:CARDNAME can be your commander.
+DeckRule:ColorIdentity:ExemptUniversesBeyond$ True | ActiveSection$ Commander | Description$ Your deck can include Universes Beyond cards of any color identity.
+# a Universe is a Universes Beyond printing's umbrella franchise, and every other printing is the Magic Universe
+A:AB$ Mill | Cost$ AddCounter<2/LOYALTY> | Planeswalker$ True | NumCards$ 3 | Defined$ You | RememberMilled$ True | SubAbility$ DBChangeZone | SpellDescription$ Mill three cards, then return any number of cards from different Universes milled this way from your graveyard to your hand.
+SVar:DBChangeZone:DB$ ChangeZone | Hidden$ True | Origin$ Graveyard | Destination$ Hand | ChangeType$ Card.IsRemembered | ChangeNum$ 3 | DifferentUniverses$ True | SelectPrompt$ You may return a card milled this way from a Universe you haven't returned one from | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+A:AB$ ChooseType | Cost$ SubCounter<X/LOYALTY> | Planeswalker$ True | Type$ Universe | Defined$ You | Note$ True | ChooseNoted$ True | AILogic$ Byode | SubAbility$ DBPlay | SpellDescription$ Choose a Universe you haven't chosen this way this game. You may cast a spell from that Universe with mana value X or less from your hand without paying its mana cost.
+SVar:DBPlay:DB$ Play | Valid$ Card.YouOwn+ChosenUniverse+cmcLEX | ValidZone$ Hand | ValidSA$ Spell | WithoutManaCost$ True | Optional$ True | Controller$ You
+SVar:X:Count$xPaid
+DeckHas:Ability$Mill|Graveyard
+Oracle:[+2]: Mill three cards, then return any number of cards from different Universes milled this way from your graveyard to your hand.\n[-X]: Choose a Universe you haven't chosen this way this game. You may cast a spell from that Universe with mana value X or less from your hand without paying its mana cost.\nByode, Inverse Sun can be your commander.\nYour deck can include Universes Beyond cards of any color identity.

@@ -60,7 +60,10 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
         Vanguard(false, "vanguards", "lblVanguard"),
         // Trial and Error's "Elemental" card type, printed as Elemental; scripts say ElementalCard so that "Elemental"
         // keeps meaning the creature type (its ruling: an effect that refers to an Elemental means the creature type)
-        ElementalCard(false, "elemental cards", "lblElementalCard");
+        ElementalCard(false, "elemental cards", "lblElementalCard"),
+        // Byode, Inverse Sun's card type: a permanent with loyalty abilities, but not a planeswalker - loyalty is a
+        // planeswalker-only characteristic (CR 306.5), so it has none, enters with no counters and never dies at 0
+        Universewalker(true, "universewalkers", "lblUniversewalker");
 
         public final boolean isPermanent;
         public final String pluralName;
@@ -717,6 +720,9 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
         if (hasType(CoreType.ElementalCard)) {
             allowedTypes = allowedTypes.or(CardType::isAnElementalType);
         }
+        if (hasType(CoreType.Universewalker)) {
+            allowedTypes = allowedTypes.or(CardType::isAUniversewalkerType);
+        }
 
         subtypes.removeIf(allowedTypes.negate());
     }
@@ -897,6 +903,7 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
         public static final Set<String> BATTLE_TYPES = Sets.newHashSet();
         public static final Set<String> PLANAR_TYPES = Sets.newHashSet();
         public static final Set<String> ELEMENTAL_TYPES = Sets.newHashSet();
+        public static final Set<String> UNIVERSEWALKER_TYPES = Sets.newHashSet();
 
         public static final Set<String> MultiwordTypes = Sets.newHashSet();
 
@@ -952,6 +959,7 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
             tmp.addAll(Constant.BATTLE_TYPES);
             tmp.addAll(Constant.PLANAR_TYPES);
             tmp.addAll(Constant.ELEMENTAL_TYPES);
+            tmp.addAll(Constant.UNIVERSEWALKER_TYPES);
             sortedSubTypes = ImmutableList.copyOf(tmp);
         }
         return sortedSubTypes;
@@ -1025,6 +1033,9 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
     public static boolean isAnElementalType(final String cardType) {
         return Constant.ELEMENTAL_TYPES.contains(cardType);
     }
+    public static boolean isAUniversewalkerType(final String cardType) {
+        return Constant.UNIVERSEWALKER_TYPES.contains(cardType);
+    }
     /**
      * If the input is a plural type, return the corresponding singular form.
      * Otherwise, simply return the input.
@@ -1090,6 +1101,9 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
                     break;
                 case "ElementalTypes":
                     addToSection = CardType.Constant.ELEMENTAL_TYPES;
+                    break;
+                case "UniversewalkerTypes":
+                    addToSection = CardType.Constant.UNIVERSEWALKER_TYPES;
                     break;
             }
 

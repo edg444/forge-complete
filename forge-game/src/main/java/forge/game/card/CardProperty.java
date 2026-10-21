@@ -147,6 +147,11 @@ public class CardProperty {
             if (!card.isBoosterFun()) {
                 return false;
             }
+        } else if (property.equals("ChosenUniverse")) {
+            // Byode, Inverse Sun: from the Universe the source chose
+            if (!source.hasChosenType() || !source.getChosenType().equals(card.getUniverse())) {
+                return false;
+            }
         } else if (property.equals("SecretLair")) {
             if (!card.isSecretLair()) {
                 return false;

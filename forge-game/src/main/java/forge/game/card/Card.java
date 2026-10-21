@@ -8334,6 +8334,18 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
 
     /**
+     * The Universe this card's printing is from (Byode, Inverse Sun): a Universes Beyond printing's franchise,
+     * otherwise Magic. Null for tokens and face-down cards, which aren't from any Universe the card can see.
+     */
+    public String getUniverse() {
+        final IPaperCard pc = isFaceDown() ? null : getPaperCard();
+        if (pc == null || pc instanceof PaperToken) {
+            return null;
+        }
+        return PrintingTraits.universeOf(pc.getEdition(), pc.getCollectorNumber());
+    }
+
+    /**
      * A Secret Lair printing (Keeper of the Secret Lair): Secret Lair Drop or one of the products Scryfall files under
      * it (Promo, Countdown, Ultimate Edition, Showcase Planes), all of which carry the name.
      */

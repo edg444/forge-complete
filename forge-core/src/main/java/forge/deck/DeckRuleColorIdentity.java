@@ -23,17 +23,21 @@ import java.util.function.Predicate;
 import forge.card.CardRules;
 import forge.card.CardRulesPredicates;
 import forge.card.ColorSet;
+import forge.card.PrintingTraits;
+import forge.item.PaperCard;
 
 /**
  * {@code DeckRule:ColorIdentity:Exempt$ <branches> | Disable$ True | AllowedAdditionalColor$
- * <n> | AllowedAdditionalColorType$ <branches>} - exempts matching cards from the deck's
+ * <n> | AllowedAdditionalColorType$ <branches> | ExemptUniversesBeyond$ True} - exempts matching cards from the deck's
  * color-identity check, disables it entirely, or lets the player choose (Cryptic Spires-style,
- * via the deck editor) up to {@code n} extra colors for cards matching a branch to use. Branch
+ * via the deck editor) up to {@code n} extra colors for cards matching a branch to use. ExemptUniversesBeyond$
+ * (Byode, Inverse Sun) exempts Universes Beyond printings, which only the printing knows. Branch
  * grammar/matching: {@link CardRulesPredicates#restrictionList}.
  */
 public class DeckRuleColorIdentity extends DeckRule {
     private final Predicate<CardRules> exemptPredicate;
     private final boolean disabled;
+    private final boolean exemptUniversesBeyond;
     private final Predicate<CardRules> additionalColorPredicate;
     private final int additionalColorCount;
     private final byte allowedAdditionalColors;
@@ -41,6 +45,7 @@ public class DeckRuleColorIdentity extends DeckRule {
     DeckRuleColorIdentity(final Map<String, String> params, final byte chosenAdditionalColors) {
         super(params);
         disabled = "True".equalsIgnoreCase(params.get("Disable"));
+        exemptUniversesBeyond = "True".equalsIgnoreCase(params.get("ExemptUniversesBeyond"));
         final String exempt = params.get("Exempt");
         exemptPredicate = exempt != null ? CardRulesPredicates.restrictionList(exempt) : card -> false;
         final String additionalColor = params.get("AllowedAdditionalColor");
@@ -61,6 +66,12 @@ public class DeckRuleColorIdentity extends DeckRule {
     /** True if the candidate matches at least one {@code Exempt$} branch (or the check is fully disabled). */
     public boolean allowsOffColorIdentity(final CardRules candidate) {
         return disabled || exemptPredicate.test(candidate);
+    }
+
+    /** Like {@link #allowsOffColorIdentity(CardRules)}, plus the exemptions that depend on the printing. */
+    public boolean allowsOffColorIdentity(final PaperCard candidate) {
+        return allowsOffColorIdentity(candidate.getRules()) || exemptUniversesBeyond
+                && PrintingTraits.isUniversesBeyond(candidate.getEdition(), candidate.getCollectorNumber());
     }
 
     /** True if this rule lets the player choose any AllowedAdditionalColor$ colors at all. */

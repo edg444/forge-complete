@@ -1193,6 +1193,13 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
                             fetchList = CardLists.filter(fetchList, x -> x.getNetPower() != chosenPower);
                         }
                     }
+                    if (sa.hasParam("DifferentUniverses")) {
+                        // Byode, Inverse Sun
+                        for (Card c : chosenCards) {
+                            final String chosenUniverse = c.getUniverse();
+                            fetchList = CardLists.filter(fetchList, x -> x.getUniverse() == null || !x.getUniverse().equals(chosenUniverse));
+                        }
+                    }
                     if (sa.hasParam("ShareLandType")) {
                         // After the first card is chosen, check if the land type is shared
                         for (final Card c : chosenCards) {
@@ -1669,6 +1676,7 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
                 && !sa.hasParam("DifferentNames")
                 && !sa.hasParam("DifferentPower")
                 && !sa.hasParam("DifferentCMC")
+                && !sa.hasParam("DifferentUniverses")
                 && !sa.hasParam("AtRandom")
                 && (!sa.hasParam("Defined") || sa.hasParam("ChooseFromDefined"))
                 && !sa.hasParam("WithTotalCMC")

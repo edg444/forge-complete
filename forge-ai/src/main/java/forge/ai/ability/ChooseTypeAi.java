@@ -44,6 +44,15 @@ public class ChooseTypeAi extends SpellAbilityAi {
             return !chooseType(sa, aiPlayer.getCardsIn(ZoneType.Hand, ZoneType.Battlefield)).isEmpty()
                     ? new AiAbilityDecision(100, AiPlayDecision.WillPlay)
                     : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        } else if ("Byode".equals(aiLogic)) {
+            // Byode, Inverse Sun's -X: worth it only with a spell in hand from a Universe not chosen yet, and X
+            // just big enough to cast it
+            final Card best = byodeSpell(aiPlayer, sa.getHostCard(), sa.getHostCard().getCounters(CounterEnumType.LOYALTY));
+            if (best == null) {
+                return new AiAbilityDecision(0, AiPlayDecision.MissingNeededCards);
+            }
+            sa.setXManaCostPaid(best.getCMC());
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         } else if ("MostProminentOppControls".equals(aiLogic)) {
             return !chooseType(sa, aiPlayer.getOpponents().getCardsIn(ZoneType.Battlefield)).isEmpty()
                     ? new AiAbilityDecision(100, AiPlayDecision.WillPlay)
@@ -51,6 +60,19 @@ public class ChooseTypeAi extends SpellAbilityAi {
         }
 
         return doTriggerNoCost(aiPlayer, sa, false);
+    }
+
+    /**
+     * The best nonland card in hand Byode, Inverse Sun could cast for free: mana value at most maxCmc, from a
+     * Universe it hasn't chosen this game. Null if there's none.
+     */
+    public static Card byodeSpell(final Player ai, final Card host, final int maxCmc) {
+        final Set<String> chosen = new HashSet<>();
+        host.getNotedTypes().forEach(chosen::add);
+        final CardCollection options = CardLists.filter(ai.getCardsIn(ZoneType.Hand), c -> !c.isLand()
+                && c.getUniverse() != null && !chosen.contains(c.getUniverse()) && c.getCMC() <= maxCmc
+                && !c.getSpells().isEmpty());
+        return options.isEmpty() ? null : ComputerUtilCard.getBestAI(options);
     }
 
     private boolean doMirrorEntityLogic(Player aiPlayer, SpellAbility sa) {

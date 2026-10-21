@@ -96,6 +96,10 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
                 // Stamp of Approval: every watermark a printing has
                 validTypes.addAll(forge.card.PrintingTraits.allWatermarkNames());
                 break;
+            case "Universe":
+                // Byode, Inverse Sun: Magic and every Universes Beyond franchise
+                validTypes.addAll(forge.card.PrintingTraits.allUniverses());
+                break;
             case "CreatureInTargetedDeck":
                 for (final Player p : tgtPlayers) {
                     for (Card c : p.getAllCards()) {
@@ -139,8 +143,8 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
             }
         }
 
-        if (validTypes.isEmpty() && sa.hasParam("TypesFromDefined")) {
-            // OK to end up with no choices/have nothing new to note
+        if (validTypes.isEmpty() && (sa.hasParam("TypesFromDefined") || "Universe".equals(type))) {
+            // OK to end up with no choices/have nothing new to note (Byode once every Universe has been chosen)
         } else if (!validTypes.isEmpty()) {
             for (final Player p : tgtPlayers) {
                 String choice;
