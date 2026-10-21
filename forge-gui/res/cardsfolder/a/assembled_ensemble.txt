@@ -1,0 +1,19 @@
+Name:Assembled Ensemble
+ManaCost:4 W
+Types:Artifact Creature Clown Robot Bard
+PT:*/6
+K:Vigilance
+S:Mode$ Continuous | CharacteristicDefining$ True | SetPower$ X | Description$ CARDNAME's power is equal to the number of Robots you control.
+SVar:X:Count$Valid Robot.YouCtrl
+# An artifact creature the printing data confirms in the spell's art (Tagger's robot/construct/golem... tags, or the art
+# of an artifact creature card) needs no question. Art Tagger hasn't tagged at all is asked about (honor system, the
+# caster can see it); the AI can't look, so it answers no.
+T:Mode$ SpellCast | ValidCard$ Card.KnownArtifactCreatureInArt,Card.ArtUntagged | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigKnown | TriggerDescription$ Whenever you cast a spell with an artifact creature in its art, create a 1/1 white Clown Robot artifact creature token.
+SVar:TrigKnown:DB$ Token | TokenScript$ w_1_1_a_clown_robot | TokenOwner$ You | ConditionDefined$ TriggeredCard | ConditionPresent$ Card.KnownArtifactCreatureInArt | SubAbility$ DBAsk
+SVar:DBAsk:DB$ GenericChoice | Defined$ You | Choices$ NoArtifactCreature,ArtifactCreature | ChoicePrompt$ Is there an artifact creature in the art of the spell you cast? | ConditionDefined$ TriggeredCard | ConditionPresent$ Card.!KnownArtifactCreatureInArt
+SVar:NoArtifactCreature:DB$ Pump | SpellDescription$ No artifact creature
+SVar:ArtifactCreature:DB$ Token | TokenScript$ w_1_1_a_clown_robot | TokenOwner$ You | SpellDescription$ There's an artifact creature: create a 1/1 white Clown Robot artifact creature token
+SVar:BuffedBy:Robot
+DeckHints:Type$Robot
+DeckHas:Ability$Token & Type$Clown|Robot
+Oracle:Vigilance\nAssembled Ensemble's power is equal to the number of Robots you control.\nWhenever you cast a spell with an artifact creature in its art, create a 1/1 white Clown Robot artifact creature token.

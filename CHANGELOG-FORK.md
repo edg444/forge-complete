@@ -312,6 +312,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Assembled Ensemble (UNF #3).** New PrintingTraits trait `artifactcreature`, which gives
+  `Card.hasKnownArtifactCreatureInArt()` and the property `KnownArtifactCreatureInArt`.
+  - Tagger has no artifact-creature tag, so these count: the robot, construct, golem, thopter, servo, automaton,
+    juggernaut and animated-object tags, plus any art that is an artifact creature card's own (Dancing Scimitar,
+    which the rulings name).
+  - Gargoyle, scarecrow, cyborg, clockwork, vehicle and homunculus art counts only when it's an artifact creature's
+    own (user ruling). Darksteel Gargoyle counts; Abbey Gargoyles, a scarecrow in a field and Vehicles don't.
+  - Untagged art is asked about, as with Acornelia, and the AI answers no.
+  - **`generate.js` fix:** Forge numbers some printings with an F that Scryfall doesn't have (Unfinity's acorn cards
+    are F3 where Scryfall says 3; Mystery Booster 2's playtest cards too). Those had never been matched, so they had
+    no printing traits at all. They're now matched by number when the card name agrees: 266 more rows.
 - **Unfinity: Standard Procedure (UNF #1).** Its rulings say it isn't a copy effect: it *becomes* the chosen card
   until end of turn even once cast or shuffled away.
   - New Clone `FollowsCard$ True` adds a `PerpetualClone` (forge.game.card.perpetual). Every zone change rebuilds

@@ -8315,6 +8315,12 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return t != null && t.hasSquirrel(isBackSide());
     }
 
+    /** An artifact creature the printing data confirms in the art of the face showing (Assembled Ensemble). */
+    public boolean hasKnownArtifactCreatureInArt() {
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t != null && t.hasArtifactCreature(isBackSide());
+    }
+
     /** Nothing is known about this face's art: no printing data, or art Scryfall Tagger hasn't tagged at all. */
     public boolean isArtUntagged() {
         final PrintingTraits.Traits t = getPrintingTraits();

@@ -519,6 +519,10 @@ public class CardProperty {
             if (!card.hasKnownSquirrelInArt()) {
                 return false;
             }
+        } else if (property.equals("KnownArtifactCreatureInArt")) {
+            if (!card.hasKnownArtifactCreatureInArt()) {
+                return false;
+            }
         } else if (property.equals("ArtUntagged")) {
             // Acornelia asks about these: no Tagger tags at all, so a missing squirrel tag proves nothing
             if (!card.isArtUntagged()) {

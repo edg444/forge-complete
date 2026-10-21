@@ -50,6 +50,8 @@ public final class PrintingTraits {
         private boolean backMoon = false;
         private boolean squirrel = false;
         private boolean backSquirrel = false;
+        private boolean artifactCreature = false;
+        private boolean backArtifactCreature = false;
         private boolean untaggedArt = false;
         private boolean backUntaggedArt = false;
         private boolean boosterFun = false;
@@ -106,6 +108,11 @@ public final class PrintingTraits {
         /** A squirrel in the artwork (Acornelia), per Scryfall Tagger. */
         public boolean hasSquirrel(final boolean backFace) {
             return backFace ? backSquirrel : squirrel;
+        }
+
+        /** An artifact creature in the artwork (Assembled Ensemble), per Scryfall Tagger and the art's own card. */
+        public boolean hasArtifactCreature(final boolean backFace) {
+            return backFace ? backArtifactCreature : artifactCreature;
         }
 
         /** Scryfall Tagger hasn't tagged this artwork at all, so its other art traits being absent says nothing. */
@@ -203,6 +210,10 @@ public final class PrintingTraits {
                     t.squirrel = true;
                 } else if (trait.equals("backsquirrel")) {
                     t.backSquirrel = true;
+                } else if (trait.equals("artifactcreature")) {
+                    t.artifactCreature = true;
+                } else if (trait.equals("backartifactcreature")) {
+                    t.backArtifactCreature = true;
                 } else if (trait.equals("untaggedart")) {
                     t.untaggedArt = true;
                 } else if (trait.equals("backuntaggedart")) {
