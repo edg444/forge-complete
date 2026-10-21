@@ -1,0 +1,9 @@
+Name:Main Event Horizon
+ManaCost:3 W W
+Types:Sorcery
+# the half of the alphabet is chosen as the spell is cast, like a mode, so it's on the stack for everyone to see and a
+# copy keeps it (rulings). It isn't modal, so Far Out can't add the other half (NotModal).
+A:SP$ Charm | Choices$ DBAToM,DBNToZ | NotModal$ True | PrecostDesc$ As an additional cost to cast this spell, choose A through M or N through Z.
+SVar:DBAToM:DB$ DestroyAll | ValidCards$ Creature.nameInitialIn A-M | SpellDescription$ A through M — Destroy each creature whose name begins with a letter in the chosen range.
+SVar:DBNToZ:DB$ DestroyAll | ValidCards$ Creature.nameInitialIn N-Z | SpellDescription$ N through Z — Destroy each creature whose name begins with a letter in the chosen range.
+Oracle:As an additional cost to cast this spell, choose A through M or N through Z.\nDestroy each creature whose name begins with a letter in the chosen range.

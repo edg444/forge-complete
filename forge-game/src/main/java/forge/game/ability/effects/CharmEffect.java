@@ -385,7 +385,8 @@ public class CharmEffect extends SpellAbilityEffect {
     public static boolean canChooseAnyNumberOfModes(final SpellAbility sa, final Player chooser, final int choices, final int min,
             final int num, final boolean canRepeat) {
         final Player activator = sa.getActivatingPlayer();
-        return !sa.hasParam("Pawprint") && activator != null && activator.equals(chooser) && choices > 0
+        // NotModal: a choice scripted as modes that isn't one (Main Event Horizon's half of the alphabet)
+        return !sa.hasParam("Pawprint") && !sa.hasParam("NotModal") && activator != null && activator.equals(chooser) && choices > 0
                 && !(min <= 1 && num >= choices && !canRepeat)
                 && StaticAbilityChooseAnyNumberOfModes.applies(activator);
     }

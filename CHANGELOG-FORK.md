@@ -312,6 +312,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Main Event Horizon (UNF #19).** The half of the alphabet is chosen as the spell is cast. It's scripted
+  as two modes, so the choice is on the stack for everyone to see and a copy keeps it (rulings).
+  - New card property `nameInitialIn A-M`. Spaces and punctuation are skipped; accents are dropped and Æ reads as A
+    (`NameLetters.latinBase`); a letter from an alphabet without A to Z is in neither half (rulings).
+  - Charm's `NotModal$ True` keeps Far Out from adding the other half, since this is an additional-cost choice and
+    the spell isn't modal.
+  - **AI:** DestroyAllAi picks the half that costs the opponent more.
 - **Unfinity: Leading Performance (UNF #18).** Two letter choices, the second into `ChosenType2`.
   - ChooseType's `InvalidTypes$` now accepts `ChosenType`, which takes out the letter already chosen, so the second
     letter must differ (rulings).

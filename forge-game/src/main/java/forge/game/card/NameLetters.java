@@ -41,6 +41,19 @@ public final class NameLetters {
         return -1;
     }
 
+    /** An initial as one of A to Z: accents dropped and Æ read as A, or -1 for a letter outside that alphabet. */
+    public static int latinBase(final int initial) {
+        if (initial == -1) {
+            return -1;
+        }
+        if (initial == 'Æ') {
+            return 'A';
+        }
+        final String base = java.text.Normalizer.normalize(new String(Character.toChars(initial)), java.text.Normalizer.Form.NFD);
+        final char c = base.charAt(0);
+        return c >= 'A' && c <= 'Z' ? c : -1;
+    }
+
     public static boolean sameInitial(final String a, final String b) {
         final int i = initial(a);
         return i != -1 && i == initial(b);

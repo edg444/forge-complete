@@ -280,6 +280,14 @@ public class CardProperty {
             if (!match) {
                 return false;
             }
+        } else if (property.startsWith("nameInitialIn ")) {
+            // Main Event Horizon: "nameInitialIn A-M". An accented letter counts as its base letter; one from an
+            // alphabet without A through Z is in neither half (rulings)
+            final String[] range = property.substring("nameInitialIn ".length()).split("-");
+            final int initial = NameLetters.latinBase(NameLetters.initial(card.getDisplayName()));
+            if (initial < range[0].charAt(0) || initial > range[1].charAt(0)) {
+                return false;
+            }
         } else if (property.equals("HasHalfSymbol")) {
             // Fraction Jackson: "a card with a 1/2 on it". In this pool that is one of three things -
             // a half in the printed power/toughness, a half shard in the mana cost, or a 1/2 written
