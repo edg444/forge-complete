@@ -515,6 +515,10 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         boolean isMine = sa.getActivatingPlayer().equals(payer);
 
         if (payNever) { return false; }
+        // Shedding Snake: only worth paying when there's commander tax to take off
+        if ("CommanderTax".equals(aiLogic) && !payer.hasCommanderTax()) {
+            return false;
+        }
         if (aiLogic != null && aiLogic.startsWith("Chance.")) {
             // Honor-system "unless" costs (see CostFlavorAction) - a real cost-affordability check
             // doesn't apply, so roll a flat percentage instead of the normal cost-based logic below.

@@ -1,0 +1,17 @@
+Name:Fear (split card)
+ManaCost:B
+Types:Sorcery
+K:Fuse
+A:SP$ Pump | ValidTgts$ Creature | TgtPrompt$ Select target creature | KW$ Fear | SubAbility$ DBDraw | SpellDescription$ Target creature gains fear until end of turn. Draw a card. (It can't be blocked except by black and/or artifact creatures. Yes, this is the same as an existing Magic card name. Deal with it.)
+SVar:DBDraw:DB$ Draw | NumCards$ 1
+AlternateMode:Split
+Oracle:Target creature gains fear until end of turn. Draw a card. (It can't be blocked except by black and/or artifact creatures. Yes, this is the same as an existing Magic card name. Deal with it.)\nFuse (You may cast one or both halves of this card from your hand.)
+
+ALTERNATE
+
+Name:Loathing
+ManaCost:1 B
+Types:Sorcery
+A:SP$ LoseLife | Defined$ Player | LifeAmount$ 2 | SubAbility$ DBDraw | SpellDescription$ Each player loses 2 life. Draw a card.
+SVar:DBDraw:DB$ Draw | NumCards$ 1
+Oracle:Each player loses 2 life. Draw a card.\nFuse (You may cast one or both halves of this card from your hand.)

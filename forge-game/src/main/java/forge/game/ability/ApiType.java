@@ -157,6 +157,7 @@ public enum ApiType {
     JumpInLog (JumpInLogEffect.class),
     CloneCombined (CloneCombinedEffect.class),
     AdjustNumber (AdjustNumberEffect.class),
+    ResetCommanderTax (ResetCommanderTaxEffect.class),
     GameDrawn (GameDrawEffect.class),
     GenericChoice (ChooseGenericEffect.class),
     Gerrymander (GerrymanderEffect.class),

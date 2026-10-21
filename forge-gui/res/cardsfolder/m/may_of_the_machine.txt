@@ -1,0 +1,11 @@
+Name:May of the Machine
+ManaCost:2 B
+Types:Sorcery
+# Today's date is the real one where the player is.
+A:SP$ Destroy | ValidTgts$ Creature,Planeswalker | TgtPrompt$ Select target creature or planeswalker | SubAbility$ DBScry | SpellDescription$ Destroy target creature or planeswalker. If today's date is May 6th, scry 1. If today's date is May 7th, fateseal 1. (To fateseal 1, look at the top card of an opponent's library. You may put that card on the bottom of their library.)
+SVar:DBScry:DB$ Scry | ScryNum$ 1 | ConditionCheckSVar$ Today | ConditionSVarCompare$ EQ506 | SubAbility$ DBChoose
+SVar:DBChoose:DB$ ChoosePlayer | Defined$ You | Choices$ Player.Opponent | AILogic$ Curse | ConditionCheckSVar$ Today | ConditionSVarCompare$ EQ507 | SubAbility$ DBFateseal
+SVar:DBFateseal:DB$ Dig | Defined$ ChosenPlayer | DigNum$ 1 | ChangeNum$ Any | DestinationZone$ Library | LibraryPosition$ -1 | LibraryPosition2$ 0 | ConditionCheckSVar$ Today | ConditionSVarCompare$ EQ507 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenPlayer$ True
+SVar:Today:Count$RealWorldMonthDay
+Oracle:Destroy target creature or planeswalker. If today's date is May 6th, scry 1. If today's date is May 7th, fateseal 1. (To fateseal 1, look at the top card of an opponent's library. You may put that card on the bottom of their library.)

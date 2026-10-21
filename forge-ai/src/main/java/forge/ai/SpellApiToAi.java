@@ -159,6 +159,7 @@ public enum SpellApiToAi {
             .put(ApiType.CloneCombined, CloneCombinedAi.class)
             .put(ApiType.AdjustNumber, AdjustNumberAi.class)
             .put(ApiType.OpenBooster, OpenBoosterAi.class)
+            .put(ApiType.ResetCommanderTax, AlwaysPlayAi.class)
             .put(ApiType.SeekHidden, SeekHiddenAi.class)
             .put(ApiType.PutHiddenTokens, AlwaysPlayAi.class)
             .put(ApiType.GainOwnership, CannotPlayAi.class)

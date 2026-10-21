@@ -2270,6 +2270,14 @@ public class AbilityUtils {
         if (sq[0].equals("RealWorldSunDown")) {
             return doXMath(forge.util.SunTimes.isSunDown(realWorldNow.get()) ? 1 : 0, expr, c, ctb);
         }
+        // May of the Machine: today's date where the player is, as month * 100 + day (May 6th is 506)
+        if (sq[0].equals("RealWorldMonthDay")) {
+            final java.time.ZonedDateTime now = realWorldNow.get();
+            return doXMath(now.getMonthValue() * 100 + now.getDayOfMonth(), expr, c, ctb);
+        }
+        if (sq[0].equals("AllCommandersRevealed")) {
+            return doXMath(player.allCommandersRevealed() ? 1 : 0, expr, c, ctb);
+        }
         // Some Disassembly Required asks whether it is December. 1-12, like the calendar.
         if (sq[0].equals("CurrentMonth")) {
             return doXMath(java.time.LocalDate.now().getMonthValue(), expr, c, ctb);

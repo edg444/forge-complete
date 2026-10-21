@@ -55,7 +55,7 @@ public class CostAdjustment {
 
             // Commander Tax there
             if (host.isCommander() && host.getCastFrom() != null && ZoneType.Command.equals(host.getCastFrom().getZoneType())) {
-                int n = activator.getCommanderCast(host) * 2;
+                int n = activator.getCommanderTax(host);
                 if (n > 0) {
                     result.add(new Cost(ManaCost.get(n), false));
                 }

@@ -1,0 +1,7 @@
+Name:Reverse Ninja
+ManaCost:1 B
+Types:Creature Snake Ninja
+PT:1/1
+K:Deathtouch
+A:AB$ ChangeZone | Cost$ B Return<1/Creature.blocking+YouCtrl/blocking creature you control> | PrecostDesc$ Ustujnin | CostDesc$ {B} | ActivationZone$ Hand | Origin$ Hand | Destination$ Battlefield | Defined$ Self | Ustujnin$ True | SpellDescription$ ({B}, Return a blocking creature you control to hand: Put this card onto the battlefield from your hand blocking the same creature.)
+Oracle:Deathtouch\nUstujnin {B} ({B}, Return a blocking creature you control to hand: Put this card onto the battlefield from your hand blocking the same creature.)

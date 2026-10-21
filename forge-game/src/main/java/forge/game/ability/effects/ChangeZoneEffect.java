@@ -464,7 +464,7 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
             return;
         }
 
-        if (sa.isHidden() && !sa.isNinjutsu()) {
+        if (sa.isHidden() && !sa.isNinjutsu() && !sa.hasParam("Ustujnin")) {
             changeHiddenOriginResolve(sa);
         } else {
             //else if (isKnown(origin) || sa.containsKey("Ninjutsu")) {
@@ -718,6 +718,16 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
                 }
                 if (addToCombat(movedCard, sa, "Attacking", "Blocking")) {
                     combatChanged = true;
+                }
+                if (sa.hasParam("Ustujnin") && game.getCombat() != null) {
+                    // Reverse Ninja: it blocks the creature the returned blocker was blocking
+                    final Card returned = sa.getPaidList("Returned", true).getFirst();
+                    final forge.game.combat.CombatLki lki = returned.getCombatLKI();
+                    if (lki != null && !lki.isAttacker && lki.getFirstBand() != null
+                            && !lki.getFirstBand().getAttackers().isEmpty()) {
+                        game.getCombat().addBlocker(lki.getFirstBand().getAttackers().get(0), movedCard);
+                        combatChanged = true;
+                    }
                 }
                 if (sa.isNinjutsu()) {
                     // Ninjutsu need to get the Defender of the Returned Creature

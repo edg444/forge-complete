@@ -1,0 +1,13 @@
+Name:Syr Konrad's Squire
+ManaCost:1 B
+Types:Creature Human Knight
+PT:2/2
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigDmg | TriggerDescription$ Whenever CARDNAME dies, or is put into a graveyard from anywhere other than the battlefield, or leaves your graveyard, or is put into exile, or is put into your library, or is returned to your hand from the battlefield or graveyard, or is phased out, it deals 1 damage to each opponent.
+T:Mode$ ChangesZone | Origin$ Hand,Exile,Stack,Library,Command,Sideboard | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigDmg | Secondary$ True | TriggerDescription$ Whenever CARDNAME is put into a graveyard from anywhere other than the battlefield, it deals 1 damage to each opponent.
+T:Mode$ ChangesZone | Origin$ Graveyard | Destination$ Any | ValidCard$ Card.Self+YouOwn | Execute$ TrigDmg | Secondary$ True | TriggerDescription$ Whenever CARDNAME leaves your graveyard, it deals 1 damage to each opponent.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Exile | ValidCard$ Card.Self | Execute$ TrigDmg | Secondary$ True | TriggerDescription$ Whenever CARDNAME is put into exile, it deals 1 damage to each opponent.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Library | ValidCard$ Card.Self+YouOwn | Execute$ TrigDmg | Secondary$ True | TriggerDescription$ Whenever CARDNAME is put into your library, it deals 1 damage to each opponent.
+T:Mode$ ChangesZone | Origin$ Battlefield,Graveyard | Destination$ Hand | ValidCard$ Card.Self | Execute$ TrigDmg | Secondary$ True | TriggerDescription$ Whenever CARDNAME is returned to your hand from the battlefield or graveyard, it deals 1 damage to each opponent.
+T:Mode$ PhaseOut | ValidCard$ Card.phasedOutSelf | Execute$ TrigDmg | Secondary$ True | TriggerDescription$ Whenever CARDNAME is phased out, it deals 1 damage to each opponent.
+SVar:TrigDmg:DB$ DealDamage | Defined$ Player.Opponent | NumDmg$ 1
+Oracle:Whenever Syr Konrad's Squire dies, or is put into a graveyard from anywhere other than the battlefield, or leaves your graveyard, or is put into exile, or is put into your library, or is returned to your hand from the battlefield or graveyard, or is phased out, it deals 1 damage to each opponent.

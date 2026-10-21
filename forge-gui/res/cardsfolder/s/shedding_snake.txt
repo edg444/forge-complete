@@ -1,0 +1,8 @@
+Name:Shedding Snake
+ManaCost:4 B
+Types:Creature Snake
+PT:6/5
+K:Menace
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigReset | TriggerDescription$ When CARDNAME enters the battlefield, you may pay 2 life. If you do, the commander tax on each of your commanders is reduced back to zero.
+SVar:TrigReset:DB$ ResetCommanderTax | Defined$ You | UnlessCost$ PayLife<2> | UnlessPayer$ You | UnlessSwitched$ True | UnlessAI$ CommanderTax
+Oracle:Menace\nWhen Shedding Snake enters the battlefield, you may pay 2 life. If you do, the commander tax on each of your commanders is reduced back to zero.

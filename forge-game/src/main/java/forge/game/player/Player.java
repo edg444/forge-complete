@@ -3623,6 +3623,27 @@ public class Player extends GameEntity implements Comparable<Player> {
     public int getCommanderCast(Card commander) {
         return commanderCast.getOrDefault(commander, 0);
     }
+
+    // Shedding Snake: casts made before the tax was reduced back to zero no longer count toward it
+    private final Map<Card, Integer> commanderCastBeforeTaxReset = Maps.newHashMap();
+
+    /** The commander tax: {2} for each time it was cast from the command zone since its tax was last reset. */
+    public int getCommanderTax(Card commander) {
+        return 2 * Math.max(0, getCommanderCast(commander) - commanderCastBeforeTaxReset.getOrDefault(commander, 0));
+    }
+
+    public void resetCommanderTax() {
+        commanderCastBeforeTaxReset.putAll(commanderCast);
+    }
+
+    public boolean hasCommanderTax() {
+        return commanderCast.keySet().stream().anyMatch(c -> getCommanderTax(c) > 0);
+    }
+
+    /** Detectives: with no commanders, or none still face down and secret, all of them have been revealed. */
+    public boolean allCommandersRevealed() {
+        return getCommanders().stream().noneMatch(c -> game.getCardState(c).isFaceDown());
+    }
     public void incCommanderCast(Card commander) {
         commanderCast.merge(commander, 1, Integer::sum);
         getView().updateCommanderCast(this, commander);
@@ -3631,6 +3652,7 @@ public class Player extends GameEntity implements Comparable<Player> {
 
     public void resetCommanderStats() {
         commanderCast.clear();
+        commanderCastBeforeTaxReset.clear();
         commanderDamage.clear();
     }
 

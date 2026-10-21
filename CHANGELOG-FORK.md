@@ -312,6 +312,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Reverse Ninja, Demon Detective, Syr Konrad's Squire, Fear // Loathing, May of the Machine, Shedding
+  Snake (UNK CB02-CB05).**
+  - **Ustujnin:** `ChangeZone` `Ustujnin$ True` puts the card onto the battlefield blocking the creature the returned
+    blocker was blocking (from its combat last-known information).
+  - **Commander tax:** `Player.getCommanderTax` now counts only casts since the tax was last reset; the new
+    `ResetCommanderTax` effect resets it without touching the cast count. The AI pays Shedding Snake's 2 life only when
+    there's tax to take off (`UnlessAI$ CommanderTax`).
+  - **Detectives:** `Count$AllCommandersRevealed` is true with no commanders, or none still face down.
+  - **Dates:** `Count$RealWorldMonthDay` (May 6th is 506), from the real date where the player is.
 - **Unknown Event: Your Mana Rock, Unicycling Automaton, Color Pie, Melira's Snacks (UNK CA02b-CA12).**
   - **Your Mana Rock:** its two colors are marked in the deck editor like Cryptic Spires', or chosen as the game
     begins (user ruling). Any card with `SETCOLORID` now gets this, so an unmarked Cryptic Spires asks too instead of

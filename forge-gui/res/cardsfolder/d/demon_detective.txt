@@ -1,0 +1,9 @@
+Name:Demon Detective
+ManaCost:1 B
+Types:Creature Demon Detective
+PT:4/4
+# With no commanders, or none still secret, all of them have been revealed.
+S:Mode$ CantBeCast | ValidCard$ Card.Self | EffectZone$ All | CheckSVar$ X | SVarCompare$ EQ0 | Description$ You can't cast CARDNAME unless all of your commanders have been revealed.
+SVar:X:Count$AllCommandersRevealed
+K:Flying
+Oracle:You can't cast Demon Detective unless all of your commanders have been revealed.\nFlying
