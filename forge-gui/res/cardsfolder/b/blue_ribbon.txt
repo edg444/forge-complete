@@ -1,0 +1,14 @@
+Name:Blue Ribbon
+ManaCost:1
+Types:Artifact Equipment
+# The person outside the game is simulated: they pick at random, the more impactful a creature the likelier (user,
+# 2026-10-21; AtRandom$ ThreatWeighted, as for Defective Detective). With no creature, it stays unattached (rulings).
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigAsk | TriggerDescription$ When this Equipment enters, ask a person outside the game which creature you control is most deserving of a blue ribbon. Attach this Equipment to that creature.
+SVar:TrigAsk:DB$ ChooseCard | Defined$ You | Choices$ Creature.YouCtrl | AtRandom$ ThreatWeighted | Mandatory$ True | Reveal$ True | RevealTitle$ Most deserving of a blue ribbon, says a person outside the game: | SubAbility$ DBAttach
+SVar:DBAttach:DB$ Attach | Defined$ ChosenCard | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+S:Mode$ Continuous | Affected$ Creature.EquippedBy | AddTrigger$ BestInShow | Description$ Equipped creature has best in show. (Whenever another creature becomes the target of a spell or ability you control, you may copy that spell or ability. If you do, the copy targets this creature.)
+SVar:BestInShow:Mode$ BecomesTarget | ValidTarget$ Creature.Other | ValidSource$ SpellAbility.YouCtrl | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ BestInShowCopy | TriggerDescription$ Best in show (Whenever another creature becomes the target of a spell or ability you control, you may copy that spell or ability. If you do, the copy targets this creature.)
+SVar:BestInShowCopy:DB$ CopySpellAbility | Defined$ TriggeredSourceSA | Controller$ You | DefinedTarget$ Self | AILogic$ BestInShow
+K:Equip:3
+Oracle:When this Equipment enters, ask a person outside the game which creature you control is most deserving of a blue ribbon. Attach this Equipment to that creature.\nEquipped creature has best in show. (Whenever another creature becomes the target of a spell or ability you control, you may copy that spell or ability. If you do, the copy targets this creature.)\nEquip {3}

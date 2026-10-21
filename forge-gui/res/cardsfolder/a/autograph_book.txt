@@ -1,0 +1,11 @@
+Name:Autograph Book
+ManaCost:2
+Types:Artifact Book
+# One page counter per person who has signed the physical card, counted as it enters (honor system; rulings). The AI
+# has no book to pass around, so a simulated number of signers (AILogic$ Signers).
+K:ETBReplacement:Other:DBSigners
+SVar:DBSigners:DB$ ChooseNumber | Defined$ You | Min$ 0 | Max$ 99 | ListTitle$ How many people have signed this Autograph Book? (One per person, however many times they signed.) | AILogic$ Signers | SubAbility$ DBPages | SpellDescription$ This artifact enters with a page counter on it for each person who has signed it.
+SVar:DBPages:DB$ PutCounter | Defined$ Self | ETB$ True | CounterType$ PAGE | CounterNum$ X
+SVar:X:Count$ChosenNumber
+A:AB$ Draw | Cost$ 3 T SubCounter<1/PAGE> | NumCards$ 1 | SpellDescription$ Draw a card.
+Oracle:This artifact enters with a page counter on it for each person who has signed it.\n{3}, {T}, Remove a page counter from this artifact: Draw a card.

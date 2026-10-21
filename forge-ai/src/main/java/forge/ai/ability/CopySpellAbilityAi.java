@@ -119,6 +119,19 @@ public class CopySpellAbilityAi extends SpellAbilityAi {
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
 
+        if ("BestInShow".equals(logic)) {
+            // Blue Ribbon: a copy aimed at the creature with best in show helps only if what's copied helps a creature
+            for (final SpellAbility copied : forge.game.ability.AbilityUtils.getDefinedSpellAbilities(sa.getHostCard(),
+                    "TriggeredSourceSA", sa)) {
+                final forge.game.ability.ApiType api = copied.getApi();
+                if (!copied.isCurse() && (api == forge.game.ability.ApiType.Pump || api == forge.game.ability.ApiType.PutCounter
+                        || api == forge.game.ability.ApiType.Protection || api == forge.game.ability.ApiType.Regenerate
+                        || api == forge.game.ability.ApiType.Untap)) {
+                    return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+                }
+            }
+        }
+
         return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
     }
 

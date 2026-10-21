@@ -2220,6 +2220,10 @@ public class AbilityUtils {
         if (sq[0].equals("CardPower")) {
             return doXMath(c.getNetPower(), expr, c, ctb);
         }
+        // Meet and Greet "Sisay": lines of flavor text on the card's printing
+        if (sq[0].equals("CardFlavorLines")) {
+            return doXMath(c.getPrintedFlavorLines(), expr, c, ctb);
+        }
         // counts in halves, so a 1/2 creature reports 1 rather than rounding away to nothing
         if (sq[0].equals("CardPowerHalves")) {
             return doXMath(c.getNetPowerInHalves(), expr, c, ctb);

@@ -1446,6 +1446,16 @@ public class CardProperty {
             if (!card.sharesNameWith(source)) {
                 return false;
             }
+        } else if (property.startsWith("sharesExpansionWith ")) {
+            // Meet and Greet "Sisay": the same expansion symbol, whatever its rarity color (rulings)
+            final String set = card.getSetCode();
+            boolean shares = false;
+            for (final Card other : AbilityUtils.getDefinedCards(source, property.substring("sharesExpansionWith ".length()), spellAbility)) {
+                shares |= set != null && set.equalsIgnoreCase(other.getSetCode());
+            }
+            if (!shares) {
+                return false;
+            }
         } else if (property.startsWith("sharesNameWith")) {
             if (property.equals("sharesNameWith")) {
                 if (!card.sharesNameWith(source)) {

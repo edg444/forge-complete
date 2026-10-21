@@ -1,0 +1,15 @@
+Name:Pietra, Crafter of Clowns
+ManaCost:1 R W
+Types:Legendary Creature Human Clown Artificer
+PT:3/2
+K:Haste
+S:Mode$ Continuous | Affected$ Creature.Robot+YouCtrl | AddPower$ 1 | AddToughness$ 1 | Description$ Robots you control get +1/+1.
+# The joke and the laugh are honor system; whether the joke is new this game is the teller's to keep track of. The
+# AI's audience laughs half the time.
+A:AB$ Token | Cost$ R W T FlavorAction<Tell a joke you haven't told this game to someone outside the game/Ba-dum-tss!> | TokenScript$ w_1_1_a_clown_robot | TokenOwner$ You | RememberTokens$ True | SubAbility$ DBLaughed | SpellDescription$ Create a 1/1 white Clown Robot artifact creature token. If that person laughed, the token gains haste until end of turn.
+SVar:DBLaughed:DB$ GenericChoice | Defined$ You | Choices$ DBHaste,DBNoLaugh | AILogic$ Random | ChoicePrompt$ Did that person laugh? (Even the mildest giggle counts.) | SubAbility$ DBCleanup
+SVar:DBHaste:DB$ Pump | Defined$ Remembered | KW$ Haste | SpellDescription$ They laughed
+SVar:DBNoLaugh:DB$ Cleanup | SpellDescription$ No laugh
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+DeckHas:Ability$Token & Type$Clown|Robot|Artifact
+Oracle:Haste\nRobots you control get +1/+1.\n{R}{W}, {T}, Tell a joke you haven't told this game to someone outside the game: Create a 1/1 white Clown Robot artifact creature token. If that person laughed, the token gains haste until end of turn.

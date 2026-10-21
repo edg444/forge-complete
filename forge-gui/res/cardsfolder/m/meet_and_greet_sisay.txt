@@ -1,0 +1,15 @@
+Name:Meet and Greet "Sisay"
+ManaCost:R G
+Types:Legendary Creature Elf Performer
+PT:1/1
+# Flavor lines are the spell's printing's, read off its card image (Card.getPrintedFlavorLines). An expansion symbol is
+# the printing's set, whatever its rarity color (rulings).
+T:Mode$ SpellCast | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCharm | TriggerDescription$ Whenever you cast a spell, ABILITY
+SVar:TrigCharm:DB$ Charm | Choices$ DBFlavor,DBHistory
+SVar:DBFlavor:DB$ Pump | Defined$ Self | NumAtt$ +X | NumDef$ +X | SpellDescription$ Flavor — CARDNAME gets +1/+1 until end of turn for each line of flavor text that spell has.
+SVar:X:TriggeredCard$CardFlavorLines
+SVar:DBHistory:DB$ Token | TokenScript$ c_a_treasure_sac | TokenOwner$ You | ConditionCheckSVar$ Y | ConditionSVarCompare$ EQ0 | SpellDescription$ History — Create a Treasure token if that spell doesn't share an expansion symbol with a permanent you control or a card in your graveyard.
+SVar:Y:Count$Valid Permanent.YouCtrl+sharesExpansionWith TriggeredCard/Plus.Z
+SVar:Z:Count$ValidGraveyard Card.YouOwn+sharesExpansionWith TriggeredCard
+DeckHas:Ability$Token & Type$Treasure|Artifact
+Oracle:Whenever you cast a spell, choose one —\n• Flavor — Meet and Greet "Sisay" gets +1/+1 until end of turn for each line of flavor text that spell has.\n• History — Create a Treasure token if that spell doesn't share an expansion symbol with a permanent you control or a card in your graveyard.

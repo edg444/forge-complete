@@ -2154,6 +2154,10 @@ public class AiController {
                 }
             }
             return Math.min(max, best);
+        } else if ("Signers".equals(logic)) {
+            // Autograph Book: a simulated book - signed by a person or two, now and then a few more
+            final int roll = MyRandom.getRandom().nextInt(100);
+            return Math.min(max, Math.max(min, roll < 30 ? 1 : roll < 65 ? 2 : roll < 85 ? 3 : roll < 95 ? 4 : 5));
         } else if ("FireExtinguishers".equals(logic)) {
             // Mistakes Were Made: a simulated room - mostly none in sight, now and then one, rarely two
             final int roll = MyRandom.getRandom().nextInt(100);

@@ -1,0 +1,10 @@
+Name:Lila, Hospitality Hostess
+ManaCost:2 G W
+Types:Legendary Creature Elf Employee
+PT:3/3
+# A spell's rarity is its printing's, by its expansion symbol; a basic land's black symbol is common, but Lila doesn't
+# let you play lands (rulings).
+S:Mode$ Continuous | Affected$ Card.TopLibrary+YouCtrl | AffectedZone$ Library | MayLookAt$ You | Description$ You may look at the top card of your library any time.
+S:Mode$ Continuous | Affected$ Card.TopLibrary+YouCtrl+nonLand+RarityCommon | AffectedZone$ Library | MayPlay$ True | Description$ You may cast common spells from the top of your library.
+S:Mode$ Continuous | Affected$ Creature.Guest+YouCtrl | AddPower$ 1 | AddToughness$ 1 | Description$ Guests you control get +1/+1.
+Oracle:You may look at the top card of your library any time.\nYou may cast common spells from the top of your library.\nGuests you control get +1/+1.

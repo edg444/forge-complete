@@ -312,6 +312,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Blue Ribbon (UNF #184).** The person outside the game is simulated: they pick at random, likelier the more
+  impactful the creature (user ruling, as for Defective Detective).
+  - Best in show is a trigger the equipped creature gains.
+  - **AI:** it copies only spells and abilities that help a creature onto the ribboned one.
+- **Unfinity: Autograph Book (UNF #183).** Signers are counted as it enters (honor system).
+  - **AI:** its simulated book has one to five signers.
+- **Unfinity: Pietra, Crafter of Clowns (UNF #176).** The joke is a FlavorAction cost; whether the person laughed is
+  asked (honor system).
+  - **AI:** its audience laughs half the time.
+- **Unfinity: Meet and Greet "Sisay" (UNF #172).** New `CardFlavorLines` count and `sharesExpansionWith` property
+  (same set, whatever the rarity color; rulings).
+- **Unfinity: Lila, Hospitality Hostess (UNF #170).** Common spells by the printing's rarity. No engine change.
 - **Unfinity: Claire D'Loon, Joy Sculptor (UNF #165).** New static mode `TokensAreCards`: your tokens go on existing in
   whatever zone they go to. The rule that a token can't move again once it has left the battlefield doesn't apply
   either (rulings).
