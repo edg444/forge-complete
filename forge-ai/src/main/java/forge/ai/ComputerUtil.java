@@ -2804,13 +2804,30 @@ public class ComputerUtil {
                     if (c.isLand()) {
                         continue;
                     }
-                    final String name = c.getDisplayName();
-                    if (name.isEmpty()) {
+                    final int initial = NameLetters.initial(c.getDisplayName());
+                    if (initial != -1 && validTypes.contains(Character.toString(initial))) {
+                        initials.merge(Character.toString(initial), 1, Integer::sum);
+                    }
+                }
+                int best = 0;
+                for (final Map.Entry<String, Integer> e : initials.entrySet()) {
+                    if (e.getValue() > best) {
+                        best = e.getValue();
+                        chosen = e.getKey();
+                    }
+                }
+            }
+            // Katerina of Myra's Marvels: a Cat for each spell cast whose name begins with the letter, so the most
+            // common initial among the spells this player has yet to cast
+            if ("MostCommonSpellInitial".equals(logic)) {
+                final Map<String, Integer> initials = Maps.newHashMap();
+                for (final Card c : ai.getAllCards()) {
+                    if (c.isLand() || c.isInPlay()) {
                         continue;
                     }
-                    final String initial = name.substring(0, 1).toUpperCase();
-                    if (validTypes.contains(initial)) {
-                        initials.merge(initial, 1, Integer::sum);
+                    final int initial = NameLetters.initial(c.getDisplayName());
+                    if (initial != -1 && validTypes.contains(Character.toString(initial))) {
+                        initials.merge(Character.toString(initial), 1, Integer::sum);
                     }
                 }
                 int best = 0;

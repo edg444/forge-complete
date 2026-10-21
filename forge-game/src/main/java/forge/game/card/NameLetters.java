@@ -20,13 +20,25 @@ public final class NameLetters {
         return name;
     }
 
-    /** The letter a name begins with, upper case, or -1 when it's empty or begins with something that isn't a letter. */
+    /**
+     * The letter a name begins with, upper case, or -1 when it has none or begins with a digit. Spaces and punctuation,
+     * blank lines included, are skipped (Katerina of Myra's Marvels), so "_____ Goblin" begins with G and a name that's
+     * only a blank begins with nothing (Stet).
+     */
     public static int initial(final String name) {
-        if (name == null || name.isEmpty()) {
+        if (name == null) {
             return -1;
         }
-        final int first = name.codePointAt(0);
-        return Character.isLetter(first) ? Character.toUpperCase(first) : -1;
+        for (int i = 0; i < name.length(); i = name.offsetByCodePoints(i, 1)) {
+            final int c = name.codePointAt(i);
+            if (Character.isLetter(c)) {
+                return Character.toUpperCase(c);
+            }
+            if (Character.isDigit(c)) {
+                return -1;
+            }
+        }
+        return -1;
     }
 
     public static boolean sameInitial(final String a, final String b) {

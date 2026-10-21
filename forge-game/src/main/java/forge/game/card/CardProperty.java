@@ -258,12 +258,11 @@ public class CardProperty {
                 return false;
             }
         } else if (property.equals("nameStartsWithChosenLetter")) {
-            // Monkey Monkey Monkey. Matched on the displayed name so a flavor name counts as printed,
-            // the same way ChosenLetterInName does.
+            // Monkey Monkey Monkey, Katerina of Myra's Marvels. Matched on the displayed name so a flavor name counts
+            // as printed, the same way ChosenLetterInName does.
             final String letter = source.hasChosenType() ? source.getChosenType() : "";
-            final String cardName = card.getDisplayName();
-            if (letter.isEmpty() || cardName.isEmpty()
-                    || Character.toUpperCase(cardName.charAt(0)) != Character.toUpperCase(letter.charAt(0))) {
+            final int initial = NameLetters.initial(card.getDisplayName());
+            if (letter.isEmpty() || initial == -1 || initial != Character.toUpperCase(letter.codePointAt(0))) {
                 return false;
             }
         } else if (property.equals("HasHalfSymbol")) {

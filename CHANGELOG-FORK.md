@@ -312,6 +312,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Katerina of Myra's Marvels (UNF #16).** You choose a letter as it enters (Monkey Monkey Monkey's
+  ChooseType), and each spell you cast whose name begins with that letter makes a white 2/2 flying Cat. It has Partner.
+  - **Ruling applied everywhere:** a name now begins with its first letter once spaces and punctuation, blank lines
+    included, are skipped. So `_____ Goblin` begins with G, and a name that is only a blank still begins with nothing
+    (Stet's ruling).
+  - That rule lives in `NameLetters.initial`, which `nameStartsWithChosenLetter` (Monkey Monkey Monkey, Katerina) and
+    the `MostCommonInitial` AI now use too. The property used to compare the raw first character.
+  - **AI:** new letter logic, `MostCommonSpellInitial`, picks the commonest initial among the nonland cards it has yet
+    to play.
 - **Unfinity: Jetpack Janitor (UNF #15).** Alpha strike is a static that grants first strike through a new card
   property, `AlphaStrike`. It holds while the creature is in combat against a creature (one it blocks, or one blocking
   it) whose displayed name comes later alphabetically.
