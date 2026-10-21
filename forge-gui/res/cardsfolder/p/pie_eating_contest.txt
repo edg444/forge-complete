@@ -1,0 +1,10 @@
+Name:Pie-Eating Contest
+ManaCost:4 G
+Types:Sorcery
+# Each gobble is a Food token sacrificed (all at once) or a bite of food taken (honor system; rulings), so X can be any
+# number. The AI takes bites, one per creature it could attack with.
+S:Mode$ RaiseCost | ValidCard$ Card.Self | Activator$ You | Type$ Spell | Cost$ Gobble<X> | EffectZone$ All | Description$ As an additional cost to cast this spell, gobble X. (Each time you gobble, take a bite of food or sacrifice a Food token.)
+A:SP$ Pump | Announce$ X | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select X target creatures you control | TargetMin$ X | TargetMax$ X | NumAtt$ +2 | NumDef$ +2 | KW$ Trample | SpellDescription$ X target creatures you control each get +2/+2 and gain trample until end of turn.
+SVar:X:Count$xPaid
+DeckHints:Type$Food
+Oracle:As an additional cost to cast this spell, gobble X. (Each time you gobble, take a bite of food or sacrifice a Food token.)\nX target creatures you control each get +2/+2 and gain trample until end of turn.

@@ -428,6 +428,12 @@ public class Cost implements Serializable {
             return new CostOpenBooster(splitStr[0]);
         }
 
+        if (parse.startsWith("Gobble<")) {
+            // Gobble<Num> - Pie-Eating Contest
+            final String[] splitStr = abCostParse(parse, 1);
+            return new CostGobble(splitStr[0]);
+        }
+
         if (parse.startsWith("FlavorAction<")) {
             // FlavorAction<Description/YesButtonText>
             final String[] splitStr = abCostParse(parse, 2);

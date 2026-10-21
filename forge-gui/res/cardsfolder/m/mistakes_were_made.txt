@@ -1,0 +1,11 @@
+Name:Mistakes Were Made
+ManaCost:1 G
+Types:Instant
+# The fire extinguishers are counted by the caster from their seat (honor system; only real ones native to the room,
+# and staying seated - rulings). The AI has no room to look around, so a simulated one (AILogic$ FireExtinguishers).
+A:SP$ Destroy | ValidTgts$ Artifact,Enchantment | TgtPrompt$ Select target artifact or enchantment | SubAbility$ DBExtinguishers | SpellDescription$ Destroy target artifact or enchantment. Create a 1/1 green Squirrel creature token for each fire extinguisher you can see from your seat.
+SVar:DBExtinguishers:DB$ ChooseNumber | Defined$ You | Min$ 0 | Max$ 99 | ListTitle$ How many fire extinguishers can you see from your seat? (Real ones native to the room - no standing up, and no bringing your own.) | AILogic$ FireExtinguishers | SubAbility$ DBSquirrels
+SVar:DBSquirrels:DB$ Token | TokenAmount$ X | TokenScript$ g_1_1_squirrel | TokenOwner$ You
+SVar:X:Count$ChosenNumber
+DeckHas:Ability$Token & Type$Squirrel
+Oracle:Destroy target artifact or enchantment. Create a 1/1 green Squirrel creature token for each fire extinguisher you can see from your seat.

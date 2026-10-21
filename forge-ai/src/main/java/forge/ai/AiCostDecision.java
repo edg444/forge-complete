@@ -321,6 +321,12 @@ public class AiCostDecision extends CostDecisionMakerBase {
     }
 
     @Override
+    public PaymentDecision visit(CostGobble cost) {
+        // every gobble a bite: the AI's Food tokens stay for their life
+        return PaymentDecision.number(0);
+    }
+
+    @Override
     public PaymentDecision visit(CostFlavorAction cost) {
         // Unenforceable real-world action - the AI can't perform it, but it can't be denied either.
         // Whether the AI actually wants to use the ability is decided by the ability's own AI logic.

@@ -270,6 +270,20 @@ public class PlayerControllerAi extends PlayerController {
                     return payingPlayer.isOpponentOf(player) && !anyController ? 0 : number;
                 case BidLife:
                     return 0;
+                case Pump:
+                    // Pie-Eating Contest: each gobble a bite the AI can always take, one per creature it could attack with
+                    for (final forge.game.staticability.StaticAbility st : ability.getHostCard().getStaticAbilities()) {
+                        if (st.getParamOrDefault("Cost", "").startsWith("Gobble<")) {
+                            int attackers = 0;
+                            for (final Card c : player.getCreaturesInPlay()) {
+                                if (forge.game.combat.CombatUtil.canAttack(c) && c.canBeTargetedBy(ability)) {
+                                    attackers++;
+                                }
+                            }
+                            return Math.min(max, attackers);
+                        }
+                    }
+                    return null;
                 default:
                     return null;
             }

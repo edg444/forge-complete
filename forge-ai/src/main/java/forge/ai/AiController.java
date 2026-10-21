@@ -2154,6 +2154,10 @@ public class AiController {
                 }
             }
             return Math.min(max, best);
+        } else if ("FireExtinguishers".equals(logic)) {
+            // Mistakes Were Made: a simulated room - mostly none in sight, now and then one, rarely two
+            final int roll = MyRandom.getRandom().nextInt(100);
+            return Math.min(max, Math.max(min, roll < 60 ? 0 : roll < 92 ? 1 : 2));
         } else if ("Mirrors".equals(logic)) {
             // Now You See Me . . .: a simulated room - usually no mirror on the walls, now and then one or two
             final int roll = MyRandom.getRandom().nextInt(100);

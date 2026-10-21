@@ -661,6 +661,37 @@ public class HumanCostDecision extends CostDecisionMakerBase {
     }
 
     @Override
+    public PaymentDecision visit(final CostGobble cost) {
+        final int n = cost.getAbilityAmount(ability);
+        if (n <= 0) {
+            return PaymentDecision.number(0);
+        }
+        final CardCollectionView foods = cost.foods(ability, player, isEffect());
+        CardCollection chosen = new CardCollection();
+        if (!foods.isEmpty()) {
+            final int max = Math.min(n, foods.size());
+            final InputSelectCardsFromList inp = new InputSelectCardsFromList(controller, 0, max, foods, ability);
+            inp.setMessage("Gobble " + n + ": choose up to " + max
+                    + " Food tokens to sacrifice. Each other gobble is a bite of food you take.");
+            inp.setCancelAllowed(!mandatory);
+            inp.showAndWait();
+            if (inp.hasCancelled()) {
+                return null;
+            }
+            chosen = new CardCollection(inp.getSelected());
+        }
+        final int bites = n - chosen.size();
+        if (bites > 0) {
+            final List<String> options = ImmutableList.of("Om nom!", Localizer.getInstance().getMessage("lblNo"));
+            if (!controller.confirmAction(ability, PlayerActionConfirmMode.OptionalChoose, CostGobble.bitesPrompt(bites) + "?",
+                    options, null, null)) {
+                return null;
+            }
+        }
+        return chosen.isEmpty() ? PaymentDecision.number(0) : PaymentDecision.card(chosen);
+    }
+
+    @Override
     public PaymentDecision visit(final CostFlavorAction cost) {
         List<String> options = ImmutableList.of(cost.getYesButtonText(), Localizer.getInstance().getMessage("lblNo"));
         boolean result = controller.confirmAction(ability, PlayerActionConfirmMode.OptionalChoose,

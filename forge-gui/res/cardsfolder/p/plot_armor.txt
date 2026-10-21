@@ -1,0 +1,9 @@
+Name:Plot Armor
+ManaCost:2 G
+Types:Enchantment Aura
+# Flavor text is the printing's; stickers neither add nor remove it (rulings).
+K:Enchant:Creature
+SVar:AttachAILogic:Pump
+S:Mode$ Continuous | Affected$ Creature.EnchantedBy | AddPower$ 2 | AddToughness$ 2 | Description$ Enchanted creature gets +2/+2 and can't be blocked except by creatures with flavor text.
+S:Mode$ CantBlockBy | ValidAttacker$ Creature.EnchantedBy | ValidBlocker$ Creature.!hasFlavorText | Secondary$ True | Description$ Enchanted creature can't be blocked except by creatures with flavor text.
+Oracle:Enchant creature\nEnchanted creature gets +2/+2 and can't be blocked except by creatures with flavor text.

@@ -312,6 +312,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Plot Armor (UNF #152).** Blockers need flavor text on their printing; stickers neither add nor remove it
+  (rulings). No engine change.
+- **Unfinity: Pie-Eating Contest (UNF #151).** New cost `Gobble<N>`: the payer picks which Food tokens to sacrifice
+  (all at once), and each gobble left over is a bite of food they confirm taking (honor system).
+  - **AI:** it takes bites and keeps its Food, with X one per creature it could attack with.
+- **Unfinity: Mistakes Were Made (UNF #147).** The fire extinguishers in sight are counted by the caster (honor
+  system).
+  - **AI:** it counts a simulated room's (mostly none, now and then one, rarely two).
 - **Unfinity: Jermane, Pride of the Circus (UNF #144).** Legs are counted in the art, on the figure that is the
   creature (rulings).
   - **Printing data:** art Scryfall Tagger tags with four or more legs is now in `PrintingTraits.txt` (`fourlegs`,
