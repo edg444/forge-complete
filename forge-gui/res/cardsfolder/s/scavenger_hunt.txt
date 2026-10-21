@@ -1,0 +1,24 @@
+Name:Scavenger Hunt
+ManaCost:no cost
+Types:Artifact Attraction
+# Art Scryfall Tagger tags with the item counts; for other art the player is asked (honor system). The AI finds a tagged
+# card in time four times out of five (ScavengerHuntEffect).
+K:Visit:TrigHunt
+K:Prize:TrigPrize
+SVar:TrigHunt:DB$ ScavengerHunt | SubAbility$ DBClaim | SpellDescription$ Choose "a humanoid animal or alien," "food," or "horns and tusks" at random. You have ten seconds to search your library and reveal a card with the chosen item in its art. If you do, claim the prize! Then shuffle.
+SVar:DBClaim:DB$ ClaimThePrize | ConditionCheckSVar$ Found | ConditionSVarCompare$ GE1
+SVar:Found:Number$0
+SVar:TrigPrize:DB$ PutCounter | Defined$ You | CounterType$ TICKET | CounterNum$ 2 | SubAbility$ DBSticker | SpellDescription$ You get {TK}{TK}, then you may put a sticker on a nonland permanent you own. Sacrifice Scavenger Hunt and open an Attraction.
+SVar:DBSticker:DB$ PutSticker | Choices$ Permanent.nonLand+YouOwn | ChoiceTitle$ Choose a nonland permanent you own | Optional$ True | SubAbility$ DBSac
+SVar:DBSac:DB$ Sacrifice | SacValid$ Self | SubAbility$ DBOpen
+SVar:DBOpen:DB$ OpenAttraction
+Oracle:Visit — Choose "a humanoid animal or alien," "food," or "horns and tusks" at random. You have ten seconds to search your library and reveal a card with the chosen item in its art. If you do, claim the prize! Then shuffle.\nPrize — You get {TK}{TK}, then you may put a sticker on a nonland permanent you own. Sacrifice Scavenger Hunt and open an Attraction.
+
+# --- VARIANTS ---
+
+Variant:A:Lights:2 3 6
+Variant:B:Lights:2 4 6
+Variant:C:Lights:2 5 6
+Variant:D:Lights:3 4 6
+Variant:E:Lights:3 5 6
+Variant:F:Lights:4 5 6

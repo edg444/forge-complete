@@ -1,0 +1,22 @@
+Name:Memory Test
+ManaCost:no cost
+Types:Artifact Attraction
+# Everyone sees the cards before they're turned face down, with no notes (rulings). The player names them from Forge's
+# card-name search; the AI remembers each one 80% of the time (user, 2026-10-21; MemoryTestEffect).
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigExile | TriggerDescription$ When this Attraction enters, target opponent exiles cards from the bottom of their library until they exile five nonland cards, then turns those nonland cards face down.
+SVar:TrigExile:DB$ MemoryTest | Mode$ Exile | ValidTgts$ Opponent | TgtPrompt$ Select target opponent
+K:Visit:TrigName
+K:Prize:TrigPrize
+SVar:TrigName:DB$ MemoryTest | Mode$ Name | SubAbility$ DBClaim | SpellDescription$ Name the exiled face-down cards, then look at them. If you named them correctly, turn them face up, then claim the prize!
+SVar:DBClaim:DB$ ClaimThePrize | ConditionCheckSVar$ NamedAll | ConditionSVarCompare$ GE1
+SVar:NamedAll:Number$0
+SVar:TrigPrize:DB$ Token | TokenAmount$ 3 | TokenScript$ r_1_1_balloon_flying | TokenOwner$ You | SubAbility$ DBSac | SpellDescription$ Create three 1/1 red Balloon creature tokens with flying, then sacrifice this Attraction and open an Attraction.
+SVar:DBSac:DB$ Sacrifice | SacValid$ Self | SubAbility$ DBOpen
+SVar:DBOpen:DB$ OpenAttraction
+DeckHas:Ability$Token & Type$Balloon
+Oracle:When this Attraction enters, target opponent exiles cards from the bottom of their library until they exile five nonland cards, then turns those nonland cards face down.\nVisit — Name the exiled face-down cards, then look at them. If you named them correctly, turn them face up, then claim the prize!\nPrize — Create three 1/1 red Balloon creature tokens with flying, then sacrifice this Attraction and open an Attraction.
+
+# --- VARIANTS ---
+
+Variant:A:Lights:4 6
+Variant:B:Lights:5 6

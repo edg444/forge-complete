@@ -1,0 +1,24 @@
+Name:Trivia Contest
+ManaCost:no cost
+Types:Artifact Attraction
+# The ten seconds are the player's to keep (honor system); the name comes from Forge's list of that category. The AI
+# answers in time three times out of four when there's an answer (TriviaContestEffect).
+K:Visit:TrigTrivia
+K:Prize:TrigPrize
+SVar:TrigTrivia:DB$ TriviaContest | SubAbility$ DBClaim | SpellDescription$ An opponent chooses white card, land card, or planeswalker card, then mills a card. You have ten seconds to name something from the chosen category that starts with the same letter as the milled card. If you do, claim the prize!
+SVar:DBClaim:DB$ ClaimThePrize | ConditionCheckSVar$ TriviaRight | ConditionSVarCompare$ GE1
+SVar:TriviaRight:Number$0
+SVar:TrigPrize:DB$ PutCounter | Defined$ You | CounterType$ TICKET | CounterNum$ 3 | SubAbility$ DBSticker | SpellDescription$ You get {TK}{TK}{TK}, then you may put a sticker on a nonland permanent you own. Sacrifice Trivia Contest and open an Attraction.
+SVar:DBSticker:DB$ PutSticker | Choices$ Permanent.nonLand+YouOwn | ChoiceTitle$ Choose a nonland permanent you own | Optional$ True | SubAbility$ DBSac
+SVar:DBSac:DB$ Sacrifice | SacValid$ Self | SubAbility$ DBOpen
+SVar:DBOpen:DB$ OpenAttraction
+Oracle:Visit — An opponent chooses white card, land card, or planeswalker card, then mills a card. You have ten seconds to name something from the chosen category that starts with the same letter as the milled card. If you do, claim the prize!\nPrize — You get {TK}{TK}{TK}, then you may put a sticker on a nonland permanent you own. Sacrifice Trivia Contest and open an Attraction.
+
+# --- VARIANTS ---
+
+Variant:A:Lights:2 3 6
+Variant:B:Lights:2 4 6
+Variant:C:Lights:2 5 6
+Variant:D:Lights:3 4 6
+Variant:E:Lights:3 5 6
+Variant:F:Lights:4 5 6

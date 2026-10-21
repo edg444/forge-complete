@@ -312,6 +312,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity Attractions: Memory Test, Scavenger Hunt, The Superlatorium, Trivia Contest (UNF #221, #226, #230,
+  #233).**
+  - **Memory Test:** new `MemoryTest` effect. Five nonland cards are exiled from the bottom and turned face down; the
+    player names them from the card-name search, the same card twice if it's there twice (rulings).
+    **AI:** it remembers each card 80% of the time (user ruling).
+  - **Scavenger Hunt:** new `ScavengerHunt` effect. Art Tagger tags with the item counts (animal-person, alien,
+    food, horn, tusk, now in the `artobjects` trait); for other art the player is asked.
+    **AI:** it finds a tagged card in time 80% of the time.
+  - **The Superlatorium:** new `SuperlativeChoice` effect. The person outside the game is simulated, judging by stats
+    with some noise (user ruling).
+  - **Trivia Contest:** new `TriviaContest` effect. The player names a card from that category's list against the
+    clock (honor system). **AI:** it answers in time 75% of the time when there's an answer, and as the opponent
+    picks planeswalker card.
 - **Unfinity Attractions: Guess Your Fate, Push Your Luck, Squirrel Stack (UNF #215, #224, #228).**
   - **Guess Your Fate:** played for real with a person in the room; the player says whether the guess was in the
     name (user ruling). The AI's simulated guesser is right 30% of the time.

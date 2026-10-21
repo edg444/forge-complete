@@ -1,0 +1,24 @@
+Name:The Superlatorium
+ManaCost:no cost
+Types:Artifact Attraction
+# The person outside the game is simulated, judging by stats with some noise (user, 2026-10-21; SuperlativeChoiceEffect).
+# The AI chooses the creature that fits best.
+K:Visit:TrigAsk
+K:Prize:TrigPrize
+SVar:TrigAsk:DB$ SuperlativeChoice | SubAbility$ DBClaim | SpellDescription$ An opponent chooses "the fastest," "the scariest," or "the weakest." You choose a creature, then ask a person outside the game to choose the creature that best fits the chosen criteria. If they chose the same creature you chose, claim the prize!
+SVar:DBClaim:DB$ ClaimThePrize | ConditionCheckSVar$ SameChoice | ConditionSVarCompare$ GE1
+SVar:SameChoice:Number$0
+SVar:TrigPrize:DB$ Token | TokenAmount$ 2 | TokenScript$ r_1_1_balloon_flying | TokenOwner$ You | SubAbility$ DBSac | SpellDescription$ Create two 1/1 red Balloon creature tokens with flying, then sacrifice The Superlatorium and open an Attraction.
+SVar:DBSac:DB$ Sacrifice | SacValid$ Self | SubAbility$ DBOpen
+SVar:DBOpen:DB$ OpenAttraction
+DeckHas:Ability$Token & Type$Balloon
+Oracle:Visit — An opponent chooses "the fastest," "the scariest," or "the weakest." You choose a creature, then ask a person outside the game to choose the creature that best fits the chosen criteria. If they chose the same creature you chose, claim the prize!\nPrize — Create two 1/1 red Balloon creature tokens with flying, then sacrifice The Superlatorium and open an Attraction.
+
+# --- VARIANTS ---
+
+Variant:A:Lights:2 3 6
+Variant:B:Lights:2 4 6
+Variant:C:Lights:2 5 6
+Variant:D:Lights:3 4 6
+Variant:E:Lights:3 5 6
+Variant:F:Lights:4 5 6
