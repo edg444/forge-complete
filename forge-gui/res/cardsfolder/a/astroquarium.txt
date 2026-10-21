@@ -1,0 +1,10 @@
+Name:Astroquarium
+ManaCost:2 U
+Types:Artifact
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | OptionalDecider$ You | Execute$ TrigSticker | TriggerDescription$ When this artifact enters, you may put an art sticker on it.
+SVar:TrigSticker:DB$ PutSticker | Defined$ Self | Kind$ Art
+# Forge's stickers have no place on the card, so the cracks count as completely covered while an art sticker is on it
+# (the one its own trigger offers). Checked as it resolves; covering them later doesn't change it (rulings).
+A:AB$ Animate | Cost$ 1 T | ValidTgts$ Creature | TgtPrompt$ Select target creature | Power$ 4 | Toughness$ 4 | Colors$ Blue | OverwriteColors$ True | Types$ Shark | RemoveCreatureTypes$ True | SorcerySpeed$ True | ConditionPresent$ Card.Self+stickeredWith Art | ConditionCompare$ EQ0 | SubAbility$ DBOctopus | SpellDescription$ Until end of turn, target creature becomes a blue Shark with base power and toughness 4/4. If the cracks in this artifact's art are completely covered, that creature becomes a blue Octopus with base power and toughness 8/8 instead. Activate only as a sorcery.
+SVar:DBOctopus:DB$ Animate | Defined$ Targeted | Power$ 8 | Toughness$ 8 | Colors$ Blue | OverwriteColors$ True | Types$ Octopus | RemoveCreatureTypes$ True | ConditionPresent$ Card.Self+stickeredWith Art
+Oracle:When this artifact enters, you may put an art sticker on it.\n{1}, {T}: Until end of turn, target creature becomes a blue Shark with base power and toughness 4/4. If the cracks in this artifact's art are completely covered, that creature becomes a blue Octopus with base power and toughness 8/8 instead. Activate only as a sorcery.

@@ -312,6 +312,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Astroquarium (UNF #34).** When it enters, you may put an art sticker on it.
+  - Its ability turns a creature into a blue 4/4 Shark, or a blue 8/8 Octopus instead if the cracks are covered. Only
+    its colors and creature types change (rulings).
+  - Forge's stickers have no position on the card, so the cracks count as completely covered while an art sticker is
+    on it (`stickeredWith Art`).
+  - This is checked as the ability resolves; covering the cracks later doesn't change the creature (rulings).
+  - No engine change.
 - **Unfinity: Animate Object (UNF #33).** New effect, `AnimateObject`.
   - You get seven tickets, through the normal counter route, so replacements apply.
   - The object from outside the game means nothing to the game (rulings), so it's a blank, nameless, colorless
