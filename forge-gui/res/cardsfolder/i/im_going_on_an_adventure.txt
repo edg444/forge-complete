@@ -1,0 +1,13 @@
+Name:I'm Going On An Adventure!
+ManaCost:W
+Types:Sorcery
+A:SP$ ChangeZone | ValidTgts$ Creature | TgtPrompt$ Select target creature | Origin$ Battlefield | Destination$ Exile | RememberChanged$ True | SubAbility$ DBAdventure | SpellDescription$ Exile target creature. It's on an adventure. When it enters from being on an adventure, it explores. (Its owner may cast it from exile. To have a creature you control explore, reveal the top card of your library. Put that card into your hand if it's a land. Otherwise, put a +1/+1 counter on the creature, then put the card back or put it into your graveyard.)
+SVar:DBAdventure:DB$ Effect | RememberObjects$ Remembered | StaticAbilities$ OnAdventure | Triggers$ Returns,LeavesOtherwise | Duration$ Permanent | EffectOwner$ RememberedOwner | SubAbility$ DBCleanup
+SVar:OnAdventure:Mode$ Continuous | Affected$ Card.IsRemembered | AffectedZone$ Exile | MayPlay$ True | MayPlayPlayer$ CardOwner | Description$ It's on an adventure: its owner may cast it from exile.
+SVar:Returns:Mode$ ChangesZone | Origin$ Stack | Destination$ Battlefield | ValidCard$ Card.IsRemembered+wasCastFromExile | TriggerZones$ Command | Execute$ TrigExplore | TriggerDescription$ When it enters from being on an adventure, it explores.
+SVar:TrigExplore:DB$ Explore | Defined$ TriggeredNewCardLKICopy | SubAbility$ ExileEffect
+SVar:LeavesOtherwise:Mode$ ChangesZone | Origin$ Exile | Destination$ Battlefield,Graveyard,Hand,Library | ValidCard$ Card.IsRemembered | TriggerZones$ Command | Static$ True | Execute$ ExileEffect
+SVar:ExileEffect:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+K:Flashback:4 W
+Oracle:Exile target creature. It's on an adventure. When it enters from being on an adventure, it explores. (Its owner may cast it from exile. To have a creature you control explore, reveal the top card of your library. Put that card into your hand if it's a land. Otherwise, put a +1/+1 counter on the creature, then put the card back or put it into your graveyard.)\nFlashback {4}{W}

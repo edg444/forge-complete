@@ -2098,6 +2098,12 @@ public class CardProperty {
             if ((card.getCMC() % 2 == 0) == (source.getChosenEvenOdd() == EvenOdd.Even)) {
                 return false;
             }
+        } else if (property.equals("sophisticated")) {
+            // Chic: a name with fifteen or more letters (spaces and punctuation aren't letters)
+            final String name = card.getDisplayName();
+            if (name.codePoints().filter(Character::isLetter).count() < 15) {
+                return false;
+            }
         } else if (property.startsWith("power") || property.startsWith("toughness") || property.startsWith("cmc")
                 || property.startsWith("totalPT") || property.startsWith("numColors")
                 || property.startsWith("basePower") || property.startsWith("baseToughness") || property.startsWith("numTypes")

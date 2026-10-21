@@ -1,0 +1,8 @@
+Name:One Does Not
+ManaCost:1 U
+Types:Enchantment Aura
+K:Enchant:Creature
+SVar:AttachAILogic:Curse
+R:Event$ Untap | ActiveZones$ Battlefield | ValidCard$ Creature.AttachedBy | ValidStepTurnToController$ You | Layer$ CantHappen | Description$ Enchanted creature does not simply untap during its controller's untap step.
+S:Mode$ Continuous | Affected$ Creature.EnchantedBy | AddKeyword$ Nonbasic landwalk | Description$ Enchanted creature has nonbasic landwalk. (It can't simply be blocked as long as defending player controls a nonbasic land.)
+Oracle:Enchant creature\nEnchanted creature does not simply untap during its controller's untap step.\nEnchanted creature has nonbasic landwalk. (It can't simply be blocked as long as defending player controls a nonbasic land.)

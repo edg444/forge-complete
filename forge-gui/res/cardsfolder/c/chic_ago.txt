@@ -1,0 +1,17 @@
+Name:Chic
+ManaCost:1 U
+Types:Instant
+K:Fuse
+A:SP$ PutCounter | ValidTgts$ Creature | TgtPrompt$ Select target creature | CounterType$ P1P1 | CounterNum$ 1 | SubAbility$ DBHexproof | SpellDescription$ Put a +1/+1 counter on target creature. It gains hexproof until end of turn. If it's sophisticated, draw a card. (A creature is sophisticated if its name contains fifteen or more letters.)
+SVar:DBHexproof:DB$ Pump | Defined$ Targeted | KW$ Hexproof | SubAbility$ DBDraw
+SVar:DBDraw:DB$ Draw | NumCards$ 1 | ConditionDefined$ Targeted | ConditionPresent$ Creature.sophisticated | ConditionCompare$ GE1
+AlternateMode:Split
+Oracle:Put a +1/+1 counter on target creature. It gains hexproof until end of turn. If it's sophisticated, draw a card. (A creature is sophisticated if its name contains fifteen or more letters.)\nFuse (You may cast one or both halves of this card from your hand.)
+
+ALTERNATE
+
+Name:Ago
+ManaCost:3 U
+Types:Instant
+A:SP$ ChangeZone | ValidTgts$ Creature | TgtPrompt$ Select target creature | Origin$ Battlefield | Destination$ Library | LibraryPosition$ 0 | SpellDescription$ Put target creature on top of its owner's library.
+Oracle:Put target creature on top of its owner's library.\nFuse (You may cast one or both halves of this card from your hand.)

@@ -1,0 +1,10 @@
+Name:Illuminating Detective
+ManaCost:1 W
+Types:Creature Insect Detective
+PT:2/2
+# Whether they were already revealed is checked before they're revealed; with no commanders, they all were.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCounter | TriggerDescription$ When CARDNAME enters the battlefield, each of your opponents reveal all of their commanders. If their commanders were already revealed, put a flying counter on this creature.
+SVar:TrigCounter:DB$ PutCounter | Defined$ Self | CounterType$ Flying | CounterNum$ 1 | ConditionCheckSVar$ X | ConditionSVarCompare$ GE1 | SubAbility$ DBReveal
+SVar:DBReveal:DB$ SetState | Defined$ ValidCommand Card.IsCommander+OppOwn+faceDown | Mode$ TurnFaceUp
+SVar:X:Count$OpponentsCommandersRevealed
+Oracle:When Illuminating Detective enters the battlefield, each of your opponents reveal all of their commanders. If their commanders were already revealed, put a flying counter on this creature.

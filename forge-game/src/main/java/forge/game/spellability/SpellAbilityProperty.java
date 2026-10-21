@@ -181,6 +181,13 @@ public class SpellAbilityProperty {
             }
         } else if (property.equals("LastChapter")) {
             return sa.isLastChapter();
+        } else if (property.equals("AdditionalCostPaid")) {
+            // Spare Changeling: kicker, buyback and the like, or a part of a spell's cost that isn't mana
+            if (sa.getOptionalCosts().iterator().hasNext()) {
+                return true;
+            }
+            return sa.isSpell() && sa.getPayCosts() != null
+                    && sa.getPayCosts().getCostParts().stream().anyMatch(p -> !(p instanceof forge.game.cost.CostPartMana));
         } else if (property.equals("paidPhyrexianMana")) {
             return sa.getSpendPhyrexianMana() > 0;
         } else if (property.startsWith("ManaSpentBy")) {

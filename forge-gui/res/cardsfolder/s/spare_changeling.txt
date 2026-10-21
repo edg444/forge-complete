@@ -1,0 +1,10 @@
+Name:Spare Changeling
+ManaCost:1 B/R
+Types:Artifact Creature Shapeshifter Treasure
+PT:1/1
+K:Changeling
+A:AB$ Mana | Cost$ T Sac<1/CARDNAME/this artifact> | Produced$ Any | SpellDescription$ Add one mana of any color.
+# An additional cost: kicker, buyback and the like, or any part of a spell's cost besides mana.
+T:Mode$ SpellCast | ValidActivatingPlayer$ You | ValidSA$ Spell.AdditionalCostPaid | TriggerZones$ Graveyard | OptionalDecider$ You | Execute$ TrigReturn | TriggerDescription$ Whenever you pay an additional cost while casting a spell, you may return this card from your graveyard to your hand.
+SVar:TrigReturn:DB$ ChangeZone | Defined$ Self | Origin$ Graveyard | Destination$ Hand
+Oracle:Changeling\n{T}, Sacrifice this artifact: Add one mana of any color.\nWhenever you pay an additional cost while casting a spell, you may return this card from your graveyard to your hand.

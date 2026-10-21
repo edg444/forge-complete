@@ -2038,6 +2038,19 @@ public class AbilityUtils {
                 return doXMath(c.getCastSA() != null ? c.getCastSA().getOptionalKeywordAmount(ctb.getKeyword()) : 0, expr, c, ctb);
             }
 
+            // Blended Twistling: each hybrid mana symbol in the mana costs of permanents you control
+            if (sq[0].equals("DevotionHybrid")) {
+                int hybrid = 0;
+                for (Card c0 : player.getCardsIn(ZoneType.Battlefield)) {
+                    for (ManaCostShard sh : c0.getManaCost()) {
+                        if (sh.isHybrid()) {
+                            hybrid++;
+                        }
+                    }
+                }
+                return doXMath(hybrid, expr, c, ctb);
+            }
+
             // Count$DevotionDual.<color name>.<color name>
             // Count$Devotion.<color name>
             if (sq[0].contains("Devotion")) {
@@ -2305,6 +2318,11 @@ public class AbilityUtils {
         }
         if (sq[0].equals("YouAreSleeved")) {
             return doXMath((player != null ? player : c.getController()).isSleeved() ? 1 : 0, expr, c, ctb);
+        }
+        // Illuminating Detective: every opponent's commanders have been revealed
+        if (sq[0].equals("OpponentsCommandersRevealed")) {
+            final Player you = player != null ? player : c.getController();
+            return doXMath(you.getOpponents().stream().allMatch(Player::allCommandersRevealed) ? 1 : 0, expr, c, ctb);
         }
         if (sq[0].equals("AllCommandersRevealed")) {
             return doXMath((player != null ? player : c.getController()).allCommandersRevealed() ? 1 : 0, expr, c, ctb);

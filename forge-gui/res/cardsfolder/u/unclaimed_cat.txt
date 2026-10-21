@@ -1,0 +1,10 @@
+Name:Unclaimed Cat
+ManaCost:2 W
+Types:Creature Cat
+PT:3/3
+SVar:AsksTeam:Team
+S:Mode$ Continuous | Affected$ Card.Self | AddKeyword$ Lifelink | CheckSVar$ Mirran | SVarCompare$ EQ1 | Description$ If you're on the Mirran team, CARDNAME has lifelink.
+S:Mode$ Continuous | Affected$ Card.Self | AddKeyword$ Toxic:1 | CheckSVar$ Phyrexian | SVarCompare$ EQ1 | Description$ If you're on the Phyrexian team, CARDNAME has Toxic 1. (Players dealt combat damage by this creature also get a poison counter.)
+SVar:Mirran:Count$UnknownTeam.Mirran
+SVar:Phyrexian:Count$UnknownTeam.Phyrexian
+Oracle:If you're on the Mirran team, Unclaimed Cat has lifelink.\nIf you're on the Phyrexian team, Unclaimed Cat has Toxic 1. (Players dealt combat damage by this creature also get a poison counter.)

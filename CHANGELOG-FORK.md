@@ -312,6 +312,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Point to the Scoreboard, Chic // Ago, One Does Not, Illuminating Detective, Unclaimed Cat, Catch-Up
+  Mechanic, Drive to Work, I'm Going On An Adventure!, Spare Changeling, Blended Twistling (UNK CU11-CZ03).**
+  - New card property `sophisticated` (fifteen or more letters in the name), spell property `AdditionalCostPaid`
+    (kicker and other optional costs, or a part of a spell's cost that isn't mana), and counts `DevotionHybrid` and
+    `OpponentsCommandersRevealed`.
+  - Drive to Work's story is the honor system; the AI tells one 80% of the time.
 - **Unknown Event: Azra Matchthrower, Establishing Shot, Now THIS Is Aether Racing, Burn the Phyresis, My Deck is
   About a Seven, Irrefutable Evidence, Drake with Set's Mechanic, Unclaimed Bird, Educated Detective, Shadowmoor Draw
   Spell, Wistful Puppeteer, Literal Delver of Secrets (UNK CR04a-CU06).**

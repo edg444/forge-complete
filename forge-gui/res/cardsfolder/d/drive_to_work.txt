@@ -1,0 +1,10 @@
+Name:Drive to Work
+ManaCost:W
+Types:Instant
+A:SP$ ChangeZone | ValidTgts$ Creature,Vehicle | TgtPrompt$ Select target creature or Vehicle | Origin$ Battlefield | Destination$ Exile | RememberChanged$ True | SubAbility$ DBDelay | SpellDescription$ Exile target creature or Vehicle. At the beginning of the next end step, return that card to the battlefield under its owner's control. Then you may share a story or fun fact about that card. If you do, you gain 3 life.
+SVar:DBDelay:DB$ DelayedTrigger | Mode$ Phase | Phase$ End of Turn | RememberObjects$ Remembered | Execute$ TrigReturn | SubAbility$ DBCleanup | TriggerDescription$ At the beginning of the next end step, return that card to the battlefield under its owner's control. Then you may share a story or fun fact about that card. If you do, you gain 3 life.
+SVar:TrigReturn:DB$ ChangeZone | Defined$ DelayTriggerRememberedLKI | Origin$ Exile | Destination$ Battlefield | GainControl$ False | SubAbility$ DBStory
+# Sharing the story is the honor system; the AI tells one most of the time.
+SVar:DBStory:DB$ GainLife | Defined$ You | LifeAmount$ 3 | UnlessCost$ FlavorAction<Share a story or fun fact about that card/Story shared> | UnlessPayer$ You | UnlessSwitched$ True | UnlessAI$ Chance.80
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Exile target creature or Vehicle. At the beginning of the next end step, return that card to the battlefield under its owner's control. Then you may share a story or fun fact about that card. If you do, you gain 3 life.
