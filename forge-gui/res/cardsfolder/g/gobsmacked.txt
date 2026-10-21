@@ -1,0 +1,23 @@
+Name:Gobsmacked
+ManaCost:1 W
+Types:Enchantment Aura
+K:Enchant:Permanent.nonLand:nonland permanent
+SVar:AttachAILogic:Curse
+# Whether you can see the chosen person is the Aura's chosen mode (Visible/Hidden), shown on its detail panel. You don't
+# have to keep looking (rulings): a human reports when they leave or come back into view (honor system). The AI's person
+# is simulated and comes and goes: at each of its upkeeps, 10% they wander off, 50% they come back (user ruling).
+K:ETBReplacement:Other:ChoosePerson
+SVar:ChoosePerson:DB$ GenericChoice | Defined$ You | Choices$ Visible,Hidden | SetChosenMode$ True | ChoicePrompt$ Choose a person outside the game. Can you see them from your seat? | SpellDescription$ As this Aura enters, choose a person outside the game.
+SVar:Visible:DB$ Pump | SpellDescription$ Visible
+SVar:Hidden:DB$ Pump | SpellDescription$ Hidden
+S:Mode$ CantAttack,CantBlock,CantBeActivated | ValidCard$ Card.EnchantedBy | IsPresent$ Card.Self+ChosenModeVisible | Description$ As long as you can see the chosen person from your seat, enchanted permanent can't attack or block, and its activated abilities can't be activated.
+A:ST$ GenericChoice | Cost$ 0 | SpecialAction$ True | IsPresent$ Card.Self+ChosenModeVisible | Defined$ You | AtRandom$ True | Choices$ Hidden | SetChosenMode$ True | SpellDescription$ You can't see the chosen person from your seat anymore (honor system).
+A:ST$ GenericChoice | Cost$ 0 | SpecialAction$ True | IsPresent$ Card.Self+ChosenModeHidden | Defined$ You | AtRandom$ True | Choices$ Visible | SetChosenMode$ True | SpellDescription$ You can see the chosen person from your seat again (honor system).
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You.IsAI | TriggerZones$ Battlefield | Static$ True | Secondary$ True | Execute$ TrigWander | TriggerDescription$ (The AI's chosen person may wander out of view, or back, at its upkeep.)
+# one roll, stored first; the two ranges don't overlap, so someone who just left can't also come back this upkeep
+SVar:TrigWander:DB$ StoreSVar | SVar$ Roll | Type$ CountSVar | Expression$ WanderRoll | SubAbility$ DBLeaves
+SVar:DBLeaves:DB$ GenericChoice | Defined$ You | AtRandom$ True | Choices$ Hidden | SetChosenMode$ True | ShowChoice$ True | ConditionPresent$ Card.Self+ChosenModeVisible | ConditionCheckSVar$ Roll | ConditionSVarCompare$ LE2 | SubAbility$ DBReturns
+SVar:DBReturns:DB$ GenericChoice | Defined$ You | AtRandom$ True | Choices$ Visible | SetChosenMode$ True | ShowChoice$ True | ConditionPresent$ Card.Self+ChosenModeHidden | ConditionCheckSVar$ Roll | ConditionSVarCompare$ GE11
+SVar:Roll:Number$0
+SVar:WanderRoll:Count$Random.1.20
+Oracle:Enchant nonland permanent\nAs this Aura enters, choose a person outside the game.\nAs long as you can see the chosen person from your seat, enchanted permanent can't attack or block, and its activated abilities can't be activated.

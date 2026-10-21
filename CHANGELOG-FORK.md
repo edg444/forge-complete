@@ -312,6 +312,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unfinity: Gobsmacked (UNF #11).** Whether you can see the chosen person is the Aura's chosen mode (Visible or
+  Hidden), so the card's detail panel shows it; the lock (Arrest's, on any nonland permanent) applies only while Visible.
+  - As it enters, you choose a person and say whether you can see them from your seat; the AI picks someone it can see.
+  - A human reports the person leaving or coming back with two honor-system special actions (rulings: you don't have
+    to keep looking, and it works again when they return).
+  - User ruling: the AI's simulated person comes and goes. At each of its upkeeps there's a 10% chance they wander off,
+    or a 50% chance an absent one comes back, from one stored roll whose ranges don't overlap. You're notified of
+    each change.
+  - No engine change.
+
 ### 2026-10-20, eleventh deploy (desktop, Android, GitHub) — Heroes of the Realm 2019–2021; Unfinity #1–#10 begun; Universes and artifact-creature art data
 
 - **Build:** whole-reactor `android-debug` install; APK versionCode 2026102102. Tests before the build: 1498 run, 0 failed, 7 skipped. No upstream merge this time.
