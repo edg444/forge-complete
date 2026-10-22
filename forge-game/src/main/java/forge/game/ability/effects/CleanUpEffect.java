@@ -32,6 +32,9 @@ public class CleanUpEffect extends SpellAbilityEffect {
             logMessage = logOutput(sa, source);
         }
 
+        if (sa.hasParam("ResetChosenModes")) {
+            sa.getHostCard().clearChosenModesThisGame(sa);
+        }
         if (sa.hasParam("ClearRemembered")) {
             source.clearRemembered();
             game.getCardState(source).clearRemembered();
