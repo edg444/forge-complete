@@ -1,0 +1,10 @@
+Name:The Paradise Bird
+ManaCost:2 G
+Types:Legendary Creature Bird
+PT:1/1
+K:Flying
+S:Mode$ Continuous | Affected$ Bird.Other+YouCtrl | AddPower$ 1 | AddToughness$ 1 | Description$ Other Birds you control get +1/+1.
+A:AB$ CopyPermanent | Cost$ G T | DefinedName$ Birds of Paradise | SpellDescription$ Create a Birds of Paradise token.
+DeckRule:ColorIdentity:Disable$ True | ActiveSection$ Commander | Description$ If CARDNAME is your commander, your deck can include cards of any color identity.
+DeckHas:Ability$Token
+Oracle:Flying\nOther Birds you control get +1/+1.\n{G}, {T}: Create a Birds of Paradise token.\nIf The Paradise Bird is your commander, your deck can include cards of any color identity.

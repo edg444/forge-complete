@@ -1,0 +1,14 @@
+Name:The Five Stages of Grief
+ManaCost:5
+Types:Enchantment Saga
+K:Chapter:5:DBDenial,DBAnger,DBBargaining,DBDepression,DBAcceptance
+SVar:DBDenial:DB$ Effect | StaticAbilities$ RaiseNoncreature | Duration$ UntilYourNextTurn | SpellDescription$ Denial — Until your next turn, noncreature spells cost {2} more to cast.
+SVar:RaiseNoncreature:Mode$ RaiseCost | ValidCard$ Card.nonCreature | Type$ Spell | Amount$ 2 | EffectZone$ Command | Description$ Noncreature spells cost {2} more to cast.
+SVar:DBAnger:DB$ Goad | ValidTgts$ Creature | TgtPrompt$ Select target creature | SpellDescription$ Anger — Goad target creature.
+SVar:DBBargaining:DB$ Sacrifice | Defined$ Player | SacValid$ Artifact,Enchantment,Card.token | SacMessage$ artifact, enchantment, or token | SpellDescription$ Bargaining — Each player sacrifices an artifact, enchantment, or token.
+SVar:DBDepression:DB$ Animate | ValidTgts$ Creature | TgtPrompt$ Select target creature | RemoveAllAbilities$ True | Duration$ UntilYourNextTurn | IsCurse$ True | SubAbility$ DBFood | SpellDescription$ Depression — Target creature loses all abilities until your next turn. Create a Food token.
+SVar:DBFood:DB$ Token | TokenScript$ c_a_food_sac
+SVar:DBAcceptance:DB$ Effect | StaticAbilities$ GrantEpic | ForgetOnCast$ Card.YouCtrl | Duration$ Permanent | SpellDescription$ Acceptance — The next spell you cast has epic.
+SVar:GrantEpic:Mode$ Continuous | Affected$ Card.YouCtrl | AffectedZone$ Stack | AddKeyword$ Epic | Description$ The next spell you cast has epic.
+DeckHas:Ability$Token|Sacrifice & Type$Food|Artifact
+Oracle:(As this Saga enters and after your draw step, add a lore counter. Sacrifice after V.)\nI Denial — Until your next turn, noncreature spells cost {2} more to cast.\nII Anger — Goad target creature.\nIII Bargaining — Each player sacrifices an artifact, enchantment, or token.\nIV Depression — Target creature loses all abilities until your next turn. Create a Food token.\nV Acceptance — The next spell you cast has epic.

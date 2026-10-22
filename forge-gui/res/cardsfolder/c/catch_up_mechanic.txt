@@ -11,4 +11,4 @@ SVar:X:Count$Compare Gap GE5.3.1
 SVar:Gap:SVar$Highest/Minus.YourLife
 SVar:Highest:PlayerCountOpponents$HighestLifeTotal
 SVar:YourLife:Count$YourLifeTotal
-Oracle:When this creature enters, choose one. If an opponent has at least 5 more life than you, choose any number instead —\n• Put two +1/+1 counters on another target creature or Vehicle.\n• Return target artifact card from your graveyard to your hand.\n• Look at the top five cards of your library. Reveal an artifact card from among them and put it into your hand. Put the rest on the bottom in a random order.
+Oracle:When this creature enters, choose one. If an opponent has at least 5 more life than you, choose any number instead—\n• Put two +1/+1 counters on another target creature or Vehicle.\n• Return target artifact card from your graveyard to your hand.\n• Look at the top five cards of your library. Reveal an artifact card from among them and put it into your hand. Put the rest on the bottom in a random order.

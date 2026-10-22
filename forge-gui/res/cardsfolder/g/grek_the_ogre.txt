@@ -1,0 +1,16 @@
+Name:Grek the Ogre
+ManaCost:3 G G
+Types:Legendary Creature Ogre
+PT:4/4
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | AddToughness$ X | Description$ Grek gets +1/+1 for each differently named token among permanents you control.
+SVar:X:Count$Valid Permanent.YouCtrl+token$DifferentCardNames
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ Whenever Grek attacks, create one of the following at random you don't already control: a 1/1 green Donkey creature token, a 2/2 white Cat creature token, a 3/3 green Ogre Noble token, a Swamp token, a Food token, or a Gold token.
+SVar:TrigToken:DB$ GenericChoice | Defined$ You | AtRandom$ True | Choices$ Donkey,Cat,OgreNoble,Swamp,Food,Gold
+SVar:Donkey:DB$ Token | TokenScript$ g_1_1_donkey | IsPresent$ Creature.Donkey+token+YouCtrl | PresentCompare$ EQ0 | SpellDescription$ a 1/1 green Donkey creature token
+SVar:Cat:DB$ Token | TokenScript$ w_2_2_cat | IsPresent$ Creature.Cat+token+YouCtrl | PresentCompare$ EQ0 | SpellDescription$ a 2/2 white Cat creature token
+SVar:OgreNoble:DB$ Token | TokenScript$ g_3_3_ogre_noble | IsPresent$ Creature.Ogre+Noble+token+YouCtrl | PresentCompare$ EQ0 | SpellDescription$ a 3/3 green Ogre Noble token
+SVar:Swamp:DB$ CopyPermanent | DefinedName$ Swamp | IsPresent$ Land.Swamp+token+YouCtrl | PresentCompare$ EQ0 | SpellDescription$ a Swamp token
+SVar:Food:DB$ Token | TokenScript$ c_a_food_sac | IsPresent$ Food.token+YouCtrl | PresentCompare$ EQ0 | SpellDescription$ a Food token
+SVar:Gold:DB$ Token | TokenScript$ c_a_gold_sac | IsPresent$ Gold.token+YouCtrl | PresentCompare$ EQ0 | SpellDescription$ a Gold token
+DeckHas:Ability$Token
+Oracle:Grek gets +1/+1 for each differently named token among permanents you control.\nWhenever Grek attacks, create one of the following at random you don't already control: a 1/1 green Donkey creature token, a 2/2 white Cat creature token, a 3/3 green Ogre Noble token, a Swamp token, a Food token, or a Gold token.

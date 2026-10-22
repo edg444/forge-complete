@@ -1,0 +1,10 @@
+Name:Call Up Emrakul to Help
+ManaCost:7
+Types:Instant
+K:Kicker:6
+A:SP$ ChangeZone | ValidTgts$ Permanent.nonLand | TgtPrompt$ Select target nonland permanent | Origin$ Battlefield | Destination$ Exile | SubAbility$ DBScion | SpellDescription$ Exile target nonland permanent. Create a 1/1 colorless Eldrazi Scion creature token. It has "Sacrifice this creature: Add {C}." If CARDNAME was kicked, instead create a token that's a copy of Emrakul, the Promised End.
+SVar:DBScion:DB$ Token | TokenScript$ c_1_1_eldrazi_scion_sac | ConditionCheckSVar$ Kicked | ConditionSVarCompare$ EQ0 | SubAbility$ DBEmrakul
+SVar:DBEmrakul:DB$ CopyPermanent | DefinedName$ Emrakul, the Promised End | Condition$ Kicked
+SVar:Kicked:Count$TimesKicked
+DeckHas:Ability$Token
+Oracle:Kicker {6} (You may pay an additional {6} as you cast this spell.)\nExile target nonland permanent. Create a 1/1 colorless Eldrazi Scion creature token. It has "Sacrifice this creature: Add {C}." If Call Up Emrakul to Help was kicked, instead create a token that's a copy of Emrakul, the Promised End.

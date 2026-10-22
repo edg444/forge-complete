@@ -1,0 +1,17 @@
+Name:Phyrexian Cytoshaper
+ManaCost:2 G
+Types:Creature Phyrexian Mutant Snake
+PT:3/3
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigIncubate | TriggerDescription$ When CARDNAME enters the battlefield, incubate 1.
+SVar:TrigIncubate:DB$ Incubate | Amount$ 1
+S:Mode$ Continuous | Affected$ Incubator.token+YouCtrl | AddTrigger$ ArtifactEvolve | Description$ Incubator tokens you control have artifact evolve. (Whenever a creature enters the battlefield under your control with greater power or toughness that the number of +1/+1 counters on that token, put a +1/+1 counter on that token.)
+SVar:ArtifactEvolve:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.YouCtrl+Other | TriggerZones$ Battlefield | CheckSVar$ Bigger | SVarCompare$ GE1 | Execute$ TrigEvolve | TriggerDescription$ Artifact evolve (Whenever a creature enters the battlefield under your control with greater power or toughness than the number of +1/+1 counters on this token, put a +1/+1 counter on this token.)
+SVar:TrigEvolve:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1
+SVar:Bigger:SVar$PowerBigger/Plus.ToughnessBigger
+SVar:PowerBigger:Count$Compare PowerGap GE1.1.0
+SVar:ToughnessBigger:Count$Compare ToughnessGap GE1.1.0
+SVar:PowerGap:TriggeredCard$CardPower/Minus.Counters
+SVar:ToughnessGap:TriggeredCard$CardToughness/Minus.Counters
+SVar:Counters:Count$CardCounters.P1P1
+DeckHas:Ability$Token|Counters
+Oracle:When Phyrexian Cytoshaper enters the battlefield, incubate 1.\nIncubator tokens you control have artifact evolve. (Whenever a creature enters the battlefield under your control with greater power or toughness that the number of +1/+1 counters on that token, put a +1/+1 counter on that token.)

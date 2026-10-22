@@ -1,0 +1,19 @@
+Name:Maître Tree
+ManaCost:2 G
+Types:Creature Tree
+PT:0/2
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigMenu | TriggerDescription$ Tempting offer — When CARDNAME enters the battlefield, create a token from the menu. Each opponent may also create a token from the menu. For each opponent who does, you create a token of the same type.
+SVar:TrigMenu:DB$ GenericChoice | Defined$ You | Choices$ YouTreasure,YouFood,YouSquirrel,YouBeast | AILogic$ BestOption | SubAbility$ DBOpponents
+SVar:YouTreasure:DB$ Token | TokenScript$ c_a_treasure_sac | SpellDescription$ Treasure
+SVar:YouFood:DB$ Token | TokenScript$ c_a_food_sac | SpellDescription$ Food
+SVar:YouSquirrel:DB$ Token | TokenScript$ g_1_1_squirrel | SpellDescription$ 1/1 green Squirrel
+SVar:YouBeast:DB$ Token | TokenScript$ g_3_3_beast | SpellDescription$ 3/3 green Beast
+SVar:DBOpponents:DB$ RepeatEach | RepeatPlayers$ Player.Opponent | RepeatSubAbility$ DBOppChoice
+SVar:DBOppChoice:DB$ GenericChoice | Defined$ Remembered | Choices$ OppTreasure,OppFood,OppSquirrel,OppBeast,OppNone | AILogic$ BestOption
+SVar:OppTreasure:DB$ Token | TokenScript$ c_a_treasure_sac | TokenOwner$ Remembered | SubAbility$ YouTreasure | SpellDescription$ Treasure
+SVar:OppFood:DB$ Token | TokenScript$ c_a_food_sac | TokenOwner$ Remembered | SubAbility$ YouFood | SpellDescription$ Food
+SVar:OppSquirrel:DB$ Token | TokenScript$ g_1_1_squirrel | TokenOwner$ Remembered | SubAbility$ YouSquirrel | SpellDescription$ 1/1 green Squirrel
+SVar:OppBeast:DB$ Token | TokenScript$ g_3_3_beast | TokenOwner$ Remembered | SubAbility$ YouBeast | SpellDescription$ 3/3 green Beast
+SVar:OppNone:DB$ Cleanup | SpellDescription$ Don't create a token
+DeckHas:Ability$Token
+Oracle:Tempting offer — When Maître Tree enters the battlefield, create a token from the menu. Each opponent may also create a token from the menu. For each opponent who does, you create a token of the same type.\n• Treasure\n• Food\n• 1/1 green Squirrel\n• 3/3 green Beast

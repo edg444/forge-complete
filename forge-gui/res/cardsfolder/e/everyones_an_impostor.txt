@@ -1,0 +1,6 @@
+Name:Everyone's an Impostor
+ManaCost:no cost
+Types:Conspiracy
+# Granted changeling would do nothing by the rules; the card humors Gavin, so the creatures get every creature type too.
+S:Mode$ Continuous | EffectZone$ Command | Affected$ Creature | AffectedZone$ Battlefield,Hand,Graveyard,Library,Exile,Stack,Command | AddKeyword$ Changeling | AddAllCreatureTypes$ True | Description$ All creatures have changeling. (Yes, we know this doesn't actually work. Okay, Gavin didn't know, but we'll humor him.)
+Oracle:(Start the game with this Conspiracy face up in the command zone. It doesn't count toward your minimum deck size.)\nAll creatures have changeling. (Yes, we know this doesn't actually work. Okay, Gavin didn't know, but we'll humor him.)

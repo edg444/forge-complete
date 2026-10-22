@@ -312,6 +312,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Guild Pact, The Five Stages of Grief, Call Up Emrakul to Help, Everyone's an Impostor, Pulse of the
+  Hunter Maze, The Paradise Bird, Phyrexian Cytoshaper, Maître Tree, Grek the Ogre, Land Station.**
+  - Everyone's an Impostor humors its own reminder text: granted changeling gives every creature type.
+  - New Donkey and Ogre Noble tokens.
 - **Unknown Event: Another Night in Vegas, Yet Another Night in Vegas, A Chaotic Night in Vegas, The Archenemy's
   Charm, Monster Mash-Up, The Zassacre Zirl.**
   - `Cleanup` `ResetChosenModes$` lets every mode be chosen again; `SetInMotion` `DefinedName$` sets a named scheme in

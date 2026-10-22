@@ -1,0 +1,37 @@
+Name:Guild Pact
+ManaCost:0
+Types:Instant
+# Choosing two colors is choosing one of the ten pairs.
+A:SP$ GenericChoice | Defined$ You | Choices$ WU,WB,UB,UR,BR,BG,RG,RW,GW,GU | ChoicePrompt$ Choose two colors | SpellDescription$ Choose two colors. Add a mana of each of the chosen colors.
+SVar:WU:DB$ Mana | Produced$ W U | SubAbility$ DelayWU | SpellDescription$ White and blue
+SVar:DelayWU:DB$ DelayedTrigger | Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | Execute$ PayWU | TriggerDescription$ At the beginning of your next upkeep, pay {W}{U}. If you don't, you lose the game.
+SVar:PayWU:DB$ LosesGame | Defined$ You | UnlessCost$ W U | UnlessPayer$ You
+SVar:WB:DB$ Mana | Produced$ W B | SubAbility$ DelayWB | SpellDescription$ White and black
+SVar:DelayWB:DB$ DelayedTrigger | Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | Execute$ PayWB | TriggerDescription$ At the beginning of your next upkeep, pay {W}{B}. If you don't, you lose the game.
+SVar:PayWB:DB$ LosesGame | Defined$ You | UnlessCost$ W B | UnlessPayer$ You
+SVar:UB:DB$ Mana | Produced$ U B | SubAbility$ DelayUB | SpellDescription$ Blue and black
+SVar:DelayUB:DB$ DelayedTrigger | Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | Execute$ PayUB | TriggerDescription$ At the beginning of your next upkeep, pay {U}{B}. If you don't, you lose the game.
+SVar:PayUB:DB$ LosesGame | Defined$ You | UnlessCost$ U B | UnlessPayer$ You
+SVar:UR:DB$ Mana | Produced$ U R | SubAbility$ DelayUR | SpellDescription$ Blue and red
+SVar:DelayUR:DB$ DelayedTrigger | Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | Execute$ PayUR | TriggerDescription$ At the beginning of your next upkeep, pay {U}{R}. If you don't, you lose the game.
+SVar:PayUR:DB$ LosesGame | Defined$ You | UnlessCost$ U R | UnlessPayer$ You
+SVar:BR:DB$ Mana | Produced$ B R | SubAbility$ DelayBR | SpellDescription$ Black and red
+SVar:DelayBR:DB$ DelayedTrigger | Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | Execute$ PayBR | TriggerDescription$ At the beginning of your next upkeep, pay {B}{R}. If you don't, you lose the game.
+SVar:PayBR:DB$ LosesGame | Defined$ You | UnlessCost$ B R | UnlessPayer$ You
+SVar:BG:DB$ Mana | Produced$ B G | SubAbility$ DelayBG | SpellDescription$ Black and green
+SVar:DelayBG:DB$ DelayedTrigger | Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | Execute$ PayBG | TriggerDescription$ At the beginning of your next upkeep, pay {B}{G}. If you don't, you lose the game.
+SVar:PayBG:DB$ LosesGame | Defined$ You | UnlessCost$ B G | UnlessPayer$ You
+SVar:RG:DB$ Mana | Produced$ R G | SubAbility$ DelayRG | SpellDescription$ Red and green
+SVar:DelayRG:DB$ DelayedTrigger | Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | Execute$ PayRG | TriggerDescription$ At the beginning of your next upkeep, pay {R}{G}. If you don't, you lose the game.
+SVar:PayRG:DB$ LosesGame | Defined$ You | UnlessCost$ R G | UnlessPayer$ You
+SVar:RW:DB$ Mana | Produced$ R W | SubAbility$ DelayRW | SpellDescription$ Red and white
+SVar:DelayRW:DB$ DelayedTrigger | Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | Execute$ PayRW | TriggerDescription$ At the beginning of your next upkeep, pay {R}{W}. If you don't, you lose the game.
+SVar:PayRW:DB$ LosesGame | Defined$ You | UnlessCost$ R W | UnlessPayer$ You
+SVar:GW:DB$ Mana | Produced$ G W | SubAbility$ DelayGW | SpellDescription$ Green and white
+SVar:DelayGW:DB$ DelayedTrigger | Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | Execute$ PayGW | TriggerDescription$ At the beginning of your next upkeep, pay {G}{W}. If you don't, you lose the game.
+SVar:PayGW:DB$ LosesGame | Defined$ You | UnlessCost$ G W | UnlessPayer$ You
+SVar:GU:DB$ Mana | Produced$ G U | SubAbility$ DelayGU | SpellDescription$ Green and blue
+SVar:DelayGU:DB$ DelayedTrigger | Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | Execute$ PayGU | TriggerDescription$ At the beginning of your next upkeep, pay {G}{U}. If you don't, you lose the game.
+SVar:PayGU:DB$ LosesGame | Defined$ You | UnlessCost$ G U | UnlessPayer$ You
+AI:RemoveDeck:All
+Oracle:Choose two colors. Add a mana of each of the chosen colors.\nAt the beginning of your next upkeep, pay one mana of each of the chosen colors. If you don't, you lose the game.
