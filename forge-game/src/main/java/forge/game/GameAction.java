@@ -3056,6 +3056,25 @@ public class GameAction {
                     }
                 }
             }
+            // Windy City Aven/Elemental: whether a person attended that MagicCon is asked once per match (honor
+            // system); the AI attended at random, decided once per match (user ruling 2026-10-22)
+            for (Card c : all) {
+                if (!c.hasSVar("AsksMagicCon")) {
+                    continue;
+                }
+                final String con = c.getSVar("AsksMagicCon");
+                final String key = "AttendedMagicCon:" + con;
+                if (takesAction.getMatchNote(key) == null) {
+                    final boolean attended;
+                    if (takesAction.getController().isAI()) {
+                        attended = forge.util.MyRandom.getRandom().nextBoolean();
+                    } else {
+                        SpellAbility sa = new SpellAbility.EmptySa(ApiType.Pump, c, takesAction);
+                        attended = takesAction.getController().confirmAction(sa, null, "Did you attend MagicCon: " + con + "?", null);
+                    }
+                    takesAction.setMatchNote(key, attended);
+                }
+            }
             // The Fifth Alias: if it's your commander or in your deck, secretly list that many nonland cards in your deck.
             // Offered sorted by name, so choosing doesn't show the library's order.
             for (Card c : all) {

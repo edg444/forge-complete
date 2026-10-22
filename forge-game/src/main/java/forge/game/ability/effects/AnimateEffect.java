@@ -192,8 +192,9 @@ public class AnimateEffect extends AnimateEffectBase {
                 // ChosenName defers to the name just picked by a NameCard ability, so the new name
                 // doesn't have to be known when the script is written
                 final List<String> named = source.getNamedCards();
+                // Name$ Nameless: it loses its name (Fear of Forgetting Names)
                 gameCard.addChangedName("ChosenName".equals(name) && !named.isEmpty()
-                        ? named.get(named.size() - 1) : name, false, timestamp, 0);
+                        ? named.get(named.size() - 1) : "Nameless".equals(name) ? "" : name, false, timestamp, 0);
             }
 
             // give sVars

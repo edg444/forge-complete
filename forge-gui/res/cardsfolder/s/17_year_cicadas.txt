@@ -1,0 +1,10 @@
+Name:17-Year Cicadas
+ManaCost:7 W
+Types:Sorcery
+A:SP$ Token | TokenAmount$ 10 | TokenScript$ w_1_1_insect_flying | SubAbility$ DBExile | SpellDescription$ Create ten 1/1 white Insect creature tokens with flying. Exile CARDNAME with seventeen time counters on it.
+SVar:DBExile:DB$ ChangeZone | Defined$ Parent | Origin$ Stack | Destination$ Exile | WithCountersType$ TIME | WithCountersAmount$ 17 | StackDescription$ None
+K:Suspend:17:0
+T:Mode$ SpellCast | ValidActivatingPlayer$ You | TriggerZones$ Exile | IsPresent$ Card.Self+suspended | PresentZone$ Exile | Execute$ TrigRemove | TriggerDescription$ Whenever you cast a spell, if this card is suspended, remove a time counter from it.
+SVar:TrigRemove:DB$ RemoveCounter | Defined$ Self | CounterType$ TIME | CounterNum$ 1
+DeckHas:Ability$Token & Type$Insect
+Oracle:Create ten 1/1 white Insect creature tokens with flying. Exile 17-Year Cicadas with seventeen time counters on it.\nSuspend 17 — {0} (Rather than cast this card from your hand, you may pay {0} and exile it with seventeen time counters on it. At the beginning of your upkeep, remove a time counter. When the last is removed, you may cast it without paying its mana cost.)\nWhenever you cast a spell, if this card is suspended, remove a time counter from it.

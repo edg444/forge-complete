@@ -1,0 +1,8 @@
+Name:Fear of Forgetting Names
+ManaCost:3 U
+Types:Enchantment Creature Nightmare
+PT:3/4
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigForget | TriggerDescription$ When this creature enters, target creature loses its name.
+SVar:TrigForget:DB$ Animate | ValidTgts$ Creature | TgtPrompt$ Select target creature | Name$ Nameless | Duration$ Permanent | IsCurse$ True
+S:Mode$ Continuous | Affected$ Creature.YouCtrl | AddKeyword$ Protection:Creature.noName:creatures with no names | Description$ Creatures you control have protection from creatures with no names.
+Oracle:When this creature enters, target creature loses its name.\nCreatures you control have protection from creatures with no names.

@@ -1,0 +1,14 @@
+Name:Identify the Culprit
+ManaCost:W
+Types:Sorcery
+# The AI caster picks the creature it most wants exiled; an AI guesser guesses at random (user ruling 2026-10-22)
+A:SP$ ChooseCard | ValidTgts$ Opponent | TgtPrompt$ Select target opponent | Defined$ You | Choices$ Creature.TargetedPlayerCtrl | Secretly$ True | Mandatory$ True | RememberChosen$ True | ChoiceTitle$ Secretly choose a creature target opponent controls | SubAbility$ DBGuess | SpellDescription$ Secretly choose a creature target opponent controls. Then, that player guesses which creature it is. Reveal the chosen creature. If they guessed incorrectly, exile the creature you chose. Otherwise, return CARDNAME to its owner's hand and you can't cast it again this turn.
+SVar:DBGuess:DB$ ChooseCard | Defined$ TargetedPlayer | Choices$ Creature.TargetedPlayerCtrl | Mandatory$ True | ImprintChosen$ True | AILogic$ Random | ChoiceTitle$ Guess which of your creatures was chosen | SubAbility$ DBReveal
+SVar:DBReveal:DB$ Reveal | Defined$ You | RevealDefined$ Remembered | SubAbility$ DBExile
+SVar:DBExile:DB$ ChangeZone | Defined$ Remembered | Origin$ Battlefield | Destination$ Exile | ConditionCheckSVar$ Guessed | ConditionSVarCompare$ EQ0 | SubAbility$ DBReturn
+SVar:DBReturn:DB$ ChangeZone | Defined$ Parent | Origin$ Stack | Destination$ Hand | ConditionCheckSVar$ Guessed | ConditionSVarCompare$ GE1 | SubAbility$ DBCantCast
+SVar:DBCantCast:DB$ Effect | StaticAbilities$ STCantCast | RememberObjects$ Self | ForgetOnMoved$ Hand | ConditionCheckSVar$ Guessed | ConditionSVarCompare$ GE1 | SubAbility$ DBCleanup
+SVar:STCantCast:Mode$ CantBeCast | ValidCard$ Card.IsRemembered | Caster$ You | EffectZone$ Command | Description$ You can't cast Identify the Culprit again this turn.
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearImprinted$ True | ClearChosenCard$ True
+SVar:Guessed:Count$Valid Card.IsRemembered+IsImprinted
+Oracle:Secretly choose a creature target opponent controls. Then, that player guesses which creature it is. Reveal the chosen creature. If they guessed incorrectly, exile the creature you chose. Otherwise, return Identify the Culprit to its owner's hand and you can't cast it again this turn.

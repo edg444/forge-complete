@@ -1,0 +1,14 @@
+Name:Windy City Elemental
+ManaCost:3 W W
+Types:Creature Elemental
+PT:4/4
+K:Flying
+# Whether you attended is asked once per match (honor system); the AI attended at random (user ruling 2026-10-22)
+SVar:AsksMagicCon:Chicago
+T:Mode$ Always | TriggerZones$ Battlefield | Static$ True | CheckSVar$ Attended | SVarCompare$ EQ1 | IsPresent$ Permanent.YouCtrl | PresentCompare$ GE10 | IsPresent2$ Effect.namedWindy_City's_Blessing | PresentZone2$ Command | PresentPlayer2$ You | PresentCompare2$ EQ0 | Execute$ TrigBless | TriggerDescription$ Ascend MagicCon Chicago (If you attended MagicCon Chicago and control ten or more permanents, you get the windy city's blessing for the rest of the game.)
+SVar:TrigBless:DB$ Effect | Name$ Windy City's Blessing | Duration$ Permanent
+T:Mode$ Attacks | ValidCard$ Card.Self | IsPresent$ Effect.namedWindy_City's_Blessing | PresentZone$ Command | PresentPlayer$ You | Execute$ TrigCounters | TriggerDescription$ Whenever CARDNAME attacks, if you have the windy city's blessing, put a +1/+1 counter on each creature you control with flying.
+SVar:TrigCounters:DB$ PutCounterAll | ValidCards$ Creature.YouCtrl+withFlying | CounterType$ P1P1 | CounterNum$ 1
+SVar:Attended:Count$AttendedMagicCon.Chicago
+DeckHas:Ability$Counters
+Oracle:Flying\nAscend MagicCon Chicago (If you attended MagicCon Chicago and control ten or more permanents, you get the windy city's blessing for the rest of the game.)\nWhenever Windy City Elemental attacks, if you have the windy city's blessing, put a +1/+1 counter on each creature you control with flying.

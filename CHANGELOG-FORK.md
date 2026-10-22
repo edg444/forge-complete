@@ -312,6 +312,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Windy City Aven, Windy City Elemental, Identify the Culprit, Hero's Uncle, Red and Black Legac,
+  17-Year Cicadas, Fear of Forgetting Names (UNK uncommons).**
+  - SVar `AsksMagicCon:<city>`: as the match begins a person says whether they attended (honor system); the AI
+    attended at random, once per match (user ruling). `Count$AttendedMagicCon.<city>`. The Windy City's blessing is
+    an effect named Windy City's Blessing, gained like Ascend's.
+  - Identify the Culprit: the AI caster picks the creature it most wants exiled, an AI guesser guesses at random (user
+    ruling).
+  - Hero's Uncle's legendary team-up creatures are Scryfall Tagger's `legendary-team-up` oracle tag (user ruling), the
+    26 tagged cards listed in its script.
+  - `Count$CastManaSpentColor.<color>`; Animate `Name$ Nameless` (it loses its name).
+  - New token script `w_1_1_insect_flying`.
+
 - **Unknown Event: Tax Draw, Tax Sweeper, Tax Hounds, Clear, the Mind, Gather, the Townsfolk, Devoted Jeskai, Devoted
   Mardu, Tricky Mage, Team Mage, Dialogue Tree, Good Knight, Rosewater's Nemesis, Echoing Echo, Out of Town, Brave
   Falconhawk, Rideable Mantis, Xerex Squire, Farseeing Flockmate (UNK uncommons).**

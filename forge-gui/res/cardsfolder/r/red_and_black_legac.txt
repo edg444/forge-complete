@@ -1,0 +1,18 @@
+Name:Red and Black Legac
+ManaCost:1 BR
+Types:Creature Lizard
+PT:2/1
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplaceWith$ DBBlack | ReplacementResult$ Updated | Description$ If you spent black mana on this creature, it enters with a deathtouch counter. If you spent red mana on this creature, it enters with a first strike counter. If you spent both, you choose which one counter it enters with.
+SVar:DBBlack:DB$ Branch | BranchConditionSVar$ Black | BranchConditionSVarCompare$ GE1 | TrueSubAbility$ DBBlackSpent | FalseSubAbility$ DBFirstStrike
+SVar:DBBlackSpent:DB$ Branch | BranchConditionSVar$ Red | BranchConditionSVarCompare$ GE1 | TrueSubAbility$ DBChoose | FalseSubAbility$ DBDeathtouch
+SVar:DBChoose:DB$ GenericChoice | Defined$ You | Choices$ DBDeathtouch,DBFirstStrike
+SVar:DBDeathtouch:DB$ PutCounter | Defined$ Self | ETB$ True | CounterType$ Deathtouch | CounterNum$ 1 | SpellDescription$ It enters with a deathtouch counter.
+SVar:DBFirstStrike:DB$ PutCounter | Defined$ Self | ETB$ True | CounterType$ First Strike | CounterNum$ 1 | ConditionCheckSVar$ Red | ConditionSVarCompare$ GE1 | SpellDescription$ It enters with a first strike counter.
+SVar:Black:Count$CastManaSpentColor.Black
+SVar:Red:Count$CastManaSpentColor.Red
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigFlip | TriggerDescription$ At the beginning of your upkeep, flip a coin. If it's heads and this creature has deathtouch, or it's tails and this creature has haste, create a treasure token.
+SVar:TrigFlip:DB$ FlipACoin | HeadsSubAbility$ DBHeads | TailsSubAbility$ DBTails
+SVar:DBHeads:DB$ Token | TokenScript$ c_a_treasure_sac | ConditionDefined$ Self | ConditionPresent$ Card.withDeathtouch
+SVar:DBTails:DB$ Token | TokenScript$ c_a_treasure_sac | ConditionDefined$ Self | ConditionPresent$ Card.withHaste
+DeckHas:Ability$Counters|Token & Type$Treasure
+Oracle:If you spent black mana on this creature, it enters with a deathtouch counter. If you spent red mana on this creature, it enters with a first strike counter. If you spent both, you choose which one counter it enters with.\nAt the beginning of your upkeep, flip a coin. If it's heads and this creature has deathtouch, or it's tails and this creature has haste, create a treasure token.

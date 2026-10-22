@@ -2030,6 +2030,14 @@ public class AbilityUtils {
             if (sq[0].equals("CastTotalManaSpent")) {
                 return doXMath(c.getCastSA() != null ? c.getCastSA().getTotalManaSpent() : 0, expr, c, ctb);
             }
+            // Red and Black Legac: Count$CastManaSpentColor.<color>, the mana of that color spent to cast this card
+            if (sq[0].equals("CastManaSpentColor") && sq.length > 1) {
+                if (c.getCastSA() == null) {
+                    return doXMath(0, expr, c, ctb);
+                }
+                final byte color = MagicColor.fromName(sq[1]);
+                return doXMath((int) c.getCastSA().getPayingMana().stream().filter(m -> (m.getColor() & color) != 0).count(), expr, c, ctb);
+            }
             if (sq[0].startsWith("CastTotalManaSpent ")) {
                 final String[] k = sq[0].split(" ");
                 if (c.getCastSA() == null) {
@@ -2451,6 +2459,10 @@ public class AbilityUtils {
                 highest = Math.max(highest, you.getCommanderTax(commander));
             }
             return doXMath(highest, expr, c, ctb);
+        }
+        // Windy City Aven: Count$AttendedMagicCon.Chicago, 1 if the player said they attended (asked as the match begins)
+        if (sq[0].equals("AttendedMagicCon") && sq.length > 1) {
+            return doXMath(Boolean.TRUE.equals((player != null ? player : c.getController()).getMatchNote("AttendedMagicCon:" + sq[1])) ? 1 : 0, expr, c, ctb);
         }
         // Artist Alley: how many colors are signed in this copy's art box
         if (sq[0].equals("CardMarkedColors")) {
