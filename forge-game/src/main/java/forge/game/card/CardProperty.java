@@ -2742,6 +2742,11 @@ public class CardProperty {
             if (!card.isSolved()) {
                 return false;
             }
+        } else if (property.equals("OnAdventure")) {
+            // Adventurer Beguiler: an adventurer card exiled by its own adventure
+            if (!card.isOnAdventure()) {
+                return false;
+            }
         } else if (property.equals("IsSaddled")) {
             if (!card.isSaddled()) {
                 return false;

@@ -36,6 +36,13 @@ public class UnknownEventBatch33Test extends AITest {
         AssertJUnit.assertTrue(ai.getCreaturesInPlay().isEmpty());
     }
 
+    private static void attachTrigger(final Card aura, final Card target) {
+        final SpellAbility trig = aura.getTriggers().get(0).ensureAbility();
+        trig.setActivatingPlayer(aura.getController());
+        trig.setTriggeringObject(forge.game.ability.AbilityKey.Target, target);
+        AbilityUtils.resolve(trig);
+    }
+
     @Test
     public void testUnstickerify() {
         final Game game = initAndCreateGame();
@@ -45,21 +52,42 @@ public class UnknownEventBatch33Test extends AITest {
         human.getZone(ZoneType.Battlefield).add(wolf);
         AssertJUnit.assertTrue(wolf.isPlaytestCard());
         final Card bears = addCard("Grizzly Bears", human);
+        // the owner said it was unclear without peeling: a Wastes
+        human.setMatchNote("StickerBeneath:Throat Wolf#1", "Wastes");
         final Card first = addCard("Unstickerify", ai);
-        first.attachToEntity(wolf, null);
         final Card second = addCard("Unstickerify", ai);
+        first.attachToEntity(wolf, null);
         second.attachToEntity(bears, null);
+        attachTrigger(first, wolf);
         game.getAction().checkStateEffects(true);
         AssertJUnit.assertEquals("Wastes", wolf.getName());
         AssertJUnit.assertTrue(wolf.isLand());
         AssertJUnit.assertFalse(wolf.isCreature());
         AssertJUnit.assertTrue(bears.isCreature());
+        first.unattachFromEntity(wolf);
+        game.getAction().checkStateEffects(true);
+        AssertJUnit.assertEquals("unattached: the sticker again", "Throat Wolf", wolf.getName());
         final Card free = addCard("Llanowar Elves", human);
         bears.setSickness(false);
         free.setSickness(false);
         game.getPhaseHandler().devModeSet(forge.game.phase.PhaseType.COMBAT_DECLARE_ATTACKERS, human);
         AssertJUnit.assertTrue(forge.game.combat.CombatUtil.canAttack(free));
         AssertJUnit.assertFalse(forge.game.combat.CombatUtil.canAttack(bears));
+    }
+
+    @Test
+    public void testAiStickerHidesARandomCard() {
+        final Game game = initAndCreateGame();
+        final Player ai = game.getPlayers().get(1);
+        final Card wolf = Card.fromPaperCard(FModel.getMagicDb().getCommonCards().getCard("Throat Wolf", "CMB1", "65"), ai);
+        ai.getZone(ZoneType.Battlefield).add(wolf);
+        final Card aura = addCard("Unstickerify", ai);
+        aura.attachToEntity(wolf, null);
+        attachTrigger(aura, wolf);
+        game.getAction().checkStateEffects(true);
+        final Object beneath = ai.getMatchNote("StickerBeneath:Throat Wolf#1");
+        AssertJUnit.assertTrue(beneath instanceof String);
+        AssertJUnit.assertEquals(beneath, wolf.getName());
     }
 
     @Test

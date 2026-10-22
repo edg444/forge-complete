@@ -1453,11 +1453,20 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
         return isTrigger() && !isOptionalTrigger();
     }
 
+    // Ring Out: a spell cast by an effect that says what it targets can target only that
+    private java.util.Collection<? extends GameObject> forcedTargets = null;
+    public final void setForcedTargets(final java.util.Collection<? extends GameObject> targets) {
+        forcedTargets = targets;
+    }
+
     public final boolean canTarget(final GameObject entity) {
         return canTarget(entity, false);
     }
     public final boolean canTarget(final GameObject entity, boolean fizzleCheck) {
         if (entity == null) {
+            return false;
+        }
+        if (forcedTargets != null && !forcedTargets.contains(entity)) {
             return false;
         }
 

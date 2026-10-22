@@ -4,7 +4,9 @@ Types:Enchantment Aura
 K:Enchant:Permanent
 SVar:AttachAILogic:Curse
 S:Mode$ CantAttack,CantBlock | ValidCard$ Card.EnchantedBy+!Playtest | Description$ If enchanted permanent isn't a stickered playtest card, it can't attack or block.
-# Forge can't see under a sticker, so a stickered playtest card is always the unclear case: a Wastes
-S:Mode$ Continuous | Affected$ Card.EnchantedBy+Playtest | SetColor$ Colorless | AddType$ Land & Basic | RemoveCardTypes$ True | RemoveSubTypes$ True | RemoveSuperTypes$ True | RemoveAllAbilities$ True | SetName$ Wastes | AddAbility$ WastesMana | Description$ If enchanted permanent is a stickered playtest card, treat it as the card beneath its sticker. If it's unclear without peeling the sticker, treat it as a Wastes. (Mystery Booster playtest cards count as stickered.)
-SVar:WastesMana:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
+# The card under the sticker: a person names it (or it's unclear, a Wastes); the AI's have a random real card under
+# them (user ruling 2026-10-22). See StickerBeneathEffect.
+T:Mode$ Attached | ValidSource$ Card.Self | ValidTarget$ Card.Playtest | TriggerZones$ Battlefield | Static$ True | Execute$ TrigBeneath | TriggerDescription$ If enchanted permanent is a stickered playtest card, treat it as the card beneath its sticker. If it's unclear without peeling the sticker, treat it as a Wastes. (Mystery Booster playtest cards count as stickered.)
+SVar:TrigBeneath:DB$ StickerBeneath | Defined$ TriggeredTarget | SubAbility$ DBClone
+SVar:DBClone:DB$ Clone | CopyFromChosenName$ True | CloneTarget$ TriggeredTarget | Duration$ UntilUnattached
 Oracle:Enchant permanent\nIf enchanted permanent isn't a stickered playtest card, it can't attack or block.\nIf enchanted permanent is a stickered playtest card, treat it as the card beneath its sticker. If it's unclear without peeling the sticker, treat it as a Wastes. (Mystery Booster playtest cards count as stickered.)

@@ -1,0 +1,8 @@
+Name:Ring Out
+ManaCost:1 U
+Types:Instant
+A:SP$ Counter | TargetType$ Spell | ValidTgts$ Card.nonCreature | TgtPrompt$ Select target noncreature spell | SpellDescription$ Counter target noncreature spell.
+T:Mode$ SpellCast | ValidCard$ Card.namedSol Ring | ValidActivatingPlayer$ Opponent | TriggerZones$ Library | OptionalDecider$ You | Execute$ TrigCast | TriggerDescription$ Whenever an opponent casts a spell named Sol Ring, if Ring Out is in your library, you may search you library for Ring Out, and cast it without paying its mana cost targeting that Sol Ring, then shuffle.
+SVar:TrigCast:DB$ Play | Defined$ Self | WithoutManaCost$ True | ForcedTarget$ TriggeredSpellAbility | SubAbility$ DBShuffle
+SVar:DBShuffle:DB$ Shuffle | Defined$ You
+Oracle:Counter target noncreature spell.\nWhenever an opponent casts a spell named Sol Ring, if Ring Out is in your library, you may search you library for Ring Out, and cast it without paying its mana cost targeting that Sol Ring, then shuffle.

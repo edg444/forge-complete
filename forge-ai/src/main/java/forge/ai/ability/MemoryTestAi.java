@@ -8,6 +8,7 @@ import forge.game.spellability.SpellAbility;
 
 /**
  * Memory Test: its enters trigger targets the opponent with the most cards in their library; naming is always tried.
+ * Trash Panda's "put it into target opponent's graveyard" (PutInZoneOf) targets the same way.
  */
 public class MemoryTestAi extends SpellAbilityAi {
 

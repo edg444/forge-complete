@@ -341,6 +341,11 @@ public abstract class GameEntity implements GameObject, IIdentifiable {
     }
 
     public final int getCounters(final CounterType counterName) {
+        // Backsies: "treat all counters as -1/-1 counters" - each counter reads as one of that type and nothing else
+        final Game game = getGame();
+        if (game != null && game.getCountersTreatedAs() != null && !counters.isEmpty()) {
+            return counterName.equals(game.getCountersTreatedAs()) ? counters.size() : 0;
+        }
         return counters.count(counterName);
     }
 

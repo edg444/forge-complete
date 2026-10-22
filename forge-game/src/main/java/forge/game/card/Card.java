@@ -951,6 +951,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
 
     public boolean canBeTurnedFaceUp() {
+        // manifested bread can't be turned face up (You're Toast!)
+        if (manifestedSA != null && manifestedSA.getApi() == ApiType.ManifestBread) {
+            return false;
+        }
         Map<AbilityKey, Object> repParams = AbilityKey.mapFromAffected(this);
         return !getGame().getReplacementHandler().cantHappenCheck(ReplacementType.TurnFaceUp, repParams);
     }

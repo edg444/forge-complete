@@ -451,6 +451,13 @@ public class PlayEffect extends SpellAbilityEffect {
             if (tgtSA.usesTargeting() && !optional) {
                 tgtSA.getTargetRestrictions().setMandatory(true);
             }
+            // Ring Out: "cast it ... targeting that Sol Ring" - ForcedTarget$ is the only thing it may target
+            if (sa.hasParam("ForcedTarget") && tgtSA.usesTargeting()) {
+                final List<forge.game.GameObject> forced = new ArrayList<>();
+                forced.addAll(AbilityUtils.getDefinedSpellAbilities(source, sa.getParam("ForcedTarget"), sa));
+                forced.addAll(AbilityUtils.getDefinedEntities(source, sa.getParam("ForcedTarget"), sa));
+                tgtSA.setForcedTargets(forced);
+            }
 
             if (sa.hasParam("Named")) {
                 tgtSA.setName(sa.getName());

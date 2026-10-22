@@ -1,0 +1,15 @@
+Name:Takesies
+ManaCost:2 U
+Types:Instant
+K:Fuse
+A:SP$ MoveCounterFromEach | ValidTgts$ Permanent | TgtPrompt$ Select target permanent | SpellDescription$ Move up to one counter from each permanent onto target permanent.
+AlternateMode:Split
+Oracle:Move up to one counter from each permanent onto target permanent.\nFuse (You may cast one or both halves of this card from your hand.)
+
+ALTERNATE
+
+Name:Backsies
+ManaCost:1 B
+Types:Instant
+A:SP$ TreatCountersAs | CounterType$ M1M1 | SpellDescription$ Until end of turn, treat all counters as -1/-1 counters.
+Oracle:Until end of turn, treat all counters as -1/-1 counters.\nFuse (You may cast one or both halves of this card from your hand.)

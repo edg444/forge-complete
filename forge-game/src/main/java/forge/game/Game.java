@@ -139,6 +139,17 @@ public class Game {
     // Grand Marshal Macie: the "until end of turn" effects not yet ended
     private final List<PausableUntil> pausableUntils = new java.util.ArrayList<>();
 
+    // Backsies: while set, every counter is treated as a counter of this type
+    private forge.game.card.CounterType countersTreatedAs = null;
+
+    public forge.game.card.CounterType getCountersTreatedAs() {
+        return countersTreatedAs;
+    }
+
+    public void setCountersTreatedAs(final forge.game.card.CounterType type) {
+        countersTreatedAs = type;
+    }
+
     public List<PausableUntil> getPausableUntils() {
         return java.util.Collections.unmodifiableList(pausableUntils);
     }

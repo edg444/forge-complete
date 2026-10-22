@@ -1,0 +1,6 @@
+Name:You're Toast!
+ManaCost:2 W
+Types:Instant
+A:SP$ ChangeZone | ValidTgts$ Permanent.nonLand | TgtPrompt$ Select target nonland permanent | Origin$ Battlefield | Destination$ Exile | SubAbility$ DBBread | SpellDescription$ Exile target nonland permanent.
+SVar:DBBread:DB$ ManifestBread | DefinedPlayer$ TargetedController | SpellDescription$ Its controller manifests bread. (They look at the top two cards of their library and put one into their graveyard and the other onto the battlefield face down as a Food artifact with "{2}, {T}, Sacrifice this artifact: You gain 3 life." It can't be turned face up. It's bread.)
+Oracle:Exile target nonland permanent. Its controller manifests bread. (They look at the top two cards of their library and put one into their graveyard and the other onto the battlefield face down as a Food artifact with "{2}, {T}, Sacrifice this artifact: You gain 3 life." It can't be turned face up. It's bread.)

@@ -3147,6 +3147,8 @@ public class GameAction {
                     c.signByDesigner();
                 }
             }
+            // Mysterious Hero: a sleeved deck may cover it with another creature card before the game begins
+            forge.game.ability.effects.SecretIdentityEffect.offerCovers(takesAction);
             // Artist Alley: the colors an illustrator signed in each copy's art box, asked the same way (honor
             // system, like Mark Ritual); the AI's copies are unsigned
             copies.clear();

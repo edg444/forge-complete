@@ -253,6 +253,12 @@ public class PlayerProperty {
             if (player.getNumCardsInHandStartedThisTurnWith() <= 0) {
                 return false;
             }
+        } else if (property.startsWith("OpponentDredge")) {
+            // Trash Panda's opponent dredge N: the source is in this player's graveyard and they could mill N
+            if (source == null || !player.getCardsIn(ZoneType.Graveyard).contains(source)
+                    || player.getCardsIn(ZoneType.Library).size() < Integer.parseInt(property.substring("OpponentDredge".length()))) {
+                return false;
+            }
         } else if (property.equals("IsRemembered")) {
             if (!source.isRemembered(player)) {
                 return false;

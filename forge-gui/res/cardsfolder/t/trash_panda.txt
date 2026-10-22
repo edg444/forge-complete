@@ -1,0 +1,17 @@
+Name:Trash Panda
+ManaCost:4 B G
+Types:Creature Raccoon Bear
+PT:5/5
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigExile | TriggerDescription$ When CARDNAME enters the battlefield, exile target opponent's graveyard. Create a Food token for each creature card exiled this way.
+SVar:TrigExile:DB$ ChangeZoneAll | ValidTgts$ Opponent | TgtPrompt$ Select target opponent | Origin$ Graveyard | Destination$ Exile | ChangeType$ Card | RememberChanged$ True | SubAbility$ DBFood
+SVar:DBFood:DB$ Token | TokenAmount$ X | TokenScript$ c_a_food_sac | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:X:Count$ValidExile Creature.IsRemembered
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigPutAway | TriggerDescription$ When CARDNAME dies, put it into target opponent's graveyard.
+SVar:TrigPutAway:DB$ PutInZoneOf | Defined$ TriggeredNewCardLKICopy | ValidTgts$ Opponent | TgtPrompt$ Select target opponent | Destination$ Graveyard
+# Opponent dredge 4: from the graveyard of the opponent who would draw, decided by its owner
+R:Event$ Draw | ActiveZones$ Graveyard | ValidPlayer$ Player.Opponent+OpponentDredge4 | Optional$ True | OptionalDecider$ You | ReplaceWith$ DBDredge | Description$ Opponent dredge 4 (If an opponent would draw a card, instead you may have them mill exactly four cards and put this card into their hand from their graveyard.)
+SVar:DBDredge:DB$ Mill | Defined$ ReplacedPlayer | NumCards$ 4 | SubAbility$ DBToHand
+SVar:DBToHand:DB$ PutInZoneOf | Defined$ Self | DefinedPlayer$ ReplacedPlayer | Destination$ Hand
+DeckHas:Ability$Token|Food & Type$Food
+Oracle:When Trash Panda enters the battlefield, exile target opponent's graveyard. Create a Food token for each creature card exiled this way.\nWhen Trash Panda dies, put it into target opponent's graveyard.\nOpponent dredge 4 (If an opponent would draw a card, instead you may have them mill exactly four cards and put this card into their hand from their graveyard.)

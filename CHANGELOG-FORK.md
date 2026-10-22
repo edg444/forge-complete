@@ -312,6 +312,24 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Unstickerify sees under stickers; Mysterious Hero, Ring Out, Adventurer Beguiler, Takesies //
+  Backsies, You're Toast!, Trash Panda (UNK).**
+  - Unstickerify: a stickered playtest card becomes a copy of the real card under its sticker while enchanted (Clone
+    `CopyFromChosenName$`, `Duration$ UntilUnattached`). New effect `StickerBeneath`: a person names that card from
+    card-name search, or says it's unclear (a Wastes); the AI's stickers each hide a random real card (user ruling).
+    Kept per copy for the match.
+  - New effect `SecretIdentity` + SVar `AsksSecretIdentity:<ability>`: before the game begins a sleeved deck may cover
+    Mysterious Hero with another creature card from the deck, which leaves the deck; it's that creature in every zone
+    (`PerpetualClone`) until the granted special action removes it (user ruling). AI covers with its highest mana
+    value creature, and removes the cover when the hero is the better creature.
+  - PlayEffect `ForcedTarget$`: the cast spell may target only that (`SpellAbility.setForcedTargets`).
+  - New effect `TakeAdventure` + card property `OnAdventure`: no one else may cast the card from exile any more.
+  - New effects `MoveCounterFromEach` (Takesies) and `TreatCountersAs` (Backsies: until end of turn every counter
+    reads as one of that type, `Game.getCountersTreatedAs` in `GameEntity.getCounters`).
+  - New effect `ManifestBread`: manifest dread, but the face-down card is a Food artifact that can't be turned face up.
+  - New effect `PutInZoneOf` (into another player's zone; the card stays its owner's) and player property
+    `OpponentDredge<N>` (Trash Panda's opponent dredge, decided by the card's owner).
+
 - **Unknown Event: Your Favorite Missing Character (UNK).**
   - SVar `AsksMissingCharacter:<ability SVars>`: as the game begins (user ruling) its owner picks two colors, up to
     three creature types, a new name and one of the listed abilities, kept for the match and written onto the card
