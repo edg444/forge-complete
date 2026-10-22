@@ -312,6 +312,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: The Sixth Seraph, The Keeper of Four Scythes, The Knight of Weeks, The Highland Runner, Crux of
+  Mirrodin, The Curve Keeper, Theopholos, Order Acolyte, Agoraphobic Phyrexian (UNK white rares).**
+  - `StopBeingCommander` takes `CommandersOf$` (every commander those players have) and `ShuffleIntoLibrary$`.
+  - `Count$LongestManaValueRun <valid>`: the most consecutive mana values among those permanents.
+  - A commander with SVar `StartingLifeBonus` (and optionally `StartingLifeIfMono`) raises its owner's starting life
+    as the game begins.
+  - New artifact type Scythe, for the Keeper's Scythe tokens.
+  - "Originally printed in" no longer counts promo sets, whose catch-all ones (DCI Promos, Magic Online Promos)
+    carry one early date for years of cards and made them look like every card's first printing.
 - **Unknown Event: Htbr, Racetrack Referee, Stika, Playtestress, Gerrard and Hanna, Draw Team Lines, Ratatwotwo,
   Kylem All-Star, Save Point, The Inspector Inspector, Robby, Another Dwarf (UNK white rares).**
   - `CantBeCast` now takes `ValidSA$`; new spell property `AlternativeOrFree` (an alternative cost, or no mana cost).

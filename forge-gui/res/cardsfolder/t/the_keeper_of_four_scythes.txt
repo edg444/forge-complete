@@ -1,0 +1,10 @@
+Name:The Keeper of Four Scythes
+ManaCost:3 W W
+Types:Legendary Creature Human Wizard
+PT:1/1
+K:Echo:3 W W
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigScythes | TriggerDescription$ When CARDNAME enters, create four Scythe tokens. (They're Equipment with "Equipped creature gets +1/+1" and equip {2}.)
+SVar:TrigScythes:DB$ Token | TokenScript$ c_a_scythe_pump_equip_2 | TokenAmount$ 4
+S:Mode$ Continuous | Affected$ Creature.equipped+YouCtrl | AddPower$ 1 | AddToughness$ 1 | Description$ Equipped creatures you control get +1/+1.
+DeckHas:Ability$Token
+Oracle:Echo {3}{W}{W} (At the beginning of your upkeep, if this came under your control since the beginning of your last upkeep, sacrifice it unless you pay its echo cost.)\nWhen The Keeper of Four Scythes enters, create four Scythe tokens. (They're Equipment with "Equipped creature gets +1/+1" and equip {2}.)\nEquipped creatures you control get +1/+1.

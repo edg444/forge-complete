@@ -14,12 +14,18 @@ import forge.item.PaperCard;
 public final class CardPrintings {
     private CardPrintings() { }
 
-    /** The set this card's name was first printed in, by set release date; null if Forge has no printing of it. */
+    /**
+     * The set this card's name was first printed in, by set release date; null if Forge has no printing of it. Promo
+     * sets don't count: catch-all ones like DCI Promos and Magic Online Promos carry one early date for years of cards.
+     */
     public static CardEdition originalEdition(final Card c) {
         CardEdition first = null;
         for (final PaperCard pc : StaticData.instance().getCommonCards().getAllCards(c.getName())) {
             final CardEdition ed = StaticData.instance().getEditions().get(pc.getEdition());
-            if (ed != null && ed.getDate() != null && (first == null || ed.getDate().before(first.getDate()))) {
+            if (ed == null || ed.getType() == CardEdition.Type.PROMO || ed.getName().endsWith("Promos")) {
+                continue;
+            }
+            if (ed.getDate() != null && (first == null || ed.getDate().before(first.getDate()))) {
                 first = ed;
             }
         }

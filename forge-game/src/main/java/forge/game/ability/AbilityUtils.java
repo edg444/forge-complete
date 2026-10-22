@@ -2355,6 +2355,25 @@ public class AbilityUtils {
             final Player you = player != null ? player : c.getController();
             return doXMath(you.getOpponents().stream().allMatch(Player::allCommandersRevealed) ? 1 : 0, expr, c, ctb);
         }
+        // The Curve Keeper: Count$LongestManaValueRun <valid> - the most consecutive mana values among them
+        if (l[0].startsWith("LongestManaValueRun ")) {
+            final Set<Integer> values = Sets.newHashSet();
+            for (final Card each : CardLists.getValidCards(game.getCardsIn(ZoneType.Battlefield),
+                    l[0].substring("LongestManaValueRun ".length()), player != null ? player : c.getController(), c, ctb)) {
+                values.add(each.getCMC());
+            }
+            int best = 0;
+            for (final int v : values) {
+                if (!values.contains(v - 1)) {
+                    int run = 1;
+                    while (values.contains(v + run)) {
+                        run++;
+                    }
+                    best = Math.max(best, run);
+                }
+            }
+            return doXMath(best, expr, c, ctb);
+        }
         // Gen, Confider of Ages: Count$DifferentReleaseYears <valid>, by each card's own printing
         if (l[0].startsWith("DifferentReleaseYears ")) {
             final Set<Integer> years = Sets.newHashSet();

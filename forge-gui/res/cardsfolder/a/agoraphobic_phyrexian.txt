@@ -1,0 +1,9 @@
+Name:Agoraphobic Phyrexian
+ManaCost:4 W
+Types:Creature Phyrexian Cleric
+PT:4/4
+K:Flying
+# Forge games have no Unknown event plane effects, so there's nothing for this to switch off; it says so when it enters.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigNote | TriggerDescription$ When CARDNAME enters the battlefield, the plane effects of the Unknown event don't apply to this game for as long as it remains on the battlefield.
+SVar:TrigNote:DB$ Cleanup | NotifyMessage$ The plane effects of the Unknown event don't apply to this game while Agoraphobic Phyrexian is on the battlefield.
+Oracle:Flying\nWhen Agoraphobic Phyrexian enters the battlefield, the plane effects of the Unknown event don't apply to this game for as long as it remains on the battlefield.

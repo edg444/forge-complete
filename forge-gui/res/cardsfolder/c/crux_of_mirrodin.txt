@@ -1,0 +1,7 @@
+Name:Crux of Mirrodin
+ManaCost:3 W W
+Types:Sorcery
+A:SP$ Charm | Choices$ DBMirran,DBPhyrexian
+SVar:DBMirran:DB$ DestroyAll | ValidCards$ Permanent.nonLand+originallyPrintedIn_MRD_DST_5DN_SOM | SpellDescription$ Destroy all nonland permanent cards originally printed in the Mirrodin, Darksteel, Fifth Dawn, and Scars of Mirrodin expansions.
+SVar:DBPhyrexian:DB$ DestroyAll | ValidCards$ Permanent.nonLand+originallyPrintedIn_MBS_NPH_ONE | SpellDescription$ Destroy all nonland permanent cards originally printed in the Mirrodin Besieged, New Phyrexia, and Phyrexia: All Will Be One expansions.
+Oracle:Choose one —\n• Destroy all nonland permanent cards originally printed in the Mirrodin, Darksteel, Fifth Dawn, and Scars of Mirrodin expansions.\n• Destroy all nonland permanent cards originally printed in the Mirrodin Besieged, New Phyrexia, and Phyrexia: All Will Be One expansions.

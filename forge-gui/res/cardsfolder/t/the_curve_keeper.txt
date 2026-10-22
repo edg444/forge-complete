@@ -1,0 +1,7 @@
+Name:The Curve Keeper
+ManaCost:4 W W
+Types:Legendary Creature Human Soldier
+PT:3/3
+S:Mode$ Continuous | Affected$ Creature.YouCtrl | AddPower$ X | Description$ Creatures you control get +X/+0, where X is the greatest number of consecutive nonland, nontoken permanents in a mana curve you control. (For example, if you have permanents with mana value 3, 4, and 5, creatures you control get+3/+0. If you're missing 4, they only get +1/+0.)
+SVar:X:Count$LongestManaValueRun Permanent.nonLand+!token+YouCtrl
+Oracle:Creatures you control get +X/+0, where X is the greatest number of consecutive nonland, nontoken permanents in a mana curve you control. (For example, if you have permanents with mana value 3, 4, and 5, creatures you control get+3/+0. If you're missing 4, they only get +1/+0.)

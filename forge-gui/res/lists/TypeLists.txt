@@ -443,6 +443,7 @@ Lander:Landers
 Map
 Mutagen
 Powerstone:Powerstones
+Scythe:Scythes
 Spacecraft:Spacecraft
 Stone:Stones
 Treasure:Treasures

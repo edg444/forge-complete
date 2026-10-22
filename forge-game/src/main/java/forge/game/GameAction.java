@@ -3056,6 +3056,19 @@ public class GameAction {
                     }
                 }
             }
+            // Mono Eminence (Theopholos): a commander's starting life bonus, if the deck's color identity is that one color
+            for (Card c : takesAction.getCardsIn(ZoneType.Command)) {
+                if (!c.isCommander() || !c.hasSVar("StartingLifeBonus")) {
+                    continue;
+                }
+                if (c.hasSVar("StartingLifeIfMono") && AbilityUtils.calculateAmount(c,
+                        "Count$DeckIdentityMono." + c.getSVar("StartingLifeIfMono"), null) != 1) {
+                    continue;
+                }
+                final int bonus = Integer.parseInt(c.getSVar("StartingLifeBonus"));
+                takesAction.setStartingLife(takesAction.getStartingLife() + bonus);
+                takesAction.setLife(takesAction.getLife() + bonus, null);
+            }
             // Unknown Event: a deck with a card that cares about a team joins one now, if not already this match
             forge.game.ability.effects.ChooseTeamEffect.chooseForDeck(takesAction, all);
             // Common Curve Filler: a number written in during deckbuilding is chosen now and kept all game

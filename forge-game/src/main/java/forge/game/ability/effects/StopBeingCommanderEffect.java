@@ -19,7 +19,16 @@ public class StopBeingCommanderEffect extends SpellAbilityEffect {
     @Override
     public void resolve(final SpellAbility sa) {
         final int min = Integer.parseInt(sa.getParamOrDefault("MinCommanders", "1"));
-        for (final Card c : getDefinedCardsOrTargeted(sa)) {
+        // The Highland Runner: CommandersOf$ - every commander those players have
+        final java.util.List<Card> cards = new java.util.ArrayList<>();
+        if (sa.hasParam("CommandersOf")) {
+            for (final Player p : forge.game.ability.AbilityUtils.getDefinedPlayers(sa.getHostCard(), sa.getParam("CommandersOf"), sa)) {
+                cards.addAll(p.getCommanders());
+            }
+        } else {
+            cards.addAll(getDefinedCardsOrTargeted(sa));
+        }
+        for (final Card c : cards) {
             final Card current = c.getGame().getCardState(c, null);
             final Card card = current == null ? c : current;
             final Player owner = card.getOwner();
@@ -28,6 +37,10 @@ public class StopBeingCommanderEffect extends SpellAbilityEffect {
             }
             owner.removeCommander(card);
             card.getGame().getAction().notifyOfValue(sa, card, card + " is no longer a commander.", null);
+            if (sa.hasParam("ShuffleIntoLibrary")) {
+                card.getGame().getAction().moveToLibrary(card, -1, sa);
+                owner.shuffle(sa);
+            }
         }
     }
 }

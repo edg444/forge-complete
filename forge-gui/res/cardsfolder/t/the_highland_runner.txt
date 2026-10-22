@@ -1,0 +1,11 @@
+Name:The Highland Runner
+ManaCost:4 W W
+Types:Legendary Creature Elk Gamer
+PT:6/6
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | OptionalDecider$ You | Execute$ TrigLife | TriggerDescription$ When CARDNAME enters and at the beginning of the first upkeep in a game where it's your commander, you may have each player's life total become 20. If you do, each of your commanders stop being commanders this game. Shuffle them into your library. (They no longer go to the command zone.)
+T:Mode$ Phase | Phase$ Upkeep | TriggerZones$ Command,Battlefield | IsPresent$ Card.Self+IsCommander | PresentZone$ Command,Battlefield | CheckSVar$ FirstUpkeep | SVarCompare$ EQ1 | OptionalDecider$ You | Execute$ TrigLife | Secondary$ True | TriggerDescription$ At the beginning of the first upkeep in a game where it's your commander, you may have each player's life total become 20. If you do, each of your commanders stop being commanders this game. Shuffle them into your library.
+SVar:TrigLife:DB$ SetLife | Defined$ Player | LifeAmount$ 20 | SubAbility$ DBStop
+SVar:DBStop:DB$ StopBeingCommander | CommandersOf$ You | ShuffleIntoLibrary$ True
+SVar:FirstUpkeep:Count$TotalTurns
+K:Partner:Ready to run
+Oracle:When The Highland Runner enters and at the beginning of the first upkeep in a game where it's your commander, you may have each player's life total become 20. If you do, each of your commanders stop being commanders this game. Shuffle them into your library. (They no longer go to the command zone.)\nReady to run (You can have two commanders if both have ready to run.)
