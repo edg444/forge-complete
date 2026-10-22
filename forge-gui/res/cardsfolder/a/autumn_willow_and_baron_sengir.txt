@@ -1,0 +1,11 @@
+Name:Autumn Willow and Baron Sengir
+ManaCost:4 B G
+Types:Legendary Creature Avatar Vampire Noble
+PT:5/5
+K:Shroud
+K:Flying
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Creature.OppCtrl | TriggerZones$ Battlefield | Execute$ TrigCounters | TriggerDescription$ Whenever a creature an opponent controls dies, put a +2/+2 counter on each Vampire you control that dealt damage to that creature this turn.
+SVar:TrigCounters:DB$ PutCounterAll | ValidCards$ Vampire.YouCtrl+Damaged TriggeredCardLKICopy | CounterType$ P2P2 | CounterNum$ 1
+DeckHas:Ability$Counters
+DeckHints:Type$Vampire
+Oracle:Shroud (This creature can't be the target of spells or abilities.)\nFlying\nWhenever a creature an opponent controls dies, put a +2/+2 counter on each Vampire you control that dealt damage to that creature this turn.

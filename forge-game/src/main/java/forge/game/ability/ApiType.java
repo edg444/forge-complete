@@ -197,6 +197,7 @@ public enum ApiType {
     Mutate (MutateEffect.class),
     NameCard (ChooseCardNameEffect.class),
     NameIt (NameItEffect.class),
+    PassLibraries (PassLibrariesEffect.class),
     //NoteCounters (CountersNoteEffect.class),
     OpenAttraction (OpenAttractionEffect.class),
     PeekAndReveal (PeekAndRevealEffect.class),

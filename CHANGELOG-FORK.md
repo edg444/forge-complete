@@ -312,6 +312,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Wheel of Not Ideal, The Cobra King, Autumn Willow and Baron Sengir, The Bird Champion, Emerin,
+  Shivan Angel (UNK).**
+  - New effect `PassLibraries`: each player's library, in order, goes to the next player in turn order; the cards
+    keep their owners.
+  - Card property `Damaged <defined>`: cards that dealt damage this turn to the defined card.
 - **Unknown Event: Genevieve, Conniving Dragon, Margle, Cousin of Yargle, The Knight of Commentary, The Judge of
   Height, Tarkiran Towelsbane, Drop Bear (UNK rares).**
   - Continuous statics take `CantGainAbilities$`: from that effect on, nothing in layer 6 gives the card abilities

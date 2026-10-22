@@ -1,0 +1,14 @@
+Name:Emerin, Shivan Angel
+ManaCost:4 R W
+Types:Legendary Creature Angel Dragon
+PT:4/5
+S:Mode$ Continuous | Affected$ Angel.YouCtrl,Dragon.YouCtrl | AddKeyword$ Flying & Lifelink & Ward:2 | AddAbility$ Firebreathing | Description$ Angels and Dragons you control have flying, lifelink, ward 2, and "{R}: This creature gets +1/+0 until end of turn."
+SVar:Firebreathing:AB$ Pump | Cost$ R | Defined$ Self | NumAtt$ +1 | SpellDescription$ This creature gets +1/+0 until end of turn.
+T:Mode$ Sacrificed | ValidCard$ Treasure.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigGain | TriggerDescription$ Whenever you sacrifice a Treasure, you gain 2 life.
+SVar:TrigGain:DB$ GainLife | LifeAmount$ 2
+T:Mode$ DamageDone | ValidSource$ Card.Self+IsSaddled | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | Execute$ TrigTreasure | TriggerDescription$ Whenever NICKNAME deals combat damage to a player while saddled, create two Treasure tokens.
+SVar:TrigTreasure:DB$ Token | TokenScript$ c_a_treasure_sac | TokenAmount$ 2
+K:Saddle:4
+DeckHas:Ability$Token|LifeGain & Type$Treasure
+DeckHints:Type$Angel|Dragon
+Oracle:Angels and Dragons you control have flying, lifelink, ward 2, and "{R}: This creature gets +1/+0 until end of turn."\nWhenever you sacrifice a Treasure, you gain 2 life.\nWhenever Emerin deals combat damage to a player while saddled, create two Treasure tokens.\nSaddle 4

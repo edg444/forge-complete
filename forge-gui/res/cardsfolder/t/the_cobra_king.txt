@@ -1,0 +1,16 @@
+Name:The Cobra King
+ManaCost:4 G U
+Types:Legendary Creature Snake Hawk Warrior
+PT:5/2
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ Player | TriggerZones$ Battlefield | Execute$ TrigCoil | TriggerDescription$ At the beginning of each player's upkeep, create a 1/1 blue Serpent creature token named Cobra Coil. When you do, if you control five or more Snakes and/or Serpents, choose one —
+SVar:TrigCoil:DB$ Token | TokenScript$ u_1_1_serpent_cobra_coil | RememberTokens$ True | SubAbility$ DBImmediate
+SVar:DBImmediate:DB$ ImmediateTrigger | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ GE1 | Execute$ TrigStrike | SubAbility$ DBCleanup | TriggerDescription$ When you do, if you control five or more Snakes and/or Serpents, choose one —
+SVar:TrigStrike:DB$ Charm | Choices$ StrikeFirst,StrikeHard | ConditionCheckSVar$ Snakes | ConditionSVarCompare$ GE5
+SVar:StrikeFirst:DB$ Pump | ValidTgts$ Snake.YouCtrl,Serpent.YouCtrl | TgtPrompt$ Select target Snake or Serpent you control | SubAbility$ DBFight | SpellDescription$ Strike first — Target Snake or Serpent you control fights target creature an opponent controls.
+SVar:DBFight:DB$ Fight | Defined$ ParentTarget | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls
+SVar:StrikeHard:DB$ PutCounterAll | ValidCards$ Snake.YouCtrl,Serpent.YouCtrl | CounterType$ P1P1 | CounterNum$ 1 | SpellDescription$ Strike hard — Put a +1/+1 counter on each Snake and Serpent you control.
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:Snakes:Count$Valid Snake.YouCtrl,Serpent.YouCtrl
+DeckHas:Ability$Token|Counters
+DeckHints:Type$Snake|Serpent
+Oracle:At the beginning of each player's upkeep, create a 1/1 blue Serpent creature token named Cobra Coil. When you do, if you control five or more Snakes and/or Serpents, choose one —\n• Strike first — Target Snake or Serpent you control fights target creature an opponent controls.\n• Strike hard — Put a +1/+1 counter on each Snake and Serpent you control.

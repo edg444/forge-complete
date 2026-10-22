@@ -199,6 +199,7 @@ public enum SpellApiToAi {
             .put(ApiType.Mutate, MutateAi.class)
             .put(ApiType.NameCard, ChooseCardNameAi.class)
             .put(ApiType.NameIt, AlwaysPlayAi.class)
+            .put(ApiType.PassLibraries, AlwaysPlayAi.class)
             //.put(ApiType.NoteCounters, AlwaysPlayAi.class)
             .put(ApiType.NudgeNumber, NudgeNumberAi.class)
             .put(ApiType.InstallResult, InstallResultAi.class)

@@ -1,0 +1,6 @@
+Name:Cobra Coil
+ManaCost:no cost
+Colors:blue
+Types:Creature Serpent
+PT:1/1
+Oracle:

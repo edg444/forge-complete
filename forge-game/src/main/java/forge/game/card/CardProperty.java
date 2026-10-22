@@ -127,6 +127,11 @@ public class CardProperty {
                 }
             }
             return found;
+        } else if (property.equals("powerEqualsToughness")) {
+            // Zimone's Homework: "whose power and toughness are equal"
+            if (card.getNetPower() != card.getNetToughness()) {
+                return false;
+            }
         } else if (property.equals("CreatesToken")) {
             // The Brewing Chef: a card with an ability that creates a token - copies included, keyword ones too
             if (!createsToken(card)) {
@@ -1845,6 +1850,21 @@ public class CardProperty {
             }
         } else if (property.equals("isDamaged")) { // with any damage
             if (card.getDamage() <= 0) {
+                return false;
+            }
+        } else if (property.startsWith("Damaged ")) {
+            // Autumn Willow and Baron Sengir: "Damaged TriggeredCardLKICopy" - cards that dealt damage this turn to the
+            // defined card(s)
+            boolean found = false;
+            for (final Card damaged : AbilityUtils.getDefinedCards(source, property.substring("Damaged ".length()), spellAbility)) {
+                for (Pair<Integer, Boolean> p : damaged.getDamageReceivedThisTurn()) {
+                    if (game.getDamageLKI(p).getLeft().equalsWithGameTimestamp(card)) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            if (!found) {
                 return false;
             }
         } else if (property.startsWith("Damaged")) { // gets cards that Damaged source

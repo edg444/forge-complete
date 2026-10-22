@@ -1,0 +1,10 @@
+Name:Wheel of Not Ideal
+ManaCost:4 B R
+Types:Sorcery
+A:SP$ Discard | Mode$ Hand | Defined$ Player | SubAbility$ DBPass | SpellDescription$ Each player discards their hand, passes their library to the player to their left, then draws seven cards. (You draw from your new library, the one passed to you. Please be careful with their cards.)
+SVar:DBPass:DB$ PassLibraries | SubAbility$ DBEachDraw
+SVar:DBEachDraw:DB$ Draw | Defined$ Player | NumCards$ 7
+K:Flashback:8 R B
+SVar:NeedsToPlayVar:Y LE2
+SVar:Y:Count$ValidHand Card.YouOwn+!namedWheel of Not Ideal
+Oracle:Each player discards their hand, passes their library to the player to their left, then draws seven cards. (You draw from your new library, the one passed to you. Please be careful with their cards.)\nFlashback {8}{R}{B}
