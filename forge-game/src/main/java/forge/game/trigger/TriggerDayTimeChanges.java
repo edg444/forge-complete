@@ -14,6 +14,10 @@ public class TriggerDayTimeChanges extends Trigger {
 
     @Override
     public boolean performTest(Map<AbilityKey, Object> runParams) {
+        // To$ Day / To$ Night (The Weekly Princess: "whenever night becomes day"); it has already changed by now
+        if (hasParam("To")) {
+            return "Day".equals(getParam("To")) ? getHostCard().getGame().isDay() : getHostCard().getGame().isNight();
+        }
         return true;
     }
 

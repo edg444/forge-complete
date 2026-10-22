@@ -1,0 +1,12 @@
+Name:The Vegetable Car
+ManaCost:G W
+Types:Legendary Artifact Vehicle
+PT:3/3
+K:Onionfect
+T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCounters | TriggerDescription$ At the beginning of your end step, put X +1/+1 counters on target creature you control, where X is the number of Foods you've sacrificed this turn.
+SVar:TrigCounters:DB$ PutCounter | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | CounterType$ P1P1 | CounterNum$ X
+SVar:X:Count$SacrificedThisTurn Food
+K:Crew:1
+K:CARDNAME can be your commander.
+DeckHas:Ability$Token|Counters & Type$Food
+Oracle:Onionfect (This creature deals damage in the form of giving you Food tokens.)\nAt the beginning of your end step, put X +1/+1 counters on target creature you control, where X is the number of Foods you've sacrificed this turn.\nCrew 1\nThe Vegetable Car can be your commander.

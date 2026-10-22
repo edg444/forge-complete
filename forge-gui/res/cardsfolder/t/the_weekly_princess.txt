@@ -1,0 +1,15 @@
+Name:The Weekly Princess
+ManaCost:1 R G
+Types:Legendary Creature Human Noble
+PT:3/3
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | DayTime$ Neither | ReplaceWith$ DoDay | ReplacementResult$ Updated | Description$ If it's neither day nor night, it becomes day as CARDNAME enters. (It becomes night next turn if a player casts no spells on their turn, and day if a player casts 2+ spells on their turn.)
+SVar:DoDay:DB$ DayTime | Value$ Day
+T:Mode$ DayTimeChanges | To$ Day | TriggerZones$ Battlefield | Execute$ TrigCounter | TriggerDescription$ Whenever night becomes day, put a +1/+1 counter on CARDNAME. Then if she has seven or more +1/+1 counters on her, she deals damage equal to her power to each opponent.
+SVar:TrigCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | SubAbility$ DBDamage
+SVar:DBDamage:DB$ DealDamage | Defined$ Player.Opponent | NumDmg$ Y | ConditionCheckSVar$ Z | ConditionSVarCompare$ GE7
+SVar:Y:Count$CardPower
+SVar:Z:Count$CardCounters.P1P1
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigNeither | TriggerDescription$ When CARDNAME leaves the battlefield, it stops being day or night. (Stop tracking it. Trust us, it's better this way.)
+SVar:TrigNeither:DB$ DayTime | Value$ Neither
+DeckHas:Ability$Counters
+Oracle:If it's neither day nor night, it becomes day as The Weekly Princess enters. (It becomes night next turn if a player casts no spells on their turn, and day if a player casts 2+ spells on their turn.)\nWhenever night becomes day, put a +1/+1 counter on The Weekly Princess. Then if she has seven or more +1/+1 counters on her, she deals damage equal to her power to each opponent.\nWhen The Weekly Princess leaves the battlefield, it stops being day or night. (Stop tracking it. Trust us, it's better this way.)

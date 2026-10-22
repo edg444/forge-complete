@@ -25,6 +25,9 @@ public enum StaticAbilityMode {
     CountersAreTokens,
     TokensAreCards,
     PoisonTolerance,
+    ManaPaymentTax,
+    InvertPTCounters,
+    JumpStartNotExiled,
     CantRemoveCounter,
 
     // StaticAbility

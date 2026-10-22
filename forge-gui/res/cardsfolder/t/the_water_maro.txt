@@ -1,0 +1,10 @@
+Name:The Water Maro
+ManaCost:1 W U G
+Types:Legendary Creature Elemental
+PT:*/*
+T:Mode$ SpellCast | ValidCard$ Card.Self | Execute$ TrigCopy | TriggerDescription$ When you cast CARDNAME, create a token that's a copy of it, except the copy isn't legendary.
+SVar:TrigCopy:DB$ CopyPermanent | Defined$ Self | NonLegendary$ True
+S:Mode$ Continuous | EffectZone$ All | CharacteristicDefining$ True | SetPower$ X | SetToughness$ X | Description$ CARDNAME's power and toughness are each equal to the number of permanents you control that are tokens and/or have the word "Maro" in the name.
+SVar:X:Count$Valid Permanent.token+YouCtrl,Permanent.nameHasWord_Maro+YouCtrl
+DeckHas:Ability$Token
+Oracle:When you cast The Water Maro, create a token that's a copy of it, except the copy isn't legendary.\nThe Water Maro's power and toughness are each equal to the number of permanents you control that are tokens and/or have the word "Maro" in the name.

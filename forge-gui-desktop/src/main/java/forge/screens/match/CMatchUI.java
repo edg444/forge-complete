@@ -624,7 +624,10 @@ public final class CMatchUI
     @Override
     public void updateDayTime(String daytime) {
         super.updateDayTime(daytime);
-        if ("Day".equals(daytime)) {
+        if (daytime == null) {
+            FView.SINGLETON_INSTANCE.getPnlInsets().setForegroundImage(FSkin.getIcon(FSkinProp.BG_MATCH), true);
+            getScreen().setDaytime(null);
+        } else if ("Day".equals(daytime)) {
             FView.SINGLETON_INSTANCE.getPnlInsets().setForegroundImage(FSkin.getIcon(FSkinProp.BG_DAY), true);
             getScreen().setDaytime("Day");
         } else {

@@ -89,6 +89,9 @@ public class EventVisualizer extends IGameEventVisitor.Base<SoundEffectType> imp
     }
     @Override
     public SoundEffectType visit(final GameEventDayTimeChanged event) {
+        if (event.daytime() == null) {
+            return null;
+        }
         return event.daytime() ? SoundEffectType.Daytime : SoundEffectType.Nighttime;
     }
     @Override

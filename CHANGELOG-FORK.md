@@ -312,6 +312,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: The Asker of More Mana, The Keeper of Favorite Cards, The Water Maro, The Vegetable Car, Jiffy,
+  Vehicle Repairer, The Bearded Teakeeper, Uh, Squen & Cragg Made a Card, The Herald of Numot, The Caffeinated
+  Runner, The Weekly Princess, The Milling Runner (UNK rares).**
+  - New static `ManaPaymentTax`: every mana payment costs more, effects and triggers included (a cost of no mana
+    at all is left alone).
+  - A per-game favorites list on each player: `NameCard AddToFavorites$`, card property `YourFavorite`.
+  - Card property `nameHasWord_<word>`.
+  - New keyword Onionfect: the damage is still dealt, but it becomes Food tokens for the source's controller.
+  - New static `InvertPTCounters`, which turns +1/+1 and -1/-1 counters around.
+  - New static `JumpStartNotExiled`; jump-start's exile now checks spell property `JumpstartExiled`.
+  - `DayTime Value$ Neither` stops tracking day and night, and the match background goes back to normal.
+  - `DayTimeChanges` triggers take `To$ Day|Night`.
 - **Unknown Event: The Sixth Seraph, The Keeper of Four Scythes, The Knight of Weeks, The Highland Runner, Crux of
   Mirrodin, The Curve Keeper, Theopholos, Order Acolyte, Agoraphobic Phyrexian (UNK white rares).**
   - `StopBeingCommander` takes `CommandersOf$` (every commander those players have) and `ShuffleIntoLibrary$`.

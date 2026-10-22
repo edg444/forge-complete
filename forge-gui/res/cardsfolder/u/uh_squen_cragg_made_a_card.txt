@@ -1,0 +1,6 @@
+Name:Uh, Squen & Cragg Made a Card
+ManaCost:1 B/G
+Types:Enchantment
+S:Mode$ InvertPTCounters | Description$ +1/+1 counters give −1/−1 and −1/−1 counters give +1/+1. (They're still +1/+1 and −1/−1 counters. The effects are just backwards.)
+AI:RemoveDeck:All
+Oracle:+1/+1 counters give −1/−1 and −1/−1 counters give +1/+1. (They're still +1/+1 and −1/−1 counters. The effects are just backwards.)

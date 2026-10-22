@@ -1,0 +1,10 @@
+Name:The Milling Runner
+ManaCost:U/B U/B U/B
+Types:Legendary Creature Cat Gamer
+PT:1/2
+K:Landwalk:Island
+K:Landwalk:Swamp
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | Execute$ TrigMill | TriggerDescription$ Whenever CARDNAME deals combat damage to a player, target player mills three cards.
+SVar:TrigMill:DB$ Mill | ValidTgts$ Player | TgtPrompt$ Select target player | NumCards$ 3
+K:Partner:Ready to run
+Oracle:Islandwalk, swampwalk (This creature can't be blocked if defending player controls an Island or a Swamp)\nWhenever The Milling Runner deals combat damage to a player, target player mills three cards.\nReady to run (You can have two commanders if both have ready to run.)

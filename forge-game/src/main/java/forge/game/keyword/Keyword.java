@@ -151,6 +151,7 @@ public enum Keyword {
     MYRIAD("Myriad", SimpleKeyword.class, false, "Whenever this creature attacks, for each opponent other than defending player, you may create a token that's a copy of this creature that's tapped and attacking that player or a planeswalker they control. Exile the tokens at end of combat."),
     NIGHTBOUND("Nightbound", SimpleKeyword.class, true, "If a player casts at least two spells during their own turn, it becomes day next turn."),
     NINJUTSU("Ninjutsu", Ninjutsu.class, false, "%s, Return an unblocked attacker you control to hand: Put this card onto the battlefield from your %s tapped and attacking."),
+    ONIONFECT("Onionfect", SimpleKeyword.class, true, "This creature deals damage in the form of giving you Food tokens."),
     OUTLAST("Outlast", KeywordWithCost.class, false, "%s, {T}: Put a +1/+1 counter on this creature. Outlast only as a sorcery."),
     OFFERING("Offering", KeywordWithType.class, false, "You may cast this card any time you could cast an instant by sacrificing a %1$s and paying the difference in mana costs between this and the sacrificed %1$s. Mana cost includes color."),
     OFFSPRING("Offspring", KeywordWithCost.class, false, "You may pay an additional %s as you cast this spell. If you do, when this creature enters, create a 1/1 token copy of it."),

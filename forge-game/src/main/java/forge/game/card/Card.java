@@ -5302,8 +5302,11 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         if (!hasCounters()) {
             return 0;
         }
-        return getCounters(CounterEnumType.P1P1) + getCounters(CounterEnumType.P1P2) + getCounters(CounterEnumType.P1P0)
-                - getCounters(CounterEnumType.M1M1) + 2 * getCounters(CounterEnumType.P2P2) - 2 * getCounters(CounterEnumType.M2M1)
+        // Uh, Squen & Cragg Made a Card turns +1/+1 and -1/-1 counters around; they're still those counters
+        final int plainCounters = getCounters(CounterEnumType.P1P1) - getCounters(CounterEnumType.M1M1);
+        return (StaticAbilityInvertPTCounters.inverted(this) ? -plainCounters : plainCounters)
+                + getCounters(CounterEnumType.P1P2) + getCounters(CounterEnumType.P1P0)
+                + 2 * getCounters(CounterEnumType.P2P2) - 2 * getCounters(CounterEnumType.M2M1)
                 - 2 * getCounters(CounterEnumType.M2M2) - getCounters(CounterEnumType.M1M0) + 2 * getCounters(CounterEnumType.P2P0);
     }
 
@@ -5380,8 +5383,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         if (!hasCounters()) {
             return 0;
         }
-        return getCounters(CounterEnumType.P1P1) + 2 * getCounters(CounterEnumType.P1P2) - getCounters(CounterEnumType.M1M1)
-                + getCounters(CounterEnumType.P0P1) - 2 * getCounters(CounterEnumType.M0M2) + 2 * getCounters(CounterEnumType.P2P2)
+        final int plainCounters = getCounters(CounterEnumType.P1P1) - getCounters(CounterEnumType.M1M1);
+        return (StaticAbilityInvertPTCounters.inverted(this) ? -plainCounters : plainCounters)
+                + 2 * getCounters(CounterEnumType.P1P2) + getCounters(CounterEnumType.P0P1) - 2 * getCounters(CounterEnumType.M0M2) + 2 * getCounters(CounterEnumType.P2P2)
                 - getCounters(CounterEnumType.M0M1) - getCounters(CounterEnumType.M2M1) - 2 * getCounters(CounterEnumType.M2M2)
                 + 2 * getCounters(CounterEnumType.P0P2);
     }
@@ -7381,6 +7385,13 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         getGame().getTriggerHandler().runTrigger(TriggerType.DamageDone, runParams, true);
 
         DamageType damageType = DamageType.Normal;
+        if (source.hasKeyword("Onionfect")) {
+            if (source.hasKeyword(Keyword.DEATHTOUCH) && isCreature()) {
+                setHasBeenDealtDeathtouchDamage(true);
+            }
+            giveOnionfectFood(source, damageIn);
+            return damageIn;
+        }
         if (isPlaneswalker()) { // 120.3c
             subtractCounter(CounterEnumType.LOYALTY, damageIn, null, true);
         }
@@ -9979,6 +9990,14 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
             return true;
         }
         return StaticAbilityWitherDamage.isWitherDamage(this);
+    }
+
+    /** The Vegetable Car: Onionfect damage becomes that many Food tokens for the source's controller. */
+    public static void giveOnionfectFood(final Card source, final int amount) {
+        final SpellAbility food = forge.game.ability.AbilityFactory.getAbility(
+                "DB$ Token | TokenScript$ c_a_food_sac | TokenAmount$ " + amount + " | TokenOwner$ You", source);
+        food.setActivatingPlayer(source.getController());
+        AbilityUtils.resolve(food);
     }
 
     public boolean isInfectDamage(Player target) {

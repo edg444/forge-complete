@@ -1,0 +1,13 @@
+Name:The Herald of Numot
+ManaCost:U R W
+Types:Legendary Creature Dragon
+PT:1/3
+K:Double Strike
+K:Vigilance
+K:Haste
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | Execute$ TrigNumot | TriggerDescription$ Whenever CARDNAME deals combat damage to a player, create a Numot, the Devastator token card and shuffle it into your library.
+SVar:TrigNumot:DB$ MakeCard | TokenCard$ True | Name$ Numot, the Devastator | Zone$ Library | SubAbility$ DBShuffle
+SVar:DBShuffle:DB$ Shuffle | Defined$ You
+S:Mode$ Continuous | Affected$ Card.namedNumot; the Devastator+YouCtrl | AddKeyword$ Vigilance & Haste | Description$ Numot, the Devastators you control have vigilance and haste, and the "legend rule" doesn't apply to them.
+S:Mode$ IgnoreLegendRule | ValidCard$ Card.namedNumot; the Devastator+YouCtrl | Secondary$ True | Description$ The "legend rule" doesn't apply to Numot, the Devastators you control.
+Oracle:Double strike, vigilance, haste\nWhenever The Herald of Numot deals combat damage to a player, create a Numot, the Devastator token card and shuffle it into your library.\nNumot, the Devastators you control have vigilance and haste, and the "legend rule" doesn't apply to them.

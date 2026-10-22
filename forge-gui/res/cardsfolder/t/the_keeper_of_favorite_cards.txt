@@ -1,0 +1,13 @@
+Name:The Keeper of Favorite Cards
+ManaCost:2 W
+Types:Legendary Creature Human Soldier
+PT:2/3
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigFavorite | TriggerDescription$ Whenever CARDNAME enters or attacks, choose a nonland card name and add it to your favorites list for this game. (You can have limitless favorites.)
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigFavorite | Secondary$ True | TriggerDescription$ Whenever CARDNAME enters or attacks, choose a nonland card name and add it to your favorites list for this game. (You can have limitless favorites.)
+SVar:TrigFavorite:DB$ NameCard | Defined$ You | ValidCards$ Card.nonLand | ValidDescription$ nonland | AddToFavorites$ True
+# "Your favorite creatures" read the way Magic reads "your creatures": the favorites you control.
+S:Mode$ Continuous | Affected$ Creature.YouCtrl+YourFavorite | AddPower$ 1 | Description$ Your favorite creatures get +1/+0.
+T:Mode$ SpellCast | ValidCard$ Card.nonCreature+YourFavorite | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigToken | TriggerDescription$ Whenever you cast one of your favorite noncreature spells, create a 1/1 white Soldier creature token.
+SVar:TrigToken:DB$ Token | TokenScript$ w_1_1_soldier
+DeckHas:Ability$Token
+Oracle:Whenever The Keeper of Favorite Cards enters or attacks, choose a nonland card name and add it to your favorites list for this game. (You can have limitless favorites.)\nYour favorite creatures get +1/+0.\nWhenever you cast one of your favorite noncreature spells, create a 1/1 white Soldier creature token.

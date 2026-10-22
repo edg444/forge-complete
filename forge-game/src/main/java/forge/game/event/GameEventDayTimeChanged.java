@@ -1,6 +1,7 @@
 package forge.game.event;
 
-public record GameEventDayTimeChanged(boolean daytime) implements GameEvent {
+// null when it stops being day or night (The Weekly Princess)
+public record GameEventDayTimeChanged(Boolean daytime) implements GameEvent {
 
     @Override
     public <T> T visit(IGameEventVisitor<T> visitor) {

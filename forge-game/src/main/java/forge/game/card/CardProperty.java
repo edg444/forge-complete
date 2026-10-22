@@ -93,6 +93,11 @@ public class CardProperty {
                 }
             }
             return found;
+        } else if (property.equals("YourFavorite")) {
+            // The Keeper of Favorite Cards: a name on the source's controller's favorites list
+            if (sourceController == null || sourceController.getFavoriteCardNames().stream().noneMatch(card::sharesNameWith)) {
+                return false;
+            }
         } else if (property.equals("NamedByRememberedPlayer")) {
             for (final Object o : source.getRemembered()) {
                 if (o instanceof Player p) {
@@ -2219,6 +2224,12 @@ public class CardProperty {
                 }
             }
             if (!hasReminder) {
+                return false;
+            }
+        } else if (property.startsWith("nameHasWord_")) {
+            // The Water Maro: nameHasWord_Maro - the word on its own, not inside another word
+            final String word = java.util.regex.Pattern.quote(property.substring("nameHasWord_".length()));
+            if (!java.util.regex.Pattern.compile("(?i)(^|[^\\p{L}])" + word + "($|[^\\p{L}])").matcher(card.getName()).find()) {
                 return false;
             }
         } else if (property.startsWith("nameWords")) {

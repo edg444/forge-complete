@@ -171,6 +171,14 @@ public class CostAdjustment {
     // If cardsToDelveOut is null, will immediately exile the delved cards and remember them on the host card.
     // Otherwise, will return them in cardsToDelveOut and the caller is responsible for doing the above.
     public static boolean adjust(ManaCostBeingPaid cost, final SpellAbility sa, final Player payer, CardCollection cardsToDelveOut, boolean test, boolean effect) {
+        // The Asker of More Mana taxes every mana payment, triggers and effects included, so this goes ahead of the
+        // early return below; a cost of no mana at all isn't a payment of mana and is left alone
+        if (payer != null && !cost.isPaid()) {
+            final int tax = forge.game.staticability.StaticAbilityManaPaymentTax.additionalMana(payer);
+            if (tax > 0) {
+                cost.increaseGenericMana(tax);
+            }
+        }
         if (effect) {
             adjustCostByWaterbend(cost, sa, payer, test);
         }

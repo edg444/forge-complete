@@ -540,7 +540,7 @@ public class FControlGameEventHandler extends IGameEventVisitor.Base<Void> {
 
     @Override
     public Void visit(final GameEventDayTimeChanged event) {
-        matchController.updateDayTime(event.daytime() ? "Day" : "Night");
+        matchController.updateDayTime(event.daytime() == null ? null : event.daytime() ? "Day" : "Night");
         return processEvent();
     }
 

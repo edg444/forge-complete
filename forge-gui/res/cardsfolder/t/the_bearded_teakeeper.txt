@@ -1,0 +1,11 @@
+Name:The Bearded Teakeeper
+ManaCost:2 R W
+Types:Legendary Creature Human Advisor
+PT:4/4
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigFood | TriggerDescription$ Whenever CARDNAME enters or attacks, create a Food token.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigFood | Secondary$ True | TriggerDescription$ Whenever CARDNAME enters or attacks, create a Food token.
+SVar:TrigFood:DB$ Token | TokenScript$ c_a_food_sac
+S:Mode$ Continuous | Affected$ Food.YouCtrl | AddAbility$ Scald | Description$ Foods you control have "Scald — {2}, {T}, Sacrifice this artifact: It deals 2 damage to target opponent."
+SVar:Scald:AB$ DealDamage | Cost$ 2 T Sac<1/CARDNAME/this artifact> | PrecostDesc$ Scald — | ValidTgts$ Opponent | NumDmg$ 2 | SpellDescription$ It deals 2 damage to target opponent.
+DeckHas:Ability$Token|Sacrifice & Type$Food
+Oracle:Whenever The Bearded Teakeeper enters or attacks, create a Food token.\nFoods you control have "Scald — {2}, {T}, Sacrifice this artifact: It deals 2 damage to target opponent."

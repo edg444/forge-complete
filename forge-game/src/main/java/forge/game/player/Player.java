@@ -143,6 +143,7 @@ public class Player extends GameEntity implements Comparable<Player> {
     private int lastTurnNr = 0;
 
     private String namedCard = "";
+    private final Set<String> favoriteCardNames = new LinkedHashSet<>();
 
     private final Map<String, FCollection<String>> notes = Maps.newHashMap();
     private final Map<String, Integer> notedNum = Maps.newHashMap();
@@ -956,9 +957,13 @@ public class Player extends GameEntity implements Comparable<Player> {
         }
 
         boolean infect = source.isInfectDamage(this);
+        final boolean onionfect = source.hasKeyword("Onionfect");
 
         int poisonCounters = 0;
-        if (infect) {
+        if (onionfect) {
+            infect = false;
+            Card.giveOnionfectFood(source, amount);
+        } else if (infect) {
             poisonCounters += amount;
         }
         else {
@@ -2400,6 +2405,14 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
     public final void setNamedCard(final String s) {
         namedCard = s;
+    }
+
+    // The Keeper of Favorite Cards: the player's favorites list, kept for the rest of the game
+    public final Set<String> getFavoriteCardNames() {
+        return favoriteCardNames;
+    }
+    public final void addFavoriteCardName(final String s) {
+        favoriteCardNames.add(s);
     }
 
     public final int getTurn() {

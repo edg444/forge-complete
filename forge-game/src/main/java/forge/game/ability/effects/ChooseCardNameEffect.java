@@ -157,6 +157,9 @@ public class ChooseCardNameEffect extends SpellAbilityEffect {
 
             if (!chosen.isEmpty()) {
                 host.addNamedCard(chosen);
+                if (sa.hasParam("AddToFavorites")) {
+                    p.addFavoriteCardName(chosen);
+                }
             }
             if (!randomChoice) {
                 p.setNamedCard(chosen);

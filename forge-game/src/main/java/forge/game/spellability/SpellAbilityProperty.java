@@ -85,6 +85,9 @@ public class SpellAbilityProperty {
             return sa.isHarmonize();
         } else if (property.equals("Jumpstart")) {
             return sa.isJumpstart();
+        } else if (property.equals("JumpstartExiled")) {
+            // jump-start's own exile, unless Jiffy, Vehicle Repairer says this caster's jump-start spells aren't exiled
+            return sa.isJumpstart() && !forge.game.staticability.StaticAbilityJumpStartNotExiled.notExiled(sa.getActivatingPlayer());
         } else if (property.equals("Kicked")) {
             return sa.isKicked();
         } else if (property.equals("Loyalty")) {

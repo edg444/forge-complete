@@ -29,6 +29,9 @@ public class DayTimeEffect extends SpellAbilityEffect {
             game.setDayTime(false);
         } else if (newValue.equals("Night")) {
             game.setDayTime(true);
+        } else if (newValue.equals("Neither")) {
+            // The Weekly Princess: stop tracking day and night altogether
+            game.setDayTime(null);
         } else if (newValue.equals("Switch")) {
             // logic for the Celestus
             game.setDayTime(!Objects.requireNonNullElse(game.getDayTime(), false));

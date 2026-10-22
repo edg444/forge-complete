@@ -1,0 +1,13 @@
+Name:The Caffeinated Runner
+ManaCost:1 R W
+Types:Legendary Creature Elemental Gamer
+PT:3/2
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigFood | TriggerDescription$ Whenever the CARDNAME enters or attacks, create a Food token.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigFood | Secondary$ True | TriggerDescription$ Whenever the CARDNAME enters or attacks, create a Food token.
+SVar:TrigFood:DB$ Token | TokenScript$ c_a_food_sac
+A:AB$ Pump | Cost$ Sac<1/Food> | ValidTgts$ Creature | TgtPrompt$ Select target creature | KW$ Haste | SubAbility$ DBDelay | SpellDescription$ Target creature gains haste until end of turn. Whenever it next becomes tapped this turn, untap it.
+SVar:DBDelay:DB$ DelayedTrigger | Mode$ Taps | ValidCard$ Card.IsTriggerRemembered | RememberObjects$ Targeted | ThisTurn$ True | Execute$ TrigUntap | TriggerDescription$ Whenever it next becomes tapped this turn, untap it.
+SVar:TrigUntap:DB$ Untap | Defined$ DelayTriggerRemembered
+K:Partner:Ready to run
+DeckHas:Ability$Token|Sacrifice & Type$Food
+Oracle:Whenever the The Caffeinated Runner enters or attacks, create a Food token.\nSacrifice a Food: Target creature gains haste until end of turn. Whenever it next becomes tapped this turn, untap it.\nReady to run (You can have two commanders if both have ready to run.)

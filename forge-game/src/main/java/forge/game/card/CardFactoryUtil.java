@@ -2359,7 +2359,7 @@ public class CardFactoryUtil {
         } else if (keyword.equals("Jump-start")) {
             StringBuilder sb = new StringBuilder();
             sb.append("Event$ Moved | ValidCard$ Card.Self | Origin$ Stack | ExcludeDestination$ Exile ");
-            sb.append("| Secondary$ True | ValidStackSa$ Spell.Jumpstart | Description$ Jump-start (");
+            sb.append("| Secondary$ True | ValidStackSa$ Spell.JumpstartExiled | Description$ Jump-start (");
             sb.append(inst.getReminderText());
             sb.append(")");
 

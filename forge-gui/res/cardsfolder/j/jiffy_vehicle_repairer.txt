@@ -1,0 +1,7 @@
+Name:Jiffy, Vehicle Repairer
+ManaCost:R W
+Types:Legendary Creature Dwarf Artificer
+PT:3/2
+S:Mode$ Continuous | Affected$ Vehicle.YouOwn | AffectedZone$ Graveyard | AddKeyword$ Jump-start | Description$ Vehicles in your graveyard have jump-start. (You may cast a Vehicle card from your graveyard by discarding a card in addition to paying its other costs. You would exile it, except...)
+S:Mode$ JumpStartNotExiled | ValidPlayer$ You | Description$ Spells you cast with jump-start aren't exiled.
+Oracle:Vehicles in your graveyard have jump-start. (You may cast a Vehicle card from your graveyard by discarding a card in addition to paying its other costs. You would exile it, except...)\nSpells you cast with jump-start aren't exiled.

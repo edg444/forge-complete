@@ -1,0 +1,6 @@
+Name:The Asker of More Mana
+ManaCost:3 W
+Types:Legendary Creature Human Soldier
+PT:3/3
+S:Mode$ ManaPaymentTax | Amount$ 1 | Description$ Each time a player pays mana, they must pay {1} additional mana. (This includes casting spells, activating abilities, turning face-down creatures face up, paying for Ghostly Prison, the weird ability on Quenchable Fire, etc.)
+Oracle:Each time a player pays mana, they must pay {1} additional mana. (This includes casting spells, activating abilities, turning face-down creatures face up, paying for Ghostly Prison, the weird ability on Quenchable Fire, etc.)

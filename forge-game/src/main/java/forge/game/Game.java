@@ -1717,6 +1717,8 @@ public class Game {
         }
         if (!isNeitherDayNorNight())
             fireEvent(new GameEventDayTimeChanged(isDay()));
+        else if (previous != null)
+            fireEvent(new GameEventDayTimeChanged(null));
     }
 
     public boolean isVoid() {
