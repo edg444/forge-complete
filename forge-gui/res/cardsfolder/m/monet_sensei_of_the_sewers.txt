@@ -1,0 +1,12 @@
+Name:Monet, Sensei of the Sewers
+ManaCost:5 B G
+Types:Legendary Creature Rat Ninja Mutant
+PT:4/4
+# from the command zone this pays the commander tax and counts toward it (user ruling)
+K:Ninjutsu:3 B G:FixedCommander
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | ValidCause$ Activated.Ninjutsu | Execute$ TrigNinjaTurtles | TriggerDescription$ When NICKNAME enters, create four 1/1 green Turtle creature tokens with training. If NICKNAME was ninjutsu'd, those tokens enter tapped and attacking. (Whenever a creature with training attacks with another creature with greater power, put a +1/+1 counter on it. This doesn't work if it enteres tapped and attacking.)
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | ValidCause$ Activated.Ninjutsu | InvertValidCause$ True | Execute$ TrigTurtles | Secondary$ True | TriggerDescription$ When NICKNAME enters, create four 1/1 green Turtle creature tokens with training. If NICKNAME was ninjutsu'd, those tokens enter tapped and attacking.
+SVar:TrigNinjaTurtles:DB$ Token | TokenScript$ g_1_1_turtle_training | TokenAmount$ 4 | TokenTapped$ True | TokenAttacking$ True
+SVar:TrigTurtles:DB$ Token | TokenScript$ g_1_1_turtle_training | TokenAmount$ 4
+DeckHas:Ability$Token
+Oracle:Fixed commander ninjutsu {3}{B}{G} (It's commander ninjutsu, except the command tax applies, like it should have originally.)\nWhen Monet enters, create four 1/1 green Turtle creature tokens with training. If Monet was ninjutsu'd, those tokens enter tapped and attacking. (Whenever a creature with training attacks with another creature with greater power, put a +1/+1 counter on it. This doesn't work if it enteres tapped and attacking.)

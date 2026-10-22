@@ -1,0 +1,7 @@
+Name:Turtle Token
+ManaCost:no cost
+Colors:green
+Types:Creature Turtle
+PT:1/1
+K:Training
+Oracle:Training (Whenever this creature attacks with another creature with greater power, put a +1/+1 counter on this creature.)

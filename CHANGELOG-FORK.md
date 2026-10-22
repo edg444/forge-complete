@@ -312,6 +312,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Groaaaaag, Hungry Monster, Monet, Sensei of the Sewers, The Mystery Raceway, Crow Scarer (UNK).**
+  - `K:Ninjutsu:<cost>:FixedCommander` and `K:Suspend:N:<cost>:Commander`: from the command zone they pay the
+    commander tax and count toward it, like a cast (user ruling).
+  - Abilities take `CommanderTaxApplies$`.
+  - The Mystery Raceway's "Team X won the race" is your own race team (user ruling).
+  - Crow Scarer's Cowards can't attack you or your planeswalkers and battles, and can't block your creatures (user
+    ruling).
 - **Unknown Event: Bag of Stroopwafels, Famous Museum, Guilded Lotus, Kibo's Bananamobile, Sawtooth Avenger, Tinfoil
   Helm, Power Level Analyzer, Twenty Lessons, That Which Was Compleated (UNK uncommons).**
   - `Play AnySupportedCard$ Type:<type>` (every card with that type or subtype) and `XIs$` (the value of X when

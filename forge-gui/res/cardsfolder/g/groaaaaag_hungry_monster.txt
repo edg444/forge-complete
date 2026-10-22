@@ -1,0 +1,16 @@
+Name:Groaaaaag, Hungry Monster
+ManaCost:4 B G
+Types:Legendary Creature Ooze
+PT:4/4
+# Commander Suspend: also from the command zone, paying the commander tax and counting toward it (user ruling)
+K:Suspend:4:B G:Commander
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ Whenever CARDNAME attacks, you may sacrifice any number of other creatures. Draw that many cards, gain that much life, and put that many +1/+1 counters on CARDNAME.
+SVar:TrigSac:DB$ Sacrifice | Defined$ You | Amount$ Others | SacValid$ Creature.Other | SacMessage$ any number of other creatures | Optional$ True | RememberSacrificed$ True | SubAbility$ DBDraw
+SVar:DBDraw:DB$ Draw | NumCards$ Eaten | SubAbility$ DBGain
+SVar:DBGain:DB$ GainLife | LifeAmount$ Eaten | SubAbility$ DBCounters
+SVar:DBCounters:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ Eaten | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:Others:Count$Valid Creature.Other+YouCtrl
+SVar:Eaten:Remembered$Amount
+DeckHas:Ability$Sacrifice|Counters|LifeGain
+Oracle:Commander Suspend 4 — {B}{G} (You can suspend this from your hand or the command zone. If it's your commander, command tax applies to the suspend. The rest all works like suspend.)\nWhenever Groaaaaag, Hungry Monster attacks, you may sacrifice any number of other creatures. Draw that many cards, gain that much life, and put that many +1/+1 counters on Groaaaaag.

@@ -3239,8 +3239,12 @@ public class CardFactoryUtil {
 
             String desc = "Ninjutsu";
             boolean commander = false;
+            final boolean fixedCommander = k.length > 2 && k[2].equals("FixedCommander");
             if (k.length > 2 && k[2].equals("Commander")) {
                 desc = "Commander " + desc;
+                commander = true;
+            } else if (fixedCommander) {
+                desc = "Fixed commander ninjutsu";
                 commander = true;
             }
 
@@ -3262,6 +3266,7 @@ public class CardFactoryUtil {
                         "| PrecostDesc$ " + desc + " | CostDesc$ " + ManaCostParser.parse(manacost) +
                         "| ActivationZone$ Command | Origin$ Command" +
                         "| Destination$ Battlefield | Defined$ Self | Secondary$ True " +
+                        (fixedCommander ? "| CommanderTaxApplies$ True " : "") +
                         "| SpellDescription$ (" + inst.getReminderText() + ")";
 
                 sa = AbilityFactory.getAbility(effect, card);
@@ -3634,6 +3639,8 @@ public class CardFactoryUtil {
 
             // be careful with Suspend ability, it will not hit the stack
             Cost cost = new Cost(k[2], true);
+            final boolean commanderSuspend = k.length > 3 && k[3].equals("Commander");
+            for (final ZoneType suspendFrom : commanderSuspend ? List.of(ZoneType.Hand, ZoneType.Command) : List.of(ZoneType.Hand)) {
             final SpellAbility suspend = new AbilityStatic(host, cost, null) {
                 @Override
                 public boolean canPlay() {
@@ -3658,6 +3665,10 @@ public class CardFactoryUtil {
                     Map<AbilityKey, Object> moveParams = AbilityKey.newMap();
                     CardZoneTable zoneMovements = AbilityKey.addCardZoneTableParams(moveParams, this);
 
+                    // suspending a commander from the command zone counts toward its tax like casting it would
+                    if (hasParam("CommanderTaxApplies") && getHostCard().isCommander() && getHostCard().isInZone(ZoneType.Command)) {
+                        getActivatingPlayer().incCommanderCast(getHostCard());
+                    }
                     final Card c = game.getAction().exile(getHostCard(), this, moveParams);
                     zoneMovements.triggerChangesZoneAll(game, this);
 
@@ -3673,7 +3684,7 @@ public class CardFactoryUtil {
                 }
             };
             final StringBuilder sbDesc = new StringBuilder();
-            sbDesc.append("Suspend ").append(k[1]).append("—").append(cost.toSimpleString());
+            sbDesc.append(commanderSuspend ? "Commander Suspend " : "Suspend ").append(k[1]).append("—").append(cost.toSimpleString());
             sbDesc.append(k[2].contains("XMin1") ? ". X can't be 0." : "");
             sbDesc.append(" (").append(inst.getReminderText()).append(")");
             suspend.setDescription(sbDesc.toString());
@@ -3687,8 +3698,12 @@ public class CardFactoryUtil {
             sbStack.append(Lang.nounWithNumeral(k[1], "turn")).append(".)");
             suspend.setStackDescription(sbStack.toString());
 
-            suspend.getRestrictions().setZone(ZoneType.Hand);
+            suspend.getRestrictions().setZone(suspendFrom);
+            if (suspendFrom == ZoneType.Command) {
+                suspend.putParam("CommanderTaxApplies", "True");
+            }
             inst.addSpellAbility(suspend);
+            }
         } else if (keyword.startsWith("Transfigure")) {
             final String[] k = keyword.split(":");
             final String manacost = k[1];

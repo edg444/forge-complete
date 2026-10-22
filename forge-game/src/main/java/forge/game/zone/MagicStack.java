@@ -415,6 +415,12 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
                 game.getTriggerHandler().runTrigger(TriggerType.SpellCast, runParams, true);
             }
 
+            // Fixed commander ninjutsu: using it from the command zone counts toward the commander tax
+            if (sp.isActivatedAbility() && sp.hasParam("CommanderTaxApplies") && source.isCommander()
+                    && source.getOwner().equals(activator)) {
+                activator.incCommanderCast(source);
+            }
+
             // Run AbilityCast triggers
             if (sp.isActivatedAbility()) {
                 game.getTriggerHandler().runTrigger(TriggerType.AbilityCast, runParams, true);

@@ -60,6 +60,12 @@ public class CostAdjustment {
                     result.add(new Cost(ManaCost.get(n), false));
                 }
             }
+        } else if (sa.hasParam("CommanderTaxApplies") && host.isCommander() && host.isInZone(ZoneType.Command)) {
+            // Fixed commander ninjutsu, Commander Suspend: the tax applies to the ability too
+            int n = activator.getCommanderTax(host);
+            if (n > 0) {
+                result.add(new Cost(ManaCost.get(n), false));
+            }
         }
 
         CardCollection cardsOnBattlefield = new CardCollection(game.getCardsIn(ZoneType.Battlefield));

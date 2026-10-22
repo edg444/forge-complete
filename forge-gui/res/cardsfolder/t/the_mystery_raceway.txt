@@ -1,0 +1,20 @@
+Name:The Mystery Raceway
+ManaCost:no cost
+Types:Land
+K:Start your engines
+A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
+# "Team X won the race" is read as your own race team being that team (user ruling)
+S:Mode$ Continuous | Affected$ Card.Self | Condition$ MaxSpeed | AddAbility$ ABRace | Description$ Max Speed — {W}{U}{B}{R}{G}, {T}: Mill seven cards. Choose a playtest card from among them. You may cast it without paying its mana cost. If Team Cloudspire won the race, copy it and you may choose new targets for the copy. If Team Speed Demons won the race, each opponent loses life equal to its mana value.
+SVar:ABRace:AB$ Mill | Cost$ W U B R G T | PrecostDesc$ Max Speed — | NumCards$ 7 | Defined$ You | RememberMilled$ True | SubAbility$ DBChoose | SpellDescription$ Mill seven cards. Choose a playtest card from among them. You may cast it without paying its mana cost. If Team Cloudspire won the race, copy it and you may choose new targets for the copy. If Team Speed Demons won the race, each opponent loses life equal to its mana value.
+SVar:DBChoose:DB$ ChooseCard | Defined$ You | Choices$ Card.IsRemembered+Playtest | ChoiceZone$ Graveyard | Mandatory$ True | SubAbility$ DBForget
+SVar:DBForget:DB$ Cleanup | ClearRemembered$ True | SubAbility$ DBCast
+SVar:DBCast:DB$ Play | Defined$ ChosenCard | ValidZone$ Graveyard | ValidSA$ Spell | WithoutManaCost$ True | Optional$ True | RememberPlayed$ True | SubAbility$ DBCopy
+SVar:DBCopy:DB$ CopySpellAbility | Defined$ Remembered | MayChooseTarget$ True | ConditionCheckSVar$ Cloudspire | ConditionSVarCompare$ EQ1 | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ GE1 | SubAbility$ DBDrain
+SVar:DBDrain:DB$ LoseLife | Defined$ Player.Opponent | LifeAmount$ PlayedMV | ConditionCheckSVar$ SpeedDemons | ConditionSVarCompare$ EQ1 | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ GE1 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
+SVar:PlayedMV:Remembered$CardManaCost
+SVar:Cloudspire:Count$RaceTeam.Cloudspire
+SVar:SpeedDemons:Count$RaceTeam.SpeedDemons
+SVar:AsksTeam:Race
+K:CARDNAME can be your commander.
+Oracle:Start your engines!\n{T}: Add {C}.\nMax Speed — {W}{U}{B}{R}{G}, {T}: Mill seven cards. Choose a playtest card from among them. You may cast it without paying its mana cost. If Team Cloudspire won the race, copy it and you may choose new targets for the copy. If Team Speed Demons won the race, each opponent loses life equal to its mana value.\nThe Mystery Raceway can be your commander.
