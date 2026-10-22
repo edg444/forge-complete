@@ -1,0 +1,8 @@
+Name:Surprise, Nerd!
+ManaCost:4 B
+Types:Enchantment
+K:Flash
+# read by Pump and PumpAll (PumpEffect.surprise)
+SVar:InvertTemporaryPumps:True
+S:Mode$ Continuous | Affected$ Card.Self | Description$ If a creature would get + some amount of power or toughness until end of turn, instead it gets - that amount of power or toughness.
+Oracle:Flash\nIf a creature would get + some amount of power or toughness until end of turn, instead it gets - that amount of power or toughness.

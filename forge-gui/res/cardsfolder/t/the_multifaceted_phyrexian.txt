@@ -1,0 +1,8 @@
+Name:The Multifaceted Phyrexian
+ManaCost:2 B B
+Types:Legendary Creature Phyrexian Ninja
+PT:2/4
+K:Protection:Elk:Elk
+A:AB$ Animate | Cost$ PayLife<1> Sac<1/Creature.Other/another creature> | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls | Power$ 3 | Toughness$ 3 | Colors$ Green | OverwriteColors$ True | Types$ Creature,Elk | RemoveCardTypes$ True | RemoveCreatureTypes$ True | Duration$ Permanent | IsCurse$ True | SpellDescription$ Target creature an opponent controls becomes a 3/3 green Elk creature. (This effect lasts indefinitely.)
+K:Ninjutsu:B B Discard<1/Card>:FixedCommander
+Oracle:Protection from Elk\nPay 1 life, Sacrifice another creature: Target creature an opponent controls becomes a 3/3 green Elk creature. (This effect lasts indefinitely.)\nFixed commander ninjutsu — {B}{B}, Discard a card (It's like commander ninjutsu, but the commander tax applies. Sorry, but I learned from Yuriko.)

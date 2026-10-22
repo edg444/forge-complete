@@ -312,6 +312,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: The Multifaceted Phyrexian, Incubation Triformer, The Underworld Fantasy Queen, Bin Chicken, Dan,
+  Shrewd Trader, Spice Rack, Mister Cheddar, Cheese Sliver, Surprise, Nerd!, The Gunky Runner (UNK rares).**
+  - SVar `BargainAnyPermanent`: its controller's bargain costs can sacrifice any permanent.
+  - SVar `MaxOneCommander` + a chosen player: a state-based action leaves that player one commander in their command
+    zone, the rest go to their graveyard (and aren't offered straight back by 903.9a).
+  - Mister Cheddar as your commander: Sliver cards in the deck may be in it any number of times (DeckFormat).
+  - SVar `InvertTemporaryPumps`: a Pump or PumpAll's positive until-end-of-turn power or toughness becomes negative
+    (`PumpEffect.surprise`).
+  - Bin Chicken: Food tokens you control are also Junk and Junk tokens also Food (my call for "treat as though").
+
 - **Unknown Event: Barce, Friend Finder, The Collector (UNK mythics).**
   - `CardRules.findsFriends`: Barce and another commander-eligible card of one color or less may be commanders
     together as though each had partner (user ruling: only cards that could already be a commander).

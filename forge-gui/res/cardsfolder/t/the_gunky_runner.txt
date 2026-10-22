@@ -1,0 +1,13 @@
+Name:The Gunky Runner
+ManaCost:5 B
+Types:Legendary Creature Slug Gamer
+PT:5/5
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGunk | TriggerDescription$ Ew-minance — When CARDNAME enters and at the beginning of the first upkeep in a game where it's your commander, shuffle three Gunk cards into each opponent's library. (Gunk is a colorless sorcery card with no mana cost and cycling {4}.)
+T:Mode$ Phase | Phase$ Upkeep | TriggerZones$ Command,Battlefield,Hand,Graveyard,Exile,Library | CheckSVar$ Turn | SVarCompare$ EQ1 | IsPresent$ Card.Self+IsCommander | PresentZone$ Command,Battlefield,Hand,Graveyard,Exile,Library | Execute$ TrigGunk | Secondary$ True | TriggerDescription$ Ew-minance — at the beginning of the first upkeep in a game where it's your commander, shuffle three Gunk cards into each opponent's library.
+SVar:TrigGunk:DB$ MakeCard | Defined$ Player.Opponent | TokenScript$ c_s_gunk | Amount$ 3 | Zone$ Library | IsCurse$ True
+SVar:Turn:Count$TotalTurns
+T:Mode$ LifeLost | ValidPlayer$ Opponent | TriggerZones$ Battlefield | Execute$ TrigMoreGunk | TriggerDescription$ Whenever an opponent loses life, they shuffle that many Gunk cards into their library.
+SVar:TrigMoreGunk:DB$ MakeCard | Defined$ TriggeredPlayer | TokenScript$ c_s_gunk | Amount$ X | Zone$ Library | IsCurse$ True
+SVar:X:TriggerCount$LifeAmount
+K:Partner:Ready to run
+Oracle:Ew-minance — When The Gunky Runner enters and at the beginning of the first upkeep in a game where it's your commander, shuffle three Gunk cards into each opponent's library. (Gunk is a colorless sorcery card with no mana cost and cycling {4}.)\nWhenever an opponent loses life, they shuffle that many Gunk cards into their library.\nReady to run (You can have two commanders if both have ready to run.)

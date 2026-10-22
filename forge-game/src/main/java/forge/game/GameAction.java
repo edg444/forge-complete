@@ -2095,6 +2095,7 @@ public class GameAction {
                 }
 
                 checkAgain |= handlePlaneswalkerRule(p, noRegCreats);
+                checkAgain |= stateBasedAction_MaxCommanders(p);
             }
             for (Player p : spaceSculptors) {
                 checkAgain |= stateBasedAction704_5u(p);
@@ -2293,6 +2294,35 @@ public class GameAction {
         if (!game.getStack().hasSourceOnStack(c, null)) {
             moveTo(ZoneType.SchemeDeck, c, -1, null, AbilityKey.newMap());
         }
+    }
+
+    /**
+     * Spice Rack: the chosen player's maximum Commander size is one. With more than one commander in their command
+     * zone, they put the excess into their graveyard, keeping the one they choose.
+     */
+    private boolean stateBasedAction_MaxCommanders(final Player p) {
+        final boolean limited = game.getCardsIn(ZoneType.Battlefield).anyMatch(c -> c.hasSVar("MaxOneCommander")
+                && p.equals(c.getChosenPlayer()));
+        if (!limited) {
+            return false;
+        }
+        final CardCollection inCommand = CardLists.filter(p.getCardsIn(ZoneType.Command), Card::isCommander);
+        if (inCommand.size() <= 1) {
+            return false;
+        }
+        final Card keep = p.getController().chooseSingleEntityForEffect(inCommand,
+                new SpellAbility.EmptySa(ApiType.ChooseCard, inCommand.get(0), p), "Choose the commander to keep in your command zone",
+                Maps.newHashMap());
+        for (final Card c : inCommand) {
+            if (c != keep) {
+                // put there for being over the maximum, so 903.9a doesn't offer it straight back
+                final Card moved = moveToGraveyard(c, null);
+                if (moved != null) {
+                    moved.setMoveToCommandZone(false);
+                }
+            }
+        }
+        return true;
     }
 
     private boolean stateBasedAction704_attach(Card c, CardCollection unAttachList, boolean ignoresSBA) {

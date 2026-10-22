@@ -1,0 +1,10 @@
+Name:Incubation Triformer
+ManaCost:2 B
+Types:Creature Phyrexian Cleric
+PT:3/3
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigIncubate | TriggerDescription$ When CARDNAME enters the battlefield, incubate 1.
+SVar:TrigIncubate:DB$ Incubate | Amount$ 1
+# the third side is everything the token now is: a colorless 3/3 Phyrexian Horror artifact creature named for it
+A:AB$ Animate | Cost$ 3 | ValidTgts$ Creature.Phyrexian+token+YouCtrl+Transformed | TgtPrompt$ Choose target transformed Phyrexian token you control | Name$ Phyrexian Horror | Power$ 3 | Toughness$ 3 | Types$ Artifact,Creature,Phyrexian,Horror | RemoveCardTypes$ True | RemoveCreatureTypes$ True | RemoveAllAbilities$ True | Colors$ Colorless | OverwriteColors$ True | Duration$ Permanent | SpellDescription$ Choose target transformed Phyrexian token you control. Transform it into a third side that's a 3/3 Phyrexian Horror artifact creature.
+DeckHas:Ability$Token|Counters & Type$Incubator|Phyrexian
+Oracle:When Incubation Triformer enters the battlefield, incubate 1.\n{3}: Choose target transformed Phyrexian token you control. Transform it into a third side that's a 3/3 Phyrexian Horror artifact creature.

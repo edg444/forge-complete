@@ -1,0 +1,11 @@
+Name:Dan, Shrewd Trader
+ManaCost:3 B
+Types:Legendary Creature Human Gamer
+PT:3/4
+# read by the bargain cost (GameActionUtil.getOptionalCostValues)
+SVar:BargainAnyPermanent:True
+S:Mode$ Continuous | Affected$ Card.Self | Description$ You can bargain any permanent instead of just artifacts, enchantments, and tokens.
+T:Mode$ SpellCast | ValidCard$ Card.bargained | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCopy | TriggerDescription$ Whenever you cast a spell, if it was bargained, copy that spell. You may choose new targets for the copy.
+SVar:TrigCopy:DB$ CopySpellAbility | Defined$ TriggeredSpellAbility | MayChooseTarget$ True
+DeckHints:Keyword$Bargain
+Oracle:You can bargain any permanent instead of just artifacts, enchantments, and tokens.\nWhenever you cast a spell, if it was bargained, copy that spell. You may choose new targets for the copy.

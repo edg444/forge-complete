@@ -485,7 +485,12 @@ public final class GameActionUtil {
         for (KeywordInterface inst : source.getKeywords()) {
             final String keyword = inst.getOriginal();
             if (keyword.equals("Bargain")) {
-                final Cost cost = new Cost("Sac<1/Artifact;Enchantment;Card.token/artifact, enchantment or token>", false);
+                // Dan, Shrewd Trader: "You can bargain any permanent instead of just artifacts, enchantments, and tokens."
+                final Player caster = sa.getActivatingPlayer() != null ? sa.getActivatingPlayer() : source.getController();
+                final boolean anyPermanent = caster != null
+                        && caster.getCardsIn(ZoneType.Battlefield).anyMatch(c -> c.hasSVar("BargainAnyPermanent"));
+                final Cost cost = new Cost(anyPermanent ? "Sac<1/Permanent/permanent>"
+                        : "Sac<1/Artifact;Enchantment;Card.token/artifact, enchantment or token>", false);
                 costs.add(new OptionalCostValue(OptionalCost.Bargain, cost));
             } else if (keyword.startsWith("Buyback")) {
                 final Cost cost = new Cost(keyword.substring(8), false);

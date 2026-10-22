@@ -379,6 +379,9 @@ public enum DeckFormat {
 
         final CardPool allCards = deck.getAllCardsInASinglePool(hasCommander(), false);
 
+        // Mister Cheddar, Cheese Sliver: as your commander, Sliver cards in your deck may be in it any number of times
+        final boolean anySlivers = hasCommander() && deck.getCommanders().stream().anyMatch(cmd -> cmd.getRules().getOracleText()
+                .contains("Sliver cards in your deck have \"Your deck may contain any number of this card.\""));
         // Should group all cards by name, so that different editions of same card are really counted as the same card
         for (final Entry<String, Integer> cp : Aggregates.groupSumBy(allCards, pc -> StaticData.instance().getCommonCards().getNormalizedName(pc.getName()))) {
             IPaperCard simpleCard = StaticData.instance().getCommonCards().getCard(cp.getKey());
@@ -392,7 +395,7 @@ public enum DeckFormat {
                 }
             }
 
-            if (canHaveAnyNumberOf(simpleCard)) {
+            if (canHaveAnyNumberOf(simpleCard) || anySlivers && simpleCard.getRules().getType().hasCreatureType("Sliver")) {
                 continue;
             }
 

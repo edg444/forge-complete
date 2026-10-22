@@ -1,0 +1,33 @@
+Name:The Underworld Fantasy Queen
+ManaCost:2 B
+Types:Legendary Creature God
+PT:3/3
+# the season is the card's chosen mode
+K:ETBReplacement:Other:DBSpring
+SVar:DBSpring:DB$ GenericChoice | Defined$ You | AtRandom$ True | Choices$ Spring | SetChosenMode$ True | ShowChoice$ True | SpellDescription$ As CARDNAME enters, it becomes spring.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigNextSeason | TriggerDescription$ At the beginning of your upkeep, the next season arrives.
+SVar:TrigNextSeason:DB$ Branch | BranchConditionSVar$ IsSpring | BranchConditionSVarCompare$ GE1 | TrueSubAbility$ ToSummer | FalseSubAbility$ CheckSummer
+SVar:CheckSummer:DB$ Branch | BranchConditionSVar$ IsSummer | BranchConditionSVarCompare$ GE1 | TrueSubAbility$ ToFall | FalseSubAbility$ CheckFall
+SVar:CheckFall:DB$ Branch | BranchConditionSVar$ IsFall | BranchConditionSVarCompare$ GE1 | TrueSubAbility$ ToWinter | FalseSubAbility$ ToSpring
+SVar:ToSummer:DB$ GenericChoice | Defined$ You | AtRandom$ True | Choices$ Summer | SetChosenMode$ True | ShowChoice$ True
+SVar:ToFall:DB$ GenericChoice | Defined$ You | AtRandom$ True | Choices$ Fall | SetChosenMode$ True | ShowChoice$ True
+SVar:ToWinter:DB$ GenericChoice | Defined$ You | AtRandom$ True | Choices$ Winter | SetChosenMode$ True | ShowChoice$ True
+SVar:ToSpring:DB$ GenericChoice | Defined$ You | AtRandom$ True | Choices$ Spring | SetChosenMode$ True | ShowChoice$ True
+SVar:Spring:DB$ Pump | SpellDescription$ Spring
+SVar:Summer:DB$ Pump | SpellDescription$ Summer
+SVar:Fall:DB$ Pump | SpellDescription$ Fall
+SVar:Winter:DB$ Pump | SpellDescription$ Winter
+SVar:IsSpring:Count$Valid Card.Self+ChosenModeSpring
+SVar:IsSummer:Count$Valid Card.Self+ChosenModeSummer
+SVar:IsFall:Count$Valid Card.Self+ChosenModeFall
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+ChosenModeSpring | Execute$ TrigSpring | TriggerDescription$ Spring — Whenever Her Majesty enters or attacks, you may sacrifice another creature. If you do, draw a card.
+T:Mode$ Attacks | ValidCard$ Card.Self | IsPresent$ Card.Self+ChosenModeSpring | Execute$ TrigSpring | Secondary$ True | TriggerDescription$ Spring — Whenever Her Majesty enters or attacks, you may sacrifice another creature. If you do, draw a card.
+SVar:TrigSpring:AB$ Draw | Cost$ Sac<1/Creature.Other/another creature>
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Creature.OppCtrl | TriggerZones$ Battlefield | IsPresent$ Card.Self+ChosenModeSummer | Execute$ TrigSummer | TriggerDescription$ Summer — Whenever a creature an opponent controls dies, put a +1/+1 counter on Her Majesty.
+SVar:TrigSummer:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Creature.Other | TriggerZones$ Battlefield | IsPresent$ Card.Self+ChosenModeFall | Execute$ TrigFall | TriggerDescription$ Fall — Whenever another creature dies, target opponent loses 1 life and you gain 1 life.
+SVar:TrigFall:DB$ LoseLife | ValidTgts$ Opponent | LifeAmount$ 1 | SubAbility$ DBGain
+SVar:DBGain:DB$ GainLife | Defined$ You | LifeAmount$ 1
+S:Mode$ CantAttack,CantBlock | ValidCard$ Card.Self | IsPresent$ Card.Self+ChosenModeWinter | Description$ Winter — Her Majesty can't attack or block.
+DeckHas:Ability$Counters|Sacrifice|LifeGain
+Oracle:As The Underworld Fantasy Queen enters, it becomes spring.\nAt the beginning of your upkeep, the next season arrives.\nSpring — Whenever Her Majesty enters or attacks, you may sacrifice another creature. If you do, draw a card.\nSummer — Whenever a creature an opponent controls dies, put a +1/+1 counter on Her Majesty.\nFall — Whenever another creature dies, target opponent loses 1 life and you gain 1 life.\nWinter — Her Majesty can't attack or block.

@@ -1,0 +1,10 @@
+Name:Mister Cheddar, Cheese Sliver
+ManaCost:4 B
+Types:Legendary Creature Rat Sliver
+PT:5/5
+S:Mode$ Continuous | Affected$ Creature.Rat+YouCtrl,Creature.Sliver+YouCtrl | AddType$ Rat & Sliver | Description$ Rats and Slivers you control are Rat Slivers in addition to their other types and have ratmanship. (They can't be blocked except by Cats, Rats, or other creatures with ratmanship.)
+# ratmanship only comes from here, and everything that has it is a Rat
+S:Mode$ CantBlockBy | ValidAttacker$ Creature.Rat+YouCtrl,Creature.Sliver+YouCtrl | ValidBlocker$ Creature.!Cat+!Rat | Secondary$ True | Description$ Ratmanship
+# deck building: DeckFormat lets a deck with it as commander have any number of each Sliver card
+S:Mode$ Continuous | Affected$ Card.Self | Description$ As long as Mister Cheddar is your commander, Sliver cards in your deck have "Your deck may contain any number of this card."
+Oracle:Rats and Slivers you control are Rat Slivers in addition to their other types and have ratmanship. (They can't be blocked except by Cats, Rats, or other creatures with ratmanship.)\nAs long as Mister Cheddar is your commander, Sliver cards in your deck have "Your deck may contain any number of this card."

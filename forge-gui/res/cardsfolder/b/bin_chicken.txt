@@ -1,0 +1,15 @@
+Name:Bin Chicken
+ManaCost:3 B B
+Types:Creature Bird Pest
+PT:3/2
+# "treat ... as though they were": your Food tokens are also Junk and your Junk tokens also Food (my call)
+S:Mode$ Continuous | Affected$ Food.token+YouCtrl | AddType$ Junk | Description$ You may treat Food tokens as though they were Junk tokens and vice versa.
+S:Mode$ Continuous | Affected$ Junk.token+YouCtrl | AddType$ Food | Secondary$ True | Description$ You may treat Food tokens as though they were Junk tokens and vice versa.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When this creature enters, choose one—
+SVar:TrigCharm:DB$ Charm | Choices$ DBFood,DBAmass
+SVar:DBFood:DB$ Token | TokenScript$ c_a_food_sac | SpellDescription$ Create a Food Token.
+SVar:DBAmass:DB$ Amass | Type$ Bird | Num$ X | SpellDescription$ Amass Birds X, where X is the number of Foods you control.
+SVar:X:Count$Valid Food.YouCtrl
+A:AB$ ChangeZone | Cost$ 3 B B ExileFromGrave<1/Artifact/artifact card> | ActivationZone$ Graveyard | Origin$ Graveyard | Destination$ Battlefield | Defined$ Self | SpellDescription$ Return this card from your graveyard to the battlefield.
+DeckHas:Ability$Token|Food|Counters|Graveyard
+Oracle:You may treat Food tokens as though they were Junk tokens and vice versa.\nWhen this creature enters, choose one—\n• Create a Food Token.\n• Amass Birds X, where X is the number of Foods you control.\n{3}{B}{B}, Exile an artifact card from your graveyard: Return this card from your graveyard to the battlefield.

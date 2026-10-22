@@ -24,9 +24,11 @@ import forge.game.zone.ZoneType;
 public class PumpAllEffect extends SpellAbilityEffect {
 
     private static void applyPumpAll(final SpellAbility sa,
-            final Iterable<Card> list, final int a, final int d,
+            final Iterable<Card> list, final int pumpA, final int pumpD,
             final List<String> keywords, final List<ZoneType> affectedZones) {
         final Game game = sa.getActivatingPlayer().getGame();
+        final int a = PumpEffect.surprise(pumpA, sa, game);
+        final int d = PumpEffect.surprise(pumpD, sa, game);
         final long timestamp = game.getNextTimestamp();
         final List<String> kws = Lists.newArrayList();
         final List<String> hiddenkws = Lists.newArrayList();

@@ -1,0 +1,10 @@
+Name:Spice Rack
+ManaCost:2
+Types:Artifact
+K:ETBReplacement:Other:ChooseOpp
+SVar:ChooseOpp:DB$ ChoosePlayer | Defined$ You | Choices$ Player.Opponent | ChoiceTitle$ Choose an opponent | SpellDescription$ As CARDNAME enters the battlefield, choose an opponent.
+# checked with the state-based actions (GameAction.stateBasedAction_MaxCommanders)
+SVar:MaxOneCommander:True
+S:Mode$ Continuous | Affected$ Card.Self | Description$ The chosen player's maximum Commander size is one. (They can only have one commander in their command zone. If they ever have more than one, they must put any excess commanders into their graveyard.)
+K:Cycling:2
+Oracle:As Spice Rack enters the battlefield, choose an opponent.\nThe chosen player's maximum Commander size is one. (They can only have one commander in their command zone. If they ever have more than one, they must put any excess commanders into their graveyard.)\nCycling {2}

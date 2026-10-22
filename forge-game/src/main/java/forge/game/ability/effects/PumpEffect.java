@@ -30,11 +30,25 @@ import forge.game.zone.ZoneType;
 
 public class PumpEffect extends SpellAbilityEffect {
 
+    /**
+     * Surprise, Nerd!: a creature that would get + some amount of power or toughness until end of turn gets - that
+     * amount instead, while one is on the battlefield.
+     */
+    public static int surprise(final int amount, final SpellAbility sa, final Game game) {
+        final String duration = sa.getParam("Duration");
+        if (amount <= 0 || duration != null && !"UntilEndOfTurn".equals(duration)) {
+            return amount;
+        }
+        return game.getCardsIn(ZoneType.Battlefield).anyMatch(c -> c.hasSVar("InvertTemporaryPumps")) ? -amount : amount;
+    }
+
     private static void applyPump(final SpellAbility sa, final Card applyTo,
-            final int a, final int d, final List<String> keywords,
+            final int pumpA, final int pumpD, final List<String> keywords,
             final long timestamp) {
         final Card host = sa.getHostCard();
         final Game game = host.getGame();
+        final int a = surprise(pumpA, sa, game);
+        final int d = surprise(pumpD, sa, game);
         final String duration = sa.getParam("Duration");
         final boolean perpetual = "Perpetual".equals(duration);
 
