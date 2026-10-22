@@ -312,7 +312,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
-### 2026-10-21, thirteenth deploy (desktop, GitHub; Android APK built and signed, not yet installed) — Unknown Event
+### 2026-10-21, thirteenth deploy (desktop, Android, GitHub) — Unknown Event
   rares and uncommons, through Windmill Slam (178+ of 398 UNK names); no upstream changes to merge
 
 - **Unknown Event: Devoted Abzan, Bad Knight, Team Perseverance, Impressive Rat, Vamping Vampire, Fear of Fear
