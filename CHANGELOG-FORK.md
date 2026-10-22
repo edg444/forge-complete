@@ -312,6 +312,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: The Bringer of the Red Beard, The Wiley Speedster, Mijo, the Bull, Mzed, Mercenary Leader, At Least
+  It's a Dry Heat, Auntie Ant, Ant Auntie, The Powerful Dragon, Tragda, the Burner, Brutal Command, Math is for
+  Blockers, Snapsail Rider (UNK red rares).**
+  - New Red Beard and Mercenary (can't block) tokens; Mijo uses the existing Rock token.
+  - Not modeled: At Least It's a Dry Heat's redirection and player-damage clauses, and Snapsail Rider's match points
+    (Forge matches have no base points; it says so when it enters).
 - **Unknown Event: Stormscale Wurm, Praetorhoof Behemoth, Lander Rizzi, Emrakul and Chatterfang, The Bear Force Pilot
   Runner, The Magical City, New, The Goblin Sparring Grounds, The Local Guides, A-Town, Lona, Tracker of the Known,
   Mr. Wiggles, Helpful Butterfly.**

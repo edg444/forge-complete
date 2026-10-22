@@ -1,0 +1,7 @@
+Name:Mercenary Token
+ManaCost:no cost
+Colors:red
+Types:Creature Mercenary
+PT:1/1
+S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't block.
+Oracle:This creature can't block.

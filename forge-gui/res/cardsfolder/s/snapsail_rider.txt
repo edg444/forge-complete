@@ -1,0 +1,9 @@
+Name:Snapsail Rider
+ManaCost:4 R
+Types:Creature Goblin Rogue
+PT:6/5
+K:Trample
+# Forge's matches don't score base points, so the trigger only says what changed.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPoints | TriggerDescription$ When CARDNAME enters the battlefield, this match is now worth 6 base points instead of 3. (A player can concede the game at any time, and may want to in response to this ability.)
+SVar:TrigPoints:DB$ Cleanup | NotifyMessage$ This match is now worth 6 base points instead of 3.
+Oracle:Trample\nWhen Snapsail Rider enters the battlefield, this match is now worth 6 base points instead of 3. (A player can concede the game at any time, and may want to in response to this ability.)

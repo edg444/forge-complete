@@ -1,0 +1,11 @@
+Name:Mzed, Mercenary Leader
+ManaCost:3 R
+Types:Legendary Creature Human Mercenary
+PT:4/2
+S:Mode$ Continuous | Affected$ Creature.YouCtrl | AddKeyword$ Haste | EffectZone$ Battlefield,Command | CheckSVar$ MonoRed | SVarCompare$ EQ1 | Description$ Mono Eminence — If CARDNAME is on the battlefield or in your command zone and your deck's color identity is mono-red, creatures you control have haste.
+SVar:MonoRed:Count$DeckIdentityMono.red
+T:Mode$ Phase | Phase$ BeginCombat | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigToken | TriggerDescription$ At the beginning of your combat step, create a 1/1 red Mercenary creature token with "This creature can't block."
+SVar:TrigToken:DB$ Token | TokenScript$ r_1_1_mercenary_noblock
+K:Partner
+DeckHas:Ability$Token
+Oracle:Mono Eminence — If Mzed is on the battlefield or in your command zone and your deck's color identity is mono-red, creatures you control have haste.\nAt the beginning of your combat step, create a 1/1 red Mercenary creature token with "This creature can't block."\nPartner (You can have two commanders if both have partner.)

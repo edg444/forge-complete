@@ -1,0 +1,8 @@
+Name:Math is for Blockers
+ManaCost:4 R R
+Types:Sorcery
+A:SP$ Effect | StaticAbilities$ STCantPrevent,STMustAttack | SubAbility$ DBPumpAll | SpellDescription$ Damage can't be prevented this turn. Creatures you control have double strike, trample, and must attack if able until end of turn.
+SVar:STCantPrevent:Mode$ CantPreventDamage | Description$ Damage can't be prevented.
+SVar:STMustAttack:Mode$ MustAttack | ValidCreature$ Creature.YouCtrl | Description$ Creatures you control attack this turn if able.
+SVar:DBPumpAll:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Double Strike & Trample
+Oracle:Damage can't be prevented this turn.\nCreatures you control have double strike, trample, and must attack if able until end of turn.

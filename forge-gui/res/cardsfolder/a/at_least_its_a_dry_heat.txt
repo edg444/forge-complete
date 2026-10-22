@@ -1,0 +1,6 @@
+Name:At Least It's a Dry Heat
+ManaCost:3 R
+Types:Instant
+# The damage can't be prevented. Not modeled yet: the clauses about redirecting it and about it causing damage to a player.
+A:SP$ DealDamage | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumDmg$ 1000000 | NoPrevention$ True | SpellDescription$ CARDNAME deals 1,000,000 damage to target creature. This damage can't be prevented, redirected, cause damage to be dealt to a player (sorry, Stuffy Doll), or be compared to damage dealt by sources on the east coast.
+Oracle:At Least It's a Dry Heat deals 1,000,000 damage to target creature. This damage can't be prevented, redirected, cause damage to be dealt to a player (sorry, Stuffy Doll), or be compared to damage dealt by sources on the east coast.

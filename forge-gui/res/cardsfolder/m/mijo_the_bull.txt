@@ -1,0 +1,10 @@
+Name:Mijo, the Bull
+ManaCost:2 R
+Types:Legendary Creature Ox Athlete
+PT:2/3
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When Mijo enters, create a colorless Equipment artifact token named Rock with "Equipped creature has "{1}, {T}: Sacrifice Rock: This creature deals 2 damage to any target." and equip {1}.
+SVar:TrigToken:DB$ Token | TokenScript$ rock
+R:Event$ DamageDone | ActiveZones$ Battlefield | ValidSource$ Card.YouCtrl,Emblem.YouCtrl | ValidTarget$ Permanent,Player | DamageAmount$ EQ2 | ReplaceWith$ DmgThree | Description$ From Downtown — If a source you control would deal exactly 2 damage to a permanent or player, it deals 3 damage instead.
+SVar:DmgThree:DB$ ReplaceEffect | VarName$ DamageAmount | VarValue$ 3
+DeckHas:Ability$Token
+Oracle:When Mijo enters, create a colorless Equipment artifact token named Rock with "Equipped creature has "{1}, {T}: Sacrifice Rock: This creature deals 2 damage to any target." and equip {1}.\nFrom Downtown — If a source you control would deal exactly 2 damage to a permanent or player, it deals 3 damage instead.

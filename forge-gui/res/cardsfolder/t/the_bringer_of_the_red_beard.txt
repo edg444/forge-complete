@@ -1,0 +1,10 @@
+Name:The Bringer of the Red Beard
+ManaCost:1 R
+Types:Legendary Creature Human Warrior
+PT:1/1
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When CARDNAME enters, create a red Equipment artifact token named Red Beard with "Equipped creature is red" and equip {1}.
+SVar:TrigToken:DB$ Token | TokenScript$ red_beard
+S:Mode$ Continuous | Affected$ Creature.Red+YouCtrl | AddPower$ 1 | Description$ Red creatures you control get +1/+0.
+S:Mode$ Continuous | Affected$ Creature.equipped+YouCtrl | AddPower$ 1 | Description$ Equipped creatures you control get +1/+0.
+DeckHas:Ability$Token
+Oracle:When The Bringer of the Red Beard enters, create a red Equipment artifact token named Red Beard with "Equipped creature is red" and equip {1}.\nRed creatures you control get +1/+0.\nEquipped creatures you control get +1/+0.

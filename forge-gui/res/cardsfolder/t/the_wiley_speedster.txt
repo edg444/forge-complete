@@ -1,0 +1,11 @@
+Name:The Wiley Speedster
+ManaCost:3 R
+Types:Legendary Creature Human Artificer
+PT:3/2
+T:Mode$ Phase | Phase$ BeginCombat | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCharm | TriggerDescription$ At the beginning of combat on your turn, ABILITY
+SVar:TrigCharm:DB$ Charm | Choices$ DBPump,DBDamage,DBTreasure
+SVar:DBPump:DB$ Pump | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumAtt$ +1 | KW$ Haste | SpellDescription$ Target creature gets +1/+0 and gains haste until end of turn.
+SVar:DBDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 1 | SpellDescription$ CARDNAME deals 1 damage to any target.
+SVar:DBTreasure:DB$ Token | TokenScript$ c_a_treasure_sac | SpellDescription$ Create a Treasure token.
+DeckHas:Ability$Token
+Oracle:At the beginning of combat on your turn, choose one —\n• Target creature gets +1/+0 and gains haste until end of turn.\n• The Wiley Speedster deals 1 damage to any target.\n• Create a Treasure token.

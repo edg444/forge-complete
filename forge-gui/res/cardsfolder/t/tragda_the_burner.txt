@@ -1,0 +1,12 @@
+Name:Tragda, the Burner
+ManaCost:4 R R R
+Types:Legendary Creature Dragon Human
+PT:6/6
+K:Flying
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Graveyard | ValidCard$ Card.!token+Land | TriggerZones$ Battlefield | Execute$ TrigCounters | TriggerDescription$ Whenever a land card is put into a graveyard from anywhere, put two +1/+1 counters on Tragda.
+SVar:TrigCounters:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 2
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ Whenever Tragda attacks, ABILITY
+SVar:TrigCharm:DB$ Charm | Choices$ DBVillage,DBPeasants
+SVar:DBVillage:DB$ Destroy | ValidTgts$ Land | TgtPrompt$ Select target land | SpellDescription$ Burn the village — Destroy target land.
+SVar:DBPeasants:DB$ DealDamage | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumDmg$ 4 | SpellDescription$ Burn the peasants — Tragda deals 4 damage to target creature.
+Oracle:Flying\nWhenever a land card is put into a graveyard from anywhere, put two +1/+1 counters on Tragda.\nWhenever Tragda attacks, choose one—\n• Burn the village — Destroy target land.\n• Burn the peasants — Tragda deals 4 damage to target creature.

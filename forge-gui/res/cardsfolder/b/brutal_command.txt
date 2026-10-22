@@ -1,0 +1,12 @@
+Name:Brutal Command
+ManaCost:2 R R
+Types:Instant
+A:SP$ Charm | CharmNum$ 2 | Choices$ DBGinger,DBSuit,DBBrute,DBStrength
+SVar:DBGinger:DB$ CopyPermanent | DefinedName$ Gingerbrute | SpellDescription$ Create a Gingerbrute token. (Yes, it's technically red life gain. Sorry, color pie.)
+SVar:DBSuit:DB$ CopyPermanent | DefinedName$ Brute Suit | SpellDescription$ Create a Brute Suit token.
+SVar:DBBrute:DB$ CopyPermanent | DefinedName$ The Brute | RememberCopied$ True | SubAbility$ DBAttach | SpellDescription$ Create a The Brute token, then attach it to a creature you control.
+SVar:DBAttach:DB$ Attach | Choices$ Creature.YouCtrl | ChoiceTitle$ Choose a creature you control | Object$ Remembered | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:DBStrength:DB$ Play | AnySupportedCard$ Names:Brute Strength | CopyCard$ True | WithoutManaCost$ True | Optional$ True | Controller$ You | SpellDescription$ Cast a copy of Brute Strength without paying its mana cost.
+DeckHas:Ability$Token
+Oracle:Choose two—\n• Create a Gingerbrute token. (Yes, it's technically red life gain. Sorry, color pie.)\n• Create a Brute Suit token.\n• Create a The Brute token, then attach it to a creature you control.\n• Cast a copy of Brute Strength without paying its mana cost.

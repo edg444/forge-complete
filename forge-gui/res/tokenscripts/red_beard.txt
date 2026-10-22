@@ -1,0 +1,7 @@
+Name:Red Beard
+ManaCost:no cost
+Colors:red
+Types:Artifact Equipment
+S:Mode$ Continuous | Affected$ Creature.EquippedBy | SetColor$ Red | Description$ Equipped creature is red.
+K:Equip:1
+Oracle:Equipped creature is red.\nEquip {1}
