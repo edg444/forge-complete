@@ -1,0 +1,13 @@
+Name:Higher Level Zone Monster
+ManaCost:3 U
+Types:Creature Shapeshifter
+PT:0/0
+K:ETBReplacement:Copy:DBChooseColors:Optional
+SVar:DBChooseColors:DB$ ChooseColor | Defined$ You | OrColors$ True | UpTo$ True | AILogic$ MostProminentInComputerDeck | SubAbility$ DBCopy | SpellDescription$ You may have this creature enter as a copy of any creature on the battlefield, except it enters with an additional +1/+1 counter on it and it's the colors of your choice in addition to its other colors.
+SVar:DBCopy:DB$ Clone | Choices$ Creature | ChoiceTitle$ Choose a creature to copy | AddColors$ ChosenColor | SubAbility$ DBConditionEffect
+SVar:DBConditionEffect:DB$ Effect | RememberObjects$ Self | ReplacementEffects$ ETBCreat
+SVar:ETBCreat:Event$ Moved | ValidCard$ Creature.IsRemembered | Destination$ Battlefield | ReplaceWith$ DBPutP1P1 | ReplacementResult$ Updated | Description$ It enters with an additional +1/+1 counter on it.
+SVar:DBPutP1P1:DB$ PutCounter | Defined$ ReplacedNewCard | CounterType$ P1P1 | ETB$ True | CounterNum$ 1 | SubAbility$ DBExile
+SVar:DBExile:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
+DeckHas:Ability$Counters
+Oracle:You may have this creature enter as a copy of any creature on the battlefield, except it enters with an additional +1/+1 counter on it and it's the colors of your choice in addition to its other colors.

@@ -540,7 +540,9 @@ public class CardFactory {
         }
 
         if (cause.hasParam("AddColors")) {
-            colors = ColorSet.fromNames(cause.getParam("AddColors").split(","));
+            // ChosenColor: the colors the host chose (Higher Level Zone Monster's "colors of your choice")
+            colors = "ChosenColor".equals(cause.getParam("AddColors")) ? ColorSet.fromNames(cause.getHostCard().getChosenColors())
+                    : ColorSet.fromNames(cause.getParam("AddColors").split(","));
         }
 
         if (cause.hasParam("SetColor")) {

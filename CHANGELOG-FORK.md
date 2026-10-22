@@ -312,6 +312,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Guess Who it Is!, Unstickerify, Higher Level Zone Monster (UNK uncommons).**
+  - New effect `GuessWho`: the guesser asks five questions from a menu of the card's characteristics (colors, types,
+    mana value, power, toughness, keywords), answered truthfully, then names a card from card-name search; the AI
+    asks whichever question best splits the creatures in its library still possible and names the likeliest (user
+    ruling).
+  - Unstickerify: Forge can't see under a sticker, so a stickered (playtest) card is always the unclear case and
+    becomes a Wastes.
+  - Clone `AddColors$ ChosenColor`: the host's chosen colors.
+
 - **Unknown Event: Windy City Aven, Windy City Elemental, Identify the Culprit, Hero's Uncle, Red and Black Legac,
   17-Year Cicadas, Fear of Forgetting Names (UNK uncommons).**
   - SVar `AsksMagicCon:<city>`: as the match begins a person says whether they attended (honor system); the AI

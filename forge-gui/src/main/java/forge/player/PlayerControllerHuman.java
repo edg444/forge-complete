@@ -1415,6 +1415,8 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
             types.sort((a, b) -> Integer.compare(inDeck.getOrDefault(b, 0), inDeck.getOrDefault(a, 0)));
         }
         final String title = "KeywordOrAbilityWord".equals(kindOfType) ? "Name a keyword ability or ability word"
+                // Guess Who it Is!
+                : "Question".equals(kindOfType) ? "Ask a yes or no question about the chosen creature card"
                 : localizer.getMessage("lblChooseATargetType", kindOfType.toLowerCase());
         if (isOptional) {
             return getGui().oneOrNone(title, types);

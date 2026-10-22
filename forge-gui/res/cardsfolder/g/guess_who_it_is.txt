@@ -1,0 +1,6 @@
+Name:Guess Who it Is!
+ManaCost:4 R
+Types:Sorcery
+# The guesser asks from a menu of questions the game answers truthfully, then names a card (user ruling 2026-10-22)
+A:SP$ GuessWho | ValidTgts$ Opponent | TgtPrompt$ Select target opponent | SpellDescription$ Look at the top ten cards of target opponent's library and choose a creature card from among them. That opponent asks you five yes or no questions about that creature. (Answer truthfully!) Then that player chooses a card name. Reveal the card. If it doesn't have that name, put it onto the battlefield under your control. Then shuffle each card not put onto the battlefield this way into its owner's library.
+Oracle:Look at the top ten cards of target opponent's library and choose a creature card from among them. That opponent asks you five yes or no questions about that creature. (Answer truthfully!) Then that player chooses a card name. Reveal the card. If it doesn't have that name, put it onto the battlefield under your control. Then shuffle each card not put onto the battlefield this way into its owner's library.

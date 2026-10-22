@@ -176,6 +176,7 @@ public enum SpellApiToAi {
             .put(ApiType.Goad, GoadAi.class)
             .put(ApiType.GuessArtist, GuessArtistAi.class)
             .put(ApiType.GuessName, GuessNameAi.class)
+            .put(ApiType.GuessWho, GuessWhoAi.class)
             .put(ApiType.GuessWord, GuessWordAi.class)
             .put(ApiType.Haunt, HauntAi.class)
             .put(ApiType.HealDamage, AlwaysPlayAi.class)
