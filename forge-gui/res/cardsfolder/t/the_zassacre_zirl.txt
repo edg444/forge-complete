@@ -1,0 +1,10 @@
+Name:The Zassacre Zirl
+ManaCost:5 B B
+Types:Legendary Creature Human Assassin
+PT:4/4
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self+wasCast | Execute$ TrigDestroy | TriggerDescription$ When CARDNAME enters the battlefield, if you cast them, destroy target commander an opponent controls. If its owner has two or more commanders, that card stops being a commander.
+SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Card.IsCommander+OppCtrl | TgtPrompt$ Select target commander an opponent controls | SubAbility$ DBStopCommander
+SVar:DBStopCommander:DB$ StopBeingCommander | Defined$ Targeted | MinCommanders$ 2
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.IsCommander+Other | TriggerZones$ Battlefield | Execute$ TrigDraw | TriggerDescription$ Whenever another Commander dies, draw a card.
+SVar:TrigDraw:DB$ Draw | NumCards$ 1
+Oracle:When The Zassacre Zirl enters the battlefield, if you cast them, destroy target commander an opponent controls. If its owner has two or more commanders, that card stops being a commander.\nWhenever another Commander dies, draw a card.

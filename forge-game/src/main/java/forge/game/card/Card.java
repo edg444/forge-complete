@@ -9740,6 +9740,19 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         numberAbilityResolved.clear();
     }
 
+    /** Yet Another Night in Vegas: every mode of the ability can be chosen again ("All modes reset"). */
+    public void clearChosenModesThisGame(SpellAbility ability) {
+        final SpellAbility root = ability.getRootAbility();
+        SpellAbility original = root.isTrigger() ? root.getTrigger().getOverridingAbility() : ability.getOriginalAbility();
+        if (original == null) {
+            original = ability;
+        }
+        chosenModesGame.remove(original);
+        if (ability.getGrantorStatic() != null) {
+            chosenModesGameStatic.remove(original, ability.getGrantorStatic());
+        }
+    }
+
     public List<String> getChosenModes(SpellAbility ability, String type) {
         SpellAbility original = null;
         SpellAbility root = ability.getRootAbility();

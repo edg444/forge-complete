@@ -312,6 +312,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Another Night in Vegas, Yet Another Night in Vegas, A Chaotic Night in Vegas, The Archenemy's
+  Charm, Monster Mash-Up, The Zassacre Zirl.**
+  - `Cleanup` `ResetChosenModes$` lets every mode be chosen again; `SetInMotion` `DefinedName$` sets a named scheme in
+    motion from outside the game; new `StopBeingCommander` effect (`MinCommanders$`).
+  - A Chaotic Night in Vegas picks among all thirteen modes of the three Nights (its text says twelve).
 - **Unknown Event: Old Way Phyrexian, Hidetsugu's Poison Rite, Invasion Specialist, Quest Compleated Beast, Rankle,
   Master of Pranksters, The Swamp Kitten, Rat of God, Davvol's Birthdaymobile, Auntie Flint (UNK black rares).**
   - New static mode `CantRemoveCounter` (players), player property `poisonCounters<op><n>`, and

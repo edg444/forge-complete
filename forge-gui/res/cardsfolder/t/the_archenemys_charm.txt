@@ -1,0 +1,8 @@
+Name:The Archenemy's Charm
+ManaCost:B B B
+Types:Instant
+A:SP$ Charm | Choices$ DBDemise,DBVanish,DBUseful
+SVar:DBDemise:DB$ SetInMotion | DefinedName$ Choose Your Demise | SpellDescription$ Choose Your Demise
+SVar:DBVanish:DB$ SetInMotion | DefinedName$ Every Hope Shall Vanish | SpellDescription$ Every Hope Shall Vanish
+SVar:DBUseful:DB$ SetInMotion | DefinedName$ Make Yourself Useful | SpellDescription$ Make Yourself Useful
+Oracle:Choose a scheme and set it into motion —\n• Choose Your Demise\n• Every Hope Shall Vanish\n• Make Yourself Useful

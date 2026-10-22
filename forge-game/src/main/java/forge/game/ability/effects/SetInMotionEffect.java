@@ -23,6 +23,15 @@ public class SetInMotionEffect extends SpellAbilityEffect {
             repeats = AbilityUtils.calculateAmount(source, sa.getParam("RepeatNum"), sa);
         }
 
+        // The Archenemy's Charm: a scheme named on the card, from outside the game
+        if (sa.hasParam("DefinedName")) {
+            final forge.item.PaperCard pc = forge.StaticData.instance().getVariantCards().getCard(sa.getParam("DefinedName"));
+            if (pc != null) {
+                final Card scheme = Card.fromPaperCard(pc, controller);
+                controller.setSchemeInMotion(sa, scheme);
+            }
+            return;
+        }
         for (int i = 0; i < repeats; i++) {
             if (again) {
                 controller.setSchemeInMotion(sa, controller.getGame().getCardState((Card) sa.getRootAbility().getTriggeringObject(AbilityKey.Scheme), null));

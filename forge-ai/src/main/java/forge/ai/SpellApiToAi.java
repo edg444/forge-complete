@@ -165,6 +165,7 @@ public enum SpellApiToAi {
             .put(ApiType.ScorePoint, AlwaysPlayAi.class)
             .put(ApiType.Pledge, AlwaysPlayAi.class)
             .put(ApiType.TapForMana, AlwaysPlayAi.class)
+            .put(ApiType.StopBeingCommander, AlwaysPlayAi.class)
             .put(ApiType.SeekHidden, SeekHiddenAi.class)
             .put(ApiType.PutHiddenTokens, AlwaysPlayAi.class)
             .put(ApiType.GainOwnership, CannotPlayAi.class)

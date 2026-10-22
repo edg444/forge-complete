@@ -163,6 +163,7 @@ public enum ApiType {
     ScorePoint (ScorePointEffect.class),
     Pledge (PledgeEffect.class),
     TapForMana (TapForManaEffect.class),
+    StopBeingCommander (StopBeingCommanderEffect.class),
     GameDrawn (GameDrawEffect.class),
     GenericChoice (ChooseGenericEffect.class),
     Gerrymander (GerrymanderEffect.class),

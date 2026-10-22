@@ -1,0 +1,31 @@
+Name:A Chaotic Night in Vegas
+ManaCost:2 B B
+Types:Enchantment
+# The modes of Night Out in Vegas, Another Night in Vegas and Yet Another Night in Vegas, one at random each time.
+# "Sacrifice this enchantment" is this enchantment; "All modes reset" has nothing to reset here.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | Execute$ TrigCharm | TriggerZones$ Battlefield | TriggerDescription$ At the beginning of your upkeep, choose a mode at random among the previous playtest cards Night Out in Vegas, Another Night in Vegas, or Yet Another Night in Vegas. (Whichever of the 12 effects happens here, stays here... unless you hit a mode that makes you sacrifice the enchantment.)
+SVar:TrigCharm:DB$ Charm | Random$ True | Choices$ Buffet,SeeAShow,PlayGames,GoToSleep,WakeUp,VIPLine,LifeParty,Breakfast,Sights,Trouble,GetLost,GoAgain,GoToBed
+SVar:Buffet:DB$ Token | TokenScript$ c_a_food_sac | TokenAmount$ 3 | SpellDescription$ Buffet — Create three Food tokens.
+SVar:SeeAShow:DB$ Token | TokenScript$ w_2_2_performer | TokenAmount$ 2 | SpellDescription$ See a Show — Create two 2/2 white Performer creature tokens.
+SVar:PlayGames:DB$ ChangeZone | Origin$ Library | NoShuffle$ True | Destination$ Hand | ChangeType$ Card | ChangeNum$ 1 | SubAbility$ DBDiscard | Mandatory$ True | SpellDescription$ Play Games — Search your library for a card, put that card into your hand, discard a card at random, then shuffle.
+SVar:DBDiscard:DB$ Discard | Defined$ You | NumCards$ 1 | Mode$ Random | SubAbility$ DBShuffle
+SVar:DBShuffle:DB$ Shuffle | Defined$ You
+SVar:GoToSleep:DB$ LoseLife | LifeAmount$ 15 | SubAbility$ DBSacSelf | SpellDescription$ Go to Sleep — You lose 15 life. Sacrifice this enchantment.
+SVar:WakeUp:DB$ ChangeZone | ValidTgts$ Creature | TgtZone$ Graveyard | TgtPrompt$ Select target creature card in a graveyard | Origin$ Graveyard | Destination$ Hand | SpellDescription$ Wake Up! — Return target creature card from a graveyard to its owner's hand.
+SVar:VIPLine:DB$ ChangeZone | Origin$ Library | Destination$ Library | LibraryPosition$ 0 | ChangeType$ Card | ChangeNum$ 1 | Mandatory$ True | SpellDescription$ VIP Line Access — Search your library for a card, then shuffle and put that card on top.
+SVar:LifeParty:DB$ Effect | Triggers$ PartyCast | SpellDescription$ Life of the Party — Whenever a spell is cast this turn, you gain 2 life.
+SVar:PartyCast:Mode$ SpellCast | ValidCard$ Card | TriggerZones$ Command | Execute$ TrigGain | TriggerDescription$ Whenever a spell is cast this turn, you gain 2 life.
+SVar:TrigGain:DB$ GainLife | Defined$ You | LifeAmount$ 2
+SVar:Breakfast:DB$ Token | TokenScript$ c_a_food_sac | TokenAmount$ 2 | SubAbility$ DBSacSelf | SpellDescription$ Breakfast at Dawn — Create two Food tokens. Sacrifice this enchantment.
+SVar:Sights:DB$ Surveil | Amount$ 3 | SpellDescription$ See the sights — Surveil 3.
+SVar:Trouble:DB$ Pump | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumAtt$ +1 | KW$ Menace | SpellDescription$ Cause trouble — Target creature gets +1/+0 and gains menace until end of turn.
+SVar:GetLost:DB$ RepeatEach | RepeatPlayers$ Player | RepeatSubAbility$ DBChooseLost | SubAbility$ DBExileLost | SpellDescription$ Get lost — Each player exiles a creature they control until this enchantment leaves the battlefield.
+SVar:DBChooseLost:DB$ ChooseCard | Defined$ Remembered | Choices$ Creature.RememberedPlayerCtrl | Amount$ 1 | Mandatory$ True | ChoiceTitle$ Choose a creature you control to exile | RememberChosen$ True
+SVar:DBExileLost:DB$ ChangeZone | Defined$ Remembered | Origin$ Battlefield | Destination$ Exile | Duration$ UntilHostLeavesPlay | SubAbility$ DBCleanupLost
+SVar:DBCleanupLost:DB$ Cleanup | ClearRemembered$ True
+SVar:GoAgain:DB$ LoseLife | Defined$ You | LifeAmount$ 5 | SpellDescription$ I'm fine! Let's go again! — All modes reset and can be chosen again. You lose 5 life.
+SVar:GoToBed:DB$ Sacrifice | Defined$ Self | SpellDescription$ Go to bed — Sacrifice this enchantment.
+SVar:DBSacSelf:DB$ Sacrifice | Defined$ Self
+AI:RemoveDeck:All
+DeckHas:Ability$Token|Sacrifice|LifeGain & Type$Food|Artifact|Performer
+Oracle:At the beginning of your upkeep, choose a mode at random among the previous playtest cards Night Out in Vegas, Another Night in Vegas, or Yet Another Night in Vegas. (Whichever of the 12 effects happens here, stays here... unless you hit a mode that makes you sacrifice the enchantment.)

@@ -1,0 +1,5 @@
+Name:Monster Mash-Up
+ManaCost:3 B B
+Types:Sorcery
+A:SP$ Combine | ValidTgts$ Creature | TgtZone$ Graveyard | TargetMin$ 2 | TargetMax$ 2 | TargetUnique$ True | TgtPrompt$ Select two target creature cards in graveyards | SpellDescription$ Put two target creature cards from graveyards onto the battlefield combined into one creature under your control. (The creature has the combined power and toughness of its cards. It has their names, types, text boxes, etc. They separate again if the creature leaves the battlefield.)
+Oracle:Put two target creature cards from graveyards onto the battlefield combined into one creature under your control. (The creature has the combined power and toughness of its cards. It has their names, types, text boxes, etc. They separate again if the creature leaves the battlefield.)
