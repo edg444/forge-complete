@@ -328,7 +328,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Unknown Event: Maeve, Wearer of Many Hats, Halana and Alena and Gisa and Geralf, The Vast Scrier, The
   Salubrious Philosopher, Falko, Showoff Pilot, The Traveling Postman (UNK rares).**
   - SVar `AnyNumberOfRoles`: the Role state-based action leaves that card's Roles alone. A Role created attached
-    isn't "attached" (CR 701.3a), so Maeve draws only when a Role is moved onto it.
+    isn't "attached" (CR 701.3a, user ruling), so Maeve draws only when a Role is moved onto it.
   - ChangeZone/combat `OwnAttackTriggers$ True` (`TriggerHandler.runOwnTriggers`): a creature put onto the
     battlefield attacking has its own "whenever this creature attacks" triggers trigger, and no one else's.
   - Card properties `addsMana` and `removalSpell` (instants and sorceries that can damage, destroy, or exile a
