@@ -1060,7 +1060,8 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
                             fetchList.addAll(player.getCardsIn(ZoneType.Library, fetchNum));
                         }
                     }
-                    if (!decider.canSearchLibraryWith(sa, player)) {
+                    if (!decider.canSearchLibraryWith(sa, player)
+                            || searchedLibrary && !forge.game.staticability.StaticAbilityActionTax.payFor(decider, "Search")) {
                         fetchList.removeAll(player.getCardsIn(ZoneType.Library));
                         // "if you do/sb does, shuffle" is not mandatory (usually a triggered ability), should has this param.
                         // "then shuffle" is mandatory

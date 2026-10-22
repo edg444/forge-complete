@@ -1515,6 +1515,9 @@ public class Player extends GameEntity implements Comparable<Player> {
             if (gameStarted && !canDraw()) {
                 return drawn;
             }
+            if (gameStarted && getNumDrawnThisTurn() >= 1 && !forge.game.staticability.StaticAbilityActionTax.payFor(this, "Draw")) {
+                continue;
+            }
             CardCollectionView cards = doDraw(toReveal, cause, params, zone, libraryOf);
             if (cards == null) {
                 break;

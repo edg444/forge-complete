@@ -25,6 +25,8 @@ public enum StaticAbilityMode {
     CountersAreTokens,
     TokensAreCards,
     PoisonTolerance,
+    // The Pleasant Taxer - see StaticAbilityActionTax
+    ActionTax,
     ManaPaymentTax,
     InvertPTCounters,
     JumpStartNotExiled,

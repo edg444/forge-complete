@@ -312,6 +312,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: The Pleasant Taxer (UNK).**
+  - New static mode `ActionTax` (`Action$ Search|Draw`, `ValidPlayer$`, `Amount$`): a library search, or a draw beyond
+    the player's first each turn, is paid for each time or it doesn't happen (user ruling). The AI pays when it can.
+  - ChooseGenericAi `AILogic$ PleasantTaxer`: taxes casting whichever kind of spell its own deck has fewer of.
+
 - **Unknown Event: Guess Who it Is!, Unstickerify, Higher Level Zone Monster (UNK uncommons).**
   - New effect `GuessWho`: the guesser asks five questions from a menu of the card's characteristics (colors, types,
     mana value, power, toughness, keywords), answered truthfully, then names a card from card-name search; the AI

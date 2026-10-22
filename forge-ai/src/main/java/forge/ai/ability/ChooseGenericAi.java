@@ -206,6 +206,17 @@ public class ChooseGenericAi extends SpellAbilityAi {
             return best;
         } else if ("Random".equals(logic)) {
             return Aggregates.random(spells);
+        } else if ("PleasantTaxer".equals(logic)) {
+            // tax everyone's casting of whichever kind of spell the AI's own deck has fewer of
+            final int creatures = CardLists.count(player.getAllCards(), c -> !c.isToken() && c.isCreature());
+            final int others = CardLists.count(player.getAllCards(), c -> !c.isToken() && !c.isCreature() && !c.isLand());
+            final String want = creatures > others ? "Casting noncreature spells" : "Casting creature spells";
+            for (final SpellAbility each : spells) {
+                if (want.equals(each.getDescription())) {
+                    return each;
+                }
+            }
+            return spells.get(0);
         } else if ("Sketch".equals(logic)) {
             // D00-DL: the AI's fifteen-second drawing - each pick a feature more, until it stops
             return MyRandom.percentTrue(55) ? Aggregates.random(spells) : null;

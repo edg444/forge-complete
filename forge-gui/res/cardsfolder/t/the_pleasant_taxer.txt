@@ -1,0 +1,18 @@
+Name:The Pleasant Taxer
+ManaCost:1 W
+Types:Legendary Creature Human Wizard
+PT:2/2
+K:ETBReplacement:Other:DBChoose
+SVar:DBChoose:DB$ GenericChoice | Defined$ You | Choices$ CreatureSpells,NoncreatureSpells,Searching,ExtraDraws,Abilities | SetChosenMode$ True | ShowChoice$ True | AILogic$ PleasantTaxer | SpellDescription$ As CARDNAME enters the battlefield, choose casting creature spells, casting noncreature spells, searching libraries, drawing a card beyond the first each turn, or activating abilities other than mana abilities.
+SVar:CreatureSpells:DB$ Pump | SpellDescription$ Casting creature spells
+SVar:NoncreatureSpells:DB$ Pump | SpellDescription$ Casting noncreature spells
+SVar:Searching:DB$ Pump | SpellDescription$ Searching libraries
+SVar:ExtraDraws:DB$ Pump | SpellDescription$ Drawing a card beyond the first each turn
+SVar:Abilities:DB$ Pump | SpellDescription$ Activating abilities other than mana abilities
+S:Mode$ RaiseCost | ValidCard$ Creature | Type$ Spell | Amount$ 1 | IsPresent$ Card.Self+ChosenModeCasting creature spells | Description$ Doing the chosen action costs players {1} more.
+S:Mode$ RaiseCost | ValidCard$ Card.nonCreature | Type$ Spell | Amount$ 1 | IsPresent$ Card.Self+ChosenModeCasting noncreature spells | Secondary$ True | Description$ Doing the chosen action costs players {1} more.
+S:Mode$ RaiseCost | ValidCard$ Card | ValidSpell$ Activated.!ManaAbility | Amount$ 1 | IsPresent$ Card.Self+ChosenModeActivating abilities other than mana abilities | Secondary$ True | Description$ Doing the chosen action costs players {1} more.
+# A search or a draw costs nothing of its own: pay {1} each time or it doesn't happen (user ruling 2026-10-22)
+S:Mode$ ActionTax | Action$ Search | ValidPlayer$ Player | Amount$ 1 | IsPresent$ Card.Self+ChosenModeSearching libraries | Secondary$ True | Description$ Doing the chosen action costs players {1} more.
+S:Mode$ ActionTax | Action$ Draw | ValidPlayer$ Player | Amount$ 1 | IsPresent$ Card.Self+ChosenModeDrawing a card beyond the first each turn | Secondary$ True | Description$ Doing the chosen action costs players {1} more.
+Oracle:As The Pleasant Taxer enters the battlefield, choose casting creature spells, casting noncreature spells, searching libraries, drawing a card beyond the first each turn, or activating abilities other than mana abilities.\nDoing the chosen action costs players {1} more.
