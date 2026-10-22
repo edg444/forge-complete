@@ -1,0 +1,15 @@
+Name:Shahrazad and Sindbad
+ManaCost:2 W U
+Types:Creature Human
+PT:3/4
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Opponent | CombatDamage$ True | CheckSVar$ Subgames | SVarCompare$ EQ0 | TriggerZones$ Battlefield | Execute$ TrigSubgame | TriggerDescription$ Whenever CARDNAME deals combat damage to an opponent, if there haven't been any subgames this match, players play a Magic subgame using their libraries as their decks. Each player who doesn't win the subgame loses half their life, rounded up.
+SVar:TrigSubgame:DB$ Subgame | RememberPlayers$ NotWin | SubAbility$ DBRepeatEachPlayer | ConditionCheckSVar$ Subgames | ConditionSVarCompare$ EQ0
+SVar:DBRepeatEachPlayer:DB$ RepeatEach | RepeatPlayers$ Remembered | ClearRememberedBeforeLoop$ True | RepeatSubAbility$ DBLoseLife
+SVar:DBLoseLife:DB$ LoseLife | LifeAmount$ X | Defined$ Player.IsRemembered
+SVar:X:PlayerCountRemembered$LifeTotal/HalfUp
+# subgames played in any game of this match (Match.getSubgamesPlayed)
+SVar:Subgames:Count$SubgamesThisMatch
+A:AB$ Draw | Cost$ T | Defined$ You | NumCards$ 1 | Reveal$ True | RememberDrawn$ True | SubAbility$ DBDiscard | SpellDescription$ Draw a card and reveal it. If it isn't a land card, discard it.
+SVar:DBDiscard:DB$ Discard | Defined$ You | Mode$ Defined | DefinedCards$ Remembered | ConditionDefined$ Remembered | ConditionPresent$ Card.nonLand | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Whenever Shahrazad and Sindbad deals combat damage to an opponent, if there haven't been any subgames this match, players play a Magic subgame using their libraries as their decks. Each player who doesn't win the subgame loses half their life, rounded up.\n{T}: Draw a card and reveal it. If it isn't a land card, discard it.

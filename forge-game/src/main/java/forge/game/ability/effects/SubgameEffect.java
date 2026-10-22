@@ -172,6 +172,7 @@ public class SubgameEffect extends SpellAbilityEffect {
             startingLife = Integer.parseInt(sa.getParam("StartingLife"));
         }
         Game subgame = createSubGame(maingame, startingLife);
+        maingame.getMatch().addSubgamePlayed();
 
         String startMessage = Localizer.getInstance().getMessage("lblSubgameStart", hostCard.getTranslatedName());
         maingame.getMatch().fireEvent(new GameEventSubgameStart(subgame, startMessage));

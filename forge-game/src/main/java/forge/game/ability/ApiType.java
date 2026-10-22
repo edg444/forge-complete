@@ -171,6 +171,8 @@ public enum ApiType {
     GuessArtist (GuessArtistEffect.class),
     GuessName (GuessNameEffect.class),
     GuessWho (GuessWhoEffect.class),
+    TriviaGuess (TriviaGuessEffect.class),
+    ResolveNow (ResolveNowEffect.class),
     StickerBeneath (StickerBeneathEffect.class),
     SecretIdentity (SecretIdentityEffect.class),
     TakeAdventure (TakeAdventureEffect.class),

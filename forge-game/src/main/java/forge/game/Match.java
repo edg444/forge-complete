@@ -573,6 +573,15 @@ public class Match {
         deckWrittenOn = listener;
     }
 
+    // Shahrazad and Sindbad: how many subgames have been played this match
+    private int subgamesPlayed = 0;
+    public int getSubgamesPlayed() {
+        return subgamesPlayed;
+    }
+    public void addSubgamePlayed() {
+        subgamesPlayed++;
+    }
+
     /**
      * Legacy: the word is written on the physical card, for good (its rulings), so one copy of that card in its
      * owner's deck becomes a copy with the word, and the deck is saved.

@@ -2494,6 +2494,10 @@ public class AbilityUtils {
         if (sq[0].equals("CurrentMonth")) {
             return doXMath(java.time.LocalDate.now().getMonthValue(), expr, c, ctb);
         }
+        // Shahrazad and Sindbad: subgames played this match
+        if (sq[0].equals("SubgamesThisMatch")) {
+            return doXMath(c.getGame().getMatch().getSubgamesPlayed(), expr, c, ctb);
+        }
         // Hosting Season: Count$DateIs.<yyyy-mm-dd>,... - 1 if it's one of those days
         if (sq[0].equals("DateIs") && sq.length > 1) {
             final String today = java.time.LocalDate.now().toString();

@@ -2029,6 +2029,10 @@ public class AiController {
             }
         } else if ("Min".equals(logic)) {
             return min;
+        } else if (sa.getApi() == forge.game.ability.ApiType.TriviaGuess) {
+            // The Trivia Mastermind: an opponent's guess, from the name alone (no looking it up)
+            return forge.util.MyRandom.getRandom().nextInt(forge.game.ability.effects.TriviaGuessEffect.MANA_VALUE
+                    .equals(sa.getSVar("TriviaCategory")) ? 7 : 6);
         } else if ("Half".equals(logic)) {
             // The Tokenator: a power out of a total, the rest its toughness - no more power than toughness
             return Math.max(min, max / 2);

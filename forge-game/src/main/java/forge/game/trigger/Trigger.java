@@ -378,6 +378,16 @@ public abstract class Trigger extends TriggerReplacementBase {
         if (hasParam("ActivationLimit")) {
             activations = Math.min(activations, Integer.parseInt(getParam("ActivationLimit")) - getActivationsThisTurn());
         }
+        // The Cosplayzer (SharedLimit$ <key>): once each turn among all of its triggers with that key
+        if (hasParam("SharedLimit")) {
+            int used = 0;
+            for (final Trigger t : getHostCard().getTriggers()) {
+                if (getParam("SharedLimit").equals(t.getParam("SharedLimit"))) {
+                    used += t.getActivationsThisTurn();
+                }
+            }
+            activations = Math.min(activations, 1 - used);
+        }
         return Math.max(activations, 0);
     }
 

@@ -1,0 +1,10 @@
+Name:The Trivia Mastermind
+ManaCost:1 U B R
+Types:Legendary Creature Human Gamer
+PT:1/4
+# the chosen card stays on top while it's guessed about (TriviaGuess), then goes to the bottom if it wasn't won
+A:AB$ Dig | Cost$ 1 T | DigNum$ 3 | ChangeNum$ 1 | ChangeValid$ Card.!Playtest | DestinationZone$ Library | LibraryPosition$ 0 | DestinationZone2$ Library | LibraryPosition2$ -1 | NoReveal$ True | RememberChanged$ True | SubAbility$ DBTrivia | SpellDescription$ Look at the top three cards of your library. Choose one of them that isn't a playtest card and say its name, then choose a category among power, toughness, or mana value. An opponent guesses in that category about that card, then reveal the card. If they guessed incorrectly, put the card into your hand. Then, put each card not put into your hand this way on the bottom of your library in any order.
+SVar:DBTrivia:DB$ TriviaGuess | Defined$ Remembered | SubAbility$ DBBottom
+SVar:DBBottom:DB$ ChangeZone | Defined$ Remembered | Origin$ Library | Destination$ Library | LibraryPosition$ -1 | ConditionDefined$ Remembered | ConditionPresent$ Card.inZoneLibrary | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:{1}, {T}: Look at the top three cards of your library. Choose one of them that isn't a playtest card and say its name, then choose a category among power, toughness, or mana value. An opponent guesses in that category about that card, then reveal the card. If they guessed incorrectly, put the card into your hand. Then, put each card not put into your hand this way on the bottom of your library in any order.

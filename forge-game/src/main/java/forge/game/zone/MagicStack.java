@@ -81,6 +81,8 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
     private final List<SpellAbility> thisTurnActivated = Lists.newArrayList();
 
     private Card curResolvingCard = null;
+    // Nah Yeah: a spell that resolves as soon as the one resolving now is done, before anyone gets priority
+    private SpellAbilityStackInstance resolveNow = null;
     private final Map<Integer, Integer> triggerRepeats = new HashMap<>();
 
     private final Game game;
@@ -808,6 +810,25 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
 
         // Do-Over: the turn restarts once the spell is done resolving
         game.getPhaseHandler().runPendingTurnRestart();
+
+        if (resolveNow != null) {
+            final SpellAbilityStackInstance next = resolveNow;
+            resolveNow = null;
+            if (stack.remove(next)) {
+                if (StaticAbilityStackFirstInFirstOut.applies(game)) {
+                    stack.addLast(next);
+                } else {
+                    stack.addFirst(next);
+                }
+                game.updateStackForView();
+                resolveStack();
+            }
+        }
+    }
+
+    /** Nah Yeah: this stack entry resolves right after the one resolving now. */
+    public final void resolveRightAfter(final SpellAbilityStackInstance si) {
+        resolveNow = si;
     }
 
     private void finishResolving(final SpellAbility sa, final boolean fizzle) {

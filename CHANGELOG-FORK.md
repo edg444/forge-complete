@@ -316,6 +316,20 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   (`UI_ZONE_TABS_LEFT`) is gone; upstream restored its own setting of that name (`UI_ALT_PLAYERZONETABS`), and the two
   showed with the same label. Hand, Library, Graveyard and Exile tabs are on the right edge, as upstream has them.
 
+- **Boosters: no crash when a foil slot has nothing to make a foil of.** `BoosterGenerator.generateFoilCard` took
+  the first card of an empty sheet; that pack now just has no foil (seen in the Summon the Pack test's random packs).
+
+- **Unknown Event: Shahrazad and Sindbad, The Trivia Mastermind, The Cosplayzer, Yeah Nah // Nah Yeah (UNK
+  rares).**
+  - The match counts its subgames (`Count$SubgamesThisMatch`).
+  - New effect `TriviaGuess`: the controller names the card and picks power, toughness, or mana value (only mana
+    value for a card without power and toughness); an opponent guesses it, and a wrong guess puts the card into its
+    controller's hand. The AI guesses from the name alone, 0 to 6.
+  - Copy `FirstLetter$ <letter>`. Trigger `SharedLimit$ <key>`: once each turn among a card's triggers with that key.
+    Ability property `NotOnceCopier` (not an ability with `OnceCopier$`).
+  - New effect `ResolveNow`: the target spell resolves as soon as this is done resolving, before anyone gets priority
+    (`MagicStack.resolveRightAfter`) - not in the middle of it.
+
 - **Unknown Event: Interrogation Robot, The Zonian Brawler, The Karst, Enchanted (UNK cards).**
   - Ability property `LastNamedSpell`: the half of a split card named last. The AI's card-name choice now picks one
     of the offered halves of a split card with more than two halves.

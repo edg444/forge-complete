@@ -1,0 +1,19 @@
+Name:Yeah Nah
+ManaCost:2 U
+Types:Instant
+K:Fuse
+A:SP$ Vote | Defined$ Player | TargetType$ Spell | ValidTgts$ Card | TgtPrompt$ Select target spell | Choices$ DBYeah,DBNah | VoteTiedAbility$ DBYeah | SpellDescription$ Each player votes for yeah or nah. If yeah gets the most votes or is tied for the most votes, each player copies target spell. If nah gets the most votes, counter that spell.
+SVar:DBYeah:DB$ CopySpellAbility | Defined$ Targeted | Controller$ Player | SpellDescription$ Yeah
+SVar:DBNah:DB$ Counter | Defined$ Targeted | SpellDescription$ Nah
+AlternateMode:Split
+Oracle:Each player votes for yeah or nah. If yeah gets the most votes or is tied for the most votes, each player copies target spell. If nah gets the most votes, counter that spell.\nFuse (You may cast one or both halves of this card from your hand.)
+
+ALTERNATE
+
+Name:Nah Yeah
+ManaCost:U
+Types:Instant
+K:Split second
+# it resolves as soon as this is done resolving, before anyone gets priority (ResolveNow)
+A:SP$ ResolveNow | TargetType$ Spell | ValidTgts$ Card | TgtPrompt$ Select target spell | SpellDescription$ Target spell resolves. (It just happens right now.)
+Oracle:Split second\nTarget spell resolves. (It just happens right now.)\nFuse (You may cast one or both halves of this card from your hand.)

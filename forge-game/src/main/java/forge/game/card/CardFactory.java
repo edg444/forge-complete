@@ -615,6 +615,11 @@ public class CardFactory {
                 state.setName(newName);
             }
 
+            // The Cosplayzer: "the first letter of its name is Z"
+            if (cause.hasParam("FirstLetter") && !state.getName().isEmpty()) {
+                state.setName(cause.getParam("FirstLetter") + state.getName().substring(1));
+            }
+
             if (cause.hasParam("AddColors")) {
                 state.addColor(colors);
             }

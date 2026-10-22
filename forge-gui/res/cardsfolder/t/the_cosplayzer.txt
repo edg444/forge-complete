@@ -1,0 +1,11 @@
+Name:The Cosplayzer
+ManaCost:4 U
+Types:Legendary Creature Shapeshifter
+PT:0/0
+K:ETBReplacement:Copy:DBCopy:Optional
+# SharedLimit$: once each turn between the two (an activated or a triggered ability); its own copying isn't copied
+SVar:DBCopy:DB$ Clone | Choices$ Creature.Other | AddTriggers$ CopyActivated,CopyTriggered | AddSVars$ TrigCopy | FirstLetter$ Z | SpellDescription$ You may have CARDNAME enter as a copy of any creature on the battlefield, except it has "The first time each turn an ability of this creature is activated or triggered, copy it. You may choose new targets for the copy" and the first letter of its name is Z. (This is both stylish AND makes it a different name for the legend rule!)
+SVar:CopyActivated:Mode$ AbilityCast | ValidCard$ Card.Self | SharedLimit$ Cosplay | TriggerZones$ Battlefield | Execute$ TrigCopy | TriggerDescription$ The first time each turn an ability of this creature is activated or triggered, copy it. You may choose new targets for the copy.
+SVar:CopyTriggered:Mode$ AbilityTriggered | ValidSource$ Card.Self | ValidSpellAbility$ SpellAbility.NotOnceCopier | SharedLimit$ Cosplay | TriggerZones$ Battlefield | Execute$ TrigCopy | Secondary$ True | TriggerDescription$ The first time each turn an ability of this creature is activated or triggered, copy it. You may choose new targets for the copy.
+SVar:TrigCopy:DB$ CopySpellAbility | Defined$ TriggeredSpellAbility | MayChooseTarget$ True | OnceCopier$ True
+Oracle:You may have The Cosplayzer enter as a copy of any creature on the battlefield, except it has "The first time each turn an ability of this creature is activated or triggered, copy it. You may choose new targets for the copy" and the first letter of its name is Z. (This is both stylish AND makes it a different name for the legend rule!)
