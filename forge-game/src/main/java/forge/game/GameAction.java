@@ -3056,6 +3056,23 @@ public class GameAction {
                     }
                 }
             }
+            // The Fifth Alias: if it's your commander or in your deck, secretly list that many nonland cards in your deck.
+            // Offered sorted by name, so choosing doesn't show the library's order.
+            for (Card c : all) {
+                if (!c.hasSVar("AsksSecretList") || !(c.isInZone(ZoneType.Library) || c.isCommander() && c.isInZone(ZoneType.Command))) {
+                    continue;
+                }
+                CardCollection deck = new CardCollection(takesAction.getCardsIn(ZoneType.Library));
+                deck.addAll(CardLists.filter(takesAction.getCardsIn(ZoneType.Command), Card::isCommander));
+                deck = CardLists.filter(deck, x -> !x.isLand());
+                deck.sort(java.util.Comparator.comparing(Card::getName));
+                final int n = Integer.parseInt(c.getSVar("AsksSecretList"));
+                SpellAbility sa = new SpellAbility.EmptySa(ApiType.ChooseCard, c, takesAction);
+                for (Card listed : takesAction.getController().chooseCardsForEffect(deck, sa,
+                        "Secretly list " + n + " nonland cards in your deck for " + c, Math.min(n, deck.size()), n, false, null)) {
+                    takesAction.addToSecretList(listed);
+                }
+            }
             // Mono Eminence (Theopholos): a commander's starting life bonus, if the deck's color identity is that one color
             for (Card c : takesAction.getCardsIn(ZoneType.Command)) {
                 if (!c.isCommander() || !c.hasSVar("StartingLifeBonus")) {

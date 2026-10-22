@@ -93,6 +93,10 @@ public class CardProperty {
                 }
             }
             return found;
+        } else if (property.equals("OnYourSecretList")) {
+            if (sourceController == null || !sourceController.isOnSecretList(card)) {
+                return false;
+            }
         } else if (property.equals("YourFavorite")) {
             // The Keeper of Favorite Cards: a name on the source's controller's favorites list
             if (sourceController == null || sourceController.getFavoriteCardNames().stream().noneMatch(card::sharesNameWith)) {

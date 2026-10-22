@@ -1,0 +1,13 @@
+Name:The Mox Painter
+ManaCost:1 G U
+Types:Legendary Creature Human Artist
+PT:1/4
+A:AB$ Cleanup | Cost$ 1 T | ClearNamedCard$ True | SubAbility$ DBChoose | SpellDescription$ Choose a tournament-legal Mox you don't control at random. Create a token that's a copy of it. Then if you control all ten, create a Mox Lotus token. (The ten are Amber, Chrome, Diamond, Emerald, Jet, Opal, Pearl, Ruby, Sapphire, and Tantalite. Perhaps roll a d10?)
+SVar:DBChoose:DB$ NameCard | Defined$ You | ChooseFromList$ Mox Amber,Chrome Mox,Mox Diamond,Mox Emerald,Mox Jet,Mox Opal,Mox Pearl,Mox Ruby,Mox Sapphire,Mox Tantalite | AtRandom$ True | ExcludeControlled$ True | SubAbility$ DBCopy
+# with every Mox already controlled nothing is named, and a DefinedName that names no card copies nothing
+SVar:DBCopy:DB$ CopyPermanent | DefinedName$ NamedCard | SubAbility$ DBLotus
+SVar:DBLotus:DB$ CopyPermanent | DefinedName$ Mox Lotus | ConditionCheckSVar$ Moxen | ConditionSVarCompare$ GE10
+SVar:Moxen:Count$DifferentNames Card.namedMox Amber+YouCtrl,Card.namedChrome Mox+YouCtrl,Card.namedMox Diamond+YouCtrl,Card.namedMox Emerald+YouCtrl,Card.namedMox Jet+YouCtrl,Card.namedMox Opal+YouCtrl,Card.namedMox Pearl+YouCtrl,Card.namedMox Ruby+YouCtrl,Card.namedMox Sapphire+YouCtrl,Card.namedMox Tantalite+YouCtrl
+A:AB$ Untap | Cost$ W U B R G | Defined$ Self | SpellDescription$ Untap CARDNAME.
+DeckHas:Ability$Token
+Oracle:{1}, {T}: Choose a tournament-legal Mox you don't control at random. Create a token that's a copy of it. Then if you control all ten, create a Mox Lotus token. (The ten are Amber, Chrome, Diamond, Emerald, Jet, Opal, Pearl, Ruby, Sapphire, and Tantalite. Perhaps roll a d10?)\n{W}{U}{B}{R}{G}: Untap The Mox Painter.

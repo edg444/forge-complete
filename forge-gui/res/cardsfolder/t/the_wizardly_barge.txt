@@ -1,0 +1,13 @@
+Name:The Wizardly Barge
+ManaCost:2 U R
+Types:Legendary Kindred Artifact Wizard Vehicle
+PT:3/5
+S:Mode$ Continuous | Affected$ Wizard.Other+YouCtrl | AddPower$ 1 | AddToughness$ 1 | Description$ Other Wizards you control get +1/+1.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigChoose | TriggerDescription$ Whenever the Wizardly Barge attacks, create a token that's a copy of a random tournament-legal Wizard creature. (I'd suggest looking them all up online and choosing one at random.)
+# "Tournament-legal" is legal in Vintage, the format every other sanctioned one sits inside.
+SVar:TrigChoose:DB$ Cleanup | ClearNamedCard$ True | SubAbility$ DBName
+SVar:DBName:DB$ NameCard | Defined$ You | ValidCards$ Creature.Wizard | AtRandom$ True | LegalIn$ Vintage | SubAbility$ DBCopy
+SVar:DBCopy:DB$ CopyPermanent | DefinedName$ NamedCard
+K:Crew:1
+DeckHas:Ability$Token
+Oracle:Other Wizards you control get +1/+1.\nWhenever the Wizardly Barge attacks, create a token that's a copy of a random tournament-legal Wizard creature. (I'd suggest looking them all up online and choosing one at random.)\nCrew 1

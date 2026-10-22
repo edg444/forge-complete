@@ -312,6 +312,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: The Fifth Alias, Gomif, Fast Racer, The Mox Painter, Efteekay, Flame of the Kav, Frie, Displaced
+  in Time, Pirk, Heroic Captain, The Cookout Creator, The Wizardly Barge (UNK rares).**
+  - A deck with SVar `AsksSecretList:N` secretly lists N nonland cards as the game begins; card property
+    `OnYourSecretList`.
+  - New static `SpeedUncapped`: speed can rise past 4, which still counts as max speed.
+  - `NameCard ExcludeControlled$`; `LegalIn$` now takes any format by name (Vintage for "tournament-legal").
+  - `Count$DifferentNames <valid>`.
+  - Warp's end-step exile is marked `WarpExile` (spell property) for "exiled because it was warped".
+  - `CounterAddedOnce FullyStations$`: the counters took a Spacecraft to its highest station number.
+  - New effect `NameIt`: a player gives a permanent a name of their own.
 - **Unknown Event: The Asker of More Mana, The Keeper of Favorite Cards, The Water Maro, The Vegetable Car, Jiffy,
   Vehicle Repairer, The Bearded Teakeeper, Uh, Squen & Cragg Made a Card, The Herald of Numot, The Caffeinated
   Runner, The Weekly Princess, The Milling Runner (UNK rares).**

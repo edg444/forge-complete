@@ -510,6 +510,10 @@ public abstract class SpellAbilityEffect {
         } else if (location.equals("Destroy")) {
             trigSA = "DB$ Destroy | Defined$ DelayTriggerRememberedLKI";
         }
+        if (sa.isWarp() && location.equals("Exile")) {
+            // Frie, Displaced in Time asks whether a card was exiled because it was warped
+            trigSA += " | WarpExile$ True";
+        }
         if (sa.hasParam("AtEOTCondition")) {
             String var = sa.getParam("AtEOTCondition");
             trigSA += "| ConditionCheckSVar$ " + var;

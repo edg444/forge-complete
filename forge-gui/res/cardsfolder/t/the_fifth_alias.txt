@@ -1,0 +1,11 @@
+Name:The Fifth Alias
+ManaCost:2 U R W
+Types:Legendary Creature Shapeshifter
+PT:5/5
+# The list is made as the game begins (see GameAction), from the nonland cards in the library and command zone.
+SVar:AsksSecretList:5
+Text:Before the game begins, if The Fifth Alias is your commander or in your deck, secretly make a list of five nonland cards in your deck. (Don't forget to do this!)
+T:Mode$ Drawn | ValidCard$ Card.YouCtrl+OnYourSecretList | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigReveal | TriggerDescription$ As you draw a card on your list, you may reveal it, show it was on the list, and exclaim its name. If you do, cast it without paying its mana cost.
+SVar:TrigReveal:DB$ Reveal | Defined$ TriggeredCard | RevealDefined$ True | SubAbility$ DBCast
+SVar:DBCast:DB$ Play | Defined$ TriggeredCard | ValidSA$ Spell | WithoutManaCost$ True | Controller$ You
+Oracle:Before the game begins, if The Fifth Alias is your commander or in your deck, secretly make a list of five nonland cards in your deck. (Don't forget to do this!)\nAs you draw a card on your list, you may reveal it, show it was on the list, and exclaim its name. If you do, cast it without paying its mana cost.

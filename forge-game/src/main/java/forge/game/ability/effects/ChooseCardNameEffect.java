@@ -87,7 +87,15 @@ public class ChooseCardNameEffect extends SpellAbilityEffect {
                     if (sa.hasParam("ExcludeChosen") && host.getNamedCards().contains(name)) {
                         continue;
                     }
+                    // The Mox Painter: a Mox you don't control
+                    final String listed = name;
+                    if (sa.hasParam("ExcludeControlled") && p.getCardsIn(forge.game.zone.ZoneType.Battlefield).anyMatch(x -> x.sharesNameWith(listed))) {
+                        continue;
+                    }
                     faces.add(StaticData.instance().getCommonCards().getFaceByName(name));
+                }
+                if (faces.isEmpty()) {
+                    continue;
                 }
                 if (randomChoice) {
                     chosen = Aggregates.random(faces).getName();
@@ -137,7 +145,8 @@ public class ChooseCardNameEffect extends SpellAbilityEffect {
                 }
                 if (sa.hasParam("LegalIn")) {
                     // Standard Procedure: "currently legal in the Standard format", whatever format the game is
-                    final GameFormat format = "Standard".equals(sa.getParam("LegalIn")) ? GameFormat.currentStandard() : null;
+                    // The Wizardly Barge: "tournament-legal" is LegalIn$ Vintage, the format every other sanctioned one sits inside
+                    final GameFormat format = "Standard".equals(sa.getParam("LegalIn")) ? GameFormat.currentStandard() : GameFormat.named(sa.getParam("LegalIn"));
                     final Set<String> legal = format == null ? Set.of() : format.getLegalFrontFaceNames();
                     cpp = cpp.and(f -> legal.contains(f.getName()));
                 }

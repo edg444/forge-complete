@@ -245,6 +245,17 @@ public class GameFormat implements Comparable<GameFormat> {
         standardSource = source;
     }
 
+    private static java.util.function.Function<String, GameFormat> formatSource = null;
+
+    public static void setFormatSource(final java.util.function.Function<String, GameFormat> source) {
+        formatSource = source;
+    }
+
+    /** A format by name as Forge currently defines it, or null before the GUI layer has registered the formats. */
+    public static GameFormat named(final String name) {
+        return formatSource == null ? null : formatSource.apply(name);
+    }
+
     /** The Standard format as Forge currently defines it, or null before the GUI layer has registered it. */
     public static GameFormat currentStandard() {
         return standardSource == null ? null : standardSource.get();

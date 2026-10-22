@@ -463,6 +463,7 @@ public final class FModel {
         WordList.setSpellingSource(() -> FileUtil.readFile(ForgeConstants.SPELLING_WORD_LIST_FILE));
         BannedOrRestricted.setSource(() -> FileUtil.readFile(ForgeConstants.BANNED_OR_RESTRICTED_FILE));
         GameFormat.setStandardSource(() -> getFormats().getStandard());
+        GameFormat.setFormatSource(name -> getFormats().get(name));
         forge.util.SunTimes.setSource(() -> FileUtil.readFile(ForgeConstants.TIME_ZONE_COORDINATES_FILE));
 
         if (!keywordsLoaded) {

@@ -1,0 +1,8 @@
+Name:Frie, Displaced in Time
+ManaCost:U B R
+Types:Legendary Creature Human Citizen
+PT:3/3
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Exile | ValidCard$ Card | ValidCause$ Ability.WarpExile | TriggerZones$ Battlefield | Execute$ TrigCounters | TriggerDescription$ Whenever a card is exiled because it was warped, put three time counters on it. It gains suspend.
+SVar:TrigCounters:DB$ PutCounter | Defined$ TriggeredNewCardLKICopy | CounterType$ TIME | CounterNum$ 3 | SubAbility$ DBSuspend
+SVar:DBSuspend:DB$ Pump | Defined$ TriggeredNewCardLKICopy | KW$ Suspend | PumpZone$ Exile | Duration$ Permanent
+Oracle:Whenever a card is exiled because it was warped, put three time counters on it. It gains suspend.

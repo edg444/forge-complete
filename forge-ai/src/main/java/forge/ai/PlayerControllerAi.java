@@ -1711,6 +1711,11 @@ public class PlayerControllerAi extends PlayerController {
         if (sa != null && sa.getApi() == ApiType.GuessWord) {
             return GuessWordAi.guessWord(player, sa.getHostCard());
         }
+        if (sa != null && sa.getApi() == ApiType.NameIt) {
+            // naming something of its own (Pirk's Spacecraft) - any decent name will do
+            return forge.util.Aggregates.random(java.util.List.of("Starhopper", "Lucky Comet", "Void Runner",
+                    "Silver Lantern", "Wandering Star", "The Long Shot"));
+        }
         if (sa != null && sa.getApi() == ApiType.GuessName) {
             return GuessNameAi.guessName(player, sa);
         }

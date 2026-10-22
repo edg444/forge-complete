@@ -1,0 +1,14 @@
+Name:Gomif, Fast Racer
+ManaCost:U R
+Types:Legendary Creature Human Pilot
+PT:*/2
+K:Start your engines
+S:Mode$ Continuous | EffectZone$ All | CharacteristicDefining$ True | SetPower$ X | Description$ NICKNAME's power is equal to your speed.
+SVar:X:Count$YourSpeed
+S:Mode$ SpeedUncapped | ValidPlayer$ You | Description$ Your speed can increase beyond 4. (You're still at max speed at 4 or greater.)
+T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | TriggerZones$ Battlefield | CheckSVar$ Y | SVarCompare$ GE1 | Execute$ TrigDraw | TriggerDescription$ At the beginning of your end step, if an opponent lost life this turn, you may draw cards equal to your speed. If you do, discard two cards.
+SVar:TrigDraw:DB$ Draw | NumCards$ X | OptionalDecider$ You | RememberDrawn$ True | SubAbility$ DBDiscard
+SVar:DBDiscard:DB$ Discard | Defined$ You | NumCards$ 2 | Mode$ TgtChoose | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ GE1 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:Y:Count$LifeOppsLostThisTurn
+Oracle:Start your engines!\nGomif's power is equal to your speed.\nYour speed can increase beyond 4. (You're still at max speed at 4 or greater.)\nAt the beginning of your end step, if an opponent lost life this turn, you may draw cards equal to your speed. If you do, discard two cards.

@@ -28,6 +28,7 @@ public enum StaticAbilityMode {
     ManaPaymentTax,
     InvertPTCounters,
     JumpStartNotExiled,
+    SpeedUncapped,
     CantRemoveCounter,
 
     // StaticAbility

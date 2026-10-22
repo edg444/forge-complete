@@ -144,6 +144,7 @@ public class Player extends GameEntity implements Comparable<Player> {
 
     private String namedCard = "";
     private final Set<String> favoriteCardNames = new LinkedHashSet<>();
+    private final Set<Integer> secretList = new HashSet<>();
 
     private final Map<String, FCollection<String>> notes = Maps.newHashMap();
     private final Map<String, Integer> notedNum = Maps.newHashMap();
@@ -2415,6 +2416,14 @@ public class Player extends GameEntity implements Comparable<Player> {
         favoriteCardNames.add(s);
     }
 
+    // The Fifth Alias: the cards secretly listed before the game began, by card id
+    public final boolean isOnSecretList(final Card c) {
+        return secretList.contains(c.getId());
+    }
+    public final void addToSecretList(final Card c) {
+        secretList.add(c.getId());
+    }
+
     public final int getTurn() {
         return stats.getTurnsPlayed();
     }
@@ -2509,7 +2518,7 @@ public class Player extends GameEntity implements Comparable<Player> {
         return speed;
     }
     public final void increaseSpeed() {
-        if (!maxSpeed()) { // can't increase past 4
+        if (canIncreaseSpeed()) { // can't increase past 4, unless Gomif, Fast Racer says it can
             int old = speed;
             speed++;
             getGame().fireEvent(new GameEventSpeedChanged(this, old, speed)); //play sound effect
@@ -2528,7 +2537,10 @@ public class Player extends GameEntity implements Comparable<Player> {
         return speed == 0;
     }
     public final boolean maxSpeed() {
-        return speed == 4;
+        return speed >= 4;
+    }
+    public final boolean canIncreaseSpeed() {
+        return !maxSpeed() || forge.game.staticability.StaticAbilitySpeedUncapped.uncapped(this);
     }
     public final void setSpeed(int i) { //just used for copy/save
         speed = i;
@@ -2560,7 +2572,7 @@ public class Player extends GameEntity implements Comparable<Player> {
         // 702.179d There is an inherent triggered ability associated with a player having 1 or more speed. This ability has no source and is controlled by that player.
         // That ability is “Whenever one or more opponents lose life during your turn, if your speed is less than 4, your speed increases by 1. This ability triggers only once each turn.”
         String trigger = "Mode$ LifeLostAll | ValidPlayer$ Opponent | TriggerZones$ Command | ActivationLimit$ 1 | " +
-                "PlayerTurn$ True | CheckSVar$ Count$YourSpeed | SVarCompare$ LT4 | "
+                "PlayerTurn$ True | CheckSVar$ Count$YourSpeedCanIncrease | SVarCompare$ EQ1 | "
                 + "TriggerDescription$ Whenever one or more opponents lose life during your turn, if your speed is less than 4, your speed increases by 1. This ability triggers only once each turn.";
         String speedUp = "DB$ ChangeSpeed";
         Trigger lifeLostTrigger = TriggerHandler.parseTrigger(trigger, speedEffect, true);
@@ -2583,7 +2595,8 @@ public class Player extends GameEntity implements Comparable<Player> {
             createSpeedEffect();
         }
         Localizer localizer = Localizer.getInstance();
-        String label = this.maxSpeed() ? localizer.getMessage("lblMaxSpeed") : localizer.getMessage("lblSpeed", this.speed);
+        // past 4 (Gomif, Fast Racer) it's still max speed, but the number is what Gomif's power reads
+        String label = this.maxSpeed() && this.speed == 4 ? localizer.getMessage("lblMaxSpeed") : localizer.getMessage("lblSpeed", this.speed);
         speedEffect.setOverlayText(label);
         if(maxSpeed() && speedEffect.getCurrentStateName() == CardStateName.Original)
             speedEffect.setState(CardStateName.Backside, true);

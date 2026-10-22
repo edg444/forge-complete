@@ -84,6 +84,20 @@ public class TriggerCounterAddedOnce extends Trigger {
             }
         }
 
+        // Pirk, Heroic Captain: these counters fully stationed it - its highest station number is the one on its
+        // Station keyword, and it has just reached it
+        if (hasParam("FullyStations")) {
+            if (!(runParams.get(AbilityKey.Card) instanceof Card c)) {
+                return false;
+            }
+            final int highest = c.getKeywordMagnitude(forge.game.keyword.Keyword.STATION);
+            final int now = c.getCounters(forge.game.card.CounterEnumType.CHARGE);
+            final int added = (int) runParams.get(AbilityKey.CounterAmount);
+            if (highest <= 0 || now < highest || now - added >= highest) {
+                return false;
+            }
+        }
+
         return true;
     }
 

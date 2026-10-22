@@ -2355,6 +2355,11 @@ public class AbilityUtils {
             final Player you = player != null ? player : c.getController();
             return doXMath(you.getOpponents().stream().allMatch(Player::allCommandersRevealed) ? 1 : 0, expr, c, ctb);
         }
+        // The Mox Painter: Count$DifferentNames <valid> - how many different names the permanents have
+        if (l[0].startsWith("DifferentNames ")) {
+            return doXMath(CardLists.getDifferentNamesCount(CardLists.getValidCards(game.getCardsIn(ZoneType.Battlefield),
+                    l[0].substring("DifferentNames ".length()), player != null ? player : c.getController(), c, ctb)), expr, c, ctb);
+        }
         // The Curve Keeper: Count$LongestManaValueRun <valid> - the most consecutive mana values among them
         if (l[0].startsWith("LongestManaValueRun ")) {
             final Set<Integer> values = Sets.newHashSet();
@@ -2775,6 +2780,9 @@ public class AbilityUtils {
 
         if (sq[0].equals("YourSpeed")) {
             return doXMath(player.getSpeed(), expr, c, ctb);
+        }
+        if (sq[0].equals("YourSpeedCanIncrease")) {
+            return doXMath(player.canIncreaseSpeed() ? 1 : 0, expr, c, ctb);
         }
         if (sq[0].equals("MaxSpeed")) {
             return doXMath(calculateAmount(c, sq[player.maxSpeed() ? 1 : 2], ctb), expr, c, ctb);
