@@ -1,0 +1,9 @@
+Name:The Clever Magician
+ManaCost:4 U
+Types:Legendary Creature Human Wizard
+PT:2/7
+# Forge can't make a proposed rule true, and the AI can't weigh one, so a proposal is always declined: scry 2.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigScry | TriggerDescription$ Rule Zero — Whenever this creature enters the battlefield, and before the game begins if this creature is your commander, you may propose a new rule that is contained to this game of Magic. If all players in the game agree to it, that rule becomes true for this game. If one or more players decline, instead you scry 2. (If this is your commander, scry after keeping your hand.)
+SVar:TrigScry:DB$ Scry | ScryNum$ 2
+T:Mode$ NewGame | TriggerZones$ Command | IsPresent$ Card.Self+IsCommander | PresentZone$ Command | Execute$ TrigScry | Secondary$ True | TriggerDescription$ Before the game begins, if this is your commander, you may propose a new rule; if one or more players decline, scry 2 after keeping your hand.
+Oracle:Rule Zero — Whenever this creature enters the battlefield, and before the game begins if this creature is your commander, you may propose a new rule that is contained to this game of Magic. If all players in the game agree to it, that rule becomes true for this game. If one or more players decline, instead you scry 2. (If this is your commander, scry after keeping your hand.)

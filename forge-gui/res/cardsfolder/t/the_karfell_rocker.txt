@@ -1,0 +1,7 @@
+Name:The Karfell Rocker
+ManaCost:2 U
+Types:Legendary Creature Human Bard
+PT:2/3
+T:Mode$ SpellCast | ValidCard$ Card.cmcGE5,Card.wordsInNameGE3 | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDraw | TriggerDescription$ Whenever you cast a LOUD spell, draw a card. (A LOUD spell has mana value 5 or greater or has three or more words in its name.)
+SVar:TrigDraw:DB$ Draw | NumCards$ 1
+Oracle:Whenever you cast a LOUD spell, draw a card. (A LOUD spell has mana value 5 or greater or has three or more words in its name.)

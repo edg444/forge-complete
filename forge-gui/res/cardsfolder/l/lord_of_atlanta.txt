@@ -1,0 +1,6 @@
+Name:Lord of Atlanta
+ManaCost:U U
+Types:Creature Merfolk Gamer
+PT:2/2
+S:Mode$ Continuous | Affected$ Merfolk.Other+YouCtrl,Creature.Playtest+Other+YouCtrl | AddPower$ 1 | AddToughness$ 1 | AddKeyword$ Landwalk:Town | Description$ Other Merfolk and playtest creatures you control get +1/+1 and have townwalk. (They can't be blocked as long as defending player controls a Town.)
+Oracle:Other Merfolk and playtest creatures you control get +1/+1 and have townwalk. (They can't be blocked as long as defending player controls a Town.)

@@ -1,0 +1,11 @@
+Name:The Misty Stepper
+ManaCost:4 U
+Types:Legendary Creature Human Wizard
+PT:2/2
+K:ETBReplacement:Copy:DBCopy:Optional
+SVar:DBCopy:DB$ Clone | Choices$ Creature.YouCtrl+Other | ChoiceTitle$ Choose a creature you control to copy | NewName$ The Misty Stepper | AddStaticAbilities$ Unblockable,SplitSecondSpells | SpellDescription$ You may have The Misty Stepper enter as a copy of a creature you control, except its name is The Misty Stepper and it has its other abilities.
+S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | Description$ CARDNAME can't be blocked.
+S:Mode$ Continuous | Affected$ Card.YouCtrl | AffectedZone$ Stack | AddKeyword$ Split second | Description$ Spells you cast have split second. (As long as that spell is on the stack, players can't cast spells or activate abilities that aren't mana abilities.)
+SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | Description$ CARDNAME can't be blocked.
+SVar:SplitSecondSpells:Mode$ Continuous | Affected$ Card.YouCtrl | AffectedZone$ Stack | AddKeyword$ Split second | Description$ Spells you cast have split second. (As long as that spell is on the stack, players can't cast spells or activate abilities that aren't mana abilities.)
+Oracle:You may have The Misty Stepper enter as a copy of a creature you control, except its name is The Misty Stepper and it has its other abilities.\nThe Misty Stepper can't be blocked.\nSpells you cast have split second. (As long as that spell is on the stack, players can't cast spells or activate abilities that aren't mana abilities.)

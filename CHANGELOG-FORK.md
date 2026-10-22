@@ -312,6 +312,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Lord of Atlanta, The Karfell Rocker, Rinta, Cousin of Sitka, The Clever Magician, The Misty Stepper
+  (UNK blue rares).**
+  - The Clever Magician: Forge can't make a proposed rule true and the AI can't weigh one, so a proposal is always
+    declined and it scries 2 (as its commander, after the opening hand is kept).
 - **Unknown Event: The Bringer of the Red Beard, The Wiley Speedster, Mijo, the Bull, Mzed, Mercenary Leader, At Least
   It's a Dry Heat, Auntie Ant, Ant Auntie, The Powerful Dragon, Tragda, the Burner, Brutal Command, Math is for
   Blockers, Snapsail Rider (UNK red rares).**
