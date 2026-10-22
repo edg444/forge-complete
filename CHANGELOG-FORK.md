@@ -312,6 +312,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Ano'thr, Equipment Commander, Zimone's Homework, First Stage of Magic Design, The Dogronmaster
+  (UNK rares).**
+  - `Count$YourLifeIn.LazyCaterer|Fibonacci|Square`; card property `powerEqualsToughness`.
 - **Unknown Event: Wheel of Not Ideal, The Cobra King, Autumn Willow and Baron Sengir, The Bird Champion, Emerin,
   Shivan Angel (UNK).**
   - New effect `PassLibraries`: each player's library, in order, goes to the next player in turn order; the cards

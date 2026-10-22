@@ -2788,6 +2788,10 @@ public class AbilityUtils {
         if (sq[0].equals("YourSpeed")) {
             return doXMath(player.getSpeed(), expr, c, ctb);
         }
+        // Zimone's Homework: Count$YourLifeIn.LazyCaterer|Fibonacci|Square - 1 if your life total is in that sequence
+        if (sq[0].equals("YourLifeIn") && sq.length > 1) {
+            return doXMath(lifeInSequence(player.getLife(), sq[1]) ? 1 : 0, expr, c, ctb);
+        }
         if (sq[0].equals("YourSpeedCanIncrease")) {
             return doXMath(player.canIncreaseSpeed() ? 1 : 0, expr, c, ctb);
         }
@@ -3780,6 +3784,34 @@ public class AbilityUtils {
         sa.getPayCosts().add(spliceCost);
         sa.setDescription(sa.getDescription() + " (Splicing " + c + " onto it)");
         sa.addSplicedCards(c);
+    }
+
+    /** The lazy caterer's sequence (1, 2, 4, 7, 11, ...), Fibonacci numbers (0, 1, 2, 3, 5, 8, ...) or square numbers. */
+    public static boolean lifeInSequence(final int life, final String sequence) {
+        if (life < 0) {
+            return false;
+        }
+        switch (sequence) {
+            case "LazyCaterer":
+                for (int n = 0; n * (n + 1) / 2 + 1 <= life; n++) {
+                    if (n * (n + 1) / 2 + 1 == life) {
+                        return true;
+                    }
+                }
+                return false;
+            case "Fibonacci":
+                for (int a = 0, b = 1; a <= life; b = a + b, a = b - a) {
+                    if (a == life) {
+                        return true;
+                    }
+                }
+                return false;
+            case "Square":
+                final int root = (int) Math.round(Math.sqrt(life));
+                return root * root == life;
+            default:
+                return false;
+        }
     }
 
     public static int wordsInName(final Card card) {

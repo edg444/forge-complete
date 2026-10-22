@@ -1,0 +1,25 @@
+Name:Ano'thr, Equipment Commander
+ManaCost:R W
+Types:Legendary Creature Kor Warrior
+PT:2/2
+# the two choices are kept as SVars on the card, cleared each time it enters
+K:ETBReplacement:Other:DBReset
+SVar:DBReset:DB$ StoreSVar | SVar$ ModeSpells | Type$ Number | Expression$ 0 | SubAbility$ DBReset2 | SpellDescription$ As CARDNAME enters the battlefield, choose two abilities for it to gain —
+SVar:DBReset2:DB$ StoreSVar | SVar$ ModeEquip | Type$ Number | Expression$ 0 | SubAbility$ DBReset3
+SVar:DBReset3:DB$ StoreSVar | SVar$ ModeAnthem | Type$ Number | Expression$ 0 | SubAbility$ DBReset4
+SVar:DBReset4:DB$ StoreSVar | SVar$ ModeHaste | Type$ Number | Expression$ 0 | SubAbility$ DBChoose
+SVar:DBChoose:DB$ GenericChoice | Defined$ You | ChoiceAmount$ 2 | Choices$ PickSpells,PickEquip,PickAnthem,PickHaste
+SVar:PickSpells:DB$ StoreSVar | SVar$ ModeSpells | Type$ Number | Expression$ 1 | SpellDescription$ Equipment spells you cast cost {1} less to cast.
+SVar:PickEquip:DB$ StoreSVar | SVar$ ModeEquip | Type$ Number | Expression$ 1 | SpellDescription$ Equip costs you pay cost {1} less.
+SVar:PickAnthem:DB$ StoreSVar | SVar$ ModeAnthem | Type$ Number | Expression$ 1 | SpellDescription$ Equipped creatures you control get +1/+1.
+SVar:PickHaste:DB$ StoreSVar | SVar$ ModeHaste | Type$ Number | Expression$ 1 | SpellDescription$ Equipped creatures you control have haste.
+SVar:ModeSpells:Number$0
+SVar:ModeEquip:Number$0
+SVar:ModeAnthem:Number$0
+SVar:ModeHaste:Number$0
+S:Mode$ ReduceCost | ValidCard$ Equipment | Type$ Spell | Activator$ You | Amount$ 1 | CheckSVar$ ModeSpells | SVarCompare$ EQ1 | Description$ • Equipment spells you cast cost {1} less to cast.
+S:Mode$ ReduceCost | ValidCard$ Card | ValidSpell$ Activated.Equip | Activator$ You | Amount$ 1 | CheckSVar$ ModeEquip | SVarCompare$ EQ1 | Description$ • Equip costs you pay cost {1} less.
+S:Mode$ Continuous | Affected$ Creature.equipped+YouCtrl | AddPower$ 1 | AddToughness$ 1 | CheckSVar$ ModeAnthem | SVarCompare$ EQ1 | Description$ • Equipped creatures you control get +1/+1.
+S:Mode$ Continuous | Affected$ Creature.equipped+YouCtrl | AddKeyword$ Haste | CheckSVar$ ModeHaste | SVarCompare$ EQ1 | Description$ • Equipped creatures you control have haste.
+DeckHints:Type$Equipment
+Oracle:As Ano'thr, Equipment Commander enters the battlefield, choose two abilities for it to gain —\n• Equipment spells you cast cost {1} less to cast.\n• Equip costs you pay cost {1} less.\n• Equipped creatures you control get +1/+1.\n• Equipped creatures you control have haste.

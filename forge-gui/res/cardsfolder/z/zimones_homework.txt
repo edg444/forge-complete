@@ -1,0 +1,13 @@
+Name:Zimone's Homework
+ManaCost:G U
+Types:Enchantment
+T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigFood | TriggerDescription$ At the beginning of your end step, if your life total is on the lazy caterer's sequence, create a Food token. If it's a Fibonacci number, create a 0/0 green and blue Fractal creature token, then put a +1/+1 counter on each Fractal you control. If it's a square number, put three +1/+1 counters on each creature you control whose power and toughness are equal. (You'll want to look these up.)
+SVar:TrigFood:DB$ Token | TokenScript$ c_a_food_sac | ConditionCheckSVar$ Caterer | ConditionSVarCompare$ EQ1 | SubAbility$ DBFractal
+SVar:DBFractal:DB$ Token | TokenScript$ gu_0_0_fractal | ConditionCheckSVar$ Fibonacci | ConditionSVarCompare$ EQ1 | SubAbility$ DBGrow
+SVar:DBGrow:DB$ PutCounterAll | ValidCards$ Fractal.YouCtrl | CounterType$ P1P1 | CounterNum$ 1 | ConditionCheckSVar$ Fibonacci | ConditionSVarCompare$ EQ1 | SubAbility$ DBSquare
+SVar:DBSquare:DB$ PutCounterAll | ValidCards$ Creature.YouCtrl+powerEqualsToughness | CounterType$ P1P1 | CounterNum$ 3 | ConditionCheckSVar$ Square | ConditionSVarCompare$ EQ1
+SVar:Caterer:Count$YourLifeIn.LazyCaterer
+SVar:Fibonacci:Count$YourLifeIn.Fibonacci
+SVar:Square:Count$YourLifeIn.Square
+DeckHas:Ability$Token|Counters & Type$Food|Fractal
+Oracle:At the beginning of your end step, if your life total is on the lazy caterer's sequence, create a Food token. If it's a Fibonacci number, create a 0/0 green and blue Fractal creature token, then put a +1/+1 counter on each Fractal you control. If it's a square number, put three +1/+1 counters on each creature you control whose power and toughness are equal. (You'll want to look these up.)

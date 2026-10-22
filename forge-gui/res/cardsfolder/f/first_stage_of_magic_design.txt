@@ -1,0 +1,9 @@
+Name:First Stage of Magic Design
+ManaCost:W U B R G
+Types:Instant
+A:SP$ GainLife | LifeAmount$ 3 | SubAbility$ DBDraw | SpellDescription$ You gain 3 life. Draw three cards. Add {B}{B}{B}. This spell deals 3 damage to any target. Target creature gets +3/+3 until end of turn.
+SVar:DBDraw:DB$ Draw | NumCards$ 3 | SubAbility$ DBMana
+SVar:DBMana:DB$ Mana | Produced$ B | Amount$ 3 | SubAbility$ DBDamage
+SVar:DBDamage:DB$ DealDamage | ValidTgts$ Any | TgtPrompt$ Select any target | NumDmg$ 3 | SubAbility$ DBPump
+SVar:DBPump:DB$ Pump | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumAtt$ +3 | NumDef$ +3
+Oracle:You gain 3 life. Draw three cards. Add {B}{B}{B}. This spell deals 3 damage to any target. Target creature gets +3/+3 until end of turn.

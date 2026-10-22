@@ -1,0 +1,10 @@
+Name:The Dogronmaster
+ManaCost:2 W R G
+Types:Legendary Creature Dragon Dog
+PT:3/2
+K:Flying
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self,Dragon.Other+YouCtrl,Dog.Other+YouCtrl | TriggerZones$ Battlefield | Execute$ TrigCloak | TriggerDescription$ Whenever CARDNAME or another Dragon or Dog enters the battlefield under your control, create a token that's a copy of the card Armadillo Cloak and attach it to that creature.
+SVar:TrigCloak:DB$ CopyPermanent | DefinedName$ Armadillo Cloak | AttachedTo$ TriggeredNewCardLKICopy
+DeckHas:Ability$Token|LifeGain
+DeckHints:Type$Dragon|Dog
+Oracle:Flying\nWhenever The Dogronmaster or another Dragon or Dog enters the battlefield under your control, create a token that's a copy of the card Armadillo Cloak and attach it to that creature.
