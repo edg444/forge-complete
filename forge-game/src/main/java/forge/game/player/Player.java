@@ -1005,6 +1005,11 @@ public class Player extends GameEntity implements Comparable<Player> {
             if (realCommander != source) {
                 view.updateMergedCommanderDamage(source, realCommander);
             }
+        } else if (source.hasSVar("DamageIsCommanderDamage") && source.getController().isOpponentOf(this)
+                && !source.getController().getCommanders().isEmpty()) {
+            // The Good Gamers: its damage to an opponent counts as its controller's commander's, any damage at all
+            addCommanderDamage(source.getController().getCommanders().get(0), amount);
+            view.updateCommanderDamage(this);
         }
 
         final Map<AbilityKey, Object> runParams = AbilityKey.newMap();

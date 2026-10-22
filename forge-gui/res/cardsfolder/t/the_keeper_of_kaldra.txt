@@ -1,0 +1,9 @@
+Name:The Keeper of Kaldra
+ManaCost:1 R W
+Types:Legendary Creature Human Warrior
+PT:3/3
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCompanions | TriggerDescription$ When CARDNAME enters the battlefield, if it's the first time this ability has resolved this game, add Helm of Kaldra, Shield of Kaldra, and Sword of Kaldra as your companions. (You can pay {3} to put one into your hand from outside the game, once each. Use tokens to represent those cards.)
+# made in the command zone, each its own companion (MakeCard Companion$); OncePerGame$ counts each player's resolutions
+SVar:TrigCompanions:DB$ MakeCard | Defined$ You | Names$ Helm of Kaldra,Shield of Kaldra,Sword of Kaldra | Zone$ Command | Companion$ True | OncePerGame$ True
+S:Mode$ Continuous | Affected$ Creature.YouCtrl+namedKaldra | AddKeyword$ Hexproof | Description$ Creatures you control named Kaldra have hexproof.
+Oracle:When The Keeper of Kaldra enters the battlefield, if it's the first time this ability has resolved this game, add Helm of Kaldra, Shield of Kaldra, and Sword of Kaldra as your companions. (You can pay {3} to put one into your hand from outside the game, once each. Use tokens to represent those cards.)\nCreatures you control named Kaldra have hexproof.

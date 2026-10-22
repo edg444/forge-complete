@@ -149,6 +149,10 @@ public class CloneEffect extends SpellAbilityEffect {
             cloneTargets.remove(cardToCopy);
         }
 
+        // Kallist Rhoka (Swap$): the card copied also becomes a copy of the clone, as the clone was before
+        final Card swapFrom = sa.hasParam("Swap") && cardToCopy != null && cloneTargets.size() == 1
+                ? CardCopyService.getLKICopy(cloneTargets.get(0)) : null;
+
         final long ts = game.getNextTimestamp();
         // FollowsCard$: the card stays the clone in every zone it moves to until the duration ends (Standard Procedure)
         final boolean followsCard = sa.hasParam("FollowsCard");
@@ -166,6 +170,11 @@ public class CloneEffect extends SpellAbilityEffect {
             game.getTriggerHandler().clearActiveTriggers(tgtCard, null);
 
             tgtCard.addCloneState(CardFactory.getCloneStates(copyItself ? tgtCard : cardToCopy, tgtCard, sa), ts);
+            if (swapFrom != null) {
+                game.getTriggerHandler().clearActiveTriggers(cardToCopy, null);
+                cardToCopy.addCloneState(CardFactory.getCloneStates(swapFrom, cardToCopy, sa), ts);
+                cardToCopy.updateStateForView();
+            }
             if (followsCard) {
                 tgtCard.addPerpetual(new forge.game.card.perpetual.PerpetualClone(ts, copyItself ? tgtCard : cardToCopy, sa));
             }

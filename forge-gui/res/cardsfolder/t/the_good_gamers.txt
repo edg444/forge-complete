@@ -1,0 +1,22 @@
+Name:The Good Gamers
+ManaCost:X U R W
+Types:Legendary Creature Human Gamer
+PT:2/2
+# your first turn's first upkeep: it can trigger only once
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Command | CheckSVar$ YourTurns | SVarCompare$ EQ1 | GameActivationLimit$ 1 | Execute$ TrigDamage | TriggerDescription$ Establishing Shot — At the beginning of your first upkeep, if CARDNAME is in the command zone, it deals 2 damage to each opponent.
+SVar:TrigDamage:DB$ DamageAll | ValidPlayers$ Player.OppCtrl | NumDmg$ 2
+SVar:YourTurns:Count$YourTurns
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCopy | TriggerDescription$ When CARDNAME enters, create X tokens that are copies of it. Give this creature and the tokens unique names.
+SVar:TrigCopy:DB$ CopyPermanent | Defined$ Self | NumCopies$ X | RememberTokens$ True | SubAbility$ DBRemember
+SVar:DBRemember:DB$ Pump | Defined$ Self | RememberObjects$ Self | SubAbility$ DBNameEach
+SVar:DBNameEach:DB$ RepeatEach | RepeatCards$ Creature.IsRemembered | UseImprinted$ True | RepeatSubAbility$ DBChooseName | SubAbility$ DBCleanup
+SVar:DBChooseName:DB$ ChooseType | Type$ name | Chooser$ You | FreeInput$ True | ChoiceTitle$ Give it a unique name | ValidTypes$ Ana,Ben,Cleo,Dex,Emi,Finn,Gwen,Hugo,Iris,Jax,Kara,Leo,Mia,Nico,Owen,Pia,Quinn,Ravi,Sara,Theo,Una,Vic,Wren,Xan,Yara,Zoe | AILogic$ UniqueName | SubAbility$ DBName
+SVar:DBName:DB$ Animate | Defined$ Imprinted | Name$ ChosenType | Duration$ Permanent | SubAbility$ DBClearType
+SVar:DBClearType:DB$ Cleanup | ClearChosenType$ True
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:X:Count$xPaid
+# Player.addDamageAfterPrevention: it counts toward the commander damage your (first) commander has dealt that player
+SVar:DamageIsCommanderDamage:True
+S:Mode$ Continuous | Affected$ Card.Self | Description$ All damage dealt by this creature to an opponent counts as commander damage for your commander (including noncombat damage and even if this isn't your commander).
+DeckHas:Ability$Token
+Oracle:Establishing Shot — At the beginning of your first upkeep, if The Good Gamers is in the command zone, it deals 2 damage to each opponent.\nWhen The Good Gamers enters, create X tokens that are copies of it. Give this creature and the tokens unique names.\nAll damage dealt by this creature to an opponent counts as commander damage for your commander (including noncombat damage and even if this isn't your commander).

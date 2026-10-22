@@ -1,0 +1,10 @@
+Name:Kallist Rhoka
+ManaCost:3 U B
+Types:Legendary Creature Human Wizard
+PT:2/2
+K:Prowess
+K:Deathtouch
+T:Mode$ SpellCast | ValidCard$ Card.Self | Execute$ TrigSwap | TriggerDescription$ When you cast CARDNAME, you may choose a creature or planeswalker on the battlefield. CARDNAME becomes a copy of that creature or planeswalker, and that creature or planeswalker becomes a copy of CARDNAME.
+# Swap$: the chosen permanent copies this spell as it was before it became a copy
+SVar:TrigSwap:DB$ Clone | Choices$ Creature,Planeswalker | ChoiceOptional$ True | ChoiceTitle$ You may choose a creature or planeswalker for Kallist Rhoka to swap copies with | CloneTarget$ Self | Swap$ True
+Oracle:Prowess, deathtouch\nWhen you cast Kallist Rhoka, you may choose a creature or planeswalker on the battlefield. Kallist Rhoka becomes a copy of that creature or planeswalker, and that creature or planeswalker becomes a copy of Kallist Rhoka.

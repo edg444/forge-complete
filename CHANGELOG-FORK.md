@@ -312,6 +312,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: The Keeper of Kaldra, The Good Gamers, Kallist Rhoka (UNK rares).**
+  - MakeCard `Companion$ True` (each card made in the command zone is its owner's companion) and `OncePerGame$ True`
+    (each player's first resolution this game).
+  - SVar `DamageIsCommanderDamage`: its damage to an opponent counts as commander damage from its controller's
+    (first) commander, combat or not.
+  - Clone `Swap$ True`: the card copied also becomes a copy of the clone as it was before. A spell cloned on the
+    stack stays the copy as it resolves.
+
 - **Unknown Event: The Kami Knight, Bobby, Another Dwarf, Fioran Reformist, Azorius Traffic Enforcement, The
   Tokenator, Third Stage of Magic Design, Naming Screen, Hosting Season, The Miniaturizer (UNK white rares).**
   - New static `CantBeGoaded` (`ValidCard$`), read by `Card.addGoad`.

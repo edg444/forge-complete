@@ -36,6 +36,14 @@ public class MakeCardEffect extends SpellAbilityEffect {
 
         for (final Player player : players) {
             final Game game = player.getGame();
+            // The Keeper of Kaldra: "if it's the first time this ability has resolved this game", for each player
+            if (sa.hasParam("OncePerGame")) {
+                final String key = "OncePerGame:" + source.getName() + ":" + game.getId();
+                if (player.getMatchNote(key) != null) {
+                    continue;
+                }
+                player.setMatchNote(key, Boolean.TRUE);
+            }
 
             List<ICardFace> faces = new ArrayList<>();
             List<PaperCard> pack = null;
@@ -322,6 +330,11 @@ public class MakeCardEffect extends SpellAbilityEffect {
         if (sa.hasParam("FaceDown")) made.turnFaceDown(true);
         if (sa.hasParam("RememberMade")) source.addRemembered(made);
         if (sa.hasParam("ImprintMade")) source.addImprintedCard(made);
+        // The Keeper of Kaldra: made in the command zone as its owner's companion, each put into hand once for {3}
+        if (sa.hasParam("Companion") && made.isInZone(ZoneType.Command)) {
+            made.getOwner().getZone(ZoneType.Command).add(forge.game.player.Player.createCompanionEffect(made));
+            made.getOwner().updateZoneForView(made.getOwner().getZone(ZoneType.Command));
+        }
         return made;
     }
 }
