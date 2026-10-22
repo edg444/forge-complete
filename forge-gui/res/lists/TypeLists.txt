@@ -394,6 +394,7 @@ Weasel:Weasels
 Weird:Weirds
 Werewolf:Werewolves
 Whale:Whales
+Windmill:Windmills
 Wizard:Wizards
 Wolf:Wolves
 Wolverine:Wolverines

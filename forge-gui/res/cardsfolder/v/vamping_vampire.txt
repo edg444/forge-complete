@@ -1,0 +1,13 @@
+Name:Vamping Vampire
+ManaCost:2 B
+Types:Creature Vampire Advisor
+PT:2/2
+K:Flying
+K:Lifelink
+K:Plot:2 B
+T:Mode$ SpellCast | ValidActivatingPlayer$ You | TriggerZones$ Exile | Execute$ TrigStall | TriggerDescription$ Whenever you cast a spell while this card is exiled, put a stall counter on it.
+SVar:TrigStall:DB$ PutCounter | Defined$ Self | CounterType$ STALL | CounterNum$ 1
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDamage | TriggerDescription$ When this creature enters, it deals damage equal to the number of stall counters that were on it to target creature an opponent controls.
+SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls | NumDmg$ X
+SVar:X:TriggeredCardLKICopy$CardCounters.STALL
+Oracle:Flying, lifelink\nPlot {2}{B}\nWhenever you cast a spell while this card is exiled, put a stall counter on it.\nWhen this creature enters, it deals damage equal to the number of stall counters that were on it to target creature an opponent controls.

@@ -312,6 +312,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Devoted Abzan, Bad Knight, Team Perseverance, Impressive Rat, Vamping Vampire, Fear of Fear
+  Itself, Soul Drainer, Would You Have Done the Same?, Sheoldred's Terror, Ransack, the Lab, Magic Designer, Windmill
+  Slam (UNK uncommons).**
+  - `Count$DevotionTriple.<c1>.<c2>.<c3>`.
+  - A permanent with SVar `ScoresAtGameEnd:<team>` on the battlefield as the game ends scores that team a point on
+    the match scoreboard.
+  - New effect `ResetCommanderDamage` (`DamagedPlayer$`).
+  - New creature type Windmill.
+  - Ransack, the Lab is in `ransack_the_lab_unknown_event.txt`: its file name collides with Ransack the Lab's.
 - **Unknown Event: Groaaaaag, Hungry Monster, Monet, Sensei of the Sewers, The Mystery Raceway, Crow Scarer (UNK).**
   - `K:Ninjutsu:<cost>:FixedCommander` and `K:Suspend:N:<cost>:Commander`: from the command zone they pay the
     commander tax and count toward it, like a cast (user ruling).

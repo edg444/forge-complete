@@ -2060,8 +2060,12 @@ public class AbilityUtils {
                     colorName = MagicColor.toShortString(c.getChosenColor());
                 }
                 byte colorCode = ManaAtom.fromName(colorName);
-                if (sq[0].equals("DevotionDual")) {
+                if (sq[0].equals("DevotionDual") || sq[0].equals("DevotionTriple")) {
                     colorCode |= ManaAtom.fromName(sq[2]);
+                }
+                // Devoted Abzan: devotion to Abzan is devotion to white, black and green
+                if (sq[0].equals("DevotionTriple")) {
+                    colorCode |= ManaAtom.fromName(sq[3]);
                 }
                 for (Card c0 : player.getCardsIn(ZoneType.Battlefield)) {
                     for (ManaCostShard sh : c0.getManaCost()) {

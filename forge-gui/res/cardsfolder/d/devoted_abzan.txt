@@ -1,0 +1,9 @@
+Name:Devoted Abzan
+ManaCost:B
+Types:Creature Dog Cleric
+PT:1/1
+A:AB$ Draw | Cost$ 5 T | NumCards$ 1 | SubAbility$ DBLose | SpellDescription$ You draw a card and lose 1 life. This ability costs X less to activate, where X is your devotion to Abzan. (Each {W}, {B}, or {G} in the mana cost of permanents you control counts towards your devotion to Abzan.)
+SVar:DBLose:DB$ LoseLife | LifeAmount$ 1
+S:Mode$ ReduceCost | ValidCard$ Card.Self | Type$ Ability | Amount$ X | AffectedZone$ Battlefield | Secondary$ True | Description$ This ability costs X less to activate, where X is your devotion to Abzan.
+SVar:X:Count$DevotionTriple.White.Black.Green
+Oracle:{5}, {T}: You draw a card and lose 1 life. This ability costs X less to activate, where X is your devotion to Abzan. (Each {W}, {B}, or {G} in the mana cost of permanents you control counts towards your devotion to Abzan.)

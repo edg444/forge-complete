@@ -1,0 +1,11 @@
+Name:Windmill Slam
+ManaCost:7
+Types:Sorcery
+A:SP$ Token | TokenScript$ c_4_4_a_windmill_defender | RememberTokens$ True | SubAbility$ DBImmediate | SpellDescription$ Create a 4/4 Windmill artifact creature token with defender. When you do, it deals damage equal to its power to any target.
+SVar:DBImmediate:DB$ ImmediateTrigger | RememberObjects$ Remembered | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ GE1 | Execute$ TrigSlam | SubAbility$ DBCleanup | TriggerDescription$ When you do, it deals damage equal to its power to any target.
+SVar:TrigSlam:DB$ DealDamage | ValidTgts$ Any | TgtPrompt$ Select any target | DamageSource$ DelayTriggerRemembered | NumDmg$ X
+SVar:X:DelayTriggerRemembered$CardPower
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+K:Miracle:0
+DeckHas:Ability$Token
+Oracle:Create a 4/4 Windmill artifact creature token with defender. When you do, it deals damage equal to its power to any target.\nMiracle {0} (You may cast this card for its miracle cost when you draw it if it's the first card you drew this turn.)

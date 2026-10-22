@@ -1,0 +1,9 @@
+Name:Soul Drainer
+ManaCost:5 B
+Types:Creature Giant Wizard
+PT:4/5
+K:Deathtouch
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDestroy | TriggerDescription$ When CARDNAME enters the battlefield, destroy target commander an opponent controls. Remove all commander damage that commander dealt to you. (You don't gain life, just treat it as though your commander damage from that commander is zero.)
+SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Card.IsCommander+OppCtrl | TgtPrompt$ Select target commander an opponent controls | SubAbility$ DBForgive
+SVar:DBForgive:DB$ ResetCommanderDamage | Defined$ Targeted | DamagedPlayer$ You
+Oracle:Deathtouch\nWhen Soul Drainer enters the battlefield, destroy target commander an opponent controls. Remove all commander damage that commander dealt to you. (You don't gain life, just treat it as though your commander damage from that commander is zero.)

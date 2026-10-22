@@ -1,0 +1,6 @@
+Name:Fear of Fear Itself
+ManaCost:2 B B
+Types:Enchantment Creature Nightmare
+PT:4/4
+A:AB$ Pump | Cost$ 2 | ValidTgts$ Creature | TgtPrompt$ Select target creature | KW$ Fear | SpellDescription$ Target creature gains fear until end of turn. (It can't be blocked except by artifact creatures and/or black creatures.)
+Oracle:{2}: Target creature gains fear until end of turn. (It can't be blocked except by artifact creatures and/or black creatures.)

@@ -801,6 +801,16 @@ public class Game {
             return;
         }
 
+        // Bad Knight: a permanent with SVar ScoresAtGameEnd:<team> on the battlefield as the game ends scores a point
+        // for that team on the match scoreboard, recorded under its controller
+        for (Card c : getCardsIn(ZoneType.Battlefield)) {
+            if (c.hasSVar("ScoresAtGameEnd")) {
+                final String key = forge.game.ability.effects.ChooseTeamEffect.POINTS_NOTE + c.getSVar("ScoresAtGameEnd");
+                final Player p = c.getController();
+                p.setMatchNote(key, (p.getMatchNote(key) instanceof Integer i ? i : 0) + 1);
+            }
+        }
+
         for (Player p : allPlayers) {
             p.clearController();
         }

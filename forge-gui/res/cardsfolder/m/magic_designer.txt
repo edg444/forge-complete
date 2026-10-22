@@ -1,0 +1,8 @@
+Name:Magic Designer
+ManaCost:2
+Types:Creature Human Gamer
+PT:2/2
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDig | TriggerDescription$ When CARDNAME enters the battlefield, look at the top 10 cards of your library. You may reveal a playtest card from among them and put it into your hand, then put the rest on the bottom of your library in a random order.
+SVar:TrigDig:DB$ Dig | DigNum$ 10 | ChangeNum$ 1 | Optional$ True | ForceRevealToController$ True | ChangeValid$ Card.Playtest | ChangeValidDesc$ playtest card | DestinationZone$ Hand | RestRandomOrder$ True
+DeckHints:Type$Playtest
+Oracle:When Magic Designer enters the battlefield, look at the top 10 cards of your library. You may reveal a playtest card from among them and put it into your hand, then put the rest on the bottom of your library in a random order.

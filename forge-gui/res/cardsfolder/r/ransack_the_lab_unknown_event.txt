@@ -1,0 +1,7 @@
+Name:Ransack, the Lab
+ManaCost:1 B
+Types:Sorcery
+# Spell commander: it can be your commander (the Limited partnering doesn't come up in Forge)
+K:CARDNAME can be your commander.
+A:SP$ Dig | DigNum$ 3 | ChangeNum$ 1 | DestinationZone$ Hand | DestinationZone2$ Graveyard | SpellDescription$ Look at the top three cards of your library. Put one of them into your hand and the rest into your graveyard.
+Oracle:Spell commander (This card can be your commander. In Limited, it can partner like other monocolored legends.)\nLook at the top three cards of your library. Put one of them into your hand and the rest into your graveyard.

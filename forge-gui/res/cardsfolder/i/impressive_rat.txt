@@ -1,0 +1,12 @@
+Name:Impressive Rat
+ManaCost:2 B
+Types:Creature Rat
+PT:3/2
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigHole | TriggerDescription$ When CARDNAME dies, put a hole counter on target land you don't control. Whenever that land becomes tapped, you investigate. (The land continues to intrigue.)
+SVar:TrigHole:DB$ PutCounter | ValidTgts$ Land.YouDontCtrl | TgtPrompt$ Select target land you don't control | CounterType$ HOLE | CounterNum$ 1 | SubAbility$ DBIntrigue
+# the investigating stays with the Rat's controller, for as long as that land stays put
+SVar:DBIntrigue:DB$ Effect | Triggers$ IntrigueTrig | RememberObjects$ Targeted | Duration$ Permanent | ForgetOnMoved$ Battlefield | ExileOnMoved$ Battlefield
+SVar:IntrigueTrig:Mode$ Taps | ValidCard$ Card.IsRemembered | TriggerZones$ Command | Execute$ TrigInvestigate | TriggerDescription$ Whenever that land becomes tapped, you investigate.
+SVar:TrigInvestigate:DB$ Investigate
+DeckHas:Ability$Investigate|Token
+Oracle:When Impressive Rat dies, put a hole counter on target land you don't control. Whenever that land becomes tapped, you investigate. (The land continues to intrigue.)

@@ -158,6 +158,7 @@ public enum ApiType {
     CloneCombined (CloneCombinedEffect.class),
     AdjustNumber (AdjustNumberEffect.class),
     ResetCommanderTax (ResetCommanderTaxEffect.class),
+    ResetCommanderDamage (ResetCommanderDamageEffect.class),
     ChooseTeam (ChooseTeamEffect.class),
     ExploreClash (ExploreClashEffect.class),
     ScorePoint (ScorePointEffect.class),

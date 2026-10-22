@@ -1,0 +1,8 @@
+Name:Would You Have Done the Same?
+ManaCost:B
+Types:Instant
+A:SP$ Destroy | ValidTgts$ Creature | TgtPrompt$ Select target creature | IsPresent$ Creature.YouCtrl | SubAbility$ DBChoose | SpellDescription$ Cast this spell only if you control a creature. Destroy target creature. That creature's controller may create an Arrest token attached to a creature you control. (It's a copy of the card Arrest)
+SVar:DBChoose:DB$ ChooseCard | Defined$ TargetedController | Choices$ Creature.YouCtrl | ChoiceTitle$ You may attach an Arrest token to one of these creatures | SubAbility$ DBArrest
+SVar:DBArrest:DB$ CopyPermanent | DefinedName$ Arrest | Controller$ TargetedController | AttachedTo$ ChosenCard | ConditionDefined$ ChosenCard | ConditionPresent$ Card | ConditionCompare$ GE1 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+Oracle:Cast this spell only if you control a creature.\nDestroy target creature. That creature's controller may create an Arrest token attached to a creature you control. (It's a copy of the card Arrest)

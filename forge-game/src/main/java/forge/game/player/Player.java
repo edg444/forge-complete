@@ -3695,6 +3695,11 @@ public class Player extends GameEntity implements Comparable<Player> {
         Integer damage = commanderDamage.get(commander);
         return damage == null ? 0 : damage;
     }
+    // Soul Drainer: treat the commander damage this commander has dealt this player as zero
+    public void removeCommanderDamage(Card commander) {
+        commanderDamage.remove(commander);
+        view.updateCommanderDamage(this);
+    }
     public void addCommanderDamage(Card commander, int damage) {
         commanderDamage.merge(commander, damage, Integer::sum);
     }

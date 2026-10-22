@@ -1,0 +1,6 @@
+Name:Windmill Token
+ManaCost:no cost
+Types:Artifact Creature Windmill
+PT:4/4
+K:Defender
+Oracle:Defender

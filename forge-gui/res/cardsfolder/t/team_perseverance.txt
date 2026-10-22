@@ -1,0 +1,14 @@
+Name:Team Perseverance
+ManaCost:1 B
+Types:Instant
+# The race team is chosen once per match, as the game begins for a deck with this card. A player on neither team
+# yet casts it for one team's line and joins that team.
+SVar:AsksTeam:Race
+A:SP$ Pump | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumAtt$ +2 | KW$ Indestructible | CheckSVar$ SpeedDemons | SVarCompare$ EQ0 | SubAbility$ DBDraw | PrecostDesc$ Team Cloudspire — | SpellDescription$ Target creature gets +2/+0 and gains indestructible until end of turn. Draw a card.
+SVar:DBDraw:DB$ Draw | SubAbility$ DBJoinCloudspire
+SVar:DBJoinCloudspire:DB$ ChooseTeam | Defined$ You | Teams$ Race | Team$ Cloudspire
+A:SP$ ChangeZone | Origin$ Graveyard | Destination$ Hand | ValidTgts$ Creature.YouOwn | TgtPrompt$ Select one or two target creature cards in your graveyard | TargetMin$ 1 | TargetMax$ 2 | TgtZone$ Graveyard | CheckSVar$ Cloudspire | SVarCompare$ EQ0 | SubAbility$ DBJoinSpeedDemons | PrecostDesc$ Team Speed Demons — | SpellDescription$ Return one or two target creature cards from your graveyard to your hand.
+SVar:DBJoinSpeedDemons:DB$ ChooseTeam | Defined$ You | Teams$ Race | Team$ Speed Demons
+SVar:Cloudspire:Count$RaceTeam.Cloudspire
+SVar:SpeedDemons:Count$RaceTeam.SpeedDemons
+Oracle:Team Cloudspire — Target creature gets +2/+0 and gains indestructible until end of turn. Draw a card.\nTeam Speed Demons — Return one or two target creature cards from your graveyard to your hand.

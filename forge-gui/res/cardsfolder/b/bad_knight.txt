@@ -1,0 +1,12 @@
+Name:Bad Knight
+ManaCost:B B
+Types:Creature Phyrexian Knight
+PT:2/2
+K:First Strike
+SVar:AsksTeam:Team
+S:Mode$ CantBeCast | ValidCard$ Card.Self | Caster$ You | EffectZone$ All | CheckSVar$ Mirran | SVarCompare$ EQ1 | Description$ You can't cast CARDNAME if you're on the Mirran team.
+SVar:Mirran:Count$UnknownTeam.Mirran
+# scored as the game ends, on the match scoreboard (see Game.setGameOver)
+SVar:ScoresAtGameEnd:Phyrexian
+Text:If Bad Knight is on the battlefield at the end of the game, score an additional point for the Phyrexian team.
+Oracle:First Strike\nYou can't cast Bad Knight if you're on the Mirran team.\nIf Bad Knight is on the battlefield at the end of the game, score an additional point for the Phyrexian team.
