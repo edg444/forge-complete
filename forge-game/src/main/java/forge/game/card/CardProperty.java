@@ -2766,6 +2766,17 @@ public class CardProperty {
             if (base.isArtifact() && base.isCreature()) {
                 return false;
             }
+        } else if (property.equals("addsMana")) {
+            // The Salubrious Philosopher's mana base: cards that add mana, by a mana ability or as a spell
+            if (!addsMana(card)) {
+                return false;
+            }
+        } else if (property.equals("removalSpell")) {
+            // The Salubrious Philosopher's removal: instants and sorceries that can damage, destroy, or exile opposing
+            // permanents
+            if (!(card.isInstant() || card.isSorcery()) || !isRemoval(card)) {
+                return false;
+            }
         } else if (property.equals("blackOrSilverSymbol")) {
             // Sixth Stage of Magic Design: its printing's expansion symbol is black or silver
             if (!CardPrintings.hasBlackOrSilverSymbol(card)) {
@@ -3242,5 +3253,60 @@ public class CardProperty {
         }
         return java.util.regex.Pattern.compile("\\b" + java.util.regex.Pattern.quote(w) + "\\b",
                 java.util.regex.Pattern.CASE_INSENSITIVE).matcher(rules + "\n" + card.getType().toString()).find();
+    }
+
+    private static boolean addsMana(final Card card) {
+        if (!card.getManaAbilities().isEmpty()) {
+            return true;
+        }
+        for (final SpellAbility spell : card.getSpellAbilities()) {
+            for (SpellAbility part = spell; part != null; part = part.getSubAbility()) {
+                if (part.getApi() == forge.game.ability.ApiType.Mana) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean isRemoval(final Card card) {
+        for (final SpellAbility spell : card.getSpellAbilities()) {
+            if (!spell.isSpell()) {
+                continue;
+            }
+            for (SpellAbility part = spell; part != null; part = part.getSubAbility()) {
+                final forge.game.ability.ApiType api = part.getApi();
+                if (api == null) {
+                    continue;
+                }
+                final String tgts = part.getParamOrDefault("ValidTgts", "");
+                switch (api) {
+                    case DealDamage:
+                        // a permanent among what it can be aimed at, not only players
+                        if (tgts.matches(".*\\b(Any|Card|Permanent|Creature|Planeswalker|Battle|Artifact|Enchantment|Land)\\b.*")
+                                || part.hasParam("Defined") && !part.getParam("Defined").contains("Player")) {
+                            return true;
+                        }
+                        break;
+                    case DamageAll:
+                        if (part.hasParam("ValidCards")) {
+                            return true;
+                        }
+                        break;
+                    case Destroy:
+                    case DestroyAll:
+                        return true;
+                    case ChangeZone:
+                    case ChangeZoneAll:
+                        if ("Exile".equals(part.getParam("Destination")) && part.getParamOrDefault("Origin", "Battlefield").contains("Battlefield")) {
+                            return true;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        return false;
     }
 }

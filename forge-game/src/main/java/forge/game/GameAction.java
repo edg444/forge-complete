@@ -2256,7 +2256,8 @@ public class GameAction {
     }
 
     private boolean stateBasedAction_Role(Card c, CardCollection removeList) {
-        if (!c.hasCardAttachments()) {
+        // Maeve, Wearer of Many Hats: any number of Roles can be attached to it
+        if (!c.hasCardAttachments() || c.hasSVar("AnyNumberOfRoles")) {
             return false;
         }
         boolean checkAgain = false;

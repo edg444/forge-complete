@@ -397,6 +397,22 @@ public class TriggerHandler {
         return true;
     }
 
+    /**
+     * The Vast Scrier: a card's own "whenever this creature ..." triggers of this mode, and no one else's, as though the
+     * event happened (it was put onto the battlefield attacking, so it didn't attack).
+     */
+    public final void runOwnTriggers(final Card host, final TriggerType mode, final Map<AbilityKey, Object> runParams) {
+        for (final Trigger t : Lists.newArrayList(host.getTriggers())) {
+            if (!t.isStatic() && t.getMode() == mode && "Card.Self".equals(t.getParam("ValidCard"))
+                    && canRunTrigger(t, mode, runParams)) {
+                final int trigAmt = t.limitByActivations(1 + StaticAbilityPanharmonicon.countPanharmonicon(game, t, runParams));
+                for (int i = 0; i < trigAmt; ++i) {
+                    runSingleTrigger(t, runParams);
+                }
+            }
+        }
+    }
+
     private boolean canRunTrigger(final Trigger regtrig, final TriggerType mode, final Map<AbilityKey, Object> runParams) {
         if (regtrig.getMode() != mode) {
             return false; // Not the right mode.

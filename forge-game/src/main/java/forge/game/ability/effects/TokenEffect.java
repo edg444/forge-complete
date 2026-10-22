@@ -127,7 +127,15 @@ public class TokenEffect extends TokenEffectBase {
             return;
         }
 
-        makeTokenTable(getDefinedPlayersOrTargeted(sa, "TokenOwner"), sa.getParam("TokenScript").split(","),
+        String[] scripts = sa.getParam("TokenScript").split(",");
+        if ("FromRandomCard".equals(sa.getParam("TokenScript"))) {
+            final String script = randomCardToken(sa);
+            if (script == null) {
+                return;
+            }
+            scripts = new String[] {script};
+        }
+        makeTokenTable(getDefinedPlayersOrTargeted(sa, "TokenOwner"), scripts,
                 amount, false, triggerList, combatChanged, sa);
 
         if (!useZoneTable) {
@@ -141,5 +149,51 @@ public class TokenEffect extends TokenEffectBase {
             game.updateCombatForView();
             game.fireEvent(new GameEventCombatChanged());
         }
+    }
+
+    private static final java.util.regex.Pattern TOKEN_SCRIPT = java.util.regex.Pattern.compile("TokenScript\\$ ([^|]+)");
+
+    /**
+     * The Traveling Postman: cards at random until one creates a token other than a copy (a token script it names), then
+     * the token of the activator's choice among the ones that card can create.
+     */
+    private static String randomCardToken(final SpellAbility sa) {
+        final forge.token.TokenDb tokens = forge.StaticData.instance().getAllTokens();
+        final List<forge.item.PaperCard> pool = new java.util.ArrayList<>(forge.StaticData.instance().getCommonCards().getUniqueCards());
+        java.util.Collections.shuffle(pool, forge.util.MyRandom.getRandom());
+        for (final forge.item.PaperCard pc : pool) {
+            final java.util.Map<String, String> found = new java.util.LinkedHashMap<>();
+            for (final forge.card.ICardFace face : pc.getRules().getAllFaces()) {
+                if (face == null) {
+                    continue;
+                }
+                final List<String> texts = new java.util.ArrayList<>();
+                face.getAbilities().forEach(texts::add);
+                face.getTriggers().forEach(texts::add);
+                face.getStaticAbilities().forEach(texts::add);
+                face.getReplacements().forEach(texts::add);
+                face.getVariables().forEach(v -> texts.add(v.getValue()));
+                for (final String text : texts) {
+                    final java.util.regex.Matcher m = TOKEN_SCRIPT.matcher(text);
+                    while (m.find()) {
+                        for (final String script : m.group(1).trim().split(",")) {
+                            if (tokens.containsRule(script.trim())) {
+                                found.put(tokens.getRules().get(script.trim()).getName() + " (" + script.trim() + ")", script.trim());
+                            }
+                        }
+                    }
+                }
+            }
+            if (found.isEmpty()) {
+                continue;
+            }
+            final Player p = sa.getActivatingPlayer();
+            p.getGame().getAction().notifyOfValue(sa, p, "The random card is " + pc.getName() + ".", null);
+            final List<String> labels = new java.util.ArrayList<>(found.keySet());
+            final String label = labels.size() == 1 || p.getController().isAI() ? forge.util.Aggregates.random(labels)
+                    : p.getController().chooseSomeType("token", sa, labels);
+            return label == null ? null : found.get(label);
+        }
+        return null;
     }
 }

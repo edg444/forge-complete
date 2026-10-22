@@ -1,0 +1,11 @@
+Name:Falko, Showoff Pilot
+ManaCost:U R W
+Types:Legendary Creature Bird Pilot
+PT:3/3
+# Spectacle:ManaCostMinus2 - each card's own mana cost minus {2} of its generic mana
+S:Mode$ Continuous | Affected$ Card.nonLand+YouOwn | AffectedZone$ Hand | AddKeyword$ Spectacle:ManaCostMinus2 | IsPresent$ Vehicle.YouCtrl+dealtCombatDamageThisTurn Opponent,Spacecraft.YouCtrl+dealtCombatDamageThisTurn Opponent | Description$ As long as a Spacecraft or Vehicle you control dealt combat damage to an opponent this turn, cards in your hand have spectacle. Their spectacle cost is equal to their mana cost minus {2}. (You may cast a spell for its spectacle cost rather than its mana cost if an opponent lost life this turn.)
+T:Mode$ SpellCast | ValidSA$ Spell.Spectacle | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCounter | TriggerDescription$ Whenever you cast a spell for its spectacle cost, put a +1/+1 counter on CARDNAME.
+SVar:TrigCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1
+DeckHints:Type$Vehicle|Spacecraft
+DeckHas:Ability$Counters
+Oracle:As long as a Spacecraft or Vehicle you control dealt combat damage to an opponent this turn, cards in your hand have spectacle. Their spectacle cost is equal to their mana cost minus {2}. (You may cast a spell for its spectacle cost rather than its mana cost if an opponent lost life this turn.)\nWhenever you cast a spell for its spectacle cost, put a +1/+1 counter on Falko.

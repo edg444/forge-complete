@@ -1,0 +1,12 @@
+Name:The Vast Scrier
+ManaCost:1 R W B
+Types:Legendary Creature Human Cleric
+PT:2/2
+K:Flying
+T:Mode$ Attacks | ValidCard$ Card.Self | Attacked$ Player | Execute$ TrigChange | TriggerZones$ Battlefield | TriggerDescription$ Whenever CARDNAME attacks a player, you may put a Soldier, Warrior, or Wizard creature card from your hand onto the battlefield tapped and attacking that player. If it has any "Whenever this creature attacks" triggers, those trigger. If you don't put a card onto the battlefield this way, scry 2.
+# OwnAttackTriggers$: only the put creature's own "whenever this creature attacks" triggers
+SVar:TrigChange:DB$ ChangeZone | Origin$ Hand | Destination$ Battlefield | ChangeType$ Creature.Soldier+YouCtrl,Creature.Warrior+YouCtrl,Creature.Wizard+YouCtrl | ChangeNum$ 1 | Tapped$ True | Attacking$ TriggeredDefender | OwnAttackTriggers$ True | RememberChanged$ True | SubAbility$ DBScry
+SVar:DBScry:DB$ Scry | ScryNum$ 2 | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ EQ0 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:HasAttackEffect:TRUE
+Oracle:Flying\nWhenever The Vast Scrier attacks a player, you may put a Soldier, Warrior, or Wizard creature card from your hand onto the battlefield tapped and attacking that player. If it has any "Whenever this creature attacks" triggers, those trigger. If you don't put a card onto the battlefield this way, scry 2.

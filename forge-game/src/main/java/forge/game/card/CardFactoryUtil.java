@@ -3617,7 +3617,16 @@ public class CardFactoryUtil {
             inst.addSpellAbility(sa);
         } else if (keyword.startsWith("Spectacle")) {
             final String[] k = keyword.split(":");
-            final Cost cost = new Cost(k[1], false);
+            final Cost cost;
+            if (k[1].startsWith("ManaCostMinus")) {
+                // Falko, Showoff Pilot: its mana cost minus that much generic mana (CR 118.7a)
+                final forge.game.mana.ManaCostBeingPaid less = new forge.game.mana.ManaCostBeingPaid(card.getManaCost());
+                less.decreaseGenericMana(Math.min(Integer.parseInt(k[1].substring("ManaCostMinus".length())),
+                        card.getManaCost().getGenericCost()));
+                cost = new Cost(less.toManaCost(), false);
+            } else {
+                cost = new Cost(k[1], false);
+            }
             final SpellAbility newSA = card.getFirstSpellAbility().copyWithDefinedCost(cost);
 
             newSA.setAlternativeCost(AlternativeCost.Spectacle);

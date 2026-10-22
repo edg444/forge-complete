@@ -1,0 +1,10 @@
+Name:The Traveling Postman
+ManaCost:1 U R W
+Types:Legendary Creature Human Artist
+PT:3/4
+K:Flying
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | Execute$ TrigToken | TriggerDescription$ Whenever CARDNAME deals combat damage to a player, choose Magic cards at random until you find one that creates a token other than a copy. Create a token of the type of your choice that card can create. (Many Magic search engines have "random card" functions.)
+# FromRandomCard: random cards until one names a token script (copies don't), then one of its tokens (TokenEffect)
+SVar:TrigToken:DB$ Token | TokenScript$ FromRandomCard | TokenOwner$ You
+DeckHas:Ability$Token
+Oracle:Flying\nWhenever The Traveling Postman deals combat damage to a player, choose Magic cards at random until you find one that creates a token other than a copy. Create a token of the type of your choice that card can create. (Many Magic search engines have "random card" functions.)

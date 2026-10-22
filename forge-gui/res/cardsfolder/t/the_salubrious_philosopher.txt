@@ -1,0 +1,11 @@
+Name:The Salubrious Philosopher
+ManaCost:2 B G
+Types:Legendary Creature Snail Advisor
+PT:2/3
+R:Event$ Draw | ActiveZones$ Battlefield | ValidPlayer$ You | ReplaceWith$ KindChoice | Optional$ True | Description$ If you would draw a card, you may instead choose mana base, removal, or win condition and reveal cards from the top of your library until you reveal a card of the chosen kind. Put that card into your hand and the rest on the bottom of your library in a random order. (Mana base cards add mana. Removal cards are instants and sorceries that can damage, destroy, or exile opposing permanents. Win conditions cost 6 or more mana.)
+SVar:KindChoice:DB$ GenericChoice | Choices$ DigMana,DigRemoval,DigWin | Defined$ You | AILogic$ Philosopher
+SVar:DigMana:DB$ DigUntil | Valid$ Card.addsMana | ValidDescription$ mana base | FoundDestination$ Hand | RevealedDestination$ Library | RevealedLibraryPosition$ -1 | RevealRandomOrder$ True | SpellDescription$ Mana base
+SVar:DigRemoval:DB$ DigUntil | Valid$ Card.removalSpell | ValidDescription$ removal | FoundDestination$ Hand | RevealedDestination$ Library | RevealedLibraryPosition$ -1 | RevealRandomOrder$ True | SpellDescription$ Removal
+SVar:DigWin:DB$ DigUntil | Valid$ Card.cmcGE6 | ValidDescription$ win condition | FoundDestination$ Hand | RevealedDestination$ Library | RevealedLibraryPosition$ -1 | RevealRandomOrder$ True | SpellDescription$ Win condition
+SVar:NonStackingEffect:True
+Oracle:If you would draw a card, you may instead choose mana base, removal, or win condition and reveal cards from the top of your library until you reveal a card of the chosen kind. Put that card into your hand and the rest on the bottom of your library in a random order. (Mana base cards add mana. Removal cards are instants and sorceries that can damage, destroy, or exile opposing permanents. Win conditions cost 6 or more mana.)

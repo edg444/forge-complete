@@ -821,6 +821,16 @@ public abstract class SpellAbilityEffect {
                 combat.addAttacker(c, defender);
                 combat.getBandOfAttacker(c).setBlocked(false);
                 combatChanged = true;
+                // The Vast Scrier: its own "whenever this creature attacks" triggers trigger
+                if (sa.hasParam("OwnAttackTriggers")) {
+                    final Map<AbilityKey, Object> runParams = AbilityKey.newMap();
+                    runParams.put(AbilityKey.Attacker, c);
+                    runParams.put(AbilityKey.OtherAttackers, new CardCollection(combat.getAttackers()));
+                    runParams.put(AbilityKey.Attacked, defender);
+                    runParams.put(AbilityKey.DefendingPlayer, combat.getDefenderPlayerByAttacker(c));
+                    runParams.put(AbilityKey.Defenders, new FCollection<>(combat.getDefenders()));
+                    game.getTriggerHandler().runOwnTriggers(c, TriggerType.Attacks, runParams);
+                }
             }
         }
         if (sa.hasParam(blockingParam)) {

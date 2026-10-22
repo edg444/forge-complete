@@ -217,6 +217,18 @@ public class ChooseGenericAi extends SpellAbilityAi {
                 }
             }
             return spells.get(0);
+        } else if ("Philosopher".equals(logic)) {
+            // The Salubrious Philosopher: lands until it has five, then removal while opponents have creatures
+            final int lands = CardLists.count(player.getCardsIn(ZoneType.Battlefield), Card::isLand)
+                    + CardLists.count(player.getCardsIn(ZoneType.Hand), Card::isLand);
+            final boolean threats = player.getOpponents().getCreaturesInPlay().size() > 0;
+            final String want = lands < 5 ? "Mana base" : threats ? "Removal" : "Win condition";
+            for (final SpellAbility each : spells) {
+                if (want.equals(each.getDescription())) {
+                    return each;
+                }
+            }
+            return spells.get(0);
         } else if ("Sketch".equals(logic)) {
             // D00-DL: the AI's fifteen-second drawing - each pick a feature more, until it stops
             return MyRandom.percentTrue(55) ? Aggregates.random(spells) : null;

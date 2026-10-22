@@ -1,0 +1,19 @@
+Name:Halana and Alena and Gisa and Geralf
+ManaCost:R G U B
+Types:Legendary Creature Human Ranger Wizard
+PT:3/5
+K:First Strike
+K:Reach
+T:Mode$ Phase | Phase$ BeginCombat | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigMill | TriggerDescription$ At the beginning of combat on your turn, mill four cards. You may choose a creature card from among them and cast it. When you do, it gains haste, becomes a Zombie in addition to its other types, and enters the battlefield with X +1/+1 counters on it, where X is CARDNAME's power.
+SVar:TrigMill:DB$ Mill | Defined$ You | NumCards$ 4 | RememberMilled$ True | SubAbility$ DBCast
+SVar:DBCast:DB$ Play | Defined$ Remembered | Valid$ Creature | ValidSA$ Spell | ValidZone$ Graveyard | Optional$ True | ForgetRemembered$ True | RememberPlayed$ True | SubAbility$ DBZombie
+# the cast creature is followed by an effect, which keeps X as it was when the spell was cast
+SVar:DBZombie:DB$ Effect | RememberObjects$ Remembered | StaticAbilities$ ZombieHaste | ReplacementEffects$ ETBCounters | SetChosenNumber$ X | Duration$ Permanent | ForgetOnMoved$ Battlefield | ConditionDefined$ Remembered | ConditionPresent$ Card | SubAbility$ DBCleanup
+SVar:ZombieHaste:Mode$ Continuous | Affected$ Card.IsRemembered | AffectedZone$ Stack,Battlefield | AddKeyword$ Haste | AddType$ Zombie | Description$ The creature cast this way has haste and is a Zombie in addition to its other types.
+SVar:ETBCounters:Event$ Moved | ActiveZones$ Command | ValidCard$ Card.IsRemembered | Destination$ Battlefield | ReplaceWith$ DBPutCounters | ReplacementResult$ Updated | Description$ It enters the battlefield with X +1/+1 counters on it.
+SVar:DBPutCounters:DB$ PutCounter | Defined$ ReplacedCard | CounterType$ P1P1 | CounterNum$ Y | ETB$ True
+SVar:Y:Count$ChosenNumber
+SVar:X:Count$CardPower
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+DeckHas:Ability$Mill|Graveyard|Counters & Type$Zombie
+Oracle:First strike, reach\nAt the beginning of combat on your turn, mill four cards. You may choose a creature card from among them and cast it. When you do, it gains haste, becomes a Zombie in addition to its other types, and enters the battlefield with X +1/+1 counters on it, where X is Halana and Alena and Gisa and Geralf's power.

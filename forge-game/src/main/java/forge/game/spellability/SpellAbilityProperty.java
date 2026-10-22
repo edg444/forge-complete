@@ -71,6 +71,8 @@ public class SpellAbilityProperty {
             return sa.isCycling();
         } else if (property.equals("Dash")) {
             return sa.isDash();
+        } else if (property.equals("Spectacle")) {
+            return sa.isSpectacle();
         } else if (property.equals("Disturb")) {
             return sa.isDisturb();
         } else if (property.equals("Embalm")) {
