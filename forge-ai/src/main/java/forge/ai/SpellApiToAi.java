@@ -181,6 +181,8 @@ public enum SpellApiToAi {
             .put(ApiType.StartTimer, AlwaysPlayAi.class)
             .put(ApiType.EraseAbilities, AlwaysPlayAi.class)
             .put(ApiType.AiTakeover, AlwaysPlayAi.class)
+            .put(ApiType.WriteName, AlwaysPlayAi.class)
+            .put(ApiType.ShareBackup, AlwaysPlayAi.class)
             .put(ApiType.StickerBeneath, AlwaysPlayAi.class)
             .put(ApiType.SecretIdentity, SecretIdentityAi.class)
             .put(ApiType.TakeAdventure, TakeAdventureAi.class)

@@ -2503,6 +2503,10 @@ public class GameAction {
             if (zoneFrom.is(ZoneType.Exile) && c.getCurrentStateName() == CardStateName.PreparedSpell) {
                 return false;
             }
+            // Split into Three Parts: tokens it makes in exile stay there (user ruling 2026-10-22)
+            if (zoneFrom.is(ZoneType.Exile) && c.hasSVar("SurvivesInExile")) {
+                return false;
+            }
 
             // Claire D'Loon: a token that is also a card
             if (forge.game.staticability.StaticAbilityTokensAreCards.applies(c)) {

@@ -446,6 +446,12 @@ public class AiCostDecision extends CostDecisionMakerBase {
     }
 
     @Override
+    public PaymentDecision visit(CostPaySpeed cost) {
+        final int c = cost.getAbilityAmount(ability);
+        return player.getSpeed() >= c ? PaymentDecision.number(c) : null;
+    }
+
+    @Override
     public PaymentDecision visit(CostPayEnergy cost) {
         int c = cost.getAbilityAmount(ability);
         if (!player.canPayEnergy(c)) {

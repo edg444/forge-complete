@@ -1,0 +1,7 @@
+Name:Bear Token
+ManaCost:no cost
+Colors:orange
+Types:Creature Bear
+PT:2/2
+K:Haste
+Oracle:Haste

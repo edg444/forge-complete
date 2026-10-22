@@ -316,6 +316,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   (`UI_ZONE_TABS_LEFT`) is gone; upstream restored its own setting of that name (`UI_ALT_PLAYERZONETABS`), and the two
   showed with the same label. Hand, Library, Graveyard and Exile tabs are on the right edge, as upstream has them.
 
+- **Unknown Event: Chicago Loop, ______, The Playful Winners, Huge Truck, Split into Three Parts (UNK).**
+  - Orange is a color (`MagicColor.ORANGE`, the color byte's top bit; `ColorSet` masks with `0xFF`), with the
+    other Un-colors. New tokens: a 2/2 orange Bear with haste, a 3/1 green Dinosaur Skeleton with trample.
+  - New cost `PaySpeed<X>`: the payer's speed goes down by X, to as low as 0.
+  - Written on the card in the deck, like a Legacy word: `PaperCard` flags `name` (an all-underscore name becomes
+    it; new effect `WriteName`, card property `writtenNameAllows`) and `tally` (`Count$TallyMarks`; the winner's
+    cards with SVar `TallyOnWin`, and their commanders, get one when the match records a win).
+  - Clone `CopyRandomPartner$`: a random Vintage-legal card with any partner variant.
+  - New effect `ShareBackup`: the abilities the triggering backup ability would give, kept for good.
+  - Token `TokenZone$ Exile`: made in exile, where it stays (no 704.5d), with its `WithCounters`.
+
 - **Unknown Event: Noyd, Keeper of the Void, Sharp Eraser, Banned Eldraine Card, Rafi, Retro Racer, The Egotistical
   Velociraptor, The Ancient Dingus, Fifth Stage of Magic Design (UNK rares).**
   - Real-time timers: new effect `StartTimer` (`Minutes$`), checked when a player would receive priority; the host's

@@ -27,6 +27,12 @@ public interface IPaperCard extends InventoryItem, Serializable {
         return null;
     }
     /** How many of this card's nodes are marked (Gold Mine); only a real card can have any. */
+    default String getWrittenName() {
+        return null;
+    }
+    default int getTallyMarks() {
+        return 0;
+    }
     default int getMarkedNodes() {
         return 0;
     }

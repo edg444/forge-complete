@@ -2554,6 +2554,15 @@ public class Player extends GameEntity implements Comparable<Player> {
             updateSpeedEffect();
         }
     }
+    /** Chicago Loop: speed paid as a cost (a negative amount refunds it), down to no speed at all. */
+    public final void paySpeed(final int n) {
+        final int old = speed;
+        speed = Math.max(0, speed - n);
+        if (speed != old) {
+            game.fireEvent(new GameEventSpeedChanged(this, old, speed));
+            updateSpeedEffect();
+        }
+    }
     public final boolean noSpeed() {
         return speed == 0;
     }

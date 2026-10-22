@@ -168,7 +168,136 @@ public enum ColorSet implements Iterable<Color>, Serializable {
     OPBRG(Color.BLACK, Color.RED, Color.GREEN, Color.PINK, Color.GOLD),
     OPBRGW(Color.BLACK, Color.RED, Color.GREEN, Color.WHITE, Color.PINK, Color.GOLD),
     OPUBRG(Color.BLUE, Color.BLACK, Color.RED, Color.GREEN, Color.PINK, Color.GOLD),
-    OPWUBRG(Color.WHITE, Color.BLUE, Color.BLACK, Color.RED, Color.GREEN, Color.PINK, Color.GOLD)
+    OPWUBRG(Color.WHITE, Color.BLUE, Color.BLACK, Color.RED, Color.GREEN, Color.PINK, Color.GOLD),
+    // Chicago Loop's orange Bear: an eighth bit on the same terms as pink and gold
+    A(Color.ORANGE),
+    AW(Color.WHITE, Color.ORANGE),
+    AU(Color.BLUE, Color.ORANGE),
+    AWU(Color.WHITE, Color.BLUE, Color.ORANGE),
+    AB(Color.BLACK, Color.ORANGE),
+    AWB(Color.WHITE, Color.BLACK, Color.ORANGE),
+    AUB(Color.BLUE, Color.BLACK, Color.ORANGE),
+    AWUB(Color.WHITE, Color.BLUE, Color.BLACK, Color.ORANGE),
+    AR(Color.RED, Color.ORANGE),
+    ARW(Color.RED, Color.WHITE, Color.ORANGE),
+    AUR(Color.BLUE, Color.RED, Color.ORANGE),
+    AURW(Color.BLUE, Color.RED, Color.WHITE, Color.ORANGE),
+    ABR(Color.BLACK, Color.RED, Color.ORANGE),
+    ARWB(Color.RED, Color.WHITE, Color.BLACK, Color.ORANGE),
+    AUBR(Color.BLUE, Color.BLACK, Color.RED, Color.ORANGE),
+    AWUBR(Color.WHITE, Color.BLUE, Color.BLACK, Color.RED, Color.ORANGE),
+    AG(Color.GREEN, Color.ORANGE),
+    AGW(Color.GREEN, Color.WHITE, Color.ORANGE),
+    AGU(Color.GREEN, Color.BLUE, Color.ORANGE),
+    AGWU(Color.GREEN, Color.WHITE, Color.BLUE, Color.ORANGE),
+    ABG(Color.BLACK, Color.GREEN, Color.ORANGE),
+    AWBG(Color.WHITE, Color.BLACK, Color.GREEN, Color.ORANGE),
+    ABGU(Color.BLACK, Color.GREEN, Color.BLUE, Color.ORANGE),
+    AGWUB(Color.GREEN, Color.WHITE, Color.BLUE, Color.BLACK, Color.ORANGE),
+    ARG(Color.RED, Color.GREEN, Color.ORANGE),
+    ARGW(Color.RED, Color.GREEN, Color.WHITE, Color.ORANGE),
+    AGUR(Color.GREEN, Color.BLUE, Color.RED, Color.ORANGE),
+    ARGWU(Color.RED, Color.GREEN, Color.WHITE, Color.BLUE, Color.ORANGE),
+    ABRG(Color.BLACK, Color.RED, Color.GREEN, Color.ORANGE),
+    ABRGW(Color.BLACK, Color.RED, Color.GREEN, Color.WHITE, Color.ORANGE),
+    AUBRG(Color.BLUE, Color.BLACK, Color.RED, Color.GREEN, Color.ORANGE),
+    AWUBRG(Color.WHITE, Color.BLUE, Color.BLACK, Color.RED, Color.GREEN, Color.ORANGE),
+    AP(Color.PINK, Color.ORANGE),
+    APW(Color.WHITE, Color.PINK, Color.ORANGE),
+    APU(Color.BLUE, Color.PINK, Color.ORANGE),
+    APWU(Color.WHITE, Color.BLUE, Color.PINK, Color.ORANGE),
+    APB(Color.BLACK, Color.PINK, Color.ORANGE),
+    APWB(Color.WHITE, Color.BLACK, Color.PINK, Color.ORANGE),
+    APUB(Color.BLUE, Color.BLACK, Color.PINK, Color.ORANGE),
+    APWUB(Color.WHITE, Color.BLUE, Color.BLACK, Color.PINK, Color.ORANGE),
+    APR(Color.RED, Color.PINK, Color.ORANGE),
+    APRW(Color.RED, Color.WHITE, Color.PINK, Color.ORANGE),
+    APUR(Color.BLUE, Color.RED, Color.PINK, Color.ORANGE),
+    APURW(Color.BLUE, Color.RED, Color.WHITE, Color.PINK, Color.ORANGE),
+    APBR(Color.BLACK, Color.RED, Color.PINK, Color.ORANGE),
+    APRWB(Color.RED, Color.WHITE, Color.BLACK, Color.PINK, Color.ORANGE),
+    APUBR(Color.BLUE, Color.BLACK, Color.RED, Color.PINK, Color.ORANGE),
+    APWUBR(Color.WHITE, Color.BLUE, Color.BLACK, Color.RED, Color.PINK, Color.ORANGE),
+    APG(Color.GREEN, Color.PINK, Color.ORANGE),
+    APGW(Color.GREEN, Color.WHITE, Color.PINK, Color.ORANGE),
+    APGU(Color.GREEN, Color.BLUE, Color.PINK, Color.ORANGE),
+    APGWU(Color.GREEN, Color.WHITE, Color.BLUE, Color.PINK, Color.ORANGE),
+    APBG(Color.BLACK, Color.GREEN, Color.PINK, Color.ORANGE),
+    APWBG(Color.WHITE, Color.BLACK, Color.GREEN, Color.PINK, Color.ORANGE),
+    APBGU(Color.BLACK, Color.GREEN, Color.BLUE, Color.PINK, Color.ORANGE),
+    APGWUB(Color.GREEN, Color.WHITE, Color.BLUE, Color.BLACK, Color.PINK, Color.ORANGE),
+    APRG(Color.RED, Color.GREEN, Color.PINK, Color.ORANGE),
+    APRGW(Color.RED, Color.GREEN, Color.WHITE, Color.PINK, Color.ORANGE),
+    APGUR(Color.GREEN, Color.BLUE, Color.RED, Color.PINK, Color.ORANGE),
+    APRGWU(Color.RED, Color.GREEN, Color.WHITE, Color.BLUE, Color.PINK, Color.ORANGE),
+    APBRG(Color.BLACK, Color.RED, Color.GREEN, Color.PINK, Color.ORANGE),
+    APBRGW(Color.BLACK, Color.RED, Color.GREEN, Color.WHITE, Color.PINK, Color.ORANGE),
+    APUBRG(Color.BLUE, Color.BLACK, Color.RED, Color.GREEN, Color.PINK, Color.ORANGE),
+    APWUBRG(Color.WHITE, Color.BLUE, Color.BLACK, Color.RED, Color.GREEN, Color.PINK, Color.ORANGE),
+    AO(Color.GOLD, Color.ORANGE),
+    AOW(Color.WHITE, Color.GOLD, Color.ORANGE),
+    AOU(Color.BLUE, Color.GOLD, Color.ORANGE),
+    AOWU(Color.WHITE, Color.BLUE, Color.GOLD, Color.ORANGE),
+    AOB(Color.BLACK, Color.GOLD, Color.ORANGE),
+    AOWB(Color.WHITE, Color.BLACK, Color.GOLD, Color.ORANGE),
+    AOUB(Color.BLUE, Color.BLACK, Color.GOLD, Color.ORANGE),
+    AOWUB(Color.WHITE, Color.BLUE, Color.BLACK, Color.GOLD, Color.ORANGE),
+    AOR(Color.RED, Color.GOLD, Color.ORANGE),
+    AORW(Color.RED, Color.WHITE, Color.GOLD, Color.ORANGE),
+    AOUR(Color.BLUE, Color.RED, Color.GOLD, Color.ORANGE),
+    AOURW(Color.BLUE, Color.RED, Color.WHITE, Color.GOLD, Color.ORANGE),
+    AOBR(Color.BLACK, Color.RED, Color.GOLD, Color.ORANGE),
+    AORWB(Color.RED, Color.WHITE, Color.BLACK, Color.GOLD, Color.ORANGE),
+    AOUBR(Color.BLUE, Color.BLACK, Color.RED, Color.GOLD, Color.ORANGE),
+    AOWUBR(Color.WHITE, Color.BLUE, Color.BLACK, Color.RED, Color.GOLD, Color.ORANGE),
+    AOG(Color.GREEN, Color.GOLD, Color.ORANGE),
+    AOGW(Color.GREEN, Color.WHITE, Color.GOLD, Color.ORANGE),
+    AOGU(Color.GREEN, Color.BLUE, Color.GOLD, Color.ORANGE),
+    AOGWU(Color.GREEN, Color.WHITE, Color.BLUE, Color.GOLD, Color.ORANGE),
+    AOBG(Color.BLACK, Color.GREEN, Color.GOLD, Color.ORANGE),
+    AOWBG(Color.WHITE, Color.BLACK, Color.GREEN, Color.GOLD, Color.ORANGE),
+    AOBGU(Color.BLACK, Color.GREEN, Color.BLUE, Color.GOLD, Color.ORANGE),
+    AOGWUB(Color.GREEN, Color.WHITE, Color.BLUE, Color.BLACK, Color.GOLD, Color.ORANGE),
+    AORG(Color.RED, Color.GREEN, Color.GOLD, Color.ORANGE),
+    AORGW(Color.RED, Color.GREEN, Color.WHITE, Color.GOLD, Color.ORANGE),
+    AOGUR(Color.GREEN, Color.BLUE, Color.RED, Color.GOLD, Color.ORANGE),
+    AORGWU(Color.RED, Color.GREEN, Color.WHITE, Color.BLUE, Color.GOLD, Color.ORANGE),
+    AOBRG(Color.BLACK, Color.RED, Color.GREEN, Color.GOLD, Color.ORANGE),
+    AOBRGW(Color.BLACK, Color.RED, Color.GREEN, Color.WHITE, Color.GOLD, Color.ORANGE),
+    AOUBRG(Color.BLUE, Color.BLACK, Color.RED, Color.GREEN, Color.GOLD, Color.ORANGE),
+    AOWUBRG(Color.WHITE, Color.BLUE, Color.BLACK, Color.RED, Color.GREEN, Color.GOLD, Color.ORANGE),
+    AOP(Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPW(Color.WHITE, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPU(Color.BLUE, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPWU(Color.WHITE, Color.BLUE, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPB(Color.BLACK, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPWB(Color.WHITE, Color.BLACK, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPUB(Color.BLUE, Color.BLACK, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPWUB(Color.WHITE, Color.BLUE, Color.BLACK, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPR(Color.RED, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPRW(Color.RED, Color.WHITE, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPUR(Color.BLUE, Color.RED, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPURW(Color.BLUE, Color.RED, Color.WHITE, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPBR(Color.BLACK, Color.RED, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPRWB(Color.RED, Color.WHITE, Color.BLACK, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPUBR(Color.BLUE, Color.BLACK, Color.RED, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPWUBR(Color.WHITE, Color.BLUE, Color.BLACK, Color.RED, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPG(Color.GREEN, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPGW(Color.GREEN, Color.WHITE, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPGU(Color.GREEN, Color.BLUE, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPGWU(Color.GREEN, Color.WHITE, Color.BLUE, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPBG(Color.BLACK, Color.GREEN, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPWBG(Color.WHITE, Color.BLACK, Color.GREEN, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPBGU(Color.BLACK, Color.GREEN, Color.BLUE, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPGWUB(Color.GREEN, Color.WHITE, Color.BLUE, Color.BLACK, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPRG(Color.RED, Color.GREEN, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPRGW(Color.RED, Color.GREEN, Color.WHITE, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPGUR(Color.GREEN, Color.BLUE, Color.RED, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPRGWU(Color.RED, Color.GREEN, Color.WHITE, Color.BLUE, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPBRG(Color.BLACK, Color.RED, Color.GREEN, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPBRGW(Color.BLACK, Color.RED, Color.GREEN, Color.WHITE, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPUBRG(Color.BLUE, Color.BLACK, Color.RED, Color.GREEN, Color.PINK, Color.GOLD, Color.ORANGE),
+    AOPWUBRG(Color.WHITE, Color.BLUE, Color.BLACK, Color.RED, Color.GREEN, Color.PINK, Color.GOLD, Color.ORANGE)
     ;
 
     private static final long serialVersionUID = 794691267379929080L;
@@ -183,8 +312,8 @@ public enum ColorSet implements Iterable<Color>, Serializable {
     }
 
     public static ColorSet fromMask(final int mask) {
-        final int mask7 = mask & (MagicColor.ALL_COLORS | MagicColor.PINK | MagicColor.GOLD);
-        return values()[mask7];
+        // orange is the byte's sign bit, so a mask arriving as a byte is read unsigned
+        return values()[mask & 0xFF];
     }
 
     public static ColorSet fromEnums(final Color... colors) {
@@ -260,12 +389,12 @@ public enum ColorSet implements Iterable<Color>, Serializable {
      * @return true, if successful
      */
     public boolean hasAllColors(final int colormask) {
-        return (this.ordinal() & colormask) == colormask;
+        return (this.ordinal() & (colormask & 0xFF)) == (colormask & 0xFF);
     }
 
     /** this has exactly the colors defined by operand.  */
     public boolean hasExactlyColor(final int colormask) {
-        return this.ordinal() == colormask;
+        return this.ordinal() == (colormask & 0xFF);
     }
 
     /** this has no other colors except defined by operand.  */
@@ -285,7 +414,7 @@ public enum ColorSet implements Iterable<Color>, Serializable {
 
     /** Operand has no other colors except defined by this. */
     public boolean containsAllColorsFrom(final int colorProfile) {
-        return (~this.ordinal() & colorProfile) == 0;
+        return (~this.ordinal() & colorProfile & 0xFF) == 0;
     }
 
     /**

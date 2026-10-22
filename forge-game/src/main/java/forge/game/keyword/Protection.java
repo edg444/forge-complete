@@ -22,7 +22,7 @@ public class Protection extends KeywordWithType {
                 if (damage && (characteristic.endsWith("White") || characteristic.endsWith("Blue")
                         || characteristic.endsWith("Black") || characteristic.endsWith("Red")
                         || characteristic.endsWith("Green") || characteristic.endsWith("Colorless")
-                        || characteristic.endsWith("Pink") || characteristic.endsWith("Gold")
+                        || characteristic.endsWith("Pink") || characteristic.endsWith("Gold") || characteristic.endsWith("Orange")
                         || characteristic.endsWith("MonoColor") || characteristic.endsWith("MultiColor")
                         || characteristic.endsWith("EnemyColor"))) {
                     characteristic += "Source";
@@ -45,6 +45,8 @@ public class Protection extends KeywordWithType {
                 validSource = "Pink" + (damage ? "Source" : "");
             } else if (protectType.equals("gold")) {
                 validSource = "Gold" + (damage ? "Source" : "");
+            } else if (protectType.equals("orange")) {
+                validSource = "Orange" + (damage ? "Source" : "");
             } else if (protectType.equals("colorless")) {
                 validSource = "Colorless" + (damage ? "Source" : "");
             } else if (protectType.equals("each color")) {

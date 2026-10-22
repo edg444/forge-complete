@@ -114,6 +114,26 @@ public class CloneEffect extends SpellAbilityEffect {
             if (!cloneSources.isEmpty()) {
                 cardToCopy = cloneSources.get(0);
             }
+        } else if (sa.hasParam("CopyRandomPartner")) {
+            // The Playful Winners: a random tournament-legal card with partner, any variant (Partner with, Friends
+            // forever, Partner—...); tournament-legal is legal in Vintage, which leaves out only Un- and other unsanctioned cards
+            final forge.game.GameFormat vintage = forge.game.GameFormat.named("Vintage");
+            final List<forge.item.PaperCard> partners = new ArrayList<>();
+            for (final forge.item.PaperCard pc : StaticData.instance().getCommonCards().getUniqueCards()) {
+                boolean partner = false;
+                for (final String k : pc.getRules().getMainPart().getKeywords()) {
+                    if (k.startsWith("Partner") || k.startsWith("Friends forever")) {
+                        partner = true;
+                        break;
+                    }
+                }
+                if (partner && (vintage == null || vintage.getFilterRules().test(pc))) {
+                    partners.add(pc);
+                }
+            }
+            if (!partners.isEmpty()) {
+                cardToCopy = Card.fromPaperCard(forge.util.Aggregates.random(partners), activator);
+            }
         } else if (sa.hasParam("CopyCardName")) {
             cardToCopy = StaticAbilityCastAs.template(game, sa.getParam("CopyCardName"), activator);
         } else if (sa.usesTargeting()) {

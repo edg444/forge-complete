@@ -859,6 +859,15 @@ public class HumanCostDecision extends CostDecisionMakerBase {
     }
 
     @Override
+    public PaymentDecision visit(final CostPaySpeed cost) {
+        final int c = cost.getAbilityAmount(ability);
+        if (player.getSpeed() >= c && controller.confirmPayment(cost, "Pay " + c + " speed? (Your speed is " + player.getSpeed() + ")", ability)) {
+            return PaymentDecision.number(c);
+        }
+        return null;
+    }
+
+    @Override
     public PaymentDecision visit(final CostPayEnergy cost) {
         int c = cost.getAbilityAmount(ability);
 

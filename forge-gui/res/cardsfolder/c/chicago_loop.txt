@@ -1,0 +1,14 @@
+Name:Chicago Loop
+ManaCost:no cost
+Types:Legendary Snow Land
+K:Start your engines
+A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
+# PaySpeed<X>: its controller's speed goes down by X
+A:AB$ Mana | Cost$ PaySpeed<X> | Produced$ Combo Any | Amount$ X | SpellDescription$ Add X mana in any combination of colors.
+SVar:X:Count$xPaid
+A:AB$ GenericChoice | Cost$ 5 T | Defined$ You | Choices$ DBDinosaur,DBBear,DBBird | AILogic$ Random | SpellDescription$ Create your choice of a 3/1 green Dinosaur Skeleton creature token with trample, a 2/2 orange Bear token with haste, or a 1/1 white Bird token with flying.
+SVar:DBDinosaur:DB$ Token | TokenScript$ g_3_1_dinosaur_skeleton_trample | SpellDescription$ A 3/1 green Dinosaur Skeleton creature token with trample
+SVar:DBBear:DB$ Token | TokenScript$ orange_2_2_bear_haste | SpellDescription$ A 2/2 orange Bear token with haste
+SVar:DBBird:DB$ Token | TokenScript$ w_1_1_bird_flying | SpellDescription$ A 1/1 white Bird token with flying
+DeckHas:Ability$Token
+Oracle:Start your engines!\n{T}: Add {C}.\nPay X speed: Add X mana in any combination of colors.\n{5}, {T}: Create your choice of a 3/1 green Dinosaur Skeleton creature token with trample, a 2/2 orange Bear token with haste, or a 1/1 white Bird token with flying.

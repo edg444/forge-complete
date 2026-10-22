@@ -2494,6 +2494,10 @@ public class AbilityUtils {
         if (sq[0].equals("CurrentMonth")) {
             return doXMath(java.time.LocalDate.now().getMonthValue(), expr, c, ctb);
         }
+        // The Playful Winners: tally marks drawn on the card
+        if (sq[0].equals("TallyMarks")) {
+            return doXMath(c.getTallyMarks(), expr, c, ctb);
+        }
         // Shahrazad and Sindbad: subgames played this match
         if (sq[0].equals("SubgamesThisMatch")) {
             return doXMath(c.getGame().getMatch().getSubgamesPlayed(), expr, c, ctb);

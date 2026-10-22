@@ -176,6 +176,8 @@ public enum ApiType {
     StartTimer (StartTimerEffect.class),
     EraseAbilities (EraseAbilitiesEffect.class),
     AiTakeover (AiTakeoverEffect.class),
+    WriteName (WriteNameEffect.class),
+    ShareBackup (ShareBackupEffect.class),
     StickerBeneath (StickerBeneathEffect.class),
     SecretIdentity (SecretIdentityEffect.class),
     TakeAdventure (TakeAdventureEffect.class),

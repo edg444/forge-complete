@@ -2766,6 +2766,27 @@ public class CardProperty {
             if (base.isArtifact() && base.isCreature()) {
                 return false;
             }
+        } else if (property.equals("hasWrittenName")) {
+            if (card.getWrittenName() == null) {
+                return false;
+            }
+        } else if (property.equals("writtenNameAllows")) {
+            // ______'s mana: a spell of the creature type or card type in its name ("Gavin's Dragon and Sorceries"),
+            // or one whose name begins with the first letter of that first name
+            final String written = source.getWrittenName();
+            if (written == null || !written.contains("'s ") || !written.contains(" and ")) {
+                return false;
+            }
+            final String first = written.substring(0, written.indexOf("'s "));
+            final String creatureType = written.substring(written.indexOf("'s ") + 3, written.lastIndexOf(" and "));
+            final String plural = written.substring(written.lastIndexOf(" and ") + 5);
+            final String cardType = plural.endsWith("ies") ? plural.substring(0, plural.length() - 3) + "y"
+                    : plural.endsWith("s") ? plural.substring(0, plural.length() - 1) : plural;
+            final boolean typed = card.getType().hasCreatureType(creatureType) || card.getType().hasStringType(cardType);
+            final boolean initial = !first.isEmpty() && card.getName().toUpperCase().startsWith(first.substring(0, 1).toUpperCase());
+            if (!typed && !initial) {
+                return false;
+            }
         } else if (property.equals("addsMana")) {
             // The Salubrious Philosopher's mana base: cards that add mana, by a mana ability or as a spell
             if (!addsMana(card)) {

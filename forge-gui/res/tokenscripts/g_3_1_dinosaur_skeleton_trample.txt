@@ -1,0 +1,7 @@
+Name:Dinosaur Skeleton Token
+ManaCost:no cost
+Colors:green
+Types:Creature Dinosaur Skeleton
+PT:3/1
+K:Trample
+Oracle:Trample

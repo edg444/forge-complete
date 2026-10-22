@@ -480,6 +480,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
             setMarkedColors(paperCard.getMarkedColors());
             setLegacyWord(paperCard.getLegacyWord());
             setMarkedNodes(paperCard.getMarkedNodes());
+            writtenName = paperCard.getWrittenName();
+            tallyMarks = paperCard.getTallyMarks();
             setPaperFoil(paperCard.isFoil());
         }
     }
@@ -1074,6 +1076,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
     public final String getName(CardState state) {
         String name = state.getName();
+        // ______: the name filled in on its blank (only while it's that card, not a copy of another)
+        if (writtenName != null && name.matches("_+")) {
+            name = writtenName;
+        }
         for (CardChangedName change : this.changedCardNames.values()) {
             if (change.isOverwrite()) {
                 name = change.newName();
@@ -2646,6 +2652,23 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
     public final int getMarkedNodes() {
         return markedNodes;
+    }
+
+    // ______ and The Playful Winners: what's written on the physical card (kept in the deck file)
+    private String writtenName = null;
+    private int tallyMarks = 0;
+    public final String getWrittenName() {
+        return writtenName;
+    }
+    public final void setWrittenName(final String name) {
+        writtenName = name;
+        updateStateForView();
+    }
+    public final int getTallyMarks() {
+        return tallyMarks;
+    }
+    public final void setTallyMarks(final int n) {
+        tallyMarks = n;
     }
     public final void setMarkedNodes(final int n) {
         markedNodes = n;

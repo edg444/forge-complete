@@ -1,0 +1,10 @@
+Name:Split into Three Parts
+ManaCost:1 U
+Types:Instant
+A:SP$ ChangeZone | ValidTgts$ Permanent,Card.inZoneStack | TgtZone$ Stack,Battlefield | TgtPrompt$ Choose target spell or permanent | Origin$ Battlefield,Stack | Destination$ Exile | WithCountersType$ TIME | WithCountersAmount$ 2 | RememberChanged$ True | SubAbility$ DBThree | SpellDescription$ Choose target spell or permanent. Exile it with two time counters on it. Create two tokens that are copies of it in exile, with three and four time counters on them, respectively. They all gain suspend.
+# the tokens are made in exile and stay there (TokenZone$, user ruling 2026-10-22)
+SVar:DBThree:DB$ CopyPermanent | Defined$ Remembered | TokenZone$ Exile | WithCountersType$ TIME | WithCountersAmount$ 3 | RememberTokens$ True | SubAbility$ DBFour
+SVar:DBFour:DB$ CopyPermanent | Defined$ Targeted | TokenZone$ Exile | WithCountersType$ TIME | WithCountersAmount$ 4 | RememberTokens$ True | SubAbility$ DBSuspend
+SVar:DBSuspend:DB$ Pump | Defined$ Remembered.withoutSuspend | KW$ Suspend | PumpZone$ Exile | Duration$ Permanent | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Choose target spell or permanent. Exile it with two time counters on it. Create two tokens that are copies of it in exile, with three and four time counters on them, respectively. They all gain suspend.

@@ -1,0 +1,9 @@
+Name:Huge Truck
+ManaCost:2
+Types:Artifact Vehicle
+PT:3/3
+T:Mode$ BecomesTarget | ValidTarget$ Creature.Other+YouCtrl | ValidSource$ SpellAbility.Backup | TriggerZones$ Battlefield | Execute$ TrigShare | TriggerDescription$ Beeeeeeep, Beeeeeeep, Beeeeeeep — Whenever another creature you control becomes the target of a backup ability, CARDNAME permanently gains all of the backup abilities shared this way.
+# the abilities that backup would give, for good (ShareBackup)
+SVar:TrigShare:DB$ ShareBackup
+K:Crew:1
+Oracle:Beeeeeeep, Beeeeeeep, Beeeeeeep — Whenever another creature you control becomes the target of a backup ability, Huge Truck permanently gains all of the backup abilities shared this way.\nCrew 1

@@ -172,6 +172,21 @@ public abstract class TokenEffectBase extends SpellAbilityEffect {
                 Card lki = CardCopyService.getLKICopy(tok);
                 moveParams.put(AbilityKey.CardLKI, lki);
 
+                // Split into Three Parts (TokenZone$ Exile): made in exile, where it stays (SVar SurvivesInExile)
+                if (sa.hasParam("TokenZone")) {
+                    tok.setSVar("SurvivesInExile", "True");
+                    final Card made = game.getAction().moveTo(ZoneType.smartValueOf(sa.getParam("TokenZone")), tok, sa, moveParams);
+                    if (sa.hasParam("WithCountersType")) {
+                        made.addCounterInternal(CounterType.getType(sa.getParam("WithCountersType")),
+                                AbilityUtils.calculateAmount(host, sa.getParamOrDefault("WithCountersAmount", "1"), sa), creator, false, null, null);
+                    }
+                    if (sa.hasParam("RememberTokens")) {
+                        host.addRemembered(made);
+                    }
+                    triggerList.addToken(lki, creator.getNumTokenCreatedThisTurn() == 0);
+                    creator.addTokensCreatedThisTurn(lki);
+                    continue;
+                }
                 Card moved = game.getAction().moveToPlay(tok, sa, moveParams);
                 if (moved == null || moved.getZone() == null) {
                     // in case token can't enter the battlefield, it isn't created

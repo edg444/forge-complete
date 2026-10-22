@@ -135,6 +135,7 @@ public class Match {
         game.getAction().startGame(this.lastOutcome, startGameHook);
 
         recordBank(game);
+        recordTallyMarks(game);
 
         // Typically ante, but also tearing up a blacker lotus
         executeOwnershipChanges(game);
@@ -595,6 +596,16 @@ public class Match {
         writeOnCard(c, pc -> pc.copyWithMarkedNodes(nodes));
     }
 
+    /** ______: the name filled in on the card, for good. */
+    public void writeName(final Card c, final String name) {
+        writeOnCard(c, pc -> pc.copyWithWrittenName(name));
+    }
+
+    /** The Playful Winners: a tally mark is drawn on the card, for good. */
+    public void writeTallyMarks(final Card c, final int marks) {
+        writeOnCard(c, pc -> pc.copyWithTallyMarks(marks));
+    }
+
     private void writeOnCard(final Card c, final java.util.function.UnaryOperator<PaperCard> change) {
         if (!(c.getPaperCard() instanceof PaperCard pc) || c.getOwner() == null || c.getOwner().getRegisteredPlayer() == null) {
             return;
@@ -610,6 +621,33 @@ public class Match {
                     deckWrittenOn.written(deck, pc, written);
                 }
                 return;
+            }
+        }
+    }
+
+    /**
+     * The Playful Winners: "If you win a game while you control The Playful Winners or it's your commander, put a tally
+     * mark on it." (SVar TallyOnWin) - drawn on the card in its owner's deck.
+     */
+    public void recordTallyMarks(final Game finished) {
+        for (final Player p : finished.getRegisteredPlayers()) {
+            if (!p.hasWon()) {
+                continue;
+            }
+            final java.util.Set<Card> marked = new java.util.HashSet<>();
+            for (final Card c : p.getCardsIn(ZoneType.Battlefield)) {
+                if (c.hasSVar("TallyOnWin")) {
+                    marked.add(c);
+                }
+            }
+            for (final Card c : p.getCommanders()) {
+                if (c.hasSVar("TallyOnWin") || c.getOriginalState(forge.card.CardStateName.Original).hasSVar("TallyOnWin")) {
+                    marked.add(finished.getCardState(c, c));
+                }
+            }
+            for (final Card c : marked) {
+                c.setTallyMarks(c.getTallyMarks() + 1);
+                writeTallyMarks(c, c.getTallyMarks());
             }
         }
     }

@@ -1,0 +1,15 @@
+Name:The Playful Winners
+ManaCost:3 U
+Types:Legendary Creature Human Gamer
+PT:2/2
+K:ETBReplacement:Copy:DBCopy
+# tournament-legal = legal in Vintage; it keeps the tally ability and boost, and its tally marks are drawn on the card
+# in its owner's deck when its player wins (Match.recordTallyMarks, SVar TallyOnWin) - user ruling 2026-10-22
+SVar:DBCopy:DB$ Clone | CopyRandomPartner$ True | AddStaticAbilities$ TallyBoost,TallyNote | AddSVars$ TallyOnWin,X | SpellDescription$ CARDNAME enters as a copy of a random tournament-legal card with partner (including any variant), except it has its other abilities.
+SVar:TallyOnWin:True
+S:Mode$ Continuous | Affected$ Card.Self | Description$ If you win a game while you control CARDNAME or it's your commander, put a tally mark on it.
+SVar:TallyNote:Mode$ Continuous | Affected$ Card.Self | Description$ If you win a game while you control CARDNAME or it's your commander, put a tally mark on it.
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | AddToughness$ X | Description$ CARDNAME gets +2/+2 for each tally mark on it. (No cheating!)
+SVar:TallyBoost:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | AddToughness$ X | Description$ CARDNAME gets +2/+2 for each tally mark on it. (No cheating!)
+SVar:X:Count$TallyMarks/Times.2
+Oracle:The Playful Winners enters as a copy of a random tournament-legal card with partner (including any variant), except it has its other abilities.\nIf you win a game while you control The Playful Winners or it's your commander, put a tally mark on it.\nThe Playful Winners gets +2/+2 for each tally mark on it. (No cheating!)

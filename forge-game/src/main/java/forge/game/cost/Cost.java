@@ -355,6 +355,11 @@ public class Cost implements Serializable {
             return new CostPayLife(splitStr[0], description);
         }
 
+        if (parse.startsWith("PaySpeed<")) {
+            // Chicago Loop: PaySpeed<X>
+            final String[] splitStr = abCostParse(parse, 1);
+            return new CostPaySpeed(splitStr[0]);
+        }
         if (parse.startsWith("PayEnergy<")) {
             // Payenergy<EnergyCost>
             final String[] splitStr = abCostParse(parse, 1);

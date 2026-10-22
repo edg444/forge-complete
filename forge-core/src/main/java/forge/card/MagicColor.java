@@ -24,6 +24,8 @@ public final class MagicColor {
     // Sword of Dungeons & Dragons' Dragon token: monocolored gold (per its ruling), not multicolored.
     // A seventh bit on the same terms as pink.
     public static final byte GOLD      = 1 << 6;
+    // Chicago Loop's orange Bear token: an eighth bit on the same terms (the byte's sign bit, so read it unsigned)
+    public static final byte ORANGE    = (byte) (1 << 7);
     // Colorless values for MagicColor needs to be the absence of any color
     // Any comparison between colorless cards and colorless mana need to be adjusted appropriately.
     public static final byte COLORLESS = 0;
@@ -73,6 +75,7 @@ public final class MagicColor {
                 case Constant.COLORLESS: return MagicColor.COLORLESS;
                 case Constant.PINK: return MagicColor.PINK;
                 case Constant.GOLD: return MagicColor.GOLD;
+                case Constant.ORANGE: return MagicColor.ORANGE;
             }
         }
         return 0; // colorless
@@ -141,11 +144,14 @@ public final class MagicColor {
         /** The Gold. */
         public static final String GOLD = "gold";
 
+        /** The Orange. */
+        public static final String ORANGE = "orange";
+
         /** The only colors. */
         public static final ImmutableList<String> ONLY_COLORS = ImmutableList.of(WHITE, BLUE, BLACK, RED, GREEN);
         public static final ImmutableList<String> COLORS_AND_COLORLESS = ImmutableList.of(WHITE, BLUE, BLACK, RED, GREEN, COLORLESS);
         /** Only choosable in a silver-bordered game (see Game.isSilverBorderedGame). */
-        public static final ImmutableList<String> SILVER_BORDER_COLORS = ImmutableList.of(PINK, GOLD);
+        public static final ImmutableList<String> SILVER_BORDER_COLORS = ImmutableList.of(PINK, GOLD, ORANGE);
 
         /** The Snow. */
         public static final String SNOW = "snow";
@@ -171,7 +177,8 @@ public final class MagicColor {
         GREEN(Constant.GREEN, MagicColor.GREEN, "G", "Forest", "lblGreen"),
         COLORLESS(Constant.COLORLESS, MagicColor.COLORLESS, "C", null, "lblColorless"),
         PINK(Constant.PINK, MagicColor.PINK, "K", null, "lblPink"),
-        GOLD(Constant.GOLD, MagicColor.GOLD, "O", null, "lblGold");
+        GOLD(Constant.GOLD, MagicColor.GOLD, "O", null, "lblGold"),
+        ORANGE(Constant.ORANGE, MagicColor.ORANGE, "N", null, "lblOrange");
 
         private final String name, shortName, symbol;
         private final String basicLandType;
@@ -196,6 +203,7 @@ public final class MagicColor {
                 case MagicColor.GREEN -> GREEN;
                 case MagicColor.PINK -> PINK;
                 case MagicColor.GOLD -> GOLD;
+                case MagicColor.ORANGE -> ORANGE;
                 default -> COLORLESS;
             };
         }
@@ -212,6 +220,7 @@ public final class MagicColor {
                 case MagicColor.Constant.COLORLESS -> COLORLESS;
                 case MagicColor.Constant.PINK -> PINK;
                 case MagicColor.Constant.GOLD -> GOLD;
+                case MagicColor.Constant.ORANGE -> ORANGE;
                 default -> null;
             };
         }

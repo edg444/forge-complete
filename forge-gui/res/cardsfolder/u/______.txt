@@ -1,0 +1,10 @@
+Name:______
+ManaCost:no cost
+Types:Land
+# the filled-in name is written on the card in its owner's deck, like a Legacy word (WriteName); the first name is
+# the first word of its player's name
+T:Mode$ LandPlayed | ValidCard$ Card.Self+!hasWrittenName | TriggerZones$ Battlefield | Execute$ TrigName | TriggerDescription$ When you play this land for the first time, its name forever becomes a creature type and a noncreature card type of your choice belonging to your first name. (For example, Gavin's Dragon and Sorceries. Make sure to fill in the name so everyone knows where they're shopping.)
+SVar:TrigName:DB$ WriteName
+A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
+A:AB$ Mana | Cost$ T | Produced$ Any | RestrictValid$ Spell.writtenNameAllows | SpellDescription$ Add one mana of any color. Spend this mana only to cast spells of the chosen types or spells whose names begin with the first letter of your name.
+Oracle:When you play this land for the first time, its name forever becomes a creature type and a noncreature card type of your choice belonging to your first name. (For example, Gavin's Dragon and Sorceries. Make sure to fill in the name so everyone knows where they're shopping.)\n{T}: Add {C}.\n{T}: Add one mana of any color. Spend this mana only to cast spells of the chosen types or spells whose names begin with the first letter of your name.
