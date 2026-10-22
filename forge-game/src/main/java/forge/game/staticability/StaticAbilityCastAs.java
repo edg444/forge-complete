@@ -121,7 +121,19 @@ public class StaticAbilityCastAs {
                         ? activator.getCommanders().stream().map(Card::getName).filter(n -> !n.equals(card.getName())).toList()
                         : List.of(name);
                 for (final String each : names) {
-                    final List<SpellAbility> spells = castAsSpells(card, activator, each);
+                    List<SpellAbility> spells = castAsSpells(card, activator, each);
+                    // Banned Eldraine Card: RaiseCost$ - the card's cost on top of the copied one's
+                    if (stAb.hasParam("RaiseCost")) {
+                        final List<SpellAbility> raised = new ArrayList<>();
+                        for (final SpellAbility s : spells) {
+                            final forge.game.cost.Cost cost = s.getPayCosts().copy();
+                            cost.add(new forge.game.cost.Cost(stAb.getParam("RaiseCost"), false));
+                            final SpellAbility r = s.copyWithDefinedCost(cost);
+                            r.setDescription("Cast as " + each + " (" + cost.toSimpleString() + ")");
+                            raised.add(r);
+                        }
+                        spells = raised;
+                    }
                     spells.forEach(s -> s.setCastAsStatic(stAb));
                     result.addAll(spells);
                 }
@@ -142,6 +154,16 @@ public class StaticAbilityCastAs {
                     ? "Cast as " + name + " (" + sa.getPayCosts().toSimpleString() + ")"
                     : "Cast as " + name + ": " + sa.getDescription());
             result.add(copy);
+        }
+        // a land has no spell: cast as one, it's a spell that puts itself onto the battlefield (Banned Eldraine Card's
+        // Mystic Sanctuary)
+        if (result.isEmpty() && template(card.getGame(), name, activator).isLand()) {
+            final SpellAbility land = forge.game.ability.AbilityFactory.getAbility("SP$ PermanentNoncreature | Cost$ 0"
+                    + " | SpellDescription$ Cast as " + name + ".", card);
+            land.setActivatingPlayer(activator);
+            land.setCastAs(name);
+            land.setDescription("Cast as " + name + " (it enters the battlefield as it resolves)");
+            result.add(land);
         }
         return result;
     }

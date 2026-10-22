@@ -1,0 +1,16 @@
+Name:Fifth Stage of Magic Design
+ManaCost:2 R G
+Types:Enchantment
+K:etbCounter:RESONANCE:3
+# the person asked is its controller, on their honor (the AI says yes about half the time) - user ruling 2026-10-22
+T:Mode$ SpellCast | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigAsk | TriggerDescription$ Whenever you cast a spell, you may remove a resonance counter from this enchantment. If you do, ask a person outside the game if the spell's name sounds like a non-Magic themed movie title. When a person answers yes, choose one — • Put two +1/+1 counters on target creature. • This enchantment deals 2 damage to target creature.
+SVar:TrigAsk:AB$ GenericChoice | Cost$ SubCounter<1/RESONANCE> | Defined$ You | Choices$ DBYes,DBNo | AILogic$ Random | ChoiceTitle$ Does the spell's name sound like a non-Magic movie title?
+SVar:DBYes:DB$ ImmediateTrigger | Execute$ TrigCharm | SpellDescription$ Yes | TriggerDescription$ When a person answers yes, choose one — • Put two +1/+1 counters on target creature. • This enchantment deals 2 damage to target creature.
+SVar:DBNo:DB$ Cleanup | SpellDescription$ No
+SVar:TrigCharm:DB$ Charm | Choices$ DBCounters,DBDamage
+SVar:DBCounters:DB$ PutCounter | ValidTgts$ Creature | TgtPrompt$ Select target creature | CounterType$ P1P1 | CounterNum$ 2 | SpellDescription$ Put two +1/+1 counters on target creature.
+SVar:DBDamage:DB$ DealDamage | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumDmg$ 2 | SpellDescription$ This enchantment deals 2 damage to target creature.
+T:Mode$ Always | TriggerZones$ Battlefield | CheckSVar$ AllCounters | SVarCompare$ EQ0 | Execute$ TrigSac | TriggerDescription$ When this enchantment has no counters on it, sacrifice it.
+SVar:TrigSac:DB$ Sacrifice | Defined$ Self
+SVar:AllCounters:Count$CardCounters.ALL
+Oracle:This enchantment enters with three resonance counters on it.\nWhenever you cast a spell, you may remove a resonance counter from this enchantment. If you do, ask a person outside the game if the spell's name sounds like a non-Magic themed movie title. When a person answers yes, choose one —\n• Put two +1/+1 counters on target creature.\n• This enchantment deals 2 damage to target creature.\nWhen this enchantment has no counters on it, sacrifice it.

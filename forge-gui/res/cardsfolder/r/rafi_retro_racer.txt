@@ -1,0 +1,12 @@
+Name:Rafi, Retro Racer
+ManaCost:3 R
+Types:Legendary Creature Dinosaur Pilot
+PT:3/3
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ DBRetroRules | TriggerDescription$ When CARDNAME enters and at the beginning of the first upkeep in a game where it's your commander, there's mana burn and combat damage uses the stack for the rest of the game. (If you don't know what that means, ask somebody over 30.)
+T:Mode$ Phase | Phase$ Upkeep | FirstUpkeepThisGame$ True | TriggerZones$ Command,Battlefield | PresentDefined$ Self | IsPresent$ Card.IsCommander | Execute$ DBRetroRules | Secondary$ True | TriggerDescription$ At the beginning of the first upkeep in a game where CARDNAME is your commander, there's mana burn and combat damage uses the stack for the rest of the game.
+# one effect for the game, however many times it's made (the game's own mana burn option does the same as Burn)
+SVar:DBRetroRules:DB$ Effect | Name$ Retro Rules | StaticAbilities$ Burn,DamageStack | Duration$ Permanent | Unique$ True
+SVar:Burn:Mode$ ManaBurn | EffectZone$ Command | ValidPlayer$ Player | Description$ There's mana burn.
+SVar:DamageStack:Mode$ CombatDamageUsesStack | EffectZone$ Command | Description$ Combat damage uses the stack.
+A:AB$ Mana | Cost$ R Sac<1/CARDNAME> | Produced$ R | Amount$ 3 | Defined$ Player | SpellDescription$ Each player adds {R}{R}{R}.
+Oracle:When Rafi enters and at the beginning of the first upkeep in a game where it's your commander, there's mana burn and combat damage uses the stack for the rest of the game. (If you don't know what that means, ask somebody over 30.)\n{R}, Sacrifice Rafi: Each player adds {R}{R}{R}.

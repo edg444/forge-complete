@@ -3274,6 +3274,36 @@ public class Player extends GameEntity implements Comparable<Player> {
         return revealedThisTurn.size();
     }
 
+    // Noyd, Keeper of the Void: a real-time timer (System.nanoTime deadline, 0 = none) and the card that started it
+    private long timerDeadline = 0;
+    private Card timerSource = null;
+    public boolean hasTimerRunning() {
+        return timerDeadline != 0;
+    }
+    public void startTimer(final long nanos, final Card source) {
+        timerDeadline = System.nanoTime() + nanos;
+        timerSource = source;
+    }
+    /** The card whose timer ran out, once (null while it's running or there's none). */
+    public Card takeExpiredTimer() {
+        if (timerDeadline == 0 || System.nanoTime() < timerDeadline) {
+            return null;
+        }
+        timerDeadline = 0;
+        final Card source = timerSource;
+        timerSource = null;
+        return source;
+    }
+
+    // Blue Screen of Death: real time this player has held priority during their current turn
+    private long priorityNanosThisTurn = 0;
+    public void addPriorityNanosThisTurn(final long nanos) {
+        priorityNanosThisTurn += nanos;
+    }
+    public int getPrioritySecondsThisTurn() {
+        return (int) (priorityNanosThisTurn / 1_000_000_000L);
+    }
+
     // Simic, Value Engine: lands that entered under this player's control and cards they drew during their own last
     // turn (-1 before their first turn ends)
     private int landsEnteredOwnLastTurn = -1;
@@ -3304,6 +3334,7 @@ public class Player extends GameEntity implements Comparable<Player> {
         }
         setNumDrawnLastTurn(getNumDrawnThisTurn());
         resetNumDrawnThisTurn();
+        priorityNanosThisTurn = 0;
         resetNumRollsThisTurn();
         resetNumFlipsThisTurn();
         resetNumExploredThisTurn();

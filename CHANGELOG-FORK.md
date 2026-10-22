@@ -316,6 +316,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   (`UI_ZONE_TABS_LEFT`) is gone; upstream restored its own setting of that name (`UI_ALT_PLAYERZONETABS`), and the two
   showed with the same label. Hand, Library, Graveyard and Exile tabs are on the right edge, as upstream has them.
 
+- **Unknown Event: Noyd, Keeper of the Void, Sharp Eraser, Banned Eldraine Card, Rafi, Retro Racer, The Egotistical
+  Velociraptor, The Ancient Dingus, Fifth Stage of Magic Design (UNK rares).**
+  - Real-time timers: new effect `StartTimer` (`Minutes$`), checked when a player would receive priority; the host's
+    `TimerExpires` SVar is what happens when it runs out. Players also keep how long they held priority this turn.
+  - New effect `EraseAbilities`: whole keywords and abilities, gone for the rest of the game in every zone. The AI
+    erases only what its creature evaluator counts against a creature (defender, can't block, upkeep costs, ...).
+  - CastAs `RaiseCost$` (more on top of the copied card's cost), `Perpetual$` (that card for the rest of the game),
+    and a land cast as a spell that puts itself onto the battlefield.
+  - New effect `AiTakeover`: an AI plays for its player until the end of their next turn (the GUI supplies the AI).
+  - ReplaceToken `Type$ Instead` (none created; the count is the host's `ReplacedTokens`). RandomCards `Defined$`,
+    and any Magic card without `LegalIn$`.
+  - Rafi uses the existing `ManaBurn` and `CombatDamageUsesStack` statics.
+
 - **Boosters: no crash when a foil slot has nothing to make a foil of.** `BoosterGenerator.generateFoilCard` took
   the first card of an empty sheet; that pack now just has no foil (seen in the Summon the Pack test's random packs).
 

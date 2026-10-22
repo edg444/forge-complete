@@ -1,0 +1,12 @@
+Name:The Egotistical Velociraptor
+ManaCost:2 W U B
+Types:Legendary Creature Dinosaur Boxer
+PT:6/6
+# the other player is an AI, who always agrees (user ruling 2026-10-22)
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self+wasCast | OptionalDecider$ You | Execute$ TrigTakeover | TriggerDescription$ Grumpy Co-play — When CARDNAME enters the battlefield, if you cast it, you may choose another Magic player not currently in a game of Magic and ask them to take over your game until the end of your next turn. If they agree, shuffle your hand into your library, draw four cards and gain 4 life. (You can't give them advice, but witty banter is encouraged.)
+SVar:TrigTakeover:DB$ AiTakeover | SubAbility$ DBShuffle
+SVar:DBShuffle:DB$ ChangeZoneAll | ChangeType$ Card.YouOwn | Origin$ Hand | Destination$ Library | Shuffle$ True | ConditionDefined$ Remembered | ConditionPresent$ Player | SubAbility$ DBDraw
+SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 4 | ConditionDefined$ Remembered | ConditionPresent$ Player | SubAbility$ DBGain
+SVar:DBGain:DB$ GainLife | Defined$ You | LifeAmount$ 4 | ConditionDefined$ Remembered | ConditionPresent$ Player | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Grumpy Co-play — When The Egotistical Velociraptor enters the battlefield, if you cast it, you may choose another Magic player not currently in a game of Magic and ask them to take over your game until the end of your next turn. If they agree, shuffle your hand into your library, draw four cards and gain 4 life. (You can't give them advice, but witty banter is encouraged.)

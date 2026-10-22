@@ -9279,8 +9279,13 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         }
         if (sa.getCastAs() != null && !isCloned()) {
             // cast as though it were that card: it is that card, copiable values and all
-            addCloneState(CardFactory.getCloneStates(StaticAbilityCastAs.template(game, sa.getCastAs(), getOwner()), this, sa),
-                    game.getNextTimestamp());
+            final long ts = game.getNextTimestamp();
+            final Card template = StaticAbilityCastAs.template(game, sa.getCastAs(), getOwner());
+            addCloneState(CardFactory.getCloneStates(template, this, sa), ts);
+            // Banned Eldraine Card (Perpetual$): that card for the rest of the game, in all zones
+            if (sa.getCastAsStatic() != null && sa.getCastAsStatic().hasParam("Perpetual")) {
+                addPerpetual(new forge.game.card.perpetual.PerpetualClone(ts, template, sa));
+            }
             updateStateForView();
         }
         if (sa.getCloneCauseWhenCast() != null && !isCloned()) {

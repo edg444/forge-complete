@@ -460,6 +460,9 @@ public final class FModel {
         forge.card.LegacyWords.setSource(() -> FileUtil.readFile(ForgeConstants.LEGACY_WORDS_FILE));
         forge.game.Match.setDeckWrittenOnListener(FModel::saveWrittenOnDeck);
         WordList.setSource(() -> FileUtil.readFile(ForgeConstants.WORD_LIST_FILE));
+        // The Egotistical Velociraptor: the AI that takes over a player's game
+        forge.game.ability.effects.AiTakeoverEffect.setAiSource(
+                () -> (forge.game.player.IGameEntitiesFactory) forge.player.GamePlayerUtil.createAiPlayer("Grumpy Co-player"));
         WordList.setSpellingSource(() -> FileUtil.readFile(ForgeConstants.SPELLING_WORD_LIST_FILE));
         BannedOrRestricted.setSource(() -> FileUtil.readFile(ForgeConstants.BANNED_OR_RESTRICTED_FILE));
         GameFormat.setStandardSource(() -> getFormats().getStandard());

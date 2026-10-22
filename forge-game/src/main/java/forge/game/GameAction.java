@@ -2255,6 +2255,25 @@ public class GameAction {
         return checkAgain;
     }
 
+    /** Noyd, Keeper of the Void: a player's timer that ran out does what its card's TimerExpires SVar says. */
+    public void checkRealTimeTimers() {
+        for (final Player p : game.getPlayers()) {
+            final Card source = p.takeExpiredTimer();
+            if (source == null) {
+                continue;
+            }
+            final Card current = game.getCardState(source, null);
+            final Card host = current != null ? current : source;
+            if (!host.hasSVar("TimerExpires")) {
+                continue;
+            }
+            final SpellAbility expires = AbilityFactory.getAbility(host.getSVar("TimerExpires"), host);
+            expires.setActivatingPlayer(p);
+            game.getGameLog().add(GameLogEntryType.INFORMATION, p + "'s timer from " + host + " has run out.");
+            AbilityUtils.resolve(expires);
+        }
+    }
+
     private boolean stateBasedAction_Role(Card c, CardCollection removeList) {
         // Maeve, Wearer of Many Hats: any number of Roles can be attached to it
         if (!c.hasCardAttachments() || c.hasSVar("AnyNumberOfRoles")) {

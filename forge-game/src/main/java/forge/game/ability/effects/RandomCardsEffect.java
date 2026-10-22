@@ -24,7 +24,8 @@ public class RandomCardsEffect extends SpellAbilityEffect {
 
     @Override
     protected String getStackDescription(final SpellAbility sa) {
-        return "Add " + sa.getParam("Amount") + " random " + sa.getParam("LegalIn") + "-legal cards to your hand.";
+        return "Add " + sa.getParamOrDefault("Amount", "1") + " random " + (sa.hasParam("LegalIn") ? sa.getParam("LegalIn") + "-legal " : "")
+                + "cards to a hand.";
     }
 
     @Override
@@ -33,14 +34,19 @@ public class RandomCardsEffect extends SpellAbilityEffect {
         final Player you = sa.getActivatingPlayer();
         final Game game = you.getGame();
         final int amount = AbilityUtils.calculateAmount(host, sa.getParamOrDefault("Amount", "1"), sa);
-        final GameFormat format = GameFormat.named(sa.getParam("LegalIn"));
+        final GameFormat format = sa.hasParam("LegalIn") ? GameFormat.named(sa.getParam("LegalIn")) : null;
         final List<PaperCard> pool = Lists.newArrayList(StaticData.instance().getCommonCards().getUniqueCards());
         if (format != null) {
             pool.removeIf(format.getFilterRules().negate());
         }
-        for (final PaperCard pc : Aggregates.random(pool, amount)) {
-            final Card made = Card.fromPaperCard(pc, you);
-            game.getAction().moveTo(you.getZone(ZoneType.Hand), made, sa);
+        // The Ancient Dingus: Defined$ - whose hand (and who owns them); any Magic card without LegalIn$
+        final List<Player> players = sa.hasParam("Defined") ? AbilityUtils.getDefinedPlayers(host, sa.getParam("Defined"), sa)
+                : List.of(you);
+        for (final Player p : players) {
+            for (final PaperCard pc : Aggregates.random(pool, amount)) {
+                final Card made = Card.fromPaperCard(pc, p);
+                game.getAction().moveTo(p.getZone(ZoneType.Hand), made, sa);
+            }
         }
     }
 }

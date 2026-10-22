@@ -1,0 +1,9 @@
+Name:Sharp Eraser
+ManaCost:6
+Types:Artifact
+# whole keywords and abilities are erased, for the rest of the game (EraseAbilities, user ruling 2026-10-21)
+A:AB$ DigUntil | Cost$ 2 T | Valid$ Card.nonLand | ValidDescription$ nonland | FoundDestination$ Library | FoundLibraryPosition$ 0 | RevealedDestination$ Library | RevealedLibraryPosition$ -1 | RevealRandomOrder$ True | RememberFound$ True | SubAbility$ DBErase | SpellDescription$ Reveal cards from the top of your library until you reveal a nonland card. You may erase any number of words on the card, including flavor text, as long as the card still makes sense. Then cast the revised card without paying its mana cost. Put all other cards revealed this way on the bottom of your library in a random order.
+SVar:DBErase:DB$ EraseAbilities | Defined$ Remembered | SubAbility$ DBCast
+SVar:DBCast:DB$ Play | Defined$ Remembered | ValidZone$ Library | ValidSA$ Spell | WithoutManaCost$ True | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:{2}, {T}: Reveal cards from the top of your library until you reveal a nonland card. You may erase any number of words on the card, including flavor text, as long as the card still makes sense. Then cast the revised card without paying its mana cost. Put all other cards revealed this way on the bottom of your library in a random order.

@@ -1,0 +1,12 @@
+Name:Banned Eldraine Card
+ManaCost:1
+Types:Sorcery
+# each additional cost casts it as that card, paying the card's {1} on top (RaiseCost$), and it's that card for the rest
+# of the game in all zones (Perpetual$); as Mystic Sanctuary it's a spell that puts itself onto the battlefield
+S:Mode$ CastAs | ValidCard$ Card.Self | Activator$ You | EffectZone$ Hand | AffectedZone$ Hand | CastAs$ Cauldron Familiar | RaiseCost$ 1 | Perpetual$ True | Description$ As an additional cost to play CARDNAME, pay {B}, {3}{R}{G}, {3}{R}, {2}, {0}, or {1}{G}. It becomes a copy respectively of Cauldron Familiar, Escape to the Wilds, Fires of Invention, Lucky Clover, Mystic Sanctuary, Once Upon A Time for the rest of the game in all zones. (You can't choose Oko. Because let's be real, nobody wants to play against Oko again.)
+S:Mode$ CastAs | ValidCard$ Card.Self | Activator$ You | EffectZone$ Hand | AffectedZone$ Hand | CastAs$ Escape to the Wilds | RaiseCost$ 1 | Perpetual$ True | Secondary$ True | Description$ Pay {3}{R}{G}: Escape to the Wilds.
+S:Mode$ CastAs | ValidCard$ Card.Self | Activator$ You | EffectZone$ Hand | AffectedZone$ Hand | CastAs$ Fires of Invention | RaiseCost$ 1 | Perpetual$ True | Secondary$ True | Description$ Pay {3}{R}: Fires of Invention.
+S:Mode$ CastAs | ValidCard$ Card.Self | Activator$ You | EffectZone$ Hand | AffectedZone$ Hand | CastAs$ Lucky Clover | RaiseCost$ 1 | Perpetual$ True | Secondary$ True | Description$ Pay {2}: Lucky Clover.
+S:Mode$ CastAs | ValidCard$ Card.Self | Activator$ You | EffectZone$ Hand | AffectedZone$ Hand | CastAs$ Mystic Sanctuary | RaiseCost$ 1 | Perpetual$ True | Secondary$ True | Description$ Pay {0}: Mystic Sanctuary.
+S:Mode$ CastAs | ValidCard$ Card.Self | Activator$ You | EffectZone$ Hand | AffectedZone$ Hand | CastAs$ Once Upon a Time | RaiseCost$ 1 | Perpetual$ True | Secondary$ True | Description$ Pay {1}{G}: Once Upon A Time.
+Oracle:As an additional cost to play Banned Eldraine Card, pay {B}, {3}{R}{G}, {3}{R}, {2}, {0}, or {1}{G}. It becomes a copy respectively of Cauldron Familiar, Escape to the Wilds, Fires of Invention, Lucky Clover, Mystic Sanctuary, Once Upon A Time for the rest of the game in all zones. (You can't choose Oko. Because let's be real, nobody wants to play against Oko again.)

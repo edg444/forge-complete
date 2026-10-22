@@ -1,0 +1,19 @@
+Name:Noyd, Keeper of the Void
+ManaCost:B
+Types:Legendary Creature Alien Rabbit
+PT:2/2
+# a real 30-minute timer (user ruling 2026-10-21), checked when a player would receive priority; TimerExpires is what
+# happens when it runs out
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigTimer | TriggerDescription$ When CARDNAME enters, if you don't have a timer running, start a 30-minute timer. When it runs out, CARDNAME delivers himself and all Food tokens you control to exile. You can't cast CARDNAME or create Food tokens for the rest of the game.
+SVar:TrigTimer:DB$ StartTimer | Minutes$ 30
+SVar:TimerExpires:DB$ ChangeZone | Defined$ Self | Origin$ Battlefield,Graveyard,Hand,Library,Command | Destination$ Exile | SubAbility$ DBFood
+SVar:DBFood:DB$ ChangeZoneAll | ChangeType$ Food.token+YouCtrl | Origin$ Battlefield | Destination$ Exile | SubAbility$ DBForever
+SVar:DBForever:DB$ Effect | Name$ Noyd's Delivery | StaticAbilities$ NoNoyd | ReplacementEffects$ NoFood | Duration$ Permanent
+SVar:NoNoyd:Mode$ CantBeCast | EffectZone$ Command | ValidCard$ Card.namedNoyd; Keeper of the Void | Caster$ You | Description$ You can't cast Noyd, Keeper of the Void for the rest of the game.
+SVar:NoFood:Event$ CreateToken | ActiveZones$ Command | ValidPlayer$ You | ValidToken$ Food | ReplaceWith$ DBNoFood | Description$ You can't create Food tokens for the rest of the game.
+SVar:DBNoFood:DB$ ReplaceToken | Type$ Amount | Amount$ Times.0
+T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | TriggerZones$ Battlefield | CheckSVar$ X | SVarCompare$ GE1 | Execute$ TrigFood | TriggerDescription$ Void—At the beginning of your end step, if a nonland permanent left the battlefield this turn or a spell was warped this turn, create a Food token.
+SVar:TrigFood:DB$ Token | TokenScript$ c_a_food_sac
+SVar:X:Count$Void.1.0
+DeckHas:Ability$Token|Food
+Oracle:When Noyd enters, if you don't have a timer running, start a 30-minute timer. When it runs out, Noyd delivers himself and all Food tokens you control to exile. You can't cast Noyd or create Food tokens for the rest of the game.\nVoid—At the beginning of your end step, if a nonland permanent left the battlefield this turn or a spell was warped this turn, create a Food token.

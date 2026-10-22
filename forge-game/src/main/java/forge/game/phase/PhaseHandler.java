@@ -1329,6 +1329,8 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
             int loopCount = 0;
             do {
+                // Noyd, Keeper of the Void: real-time timers are checked when a player would receive priority
+                game.getAction().checkRealTimeTimers();
                 if (checkStateBasedEffects()) {
                     // state-based effects check could lead to game over
                     return;
@@ -1337,7 +1339,12 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 game.fireEvent(new GameEventPlayerPriority(PlayerView.get(playerTurn), phase, PlayerView.get(getPriorityPlayer())));
                 game.stashGameState();
 
+                final long priorityStart = System.nanoTime();
                 chosenSa = pPlayerPriority.getController().chooseSpellAbilityToPlay();
+                // Blue Screen of Death: real time a player holds priority during their own turn
+                if (pPlayerPriority.equals(playerTurn)) {
+                    pPlayerPriority.addPriorityNanosThisTurn(System.nanoTime() - priorityStart);
+                }
 
                 // this needs to come after chosenSa so it sees you conceding on own turn
                 if (playerTurn.hasLost() && pPlayerPriority.equals(playerTurn) && pFirstPriority.equals(playerTurn)) {

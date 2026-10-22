@@ -1,0 +1,15 @@
+Name:The Ancient Dingus
+ManaCost:2 R G
+Types:Legendary Artifact Creature Elder Construct
+PT:4/4
+# for each Food that isn't created; the stack of outside cards is any Magic card at random (user ruling 2026-10-22)
+R:Event$ CreateToken | ActiveZones$ Battlefield | ValidToken$ Food | ReplaceWith$ DBNoFood | Description$ If a player would create a Food token, instead CARDNAME deals 2 damage to that player and they put a random card from a stack of visible unsleeved cards they own from outside the game into their hand.
+SVar:DBNoFood:DB$ ReplaceToken | Type$ Instead | SubAbility$ DBDamage
+SVar:DBDamage:DB$ DealDamage | Defined$ ReplacedPlayer | NumDmg$ Damage | SubAbility$ DBCard
+SVar:DBCard:DB$ RandomCards | Defined$ ReplacedPlayer | Amount$ Count
+SVar:Count:SVar$ReplacedTokens
+SVar:ReplacedTokens:Number$0
+SVar:Damage:SVar$ReplacedTokens/Times.2
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigFood | TriggerDescription$ Whenever CARDNAME attacks, target player creates a Food token.
+SVar:TrigFood:DB$ Token | ValidTgts$ Player | TgtPrompt$ Select target player | TokenScript$ c_a_food_sac | TokenOwner$ Targeted
+Oracle:If a player would create a Food token, instead The Ancient Dingus deals 2 damage to that player and they put a random card from a stack of visible unsleeved cards they own from outside the game into their hand.\nWhenever The Ancient Dingus attacks, target player creates a Food token.

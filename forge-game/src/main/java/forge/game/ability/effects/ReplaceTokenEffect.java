@@ -58,6 +58,16 @@ public class ReplaceTokenEffect extends SpellAbilityEffect {
                 int newAmt = AbilityUtils.doXMath(e.getValue(), mod, card, sa);
                 table.put(affected, e.getKey(), newAmt);
             }
+        } else if ("Instead".equals(sa.getParam("Type"))) {
+            // The Ancient Dingus: none of these tokens are created; how many is the host's ReplacedTokens SVar
+            int instead = 0;
+            for (Map.Entry<Card, Integer> e : table.row(affected).entrySet()) {
+                if (re.matchesValidParam("ValidToken", e.getKey())) {
+                    instead += e.getValue();
+                    table.put(affected, e.getKey(), 0);
+                }
+            }
+            card.setSVar("ReplacedTokens", "Number$" + instead);
         } else if ("FirstPerTurn".equals(sa.getParam("Type"))) {
             // Dockbreacher: only the first such token they create each turn is created; its controller draws a card
             // for each one beyond that instead
