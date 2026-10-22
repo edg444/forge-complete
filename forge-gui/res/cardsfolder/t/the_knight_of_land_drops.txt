@@ -1,0 +1,12 @@
+Name:The Knight of Land Drops
+ManaCost:1 R
+Types:Legendary Creature Human Knight
+PT:1/1
+# the partnering is in deck building (CardRules.partnersWithKnights)
+S:Mode$ Continuous | Affected$ Card.Self | Description$ Partner with Knight (You may select any legendary Knight to be this creature's partner. It doesn't have to have Partner. You don't search for a Knight when this enters the battlefield.)
+S:Mode$ Continuous | Affected$ Knight.YouCtrl | AddKeyword$ Haste | AddTrigger$ KnightLoot | Description$ Knights you control have haste and "At the beginning of your end step, if you didn't play a land this turn, you may discard a card, then draw a card."
+SVar:KnightLoot:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | TriggerZones$ Battlefield | CheckSVar$ LandsPlayed | SVarCompare$ EQ0 | OptionalDecider$ You | Execute$ TrigLoot | TriggerDescription$ At the beginning of your end step, if you didn't play a land this turn, you may discard a card, then draw a card.
+SVar:TrigLoot:DB$ Discard | Defined$ You | NumCards$ 1 | Mode$ TgtChoose | SubAbility$ DBDraw
+SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1
+SVar:LandsPlayed:PlayerCountPropertyYou$LandsPlayed
+Oracle:Partner with Knight (You may select any legendary Knight to be this creature's partner. It doesn't have to have Partner. You don't search for a Knight when this enters the battlefield.)\nKnights you control have haste and "At the beginning of your end step, if you didn't play a land this turn, you may discard a card, then draw a card."

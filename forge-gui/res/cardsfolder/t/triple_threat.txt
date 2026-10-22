@@ -1,0 +1,7 @@
+Name:Triple Threat
+ManaCost:2 R
+Types:Enchantment
+# read where commander damage is recorded (Player.addDamage)
+SVar:TripleCommanderDamage:True
+S:Mode$ Continuous | Affected$ Card.Self | Description$ If an opponent would be dealt commander damage, they receive triple that amount of commander damage instead. (They don't actually take more damage, it just counts as triple the amount of commander damage.)
+Oracle:If an opponent would be dealt commander damage, they receive triple that amount of commander damage instead. (They don't actually take more damage, it just counts as triple the amount of commander damage.)

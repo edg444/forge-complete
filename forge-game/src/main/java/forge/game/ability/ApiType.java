@@ -181,6 +181,7 @@ public enum ApiType {
     Signature (SignatureEffect.class),
     LockPT (LockPTEffect.class),
     FavoriteCharacter (FavoriteCharacterEffect.class),
+    RandomCards (RandomCardsEffect.class),
     GuessWord (GuessWordEffect.class),
     Goad (GoadEffect.class),
     Haunt (HauntEffect.class),

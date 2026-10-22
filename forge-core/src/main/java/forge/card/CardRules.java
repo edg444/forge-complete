@@ -386,7 +386,16 @@ public final class CardRules implements ICardCharacteristics {
         return mainPart.getOracleText().contains("any other legend with one color identity or less as your commanders as though they each had partner");
     }
 
+    /** The Knight of Land Drops: "Partner with Knight" - any legendary Knight may be its partner. */
+    public boolean partnersWithKnights() {
+        return mainPart.getOracleText().contains("You may select any legendary Knight to be this creature's partner.");
+    }
+
     public boolean canBePartnerCommanders(CardRules b, boolean impliedPartnership) {
+        if (partnersWithKnights() && b.canBeCommander() && b.getType().hasCreatureType("Knight")
+                || b.partnersWithKnights() && canBeCommander() && getType().hasCreatureType("Knight")) {
+            return true;
+        }
         if (findsFriends() && canBeCommander() && b.canBeCommander() && b.getColorIdentity().countColors() <= 1
                 || b.findsFriends() && b.canBeCommander() && canBeCommander() && getColorIdentity().countColors() <= 1) {
             return true;
@@ -438,7 +447,8 @@ public final class CardRules implements ICardCharacteristics {
         }
         // Barce, Friend Finder can pair with any commander of one color or less, so those may be a second commander
         return hasKeyword("Partner") || !this.partnerWith.isEmpty() || !this.partnerType.isEmpty() || hasLegendaryPartner() ||
-                findsFriends() || getColorIdentity().countColors() <= 1 ||
+                findsFriends() || getColorIdentity().countColors() <= 1 || partnersWithKnights()
+                || canBeCommander() && getType().hasCreatureType("Knight") ||
                 hasKeyword("Choose a Background") || hasKeyword("Doctor's companion") || isDoctor();
     }
 

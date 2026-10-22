@@ -5,6 +5,7 @@ Swamp:Swamps
 Mountain:Mountains
 Forest:Forests
 [LandTypes]
+Barnyard:Barnyards
 Cave:Caves
 Cloud:Clouds
 Desert:Deserts

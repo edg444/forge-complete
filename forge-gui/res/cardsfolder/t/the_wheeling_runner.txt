@@ -1,0 +1,10 @@
+Name:The Wheeling Runner
+ManaCost:3 R
+Types:Legendary Creature Splinter Gamer
+PT:3/4
+S:Mode$ ManaConvert | ValidPlayer$ You | ValidCard$ Card.YouCtrl+!StartingDeck | ValidSA$ Spell | ManaConversion$ AnyType->AnyType | Description$ You may spend any type of mana to cast cards that didn't start in your deck.
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigDiscard | TriggerDescription$ Whenever CARDNAME deals combat damage to a player, you may discard your hand. If you do, choose four Vintage-legal cards at random. Add those cards to your hand. (The "Random Card" feature on a search site may help.)
+SVar:TrigDiscard:DB$ Discard | Defined$ You | Mode$ Hand | SubAbility$ DBRandom
+SVar:DBRandom:DB$ RandomCards | Amount$ 4 | LegalIn$ Vintage
+K:Partner:Ready to run
+Oracle:You may spend any type of mana to cast cards that didn't start in your deck.\nWhenever The Wheeling Runner deals combat damage to a player, you may discard your hand. If you do, choose four Vintage-legal cards at random. Add those cards to your hand. (The "Random Card" feature on a search site may help.)\nReady to run (You can have two commanders if both have ready to run.)

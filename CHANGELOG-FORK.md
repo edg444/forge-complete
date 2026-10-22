@@ -312,6 +312,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Memnarchitect, Triple Threat, The Knight of Land Drops, The Wheeling Runner, Blustering Barnyard,
+  Mana Max, Afterburner (UNK rares).**
+  - Card properties `notOriginallyArtifactCreature` and `StartingDeck`.
+  - SVar `TripleCommanderDamage`: commander damage to an opponent of its controller counts triple, per copy.
+  - `CardRules.partnersWithKnights`: "Partner with Knight" pairs with any legendary Knight.
+  - New effect `RandomCards` (`Amount$`, `LegalIn$`): random cards legal in a format, put into your hand.
+  - New trigger `ManaLost`: a player's mana pool empties with mana still in it.
+  - Land type Barnyard. Blustering Barnyard's storm makes token copies of the land it is (my call). Token scripts
+    `w_2_2_horse_with_horsemanship`, `g_3_3_ox_trample`.
+
 - **Unknown Event: The Colossal Dreadmaw, Just a Li'l Guy, Oozeavite, Retto, Family Racer, Your Favorite Character,
   Playtest Wish, Fear of the Unknown, The Companion of the Wilds (UNK rares).**
   - New effect `LockPT` (`Card.lockPT`): the creature is that power and toughness until end of turn, whatever else

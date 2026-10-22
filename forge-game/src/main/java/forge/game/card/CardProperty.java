@@ -2752,6 +2752,17 @@ public class CardProperty {
             if (!source.hasChosenNumber() || CardPrintings.releaseYear(card) != source.getChosenNumber()) {
                 return false;
             }
+        } else if (property.equals("notOriginallyArtifactCreature")) {
+            // Memnarchitect: its own characteristics, before any effect, don't make it an artifact creature
+            final forge.card.CardTypeView base = card.getCurrentState().getType();
+            if (base.isArtifact() && base.isCreature()) {
+                return false;
+            }
+        } else if (property.equals("StartingDeck")) {
+            // The Wheeling Runner: it started the game in its owner's deck
+            if (!card.isStartingDeckCard()) {
+                return false;
+            }
         } else if (property.equals("InFamily")) {
             // Retto, Family Racer: one of the five names its controller wrote down this game
             if (!(sourceController.getMatchNote("Family:" + game.getId()) instanceof List<?> family)

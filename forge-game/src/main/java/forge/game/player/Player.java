@@ -987,7 +987,14 @@ public class Player extends GameEntity implements Comparable<Player> {
                 && !this.getGame().getRules().hasAppliedVariant(GameType.Brawl)) {
             // In case that commander is merged permanent, get the real commander card
             final Card realCommander = source.getRealCommander();
-            addCommanderDamage(realCommander, amount);
+            // Triple Threat: an opponent of its controller receives triple that much commander damage, per copy
+            int commanderDamage = amount;
+            for (final Card c : getGame().getCardsIn(ZoneType.Battlefield)) {
+                if (c.hasSVar("TripleCommanderDamage") && c.getController().isOpponentOf(this)) {
+                    commanderDamage *= 3;
+                }
+            }
+            addCommanderDamage(realCommander, commanderDamage);
             view.updateCommanderDamage(this);
             if (realCommander != source) {
                 view.updateMergedCommanderDamage(source, realCommander);

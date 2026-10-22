@@ -1,0 +1,8 @@
+Name:Memnarchitect
+ManaCost:1 U
+Types:Creature Vedalken Artificer
+PT:1/4
+S:Mode$ ReduceCost | ValidCard$ Card | Type$ Spell | Activator$ You | Amount$ X | Description$ Spells you cast have affinity for artifact creatures that weren't originally artifact creatures. (They cost {1} less to cast for each artifact creature you control that wasn't originally an artifact creature.)
+SVar:X:Count$Valid Creature.Artifact+YouCtrl+notOriginallyArtifactCreature
+A:AB$ Animate | Cost$ 1 U U | ValidTgts$ Permanent | TgtPrompt$ Select target permanent | Types$ Artifact | Duration$ Permanent | SpellDescription$ Target permanent becomes an artifact in addition to its other types.
+Oracle:Spells you cast have affinity for artifact creatures that weren't originally artifact creatures. (They cost {1} less to cast for each artifact creature you control that wasn't originally an artifact creature.)\n{1}{U}{U}: Target permanent becomes an artifact in addition to its other types.

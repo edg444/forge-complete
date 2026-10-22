@@ -1,0 +1,17 @@
+Name:Blustering Barnyard
+ManaCost:no cost
+Types:Land Barnyard
+# "Pretend it works on a land": played, it's copied once for each spell cast before it this turn, as token copies of
+# the land (my call; a land is never on the stack)
+T:Mode$ LandPlayed | ValidCard$ Card.Self | Execute$ TrigStorm | TriggerDescription$ Storm (Pretend it works on a land.)
+SVar:TrigStorm:DB$ CopyPermanent | Defined$ Self | NumCopies$ Storm
+SVar:Storm:Count$ThisTurnCast_Card
+A:AB$ Mana | Cost$ T | Produced$ Any | SubAbility$ DBLose | SpellDescription$ Add one mana of any color and lose life equal to the number of barnyards you control.
+SVar:DBLose:DB$ LoseLife | Defined$ You | LifeAmount$ Barnyards
+SVar:Barnyards:Count$Valid Barnyard.YouCtrl
+A:AB$ Charm | Cost$ 5 Discard<1/CARDNAME> | ActivationZone$ Hand | Choices$ DBBird,DBHorse,DBOx | CharmNum$ Storm | MinCharmNum$ 0 | CanRepeatModes$ True | Pawprint$ Storm | PawprintExact$ True | PrecostDesc$ Channelstorm — | SpellDescription$ Choose {P} worth of modes equal to the number of spells that have been cast this turn.
+SVar:DBBird:DB$ Token | Pawprint$ 1 | TokenScript$ w_1_1_bird_flying | SpellDescription$ Create a 1/1 white Bird token with flying.
+SVar:DBHorse:DB$ Token | Pawprint$ 2 | TokenScript$ w_2_2_horse_with_horsemanship | SpellDescription$ Create a 2/2 white Horse token with horsemanship.
+SVar:DBOx:DB$ Token | Pawprint$ 3 | TokenScript$ g_3_3_ox_trample | SpellDescription$ Create a 3/3 green Ox token with trample.
+DeckHas:Ability$Token
+Oracle:Storm (Pretend it works on a land.)\n{T}: Add one mana of any color and lose life equal to the number of barnyards you control.\nChannelstorm — {5}, Discard this card: Choose {P} worth of modes equal to the number of spells that have been cast this turn.\n{P} — Create a 1/1 white Bird token with flying.\n{P}{P} — Create a 2/2 white Horse token with horsemanship.\n{P}{P}{P} — Create a 3/3 green Ox token with trample.

@@ -612,6 +612,10 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
             // clearPool empties them (they are never part of the cleared whole-mana list)
             final int halves = p.getManaPool().totalHalfMana();
             int burn = p.getManaPool().clearPool(true).size();
+            // Mana Max, Afterburner: "Whenever a player loses one or more unspent mana"
+            if (burn > 0 || halves > 0) {
+                game.getTriggerHandler().runTrigger(TriggerType.ManaLost, AbilityKey.mapFromPlayer(p), false);
+            }
             p.clearTapSymbols();
 
             if (p.getManaPool().hasBurn()) {

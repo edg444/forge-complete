@@ -1,0 +1,11 @@
+Name:Mana Max, Afterburner
+ManaCost:3 R
+Types:Legendary Creature Human Survivor Pilot
+PT:4/4
+T:Mode$ Phase | Phase$ End of Turn | TriggerZones$ Battlefield | Execute$ TrigDamage | TriggerDescription$ At the beginning of each player's end step, CARDNAME deals damage to that player equal to the number of untapped lands they control.
+SVar:TrigDamage:DB$ DealDamage | Defined$ TriggeredPlayer | NumDmg$ X
+SVar:X:Count$Valid Land.untapped+ActivePlayerCtrl
+T:Mode$ ManaLost | ValidPlayer$ Player | TriggerZones$ Battlefield | Execute$ TrigTreasure | TriggerDescription$ Whenever a player loses one or more unspent mana, each of that player's opponents creates a Treasure token.
+SVar:TrigTreasure:DB$ Token | TokenScript$ c_a_treasure_sac | TokenOwner$ Player.OpponentOf TriggeredPlayer
+DeckHas:Ability$Token & Type$Treasure
+Oracle:At the beginning of each player's end step, Mana Max deals damage to that player equal to the number of untapped lands they control.\nWhenever a player loses one or more unspent mana, each of that player's opponents creates a Treasure token.
