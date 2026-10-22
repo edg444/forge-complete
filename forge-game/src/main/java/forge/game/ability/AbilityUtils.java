@@ -3821,6 +3821,41 @@ public class AbilityUtils {
         return namedKeywords;
     }
 
+    private static Set<String> keywordAbilityNames = null;
+
+    /**
+     * Second Stage of Magic Design: the keyword abilities a card has and the ability words it's printed with, lower
+     * case. Unlike The Horizon Seeker's words these are ones it has, not ones its text mentions ("creature with
+     * flying"), and enchant is left out the same way.
+     */
+    public static Set<String> keywordsAndAbilityWordsOf(final Card card) {
+        synchronized (AbilityUtils.class) {
+            if (keywordAbilityNames == null) {
+                final Set<String> names = Sets.newHashSet();
+                for (final String w : forge.card.LegacyWords.getKeywordAbilities()) {
+                    names.add(w.toLowerCase(java.util.Locale.ROOT));
+                }
+                names.remove("enchant");
+                keywordAbilityNames = names;
+            }
+        }
+        final Set<String> result = Sets.newHashSet();
+        for (final forge.game.keyword.KeywordInterface k : card.getKeywords()) {
+            final String name = k.getKeyword().toString().toLowerCase(java.util.Locale.ROOT);
+            if (keywordAbilityNames.contains(name)) {
+                result.add(name);
+            }
+        }
+        final String text = card.getOracleText() == null ? "" : card.getOracleText().toLowerCase(java.util.Locale.ROOT);
+        for (final String w : forge.card.LegacyWords.getAbilityWords()) {
+            final String lower = w.toLowerCase(java.util.Locale.ROOT);
+            if (text.startsWith(lower + " —") || text.contains("\n" + lower + " —")) {
+                result.add(lower);
+            }
+        }
+        return result;
+    }
+
     public static SpellAbility addSpliceEffects(final SpellAbility sa) {
         final Card source = sa.getHostCard();
         final Player player = sa.getActivatingPlayer();

@@ -137,6 +137,8 @@ public class Player extends GameEntity implements Comparable<Player> {
     private List<Card> sacrificedThisTurn = new ArrayList<>();
 
     private int simultaneousDamage = 0;
+    // The Countering Runner: psychic damage dealt to this player, which doesn't cause loss of life (20 loses the game)
+    private int psychicDamage = 0;
     private int simultaneousHalfDamage = 0;
     private int simultaneousHundredthsDamage = 0;
 
@@ -961,7 +963,11 @@ public class Player extends GameEntity implements Comparable<Player> {
         final boolean onionfect = source.hasKeyword("Onionfect");
 
         int poisonCounters = 0;
-        if (onionfect) {
+        if (cause != null && cause.hasParam("Psychic")) {
+            infect = false;
+            psychicDamage += amount;
+            getGame().getGameLog().add(forge.game.GameLogEntryType.DAMAGE, this + " has been dealt " + psychicDamage + " psychic damage.");
+        } else if (onionfect) {
             infect = false;
             Card.giveOnionfectFood(source, amount);
         } else if (infect) {
@@ -2727,6 +2733,10 @@ public class Player extends GameEntity implements Comparable<Player> {
             return true;
         }
 
+        if (psychicDamage >= 20 && loseConditionMet(GameLossReason.SpellEffect, "20 psychic damage")) {
+            return true;
+        }
+
         if (game.getRules().hasAppliedVariant(GameType.Commander)) {
             for (Entry<Card, Integer> entry : getCommanderDamage()) {
                 if (entry.getValue() >= 21 && loseConditionMet(GameLossReason.CommanderDamage, null)) {
@@ -2917,6 +2927,13 @@ public class Player extends GameEntity implements Comparable<Player> {
     public int getStartingHandSize() {
         return startingHandSize;
     }
+    public int getPsychicDamage() {
+        return psychicDamage;
+    }
+    public void setPsychicDamage(final int n) {
+        psychicDamage = n;
+    }
+
     public void setStartingHandSize(int shs) {
         startingHandSize = shs;
     }

@@ -2758,6 +2758,31 @@ public class CardProperty {
             if (base.isArtifact() && base.isCreature()) {
                 return false;
             }
+        } else if (property.equals("unsharedKeywordOrAbilityWord")) {
+            // Second Stage of Magic Design: it has a keyword or ability word, and no permanent its controller
+            // controls or card in their graveyard shares one with it
+            final java.util.Set<String> own = AbilityUtils.keywordsAndAbilityWordsOf(card);
+            if (own.isEmpty()) {
+                return false;
+            }
+            final CardCollection others = new CardCollection(sourceController.getCardsIn(ZoneType.Battlefield));
+            others.addAll(sourceController.getCardsIn(ZoneType.Graveyard));
+            for (final Card other : others) {
+                if (!other.equals(card) && !java.util.Collections.disjoint(own, AbilityUtils.keywordsAndAbilityWordsOf(other))) {
+                    return false;
+                }
+            }
+        } else if (property.equals("wouldCounterASpell")) {
+            // The Countering Runner: a spell that would counter a spell
+            boolean counters = false;
+            for (final SpellAbility spell : card.getSpellAbilities()) {
+                for (SpellAbility part = spell.isSpell() ? spell : null; part != null && !counters; part = part.getSubAbility()) {
+                    counters = part.getApi() == forge.game.ability.ApiType.Counter;
+                }
+            }
+            if (!counters) {
+                return false;
+            }
         } else if (property.equals("StartingDeck")) {
             // The Wheeling Runner: it started the game in its owner's deck
             if (!card.isStartingDeckCard()) {

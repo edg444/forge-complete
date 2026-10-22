@@ -1,0 +1,7 @@
+Name:Second Stage of Magic Design
+ManaCost:2 U
+Types:Enchantment
+# keywords are the keyword abilities it has (enchant left out, as for The Horizon Seeker), ability words what it's printed with
+T:Mode$ SpellCast | ValidCard$ Card.unsharedKeywordOrAbilityWord | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDraw | TriggerDescription$ Whenever you cast a spell with a keyword or ability word, if it doesn't share a keyword or ability word with a permanent you control or a card in your graveyard, draw a card. (Keywords and ability words include abilities like flying, flashback, and landfall.)
+SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
+Oracle:Whenever you cast a spell with a keyword or ability word, if it doesn't share a keyword or ability word with a permanent you control or a card in your graveyard, draw a card. (Keywords and ability words include abilities like flying, flashback, and landfall.)

@@ -1,0 +1,10 @@
+Name:Untap, Upkeep, Draw
+ManaCost:1 U
+Types:Sorcery
+K:Entwine:3
+# entwined, the steps come in reverse order: of extra steps after the same phase, the newest comes first (CR 500.8)
+A:SP$ Charm | Choices$ DBUntap,DBUpkeep,DBDraw
+SVar:DBUntap:DB$ AddPhase | ExtraPhase$ Untap | AILogic$ ExtraStep | SpellDescription$ After this phase, there is an additional untap step.
+SVar:DBUpkeep:DB$ AddPhase | ExtraPhase$ Upkeep | AILogic$ ExtraStep | SpellDescription$ After this phase, there is an additional upkeep step.
+SVar:DBDraw:DB$ AddPhase | ExtraPhase$ Draw | AILogic$ ExtraStep | SpellDescription$ After this phase, there is an additional draw step.
+Oracle:Choose one —\n• After this phase, there is an additional untap step.\n• After this phase, there is an additional upkeep step.\n• After this phase, there is an additional draw step.\nEntwine {3} (Choose all of them if you pay the entwine cost.)

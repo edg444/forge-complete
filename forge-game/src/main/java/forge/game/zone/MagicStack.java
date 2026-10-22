@@ -412,6 +412,9 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
                         && source.getOwner().equals(activator)) {
                     activator.incCommanderCast(source);
                 }
+                if (sp.getCastAsStatic() != null) {
+                    forge.game.staticability.StaticAbilityCastAs.recordCast(sp);
+                }
                 game.getTriggerHandler().runTrigger(TriggerType.SpellCast, runParams, true);
             }
 

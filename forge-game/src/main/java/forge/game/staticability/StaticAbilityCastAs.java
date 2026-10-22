@@ -48,6 +48,8 @@ public class StaticAbilityCastAs {
     private static final int AI_LOOK = 15;
     // a random order kept for the turn, so what the AI is weighing doesn't change every time it looks at its hand
     private static final Map<Card, Pair<Integer, List<String>>> AI_ORDER_BY_CARD = new WeakHashMap<>();
+    // Fourth Stage of Magic Design (OncePerTurn$): the turn each static was last cast with
+    private static final Map<StaticAbility, Integer> USED_ON_TURN = new WeakHashMap<>();
 
     public static synchronized Card template(final Game game, final String name, final Player owner) {
         return TEMPLATES.computeIfAbsent(game, g -> new HashMap<>()).computeIfAbsent(name,
@@ -69,17 +71,21 @@ public class StaticAbilityCastAs {
                     continue;
                 }
                 final String name = stAb.getParam("CastAs");
+                if (stAb.hasParam("OncePerTurn") && usedThisTurn(stAb)) {
+                    continue;
+                }
                 if (ANOTHER_CARD.equals(name)) {
                     if (activator.getController().isAI()) {
                         // no strategy: the first few cards in a random order that can be cast right now (some have
                         // their own timing, "only during combat"), offered as ordinary spells for its usual logic
                         int found = 0;
                         int looked = 0;
-                        for (final String pick : aiOrder(card)) {
+                        for (final String pick : aiOrder(card, stAb)) {
                             if (found >= AI_PICKS || ++looked > AI_LOOK) {
                                 break;
                             }
                             final List<SpellAbility> spells = castAsSpells(card, activator, pick);
+                            spells.forEach(s -> s.setCastAsStatic(stAb));
                             spells.removeIf(s -> {
                                 s.setActivatingPlayer(activator);
                                 return !s.canPlay(true);
@@ -89,12 +95,15 @@ public class StaticAbilityCastAs {
                                 found++;
                             }
                         }
-                    } else if (!anotherCardChoices(card).isEmpty()) {
+                    } else if (!anotherCardChoices(card, stAb).isEmpty()) {
                         for (final SpellAbility sa : card.getSpellAbilities()) {
                             if (sa.isSpell()) {
                                 final SpellAbility standIn = sa.copy(card, activator, false);
                                 standIn.setCastAsAnother(true);
-                                standIn.setDescription("Cast as another card with the same type and mana cost");
+                                standIn.setCastAsStatic(stAb);
+                                standIn.setDescription(stAb.hasParam("SameManaCost")
+                                        ? "Cast as another card with the same mana cost (" + stAb.getHostCard() + ")"
+                                        : "Cast as another card with the same type and mana cost");
                                 result.add(standIn);
                                 break;
                             }
@@ -102,7 +111,9 @@ public class StaticAbilityCastAs {
                     }
                     continue;
                 }
-                result.addAll(castAsSpells(card, activator, name));
+                final List<SpellAbility> spells = castAsSpells(card, activator, name);
+                spells.forEach(s -> s.setCastAsStatic(stAb));
+                result.addAll(spells);
             }
         }
         return result;
@@ -126,8 +137,11 @@ public class StaticAbilityCastAs {
 
     /** The choices for this card the AI knows how to play: none its deck builder is told to leave out. */
     public static List<String> aiPlayableChoices(final Card card) {
+        return aiPlayableChoices(card, null);
+    }
+    private static List<String> aiPlayableChoices(final Card card, final StaticAbility stAb) {
         final List<String> result = new ArrayList<>();
-        for (final ICardFace face : anotherCardChoices(card)) {
+        for (final ICardFace face : anotherCardChoices(card, stAb)) {
             final PaperCard pc = StaticData.instance().getCommonCards().getUniqueByName(face.getName());
             if (pc != null && !pc.getRules().getAiHints().getRemAIDecks()) {
                 result.add(face.getName());
@@ -136,13 +150,19 @@ public class StaticAbilityCastAs {
         return result;
     }
 
-    private static synchronized List<String> aiOrder(final Card card) {
+    private static synchronized List<String> aiOrder(final Card card, final StaticAbility stAb) {
         final int turn = card.getGame().getPhaseHandler().getTurn();
-        final Pair<Integer, List<String>> kept = AI_ORDER_BY_CARD.get(card);
+        // the kept order is Imaginary Friends' - another static's choices aren't the same cards
+        final boolean keep = !stAb.hasParam("SameManaCost");
+        final Pair<Integer, List<String>> kept = keep ? AI_ORDER_BY_CARD.get(card) : null;
         if (kept != null && kept.getLeft() == turn) {
             return kept.getRight();
         }
-        final List<String> names = aiPlayableChoices(card);
+        final List<String> names = aiPlayableChoices(card, stAb);
+        if (!keep) {
+            Collections.shuffle(names, MyRandom.getRandom());
+            return names;
+        }
         Collections.shuffle(names, MyRandom.getRandom());
         AI_ORDER_BY_CARD.put(card, Pair.of(turn, names));
         return names;
@@ -150,11 +170,20 @@ public class StaticAbilityCastAs {
 
     /** The cards legal in this game's format, other than this one, with this card's card types and mana cost. */
     public static List<ICardFace> anotherCardChoices(final Card card) {
+        return anotherCardChoices(card, null);
+    }
+
+    /**
+     * With {@code SameManaCost$} (Fourth Stage of Magic Design) any nonland card with the same mana cost will do, and
+     * with {@code NoRepeat$} the names its host was already cast as are left out.
+     */
+    public static List<ICardFace> anotherCardChoices(final Card card, final StaticAbility stAb) {
         final Game game = card.getGame();
         final DeckFormat format = gameFormat(game);
+        final boolean anyType = stAb != null && stAb.hasParam("SameManaCost");
         final EnumSet<CardType.CoreType> types = coreTypes(card.getType().getCoreTypes());
         final String cost = card.getManaCost().getShortString();
-        final String key = types + "|" + cost + "|" + format;
+        final String key = (anyType ? "nonland" : types) + "|" + cost + "|" + format;
         final List<ICardFace> all;
         synchronized (ANOTHER_CARDS) {
             all = ANOTHER_CARDS.computeIfAbsent(game, g -> new HashMap<>()).computeIfAbsent(key, k -> {
@@ -165,15 +194,32 @@ public class StaticAbilityCastAs {
                         continue;
                     }
                     final ICardFace face = pc.getRules().getMainPart();
-                    if (face.getManaCost().getShortString().equals(cost)
-                            && coreTypes(face.getType().getCoreTypes()).equals(types) && format.isLegalCard(pc)) {
+                    if (face.getManaCost().getShortString().equals(cost) && format.isLegalCard(pc) && (anyType
+                            ? !face.getType().isLand() : coreTypes(face.getType().getCoreTypes()).equals(types))) {
                         result.add(face);
                     }
                 }
                 return result;
             });
         }
-        return all.stream().filter(f -> !f.getName().equals(card.getName())).toList();
+        final List<String> used = stAb != null && stAb.hasParam("NoRepeat") ? stAb.getHostCard().getNamedCards() : List.of();
+        return all.stream().filter(f -> !f.getName().equals(card.getName()) && !used.contains(f.getName())).toList();
+    }
+
+    private static synchronized boolean usedThisTurn(final StaticAbility stAb) {
+        final Integer turn = USED_ON_TURN.get(stAb);
+        return turn != null && turn == stAb.getHostCard().getGame().getPhaseHandler().getTurn();
+    }
+
+    /** A spell cast with a CastAs static has been cast: what Fourth Stage of Magic Design keeps track of. */
+    public static synchronized void recordCast(final SpellAbility sp) {
+        final StaticAbility stAb = sp.getCastAsStatic();
+        if (stAb.hasParam("OncePerTurn")) {
+            USED_ON_TURN.put(stAb, stAb.getHostCard().getGame().getPhaseHandler().getTurn());
+        }
+        if (stAb.hasParam("NoRepeat") && sp.getCastAs() != null) {
+            stAb.getHostCard().addNamedCard(sp.getCastAs());
+        }
     }
 
     /**
@@ -181,7 +227,7 @@ public class StaticAbilityCastAs {
      * null if the player backed out.
      */
     public static SpellAbility chooseAnotherCard(final Card card, final Player activator, final SpellAbility sa) {
-        final List<ICardFace> choices = anotherCardChoices(card);
+        final List<ICardFace> choices = anotherCardChoices(card, sa.getCastAsStatic());
         if (choices.isEmpty()) {
             return null;
         }
@@ -195,6 +241,7 @@ public class StaticAbilityCastAs {
             if (spell.isSpell()) {
                 final SpellAbility copy = spell.copy(card, activator, false);
                 copy.setCastAs(name);
+                copy.setCastAsStatic(sa.getCastAsStatic());
                 spells.add(copy);
             }
         }

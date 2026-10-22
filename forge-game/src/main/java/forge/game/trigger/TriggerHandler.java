@@ -175,7 +175,8 @@ public class TriggerHandler {
         collectTriggerForWaiting(false);
     }
     public void collectTriggerForWaiting(final boolean exceptEntering) {
-        for (final TriggerWaiting wt : waitingTriggers) {
+        // a copy: The Fish Brewer's taps, made while counting, can add waiting triggers of their own
+        for (final TriggerWaiting wt : new ArrayList<>(waitingTriggers)) {
             if (wt.getTriggers() != null)
                 continue;
 

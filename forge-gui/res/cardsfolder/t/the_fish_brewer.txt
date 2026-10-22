@@ -1,0 +1,11 @@
+Name:The Fish Brewer
+ManaCost:4 U
+Types:Legendary Creature Human Wizard
+PT:4/4
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When CARDNAME enters the battlefield or attacks, create a 1/1 Fish creature token that's all colors.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigToken | Secondary$ True | TriggerDescription$ When CARDNAME enters the battlefield or attacks, create a 1/1 Fish creature token that's all colors.
+SVar:TrigToken:DB$ Token | TokenScript$ all_1_1_fish
+# TapForEach$: the Fish are tapped when the trigger event happens (CR 603.2d), one more trigger each
+S:Mode$ Panharmonicon | ValidMode$ ChangesZone,ChangesZoneAll | ValidCard$ Permanent.YouCtrl | ValidCause$ Permanent.Other | Destination$ Battlefield | TapForEach$ Fish.YouCtrl | TapForEachDesc$ Fish | Description$ If another permanent entering the battlefield causes a triggered ability of a permanent you control to trigger, tap any number of Fish you control. That ability triggers an additional time for each Fish tapped this way.
+DeckHas:Ability$Token
+Oracle:When The Fish Brewer enters the battlefield or attacks, create a 1/1 Fish creature token that's all colors.\nIf another permanent entering the battlefield causes a triggered ability of a permanent you control to trigger, tap any number of Fish you control. That ability triggers an additional time for each Fish tapped this way.

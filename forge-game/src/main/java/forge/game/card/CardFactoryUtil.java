@@ -3152,8 +3152,14 @@ public class CardFactoryUtil {
             final String manacost = k[1];
 
             StringBuilder sb = new StringBuilder();
-            sb.append("AB$ PutCounter | Cost$ ").append(manacost).append(" | PrecostDesc$ Level up | CostDesc$ ");
+            // The Fearsome Flock: "split second level up" (Level up:<cost>:SplitSecond) can't be responded to
+            final boolean splitSecond = k.length > 2 && k[2].equals("SplitSecond");
+            sb.append("AB$ PutCounter | Cost$ ").append(manacost).append(" | PrecostDesc$ ")
+                    .append(splitSecond ? "Split second level up" : "Level up").append(" | CostDesc$ ");
             sb.append(ManaCostParser.parse(manacost)).append(" | SorcerySpeed$ True | Secondary$ True");
+            if (splitSecond) {
+                sb.append(" | SplitSecond$ True");
+            }
             sb.append("| CounterType$ LEVEL | StackDescription$ {p:You} levels up {c:Self}.");
             sb.append(" | SpellDescription$ (").append(inst.getReminderText()).append(")");
 

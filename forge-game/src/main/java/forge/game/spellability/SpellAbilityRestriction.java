@@ -358,7 +358,11 @@ public class SpellAbilityRestriction extends SpellAbilityVariables {
         }
 
         String validPlayer = this.getActivator();
-        return activator.isValid(validPlayer, c.getController(), c, sa);
+        if (activator.isValid(validPlayer, c.getController(), c, sa)) {
+            return true;
+        }
+        return !sa.isSpell() && c.isInPlay() && "You".equals(validPlayer)
+                && forge.game.staticability.StaticAbilityActivateAsController.canActivate(c, activator);
     }
 
     public final boolean checkOtherRestrictions(final Card c, final SpellAbility sa, final Player activator) {

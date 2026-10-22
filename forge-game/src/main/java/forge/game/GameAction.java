@@ -3185,6 +3185,18 @@ public class GameAction {
                 takesAction.setStartingLife(takesAction.getStartingLife() + bonus);
                 takesAction.setLife(takesAction.getLife() + bonus, null);
             }
+            // Mono Eminence (Lorthos): a commander's starting hand size, which is also the maximum hand size (static
+            // effects reset that to the starting hand size)
+            for (Card c : takesAction.getCardsIn(ZoneType.Command)) {
+                if (!c.isCommander() || !c.hasSVar("StartingHandSizeIfMono")) {
+                    continue;
+                }
+                final String[] mono = c.getSVar("StartingHandSizeIfMono").split(":");
+                if (AbilityUtils.calculateAmount(c, "Count$DeckIdentityMono." + mono[0], null) == 1) {
+                    takesAction.setStartingHandSize(Integer.parseInt(mono[1]));
+                    takesAction.setMaxHandSize(Integer.parseInt(mono[1]));
+                }
+            }
             // Unknown Event: a deck with a card that cares about a team joins one now, if not already this match
             forge.game.ability.effects.ChooseTeamEffect.chooseForDeck(takesAction, all);
             // Common Curve Filler: a number written in during deckbuilding is chosen now and kept all game

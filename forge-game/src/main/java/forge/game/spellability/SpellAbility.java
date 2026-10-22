@@ -1829,6 +1829,15 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
         castAs = name;
     }
 
+    // the CastAs static this spell is cast with, for what it keeps track of (Fourth Stage of Magic Design), or null
+    private forge.game.staticability.StaticAbility castAsStatic = null;
+    public forge.game.staticability.StaticAbility getCastAsStatic() {
+        return castAsStatic;
+    }
+    public void setCastAsStatic(final forge.game.staticability.StaticAbility stAb) {
+        castAsStatic = stAb;
+    }
+
     // Imaginary Friends (Plane): a stand-in that asks which card to cast this one as before it's cast
     private boolean castAsAnother = false;
     public boolean isCastAsAnother() {

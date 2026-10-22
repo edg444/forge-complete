@@ -312,6 +312,21 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Second Stage of Magic Design, Untap, Upkeep, Draw, The Countering Runner, The Fearsome Flock,
+  Lorthos, Tentacled Terror, The Fish Brewer, Fourth Stage of Magic Design (UNK blue rares).**
+  - Card properties `unsharedKeywordOrAbilityWord` (keyword abilities a card has plus ability words it's printed
+    with; enchant left out, as for The Horizon Seeker) and `wouldCounterASpell`.
+  - Psychic damage (`DealDamage | Psychic$ True`): no loss of life; a player dealt 20 of it loses the game.
+  - `K:Level up:<cost>:SplitSecond`: the level up ability can't be responded to.
+  - New static `ActivateAsController` (`ValidCard$`, `Activator$`): activate abilities of others' permanents. Mana
+    abilities of them aren't offered while paying costs.
+  - Panharmonicon `TapForEach$`: tap any number of those as the trigger event happens, one more trigger each.
+  - Mono Eminence starting hand size (SVar `StartingHandSizeIfMono:<color>:<size>`), also the maximum hand size.
+  - CastAs `SameManaCost$` (any nonland card with that mana cost), `OncePerTurn$`, `NoRepeat$`. A person picks from
+    the list of those cards, as for Imaginary Friends.
+  - AddPhaseAi `AILogic$ ExtraStep` (extra draw step; extra untap step with two or more things tapped). Entwined, the
+    extra steps come draw, upkeep, untap (CR 500.8). Token script `all_1_1_fish`.
+
 - **Unknown Event: Memnarchitect, Triple Threat, The Knight of Land Drops, The Wheeling Runner, Blustering Barnyard,
   Mana Max, Afterburner (UNK rares).**
   - Card properties `notOriginallyArtifactCreature` and `StartingDeck`.

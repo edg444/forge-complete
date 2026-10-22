@@ -198,6 +198,8 @@ public enum StaticAbilityMode {
 
     // StaticAbilityActivateAbilityAsIfHaste
     ActivateAbilityAsIfHaste,
+    // StaticAbilityActivateAsController - The Fearsome Flock
+    ActivateAsController,
 
     // StaticAbilityCastWithFlash
     CastWithFlash,

@@ -1,0 +1,11 @@
+Name:Lorthos, Tentacled Terror
+ManaCost:6 U U
+Types:Legendary Creature Octopus
+PT:8/8
+# applied as the game begins when it's in the command zone as a commander (GameAction: color:size)
+SVar:StartingHandSizeIfMono:blue:8
+Text:Mono Eminence — As the game begins, if Lorthos is your commander and your deck's color identity is mono-blue, your starting hand size becomes 8. (You draw 8 cards and your maximum hand size is 8.)
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigTap | TriggerDescription$ Whenever CARDNAME attacks, tap all permanents your opponent controls.
+SVar:TrigTap:DB$ TapAll | ValidCards$ Permanent.OppCtrl
+K:Partner
+Oracle:Mono Eminence — As the game begins, if Lorthos is your commander and your deck's color identity is mono-blue, your starting hand size becomes 8. (You draw 8 cards and your maximum hand size is 8.)\nWhenever Lorthos attacks, tap all permanents your opponent controls.\nPartner (You can have two commanders if both have partner.)

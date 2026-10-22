@@ -3,12 +3,15 @@ package forge.game.staticability;
 import forge.game.Game;
 import forge.game.GameEntity;
 import forge.game.ability.AbilityKey;
+import forge.game.ability.ApiType;
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
 import forge.game.card.CardCollectionView;
 import forge.game.card.CardDamageTable;
+import forge.game.card.CardLists;
 import forge.game.GameObjectPredicates;
 import forge.game.card.CardZoneTable;
+import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.trigger.Trigger;
 import forge.game.trigger.TriggerType;
@@ -74,11 +77,41 @@ public class StaticAbilityPanharmonicon {
                     continue;
                 }
                 if (applyPanharmoniconAbility(stAb, t, runParams)) {
-                    n++;
+                    n += stAb.hasParam("TapForEach") ? tapForEach(stAb, t) : 1;
                 }
             }
         }
 
+        return n;
+    }
+
+    /** The Fish Brewer: its controller taps any number of these, and the ability triggers once more for each. */
+    private static int tapForEach(final StaticAbility stAb, final Trigger t) {
+        final Card host = stAb.getHostCard();
+        final Player p = host.getController();
+        final CardCollectionView untapped = CardLists.filter(CardLists.getValidCards(p.getCardsIn(ZoneType.Battlefield),
+                stAb.getParam("TapForEach"), p, host, stAb), Card::isUntapped);
+        if (untapped.isEmpty()) {
+            return 0;
+        }
+        final SpellAbility sa = new SpellAbility.EmptySa(ApiType.Tap, host, p);
+        final CardCollectionView tapped;
+        if (p.getController().isAI()) {
+            // all of them, unless they may still be wanted as blockers this turn
+            final forge.game.phase.PhaseHandler ph = host.getGame().getPhaseHandler();
+            tapped = !ph.isPlayerTurn(p) && ph.getPhase().isBefore(forge.game.phase.PhaseType.COMBAT_DECLARE_BLOCKERS)
+                    ? new CardCollection() : untapped;
+        } else {
+            tapped = p.getController().chooseCardsForEffect(untapped, sa,
+                    "Tap any number of " + stAb.getParam("TapForEachDesc") + " for " + t.getHostCard() + "'s trigger to trigger an additional time each",
+                    0, untapped.size(), true, null);
+        }
+        int n = 0;
+        for (final Card c : tapped) {
+            if (c.tap(true, sa, p)) {
+                n++;
+            }
+        }
         return n;
     }
 
