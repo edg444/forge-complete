@@ -1,0 +1,19 @@
+Name:The Good Time Sleuth
+ManaCost:3 W B
+Types:Legendary Creature Human?
+PT:3/3
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigExileTop | TriggerDescription$ When CARDNAME enters, exile the top card of your library and each nontoken creature you control in a face-down pile, shuffle that pile, then manifest those cards. Then create a Blood token for each face-down creature you control. Those creature gain "Sacrifice a Blood: Turn this creature face up." Secretly choose one of them. As that creature is turned face up, reveal the choice and it becomes a 5/5 black Demon.
+SVar:TrigExileTop:DB$ Dig | DigNum$ 1 | ChangeNum$ All | DestinationZone$ Exile | ExileFaceDown$ True | RememberChanged$ True | SubAbility$ DBExileCreatures
+SVar:DBExileCreatures:DB$ ChangeZoneAll | ChangeType$ Creature.!token+YouCtrl | Origin$ Battlefield | Destination$ Exile | ExileFaceDown$ True | RememberChanged$ True | SubAbility$ DBManifest
+SVar:DBManifest:DB$ Manifest | Defined$ Remembered | DefinedPlayer$ You | Shuffle$ True | SubAbility$ DBBlood
+SVar:DBBlood:DB$ Token | TokenScript$ c_a_blood_draw | TokenAmount$ X | SubAbility$ DBGain
+SVar:DBGain:DB$ AnimateAll | ValidCards$ Creature.faceDown+YouCtrl+IsRemembered | Abilities$ ABFaceUp | Duration$ Permanent | SubAbility$ DBChoose
+SVar:ABFaceUp:AB$ SetState | Cost$ Sac<1/Blood> | Defined$ Self | Mode$ TurnFaceUp | SpellDescription$ Turn this creature face up.
+SVar:DBChoose:DB$ ChooseCard | Choices$ Creature.faceDown+YouCtrl+IsRemembered | Secretly$ True | Mandatory$ True | ChoiceTitle$ Secretly choose one of them | SubAbility$ DBDemon
+# CR 205.1a: becoming a Demon replaces its creature types
+SVar:DBDemon:DB$ Effect | RememberObjects$ ChosenCard | StaticAbilities$ Demon | Duration$ Permanent | ForgetOnMoved$ Battlefield | ConditionDefined$ ChosenCard | ConditionPresent$ Card | SubAbility$ DBCleanup
+SVar:Demon:Mode$ Continuous | Affected$ Card.IsRemembered+faceUp | SetPower$ 5 | SetToughness$ 5 | SetColor$ Black | AddType$ Demon | RemoveCreatureTypes$ True | Description$ As the chosen creature is turned face up, it becomes a 5/5 black Demon.
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
+SVar:X:Count$Valid Creature.faceDown+YouCtrl
+DeckHas:Ability$Token & Type$Blood
+Oracle:When The Good Time Sleuth enters, exile the top card of your library and each nontoken creature you control in a face-down pile, shuffle that pile, then manifest those cards. Then create a Blood token for each face-down creature you control. Those creature gain "Sacrifice a Blood: Turn this creature face up." Secretly choose one of them. As that creature is turned face up, reveal the choice and it becomes a 5/5 black Demon.

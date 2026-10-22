@@ -1,0 +1,11 @@
+Name:The Actualizer
+ManaCost:1 B R
+Types:Legendary Creature Human Wizard
+PT:3/3
+T:Mode$ Phase | Phase$ Main1 | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigRead | TriggerDescription$ At the beginning of your first main phase, read aloud the name, mana cost, type line, power, and toughness of a card in your hand, except lie about one of them. Each opponent simultaneously guesses which one is incorrect. Then reveal the card. Each opponent who guessed incorrectly loses 3 life. You may discard that card and draw a card. (They can't look it up or ask for help as this ability is resolving. Nice try, though.)
+SVar:TrigRead:DB$ Actualize | SubAbility$ DBDiscard
+SVar:DBDiscard:DB$ Discard | Mode$ Defined | DefinedCards$ ChosenCard | Optional$ True | RememberDiscarded$ True | ConditionDefined$ ChosenCard | ConditionPresent$ Card | SubAbility$ DBDraw
+SVar:DBDraw:DB$ Draw | ConditionDefined$ Remembered | ConditionPresent$ Card | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
+DeckHas:Ability$Discard
+Oracle:At the beginning of your first main phase, read aloud the name, mana cost, type line, power, and toughness of a card in your hand, except lie about one of them. Each opponent simultaneously guesses which one is incorrect. Then reveal the card. Each opponent who guessed incorrectly loses 3 life. You may discard that card and draw a card. (They can't look it up or ask for help as this ability is resolving. Nice try, though.)

@@ -1,0 +1,14 @@
+Name:Need for Speed (Not the Odyssey One)
+ManaCost:3 R
+Types:Enchantment
+K:Start your engines
+S:Mode$ Continuous | Affected$ Creature.YouCtrl | AddKeyword$ Haste | CheckSVar$ X | SVarCompare$ GE1 | Description$ As long as your speed is 1 or higher, creatures you control have haste. The same is true for speed 2 and higher and trample, speed 3 or higher and first strike, and speed 4 and higher and super haste. (You may put a creature with super haste from your hand onto the battlefield tapped and attacking during your declare attackers step. You may pay its mana cost any time during your next turn. At the beginning of that turn's end step, if you haven't paid its mana cost, you lose the game. Wait. 4 and higher?)
+S:Mode$ Continuous | Affected$ Creature.YouCtrl | AddKeyword$ Trample | CheckSVar$ X | SVarCompare$ GE2 | Secondary$ True
+S:Mode$ Continuous | Affected$ Creature.YouCtrl | AddKeyword$ First Strike | CheckSVar$ X | SVarCompare$ GE3 | Secondary$ True
+# super haste only does anything from your hand, so creature cards in your hand get it (user ruling 2026-10-22)
+S:Mode$ Continuous | Affected$ Creature.YouOwn | AffectedZone$ Hand | AddAbility$ SuperHaste | CheckSVar$ X | SVarCompare$ GE4 | Secondary$ True
+SVar:SuperHaste:AB$ ChangeZone | Cost$ 0 | CostDesc$ | PrecostDesc$ Super haste — | Defined$ Self | Origin$ Hand | Destination$ Battlefield | Tapped$ True | Attacking$ True | ActivationZone$ Hand | PlayerTurn$ True | ActivationPhases$ Declare Attackers | AILogic$ SuperHaste | SubAbility$ DBDelay | SpellDescription$ Put this card from your hand onto the battlefield tapped and attacking. If you do, you lose the game at the beginning of your next turn's end step unless you pay this card's mana cost during that turn.
+SVar:DBDelay:DB$ DelayedTrigger | DelayedTriggerDefinedPlayer$ You | Mode$ Phase | Phase$ End of Turn | Execute$ TrigLose | TriggerDescription$ At the beginning of your next turn's end step, you lose the game unless you pay that card's mana cost during that turn.
+SVar:TrigLose:DB$ LosesGame | Defined$ You | UnlessCost$ DefinedCost_Self | UnlessPayer$ You
+SVar:X:Count$YourSpeed
+Oracle:Start your engines!\nAs long as your speed is 1 or higher, creatures you control have haste. The same is true for speed 2 and higher and trample, speed 3 or higher and first strike, and speed 4 and higher and super haste. (You may put a creature with super haste from your hand onto the battlefield tapped and attacking during your declare attackers step. You may pay its mana cost any time during your next turn. At the beginning of that turn's end step, if you haven't paid its mana cost, you lose the game. Wait. 4 and higher?)

@@ -177,6 +177,7 @@ Homunculus:Homunculi
 Horror:Horrors
 Horse:Horses
 Human:Humans
+Human?:Humans?
 Hydra:Hydras
 Hyena:Hyenas
 Igpay:Igpays

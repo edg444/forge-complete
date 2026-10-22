@@ -55,11 +55,16 @@ public class CostSacrifice extends CostPartWithList {
     @Override
     public int paymentOrder() { return 15; }
 
+    /** The type to sacrifice, with Slobad's creatures-and-artifacts-interchangeably applied for its payer. */
+    public String getTypeFor(final Player payer) {
+        return forge.game.staticability.StaticAbilitySacrificeInterchangeably.expand(getType(), payer, ";");
+    }
+
     @Override
     public Integer getMaxAmountX(SpellAbility ability, Player payer, final boolean effect) {
         final Card source = ability.getHostCard();
 
-        String type = getType();
+        String type = getTypeFor(payer);
         boolean differentNames = false;
         if (type.contains("+WithDifferentNames")) {
             type = type.replace("+WithDifferentNames", "");
@@ -137,7 +142,7 @@ public class CostSacrifice extends CostPartWithList {
         // You can always sac all
         if ("All".equalsIgnoreCase(getAmount())) {
             CardCollectionView typeList = activator.getCardsIn(ZoneType.Battlefield);
-            typeList = CardLists.getValidCards(typeList, getType().split(";"), activator, source, ability);
+            typeList = CardLists.getValidCards(typeList, getTypeFor(activator).split(";"), activator, source, ability);
             // it needs to check if everything can be sacrificed
             return typeList.allMatch(CardPredicates.canBeSacrificedBy(ability, effect));
         }

@@ -316,6 +316,22 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   (`UI_ZONE_TABS_LEFT`) is gone; upstream restored its own setting of that name (`UI_ALT_PLAYERZONETABS`), and the two
   showed with the same label. Hand, Library, Graveyard and Exile tabs are on the right edge, as upstream has them.
 
+- **Unknown Event: Need for Speed (Not the Odyssey One), Blu, Mansion Prince, Slobad, Actually Just Fine, The Octopus
+  Official, Syx, Robot Overlord, The Actualizer, The Good Time Sleuth, The Meld Hound, X, Mystery Racer (UNK
+  rares).**
+  - Need for Speed's super haste goes to creature cards in your hand, where it does something.
+  - Rooms can have a sealed door that can never be unlocked (`UnlockDoor Mode$ OnlyOne`: unlock the chosen door,
+    seal the other). CopyPermanent `ValidSupportedCopy$ Card.Room` picks among Rooms only.
+  - New static `SacrificeInterchangeably`: a sacrifice cost or effect asking for a creature takes an artifact too,
+    and the other way around.
+  - New effect `Tournament` (`Mode$ Announce` / `Advance`): a player's top-8 bracket of exiled piles.
+  - Syx: SVar `AsksInvaders` (names written down as the game begins, if it's your commander, and logged after the
+    game), card property `Invader`, new effect `GuessInvader`.
+  - New effect `Actualize`: read out a hand card with one lie (another real card's name, cost or type line, or a
+    different number); opponents guess at once.
+  - New effect `MeldIntoSpell`: the card melds with a creature spell (combined like Glurg) as a merged card, and a
+    spell's merged cards now go with it when it leaves the stack. The creature type `Human?` is added.
+
 - **Unknown Event: Chicago Loop, ______, The Playful Winners, Huge Truck, Split into Three Parts (UNK).**
   - Orange is a color (`MagicColor.ORANGE`, the color byte's top bit; `ColorSet` masks with `0xFF`), with the
     other Un-colors. New tokens: a 2/2 orange Bear with haste, a 3/1 green Dinosaur Skeleton with trample.

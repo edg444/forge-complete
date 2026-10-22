@@ -1,0 +1,16 @@
+Name:Syx, Robot Overlord
+ManaCost:U R
+Types:Legendary Artifact Creature Robot Rogue
+PT:2/2
+# the invaders are written down as the game begins (see GameAction) and revealed in the log after it
+SVar:AsksInvaders:5
+Text:Before this game begins, if this is your commander, secretly write down the name of five nonartifact creature cards in your deck to be invaders. Reveal them after the game.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigGuess | TriggerDescription$ At the beginning of your upkeep, target opponent may guess if a creature you control is an invader. If they guess right, exile that creature. If they guess wrong, they lose 3 life. Then you may reveal the name of an invader you control. If you do, put two +1/+1 counters on it. It becomes a Robot artifact creature.
+SVar:TrigGuess:DB$ GuessInvader | ValidTgts$ Opponent | SubAbility$ DBReveal
+SVar:DBReveal:DB$ ChooseCard | Choices$ Creature.YouCtrl+Invader | ChoiceOptional$ True | ChoiceTitle$ You may reveal the name of an invader you control | SubAbility$ DBCounters
+SVar:DBCounters:DB$ PutCounter | Defined$ ChosenCard | CounterType$ P1P1 | CounterNum$ 2 | SubAbility$ DBRobot
+# CR 205.1a: "becomes a Robot artifact creature" replaces its card types and creature types
+SVar:DBRobot:DB$ Animate | Defined$ ChosenCard | Types$ Artifact,Creature,Robot | RemoveCardTypes$ True | RemoveCreatureTypes$ True | Duration$ Permanent | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+DeckHas:Ability$Counters
+Oracle:Before this game begins, if this is your commander, secretly write down the name of five nonartifact creature cards in your deck to be invaders. Reveal them after the game.\nAt the beginning of your upkeep, target opponent may guess if a creature you control is an invader. If they guess right, exile that creature. If they guess wrong, they lose 3 life. Then you may reveal the name of an invader you control. If you do, put two +1/+1 counters on it. It becomes a Robot artifact creature.

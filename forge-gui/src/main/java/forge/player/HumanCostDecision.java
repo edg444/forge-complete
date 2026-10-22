@@ -1431,7 +1431,7 @@ public class HumanCostDecision extends CostDecisionMakerBase {
     @Override
     public PaymentDecision visit(final CostSacrifice cost) {
         final String amount = cost.getAmount();
-        String type = cost.getType();
+        String type = cost.getTypeFor(player);
 
         if (cost.payCostFromSource()) {
             if (source.getController() == ability.getActivatingPlayer() && source.canBeSacrificedBy(ability, isEffect()) &&

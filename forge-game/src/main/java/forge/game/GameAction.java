@@ -529,7 +529,8 @@ public class GameAction {
 
         // Handle merged permanent here so all replacement effects are already applied.
         CardCollection mergedCards = null;
-        if (fromBattlefield && !toBattlefield && c.hasMergedCard()) {
+        // The Meld Hound: a creature spell melded with another card takes it along wherever the spell goes, too
+        if ((fromBattlefield || zoneFrom != null && zoneFrom.is(ZoneType.Stack)) && !toBattlefield && c.hasMergedCard()) {
             mergedCards = new CardCollection(c.getMergedCards());
             // replace top card with copied card for correct name for human to choose
             mergedCards.set(mergedCards.indexOf(c), copied);
@@ -3194,6 +3195,33 @@ public class GameAction {
                 for (Card listed : takesAction.getController().chooseCardsForEffect(deck, sa,
                         "Secretly list " + n + " nonland cards in your deck for " + c, Math.min(n, deck.size()), n, false, null)) {
                     takesAction.addToSecretList(listed);
+                }
+            }
+            // Syx, Robot Overlord: as your commander, secretly write down that many nonartifact creature cards in your deck
+            // to be invaders (by name; the AI picks at random)
+            for (Card c : takesAction.getCardsIn(ZoneType.Command)) {
+                if (!c.isCommander() || !c.hasSVar("AsksInvaders")) {
+                    continue;
+                }
+                final java.util.Map<String, Card> byName = new java.util.TreeMap<>();
+                for (Card x : takesAction.getCardsIn(ZoneType.Library)) {
+                    if (x.isCreature() && !x.isArtifact()) {
+                        byName.putIfAbsent(x.getName(), x);
+                    }
+                }
+                final int n = Math.min(Integer.parseInt(c.getSVar("AsksInvaders")), byName.size());
+                final java.util.List<Card> picked = new java.util.ArrayList<>();
+                if (takesAction.getController().isAI()) {
+                    final java.util.List<Card> pool = new java.util.ArrayList<>(byName.values());
+                    java.util.Collections.shuffle(pool, forge.util.MyRandom.getRandom());
+                    picked.addAll(pool.subList(0, n));
+                } else {
+                    SpellAbility sa = new SpellAbility.EmptySa(ApiType.ChooseCard, c, takesAction);
+                    picked.addAll(takesAction.getController().chooseCardsForEffect(new CardCollection(byName.values()), sa,
+                            "Secretly write down " + n + " nonartifact creature cards in your deck to be invaders", n, n, false, null));
+                }
+                for (Card x : picked) {
+                    takesAction.getInvaderNames().add(x.getName());
                 }
             }
             // Mono Eminence (Theopholos): a commander's starting life bonus, if the deck's color identity is that one color

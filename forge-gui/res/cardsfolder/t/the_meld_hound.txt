@@ -1,0 +1,10 @@
+Name:The Meld Hound
+ManaCost:3 U B R
+Types:Legendary Creature Dog
+PT:4/4
+T:Mode$ SpellCast | ValidCard$ Creature | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigExile | TriggerDescription$ Whenever you cast a creature spell, exile cards from the top of your library until you exile a creature card. It melds with that spell. You may give the combined creature spell a new name. (The combined creature spell has the abilities and creature types of both creatures, their combined powers and toughnesses, and so on.)
+SVar:TrigExile:DB$ DigUntil | Valid$ Card.Creature | ValidDescription$ creature card | FoundDestination$ Exile | RevealedDestination$ Exile | RememberFound$ True | SubAbility$ DBMeld
+# the two cards are one from then on, and go everywhere together (MeldIntoSpell, user ruling 2026-10-22)
+SVar:DBMeld:DB$ MeldIntoSpell | Defined$ TriggeredCard | Melder$ Remembered | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Whenever you cast a creature spell, exile cards from the top of your library until you exile a creature card. It melds with that spell. You may give the combined creature spell a new name. (The combined creature spell has the abilities and creature types of both creatures, their combined powers and toughnesses, and so on.)

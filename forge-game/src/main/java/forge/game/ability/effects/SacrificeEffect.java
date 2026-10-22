@@ -129,7 +129,8 @@ public class SacrificeEffect extends SpellAbilityEffect {
                     }
                     choosenToSacrifice = chosenCards;
                 } else {
-                    CardCollectionView validTargets = AbilityUtils.filterListByType(battlefield, valid, sa);
+                    CardCollectionView validTargets = AbilityUtils.filterListByType(battlefield,
+                            forge.game.staticability.StaticAbilitySacrificeInterchangeably.expand(valid, p, ","), sa);
                     if (!destroy) {
                         validTargets = CardLists.filter(validTargets, CardPredicates.canBeSacrificedBy(sa, true));
                     }

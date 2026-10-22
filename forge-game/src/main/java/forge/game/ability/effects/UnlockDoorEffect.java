@@ -51,6 +51,21 @@ public class UnlockDoorEffect extends SpellAbilityEffect {
             case "ThisDoor":
                 c.unlockRoom(activator, sa.getCardStateName());
                 break;
+            case "OnlyOne": {
+                // Blu, Mansion Prince: the chosen door is unlocked, and the other one is gone for good
+                List<CardState> doors = c.getLockedRooms().stream().map(c::getState).collect(Collectors.toList());
+                CardState door = activator.getController().chooseSingleCardState(sa, doors, "Choose the door to unlock", params);
+                if (door == null) {
+                    continue;
+                }
+                for (CardStateName other : c.getLockedRooms()) {
+                    if (other != door.getStateName()) {
+                        c.sealRoom(other);
+                    }
+                }
+                c.unlockRoom(activator, door.getStateName());
+                break;
+            }
             case "Unlock":
                 List<CardState> states = c.getLockedRooms().stream().map(c::getState).collect(Collectors.toList());
 

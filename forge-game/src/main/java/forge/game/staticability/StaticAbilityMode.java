@@ -25,6 +25,8 @@ public enum StaticAbilityMode {
     CountersAreTokens,
     TokensAreCards,
     PoisonTolerance,
+    // Slobad, Actually Just Fine - see StaticAbilitySacrificeInterchangeably
+    SacrificeInterchangeably,
     // The Pleasant Taxer - see StaticAbilityActionTax
     ActionTax,
     ManaPaymentTax,

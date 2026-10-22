@@ -2437,6 +2437,15 @@ public class Player extends GameEntity implements Comparable<Player> {
         favoriteCardNames.add(s);
     }
 
+    // Syx, Robot Overlord: the invaders' names, written down as the game began
+    private final Set<String> invaderNames = new LinkedHashSet<>();
+    public final Set<String> getInvaderNames() {
+        return invaderNames;
+    }
+    public final boolean isInvader(final Card c) {
+        return invaderNames.stream().anyMatch(c::sharesNameWith);
+    }
+
     // The Fifth Alias: the cards secretly listed before the game began, by card id
     public final boolean isOnSecretList(final Card c) {
         return secretList.contains(c.getId());
@@ -3306,6 +3315,15 @@ public class Player extends GameEntity implements Comparable<Player> {
 
     // Blue Screen of Death: real time this player has held priority during their current turn
     private long priorityNanosThisTurn = 0;
+
+    // The Octopus Official: this player's active tournament, its piles of exiled cards (TournamentEffect)
+    private java.util.List<java.util.List<Card>> tournament = null;
+    public java.util.List<java.util.List<Card>> getTournament() {
+        return tournament;
+    }
+    public void setTournament(final java.util.List<java.util.List<Card>> piles) {
+        tournament = piles;
+    }
     public void addPriorityNanosThisTurn(final long nanos) {
         priorityNanosThisTurn += nanos;
     }

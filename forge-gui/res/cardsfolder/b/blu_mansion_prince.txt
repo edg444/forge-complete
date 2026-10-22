@@ -1,0 +1,15 @@
+Name:Blu, Mansion Prince
+ManaCost:3 U
+Types:Legendary Creature Human Noble
+PT:2/3
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigInvestigate | TriggerDescription$ Whenever this creature enters or attacks, investigate.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigInvestigate | Secondary$ True | TriggerDescription$ Whenever this creature enters or attacks, investigate.
+SVar:TrigInvestigate:DB$ Investigate
+T:Mode$ Sacrificed | ValidPlayer$ You | ValidCard$ Clue.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigRoom | TriggerDescription$ Whenever you sacrifice a Clue, choose a Room card at random. Create a token that's a copy of one of its halves, then unlock it. (There are currently 30 Room cards.)
+# a copy of one half: the chosen door is unlocked and the other one never can be (UnlockDoor Mode$ OnlyOne, user ruling
+# 2026-10-22)
+SVar:TrigRoom:DB$ CopyPermanent | ValidSupportedCopy$ Card.Room | RandomCopied$ True | RememberTokens$ True | SubAbility$ DBUnlock
+SVar:DBUnlock:DB$ UnlockDoor | Defined$ Remembered | Mode$ OnlyOne | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+DeckHas:Ability$Token|Sacrifice & Type$Clue|Artifact
+Oracle:Whenever this creature enters or attacks, investigate.\nWhenever you sacrifice a Clue, choose a Room card at random. Create a token that's a copy of one of its halves, then unlock it. (There are currently 30 Room cards.)

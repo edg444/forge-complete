@@ -1,0 +1,16 @@
+Name:X, Mystery Racer
+ManaCost:3 U B
+Types:Legendary Creature Human Spy
+PT:5/5
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | OptionalDecider$ You | Execute$ TrigGive | TriggerDescription$ When NICKNAME enters, you may put it into target opponent's hand. If you do, as long as it remains in their hand, that player can't cast NICKNAME and they play with their hand revealed.
+SVar:TrigGive:DB$ ChangeZone | Defined$ Self | Origin$ Battlefield | Destination$ Hand | HandOf$ Targeted | ValidTgts$ Opponent | RememberChanged$ True | SubAbility$ DBEffect
+# everything X does from their hand lives on this effect, which ends once X leaves that hand
+SVar:DBEffect:DB$ Effect | RememberObjects$ Remembered & Targeted | ExileOnMoved$ Hand | StaticAbilities$ CantCast,Revealed,Activate | Triggers$ TrigCrew | Duration$ Permanent | ConditionDefined$ Remembered | ConditionPresent$ Card.inZoneHand | SubAbility$ DBCleanup
+SVar:CantCast:Mode$ CantBeCast | ValidCard$ Card.IsRemembered | Description$ That player can't cast X.
+SVar:Revealed:Mode$ Continuous | Affected$ Card.ControlledBy Remembered | AffectedZone$ Hand | MayLookAt$ Player | Description$ They play with their hand revealed.
+SVar:Activate:Mode$ ActivateAsController | ValidCard$ Permanent.nonLand+OppCtrl | Activator$ You | PlayerTurn$ True | Description$ During your turn while X is in an opponent's hand, you may activate abilities of nonland permanents opponents control.
+SVar:TrigCrew:Mode$ AbilityCast | ValidSA$ Activated.Crew,Activated.Saddle | ValidActivatingPlayer$ You | ValidCard$ Permanent.OppCtrl | TriggerZones$ Command | Execute$ TrigSteal | TriggerDescription$ If you activate the crew or saddle ability of a permanent this way, gain control of it until end of turn. Untap it. It gains haste until end of turn.
+SVar:TrigSteal:DB$ GainControl | Defined$ TriggeredCard | LoseControl$ EOT | Untap$ True | AddKWs$ Haste
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Text:During your turn while X is in an opponent's hand, you may activate abilities of nonland permanents opponents control. If you activate the crew or saddle ability of a permanent this way, gain control of it until end of turn. Untap it. It gains haste until end of turn.
+Oracle:When X enters, you may put it into target opponent's hand. If you do, as long as it remains in their hand, that player can't cast X and they play with their hand revealed.\nDuring your turn while X is in an opponent's hand, you may activate abilities of nonland permanents opponents control. If you activate the crew or saddle ability of a permanent this way, gain control of it until end of turn. Untap it. It gains haste until end of turn.

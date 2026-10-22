@@ -136,6 +136,12 @@ public class Match {
 
         recordBank(game);
         recordTallyMarks(game);
+        // Syx, Robot Overlord: the invaders are revealed after the game
+        for (final Player p : game.getRegisteredPlayers()) {
+            if (!p.getInvaderNames().isEmpty()) {
+                game.getGameLog().add(forge.game.GameLogEntryType.INFORMATION, p + "'s invaders: " + String.join(", ", p.getInvaderNames()) + ".");
+            }
+        }
 
         // Typically ante, but also tearing up a blacker lotus
         executeOwnershipChanges(game);

@@ -243,6 +243,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     private Set<CardStateName> unlockedRooms = EnumSet.noneOf(CardStateName.class);
     private Map<CardStateName, SpellAbility> unlockAbilities = Maps.newEnumMap(CardStateName.class);
+    // Blu, Mansion Prince: a token copy of one half of a Room - its other door can never be unlocked
+    private Set<CardStateName> sealedRooms = EnumSet.noneOf(CardStateName.class);
 
     private boolean specialized;
 
@@ -9404,10 +9406,12 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         }
 
         if (isInPlay() && !isPhasedOut() && player.canCastSorcery()) {
-            if (getCurrentStateName() == CardStateName.RightSplit || getCurrentStateName() == CardStateName.EmptyRoom) {
+            if ((getCurrentStateName() == CardStateName.RightSplit || getCurrentStateName() == CardStateName.EmptyRoom)
+                    && !sealedRooms.contains(CardStateName.LeftSplit)) {
                 abilities.add(getUnlockAbility(CardStateName.LeftSplit));
             }
-            if (getCurrentStateName() == CardStateName.LeftSplit || getCurrentStateName() == CardStateName.EmptyRoom) {
+            if ((getCurrentStateName() == CardStateName.LeftSplit || getCurrentStateName() == CardStateName.EmptyRoom)
+                    && !sealedRooms.contains(CardStateName.RightSplit)) {
                 abilities.add(getUnlockAbility(CardStateName.RightSplit));
             }
         }
@@ -10128,6 +10132,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public Set<CardStateName> getLockedRooms() {
         Set<CardStateName> result = Sets.newHashSet(CardStateName.LeftSplit, CardStateName.RightSplit);
         result.removeAll(this.unlockedRooms);
+        result.removeAll(this.sealedRooms);
         return result;
     }
 
@@ -10141,8 +10146,15 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return result;
     }
 
+    public Set<CardStateName> getSealedRooms() {
+        return sealedRooms;
+    }
+    public void sealRoom(CardStateName stateName) {
+        sealedRooms.add(stateName);
+    }
+
     public boolean unlockRoom(Player p, CardStateName stateName) {
-        if (unlockedRooms.contains(stateName) || (stateName != CardStateName.LeftSplit && stateName != CardStateName.RightSplit)) {
+        if (unlockedRooms.contains(stateName) || sealedRooms.contains(stateName) || (stateName != CardStateName.LeftSplit && stateName != CardStateName.RightSplit)) {
             return false;
         }
         unlockedRooms.add(stateName);

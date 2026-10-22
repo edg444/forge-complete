@@ -158,6 +158,9 @@ public class CopyPermanentEffect extends TokenEffectBase {
                 if (StringUtils.containsIgnoreCase(valid, "creature")) {
                     cards = IterableUtil.filter(cards, PaperCardPredicates.IS_CREATURE);
                 }
+                if (StringUtils.containsIgnoreCase(valid, "room")) {
+                    cards = IterableUtil.filter(cards, pc -> pc.getRules().getMainPart().getType().hasSubtype("Room"));
+                }
                 if (StringUtils.containsIgnoreCase(valid, "equipment")) {
                     Predicate<PaperCard> cpp = PaperCardPredicates.fromRules(CardRulesPredicates.IS_EQUIPMENT);
                     cards = IterableUtil.filter(cards, cpp);

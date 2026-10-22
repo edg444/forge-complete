@@ -137,6 +137,11 @@ public class CardProperty {
             if (!createsToken(card)) {
                 return false;
             }
+        } else if (property.equals("Invader")) {
+            // Syx, Robot Overlord: named on the source's controller's invader list
+            if (sourceController == null || !sourceController.isInvader(card)) {
+                return false;
+            }
         } else if (property.equals("OnYourSecretList")) {
             if (sourceController == null || !sourceController.isOnSecretList(card)) {
                 return false;

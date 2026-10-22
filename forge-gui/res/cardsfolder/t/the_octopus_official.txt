@@ -1,0 +1,15 @@
+Name:The Octopus Official
+ManaCost:6 G U
+Types:Legendary Creature Octopus Insect
+PT:8/8
+K:Hexproof
+# the top 8 sit in exile in their piles (the player's tournament, TournamentEffect)
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigAnnounce | TriggerDescription$ When CARDNAME enters, if you didn't have an active tournament, announce the top 8. (Reveal cards from your library until you reveal eight nonland cards. Randomly distribute them into four two-card piles, like a tournament bracket. Put land cards on the bottom in a random order.)
+SVar:TrigAnnounce:DB$ Tournament | Mode$ Announce
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigAdvance | TriggerDescription$ At the beginning of your upkeep, randomly put a card from each pile into your hand. The other cards advance to the next round. If only one card remains, you may cast it without paying its mana cost four times.
+SVar:TrigAdvance:DB$ Tournament | Mode$ Advance | RememberChampion$ True | SubAbility$ DBCast
+# four times = the card itself, then three copies of it (user ruling 2026-10-22)
+SVar:DBCast:DB$ Play | Defined$ Remembered | ValidZone$ Exile | ValidSA$ Spell | WithoutManaCost$ True | Optional$ True | ConditionDefined$ Remembered | ConditionPresent$ Card | SubAbility$ DBCopies
+SVar:DBCopies:DB$ Play | Defined$ Remembered | ValidSA$ Spell | CopyCard$ True | ZoneRegardless$ True | Amount$ 3 | AllowRepeats$ True | WithoutManaCost$ True | Optional$ True | ConditionDefined$ Remembered | ConditionPresent$ Card | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Hexproof\nWhen The Octopus Official enters, if you didn't have an active tournament, announce the top 8. (Reveal cards from your library until you reveal eight nonland cards. Randomly distribute them into four two-card piles, like a tournament bracket. Put land cards on the bottom in a random order.)\nAt the beginning of your upkeep, randomly put a card from each pile into your hand. The other cards advance to the next round. If only one card remains, you may cast it without paying its mana cost four times.

@@ -580,7 +580,7 @@ public class AiCostDecision extends CostDecisionMakerBase {
         int c = cost.getAbilityAmount(ability);
 
         final AiController aic = ((PlayerControllerAi)player.getController()).getAi();
-        CardCollectionView list = aic.chooseSacrificeType(cost.getType(), ability, isEffect(), c, null);
+        CardCollectionView list = aic.chooseSacrificeType(cost.getTypeFor(player), ability, isEffect(), c, null);
         return list == null ? null : PaymentDecision.card(list);
     }
 
