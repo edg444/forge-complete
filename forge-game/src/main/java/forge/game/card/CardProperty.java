@@ -2752,6 +2752,12 @@ public class CardProperty {
             if (!source.hasChosenNumber() || CardPrintings.releaseYear(card) != source.getChosenNumber()) {
                 return false;
             }
+        } else if (property.equals("notKnownUnsigned")) {
+            // The Collector: signed, or not asked about yet (SignatureEffect asks when it resolves)
+            final String signer = forge.game.ability.effects.SignatureEffect.knownSigner(card);
+            if (signer != null && signer.isEmpty()) {
+                return false;
+            }
         } else if (property.equals("hasChosenWatermark")) {
             // The Faction Dragon: the chosen faction's watermark
             if (!source.hasChosenType() || card.getWatermarks().stream().noneMatch(source.getChosenType()::equalsIgnoreCase)) {

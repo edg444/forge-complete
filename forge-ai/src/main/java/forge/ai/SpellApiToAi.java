@@ -184,6 +184,7 @@ public enum SpellApiToAi {
             .put(ApiType.TreatCountersAs, TreatCountersAsAi.class)
             .put(ApiType.PutInZoneOf, MemoryTestAi.class)
             .put(ApiType.ChooseRandomPlane, AlwaysPlayAi.class)
+            .put(ApiType.Signature, SignatureAi.class)
             .put(ApiType.GuessWord, GuessWordAi.class)
             .put(ApiType.Haunt, HauntAi.class)
             .put(ApiType.HealDamage, AlwaysPlayAi.class)

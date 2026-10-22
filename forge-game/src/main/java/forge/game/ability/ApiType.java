@@ -178,6 +178,7 @@ public enum ApiType {
     TreatCountersAs (TreatCountersAsEffect.class),
     PutInZoneOf (PutInZoneOfEffect.class),
     ChooseRandomPlane (ChooseRandomPlaneEffect.class),
+    Signature (SignatureEffect.class),
     GuessWord (GuessWordEffect.class),
     Goad (GoadEffect.class),
     Haunt (HauntEffect.class),

@@ -377,7 +377,20 @@ public final class CardRules implements ICardCharacteristics {
         return hasKeyword("Legendary partner");
     }
 
+    /**
+     * Barce, Friend Finder: it and any other commander-eligible legend with a color identity of one color or less
+     * may be commanders together as though each had partner (user ruling 2026-10-22: only cards that could already be
+     * a commander).
+     */
+    public boolean findsFriends() {
+        return mainPart.getOracleText().contains("any other legend with one color identity or less as your commanders as though they each had partner");
+    }
+
     public boolean canBePartnerCommanders(CardRules b, boolean impliedPartnership) {
+        if (findsFriends() && canBeCommander() && b.canBeCommander() && b.getColorIdentity().countColors() <= 1
+                || b.findsFriends() && b.canBeCommander() && canBeCommander() && getColorIdentity().countColors() <= 1) {
+            return true;
+        }
         if (hasLegendaryPartner() && canBeCommander() && b.canBeCommanderIfLegendary()
                 || b.hasLegendaryPartner() && b.canBeCommander() && canBeCommanderIfLegendary()) {
             return true; // the other one is promoted to legendary
@@ -423,7 +436,9 @@ public final class CardRules implements ICardCharacteristics {
         if (!canBeCommander()) {
             return false;
         }
+        // Barce, Friend Finder can pair with any commander of one color or less, so those may be a second commander
         return hasKeyword("Partner") || !this.partnerWith.isEmpty() || !this.partnerType.isEmpty() || hasLegendaryPartner() ||
+                findsFriends() || getColorIdentity().countColors() <= 1 ||
                 hasKeyword("Choose a Background") || hasKeyword("Doctor's companion") || isDoctor();
     }
 

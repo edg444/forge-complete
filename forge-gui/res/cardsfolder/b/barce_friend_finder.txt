@@ -1,0 +1,14 @@
+Name:Barce, Friend Finder
+ManaCost:2 U
+Types:Legendary Creature Human Wizard
+PT:2/3
+# The partnering is in deck building (CardRules.findsFriends): only cards that could already be a commander, with a
+# color identity of one color or less (user ruling 2026-10-22)
+S:Mode$ Continuous | Affected$ Card.Self | Description$ You may play Barce and any other legend with one color identity or less as your commanders as though they each had partner.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Creature.Legendary+Other+YouCtrl | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigCommand | TriggerDescription$ Whenever another legendary creature you control dies, you may put it into your command zone. It replaces one of your commanders.
+SVar:TrigCommand:DB$ ChangeZone | Defined$ TriggeredNewCardLKICopy | Origin$ Graveyard | Destination$ Command | RememberChanged$ True | SubAbility$ DBChoose
+SVar:DBChoose:DB$ ChooseCard | Defined$ You | Choices$ Card.IsCommander+YouOwn | ChoiceZone$ Battlefield,Command,Graveyard,Exile,Hand,Library,Stack | Mandatory$ True | ChoiceTitle$ Choose the commander it replaces | ConditionDefined$ Remembered | ConditionPresent$ Card | SubAbility$ DBStop
+SVar:DBStop:DB$ StopBeingCommander | Defined$ ChosenCard | ConditionDefined$ Remembered | ConditionPresent$ Card | SubAbility$ DBBecome
+SVar:DBBecome:DB$ AlterAttribute | Defined$ Remembered | Attributes$ Commander | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
+Oracle:You may play Barce and any other legend with one color identity or less as your commanders as though they each had partner.\nWhenever another legendary creature you control dies, you may put it into your command zone. It replaces one of your commanders.

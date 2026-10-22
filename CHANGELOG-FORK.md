@@ -312,6 +312,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Barce, Friend Finder, The Collector (UNK mythics).**
+  - `CardRules.findsFriends`: Barce and another commander-eligible card of one color or less may be commanders
+    together as though each had partner (user ruling: only cards that could already be a commander).
+  - New effect `Signature`: who signed a physical card, asked of its owner the first time it matters and kept per copy
+    for the match; the AI's cards are unsigned (user ruling). Property `notKnownUnsigned`. `Mode$ DestroyByName`
+    destroys a creature whose name is within five letters' length of the discarded card's signer. A played signed
+    land is copied as a token (my call).
+
 - **Unknown Event: The Horizon Seeker, The Convincing General, The Faction Dragon, Polis the Planeshifter (UNK
   mythics); fix Red and Black Legac.**
   - `Count$DifferentNamedKeywords`: keyword abilities, ability words and keyword actions named in the rules text of
