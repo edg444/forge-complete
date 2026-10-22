@@ -56,15 +56,25 @@ public class BoosterGenerator {
         return cachedSheets.get(key);
     }
 
+    // null when there's nothing to make a foil of (an empty sheet), so a pack with no foil candidates gets no foil
     private static PaperCard generateFoilCard(PrintSheet sheet) {
-        PaperCard randomCard = sheet.random(1, true).get(0);
-        return randomCard.getFoiled();
+        final List<PaperCard> picked = sheet.random(1, true);
+        return picked.isEmpty() ? null : picked.get(0).getFoiled();
     }
 
     private static PaperCard generateFoilCard(List<PaperCard> cardList) {
+        if (cardList.isEmpty()) {
+            return null;
+        }
         Collections.shuffle(cardList, MyRandom.getRandom());
         PaperCard randomCard = cardList.get(0);
         return randomCard.getFoiled();
+    }
+
+    private static void addIfNotNull(final List<PaperCard> cards, final PaperCard card) {
+        if (card != null) {
+            cards.add(card);
+        }
     }
 
     public static PrintSheet tryGetStaticSheet(String sheetName) {
@@ -322,9 +332,9 @@ public class BoosterGenerator {
                             }
                         }
                         addCardsFromExtraSheet(foilCards, extraFoilSheetKey);
-                        result.add(generateFoilCard(foilCards));
+                        addIfNotNull(result, generateFoilCard(foilCards));
                     } else {
-                        result.add(generateFoilCard(ps));
+                        addIfNotNull(result, generateFoilCard(ps));
                     }
                 } else { // foilAtEndOfPack
                     if (!extraFoilSheetKey.isEmpty()) {
@@ -339,7 +349,7 @@ public class BoosterGenerator {
                             }
                         }
                         addCardsFromExtraSheet(foilCards, extraFoilSheetKey);
-                        foilCardGeneratedAndHeld.add(generateFoilCard(foilCards));
+                        addIfNotNull(foilCardGeneratedAndHeld, generateFoilCard(foilCards));
                     } else {
                         if (edition != null) {
                             if (edition.getName().equals("Vintage Masters")) {
@@ -350,14 +360,14 @@ public class BoosterGenerator {
                                 // match that.
                                 // If not special card, make it always foil.
                                 if ((MyRandom.getRandom().nextInt(30) == 1) || (!foilSlot.equals(BoosterSlots.SPECIAL))) {
-                                    foilCardGeneratedAndHeld.add(generateFoilCard(ps));
+                                    addIfNotNull(foilCardGeneratedAndHeld, generateFoilCard(ps));
                                 } else {
                                     // Otherwise it's not foil (even though this is the
                                     // foil slot!)
                                     result.addAll(ps.random(1, true));
                                 }
                             } else {
-                                foilCardGeneratedAndHeld.add(generateFoilCard(ps));
+                                addIfNotNull(foilCardGeneratedAndHeld, generateFoilCard(ps));
                             }
                         }
                     }
