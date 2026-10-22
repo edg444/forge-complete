@@ -3168,6 +3168,23 @@ public class GameAction {
                 }
                 c.setMarkedColors((ColorSet) colors);
             }
+            // Your Favorite Missing Character: "during deckbuilding" choices are made now and kept for the match
+            // (user ruling 2026-10-21); the AI picks to suit its deck
+            copies.clear();
+            final List<Card> missing = CardLists.filter(all, x -> x.hasSVar("AsksMissingCharacter") && !x.isInZone(ZoneType.Sideboard));
+            missing.sort(java.util.Comparator.comparingInt(Card::getId));
+            for (Card c : missing) {
+                final int copy = copies.merge(c.getName(), 1, Integer::sum);
+                final String key = "MissingCharacter:" + c.getName() + "#" + copy;
+                List<?> choices = takesAction.getMatchNote(key) instanceof List<?> noted ? noted : null;
+                if (choices == null) {
+                    choices = chooseMissingCharacter(takesAction, c);
+                    takesAction.setMatchNote(key, choices);
+                }
+                @SuppressWarnings("unchecked")
+                final List<String> types = (List<String>) choices.get(1);
+                c.writeMissingCharacter((ColorSet) choices.get(0), types, (String) choices.get(2), (String) choices.get(3));
+            }
             for (Card c : all) {
                 if (c.hasKeyword(Keyword.LEGACY) && c.getLegacyWord() == null && !c.isInZone(ZoneType.Sideboard)) {
                     writeLegacyWord(takesAction, c, all);
@@ -3175,6 +3192,53 @@ public class GameAction {
             }
             takesAction = game.getNextPlayerAfter(takesAction);
         } while (takesAction != first);
+    }
+
+    /** Your Favorite Missing Character's choices: [two colors, up to three creature types, a name, an ability SVar]. */
+    private static List<Object> chooseMissingCharacter(final Player p, final Card c) {
+        final String label = c.getTranslatedName() + ": ";
+        SpellAbility sa = new SpellAbility.EmptySa(ApiType.ChooseColor, c, p);
+        sa.putParam("AILogic", "MostProminentDualInComputerDeck");
+        final ColorSet colors = p.getController().chooseColors(label + "choose any two colors", sa, 2, 2, ColorSet.WUBRG);
+        final List<String> types = Lists.newArrayList();
+        final List<String> typeChoices = Lists.newArrayList(forge.card.CardType.getAllCreatureTypes());
+        sa = new SpellAbility.EmptySa(ApiType.ChooseType, c, p);
+        for (int i = 0; i < 3; i++) {
+            final String type = p.getController().chooseSomeType("Creature", sa, typeChoices, !p.isAI() || i > 0);
+            if (type == null) {
+                break;
+            }
+            types.add(type);
+            typeChoices.remove(type);
+            if (p.isAI() && i >= 1) {
+                break;
+            }
+        }
+        final String name = p.getController().guessString(new SpellAbility.EmptySa(ApiType.NameIt, c, p), label + "give it a new name");
+        final List<String> abilities = Arrays.asList(c.getSVar("AsksMissingCharacter").split(","));
+        String ability;
+        if (p.isAI()) {
+            // the ability its deck uses most: noncreature spells, Equipment, Sagas, else surveil every upkeep
+            final CardCollectionView deck = p.getAllCards();
+            if (CardLists.count(deck, x -> x.isEquipment()) >= 3) {
+                ability = abilities.get(2);
+            } else if (CardLists.count(deck, x -> x.getType().hasSubtype("Saga")) >= 2) {
+                ability = abilities.get(0);
+            } else if (CardLists.count(deck, x -> !x.isLand() && !x.isCreature()) >= 15) {
+                ability = abilities.get(3);
+            } else {
+                ability = abilities.get(1);
+            }
+        } else {
+            final Map<String, String> byText = Maps.newLinkedHashMap();
+            for (final String each : abilities) {
+                final String text = c.getSVar(each);
+                final int at = text.indexOf("Description$ ");
+                byText.put(at < 0 ? each : text.substring(at + "Description$ ".length()).split("\\|")[0].trim(), each);
+            }
+            ability = byText.get(p.getController().chooseSomeType("MissingAbility", sa, byText.keySet()));
+        }
+        return Lists.newArrayList(colors, types, name == null ? "" : name.trim(), ability);
     }
 
     /** The mana value from lo to hi that the fewest of the player's nonland cards have, the lowest on a tie. */

@@ -312,6 +312,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Your Favorite Missing Character (UNK).**
+  - SVar `AsksMissingCharacter:<ability SVars>`: as the game begins (user ruling) its owner picks two colors, up to
+    three creature types, a new name and one of the listed abilities, kept for the match and written onto the card
+    in every zone (`Card.writeMissingCharacter`); a `MissingStatic*` SVar is a static ability, the others triggers.
+    The AI picks its deck's two main colors and creature types, a made-up name, and the ability its deck uses most.
+
 - **Unknown Event: The Pleasant Taxer (UNK).**
   - New static mode `ActionTax` (`Action$ Search|Draw`, `ValidPlayer$`, `Amount$`): a library search, or a draw beyond
     the player's first each turn, is paid for each time or it doesn't happen (user ruling). The AI pays when it can.

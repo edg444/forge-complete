@@ -1,0 +1,17 @@
+Name:Your Favorite Missing Character
+ManaCost:3
+Types:Legendary Creature
+PT:2/2
+# The deckbuilding choices are made as the game begins and kept for the match (user ruling 2026-10-21); the chosen
+# ability is added to the card then (Card.writeMissingCharacter)
+SVar:AsksMissingCharacter:MissingTrigETB,MissingTrigUpkeep,MissingStaticEquip,MissingTrigCast
+S:Mode$ Continuous | Affected$ Card.Self | Description$ During deckbuilding, choose any two colors, up to three creature types, a new name, and one of the following abilities for this card to have.
+SVar:MissingTrigETB:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCounter | TriggerDescription$ When this creature enters, put a +1/+1 counter on target creature or a lore counter on target Saga you control.
+SVar:TrigCounter:DB$ PutCounter | ValidTgts$ Creature,Saga.YouCtrl | TgtPrompt$ Select target creature or Saga you control | CounterType$ P1P1 | CounterNum$ 1 | ConditionDefined$ Targeted | ConditionPresent$ Creature | SubAbility$ DBLore
+SVar:DBLore:DB$ PutCounter | Defined$ Targeted | CounterType$ LORE | CounterNum$ 1 | ConditionDefined$ Targeted | ConditionPresent$ Card.nonCreature
+SVar:MissingTrigUpkeep:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigSurveil | TriggerDescription$ At the beginning of your upkeep, surveil 1.
+SVar:TrigSurveil:DB$ Surveil | Amount$ 1
+SVar:MissingStaticEquip:Mode$ ReduceCost | ValidCard$ Card | ValidSpell$ Activated.Equip | Activator$ You | Amount$ 1 | Description$ Equip costs you pay cost {1} less.
+SVar:MissingTrigCast:Mode$ SpellCast | ValidCard$ Card.nonCreature | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDamage | TriggerDescription$ Whenever you cast a noncreature spell, this creature deals 1 damage to each opponent.
+SVar:TrigDamage:DB$ DealDamage | Defined$ Player.Opponent | NumDmg$ 1
+Oracle:During deckbuilding, choose any two colors, up to three creature types, a new name, and one of the following abilities for this card to have.\n• When this creature enters, put a +1/+1 counter on target creature or a lore counter on target Saga you control.\n• At the beginning of your upkeep, surveil 1.\n• Equip costs you pay cost {1} less.\n• Whenever you cast a noncreature spell, this creature deals 1 damage to each opponent.

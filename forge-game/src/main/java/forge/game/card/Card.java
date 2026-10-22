@@ -8419,6 +8419,32 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
 
     /**
+     * Your Favorite Missing Character: the two colors, creature types, name and one ability chosen during deckbuilding
+     * (as the game begins, user ruling 2026-10-21) become part of the card in every zone. The ability is one of the
+     * card's MissingTrig/MissingStatic SVars.
+     */
+    public void writeMissingCharacter(final ColorSet colors, final List<String> types, final String name, final String ability) {
+        for (final CardStateName stateName : getStates()) {
+            final CardState state = getState(stateName);
+            state.setColor(colors);
+            for (final String type : types) {
+                state.addType(type);
+            }
+            if (name != null && !name.isEmpty()) {
+                state.setName(name);
+            }
+            if (ability != null && hasSVar(ability)) {
+                if (ability.startsWith("MissingStatic")) {
+                    state.addStaticAbility(StaticAbility.create(getSVar(ability), this, state, true));
+                } else {
+                    state.addTrigger(TriggerHandler.parseTrigger(getSVar(ability), this, true, state));
+                }
+            }
+        }
+        updateStateForView();
+    }
+
+    /**
      * Goblin Haberdasher: what this card's controller answered when asked whether the creature it represents wears a
      * hat in its art (honor system, see GameAction.askHatInArt), or null if never asked. It's about the physical
      * card, so like a signature it follows the card into every zone.
