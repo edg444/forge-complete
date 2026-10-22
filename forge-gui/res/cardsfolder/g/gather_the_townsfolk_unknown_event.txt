@@ -1,0 +1,9 @@
+Name:Gather, the Townsfolk
+ManaCost:1 W
+Types:Sorcery
+# Spell commander: it can be your commander (the Limited partnering doesn't come up in Forge)
+K:CARDNAME can be your commander.
+A:SP$ Token | TokenAmount$ X | TokenScript$ w_1_1_human | TokenOwner$ You | SpellDescription$ Create two 1/1 white Human creature tokens. Fateful hour — If you have 5 or less life, create five of those tokens instead.
+SVar:X:Count$FatefulHour.5.2
+DeckHas:Ability$Token & Type$Human
+Oracle:Spell commander (This card can be your commander. In Limited, it can partner like other monocolored legends.)\nCreate two 1/1 white Human creature tokens.\nFateful hour — If you have 5 or less life, create five of those tokens instead.

@@ -1,0 +1,11 @@
+Name:Team Mage
+ManaCost:2 U
+Types:Creature Human Wizard
+PT:2/2
+SVar:AsksTeam:Race
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCloudspire | TriggerDescription$ When CARDNAME enters, search you library for an artifact card with mana value 4 or greater if you're on Team Cloudspire or an artifact card with mana value 3 or less if you're on Team Speed Demons. Reveal that card, put it into your hand, then shuffle.
+SVar:TrigCloudspire:DB$ ChangeZone | Origin$ Library | Destination$ Hand | ChangeType$ Artifact.cmcGE4 | ChangeTypeDesc$ artifact card with mana value 4 or greater | ChangeNum$ 1 | ConditionCheckSVar$ Cloudspire | ConditionSVarCompare$ EQ1 | SubAbility$ DBSpeedDemons
+SVar:DBSpeedDemons:DB$ ChangeZone | Origin$ Library | Destination$ Hand | ChangeType$ Artifact.cmcLE3 | ChangeTypeDesc$ artifact card with mana value 3 or less | ChangeNum$ 1 | ConditionCheckSVar$ SpeedDemons | ConditionSVarCompare$ EQ1
+SVar:Cloudspire:Count$RaceTeam.Cloudspire
+SVar:SpeedDemons:Count$RaceTeam.SpeedDemons
+Oracle:When Team Mage enters, search you library for an artifact card with mana value 4 or greater if you're on Team Cloudspire or an artifact card with mana value 3 or less if you're on Team Speed Demons. Reveal that card, put it into your hand, then shuffle.

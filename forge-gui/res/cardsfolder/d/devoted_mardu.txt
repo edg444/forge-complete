@@ -1,0 +1,9 @@
+Name:Devoted Mardu
+ManaCost:4 W
+Types:Creature Human Warrior
+PT:5/3
+K:Vigilance
+# Mobilize as the rules define it (whenever this creature attacks), not the reminder's "Whenever you attack"
+K:Mobilize:X
+SVar:X:Count$DevotionTriple.Red.White.Black
+Oracle:Vigilance\nMobilize X, where X is your devotion to Mardu. (Whenever you attack, create X tapped and attacking Mardudes (tapped and attacking 1/1 red Warrior creature tokens). Sacrifice them at the beginning of the next end step. I'm out of room. You remember what devotion does, right? Counts {R}, {W}, and {B}!)

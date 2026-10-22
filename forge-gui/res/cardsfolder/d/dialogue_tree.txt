@@ -1,0 +1,13 @@
+Name:Dialogue Tree
+ManaCost:U
+Types:Sorcery
+A:SP$ Scry | ScryNum$ 1 | SubAbility$ DBImmediate | SpellDescription$ Scry 1. When you do, choose one —
+SVar:DBImmediate:DB$ ImmediateTrigger | Execute$ TrigCharm | TriggerDescription$ When you do, choose one —
+SVar:TrigCharm:DB$ Charm | Choices$ DBDraw,DBExile
+SVar:DBDraw:DB$ Draw | SpellDescription$ Yes, I understand my mission. — Draw a card.
+# the reflexive trigger resolves after the spell, so the card is exiled from its graveyard
+SVar:DBExile:DB$ ChangeZone | Defined$ Self | Origin$ Graveyard | Destination$ Exile | RememberChanged$ True | SubAbility$ DBDelay | SpellDescription$ Could you repeat that again? — Exile CARDNAME. Return it to its owner's hand at the beginning of the next end step.
+SVar:DBDelay:DB$ DelayedTrigger | Mode$ Phase | Phase$ End of Turn | RememberObjects$ Remembered | Execute$ TrigReturn | ConditionDefined$ Remembered | ConditionPresent$ Card | SubAbility$ DBCleanup | TriggerDescription$ Return CARDNAME to its owner's hand at the beginning of the next end step.
+SVar:TrigReturn:DB$ ChangeZone | Defined$ DelayTriggerRememberedLKI | Origin$ Exile | Destination$ Hand
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Scry 1. When you do, choose one —\n• Yes, I understand my mission. — Draw a card.\n• Could you repeat that again? — Exile Dialogue Tree. Return it to its owner's hand at the beginning of the next end step.

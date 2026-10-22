@@ -2400,6 +2400,22 @@ public class AbilityUtils {
             }
             return doXMath(best, expr, c, ctb);
         }
+        // Xerex Squire: Count$HypotenuseOf <defined>, the square root of power² + toughness², rounded up
+        if (l[0].startsWith("HypotenuseOf ")) {
+            final CardCollection defined = getDefinedCards(c, l[0].substring("HypotenuseOf ".length()), ctb);
+            if (defined.isEmpty()) {
+                return doXMath(0, expr, c, ctb);
+            }
+            final Card each = defined.getFirst();
+            final double a = each.getNetPower(), b = each.getNetToughness();
+            return doXMath((int) Math.ceil(Math.sqrt(a * a + b * b) - 1e-9), expr, c, ctb);
+        }
+        // Rideable Mantis: Count$SaddledByThisTurn <valid>, the creatures that saddled it this turn, as they were
+        if (l[0].startsWith("SaddledByThisTurn ")) {
+            final CardCollection saddlers = c.getSaddledByThisTurn();
+            return doXMath(saddlers == null ? 0 : CardLists.getValidCards(saddlers, l[0].substring("SaddledByThisTurn ".length()),
+                    player != null ? player : c.getController(), c, ctb).size(), expr, c, ctb);
+        }
         // You and Ooze Army?: Count$CreatureTypesAmong <valid>. A creature with every creature type (a changeling)
         // adds none: "Don't count changelings. That would be ridiculous."
         if (l[0].startsWith("CreatureTypesAmong ")) {

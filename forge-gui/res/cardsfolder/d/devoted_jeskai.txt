@@ -1,0 +1,9 @@
+Name:Devoted Jeskai
+ManaCost:3 U
+Types:Creature Bird Monk
+PT:3/4
+K:Flying
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | OptionalDecider$ You | Execute$ TrigBounce | TriggerDescription$ When this creature enters, you may return target creature an opponent controls with mana value X or less to its owners hand, where X is your devotion to Jeskai. (Each {U}, {R}, or {W} in the mana costs of permanents you control counts towards your devotion to Jeskai.)
+SVar:TrigBounce:DB$ ChangeZone | Origin$ Battlefield | Destination$ Hand | ValidTgts$ Creature.OppCtrl+cmcLEX | TgtPrompt$ Select target creature an opponent controls with mana value X or less
+SVar:X:Count$DevotionTriple.Blue.Red.White
+Oracle:Flying\nWhen this creature enters, you may return target creature an opponent controls with mana value X or less to its owners hand, where X is your devotion to Jeskai. (Each {U}, {R}, or {W} in the mana costs of permanents you control counts towards your devotion to Jeskai.)

@@ -1,0 +1,11 @@
+Name:Tricky Mage
+ManaCost:2 U
+Types:Creature Human Wizard
+PT:2/2
+SVar:AsksTeam:Team
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigMirran | TriggerDescription$ When CARDNAME enters the battlefield, if you're on the Mirran team, search your library for an artifact card with mana value 2 or less, reveal it, put it into your hand, then shuffle. If you're on the Phyrexian team, search your library for an artifact card with mana value 6 or greater, reveal it, and put it into your hand, then shuffle.
+SVar:TrigMirran:DB$ ChangeZone | Origin$ Library | Destination$ Hand | ChangeType$ Artifact.cmcLE2 | ChangeTypeDesc$ artifact card with mana value 2 or less | ChangeNum$ 1 | ConditionCheckSVar$ Mirran | ConditionSVarCompare$ EQ1 | SubAbility$ DBPhyrexian
+SVar:DBPhyrexian:DB$ ChangeZone | Origin$ Library | Destination$ Hand | ChangeType$ Artifact.cmcGE6 | ChangeTypeDesc$ artifact card with mana value 6 or greater | ChangeNum$ 1 | ConditionCheckSVar$ Phyrexian | ConditionSVarCompare$ EQ1
+SVar:Mirran:Count$UnknownTeam.Mirran
+SVar:Phyrexian:Count$UnknownTeam.Phyrexian
+Oracle:When Tricky Mage enters the battlefield, if you're on the Mirran team, search your library for an artifact card with mana value 2 or less, reveal it, put it into your hand, then shuffle. If you're on the Phyrexian team, search your library for an artifact card with mana value 6 or greater, reveal it, and put it into your hand, then shuffle.

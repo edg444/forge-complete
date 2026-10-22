@@ -1,0 +1,11 @@
+Name:Xerex Squire
+ManaCost:2 U
+Types:Creature Human Knight
+PT:1/1
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigChoose | TriggerDescription$ Whenever CARDNAME attacks, calculate the hypotenuse of another creature you control. CARDNAME's power and toughness become equal to that number, rounded up, until end of turn. (To calculate a hypotenuse, let A be that creature's power and B be that creature's toughness. Then C = √(a² + b²). C is the hypotenuse. Or just look up a calculator online.)
+SVar:TrigChoose:DB$ ChooseCard | Choices$ Creature.Other+YouCtrl | ChoiceTitle$ Choose another creature you control | Mandatory$ True | AILogic$ BestCreature | SubAbility$ DBAnimate
+SVar:DBAnimate:DB$ Animate | Defined$ Self | Power$ X | Toughness$ X | ConditionDefined$ ChosenCard | ConditionPresent$ Card | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+SVar:X:Count$HypotenuseOf ChosenCard
+SVar:HasAttackEffect:TRUE
+Oracle:Whenever Xerex Squire attacks, calculate the hypotenuse of another creature you control. Xerex Squire's power and toughness become equal to that number, rounded up, until end of turn. (To calculate a hypotenuse, let A be that creature's power and B be that creature's toughness. Then C = √(a² + b²). C is the hypotenuse. Or just look up a calculator online.)

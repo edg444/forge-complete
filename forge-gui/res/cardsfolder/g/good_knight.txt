@@ -1,0 +1,12 @@
+Name:Good Knight
+ManaCost:W W
+Types:Creature Cat Knight
+PT:2/2
+K:First Strike
+SVar:AsksTeam:Team
+S:Mode$ CantBeCast | ValidCard$ Card.Self | Caster$ You | EffectZone$ All | CheckSVar$ Phyrexian | SVarCompare$ EQ1 | Description$ You can't cast CARDNAME if you're on the Phyrexian team.
+SVar:Phyrexian:Count$UnknownTeam.Phyrexian
+# scored as the game ends, on the match scoreboard (see Game.setGameOver)
+SVar:ScoresAtGameEnd:Mirran
+Text:If Good Knight is on the battlefield at the end of the game, score an additional point for the Mirran team.
+Oracle:First Strike\nYou can't cast Good Knight if you're on the Phyrexian team.\nIf Good Knight is on the battlefield at the end of the game, score an additional point for the Mirran team.

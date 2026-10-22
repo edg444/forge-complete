@@ -1,0 +1,8 @@
+Name:Clear, the Mind
+ManaCost:2 U
+Types:Sorcery
+# Spell commander: it can be your commander (the Limited partnering doesn't come up in Forge)
+K:CARDNAME can be your commander.
+A:SP$ ChangeZoneAll | ValidTgts$ Player | Origin$ Graveyard | Destination$ Library | ChangeType$ Card | Shuffle$ True | SubAbility$ DBDraw | SpellDescription$ Target player shuffles their graveyard into their library.
+SVar:DBDraw:DB$ Draw | SpellDescription$ Draw a card.
+Oracle:Spell commander (This card can be your commander. In Limited, it can partner like other monocolored legends.)\nTarget player shuffles their graveyard into their library.\nDraw a card.

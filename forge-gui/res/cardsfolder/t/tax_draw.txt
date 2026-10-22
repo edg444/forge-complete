@@ -1,0 +1,6 @@
+Name:Tax Draw
+ManaCost:3 U
+Types:Instant
+A:SP$ Draw | NumCards$ X | SpellDescription$ Draw cards equal to your highest commander tax among your commanders. (For example, if you've cast your one commander from your command zone twice, draw four cards.)
+SVar:X:Count$HighestCommanderTax
+Oracle:Draw cards equal to your highest commander tax among your commanders. (For example, if you've cast your one commander from your command zone twice, draw four cards.)

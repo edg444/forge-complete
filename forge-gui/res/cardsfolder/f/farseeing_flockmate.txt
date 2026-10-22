@@ -1,0 +1,13 @@
+Name:Farseeing Flockmate
+ManaCost:3 U
+Types:Creature Bird Wizard
+PT:3/2
+K:Flying
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigBackup | TriggerDescription$ Flying backup (When this creature enters the battlefield, put a flying counter on target creature. If that's another creature, it also gains the following ability until end of turn.)
+SVar:TrigBackup:DB$ PutCounter | ValidTgts$ Creature | TgtPrompt$ Select target creature | CounterType$ Flying | CounterNum$ 1 | SubAbility$ DBGain
+SVar:DBGain:DB$ Animate | Defined$ Targeted | Triggers$ SurveilTrig | ConditionDefined$ Targeted | ConditionPresent$ Card.Other
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player,Planeswalker,Battle | CombatDamage$ True | Execute$ TrigSurveil | TriggerZones$ Battlefield | TriggerDescription$ Whenever this creature deals combat damage to a player, planeswalker, or battle, surveil 1.
+SVar:SurveilTrig:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player,Planeswalker,Battle | CombatDamage$ True | Execute$ TrigSurveil | TriggerZones$ Battlefield | TriggerDescription$ Whenever this creature deals combat damage to a player, planeswalker, or battle, surveil 1.
+SVar:TrigSurveil:DB$ Surveil | Amount$ 1
+DeckHas:Ability$Counters|Surveil
+Oracle:Flying\nFlying backup (When this creature enters the battlefield, put a flying counter on target creature. If that's another creature, it also gains the following ability until end of turn.)\nWhenever this creature deals combat damage to a player, planeswalker, or battle, surveil 1.

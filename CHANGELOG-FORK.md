@@ -312,6 +312,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Tax Draw, Tax Sweeper, Tax Hounds, Clear, the Mind, Gather, the Townsfolk, Devoted Jeskai, Devoted
+  Mardu, Tricky Mage, Team Mage, Dialogue Tree, Good Knight, Rosewater's Nemesis, Echoing Echo, Out of Town, Brave
+  Falconhawk, Rideable Mantis, Xerex Squire, Farseeing Flockmate (UNK uncommons).**
+  - `Count$HypotenuseOf <defined>` (rounded up) and `Count$SaddledByThisTurn <valid>` (the saddlers as they were).
+  - Devoted Mardu's Mobilize is the keyword as the rules define it (whenever this creature attacks), not its
+    reminder's "Whenever you attack".
+  - Clear, the Mind and Gather, the Townsfolk are in `*_unknown_event.txt`.
+
 - **Unknown Event: Team Acceleration, Tax Keeper, Devoted Sultai, Arcbound Mamba, You and Ooze Army?, Rampant, Growth,
   Artist Alley, Mana Conference, Urza's Hot Dog Stand, Reflective Gate, Must Be Knights, Unclaimed Battle Axe, Devoted
   Temur, CGI Fight Sequence, Nevermind, Tax Bolt, Furnace Oriflamme, Across the Multiverse, Lava, Axe (UNK

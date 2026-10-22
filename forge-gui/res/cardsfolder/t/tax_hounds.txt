@@ -1,0 +1,7 @@
+Name:Tax Hounds
+ManaCost:2 W
+Types:Sorcery
+A:SP$ Token | TokenAmount$ X | TokenScript$ w_1_1_dog | SpellDescription$ Create X 1/1 white Dog creature tokens, where X is your highest commander tax among your commanders. (For example, if you've cast your one commander from your command zone twice, create four tokens.)
+SVar:X:Count$HighestCommanderTax
+DeckHas:Ability$Token & Type$Dog
+Oracle:Create X 1/1 white Dog creature tokens, where X is your highest commander tax among your commanders. (For example, if you've cast your one commander from your command zone twice, create four tokens.)

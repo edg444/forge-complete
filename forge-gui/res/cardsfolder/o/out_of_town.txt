@@ -1,0 +1,10 @@
+Name:Out of Town
+ManaCost:W
+Types:Enchantment
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigExile | TriggerDescription$ When this enchantment enters, exile target creature an opponent controls until this enchantment leaves the battlefield.
+SVar:TrigExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls | Duration$ UntilHostLeavesPlay | RememberChanged$ True
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Town.ControlledBy RememberedOwner | TriggerZones$ Battlefield | IsPresent$ Card.IsRemembered | PresentZone$ Exile | Execute$ TrigSac | TriggerDescription$ When a Town controlled by the owner of the exiled card enters, sacrifice this enchantment.
+SVar:TrigSac:DB$ Sacrifice | SacValid$ Self
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Static$ True | Execute$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:When this enchantment enters, exile target creature an opponent controls until this enchantment leaves the battlefield.\nWhen a Town controlled by the owner of the exiled card enters, sacrifice this enchantment.

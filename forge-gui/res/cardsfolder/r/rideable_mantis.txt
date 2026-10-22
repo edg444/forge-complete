@@ -1,0 +1,14 @@
+Name:Rideable Mantis
+ManaCost:2 W
+Types:Creature Insect Mount
+PT:3/3
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigFlying | TriggerDescription$ Whenever CARDNAME attacks, it gains flying until end of turn if it was saddled by a blue creature this turn. It gains trample until end of turn if it was saddled by a red creature this turn. If it was saddled by a white creature this turn, untap it.
+SVar:TrigFlying:DB$ Pump | Defined$ Self | KW$ Flying | ConditionCheckSVar$ Blue | ConditionSVarCompare$ GE1 | SubAbility$ DBTrample
+SVar:DBTrample:DB$ Pump | Defined$ Self | KW$ Trample | ConditionCheckSVar$ Red | ConditionSVarCompare$ GE1 | SubAbility$ DBUntap
+SVar:DBUntap:DB$ Untap | Defined$ Self | ConditionCheckSVar$ White | ConditionSVarCompare$ GE1
+SVar:Blue:Count$SaddledByThisTurn Card.Blue
+SVar:Red:Count$SaddledByThisTurn Card.Red
+SVar:White:Count$SaddledByThisTurn Card.White
+K:Saddle:1
+SVar:HasAttackEffect:TRUE
+Oracle:Whenever Rideable Mantis attacks, it gains flying until end of turn if it was saddled by a blue creature this turn. It gains trample until end of turn if it was saddled by a red creature this turn. If it was saddled by a white creature this turn, untap it.\nSaddle 1

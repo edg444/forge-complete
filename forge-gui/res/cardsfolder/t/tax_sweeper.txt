@@ -1,0 +1,6 @@
+Name:Tax Sweeper
+ManaCost:2 B
+Types:Sorcery
+A:SP$ PumpAll | ValidCards$ Creature | NumAtt$ -X | NumDef$ -X | IsCurse$ True | SpellDescription$ Creatures get -X/-X until end of turn, where X is your highest commander tax among your commanders. (For example, if you've cast your one commander from your command zone twice, creatures get -4/-4 until end of turn.)
+SVar:X:Count$HighestCommanderTax
+Oracle:Creatures get -X/-X until end of turn, where X is your highest commander tax among your commanders. (For example, if you've cast your one commander from your command zone twice, creatures get -4/-4 until end of turn.)
