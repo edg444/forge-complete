@@ -315,6 +315,8 @@ public class TokenInfo {
 
         if (sa.hasParam("TokenColors")) {
             String colors = sa.getParam("TokenColors");
+            // The Tokenator: every chosen color
+            colors = colors.replace("ChosenColors", String.join(",", host.getChosenColors()));
             colors = colors.replace("ChosenColor", host.getChosenColor());
             result.setColor(colors.split(","));
         }

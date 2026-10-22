@@ -312,6 +312,21 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: The Kami Knight, Bobby, Another Dwarf, Fioran Reformist, Azorius Traffic Enforcement, The
+  Tokenator, Third Stage of Magic Design, Naming Screen, Hosting Season, The Miniaturizer (UNK white rares).**
+  - New static `CantBeGoaded` (`ValidCard$`), read by `Card.addGoad`.
+  - DisableTriggers `KeywordTrigger$ <keyword>`: only that keyword's triggers ("backup abilities").
+  - BecomeMonarch `Abolish$ True`: no one is the monarch. Player property `withMostCreatures` (more than each
+    other player). Democracy is its two parts on the card, so two Reformists draw twice (my call).
+  - Card properties `rulesTextOrTypeHasChosenWord`, `doesNotShareNameWith OtherYourCreatures`. AI ChooseType logics
+    `MostWordMatches` (the word on the most of its nonland permanents and graveyard cards) and `UniqueName`.
+  - Animate `Name$ ChosenType`. TokenColors `ChosenColors` (every chosen color). AI ChooseNumber `AILogic$ Half`.
+  - `Count$DateIs.<yyyy-mm-dd>,...` (the device's date).
+  - Copy `RemoveCreatureType$ True` (keeps its other card types); `ThisManaCost` in an added keyword is the copy's
+    mana cost. Token script `c_2_2_nameless` (its name is taken away as it's made).
+  - Fix: Second Stage of Magic Design missed ability words after an Oracle text's first line (now
+    `Card.hasKeywordOrAbilityWord`).
+
 - **Unknown Event: Second Stage of Magic Design, Untap, Upkeep, Draw, The Countering Runner, The Fearsome Flock,
   Lorthos, Tentacled Terror, The Fish Brewer, Fourth Stage of Magic Design (UNK blue rares).**
   - Card properties `unsharedKeywordOrAbilityWord` (keyword abilities a card has plus ability words it's printed

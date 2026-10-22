@@ -1,0 +1,14 @@
+Name:The Miniaturizer
+ManaCost:4 W
+Types:Legendary Creature Human Artificer
+PT:5/5
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSoospect | TriggerDescription$ When CARDNAME enters the battlefield, soospect up to one target creature. (It gains first strike and can't block. This is different than suspecting.)
+SVar:TrigSoospect:DB$ Animate | ValidTgts$ Creature | TargetMin$ 0 | TargetMax$ 1 | TgtPrompt$ Select up to one target creature to soospect | Keywords$ First Strike | staticAbilities$ SoospectCantBlock | Duration$ Permanent
+SVar:SoospectCantBlock:Mode$ CantBlock | ValidCard$ Card.Self | Description$ CARDNAME can't block.
+# the equip cost is written in as the copy is made (ThisManaCost); X is the power the copy has from the card, which a
+# noncreature only has as its base power
+A:AB$ CopyPermanent | Cost$ 4 W ExileFromGrave<1/Creature> | Defined$ Exiled | RemoveCreatureType$ True | AddTypes$ Artifact & Equipment | AddKeywords$ Equip:ThisManaCost | AddStaticAbilities$ EquipPump | AddSVars$ X | SpellDescription$ Create a token that's a copy of the exiled card, except it's an Equipment artifact token instead of a creature. Its equip cost is equal to its mana cost, and it has "Equipped creature gets +X/+X, where X is this card's power."
+SVar:EquipPump:Mode$ Continuous | Affected$ Creature.EquippedBy | AddPower$ X | AddToughness$ X | Description$ Equipped creature gets +X/+X, where X is this card's power.
+SVar:X:Count$CardBasePower
+DeckHas:Ability$Token
+Oracle:When The Miniaturizer enters the battlefield, soospect up to one target creature. (It gains first strike and can't block. This is different than suspecting.)\n{4}{W}, Exile a creature card from your graveyard: Create a token that's a copy of the exiled card, except it's an Equipment artifact token instead of a creature. Its equip cost is equal to its mana cost, and it has "Equipped creature gets +X/+X, where X is this card's power."

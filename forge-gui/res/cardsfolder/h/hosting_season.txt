@@ -1,0 +1,15 @@
+Name:Hosting Season
+ManaCost:4 W
+Types:Enchantment
+# the device's date; on any other day than these three, both abilities apply
+T:Mode$ SpellCast | ValidCard$ Card.IsCommander+YouOwn | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | CheckSVar$ TokenDays | SVarCompare$ EQ0 | Execute$ TrigCopy | TriggerDescription$ While it's October 25th, 2024, whenever you cast your commander, create a token that's a copy of it except it isn't legendary.
+SVar:TrigCopy:DB$ CopyPermanent | Defined$ TriggeredCard | NonLegendary$ True
+R:Event$ CreateToken | ActiveZones$ Battlefield | ValidToken$ Card.YouCtrl | CheckSVar$ CommanderDay | SVarCompare$ EQ0 | ReplaceWith$ DoubleToken | Description$ While it's October 26th or 27th, 2024, if one or more tokens would be created under your control, instead twice that many tokens are created and each of them enters with a +1/+1 counter on it.
+SVar:DoubleToken:DB$ ReplaceToken | Type$ Amount
+R:Event$ Moved | ActiveZones$ Battlefield | Destination$ Battlefield | ValidCard$ Card.token+YouCtrl | CheckSVar$ CommanderDay | SVarCompare$ EQ0 | ReplaceWith$ DBCounter | ReplacementResult$ Updated | Secondary$ True | Description$ Each of them enters with a +1/+1 counter on it.
+SVar:DBCounter:DB$ PutCounter | Defined$ ReplacedCard | CounterType$ P1P1 | CounterNum$ 1 | ETB$ True
+S:Mode$ Continuous | Affected$ Card.Self | Description$ On any other date, both abilities apply. (Because why not?)
+SVar:CommanderDay:Count$DateIs.2024-10-25
+SVar:TokenDays:Count$DateIs.2024-10-26,2024-10-27
+DeckHas:Ability$Token & Ability$Counters
+Oracle:While it's October 25th, 2024, whenever you cast your commander, create a token that's a copy of it except it isn't legendary.\nWhile it's October 26th or 27th, 2024, if one or more tokens would be created under your control, instead twice that many tokens are created and each of them enters with a +1/+1 counter on it.\nOn any other date, both abilities apply. (Because why not?)

@@ -1,0 +1,13 @@
+Name:Naming Screen
+ManaCost:4 W W
+Types:Enchantment
+R:Event$ Moved | ActiveZones$ Battlefield | Destination$ Battlefield | ValidCard$ Creature.token+YouCtrl | ReplaceWith$ DBChooseName | ReplacementResult$ Updated | Description$ As a creature token you control enters, name it using up to four letters. (It keeps its types. It just has a new name. Remember this is a family event.)
+# the AI gives each token a name none of its creatures has
+SVar:DBChooseName:DB$ ChooseType | Type$ name | Chooser$ You | FreeInput$ True | MaxLetters$ 4 | ChoiceTitle$ Name the token using up to four letters | ValidTypes$ Ada,Bo,Cat,Dot,Eve,Fig,Gus,Hal,Ivy,Jo,Kit,Lu,Max,Ned,Oz,Pip,Quin,Rex,Sam,Tia,Uma,Val,Wes,Xia,Yuri,Zed,Abe,Bea,Cy,Dee,Eli,Flo,Gil,Hob,Ike,Jem,Kai,Lev,Mo,Nia | AILogic$ UniqueName | SubAbility$ DBName
+SVar:DBName:DB$ Animate | Defined$ ReplacedCard | Name$ ChosenType | Duration$ Permanent | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenType$ True
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When this enchantment enters, create four 1/1 colorless Hero tokens.
+SVar:TrigToken:DB$ Token | TokenAmount$ 4 | TokenScript$ c_1_1_hero
+S:Mode$ Continuous | Affected$ Creature.YouCtrl+doesNotShareNameWith OtherYourCreatures | AddPower$ 1 | AddToughness$ 1 | Description$ Each creature you control that doesn't share a name with any other creature you control gets +1/+1.
+DeckHas:Ability$Token
+Oracle:As a creature token you control enters, name it using up to four letters. (It keeps its types. It just has a new name. Remember this is a family event.)\nWhen this enchantment enters, create four 1/1 colorless Hero tokens.\nEach creature you control that doesn't share a name with any other creature you control gets +1/+1.

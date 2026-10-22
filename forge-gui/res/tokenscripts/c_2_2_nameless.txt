@@ -1,0 +1,6 @@
+Name:Creature Token
+ManaCost:no cost
+Colors:colorless
+Types:Creature
+PT:2/2
+Oracle:

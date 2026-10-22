@@ -630,6 +630,13 @@ public class CardFactory {
             if (cause.hasParam("RemoveCardTypes")) {
                 state.removeCardTypes(cause.hasParam("RemoveSubTypes"));
             }
+            // The Miniaturizer: "an Equipment artifact token instead of a creature" - it keeps its other card types
+            if (cause.hasParam("RemoveCreatureType")) {
+                final CardType noCreature = new CardType(state.getType());
+                noCreature.remove("Creature");
+                noCreature.sanisfySubtypes();
+                state.setType(noCreature);
+            }
 
             state.addType(types);
 
@@ -641,6 +648,10 @@ public class CardFactory {
             if (KWifNew) {
                 finalizedKWs = keywords.stream().filter(k -> !state.hasIntrinsicKeyword(Keyword.getInstance(k).getKeyword())).collect(Collectors.toList());
             }
+            // "ThisManaCost" in an added keyword is the copy's own mana cost (The Miniaturizer's equip cost)
+            final String ownCost = state.getManaCost().isNoCost() ? "0"
+                    : state.getManaCost().getShortString().replace("{", "").replace("}", "");
+            finalizedKWs = finalizedKWs.stream().map(k -> k.replace("ThisManaCost", ownCost)).collect(Collectors.toList());
             state.addIntrinsicKeywords(finalizedKWs);
             for (String kw : removeKeywords) {
                 state.removeIntrinsicKeyword(kw);

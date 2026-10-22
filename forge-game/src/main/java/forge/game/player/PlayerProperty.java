@@ -450,6 +450,15 @@ public class PlayerProperty {
                     return false;
                 }
             }
+            else if (kind.equals("Creatures")) {
+                // Fioran Reformist's democracy: more creatures than each other player
+                final int mine = player.getCreaturesInPlay().size();
+                for (final Player p : game.getPlayers()) {
+                    if (!p.equals(player) && p.getCreaturesInPlay().size() >= mine) {
+                        return false;
+                    }
+                }
+            }
             else if (kind.equals("CardsInHand")) {
                 int largestHand = 0;
                 Player withLargestHand = null;

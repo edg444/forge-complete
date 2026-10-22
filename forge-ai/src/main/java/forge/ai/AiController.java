@@ -2029,6 +2029,9 @@ public class AiController {
             }
         } else if ("Min".equals(logic)) {
             return min;
+        } else if ("Half".equals(logic)) {
+            // The Tokenator: a power out of a total, the rest its toughness - no more power than toughness
+            return Math.max(min, max / 2);
         } else if ("RememberedRulesLines".equals(logic)) {
             // Alexander Clamilton, when the revealed card's lines couldn't be read off its image: each Oracle
             // paragraph with rules text is at least one printed line, so that's a count the AI can stand behind

@@ -1,0 +1,12 @@
+Name:Fioran Reformist
+ManaCost:2 W
+Types:Creature Human Advisor
+PT:3/3
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | CheckSVar$ HasMonarch | SVarCompare$ GE1 | Execute$ TrigAbolish | TriggerDescription$ When CARDNAME enters the battlefield, if a player is the monarch, get rid of the monarchy.
+SVar:TrigAbolish:DB$ BecomeMonarch | Abolish$ True | StackDescription$ Get rid of the monarchy.
+SVar:HasMonarch:PlayerCountPlayers$HasPropertyisMonarch
+# Democracy, while it's on the battlefield
+T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ Player.withMostCreatures | TriggerZones$ Battlefield | Execute$ TrigDraw | Secondary$ True | TriggerDescription$ Democracy — At the beginning of each player's end step, if they control more creatures than each other player, they draw a card.
+SVar:TrigDraw:DB$ Draw | Defined$ TriggeredPlayer | NumCards$ 1
+S:Mode$ CantBecomeMonarch | ValidPlayer$ Player | Description$ Democracy is in effect until CARDNAME leaves the battlefield. (At the beginning of each player's end step, if they control more creatures than each other player, they draw a card. Players can't become the monarch.)
+Oracle:When Fioran Reformist enters the battlefield, if a player is the monarch, get rid of the monarchy.\nDemocracy is in effect until Fioran Reformist leaves the battlefield. (At the beginning of each player's end step, if they control more creatures than each other player, they draw a card. Players can't become the monarch.)

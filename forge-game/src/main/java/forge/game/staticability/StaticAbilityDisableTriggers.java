@@ -66,6 +66,12 @@ public class StaticAbilityDisableTriggers {
             }
         }
 
+        // Azorius Traffic Enforcement: only the triggers of a keyword ("backup abilities")
+        if (stAb.hasParam("KeywordTrigger") && (regtrig.getKeyword() == null
+                || !regtrig.getKeyword().getKeyword().toString().equalsIgnoreCase(stAb.getParam("KeywordTrigger")))) {
+            return false;
+        }
+
         if (trigMode.equals(TriggerType.ChangesZone)) {
             // Cause of the trigger – the card changing zones
             Card moved = (Card) runParams.get(AbilityKey.Card);

@@ -2578,6 +2578,39 @@ public class ComputerUtil {
             }
             return best;
         }
+        if ("UniqueName".equals(logic)) {
+            // Naming Screen: a name none of its creatures has yet
+            for (final String name : validTypes) {
+                if (!ai.getCreaturesInPlay().anyMatch(c -> c.getName().equalsIgnoreCase(name))) {
+                    return name;
+                }
+            }
+            return Aggregates.random(validTypes);
+        }
+        if ("MostWordMatches".equals(logic)) {
+            // Third Stage of Magic Design: the word of four or more letters on the most of its nonland permanents and
+            // nonland cards in its graveyard, from the words those cards have
+            final CardCollection among = CardLists.filter(ai.getCardsIn(ZoneType.Battlefield), c -> !c.isLand());
+            among.addAll(CardLists.filter(ai.getCardsIn(ZoneType.Graveyard), c -> !c.isLand()));
+            final java.util.Set<String> words = new java.util.LinkedHashSet<>();
+            for (final Card c : among) {
+                for (final String w : (c.getTextBoxOracle() + " " + c.getType()).split("[^A-Za-z]+")) {
+                    if (w.length() >= 4) {
+                        words.add(w.toLowerCase());
+                    }
+                }
+            }
+            String best = Iterables.getFirst(validTypes, "");
+            int most = 0;
+            for (final String w : words) {
+                final int n = CardLists.count(among, c -> forge.game.card.CardProperty.rulesTextOrTypeHasWord(c, w));
+                if (n > most) {
+                    most = n;
+                    best = w;
+                }
+            }
+            return best;
+        }
         if (kindOfType.equals("Character")) {
             // Vorthos: the character on the most of the spells it still has to cast
             final List<java.util.Set<String>> spells = Lists.newArrayList();

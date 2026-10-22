@@ -201,6 +201,9 @@ public enum StaticAbilityMode {
     // StaticAbilityActivateAsController - The Fearsome Flock
     ActivateAsController,
 
+    // StaticAbilityCantBeGoaded - The Kami Knight
+    CantBeGoaded,
+
     // StaticAbilityCastWithFlash
     CastWithFlash,
 

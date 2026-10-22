@@ -1,0 +1,8 @@
+Name:Azorius Traffic Enforcement
+ManaCost:2 W
+Types:Creature Human Soldier
+PT:2/3
+S:Mode$ DisableTriggers | ValidCause$ Creature.OppCtrl | ValidMode$ ChangesZone,ChangesZoneAll | Destination$ Battlefield | KeywordTrigger$ Backup | Description$ Creatures opponents control entering the battlefield don't cause backup abilities to trigger.
+T:Mode$ Phase | Phase$ BeginCombat | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDetain | TriggerDescription$ At the beginning of your combat step, detain target creature with backup or vehicle an opponent controls. (Until your next turn, that permanent can't attack or block and its activated abilities can't be activated.)
+SVar:TrigDetain:DB$ Detain | ValidTgts$ Creature.withBackup+OppCtrl,Vehicle.OppCtrl | TgtPrompt$ Select target creature with backup or Vehicle an opponent controls
+Oracle:Creatures opponents control entering the battlefield don't cause backup abilities to trigger.\nAt the beginning of your combat step, detain target creature with backup or vehicle an opponent controls. (Until your next turn, that permanent can't attack or block and its activated abilities can't be activated.)

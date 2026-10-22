@@ -1,0 +1,7 @@
+Name:The Kami Knight
+ManaCost:2 W
+Types:Legendary Creature Spirit Warrior
+PT:3/3
+S:Mode$ ShareAttachments | ValidAttachment$ Equipment | Affected$ Creature.Other+YouCtrl | Description$ Other creatures you control gain all bonuses conferred by equipment attached to this creature.
+S:Mode$ CantBeGoaded | ValidCard$ Creature.YouCtrl | Description$ Creatures you control can't be goaded.
+Oracle:Other creatures you control gain all bonuses conferred by equipment attached to this creature.\nCreatures you control can't be goaded.

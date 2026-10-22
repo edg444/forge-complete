@@ -193,8 +193,10 @@ public class AnimateEffect extends AnimateEffectBase {
                 // doesn't have to be known when the script is written
                 final List<String> named = source.getNamedCards();
                 // Name$ Nameless: it loses its name (Fear of Forgetting Names)
+                // Name$ ChosenType: the word just written down (Naming Screen)
                 gameCard.addChangedName("ChosenName".equals(name) && !named.isEmpty()
-                        ? named.get(named.size() - 1) : "Nameless".equals(name) ? "" : name, false, timestamp, 0);
+                        ? named.get(named.size() - 1) : "Nameless".equals(name) ? ""
+                        : "ChosenType".equals(name) && source.hasChosenType() ? source.getChosenType() : name, false, timestamp, 0);
             }
 
             // give sVars

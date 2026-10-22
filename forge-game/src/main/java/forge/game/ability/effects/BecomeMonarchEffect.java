@@ -26,6 +26,16 @@ public class BecomeMonarchEffect extends SpellAbilityEffect {
         // TODO: improve ai and fix corner cases
         final String set = sa.getOriginalHost().getSetCode();
 
+        // Fioran Reformist: "get rid of the monarchy" - no one is the monarch
+        if (sa.hasParam("Abolish")) {
+            final forge.game.Game game = sa.getHostCard().getGame();
+            if (game.getMonarch() != null) {
+                game.getMonarch().removeMonarchEffect();
+                game.setMonarch(null);
+            }
+            return;
+        }
+
         for (final Player p : getTargetPlayers(sa)) {
             if (!p.isInGame()) {
                 continue;

@@ -9720,6 +9720,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
 
     public final void addGoad(Long timestamp, final Player p) {
+        if (forge.game.staticability.StaticAbilityCantBeGoaded.cantBeGoaded(this)) {
+            return;
+        }
         goad.put(timestamp, p);
         updateAbilityTextForView();
     }

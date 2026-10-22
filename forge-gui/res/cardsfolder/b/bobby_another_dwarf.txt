@@ -1,0 +1,8 @@
+Name:Bobby, Another Dwarf
+ManaCost:2 W
+Types:Legendary Creature Dwarf Warrior
+PT:3/3
+S:Mode$ Continuous | Affected$ Creature.Dwarf+YouOwn,Creature.Legendary+YouOwn,Equipment.YouOwn | AffectedZone$ Hand | AddKeyword$ Sneak:2 | Description$ Dwarf creature cards, legendary creature cards, and Equipment cards in your hand have sneak {2}. (You may cast a spell for its sneak cost if you also return an unblocked attacker you control to hand during the declare blockers step. Creatures with sneak enter tapped and attacking.)
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Equipment.YouCtrl+sneaked | TriggerZones$ Battlefield | Execute$ TrigAttach | TriggerDescription$ When an Equipment you control sneaks in, attach it to a creature you control.
+SVar:TrigAttach:DB$ Attach | Object$ TriggeredNewCardLKICopy | Choices$ Creature.YouCtrl | ChoiceTitle$ Choose a creature you control to attach it to
+Oracle:Dwarf creature cards, legendary creature cards, and Equipment cards in your hand have sneak {2}. (You may cast a spell for its sneak cost if you also return an unblocked attacker you control to hand during the declare blockers step. Creatures with sneak enter tapped and attacking.)\nWhen an Equipment you control sneaks in, attach it to a creature you control.

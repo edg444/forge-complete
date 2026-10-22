@@ -787,6 +787,11 @@ public class CardProperty {
                     java.util.regex.Pattern.CASE_INSENSITIVE).matcher(rules).find()) {
                 return false;
             }
+        } else if (property.equals("rulesTextOrTypeHasChosenWord")) {
+            // Third Stage of Magic Design: the chosen word in its rules text or type line
+            if (!source.hasChosenType() || !rulesTextOrTypeHasWord(card, source.getChosenType())) {
+                return false;
+            }
         } else if (property.startsWith("rulesTextHasWord_")) {
             // Kindly Cognician: the word or its plural in the rules text. Reminder text, the name, the type
             // line and flavor text don't count (Unstable ruling), and whole words only - "nonartifact" isn't it
@@ -1624,6 +1629,9 @@ public class CardProperty {
                         }
                     }
                     return list.isEmpty();
+                } else if (restriction.equals("OtherYourCreatures")) {
+                    // Naming Screen: any other creature you control
+                    return !sourceController.getCreaturesInPlay().anyMatch(c -> !c.equals(card) && c.sharesNameWith(card));
                 } else {
                     CardCollection list = CardLists.getValidCards(game.getCardsIn(ZoneType.Battlefield), restriction,
                             sourceController, source, spellAbility);
@@ -3215,5 +3223,19 @@ public class CardProperty {
             }
         }
         return match;
+    }
+
+    /** The word, exactly and as a whole word, in the card's rules text (as for Nocturno) or type line. */
+    public static boolean rulesTextOrTypeHasWord(final Card card, final String word) {
+        final String w = word.trim();
+        if (w.isEmpty()) {
+            return false;
+        }
+        String rules = card.getTextBoxOracle().replace("\\n", "\n").replaceAll("\\([^)]*\\)", " ");
+        if (!card.getName().isEmpty()) {
+            rules = rules.replace(card.getName(), " ");
+        }
+        return java.util.regex.Pattern.compile("\\b" + java.util.regex.Pattern.quote(w) + "\\b",
+                java.util.regex.Pattern.CASE_INSENSITIVE).matcher(rules + "\n" + card.getType().toString()).find();
     }
 }

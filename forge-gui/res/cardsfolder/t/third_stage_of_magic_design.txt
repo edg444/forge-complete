@@ -1,0 +1,14 @@
+Name:Third Stage of Magic Design
+ManaCost:3 W W
+Types:Sorcery
+# the word as written, exactly (as for Nocturno); the AI picks the word on the most of those cards, from their words
+A:SP$ ChooseType | Type$ word | Chooser$ You | FreeInput$ True | MinLetters$ 4 | ChoiceTitle$ Choose a word that's four letters or longer | ValidTypes$ creature,artifact,enchantment,instant,sorcery,flying,target,damage,draw,card,token,counter,life,mana,attack,block | AILogic$ MostWordMatches | SubAbility$ DBToken | SpellDescription$ Choose a word that's four letters or longer. For each nonland permanent you control and each nonland card in your graveyard with the chosen word in its rules text or type line, create a colorless 2/2 creature token with no name or creature types.
+SVar:DBToken:DB$ Token | TokenAmount$ X | TokenScript$ c_2_2_nameless | RememberTokens$ True | SubAbility$ DBNameless
+# the token script needs a name, so it's taken away as the tokens are made
+SVar:DBNameless:DB$ Animate | Defined$ Remembered | Name$ Nameless | Duration$ Permanent | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenType$ True
+SVar:X:SVar$OnBattlefield/Plus.InGraveyard
+SVar:OnBattlefield:Count$Valid Permanent.nonLand+YouCtrl+rulesTextOrTypeHasChosenWord
+SVar:InGraveyard:Count$ValidGraveyard Card.nonLand+YouOwn+rulesTextOrTypeHasChosenWord
+DeckHas:Ability$Token
+Oracle:Choose a word that's four letters or longer. For each nonland permanent you control and each nonland card in your graveyard with the chosen word in its rules text or type line, create a colorless 2/2 creature token with no name or creature types.

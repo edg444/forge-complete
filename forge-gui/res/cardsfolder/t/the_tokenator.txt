@@ -1,0 +1,16 @@
+Name:The Tokenator
+ManaCost:2 W
+Types:Legendary Creature Human Advisor
+PT:2/4
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigCounters | TriggerDescription$ Whenever CARDNAME attacks, you get two token counters. Then create a creature token with the color(s) and creature type of your choice. Its power and toughness are any combination equal to the number of token counters you have. (For example, if you have four token counters, it can be a 0/4, 1/3, 2/2, 3/1, or, if you're really sure, 4/0.)
+SVar:TrigCounters:DB$ PutCounter | Defined$ You | CounterType$ TOKEN | CounterNum$ 2 | SubAbility$ DBColors
+SVar:DBColors:DB$ ChooseColor | Defined$ You | OrColors$ True | AILogic$ MostProminentInComputerDeck | SubAbility$ DBType
+SVar:DBType:DB$ ChooseType | Defined$ You | Type$ Creature | AILogic$ MostProminentInComputerDeck | SubAbility$ DBPower
+SVar:DBPower:DB$ ChooseNumber | Defined$ You | Min$ 0 | Max$ N | ListTitle$ Choose the token's power (the rest of the token counters are its toughness) | AILogic$ Half | SubAbility$ DBToken
+SVar:DBToken:DB$ Token | TokenScript$ riptide_replicator | TokenTypes$ ChosenType | TokenColors$ ChosenColors | TokenPower$ P | TokenToughness$ T | TokenOwner$ You | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenType$ True | ClearChosenColor$ True
+SVar:N:Count$YourCountersTOKEN
+SVar:P:Count$ChosenNumber
+SVar:T:SVar$N/Minus.P
+DeckHas:Ability$Token
+Oracle:Whenever The Tokenator attacks, you get two token counters. Then create a creature token with the color(s) and creature type of your choice. Its power and toughness are any combination equal to the number of token counters you have. (For example, if you have four token counters, it can be a 0/4, 1/3, 2/2, 3/1, or, if you're really sure, 4/0.)
