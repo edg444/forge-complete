@@ -3257,6 +3257,15 @@ public class GameAction {
                     takesAction.setMaxHandSize(Integer.parseInt(mono[1]));
                 }
             }
+            // Command From the Shadows: while it's in a command zone, every commander starts face down and secret to
+            // its controller's opponents, until cast for the first time (user ruling 2026-10-22)
+            if (game.getCardsIn(ZoneType.Command).anyMatch(c -> c.hasSVar("SecretCommanders"))) {
+                for (Card c : takesAction.getCardsIn(ZoneType.Command)) {
+                    if (c.isCommander()) {
+                        c.setSecretCommander(true);
+                    }
+                }
+            }
             // The Rhystic Storyteller: as your commander, your deck can't use sleeves
             for (Card c : takesAction.getCardsIn(ZoneType.Command)) {
                 if (c.isCommander() && c.hasSVar("CommanderUnsleeved")) {

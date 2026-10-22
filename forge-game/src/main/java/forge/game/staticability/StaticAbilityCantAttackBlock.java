@@ -237,6 +237,10 @@ public class StaticAbilityCantAttackBlock {
         if (!stAb.matchesValidParam("ValidAttacker", attacker)) {
             return false;
         }
+        // Advanced Tactics: only creatures orthogonally adjacent to it in the host's grid can block it
+        if (stAb.hasParam("GridAdjacency")) {
+            return blocker != null && !forge.game.ability.effects.TacticsGridEffect.adjacent(host, attacker, blocker);
+        }
         if (stAb.hasParam("ValidBlocker")) {
             boolean stillblock = true;
             for (final String v : stAb.getParam("ValidBlocker").split(",")) {

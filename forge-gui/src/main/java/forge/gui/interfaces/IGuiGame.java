@@ -103,6 +103,9 @@ public interface IGuiGame {
     }
     default void endFlipOntoBattlefield(CardView flipped) {}
 
+    /** Advanced Tactics: show its grid as it now is (an empty grid string means it's gone). */
+    default void updateTacticsGrid(CardView host) {}
+
     void flashIncorrectAction();
     void alertUser();
 

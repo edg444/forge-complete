@@ -82,6 +82,8 @@ public class MatchScreen extends FScreen {
     private final VLog log;
     private final VChat chat;
     private final VStack stack;
+    // Advanced Tactics: its grid, a tab only while there is one
+    private final forge.screens.match.views.VTacticsGrid tacticsGrid;
     private final VDevMenu devMenu;
     private final FieldScroller scroller;
     private final VPrompt bottomPlayerPrompt, topPlayerPrompt;
@@ -158,6 +160,8 @@ public class MatchScreen extends FScreen {
         devMenu.setDropDownContainer(this);
         stack = new VStack();
         stack.setDropDownContainer(this);
+        tacticsGrid = new forge.screens.match.views.VTacticsGrid();
+        tacticsGrid.setDropDownContainer(this);
 
         FMenuBar menuBar = (FMenuBar) getHeader();
         if (topPlayerPrompt == null) {
@@ -172,6 +176,8 @@ public class MatchScreen extends FScreen {
                 menuBar.addTab(Forge.getLocalizer().getMessage("lblDev"), devMenu);
             }
             menuBar.addTab(Forge.getLocalizer().getMessage("lblStack") + " (0)", stack);
+            menuBar.addTab("Grid", tacticsGrid);
+            tacticsGrid.getMenuTab().setVisible(false);
         } else {
             menuBar.addTab("\u2022 \u2022 \u2022", new PlayerSpecificMenu(true));
             stack.setRotate90(true);
@@ -183,6 +189,7 @@ public class MatchScreen extends FScreen {
             players.setMenuTab(new HiddenMenuTab(players));
             log.setMenuTab(new HiddenMenuTab(log));
             devMenu.setMenuTab(new HiddenMenuTab(devMenu));
+            tacticsGrid.setMenuTab(new HiddenMenuTab(tacticsGrid));
         }
         endpoints = new HashMap<>();
         cardsonBattlefield  = new HashSet<>();
@@ -291,6 +298,9 @@ public class MatchScreen extends FScreen {
                 if (ForgePreferences.DEV_MODE) {
                     addItem(new MenuItem(Forge.getLocalizer().getMessage("lblDev"), devMenu));
                 }
+                if (tacticsGrid.hasGrid()) {
+                    addItem(new MenuItem("Grid", tacticsGrid));
+                }
             } else { //TODO: Support using menu when player doesn't have priority
                 FMenuItem item = new FMenuItem(Forge.getLocalizer().getMessage("lblMustWaitPriority"), null);
                 item.setEnabled(false);
@@ -331,6 +341,20 @@ public class MatchScreen extends FScreen {
 
     public VStack getStack() {
         return stack;
+    }
+
+    /** Advanced Tactics: shows the host's grid, with its tab only while there is one. */
+    public void updateTacticsGrid(final forge.game.card.CardView host) {
+        tacticsGrid.setHost(host);
+        final boolean show = tacticsGrid.hasGrid();
+        if (!(tacticsGrid.getMenuTab() instanceof HiddenMenuTab)) {
+            tacticsGrid.getMenuTab().setVisible(show);
+        }
+        if (!show) {
+            tacticsGrid.hide();
+        } else {
+            tacticsGrid.update();
+        }
     }
 
     public VPlayerPanel getTopPlayerPanel() {

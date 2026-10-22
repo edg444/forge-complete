@@ -1,0 +1,14 @@
+Name:Advanced Tactics
+ManaCost:3 R
+Types:Enchantment
+# the grid is kept on this card (TacticsGridEffect) and shown in its own view on desktop and mobile (user ruling
+# 2026-10-22)
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Static$ True | Execute$ TrigGrid | TriggerDescription$ When this enchantment enters, create a 5x5 grid for as long as it remains on the battlefield. Starting with the top left space and skipping every other space, choose a random creature and put it in the grid. As a creature enters, its controller puts it in an empty space.
+SVar:TrigGrid:DB$ TacticsGrid | Mode$ Create
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Creature | TriggerZones$ Battlefield | Static$ True | Execute$ TrigPlace | Secondary$ True | TriggerDescription$ As a creature enters, its controller puts it in an empty space.
+SVar:TrigPlace:DB$ TacticsGrid | Mode$ Place | Defined$ TriggeredCard
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Static$ True | Execute$ TrigGone | Secondary$ True | TriggerDescription$ The grid lasts as long as CARDNAME remains on the battlefield.
+SVar:TrigGone:DB$ TacticsGrid | Mode$ Remove
+S:Mode$ CantBlockBy | ValidAttacker$ Creature | GridAdjacency$ True | Description$ Creatures can't block creatures they aren't orthogonally adjacent to.
+A:AB$ TacticsGrid | Cost$ 1 | Mode$ Move | AnyPlayer$ True | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | SpellDescription$ Move target creature you control one space left, right, up, or down. Any player may activate this ability.
+Oracle:When this enchantment enters, create a 5x5 grid for as long as it remains on the battlefield. Starting with the top left space and skipping every other space, choose a random creature and put it in the grid. As a creature enters, its controller puts it in an empty space.\nCreatures can't block creatures they aren't orthogonally adjacent to.\n{1}: Move target creature you control one space left, right, up, or down. Any player may activate this ability.

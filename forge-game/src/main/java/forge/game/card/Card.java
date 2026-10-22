@@ -6810,6 +6810,26 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
             view.updateMarkerText(this);
         }
     }
+    // Advanced Tactics: its 5x5 grid of creature ids (TacticsGridEffect), null while there's none
+    private int[] tacticsGrid = null;
+    public final int[] getTacticsGrid() {
+        return tacticsGrid;
+    }
+    public final void setTacticsGrid(final int[] grid) {
+        tacticsGrid = grid;
+        view.updateTacticsGrid(this);
+    }
+
+    // Command From the Shadows: secret to its controller's opponents until it's cast for the first time
+    private boolean secretCommander = false;
+    public final boolean isSecretCommander() {
+        return secretCommander;
+    }
+    public final void setSecretCommander(final boolean b) {
+        secretCommander = b;
+        view.updateSecretCommander(this);
+    }
+
     public final boolean isHiddenOnBattlefield() {
         return hiddenSpot != null && isInPlay();
     }

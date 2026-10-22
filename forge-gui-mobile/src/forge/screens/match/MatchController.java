@@ -390,6 +390,15 @@ public class MatchController extends NetworkGuiGame {
     }
 
     @Override
+    public void updateTacticsGrid(final CardView host) {
+        Gdx.app.postRunnable(() -> {
+            if (view != null) {
+                view.updateTacticsGrid(host);
+            }
+        });
+    }
+
+    @Override
     public void endFlipOntoBattlefield(CardView flipped) {
         FlipOntoBattlefieldAnimation.markResolved(flipped);
     }

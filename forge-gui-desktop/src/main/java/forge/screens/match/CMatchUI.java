@@ -621,6 +621,32 @@ public final class CMatchUI
         cDependencies.update();
     }
 
+    // Advanced Tactics: a grid window for each card that has one, by card id
+    private final Map<Integer, TacticsGridWindow> tacticsWindows = new HashMap<>();
+    private final Map<Integer, CardView> tacticsHosts = new HashMap<>();
+
+    @Override
+    public void updateTacticsGrid(final CardView host) {
+        if (host == null) {
+            return;
+        }
+        FThreads.invokeInEdtLater(() -> {
+            tacticsHosts.put(host.getId(), host);
+            tacticsWindows.computeIfAbsent(host.getId(), id -> new TacticsGridWindow(this)).update(host);
+        });
+    }
+
+    private void refreshTacticsGrids() {
+        if (tacticsWindows.isEmpty()) {
+            return;
+        }
+        FThreads.invokeInEdtLater(() -> {
+            for (final Map.Entry<Integer, TacticsGridWindow> e : tacticsWindows.entrySet()) {
+                e.getValue().update(tacticsHosts.get(e.getKey()));
+            }
+        });
+    }
+
     @Override
     public void updateDayTime(String daytime) {
         super.updateDayTime(daytime);
@@ -742,6 +768,7 @@ public final class CMatchUI
 
     @Override
     public void updateCards(final Iterable<CardView> cards) {
+        refreshTacticsGrids();
         for (final CardView c : cards) {
             // Null can flow in from a remote-side event whose IdRef failed to resolve in the tracker.
             if (c == null) { continue; }
@@ -1104,6 +1131,11 @@ public final class CMatchUI
     @Override
     public void finishGame() {
         FloatingZone.closeAll(); //ensure floating card areas cleared and closed after the game
+        FThreads.invokeInEdtNowOrLater(() -> {
+            tacticsWindows.values().forEach(TacticsGridWindow::close);
+            tacticsWindows.clear();
+            tacticsHosts.clear();
+        });
         selectionZonesShown.clear();
         revealZonesShown.clear();
         if (isNetGame()) {

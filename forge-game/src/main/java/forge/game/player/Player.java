@@ -3856,9 +3856,12 @@ public class Player extends GameEntity implements Comparable<Player> {
 
     /** Detectives: with no commanders, or none still face down and secret, all of them have been revealed. */
     public boolean allCommandersRevealed() {
-        return getCommanders().stream().noneMatch(c -> game.getCardState(c).isFaceDown());
+        return getCommanders().stream().noneMatch(c -> game.getCardState(c).isFaceDown() || game.getCardState(c).isSecretCommander());
     }
     public void incCommanderCast(Card commander) {
+        // Command From the Shadows: casting it reveals it for good
+        commander.setSecretCommander(false);
+        game.getCardState(commander).setSecretCommander(false);
         commanderCast.merge(commander, 1, Integer::sum);
         getView().updateCommanderCast(this, commander);
         getGame().fireEvent(new GameEventPlayerStatsChanged(this));

@@ -316,6 +316,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   (`UI_ZONE_TABS_LEFT`) is gone; upstream restored its own setting of that name (`UI_ALT_PLAYERZONETABS`), and the two
   showed with the same label. Hand, Library, Graveyard and Exile tabs are on the right edge, as upstream has them.
 
+- **Unknown Event: Command From the Shadows, Advanced Tactics (UNK rares).**
+  - Secret commanders (SVar `SecretCommanders` on a conspiracy): every commander starts the game hidden from everyone
+    but its controller in the command zone, until it's cast the first time; it's cast normally.
+  - Advanced Tactics' 5x5 grid (new effect `TacticsGrid`, Card/CardView `TacticsGrid`): filled at random as it enters,
+    each entering creature placed by its controller, `{1}` moves; CantBlockBy `GridAdjacency$` keeps blocks to
+    orthogonal neighbors. The grid has its own view: a window beside the match on desktop, a "Grid" tab in the menu
+    bar on mobile (new game event `GameEventTacticsGrid`, `IGuiGame.updateTacticsGrid`).
+
 - **Unknown Event: Occupation of Kulrath, Occupation of Llanowar, Sort of _____ and _____, The Whiteboarder, The
   Chaos Keeper, The Charitable Drafter, The Rhystic Storyteller, The Game-Changing Host, Clear, Fair Magic, The
   Commander Recommender (UNK rares).**

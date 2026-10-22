@@ -191,6 +191,7 @@ public enum ApiType {
     DestroyAnything (DestroyAnythingEffect.class),
     GuessedWrong (GuessedWrongEffect.class),
     RecommendDeck (RecommendDeckEffect.class),
+    TacticsGrid (TacticsGridEffect.class),
     StickerBeneath (StickerBeneathEffect.class),
     SecretIdentity (SecretIdentityEffect.class),
     TakeAdventure (TakeAdventureEffect.class),

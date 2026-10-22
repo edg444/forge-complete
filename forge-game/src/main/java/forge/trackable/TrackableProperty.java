@@ -59,6 +59,8 @@ public enum TrackableProperty {
     Blocking(TrackableTypes.BooleanType),
     PhasedOut(TrackableTypes.BooleanType),
     HiddenOnBattlefield(TrackableTypes.BooleanType),
+    SecretCommander(TrackableTypes.BooleanType),
+    TacticsGrid(TrackableTypes.StringType),
     Sickness(TrackableTypes.BooleanType),
     Tapped(TrackableTypes.BooleanType),
     Token(TrackableTypes.BooleanType),

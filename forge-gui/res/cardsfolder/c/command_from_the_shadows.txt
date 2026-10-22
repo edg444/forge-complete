@@ -1,0 +1,8 @@
+Name:Command From the Shadows
+ManaCost:no cost
+Types:Conspiracy
+# as the game begins every player's commanders are secret to their opponents (shown face down) until first cast,
+# then revealed for good; they're cast normally (user ruling 2026-10-22)
+SVar:SecretCommanders:True
+Text:(Start the game with this conspiracy face up in the command zone.)\nPlayers play with each of their commanders face down and secret until they cast them for the first time. (Be sure to tell your opponent you're using this right at the beginning of the game, so they don't reveal their commanders to you yet!)
+Oracle:(Start the game with this conspiracy face up in the command zone.)\nPlayers play with each of their commanders face down and secret until they cast them for the first time. (Be sure to tell your opponent you're using this right at the beginning of the game, so they don't reveal their commanders to you yet!)

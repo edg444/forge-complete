@@ -275,6 +275,29 @@ public class CardView extends GameEntityView {
     void updateHiddenOnBattlefield(Card c) {
         set(TrackableProperty.HiddenOnBattlefield, c.isHiddenOnBattlefield());
     }
+    /** Advanced Tactics: its grid, the 25 spaces' card ids by row ("0" for empty), or "" for none. */
+    public String getTacticsGrid() {
+        final String s = get(TrackableProperty.TacticsGrid);
+        return s == null ? "" : s;
+    }
+    void updateTacticsGrid(Card c) {
+        final int[] grid = c.getTacticsGrid();
+        final StringBuilder sb = new StringBuilder();
+        for (int i = 0; grid != null && i < grid.length; i++) {
+            if (i > 0) {
+                sb.append(',');
+            }
+            sb.append(grid[i]);
+        }
+        set(TrackableProperty.TacticsGrid, sb.toString());
+    }
+    /** Command From the Shadows: a commander face down and secret to its controller's opponents until first cast. */
+    public boolean isSecretCommander() {
+        return get(TrackableProperty.SecretCommander);
+    }
+    void updateSecretCommander(Card c) {
+        set(TrackableProperty.SecretCommander, c.isSecretCommander());
+    }
     /** Entirely Normal Armchair: hidden on the battlefield, so its controller's opponents don't see it at all. */
     public boolean isHiddenFrom(final PlayerView viewer) {
         final PlayerView controller = getController();
@@ -796,6 +819,12 @@ public class CardView extends GameEntityView {
         final PlayerView controller = getController();
         if (zone == ZoneType.Battlefield && isHiddenFrom(viewer)) {
             return false;
+        }
+        if (zone == ZoneType.Command && isSecretCommander()) {
+            final PlayerView holder = controller != null ? controller : getOwner();
+            if (holder != null && !holder.equals(viewer) && !holder.isGiantTeammateOf(viewer)) {
+                return false;
+            }
         }
         switch (zone) {
         case Ante:
