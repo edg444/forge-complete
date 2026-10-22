@@ -1,0 +1,6 @@
+Name:Margle, Cousin of Yargle
+ManaCost:3 G W
+Types:Legendary Creature Frog Noble
+PT:5/2
+S:Mode$ Continuous | Affected$ Creature.Other+YouCtrl | RemoveAllAbilities$ True | CantGainAbilities$ True | AddPower$ 2 | AddToughness$ 2 | Description$ Other creatures you control lose all abilities, can't gain abilities, and get +2/+2.
+Oracle:Other creatures you control lose all abilities, can't gain abilities, and get +2/+2.

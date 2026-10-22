@@ -296,6 +296,9 @@ public class StaticEffect {
                 if (hasParam("CantHaveKeyword")) {
                     abilitiesChanged |= affectedCard.removeCantHaveKeyword(getTimestamp());
                 }
+                if (hasParam("CantGainAbilities")) {
+                    abilitiesChanged |= affectedCard.removeCantGainAbilities(getTimestamp());
+                }
 
                 affectedCard.removeChangedSVars(getTimestamp(), ability.getId());
 

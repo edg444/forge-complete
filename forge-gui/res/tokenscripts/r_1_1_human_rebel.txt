@@ -1,0 +1,6 @@
+Name:Human Rebel Token
+ManaCost:no cost
+Colors:red
+Types:Creature Human Rebel
+PT:1/1
+Oracle:

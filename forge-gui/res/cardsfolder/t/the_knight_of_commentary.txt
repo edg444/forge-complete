@@ -1,0 +1,7 @@
+Name:The Knight of Commentary
+ManaCost:W U B R G
+Types:Legendary Creature Human Advisor Knight
+PT:7/7
+# Asking for advice happens outside the game, so the ability has nothing to do in Forge.
+Text:Eminence — While The Knight of Commentary is in the command zone or on the battlefield, you are freely allowed to ask people for advice on your game while playing. (This includes nearby players, friends around you, and even people you message on your phone, but it all must be done in a timely fashion, courteously, and without causing large interruptions in other games.)
+Oracle:Eminence — While The Knight of Commentary is in the command zone or on the battlefield, you are freely allowed to ask people for advice on your game while playing. (This includes nearby players, friends around you, and even people you message on your phone, but it all must be done in a timely fashion, courteously, and without causing large interruptions in other games.)

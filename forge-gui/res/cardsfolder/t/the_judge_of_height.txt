@@ -1,0 +1,8 @@
+Name:The Judge of Height
+ManaCost:3 R W
+Types:Legendary Creature Giant Wizard
+PT:0/6
+K:Trample
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | Description$ CARDNAME gets +1/+0 for each creature on the battlefield that it's taller than. (A creature's height is equal to its toughness plus its mana value.)
+SVar:X:Count$ShorterCreatures
+Oracle:Trample\nThe Judge of Height gets +1/+0 for each creature on the battlefield that it's taller than. (A creature's height is equal to its toughness plus its mana value.)

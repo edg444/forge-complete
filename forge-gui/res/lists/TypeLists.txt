@@ -35,9 +35,11 @@ Armadillo:Armadillos
 Art:Arts
 Artificer:Artificers
 Army:Armies
+Artist:Artists
 Assassin:Assassins
 Assembly-Worker:Assembly-Workers
 Astartes:Astartes
+Athlete:Athletes
 Atog:Atogs
 Aurochs:Aurochs
 Autobot:Autobots
@@ -75,6 +77,7 @@ Carrier:Carriers
 Cat:Cats
 Centaur:Centaurs
 Chameleon:Chameleons
+Chef:Chefs
 Chicken:Chickens
 Chimera:Chimeras
 Child:Children
@@ -185,6 +188,7 @@ Inquisitor:Inquisitors
 Insect:Insects
 Jackal:Jackals
 Jellyfish:Jellyfishes
+Judge:Judges
 Juggernaut:Juggernauts
 Kangaroo:Kangaroos
 Kavu:Kavu
@@ -194,6 +198,7 @@ Kirin:Kirins
 Kithkin:Kithkin
 Klingon:Klingons
 Knight:Knights
+Koala:Koalas
 Kobold:Kobolds
 Kor:Kors
 Kraken:Krakens

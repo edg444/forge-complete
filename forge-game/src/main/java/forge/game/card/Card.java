@@ -153,6 +153,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     // x=timestamp y=StaticAbility id
     private final Table<Long, Long, CardTraitChanges> changedCardTraitsByText = TreeBasedTable.create(); // Layer 3 by Text Change
     private final Table<Long, Long, ICardTraitChanges> changedCardTraits = TreeBasedTable.create(); // Layer 6
+    // Margle, Cousin of Yargle: from the earliest of these timestamps on, layer 6 can't give this card abilities
+    private final java.util.TreeSet<Long> cantGainAbilities = new java.util.TreeSet<>();
 
     // stores the card traits created by static abilities
     private final Table<StaticAbility, String, SpellAbility> storedSpellAbility = TreeBasedTable.create();
@@ -4729,7 +4731,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
             changedCardKeywordsByText.values(), // Layer 3
             ImmutableList.of(changedCardKeywordsByWord), // Layer 3
             state.getLandTraitChanges(), // Layer 4
-            changedCardKeywords.values() // Layer 6
+            untilCantGainAbilities(changedCardKeywords) // Layer 6
         );
     }
 
@@ -5931,8 +5933,33 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return Iterables.<ICardTraitChanges>concat(
             changedCardTraitsByText.values(), // Layer 3
             state.getLandTraitChanges(), // Layer 4
-            changedCardTraits.values() // Layer 6
+            untilCantGainAbilities(changedCardTraits) // Layer 6
         );
+    }
+
+    /**
+     * Layer 6 changes in timestamp order, stopping after the earliest "can't gain abilities" one: that one removes
+     * every ability, and nothing applied later may hand any back.
+     */
+    private <T> java.util.Collection<T> untilCantGainAbilities(final Table<Long, Long, T> changes) {
+        if (cantGainAbilities.isEmpty()) {
+            return changes.values();
+        }
+        final long cutoff = cantGainAbilities.first();
+        final List<T> result = Lists.newArrayList();
+        for (final Table.Cell<Long, Long, T> cell : changes.cellSet()) {
+            if (cell.getRowKey() <= cutoff) {
+                result.add(cell.getValue());
+            }
+        }
+        return result;
+    }
+
+    public void addCantGainAbilities(final long timestamp) {
+        cantGainAbilities.add(timestamp);
+    }
+    public boolean removeCantGainAbilities(final long timestamp) {
+        return cantGainAbilities.remove(timestamp);
     }
 
     public final Table<Long, Long, ICardTraitChanges> getChangedCardTraits() {

@@ -1101,6 +1101,9 @@ public final class StaticAbilityContinuous {
                 if (cantHaveKeyword != null) {
                     affectedCard.addCantHaveKeyword(se.getTimestamp(), cantHaveKeyword);
                 }
+                if (params.containsKey("CantGainAbilities")) {
+                    affectedCard.addCantGainAbilities(se.getTimestamp());
+                }
             }
 
             // add Types

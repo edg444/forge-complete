@@ -312,6 +312,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Genevieve, Conniving Dragon, Margle, Cousin of Yargle, The Knight of Commentary, The Judge of
+  Height, Tarkiran Towelsbane, Drop Bear (UNK rares).**
+  - Continuous statics take `CantGainAbilities$`: from that effect on, nothing in layer 6 gives the card abilities
+    back, whatever its timestamp (Pump grants included).
+  - `Count$ShorterCreatures`: creatures whose toughness plus mana value is less than the source's.
+  - New creature types Artist, Athlete, Chef, Judge and Koala, printed on UNK cards; Forge dropped them before.
 - **Unknown Event: The Majestic Duo, The Zabulous Cosplayer, Shen, Wish Granter, The Goblin Mastermind, The Brewing
   Chef (UNK rares).**
   - Card property `CreatesToken`: an ability that makes a token (Token, CopyPermanent, Amass, Investigate,

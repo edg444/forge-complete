@@ -2355,6 +2355,13 @@ public class AbilityUtils {
             final Player you = player != null ? player : c.getController();
             return doXMath(you.getOpponents().stream().allMatch(Player::allCommandersRevealed) ? 1 : 0, expr, c, ctb);
         }
+        // The Judge of Height: Count$ShorterCreatures - creatures on the battlefield whose height (toughness plus mana
+        // value) is less than this card's
+        if (l[0].equals("ShorterCreatures")) {
+            final int height = c.getNetToughness() + c.getCMC();
+            return doXMath(CardLists.count(game.getCardsIn(ZoneType.Battlefield),
+                    x -> x.isCreature() && x.getNetToughness() + x.getCMC() < height), expr, c, ctb);
+        }
         // The Mox Painter: Count$DifferentNames <valid> - how many different names the permanents have
         if (l[0].startsWith("DifferentNames ")) {
             return doXMath(CardLists.getDifferentNamesCount(CardLists.getValidCards(game.getCardsIn(ZoneType.Battlefield),

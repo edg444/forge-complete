@@ -1,0 +1,11 @@
+Name:Tarkiran Towelsbane
+ManaCost:5 R W
+Types:Legendary Creature Shark Rebel
+PT:2/2
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigTokens | TriggerDescription$ When NICKNAME enters, create five 1/1 red Human Rebel creature tokens.
+SVar:TrigTokens:DB$ Token | TokenScript$ r_1_1_human_rebel | TokenAmount$ 5
+T:Mode$ DamageDoneOnce | ValidSource$ Rebel.YouCtrl | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | Execute$ TrigGain | TriggerDescription$ Whenever one or more Rebels you control deal combat damage to a player, you gain 2 life.
+SVar:TrigGain:DB$ GainLife | LifeAmount$ 2
+DeckHas:Ability$Token|LifeGain
+DeckHints:Type$Rebel
+Oracle:When Tarkiran enters, create five 1/1 red Human Rebel creature tokens.\nWhenever one or more Rebels you control deal combat damage to a player, you gain 2 life.
