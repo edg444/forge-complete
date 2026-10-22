@@ -1,0 +1,7 @@
+Name:Stika, Playtestress
+ManaCost:2 W
+Types:Legendary Creature Human Druid
+PT:2/3
+T:Mode$ SpellCast | ValidCard$ Card.Playtest | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | ActivationLimit$ 1 | Execute$ TrigDraw | TriggerDescription$ Whenever you cast a playtest card, draw a card. This ability triggers only once each turn.
+SVar:TrigDraw:DB$ Draw | NumCards$ 1
+Oracle:Whenever you cast a playtest card, draw a card. This ability triggers only once each turn.

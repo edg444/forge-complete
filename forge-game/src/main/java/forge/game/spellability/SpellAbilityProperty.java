@@ -188,6 +188,11 @@ public class SpellAbilityProperty {
             }
             return sa.isSpell() && sa.getPayCosts() != null
                     && sa.getPayCosts().getCostParts().stream().anyMatch(p -> !(p instanceof forge.game.cost.CostPartMana));
+        } else if (property.equals("AlternativeOrFree")) {
+            // Htbr, Racetrack Referee: cast for an alternative cost or without paying its mana cost
+            if (sa.getAlternativeCost() == null && !sa.hasParam("WithoutManaCost")) {
+                return false;
+            }
         } else if (property.equals("paidPhyrexianMana")) {
             return sa.getSpendPhyrexianMana() > 0;
         } else if (property.startsWith("ManaSpentBy")) {

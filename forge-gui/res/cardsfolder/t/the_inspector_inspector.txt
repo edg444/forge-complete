@@ -1,0 +1,8 @@
+Name:The Inspector Inspector
+ManaCost:2 W
+Types:Legendary Creature Human Detective
+PT:1/2
+K:ETBReplacement:Copy:InspectorClone:Mandatory:Battlefield:Creature.Other+YouCtrl
+SVar:InspectorClone:DB$ Clone | CopyCardName$ Thraben Inspector | CloneTarget$ ReplacedCard | SpellDescription$ Other creatures you control enter the battlefield as a copy of Thraben Inspector. (They're 1/2s with "When this creature enters the battlefield, investigate".)
+A:AB$ Draw | Cost$ 2 Sac<1/CARDNAME> | NumCards$ 1 | SpellDescription$ Draw a card.
+Oracle:Other creatures you control enter the battlefield as a copy of Thraben Inspector. (They're 1/2s with "When this creature enters the battlefield, investigate".)\n{2}, Sacrifice The Inspector Inspector: Draw a card.

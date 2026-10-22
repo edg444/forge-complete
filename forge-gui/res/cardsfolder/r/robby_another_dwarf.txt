@@ -1,0 +1,6 @@
+Name:Robby, Another Dwarf
+ManaCost:2 W
+Types:Legendary Creature Dwarf Warrior
+PT:3/3
+S:Mode$ Continuous | Affected$ Creature.Dwarf+YouCtrl,Creature.Legendary+YouCtrl,Equipment.YouCtrl | AffectedZone$ Hand,Graveyard,Exile,Library,Command,Stack | AddKeyword$ Squad:2:NonLegendary | Description$ Dwarf creature spells, legendary creature spells, and Equipment spells you cast have squad 2. Tokens created this way aren't legendary. (As an additional cost to cast one of those spells, you may pay {2} any number of times. When that permanent enters, create that many tokens that are copies of it.)
+Oracle:Dwarf creature spells, legendary creature spells, and Equipment spells you cast have squad 2. Tokens created this way aren't legendary. (As an additional cost to cast one of those spells, you may pay {2} any number of times. When that permanent enters, create that many tokens that are copies of it.)

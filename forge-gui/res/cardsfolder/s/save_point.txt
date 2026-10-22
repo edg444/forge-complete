@@ -1,0 +1,9 @@
+Name:Save Point
+ManaCost:1 W
+Types:Enchantment
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When this enchantment enters, draw a card.
+SVar:TrigDraw:DB$ Draw | NumCards$ 1
+A:AB$ RemoveFromCombat | Cost$ Sac<1/CARDNAME/this enchantment> | Defined$ Valid Creature | ActivationPhases$ BeginCombat->Declare Blockers | SubAbility$ DBUntap | SpellDescription$ Remove each creature from combat and untap each creature that attacked this turn. There is an additional combat phase after this one. Activate only during combat before combat damage has been dealt.
+SVar:DBUntap:DB$ UntapAll | ValidCards$ Creature.attackedThisTurn | SubAbility$ DBAddCombat
+SVar:DBAddCombat:DB$ AddPhase | ExtraPhase$ Combat | AfterPhase$ EndCombat
+Oracle:When this enchantment enters, draw a card.\nSacrifice this enchantment: Remove each creature from combat and untap each creature that attacked this turn. There is an additional combat phase after this one. Activate only during combat before combat damage has been dealt.

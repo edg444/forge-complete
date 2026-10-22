@@ -1,0 +1,13 @@
+Name:Ratatwotwo
+ManaCost:3 W
+Types:Legendary Creature Rat
+PT:2/2
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigRole | TriggerDescription$ When CARDNAME enters the battlefield, create a Chef Role token attached to up to one other target creature you control. (Enchanted creature gets +1/+1 and has "Whenever this creature attacks, create a Food token.")
+SVar:TrigRole:DB$ Token | TokenScript$ role_chef | TokenOwner$ You | AttachedTo$ ThisTargetedCard | TargetMin$ 0 | TargetMax$ 1 | ValidTgts$ Creature.Other+YouCtrl | TgtPrompt$ Select up to one other target creature you control
+T:Mode$ Attacks | ValidCard$ Creature.YouCtrl+EnchantedBy Role.namedChef | TriggerZones$ Battlefield | Execute$ TrigPump | TriggerDescription$ Whenever a creature you control enchanted by a Chef Role attacks or blocks, it gets +X/+X until end of turn, where X is CARDNAME's power.
+T:Mode$ Blocks | ValidCard$ Creature.YouCtrl+EnchantedBy Role.namedChef | TriggerZones$ Battlefield | Execute$ TrigPumpBlocker | Secondary$ True | TriggerDescription$ Whenever a creature you control enchanted by a Chef Role attacks or blocks, it gets +X/+X until end of turn, where X is CARDNAME's power.
+SVar:TrigPump:DB$ Pump | Defined$ TriggeredAttackerLKICopy | NumAtt$ +X | NumDef$ +X
+SVar:TrigPumpBlocker:DB$ Pump | Defined$ TriggeredBlockerLKICopy | NumAtt$ +X | NumDef$ +X
+SVar:X:Count$CardPower
+DeckHas:Ability$Token
+Oracle:When Ratatwotwo enters the battlefield, create a Chef Role token attached to up to one other target creature you control. (Enchanted creature gets +1/+1 and has "Whenever this creature attacks, create a Food token.")\nWhenever a creature you control enchanted by a Chef Role attacks or blocks, it gets +X/+X until end of turn, where X is Ratatwotwo's power.

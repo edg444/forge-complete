@@ -1,0 +1,6 @@
+Name:Htbr, Racetrack Referee
+ManaCost:1 W
+Types:Legendary Creature Homunculus
+PT:2/2
+S:Mode$ CantBeCast | ValidCard$ Card | ValidSA$ Spell.AlternativeOrFree | Caster$ Player | Description$ Players can't cast spells by paying alternative costs or without paying their mana costs. (Additional costs are still okay. Anything that replaces the mana cost like flashback or madness is not.)
+Oracle:Players can't cast spells by paying alternative costs or without paying their mana costs. (Additional costs are still okay. Anything that replaces the mana cost like flashback or madness is not.)

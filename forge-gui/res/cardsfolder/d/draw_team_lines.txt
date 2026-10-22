@@ -1,0 +1,13 @@
+Name:Draw Team Lines
+ManaCost:2 W W
+Types:Sorcery
+# The race team is chosen once per match (user ruling 2026-10-21), as the game begins for a deck with this card. A
+# player on neither team yet casts it for one team's line and joins that team.
+SVar:AsksTeam:Race
+A:SP$ DestroyAll | ValidCards$ Creature.powerGE4 | CheckSVar$ SpeedDemons | SVarCompare$ EQ0 | SubAbility$ DBJoinCloudspire | PrecostDesc$ Team Cloudspire — | SpellDescription$ Destroy all creatures with power 4 or greater.
+SVar:DBJoinCloudspire:DB$ ChooseTeam | Defined$ You | Teams$ Race | Team$ Cloudspire
+A:SP$ ChangeZoneAll | ChangeType$ Creature.YouOwn+powerLE3 | Origin$ Graveyard | Destination$ Battlefield | CheckSVar$ Cloudspire | SVarCompare$ EQ0 | SubAbility$ DBJoinSpeedDemons | PrecostDesc$ Team Speed Demons — | SpellDescription$ Return all creature cards with power 3 or less from your graveyard to the battlefield.
+SVar:DBJoinSpeedDemons:DB$ ChooseTeam | Defined$ You | Teams$ Race | Team$ Speed Demons
+SVar:Cloudspire:Count$RaceTeam.Cloudspire
+SVar:SpeedDemons:Count$RaceTeam.SpeedDemons
+Oracle:Team Cloudspire — Destroy all creatures with power 4 or greater.\nTeam Speed Demons — Return all creature cards with power 3 or less from your graveyard to the battlefield.

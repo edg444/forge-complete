@@ -1802,7 +1802,9 @@ public class CardFactoryUtil {
                     "ValidCard$ Card.Self+linkedCastSA | CheckSVar$ SquadAmount | Secondary$ True | " +
                     "TriggerDescription$ When this creature enters, create that many tokens that " +
                     "are copies of it.";
-            final String abString = "DB$ CopyPermanent | Defined$ TriggeredCardLKICopy | NumCopies$ SquadAmount";
+            // Robby, Another Dwarf: Squad:N:NonLegendary - the tokens aren't legendary
+            final String abString = "DB$ CopyPermanent | Defined$ TriggeredCardLKICopy | NumCopies$ SquadAmount"
+                    + (keyword.endsWith(":NonLegendary") ? " | NonLegendary$ True" : "");
 
             final Trigger squadTrigger = TriggerHandler.parseTrigger(trigScript, card, intrinsic);
             final SpellAbility squadAbility = AbilityFactory.getAbility(abString, card);

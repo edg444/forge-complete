@@ -111,6 +111,10 @@ public class StaticAbilityCantBeCast {
         if (!stAb.matchesValidParam("ValidCard", card)) {
             return false;
         }
+        // Htbr, Racetrack Referee: only some ways of casting it
+        if (stAb.hasParam("ValidSA") && (spell == null || !stAb.matchesValidParam("ValidSA", spell))) {
+            return false;
+        }
         if (stAb.hasParam("OnlyFirstOfProgram") && !onlyFirstOfProgramForbids(spell, card, activator)) {
             return false;
         }

@@ -1,0 +1,10 @@
+Name:Kylem All-Star
+ManaCost:3 W
+Types:Creature Human Warrior
+PT:2/2
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGlitter | TriggerDescription$ When CARDNAME enters the battlefield, create a token copy of All that Glitters and attach it to this creature. (It's an aura with "enchanted creature gets +1/+1 for each artifact and/or enchantment you control.)
+SVar:TrigGlitter:DB$ CopyPermanent | DefinedName$ All That Glitters | AttachedTo$ Self
+S:Mode$ Continuous | Affected$ Enchantment.YouCtrl | AddType$ Artifact & Gold | AddAbility$ GoldMana | Description$ Enchantments you control are Gold artifacts in addition to their other types and have "Sacrifice this artifact: Add one mana of any color."
+SVar:GoldMana:AB$ Mana | Cost$ Sac<1/CARDNAME/this artifact> | Produced$ Any | SpellDescription$ Add one mana of any color.
+DeckHas:Ability$Token|Sacrifice
+Oracle:When Kylem All-Star enters the battlefield, create a token copy of All that Glitters and attach it to this creature. (It's an aura with "enchanted creature gets +1/+1 for each artifact and/or enchantment you control.)\nEnchantments you control are Gold artifacts in addition to their other types and have "Sacrifice this artifact: Add one mana of any color."

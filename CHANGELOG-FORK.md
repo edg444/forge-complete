@@ -312,6 +312,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Htbr, Racetrack Referee, Stika, Playtestress, Gerrard and Hanna, Draw Team Lines, Ratatwotwo,
+  Kylem All-Star, Save Point, The Inspector Inspector, Robby, Another Dwarf (UNK white rares).**
+  - `CantBeCast` now takes `ValidSA$`; new spell property `AlternativeOrFree` (an alternative cost, or no mana cost).
+  - `Squad:N:NonLegendary` makes squad tokens that aren't legendary.
+  - New Chef Role token.
 - **Unknown Event: Lord of Atlanta, The Karfell Rocker, Rinta, Cousin of Sitka, The Clever Magician, The Misty Stepper
   (UNK blue rares).**
   - The Clever Magician: Forge can't make a proposed rule true and the AI can't weigh one, so a proposal is always
