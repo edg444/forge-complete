@@ -34,7 +34,13 @@ public class GuessInvaderEffect extends SpellAbilityEffect {
             if (!guesser.isInGame()) {
                 continue;
             }
-            final Card guess = guesser.getController().chooseSingleEntityForEffect(creatures, sa,
+            // The Fact Checker: the guesser just chooses how it comes out - right means picking one of the invaders
+            final Boolean outcome = forge.game.staticability.StaticAbilityChooseGuessOutcome.chosenOutcome(guesser, sa);
+            final CardCollection invaders = CardLists.filter(creatures, owner::isInvader);
+            if (outcome != null && (!outcome || invaders.isEmpty())) {
+                continue;
+            }
+            final Card guess = guesser.getController().chooseSingleEntityForEffect(outcome != null ? invaders : creatures, sa,
                     "Call one of " + owner + "'s creatures an invader (or don't guess)", true, null);
             if (guess == null) {
                 continue;

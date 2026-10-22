@@ -51,12 +51,14 @@ public class TriviaGuessEffect extends SpellAbilityEffect {
         final Player guesser = p.getOpponents().size() == 1 ? p.getOpponents().get(0)
                 : p.getController().chooseSingleEntityForEffect(p.getOpponents(), sa, "Choose an opponent to guess", null);
         sa.setSVar("TriviaCategory", category);
-        final int guess = guesser.getController().chooseNumber(sa, "Guess the " + category.toLowerCase() + " of "
-                + card.getName(), 0, 20);
-
-        game.getAction().reveal(new CardCollection(card), p, true);
         final int actual = POWER.equals(category) ? card.getNetPower()
                 : TOUGHNESS.equals(category) ? card.getNetToughness() : card.getCMC();
+        // The Fact Checker: the guesser just chooses how it comes out
+        final Boolean outcome = forge.game.staticability.StaticAbilityChooseGuessOutcome.chosenOutcome(guesser, sa);
+        final int guess = outcome != null ? (outcome ? actual : actual + 1)
+                : guesser.getController().chooseNumber(sa, "Guess the " + category.toLowerCase() + " of " + card.getName(), 0, 20);
+
+        game.getAction().reveal(new CardCollection(card), p, true);
         game.getGameLog().add(GameLogEntryType.INFORMATION, guesser + " guesses " + guess + " for the "
                 + category.toLowerCase() + " of " + card.getName() + "; it's " + actual + ".");
         if (guess != actual) {

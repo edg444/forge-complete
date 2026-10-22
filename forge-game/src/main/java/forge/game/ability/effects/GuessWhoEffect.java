@@ -78,7 +78,11 @@ public class GuessWhoEffect extends SpellAbilityEffect {
                     game.getAction().notifyOfValue(sa, opp, "Question " + i + ": " + q.text() + " " + (yes ? "Yes." : "No."), null);
                 }
                 final String guess;
-                if (opp.getController().isAI()) {
+                // The Fact Checker: the guesser just chooses how it comes out
+                final Boolean outcome = forge.game.staticability.StaticAbilityChooseGuessOutcome.chosenOutcome(opp, sa);
+                if (outcome != null) {
+                    guess = outcome ? chosen.getName() : "";
+                } else if (opp.getController().isAI()) {
                     guess = possible.isEmpty() ? "" : likeliest(possible);
                 } else {
                     guess = opp.getController().chooseCardName(sa, f -> true, "Card", "Name the chosen creature card");

@@ -56,8 +56,10 @@ public class GuessNameEffect extends SpellAbilityEffect {
                     "Say the flavor text on " + hidden.getName() + ":\n\n\"" + flavor + "\"");
         }
 
-        final String guess = guesser.getController().guessString(sa,
-                "\"" + flavor + "\"\n\nName the card that flavor text is on");
+        // The Fact Checker: the guesser just chooses how it comes out
+        final Boolean outcome = forge.game.staticability.StaticAbilityChooseGuessOutcome.chosenOutcome(guesser, sa);
+        final String guess = outcome != null ? (outcome ? hidden.getName() : "")
+                : guesser.getController().guessString(sa, "\"" + flavor + "\"\n\nName the card that flavor text is on");
         final boolean correct = guess != null && guess.trim().equalsIgnoreCase(hidden.getName().trim());
 
         // name the guess, not just the verdict - "Not it." alone gives away nothing about what was

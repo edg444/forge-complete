@@ -1,0 +1,11 @@
+Name:The Beleaguered Boxer
+ManaCost:W U B R G
+Types:Legendary Creature Human Warrior
+PT:6/6
+# honor system: it can be your commander (user ruling 2026-10-22)
+Text:The Beleaguered Boxer can't be your Commander unless your deck is 100 cards and originally built out of no more than 36 booster packs, plus basic lands.
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigOpen | TriggerDescription$ When CARDNAME enters the battlefield, open a Magic booster pack. Remove up to three cards in your hand or graveyard from your deck permanently. For each card removed this way, add a card from that pack to your hand. Those cards are now permanently part of your deck.
+# the removed cards are exiled for the rest of the match, and the saved deck swaps them for the pack cards (user
+# ruling 2026-10-22)
+SVar:TrigOpen:DB$ OpenBooster | Defined$ You | Swap$ 3
+Oracle:The Beleaguered Boxer can't be your Commander unless your deck is 100 cards and originally built out of no more than 36 booster packs, plus basic lands.\nWhen The Beleaguered Boxer enters the battlefield, open a Magic booster pack. Remove up to three cards in your hand or graveyard from your deck permanently. For each card removed this way, add a card from that pack to your hand. Those cards are now permanently part of your deck.

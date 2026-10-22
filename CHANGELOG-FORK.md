@@ -316,6 +316,21 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   (`UI_ZONE_TABS_LEFT`) is gone; upstream restored its own setting of that name (`UI_ALT_PLAYERZONETABS`), and the two
   showed with the same label. Hand, Library, Graveyard and Exile tabs are on the right edge, as upstream has them.
 
+- **Unknown Event: Blue Screen of Death, The Snapstone Wielder, Welcome to Australia, The Sprinkler of Stardust, The
+  Fact Checker, The Convention Enthusiast, The Policy Maker, The Beleaguered Boxer, The Multiplayer Nitpickers (UNK
+  rares).**
+  - `Count$ActivePrioritySeconds`: real seconds the active player has held priority this turn.
+  - SVars `NoLandsCommanderEffect` / `NoLandsHandSize`: for a commander whose deck has no land cards, as the game
+    begins. Play `AnySupportedCard$ Nonland` and `RandomTargets$` (targets picked at random, as High Troller's).
+  - New effect `ReverseLibraries` (each library's order reversed).
+  - New static `ChooseGuessOutcome`: guessing a card (name, artist, Guess Who, trivia, invaders, the Actualizer's
+    lie) is just choosing how it comes out. New effect `FactCheck`.
+  - New effect `ProposeRule`: a random rule from real cards that affect every player (the Policy Maker's 15, each with
+    its source card), applied if every player agrees.
+  - OpenBooster `Swap$ N` and `Match.swapInDeck`: cards leave the deck for the match and the saved deck file.
+  - New static `PhantomPlayer`: player and opponent counts are one higher, and "for each player/opponent" repeats
+    (RepeatEach, CopyPermanent `ForEach$`) run once more for a phantom who does nothing.
+
 - **Unknown Event: Need for Speed (Not the Odyssey One), Blu, Mansion Prince, Slobad, Actually Just Fine, The Octopus
   Official, Syx, Robot Overlord, The Actualizer, The Good Time Sleuth, The Meld Hound, X, Mystery Racer (UNK
   rares).**

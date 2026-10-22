@@ -3257,6 +3257,24 @@ public class GameAction {
                     takesAction.setMaxHandSize(Integer.parseInt(mono[1]));
                 }
             }
+            // The Snapstone Wielder: as your commander, with no land cards in your deck, your starting hand size is
+            // NoLandsHandSize and NoLandsCommanderEffect (its mana counters) applies for the rest of the game
+            for (Card c : takesAction.getCardsIn(ZoneType.Command)) {
+                if (!c.isCommander() || !c.hasSVar("NoLandsCommanderEffect")) {
+                    continue;
+                }
+                final CardCollection deck = new CardCollection(takesAction.getCardsIn(ZoneType.Library));
+                deck.addAll(CardLists.filter(takesAction.getCardsIn(ZoneType.Command), Card::isCommander));
+                if (deck.anyMatch(Card::isLand)) {
+                    continue;
+                }
+                if (c.hasSVar("NoLandsHandSize")) {
+                    takesAction.setStartingHandSize(Integer.parseInt(c.getSVar("NoLandsHandSize")));
+                }
+                final SpellAbility effect = AbilityFactory.getAbility(c.getSVar("NoLandsCommanderEffect"), c);
+                effect.setActivatingPlayer(takesAction);
+                AbilityUtils.resolve(effect);
+            }
             // Unknown Event: a deck with a card that cares about a team joins one now, if not already this match
             forge.game.ability.effects.ChooseTeamEffect.chooseForDeck(takesAction, all);
             // Common Curve Filler: a number written in during deckbuilding is chosen now and kept all game

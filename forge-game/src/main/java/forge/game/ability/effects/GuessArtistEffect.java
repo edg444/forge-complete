@@ -45,7 +45,9 @@ public class GuessArtistEffect extends SpellAbilityEffect {
         }
         final Player guesser = guessers.get(0);
 
-        final String guess = guesser.getController().guessString(sa,
+        // The Fact Checker: the guesser just chooses how it comes out
+        final Boolean outcome = forge.game.staticability.StaticAbilityChooseGuessOutcome.chosenOutcome(guesser, sa);
+        final String guess = outcome != null ? (outcome ? actualArtist : "") : guesser.getController().guessString(sa,
                 Localizer.getInstance().getMessage("lblNameACard") + " - " + revealed.getName() + ": guess the artist");
         final boolean correct = !actualArtist.isEmpty() && guess != null && guess.trim().equalsIgnoreCase(actualArtist.trim());
 

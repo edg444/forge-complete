@@ -77,6 +77,12 @@ public class ActualizeEffect extends SpellAbilityEffect {
 
         final Map<Player, String> guesses = new LinkedHashMap<>();
         for (final Player opp : p.getOpponents()) {
+            // The Fact Checker: the guesser just chooses how it comes out
+            final Boolean outcome = forge.game.staticability.StaticAbilityChooseGuessOutcome.chosenOutcome(opp, sa);
+            if (outcome != null) {
+                guesses.put(opp, outcome ? lied : PARTS.stream().filter(x -> !x.equals(lied)).findFirst().orElse(lied));
+                continue;
+            }
             guesses.put(opp, opp.getController().isAI() ? Aggregates.random(PARTS)
                     : opp.getController().chooseSomeType("lie (which one is incorrect?)", sa, PARTS));
         }

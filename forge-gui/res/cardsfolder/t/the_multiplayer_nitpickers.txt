@@ -1,0 +1,8 @@
+Name:The Multiplayer Nitpickers
+ManaCost:W U B
+Types:Legendary Creature Human Wizard
+PT:4/3
+# counts of players and opponents are one higher, and "for each player/opponent" repeats run once more for a phantom
+# who does nothing (StaticAbilityPhantomPlayer, user ruling 2026-10-22)
+S:Mode$ PhantomPlayer | ValidPlayer$ You | Description$ Treat your effects that scale off of "players" or "opponents" as though there were one more. (For example, with myriad you'd make an additional token that's just attacking nobody, and with Braids, Arisen Nightmare, you'd draw an additional card.)
+Oracle:Treat your effects that scale off of "players" or "opponents" as though there were one more. (For example, with myriad you'd make an additional token that's just attacking nobody, and with Braids, Arisen Nightmare, you'd draw an additional card.)

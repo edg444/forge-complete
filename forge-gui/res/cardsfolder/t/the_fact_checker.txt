@@ -1,0 +1,11 @@
+Name:The Fact Checker
+ManaCost:1 W U
+Types:Legendary Creature Human Wizard
+PT:3/3
+S:Mode$ ChooseGuessOutcome | ValidPlayer$ You | Description$ If you would guess a card, instead just choose the outcome you want.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ Opponent | TriggerZones$ Battlefield | Execute$ TrigCheck | TriggerDescription$ At the beginning of each opponent's upkeep, look at the top card of their library. Tell them the name of that card. They tell you its mana cost, type line, power, and toughness. Then reveal that card. If they got anything wrong, draw a card.
+# they pick each answer from the real one and plausible others (FactCheck, user ruling 2026-10-22)
+SVar:TrigCheck:DB$ FactCheck | Defined$ TriggeredPlayer | SubAbility$ DBDraw
+SVar:DBDraw:DB$ Draw | ConditionCheckSVar$ FactWrong | ConditionSVarCompare$ EQ1
+SVar:FactWrong:Number$0
+Oracle:If you would guess a card, instead just choose the outcome you want.\nAt the beginning of each opponent's upkeep, look at the top card of their library. Tell them the name of that card. They tell you its mana cost, type line, power, and toughness. Then reveal that card. If they got anything wrong, draw a card.

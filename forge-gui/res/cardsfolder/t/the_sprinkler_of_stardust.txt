@@ -1,0 +1,13 @@
+Name:The Sprinkler of Stardust
+ManaCost:2 R W
+Types:Legendary Creature Human Warrior
+PT:4/4
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigDig | TriggerDescription$ Whenever CARDNAME attacks, look at the top six cards of your library. You may put an instant or sorcery card from among them onto the battlefield tapped and attacking. It becomes a 2/2 creature with "Whenever this deals combat damage to an opponent, cast a copy of this card." (The 2/2 creature stays on the battlefield.) Put the rest of the cards on the bottom of your library in a random order.
+SVar:TrigDig:DB$ Dig | DigNum$ 6 | ChangeNum$ 1 | Optional$ True | ChangeValid$ Instant,Sorcery | DestinationZone$ Battlefield | Tapped$ True | AllowNonPermanent$ True | RememberChanged$ True | DestinationZone2$ Library | LibraryPosition2$ -1 | RestRandomOrder$ True | SubAbility$ DBAnimate
+# it's a creature only once it's on the battlefield, so it joins the attack after becoming one
+SVar:DBAnimate:DB$ Animate | Defined$ Remembered | Power$ 2 | Toughness$ 2 | Types$ Creature | Triggers$ TrigCopy | Duration$ Permanent | SubAbility$ DBAttack
+SVar:TrigCopy:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Opponent | CombatDamage$ True | Execute$ TrigCast | TriggerDescription$ Whenever this deals combat damage to an opponent, cast a copy of this card.
+SVar:TrigCast:DB$ Play | Defined$ Self | CopyCard$ True | ZoneRegardless$ True | ValidSA$ Spell | Controller$ You
+SVar:DBAttack:DB$ JoinAttack | Defined$ Remembered | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Whenever The Sprinkler of Stardust attacks, look at the top six cards of your library. You may put an instant or sorcery card from among them onto the battlefield tapped and attacking. It becomes a 2/2 creature with "Whenever this deals combat damage to an opponent, cast a copy of this card." (The 2/2 creature stays on the battlefield.) Put the rest of the cards on the bottom of your library in a random order.

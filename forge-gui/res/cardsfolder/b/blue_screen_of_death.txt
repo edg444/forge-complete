@@ -1,0 +1,14 @@
+Name:Blue Screen of Death
+ManaCost:4 U B
+Types:Legendary Instant Artifact Enchantment
+Text:(It's like flash but more card types.)
+K:etbCounter:CURSE:108
+A:AB$ RemoveCounter | Cost$ 1 | Defined$ Self | CounterType$ CURSE | CounterNum$ 1 | SpellDescription$ Remove a curse counter from CARDNAME.
+# real seconds with priority, summed over the active player's turn (Player.getPrioritySecondsThisTurn; user ruling
+# 2026-10-22: paused with the game, and the AI's time counts)
+T:Mode$ Always | TriggerZones$ Battlefield | CheckSVar$ X | SVarCompare$ GTY | Execute$ TrigCrash | TriggerDescription$ Whenever a player spends more seconds with priority during their turn than the number of curse counters on CARDNAME, sacrifice it and they lose 6 life.
+SVar:TrigCrash:DB$ Sacrifice | SacValid$ Self | SubAbility$ DBLose
+SVar:DBLose:DB$ LoseLife | Defined$ ActivePlayer | LifeAmount$ 6
+SVar:X:Count$ActivePrioritySeconds
+SVar:Y:Count$CardCounters.CURSE
+Oracle:(It's like flash but more card types.)\nBlue Screen of Death enters with 108 curse counters.\n{1}: Remove a curse counter from Blue Screen of Death.\nWhenever a player spends more seconds with priority during their turn than the number of curse counters on Blue Screen of Death, sacrifice it and they lose 6 life.

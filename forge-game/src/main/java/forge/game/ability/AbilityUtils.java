@@ -511,6 +511,11 @@ public class AbilityUtils {
             } else {
                 val = 0;
             }
+            // The Multiplayer Nitpickers: one more player or opponent to count
+            if (calcX[1].startsWith("Amount") && (hType.isEmpty() || hType.equals("Players") || hType.equals("Opponents")
+                    || hType.equals("RegisteredOpponents") || hType.equals("Other")) && forge.game.staticability.StaticAbilityPhantomPlayer.applies(player)) {
+                val = doXMath(players.size() + 1, CardFactoryUtil.extractOperators(calcX[1]), card, ability);
+            }
         } else if (calcX[0].equals("OriginalHost")) {
             val = xCount(ability.getOriginalHost(), calcX[1], ability);
         } else if (calcX[0].equals("DungeonsCompleted")) {
@@ -2497,6 +2502,10 @@ public class AbilityUtils {
         // The Playful Winners: tally marks drawn on the card
         if (sq[0].equals("TallyMarks")) {
             return doXMath(c.getTallyMarks(), expr, c, ctb);
+        }
+        // Blue Screen of Death: whole seconds the active player has held priority during this turn
+        if (sq[0].equals("ActivePrioritySeconds")) {
+            return doXMath(c.getGame().getPhaseHandler().getPlayerTurn().getPrioritySecondsThisTurn(), expr, c, ctb);
         }
         // Shahrazad and Sindbad: subgames played this match
         if (sq[0].equals("SubgamesThisMatch")) {

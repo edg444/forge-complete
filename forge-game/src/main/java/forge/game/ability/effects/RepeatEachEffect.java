@@ -194,6 +194,14 @@ public class RepeatEachEffect extends SpellAbilityEffect {
                     source.addRemembered(tempRemembered);
                 }
             }
+            // The Multiplayer Nitpickers: once more, for a phantom player who does nothing
+            if (!optional && !nextTurn && forge.game.staticability.StaticAbilityPhantomPlayer.scalesOffPlayers(sa.getParam("RepeatPlayers"))
+                    && forge.game.staticability.StaticAbilityPhantomPlayer.applies(sa.getActivatingPlayer())) {
+                List<Object> tempRemembered = Lists.newArrayList(IterableUtil.filter(source.getRemembered(), Player.class));
+                source.removeRemembered(tempRemembered);
+                AbilityUtils.resolve(repeat);
+                source.addRemembered(tempRemembered);
+            }
         }
 
         if (sa.hasParam("DamageMap")) {

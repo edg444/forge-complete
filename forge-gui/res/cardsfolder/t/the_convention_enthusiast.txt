@@ -1,0 +1,24 @@
+Name:The Convention Enthusiast
+ManaCost:W U B R G
+Types:Legendary Creature Human Gamer
+PT:5/5
+Text:As long as this creature is your commander, you may play cards from any game in your deck as long as they can be reasonably translated into Magic. They all fit within this Commander's color identity.
+# a resource is mana, a counter on you, or a resource token (user ruling 2026-10-22); the mana is its own mana
+# ability so it can pay for spells (user ruling 2026-10-22)
+A:AB$ Mana | Cost$ 1 | Produced$ Any | SpellDescription$ Create one resource of any type. (Mana or otherwise.)
+A:AB$ GenericChoice | Cost$ 1 | Choices$ DBTreasure,DBClue,DBFood,DBBlood,DBGold,DBPowerstone,DBMap,DBJunk,DBLander,DBShard,DBEnergy,DBExperience,DBTicket | Defined$ You | SpellDescription$ Create one resource of any type. (Mana or otherwise.)
+SVar:DBTreasure:DB$ Token | TokenScript$ c_a_treasure_sac | SpellDescription$ A Treasure token
+SVar:DBClue:DB$ Token | TokenScript$ c_a_clue_draw | SpellDescription$ A Clue token
+SVar:DBFood:DB$ Token | TokenScript$ c_a_food_sac | SpellDescription$ A Food token
+SVar:DBBlood:DB$ Token | TokenScript$ c_a_blood_draw | SpellDescription$ A Blood token
+SVar:DBGold:DB$ Token | TokenScript$ c_a_gold_sac | SpellDescription$ A Gold token
+SVar:DBPowerstone:DB$ Token | TokenScript$ c_a_powerstone | SpellDescription$ A Powerstone token
+SVar:DBMap:DB$ Token | TokenScript$ c_a_map_sac_explore | SpellDescription$ A Map token
+SVar:DBJunk:DB$ Token | TokenScript$ c_a_junk_sac_exileplay | SpellDescription$ A Junk token
+SVar:DBLander:DB$ Token | TokenScript$ c_a_lander_sac_search | SpellDescription$ A Lander token
+SVar:DBShard:DB$ Token | TokenScript$ c_e_shard_draw | SpellDescription$ A Shard token
+SVar:DBEnergy:DB$ PutCounter | Defined$ You | CounterType$ ENERGY | CounterNum$ 1 | SpellDescription$ An energy counter
+SVar:DBExperience:DB$ PutCounter | Defined$ You | CounterType$ EXPERIENCE | CounterNum$ 1 | SpellDescription$ An experience counter
+SVar:DBTicket:DB$ PutCounter | Defined$ You | CounterType$ TICKET | CounterNum$ 1 | SpellDescription$ A ticket counter
+DeckHas:Ability$Token|Counters|Sacrifice & Type$Treasure|Clue|Food|Blood|Gold|Powerstone|Map|Junk|Lander|Shard
+Oracle:As long as this creature is your commander, you may play cards from any game in your deck as long as they can be reasonably translated into Magic. They all fit within this Commander's color identity.\n{1}: Create one resource of any type. (Mana or otherwise.)

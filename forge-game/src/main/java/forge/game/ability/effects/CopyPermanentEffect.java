@@ -259,6 +259,11 @@ public class CopyPermanentEffect extends TokenEffectBase {
                         proto.addRemembered(p);
                         tokenTable.put(controller, proto, numCopies);
                     }
+                    // The Multiplayer Nitpickers: one more, for a phantom opponent - it attacks nobody
+                    if (forge.game.staticability.StaticAbilityPhantomPlayer.scalesOffPlayers(sa.getParam("ForEach"))
+                            && forge.game.staticability.StaticAbilityPhantomPlayer.applies(activator)) {
+                        tokenTable.put(controller, getProtoType(sa, c, controller), numCopies);
+                    }
                 } else {
                     tokenTable.put(controller, getProtoType(sa, c, controller), numCopies);
                 }

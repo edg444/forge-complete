@@ -43,6 +43,10 @@ public class OpenBoosterEffect extends SpellAbilityEffect {
             openFromContainer(sa);
             return;
         }
+        if (sa.hasParam("Swap")) {
+            openAndSwap(sa);
+            return;
+        }
         final Card host = sa.getHostCard();
         final Game game = host.getGame();
         final String setCode = host.getChosenExpansion();
@@ -120,6 +124,68 @@ public class OpenBoosterEffect extends SpellAbilityEffect {
                     "Put a card from the " + setCode + " pack into your hand", false, null);
             if (kept != null) {
                 game.getAction().moveTo(ZoneType.Hand, kept, sa, AbilityKey.newMap());
+            }
+        }
+    }
+
+    /**
+     * The Beleaguered Boxer: the player opens a pack of a set they pick (the AI's is random), removes up to Swap$ cards
+     * in their hand or graveyard from their deck for good - exiled for the rest of the match - and puts that many cards
+     * from the pack into their hand, now part of the deck (Match.swapInDeck). The rest of the pack stays out of the game.
+     */
+    private static void openAndSwap(final SpellAbility sa) {
+        final Card host = sa.getHostCard();
+        final Game game = host.getGame();
+        final int max = Integer.parseInt(sa.getParam("Swap"));
+        for (final Player p : getDefinedPlayersOrTargeted(sa)) {
+            final Map<String, String> byLabel = new java.util.LinkedHashMap<>();
+            for (final String code : boosterSetCodes()) {
+                final CardEdition ed = StaticData.instance().getEditions().get(code);
+                byLabel.put((ed == null ? code : ed.getName()) + " (" + code + ")", code);
+            }
+            if (byLabel.isEmpty()) {
+                continue;
+            }
+            final List<String> labels = new java.util.ArrayList<>(byLabel.keySet());
+            final String label = p.getController().isAI() ? forge.util.Aggregates.random(labels)
+                    : p.getController().chooseSomeType("Magic set", sa, labels);
+            if (label == null) {
+                continue;
+            }
+            final String setCode = byLabel.get(label);
+            final CardCollection pack = new CardCollection();
+            for (final PaperCard pc : openPack(setCode)) {
+                pack.add(Card.fromPaperCard(pc, p));
+            }
+            if (pack.isEmpty()) {
+                continue;
+            }
+            final List<String> names = new java.util.ArrayList<>();
+            pack.forEach(c -> names.add(c.getName()));
+            game.getAction().notifyOfValue(sa, p, p + " opens a " + setCode + " booster pack: " + String.join(", ", names), null);
+
+            final CardCollection removable = new CardCollection();
+            for (final Card c : p.getCardsIn(java.util.EnumSet.of(ZoneType.Hand, ZoneType.Graveyard))) {
+                if (c.getOwner().equals(p) && !c.isToken() && c.getPaperCard() != null) {
+                    removable.add(c);
+                }
+            }
+            final CardCollection removed = new CardCollection(p.getController().chooseCardsForEffect(removable, sa,
+                    "Remove up to " + max + " cards in your hand or graveyard from your deck permanently", 0,
+                    Math.min(max, Math.min(removable.size(), pack.size())), true, null));
+            final List<Card> taken = new java.util.ArrayList<>();
+            if (!removed.isEmpty()) {
+                taken.addAll(p.getController().chooseCardsForEffect(pack, sa,
+                        "Add " + removed.size() + " cards from the pack to your hand", removed.size(), removed.size(), false, null));
+            }
+            for (int i = 0; i < removed.size() && i < taken.size(); i++) {
+                final Card out = removed.get(i);
+                final Card in = taken.get(i);
+                if (in.getPaperCard() instanceof PaperCard added) {
+                    game.getMatch().swapInDeck(out, added);
+                }
+                game.getAction().exile(out, sa, AbilityKey.newMap());
+                game.getAction().moveTo(ZoneType.Hand, in, sa, AbilityKey.newMap());
             }
         }
     }

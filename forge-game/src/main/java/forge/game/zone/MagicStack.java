@@ -231,7 +231,8 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
 
         // High Troller: targets are chosen at random. The controller's choices only decided how many there are; costs
         // depended only on having targets, so picking them here, before anything sees them, comes to the same thing
-        if (si == null && !sp.isManaAbility() && !sp.isCopied() && StaticAbilityRandomTargets.applies(sp)) {
+        if (si == null && !sp.isManaAbility() && !sp.isCopied()
+                && (StaticAbilityRandomTargets.applies(sp) || sp.hasParam("RandomTargets"))) {
             StaticAbilityRandomTargets.randomizeTargets(sp);
         }
 

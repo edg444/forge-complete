@@ -1,0 +1,14 @@
+Name:Welcome to Australia
+ManaCost:2 R G
+Types:World Enchantment
+K:MayEffectFromOpeningHand:FromHand
+SVar:FromHand:DB$ ChangeZone | Defined$ Self | Origin$ Hand | Destination$ Battlefield | SpellDescription$ If this card is in your opening hand, you may begin the game with it on the battlefield.
+S:Mode$ Continuous | Affected$ Creature.nonHuman | AddKeyword$ Deathtouch | Description$ Non-Human creatures have deathtouch.
+S:Mode$ Continuous | Affected$ Creature | AddHiddenKeyword$ CARDNAME's power and toughness are switched | Description$ Powers and toughnesses are reversed.
+# the libraries are flipped while it's out, and flipped back once it leaves; each library's new top card is face up
+# (user ruling 2026-10-22)
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Static$ True | Execute$ TrigFlip | TriggerDescription$ Players flip their libraries over and draw from the new top. (No peeking at cards below!)
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Static$ True | Execute$ TrigFlip | Secondary$ True | TriggerDescription$ When CARDNAME leaves the battlefield, players flip their libraries back over.
+SVar:TrigFlip:DB$ ReverseLibraries
+S:Mode$ Continuous | Affected$ Card.TopLibrary | AffectedZone$ Library | MayLookAt$ Player | Secondary$ True | Description$ Each library's top card is face up.
+Oracle:If this card is in your opening hand, you may begin the game with it on the battlefield.\nNon-Human creatures have deathtouch.\nPowers and toughnesses are reversed.\nPlayers flip their libraries over and draw from the new top. (No peeking at cards below!)

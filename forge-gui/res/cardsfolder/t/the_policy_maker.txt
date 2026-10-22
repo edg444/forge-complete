@@ -1,0 +1,46 @@
+Name:The Policy Maker
+ManaCost:1 W B
+Types:Legendary Creature Human Judge
+PT:3/3
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPropose | TriggerDescription$ Whenever CARDNAME enters or attacks, ask a player outside the game to propose a new rule. If each player in the game agrees to the rule, apply it for the rest of the game. If an opponent doesn't agree to the rule, put a +1/+1 counter on CARDNAME.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPropose | Secondary$ True | TriggerDescription$ Whenever CARDNAME enters or attacks, ask a player outside the game to propose a new rule. If each player in the game agrees to the rule, apply it for the rest of the game. If an opponent doesn't agree to the rule, put a +1/+1 counter on CARDNAME.
+# the proposed rule is a random one of these, each the wording of a real card that affects every player (source in
+# parentheses, Oracle text checked on Scryfall 2026-10-22; user ruling 2026-10-22)
+SVar:TrigPropose:DB$ ProposeRule | Rules$ RuleHaste,RuleNoLife,RuleOneSpell,RuleExtraDraw,RuleLegendary,RuleMountains,RuleMoat,RuleTorpor,RuleTotem,RuleExile,RuleWhite,RuleBlack,RuleMana,RuleTax,RuleTapped | SubAbility$ DBCounter
+SVar:DBCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1 | ConditionCheckSVar$ PolicyRejected | ConditionSVarCompare$ EQ1
+SVar:PolicyRejected:Number$0
+SVar:RuleHaste:DB$ Effect | Name$ Policy - Haste | StaticAbilities$ SHaste | Duration$ Permanent | SpellDescription$ All creatures have haste. (Concordant Crossroads)
+SVar:SHaste:Mode$ Continuous | Affected$ Creature | AddKeyword$ Haste | Description$ All creatures have haste.
+SVar:RuleNoLife:DB$ Effect | Name$ Policy - No Life Gain | ReplacementEffects$ RNoLife | Duration$ Permanent | SpellDescription$ If a player would gain life, that player gains no life instead. (Sulfuric Vortex)
+SVar:RNoLife:Event$ GainLife | ActiveZones$ Command | Prevent$ True | Description$ If a player would gain life, that player gains no life instead.
+SVar:RuleOneSpell:DB$ Effect | Name$ Policy - One Spell | StaticAbilities$ SOneSpell | Duration$ Permanent | SpellDescription$ Each player can't cast more than one spell each turn. (Rule of Law)
+SVar:SOneSpell:Mode$ CantBeCast | ValidCard$ Card | Caster$ Player | NumLimitEachTurn$ 1 | Description$ Each player can't cast more than one spell each turn.
+SVar:RuleExtraDraw:DB$ Effect | Name$ Policy - Extra Draw | Triggers$ TExtraDraw | Duration$ Permanent | SpellDescription$ At the beginning of each player's draw step, that player draws an additional card. (Kami of the Crescent Moon)
+SVar:TExtraDraw:Mode$ Phase | Phase$ Draw | ValidPlayer$ Player | TriggerZones$ Command | Execute$ DBExtraDraw | TriggerDescription$ At the beginning of each player's draw step, that player draws an additional card.
+SVar:DBExtraDraw:DB$ Draw | Defined$ TriggeredPlayer
+SVar:RuleLegendary:DB$ Effect | Name$ Policy - Legendary | StaticAbilities$ SLegendary | Duration$ Permanent | SpellDescription$ All nonland permanents are legendary. (Leyline of Singularity)
+SVar:SLegendary:Mode$ Continuous | Affected$ Permanent.nonLand | AddType$ Legendary | Description$ All nonland permanents are legendary.
+SVar:RuleMountains:DB$ Effect | Name$ Policy - Mountains | StaticAbilities$ SMountains | Duration$ Permanent | SpellDescription$ Nonbasic lands are Mountains. (Blood Moon)
+SVar:SMountains:Mode$ Continuous | Affected$ Land.nonBasic | AddType$ Mountain | RemoveLandTypes$ True | Description$ Nonbasic lands are Mountains.
+SVar:RuleMoat:DB$ Effect | Name$ Policy - Moat | StaticAbilities$ SMoat | Duration$ Permanent | SpellDescription$ Creatures without flying can't attack. (Moat)
+SVar:SMoat:Mode$ CantAttack | ValidCard$ Creature.withoutFlying | Description$ Creatures without flying can't attack.
+SVar:RuleTorpor:DB$ Effect | Name$ Policy - Torpor | StaticAbilities$ STorpor | Duration$ Permanent | SpellDescription$ Creatures entering don't cause abilities to trigger. (Torpor Orb)
+SVar:STorpor:Mode$ DisableTriggers | ValidCause$ Creature | ValidMode$ ChangesZone,ChangesZoneAll | Destination$ Battlefield | Description$ Creatures entering don't cause abilities to trigger.
+SVar:RuleTotem:DB$ Effect | Name$ Policy - Totem | StaticAbilities$ STotem | Duration$ Permanent | SpellDescription$ Activated abilities of creatures can't be activated. (Cursed Totem)
+SVar:STotem:Mode$ CantBeActivated | Activator$ Player | AffectedZone$ Battlefield | ValidCard$ Creature | ValidSA$ Activated | Description$ Activated abilities of creatures can't be activated.
+SVar:RuleExile:DB$ Effect | Name$ Policy - Rest | ReplacementEffects$ RExile | Duration$ Permanent | SpellDescription$ If a card or token would be put into a graveyard from anywhere, exile it instead. (Rest in Peace)
+SVar:RExile:Event$ Moved | ActiveZones$ Command | Destination$ Graveyard | ValidCard$ Card | ReplaceWith$ DBExile | Description$ If a card or token would be put into a graveyard from anywhere, exile it instead.
+SVar:DBExile:DB$ ChangeZone | Hidden$ True | Origin$ All | Destination$ Exile | Defined$ ReplacedCard
+SVar:RuleWhite:DB$ Effect | Name$ Policy - Crusade | StaticAbilities$ SWhite | Duration$ Permanent | SpellDescription$ White creatures get +1/+1. (Crusade)
+SVar:SWhite:Mode$ Continuous | Affected$ Creature.White | AddPower$ 1 | AddToughness$ 1 | Description$ White creatures get +1/+1.
+SVar:RuleBlack:DB$ Effect | Name$ Policy - Bad Moon | StaticAbilities$ SBlack | Duration$ Permanent | SpellDescription$ Black creatures get +1/+1. (Bad Moon)
+SVar:SBlack:Mode$ Continuous | Affected$ Creature.Black | AddPower$ 1 | AddToughness$ 1 | Description$ Black creatures get +1/+1.
+SVar:RuleMana:DB$ Effect | Name$ Policy - Upwelling | StaticAbilities$ SMana | Duration$ Permanent | SpellDescription$ Players don't lose unspent mana as steps and phases end. (Upwelling)
+SVar:SMana:Mode$ UnspentMana | Description$ Players don't lose unspent mana as steps and phases end.
+SVar:RuleTax:DB$ Effect | Name$ Policy - Sphere | StaticAbilities$ STax | Duration$ Permanent | SpellDescription$ Spells cost {1} more to cast. (Sphere of Resistance)
+SVar:STax:Mode$ RaiseCost | ValidCard$ Card | Type$ Spell | Amount$ 1 | Description$ Spells cost {1} more to cast.
+SVar:RuleTapped:DB$ Effect | Name$ Policy - Root Maze | ReplacementEffects$ RTapped | Duration$ Permanent | SpellDescription$ Artifacts and lands enter tapped. (Root Maze)
+SVar:RTapped:Event$ Moved | ValidCard$ Artifact,Land | Destination$ Battlefield | ReplaceWith$ DBETBTapped | ReplacementResult$ Updated | ActiveZones$ Command | Description$ Artifacts and lands enter tapped.
+SVar:DBETBTapped:DB$ Tap | ETB$ True | Defined$ ReplacedCard
+DeckHas:Ability$Counters
+Oracle:Whenever The Policy Maker enters or attacks, ask a player outside the game to propose a new rule. If each player in the game agrees to the rule, apply it for the rest of the game. If an opponent doesn't agree to the rule, put a +1/+1 counter on The Policy Maker.

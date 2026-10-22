@@ -27,6 +27,10 @@ public enum StaticAbilityMode {
     PoisonTolerance,
     // Slobad, Actually Just Fine - see StaticAbilitySacrificeInterchangeably
     SacrificeInterchangeably,
+    // The Fact Checker - see StaticAbilityChooseGuessOutcome
+    ChooseGuessOutcome,
+    // The Multiplayer Nitpickers - see StaticAbilityPhantomPlayer
+    PhantomPlayer,
     // The Pleasant Taxer - see StaticAbilityActionTax
     ActionTax,
     ManaPaymentTax,

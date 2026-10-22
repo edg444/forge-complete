@@ -3315,6 +3315,12 @@ public class Player extends GameEntity implements Comparable<Player> {
 
     // Blue Screen of Death: real time this player has held priority during their current turn
     private long priorityNanosThisTurn = 0;
+    public void addPriorityNanosThisTurn(final long nanos) {
+        priorityNanosThisTurn += nanos;
+    }
+    public int getPrioritySecondsThisTurn() {
+        return (int) (priorityNanosThisTurn / 1_000_000_000L);
+    }
 
     // The Octopus Official: this player's active tournament, its piles of exiled cards (TournamentEffect)
     private java.util.List<java.util.List<Card>> tournament = null;
@@ -3323,12 +3329,6 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
     public void setTournament(final java.util.List<java.util.List<Card>> piles) {
         tournament = piles;
-    }
-    public void addPriorityNanosThisTurn(final long nanos) {
-        priorityNanosThisTurn += nanos;
-    }
-    public int getPrioritySecondsThisTurn() {
-        return (int) (priorityNanosThisTurn / 1_000_000_000L);
     }
 
     // Simic, Value Engine: lands that entered under this player's control and cards they drew during their own last

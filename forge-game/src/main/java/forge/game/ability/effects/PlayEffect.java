@@ -133,6 +133,10 @@ public class PlayEffect extends SpellAbilityEffect {
                 StaticData.instance().ensureAllCardsLoaded();
                 cards = cardDb.streamUniqueCards()
                         .filter(PaperCardPredicates.fromRules(CardRulesPredicates.IS_INSTANT));
+            } else if (valid.equalsIgnoreCase("nonland")) {
+                // The Snapstone Wielder: any nonland Magic card
+                StaticData.instance().ensureAllCardsLoaded();
+                cards = cardDb.streamUniqueCards().filter(pc -> !pc.getRules().getType().isLand());
             } else if (valid.startsWith("Type:")) {
                 // Twenty Lessons: "Type:Lesson" - every card with that type or subtype
                 final String type = valid.substring(5);
@@ -465,6 +469,10 @@ public class PlayEffect extends SpellAbilityEffect {
 
             if (sa.hasParam("Named")) {
                 tgtSA.setName(sa.getName());
+            }
+            // The Snapstone Wielder: its targets are chosen at random, as High Troller's (MagicStack.add)
+            if (sa.hasParam("RandomTargets")) {
+                tgtSA.putParam("RandomTargets", "True");
             }
 
             // can't be done later

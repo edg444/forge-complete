@@ -1,0 +1,16 @@
+Name:The Snapstone Wielder
+ManaCost:W U B R G
+Types:Legendary Creature Human Gamer
+PT:5/5
+# set up as the game begins (see GameAction): the hand size, and an effect with the mana counters, whose mana is free
+# mana of any color during your turns, up to your mana counters (user ruling 2026-10-22)
+SVar:NoLandsHandSize:4
+SVar:NoLandsCommanderEffect:DB$ Effect | Name$ Snapstone Mana | Triggers$ SnapUpkeep | Abilities$ SnapMana | Duration$ Permanent
+SVar:SnapUpkeep:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Command | Execute$ SnapCounter | TriggerDescription$ At the beginning of your upkeep, you get a mana counter.
+SVar:SnapCounter:DB$ PutCounter | Defined$ You | CounterType$ MANA | CounterNum$ 1
+SVar:SnapMana:AB$ Mana | Cost$ 0 | Produced$ Any | ActivationZone$ Command | PlayerTurn$ True | ActivationLimit$ Count$YourCountersMANA | SpellDescription$ During each of your turns, you can spend mana of any color equal to the number of mana counters you have.
+Text:If The Snapstone Wielder is your commander and your deck contains no land cards, your starting hand size is four and for the rest of the game, at the beginning of your upkeep, you get a mana counter. During each of your turns, you can spend mana of any color equal to the number of mana counters you have. (You want mana on opponent's turns, you're on your own. Who needs instant-speed interaction?)
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCast | TriggerDescription$ Whenever CARDNAME enters or attacks, cast a random nonland Magic card without paying its mana cost. If it has targets, choose the targets at random.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigCast | Secondary$ True | TriggerDescription$ Whenever CARDNAME enters or attacks, cast a random nonland Magic card without paying its mana cost. If it has targets, choose the targets at random.
+SVar:TrigCast:DB$ Play | AnySupportedCard$ Nonland | RandomCopied$ True | RandomNum$ 1 | CopyCard$ True | WithoutManaCost$ True | RandomTargets$ True | Controller$ You
+Oracle:If The Snapstone Wielder is your commander and your deck contains no land cards, your starting hand size is four and for the rest of the game, at the beginning of your upkeep, you get a mana counter. During each of your turns, you can spend mana of any color equal to the number of mana counters you have. (You want mana on opponent's turns, you're on your own. Who needs instant-speed interaction?)\nWhenever The Snapstone Wielder enters or attacks, cast a random nonland Magic card without paying its mana cost. If it has targets, choose the targets at random.

@@ -612,6 +612,29 @@ public class Match {
         writeOnCard(c, pc -> pc.copyWithTallyMarks(marks));
     }
 
+    /**
+     * The Beleaguered Boxer: {@code removed} leaves its owner's deck for good and {@code added} takes its place - for the
+     * rest of the match and in the saved deck (user ruling 2026-10-22). False if the card wasn't from that deck.
+     */
+    public boolean swapInDeck(final Card removed, final PaperCard added) {
+        if (!(removed.getPaperCard() instanceof PaperCard pc) || removed.getOwner() == null
+                || removed.getOwner().getRegisteredPlayer() == null) {
+            return false;
+        }
+        final Deck deck = removed.getOwner().getRegisteredPlayer().getDeck();
+        for (final Entry<DeckSection, CardPool> part : deck) {
+            if (part.getValue().count(pc) > 0) {
+                part.getValue().remove(pc, 1);
+                part.getValue().add(added, 1);
+                if (deckWrittenOn != null) {
+                    deckWrittenOn.written(deck, pc, added);
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void writeOnCard(final Card c, final java.util.function.UnaryOperator<PaperCard> change) {
         if (!(c.getPaperCard() instanceof PaperCard pc) || c.getOwner() == null || c.getOwner().getRegisteredPlayer() == null) {
             return;
