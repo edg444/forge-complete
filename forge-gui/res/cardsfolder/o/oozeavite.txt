@@ -1,0 +1,23 @@
+Name:Oozeavite
+ManaCost:4 G
+Types:Creature Ooze
+PT:0/0
+# Each keyword counter is also a +1/+1 counter: they're kept as pairs, a keyword counter and a +1/+1 counter, and a
+# pair moves as the one counter (my call)
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplaceWith$ DBVigilance | ReplacementResult$ Updated | Description$ CARDNAME enters with each of a vigilance, reach, trample, and hexproof counter on it. These are also +1/+1 counters.
+SVar:DBVigilance:DB$ PutCounter | Defined$ Self | ETB$ True | CounterType$ Vigilance | CounterNum$ 1 | SubAbility$ DBReach
+SVar:DBReach:DB$ PutCounter | Defined$ Self | ETB$ True | CounterType$ Reach | CounterNum$ 1 | SubAbility$ DBTrample
+SVar:DBTrample:DB$ PutCounter | Defined$ Self | ETB$ True | CounterType$ Trample | CounterNum$ 1 | SubAbility$ DBHexproof
+SVar:DBHexproof:DB$ PutCounter | Defined$ Self | ETB$ True | CounterType$ Hexproof | CounterNum$ 1 | SubAbility$ DBPlus
+SVar:DBPlus:DB$ PutCounter | Defined$ Self | ETB$ True | CounterType$ P1P1 | CounterNum$ 4
+R:Event$ DamageDone | ActiveZones$ Battlefield | ValidTarget$ Card.Self | ReplaceWith$ DBOoze | Description$ If CARDNAME would be dealt damage, instead create a 0/0 green Ooze creature token and move a counter from CARDNAME onto it. Then if CARDNAME has no counters on it, sacrifice it.
+SVar:DBOoze:DB$ Token | TokenScript$ g_0_0_ooze | RememberTokens$ True | SubAbility$ DBMoveKeyword
+SVar:DBMoveKeyword:DB$ MoveCounter | Source$ Self | Defined$ Remembered | CounterType$ Any | CounterNum$ 1 | SubAbility$ DBMovePair
+# a moved keyword counter takes its +1/+1 counter with it
+SVar:DBMovePair:DB$ MoveCounter | Source$ Self | Defined$ Remembered | CounterType$ P1P1 | CounterNum$ 1 | ConditionDefined$ Remembered | ConditionPresent$ Card.counters_EQ0_P1P1 | ConditionCompare$ GE1 | SubAbility$ DBSacrifice
+SVar:DBSacrifice:DB$ Sacrifice | SacValid$ Self | ConditionCheckSVar$ Left | ConditionSVarCompare$ EQ0 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:Left:Count$CardCounters.ALL
+A:AB$ MoveCounter | Cost$ 3 G T | ValidSource$ Creature.Other+YouCtrl | Defined$ Self | CounterType$ All | CounterNum$ Any | SpellDescription$ Move any number of counters from other creatures you control onto CARDNAME.
+DeckHas:Ability$Counters|Token
+Oracle:Oozeavite enters with each of a vigilance, reach, trample, and hexproof counter on it. These are also +1/+1 counters.\nIf Oozeavite would be dealt damage, instead create a 0/0 green Ooze creature token and move a counter from Oozeavite onto it. Then if Oozeavite has no counters on it, sacrifice it.\n{3}{G}, {T}: Move any number of counters from other creatures you control onto Oozeavite.

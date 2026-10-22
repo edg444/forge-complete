@@ -2752,6 +2752,12 @@ public class CardProperty {
             if (!source.hasChosenNumber() || CardPrintings.releaseYear(card) != source.getChosenNumber()) {
                 return false;
             }
+        } else if (property.equals("InFamily")) {
+            // Retto, Family Racer: one of the five names its controller wrote down this game
+            if (!(sourceController.getMatchNote("Family:" + game.getId()) instanceof List<?> family)
+                    || family.stream().noneMatch(n -> card.sharesNameWith(String.valueOf(n)))) {
+                return false;
+            }
         } else if (property.equals("notKnownUnsigned")) {
             // The Collector: signed, or not asked about yet (SignatureEffect asks when it resolves)
             final String signer = forge.game.ability.effects.SignatureEffect.knownSigner(card);

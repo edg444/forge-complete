@@ -312,6 +312,20 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: The Colossal Dreadmaw, Just a Li'l Guy, Oozeavite, Retto, Family Racer, Your Favorite Character,
+  Playtest Wish, Fear of the Unknown, The Companion of the Wilds (UNK rares).**
+  - New effect `LockPT` (`Card.lockPT`): the creature is that power and toughness until end of turn, whatever else
+    applies.
+  - SVar `AsksFamily`: five creature names written down as each game begins (a person picks from card-name search,
+    the AI its five biggest creatures; my call), property `InFamily`.
+  - New effect `FavoriteCharacter`: a Magic character's name, up to three colors, two creature types (replacing its
+    own) and two keywords, written onto the card in every zone.
+  - SVar `OldCompanion`: as your companion it's cast from the command zone instead of being put into your hand for
+    {3}.
+  - Oozeavite's counters that are also +1/+1 counters are kept as a keyword counter and a +1/+1 counter, moved
+    together (my call). Playtest Wish takes the playtest card from outside the game as it resolves and lets you play
+    it from exile this turn (my call). New token script `g_0_0_ooze`.
+
 - **Unknown Event: The Multifaceted Phyrexian, Incubation Triformer, The Underworld Fantasy Queen, Bin Chicken, Dan,
   Shrewd Trader, Spice Rack, Mister Cheddar, Cheese Sliver, Surprise, Nerd!, The Gunky Runner (UNK rares).**
   - SVar `BargainAnyPermanent`: its controller's bargain costs can sacrifice any permanent.

@@ -1,0 +1,16 @@
+Name:The Companion of the Wilds
+ManaCost:5
+Types:Legendary Creature Beast Noble
+PT:3/3
+# Old companion: chosen as your companion, it's cast from the command zone without paying {3} first
+# (Player.createCompanionEffect)
+K:Companion:Card.printingFrom_WOE_WOC,Card.Playtest:Your starting deck contains only cards from WOE, WOC, and playtest cards.
+SVar:OldCompanion:True
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigFood | TriggerDescription$ When CARDNAME enters the battlefield, create a Food token, a 1/1 black Rat creature token with "This creature can't block," and a Royal role token attached to a creature you control.
+SVar:TrigFood:DB$ Token | TokenScript$ c_a_food_sac | SubAbility$ DBRat
+SVar:DBRat:DB$ Token | TokenScript$ b_1_1_rat_noblock | SubAbility$ DBChoose
+SVar:DBChoose:DB$ ChooseCard | Defined$ You | Choices$ Creature.YouCtrl | Mandatory$ True | ChoiceTitle$ Choose a creature you control for the Royal role | SubAbility$ DBRole
+SVar:DBRole:DB$ Token | TokenScript$ role_royal | AttachedTo$ ChosenCard | ConditionDefined$ ChosenCard | ConditionPresent$ Card | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+DeckHas:Ability$Token|Food & Type$Rat|Role
+Oracle:Old Companion — Your starting deck contains only cards from WOE, WOC, and playtest cards. (You may cast this from outside the game if this is companion without paying {3} first.)\nWhen The Companion of the Wilds enters the battlefield, create a Food token, a 1/1 black Rat creature token with "This creature can't block," and a Royal role token attached to a creature you control.

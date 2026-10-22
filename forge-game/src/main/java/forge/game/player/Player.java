@@ -4098,6 +4098,13 @@ public class Player extends GameEntity implements Comparable<Player> {
         String addToHandAbility = "Mode$ Continuous | EffectZone$ Command | Affected$ Card.YouOwn+EffectSource | AffectedZone$ Command | AddAbility$ MoveToHand";
         String moveToHand = "ST$ ChangeZone | Cost$ 3 | Defined$ Self | Origin$ Command | Destination$ Hand | SorcerySpeed$ True | ActivationZone$ Command | SpellDescription$ Companion - Put CARDNAME in to your hand";
 
+        // The Companion of the Wilds' old companion: cast it from outside the game, without paying {3} first
+        if (companion.hasSVar("OldCompanion")) {
+            eff.addStaticAbility(StaticAbility.create("Mode$ Continuous | EffectZone$ Command | Affected$ Card.YouOwn+EffectSource"
+                    + " | AffectedZone$ Command | MayPlay$ True | Description$ You may cast your companion from outside the game.",
+                    eff, eff.getCurrentState(), true));
+            return eff;
+        }
         StaticAbility stAb = StaticAbility.create(addToHandAbility, eff, eff.getCurrentState(), true);
         stAb.setSVar("MoveToHand", moveToHand);
         eff.addStaticAbility(stAb);

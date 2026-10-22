@@ -1423,6 +1423,8 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
                 : "College".equals(kindOfType) ? "Choose a Strixhaven college"
                 // The Faction Dragon
                 : "Faction".equals(kindOfType) ? "Choose a faction"
+                // Your Favorite Character
+                : "FavoriteKeyword".equals(kindOfType) ? "Choose a keyword"
                 : localizer.getMessage("lblChooseATargetType", kindOfType.toLowerCase());
         if (isOptional) {
             return getGui().oneOrNone(title, types);

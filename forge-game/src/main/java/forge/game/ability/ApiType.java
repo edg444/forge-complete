@@ -179,6 +179,8 @@ public enum ApiType {
     PutInZoneOf (PutInZoneOfEffect.class),
     ChooseRandomPlane (ChooseRandomPlaneEffect.class),
     Signature (SignatureEffect.class),
+    LockPT (LockPTEffect.class),
+    FavoriteCharacter (FavoriteCharacterEffect.class),
     GuessWord (GuessWordEffect.class),
     Goad (GoadEffect.class),
     Haunt (HauntEffect.class),

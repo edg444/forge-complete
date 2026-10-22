@@ -5322,7 +5322,20 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         }
         return getUnswitchedPowerBreakdown();
     }
+    // Just a Li'l Guy: "can't be anything other than 1/1 until end of turn" - set by LockPTEffect, cleared at end of turn
+    private Integer lockedPower = null;
+    private Integer lockedToughness = null;
+    public final void lockPT(final Integer power, final Integer toughness) {
+        lockedPower = power;
+        lockedToughness = toughness;
+        currentState.getView().updatePower(currentState);
+        currentState.getView().updateToughness(currentState);
+    }
+
     public final int getNetPower() {
+        if (lockedPower != null) {
+            return lockedPower;
+        }
         if (getAmountOfKeyword("CARDNAME's power and toughness are switched") % 2 != 0) {
             return getUnswitchedToughness();
         }
@@ -5407,6 +5420,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     // toughness read as 3+1+1 = 5 instead of carrying the two halves into 6. getNetPower already
     // routes this way, which is why power looked right while toughness didn't.
     public final int getNetToughness() {
+        if (lockedToughness != null) {
+            return lockedToughness;
+        }
         return hasSwitchedPT() ? getUnswitchedPower() : getUnswitchedToughness();
     }
 

@@ -3274,6 +3274,31 @@ public class GameAction {
                 if (c.hasSVar("AsksCollege")) {
                     chooseCollegeAndKin(takesAction, c, all);
                 }
+                // Retto, Family Racer: five creature cards secretly written down as the family, each game. A person
+                // picks them from card-name search (my call); the AI takes its five biggest creatures
+                if (c.hasSVar("AsksFamily") && takesAction.getMatchNote("Family:" + game.getId()) == null) {
+                    final List<String> family = Lists.newArrayList();
+                    if (takesAction.isAI()) {
+                        final List<Card> creatures = CardLists.filter(all, x -> x.isCreature() && !x.isToken() && x != c);
+                        creatures.sort(java.util.Comparator.comparingInt((Card x) -> x.getCMC()).reversed());
+                        for (final Card x : creatures) {
+                            if (family.size() < 5 && !family.contains(x.getName())) {
+                                family.add(x.getName());
+                            }
+                        }
+                    } else {
+                        final SpellAbility sa = new SpellAbility.EmptySa(ApiType.NameCard, c, takesAction);
+                        for (int i = 1; i <= 5; i++) {
+                            final String name = takesAction.getController().chooseCardName(sa,
+                                    f -> f.getType().isCreature(), "Card.Creature", c.getTranslatedName()
+                                            + ": secretly write down family member " + i + " of 5");
+                            if (name != null && !name.isEmpty()) {
+                                family.add(name);
+                            }
+                        }
+                    }
+                    takesAction.setMatchNote("Family:" + game.getId(), family);
+                }
                 if (c.hasSVar("AsksReleaseYear") && c.isCommander()) {
                     chooseReleaseYear(takesAction, c, all);
                 }

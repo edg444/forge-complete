@@ -1,0 +1,7 @@
+Name:The Colossal Dreadmaw
+ManaCost:4 G G
+Types:Legendary Creature Dinosaur
+PT:6/6
+K:Trample
+S:Mode$ CastAs | ValidCard$ Creature.YouOwn | Activator$ You | AffectedZone$ Hand | CastAs$ Colossal Dreadmaw | Description$ You may cast creature cards from your hand as though they were the card Colossal Dreadmaw. (They become Colossal Dreadmaws.)
+Oracle:Trample\nYou may cast creature cards from your hand as though they were the card Colossal Dreadmaw. (They become Colossal Dreadmaws.)

@@ -1,0 +1,10 @@
+Name:Playtest Wish
+ManaCost:2
+Types:Sorcery
+# The playtest card is chosen from outside the game (your sideboard) as this resolves and waits in exile, playable
+# this turn (my call; Forge offers plays from exile, not straight from the sideboard)
+A:SP$ ChangeZone | Origin$ Sideboard | Destination$ Exile | ChangeType$ Card.Playtest+YouOwn | ChangeNum$ 1 | Hidden$ True | RememberChanged$ True | SubAbility$ DBPlay | SpellDescription$ You may play a playtest card you own from outside the game this turn, and mana of any type can be spent to cast it. (In an game of Unknown event commander sealed, these are all the playtest cards you opened but aren't using in your deck.)
+SVar:DBPlay:DB$ Effect | RememberObjects$ Remembered | StaticAbilities$ STPlay | ForgetOnMoved$ Exile | SubAbility$ DBCleanup
+SVar:STPlay:Mode$ Continuous | EffectZone$ Command | Affected$ Card.IsRemembered | AffectedZone$ Exile | MayPlay$ True | MayPlayIgnoreType$ True | Description$ You may play that card this turn, and mana of any type can be spent to cast it.
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:You may play a playtest card you own from outside the game this turn, and mana of any type can be spent to cast it. (In an game of Unknown event commander sealed, these are all the playtest cards you opened but aren't using in your deck.)

@@ -1,0 +1,11 @@
+Name:Fear of the Unknown
+ManaCost:6
+Types:Enchantment Creature Nightmare
+PT:6/6
+K:Trample
+T:Mode$ SpellCast | ValidCard$ Card.Self | Execute$ TrigExile | TriggerDescription$ When you cast this spell, choose a playtest card you own from outside the game. Exile it. You may cast that card as long as it remains exiled. Mana of any type can be spent to cast that spell. (In a sealed event, outside the game is your sideboard.)
+SVar:TrigExile:DB$ ChangeZone | Origin$ Sideboard | Destination$ Exile | ChangeType$ Card.Playtest+YouOwn | ChangeNum$ 1 | Hidden$ True | Mandatory$ True | RememberChanged$ True | SubAbility$ DBPlay
+SVar:DBPlay:DB$ Effect | RememberObjects$ Remembered | StaticAbilities$ STPlay | ForgetOnMoved$ Exile | Duration$ Permanent | SubAbility$ DBCleanup
+SVar:STPlay:Mode$ Continuous | EffectZone$ Command | Affected$ Card.IsRemembered+nonLand | AffectedZone$ Exile | MayPlay$ True | MayPlayIgnoreType$ True | Description$ You may cast that card as long as it remains exiled, and mana of any type can be spent to cast it.
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Trample\nWhen you cast this spell, choose a playtest card you own from outside the game. Exile it. You may cast that card as long as it remains exiled. Mana of any type can be spent to cast that spell. (In a sealed event, outside the game is your sideboard.)

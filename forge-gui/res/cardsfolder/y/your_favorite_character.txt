@@ -1,0 +1,9 @@
+Name:Your Favorite Character
+ManaCost:5
+Types:Legendary Creature Shapeshifter
+PT:4/4
+# as the game begins if it's your commander (GameAction: SVar AtGameStartIfCommander), else as it enters
+SVar:AtGameStartIfCommander:DB$ FavoriteCharacter
+K:ETBReplacement:Other:DBDefine
+SVar:DBDefine:DB$ FavoriteCharacter | ConditionDefined$ Self | ConditionPresent$ Card.!IsCommander | SpellDescription$ As the game begins, if CARDNAME is your commander, or as CARDNAME enters the battlefield if it's not your commander, name a character from the Magic storyline. Choose up to three colors, two creature types, and then two keywords from among vigilance, flying, haste, trample, and menace. CARDNAME has the chosen name, types, colors, and keywords.
+Oracle:As the game begins, if Your Favorite Character is your commander, or as Your Favorite Character enters the battlefield if it's not your commander, name a character from the Magic storyline. Choose up to three colors, two creature types, and then two keywords from among vigilance, flying, haste, trample, and menace. Your Favorite Character has the chosen name, types, colors, and keywords.

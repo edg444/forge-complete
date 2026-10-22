@@ -1,0 +1,6 @@
+Name:Just a Li'l Guy
+ManaCost:G
+Types:Instant
+A:SP$ Pump | ValidTgts$ Creature | TgtPrompt$ Select target creature | KW$ Hexproof & Indestructible | SubAbility$ DBLock | SpellDescription$ Target creature gains hexproof and indestructible until end of turn. That creature is 1/1 until end of turn and can't be anything other than 1/1 until end of turn. (No matter what happens to it, it'll still be a 1/1.)
+SVar:DBLock:DB$ LockPT | Defined$ Targeted | Power$ 1 | Toughness$ 1
+Oracle:Target creature gains hexproof and indestructible until end of turn. That creature is 1/1 until end of turn and can't be anything other than 1/1 until end of turn. (No matter what happens to it, it'll still be a 1/1.)

@@ -1,0 +1,12 @@
+Name:Retto, Family Racer
+ManaCost:1 G
+Types:Legendary Creature Human Pilot
+PT:2/2
+# The family is written down as each game begins (GameAction: SVar AsksFamily); a person picks the names from
+# card-name search, the AI takes its five biggest creatures (my call)
+SVar:AsksFamily:True
+S:Mode$ Continuous | Affected$ Card.Self | Description$ Before the game begins, if this is your commander or in your deck, secretly write down the names of five creature cards to be part of your family.
+R:Event$ Moved | ActiveZones$ Battlefield | ValidCard$ Creature.YouCtrl+InFamily+Other | Destination$ Battlefield | Optional$ True | ReplaceWith$ DBFamily | ReplacementResult$ Updated | Description$ As members of your family enters, you may say "Nothing is stronger than family" and reveal its name from your list. That creature enters with two +1/+1 counters on it.
+SVar:DBFamily:DB$ PutCounter | Defined$ ReplacedCard | ETB$ True | CounterType$ P1P1 | CounterNum$ 2
+DeckHas:Ability$Counters
+Oracle:Before the game begins, if this is your commander or in your deck, secretly write down the names of five creature cards to be part of your family.\nAs members of your family enters, you may say "Nothing is stronger than family" and reveal its name from your list. That creature enters with two +1/+1 counters on it.
