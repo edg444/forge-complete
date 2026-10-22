@@ -58,6 +58,24 @@ public class ReplaceTokenEffect extends SpellAbilityEffect {
                 int newAmt = AbilityUtils.doXMath(e.getValue(), mod, card, sa);
                 table.put(affected, e.getKey(), newAmt);
             }
+        } else if ("FirstPerTurn".equals(sa.getParam("Type"))) {
+            // Dockbreacher: only the first such token they create each turn is created; its controller draws a card
+            // for each one beyond that instead
+            int allowed = Math.max(0, 1 - CardLists.count(affected.getZone(ZoneType.Battlefield).getCardsAddedThisTurn(null),
+                    c -> c.isToken() && re.matchesValidParam("ValidToken", c)));
+            int instead = 0;
+            for (Map.Entry<Card, Integer> e : table.row(affected).entrySet()) {
+                if (!re.matchesValidParam("ValidToken", e.getKey())) {
+                    continue;
+                }
+                final int keep = Math.min(allowed, e.getValue());
+                allowed -= keep;
+                instead += e.getValue() - keep;
+                table.put(affected, e.getKey(), keep);
+            }
+            if (instead > 0) {
+                p.drawCards(instead, sa, AbilityKey.newMap());
+            }
         } else if ("AddToken".equals(sa.getParam("Type"))) {
             long timestamp = game.getNextTimestamp();
 

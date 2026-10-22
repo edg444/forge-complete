@@ -3284,6 +3284,20 @@ public class GameAction {
                 c.addPerpetual(new forge.game.card.perpetual.PerpetualClone(ts, template, cause));
                 c.updateStateForView();
             }
+            // Enolc, Perfect Clone (SVar CopiesOtherCommander): one of two partner commanders is a copy of the other, in
+            // every zone, except it keeps its own name
+            for (Card c : CardLists.filter(takesAction.getCommanders(), x -> x.hasSVar("CopiesOtherCommander"))) {
+                final List<Card> others = CardLists.filter(takesAction.getCommanders(), x -> x != c);
+                if (takesAction.getCommanders().size() != 2 || others.isEmpty() || others.get(0).hasSVar("CopiesOtherCommander")) {
+                    continue;
+                }
+                final SpellAbility cause = AbilityFactory.getAbility("DB$ Clone | KeepName$ True", c);
+                cause.setActivatingPlayer(takesAction);
+                final long ts = game.getNextTimestamp();
+                c.addCloneState(CardFactory.getCloneStates(others.get(0), c, cause), ts);
+                c.addPerpetual(new forge.game.card.perpetual.PerpetualClone(ts, others.get(0), cause));
+                c.updateStateForView();
+            }
             // Your Favorite Missing Character: "during deckbuilding" choices are made now and kept for the match
             // (user ruling 2026-10-21); the AI picks to suit its deck
             copies.clear();

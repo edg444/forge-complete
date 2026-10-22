@@ -1,0 +1,9 @@
+Name:Dockbreacher
+ManaCost:2 U
+Types:Creature Merfolk Pirate
+PT:2/3
+K:Flash
+R:Event$ CreateToken | ActiveZones$ Battlefield | ValidPlayer$ Opponent | ValidToken$ Card.Treasure | ReplaceWith$ DBFirstOnly | Description$ If an opponent would create a treasure token beyond the first one they create each turn, instead you draw a card.
+# FirstPerTurn: the ones beyond their first this turn aren't created, and you draw a card for each
+SVar:DBFirstOnly:DB$ ReplaceToken | Type$ FirstPerTurn
+Oracle:Flash\nIf an opponent would create a treasure token beyond the first one they create each turn, instead you draw a card.

@@ -60,7 +60,12 @@ public class StaticAbilityCastAs {
     public static List<SpellAbility> getCastAsSpells(final Card card, final Player activator) {
         final List<SpellAbility> result = new ArrayList<>();
         final Game game = card.getGame();
-        for (final Card ca : game.getCardsIn(ZoneType.STATIC_ABILITIES_SOURCE_ZONES)) {
+        // Enolc, Perfect Clone: a card's own CastAs static, read from the zone it's cast from (EffectZone$ Hand)
+        final List<Card> sources = new ArrayList<>(game.getCardsIn(ZoneType.STATIC_ABILITIES_SOURCE_ZONES));
+        if (!sources.contains(card)) {
+            sources.add(card);
+        }
+        for (final Card ca : sources) {
             for (final StaticAbility stAb : ca.getStaticAbilities()) {
                 if (!stAb.checkConditions(StaticAbilityMode.CastAs)) {
                     continue;
@@ -111,9 +116,15 @@ public class StaticAbilityCastAs {
                     }
                     continue;
                 }
-                final List<SpellAbility> spells = castAsSpells(card, activator, name);
-                spells.forEach(s -> s.setCastAsStatic(stAb));
-                result.addAll(spells);
+                // Enolc: CastAs$ YourCommander - any of the activator's commanders
+                final List<String> names = "YourCommander".equals(name)
+                        ? activator.getCommanders().stream().map(Card::getName).filter(n -> !n.equals(card.getName())).toList()
+                        : List.of(name);
+                for (final String each : names) {
+                    final List<SpellAbility> spells = castAsSpells(card, activator, each);
+                    spells.forEach(s -> s.setCastAsStatic(stAb));
+                    result.addAll(spells);
+                }
             }
         }
         return result;

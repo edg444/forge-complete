@@ -183,6 +183,10 @@ public class DigEffect extends SpellAbilityEffect {
             if (sa.hasParam("FromBottom")) {
                 Collections.reverse(all);
             }
+            // Compleated Clone Shell: cards at random from an unordered zone (its sideboard)
+            if (sa.hasParam("AtRandom")) {
+                Collections.shuffle(all, forge.util.MyRandom.getRandom());
+            }
 
             int numToDig = Math.min(digNum, all.size());
             for (int i = 0; i < numToDig; i++) {

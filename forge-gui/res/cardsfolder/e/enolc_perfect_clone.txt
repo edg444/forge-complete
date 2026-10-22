@@ -1,0 +1,11 @@
+Name:Enolc, Perfect Clone
+ManaCost:no cost
+Types:Legendary Creature Shapeshifter
+PT:*/*
+# as the game begins, if it and another are your two commanders, it's a copy of that one in every zone (GameAction);
+# two Enolcs copy nothing
+SVar:CopiesOtherCommander:True
+S:Mode$ Continuous | Affected$ Card.Self | Description$ If CARDNAME is one of two partner commanders, it's a copy of your other commander except it retains its name. (Including mana cost.)
+S:Mode$ CastAs | ValidCard$ Card.Self+!IsCommander | Activator$ You | EffectZone$ Hand | AffectedZone$ Hand | CastAs$ YourCommander | Description$ If CARDNAME isn't a commander, you may cast it as though it was a copy of any of your commanders.
+K:Partner
+Oracle:If Enolc is one of two partner commanders, it's a copy of your other commander except it retains its name. (Including mana cost.)\nIf Enolc isn't a commander, you may cast it as though it was a copy of any of your commanders.\nPartner (You can have two commanders if both have partner.)

@@ -76,6 +76,11 @@ public class RestartGameEffect extends SpellAbilityEffect {
             p.clearController();
 
             CardCollection newLibrary = new CardCollection(p.getCardsIn(restartZones, false));
+            // New Magic Game Plus: these permanents stay on the battlefield through the restart
+            if (sa.hasParam("KeepOnBattlefield")) {
+                newLibrary.removeAll(CardLists.getValidCards(p.getCardsIn(ZoneType.Battlefield), sa.getParam("KeepOnBattlefield"),
+                        p, sa.getHostCard(), sa));
+            }
             if (leaveZone != null) {
                 List<Card> filteredCards = CardLists.getValidCards(p.getCardsIn(leaveZone), leaveRestriction, p, sa.getHostCard(), sa);
                 newLibrary.addAll(filteredCards);

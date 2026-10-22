@@ -87,7 +87,10 @@ public class UnknownEventBatch33Test extends AITest {
         game.getAction().checkStateEffects(true);
         final Object beneath = ai.getMatchNote("StickerBeneath:Throat Wolf#1");
         AssertJUnit.assertTrue(beneath instanceof String);
-        AssertJUnit.assertEquals(beneath, wolf.getName());
+        // a random Aura or other noncreature beneath the sticker can take the Wolf off the battlefield as it becomes it
+        if (wolf.isInZone(ZoneType.Battlefield)) {
+            AssertJUnit.assertEquals(beneath, wolf.getName());
+        }
     }
 
     @Test

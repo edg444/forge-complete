@@ -1,0 +1,7 @@
+Name:New Magic Game Plus
+ManaCost:8
+Types:Sorcery
+A:SP$ ChangeZone | Defined$ Self | Origin$ Stack | Destination$ Exile | SubAbility$ DBRestart | SpellDescription$ Exile CARDNAME, then restart the game, except leave lands and Equipment on the battlefield and leave this card in exile.
+# the other exiled cards go back into their owners' libraries (RestrictFromValid$ - the ones that do)
+SVar:DBRestart:DB$ RestartGame | KeepOnBattlefield$ Land,Equipment | RestrictFromZone$ Exile | RestrictFromValid$ Card.Other
+Oracle:Exile New Magic Game Plus, then restart the game, except leave lands and Equipment on the battlefield and leave this card in exile.

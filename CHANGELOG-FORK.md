@@ -312,6 +312,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Dockbreacher, New Magic Game Plus, Compleated Clone Shell, Enolc, Perfect Clone (UNK cards).**
+  - ReplaceToken `Type$ FirstPerTurn`: only the first such token a player creates each turn; the replacement's
+    controller draws a card for each other one.
+  - RestartGame `KeepOnBattlefield$ <valid>`: those permanents stay on the battlefield through the restart.
+  - Dig `AtRandom$ True`: the cards are taken at random (from an unordered zone such as the sideboard).
+  - SVar `CopiesOtherCommander`: one of two commanders is a copy of the other in every zone, keeping its name.
+    CastAs `CastAs$ YourCommander`, and a card's own CastAs static works from the zone it's cast from.
+
 - **Unknown Event: Sue, Everlasting Dinosaur, Awoken Nephilim, Seventh Stage of Magic Design, Saga of Krark Losing
   His Thumb, Niv-Mizzet's Diary, Simic, Value Engine (UNK rares).**
   - New keyword Fossilize (`K:Fossilize:<cost>` or `ManaCostMinus<N>`): from the graveyard, any time, it returns with
