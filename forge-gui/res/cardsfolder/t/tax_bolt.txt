@@ -1,0 +1,6 @@
+Name:Tax Bolt
+ManaCost:R
+Types:Instant
+A:SP$ DealDamage | ValidTgts$ Any | NumDmg$ X | SpellDescription$ CARDNAME deals damage to any target equal to your highest commander tax among your commanders. (For example, if you've cast your one commander from your command zone twice, it deals 4 damage.)
+SVar:X:Count$HighestCommanderTax
+Oracle:Tax Bolt deals damage to any target equal to your highest commander tax among your commanders. (For example, if you've cast your one commander from your command zone twice, it deals 4 damage.)

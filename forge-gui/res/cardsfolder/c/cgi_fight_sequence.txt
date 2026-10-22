@@ -1,0 +1,10 @@
+Name:CGI Fight Sequence
+ManaCost:R
+Types:Enchantment
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigSac | TriggerDescription$ At the beginning of your upkeep, sacrifice this enchantment unless you sacrifice a Treasure token.
+SVar:TrigSac:DB$ Sacrifice | SacValid$ Self | UnlessCost$ Sac<1/Treasure.token/Treasure token> | UnlessPayer$ You
+T:Mode$ AttackersDeclared | AttackingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPump | TriggerDescription$ Whenever you attack, target attacking creature you control fights target creature defending player controls.
+SVar:TrigPump:DB$ Pump | ValidTgts$ Creature.attacking+YouCtrl | TgtPrompt$ Select target attacking creature you control | SubAbility$ DBFight | StackDescription$ None
+SVar:DBFight:DB$ Fight | Defined$ ParentTarget | ValidTgts$ Creature | TargetsWithDefinedController$ ParentTargetDefendingPlayer | TgtPrompt$ Select target creature defending player controls
+DeckNeeds:Type$Treasure
+Oracle:At the beginning of your upkeep, sacrifice this enchantment unless you sacrifice a Treasure token.\nWhenever you attack, target attacking creature you control fights target creature defending player controls.

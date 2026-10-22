@@ -1,0 +1,8 @@
+Name:Reflective Gate
+ManaCost:no cost
+Types:Artifact Land Gate Food
+A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
+A:AB$ ManaReflected | Cost$ T | ColorOrType$ Color | Valid$ Permanent | ReflectProperty$ Is | SpellDescription$ Add one mana of any color that shares a color with a permanent a player controls.
+A:AB$ GainLife | Cost$ 2 T Sac<1/CARDNAME> | LifeAmount$ 3 | SpellDescription$ You gain 3 life.
+DeckHas:Ability$LifeGain|Sacrifice
+Oracle:{T}: Add {C}.\n{T}: Add one mana of any color that shares a color with a permanent a player controls.\n{2}, {T}, Sacrifice this land: You gain 3 life.

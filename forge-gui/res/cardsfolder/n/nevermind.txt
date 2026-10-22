@@ -1,0 +1,7 @@
+Name:Nevermind
+ManaCost:no cost
+Types:Instant Arcane
+K:Splice:Card:1 R:Anything
+A:SP$ Discard | Defined$ You | NumCards$ 1 | Mode$ TgtChoose | SubAbility$ DBDraw | SpellDescription$ When this spell resolves, discard a card. Then draw a card.
+SVar:DBDraw:DB$ Draw | NumCards$ 1
+Oracle:(Spells without mana costs can't be played)\nWhen this spell resolves, discard a card. Then draw a card.\nSplice onto Anything {1}{R} (As you cast a spell, you may reveal this card from your hand and pay its splice cost. If you do, add this card's effect to that spell.)

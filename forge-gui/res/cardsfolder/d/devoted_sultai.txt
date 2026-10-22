@@ -1,0 +1,8 @@
+Name:Devoted Sultai
+ManaCost:2 G
+Types:Creature Snake Druid
+PT:3/3
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | OptionalDecider$ You | Execute$ TrigReturn | TriggerDescription$ When this creature enters, you may return target card from your graveyard with mana value X or less to your hand where X is your devotion to Sultai. (Each {U}, {B}, or {G} in the mana cost of permanents you control counts towards your devotion those colors.)
+SVar:TrigReturn:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand | ValidTgts$ Card.YouOwn+cmcLEX | TgtPrompt$ Select target card from your graveyard with mana value X or less | TgtZone$ Graveyard
+SVar:X:Count$DevotionTriple.Blue.Black.Green
+Oracle:When this creature enters, you may return target card from your graveyard with mana value X or less to your hand where X is your devotion to Sultai. (Each {U}, {B}, or {G} in the mana cost of permanents you control counts towards your devotion those colors.)

@@ -1,0 +1,9 @@
+Name:Devoted Temur
+ManaCost:2 R
+Types:Creature Orc Ranger
+PT:2/2
+K:Haste
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ When this creature enters, target creature gets +X/+X until end of turn, where X is your devotion to Temur. (Each {G}, {U}, or {R} in the mana cost of permanents you control counts towards your devotion to Temur.)
+SVar:TrigPump:DB$ Pump | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumAtt$ +X | NumDef$ +X
+SVar:X:Count$DevotionTriple.Green.Blue.Red
+Oracle:Haste\nWhen this creature enters, target creature gets +X/+X until end of turn, where X is your devotion to Temur. (Each {G}, {U}, or {R} in the mana cost of permanents you control counts towards your devotion to Temur.)

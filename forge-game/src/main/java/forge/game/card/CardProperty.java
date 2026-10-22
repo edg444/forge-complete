@@ -207,6 +207,13 @@ public class CardProperty {
             if (!CardPrintings.originallyPrintedIn(card, java.util.List.of(property.substring(20).split("_")))) {
                 return false;
             }
+        } else if (property.startsWith("printingFrom_")) {
+            // Must Be Knights, Across the Multiverse: this card's own printing is from one of these sets
+            // (printingFrom_WOT); other printings of the same card don't count
+            final String set = card.getSetCode();
+            if (set == null || java.util.Arrays.stream(property.substring(13).split("_")).noneMatch(set::equalsIgnoreCase)) {
+                return false;
+            }
         } else if (property.startsWith("releasesGE")) {
             // Lona, Tracker of the Known: printed in at least N different English releases
             if (CardPrintings.releaseCount(card) < Integer.parseInt(property.substring("releasesGE".length()))) {

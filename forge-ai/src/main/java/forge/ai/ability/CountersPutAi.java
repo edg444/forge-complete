@@ -762,6 +762,22 @@ public class CountersPutAi extends CountersAi {
             return doChargeToCMCLogic(ai, sa);
         }
 
+        // Arcbound Mamba: poison an opponent it would kill, else grow an artifact creature of ours, else poison anyway
+        if ("PoisonModular".equals(aiLogic) && sa.usesTargeting()) {
+            sa.resetTargets();
+            final PlayerCollection opps = ai.getOpponents().filter(PlayerPredicates.isTargetableBy(sa));
+            final Player worst = opps.isEmpty() ? null
+                    : java.util.Collections.max(opps, java.util.Comparator.comparingInt(Player::getPoisonCounters));
+            final Card mine = ComputerUtilCard.getBestCreatureAI(CardLists.getTargetableCards(ai.getCreaturesInPlay(), sa));
+            if (worst != null && (mine == null || worst.getPoisonCounters() + amount >= worst.getPoisonCountersToLose())) {
+                sa.getTargets().add(worst);
+            } else if (mine != null) {
+                sa.getTargets().add(mine);
+            }
+            return sa.isTargetNumberValid() ? new AiAbilityDecision(100, AiPlayDecision.WillPlay)
+                    : new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
+        }
+
         if (!sa.usesTargeting()) {
             // No target. So must be defined. (Unused at the moment)
             // list = AbilityUtils.getDefinedCards(source, sa.getParam("Defined"), sa);

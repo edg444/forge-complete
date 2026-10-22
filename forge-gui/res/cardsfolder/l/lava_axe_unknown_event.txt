@@ -1,0 +1,7 @@
+Name:Lava, Axe
+ManaCost:4 R
+Types:Sorcery
+# Spell commander: it can be your commander (the Limited partnering doesn't come up in Forge)
+K:CARDNAME can be your commander.
+A:SP$ DealDamage | ValidTgts$ Player,Planeswalker | TgtPrompt$ Select target player or planeswalker | NumDmg$ 5 | SpellDescription$ CARDNAME deals 5 damage to target player or planeswalker.
+Oracle:Spell commander (This card can be your commander. In Limited, it can partner like other monocolored legends.)\nLava, Axe deals 5 damage to target player or planeswalker.

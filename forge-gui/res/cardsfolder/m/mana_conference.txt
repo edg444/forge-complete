@@ -1,0 +1,7 @@
+Name:Mana Conference
+ManaCost:no cost
+Types:Land
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigVote | TriggerDescription$ When CARDNAME enters the battlefield, each player secretly chooses a basic land type, then those choices are revealed. CARDNAME gains each basic land type that received at least one vote. (Basic land types are Plains, Island, Swamp, Mountain, and Forest.)
+SVar:TrigVote:DB$ ChooseType | Chooser$ Player | Type$ Basic Land | Ballot$ True | SubAbility$ DBGain
+SVar:DBGain:DB$ Animate | Defined$ Self | Types$ ChosenTypes | Duration$ Permanent | StackDescription$ None
+Oracle:When Mana Conference enters the battlefield, each player secretly chooses a basic land type, then those choices are revealed. Mana Conference gains each basic land type that received at least one vote. (Basic land types are Plains, Island, Swamp, Mountain, and Forest.)

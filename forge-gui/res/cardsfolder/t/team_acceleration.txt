@@ -1,0 +1,14 @@
+Name:Team Acceleration
+ManaCost:1 G
+Types:Sorcery
+# The race team is chosen once per match, as the game begins for a deck with this card. A player on neither team
+# yet casts it for one team's line and joins that team.
+SVar:AsksTeam:Race
+A:SP$ Token | TokenAmount$ 2 | TokenScript$ w_1_1_warrior | CheckSVar$ SpeedDemons | SVarCompare$ EQ0 | SubAbility$ DBJoinCloudspire | PrecostDesc$ Team Cloudspire — | SpellDescription$ Create two 1/1 white Warrior creature tokens.
+SVar:DBJoinCloudspire:DB$ ChooseTeam | Defined$ You | Teams$ Race | Team$ Cloudspire
+A:SP$ ChangeZone | Origin$ Library | Destination$ Battlefield | ChangeType$ Land.Basic | ChangeTypeDesc$ basic land | Tapped$ True | ChangeNum$ 1 | CheckSVar$ Cloudspire | SVarCompare$ EQ0 | SubAbility$ DBJoinSpeedDemons | PrecostDesc$ Team Speed Demons — | SpellDescription$ Search your library for a basic land card, put it onto the battlefield tapped, then shuffle.
+SVar:DBJoinSpeedDemons:DB$ ChooseTeam | Defined$ You | Teams$ Race | Team$ Speed Demons
+SVar:Cloudspire:Count$RaceTeam.Cloudspire
+SVar:SpeedDemons:Count$RaceTeam.SpeedDemons
+DeckHas:Ability$Token & Type$Warrior
+Oracle:Team Cloudspire — Create two 1/1 white Warrior creature tokens.\nTeam Speed Demons — Search your library for a basic land card, put it onto the battlefield tapped, then shuffle.

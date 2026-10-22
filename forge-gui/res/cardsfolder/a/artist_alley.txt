@@ -1,0 +1,10 @@
+Name:Artist Alley
+ManaCost:no cost
+Types:Land
+# The colors signed in each copy's art box are asked as the match begins (honor system, like Mark Ritual's
+# signature); the AI's copies are unsigned.
+SVar:AsksSignedColors:True
+A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
+A:AB$ Mana | Cost$ T | Produced$ Combo ColorID | CheckSVar$ Signed | SVarCompare$ GE1 | SpellDescription$ Add one mana of any color signed in this card's art box by someone who has illustrated a printed Magic card. (You can't add colors besides white, blue, black, red, and green. Sorry, purple and orange enjoyers.)
+SVar:Signed:Count$CardMarkedColors
+Oracle:{T}: Add {C}\n{T}: Add one mana of any color signed in this card's art box by someone who has illustrated a printed Magic card. (You can't add colors besides white, blue, black, red, and green. Sorry, purple and orange enjoyers.)

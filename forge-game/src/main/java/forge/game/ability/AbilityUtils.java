@@ -1004,6 +1004,16 @@ public class AbilityUtils {
             for (final SpellAbility s : getDefinedSpellAbilities(card, "Targeted", sa)) {
                 players.add(s.getActivatingPlayer());
             }
+        } else if (defined.equals("ParentTargetDefendingPlayer")) {
+            // CGI Fight Sequence: the player the parent's targeted attacking creature is attacking
+            if (game.getCombat() != null) {
+                for (final Card c : getDefinedCards(card, "ParentTarget", sa)) {
+                    final Player defender = game.getCombat().getDefendingPlayerRelatedTo(c);
+                    if (defender != null) {
+                        players.add(defender);
+                    }
+                }
+            }
         } else if (defined.startsWith("AttachedBy ") && (defined.endsWith("Owner") || defined.endsWith("Controller"))) {
             // "enchanted card's owner" after the Aura is gone (Animate Spell): AttachedBy TriggeredCardLKICopyOwner
             final String cards = defined.substring(0, defined.length() - (defined.endsWith("Owner") ? 5 : 10));
@@ -2390,6 +2400,18 @@ public class AbilityUtils {
             }
             return doXMath(best, expr, c, ctb);
         }
+        // You and Ooze Army?: Count$CreatureTypesAmong <valid>. A creature with every creature type (a changeling)
+        // adds none: "Don't count changelings. That would be ridiculous."
+        if (l[0].startsWith("CreatureTypesAmong ")) {
+            final Set<String> types = Sets.newHashSet();
+            for (final Card each : CardLists.getValidCards(game.getCardsIn(ZoneType.Battlefield),
+                    l[0].substring("CreatureTypesAmong ".length()), player != null ? player : c.getController(), c, ctb)) {
+                if (!each.getType().hasAllCreatureTypes() && !each.hasKeyword(Keyword.CHANGELING)) {
+                    each.getType().getCreatureTypes().forEach(types::add);
+                }
+            }
+            return doXMath(types.size(), expr, c, ctb);
+        }
         // Gen, Confider of Ages: Count$DifferentReleaseYears <valid>, by each card's own printing
         if (l[0].startsWith("DifferentReleaseYears ")) {
             final Set<Integer> years = Sets.newHashSet();
@@ -2404,6 +2426,19 @@ public class AbilityUtils {
         }
         if (sq[0].equals("AllCommandersRevealed")) {
             return doXMath((player != null ? player : c.getController()).allCommandersRevealed() ? 1 : 0, expr, c, ctb);
+        }
+        // Tax Keeper, Tax Bolt: your highest commander tax among your commanders
+        if (sq[0].equals("HighestCommanderTax")) {
+            final Player you = player != null ? player : c.getController();
+            int highest = 0;
+            for (final Card commander : you.getCommanders()) {
+                highest = Math.max(highest, you.getCommanderTax(commander));
+            }
+            return doXMath(highest, expr, c, ctb);
+        }
+        // Artist Alley: how many colors are signed in this copy's art box
+        if (sq[0].equals("CardMarkedColors")) {
+            return doXMath(c.getMarkedColors() == null ? 0 : c.getMarkedColors().countColors(), expr, c, ctb);
         }
         // Some Disassembly Required asks whether it is December. 1-12, like the calendar.
         if (sq[0].equals("CurrentMonth")) {

@@ -1,0 +1,10 @@
+Name:Must Be Knights
+ManaCost:1 R
+Types:Creature Human Knight
+PT:2/2
+K:Haste
+T:Mode$ Attacks | ValidCard$ Card.Self | IsPresent$ Card.DefenderCtrl+printingFrom_WOT | Execute$ TrigDamage | TriggerDescription$ Whenever CARDNAME attacks, if defending player controls an Enchanting Tale, CARDNAME deals damage equal to its power to any target. (Enchanting Tales have the expansion code WOT. Other versions of them don't count.)
+SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ X
+SVar:X:Count$CardPower
+SVar:HasAttackEffect:TRUE
+Oracle:Haste\nWhenever Must Be Knights attacks, if defending player controls an Enchanting Tale, Must Be Knights deals damage equal to its power to any target. (Enchanting Tales have the expansion code WOT. Other versions of them don't count.)

@@ -1,0 +1,13 @@
+Name:Urza's Hot Dog Stand
+ManaCost:no cost
+Types:Artifact Land Urza's Vehicle
+PT:3/3
+K:Hexproof:Red
+A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
+A:AB$ Token | Cost$ 7 T | TokenAmount$ 2 | TokenScript$ c_a_food_sac | TokenName$ Hot Dog | SpellDescription$ Create two Food tokens named Hot Dog.
+T:Mode$ Sacrificed | ValidPlayer$ You | ValidCard$ Card.namedHot_Dog | TriggerZones$ Battlefield | Execute$ TrigTreasure | TriggerDescription$ Whenever you sacrifice a Hot Dog, create a Treasure token.
+SVar:TrigTreasure:DB$ Token | TokenScript$ c_a_treasure_sac
+# Food Crew: crewed by tapping Foods instead of creatures
+A:AB$ Animate | Cost$ tapXType<2/Food> | Defined$ Self | Types$ Artifact,Creature | PrecostDesc$ Food Crew | CostDesc$ 2 (Tap two Foods you control: | SpellDescription$ This Vehicle becomes an artifact creature until end of turn.)
+DeckHas:Ability$Token|Food|Sacrifice & Type$Treasure
+Oracle:Hexproof from red\n{T}: Add {C}.\n{7}, {T}: Create two Food tokens named Hot Dog.\nWhenever you sacrifice a Hot Dog, create a Treasure token.\nFood Crew 2 (Tap two Foods you control: This Vehicle becomes an artifact creature until end of turn.)

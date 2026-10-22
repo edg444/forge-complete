@@ -1,0 +1,7 @@
+Name:Across the Multiverse
+ManaCost:2 R
+Types:Enchantment
+# "From the MOM main set" goes by the card's own printing, so a MOM card's Multiverse Legends printing gets the bonus
+S:Mode$ Continuous | Affected$ Creature.!token+YouCtrl+!printingFrom_MOM | AddPower$ 1 | AddKeyword$ Haste | Description$ Nontoken creatures you control which aren't from the MOM main set get +1/+0 and gain haste. (This includes Multiverse Legends, playtest cards, cards from Mystery Booster, and anything else not from the MOM main set.)
+SVar:PlayMain1:TRUE
+Oracle:Nontoken creatures you control which aren't from the MOM main set get +1/+0 and gain haste. (This includes Multiverse Legends, playtest cards, cards from Mystery Booster, and anything else not from the MOM main set.)

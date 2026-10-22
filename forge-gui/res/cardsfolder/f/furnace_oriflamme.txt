@@ -1,0 +1,11 @@
+Name:Furnace Oriflamme
+ManaCost:2 R
+Types:Enchantment
+SVar:AsksTeam:Team
+S:Mode$ Continuous | Affected$ Creature.YouCtrl | AddPower$ 1 | Description$ Creatures you control get +1/+0.
+S:Mode$ Continuous | Affected$ Creature.YouCtrl | AddKeyword$ Haste | CheckSVar$ Mirran | SVarCompare$ EQ1 | Description$ If you're on the Mirran team, creatures you control have haste.
+S:Mode$ Continuous | Affected$ Creature.YouCtrl | AddKeyword$ Trample | CheckSVar$ Phyrexian | SVarCompare$ EQ1 | Description$ If you're on the Phyrexian team, creatures you control have trample.
+SVar:Mirran:Count$UnknownTeam.Mirran
+SVar:Phyrexian:Count$UnknownTeam.Phyrexian
+SVar:PlayMain1:TRUE
+Oracle:Creatures you control get +1/+0.\nIf you're on the Mirran team, creatures you control have haste.\nIf you're on the Phyrexian team, creatures you control have trample.

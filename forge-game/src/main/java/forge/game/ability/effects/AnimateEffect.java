@@ -67,7 +67,13 @@ public class AnimateEffect extends AnimateEffectBase {
         }
 
         // allow ChosenType - overrides anything else specified
-        if (types.hasSubtype("ChosenType")) {
+        if (types.hasSubtype("ChosenTypes")) {
+            // a ballot's chosen types (ChooseType Ballot$), comma-separated
+            types.clear();
+            if (source.hasChosenType()) {
+                types.addAll(Arrays.asList(source.getChosenType().split(",")));
+            }
+        } else if (types.hasSubtype("ChosenType")) {
             types.clear();
             types.add(source.getChosenType());
         } else if (types.hasSubtype("ChosenType2")) {

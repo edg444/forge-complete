@@ -3128,6 +3128,27 @@ public class GameAction {
                     c.signByDesigner();
                 }
             }
+            // Artist Alley: the colors an illustrator signed in each copy's art box, asked the same way (honor
+            // system, like Mark Ritual); the AI's copies are unsigned
+            copies.clear();
+            final List<Card> alleys = CardLists.filter(all, x -> x.hasSVar("AsksSignedColors"));
+            alleys.sort(java.util.Comparator.comparingInt(Card::getId));
+            for (Card c : alleys) {
+                final int copy = copies.merge(c.getName(), 1, Integer::sum);
+                if (takesAction.isAI() || c.isInZone(ZoneType.Sideboard)) {
+                    continue;
+                }
+                final String key = "SignedColors:" + c.getName() + "#" + copy;
+                Object colors = takesAction.getMatchNote(key);
+                if (!(colors instanceof ColorSet)) {
+                    SpellAbility sa = new SpellAbility.EmptySa(ApiType.ChooseColor, c, takesAction);
+                    colors = takesAction.getController().chooseColors("Copy " + copy + " of " + c.getTranslatedName()
+                            + ": choose each color signed in its art box by someone who has illustrated a printed Magic card",
+                            sa, 0, 5, ColorSet.WUBRG);
+                    takesAction.setMatchNote(key, colors);
+                }
+                c.setMarkedColors((ColorSet) colors);
+            }
             for (Card c : all) {
                 if (c.hasKeyword(Keyword.LEGACY) && c.getLegacyWord() == null && !c.isInZone(ZoneType.Sideboard)) {
                     writeLegacyWord(takesAction, c, all);

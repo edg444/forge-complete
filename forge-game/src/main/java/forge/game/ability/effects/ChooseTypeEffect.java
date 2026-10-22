@@ -46,7 +46,10 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
                 : getTargetPlayers(sa);
         // Hangman: a secretly noted word the other players then guess at, so only plain letters
         final boolean guessable = sa.hasParam("Guessable");
-        final boolean secret = sa.hasParam("Secretly") || guessable;
+        // Mana Conference: each player votes secretly, then the votes are revealed together
+        final boolean ballot = sa.hasParam("Ballot");
+        final boolean secret = sa.hasParam("Secretly") || guessable || ballot;
+        final java.util.Map<Player, String> votes = new java.util.LinkedHashMap<>();
         final int minLetters = Integer.parseInt(sa.getParamOrDefault("MinLetters", "0"));
         final int maxLetters = Integer.parseInt(sa.getParamOrDefault("MaxLetters", "0"));
 
@@ -194,6 +197,10 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
 
                 if (!secret) p.getGame().getAction().notifyOfValue(sa, p, choice, noNotify);
 
+                if (ballot) {
+                    votes.put(p, choice);
+                    continue;
+                }
                 if (sa.hasParam("Note")) {
                     card.addNotedType(choice);
                     if (!sa.hasParam("ChooseNoted")) {
@@ -217,6 +224,14 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
             }
         } else {
             throw new RuntimeException(sa.getHostCard() + "'s ability resulted in no types to choose from");
+        }
+        if (ballot) {
+            for (final java.util.Map.Entry<Player, String> vote : votes.entrySet()) {
+                card.getGame().getAction().notifyOfValue(sa, vote.getKey(), vote.getValue(), null);
+            }
+            // every type with at least one vote, read back by Animate's Types$ ChosenTypes
+            card.setChosenTypeKind(type);
+            card.setChosenType(String.join(",", new java.util.LinkedHashSet<>(votes.values())));
         }
     }
 

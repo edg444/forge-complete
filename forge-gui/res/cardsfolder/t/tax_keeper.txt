@@ -1,0 +1,7 @@
+Name:Tax Keeper
+ManaCost:1 G
+Types:Creature Elf Advisor
+PT:1/1
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | AddToughness$ X | Description$ CARDNAME gets +X/+X, where X is your highest commander tax among your commanders. (For example, if you've cast your one commander from your command zone twice, it gets +4/+4.)
+SVar:X:Count$HighestCommanderTax
+Oracle:Tax Keeper gets +X/+X, where X is your highest commander tax among your commanders. (For example, if you've cast your one commander from your command zone twice, it gets +4/+4.)

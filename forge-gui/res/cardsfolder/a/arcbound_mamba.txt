@@ -1,0 +1,12 @@
+Name:Arcbound Mamba
+ManaCost:3 G
+Types:Artifact Creature Snake
+PT:0/0
+K:Deathtouch
+K:etbCounter:P1P1:2:no Condition:Poison Modular 2 (This creature enters the battlefield with two +1/+1 counters on it. When it dies, you may put its +1/+1 counters on target player or artifact creature. If they're put on a player this way, they become poison counters.)
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | OptionalDecider$ TriggeredCardController | Execute$ TrigModular | Secondary$ True | TriggerDescription$ When CARDNAME dies, you may put its +1/+1 counters on target player or artifact creature. If they're put on a player this way, they become poison counters.
+SVar:TrigModular:DB$ PutCounter | ValidTgts$ Player,Artifact.Creature | TgtPrompt$ Select target player or artifact creature | CounterType$ P1P1 | CounterNum$ X | ConditionDefined$ Targeted | ConditionPresent$ Card | ConditionCompare$ GE1 | SubAbility$ DBPoison | AILogic$ PoisonModular
+SVar:DBPoison:DB$ Poison | Defined$ TargetedPlayer | Num$ X
+SVar:X:TriggeredCard$CardCounters.P1P1
+DeckHas:Ability$Counters
+Oracle:Deathtouch\nPoison Modular 2 (This creature enters the battlefield with two +1/+1 counters on it. When it dies, you may put its +1/+1 counters on target player or artifact creature. If they're put on a player this way, they become poison counters.)

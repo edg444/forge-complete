@@ -1,0 +1,7 @@
+Name:Rampant, Growth
+ManaCost:1 G
+Types:Sorcery
+# Spell commander: it can be your commander (the Limited partnering doesn't come up in Forge)
+K:CARDNAME can be your commander.
+A:SP$ ChangeZone | Origin$ Library | Destination$ Battlefield | ChangeType$ Land.Basic | ChangeTypeDesc$ basic land | Tapped$ True | ChangeNum$ 1 | SpellDescription$ Search your library for a basic land card, put that card onto the battlefield tapped, then shuffle.
+Oracle:Spell commander (This card can be your commander. In Limited, it can partner like other monocolored legends.)\nSearch your library for a basic land card, put that card onto the battlefield tapped, then shuffle.

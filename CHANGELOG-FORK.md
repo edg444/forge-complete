@@ -312,6 +312,22 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Team Acceleration, Tax Keeper, Devoted Sultai, Arcbound Mamba, You and Ooze Army?, Rampant, Growth,
+  Artist Alley, Mana Conference, Urza's Hot Dog Stand, Reflective Gate, Must Be Knights, Unclaimed Battle Axe, Devoted
+  Temur, CGI Fight Sequence, Nevermind, Tax Bolt, Furnace Oriflamme, Across the Multiverse, Lava, Axe (UNK
+  uncommons).**
+  - `Count$HighestCommanderTax`, `Count$CardMarkedColors`, `Count$CreatureTypesAmong <valid>` (changelings add
+    nothing).
+  - Card property `printingFrom_<SET>[_<SET>...]`: the card's own printing, unlike `set<SET>` (its original one).
+  - Defined player `ParentTargetDefendingPlayer`: the player the parent's targeted attacker is attacking.
+  - `ChooseType | Ballot$ True`: every chooser votes secretly, then the votes are revealed together; Animate
+    `Types$ ChosenTypes` gains each type voted for.
+  - SVar `AsksSignedColors`: as the match begins, a person says which colors are signed in each copy's art box (honor
+    system, like Mark Ritual); the AI's copies are unsigned. Read back by `Produced$ Combo ColorID`.
+  - CountersPutAi `AILogic$ PoisonModular` (Arcbound Mamba).
+  - Rampant, Growth and Lava, Axe are in `*_unknown_event.txt`: their file names collide with Rampant Growth's and
+    Lava Axe's.
+
 ### 2026-10-21, thirteenth deploy (desktop, Android, GitHub) — Unknown Event
   rares and uncommons, through Windmill Slam (178+ of 398 UNK names); no upstream changes to merge
 
