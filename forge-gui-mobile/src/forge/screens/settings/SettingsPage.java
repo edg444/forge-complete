@@ -324,17 +324,6 @@ public class SettingsPage extends TabPage<SettingsScreen> {
                         MatchController.instance.resetPlayerPanels();
                 }
             }, 1);
-        lstSettings.addItem(new BooleanSetting(FPref.UI_ZONE_TABS_LEFT,
-            Forge.getLocalizer().getMessageorUseDefault("lblZoneTabsLeft", "Alternate Player Zone Layout (Landscape Mode)"),
-            Forge.getLocalizer().getMessageorUseDefault("nlZoneTabsLeft", "Shows the Hand, Library, Graveyard and Exile tabs in the left column with the other tabs, instead of along the right edge.")) {
-                @Override
-                public void select() {
-                    super.select();
-                    Forge.zoneTabsLeft = FModel.getPreferences().getPrefBoolean(FPref.UI_ZONE_TABS_LEFT);
-                    if (MatchController.instance != null)
-                        MatchController.instance.resetPlayerPanels();
-                }
-            }, 1);
         lstSettings.addItem(new BooleanSetting(FPref.UI_ALT_PLAYERZONETABS,
             Forge.getLocalizer().getMessageorUseDefault("lblAltZoneTabs", "Alternate Zone Layout (Landscape Mode)"),
             Forge.getLocalizer().getMessageorUseDefault("nlAltZoneTabs", "Shows the open zone (hand, graveyard...) as a wide bottom row instead of a side panel.")) {

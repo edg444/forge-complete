@@ -312,6 +312,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Mobile Settings: one "Alternate Player Zone Layout" again.** The fork's zone-tabs-on-the-left option
+  (`UI_ZONE_TABS_LEFT`) is gone; upstream restored its own setting of that name (`UI_ALT_PLAYERZONETABS`), and the two
+  showed with the same label. Hand, Library, Graveyard and Exile tabs are on the right edge, as upstream has them.
+
 - **Unknown Event: Interrogation Robot, The Zonian Brawler, The Karst, Enchanted (UNK cards).**
   - Ability property `LastNamedSpell`: the half of a split card named last. The AI's card-name choice now picks one
     of the offered halves of a split card with more than two halves.

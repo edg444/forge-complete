@@ -130,7 +130,6 @@ public class ForgePreferences extends AbstractPreferences<ForgePreferences.FPref
         UI_ALLOW_ESC_TO_END_TURN ("false"),
         UI_ALT_PLAYERINFOLAYOUT ("false"),
         UI_ALT_PLAYERZONETABS ("false"),
-        UI_ZONE_TABS_LEFT ("false"),
         UI_COMPACT_LANDSCAPE_LAYOUT ("Left"),
         UI_FROSTED_STYLE ("true"),
         UI_COMPACT_ZONE_TABS ("true"),
