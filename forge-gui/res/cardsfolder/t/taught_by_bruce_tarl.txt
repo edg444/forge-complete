@@ -1,0 +1,12 @@
+Name:Taught by Bruce Tarl
+ManaCost:3 R
+Types:Enchantment Aura
+# A commander enchantment follows its commander between face-up zones (GameAction.followCommander)
+SVar:CommanderEnchantment:True
+K:Enchant:Creature.IsCommander+inZoneBattlefield,Card.IsCommander+YouOwn+inZoneCommand:commander creature
+SVar:AuraSpell:SP$ Attach | ValidTgts$ Card.CanBeEnchantedBy | TgtZone$ Battlefield,Command | ValidTgtsDesc$ commander creature | AILogic$ Pump
+S:Mode$ Continuous | Affected$ Card.Self | Description$ Commander enchantment (This aura enchants a commander creature, and remains attached to the creature as it moves between any face-up zones. You can cast it on a Commander in your command zone.)
+T:Mode$ SpellCast | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When you cast CARDNAME, draw a card.
+SVar:TrigDraw:DB$ Draw
+S:Mode$ Continuous | Affected$ Creature.EnchantedBy | AddKeyword$ Double Strike & Protection:Ox:Oxen | Description$ Enchanted creature has double strike and protection from Oxen.
+Oracle:Commander enchantment (This aura enchants a commander creature, and remains attached to the creature as it moves between any face-up zones. You can cast it on a Commander in your command zone.)\nWhen you cast Taught by Bruce Tarl, draw a card.\nEnchanted creature has double strike and protection from Oxen.

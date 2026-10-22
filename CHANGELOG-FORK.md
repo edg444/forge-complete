@@ -312,6 +312,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Taught by Narset, Serra, Vito, Surrak and Bruce Tarl (UNK commander enchantments).**
+  - SVar `CommanderEnchantment`: the Aura stays attached to its commander as it moves between face-up zones
+    (`GameAction.followCommander`, run after every zone change). It waits where it is while the commander is a spell,
+    comes along to the battlefield, graveyard, exile, hand and command zone, and falls off if the commander goes to a
+    library or face down. Cast on a commander in your command zone, it goes there with it (SVar `AuraSpell`).
+
 - **Unknown Event: Unstickerify sees under stickers; Mysterious Hero, Ring Out, Adventurer Beguiler, Takesies //
   Backsies, You're Toast!, Trash Panda (UNK).**
   - Unstickerify: a stickered playtest card becomes a copy of the real card under its sticker while enchanted (Clone

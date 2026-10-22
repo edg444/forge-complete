@@ -117,6 +117,56 @@ public class GameAction {
     }
 
     private Card changeZone(final Zone zoneFrom, Zone zoneTo, final Card c, Integer position, SpellAbility cause, Map<AbilityKey, Object> params) {
+        // Taught by ___: a commander enchantment stays attached to its commander as it moves between face-up zones
+        final List<Card> followers = c.hasCardAttachments()
+                ? CardLists.filter(c.getAttachedCards(), a -> a.hasSVar("CommanderEnchantment")) : List.of();
+        final Card moved = changeZoneUnfollowed(zoneFrom, zoneTo, c, position, cause, params);
+        if (moved != null) {
+            for (final Card aura : followers) {
+                followCommander(aura, moved);
+            }
+            if (moved.hasSVar("CommanderEnchantment") && moved.getEntityAttachedTo() instanceof Card commander) {
+                followCommander(moved, commander);
+            }
+        }
+        return moved;
+    }
+
+    /**
+     * Puts a commander enchantment in the zone its commander is now in, still attached to it. A spell on the stack
+     * leaves the Aura where it was; the library or a face-down card means it doesn't follow, and it falls off.
+     */
+    private void followCommander(final Card aura, final Card commander) {
+        Card cur = game.getCardState(aura);
+        final Zone to = commander.getZone();
+        if (to == null || to.is(ZoneType.Library) || commander.isFaceDown() || !cur.isAura()) {
+            if (cur.isAttachedToEntity() && cur.getEntityAttachedTo().equals(commander)) {
+                cur.unattachFromEntity(commander);
+            }
+            return;
+        }
+        if (!to.is(ZoneType.Stack) && (cur.getZone() == null || !cur.getZone().is(to.getZoneType()))) {
+            if (cur.isAttachedToEntity()) {
+                cur.unattachFromEntity(cur.getEntityAttachedTo());
+            }
+            // attached first, so entering the battlefield doesn't ask what it enchants
+            cur.attachToEntity(commander, null, true);
+            cur = to.is(ZoneType.Battlefield) ? moveToPlay(cur, cur.getController(), null, null)
+                    : moveTo(cur.getOwner().getZone(to.getZoneType()), cur, null);
+            if (cur == null) {
+                return;
+            }
+        }
+        // the moved commander is a new object with the same id, which attachToEntity would take for the old one
+        if (cur.getEntityAttachedTo() != commander) {
+            if (cur.isAttachedToEntity()) {
+                cur.unattachFromEntity(cur.getEntityAttachedTo());
+            }
+            cur.attachToEntity(commander, null, true);
+        }
+    }
+
+    private Card changeZoneUnfollowed(final Zone zoneFrom, Zone zoneTo, final Card c, Integer position, SpellAbility cause, Map<AbilityKey, Object> params) {
         // 111.11. A copy of a permanent spell becomes a token as it resolves.
         // The token has the characteristics of the spell that became that token.
         // The token is not “created” for the purposes of any replacement effects or triggered abilities that refer to creating a token.

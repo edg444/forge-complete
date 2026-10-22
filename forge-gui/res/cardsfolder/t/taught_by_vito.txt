@@ -1,0 +1,12 @@
+Name:Taught by Vito
+ManaCost:2 B
+Types:Enchantment Aura
+# A commander enchantment follows its commander between face-up zones (GameAction.followCommander)
+SVar:CommanderEnchantment:True
+K:Enchant:Creature.IsCommander+inZoneBattlefield,Card.IsCommander+YouOwn+inZoneCommand:commander creature
+SVar:AuraSpell:SP$ Attach | ValidTgts$ Card.CanBeEnchantedBy | TgtZone$ Battlefield,Command | ValidTgtsDesc$ commander creature | AILogic$ Pump
+S:Mode$ Continuous | Affected$ Card.Self | Description$ Commander enchantment (This aura enchants a commander creature, and remains attached to the creature as it moves between any face-up zones. You can cast it on a Commander in your command zone.)
+T:Mode$ SpellCast | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When you cast CARDNAME, draw a card.
+SVar:TrigDraw:DB$ Draw
+S:Mode$ Continuous | Affected$ Creature.EnchantedBy | AddPower$ 1 | AddToughness$ 1 | AddKeyword$ Lifelink | Description$ Enchanted creature gets +1/+1 and has lifelink.
+Oracle:Commander enchantment (This aura enchants a commander creature, and remains attached to the creature as it moves between any face-up zones. You can cast it on a Commander in your command zone.)\nWhen you cast Taught by Vito, draw a card.\nEnchanted creature gets +1/+1 and has lifelink.
