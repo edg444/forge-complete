@@ -178,6 +178,7 @@ public final class CMatchUI
 
     private final CCombat cCombat = new CCombat();
     private final CDependencies cDependencies = new CDependencies(this);
+    private final forge.screens.match.controllers.CTacticsGrid cTacticsGrid = new forge.screens.match.controllers.CTacticsGrid(this);
     private final CDetailPicture cDetailPicture = new CDetailPicture(this);
     private final CDev cDev = new CDev(this);
     private final CDock cDock = new CDock(this);
@@ -197,6 +198,7 @@ public final class CMatchUI
         this.myDocs.put(EDocID.REPORT_STACK, getCStack().getView());
         this.myDocs.put(EDocID.REPORT_COMBAT, cCombat.getView());
         this.myDocs.put(EDocID.REPORT_DEPENDENCIES, cDependencies.getView());
+        this.myDocs.put(EDocID.REPORT_GRID, cTacticsGrid.getView());
         this.myDocs.put(EDocID.REPORT_LOG, cLog.getView());
         this.myDocs.put(EDocID.DEV_MODE, getCDev().getView());
         this.myDocs.put(EDocID.BUTTON_DOCK, getCDock().getView());
@@ -621,30 +623,16 @@ public final class CMatchUI
         cDependencies.update();
     }
 
-    // Advanced Tactics: a grid window for each card that has one, by card id
-    private final Map<Integer, TacticsGridWindow> tacticsWindows = new HashMap<>();
-    private final Map<Integer, CardView> tacticsHosts = new HashMap<>();
-
+    // Advanced Tactics: its grid is a "Grid" tab while it exists
     @Override
     public void updateTacticsGrid(final CardView host) {
-        if (host == null) {
-            return;
-        }
-        FThreads.invokeInEdtLater(() -> {
-            tacticsHosts.put(host.getId(), host);
-            tacticsWindows.computeIfAbsent(host.getId(), id -> new TacticsGridWindow(this)).update(host);
-        });
+        FThreads.invokeInEdtLater(() -> cTacticsGrid.show(host));
     }
 
     private void refreshTacticsGrids() {
-        if (tacticsWindows.isEmpty()) {
-            return;
+        if (cTacticsGrid.getView().getParentCell() != null) {
+            FThreads.invokeInEdtLater(cTacticsGrid::update);
         }
-        FThreads.invokeInEdtLater(() -> {
-            for (final Map.Entry<Integer, TacticsGridWindow> e : tacticsWindows.entrySet()) {
-                e.getValue().update(tacticsHosts.get(e.getKey()));
-            }
-        });
     }
 
     @Override
@@ -1131,11 +1119,8 @@ public final class CMatchUI
     @Override
     public void finishGame() {
         FloatingZone.closeAll(); //ensure floating card areas cleared and closed after the game
-        FThreads.invokeInEdtNowOrLater(() -> {
-            tacticsWindows.values().forEach(TacticsGridWindow::close);
-            tacticsWindows.clear();
-            tacticsHosts.clear();
-        });
+        // the Grid tab mustn't outlive the game (or be saved into the layout)
+        FThreads.invokeInEdtNowOrLater(() -> cTacticsGrid.show(null));
         selectionZonesShown.clear();
         revealZonesShown.clear();
         if (isNetGame()) {

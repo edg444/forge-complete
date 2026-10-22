@@ -94,6 +94,8 @@ public enum EDocID {
     REPORT_STACK (),
     REPORT_COMBAT (),
     REPORT_DEPENDENCIES (),
+    // Advanced Tactics' grid: only in a cell while a grid exists (CTacticsGrid)
+    REPORT_GRID (),
     REPORT_LOG (),
 
     DEV_MODE (),

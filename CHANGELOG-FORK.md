@@ -327,8 +327,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     but its controller in the command zone, until it's cast the first time; it's cast normally.
   - Advanced Tactics' 5x5 grid (new effect `TacticsGrid`, Card/CardView `TacticsGrid`): filled at random as it enters,
     each entering creature placed by its controller, `{1}` moves; CantBlockBy `GridAdjacency$` keeps blocks to
-    orthogonal neighbors. The grid has its own view: a window beside the match on desktop, a "Grid" tab in the menu
-    bar on mobile (new game event `GameEventTacticsGrid`, `IGuiGame.updateTacticsGrid`).
+    orthogonal neighbors. The grid has its own view: a "Grid" tab next to Stack, Combat and Log on desktop (doc
+    `REPORT_GRID`, only there while a grid exists), a "Grid" tab in the menu bar on mobile (new game event
+    `GameEventTacticsGrid`, `IGuiGame.updateTacticsGrid`).
 
 - **Unknown Event: Occupation of Kulrath, Occupation of Llanowar, Sort of _____ and _____, The Whiteboarder, The
   Chaos Keeper, The Charitable Drafter, The Rhystic Storyteller, The Game-Changing Host, Clear, Fair Magic, The
