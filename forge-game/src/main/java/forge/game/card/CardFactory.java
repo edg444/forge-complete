@@ -678,7 +678,12 @@ public class CardFactory {
                 }
             }
 
-            // triggers to add to clone
+            if (cause.hasParam("RemoveAllAbilities")) {
+                state.clearAllAbilities();
+            }
+
+            // triggers to add to clone - after any removal, since "it has this and loses all other abilities" keeps
+            // what it gains (The Majestic Duo)
             if (cause.hasParam("AddTriggers")) {
                 for (final String s : cause.getParam("AddTriggers").split(",")) {
                     if (origSVars.containsKey(s)) {
@@ -687,10 +692,6 @@ public class CardFactory {
                         state.addTrigger(parsedTrigger);
                     }
                 }
-            }
-
-            if (cause.hasParam("RemoveAllAbilities")) {
-                state.clearAllAbilities();
             }
 
             // abilities to add to clone

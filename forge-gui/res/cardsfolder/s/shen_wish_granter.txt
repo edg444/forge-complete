@@ -1,0 +1,18 @@
+Name:Shen, Wish Granter
+ManaCost:1 G U R
+Types:Legendary Creature Dragon
+PT:6/6
+K:Defender
+K:Flying
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | CheckSVar$ Scattered | SVarCompare$ EQ0 | Execute$ TrigScatter | TriggerDescription$ When NICKNAME enters, if you haven't scattered the Dragonstorm Globes this game, scatter them. (Create seven Dragonstorm Globe token cards and shuffle them into your library.)
+SVar:TrigScatter:DB$ MakeCard | TokenCard$ True | Name$ Dragonstorm Globe | Zone$ Library | Amount$ 7 | SubAbility$ DBShuffle
+SVar:DBShuffle:DB$ Shuffle | Defined$ You | SubAbility$ DBMark
+# the scattering is remembered as an effect in your command zone, for the rest of the game
+SVar:DBMark:DB$ Effect | Name$ Dragonstorm Globes Scattered | Duration$ Permanent
+SVar:Scattered:Count$ValidCommand Effect.YouCtrl+namedDragonstorm Globes Scattered
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Permanent.namedDragonstorm Globe+YouCtrl | TriggerZones$ Battlefield | Execute$ TrigDraw | TriggerDescription$ Whenever a permanent named Dragonstorm Globe you control enters, draw a card. Then if you control seven permanents named Dragonstorm Globe, you win the game.
+SVar:TrigDraw:DB$ Draw | SubAbility$ DBWin
+SVar:DBWin:DB$ WinsGame | Defined$ You | ConditionCheckSVar$ Globes | ConditionSVarCompare$ GE7
+SVar:Globes:Count$Valid Permanent.namedDragonstorm Globe+YouCtrl
+DeckHas:Ability$Token
+Oracle:Defender, flying\nWhen Shen enters, if you haven't scattered the Dragonstorm Globes this game, scatter them. (Create seven Dragonstorm Globe token cards and shuffle them into your library.)\nWhenever a permanent named Dragonstorm Globe you control enters, draw a card. Then if you control seven permanents named Dragonstorm Globe, you win the game.

@@ -1,0 +1,12 @@
+Name:The Goblin Mastermind
+ManaCost:2 B R
+Types:Legendary Creature Goblin Wizard
+PT:3/3
+# "it's your commander" is read as being in the command zone; on the battlefield, controlling it is enough
+S:Mode$ Continuous | EffectZone$ Battlefield,Command | Affected$ Card.YouCtrl+inZoneBattlefield,Card.YouCtrl+inZoneStack,Card.YouOwn+!inZoneBattlefield+!inZoneStack | AffectedZone$ Battlefield,Stack,Hand,Library,Graveyard,Exile,Command | AddType$ Kindred & Goblin | Description$ As long as you control CARDNAME or it's your commander, permanents you control are Kindred Goblins in addition to their other types. The same is true for spells you control and cards that you own that aren't on the battlefield.
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | Execute$ TrigForget | TriggerDescription$ Whenever CARDNAME deals combat damage to a player, you create a token that's a copy of one of Skirk Prospector, Goblin Lackey, Goblin Piledriver, Goblin Warchief, Boggart Harbinger, or Goblin Ringleader, chosen at random.
+SVar:TrigForget:DB$ Cleanup | ClearNamedCard$ True | SubAbility$ DBPick
+SVar:DBPick:DB$ NameCard | Defined$ You | ChooseFromList$ Skirk Prospector,Goblin Lackey,Goblin Piledriver,Goblin Warchief,Boggart Harbinger,Goblin Ringleader | AtRandom$ True | SubAbility$ DBCopy
+SVar:DBCopy:DB$ CopyPermanent | DefinedName$ NamedCard
+DeckHas:Ability$Token
+Oracle:As long as you control The Goblin Mastermind or it's your commander, permanents you control are Kindred Goblins in addition to their other types. The same is true for spells you control and cards that you own that aren't on the battlefield.\nWhenever The Goblin Mastermind deals combat damage to a player, you create a token that's a copy of one of Skirk Prospector, Goblin Lackey, Goblin Piledriver, Goblin Warchief, Boggart Harbinger, or Goblin Ringleader, chosen at random.

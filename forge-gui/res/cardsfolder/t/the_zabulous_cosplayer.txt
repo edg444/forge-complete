@@ -1,0 +1,14 @@
+Name:The Zabulous Cosplayer
+ManaCost:2 U R
+Types:Legendary Creature Human Shapeshifter
+PT:0/0
+# "Tournament-legal" is legal in Vintage, the format every other sanctioned one sits inside.
+K:ETBReplacement:Copy:DBForget
+SVar:DBForget:DB$ Cleanup | ClearNamedCard$ True | SubAbility$ DBPick | SpellDescription$ As CARDNAME enters and at the beginning of your upkeep, choose a tournament-legal non-Aura permanent card at random. CARDNAME becomes a copy of that card, except it has this ability. (Use the "random card" feature on a Magic card search engine until you hit a permanent card.)
+SVar:DBPick:DB$ NameCard | Defined$ You | ValidCards$ Permanent.nonAura | AtRandom$ True | LegalIn$ Vintage | SubAbility$ DBBecome
+SVar:DBBecome:DB$ Clone | CopyFromChosenName$ True | AddTriggers$ CosplayTrig | AddSVars$ TrigCosplay,DBPickAgain,DBBecome
+SVar:CosplayTrig:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCosplay | TriggerDescription$ At the beginning of your upkeep, choose a tournament-legal non-Aura permanent card at random. CARDNAME becomes a copy of that card, except it has this ability.
+SVar:TrigCosplay:DB$ Cleanup | ClearNamedCard$ True | SubAbility$ DBPickAgain
+SVar:DBPickAgain:DB$ NameCard | Defined$ You | ValidCards$ Permanent.nonAura | AtRandom$ True | LegalIn$ Vintage | SubAbility$ DBBecome
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCosplay | Secondary$ True | TriggerDescription$ At the beginning of your upkeep, choose a tournament-legal non-Aura permanent card at random. CARDNAME becomes a copy of that card, except it has this ability.
+Oracle:As The Zabulous Cosplayer enters and at the beginning of your upkeep, choose a tournament-legal non-Aura permanent card at random. The Zabulous Cosplayer becomes a copy of that card, except it has this ability. (Use the "random card" feature on a Magic card search engine until you hit a permanent card.)

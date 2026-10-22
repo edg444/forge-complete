@@ -1,0 +1,13 @@
+Name:The Majestic Duo
+ManaCost:2 G U
+Types:Legendary Creature Human Wizard
+PT:2/2
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.namedThe Majestic Duo+Other+YouCtrl | PresentCompare$ EQ0 | Execute$ TrigCopy | TriggerDescription$ When CARDNAME enters, if you don't control another permanent named The Majestic Duo, create a token that's a copy of it, except it's not legendary, it has "Whenever this creature deals combat damage to a player, draw a card and earnestly tell them good luck," and it loses all other abilities.
+SVar:TrigCopy:DB$ CopyPermanent | Defined$ Self | NonLegendary$ True | RemoveAllAbilities$ True | AddTriggers$ LuckTrig | AddSVars$ TrigLuck
+SVar:LuckTrig:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | Execute$ TrigLuck | TriggerDescription$ Whenever this creature deals combat damage to a player, draw a card and earnestly tell them good luck.
+SVar:TrigLuck:DB$ Draw
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | Execute$ TrigYours | TriggerDescription$ Whenever this creature deals combat damage to a player, you and that player may each put a permanent card from your hand onto the battlefield. Offer them a high-five.
+SVar:TrigYours:DB$ ChangeZone | Origin$ Hand | Destination$ Battlefield | ChangeType$ Permanent | ChangeNum$ 1 | DefinedPlayer$ You | SubAbility$ DBTheirs
+SVar:DBTheirs:DB$ ChangeZone | Origin$ Hand | Destination$ Battlefield | ChangeType$ Permanent | ChangeNum$ 1 | DefinedPlayer$ TriggeredTarget | Chooser$ TriggeredTarget
+DeckHas:Ability$Token
+Oracle:When The Majestic Duo enters, if you don't control another permanent named The Majestic Duo, create a token that's a copy of it, except it's not legendary, it has "Whenever this creature deals combat damage to a player, draw a card and earnestly tell them good luck," and it loses all other abilities.\nWhenever this creature deals combat damage to a player, you and that player may each put a permanent card from your hand onto the battlefield. Offer them a high-five.

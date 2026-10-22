@@ -312,6 +312,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: The Majestic Duo, The Zabulous Cosplayer, Shen, Wish Granter, The Goblin Mastermind, The Brewing
+  Chef (UNK rares).**
+  - Card property `CreatesToken`: an ability that makes a token (Token, CopyPermanent, Amass, Investigate,
+    Incubate, keyword-made ones included).
+  - Copy effects now add `AddTriggers$` after `RemoveAllAbilities$`, so a copy that "loses all other abilities"
+    keeps the trigger it gains.
 - **Unknown Event: Evy, Fang Keeper, The Ice Dancer, The Sad Creaturez, Tarelily, Lovestruck Archer, Princess
   Snowfall, The Joiner of Cats, The Bus Runner, The River Warlock (UNK rares).**
   - Evy's "draw on it" is an honor-system choice of what you drew; a creature that has shared its feelings

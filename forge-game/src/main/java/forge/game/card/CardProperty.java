@@ -57,6 +57,40 @@ public class CardProperty {
         return card.getOwner();
     }
 
+    private static final java.util.Set<forge.game.ability.ApiType> TOKEN_MAKERS = java.util.EnumSet.of(
+            forge.game.ability.ApiType.Token, forge.game.ability.ApiType.CopyPermanent, forge.game.ability.ApiType.Amass,
+            forge.game.ability.ApiType.Investigate, forge.game.ability.ApiType.Incubate);
+
+    private static boolean createsToken(final Card card) {
+        final java.util.List<SpellAbility> abilities = new java.util.ArrayList<>(card.getSpellAbilities());
+        for (final forge.game.trigger.Trigger t : card.getTriggers()) {
+            if (t.ensureAbility() != null) {
+                abilities.add(t.ensureAbility());
+            }
+        }
+        for (final forge.game.replacement.ReplacementEffect re : card.getReplacementEffects()) {
+            if (re.getOverridingAbility() != null) {
+                abilities.add(re.getOverridingAbility());
+            }
+        }
+        while (!abilities.isEmpty()) {
+            final SpellAbility sa = abilities.remove(abilities.size() - 1);
+            if (sa == null) {
+                continue;
+            }
+            if (TOKEN_MAKERS.contains(sa.getApi())) {
+                return true;
+            }
+            if (sa.getSubAbility() != null) {
+                abilities.add(sa.getSubAbility());
+            }
+            if (sa.getAdditionalAbilityList("Choices") != null) {
+                abilities.addAll(sa.getAdditionalAbilityList("Choices"));
+            }
+        }
+        return false;
+    }
+
     public static boolean cardHasProperty(Card card, String property, Player sourceController, Card source, CardTraitBase spellAbility) {
         final Game game = card.getGame();
         final Combat combat = game.getCombat();
@@ -93,6 +127,11 @@ public class CardProperty {
                 }
             }
             return found;
+        } else if (property.equals("CreatesToken")) {
+            // The Brewing Chef: a card with an ability that creates a token - copies included, keyword ones too
+            if (!createsToken(card)) {
+                return false;
+            }
         } else if (property.equals("OnYourSecretList")) {
             if (sourceController == null || !sourceController.isOnSecretList(card)) {
                 return false;
