@@ -3714,6 +3714,10 @@ public class Player extends GameEntity implements Comparable<Player> {
         byte ci = 0;
         for (final Card c : commanders) {
             ci |= c.getRules().getColorIdentity().getColor();
+            // The Strixhaven-Lorwyn Rover has the color identity of the college chosen for it
+            if (c.hasSVar("AsksCollege") && c.hasChosenColor()) {
+                ci |= ColorSet.fromNames(c.getChosenColors()).getColor();
+            }
         }
         ColorSet identity = ColorSet.fromMask(ci);
         return identity;

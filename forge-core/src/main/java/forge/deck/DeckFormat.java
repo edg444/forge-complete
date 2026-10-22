@@ -484,6 +484,26 @@ public enum DeckFormat {
             }
         }
 
+        // The Strixhaven-Lorwyn Rover: the commander takes whichever of its color identities the deck fits
+        // (user ruling 2026-10-21)
+        for (final DeckRuleColorIdentity rule : commanderCIRules) {
+            if (rule.getColorIdentityChoices().isEmpty()) {
+                continue;
+            }
+            byte deckCI = 0;
+            for (final Entry<PaperCard, Integer> cp : deck.get(DeckSection.Main)) {
+                if (!allowsOffColorIdentity(commanderCIRules, cp.getKey())) {
+                    deckCI |= cp.getKey().getRules().getColorIdentity().getColor();
+                }
+            }
+            for (final byte choice : rule.getColorIdentityChoices()) {
+                if (ColorSet.fromMask(deckCI).hasNoColorsExcept(cmdCI | choice)) {
+                    cmdCI |= choice;
+                    break;
+                }
+            }
+        }
+
         final List<PaperCard> erroneousCI = new ArrayList<>();
 
         Set<String> basicLandNames = new HashSet<>();

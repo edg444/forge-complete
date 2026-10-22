@@ -1,0 +1,12 @@
+Name:The Generational Historian
+ManaCost:1 G
+Types:Legendary Creature Human Druid
+PT:1/2
+# The year is chosen as the game begins if it's your commander: the one every printing in the deck fits, or any year
+# (honor system) if they don't share one (user ruling 2026-10-21)
+SVar:AsksReleaseYear:True
+S:Mode$ Continuous | Affected$ Card.Self | Description$ Before the game begins, if CARDNAME is your commander, choose a year. Your deck can contain only cards released in that year. (Legal text, for once, is a great place to check. Specific versions matter.)
+S:Mode$ ReduceCost | ValidCard$ Card.releasedInChosenYear | Type$ Spell | Amount$ 1 | Description$ Spells released in the chosen year cost {1} less to cast. If the chosen year is in the 1990s, they also cost {W}{U}{B}{R}{G} less to cast, reducing only the amount of colored mana you pay.
+S:Mode$ ReduceCost | ValidCard$ Card.releasedInChosenYear | Type$ Spell | Amount$ 1 | Color$ W U B R G | IgnoreGeneric$ True | CheckSVar$ Decade | SVarCompare$ EQ199 | Secondary$ True | Description$ If the chosen year is in the 1990s, they also cost {W}{U}{B}{R}{G} less to cast.
+SVar:Decade:Count$ChosenNumber/DivideEvenlyDown.10
+Oracle:Before the game begins, if The Generational Historian is your commander, choose a year. Your deck can contain only cards released in that year. (Legal text, for once, is a great place to check. Specific versions matter.)\nSpells released in the chosen year cost {1} less to cast. If the chosen year is in the 1990s, they also cost {W}{U}{B}{R}{G} less to cast, reducing only the amount of colored mana you pay.

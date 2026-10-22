@@ -1419,6 +1419,8 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
                 : "Question".equals(kindOfType) ? "Ask a yes or no question about the chosen creature card"
                 // Your Favorite Missing Character
                 : "MissingAbility".equals(kindOfType) ? "Choose its ability"
+                // The Strixhaven-Lorwyn Rover
+                : "College".equals(kindOfType) ? "Choose a Strixhaven college"
                 : localizer.getMessage("lblChooseATargetType", kindOfType.toLowerCase());
         if (isOptional) {
             return getGui().oneOrNone(title, types);

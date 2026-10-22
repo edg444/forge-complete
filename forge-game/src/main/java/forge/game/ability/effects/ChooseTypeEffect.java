@@ -103,6 +103,10 @@ public class ChooseTypeEffect extends SpellAbilityEffect {
                 // Vorthos, Steward of Myth: Scryfall Tagger's named characters
                 validTypes.addAll(forge.card.PrintingTraits.allCharacterNames());
                 break;
+            case "Plane":
+                // Minnea, Planar Tourist: every plane some printing's set is on
+                validTypes.addAll(forge.card.PrintingTraits.allPlanes());
+                break;
             case "Universe":
                 // Byode, Inverse Sun: Magic and every Universes Beyond franchise
                 validTypes.addAll(forge.card.PrintingTraits.allUniverses());

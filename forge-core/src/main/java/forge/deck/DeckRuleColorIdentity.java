@@ -17,6 +17,7 @@
  */
 package forge.deck;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -41,6 +42,7 @@ public class DeckRuleColorIdentity extends DeckRule {
     private final Predicate<CardRules> additionalColorPredicate;
     private final int additionalColorCount;
     private final byte allowedAdditionalColors;
+    private final List<Byte> colorPairs = new java.util.ArrayList<>();
 
     DeckRuleColorIdentity(final Map<String, String> params, final byte chosenAdditionalColors) {
         super(params);
@@ -53,6 +55,14 @@ public class DeckRuleColorIdentity extends DeckRule {
         final String additionalColorType = params.get("AllowedAdditionalColorType");
         additionalColorPredicate = additionalColorCount > 0 && additionalColorType != null
                 ? CardRulesPredicates.restrictionList(additionalColorType) : card -> false;
+        // The Strixhaven-Lorwyn Rover: ColorIdentityOneOf$ WR,UR,GU,WB,BG - the commander has one of these color
+        // identities, whichever the deck fits
+        final String oneOf = params.get("ColorIdentityOneOf");
+        if (oneOf != null) {
+            for (final String colors : oneOf.split(",")) {
+                colorPairs.add(ColorSet.fromNames(colors.trim().toCharArray()).getColor());
+            }
+        }
         // Ignore a stored selection that doesn't fit the budget (e.g. a hand-edited decklist).
         allowedAdditionalColors = ColorSet.fromMask(chosenAdditionalColors).countColors() <= additionalColorCount
                 ? chosenAdditionalColors : 0;
@@ -72,6 +82,11 @@ public class DeckRuleColorIdentity extends DeckRule {
     public boolean allowsOffColorIdentity(final PaperCard candidate) {
         return allowsOffColorIdentity(candidate.getRules()) || exemptUniversesBeyond
                 && PrintingTraits.isUniversesBeyond(candidate.getEdition(), candidate.getCollectorNumber());
+    }
+
+    /** The ColorIdentityOneOf$ choices, as color masks (empty if this rule has none). */
+    public List<Byte> getColorIdentityChoices() {
+        return colorPairs;
     }
 
     /** True if this rule lets the player choose any AllowedAdditionalColor$ colors at all. */

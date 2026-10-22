@@ -1,0 +1,16 @@
+Name:The Waffle Restaurant
+ManaCost:no cost
+Types:Legendary Land
+K:CARDNAME can be your commander.
+# "Cards that can create Food tokens": their rules text creates a Food (CardRulesPredicates CreatesFood, my call)
+DeckRule:ColorIdentity:Exempt$ Land.Basic,CreatesFood | ActiveSection$ Commander | Description$ If it is, your deck can contain any basic land cards and cards of any color identity that can create Food tokens.
+A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
+A:AB$ ChooseCard | Cost$ 3 T | ValidTgts$ Opponent | TgtPrompt$ Select target opponent | Defined$ You | Choices$ Food.YouCtrl | MinAmount$ 0 | Amount$ X | ChoiceTitle$ Choose any number of Foods you control | RememberChosen$ True | SubAbility$ DBGive | SpellDescription$ Target opponent gains control of any number of Foods you control. You draw that many cards and create that many Treasure tokens.
+SVar:DBGive:DB$ GainControl | Defined$ Remembered | NewController$ Targeted | SubAbility$ DBDraw
+SVar:DBDraw:DB$ Draw | NumCards$ Y | SubAbility$ DBTreasure
+SVar:DBTreasure:DB$ Token | TokenAmount$ Y | TokenScript$ c_a_treasure_sac | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:X:Count$Valid Food.YouCtrl
+SVar:Y:Count$RememberedSize
+DeckHas:Ability$Token & Type$Treasure
+Oracle:The Waffle Restaurant can be your commander. If it is, your deck can contain any basic land cards and cards of any color identity that can create Food tokens.\n{T}: Add {C}.\n{3}, {T}: Target opponent gains control of any number of Foods you control. You draw that many cards and create that many Treasure tokens.

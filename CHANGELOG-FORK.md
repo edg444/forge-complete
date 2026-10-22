@@ -312,6 +312,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Minnea, Planar Tourist, The Generational Historian, The Strixhaven-Lorwyn Rover, The Waffle
+  Restaurant (UNK mythics).**
+  - ChooseType `Type$ Plane` (every plane a printing's set is on; the AI takes the plane most of its spells are from).
+    Card properties `fromChosenPlane` and `planeUnclear`; ReduceCost `HonorAsk$ <question>` asks the caster as the
+    cost is really paid (never the AI), for a printing whose set is on several planes or none (user ruling).
+  - SVar `AsksReleaseYear`: as the game begins, if it's your commander, the year every printing in the deck fits, or
+    any year if they don't share one (user ruling); the AI takes its most common year. Property `releasedInChosenYear`.
+  - SVar `AsksCollege` and DeckRule `ColorIdentityOneOf$`: the deck is legal if one of the listed color identities
+    covers it (user ruling); the college (one that fits) and a Lorwyn type are chosen as the game begins, and the
+    commander's color identity in game is the college's. Property `allChosenColors`.
+  - DeckRule restriction word `CreatesFood`: a card whose rules text creates a Food (my call, for The Waffle
+    Restaurant's "cards ... that can create Food tokens").
+
 - **Unknown Event: Taught by Narset, Serra, Vito, Surrak and Bruce Tarl (UNK commander enchantments).**
   - SVar `CommanderEnchantment`: the Aura stays attached to its commander as it moves between face-up zones
     (`GameAction.followCommander`, run after every zone change). It waits where it is while the commander is a spell,

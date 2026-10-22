@@ -1,0 +1,13 @@
+Name:The Strixhaven-Lorwyn Rover
+ManaCost:4
+Types:Legendary Artifact Creature Construct
+PT:3/3
+# A deck is legal with it as commander if some college's colors cover the deck; the college (one that fits) and the
+# Lorwyn type are chosen as the game begins (user ruling 2026-10-21, GameAction.chooseCollegeAndKin)
+DeckRule:ColorIdentity:ColorIdentityOneOf$ RW,UR,GU,WB,BG | ActiveSection$ Commander | Description$ This card has the color identity of the college chosen this way.
+SVar:AsksCollege:True
+S:Mode$ Continuous | Affected$ Card.Self | Description$ Before the game beings, choose a Strixhaven college and a Lorwyn creature type (Elemental, Elf, Faerie, Giant, Goblin, Kithkin, Merfolk, or Treefolk.)
+S:Mode$ Continuous | Affected$ Card.Self | Description$ This card has the color identity of the college chosen this way.
+T:Mode$ SpellCast | ValidCard$ Instant.allChosenColors,Sorcery.allChosenColors,Creature.ChosenType | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCopy | TriggerDescription$ Whenever you cast an instant or sorcery spell that's both the chosen college's colors or a creature spell of the chosen creature type, copy it. You may choose new targets for the copy.
+SVar:TrigCopy:DB$ CopySpellAbility | Defined$ TriggeredSpellAbility | MayChooseTarget$ True
+Oracle:Before the game beings, choose a Strixhaven college and a Lorwyn creature type (Elemental, Elf, Faerie, Giant, Goblin, Kithkin, Merfolk, or Treefolk.)\nThis card has the color identity of the college chosen this way.\nWhenever you cast an instant or sorcery spell that's both the chosen college's colors or a creature spell of the chosen creature type, copy it. You may choose new targets for the copy.

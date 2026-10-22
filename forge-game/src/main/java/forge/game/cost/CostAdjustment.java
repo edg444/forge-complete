@@ -215,7 +215,8 @@ public class CostAdjustment {
         // Sort abilities to apply them in proper order
         for (Card c : cardsOnBattlefield) {
             for (final StaticAbility stAb : c.getStaticAbilities()) {
-                if (stAb.checkMode(StaticAbilityMode.ReduceCost) && checkRequirement(sa, stAb)) {
+                if (stAb.checkMode(StaticAbilityMode.ReduceCost) && checkRequirement(sa, stAb)
+                        && (!stAb.hasParam("HonorAsk") || honorAsk(stAb, sa, activator, test))) {
                     reduceAbilities.add(stAb);
                 }
                 else if (stAb.checkMode(StaticAbilityMode.SetCost)) {
@@ -637,6 +638,19 @@ public class CostAdjustment {
         }
         return 0;
     }    
+
+    /**
+     * Minnea, Planar Tourist: a reduction only the caster can vouch for (honor system) is asked when the cost is
+     * really paid, not while it's only being estimated; the AI never claims it (user ruling 2026-10-21).
+     */
+    private static boolean honorAsk(final StaticAbility st, final SpellAbility sa, final Player activator, final boolean test) {
+        if (test || activator.getController().isAI()) {
+            return false;
+        }
+        final String question = st.getParam("HonorAsk").replace("CARDNAME", sa.getHostCard().getTranslatedName())
+                .replace("CHOSENTYPE", st.getHostCard().getChosenType());
+        return activator.getController().confirmAction(sa, null, question, null);
+    }
 
     private static boolean checkRequirement(final SpellAbility sa, final StaticAbility st) {
         if (!st.checkConditions()) {

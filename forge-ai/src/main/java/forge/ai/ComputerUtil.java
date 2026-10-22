@@ -2560,6 +2560,24 @@ public class ComputerUtil {
             }
             return chosen.isEmpty() ? Iterables.getFirst(validTypes, "") : chosen;
         }
+        if (kindOfType.equals("Plane")) {
+            // Minnea: the plane the most of its spells are from (by their sets; it doesn't guess about the rest)
+            final java.util.Map<String, Integer> counts = new java.util.HashMap<>();
+            for (final Card c : ai.getAllCards()) {
+                if (!c.isLand() && c.getPrintingPlane() != null) {
+                    counts.merge(c.getPrintingPlane(), 1, Integer::sum);
+                }
+            }
+            String best = Iterables.getFirst(validTypes, "");
+            int most = 0;
+            for (final java.util.Map.Entry<String, Integer> e : counts.entrySet()) {
+                if (e.getValue() > most && validTypes.contains(e.getKey())) {
+                    most = e.getValue();
+                    best = e.getKey();
+                }
+            }
+            return best;
+        }
         if (kindOfType.equals("Character")) {
             // Vorthos: the character on the most of the spells it still has to cast
             final List<java.util.Set<String>> spells = Lists.newArrayList();

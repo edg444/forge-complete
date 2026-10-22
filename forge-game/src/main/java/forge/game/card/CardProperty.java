@@ -2742,6 +2742,31 @@ public class CardProperty {
             if (!card.isSolved()) {
                 return false;
             }
+        } else if (property.equals("fromChosenPlane")) {
+            // Minnea, Planar Tourist: its printing's set is on the chosen plane
+            if (card.getPrintingPlane() == null || !card.getPrintingPlane().equalsIgnoreCase(source.getChosenType())) {
+                return false;
+            }
+        } else if (property.equals("releasedInChosenYear")) {
+            // The Generational Historian: this printing's set came out in the chosen year
+            if (!source.hasChosenNumber() || CardPrintings.releaseYear(card) != source.getChosenNumber()) {
+                return false;
+            }
+        } else if (property.equals("allChosenColors")) {
+            // The Strixhaven-Lorwyn Rover: "both the chosen college's colors"
+            for (final String color : source.getChosenColors()) {
+                if (!card.getColor().hasAnyColor(forge.card.MagicColor.fromName(color))) {
+                    return false;
+                }
+            }
+            if (!source.hasChosenColor()) {
+                return false;
+            }
+        } else if (property.equals("planeUnclear")) {
+            // a printing from a set on several planes, or none, which only its caster can vouch for
+            if (card.getPrintingPlane() != null) {
+                return false;
+            }
         } else if (property.equals("OnAdventure")) {
             // Adventurer Beguiler: an adventurer card exiled by its own adventure
             if (!card.isOnAdventure()) {

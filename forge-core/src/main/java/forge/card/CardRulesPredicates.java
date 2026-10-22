@@ -316,7 +316,13 @@ public final class CardRulesPredicates {
     private static final Pattern RESTRICTION_STAT_FILTER =
             Pattern.compile("^(power|toughness|cmc)(EQ|NE|GT|LT|GE|LE)(\\d+)$");
 
+    private static final java.util.regex.Pattern FOOD_CREATION =
+            java.util.regex.Pattern.compile("(?i)\\bcreates?\\b[^.]*\\bFood\\b");
+    private static final Predicate<CardRules> CREATES_FOOD = card -> card.getOracleText() != null
+            && FOOD_CREATION.matcher(card.getOracleText()).find();
+
     /** Parses a {@code Branch1,Branch2,...} restriction list (as in {@code DeckRule:ColorIdentity}'s {@code Exempt$}) into a predicate matching any branch. */
+
     public static Predicate<CardRules> restrictionList(final String rawValue) {
         Predicate<CardRules> result = null;
         final String body = rawValue.trim();
@@ -351,6 +357,9 @@ public final class CardRulesPredicates {
                 branch = branch == null ? statFilter : branch.and(statFilter);
             } else if (token.equals("Permanent")) {
                 branch = branch == null ? IS_PERMANENT : branch.and(IS_PERMANENT);
+            } else if (token.equals("CreatesFood")) {
+                // The Waffle Restaurant: "cards ... that can create Food tokens" - its rules text creates one
+                branch = branch == null ? CREATES_FOOD : branch.and(CREATES_FOOD);
             } else {
                 typeWords.add(token);
             }

@@ -1,0 +1,11 @@
+Name:Minnea, Planar Tourist
+ManaCost:3 G
+Types:Legendary Creature Human Scout
+PT:3/4
+K:ETBReplacement:Other:ChoosePlane
+SVar:ChoosePlane:DB$ ChooseType | Defined$ You | Type$ Plane | SpellDescription$ As CARDNAME enters the battlefield, choose a plane.
+# A printing's set gives its plane; a set on several planes (core sets, Masters) is the caster's to vouch for (user
+# ruling 2026-10-21). One colored mana symbol of the spell's own comes off.
+S:Mode$ ReduceCost | ValidCard$ Card.fromChosenPlane | Type$ Spell | Color$ AnyOneColored | Description$ Spells from the chosen plane cost {W}, {U}, {B}, {R}, or {G} less to cast. (They're from the chosen plane if it's clear beyond doubt from the name, art, flavor text, or whatever extensive research you've done and can show that they're from that plane.)
+S:Mode$ ReduceCost | ValidCard$ Card.planeUnclear | Type$ Spell | Color$ AnyOneColored | HonorAsk$ Is CARDNAME clear beyond doubt from CHOSENTYPE (its name, art, flavor text, or your research)? | Secondary$ True | Description$ Spells from the chosen plane cost {W}, {U}, {B}, {R}, or {G} less to cast.
+Oracle:As Minnea, Planar Tourist enters the battlefield, choose a plane.\nSpells from the chosen plane cost {W}, {U}, {B}, {R}, or {G} less to cast. (They're from the chosen plane if it's clear beyond doubt from the name, art, flavor text, or whatever extensive research you've done and can show that they're from that plane.)

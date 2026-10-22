@@ -3238,12 +3238,105 @@ public class GameAction {
                 c.writeMissingCharacter((ColorSet) choices.get(0), types, (String) choices.get(2), (String) choices.get(3));
             }
             for (Card c : all) {
+                if (c.isInZone(ZoneType.Sideboard)) {
+                    continue;
+                }
+                if (c.hasSVar("AsksCollege")) {
+                    chooseCollegeAndKin(takesAction, c, all);
+                }
+                if (c.hasSVar("AsksReleaseYear") && c.isCommander()) {
+                    chooseReleaseYear(takesAction, c, all);
+                }
+            }
+            for (Card c : all) {
                 if (c.hasKeyword(Keyword.LEGACY) && c.getLegacyWord() == null && !c.isInZone(ZoneType.Sideboard)) {
                     writeLegacyWord(takesAction, c, all);
                 }
             }
             takesAction = game.getNextPlayerAfter(takesAction);
         } while (takesAction != first);
+    }
+
+    // The Strixhaven-Lorwyn Rover's colleges and Lorwyn creature types, as printed on it
+    private static final Map<String, String> COLLEGES = new java.util.LinkedHashMap<>();
+    static {
+        COLLEGES.put("Lorehold", "red,white");
+        COLLEGES.put("Prismari", "blue,red");
+        COLLEGES.put("Quandrix", "green,blue");
+        COLLEGES.put("Silverquill", "white,black");
+        COLLEGES.put("Witherbloom", "black,green");
+    }
+    private static final List<String> LORWYN_TYPES = List.of("Elemental", "Elf", "Faerie", "Giant", "Goblin", "Kithkin",
+            "Merfolk", "Treefolk");
+
+    /**
+     * The Strixhaven-Lorwyn Rover: before the game begins, a college whose colors the rest of the deck fits (user
+     * ruling 2026-10-21; any college if none does) and a Lorwyn creature type. The AI takes the first college that
+     * fits and the Lorwyn type most of its creatures have.
+     */
+    private static void chooseCollegeAndKin(final Player p, final Card c, final CardCollectionView all) {
+        byte deck = 0;
+        for (final Card each : all) {
+            if (each != c && !each.isToken() && each.getRules() != null) {
+                deck |= each.getRules().getColorIdentity().getColor();
+            }
+        }
+        final List<String> fitting = Lists.newArrayList();
+        for (final Map.Entry<String, String> e : COLLEGES.entrySet()) {
+            if (ColorSet.fromMask(deck).hasNoColorsExcept(ColorSet.fromNames(e.getValue().split(",")))) {
+                fitting.add(e.getKey());
+            }
+        }
+        if (fitting.isEmpty()) {
+            fitting.addAll(COLLEGES.keySet());
+        }
+        final SpellAbility sa = new SpellAbility.EmptySa(ApiType.ChooseType, c, p);
+        final String college = p.isAI() || fitting.size() == 1 ? fitting.get(0)
+                : p.getController().chooseSomeType("College", sa, fitting);
+        String kin;
+        if (p.isAI()) {
+            kin = LORWYN_TYPES.get(0);
+            int most = -1;
+            for (final String type : LORWYN_TYPES) {
+                final int n = CardLists.count(all, x -> x.isCreature() && x.getType().hasCreatureType(type));
+                if (n > most) {
+                    most = n;
+                    kin = type;
+                }
+            }
+        } else {
+            kin = p.getController().chooseSomeType("Creature", sa, LORWYN_TYPES);
+        }
+        c.setChosenColors(Lists.newArrayList(COLLEGES.get(college).split(",")));
+        c.setChosenType(kin);
+        c.getGame().getGameLog().add(GameLogEntryType.INFORMATION, c + ": " + college + " and " + kin + ".");
+    }
+
+    /**
+     * The Generational Historian: the year has to fit every printing in the deck, so with all of them from one year
+     * that's it; otherwise (honor system) any year (user ruling 2026-10-21). The AI then takes its most common year.
+     */
+    private static void chooseReleaseYear(final Player p, final Card c, final CardCollectionView all) {
+        final Map<Integer, Integer> years = Maps.newHashMap();
+        for (final Card each : all) {
+            if (!each.isToken()) {
+                final int year = CardPrintings.releaseYear(each);
+                if (year > 0) {
+                    years.merge(year, 1, Integer::sum);
+                }
+            }
+        }
+        int year;
+        if (years.size() == 1) {
+            year = years.keySet().iterator().next();
+        } else if (p.isAI()) {
+            year = years.entrySet().stream().max(Map.Entry.comparingByValue()).map(Map.Entry::getKey).orElse(1993);
+        } else {
+            final SpellAbility sa = new SpellAbility.EmptySa(ApiType.ChooseNumber, c, p);
+            year = p.getController().chooseNumber(sa, c.getTranslatedName() + ": choose a year", 1993,
+                    java.time.LocalDate.now().getYear());
+        }
+        c.setChosenNumber(year);
     }
 
     /** Your Favorite Missing Character's choices: [two colors, up to three creature types, a name, an ability SVar]. */
