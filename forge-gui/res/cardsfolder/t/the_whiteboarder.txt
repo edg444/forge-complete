@@ -1,0 +1,11 @@
+Name:The Whiteboarder
+ManaCost:1 U
+Types:Legendary Creature Human Wizard
+PT:1/3
+# white-bordered = a white-bordered printing, or a token it made (user ruling 2026-10-22)
+S:Mode$ Continuous | Affected$ Creature.WhiteBordered+YouCtrl | AddPower$ 1 | AddToughness$ 1 | Description$ White-bordered creatures you control get +1/+1.
+T:Mode$ SpellCast | ValidCard$ Creature | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigNote | TriggerDescription$ Whenever you cast a creature spell, note its power, toughness, or one of its abilities. (Perhaps write on something you can reuse infinitely.)
+SVar:TrigNote:DB$ Whiteboard | Mode$ Note | Defined$ TriggeredCard
+A:AB$ Whiteboard | Cost$ 6 T | Mode$ Create | SpellDescription$ Create a white-bordered blue Elemental creature token. It has noted power and toughness and up to two noted abilities. Erase whatever text you use this way.
+DeckHas:Ability$Token
+Oracle:White-bordered creatures you control get +1/+1.\nWhenever you cast a creature spell, note its power, toughness, or one of its abilities. (Perhaps write on something you can reuse infinitely.)\n{6}, {T}: Create a white-bordered blue Elemental creature token. It has noted power and toughness and up to two noted abilities. Erase whatever text you use this way.

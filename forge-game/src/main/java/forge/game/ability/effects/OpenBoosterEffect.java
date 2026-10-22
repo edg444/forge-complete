@@ -47,6 +47,23 @@ public class OpenBoosterEffect extends SpellAbilityEffect {
             openAndSwap(sa);
             return;
         }
+        if (sa.hasParam("PutUnder")) {
+            // The Chaos Keeper: a sealed pack of its controller's choice goes under it, unopened
+            final String code = chooseSet(sa, sa.getActivatingPlayer());
+            sa.getHostCard().getPackUnder().clear();
+            if (code != null) {
+                sa.getHostCard().getPackUnder().addAll(openPack(code));
+            }
+            return;
+        }
+        if (sa.hasParam("TakeFromUnder")) {
+            takeFromUnder(sa);
+            return;
+        }
+        if (sa.hasParam("Draft")) {
+            draftPack(sa);
+            return;
+        }
         final Card host = sa.getHostCard();
         final Game game = host.getGame();
         final String setCode = host.getChosenExpansion();
@@ -187,6 +204,84 @@ public class OpenBoosterEffect extends SpellAbilityEffect {
                 game.getAction().exile(out, sa, AbilityKey.newMap());
                 game.getAction().moveTo(ZoneType.Hand, in, sa, AbilityKey.newMap());
             }
+        }
+    }
+
+    /** A set to open a pack of: the player's pick, or a random one for the AI (user ruling 2026-10-22). */
+    private static String chooseSet(final SpellAbility sa, final Player p) {
+        final Map<String, String> byLabel = new java.util.LinkedHashMap<>();
+        for (final String code : boosterSetCodes()) {
+            final CardEdition ed = StaticData.instance().getEditions().get(code);
+            byLabel.put((ed == null ? code : ed.getName()) + " (" + code + ")", code);
+        }
+        if (byLabel.isEmpty()) {
+            return null;
+        }
+        final List<String> labels = new java.util.ArrayList<>(byLabel.keySet());
+        final String label = p.getController().isAI() ? forge.util.Aggregates.random(labels)
+                : p.getController().chooseSomeType("Magic set", sa, labels);
+        return label == null ? null : byLabel.get(label);
+    }
+
+    /** The Chaos Keeper: the pack under it is revealed and its controller puts one of its cards into their hand. */
+    private static void takeFromUnder(final SpellAbility sa) {
+        final Card host = sa.getHostCard();
+        final Game game = host.getGame();
+        final Player p = sa.getActivatingPlayer();
+        final List<PaperCard> under = host.getPackUnder();
+        if (under.isEmpty()) {
+            return;
+        }
+        final CardCollection shown = new CardCollection();
+        final Map<Card, PaperCard> paperOf = new java.util.HashMap<>();
+        for (final PaperCard pc : under) {
+            final Card c = Card.fromPaperCard(pc, p);
+            shown.add(c);
+            paperOf.put(c, pc);
+        }
+        final List<String> names = new java.util.ArrayList<>();
+        shown.forEach(c -> names.add(c.getName()));
+        game.getAction().notifyOfValue(sa, p, "Under " + host + ": " + String.join(", ", names), null);
+        final Card kept = p.getController().chooseSingleEntityForEffect(shown, sa, "Put one of them into your hand", false, null);
+        if (kept != null) {
+            under.remove(paperOf.get(kept));
+            game.getAction().moveTo(ZoneType.Hand, kept, sa, AbilityKey.newMap());
+        }
+    }
+
+    /**
+     * The Charitable Drafter: a pack of a set its controller picks is drafted face up, its controller first and then in
+     * turn order, until it's gone; each pick goes into its drafter's hand and is theirs for the game.
+     */
+    private static void draftPack(final SpellAbility sa) {
+        final Card host = sa.getHostCard();
+        final Game game = host.getGame();
+        final Player first = sa.getActivatingPlayer();
+        final String code = chooseSet(sa, first);
+        if (code == null) {
+            return;
+        }
+        final List<PaperCard> pack = new java.util.ArrayList<>(openPack(code));
+        final List<Player> order = new java.util.ArrayList<>(game.getPlayersInTurnOrder(first));
+        int turn = 0;
+        while (!pack.isEmpty() && !order.isEmpty()) {
+            final Player drafter = order.get(turn % order.size());
+            turn++;
+            final CardCollection shown = new CardCollection();
+            final Map<Card, PaperCard> paperOf = new java.util.HashMap<>();
+            for (final PaperCard pc : pack) {
+                final Card c = Card.fromPaperCard(pc, drafter);
+                shown.add(c);
+                paperOf.put(c, pc);
+            }
+            final Card pick = drafter.getController().chooseSingleEntityForEffect(shown, sa,
+                    "Draft a card from the " + code + " pack", false, null);
+            if (pick == null) {
+                continue;
+            }
+            pack.remove(paperOf.get(pick));
+            game.getGameLog().add(forge.game.GameLogEntryType.INFORMATION, drafter + " drafts " + pick.getName() + ".");
+            game.getAction().moveTo(ZoneType.Hand, pick, sa, AbilityKey.newMap());
         }
     }
 

@@ -1,0 +1,11 @@
+Name:The Rhystic Storyteller
+ManaCost:2 U
+Types:Legendary Creature Human Wizard
+PT:2/3
+# as the game begins, a deck with it as commander is unsleeved (Player.setForcedUnsleeved; user ruling 2026-10-22)
+SVar:CommanderUnsleeved:True
+Text:If The Rhystic Storyteller is your Commander, your deck can't use sleeves.
+# flavor text is the spell's printing's, from Scryfall (CardFlavorText; user ruling 2026-10-22)
+T:Mode$ SpellCast | ValidCard$ Card.flavorWordsGE10 | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDraw | TriggerDescription$ Whenever you cast a spell with ten or more words of flavor text, draw a card unless an opponent pays {1}.
+SVar:TrigDraw:DB$ Draw | Defined$ You | UnlessCost$ 1 | UnlessPayer$ Opponent | NumCards$ 1
+Oracle:If The Rhystic Storyteller is your Commander, your deck can't use sleeves.\nWhenever you cast a spell with ten or more words of flavor text, draw a card unless an opponent pays {1}.

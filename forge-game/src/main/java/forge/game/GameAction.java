@@ -3257,6 +3257,12 @@ public class GameAction {
                     takesAction.setMaxHandSize(Integer.parseInt(mono[1]));
                 }
             }
+            // The Rhystic Storyteller: as your commander, your deck can't use sleeves
+            for (Card c : takesAction.getCardsIn(ZoneType.Command)) {
+                if (c.isCommander() && c.hasSVar("CommanderUnsleeved")) {
+                    takesAction.setForcedUnsleeved(true);
+                }
+            }
             // The Snapstone Wielder: as your commander, with no land cards in your deck, your starting hand size is
             // NoLandsHandSize and NoLandsCommanderEffect (its mana counters) applies for the rest of the game
             for (Card c : takesAction.getCardsIn(ZoneType.Command)) {

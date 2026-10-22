@@ -1534,7 +1534,14 @@ public class Game {
         numPiledGuessedSA = 0;
     }
 
+    // The Game-Changing Host: the spells and abilities that resolved this turn, in order
+    private final List<SpellAbility> resolvedThisTurn = Lists.newArrayList();
+    public List<SpellAbility> getResolvedThisTurn() {
+        return resolvedThisTurn;
+    }
+
     public void onCleanupPhase() {
+        resolvedThisTurn.clear();
         resetNumPiledGuessedSA();
         clearLeftBattlefieldThisTurn();
         clearLeftGraveyardThisTurn();

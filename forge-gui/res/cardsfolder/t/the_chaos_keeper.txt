@@ -1,0 +1,11 @@
+Name:The Chaos Keeper
+ManaCost:U R
+Types:Legendary Creature Elemental
+PT:1/1
+# the pack is generated as it enters, from a set its controller picks (the AI's is random; user ruling 2026-10-22),
+# and kept unopened under it until the first time its ability resolves
+K:ETBReplacement:Other:DBPack
+SVar:DBPack:DB$ OpenBooster | PutUnder$ True | ETB$ True | SpellDescription$ CARDNAME enters with a sealed Magic booster pack of your choice under it. (You provide a new pack each time.)
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield | Execute$ TrigTake | TriggerDescription$ Whenever CARDNAME deals combat damage to a player, reveal its cards and put one of them into your hand. (Don't open the booster pack until the first time this ability resolves.)
+SVar:TrigTake:DB$ OpenBooster | TakeFromUnder$ True
+Oracle:The Chaos Keeper enters with a sealed Magic booster pack of your choice under it. (You provide a new pack each time.)\nWhenever The Chaos Keeper deals combat damage to a player, reveal its cards and put one of them into your hand. (Don't open the booster pack until the first time this ability resolves.)

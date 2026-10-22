@@ -1,0 +1,13 @@
+Name:The Charitable Drafter
+ManaCost:4 U U
+Types:Legendary Creature Human Wizard
+PT:3/5
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDog | TriggerDescription$ When CARDNAME enters, create a 1/1 white Dog creature token. Then each players shuffles their hand into their library. Open a Magic booster pack, then starting with you, all players draft it face up. Each player's draft picks become their hand. (Each player owns the cards they draft until the game ends, then you should get them back, unless you feel generous or rare-drafted and don't care.)
+SVar:TrigDog:DB$ Token | TokenScript$ w_1_1_dog | SubAbility$ DBShuffleHands
+SVar:DBShuffleHands:DB$ ChangeZoneAll | ChangeType$ Card | Origin$ Hand | Destination$ Library | Shuffle$ True | SubAbility$ DBDraft
+# a pack of a set its controller picks (the AI's is random; user ruling 2026-10-22), drafted in turn order
+SVar:DBDraft:DB$ OpenBooster | Draft$ True
+S:Mode$ Continuous | Affected$ Creature.YouCtrl | AddAbility$ ABMana | Description$ Creatures you control have "{T}: Add one mana of any color. Spend this mana only to cast a card that wasn't in your starting deck."
+SVar:ABMana:AB$ Mana | Cost$ T | Produced$ Any | RestrictValid$ Spell.notFromStartingDeck | SpellDescription$ Add one mana of any color. Spend this mana only to cast a card that wasn't in your starting deck.
+DeckHas:Ability$Token
+Oracle:When The Charitable Drafter enters, create a 1/1 white Dog creature token. Then each players shuffles their hand into their library. Open a Magic booster pack, then starting with you, all players draft it face up. Each player's draft picks become their hand. (Each player owns the cards they draft until the game ends, then you should get them back, unless you feel generous or rare-drafted and don't care.)\nCreatures you control have "{T}: Add one mana of any color. Spend this mana only to cast a card that wasn't in your starting deck."

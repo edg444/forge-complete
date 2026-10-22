@@ -1,0 +1,14 @@
+Name:Occupation of Kulrath
+ManaCost:1 R
+Types:Battle Control Point
+Defense:2
+# a Control Point's protector is its controller (CR 310.9a: no known battle type), so its opponents attack it
+T:Mode$ CounterRemovedOnce | ValidCard$ Card.Self | CounterType$ DEFENSE | Remaining$ 0 | ValidPlayer$ Opponent | TriggerZones$ Battlefield | Execute$ TrigCapture | Secondary$ True | TriggerDescription$ (An opponent may attack this battle. When an opponent defeats it, exile it, then return it to the battlefield under their control.)
+SVar:TrigCapture:DB$ ChangeZone | Defined$ Self | Origin$ Battlefield | Destination$ Exile | RememberChanged$ True | SubAbility$ DBReturn
+SVar:DBReturn:DB$ ChangeZone | Defined$ Remembered | Origin$ Exile | Destination$ Battlefield | GainControl$ TriggeredPlayer | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigLoot | TriggerDescription$ When this battle enters, you may discard a card. If you do, draw a card.
+SVar:TrigLoot:DB$ Discard | NumCards$ 1 | Mode$ TgtChoose | Optional$ True | RememberDiscarded$ True | SubAbility$ DBDraw
+SVar:DBDraw:DB$ Draw | ConditionDefined$ Remembered | ConditionPresent$ Card | SubAbility$ DBCleanup
+A:AB$ Mana | Cost$ T | Produced$ R | SpellDescription$ Add {R}.
+Oracle:(An opponent may attack this battle. When an opponent defeats it, exile it, then return it to the battlefield under their control.)\nWhen this battle enters, you may discard a card. If you do, draw a card.\n{T}: Add {R}.

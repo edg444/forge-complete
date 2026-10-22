@@ -60,6 +60,10 @@ public class TriggerCounterRemovedOnce extends Trigger {
         if (!matchesValidParam("ValidCard", runParams.get(AbilityKey.Card))) {
             return false;
         }
+        // Control Point battles: who removed them
+        if (!matchesValidParam("ValidPlayer", runParams.get(AbilityKey.Player))) {
+            return false;
+        }
 
         if (hasParam("CounterType")) {
             final String type = getParam("CounterType");
@@ -82,7 +86,7 @@ public class TriggerCounterRemovedOnce extends Trigger {
     /** {@inheritDoc} */
     @Override
     public final void setTriggeringObjects(final SpellAbility sa, Map<AbilityKey, Object> runParams) {
-        sa.setTriggeringObjectsFrom(runParams, AbilityKey.Card);
+        sa.setTriggeringObjectsFrom(runParams, AbilityKey.Card, AbilityKey.Player);
         sa.setTriggeringObject(AbilityKey.Amount, runParams.get(AbilityKey.CounterAmount));
     }
 

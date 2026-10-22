@@ -90,6 +90,7 @@ public class ActualizeEffect extends SpellAbilityEffect {
         game.getGameLog().add(GameLogEntryType.INFORMATION, "The lie was the " + lied.toLowerCase() + ".");
         for (final Map.Entry<Player, String> g : guesses.entrySet()) {
             if (!lied.equals(g.getValue())) {
+                GuessedWrongEffect.fire(g.getKey());
                 g.getKey().loseLife(3, false, false, sa);
             }
         }

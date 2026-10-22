@@ -1,0 +1,11 @@
+Name:The Commander Recommender
+ManaCost:4 U
+Types:Legendary Creature Human Wizard
+PT:4/4
+# the deck is one of its controller's saved Commander decks or a random precon (the AI's is a precon), and opponents
+# guess from a list (RecommendDeck, user ruling 2026-10-22)
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigRecommend | TriggerDescription$ When CARDNAME enters, bring out another Commander deck you own without revealing the commander. Reveal fifteen cards at random from it other than the commander. Each opponent guesses the deck's commander, then reveal it. (The deck must be a legit Commander deck, not just The Ur-Dragon and 99 Islands. Respect the minigame.)
+SVar:TrigRecommend:DB$ RecommendDeck
+T:Mode$ GuessedWrong | ValidPlayer$ Opponent | TriggerZones$ Battlefield | Execute$ TrigDraw | TriggerDescription$ Whenever an opponent guesses wrong (like to Liar's Pendulum... or the above effect), you draw two cards.
+SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 2
+Oracle:When The Commander Recommender enters, bring out another Commander deck you own without revealing the commander. Reveal fifteen cards at random from it other than the commander. Each opponent guesses the deck's commander, then reveal it. (The deck must be a legit Commander deck, not just The Ur-Dragon and 99 Islands. Respect the minigame.)\nWhenever an opponent guesses wrong (like to Liar's Pendulum... or the above effect), you draw two cards.

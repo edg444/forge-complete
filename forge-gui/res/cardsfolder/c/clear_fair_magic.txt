@@ -1,0 +1,10 @@
+Name:Clear, Fair Magic
+ManaCost:1 G
+Types:Instant
+K:Split second
+# designations can't be targeted, so they're the second mode, picked from the ones in the game; a vanguard covers a
+# Magic Online avatar, and an elite creature (not a thing in Forge) is left out (user ruling 2026-10-22)
+A:SP$ Charm | Choices$ DBObject,DBDesignation
+SVar:DBObject:DB$ DestroyAnything | ValidTgts$ Artifact,Enchantment,Card.token,Emblem,Dungeon,Plane,Scheme,Vanguard,Conspiracy,Bounty | TgtZone$ Battlefield,Command | TgtPrompt$ Select target artifact, enchantment, token, emblem, dungeon, Attraction, Contraption, plane, scheme, vanguard, bounty, or conspiracy | SpellDescription$ Destroy target artifact, enchantment, token, emblem, dungeon, Attraction, Contraption, plane, scheme, vanguard (or Magic: The Gathering Online avatar), bounty, or conspiracy.
+SVar:DBDesignation:DB$ DestroyAnything | Designation$ True | SpellDescription$ Destroy the day/night tracker, the monarch, the initiative, or a city's blessing.
+Oracle:Split second (As long as this spell is on the stack, players can't cast spells or activate abilities that aren't mana abilities.)\nDestroy target artifact, enchantment, token, emblem, day/night tracker, monarch, initiative, dungeon, city's blessing, Attraction, Contraption, plane, scheme, vanguard, bounty, conspiracy, elite creature, or Magic: The Gathering Online avatar.

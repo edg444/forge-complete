@@ -2216,7 +2216,8 @@ public class CardProperty {
                 || property.startsWith("totalPT") || property.startsWith("numColors")
                 || property.startsWith("basePower") || property.startsWith("baseToughness") || property.startsWith("numTypes")
                 || property.startsWith("numCreatureTypes") || property.startsWith("baseLoyalty")
-                || property.startsWith("flavorLines") || property.startsWith("wordsInName")) {
+                || property.startsWith("flavorLines") || property.startsWith("wordsInName")
+                || property.startsWith("flavorWords")) {
             int x;
             int y = 0;
             String rhs = "";
@@ -2258,6 +2259,16 @@ public class CardProperty {
                 // Angelic Harold; a token's name ends in "Token" (CR 111.4)
                 rhs = property.substring(13);
                 y = AbilityUtils.wordsInName(card);
+            } else if (property.startsWith("flavorWords")) {
+                // The Rhystic Storyteller: words of its printing's flavor text (Scryfall's), a word being anything
+                // with a letter or digit in it, so an attribution's dash isn't one
+                rhs = property.substring(13);
+                y = 0;
+                for (final String w : card.getFlavorText().split("\\s+")) {
+                    if (w.codePoints().anyMatch(Character::isLetterOrDigit)) {
+                        y++;
+                    }
+                }
             }
             if (rhs.equals("Chosen")) {
                 if (!source.hasChosenNumber()) {

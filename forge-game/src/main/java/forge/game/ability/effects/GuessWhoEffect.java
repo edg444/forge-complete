@@ -90,6 +90,7 @@ public class GuessWhoEffect extends SpellAbilityEffect {
                 game.getAction().reveal(new CardCollection(chosen), opp, false, opp + " guessed " + guess + ". The chosen card is ");
                 game.getGameLog().add(GameLogEntryType.INFORMATION, opp + " guessed " + guess + "; it was " + chosen.getName() + ".");
                 if (guess == null || !guess.equals(chosen.getName())) {
+                    GuessedWrongEffect.fire(opp);
                     final Map<forge.game.ability.AbilityKey, Object> params = forge.game.ability.AbilityKey.newMap();
                     game.getAction().moveToPlay(chosen, you, sa, params);
                 }

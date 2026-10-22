@@ -1,0 +1,41 @@
+Name:Sort of _____ and _____
+ManaCost:3
+Types:Artifact Equipment
+K:Equip:2
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChoose | TriggerDescription$ When CARDNAME enters the battlefield, choose two tournament legal cards in the Sword of _____ and _____ cycle at random. This equipment has the first piece of the combat damage trigger of the first chosen one, and the second piece of the combat damage trigger on the second chosen one. (It doesn't grant +2/+2 or protection. Yes, Hearth still returns the creature.)
+# tournament legal = legal in Vintage: the eleven swords below (Scryfall 2026-10-22). Each piece is that half of the
+# sword's own Forge script
+SVar:TrigChoose:DB$ SortOfSword | Trigger$ SwordTrigger | Swords$ Body and Mind/BodyA/BodyB,Feast and Famine/FeastA/FeastB,Fire and Ice/FireA/FireB,Forge and Frontier/ForgeA/ForgeB,Hearth and Home/HearthA/HearthB,Light and Shadow/LightA/LightB,Once and Future/OnceA/OnceB,Sinew and Steel/SinewA/SinewB,Truth and Justice/TruthA/TruthB,War and Peace/WarA/WarB,Wealth and Power/WealthA/WealthB
+SVar:SwordTrigger:Mode$ DamageDone | ValidSource$ Creature.EquippedBy | ValidTarget$ Player | CombatDamage$ True | TriggerZones$ Battlefield
+SVar:BodyA:DB$ Token | TokenScript$ g_2_2_wolf | TokenOwner$ You | SpellDescription$ you create a 2/2 green Wolf creature token
+SVar:BodyB:DB$ Mill | Defined$ TriggeredTarget | NumCards$ 10 | SpellDescription$ that player mills ten cards.
+SVar:FeastA:DB$ Discard | Defined$ TriggeredTarget | NumCards$ 1 | Mode$ TgtChoose | SpellDescription$ that player discards a card
+SVar:FeastB:DB$ UntapAll | ValidCards$ Land.YouCtrl | SpellDescription$ you untap all lands you control.
+SVar:FireA:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 2 | SpellDescription$ this Equipment deals 2 damage to any target
+SVar:FireB:DB$ Draw | Defined$ You | NumCards$ 1 | SpellDescription$ you draw a card.
+SVar:ForgeA:DB$ Dig | Defined$ You | DigNum$ 2 | ChangeNum$ All | DestinationZone$ Exile | RememberChanged$ True | SubAbility$ ForgeEffect | SpellDescription$ exile the top two cards of your library. You may play those cards this turn.
+SVar:ForgeEffect:DB$ Effect | RememberObjects$ RememberedCard | StaticAbilities$ ForgePlay | ForgetOnMoved$ Exile | Duration$ EndOfTurn | SubAbility$ ForgeCleanup
+SVar:ForgePlay:Mode$ Continuous | MayPlay$ True | Affected$ Card.IsRemembered | AffectedZone$ Exile | Description$ You may play the exiled cards this turn.
+SVar:ForgeCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:ForgeB:DB$ Effect | Name$ Sort of _____ and _____'s Effect — Exploration | StaticAbilities$ ForgeLand | AILogic$ Always | SpellDescription$ You may play an additional land this turn.
+SVar:ForgeLand:Mode$ Continuous | Affected$ You | AdjustLandPlays$ 1 | Description$ You may play an additional land this turn.
+SVar:HearthA:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | RememberChanged$ True | ValidTgts$ Creature.YouOwn | TargetMin$ 0 | TargetMax$ 1 | TgtPrompt$ Select target creature you own | SubAbility$ HearthReturn | SpellDescription$ exile up to one target creature you own, then return it to the battlefield under your control
+SVar:HearthReturn:DB$ ChangeZone | Defined$ Remembered | Origin$ Exile | Destination$ Battlefield | GainControl$ True | SubAbility$ HearthCleanup
+SVar:HearthCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:HearthB:DB$ ChangeZone | Origin$ Library | Destination$ Battlefield | ChangeType$ Land.Basic | ChangeTypeDesc$ basic land | GainControl$ True | SpellDescription$ search your library for a basic land card, put it onto the battlefield under your control, then shuffle.
+SVar:LightA:DB$ GainLife | Defined$ You | LifeAmount$ 3 | SpellDescription$ you gain 3 life
+SVar:LightB:DB$ ChangeZone | Optional$ You | Origin$ Graveyard | Destination$ Hand | ValidTgts$ Creature.YouCtrl | TargetMin$ 0 | TargetMax$ 1 | TgtPrompt$ Select target creature in your graveyard | SpellDescription$ you may return up to one target creature card from your graveyard to your hand.
+SVar:OnceA:DB$ Surveil | Amount$ 2 | SpellDescription$ surveil 2
+SVar:OnceB:DB$ Play | Valid$ Card.YouOwn | ValidSA$ Instant.cmcLE2,Sorcery.cmcLE2 | ValidZone$ Graveyard | Optional$ True | WithoutManaCost$ True | Amount$ 1 | Controller$ You | ReplaceGraveyard$ Exile | SpellDescription$ you may cast an instant or sorcery spell with mana value 2 or less from your graveyard without paying its mana cost. If that spell would be put into your graveyard, exile it instead.
+SVar:SinewA:DB$ Destroy | ValidTgts$ Planeswalker | TgtPrompt$ Select target planeswalker | TargetMin$ 0 | TargetMax$ 1 | SpellDescription$ destroy up to one target planeswalker
+SVar:SinewB:DB$ Destroy | ValidTgts$ Artifact | TgtPrompt$ Select target artifact | TargetMin$ 0 | TargetMax$ 1 | SpellDescription$ destroy up to one target artifact.
+SVar:TruthA:DB$ PutCounter | Choices$ Creature.YouCtrl | ChoiceTitle$ Choose a creature you control | CounterType$ P1P1 | CounterNum$ 1 | SpellDescription$ put a +1/+1 counter on a creature you control
+SVar:TruthB:DB$ Proliferate | SpellDescription$ proliferate.
+SVar:WarA:DB$ DealDamage | Defined$ TriggeredTarget | NumDmg$ WarX | SpellDescription$ this Equipment deals damage to that player equal to the number of cards in their hand
+SVar:WarX:TriggeredTarget$CardsInHand
+SVar:WarB:DB$ GainLife | Defined$ You | LifeAmount$ WarY | SpellDescription$ you gain 1 life for each card in your hand.
+SVar:WarY:Count$CardsInYourHand
+SVar:WealthA:DB$ Token | TokenScript$ c_a_treasure_sac | TokenOwner$ You | SpellDescription$ create a Treasure token
+SVar:WealthB:DB$ DelayedTrigger | AILogic$ SpellCopy | Execute$ WealthCopy | ThisTurn$ True | Mode$ SpellCast | ValidCard$ Instant,Sorcery | ValidActivatingPlayer$ You | SpellDescription$ when you next cast an instant or sorcery spell this turn, copy that spell. You may choose new targets for the copy.
+SVar:WealthCopy:DB$ CopySpellAbility | Amount$ 1 | Defined$ TriggeredSpellAbility | MayChooseTarget$ True
+Oracle:When Sort of _____ and _____ enters the battlefield, choose two tournament legal cards in the Sword of _____ and _____ cycle at random. This equipment has the first piece of the combat damage trigger of the first chosen one, and the second piece of the combat damage trigger on the second chosen one. (It doesn't grant +2/+2 or protection. Yes, Hearth still returns the creature.)\nEquip {2}

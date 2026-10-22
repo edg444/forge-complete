@@ -1,0 +1,11 @@
+Name:The Game-Changing Host
+ManaCost:2 G U R
+Types:Legendary Creature Human Wizard
+PT:4/4
+# earlier this turn's effects on each creature of a kind it is, and targeted ones it could have been a target of
+# (Retroactive, user ruling 2026-10-22)
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Static$ True | Execute$ TrigRetro | TriggerDescription$ Anything that could have changed CARDNAME on the turn it enters applies retroactively. (He's been here the whole time.)
+SVar:TrigRetro:DB$ Retroactive
+# the game changers are Scryfall's is:gamechanger list (53 cards on 2026-10-22; user ruling 2026-10-22)
+A:AB$ Play | Cost$ T | AnySupportedCard$ Names:Ad Nauseam,Ancient Tomb,Aura Shards,Biorhythm,Bolas's Citadel,Braids; Cabal Minion,Chrome Mox,Coalition Victory,Consecrated Sphinx,Crop Rotation,Cyclonic Rift,Demonic Tutor,Drannith Magistrate,Enlightened Tutor,Farewell,Field of the Dead,Fierce Guardianship,Force of Will,Gaea's Cradle,Gamble,Gifts Ungiven,Glacial Chasm,Grand Arbiter Augustin IV,Grim Monolith,Humility,Imperial Seal,Intuition,Jeska's Will,Lion's Eye Diamond,Mana Vault,Mishra's Workshop,Mox Diamond,Mystical Tutor,Narset; Parter of Veils,Natural Order,Necropotence,Notion Thief,Opposition Agent,Orcish Bowmasters,Panoptic Mirror,Rhystic Study,Seedborn Muse,Serra's Sanctum,Smothering Tithe,Survival of the Fittest,Teferi's Protection,Tergrid; God of Fright,Thassa's Oracle,The One Ring,The Tabernacle at Pendrell Vale,Underworld Breach,Vampiric Tutor,Worldly Tutor | RandomCopied$ True | RandomNum$ 1 | CopyCard$ True | WithoutManaCost$ True | Optional$ True | Controller$ You | SpellDescription$ Create a copy of a game changer at random. You may play the copy without paying its mana cost. (There are currently 61. Perhaps look at a list and randomize?)
+Oracle:Anything that could have changed The Game-Changing Host on the turn it enters applies retroactively. (He's been here the whole time.)\n{T}: Create a copy of a game changer at random. You may play the copy without paying its mana cost. (There are currently 61. Perhaps look at a list and randomize?)

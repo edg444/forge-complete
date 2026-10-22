@@ -75,6 +75,7 @@ public class FactCheckEffect extends SpellAbilityEffect {
         game.getGameLog().add(GameLogEntryType.INFORMATION, teller + (wrong ? " got something wrong" : " got it all right")
                 + " about " + top.getName() + ".");
         if (wrong) {
+            GuessedWrongEffect.fire(teller);
             host.setSVar("FactWrong", "Number$1");
         }
     }

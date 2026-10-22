@@ -316,6 +316,22 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   (`UI_ZONE_TABS_LEFT`) is gone; upstream restored its own setting of that name (`UI_ALT_PLAYERZONETABS`), and the two
   showed with the same label. Hand, Library, Graveyard and Exile tabs are on the right edge, as upstream has them.
 
+- **Unknown Event: Occupation of Kulrath, Occupation of Llanowar, Sort of _____ and _____, The Whiteboarder, The
+  Chaos Keeper, The Charitable Drafter, The Rhystic Storyteller, The Game-Changing Host, Clear, Fair Magic, The
+  Commander Recommender (UNK rares).**
+  - Battle type `Control Point` (its controller protects it). Damage to a battle removes its defense counters as the
+    damage source's controller, and CounterRemovedOnce triggers take `ValidPlayer$` and give `TriggeredPlayer`.
+  - New effect `SortOfSword`: a trigger made of the first half of one random sword and the second half of another.
+  - New effect `Whiteboard` (`Mode$ Note` / `Create`): notes kept on the card, and a white-bordered token built from
+    them (SVar `WhiteBorderedToken` makes a card white-bordered).
+  - OpenBooster `PutUnder$` / `TakeFromUnder$` (a pack kept under a card) and `Draft$` (a pack drafted in turn order).
+  - Card property `flavorWords<op><n>` (words of the printing's flavor text); SVar `CommanderUnsleeved`.
+  - New effect `Retroactive`: this turn's resolved spells and abilities (`Game.getResolvedThisTurn`) apply to the host
+    where they would have - "all" effects it fits and targeted ones it could have been a target of.
+  - New effect `DestroyAnything`: destroys permanents and command-zone objects, or a designation picked from a list.
+  - New trigger `GuessedWrong` and effect `GuessedWrong`: every guess effect reports a wrong guess, and Liar's Pendulum
+    and Master of Predicaments now do too. New effect `RecommendDeck` (saved Commander decks or a random precon).
+
 - **Unknown Event: Blue Screen of Death, The Snapstone Wielder, Welcome to Australia, The Sprinkler of Stardust, The
   Fact Checker, The Convention Enthusiast, The Policy Maker, The Beleaguered Boxer, The Multiplayer Nitpickers (UNK
   rares).**

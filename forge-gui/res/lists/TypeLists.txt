@@ -550,6 +550,7 @@ Zariel
 Undercity
 [BattleTypes]
 Siege
+Control Point
 [PlanarTypes]
 Androzani Minor
 Alara

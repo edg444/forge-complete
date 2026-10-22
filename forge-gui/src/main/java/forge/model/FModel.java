@@ -464,6 +464,19 @@ public final class FModel {
         forge.game.ability.effects.AiTakeoverEffect.setAiSource(
                 () -> (forge.game.player.IGameEntitiesFactory) forge.player.GamePlayerUtil.createAiPlayer("Grumpy Co-player"));
         WordList.setSpellingSource(() -> FileUtil.readFile(ForgeConstants.SPELLING_WORD_LIST_FILE));
+        // The Commander Recommender: the player's saved Commander decks, or a random precon
+        forge.game.ability.effects.RecommendDeckEffect.setDeckSource(new forge.game.ability.effects.RecommendDeckEffect.DeckSource() {
+            @Override
+            public java.util.List<forge.deck.Deck> commanderDecks() {
+                final java.util.List<forge.deck.Deck> all = new java.util.ArrayList<>();
+                collectDecks(getDecks().getCommander(), all);
+                return all;
+            }
+            @Override
+            public forge.deck.Deck randomPrecon() {
+                return forge.deck.DeckgenUtil.getRandomCommanderPreconDeck();
+            }
+        });
         BannedOrRestricted.setSource(() -> FileUtil.readFile(ForgeConstants.BANNED_OR_RESTRICTED_FILE));
         GameFormat.setStandardSource(() -> getFormats().getStandard());
         GameFormat.setFormatSource(name -> getFormats().get(name));
@@ -542,6 +555,17 @@ public final class FModel {
             }
         }
     }
+    private static void collectDecks(final forge.util.storage.IStorage<forge.deck.Deck> folder, final java.util.List<forge.deck.Deck> into) {
+        for (final forge.deck.Deck d : folder) {
+            into.add(d);
+        }
+        if (folder.getFolders() != null) {
+            for (final forge.util.storage.IStorage<forge.deck.Deck> sub : folder.getFolders()) {
+                collectDecks(sub, into);
+            }
+        }
+    }
+
     private static boolean saveWrittenOnDeck(final forge.util.storage.IStorage<forge.deck.Deck> folder,
             final forge.deck.Deck deck, final forge.item.PaperCard before, final forge.item.PaperCard after) {
         final forge.deck.Deck stored = folder.get(deck.getName());

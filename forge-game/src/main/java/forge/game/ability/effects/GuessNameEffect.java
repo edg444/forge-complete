@@ -70,7 +70,11 @@ public class GuessNameEffect extends SpellAbilityEffect {
 
         if (correct && sa.hasParam("GuessCorrect")) {
             AbilityUtils.resolve(sa.getAdditionalAbility("GuessCorrect"));
-        } else if (!correct && sa.hasParam("GuessWrong")) {
+        }
+        if (!correct) {
+            GuessedWrongEffect.fire(guesser);
+        }
+        if (!correct && sa.hasParam("GuessWrong")) {
             AbilityUtils.resolve(sa.getAdditionalAbility("GuessWrong"));
         }
     }

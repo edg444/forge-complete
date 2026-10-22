@@ -50,6 +50,7 @@ public class GuessInvaderEffect extends SpellAbilityEffect {
                 game.getAction().exile(guess, sa, null);
             } else {
                 game.getGameLog().add(GameLogEntryType.INFORMATION, guesser + " is wrong: " + guess + " isn't an invader.");
+                GuessedWrongEffect.fire(guesser);
                 guesser.loseLife(3, false, false, sa);
             }
         }

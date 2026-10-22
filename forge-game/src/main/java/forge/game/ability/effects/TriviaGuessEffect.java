@@ -62,6 +62,7 @@ public class TriviaGuessEffect extends SpellAbilityEffect {
         game.getGameLog().add(GameLogEntryType.INFORMATION, guesser + " guesses " + guess + " for the "
                 + category.toLowerCase() + " of " + card.getName() + "; it's " + actual + ".");
         if (guess != actual) {
+            GuessedWrongEffect.fire(guesser);
             game.getAction().moveToHand(card, sa, AbilityKey.newMap());
         }
     }

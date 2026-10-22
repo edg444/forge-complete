@@ -3513,8 +3513,16 @@ public class Player extends GameEntity implements Comparable<Player> {
      * plain Magic card back, so it's unsleeved; any other built-in sleeve or a card-art sleeve is a sleeve.
      */
     public boolean isSleeved() {
+        if (forcedUnsleeved) {
+            return false;
+        }
         final forge.LobbyPlayer lp = getLobbyPlayer();
         return lp != null && (!lp.getSleeveArtKey().isEmpty() || lp.getSleeveIndex() > 0);
+    }
+    // The Rhystic Storyteller: as this player's commander, their deck can't use sleeves
+    private boolean forcedUnsleeved = false;
+    public void setForcedUnsleeved(final boolean b) {
+        forcedUnsleeved = b;
     }
 
     public void updateSleeve() {

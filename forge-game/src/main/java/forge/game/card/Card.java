@@ -243,6 +243,19 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     private Set<CardStateName> unlockedRooms = EnumSet.noneOf(CardStateName.class);
     private Map<CardStateName, SpellAbility> unlockAbilities = Maps.newEnumMap(CardStateName.class);
+    // The Chaos Keeper: the sealed booster pack under it, and what's left of it once opened
+    private final List<forge.item.PaperCard> packUnder = Lists.newArrayList();
+    public List<forge.item.PaperCard> getPackUnder() {
+        return packUnder;
+    }
+
+    // The Whiteboarder: what's been noted on it (power, toughness, or an ability of a creature spell)
+    public record WhiteboardNote(String kind, String label, Object value) {}
+    private final List<WhiteboardNote> whiteboardNotes = Lists.newArrayList();
+    public List<WhiteboardNote> getWhiteboardNotes() {
+        return whiteboardNotes;
+    }
+
     // Blu, Mansion Prince: a token copy of one half of a Room - its other door can never be unlocked
     private Set<CardStateName> sealedRooms = EnumSet.noneOf(CardStateName.class);
 
@@ -7468,7 +7481,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
             subtractCounter(CounterEnumType.LOYALTY, damageIn, null, true);
         }
         if (isBattle()) {
-            subtractCounter(CounterEnumType.DEFENSE, damageIn, null, true);
+            // the damage source's controller removes them (Control Point battles: "when an opponent defeats it")
+            subtractCounter(CounterEnumType.DEFENSE, damageIn, source.getController(), true);
         }
         if (isCreature()) {
             if (source.isWitherDamage()) { // 120.3d
@@ -7546,6 +7560,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         // an animated library is a stack of cards, not a card with a border of its own
         if (isFaceDown() || getGamePieceType() == GamePieceType.LIBRARY || getGamePieceType() == GamePieceType.GRAVEYARD) {
             return null;
+        }
+        // The Whiteboarder's tokens are white-bordered
+        if (hasSVar("WhiteBorderedToken")) {
+            return CardEdition.BorderColor.WHITE;
         }
         final PrintingTraits.Traits t = getPrintingTraits();
         return t != null && t.getBorder() != null ? t.getBorder() : borderColor();
