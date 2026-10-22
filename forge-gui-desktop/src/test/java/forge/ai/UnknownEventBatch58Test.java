@@ -9,7 +9,8 @@ import forge.game.player.Player;
 import forge.game.zone.ZoneType;
 
 /**
- * Command From the Shadows and Advanced Tactics (UNK), checked against Scryfall 2026-10-22 (no rulings).
+ * Command From the Shadows, Advanced Tactics and The Flavormancer (UNK), checked against Scryfall 2026-10-22 (no
+ * rulings).
  */
 public class UnknownEventBatch58Test extends AITest {
 
@@ -97,5 +98,28 @@ public class UnknownEventBatch58Test extends AITest {
         game.getAction().checkStateEffects(true);
         AssertJUnit.assertNull("the grid is gone", game.getCardState(tactics).getTacticsGrid());
         AssertJUnit.assertTrue(forge.game.combat.CombatUtil.canBlock(attacker, diagonal));
+    }
+
+    @Test
+    public void testFlavormancer() throws Exception {
+        final Game game = initAndCreateGame();
+        final Player ai = game.getPlayers().get(1);
+        final Card flavormancer = addCardToZone("The Flavormancer", ai, ZoneType.Command);
+        ai.addCommander(flavormancer);
+        final Card gideon = addCardToZone("Gideon Jura", ai, ZoneType.Library);
+        final Card yawgmoth = addCardToZone("Yawgmoth, Thran Physician", ai, ZoneType.Library);
+        final Card isamaru = addCardToZone("Isamaru, Hound of Konda", ai, ZoneType.Library);
+        runPreOpeningHandActions(game, ai);
+        AssertJUnit.assertTrue("planeswalkers get creature types this way", gideon.getType().hasStringType("Hero"));
+        AssertJUnit.assertTrue(yawgmoth.getType().hasStringType("Villain"));
+        AssertJUnit.assertFalse(isamaru.getType().hasStringType("Hero") || isamaru.getType().hasStringType("Villain"));
+        final Card moved = game.getAction().moveToHand(gideon, null);
+        AssertJUnit.assertTrue("perpetual", moved.getType().hasStringType("Hero"));
+
+        final Card inPlay = game.getAction().moveToPlay(game.getCardState(flavormancer), ai, null, forge.game.ability.AbilityKey.newMap());
+        game.getPhaseHandler().devModeSet(forge.game.phase.PhaseType.MAIN1, ai);
+        game.getAction().checkStateEffects(true);
+        AssertJUnit.assertTrue(inPlay.isInPlay());
+        AssertJUnit.assertFalse("castable for free from hand", game.getCardState(moved).mayPlay(ai).isEmpty());
     }
 }

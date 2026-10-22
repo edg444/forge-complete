@@ -316,6 +316,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   (`UI_ZONE_TABS_LEFT`) is gone; upstream restored its own setting of that name (`UI_ALT_PLAYERZONETABS`), and the two
   showed with the same label. Hand, Library, Graveyard and Exile tabs are on the right edge, as upstream has them.
 
+- **Unknown Event: The Flavormancer (UNK mythic). Every Unknown Event card is now in.**
+  - As the game begins, with it as your commander, a person marks their own legendary creature and planeswalker cards
+    as Heroes or Villains (honor system), and the AI goes by the Flavormancer's lists: 225 hero and 123 villain card
+    names from the MTG wiki (and Wizards' Reality Fracture story), reviewed by the user. They perpetually gain the
+    creature type; planeswalkers may now have the creature types Hero and Villain.
+
 - **Unknown Event: Command From the Shadows, Advanced Tactics (UNK rares).**
   - Secret commanders (SVar `SecretCommanders` on a conspiracy): every commander starts the game hidden from everyone
     but its controller in the command zone, until it's cast the first time; it's cast normally.

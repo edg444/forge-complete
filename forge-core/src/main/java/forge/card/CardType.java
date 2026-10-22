@@ -707,6 +707,8 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
         }
         if (isPlaneswalker()) {
             allowedTypes = allowedTypes.or(CardType::isAPlaneswalkerType);
+            // The Flavormancer: "Yes, planeswalkers get creature types this way."
+            allowedTypes = allowedTypes.or(t -> t.equals("Hero") || t.equals("Villain"));
         }
         if (isDungeon()) {
             allowedTypes = allowedTypes.or(CardType::isADungeonType);

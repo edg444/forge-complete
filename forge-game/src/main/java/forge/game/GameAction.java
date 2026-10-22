@@ -2256,6 +2256,15 @@ public class GameAction {
         return checkAgain;
     }
 
+    /** The names of every face of a card (The Flavormancer's lists name each face of a double-faced card). */
+    private static java.util.List<String> faceNames(final Card c) {
+        final java.util.List<String> names = new java.util.ArrayList<>();
+        for (final forge.card.CardStateName st : c.getStates()) {
+            names.add(c.getState(st).getName());
+        }
+        return names;
+    }
+
     /** Noyd, Keeper of the Void: a player's timer that ran out does what its card's TimerExpires SVar says. */
     public void checkRealTimeTimers() {
         for (final Player p : game.getPlayers()) {
@@ -3255,6 +3264,52 @@ public class GameAction {
                 if (AbilityUtils.calculateAmount(c, "Count$DeckIdentityMono." + mono[0], null) == 1) {
                     takesAction.setStartingHandSize(Integer.parseInt(mono[1]));
                     takesAction.setMaxHandSize(Integer.parseInt(mono[1]));
+                }
+            }
+            // The Flavormancer: as your commander, the legendary creature and planeswalker cards in your deck that are
+            // flavorfully Heroes or Villains perpetually gain that creature type. A person marks their own (honor
+            // system, user ruling 2026-10-21); the AI goes by the commander's HeroNames/VillainNames lists
+            for (Card c : takesAction.getCardsIn(ZoneType.Command)) {
+                if (!c.isCommander() || !c.hasSVar("HeroNames")) {
+                    continue;
+                }
+                final CardCollection deck = new CardCollection(takesAction.getCardsIn(ZoneType.Library));
+                deck.addAll(CardLists.filter(takesAction.getCardsIn(ZoneType.Command), Card::isCommander));
+                final CardCollection legends = CardLists.filter(deck, x -> x.getType().isLegendary()
+                        && (x.isCreature() || x.isPlaneswalker()));
+                legends.sort(java.util.Comparator.comparing(Card::getName));
+                final CardCollection heroes = new CardCollection();
+                final CardCollection villains = new CardCollection();
+                if (takesAction.getController().isAI()) {
+                    final java.util.Set<String> heroNames = java.util.Set.of(c.getSVar("HeroNames").split(";"));
+                    final java.util.Set<String> villainNames = java.util.Set.of(c.getSVar("VillainNames").split(";"));
+                    for (Card x : legends) {
+                        if (faceNames(x).stream().anyMatch(heroNames::contains)) {
+                            heroes.add(x);
+                        } else if (faceNames(x).stream().anyMatch(villainNames::contains)) {
+                            villains.add(x);
+                        }
+                    }
+                } else if (!legends.isEmpty()) {
+                    SpellAbility sa = new SpellAbility.EmptySa(ApiType.ChooseCard, c, takesAction);
+                    heroes.addAll(takesAction.getController().chooseCardsForEffect(legends, sa,
+                            "The Flavormancer: choose the cards in your deck that are flavorfully Heroes", 0, legends.size(), true, null));
+                    final CardCollection rest = new CardCollection(legends);
+                    rest.removeAll(heroes);
+                    if (!rest.isEmpty()) {
+                        villains.addAll(takesAction.getController().chooseCardsForEffect(rest, sa,
+                                "The Flavormancer: choose the cards in your deck that are flavorfully Villains", 0, rest.size(), true, null));
+                    }
+                }
+                for (Card x : heroes) {
+                    final SpellAbility become = AbilityFactory.getAbility("DB$ Animate | Defined$ Self | Types$ Hero | Duration$ Perpetual", x);
+                    become.setActivatingPlayer(takesAction);
+                    AbilityUtils.resolve(become);
+                }
+                for (Card x : villains) {
+                    final SpellAbility become = AbilityFactory.getAbility("DB$ Animate | Defined$ Self | Types$ Villain | Duration$ Perpetual", x);
+                    become.setActivatingPlayer(takesAction);
+                    AbilityUtils.resolve(become);
                 }
             }
             // Command From the Shadows: while it's in a command zone, every commander starts face down and secret to
