@@ -96,10 +96,24 @@ public class TriggerDamageDone extends Trigger {
             if (fullParam.substring(2).equals("TargetToughness")) {
                 final Card target = (Card) runParams.get(AbilityKey.DamageTarget);
                 operand = target.getNetToughness();
+            } else if (fullParam.substring(2).equals("SourcePower")) {
+                // The Zonian Brawler: "biting is when a creature deals damage equal to its power" (fighting too)
+                operand = ((Card) runParams.get(AbilityKey.DamageSource)).getNetPower();
             } else operand = Integer.parseInt(fullParam.substring(2));
             final int actualAmount = (Integer) runParams.get(AbilityKey.DamageAmount);
 
             if (!Expressions.compare(actualAmount, operator, operand)) {
+                return false;
+            }
+        }
+
+        // The Zonian Brawler: the damage was lethal - the creature has at least lethal damage marked now
+        if (hasParam("Lethal")) {
+            if (!(runParams.get(AbilityKey.DamageTarget) instanceof Card target) || !target.isCreature()) {
+                return false;
+            }
+            final Card source = (Card) runParams.get(AbilityKey.DamageSource);
+            if (target.getLethalDamage() > 0 && !source.hasKeyword(forge.game.keyword.Keyword.DEATHTOUCH)) {
                 return false;
             }
         }

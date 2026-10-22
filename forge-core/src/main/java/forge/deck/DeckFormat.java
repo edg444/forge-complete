@@ -309,6 +309,10 @@ public enum DeckFormat {
             }
         }
         for (final DeckRuleSize sizeRule : commanderSizeRules) {
+            if (sizeRule.getSetMin() > 0) {
+                // the main deck's minimum: the whole deck's, less the one commander (two take one more off below)
+                min = sizeRule.getSetMin() - 1;
+            }
             if (sizeRule.removesMaxDeckSize()) {
                 max = Integer.MAX_VALUE;
             } else if (max != Integer.MAX_VALUE) {

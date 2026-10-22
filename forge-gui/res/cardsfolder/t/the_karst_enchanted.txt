@@ -1,0 +1,11 @@
+Name:The Karst, Enchanted
+ManaCost:2 U G
+Types:Legendary Enchantment Creature Elemental
+PT:4/4
+# as Gifts Ungiven, with the cards searched for one at a time sharing no mana value, power, toughness, or card type
+A:AB$ ChangeZone | Cost$ 3 U T Sac<1/Creature.Other/another creature> | Origin$ Library | Destination$ Library | ChangeType$ Card | ChangeNum$ 4 | RememberChanged$ True | Reveal$ True | Shuffle$ False | DifferentCMC$ True | DifferentPT$ True | DifferentCardTypes$ True | SubAbility$ DBChangeZone1 | SpellDescription$ Search your library for up to four cards that don't share a mana value, power, toughness, or card type with each other. Target opponent chooses two of those cards. Put the chosen cards into your graveyard and the rest into your hand. Then shuffle.
+SVar:DBChangeZone1:DB$ ChangeZone | ValidTgts$ Opponent | DefinedPlayer$ You | Chooser$ Targeted | NoLooking$ True | Hidden$ True | Origin$ Library | Destination$ Graveyard | ChangeType$ Card.IsRemembered | ChangeNum$ 2 | Mandatory$ True | SelectPrompt$ Select two cards for the graveyard | Shuffle$ False | SubAbility$ DBChangeZone2
+SVar:DBChangeZone2:DB$ ChangeZoneAll | Origin$ Library | Destination$ Hand | ChangeType$ Card.IsRemembered | Shuffle$ True | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+DeckHints:Ability$Graveyard
+Oracle:{3}{U}, {T}, Sacrifice another creature: Search your library for up to four cards that don't share a mana value, power, toughness, or card type with each other. Target opponent chooses two of those cards. Put the chosen cards into your graveyard and the rest into your hand. Then shuffle.

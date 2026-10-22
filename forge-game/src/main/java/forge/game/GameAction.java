@@ -3186,6 +3186,14 @@ public class GameAction {
                 takesAction.setStartingLife(takesAction.getStartingLife() + bonus);
                 takesAction.setLife(takesAction.getLife() + bonus, null);
             }
+            // The Zonian Brawler: a commander that sets its player's starting life total (SVar StartingLifeSet)
+            for (Card c : takesAction.getCardsIn(ZoneType.Command)) {
+                if (c.isCommander() && c.hasSVar("StartingLifeSet")) {
+                    final int life = Integer.parseInt(c.getSVar("StartingLifeSet"));
+                    takesAction.setStartingLife(life);
+                    takesAction.setLife(life, null);
+                }
+            }
             // Mono Eminence (Lorthos): a commander's starting hand size, which is also the maximum hand size (static
             // effects reset that to the starting hand size)
             for (Card c : takesAction.getCardsIn(ZoneType.Command)) {

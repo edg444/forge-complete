@@ -1207,6 +1207,21 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
                             fetchList = CardLists.filter(fetchList, x -> x.getNetPower() != chosenPower);
                         }
                     }
+                    // The Karst, Enchanted (DifferentPT$): no shared power or toughness - a card without them (no
+                    // printed P/T and not a creature) shares neither with anything
+                    if (sa.hasParam("DifferentPT")) {
+                        for (Card c : chosenCards) {
+                            if (c.getCurrentState().hasPrintedPT() || c.isCreature()) {
+                                fetchList = CardLists.filter(fetchList, x -> !(x.getCurrentState().hasPrintedPT() || x.isCreature())
+                                        || x.getNetPower() != c.getNetPower() && x.getNetToughness() != c.getNetToughness());
+                            }
+                        }
+                    }
+                    if (sa.hasParam("DifferentCardTypes")) {
+                        for (Card c : chosenCards) {
+                            fetchList = CardLists.filter(fetchList, CardPredicates.sharesCardTypeWith(c).negate());
+                        }
+                    }
                     if (sa.hasParam("DifferentUniverses")) {
                         // Byode, Inverse Sun
                         for (Card c : chosenCards) {
@@ -1691,6 +1706,8 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
                 && !sa.hasParam("DifferentPower")
                 && !sa.hasParam("DifferentCMC")
                 && !sa.hasParam("DifferentUniverses")
+                && !sa.hasParam("DifferentPT")
+                && !sa.hasParam("DifferentCardTypes")
                 && !sa.hasParam("AtRandom")
                 && (!sa.hasParam("Defined") || sa.hasParam("ChooseFromDefined"))
                 && !sa.hasParam("WithTotalCMC")

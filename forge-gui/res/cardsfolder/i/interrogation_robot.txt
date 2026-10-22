@@ -1,0 +1,8 @@
+Name:Interrogation Robot
+ManaCost:3
+Types:Artifact Creature Construct
+PT:2/2
+# the names chosen are kept on it, so each is chosen once; the copy is of the split card, cast as the half just named
+A:AB$ NameCard | Cost$ T Discard<1/Card> | Defined$ You | ChooseFromList$ Who,What,When,Where,Why | ExcludeChosen$ True | SubAbility$ DBCast | SpellDescription$ Choose a card name that hasn't been chosen among Who, What, When, Where, and Why. Create a copy of the card with the chosen name. You may cast the copy. (You still pay its costs. Who//What//When//Where//Why is a split card from Unhinged.)
+SVar:DBCast:DB$ Play | CopyFromChosenName$ True | ValidSA$ Spell.LastNamedSpell | Optional$ True
+Oracle:{T}, Discard a card: Choose a card name that hasn't been chosen among Who, What, When, Where, and Why. Create a copy of the card with the chosen name. You may cast the copy. (You still pay its costs. Who//What//When//Where//Why is a split card from Unhinged.)

@@ -1,0 +1,14 @@
+Name:The Zonian Brawler
+ManaCost:2 R G
+Types:Legendary Creature Zonian Gamer
+PT:4/4
+DeckRule:Size:SetMin$ 60 | ActiveSection$ Commander | Description$ If The Zonian Brawler is your commander, your minimum deck size is 60.
+# applied as the game begins when it's your commander (GameAction)
+SVar:StartingLifeSet:30
+S:Mode$ Continuous | Affected$ Card.Self | Description$ If CARDNAME is your commander, your minimum deck size is 60 and your starting life total is 30. (That's right, you're playing Brawl!)
+# fighting and biting are both a creature dealing damage equal to its power, other than in combat
+T:Mode$ DamageDone | ValidSource$ Creature.YouCtrl | ValidTarget$ Creature | CombatDamage$ False | DamageAmount$ EQSourcePower | Lethal$ True | TriggerZones$ Battlefield | Execute$ TrigFood | TriggerDescription$ Whenever a fighting or biting creature you control deals lethal damage to a creature, create a Food token and draw a card. (Biting is when a creature deals damage equal to its power to another creature.)
+SVar:TrigFood:DB$ Token | TokenScript$ c_a_food_sac | SubAbility$ DBDraw
+SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1
+DeckHas:Ability$Token|Food
+Oracle:If The Zonian Brawler is your commander, your minimum deck size is 60 and your starting life total is 30. (That's right, you're playing Brawl!)\nWhenever a fighting or biting creature you control deals lethal damage to a creature, create a Food token and draw a card. (Biting is when a creature deals damage equal to its power to another creature.)

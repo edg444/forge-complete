@@ -127,6 +127,12 @@ public class ChooseCardNameAi extends SpellAbilityAi {
             }
         }
 
-        return ComputerUtilCard.getBestAI(cards).getName();
+        final String best = ComputerUtilCard.getBestAI(cards).getName();
+        // a split card with more than two halves (Who // What // When // Where // Why) reads as its first half's name,
+        // which may not be one of the choices
+        if (faces.stream().noneMatch(f -> f.getName().equals(best))) {
+            return forge.util.Aggregates.random(faces).getName();
+        }
+        return best;
     }
 }

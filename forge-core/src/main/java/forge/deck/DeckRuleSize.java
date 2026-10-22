@@ -28,9 +28,12 @@ public class DeckRuleSize extends DeckRule {
 
     private final boolean unlimited;
     private final int maxDelta;
+    // The Zonian Brawler: SetMin$ <n>, the deck's whole minimum size, its commander included
+    private final int setMin;
 
     DeckRuleSize(final Map<String, String> params) {
         super(params);
+        setMin = params.containsKey("SetMin") ? Integer.parseInt(params.get("SetMin")) : 0;
         final String adjustMax = params.get("AdjustMax");
         if (UNLIMITED.equalsIgnoreCase(adjustMax)) {
             unlimited = true;
@@ -39,6 +42,11 @@ public class DeckRuleSize extends DeckRule {
             unlimited = false;
             maxDelta = adjustMax != null ? Integer.parseInt(adjustMax) : 0;
         }
+    }
+
+    /** The deck's minimum size with its commander, if this rule sets one (0 if not). */
+    public int getSetMin() {
+        return setMin;
     }
 
     /** True if this rule removes the deck's maximum size cap entirely. */

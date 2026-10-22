@@ -312,6 +312,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Interrogation Robot, The Zonian Brawler, The Karst, Enchanted (UNK cards).**
+  - Ability property `LastNamedSpell`: the half of a split card named last. The AI's card-name choice now picks one
+    of the offered halves of a split card with more than two halves.
+  - DeckRule Size `SetMin$ <n>`: the commander's deck's minimum size, the commander included. SVar
+    `StartingLifeSet:<n>`: a commander that sets its player's starting life total.
+  - DamageDone trigger `DamageAmount$ EQSourcePower` (fighting and biting) and `Lethal$ True` (the damage left the
+    creature with lethal damage marked).
+  - Library search `DifferentPT$` (no shared power or toughness; a card without them shares neither) and
+    `DifferentCardTypes$`.
+
 - **Unknown Event: Dockbreacher, New Magic Game Plus, Compleated Clone Shell, Enolc, Perfect Clone (UNK cards).**
   - ReplaceToken `Type$ FirstPerTurn`: only the first such token a player creates each turn; the replacement's
     controller draws a card for each other one.

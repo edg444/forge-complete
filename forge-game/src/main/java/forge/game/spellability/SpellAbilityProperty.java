@@ -305,6 +305,9 @@ public class SpellAbilityProperty {
             if (sa.isManaAbilityFor(paidFor, colorCanUse)) {
                 return false;
             }
+        } else if (property.equals("LastNamedSpell")) {
+            // Interrogation Robot: the half of a split card named last, not one named before
+            return source.hasNamedCard() && sa.getCardState().getName().equals(source.getNamedCard());
         } else if (property.equals("NamedSpell")) {
             boolean found = false;
             for (String name : source.getNamedCards()) {
