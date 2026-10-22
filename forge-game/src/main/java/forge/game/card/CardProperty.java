@@ -2766,6 +2766,11 @@ public class CardProperty {
             if (base.isArtifact() && base.isCreature()) {
                 return false;
             }
+        } else if (property.equals("blackOrSilverSymbol")) {
+            // Sixth Stage of Magic Design: its printing's expansion symbol is black or silver
+            if (!CardPrintings.hasBlackOrSilverSymbol(card)) {
+                return false;
+            }
         } else if (property.equals("unsharedKeywordOrAbilityWord")) {
             // Second Stage of Magic Design: it has a keyword or ability word, and no permanent its controller
             // controls or card in their graveyard shares one with it

@@ -312,6 +312,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Sixth Stage of Magic Design (UNK white rare).**
+  - Card property `blackOrSilverSymbol` (`CardPrintings.hasBlackOrSilverSymbol`, user ruling): from Exodus on,
+    commons and basic lands are black and uncommons silver, except Dominaria's and Coldsnap's white commons; every
+    set before Exodus is black, except Alpha through Fifth Edition (and their variants), which have no symbol. Tokens
+    count as black.
+
 - **Unknown Event: The Keeper of Kaldra, The Good Gamers, Kallist Rhoka (UNK rares).**
   - MakeCard `Companion$ True` (each card made in the command zone is its owner's companion) and `OncePerGame$ True`
     (each player's first resolution this game).

@@ -69,4 +69,38 @@ public final class CardPrintings {
         cal.setTime(date);
         return cal.get(Calendar.YEAR);
     }
+
+    // Sixth Stage of Magic Design (user ruling 2026-10-22): Alpha through Fifth Edition have no expansion symbol, and
+    // Dominaria and Coldsnap are the only sets whose commons' symbols are white
+    private static final java.util.Set<String> NO_SYMBOL = java.util.Set.of("LEA", "LEB", "2ED", "3ED", "4ED", "5ED",
+            "CED", "CEI", "FBB", "SUM", "4BB");
+    private static final java.util.Set<String> WHITE_COMMONS = java.util.Set.of("DOM", "CSP");
+
+    /**
+     * Whether this printing's expansion symbol is black or silver: every set before Exodus, which brought in rarity
+     * colors, is black; after it, commons (and basic lands) are black and uncommons silver. Tokens count as black.
+     */
+    public static boolean hasBlackOrSilverSymbol(final Card c) {
+        final String code = c.getSetCode();
+        if (code == null || code.isEmpty() || NO_SYMBOL.contains(code)) {
+            return false;
+        }
+        if (c.isToken()) {
+            return true;
+        }
+        final CardEdition ed = StaticData.instance().getEditions().get(code);
+        final CardEdition exodus = StaticData.instance().getEditions().get("EXO");
+        if (ed != null && exodus != null && ed.getDate() != null && ed.getDate().before(exodus.getDate())) {
+            return true;
+        }
+        switch (c.getRarity()) {
+            case Uncommon:
+                return true;
+            case Common:
+            case BasicLand:
+                return !WHITE_COMMONS.contains(code);
+            default:
+                return false;
+        }
+    }
 }

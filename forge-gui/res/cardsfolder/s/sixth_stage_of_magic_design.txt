@@ -1,0 +1,9 @@
+Name:Sixth Stage of Magic Design
+ManaCost:1 W W
+Types:Enchantment
+S:Mode$ Continuous | Affected$ Creature | AddType$ Legendary | Description$ All creatures are legendary.
+# the printing's symbol (CardPrintings.hasBlackOrSilverSymbol): commons black and uncommons silver from Exodus on,
+# everything before it black, except Alpha-Fifth Edition (none) and Dominaria and Coldsnap's white commons; tokens black
+S:Mode$ Continuous | Affected$ Creature.blackOrSilverSymbol | AddPower$ 1 | AddToughness$ 1 | Description$ Creatures with a black or silver expansion symbol get +1/+1.
+S:Mode$ Continuous | Affected$ Creature.!blackOrSilverSymbol | AddPower$ 2 | AddToughness$ 2 | Description$ Creatures without a black or silver expansion symbol get +2/+2.
+Oracle:All creatures are legendary.\nCreatures with a black or silver expansion symbol get +1/+1.\nCreatures without a black or silver expansion symbol get +2/+2.
