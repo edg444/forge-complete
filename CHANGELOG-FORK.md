@@ -312,6 +312,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Sue, Everlasting Dinosaur, Awoken Nephilim, Seventh Stage of Magic Design, Saga of Krark Losing
+  His Thumb, Niv-Mizzet's Diary, Simic, Value Engine (UNK rares).**
+  - New keyword Fossilize (`K:Fossilize:<cost>` or `ManaCostMinus<N>`): from the graveyard, any time, it returns with
+    a finality counter as an artifact and not a creature.
+  - SVar `BecomesCopyOf:<names>`: one is named as the game begins (kept for the match) and the card is a copy of it
+    in every zone, also legendary. The AI takes one whose color identity holds its deck.
+  - ChangeZone `Imprint$ Source`: from an effect, imprinted on the card that made it. Play `NoExtraTurns$ True`:
+    the copy's extra-turn effects do nothing.
+  - Players keep the lands that entered under their control and the cards they drew during their own last turn;
+    `Count$FewestOppOwnLastTurn.Lands|Draws`.
+  - Flip Ahead is a lore-counter replacement that, on a lost flip, puts no counter and triggers the current chapter
+    again.
+
 - **Unknown Event: Maeve, Wearer of Many Hats, Halana and Alena and Gisa and Geralf, The Vast Scrier, The
   Salubrious Philosopher, Falko, Showoff Pilot, The Traveling Postman (UNK rares).**
   - SVar `AnyNumberOfRoles`: the Role state-based action leaves that card's Roles alone. A Role created attached

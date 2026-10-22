@@ -3263,6 +3263,27 @@ public class GameAction {
                 }
                 c.setMarkedColors((ColorSet) colors);
             }
+            // Awoken Nephilim (SVar BecomesCopyOf:<names>): the card named during deck construction, chosen now and kept
+            // for the match, which it's a copy of in every zone except it's also legendary
+            copies.clear();
+            final List<Card> namedCopies = CardLists.filter(all, x -> x.hasSVar("BecomesCopyOf") && !x.isInZone(ZoneType.Sideboard));
+            namedCopies.sort(java.util.Comparator.comparingInt(Card::getId));
+            for (Card c : namedCopies) {
+                final int copy = copies.merge(c.getName(), 1, Integer::sum);
+                final String key = "NamedCopy:" + c.getName() + "#" + copy;
+                String name = takesAction.getMatchNote(key) instanceof String noted ? noted : null;
+                if (name == null) {
+                    name = chooseNamedCopy(takesAction, c, all);
+                    takesAction.setMatchNote(key, name);
+                }
+                final Card template = forge.game.staticability.StaticAbilityCastAs.template(game, name, takesAction);
+                final SpellAbility cause = AbilityFactory.getAbility("DB$ Clone | AddTypes$ Legendary", c);
+                cause.setActivatingPlayer(takesAction);
+                final long ts = game.getNextTimestamp();
+                c.addCloneState(CardFactory.getCloneStates(template, c, cause), ts);
+                c.addPerpetual(new forge.game.card.perpetual.PerpetualClone(ts, template, cause));
+                c.updateStateForView();
+            }
             // Your Favorite Missing Character: "during deckbuilding" choices are made now and kept for the match
             // (user ruling 2026-10-21); the AI picks to suit its deck
             copies.clear();
@@ -3351,6 +3372,33 @@ public class GameAction {
      * ruling 2026-10-21; any college if none does) and a Lorwyn creature type. The AI takes the first college that
      * fits and the Lorwyn type most of its creatures have.
      */
+    /** The card named for an Awoken Nephilim: one whose color identity holds the rest of the deck's, if any does. */
+    private static String chooseNamedCopy(final Player p, final Card c, final CardCollectionView all) {
+        byte deck = 0;
+        for (final Card each : all) {
+            if (each != c && !each.isToken() && each.getRules() != null) {
+                deck |= each.getRules().getColorIdentity().getColor();
+            }
+        }
+        final List<String> names = Arrays.asList(c.getSVar("BecomesCopyOf").split(","));
+        final List<String> fitting = Lists.newArrayList();
+        for (final String name : names) {
+            final forge.item.PaperCard pc = StaticData.instance().getCommonCards().getUniqueByName(name);
+            if (pc != null && ColorSet.fromMask(deck).hasNoColorsExcept(pc.getRules().getColorIdentity())) {
+                fitting.add(name);
+            }
+        }
+        if (fitting.isEmpty()) {
+            fitting.addAll(names);
+        }
+        if (p.isAI() || fitting.size() == 1) {
+            return fitting.get(0);
+        }
+        final SpellAbility sa = new SpellAbility.EmptySa(ApiType.NameCard, c, p);
+        final String chosen = p.getController().chooseSomeType("Card", sa, fitting);
+        return chosen == null ? fitting.get(0) : chosen;
+    }
+
     private static void chooseCollegeAndKin(final Player p, final Card c, final CardCollectionView all) {
         byte deck = 0;
         for (final Card each : all) {

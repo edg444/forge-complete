@@ -3274,8 +3274,23 @@ public class Player extends GameEntity implements Comparable<Player> {
         return revealedThisTurn.size();
     }
 
+    // Simic, Value Engine: lands that entered under this player's control and cards they drew during their own last
+    // turn (-1 before their first turn ends)
+    private int landsEnteredOwnLastTurn = -1;
+    private int drawnOwnLastTurn = -1;
+    public int getLandsEnteredOwnLastTurn() {
+        return landsEnteredOwnLastTurn;
+    }
+    public int getDrawnOwnLastTurn() {
+        return drawnOwnLastTurn;
+    }
+
     public void onCleanupPhase() {
         revealedThisTurn.clear();
+        if (game.getPhaseHandler().isPlayerTurn(this)) {
+            landsEnteredOwnLastTurn = CardLists.count(getZone(ZoneType.Battlefield).getCardsAddedThisTurn(null), Card::isLand);
+            drawnOwnLastTurn = getNumDrawnThisTurn();
+        }
         for (Card c : getCardsIn(ZoneType.Hand)) {
             c.setDrawnThisTurn(false);
         }

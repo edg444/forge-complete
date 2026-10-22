@@ -2841,6 +2841,17 @@ public class AbilityUtils {
             return doXMath(player.getOpponentsGreatestLifeTotal(), expr, c, ctb);
         }
 
+        // Simic, Value Engine: Count$FewestOppOwnLastTurn.Lands|Draws - the fewest among opponents who've had a turn
+        if (sq[0].equals("FewestOppOwnLastTurn") && sq.length > 1) {
+            int fewest = Integer.MAX_VALUE / 2;
+            for (final Player opp : (player != null ? player : c.getController()).getOpponents()) {
+                final int n = "Lands".equals(sq[1]) ? opp.getLandsEnteredOwnLastTurn() : opp.getDrawnOwnLastTurn();
+                if (n >= 0) {
+                    fewest = Math.min(fewest, n);
+                }
+            }
+            return doXMath(fewest, expr, c, ctb);
+        }
         if (sq[0].equals("YouDrewThisTurn")) {
             return doXMath(player.getNumDrawnThisTurn(), expr, c, ctb);
         }

@@ -1,0 +1,10 @@
+Name:Sue, Everlasting Dinosaur
+ManaCost:3 R G W
+Types:Legendary Creature Dinosaur
+PT:7/6
+K:Trample
+# Fossilize:ManaCostMinus2 - each card's own mana cost minus {2} of its generic mana
+S:Mode$ Continuous | Affected$ Creature.YouOwn | AffectedZone$ Graveyard | AddKeyword$ Fossilize:ManaCostMinus2 | Description$ Each creature card in your graveyard has fossilize. Its fossilize cost is equal to its mana cost minus {2}.
+K:Fossilize:R G W
+DeckHas:Ability$Graveyard|Counters
+Oracle:Trample\nEach creature card in your graveyard has fossilize. Its fossilize cost is equal to its mana cost minus {2}.\nFossilize {R}{G}{W} (Return this card from your graveyard to the battlefield with a finality counter on it. It's an artifact and not a creature.)

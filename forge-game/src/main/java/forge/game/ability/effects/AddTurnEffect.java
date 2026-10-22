@@ -38,6 +38,9 @@ public class AddTurnEffect extends SpellAbilityEffect {
     @Override
     public void resolve(SpellAbility sa) {
         final int numTurns = AbilityUtils.calculateAmount(sa.getHostCard(), sa.getParam("NumTurns"), sa);
+        if (sa.getHostCard().hasSVar("NoExtraTurns")) {
+            return;
+        }
 
         for (final Player p : getTargetPlayers(sa)) {
             if (!p.isInGame()) {

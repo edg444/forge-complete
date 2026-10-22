@@ -1,0 +1,11 @@
+Name:Seventh Stage of Magic Design
+ManaCost:4 G U
+Types:Enchantment
+# its own copying triggers aren't copied (ValidSource$ Card.Other), or each copy would be made twice
+T:Mode$ SpellCast | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCopy | TriggerDescription$ Double all your spells and abilities. (All spells and abilities cast, activated, or triggered by you are copied. Mana abilities produce twice as much mana.)
+T:Mode$ AbilityCast | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCopy | Secondary$ True | TriggerDescription$ Whenever you activate an ability, copy it.
+T:Mode$ AbilityTriggered | ValidSpellAbility$ SpellAbility.YouCtrl | ValidSource$ Card.Other | TriggerZones$ Battlefield | Execute$ TrigCopy | Secondary$ True | TriggerDescription$ Whenever an ability you control triggers, copy it.
+SVar:TrigCopy:DB$ CopySpellAbility | Defined$ TriggeredSpellAbility | MayChooseTarget$ True
+R:Event$ ProduceMana | ActiveZones$ Battlefield | ValidActivator$ You | ValidCard$ Card | ReplaceWith$ ProduceTwice | Secondary$ True | Description$ Mana abilities you activate produce twice as much mana.
+SVar:ProduceTwice:DB$ ReplaceMana | ReplaceAmount$ 2
+Oracle:Double all your spells and abilities. (All spells and abilities cast, activated, or triggered by you are copied. Mana abilities produce twice as much mana.)

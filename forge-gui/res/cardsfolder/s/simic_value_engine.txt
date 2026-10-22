@@ -1,0 +1,15 @@
+Name:Simic, Value Engine
+ManaCost:1 U G
+Types:Legendary Creature Vedalken Octopus Raccoon
+PT:3/2
+# an opponent's "last turn" is their own (Player tracks it as their turn ends); one with no turn yet doesn't compare
+T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | TriggerZones$ Battlefield | CheckSVar$ LandGap | SVarCompare$ GT0 | Execute$ TrigDraw | TriggerDescription$ At the beginning of your end step, if more lands entered the battlefield under your control this turn than an opponent had enter during their last turn, draw a card. Then, not counting that draw, if you drew more cards this turn than an opponent drew on their last turn, you may put a land card from your hand onto the battlefield.
+SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1 | SubAbility$ DBLand
+SVar:DBLand:DB$ ChangeZone | Origin$ Hand | Destination$ Battlefield | ChangeType$ Land.YouOwn | ChangeNum$ 1 | Optional$ True | ConditionCheckSVar$ DrawGap | ConditionSVarCompare$ GT0
+SVar:LandGap:SVar$MyLands/Minus.TheirLands
+SVar:MyLands:Count$ThisTurnEntered_Battlefield_Land.YouCtrl
+SVar:TheirLands:Count$FewestOppOwnLastTurn.Lands
+SVar:DrawGap:SVar$MyDrawsBefore/Minus.TheirDraws
+SVar:MyDrawsBefore:Count$YouDrewThisTurn/Minus.1
+SVar:TheirDraws:Count$FewestOppOwnLastTurn.Draws
+Oracle:At the beginning of your end step, if more lands entered the battlefield under your control this turn than an opponent had enter during their last turn, draw a card. Then, not counting that draw, if you drew more cards this turn than an opponent drew on their last turn, you may put a land card from your hand onto the battlefield.

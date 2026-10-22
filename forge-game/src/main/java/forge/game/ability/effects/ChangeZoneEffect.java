@@ -854,7 +854,10 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
                     hostCard.removeRemembered(movedCard);
                 }
                 if (imprint != null) {
-                    hostCard.addImprintedCard(movedCard);
+                    // Niv-Mizzet's Diary (Imprint$ Source): from its effect, onto the card that made the effect
+                    final Card imprintOn = "Source".equals(imprint) && hostCard.getEffectSource() != null
+                            ? hostCard.getEffectSource() : hostCard;
+                    imprintOn.addImprintedCard(movedCard);
                     if (gameCard.hasMergedCard()) {
                         for (final Card c : gameCard.getMergedCards()) {
                             if (c == gameCard) continue;

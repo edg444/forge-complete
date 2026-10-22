@@ -283,6 +283,10 @@ public class PlayEffect extends SpellAbilityEffect {
 
                 tgtCard.setGamePieceType(GamePieceType.TOKEN);
                 tgtCard.setZone(zone);
+                // Niv-Mizzet's Diary: "It can't cause you to take extra turns." (read by AddTurnEffect)
+                if (sa.hasParam("NoExtraTurns")) {
+                    tgtCard.setSVar("NoExtraTurns", "True");
+                }
                 // to fix the CMC
                 tgtCard.setCopiedPermanent(original);
                 if (zone != null) {

@@ -223,6 +223,7 @@ public enum Keyword {
     UMBRA_ARMOR("Umbra armor", SimpleKeyword.class, true, "If enchanted permanent would be destroyed, instead remove all damage marked on it and destroy this Aura."),
     UNDAUNTED("Undaunted", SimpleKeyword.class, false, "This spell costs {1} less to cast for each opponent."),
     UNDYING("Undying", SimpleKeyword.class, false, "When this creature dies, if it had no +1/+1 counters on it, return it to the battlefield under its owner's control with a +1/+1 counter on it."),
+    FOSSILIZE("Fossilize", KeywordWithCost.class, false, "%s: Return this card from your graveyard to the battlefield with a finality counter on it. It's an artifact and not a creature."),
     UNEARTH("Unearth", KeywordWithCost.class, false, "%s: Return this card from your graveyard to the battlefield. It gains haste. Exile it at the beginning of the next end step or if it would leave the battlefield. Unearth only as a sorcery."),
     UNLEASH("Unleash", SimpleKeyword.class, false, "You may have this creature enter with a +1/+1 counter on it. It can't block as long as it has a +1/+1 counter on it."),
     UPGRADE("Upgrade", SimpleKeyword.class, true, "This creature enters covering another artifact you control. If it can't, exile it. Ignore the artifact it's covering. Anywhere this card goes, cards underneath it also go. It has haste."),

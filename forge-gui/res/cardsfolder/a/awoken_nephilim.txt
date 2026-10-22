@@ -1,0 +1,10 @@
+Name:Awoken Nephilim
+ManaCost:no cost
+Types:Legendary Creature Nephilim
+PT:*/*
+# named as the game begins and kept for the match, becoming a copy of it in every zone (GameAction: BecomesCopyOf);
+# the five Nephilim originally printed in Guildpact, checked against Scryfall 2026-10-22
+SVar:BecomesCopyOf:Dune-Brood Nephilim,Glint-Eye Nephilim,Ink-Treader Nephilim,Witch-Maw Nephilim,Yore-Tiller Nephilim
+DeckRule:ColorIdentity:ColorIdentityOneOf$ WBRG,UBRG,WURG,WUBG,WUBR | ActiveSection$ Commander | Description$ This card has the named card's color identity.
+S:Mode$ Continuous | Affected$ Card.Self | Description$ During deck construction, name a Nephilim card originally printed in Guildpact. CARDNAME has that card's color identity and is a copy of that card in all zones except it's also Legendary.
+Oracle:During deck construction, name a Nephilim card originally printed in Guildpact. Awoken Nephilim has that card's color identity and is a copy of that card in all zones except it's also Legendary.

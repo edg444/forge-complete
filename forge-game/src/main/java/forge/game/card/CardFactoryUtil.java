@@ -3746,6 +3746,30 @@ public class CardFactoryUtil {
             sa.setSVar("TransmuteX", "Count$CardManaCost");
             sa.setIntrinsic(intrinsic);
             inst.addSpellAbility(sa);
+        } else if (keyword.startsWith("Fossilize")) {
+            // Sue, Everlasting Dinosaur: no timing restriction; Fossilize:ManaCostMinus<N> is its mana cost minus {N}
+            final String[] k = keyword.split(":");
+            String manacost = k[1];
+            if (manacost.startsWith("ManaCostMinus")) {
+                final forge.game.mana.ManaCostBeingPaid less = new forge.game.mana.ManaCostBeingPaid(card.getManaCost());
+                less.decreaseGenericMana(Math.min(Integer.parseInt(manacost.substring("ManaCostMinus".length())),
+                        card.getManaCost().getGenericCost()));
+                final String shortCost = less.toManaCost().getShortString().replace("{", "").replace("}", "");
+                manacost = shortCost.isEmpty() || less.toManaCost().isNoCost() ? "0" : shortCost;
+            }
+
+            String effect = "AB$ ChangeZone | Cost$ " + manacost + " | Defined$ Self"
+                    + " | Origin$ Graveyard | Destination$ Battlefield | WithCountersType$ FINALITY | RememberChanged$ True"
+                    + " | ActivationZone$ Graveyard | PrecostDesc$ Fossilize | CostDesc$ " + ManaCostParser.parse(manacost)
+                    + " | StackDescription$ Fossilize: Return CARDNAME to the battlefield. | SpellDescription$"
+                    + " (" + inst.getReminderText() + ")";
+            final SpellAbility sa = AbilityFactory.getAbility(effect, card);
+            final AbilitySub artifact = (AbilitySub) AbilityFactory.getAbility("DB$ Animate | Defined$ Remembered | Types$ Artifact"
+                    + " | RemoveTypes$ Creature | Duration$ Permanent", card);
+            artifact.setSubAbility((AbilitySub) AbilityFactory.getAbility("DB$ Cleanup | ClearRemembered$ True", card));
+            sa.setSubAbility(artifact);
+            sa.setIntrinsic(intrinsic);
+            inst.addSpellAbility(sa);
         } else if (keyword.startsWith("Unearth")) {
             final String[] k = keyword.split(":");
             final String manacost = k[1];

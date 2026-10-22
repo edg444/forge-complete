@@ -1,0 +1,17 @@
+Name:Niv-Mizzet's Diary
+ManaCost:3 U R
+Types:Artifact Book
+# "cards" as printed - a player casting the spell
+T:Mode$ SpellCast | ValidCard$ Instant,Sorcery | TriggerZones$ Battlefield | Execute$ TrigEffect | TriggerDescription$ Imprint - Whenever a player cards an instant or sorcery spell, exile it as it resolves.
+SVar:TrigEffect:DB$ Effect | ReplacementEffects$ ExileAsItResolves | RememberObjects$ TriggeredCard | ConditionDefined$ TriggeredCard | ConditionPresent$ Card.inZoneStack | ExileOnMoved$ Stack
+SVar:ExileAsItResolves:Event$ Moved | ValidCard$ Card.IsRemembered | Origin$ Stack | Destination$ Graveyard | Fizzle$ False | ReplaceWith$ DBExile | Description$ Exile it as it resolves.
+# Imprint$ Source: imprinted on the Diary, not on the effect
+SVar:DBExile:DB$ ChangeZone | Defined$ ReplacedCard | Origin$ Stack | Destination$ Exile | Imprint$ Source
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCopy | TriggerDescription$ At the beginning of your upkeep, you may copy an imprinted card and cast the copy without paying its mana cost. It can't cause you to take extra turns. Then, if there are three or more cards imprinted on this artifact, sacrifice it and create a token that's a copy of Niv-Mizzet, Firemind.
+SVar:TrigCopy:DB$ Play | Defined$ Imprinted | Valid$ Card | ValidSA$ Spell | ValidZone$ Exile | CopyCard$ True | WithoutManaCost$ True | Optional$ True | NoExtraTurns$ True | SubAbility$ DBNiv
+# the token first, while the Diary still has its imprinted cards to count
+SVar:DBNiv:DB$ CopyPermanent | DefinedName$ Niv-Mizzet, Firemind | ConditionCheckSVar$ Imprinted | ConditionSVarCompare$ GE3 | SubAbility$ DBSacrifice
+SVar:DBSacrifice:DB$ Sacrifice | Defined$ Self | ConditionCheckSVar$ Imprinted | ConditionSVarCompare$ GE3
+SVar:Imprinted:Count$ValidExile Card.IsImprinted
+DeckHas:Ability$Token
+Oracle:Imprint - Whenever a player cards an instant or sorcery spell, exile it as it resolves.\nAt the beginning of your upkeep, you may copy an imprinted card and cast the copy without paying its mana cost. It can't cause you to take extra turns. Then, if there are three or more cards imprinted on this artifact, sacrifice it and create a token that's a copy of Niv-Mizzet, Firemind.

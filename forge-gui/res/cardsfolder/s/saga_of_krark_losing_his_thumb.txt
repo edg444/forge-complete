@@ -1,0 +1,22 @@
+Name:Saga of Krark Losing His Thumb
+ManaCost:3 U R
+Types:Enchantment Saga
+K:Chapter:3:DBMana,DBKrark,DBFlip
+SVar:DBMana:DB$ Mana | Produced$ U R | SpellDescription$ Add {U}{R}.
+SVar:DBKrark:DB$ CopyPermanent | DefinedName$ Krark, the Thumbless | SubAbility$ DBThumb | SpellDescription$ Create a token that's a copy of Krark, the Thumbless and a token that's a copy of Krark's Thumb. (Keep in mind they're both legendary!)
+SVar:DBThumb:DB$ CopyPermanent | DefinedName$ Krark's Thumb
+SVar:DBFlip:DB$ FlipCoin | ValidTgts$ Opponent | TgtPrompt$ Choose target opponent | Flipper$ You | WinSubAbility$ DBTheyLose | LoseSubAbility$ DBYouLose | SpellDescription$ Choose target opponent. Flip a coin with them. The loser of the flip loses a quarter of their life, rounded up.
+SVar:DBTheyLose:DB$ LoseLife | Defined$ Targeted | LifeAmount$ TheirQuarter
+SVar:DBYouLose:DB$ LoseLife | Defined$ You | LifeAmount$ YourQuarter
+SVar:TheirQuarter:TargetedPlayer$LifeTotal/DivideEvenlyUp.4
+SVar:YourQuarter:Count$YourLifeTotal/DivideEvenlyUp.4
+# Flip Ahead: a lost flip puts no lore counter on it and the chapter it's on triggers again
+R:Event$ AddCounter | ActiveZones$ Battlefield | ValidCard$ Card.Self | ValidCounterType$ LORE | ReplaceWith$ DBFlipAhead | Description$ Flip Ahead (If you would put a lore counter on this saga, instead flip a coin. If you lose the flip, don't put a counter on and repeat the current chapter.)
+SVar:DBFlipAhead:DB$ FlipCoin | Flipper$ You | LoseSubAbility$ DBNoCounter
+SVar:DBNoCounter:DB$ ReplaceCounter | ValidCounterType$ LORE | Amount$ 0 | SubAbility$ DBRepeatOne
+SVar:DBRepeatOne:DB$ ImmediateTrigger | Execute$ DBMana | ConditionCheckSVar$ Lore | ConditionSVarCompare$ EQ1 | SubAbility$ DBRepeatTwo | TriggerDescription$ Chapter I again: add {U}{R}.
+SVar:DBRepeatTwo:DB$ ImmediateTrigger | Execute$ DBKrark | ConditionCheckSVar$ Lore | ConditionSVarCompare$ EQ2 | SubAbility$ DBRepeatThree | TriggerDescription$ Chapter II again: create a token copy of Krark, the Thumbless and of Krark's Thumb.
+SVar:DBRepeatThree:DB$ ImmediateTrigger | Execute$ DBFlip | ConditionCheckSVar$ Lore | ConditionSVarCompare$ EQ3 | TriggerDescription$ Chapter III again: flip a coin with target opponent; the loser loses a quarter of their life, rounded up.
+SVar:Lore:Count$CardCounters.LORE
+DeckHas:Ability$Token
+Oracle:Flip Ahead (If you would put a lore counter on this saga, instead flip a coin. If you lose the flip, don't put a counter on and repeat the current chapter.)\nI — Add {U}{R}.\nII — Create a token that's a copy of Krark, the Thumbless and a token that's a copy of Krark's Thumb. (Keep in mind they're both legendary!)\nIII — Choose target opponent. Flip a coin with them. The loser of the flip loses a quarter of their life, rounded up.
