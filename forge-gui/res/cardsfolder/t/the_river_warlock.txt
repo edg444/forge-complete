@@ -1,0 +1,16 @@
+Name:The River Warlock
+ManaCost:1 B R G
+Types:Legendary Creature Human Warlock
+PT:1/1
+S:Mode$ Continuous | Affected$ Card.Self | AddKeyword$ Flying & Lifelink & Indestructible | Condition$ PlayerTurn | Description$ During your turn, CARDNAME has flying, lifelink, and indestructible.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ Whenever CARDNAME attacks, you and defending player each draw a card, then discard a card. If you discarded a card with equal or greater mana value than the card that player discarded, look at their hand. Exile a nonland card from it until CARDNAME leaves the battlefield.
+SVar:TrigDraw:DB$ Draw | Defined$ You & TriggeredDefendingPlayer | SubAbility$ DBDiscardMine
+SVar:DBDiscardMine:DB$ Discard | Defined$ You | NumCards$ 1 | Mode$ TgtChoose | RememberDiscarded$ True | SubAbility$ DBStore
+SVar:DBStore:DB$ StoreSVar | SVar$ MineMV | Type$ Calculate | Expression$ Remembered$CardManaCost | SubAbility$ DBForget
+SVar:DBForget:DB$ Cleanup | ClearRemembered$ True | SubAbility$ DBDiscardTheirs
+SVar:DBDiscardTheirs:DB$ Discard | Defined$ TriggeredDefendingPlayer | NumCards$ 1 | Mode$ TgtChoose | RememberDiscarded$ True | SubAbility$ DBExile
+SVar:DBExile:DB$ ChangeZone | Origin$ Hand | Destination$ Exile | DefinedPlayer$ TriggeredDefendingPlayer | ChangeType$ Card.nonLand | ChangeNum$ 1 | Chooser$ You | IsCurse$ True | Mandatory$ True | Duration$ UntilHostLeavesPlay | ConditionCheckSVar$ MineMV | ConditionSVarCompare$ GETheirsMV | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:MineMV:Number$0
+SVar:TheirsMV:Remembered$CardManaCost
+Oracle:During your turn, The River Warlock has flying, lifelink, and indestructible.\nWhenever The River Warlock attacks, you and defending player each draw a card, then discard a card. If you discarded a card with equal or greater mana value than the card that player discarded, look at their hand. Exile a nonland card from it until The River Warlock leaves the battlefield.

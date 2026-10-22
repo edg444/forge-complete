@@ -1,0 +1,13 @@
+Name:Princess Snowfall
+ManaCost:4 W R
+Types:Legendary Snow Creature Human Noble
+PT:4/4
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCopy | TriggerDescription$ When CARDNAME enters the battlefield and at the beginning of your upkeep, create a token that's a copy of Seven Dwarves. When you do, each Dwarf you control deals 1 damage to any target.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCopy | Secondary$ True | TriggerDescription$ When CARDNAME enters the battlefield and at the beginning of your upkeep, create a token that's a copy of Seven Dwarves. When you do, each Dwarf you control deals 1 damage to any target.
+SVar:TrigCopy:DB$ CopyPermanent | DefinedName$ Seven Dwarves | RememberTokens$ True | SubAbility$ DBImmediate
+SVar:DBImmediate:DB$ ImmediateTrigger | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ GE1 | Execute$ TrigDamage | SubAbility$ DBCleanup | TriggerDescription$ When you do, each Dwarf you control deals 1 damage to any target.
+SVar:TrigDamage:DB$ EachDamage | ValidTgts$ Any | TgtPrompt$ Select any target | DefinedDamagers$ Valid Dwarf.YouCtrl | NumDmg$ 1
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+DeckHas:Ability$Token
+DeckHints:Type$Dwarf
+Oracle:When Princess Snowfall enters the battlefield and at the beginning of your upkeep, create a token that's a copy of Seven Dwarves. When you do, each Dwarf you control deals 1 damage to any target.

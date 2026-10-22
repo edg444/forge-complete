@@ -1,0 +1,11 @@
+Name:The Joiner of Cats
+ManaCost:2 R W
+Types:Legendary Creature Human Warrior
+PT:3/4
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigDig | TriggerDescription$ Whenever this creature attacks, look at the top six cards of your library. You may put a Cat creature card from among them onto the battlefield tapped and attacking. Put the rest of the cards on the bottom of your library in a random order. If you don't put a card onto the battlefield this way, create a token that's a tapped and attacking copy of Lurrus of the Dream-Den.
+SVar:TrigDig:DB$ Dig | DigNum$ 6 | ChangeNum$ 1 | Optional$ True | ChangeValid$ Creature.Cat | DestinationZone$ Battlefield | Tapped$ True | Attacking$ True | RestRandomOrder$ True | RememberChanged$ True | SubAbility$ DBLurrus
+SVar:DBLurrus:DB$ CopyPermanent | DefinedName$ Lurrus of the Dream-Den | TokenTapped$ True | TokenAttacking$ True | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ EQ0 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+DeckHas:Ability$Token
+DeckHints:Type$Cat
+Oracle:Whenever this creature attacks, look at the top six cards of your library. You may put a Cat creature card from among them onto the battlefield tapped and attacking. Put the rest of the cards on the bottom of your library in a random order. If you don't put a card onto the battlefield this way, create a token that's a tapped and attacking copy of Lurrus of the Dream-Den.

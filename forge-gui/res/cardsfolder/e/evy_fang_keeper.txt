@@ -1,0 +1,22 @@
+Name:Evy, Fang Keeper
+ManaCost:1 B G U
+Types:Legendary Creature Human Artist
+PT:3/4
+# Drawing on the card is an honor-system choice of what you drew.
+T:Mode$ SpellCast | ValidCard$ Creature | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDraw | TriggerDescription$ Whenever you cast a creature spell, you may draw on it. If you drew wings, it enters with a flying counter on it. If you drew boots, it enters with a haste counter on it. If you drew fangs, it enters with a deathtouch counter on it. If you drew something else, it enters with a +1/+1 counter on it. (Previous drawings don't count. For example, if you gave it boots last game, give it more boots. Bigger boots. Boots in unexpected places.)
+SVar:TrigDraw:DB$ GenericChoice | Defined$ You | Choices$ DrewWings,DrewBoots,DrewFangs,DrewElse,DrewNothing
+SVar:DrewWings:DB$ Effect | ReplacementEffects$ ETBWings | RememberObjects$ TriggeredCard | ForgetOnMoved$ Stack | SpellDescription$ Draw wings on it (a flying counter).
+SVar:ETBWings:Event$ Moved | Origin$ Stack | Destination$ Battlefield | ValidCard$ Card.IsRemembered | ReplaceWith$ AddWings | ReplacementResult$ Updated | Description$ It enters with a flying counter on it.
+SVar:AddWings:DB$ PutCounter | ETB$ True | Defined$ ReplacedCard | CounterType$ Flying | CounterNum$ 1
+SVar:DrewBoots:DB$ Effect | ReplacementEffects$ ETBBoots | RememberObjects$ TriggeredCard | ForgetOnMoved$ Stack | SpellDescription$ Draw boots on it (a haste counter).
+SVar:ETBBoots:Event$ Moved | Origin$ Stack | Destination$ Battlefield | ValidCard$ Card.IsRemembered | ReplaceWith$ AddBoots | ReplacementResult$ Updated | Description$ It enters with a haste counter on it.
+SVar:AddBoots:DB$ PutCounter | ETB$ True | Defined$ ReplacedCard | CounterType$ Haste | CounterNum$ 1
+SVar:DrewFangs:DB$ Effect | ReplacementEffects$ ETBFangs | RememberObjects$ TriggeredCard | ForgetOnMoved$ Stack | SpellDescription$ Draw fangs on it (a deathtouch counter).
+SVar:ETBFangs:Event$ Moved | Origin$ Stack | Destination$ Battlefield | ValidCard$ Card.IsRemembered | ReplaceWith$ AddFangs | ReplacementResult$ Updated | Description$ It enters with a deathtouch counter on it.
+SVar:AddFangs:DB$ PutCounter | ETB$ True | Defined$ ReplacedCard | CounterType$ Deathtouch | CounterNum$ 1
+SVar:DrewElse:DB$ Effect | ReplacementEffects$ ETBElse | RememberObjects$ TriggeredCard | ForgetOnMoved$ Stack | SpellDescription$ Draw something else on it (a +1/+1 counter).
+SVar:ETBElse:Event$ Moved | Origin$ Stack | Destination$ Battlefield | ValidCard$ Card.IsRemembered | ReplaceWith$ AddElse | ReplacementResult$ Updated | Description$ It enters with a +1/+1 counter on it.
+SVar:AddElse:DB$ PutCounter | ETB$ True | Defined$ ReplacedCard | CounterType$ P1P1 | CounterNum$ 1
+SVar:DrewNothing:DB$ Cleanup | SpellDescription$ Don't draw on it.
+DeckHas:Ability$Counters
+Oracle:Whenever you cast a creature spell, you may draw on it. If you drew wings, it enters with a flying counter on it. If you drew boots, it enters with a haste counter on it. If you drew fangs, it enters with a deathtouch counter on it. If you drew something else, it enters with a +1/+1 counter on it. (Previous drawings don't count. For example, if you gave it boots last game, give it more boots. Bigger boots. Boots in unexpected places.)

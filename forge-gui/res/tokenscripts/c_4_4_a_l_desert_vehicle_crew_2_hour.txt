@@ -1,0 +1,13 @@
+Name:Desert Vehicle Token
+ManaCost:no cost
+Types:Artifact Land Desert Vehicle
+PT:4/4
+K:Crew:2
+A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
+T:Mode$ Taps | ValidCard$ Card.Self,Gamer.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigHour | TriggerDescription$ Whenever this token or a Gamer you control becomes tapped, remove an hour counter from this token. Then if it has no hour counters on it, each opponent loses 1 life, you gain 1 life, and put eight hour counters on this token.
+SVar:TrigHour:DB$ RemoveCounter | Defined$ Self | CounterType$ HOUR | CounterNum$ 1 | SubAbility$ DBDrain
+SVar:DBDrain:DB$ LoseLife | Defined$ Player.Opponent | LifeAmount$ 1 | ConditionCheckSVar$ Hours | ConditionSVarCompare$ EQ0 | SubAbility$ DBGain
+SVar:DBGain:DB$ GainLife | LifeAmount$ 1 | ConditionCheckSVar$ Hours | ConditionSVarCompare$ EQ0 | SubAbility$ DBReset
+SVar:DBReset:DB$ PutCounter | Defined$ Self | CounterType$ HOUR | CounterNum$ 8 | ConditionCheckSVar$ Hours | ConditionSVarCompare$ EQ0
+SVar:Hours:Count$CardCounters.HOUR
+Oracle:Crew 2\n{T}: Add {C}.\nWhenever this token or a Gamer you control becomes tapped, remove an hour counter from this token. Then if it has no hour counters on it, each opponent loses 1 life, you gain 1 life, and put eight hour counters on this token.

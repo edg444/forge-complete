@@ -312,6 +312,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Evy, Fang Keeper, The Ice Dancer, The Sad Creaturez, Tarelily, Lovestruck Archer, Princess
+  Snowfall, The Joiner of Cats, The Bus Runner, The River Warlock (UNK rares).**
+  - Evy's "draw on it" is an honor-system choice of what you drew; a creature that has shared its feelings
+    (The Sad Creaturez) keeps a "Shares its feelings" marker while it stays on the battlefield.
 - **Unknown Event: The Fifth Alias, Gomif, Fast Racer, The Mox Painter, Efteekay, Flame of the Kav, Frie, Displaced
   in Time, Pirk, Heroic Captain, The Cookout Creator, The Wizardly Barge (UNK rares).**
   - A deck with SVar `AsksSecretList:N` secretly lists N nonland cards as the game begins; card property

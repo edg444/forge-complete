@@ -1,0 +1,14 @@
+Name:The Sad Creaturez
+ManaCost:R G W
+Types:Legendary Creature Elemental
+PT:2/4
+# A creature that has shared its feelings keeps a "Shares its feelings" marker for as long as it stays on the battlefield.
+S:Mode$ CantAttack | ValidCard$ Creature.withoutShares its feelings | Description$ Creatures that haven't shared their feelings can't attack or block.
+S:Mode$ CantBlock | ValidCard$ Creature.withoutShares its feelings | Secondary$ True | Description$ Creatures that haven't shared their feelings can't block.
+S:Mode$ Continuous | Affected$ Creature | AddAbility$ ShareFeelings | Description$ All creatures have "{2}: Put a +1/+1 counter on this creature. You gain 1 life. This creature shares its feelings. Activate only as a sorcery. (Creatures can continue to share their feelings.)"
+SVar:ShareFeelings:AB$ PutCounter | Cost$ 2 | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1 | SorcerySpeed$ True | SubAbility$ DBLife | SpellDescription$ Put a +1/+1 counter on this creature. You gain 1 life. This creature shares its feelings. Activate only as a sorcery. (Creatures can continue to share their feelings.)
+SVar:DBLife:DB$ GainLife | LifeAmount$ 1 | SubAbility$ DBFeel
+SVar:DBFeel:DB$ Pump | Defined$ Self | KW$ Shares its feelings | Duration$ Permanent
+A:AB$ Mana | Cost$ T | Produced$ Any | Amount$ 2 | SpellDescription$ Add two mana of any one color.
+DeckHas:Ability$Counters|LifeGain
+Oracle:Creatures that haven't shared their feelings can't attack or block.\nAll creatures have "{2}: Put a +1/+1 counter on this creature. You gain 1 life. This creature shares its feelings. Activate only as a sorcery. (Creatures can continue to share their feelings.)"\n{T}: Add two mana of any one color.

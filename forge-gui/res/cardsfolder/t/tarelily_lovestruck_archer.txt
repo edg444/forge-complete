@@ -1,0 +1,9 @@
+Name:Tarelily, Lovestruck Archer
+ManaCost:1 G W
+Types:Legendary Creature Elf Archer
+PT:2/3
+S:Mode$ ReduceCost | ValidCard$ Elf,Dwarf | Type$ Spell | Activator$ You | Amount$ 1 | Description$ Elves and/or Dwarf spells you cast cost {1} less to cast.
+K:Soulbond
+S:Mode$ Continuous | Affected$ Creature.PairedWith,Creature.Self+Paired | AddKeyword$ Reach | Description$ As long as this creature is paired with another creature, both creatures have reach. If that creature is a Dwarf, both creatures have lifelink.
+S:Mode$ Continuous | Affected$ Creature.PairedWith,Creature.Self+Paired | AddKeyword$ Lifelink | IsPresent$ Creature.PairedWith+Dwarf | Secondary$ True | Description$ If that creature is a Dwarf, both creatures have lifelink.
+Oracle:Elves and/or Dwarf spells you cast cost {1} less to cast.\nSoulbond (You may pair this creature with another unpaired creature when either enters. They remain paired for as long as you control both of them.)\nAs long as this creature is paired with another creature, both creatures have reach. If that creature is a Dwarf, both creatures have lifelink.

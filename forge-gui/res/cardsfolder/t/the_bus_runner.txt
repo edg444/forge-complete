@@ -1,0 +1,9 @@
+Name:The Bus Runner
+ManaCost:1 B G U
+Types:Legendary Creature Human Gamer
+PT:3/4
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When CARDNAME enters, create a 4/4 Desert Vehicle artifact land token with crew 2. Put eight hour counters on it. It has "{T}: Add {C}" and "Whenever this token or a Gamer you control becomes tapped, remove an hour counter from this token. Then if it has no hour counters on it, each opponent loses 1 life, you gain 1 life, and put eight hour counters on this token."
+SVar:TrigToken:DB$ Token | TokenScript$ c_4_4_a_l_desert_vehicle_crew_2_hour | WithCountersType$ HOUR | WithCountersAmount$ 8
+K:Partner:Ready to run
+DeckHas:Ability$Token|LifeGain
+Oracle:When The Bus Runner enters, create a 4/4 Desert Vehicle artifact land token with crew 2. Put eight hour counters on it. It has "{T}: Add {C}" and "Whenever this token or a Gamer you control becomes tapped, remove an hour counter from this token. Then if it has no hour counters on it, each opponent loses 1 life, you gain 1 life, and put eight hour counters on this token."\nReady to run (You can have two commanders if both have ready to run.)
