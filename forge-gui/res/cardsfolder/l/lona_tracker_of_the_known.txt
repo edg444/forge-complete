@@ -1,0 +1,9 @@
+Name:Lona, Tracker of the Known
+ManaCost:1 G
+Types:Legendary Creature Elf Ranger
+PT:1/1
+# Releases are the sets Forge has the card in, digital-only ones too, not promos (user ruling 2026-10-21).
+S:Mode$ ReduceCost | ValidCard$ Card.releasesGE5 | Type$ Spell | Activator$ You | Amount$ 1 | Color$ AnyOneColored | Description$ Spells you cast that have been printed in at least five different English language Magic releases cost {W}, {U}, {B}, {R}, or {G} less to cast.
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | AddToughness$ X | Description$ Lona gets +1/+1 for each nonland permanent you control that has been printed in at least five different English language Magic releases.
+SVar:X:Count$Valid Permanent.nonLand+YouCtrl+releasesGE5
+Oracle:Spells you cast that have been printed in at least five different English language Magic releases cost {W}, {U}, {B}, {R}, or {G} less to cast.\nLona gets +1/+1 for each nonland permanent you control that has been printed in at least five different English language Magic releases.

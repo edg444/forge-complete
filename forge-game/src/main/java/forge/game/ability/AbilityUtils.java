@@ -2328,6 +2328,25 @@ public class AbilityUtils {
             }
             return doXMath(identity == MagicColor.fromName(sq[1]) ? 1 : 0, expr, c, ctb);
         }
+        // The Local Guides: Count$CityHasFirstLetterOf <defined card>; A-Town: Count$CityStartsWith <letter>
+        if (l[0].startsWith("CityHasFirstLetterOf ") || l[0].startsWith("CityStartsWith ")) {
+            final String city = (player != null ? player : c.getController()).getCity();
+            if (city == null) {
+                return doXMath(0, expr, c, ctb);
+            }
+            final String cityUpper = city.toUpperCase(java.util.Locale.ROOT);
+            if (l[0].startsWith("CityStartsWith ")) {
+                return doXMath(cityUpper.startsWith(l[0].substring("CityStartsWith ".length()).trim().toUpperCase(java.util.Locale.ROOT)) ? 1 : 0, expr, c, ctb);
+            }
+            int found = 0;
+            for (final Card each : getDefinedCards(c, l[0].substring("CityHasFirstLetterOf ".length()).trim(), ctb)) {
+                final String name = each.getName();
+                if (!name.isEmpty() && cityUpper.indexOf(Character.toUpperCase(name.charAt(0))) >= 0) {
+                    found = 1;
+                }
+            }
+            return doXMath(found, expr, c, ctb);
+        }
         if (sq[0].equals("YouAreSleeved")) {
             return doXMath((player != null ? player : c.getController()).isSleeved() ? 1 : 0, expr, c, ctb);
         }

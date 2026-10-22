@@ -1,0 +1,9 @@
+Name:The Bear Force Pilot Runner
+ManaCost:1 G
+Types:Legendary Creature Bear Pilot Gamer
+PT:2/2
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When CARDNAME enters, create a 0/0 colorless Vehicle artifact token with flying, "This creature gets +1/+1 for each Bear you control," and crew 2.
+SVar:TrigToken:DB$ Token | TokenScript$ c_0_0_a_vehicle_flying_bears_crew_2
+K:Partner:Ready to run
+DeckHas:Ability$Token
+Oracle:When The Bear Force Pilot Runner enters, create a 0/0 colorless Vehicle artifact token with flying, "This creature gets +1/+1 for each Bear you control," and crew 2.\nReady to run (You can have two commanders if both have ready to run.)

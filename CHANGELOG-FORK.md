@@ -312,6 +312,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Stormscale Wurm, Praetorhoof Behemoth, Lander Rizzi, Emrakul and Chatterfang, The Bear Force Pilot
+  Runner, The Magical City, New, The Goblin Sparring Grounds, The Local Guides, A-Town, Lona, Tracker of the Known,
+  Mr. Wiggles, Helpful Butterfly.**
+  - **City (user ruling):** a player whose deck has The Local Guides or A-Town types their city as the match begins;
+    the AI is where its human opponent is (`Count$CityStartsWith`, `Count$CityHasFirstLetterOf`).
+  - **Releases (user ruling):** property `releasesGE<n>` counts the sets Forge has a card in, digital-only ones too, but
+    not promos, custom sets or other-language sets. `ReduceCost` `Color$ AnyOneColored` takes off one colored symbol.
+  - "can be your Commander" with a capital C now makes a card commander-eligible too.
 - **Unknown Event: Guild Pact, The Five Stages of Grief, Call Up Emrakul to Help, Everyone's an Impostor, Pulse of the
   Hunter Maze, The Paradise Bird, Phyrexian Cytoshaper, Maître Tree, Grek the Ogre, Land Station.**
   - Everyone's an Impostor humors its own reminder text: granted changeling gives every creature type.

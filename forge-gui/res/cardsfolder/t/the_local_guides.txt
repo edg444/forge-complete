@@ -1,0 +1,11 @@
+Name:The Local Guides
+ManaCost:2 G
+Types:Legendary Creature Human Advisor
+PT:2/3
+# The city is the one its player typed as the match began (honor system); the AI is where its human opponent is.
+SVar:AsksCity:True
+S:Mode$ Continuous | Affected$ Card.TopLibrary+YouCtrl | AffectedZone$ Library | MayLookAt$ You | Description$ You may look at the top card of your library any time.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.Other+YouCtrl | TriggerZones$ Battlefield | CheckSVar$ InCity | SVarCompare$ GE1 | Execute$ TrigExplore | TriggerDescription$ Whenever another creature you control enters, if the first letter of its name is found in the name of the city you're in, it explores. (Reveal the top card of your library. Put that card into your hand if it's a land. Otherwise, put a +1/+1 counter on the creature, then put the card back or put it into your graveyard.)
+SVar:TrigExplore:DB$ Explore | Defined$ TriggeredNewCardLKICopy
+SVar:InCity:Count$CityHasFirstLetterOf TriggeredCard
+Oracle:You may look at the top card of your library any time.\nWhenever another creature you control enters, if the first letter of its name is found in the name of the city you're in, it explores. (Reveal the top card of your library. Put that card into your hand if it's a land. Otherwise, put a +1/+1 counter on the creature, then put the card back or put it into your graveyard.)

@@ -3043,6 +3043,19 @@ public class GameAction {
                     c.setMarkedColors(takesAction.getController().chooseColors(prompt, sa, n, n, ColorSet.WUBRG));
                 }
             }
+            // The Local Guides, A-Town: a person whose deck asks says which city they're in, once a match (honor system)
+            if (!takesAction.getController().isAI() && takesAction.getMatchNote("City") == null) {
+                for (Card c : all) {
+                    if (c.hasSVar("AsksCity")) {
+                        SpellAbility sa = new SpellAbility.EmptySa(ApiType.ChooseType, c, takesAction);
+                        final String city = takesAction.getController().guessString(sa, "Which city are you in?");
+                        if (city != null && !city.trim().isEmpty()) {
+                            takesAction.setMatchNote("City", city.trim());
+                        }
+                        break;
+                    }
+                }
+            }
             // Unknown Event: a deck with a card that cares about a team joins one now, if not already this match
             forge.game.ability.effects.ChooseTeamEffect.chooseForDeck(takesAction, all);
             // Common Curve Filler: a number written in during deckbuilding is chosen now and kept all game

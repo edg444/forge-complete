@@ -1,0 +1,7 @@
+Name:Eldrazi Squirrel Scion Token
+ManaCost:no cost
+Colors:green
+Types:Creature Eldrazi Squirrel Scion
+PT:1/1
+A:AB$ Mana | Cost$ Sac<1/CARDNAME/this creature> | Produced$ Combo G B | SpellDescription$ Add {G} or {B}.
+Oracle:Sacrifice this creature: Add {G} or {B}.

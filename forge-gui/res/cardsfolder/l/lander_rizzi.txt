@@ -1,0 +1,12 @@
+Name:Lander Rizzi
+ManaCost:X G G
+Types:Legendary Artifact Creature Lander Rogue
+PT:1/1
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigLanders | TriggerDescription$ When Lander enters, create X lander tokens (They're artifacts with "{2}, {T}, Sacrifice this token: Search you library for a basic land card, put it onto the battlefield tapped, then shuffle.)
+SVar:TrigLanders:DB$ Token | TokenScript$ c_a_lander_sac_search | TokenAmount$ X
+SVar:X:Count$xPaid
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Lander.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigCounter | TriggerDescription$ Landerfall — Whenever a lander you control enters, put a +1/+1 counter on Lander.
+SVar:TrigCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1
+A:AB$ ChangeZone | Cost$ 2 T Sac<1/CARDNAME/Lander> | Origin$ Library | Destination$ Battlefield | Tapped$ True | ChangeType$ Land.Basic | ChangeNum$ 1 | SpellDescription$ Search you library for a basic land card, put it onto the battlefield tapped, then shuffle.
+DeckHas:Ability$Token
+Oracle:When Lander enters, create X lander tokens (They're artifacts with "{2}, {T}, Sacrifice this token: Search you library for a basic land card, put it onto the battlefield tapped, then shuffle.)\nLanderfall — Whenever a lander you control enters, put a +1/+1 counter on Lander.\n{2}, {T}, Sacrifice Lander: Search you library for a basic land card, put it onto the battlefield tapped, then shuffle.

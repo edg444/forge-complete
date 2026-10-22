@@ -586,6 +586,16 @@ public class CostAdjustment {
             value = sa.getActivatingPlayer().getController().chooseNumberForCostReduction(sa, 0, value);
         }
 
+        // Lona, Tracker of the Known: {W}, {U}, {B}, {R}, or {G} less - one colored mana symbol the spell has
+        if ("AnyOneColored".equals(staticAbility.getParam("Color"))) {
+            for (final ManaCostShard shard : manaCost.getDistinctShards()) {
+                if (shard.getColorMask() != 0 && !shard.isPhyrexian()) {
+                    manaCost.decreaseShard(shard, 1);
+                    break;
+                }
+            }
+            return 0;
+        }
         if (staticAbility.hasParam("Color")) {
             final String color = staticAbility.getParam("Color");
             int sumGeneric = 0;

@@ -31,6 +31,26 @@ public final class CardPrintings {
         return first != null && setCodes.contains(first.getCode());
     }
 
+    /**
+     * Lona, Tracker of the Known: the different English releases the card's name has been printed in - every set Forge
+     * has it in, digital-only ones included, but not promos, custom sets, or sets in another language (user ruling).
+     */
+    public static int releaseCount(final Card c) {
+        final java.util.Set<String> sets = new java.util.HashSet<>();
+        for (final PaperCard pc : StaticData.instance().getCommonCards().getAllCards(c.getName())) {
+            final CardEdition ed = StaticData.instance().getEditions().get(pc.getEdition());
+            if (ed == null || ed.getType() == CardEdition.Type.PROMO || ed.getType() == CardEdition.Type.CUSTOM_SET) {
+                continue;
+            }
+            final String name = ed.getName().toLowerCase(java.util.Locale.ROOT);
+            if (name.contains("chinese") || name.contains("japanese") || name.contains("korean") || name.contains("foreign")) {
+                continue;
+            }
+            sets.add(ed.getCode());
+        }
+        return sets.size();
+    }
+
     /** The year this card's printing was released, or -1 if it isn't known (tokens, cards without a set). */
     public static int releaseYear(final Card c) {
         final String code = c.getSetCode();

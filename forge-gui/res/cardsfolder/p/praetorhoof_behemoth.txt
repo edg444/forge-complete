@@ -1,0 +1,15 @@
+Name:Praetorhoof Behemoth
+ManaCost:4 G G
+Types:Creature Phyrexian Praetor Beast
+PT:4/4
+K:Haste
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigReveal | TriggerDescription$ When CARDNAME enters the battlefield, you may search your library and reveal any number of Praetors from among cards in your library and hand. Creatures you control gain trample and get +X/+X until end of turn, where X is the number of Praetors you have showing from among your hand, library, battlefield, and graveyard. Then shuffle.
+SVar:TrigReveal:DB$ ChooseCard | Defined$ You | ChoiceZone$ Library,Hand | Choices$ Card.Praetor+YouOwn | MinAmount$ 0 | Amount$ Praetors | Reveal$ True | ChoiceTitle$ Reveal any number of Praetors from your library and hand | RememberChosen$ True | AILogic$ AtLeast1 | SubAbility$ DBPump
+SVar:DBPump:DB$ PumpAll | ValidCards$ Creature.YouCtrl | NumAtt$ +X | NumDef$ +X | KW$ Trample | SubAbility$ DBShuffle
+SVar:DBShuffle:DB$ Shuffle | Defined$ You | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:Praetors:Count$ValidLibrary,Hand Card.Praetor+YouOwn
+SVar:X:SVar$Revealed/Plus.Public
+SVar:Revealed:Count$RememberedSize
+SVar:Public:Count$ValidBattlefield,Graveyard Card.Praetor+YouOwn
+Oracle:Haste\nWhen Praetorhoof Behemoth enters the battlefield, you may search your library and reveal any number of Praetors from among cards in your library and hand. Creatures you control gain trample and get +X/+X until end of turn, where X is the number of Praetors you have showing from among your hand, library, battlefield, and graveyard. Then shuffle.

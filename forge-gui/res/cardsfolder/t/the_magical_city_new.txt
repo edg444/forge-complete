@@ -1,0 +1,11 @@
+Name:The Magical City, New
+ManaCost:no cost
+Types:Legendary Land
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ CARDNAME enters the battlefield tapped.
+SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
+A:AB$ Mana | Cost$ T | Produced$ Combo W U R | TriggersWhenSpent$ TrigSpent | SpellDescription$ Add {W}, {U}, or {R}. When this mana is spent to cast a legendary spell, put a +1/+1 counter on this land.
+SVar:TrigSpent:Mode$ SpellCast | ValidCard$ Card.Legendary | ValidActivatingPlayer$ You | Execute$ TrigCounter | TriggerDescription$ When this mana is spent to cast a legendary spell, put a +1/+1 counter on this land.
+SVar:TrigCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1
+A:AB$ Animate | Cost$ 4 | Defined$ Self | Power$ 1 | Toughness$ 1 | Types$ Creature,Human,Artist | Colors$ White,Blue,Red | OverwriteColors$ True | SpellDescription$ CARDNAME becomes a 1/1 white, blue, and red Human Artist creature until end of turn.
+Text:The Magical City, New can be your Commander. (Commander tax still applies.)
+Oracle:The Magical City, New enters the battlefield tapped.\n{T}: Add {W}, {U}, or {R}. When this mana is spent to cast a legendary spell, put a +1/+1 counter on this land.\n{4}: The Magical City, New becomes a 1/1 white, blue, and red Human Artist creature until end of turn.\nThe Magical City, New can be your Commander. (Commander tax still applies.)

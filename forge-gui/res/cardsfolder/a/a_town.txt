@@ -1,0 +1,9 @@
+Name:A-Town
+ManaCost:no cost
+Types:Land Town
+# The city is the one its player typed as the match began (honor system); the AI is where its human opponent is.
+SVar:AsksCity:True
+A:AB$ Mana | Cost$ T | Produced$ C | CheckSVar$ InA | SVarCompare$ EQ0 | SpellDescription$ Add {C}. If you're in a city that starts with an A, instead add one mana of any color.
+A:AB$ Mana | Cost$ T | Produced$ Any | CheckSVar$ InA | SVarCompare$ GE1 | SpellDescription$ Add one mana of any color (you're in a city that starts with an A).
+SVar:InA:Count$CityStartsWith A
+Oracle:{T}: Add {C}. If you're in a city that starts with an A, instead add one mana of any color.

@@ -154,6 +154,11 @@ public class CardProperty {
             if (!CardPrintings.originallyPrintedIn(card, java.util.List.of(property.substring(20).split("_")))) {
                 return false;
             }
+        } else if (property.startsWith("releasesGE")) {
+            // Lona, Tracker of the Known: printed in at least N different English releases
+            if (CardPrintings.releaseCount(card) < Integer.parseInt(property.substring("releasesGE".length()))) {
+                return false;
+            }
         } else if (property.startsWith("backFaceType")) {
             // Phyrexian Incubator: a double-faced card whose back face has the type (backFaceTypePhyrexian)
             final String type = property.substring("backFaceType".length());

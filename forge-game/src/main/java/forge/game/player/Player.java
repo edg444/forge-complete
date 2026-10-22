@@ -3069,6 +3069,29 @@ public class Player extends GameEntity implements Comparable<Player> {
         guild = guild0;
     }
 
+    /**
+     * The Local Guides, A-Town: the city this player typed as the match began (user ruling 2026-10-21). The AI is where
+     * a human player is. Null if nobody has said.
+     */
+    public String getCity() {
+        if (getMatchNote("City") instanceof String city) {
+            return city;
+        }
+        if (getController().isAI()) {
+            String any = null;
+            for (final Player p : game.getRegisteredPlayers()) {
+                if (p.getMatchNote("City") instanceof String city) {
+                    if (!p.getController().isAI()) {
+                        return city;
+                    }
+                    any = any == null ? city : any;
+                }
+            }
+            return any;
+        }
+        return null;
+    }
+
     /** Something this player settled for the whole match, or null. */
     public Object getMatchNote(final String key) {
         if (game.getMatch() == null || getRegisteredPlayer() == null) {

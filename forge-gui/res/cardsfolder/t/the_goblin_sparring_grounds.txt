@@ -1,0 +1,13 @@
+Name:The Goblin Sparring Grounds
+ManaCost:no cost
+Types:Legendary Land
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ CARDNAME enters tapped.
+SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
+A:AB$ Mana | Cost$ T | Produced$ Combo B R | TriggersWhenSpent$ TrigSpent | SpellDescription$ Add {B} or {R}. If this mana is spent to cast a Goblin spell, you get an experience counter.
+SVar:TrigSpent:Mode$ SpellCast | ValidCard$ Card.Goblin | ValidActivatingPlayer$ You | Execute$ TrigExperience | TriggerDescription$ If this mana is spent to cast a Goblin spell, you get an experience counter.
+SVar:TrigExperience:DB$ PutCounter | Defined$ You | CounterType$ EXPERIENCE | CounterNum$ 1
+A:AB$ Animate | Cost$ B R | Defined$ Self | Types$ Creature,Goblin | staticAbilities$ ExperiencePT | SpellDescription$ Until end of turn, CARDNAME becomes a Goblin creature in addition to its other types and gains "This creature's power and toughness are each equal to the number of experience counters you have."
+SVar:ExperiencePT:Mode$ Continuous | Affected$ Card.Self | CharacteristicDefining$ True | SetPower$ X | SetToughness$ X | Description$ This creature's power and toughness are each equal to the number of experience counters you have.
+SVar:X:Count$YourCountersExperience
+Text:The Goblin Sparring Grounds can be your commander.
+Oracle:The Goblin Sparring Grounds enters tapped.\n{T}: Add {B} or {R}. If this mana is spent to cast a Goblin spell, you get an experience counter.\n{B}{R}: Until end of turn, The Goblin Sparring Grounds becomes a Goblin creature in addition to its other types and gains "This creature's power and toughness are each equal to the number of experience counters you have."\nThe Goblin Sparring Grounds can be your commander.

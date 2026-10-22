@@ -353,7 +353,8 @@ public final class CardRules implements ICardCharacteristics {
     }
 
     public boolean canBeCommander() {
-        if (mainPart.getOracleText().contains("can be your commander") || canBeBackground()) {
+        // "can be your Commander" (The Magical City, New) counts too
+        if (mainPart.getOracleText().toLowerCase(java.util.Locale.ROOT).contains("can be your commander") || canBeBackground()) {
             return true;
         }
         if (!mainPart.getType().isLegendary()) {
@@ -364,7 +365,7 @@ public final class CardRules implements ICardCharacteristics {
 
     /** The commander requirements minus "legendary" - what a legendary partner's other commander must meet. */
     public boolean canBeCommanderIfLegendary() {
-        if (mainPart.getOracleText().contains("can be your commander")) {
+        if (mainPart.getOracleText().toLowerCase(java.util.Locale.ROOT).contains("can be your commander")) {
             return true;
         }
         CardType type = mainPart.getType();
