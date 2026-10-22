@@ -3247,6 +3247,15 @@ public class GameAction {
                 if (c.hasSVar("AsksReleaseYear") && c.isCommander()) {
                     chooseReleaseYear(takesAction, c, all);
                 }
+                if (c.hasSVar("AsksFaction") && c.isCommander()) {
+                    chooseFaction(takesAction, c, all);
+                }
+                // The Convincing General: "As the game begins, if this creature is your commander, ..."
+                if (c.hasSVar("AtGameStartIfCommander") && c.isCommander()) {
+                    final SpellAbility start = AbilityFactory.getAbility(c.getSVar("AtGameStartIfCommander"), c);
+                    start.setActivatingPlayer(takesAction);
+                    AbilityUtils.resolve(start);
+                }
             }
             for (Card c : all) {
                 if (c.hasKeyword(Keyword.LEGACY) && c.getLegacyWord() == null && !c.isInZone(ZoneType.Sideboard)) {
@@ -3310,6 +3319,73 @@ public class GameAction {
         c.setChosenColors(Lists.newArrayList(COLLEGES.get(college).split(",")));
         c.setChosenType(kin);
         c.getGame().getGameLog().add(GameLogEntryType.INFORMATION, c + ": " + college + " and " + kin + ".");
+    }
+
+    // The Faction Dragon's factions: the watermarks that stand for a group of colors, checked against what Scryfall's
+    // cards with each watermark share (2026-10-22): the guilds, Khans clans, dragonlord clans, colleges and families
+    public static final Map<String, String> FACTIONS = new java.util.LinkedHashMap<>();
+    static {
+        for (final String[] f : new String[][] {
+                {"azorius", "W U"}, {"dimir", "U B"}, {"rakdos", "B R"}, {"gruul", "R G"}, {"selesnya", "W G"},
+                {"orzhov", "W B"}, {"izzet", "U R"}, {"golgari", "B G"}, {"boros", "W R"}, {"simic", "U G"},
+                {"abzan", "W B G"}, {"jeskai", "W U R"}, {"sultai", "U B G"}, {"mardu", "W B R"}, {"temur", "U R G"},
+                {"dromoka", "W G"}, {"ojutai", "W U"}, {"silumgar", "U B"}, {"kolaghan", "B R"}, {"atarka", "R G"},
+                {"lorehold", "W R"}, {"prismari", "U R"}, {"quandrix", "U G"}, {"silverquill", "W B"}, {"witherbloom", "B G"},
+                {"brokers", "W U G"}, {"obscura", "W U B"}, {"maestros", "U B R"}, {"riveteers", "B R G"}, {"cabaretti", "W R G"}}) {
+            FACTIONS.put(f[0], f[1]);
+        }
+    }
+
+    /**
+     * The Faction Dragon: a faction chosen "during deck building", as the game begins (user ruling 2026-10-21): one
+     * whose colors the rest of the deck fits, if any does. Its mana cost becomes the faction's symbols. The AI takes the
+     * fitting faction whose watermark is on the most of its cards.
+     */
+    private static void chooseFaction(final Player p, final Card c, final CardCollectionView all) {
+        byte deck = 0;
+        for (final Card each : all) {
+            if (each != c && !each.isToken() && each.getRules() != null) {
+                deck |= each.getRules().getColorIdentity().getColor();
+            }
+        }
+        final List<String> fitting = Lists.newArrayList();
+        for (final Map.Entry<String, String> e : FACTIONS.entrySet()) {
+            if (ColorSet.fromMask(deck).hasNoColorsExcept(ColorSet.fromNames(e.getValue().replace(" ", "").toCharArray()))) {
+                fitting.add(e.getKey());
+            }
+        }
+        if (fitting.isEmpty()) {
+            fitting.addAll(FACTIONS.keySet());
+        }
+        String faction = fitting.get(0);
+        if (p.isAI()) {
+            int most = -1;
+            for (final String f : fitting) {
+                final int n = CardLists.count(all, x -> x.getWatermarks().stream().anyMatch(f::equalsIgnoreCase));
+                if (n > most) {
+                    most = n;
+                    faction = f;
+                }
+            }
+        } else if (fitting.size() > 1) {
+            final Map<String, String> byName = new java.util.LinkedHashMap<>();
+            for (final String f : fitting) {
+                byName.put(forge.card.PrintingTraits.watermarkName(f), f);
+            }
+            final SpellAbility sa = new SpellAbility.EmptySa(ApiType.ChooseType, c, p);
+            faction = byName.get(p.getController().chooseSomeType("Faction", sa, byName.keySet()));
+        }
+        final forge.card.mana.ManaCost cost = new forge.card.mana.ManaCost(new forge.card.mana.ManaCostParser(FACTIONS.get(faction)));
+        for (final CardStateName name : c.getStates()) {
+            c.getState(name).setManaCost(cost);
+        }
+        c.setChosenType(faction);
+        final List<String> colors = Lists.newArrayList();
+        for (final char sym : FACTIONS.get(faction).replace(" ", "").toCharArray()) {
+            colors.add(forge.card.MagicColor.toLongString(forge.card.MagicColor.fromName(sym)));
+        }
+        c.setChosenColors(colors);
+        c.updateStateForView();
     }
 
     /**

@@ -1,0 +1,12 @@
+Name:Polis the Planeshifter
+ManaCost:2 R
+Types:Legendary Creature Azra Wizard
+PT:3/3
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPlane | TriggerDescription$ When CARDNAME enters the battlefield, choose a plane at random from among all planechase planes. CARDNAME has all abilities of the last chosen plane. (Rolls of the planar die don't affect CARDNAME.)
+SVar:TrigPlane:DB$ ChooseRandomPlane
+# the plane's abilities work from the battlefield, and its chaos abilities only from this card's own effect
+S:Mode$ Continuous | Affected$ Card.Self | GainsPlaneAbilities$ True | Description$ CARDNAME has all abilities of the last chosen plane. (Rolls of the planar die don't affect CARDNAME.)
+A:AB$ FlipCoin | Cost$ W U B R G | WinSubAbility$ DBChaos | LoseSubAbility$ DBNewPlane | SpellDescription$ Flip a coin. If you win the flip, do CARDNAME's chaos ensues effect. If you lose the flip, choose a new plane for CARDNAME.
+SVar:DBChaos:DB$ ChaosEnsues | Defined$ Self | AnyGame$ True
+SVar:DBNewPlane:DB$ ChooseRandomPlane
+Oracle:When Polis the Planeshifter enters the battlefield, choose a plane at random from among all planechase planes. Polis the Planeshifter has all abilities of the last chosen plane. (Rolls of the planar die don't affect Polis.)\n{W}{U}{B}{R}{G}: Flip a coin. If you win the flip, do Polis the Planeshifter's chaos ensues effect. If you lose the flip, choose a new plane for Polis the Planeshifter.

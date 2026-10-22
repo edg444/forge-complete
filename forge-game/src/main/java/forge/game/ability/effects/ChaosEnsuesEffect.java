@@ -30,7 +30,8 @@ public class ChaosEnsuesEffect extends SpellAbilityEffect {
         final Player activator = sa.getActivatingPlayer();
         final Game game = activator.getGame();
 
-        if (game.getActivePlanes() == null) { // not a planechase game, nothing happens
+        // Polis the Planeshifter's own chaos ensues effect works in any game (AnyGame$)
+        if (game.getActivePlanes() == null && !sa.hasParam("AnyGame")) { // not a planechase game, nothing happens
             return;
         }
 

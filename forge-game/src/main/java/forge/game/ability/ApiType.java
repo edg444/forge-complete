@@ -177,6 +177,7 @@ public enum ApiType {
     MoveCounterFromEach (MoveCounterFromEachEffect.class),
     TreatCountersAs (TreatCountersAsEffect.class),
     PutInZoneOf (PutInZoneOfEffect.class),
+    ChooseRandomPlane (ChooseRandomPlaneEffect.class),
     GuessWord (GuessWordEffect.class),
     Goad (GoadEffect.class),
     Haunt (HauntEffect.class),

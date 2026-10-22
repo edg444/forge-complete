@@ -162,6 +162,7 @@ public class StaticAbility extends CardTraitBase implements IIdentifiable, Clone
 
         if (hasParam("RemoveAllAbilities") || hasParam("RemoveNonManaAbilities") || hasParam("GainsAbilitiesOf")
                 || hasParam("GainsAbilitiesOfDefined") || hasParam("GainsTriggerAbsOf") || hasParam("GainsTextBoxOf")
+                || hasParam("GainsPlaneAbilities")
                 || hasParam("GainsStickerAbilitiesOf") || hasParam("GainsStickerAbilitiesOfDefined")
                 || hasParam("GainsCounterKeywordsOfDefined")
                 || hasParam("AddKeyword") || hasParam("AddAbility")

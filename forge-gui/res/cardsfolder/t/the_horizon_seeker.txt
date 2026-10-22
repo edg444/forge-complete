@@ -1,0 +1,10 @@
+Name:The Horizon Seeker
+ManaCost:W U B R G
+Types:Legendary Creature Human Gamer
+PT:0/0
+K:Horsemanship
+# Named keywords: the Comprehensive Rules' keyword abilities, ability words and keyword actions, less enchant and the
+# everyday actions (user ruling 2026-10-21; res/lists/LegacyWords.txt)
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | AddToughness$ X | Description$ CARDNAME gets +1/+1 for each different named keyword and ability word among permanents you control and instant or sorcery cards in your graveyard. (For example, flying, landfall, and scry count. Flavor words, like "Magical Tinkering", or game terms like "enchant creature" and "mana" do not.)
+SVar:X:Count$DifferentNamedKeywords
+Oracle:Horsemanship\nThe Horizon Seeker gets +1/+1 for each different named keyword and ability word among permanents you control and instant or sorcery cards in your graveyard. (For example, flying, landfall, and scry count. Flavor words, like "Magical Tinkering", or game terms like "enchant creature" and "mana" do not.)

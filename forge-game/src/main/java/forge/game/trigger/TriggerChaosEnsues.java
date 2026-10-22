@@ -33,6 +33,10 @@ public class TriggerChaosEnsues extends Trigger {
         if (!matchesValidParam("ValidPlayer", runParams.get(AbilityKey.Player))) {
             return false;
         }
+        // Polis the Planeshifter: its plane's chaos abilities aren't affected by rolls of the planar die
+        if (hasParam("OnlyWhenAffected") && !runParams.containsKey(AbilityKey.Affected)) {
+            return false;
+        }
         if (runParams.containsKey(AbilityKey.Affected)) {
             final Object o = runParams.get(AbilityKey.Affected);
             if (o instanceof GameObject) {

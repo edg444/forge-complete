@@ -258,3 +258,62 @@ valiant
 vivid
 void
 will of the council
+
+# The Horizon Seeker: keyword actions (701), less the everyday ones (activate, attach, cast, counter, create, destroy,
+# discard, exchange, exile, play, reveal, sacrifice, search, shuffle, tap and untap; user ruling 2026-10-21).
+[KeywordActions]
+Behold
+Double
+Triple
+Fight
+Goad
+Investigate
+Mill
+Regenerate
+Scry
+Surveil
+Transform
+Convert
+Fateseal
+Clash
+Planeswalk
+Set in Motion
+Abandon
+Proliferate
+Detain
+Populate
+Monstrosity
+Vote
+Bolster
+Manifest
+Support
+Meld
+Exert
+Explore
+Assemble
+Adapt
+Amass
+Learn
+Venture into the Dungeon
+Connive
+Open an Attraction
+Roll to Visit Your Attractions
+Incubate
+The Ring Tempts You
+Face a Villainous Choice
+Time Travel
+Discover
+Cloak
+Collect Evidence
+Suspect
+Forage
+Manifest Dread
+Endure
+Harness
+Airbend
+Earthbend
+Waterbend
+Blight
+Heal
+Recruit
+Empower Jace

@@ -16,11 +16,13 @@ public final class LegacyWords {
     private static Supplier<List<String>> source = null;
     private static List<String> keywordAbilities = null;
     private static List<String> abilityWords = null;
+    private static List<String> keywordActions = null;
 
     public static synchronized void setSource(final Supplier<List<String>> source0) {
         source = source0;
         keywordAbilities = null;
         abilityWords = null;
+        keywordActions = null;
     }
 
     private static synchronized void load() {
@@ -29,6 +31,7 @@ public final class LegacyWords {
         }
         final List<String> keywords = new ArrayList<>();
         final List<String> words = new ArrayList<>();
+        final List<String> actions = new ArrayList<>();
         List<String> section = null;
         for (final String raw : source == null ? List.<String>of() : source.get()) {
             final String line = raw.trim();
@@ -39,12 +42,15 @@ public final class LegacyWords {
                 section = keywords;
             } else if (line.equals("[AbilityWords]")) {
                 section = words;
+            } else if (line.equals("[KeywordActions]")) {
+                section = actions;
             } else if (section != null) {
                 section.add(line);
             }
         }
         keywordAbilities = Collections.unmodifiableList(keywords);
         abilityWords = Collections.unmodifiableList(words);
+        keywordActions = Collections.unmodifiableList(actions);
     }
 
     public static List<String> getKeywordAbilities() {
@@ -55,5 +61,11 @@ public final class LegacyWords {
     public static List<String> getAbilityWords() {
         load();
         return abilityWords;
+    }
+
+    /** The Horizon Seeker: the keyword actions (701), less the everyday ones (user ruling 2026-10-21). Not for legacy. */
+    public static List<String> getKeywordActions() {
+        load();
+        return keywordActions;
     }
 }

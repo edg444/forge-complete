@@ -1,0 +1,18 @@
+Name:The Convincing General
+ManaCost:W U B R G
+Types:Legendary Creature Shapeshifter
+PT:5/5
+K:Changeling
+# As the game begins, if it's your commander (GameAction: SVar AtGameStartIfCommander). The two types live on an
+# effect, so its own {3}, {T} choice can't overwrite them.
+SVar:AtGameStartIfCommander:DB$ ChooseType | Defined$ You | Type$ Creature | SubAbility$ DBType2
+SVar:DBType2:DB$ ChooseType | Defined$ You | Type$ Creature | ChooseType2$ True | InvalidTypes$ ChosenType | SubAbility$ DBSame
+SVar:DBSame:DB$ Effect | Name$ The Convincing General's Two Types | StaticAbilities$ SameAs2,SameAs1 | Duration$ Permanent | SubAbility$ DBCleanup
+SVar:SameAs2:Mode$ Continuous | EffectZone$ Command | Affected$ Creature.YouCtrl+ChosenType+inZoneBattlefield,Creature.YouOwn+ChosenType+!inZoneBattlefield | AffectedZone$ Battlefield,Hand,Graveyard,Exile,Library,Stack,Command | AddType$ ChosenType2 | Description$ Treat the two chosen creature types like they're the same among your creatures and creature cards everywhere.
+SVar:SameAs1:Mode$ Continuous | EffectZone$ Command | Affected$ Creature.YouCtrl+ChosenType2+inZoneBattlefield,Creature.YouOwn+ChosenType2+!inZoneBattlefield | AffectedZone$ Battlefield,Hand,Graveyard,Exile,Library,Stack,Command | AddType$ ChosenType | Secondary$ True | Description$ Treat the two chosen creature types like they're the same among your creatures and creature cards everywhere.
+SVar:DBCleanup:DB$ Cleanup | ClearChosenType$ True
+S:Mode$ Continuous | Affected$ Card.Self | Description$ As the game begins, if this creature is your commander, choose two creature types. For the rest of the game, treat those two types like they're the same among your creatures and creature cards everywhere.
+A:AB$ ChooseType | Cost$ 3 T | Defined$ You | Type$ Creature | SubAbility$ DBDraw | SpellDescription$ Choose a creature type. Draw a card for each creature you control of that type.
+SVar:DBDraw:DB$ Draw | NumCards$ X
+SVar:X:Count$Valid Creature.YouCtrl+ChosenType
+Oracle:Changeling (This card is every creature type.)\nAs the game begins, if this creature is your commander, choose two creature types. For the rest of the game, treat those two types like they're the same among your creatures and creature cards everywhere.\n{3}, {T}: Choose a creature type. Draw a card for each creature you control of that type.

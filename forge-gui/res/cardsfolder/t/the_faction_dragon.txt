@@ -1,0 +1,13 @@
+Name:The Faction Dragon
+ManaCost:no cost
+Types:Legendary Creature Dragon
+PT:4/3
+K:Flying
+# The faction is chosen as the game begins (the "during deck building" ruling, 2026-10-21): one whose colors the deck
+# fits. Factions are the watermarks with set colors (GameAction.FACTIONS); the deck may be any of their identities.
+DeckRule:ColorIdentity:ColorIdentityOneOf$ WU,UB,BR,RG,WG,WB,UR,BG,WR,UG,WBG,WUR,UBG,WBR,URG,WUG,WUB,UBR,BRG,WRG | ActiveSection$ Commander | Description$ This card's mana cost is that faction's mana symbols.
+SVar:AsksFaction:True
+S:Mode$ Continuous | Affected$ Card.Self | Description$ If CARDNAME is your commander, choose a faction during deck building. This card's mana cost is that faction's mana symbols. (For example, if you choose Abzan, it costs {W}{B}{G}.)
+S:Mode$ ReduceCost | ValidCard$ Card.hasChosenWatermark | Type$ Spell | Activator$ You | Amount$ 1 | Description$ Spells you cast with the chosen faction's watermark cost {1} less to cast.
+S:Mode$ Continuous | Affected$ Creature.Other+YouCtrl+hasChosenWatermark | AddPower$ 1 | AddToughness$ 1 | Description$ Other creatures you control with the chosen faction's watermark get +1/+1.
+Oracle:Flying\nIf The Faction Dragon is your commander, choose a faction during deck building. This card's mana cost is that faction's mana symbols. (For example, if you choose Abzan, it costs {W}{B}{G}.)\nSpells you cast with the chosen faction's watermark cost {1} less to cast.\nOther creatures you control with the chosen faction's watermark get +1/+1.

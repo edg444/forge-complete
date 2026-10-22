@@ -312,6 +312,23 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: The Horizon Seeker, The Convincing General, The Faction Dragon, Polis the Planeshifter (UNK
+  mythics); fix Red and Black Legac.**
+  - `Count$DifferentNamedKeywords`: keyword abilities, ability words and keyword actions named in the rules text of
+    permanents you control and instant and sorcery cards in your graveyard, or had by those permanents; reminder text
+    doesn't count, nor do enchant and the everyday actions (user ruling). Keyword actions come from a new
+    `[KeywordActions]` section in `res/lists/LegacyWords.txt` (CR 701, effective 2026-09-25).
+  - SVar `AtGameStartIfCommander`: an ability run as the game begins if the card is its owner's commander.
+  - SVar `AsksFaction`: as the game begins, a faction whose colors the deck fits; the card's mana cost becomes its
+    symbols and its in-game color identity its colors. Factions are the watermarks with set colors, checked against
+    Scryfall: the guilds, Khans clans, dragonlord clans, colleges and families (my call; `GameAction.FACTIONS`).
+    Property `hasChosenWatermark`.
+  - New effect `ChooseRandomPlane` and continuous static `GainsPlaneAbilities$`: the imprinted plane's abilities,
+    working from the battlefield; its chaos abilities ignore the planar die (trigger param `OnlyWhenAffected`).
+    ChaosEnsues `AnyGame$` works outside Planechase.
+  - Red and Black Legac's coin flip named the wrong ApiType (`FlipACoin`), so the card couldn't be built. New
+    `UnknownEventScriptsLoadTest` builds every Unknown Event card so a bad script can't hide.
+
 - **Unknown Event: Minnea, Planar Tourist, The Generational Historian, The Strixhaven-Lorwyn Rover, The Waffle
   Restaurant (UNK mythics).**
   - ChooseType `Type$ Plane` (every plane a printing's set is on; the AI takes the plane most of its spells are from).

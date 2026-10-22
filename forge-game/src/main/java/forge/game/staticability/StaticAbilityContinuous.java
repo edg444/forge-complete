@@ -1058,6 +1058,42 @@ public final class StaticAbilityContinuous {
                     }
                 }
 
+                // Polis the Planeshifter: all abilities of the plane imprinted on it, working from the battlefield
+                // instead of the command zone. Its chaos abilities answer only to an effect that names it, never to
+                // the planar die.
+                if (params.containsKey("GainsPlaneAbilities")) {
+                    final EnumSet<ZoneType> battlefield = EnumSet.of(ZoneType.Battlefield);
+                    for (final Card plane : hostCard.getImprintedCards()) {
+                        if (!plane.isPlane()) {
+                            continue;
+                        }
+                        final CardState state = plane.getCurrentState();
+                        for (final SpellAbility sa : state.getSpellAbilities()) {
+                            if (sa.isActivatedAbility()) {
+                                addedAbilities.add(affectedCard.getSpellAbilityForStaticAbilityByText(sa, stAb));
+                            }
+                        }
+                        for (final Trigger tr : state.getTriggers()) {
+                            final Trigger gained = affectedCard.getTriggerForStaticAbilityByText(tr, stAb);
+                            gained.setActiveZone(battlefield);
+                            if (gained.getMode() == forge.game.trigger.TriggerType.ChaosEnsues) {
+                                gained.putParam("OnlyWhenAffected", "True");
+                            }
+                            addedTrigger.add(gained);
+                        }
+                        for (final ReplacementEffect re : state.getReplacementEffects()) {
+                            final ReplacementEffect gained = affectedCard.getReplacementEffectForStaticAbilityByText(re, stAb);
+                            gained.setActiveZone(battlefield);
+                            addedReplacementEffects.add(gained);
+                        }
+                        for (final StaticAbility st : state.getStaticAbilities()) {
+                            final StaticAbility gained = affectedCard.getStaticAbilityForStaticAbilityByText(st, stAb);
+                            gained.setActiveZone(battlefield);
+                            addedStaticAbility.add(gained);
+                        }
+                    }
+                }
+
                 if (params.containsKey("GainsTriggerAbsOf")) {
                     CardCollection cards = cardsGainedFrom("GainsTriggerAbsOf", params, hostCard, stAb, game);
 

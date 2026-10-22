@@ -2408,6 +2408,28 @@ public class AbilityUtils {
             }
             return doXMath(best, expr, c, ctb);
         }
+        // The Horizon Seeker: different keyword abilities, ability words and keyword actions named among permanents
+        // you control and instant and sorcery cards in your graveyard (user ruling 2026-10-21: not enchant, and not
+        // the everyday actions, which the list leaves out)
+        if (sq[0].equals("DifferentNamedKeywords")) {
+            final Player you = player != null ? player : c.getController();
+            final CardCollection among = new CardCollection(you.getCardsIn(ZoneType.Battlefield));
+            among.addAll(CardLists.filter(you.getCardsIn(ZoneType.Graveyard), x -> x.isInstant() || x.isSorcery()));
+            final Set<String> named = Sets.newHashSet();
+            for (final Card each : among) {
+                final StringBuilder text = new StringBuilder(each.getOracleText() == null ? "" : each.getOracleText().replaceAll("\\([^)]*\\)", ""));
+                for (final forge.game.keyword.KeywordInterface k : each.getKeywords()) {
+                    text.append('\n').append(k.getKeyword().toString());
+                }
+                final String lower = text.toString().toLowerCase(java.util.Locale.ROOT);
+                for (final Map.Entry<String, java.util.regex.Pattern> w : namedKeywordPatterns().entrySet()) {
+                    if (!named.contains(w.getKey()) && w.getValue().matcher(lower).find()) {
+                        named.add(w.getKey());
+                    }
+                }
+            }
+            return doXMath(named.size(), expr, c, ctb);
+        }
         // Xerex Squire: Count$HypotenuseOf <defined>, the square root of power² + toughness², rounded up
         if (l[0].startsWith("HypotenuseOf ")) {
             final CardCollection defined = getDefinedCards(c, l[0].substring("HypotenuseOf ".length()), ctb);
@@ -3778,6 +3800,25 @@ public class AbilityUtils {
                 }
             }
         }
+    }
+
+    private static Map<String, java.util.regex.Pattern> namedKeywords = null;
+
+    /** The Horizon Seeker's words, each with a whole-word pattern, built once. */
+    private static synchronized Map<String, java.util.regex.Pattern> namedKeywordPatterns() {
+        if (namedKeywords == null) {
+            final Map<String, java.util.regex.Pattern> patterns = new java.util.LinkedHashMap<>();
+            for (final String w : Iterables.concat(forge.card.LegacyWords.getKeywordAbilities(),
+                    forge.card.LegacyWords.getAbilityWords(), forge.card.LegacyWords.getKeywordActions())) {
+                final String lower = w.toLowerCase(java.util.Locale.ROOT);
+                if (!lower.equals("enchant")) {
+                    // "mills", "scried", "votes": the word with its usual endings
+                    patterns.put(lower, java.util.regex.Pattern.compile("\\b" + java.util.regex.Pattern.quote(lower) + "(s|es|d|ed)?\\b"));
+                }
+            }
+            namedKeywords = patterns;
+        }
+        return namedKeywords;
     }
 
     public static SpellAbility addSpliceEffects(final SpellAbility sa) {

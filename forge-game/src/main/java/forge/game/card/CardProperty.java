@@ -2752,6 +2752,11 @@ public class CardProperty {
             if (!source.hasChosenNumber() || CardPrintings.releaseYear(card) != source.getChosenNumber()) {
                 return false;
             }
+        } else if (property.equals("hasChosenWatermark")) {
+            // The Faction Dragon: the chosen faction's watermark
+            if (!source.hasChosenType() || card.getWatermarks().stream().noneMatch(source.getChosenType()::equalsIgnoreCase)) {
+                return false;
+            }
         } else if (property.equals("allChosenColors")) {
             // The Strixhaven-Lorwyn Rover: "both the chosen college's colors"
             for (final String color : source.getChosenColors()) {

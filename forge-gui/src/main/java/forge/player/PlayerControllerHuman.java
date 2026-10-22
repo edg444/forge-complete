@@ -1421,6 +1421,8 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
                 : "MissingAbility".equals(kindOfType) ? "Choose its ability"
                 // The Strixhaven-Lorwyn Rover
                 : "College".equals(kindOfType) ? "Choose a Strixhaven college"
+                // The Faction Dragon
+                : "Faction".equals(kindOfType) ? "Choose a faction"
                 : localizer.getMessage("lblChooseATargetType", kindOfType.toLowerCase());
         if (isOptional) {
             return getGui().oneOrNone(title, types);
