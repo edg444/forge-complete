@@ -1,0 +1,17 @@
+Name:Power Level Analyzer
+ManaCost:3
+Types:Artifact Creature Construct
+PT:0/0
+# "Target opponent" is chosen as it enters: an ETB replacement has no stack to target from.
+K:ETBReplacement:Other:DBOpponent
+SVar:DBOpponent:DB$ ChoosePlayer | Defined$ You | Choices$ Player.Opponent | ChoiceTitle$ Choose an opponent | SubAbility$ DBNumbers | SpellDescription$ As CARDNAME enters the battlefield, you and target opponent each secretly choose a number between 1 and 10, then reveal. CARDNAME enters with a number of +1/+1 counters equal to the distance between the two numbers. If both players chose the same number, put seven +1/+1 counters on CARDNAME instead.
+SVar:DBNumbers:DB$ ChooseNumber | Defined$ You & ChosenPlayer | Min$ 1 | Max$ 10 | Secretly$ True | Lowest$ StoreLow | Highest$ StoreHigh | MatchedAbility$ Seven | UnmatchedAbility$ Distance
+SVar:StoreLow:DB$ StoreSVar | SVar$ Low | Type$ Count | Expression$ ChosenNumber
+SVar:StoreHigh:DB$ StoreSVar | SVar$ High | Type$ Count | Expression$ ChosenNumber
+SVar:Seven:DB$ PutCounter | ETB$ True | Defined$ Self | CounterType$ P1P1 | CounterNum$ 7
+SVar:Distance:DB$ PutCounter | ETB$ True | Defined$ Self | CounterType$ P1P1 | CounterNum$ Gap
+SVar:Gap:SVar$High/Minus.Low
+SVar:High:Number$0
+SVar:Low:Number$0
+DeckHas:Ability$Counters
+Oracle:As Power Level Analyzer enters the battlefield, you and target opponent each secretly choose a number between 1 and 10, then reveal. Power Level Analyzer enters with a number of +1/+1 counters equal to the distance between the two numbers. If both players chose the same number, put seven +1/+1 counters on Power Level Analyzer instead.

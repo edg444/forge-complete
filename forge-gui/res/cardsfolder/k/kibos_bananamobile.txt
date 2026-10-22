@@ -1,0 +1,11 @@
+Name:Kibo's Bananamobile
+ManaCost:5
+Types:Legendary Artifact Vehicle
+PT:6/6
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigBananas | TriggerDescription$ When this Vehicle enters, create three colorless artifact tokens named Banana with "{T}, Sacrifice this token: Add {R} or {G}. You gain 2 life."
+SVar:TrigBananas:DB$ Token | TokenScript$ c_a_banana_sac_rg_life | TokenAmount$ 3
+T:Mode$ Sacrificed | ValidCard$ Card.namedBanana+YouCtrl | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigPeel | TriggerDescription$ Whenever you sacrifice a Banana, you may have it deal 2 damage to target attacking creature.
+SVar:TrigPeel:DB$ DealDamage | ValidTgts$ Creature.attacking | TgtPrompt$ Select target attacking creature | NumDmg$ 2 | DamageSource$ TriggeredCardLKICopy
+K:Crew:1
+DeckHas:Ability$Token|LifeGain|Sacrifice
+Oracle:When this Vehicle enters, create three colorless artifact tokens named Banana with "{T}, Sacrifice this token: Add {R} or {G}. You gain 2 life."\nWhenever you sacrifice a Banana, you may have it deal 2 damage to target attacking creature.\nCrew 1

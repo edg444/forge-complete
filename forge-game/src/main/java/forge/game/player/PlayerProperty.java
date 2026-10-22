@@ -321,6 +321,11 @@ public class PlayerProperty {
             if (!Expressions.compare(life, property, amount)) {
                 return false;
             }
+        } else if (property.equals("hasConspiracyInCommand")) {
+            // Tinfoil Helm: a player with a conspiracy in their command zone
+            if (!player.getCardsIn(forge.game.zone.ZoneType.Command).anyMatch(c -> c.getType().hasStringType("Conspiracy"))) {
+                return false;
+            }
         } else if (property.startsWith("poisonCounters")) {
             // Hidetsugu's Poison Rite: poisonCountersEQ7
             final String rest = property.substring("poisonCounters".length());

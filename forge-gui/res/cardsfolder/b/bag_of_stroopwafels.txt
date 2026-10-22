@@ -1,0 +1,8 @@
+Name:Bag of Stroopwafels
+ManaCost:3
+Types:Artifact Food
+K:etbCounter:STROOPWAFEL:8
+A:AB$ GainLife | Cost$ 3 T SubCounter<1/STROOPWAFEL> | LifeAmount$ 3 | SubAbility$ DBDraw | SpellDescription$ You gain 3 life and draw a card.
+SVar:DBDraw:DB$ Draw
+DeckHas:Ability$LifeGain
+Oracle:Bag of Stroopwafels enters the battlefield with eight stroopwafel counters on it.\n{3}, {T}, Remove a stroopwafel counter from Bag of Stroopwafels: You gain 3 life and draw a card.

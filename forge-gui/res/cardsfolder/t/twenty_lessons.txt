@@ -1,0 +1,5 @@
+Name:Twenty Lessons
+ManaCost:3
+Types:Sorcery
+A:SP$ Play | AnySupportedCard$ Type:Lesson | RandomCopied$ True | RandomNum$ 1 | WithoutManaCost$ True | XIs$ 3 | ValidSA$ Spell | SpellDescription$ Cast a random Lesson spell without paying its mana cost. If that spell has X in its mana cost, X is 3. (As of today, there are 20 lessons. Perhaps look up a list and roll a d20?)
+Oracle:Cast a random Lesson spell without paying its mana cost. If that spell has X in its mana cost, X is 3. (As of today, there are 20 lessons. Perhaps look up a list and roll a d20?)

@@ -133,6 +133,11 @@ public class PlayEffect extends SpellAbilityEffect {
                 StaticData.instance().ensureAllCardsLoaded();
                 cards = cardDb.streamUniqueCards()
                         .filter(PaperCardPredicates.fromRules(CardRulesPredicates.IS_INSTANT));
+            } else if (valid.startsWith("Type:")) {
+                // Twenty Lessons: "Type:Lesson" - every card with that type or subtype
+                final String type = valid.substring(5);
+                StaticData.instance().ensureAllCardsLoaded();
+                cards = cardDb.streamUniqueCards().filter(pc -> pc.getRules().getType().hasStringType(type));
             } else {
                 //Could just return a stream of all cards, but that should probably be a specific option rather than a fallback.
                 //Could also just leave it null but there's currently nothing else that can happen that case.
@@ -469,6 +474,11 @@ public class PlayEffect extends SpellAbilityEffect {
                 tgtSA.setControlledByPlayer(controlledByTimeStamp, controlledByPlayer);
                 controller.pushPaidForSA(tgtSA);
                 tgtSA.setManaCostBeingPaid(new ManaCostBeingPaid(tgtSA.getPayCosts().getCostMana().getManaCostFor(tgtSA)));
+            }
+
+            // Twenty Lessons: "if that spell has X in its mana cost, X is 3"
+            if (sa.hasParam("XIs") && tgtCard.getManaCost().countX() > 0) {
+                tgtSA.setXManaCostPaid(AbilityUtils.calculateAmount(source, sa.getParam("XIs"), sa));
             }
 
             if (controller.getController().playSaFromPlayEffect(tgtSA)) {

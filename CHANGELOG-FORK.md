@@ -312,6 +312,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Unknown Event: Bag of Stroopwafels, Famous Museum, Guilded Lotus, Kibo's Bananamobile, Sawtooth Avenger, Tinfoil
+  Helm, Power Level Analyzer, Twenty Lessons, That Which Was Compleated (UNK uncommons).**
+  - `Play AnySupportedCard$ Type:<type>` (every card with that type or subtype) and `XIs$` (the value of X when
+    the played spell has X in its mana cost).
+  - Player property `hasConspiracyInCommand`.
 - **Unknown Event: Ano'thr, Equipment Commander, Zimone's Homework, First Stage of Magic Design, The Dogronmaster
   (UNK rares).**
   - `Count$YourLifeIn.LazyCaterer|Fibonacci|Square`; card property `powerEqualsToughness`.

@@ -1,0 +1,7 @@
+Name:Guilded Lotus
+ManaCost:5
+Types:Artifact
+K:ETBReplacement:Other:DBPledge
+SVar:DBPledge:DB$ Pledge | Defined$ You | SpellDescription$ Pledge (Join a two-colored guild if you haven't already this game.)
+A:AB$ Mana | Cost$ T | Produced$ Combo GuildColors | Amount$ 3 | SpellDescription$ Add three mana in any combination of your guild's colors
+Oracle:Pledge (Join a two-colored guild if you haven't already this game.)\n{T}: Add three mana in any combination of your guild's colors

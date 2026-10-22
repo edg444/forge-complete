@@ -1,0 +1,8 @@
+Name:Tinfoil Helm
+ManaCost:2
+Types:Artifact Equipment
+S:Mode$ Continuous | Affected$ Creature.EquippedBy | AddPower$ 2 | AddToughness$ 2 | AddKeyword$ Protection:Card.Alien,Card.Bird,Card.Eldrazi,Card.Lizard,Card.Mutant,Card.Robot,Card.Yeti,Card.hasHybridManaCost:Aliens, Birds, Eldrazi, Lizards, Mutants, Robots, Yetis, and hybrid mana | Description$ Equipped creature has +2/+2 and has protection from Aliens, Birds, Eldrazi, Lizards, Mutants, Robots, Yetis, and hybrid mana.
+T:Mode$ DamageDone | ValidSource$ Creature.EquippedBy | ValidTarget$ Player.hasConspiracyInCommand | TriggerZones$ Battlefield | Execute$ TrigDraw | TriggerDescription$ Whenever equipped creature deals damage to a player with a conspiracy in their command zone, draw a card.
+SVar:TrigDraw:DB$ Draw
+K:Equip:2
+Oracle:Equipped creature has +2/+2 and has protection from Aliens, Birds, Eldrazi, Lizards, Mutants, Robots, Yetis, and hybrid mana.\nWhenever equipped creature deals damage to a player with a conspiracy in their command zone, draw a card.\nEquip {2}

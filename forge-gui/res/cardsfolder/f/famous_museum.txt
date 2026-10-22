@@ -1,0 +1,8 @@
+Name:Famous Museum
+ManaCost:3
+Types:Artifact
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Creature.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigArt | TriggerDescription$ Whenever a creature you control dies, put an art counter on CARDNAME.
+SVar:TrigArt:DB$ PutCounter | Defined$ Self | CounterType$ ART | CounterNum$ 1
+A:AB$ Mana | Cost$ T | Produced$ C | Amount$ X | SpellDescription$ Add {C}, plus an additional {C} for each art counter on CARDNAME.
+SVar:X:Count$CardCounters.ART/Plus.1
+Oracle:Whenever a creature you control dies, put an art counter on Famous Museum.\n{T}: Add {C}, plus an additional {C} for each art counter on Famous Museum.

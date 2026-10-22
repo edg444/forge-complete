@@ -1,0 +1,12 @@
+Name:That Which Was Compleated
+ManaCost:8 C/P C/P
+Types:Artifact Creature Eldrazi Phyrexian Processor
+PT:10/10
+K:Ward:AddCounterYou<2/POISON>
+K:Annihilator:X
+SVar:X:Count$TotalOppPoisonCounters
+T:Mode$ SpellCast | ValidCard$ Card.Self | Execute$ TrigProcess | TriggerDescription$ When you cast CARDNAME, you may put a card an opponent owns in exile into their graveyard. If you do, they get two poison counters.
+SVar:TrigProcess:DB$ ChangeZone | Origin$ Exile | Destination$ Graveyard | ChangeType$ Card.OppOwn | ChangeNum$ 1 | Hidden$ True | RememberChanged$ True | SubAbility$ DBPoison
+SVar:DBPoison:DB$ Poison | Defined$ RememberedOwner | Num$ 2 | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ GE1 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Ward—You get two poison counters.\nAnnihilator X, where X is the total number of poison counters your opponents have.\nWhen you cast That Which Was Compleated, you may put a card an opponent owns in exile into their graveyard. If you do, they get two poison counters.
