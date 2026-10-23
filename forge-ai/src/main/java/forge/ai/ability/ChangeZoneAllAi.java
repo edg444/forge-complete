@@ -168,9 +168,12 @@ public class ChangeZoneAllAi extends SpellAbilityAi {
                     .evaluatePermanentList(oppType)) {
                 return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
             }
-            // a spell cast by an effect (reverse miracle) is now or never
-            if (game.getPhaseHandler().is(PhaseType.MAIN1, ai) && !aiLogic.equals("Main1") && !sa.isCastFromPlayEffect()) {
-                return new AiAbilityDecision(0, AiPlayDecision.TimingRestrictions);
+            // On its own turn, sweep after combat: an instant-speed sweeper (Perilous Vault) used to fire
+            // in upkeep, since only Main 1 was held back, exiling creatures that could have attacked first.
+            // A spell cast by an effect (reverse miracle) is now or never.
+            if (game.getPhaseHandler().isPlayerTurn(ai) && game.getPhaseHandler().getPhase().isBefore(PhaseType.MAIN2)
+                    && !aiLogic.equals("Main1") && !sa.isCastFromPlayEffect()) {
+                return new AiAbilityDecision(0, AiPlayDecision.WaitForMain2);
             }
         } else if (origin.equals(ZoneType.Graveyard)) {
             if (sa.usesTargeting()) {
