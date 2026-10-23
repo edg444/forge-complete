@@ -161,7 +161,12 @@ public class RepeatEachEffect extends SpellAbilityEffect {
         }
 
         if (sa.hasParam("RepeatPlayers")) {
-            final FCollection<Player> repeatPlayers = getDefinedPlayersOrTargeted(sa, "RepeatPlayers");
+            FCollection<Player> repeatPlayers = getDefinedPlayersOrTargeted(sa, "RepeatPlayers");
+            if (sa.hasParam("StartingWithYou")) {
+                // "starting with you, each player ..." - in turn order from the activator
+                final FCollection<Player> defined = repeatPlayers;
+                repeatPlayers = new FCollection<>(IterableUtil.filter(game.getPlayersInTurnOrder(sa.getActivatingPlayer()), defined::contains));
+            }
             if (sa.hasParam("ClearRememberedBeforeLoop")) {
                 source.clearRemembered();
             }

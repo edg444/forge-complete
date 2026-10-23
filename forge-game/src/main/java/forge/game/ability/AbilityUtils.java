@@ -1462,6 +1462,19 @@ public class AbilityUtils {
             game.getTriggerHandler().runTrigger(TriggerType.GiveGift, AbilityKey.mapFromPlayer(sa.getActivatingPlayer()), false);
         }
 
+        // High and Dry Black Market: a modal choice made by each player in turn as the ability resolves
+        if (sa.getApi() == ApiType.Charm && sa.hasParam("ChooseOnResolve") && sa.metConditions()) {
+            // the chooser's own modes: they're the one choosing them, and an AI's earlier pick isn't reused
+            if (sa.hasParam("Chooser")) {
+                final Player chooser = Iterables.getFirst(getDefinedPlayers(card, sa.getParam("Chooser"), sa), null);
+                if (chooser != null) {
+                    sa.setActivatingPlayer(chooser);
+                }
+            }
+            sa.setChosenList(null);
+            forge.game.ability.effects.CharmEffect.makeChoices(sa);
+        }
+
         // check conditions
         if (sa.metConditions()) {
             if (sa.isWrapper() || StringUtils.isBlank(sa.getParam("UnlessCost"))) {
@@ -4014,7 +4027,10 @@ public class AbilityUtils {
             secondaryNum = calculateAmount(c, s[1], ctb);
         }
 
-        if (s[0].contains("Plus")) {
+        if (s[0].equals("RoundUpExtra")) {
+            // The Sphere: what it takes to round up to the nearest multiple of the operand
+            return secondaryNum == 0 ? 0 : (int) (Math.ceil(num / (double) secondaryNum) * secondaryNum) - num;
+        } else if (s[0].contains("Plus")) {
             return num + secondaryNum;
         } else if (s[0].contains("NMinus")) {
             return secondaryNum - num;

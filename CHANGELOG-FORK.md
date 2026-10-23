@@ -312,6 +312,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Black Lotus Unknown Planechase (PUNK): High and Dry Black Market, Team-Up!, Probability Flux, Clamilton Estate,
+  Event Horizon, The Sphere, Game Knights Live, The Command Zone, High Noon At Thunder Junction.**
+  - Charm `ChooseOnResolve$` (each player picks modes as a RepeatEach resolves; the chooser becomes the activator) and
+    RepeatEach `StartingWithYou$`; the AI fills an "up to N" pawprint budget with repeated modes.
+  - Player property `NeighborsEliminated` (both original-seating neighbors have lost); xMath `RoundUpExtra.N`; Amass
+    `TokenScript$`; ResetCommanderTax `CastCount$` (the cast count itself becomes 0).
+  - Clash `Clasher$` (a player other than the source's controller), `FirstToSay$` (the clasher's opponents in turn
+    order may say it; the first one clashes) and `RememberWinner$`.
+  - Phenomena whose text has no "planeswalk away" still planeswalk away after their trigger (CR 704.6f). Event Horizon's
+    nonbasic lands become Wastes: named Wastes, basic, only "{T}: Add {C}" (user ruling 2026-10-22).
+
 - **2022 Heroes of the Realm (PH22): Treizeci, Sun of Serra; Elusen, the Giving; Heroes of Kamigawa; Wizard from
   Beyond. 2023 Heroes of the Realm (PH23): Ormacar, Relic Wraith. MagicFest 2024 (PF24): Convention Maro.**
   - Printing trait `retroframe` (Scryfall's 1993 and 1997 frames; `Card.hasRetroFrame()`) and property `Nostalgic`:

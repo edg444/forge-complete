@@ -1,0 +1,15 @@
+Name:Probability Flux
+ManaCost:no cost
+Types:Phenomenon
+# its effect starts as it's encountered, then it's planeswalked away from (CR 704.6f). The roller picks the die to
+# ignore, and the planar die counts too (CR 706.7)
+T:Mode$ PlaneswalkedTo | ValidCard$ Card.Self | Execute$ TrigEffect | TriggerDescription$ Until your next turn, if a player would roll one or more dice, instead they roll that many dice plus one and ignore one.
+SVar:TrigEffect:DB$ Effect | ReplacementEffects$ FluxRoll,FluxPlanar | Duration$ UntilYourNextTurn | SubAbility$ PWAway
+SVar:FluxRoll:Event$ RollDice | ValidPlayer$ Player | ReplaceWith$ PlusRoll | Description$ Until your next turn, if a player would roll one or more dice, instead they roll that many dice plus one and ignore one.
+SVar:PlusRoll:DB$ ReplaceEffect | VarName$ Number | VarValue$ ReplaceCount$Number/Plus.1 | SubAbility$ IgnoreRoll
+SVar:IgnoreRoll:DB$ ReplaceEffect | VarName$ IgnoreChosen | VarType$ Map | VarKey$ ReplacedAffected | VarValue$ 1
+SVar:FluxPlanar:Event$ RollPlanarDice | ValidPlayer$ Player | ReplaceWith$ PlusPlanar | Secondary$ True | Description$ Until your next turn, if a player would roll one or more dice, instead they roll that many dice plus one and ignore one.
+SVar:PlusPlanar:DB$ ReplaceEffect | VarName$ Number | VarValue$ ReplaceCount$Number/Plus.1 | SubAbility$ IgnorePlanar
+SVar:IgnorePlanar:DB$ ReplaceEffect | VarName$ Ignore | VarValue$ ReplaceCount$Ignore/Plus.1
+SVar:PWAway:DB$ Planeswalk
+Oracle:Until your next turn, if a player would roll one or more dice, instead they roll that many dice plus one and ignore one.

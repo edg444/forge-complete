@@ -41,6 +41,18 @@ public class PlayerProperty {
             if (!same) {
                 return false;
             }
+        } else if (property.equals("NeighborsEliminated")) {
+            // Team-Up!: the players to their left and right in the original seating have both left the game
+            final List<Player> seats = game.getRegisteredPlayers();
+            final int i = seats.indexOf(player);
+            if (i < 0 || seats.size() < 3 || player.hasLost()) {
+                return false;
+            }
+            final Player left = seats.get((i + 1) % seats.size());
+            final Player right = seats.get((i + seats.size() - 1) % seats.size());
+            if (!left.hasLost() || !right.hasLost()) {
+                return false;
+            }
         } else if (property.equals("IsAI")) {
             // a computer player: physical-world cards simulate what an AI can't do (Get Your Head in the Game)
             if (!player.getController().isAI()) {

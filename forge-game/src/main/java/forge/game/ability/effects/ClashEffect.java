@@ -33,12 +33,32 @@ public class ClashEffect extends SpellAbilityEffect {
     @Override
     public void resolve(final SpellAbility sa) {
         final Card source = sa.getHostCard();
-        final Player player = source.getController();
-        final Player opponent = sa.hasParam("Defined") ?
+        final Player player = clasher(sa);
+        Player opponent = null;
+        if (sa.hasParam("FirstToSay")) {
+            // High Noon At Thunder Junction: the clasher's opponents may say it, the first to do so (in turn order
+            // after the clasher) clashes
+            for (final Player p : source.getGame().getPlayersInTurnOrder(player)) {
+                if (p.isOpponentOf(player) && p.getController().confirmAction(sa, null,
+                        "Say \"" + sa.getParam("FirstToSay") + "\" and clash with " + player + "?", null)) {
+                    source.getGame().getGameLog().add(GameLogEntryType.INFORMATION, p + " says \"" + sa.getParam("FirstToSay") + "\"");
+                    opponent = p;
+                    break;
+                }
+            }
+            if (opponent == null) {
+                return;
+            }
+        } else {
+            opponent = sa.hasParam("Defined") ?
                 AbilityUtils.getDefinedPlayers(source, sa.getParam("Defined"), sa).getFirst() :
                 sa.getActivatingPlayer().getController().chooseSingleEntityForEffect(player.getOpponents(), sa,
                         Localizer.getInstance().getMessage("lblChooseOpponent"), null);
+        }
         final Player winner = clashWithOpponent(sa, opponent);
+        if (winner != null && sa.hasParam("RememberWinner")) {
+            source.addRemembered(winner);
+        }
 
         if (player.equals(winner)) {
             SpellAbility sub = sa.getAdditionalAbility("WinSubAbility");
@@ -67,6 +87,17 @@ public class ClashEffect extends SpellAbilityEffect {
      *
      * @return a boolean.
      */
+    /** Who clashes: the source's controller, or Clasher$ (a player the card doesn't belong to). */
+    private static Player clasher(final SpellAbility sa) {
+        if (sa.hasParam("Clasher")) {
+            final Player p = AbilityUtils.getDefinedPlayers(sa.getHostCard(), sa.getParam("Clasher"), sa).getFirst();
+            if (p != null) {
+                return p;
+            }
+        }
+        return sa.getHostCard().getController();
+    }
+
     private static Player clashWithOpponent(final SpellAbility sa, Player opponent) {
         /*
          * Each clashing player reveals the top card of his or her library, then
@@ -76,7 +107,7 @@ public class ClashEffect extends SpellAbilityEffect {
          * Clash you win or win you don't. There is no tie.
          */
         final Card source = sa.getHostCard();
-        final Player player = source.getController();
+        final Player player = clasher(sa);
         final ZoneType lib = ZoneType.Library;
 
         if (sa.hasParam("RememberClasher")) {

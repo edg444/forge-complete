@@ -1,0 +1,6 @@
+Name:Assassin Token
+ManaCost:no cost
+Colors:black
+Types:Creature Assassin
+PT:1/1
+Oracle:

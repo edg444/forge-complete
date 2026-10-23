@@ -1,0 +1,10 @@
+Name:Team-Up!
+ManaCost:no cost
+Types:Phenomenon
+T:Mode$ PlaneswalkedTo | ValidCard$ Card.Self | Execute$ TrigEffect | TriggerDescription$ Whenever you encounter this Phenomenon, for the rest of the game, each player wins the game if the players to their left and right are eliminated. (Multiple players can win the game this way.)
+SVar:TrigEffect:DB$ Effect | Name$ Team-Up! Effect | Triggers$ TrigNeighbors | Duration$ Permanent | SubAbility$ PWAway
+# neighbors in the original seating (Game.getRegisteredPlayers), so two players can share the same eliminated neighbors
+SVar:TrigNeighbors:Mode$ LosesGame | ValidPlayer$ Player | TriggerZones$ Command | Static$ True | Execute$ DBWin | TriggerDescription$ For the rest of the game, each player wins the game if the players to their left and right are eliminated.
+SVar:DBWin:DB$ WinsGame | Defined$ Player.NeighborsEliminated
+SVar:PWAway:DB$ Planeswalk
+Oracle:Whenever you encounter this Phenomenon, for the rest of the game, each player wins the game if the players to their left and right are eliminated. (Multiple players can win the game this way.)

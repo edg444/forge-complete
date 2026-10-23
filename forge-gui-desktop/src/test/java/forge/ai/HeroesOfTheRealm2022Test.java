@@ -198,6 +198,13 @@ public class HeroesOfTheRealm2022Test extends AITest {
         AssertJUnit.assertFalse(bears.isValid("Card.NamePrintedIn CHK BOK SOK NEO", ai, heroes, null));
         AssertJUnit.assertTrue(heroes.getRules().canBeCommander());
 
+        // before the +2, which can mill other Kamigawa creatures
+        final SpellAbility minus = ability(heroes, ApiType.ChangeZone);
+        minus.setActivatingPlayer(ai);
+        AbilityUtils.resolve(minus);
+        AssertJUnit.assertTrue(game.getCardState(mystic).isInZone(ZoneType.Battlefield));
+        AssertJUnit.assertTrue(bears.isInZone(ZoneType.Graveyard));
+
         final int hand = ai.getCardsIn(ZoneType.Hand).size();
         final int yard = ai.getCardsIn(ZoneType.Graveyard).size();
         final SpellAbility plus = ability(heroes, ApiType.OpenBooster);
@@ -206,12 +213,6 @@ public class HeroesOfTheRealm2022Test extends AITest {
         AssertJUnit.assertEquals(hand + 2, ai.getCardsIn(ZoneType.Hand).size());
         AssertJUnit.assertEquals(yard + 2, ai.getCardsIn(ZoneType.Graveyard).size());
         AssertJUnit.assertTrue("the rest of the pack stays in the booster pile", ai.getCardsIn(ZoneType.BoosterPile).size() >= 6);
-
-        final SpellAbility minus = ability(heroes, ApiType.ChangeZone);
-        minus.setActivatingPlayer(ai);
-        AbilityUtils.resolve(minus);
-        AssertJUnit.assertTrue(game.getCardState(mystic).isInZone(ZoneType.Battlefield));
-        AssertJUnit.assertTrue(bears.isInZone(ZoneType.Graveyard));
     }
 
     @Test

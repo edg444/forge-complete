@@ -69,8 +69,14 @@ Amsterdam
 Blind Eternities
 Bloomburrow
 Chicago
+Clamhattan
 Duskmourn
+Foldaria
+Foundations
 Hell
 Las Vegas
 MagicCon
 Thunder Junction
+Universia Beyondia
+[CreatureTypes]
+Fan:Fans

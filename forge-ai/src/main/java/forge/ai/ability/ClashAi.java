@@ -61,6 +61,12 @@ public class ClashAi extends SpellAbilityAi {
      * @see forge.ai.SpellAbilityAi#chooseSinglePlayer(forge.game.player.Player,
      * forge.game.spellability.SpellAbility, java.lang.Iterable)
      */
+    /** High Noon At Thunder Junction: saying "DRAW!" - a clash is even, and the winner is the one making tokens. */
+    @Override
+    public boolean confirmAction(Player player, SpellAbility sa, forge.game.player.PlayerActionConfirmMode mode, String message, Map<String, Object> params) {
+        return true;
+    }
+
     @Override
     protected Player chooseSinglePlayer(Player ai, SpellAbility sa, Iterable<Player> options, Map<String, Object> params) {
         for (Player p : options) {

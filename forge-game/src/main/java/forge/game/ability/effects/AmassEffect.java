@@ -64,7 +64,8 @@ public class AmassEffect extends TokenEffectBase {
             StringBuilder sb = new StringBuilder("b_0_0_");
             sb.append(sa.getOriginalParam("Type").toLowerCase()).append("_army");
 
-            Card result = TokenInfo.getProtoType(sb.toString(), sa, amasser, false);
+            // The Sphere's Fan Army is red, so a script can name its own token
+            Card result = TokenInfo.getProtoType(sa.hasParam("TokenScript") ? sa.getParam("TokenScript") : sb.toString(), sa, amasser, false);
             if (result == null) //Custom Amass type.
                 result = TokenInfo.getProtoType("b_0_0_army", sa, amasser, false);
             // need to alter the token to add the Type from the Parameter

@@ -6,7 +6,8 @@ import forge.game.spellability.SpellAbility;
 
 /**
  * Shedding Snake: the commander tax on each of the defined players' commanders is reduced back to zero. Only the tax
- * starts over; the number of times each commander has been cast from the command zone stays as it was.
+ * starts over; the number of times each commander has been cast from the command zone stays as it was. With CastCount$
+ * (The Command Zone) that number itself becomes 0.
  */
 public class ResetCommanderTaxEffect extends SpellAbilityEffect {
 
@@ -18,6 +19,12 @@ public class ResetCommanderTaxEffect extends SpellAbilityEffect {
     @Override
     public void resolve(final SpellAbility sa) {
         for (final Player p : getDefinedPlayersOrTargeted(sa)) {
+            if (sa.hasParam("CastCount")) {
+                p.resetCommanderCastCount();
+                p.getGame().getGameLog().add(forge.game.GameLogEntryType.STACK_RESOLVE,
+                        "The number of times " + p + "'s commanders have been cast from the command zone is 0.");
+                continue;
+            }
             p.resetCommanderTax();
             p.getGame().getGameLog().add(forge.game.GameLogEntryType.STACK_RESOLVE,
                     "The commander tax on " + p + "'s commanders is back to zero.");

@@ -3854,6 +3854,17 @@ public class Player extends GameEntity implements Comparable<Player> {
         commanderCastBeforeTaxReset.putAll(commanderCast);
     }
 
+    /** The Command Zone: "the number of times each commander has been cast from the command zone becomes 0." */
+    public void resetCommanderCastCount() {
+        final List<Card> cast = Lists.newArrayList(commanderCast.keySet());
+        commanderCast.clear();
+        commanderCastBeforeTaxReset.clear();
+        for (final Card c : cast) {
+            getView().updateCommanderCast(this, c);
+        }
+        getGame().fireEvent(new GameEventPlayerStatsChanged(this));
+    }
+
     public boolean hasCommanderTax() {
         return commanderCast.keySet().stream().anyMatch(c -> getCommanderTax(c) > 0);
     }

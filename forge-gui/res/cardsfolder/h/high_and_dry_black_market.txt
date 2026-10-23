@@ -1,0 +1,11 @@
+Name:High and Dry Black Market
+ManaCost:no cost
+Types:Phenomenon
+T:Mode$ PlaneswalkedTo | ValidCard$ Card.Self | Execute$ TrigRepeat | TriggerDescription$ Whenever you planeswalk here, starting with you, each player chooses up to 5 ♦ worth of modes and may choose the same mode more than once. (Then planeswalk away from this phenomenon.)
+SVar:TrigRepeat:DB$ RepeatEach | RepeatPlayers$ Player | StartingWithYou$ True | RepeatSubAbility$ DBCharm | SubAbility$ PWAway
+SVar:DBCharm:DB$ Charm | ChooseOnResolve$ True | Chooser$ Remembered | Choices$ DBTreasure,DBDraw,DBShapeshifter | CharmNum$ 5 | MinCharmNum$ 0 | CanRepeatModes$ True | Pawprint$ 5
+SVar:DBTreasure:DB$ Token | Pawprint$ 1 | TokenScript$ c_a_treasure_sac | TokenOwner$ Remembered | SpellDescription$ Create a Treasure token.
+SVar:DBDraw:DB$ Draw | Pawprint$ 2 | Defined$ Remembered | SpellDescription$ Draw a card.
+SVar:DBShapeshifter:DB$ Token | Pawprint$ 3 | TokenScript$ c_3_2_shapeshifter_changeling | TokenOwner$ Remembered | SpellDescription$ Create a 3/2 colorless Shapeshifter creature token with Changeling.
+SVar:PWAway:DB$ Planeswalk
+Oracle:Whenever you planeswalk here, starting with you, each player chooses up to 5 ♦ worth of modes and may choose the same mode more than once. (Then Planeswalk away from this phenomenon.)\n♦ — Create a Treasure Token.\n♦ ♦ — Draw a card.\n♦ ♦ ♦ — Create a 3/2 colorless Shapeshifter creature token with Changeling.

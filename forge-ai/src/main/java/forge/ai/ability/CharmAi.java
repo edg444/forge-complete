@@ -84,6 +84,13 @@ public class CharmAi extends SpellAbilityAi {
             chosenList = choices.subList(1, choices.size());
         } else if (sa.hasParam("PawprintExact")) {
             chosenList = chooseExactTotal(sa, choices, ai);
+        } else if (sa.hasParam("Pawprint") && sa.hasParam("CanRepeatModes")) {
+            // High and Dry Black Market: "up to" a total with repeats - spend as much of it as fits
+            chosenList = Lists.newArrayList();
+            final int limit = AbilityUtils.calculateAmount(sa.getHostCard(), sa.getParam("Pawprint"), sa);
+            for (int total = limit; total > 0 && chosenList.isEmpty(); total--) {
+                chosenList = chooseExactTotal(sa, choices, ai, total);
+            }
         } else if ("Triskaidekaphobia".equals(ComputerUtilAbility.getAbilitySourceName(sa))) {
             chosenList = chooseTriskaidekaphobia(choices, ai);
         } else if (choices.stream().anyMatch(c -> c.hasParam("AIPreferred"))) {
@@ -153,7 +160,10 @@ public class CharmAi extends SpellAbilityAi {
      * first with modes worth playing on their own, then with ones merely acceptable as an add-on.
      */
     private List<AbilitySub> chooseExactTotal(SpellAbility sa, List<AbilitySub> choices, final Player ai) {
-        final int total = AbilityUtils.calculateAmount(sa.getHostCard(), sa.getParam("Pawprint"), sa);
+        return chooseExactTotal(sa, choices, ai, AbilityUtils.calculateAmount(sa.getHostCard(), sa.getParam("Pawprint"), sa));
+    }
+
+    private List<AbilitySub> chooseExactTotal(SpellAbility sa, List<AbilitySub> choices, final Player ai, final int total) {
         final boolean repeat = sa.hasParam("CanRepeatModes");
         final List<AbilitySub> byValue = Lists.newArrayList(choices);
         byValue.sort((a, b) -> CharmEffect.pawprintValue(b) - CharmEffect.pawprintValue(a));

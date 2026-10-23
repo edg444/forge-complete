@@ -1,0 +1,18 @@
+Name:Game Knights Live
+ManaCost:no cost
+Types:Plane MagicCon
+T:Mode$ SpellCast | ValidCard$ Card.IsCommander | TriggerZones$ Command | OptionalDecider$ TriggeredActivator | Execute$ TrigKnight | TriggerDescription$ Whenever a player casts their commander or attacks with their commander, they may say "Only one may stand." If they do, that commander becomes a Knight in addition to its other types until a player planeswalks away from CARDNAME.
+T:Mode$ Attacks | ValidCard$ Card.IsCommander | TriggerZones$ Command | OptionalDecider$ TriggeredAttackerController | Execute$ TrigKnightAttack | Secondary$ True | TriggerDescription$ Whenever a player casts their commander or attacks with their commander, they may say "Only one may stand." If they do, that commander becomes a Knight in addition to its other types until a player planeswalks away from CARDNAME.
+SVar:TrigKnight:DB$ Effect | Name$ Game Knights Live Effect | RememberObjects$ TriggeredCard | StaticAbilities$ KnightType | Triggers$ PWAway | Duration$ Permanent
+SVar:TrigKnightAttack:DB$ Effect | Name$ Game Knights Live Effect | RememberObjects$ TriggeredAttacker | StaticAbilities$ KnightType | Triggers$ PWAway | Duration$ Permanent
+SVar:KnightType:Mode$ Continuous | Affected$ Card.IsRemembered | AffectedZone$ Battlefield,Stack | AddType$ Knight | Description$ That commander is a Knight in addition to its other types until a player planeswalks away from Game Knights Live.
+SVar:PWAway:Mode$ PlaneswalkedFrom | ValidCard$ Plane.namedGame_Knights_Live | TriggerZones$ Command | Static$ True | Execute$ ExileSelf | TriggerDescription$ until a player planeswalks away from Game Knights Live.
+SVar:ExileSelf:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
+S:Mode$ Continuous | EffectZone$ Command | Affected$ Creature.Knight+YouCtrl | AddKeyword$ Double Strike & Trample | Description$ Knights you control have double strike and trample.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigChaos | TriggerDescription$ Whenever chaos ensues, commanders you control can't be blocked this turn and gain "Whenever this creature deals combat damage to a player, draw a card" until end of turn.
+SVar:TrigChaos:DB$ Effect | RememberObjects$ Valid Creature.IsCommander+YouCtrl | StaticAbilities$ Unblockable,GrantDraw
+SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Creature.IsRemembered | Description$ Commanders you control can't be blocked this turn.
+SVar:GrantDraw:Mode$ Continuous | Affected$ Creature.IsRemembered | AddTrigger$ CombatDraw | Description$ Commanders you control have "Whenever this creature deals combat damage to a player, draw a card" until end of turn.
+SVar:CombatDraw:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigDraw | TriggerDescription$ Whenever this creature deals combat damage to a player, draw a card.
+SVar:TrigDraw:DB$ Draw
+Oracle:Whenever a player casts their commander or attacks with their commander, they may say "Only one may stand." If they do, that commander becomes a Knight in addition to its other types until a player planeswalks away from Game Knights Live.\nKnights you control have double strike and trample.\nWhenever chaos ensues, commanders you control can't be blocked this turn and gain "Whenever this creature deals combat damage to a player, draw a card" until end of turn.

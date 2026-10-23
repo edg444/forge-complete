@@ -1,0 +1,12 @@
+Name:The Command Zone
+ManaCost:no cost
+Types:Plane MagicCon
+T:Mode$ PlaneswalkedTo | ValidCard$ Card.Self | Execute$ TrigRepeat | TriggerDescription$ When you planeswalk here, each player who controls their commander draws a card. Other players may put their commander from the command zone onto the battlefield.
+SVar:TrigRepeat:DB$ RepeatEach | RepeatPlayers$ Player | RepeatSubAbility$ DBDraw
+SVar:DBDraw:DB$ Draw | Defined$ Remembered | ConditionCheckSVar$ Controls | ConditionSVarCompare$ GE1 | SubAbility$ DBPut
+SVar:DBPut:DB$ ChangeZone | DefinedPlayer$ Remembered | Origin$ Command | Destination$ Battlefield | ChangeType$ Card.IsCommander+RememberedPlayerOwn | ChangeNum$ 1 | Hidden$ True | Optional$ True | ConditionCheckSVar$ Controls | ConditionSVarCompare$ EQ0
+SVar:Controls:Count$Valid Card.IsCommander+RememberedPlayerCtrl+RememberedPlayerOwn
+S:Mode$ Panharmonicon | EffectZone$ Command | ValidCard$ Card.IsCommander+YouOwn | Condition$ PlayerTurn | Description$ If an ability of your commander would trigger during your turn, that ability triggers an additional time.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigReset | TriggerDescription$ Whenever chaos ensues, the number of times each commander has been cast from the command zone becomes 0. (This resets commander tax.)
+SVar:TrigReset:DB$ ResetCommanderTax | Defined$ Player | CastCount$ True
+Oracle:When you planeswalk here, each player who controls their commander draws a card. Other players may put their commander from the command zone onto the battlefield.\nIf an ability of your commander would trigger during your turn, that ability triggers an additional time.\nWhenever chaos ensues, the number of times each commander has been cast from the command zone becomes 0. (This resets commander tax.)
