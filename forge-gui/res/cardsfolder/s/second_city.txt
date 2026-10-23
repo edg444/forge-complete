@@ -1,0 +1,9 @@
+Name:Second City
+ManaCost:no cost
+Types:Land Town
+A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
+A:AB$ Mana | Cost$ T | Produced$ Any | RestrictValid$ Spell.SecondSpellThisTurn | TriggersWhenSpent$ TrigPizza | SpellDescription$ Add one mana of any color. Spend this mana only to cast your second spell in a turn. When that mana is spent, create a Deep Dish Pizza token. (It's a Food artifact with "{3}, {T}, Sacrifice this token: You gain 3 life and draw a card.")
+SVar:TrigPizza:Mode$ SpellCast | ValidCard$ Card | Execute$ DBPizza | TriggerDescription$ When that mana is spent, create a Deep Dish Pizza token.
+SVar:DBPizza:DB$ Token | TokenScript$ c_a_food_deep_dish_pizza
+DeckHas:Ability$Token|LifeGain & Type$Food|Artifact
+Oracle:{T}: Add {C}.\n{T}: Add one mana of any color. Spend this mana only to cast your second spell in a turn. When that mana is spent, create a Deep Dish Pizza token. (It's a Food artifact with "{3}, {T}, Sacrifice this token: You gain 3 life and draw a card.")

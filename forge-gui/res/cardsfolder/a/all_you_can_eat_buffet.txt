@@ -1,0 +1,11 @@
+Name:All-You-Can-Eat Buffet
+ManaCost:2 G G
+Types:Enchantment
+S:Mode$ Continuous | Affected$ Card.TopLibrary+YouCtrl | AffectedZone$ Library | MayLookAt$ You | Description$ You may look at the top card of your library any time.
+S:Mode$ Continuous | Affected$ Land.TopLibrary+YouCtrl,Creature.TopLibrary+YouCtrl | AffectedZone$ Library | MayPlay$ True | Description$ You may play lands and cast creature spells from the top of your library.
+# a card in a library can't be tapped or sacrificed in Forge, so the top card's Food ability puts it into the graveyard
+# as its cost instead (like Stroopwafel Cafe's)
+S:Mode$ Continuous | Affected$ Card.TopLibrary+YouCtrl | AffectedZone$ Library | AddType$ Artifact & Food | AddAbility$ LibraryFood | Description$ The top card of your library is a Food token. It's still a card. (It has "{2},{T}, Sacrifice this token: You gain 3 life.")
+SVar:LibraryFood:AB$ GainLife | Cost$ 2 Mill<1> | ActivationZone$ Library | LifeAmount$ 3 | SpellDescription$ You gain 3 life.
+DeckHas:Ability$LifeGain
+Oracle:You may look at the top card of your library any time.\nYou may play lands and cast creature spells from the top of your library.\nThe top card of your library is a Food token. It's still a card. (It has "{2},{T}, Sacrifice this token: You gain 3 life.")

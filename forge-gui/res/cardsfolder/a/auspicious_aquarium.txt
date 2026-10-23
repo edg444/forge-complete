@@ -1,0 +1,11 @@
+Name:Auspicious Aquarium
+ManaCost:5
+Types:Artifact
+SVar:AquaticTypes:Clamfolk,Crab,Crocodile,Fish,Homarid,Jellyfish,Kraken,Leviathan,Lobster,Merfolk,Nautilus,Octopus,Otter,Oyster,Seal,Serpent,Shark,Shrimp,Sponge,Squid,Starfish,Trilobite,Turtle,Walrus,Whale
+S:Mode$ Continuous | Affected$ Creature.YouCtrl+CreatureTypeListedIn_AquaticTypes | AddPower$ 2 | AddToughness$ 2 | Description$ Each creature you control that's a Clamfolk, Crab, Crocodile, Fish, Homarid, Jellyfish, Kraken, Leviathan, Lobster, Merfolk, Nautilus, Octopus, Otter, Oyster, Seal, Serpent, Shark, Shrimp, Sponge, Squid, Starfish, Trilobite, Turtle, Walrus, or Whale gets +2/+2.
+# twelve different creatures: differently named ones, which may share types (user ruling 2026-10-22)
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | CheckSVar$ Aquatic | SVarCompare$ GE12 | CheckSecondSVar$ Brushwaggs | SecondSVarCompare$ EQ0 | Execute$ TrigWin | TriggerDescription$ At the beginning of your upkeep, if you control twelve different creatures from the above list and don't control a Brushwagg, you win the game.
+SVar:TrigWin:DB$ WinsGame | Defined$ You
+SVar:Aquatic:Count$Valid Creature.YouCtrl+CreatureTypeListedIn_AquaticTypes$DifferentCardNames
+SVar:Brushwaggs:Count$Valid Brushwagg.YouCtrl
+Oracle:Each creature you control that's a Clamfolk, Crab, Crocodile, Fish, Homarid, Jellyfish, Kraken, Leviathan, Lobster, Merfolk, Nautilus, Octopus, Otter, Oyster, Seal, Serpent, Shark, Shrimp, Sponge, Squid, Starfish, Trilobite, Turtle, Walrus, or Whale gets +2/+2.\nAt the beginning of your upkeep, if you control twelve different creatures from the above list and don't control a Brushwagg, you win the game.

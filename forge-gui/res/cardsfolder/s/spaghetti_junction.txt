@@ -1,0 +1,13 @@
+Name:Spaghetti Junction
+ManaCost:no cost
+Types:Land
+A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
+A:AB$ Token | Cost$ 4 T | TokenScript$ c_3_2_a_vehicle_crew_1 | SpellDescription$ Create a 3/2 colorless Vehicle artifact token with crew 1.
+T:Mode$ Attacks | ValidCard$ Vehicle.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigTraffic | TriggerDescription$ Whenever a Vehicle you control attacks, put a traffic counter on this land.
+SVar:TrigTraffic:DB$ PutCounter | Defined$ Self | CounterType$ TRAFFIC | CounterNum$ 1
+T:Mode$ Always | IsPresent$ Card.Self+counters_GE8_TRAFFIC | TriggerZones$ Battlefield | Execute$ TrigSac | TriggerDescription$ When this land has eight traffic counters on it, sacrifice it. If you do, create Atlantakul, a legendary 20/20 colorless Eldrazi creature token with annihilator 2.
+SVar:TrigSac:DB$ Sacrifice | Defined$ Self | RememberSacrificed$ True | SubAbility$ DBAtlantakul
+SVar:DBAtlantakul:DB$ Token | TokenScript$ c_20_20_eldrazi_atlantakul_annihilator | ConditionDefined$ Remembered | ConditionPresent$ Card | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+DeckHas:Ability$Token & Type$Vehicle|Eldrazi
+Oracle:{T}: Add {C}.\n{4}, {T}: Create a 3/2 colorless Vehicle artifact token with crew 1.\nWhenever a Vehicle you control attacks, put a traffic counter on this land.\nWhen this land has eight traffic counters on it, sacrifice it. If you do, create Atlantakul, a legendary 20/20 colorless Eldrazi creature token with annihilator 2.

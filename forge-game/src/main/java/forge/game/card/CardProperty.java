@@ -209,6 +209,16 @@ public class CardProperty {
             if (universe == null || universe.equals(forge.card.PrintingTraits.MAGIC_UNIVERSE)) {
                 return false;
             }
+        } else if (property.equals("SecondSpellThisTurn")) {
+            // Second City: "your second spell in a turn" - while it's being paid for, one spell has been cast before it
+            if (card.getController() == null || card.getController().getSpellsCastThisTurn() != 1) {
+                return false;
+            }
+        } else if (property.equals("HasChosenWord")) {
+            // Bicycle Elemental: the chosen word in the card's name, type line or rules text, as a whole word
+            if (!source.hasChosenType() || !hasWord(card, source.getChosenType())) {
+                return false;
+            }
         } else if (property.equals("StandardLegal")) {
             // The Pro Tour: "Standard-legal cards" - legal in the current Standard, whatever format the game is
             final forge.game.GameFormat standard = forge.game.GameFormat.currentStandard();
@@ -3415,5 +3425,13 @@ public class CardProperty {
             }
         }
         return false;
+    }
+
+    /** A whole word (case-insensitive) in the card's name, type line or rules text (Bicycle Elemental). */
+    public static boolean hasWord(final Card card, final String word) {
+        // getOracleText keeps its line breaks escaped
+        final String text = (card.getName() + " " + card.getType() + " " + card.getOracleText()).replace("\\n", " ");
+        return java.util.regex.Pattern.compile("(?<![\\p{L}'])" + java.util.regex.Pattern.quote(word.trim()) + "(?![\\p{L}'])",
+                java.util.regex.Pattern.CASE_INSENSITIVE).matcher(text).find();
     }
 }

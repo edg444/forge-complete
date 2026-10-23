@@ -1,0 +1,12 @@
+Name:Bicycle Elemental
+ManaCost:2 U
+Types:Artifact Creature Elemental
+PT:2/2
+# a person types any word; the AI picks the word the most of its cards have
+K:ETBReplacement:Other:ChooseWord
+SVar:ChooseWord:DB$ ChooseType | Defined$ You | Type$ word | FreeInput$ True | WordList$ True | AILogic$ MostCommonWordInDeck | ChoiceTitle$ Choose a word | SpellDescription$ As this creature enters, choose a word.
+S:Mode$ Continuous | Affected$ Card.YouOwn+HasChosenWord | AffectedZone$ Hand | AddKeyword$ Cycling:2 | Description$ Each card in your hand with the chosen word in its name, type line, and/or rules text has cycling {2}. ({2}, Discard that card: Draw a card.)
+T:Mode$ Cycled | ValidCard$ Card.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigCounter | TriggerDescription$ Whenever you cycle a card, put a +1/+1 counter on this creature.
+SVar:TrigCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1
+DeckHas:Ability$Counters
+Oracle:As this creature enters, choose a word.\nEach card in your hand with the chosen word in its name, type line, and/or rules text has cycling {2}. ({2}, Discard that card: Draw a card.)\nWhenever you cycle a card, put a +1/+1 counter on this creature.

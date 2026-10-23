@@ -2540,6 +2540,24 @@ public class ComputerUtil {
 
         final Game game = ai.getGame();
         String chosen = "";
+        if ("MostCommonWordInDeck".equals(logic)) {
+            // Bicycle Elemental: the word the most of its cards have in their name, type line or rules text
+            final java.util.Set<String> skip = java.util.Set.of("this", "that", "with", "your", "from", "each", "into",
+                    "onto", "then", "than", "when", "whenever", "have", "until", "their", "they", "card", "cards", "other");
+            final Map<String, Integer> counts = Maps.newHashMap();
+            for (final Card c : ai.getAllCards()) {
+                final String text = (c.getName() + " " + c.getType() + " " + c.getOracleText()).replace("\\n", " ");
+                final java.util.Set<String> words = new java.util.HashSet<>();
+                for (final String w : text.toLowerCase(java.util.Locale.ROOT).split("[^\\p{L}]+")) {
+                    if (w.length() >= 4 && !skip.contains(w)) {
+                        words.add(w);
+                    }
+                }
+                words.forEach(w -> counts.merge(w, 1, Integer::sum));
+            }
+            return counts.entrySet().stream().max(Map.Entry.comparingByValue()).map(Map.Entry::getKey)
+                    .orElse(Iterables.getFirst(validTypes, ""));
+        }
         if (kindOfType.equals("Letter")) {
             // _____ _____ Rocketship counts its own name stickers starting with the letter
             Map<String, Integer> begins = Maps.newHashMap();

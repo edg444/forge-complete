@@ -49,6 +49,7 @@ public final class AbilityFactory {
 
     public static final List<String> additionalAbilityKeys = Lists.newArrayList(
             "WinSubAbility", "OtherwiseSubAbility", // Clash
+            "IntroducedSubAbility", // Introduce
             "BidSubAbility", // BidLifeEffect
             "ChooseNumberSubAbility", "Lowest", "Highest", "NotLowest", "GuessCorrect", "GuessWrong", "MatchedAbility", "UnmatchedAbility", // ChooseNumber
             "HeadsSubAbility", "TailsSubAbility", "LoseSubAbility", // FlipCoin

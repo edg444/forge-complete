@@ -1,0 +1,6 @@
+Name:Deep Dish Pizza
+ManaCost:no cost
+Types:Artifact Food
+A:AB$ GainLife | Cost$ 3 T Sac<1/CARDNAME/this token> | LifeAmount$ 3 | SubAbility$ DBDraw | SpellDescription$ You gain 3 life and draw a card.
+SVar:DBDraw:DB$ Draw
+Oracle:{3}, {T}, Sacrifice this token: You gain 3 life and draw a card.

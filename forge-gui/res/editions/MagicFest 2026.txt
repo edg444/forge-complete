@@ -23,3 +23,5 @@ F11 R Bicycle Elemental @Mark Rosewater
 15 R Tana, the Bloodsower @Ernanda Souza
 16 R Tymna the Weaver @Justyna Dura
 F17 R Auspicious Aquarium @Mark Rosewater
+[CreatureTypes]
+Shrimp:Shrimp

@@ -1,0 +1,14 @@
+Name:In Residence
+ManaCost:X R G
+Types:Enchantment
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSearch | TriggerDescription$ When this enchantment enters, search your library for a legendary creature card with mana value X or less, exile it, then shuffle.
+SVar:TrigSearch:DB$ ChangeZone | Origin$ Library | Destination$ Exile | ChangeType$ Creature.Legendary+cmcLEX | ChangeNum$ 1 | RememberChanged$ True | Shuffle$ True
+SVar:X:Count$xPaid
+# introductions are typed (honor system), never one already used this game; the AI has stock lines (user ruling
+# 2026-10-22)
+T:Mode$ Phase | Phase$ Main1 | ValidPlayer$ You | TriggerZones$ Battlefield | IsPresent$ Card.IsRemembered | PresentZone$ Exile | Execute$ TrigIntroduce | TriggerDescription$ At the beginning of your first main phase, you may introduce the exiled card using an introduction you haven't used this game. If you do, put that card onto the battlefield. It gains haste. Exile that creature at the beginning of the next end step.
+SVar:TrigIntroduce:DB$ Introduce | Defined$ Remembered | IntroducedSubAbility$ DBPut
+SVar:DBPut:DB$ ChangeZone | Defined$ Remembered | Origin$ Exile | Destination$ Battlefield | SubAbility$ DBHaste
+SVar:DBHaste:DB$ Animate | Defined$ Remembered | Keywords$ Haste | Duration$ Permanent | AtEOT$ Exile | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:When this enchantment enters, search your library for a legendary creature card with mana value X or less, exile it, then shuffle.\nAt the beginning of your first main phase, you may introduce the exiled card using an introduction you haven't used this game. If you do, put that card onto the battlefield. It gains haste. Exile that creature at the beginning of the next end step.

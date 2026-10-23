@@ -1,0 +1,6 @@
+Name:Atlantakul
+ManaCost:no cost
+Types:Legendary Creature Eldrazi
+PT:20/20
+K:Annihilator:2
+Oracle:Annihilator 2

@@ -312,6 +312,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **MagicFest 2025 (PF25): Second City, All-You-Can-Eat Buffet, Spaghetti Junction. MagicFest 2026 (PF26): In Residence,
+  Bicycle Elemental, Auspicious Aquarium.**
+  - Property `SecondSpellThisTurn` (mana restriction), `HasChosenWord` (a whole word in the name, type line or rules
+    text; `CardProperty.hasWord`), AI ChooseType logic `MostCommonWordInDeck`.
+  - New effect `Introduce` (a typed introduction, refused if used this game; the AI has stock lines;
+    `IntroducedSubAbility$`) and per-game player notes (`Player.getGameNote`/`setGameNote`).
+  - Auspicious Aquarium's twelve different creatures are differently named (user ruling 2026-10-22); the PF26 edition
+    adds the creature type Shrimp.
+
 - **Black Lotus Unknown Planechase (PUNK): Unknown Event, The Pro Tour, Royal Booster, Year-End Review, Artist Alley.
   Every PUNK card is now in.**
   - OpenBooster `ExileUpTo$` (each player keeps cards of their own pack exiled face down that only they may look at and
