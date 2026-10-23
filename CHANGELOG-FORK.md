@@ -312,6 +312,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
+
 - **Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie (SLD 1537-1539)** - the last cards from released sets
   missing besides Alchemy: Reality Fracture.
   - PrintingTraits art objects `smile` and `tail` (Scryfall Tagger trees) and property `KnownArtObject_<object>`;
