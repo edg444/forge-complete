@@ -312,6 +312,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Black Lotus Unknown Planechase (PUNK): Pin Collector's Booth, Pin Trading, Shrinking Plane, Windmill Farm, New
+  Player's Journey, Welcome to Valley, Sorin's Remastered Manor, Multiversal High Council, Stroopwafel Cafe, Mad Labs.**
+  - New effect `MatchNumber` (a real-world number a person gives once per match, the AI's random within
+    `AIMin$`/`AIMax$`; `Count$MatchNumber.<Key>`), `Count$CurrentYear`. User rulings 2026-10-22: worn pins (AI 0-5),
+    years played (AI 1 to this year - 1993), seven folds, Windmill Farm's spin (random permanent, full turn 80%).
+  - Printing trait `dnd` (the D&D Secret Lair drops, from MTGJSON's SLD subsets) and `PrintingTraits.councilUniverseOf`
+    / `Card.getCouncilUniverse()`: D&D is its own Universe there (Forgotten Realms sets plus those Secret Lairs).
+    Properties `UniversesBeyond`, `CorePrinting`, `CreatureTypeListedIn_<SVar>`; count `$CouncilUniverseCount`;
+    target restriction `TargetsWithDifferentUniverses$`; Continuous `MayLookAt$ Owner`.
+  - New effect `MadLabs` (the three blind choices, then a token copy for each player); `CounterKeywordType.keywordCounterNames()`.
+  - Stroopwafel Cafe's top-of-library Food mills itself as its cost: a card in a library can't be tapped or sacrificed.
+
 - **Black Lotus Unknown Planechase (PUNK): High and Dry Black Market, Team-Up!, Probability Flux, Clamilton Estate,
   Event Horizon, The Sphere, Game Knights Live, The Command Zone, High Noon At Thunder Junction.**
   - Charm `ChooseOnResolve$` (each player picks modes as a RepeatEach resolves; the chooser becomes the activator) and

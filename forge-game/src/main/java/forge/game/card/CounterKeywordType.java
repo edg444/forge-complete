@@ -26,6 +26,11 @@ public record CounterKeywordType(KeywordView keyword) implements CounterType {
         return sMap.get(s);
     }
 
+    /** The keywords a keyword counter can be (Mad Labs offers them), in rule 122.1b's order. */
+    public static ImmutableList<String> keywordCounterNames() {
+        return keywordCounter;
+    }
+
     public static Set<CounterType> getValues() {
         // add fixed first
         Set<CounterType> result = keywordCounter.stream().map(CounterKeywordType::get).collect(Collectors.toCollection(LinkedHashSet::new));

@@ -1,0 +1,12 @@
+Name:Pin Collector's Booth
+ManaCost:no cost
+Types:Plane MagicCon
+T:Mode$ AttackersDeclared | AttackingPlayer$ You | TriggerZones$ Command | Execute$ TrigPin | TriggerDescription$ Whenever you attack, create a Pin token attached to target attacking creature you control. It's an Pin Aura enchantment with enchant creature and "Enchanted creature gets +1/+1."
+SVar:TrigPin:DB$ Token | TokenScript$ c_e_pin_aura | TokenOwner$ You | AttachedTo$ Targeted | ValidTgts$ Creature.attacking+YouCtrl | TgtPrompt$ Select target attacking creature you control
+# pins worn in real life: a person says how many once per match, the AI wears a random 0-5 (user ruling 2026-10-22)
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigPinsWorn | TriggerDescription$ Whenever Chaos ensues, each opponent loses X life, where X is the total number of pins attached to you and creatures you control. (This includes pins on your backpack.)
+SVar:TrigPinsWorn:DB$ MatchNumber | Defined$ You | Key$ PinsWorn | Prompt$ How many pins are you wearing (your backpack included)? | LogText$ pins worn | AIMin$ 0 | AIMax$ 5 | SubAbility$ DBLoseLife
+SVar:DBLoseLife:DB$ LoseLife | Defined$ Opponent | LifeAmount$ X
+SVar:X:Count$MatchNumber.PinsWorn/Plus.PinTokens
+SVar:PinTokens:Count$Valid Card.Pin+AttachedTo Creature.YouCtrl
+Oracle:Whenever you attack, create a Pin token attached to target attacking creature you control. It's an Pin Aura enchantment with enchant creature and "Enchanted creature gets +1/+1."\nWhenever Chaos ensues, each opponent loses X life, where X is the total number of pins attached to you and creatures you control. (This includes pins on your backpack.)

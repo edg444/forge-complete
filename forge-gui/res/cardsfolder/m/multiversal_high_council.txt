@@ -1,0 +1,12 @@
+Name:Multiversal High Council
+ManaCost:no cost
+Types:Plane Universia Beyondia
+S:Mode$ ReduceCost | EffectZone$ Command | ValidCard$ Card.UniversesBeyond | Type$ Spell | Activator$ You | Amount$ 1 | Description$ Universes Beyond spells you cast cost {1} less to cast.
+# D&D is a Universe of its own here: the Forgotten Realms sets and the D&D Secret Lair drops (user ruling 2026-10-22)
+S:Mode$ Continuous | EffectZone$ Command | Affected$ Creature | AddStaticAbility$ CouncilPump | Description$ Each creature gets +1/+1 for each different Universe among permanents its controller controls. (Magic: The Gathering and D&D each count as a universe.)
+SVar:CouncilPump:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | AddToughness$ X | Description$ This creature gets +1/+1 for each different Universe among permanents its controller controls.
+SVar:X:Count$Valid Permanent.YouCtrl$CouncilUniverseCount
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigReturn | TriggerDescription$ Whenever Chaos ensues, for each universe, return up to one target card from that Universe from your graveyard to your hand.
+SVar:TrigReturn:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand | ValidTgts$ Card.YouOwn | TgtZone$ Graveyard | TargetMin$ 0 | TargetMax$ Universes | TargetsWithDifferentUniverses$ True | TgtPrompt$ Select up to one target card from each Universe in your graveyard
+SVar:Universes:Count$ValidGraveyard Card.YouOwn$CouncilUniverseCount
+Oracle:Universes Beyond spells you cast cost {1} less to cast.\nEach creature gets +1/+1 for each different Universe among permanents its controller controls. (Magic: The Gathering and D&D each count as a universe.)\nWhenever Chaos ensues, for each universe, return up to one target card from that Universe from your graveyard to your hand.

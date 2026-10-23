@@ -65,6 +65,7 @@ public final class PrintingTraits {
         private boolean boosterFun = false;
         private boolean playtest = false;
         private boolean retroFrame = false;
+        private boolean dnd = false;
         private String plane = null;
         private String universe = null;
         private java.util.Set<String> characters = java.util.Collections.emptySet();
@@ -308,6 +309,8 @@ public final class PrintingTraits {
                     t.playtest = true;
                 } else if (trait.equals("retroframe")) {
                     t.retroFrame = true;
+                } else if (trait.equals("dnd")) {
+                    t.dnd = true;
                 } else if (trait.startsWith("plane=")) {
                     t.plane = trait.substring(6);
                 } else if (trait.startsWith("universe=")) {
@@ -417,6 +420,24 @@ public final class PrintingTraits {
     public static String universeOf(final String edition, final String collectorNumber) {
         final Traits t = get(edition, collectorNumber, false);
         return t != null && t.universe != null ? t.universe : MAGIC_UNIVERSE;
+    }
+
+    public static final String DND_UNIVERSE = "Dungeons & Dragons";
+
+    /**
+     * Multiversal High Council: "Magic: The Gathering and D&D each count as a universe." A printing's Universe, except
+     * that D&D printings outside Universes Beyond - the Forgotten Realms sets and the D&D Secret Lair drops - are D&D
+     * too (user ruling 2026-10-22).
+     */
+    public static String councilUniverseOf(final String edition, final String collectorNumber) {
+        final Traits t = get(edition, collectorNumber, false);
+        if (t == null) {
+            return MAGIC_UNIVERSE;
+        }
+        if (t.universe != null) {
+            return t.universe;
+        }
+        return t.dnd || "Forgotten Realms".equals(t.plane) ? DND_UNIVERSE : MAGIC_UNIVERSE;
     }
 
     /** A Universes Beyond printing (Byode's deck-building exemption): one with a franchise Universe. */

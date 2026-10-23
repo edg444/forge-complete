@@ -60,6 +60,7 @@ public class TargetRestrictions {
     private boolean forEachPlayer = false;
     private boolean differentControllers = false;
     private boolean differentCMC = false;
+    private boolean differentUniverses = false;
     private boolean differentNames = false;
     private boolean equalToughness = false;
     private boolean sameController = false;
@@ -104,6 +105,7 @@ public class TargetRestrictions {
         this.forEachPlayer = target.isForEachPlayer();
         this.differentControllers = target.isDifferentControllers();
         this.differentCMC = target.isDifferentCMC();
+        this.differentUniverses = target.isDifferentUniverses();
         this.equalToughness = target.isEqualToughness();
         this.sameController = target.isSameController();
         this.withoutSameCreatureType = target.isWithoutSameCreatureType();
@@ -192,6 +194,9 @@ public class TargetRestrictions {
         }
         if (mapParams.containsKey("TargetsWithDifferentCMC")) {
             setDifferentCMC(true);
+        }
+        if (mapParams.containsKey("TargetsWithDifferentUniverses")) {
+            differentUniverses = true;
         }
         if (mapParams.containsKey("TargetsWithDifferentNames")) {
             setDifferentNames(true);
@@ -674,6 +679,11 @@ public class TargetRestrictions {
      */
     public void setDifferentCMC(boolean different) {
         this.differentCMC = different;
+    }
+
+    /** Multiversal High Council: "for each universe, ... up to one target card from that Universe" */
+    public boolean isDifferentUniverses() {
+        return differentUniverses;
     }
 
     public boolean isDifferentNames() {

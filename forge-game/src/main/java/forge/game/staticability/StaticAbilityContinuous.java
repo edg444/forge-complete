@@ -147,6 +147,8 @@ public final class StaticAbilityContinuous {
         // (a single fixed set applied to every affected card), this needs to exclude each card's
         // OWN owner specifically, so it's resolved per-card in the main loop below instead.
         boolean mayLookAtExceptOwner = false;
+        // Stroopwafel Cafe: "Players may look at the top card of their library" - each card's own owner
+        boolean mayLookAtOwner = false;
 
         boolean controllerMayPlay = false, mayPlayWithoutManaCost = false, mayPlayWithFlash = false;
         String mayPlayAltManaCost = null;
@@ -583,6 +585,8 @@ public final class StaticAbilityContinuous {
                     mayLookAt = new PlayerCollection();
                 } else if ("OtherPlayers".equals(look)) {
                     mayLookAtExceptOwner = true;
+                } else if ("Owner".equals(look)) {
+                    mayLookAtOwner = true;
                 } else {
                     mayLookAt = AbilityUtils.getDefinedPlayers(hostCard, look, stAb);
                 }
@@ -1216,6 +1220,8 @@ public final class StaticAbilityContinuous {
                 PlayerCollection others = new PlayerCollection(game.getPlayers());
                 others.remove(affectedCard.getOwner());
                 affectedCard.addMayLookAt(se.getTimestamp(), others);
+            } else if (mayLookAtOwner && topLibCondition) {
+                affectedCard.addMayLookAt(se.getTimestamp(), new PlayerCollection(affectedCard.getOwner()));
             }
         }
 

@@ -1,0 +1,15 @@
+Name:Sorin's Remastered Manor
+ManaCost:no cost
+Types:Plane Innistrad
+# could be a horror movie monster: these creature types (my list; user ruling 2026-10-22: use it as is)
+SVar:SpookyTypes:Alien,Clown,Demon,Devil,Gargoyle,Gremlin,Hag,Horror,Mutant,Nightmare,Ooze,Scarecrow,Shade,Shark,Skeleton,Specter,Spider,Spirit,Vampire,Werewolf,Wraith,Yeti,Zombie
+T:Mode$ PlaneswalkedTo | ValidCard$ Card.Self | Execute$ TrigCounter | TriggerDescription$ When you planeswalk here and at the beginning your upkeep, put a spooky counter on target creature you control.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Command | Execute$ TrigCounter | Secondary$ True | TriggerDescription$ When you planeswalk here and at the beginning your upkeep, put a spooky counter on target creature you control.
+SVar:TrigCounter:DB$ PutCounter | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | CounterType$ SPOOKY | CounterNum$ 1
+S:Mode$ Continuous | EffectZone$ Command | Affected$ Creature.YouCtrl+counters_GE1_SPOOKY,Creature.YouCtrl+CreatureTypeListedIn_SpookyTypes | AddPower$ 1 | AddToughness$ 1 | AddKeyword$ Menace | Description$ Spooky creatures you control have +1/+1 and menace. (A creature is spooky if it has a spooky counter or it could be a horror movie monster.)
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigBite | TriggerDescription$ A Murder at Markov Manor — Whenever chaos ensues, target spooky creature you control bites target opponent or creature an opponent controls. (The creature deals damage equal to its power to the creature your opponent controls. You gain that much life.)
+SVar:TrigBite:DB$ Pump | ValidTgts$ Creature.YouCtrl+counters_GE1_SPOOKY,Creature.YouCtrl+CreatureTypeListedIn_SpookyTypes | TgtPrompt$ Select target spooky creature you control | SubAbility$ DBBite | StackDescription$ None
+SVar:DBBite:DB$ DealDamage | ValidTgts$ Opponent,Creature.OppCtrl | TgtPrompt$ Select target opponent or creature an opponent controls | NumDmg$ X | DamageSource$ ParentTarget | SubAbility$ DBGainLife
+SVar:DBGainLife:DB$ GainLife | LifeAmount$ X
+SVar:X:ParentTargeted$CardPower
+Oracle:When you planeswalk here and at the beginning your upkeep, put a spooky counter on target creature you control.\nSpooky creatures you control have +1/+1 and menace. (A creature is spooky if it has a spooky counter or it could be a horror movie monster.)\nA Murder at Markov Manor — Whenever chaos ensues, target spooky creature you control bites target opponent or creature an opponent controls. (The creature deals damage equal to its power to the creature your opponent controls. You gain that much life.)

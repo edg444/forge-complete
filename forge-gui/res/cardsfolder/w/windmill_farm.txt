@@ -1,0 +1,14 @@
+Name:Windmill Farm
+ManaCost:no cost
+Types:Plane Amsterdam
+T:Mode$ PlaneswalkedTo | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When you planeswalk here and at the beginning of your upkeep, create a Tulip Petal artifact token that has "{T}, Sacrifice this artifact: Add one mana of any color."
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Command | Execute$ TrigToken | Secondary$ True | TriggerDescription$ When you planeswalk here and at the beginning of your upkeep, create a Tulip Petal artifact token that has "{T}, Sacrifice this artifact: Add one mana of any color."
+SVar:TrigToken:DB$ Token | TokenScript$ c_a_tulip_petal_sac
+# the spin is simulated for everyone: the arrow lands on a random permanent, after a full rotation 80% of the time
+# (user ruling 2026-10-22)
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigSpin | TriggerDescription$ Chaos: Spin this plane until the arrow lands on a permanent. If the plane rotated at least 360 degrees during the spin, create a token that's a copy of that permanent.
+SVar:TrigSpin:DB$ ChooseCard | Choices$ Permanent | ChoiceZone$ Battlefield | AtRandom$ True | ChoiceTitle$ The arrow lands on | SubAbility$ DBCopy
+SVar:DBCopy:DB$ CopyPermanent | Defined$ ChosenCard | ConditionCheckSVar$ Spin | ConditionSVarCompare$ LE8 | SubAbility$ DBCleanup
+SVar:Spin:Count$Random.1.10
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+Oracle:When you planeswalk here and at the beginning of your upkeep, create a Tulip Petal artifact token that has "{T}, Sacrifice this artifact: Add one mana of any color."\nChaos: Spin this plane until the arrow lands on a permanent. If the plane rotated at least 360 degrees during the spin, create a token that's a copy of that permanent.

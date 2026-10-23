@@ -1608,6 +1608,15 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
                 }
             }
 
+            if (tr.isDifferentUniverses() && entity instanceof Card) {
+                final String universe = ((Card) entity).getCouncilUniverse();
+                for (final Card c : getTargets().getTargetCards()) {
+                    if (entity != c && java.util.Objects.equals(universe, c.getCouncilUniverse())) {
+                        return false;
+                    }
+                }
+            }
+
             if (tr.isDifferentNames() && entity instanceof Card) {
                 for (final Card c : getTargets().getTargetCards()) {
                     if (entity != c && c.sharesNameWith(((Card) entity).getName())) {

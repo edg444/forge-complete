@@ -1,0 +1,13 @@
+Name:Stroopwafel Cafe
+ManaCost:no cost
+Types:Plane Amsterdam
+S:Mode$ Continuous | EffectZone$ Command | Affected$ Card.TopLibrary | AffectedZone$ Library | MayLookAt$ Owner | MayPlay$ True | MayPlayPlayer$ CardOwner | Description$ Players may look at the top card of their library at any time and may play cards from the top of their library.
+# a card in a library can't be tapped or sacrificed in Forge, so the top card's Food ability puts it into the graveyard
+# as its cost instead (milling it is the only way off the top that isn't playing it)
+S:Mode$ Continuous | EffectZone$ Command | Affected$ Card.TopLibrary | AffectedZone$ Library | AddType$ Artifact & Food | AddAbility$ LibraryFood | Description$ The top card of each player's library is a Food artifact. (It's an artifact with "{2}, {T}, Sacrifice this artifact: You gain 3 life." Activate this ability from the top of the library.)
+SVar:LibraryFood:AB$ GainLife | Cost$ 2 Mill<1> | ActivationZone$ Library | LifeAmount$ 3 | SpellDescription$ You gain 3 life. Activate this ability from the top of the library.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigSac | TriggerDescription$ Chaos: You may sacrifice a Food. If you do, draw a card, gain three life and each opponent loses 3 life.
+SVar:TrigSac:AB$ Draw | Cost$ Sac<1/Food> | SubAbility$ DBGainLife
+SVar:DBGainLife:DB$ GainLife | LifeAmount$ 3 | SubAbility$ DBLoseLife
+SVar:DBLoseLife:DB$ LoseLife | Defined$ Opponent | LifeAmount$ 3
+Oracle:Players may look at the top card of their library at any time and may play cards from the top of their library.\nThe top card of each player's library is a Food artifact. (It's an artifact with "{2}, {T}, Sacrifice this artifact: You gain 3 life." Activate this ability from the top of the library.)\nChaos: You may sacrifice a Food. If you do, draw a card, gain three life and each opponent loses 3 life.

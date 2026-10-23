@@ -1,0 +1,17 @@
+Name:New Player's Journey
+ManaCost:no cost
+Types:Plane Foundations
+T:Mode$ PlaneswalkedTo | ValidCard$ Card.Self | Execute$ TrigSearch | TriggerDescription$ When you planeswalk here, each player may search their library for a basic land card, put it into their hand, then shuffle.
+SVar:TrigSearch:DB$ ChangeZone | Origin$ Library | Destination$ Hand | ChangeType$ Land.Basic | ChangeNum$ 1 | DefinedPlayer$ Player | Optional$ True | Shuffle$ True
+# Foundations and every core set are the edition type Core in Forge (Alpha through Magic Origins, M19-M21, FDN)
+T:Mode$ SpellCast | ValidCard$ Card.CorePrinting | ValidActivatingPlayer$ You | TriggerZones$ Command | Execute$ TrigDraw | TriggerDescription$ Whenever you play a card from Foundations or a core set (including Alpha!), draw a card.
+T:Mode$ LandPlayed | ValidCard$ Land.CorePrinting+YouCtrl | TriggerZones$ Command | Execute$ TrigDraw | Secondary$ True | TriggerDescription$ Whenever you play a card from Foundations or a core set (including Alpha!), draw a card.
+SVar:TrigDraw:DB$ Draw
+# years played: a person says it once per match, the AI's is random from 1 to (this year - 1993) (user ruling 2026-10-22)
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigYears | TriggerDescription$ Whenever chaos ensues, you gain life equal to the number of years you've played Magic, rounded up. Then planeswalk.
+SVar:TrigYears:DB$ MatchNumber | Defined$ You | Key$ YearsPlayed | Prompt$ How many years have you played Magic (rounded up)? | LogText$ years played | AIMin$ 1 | AIMax$ MaxYears | SubAbility$ DBGain
+SVar:DBGain:DB$ GainLife | LifeAmount$ Years | SubAbility$ DBWalk
+SVar:DBWalk:DB$ Planeswalk
+SVar:Years:Count$MatchNumber.YearsPlayed
+SVar:MaxYears:Count$CurrentYear/Minus.1993
+Oracle:When you planeswalk here, each player may search their library for a basic land card, put it into their hand, then shuffle.\nWhenever you play a card from Foundations or a core set (including Alpha!), draw a card.\nWhenever chaos ensues, you gain life equal to the number of years you've played Magic, rounded up. Then planeswalk.

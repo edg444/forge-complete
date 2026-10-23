@@ -203,6 +203,31 @@ public class CardProperty {
             if (!card.hasPaperFoil()) {
                 return false;
             }
+        } else if (property.equals("UniversesBeyond")) {
+            // Multiversal High Council: a printing with a Universes Beyond franchise
+            final String universe = card.getUniverse();
+            if (universe == null || universe.equals(forge.card.PrintingTraits.MAGIC_UNIVERSE)) {
+                return false;
+            }
+        } else if (property.equals("CorePrinting")) {
+            // New Player's Journey: "a card from Foundations or a core set (including Alpha!)"
+            final forge.card.CardEdition ed = forge.StaticData.instance().getEditions().get(card.getSetCode());
+            if (ed == null || ed.getType() != forge.card.CardEdition.Type.CORE) {
+                return false;
+            }
+        } else if (property.startsWith("CreatureTypeListedIn_")) {
+            // Welcome to Valley's animals, Sorin's Remastered Manor's horror movie monsters: a creature type from the
+            // source's comma-separated SVar
+            boolean listed = false;
+            for (final String type : source.getSVar(property.substring("CreatureTypeListedIn_".length())).split(",")) {
+                if (card.getType().hasCreatureType(type.trim())) {
+                    listed = true;
+                    break;
+                }
+            }
+            if (!listed) {
+                return false;
+            }
         } else if (property.equals("Nostalgic")) {
             // Treizeci, Sun of Serra: "Retro frames, legends, and artifacts are nostalgic." Legends are legendary cards
             // (user ruling 2026-10-22)

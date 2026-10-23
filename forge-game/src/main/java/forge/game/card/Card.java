@@ -8734,6 +8734,15 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return PrintingTraits.universeOf(pc.getEdition(), pc.getCollectorNumber());
     }
 
+    /** The Universe Multiversal High Council counts this card in, D&D included; null like {@link #getUniverse()}. */
+    public String getCouncilUniverse() {
+        final IPaperCard pc = isFaceDown() ? null : getPaperCard();
+        if (pc == null || pc instanceof PaperToken) {
+            return null;
+        }
+        return PrintingTraits.councilUniverseOf(pc.getEdition(), pc.getCollectorNumber());
+    }
+
     /**
      * A Secret Lair printing (Keeper of the Secret Lair): Secret Lair Drop or one of the products Scryfall files under
      * it (Promo, Countdown, Ultimate Edition, Showcase Planes), all of which carry the name.

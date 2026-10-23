@@ -1,0 +1,17 @@
+Name:Shrinking Plane
+ManaCost:no cost
+Types:Plane Foldaria
+# it folds in half at most seven times, so the eighth fold can't happen and it planeswalks (user ruling 2026-10-22);
+# the folds are counters on it, so it's flat again once it leaves
+T:Mode$ PlaneswalkedTo | ValidCard$ Card.Self | Execute$ TrigFold | TriggerDescription$ When you planeswalk here and at the beginning of your upkeep, fold this plane in half. Draw cards equal to the number of times it's been folded. If you can't fold it, planeswalk.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Command | Execute$ TrigFold | Secondary$ True | TriggerDescription$ When you planeswalk here and at the beginning of your upkeep, fold this plane in half. Draw cards equal to the number of times it's been folded. If you can't fold it, planeswalk.
+SVar:TrigFold:DB$ Branch | BranchConditionSVar$ Folds | BranchConditionSVarCompare$ LT7 | TrueSubAbility$ DBFold | FalseSubAbility$ DBDrawThenWalk
+SVar:DBFold:DB$ PutCounter | Defined$ Self | CounterType$ FOLD | CounterNum$ 1 | SubAbility$ DBDraw
+SVar:DBDraw:DB$ Draw | NumCards$ Folds
+SVar:DBDrawThenWalk:DB$ Draw | NumCards$ Folds | SubAbility$ DBWalk
+SVar:DBWalk:DB$ Planeswalk
+SVar:Folds:Count$CardCounters.FOLD
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigUnfold | TriggerDescription$ Chaos: Completely unfold this plane. Each opponent discards two cards.
+SVar:TrigUnfold:DB$ RemoveCounter | Defined$ Self | CounterType$ FOLD | CounterNum$ All | SubAbility$ DBDiscard
+SVar:DBDiscard:DB$ Discard | Defined$ Opponent | NumCards$ 2 | Mode$ TgtChoose
+Oracle:When you planeswalk here and at the beginning of your upkeep, fold this plane in half. Draw cards equal to the number of times it's been folded. If you can't fold it, planeswalk.\nChaos: Completely unfold this plane. Each opponent discards two cards.

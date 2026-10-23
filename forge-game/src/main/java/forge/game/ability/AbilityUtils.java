@@ -2804,6 +2804,10 @@ public class AbilityUtils {
         if (sq[0].equals("YourLifeTotal")) {
             return doXMath(player.getLife(), expr, c, ctb);
         }
+        // a real-world number its controller gave once per match (Pin Collector's Booth, New Player's Journey)
+        if (sq[0].equals("MatchNumber")) {
+            return doXMath(forge.game.ability.effects.MatchNumberEffect.numberOf(player, sq[1]), expr, c, ctb);
+        }
         // SetLife reads life-total amounts in halves; without this "double your life total" set it to 0
         if (sq[0].equals("YourLifeTotalHalves")) {
             return doXMath(player.getLife() * 2 + player.getHalfLife(), expr, c, ctb);
@@ -2856,6 +2860,10 @@ public class AbilityUtils {
                 }
             }
             return doXMath(lost ? 1 : 0, expr, c, ctb);
+        }
+        // New Player's Journey: the AI has played Magic for up to (this year - 1993) years (user ruling 2026-10-22)
+        if (sq[0].equals("CurrentYear")) {
+            return doXMath(java.time.LocalDate.now().getYear(), expr, c, ctb);
         }
         if (sq[0].equals("YourAge")) {
             // asked here rather than on resolution because the cost needs it while it's being paid
@@ -4555,6 +4563,17 @@ public class AbilityUtils {
             return countCardTypesFromList(paidList, false) +
                     countSuperTypesFromList(paidList) +
                     countSubTypesFromList(paidList);
+        }
+
+        if (def.startsWith("CouncilUniverseCount")) {
+            // Multiversal High Council: the different Universes among them, D&D counted as one
+            final Set<String> universes = Sets.newHashSet();
+            for (final Card card : paidList) {
+                if (card.getCouncilUniverse() != null) {
+                    universes.add(card.getCouncilUniverse());
+                }
+            }
+            return doXMath(universes.size(), CardFactoryUtil.extractOperators(def), source, ctb);
         }
 
         if (def.startsWith("ArtistsAmong")) {

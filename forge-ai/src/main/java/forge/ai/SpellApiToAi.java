@@ -219,6 +219,8 @@ public enum SpellApiToAi {
             .put(ApiType.LosePerpetual, AlwaysPlayAi.class)
             .put(ApiType.LosesGame, GameLossAi.class)
             .put(ApiType.MakeCard, AlwaysPlayAi.class)
+            .put(ApiType.MatchNumber, AlwaysPlayAi.class)
+            .put(ApiType.MadLabs, AlwaysPlayAi.class)
             .put(ApiType.Mana, ManaAi.class)
             .put(ApiType.ManaReflected, CannotPlayAi.class)
             .put(ApiType.Manifest, ManifestAi.class)

@@ -1,0 +1,11 @@
+Name:Welcome to Valley
+ManaCost:no cost
+Types:Plane Bloomburrow
+# animals: the creature types that are real-world animals (living or extinct), Human aside (my list; user ruling
+# 2026-10-22: use it as is)
+SVar:AnimalTypes:Antelope,Ape,Armadillo,Aurochs,Badger,Bat,Bear,Beaver,Bird,Bison,Boar,Camel,Capybara,Caribou,Cat,Chameleon,Chicken,Coyote,Crab,Crocodile,Deer,Dinosaur,Dog,Donkey,Echidna,Elephant,Elk,Ferret,Fish,Fox,Frog,Giraffe,Goat,Hamster,Hedgehog,Hippo,Horse,Hyena,Insect,Jackal,Jellyfish,Kangaroo,Koala,Leech,Lemur,Lizard,Llama,Lobster,Mite,Mole,Mongoose,Monkey,Mouse,Octopus,Otter,Ox,Oyster,Pangolin,Penguin,Platypus,Pony,Porcupine,Possum,Rabbit,Raccoon,Rat,Rhino,Sable,Salamander,Scorpion,Seal,Shark,Sheep,Skunk,Sloth,Slug,Snail,Snake,Spider,Sponge,Squid,Squirrel,Starfish,Trilobite,Turtle,Walrus,Weasel,Whale,Wolf,Wolverine,Wombat,Worm
+T:Mode$ SpellCast | ValidCard$ Card.CreatureTypeListedIn_AnimalTypes | ValidActivatingPlayer$ You | TriggerZones$ Command | Execute$ TrigDraw | TriggerDescription$ Whenever you cast an animal spell, draw a card. (Animals are any non-human creature types that are animals in real life.)
+SVar:TrigDraw:DB$ Draw
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigCopy | TriggerDescription$ Whenever Chaos ensues, create a token that's a copy of target creature you control, except it's a 1/1.
+SVar:TrigCopy:DB$ CopyPermanent | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | SetPower$ 1 | SetToughness$ 1
+Oracle:Whenever you cast an animal spell, draw a card. (Animals are any non-human creature types that are animals in real life.)\nWhenever Chaos ensues, create a token that's a copy of target creature you control, except it's a 1/1.

@@ -62,6 +62,7 @@ PLA046 C Year-End Review @
 [EnchantmentTypes]
 Entropy
 Omenpath
+Pin
 [ArtifactTypes]
 Hat
 [PlanarTypes]

@@ -1,0 +1,11 @@
+Name:Pin Trading
+ManaCost:no cost
+Types:Phenomenon
+# pins worn in real life: a person says how many once per match, the AI wears a random 0-5 (user ruling 2026-10-22)
+T:Mode$ PlaneswalkedTo | ValidCard$ Card.Self | Execute$ TrigPinsWorn | TriggerDescription$ When you encounter this, draw a card for each pin you are wearing and each Pin token attached to creatures you control. (This includes pins on your backpack.) (Then planeswalk away from this phenomenon.)
+SVar:TrigPinsWorn:DB$ MatchNumber | Defined$ You | Key$ PinsWorn | Prompt$ How many pins are you wearing (your backpack included)? | LogText$ pins worn | AIMin$ 0 | AIMax$ 5 | SubAbility$ DBDraw
+SVar:DBDraw:DB$ Draw | NumCards$ X | SubAbility$ PWAway
+SVar:X:Count$MatchNumber.PinsWorn/Plus.PinTokens
+SVar:PinTokens:Count$Valid Card.Pin+AttachedTo Creature.YouCtrl
+SVar:PWAway:DB$ Planeswalk
+Oracle:When you encounter this, draw a card for each pin you are wearing and each Pin token attached to creatures you control. (This includes pins on your backpack.) (Then planeswalk away from this phenomenon.)
