@@ -312,6 +312,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-22, fourteenth deploy (desktop, Android, GitHub) — Unknown Event complete; promos (PH22, PH23, PF24, PUNK, PF25, PF26); Mystery Booster 2 playtest parts 1–5; 16-commit upstream merge
+
+- **Upstream merge (16 commits).** Three conflicts: Defend the Celestus and Infernal Denizen keep upstream's fixes
+  (targets you control; `GainControl` `Chooser$`) with the fork's wording, and the mobile MatchScreen keeps both the
+  fork's Advanced Tactics grid tab and upstream's compact icon tabs.
+
 - **Mystery Booster 2 playtest cards (MB2), part 5: Friarball, Knight of Lost Causes, Champion of the Hareish,
   Marchesa's Surprise Party, Arcanum Things, Intangible Vibes, Tax Taker.**
   - Keywords `Coststorm` (copies per different mana value among your other spells and lands played this turn) and
