@@ -1,6 +1,9 @@
 Name:Greed
 ManaCost:3 B
 Types:Enchantment
-A:AB$ Draw | Cost$ B PayLife<2> | NumCards$ 1 | SpellDescription$ Draw a card.
+A:AB$ Draw | Cost$ B PayLife<2> | NumCards$ 1 | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19950401 | SpellDescription$ Draw a card.
+# R&D's Secret Lair: Legends says "{B} Draw an extra card and lose 2 life" - losing it, not paying it.
+A:AB$ Draw | Cost$ B | NumCards$ 1 | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19950401 | SubAbility$ DBPrintedLoseLife | SpellDescription$ (As printed) Draw a card and lose 2 life.
+SVar:DBPrintedLoseLife:DB$ LoseLife | Defined$ You | LifeAmount$ 2
 SVar:NonStackingEffect:True
 Oracle:{B}, Pay 2 life: Draw a card.

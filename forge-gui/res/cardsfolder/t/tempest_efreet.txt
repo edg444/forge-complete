@@ -4,8 +4,12 @@ Types:Creature Efreet
 PT:3/3
 K:Remove CARDNAME from your deck before playing if you're not playing for ante.
 A:AB$ Pump | Cost$ T Sac<1/CARDNAME> | ValidTgts$ Opponent | SubAbility$ Choice | RememberObjects$ Targeted | StackDescription$ SpellDescription | SpellDescription$ Target opponent may pay 10 life. If that player doesn't, they reveal a card at random from their hand. Exchange ownership of the revealed card and CARDNAME. Put the revealed card into your hand and CARDNAME from anywhere into that player's graveyard. This change in ownership is permanent.
-SVar:Choice:DB$ GenericChoice | Choices$ RevealCard | Defined$ Targeted | ConditionCheckSVar$ X | ConditionSVarCompare$ LT10 | SubAbility$ Choice2 | StackDescription$ None
-SVar:Choice2:DB$ GenericChoice | Choices$ PayLife,RevealCard | Defined$ Targeted | ConditionCheckSVar$ X | ConditionSVarCompare$ GE10 | StackDescription$ None
+SVar:Choice:DB$ GenericChoice | Choices$ RevealCard | Defined$ Targeted | ConditionCheckSVar$ X | ConditionSVarCompare$ LT10 | ConditionDefined$ Self | ConditionPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19970101 | SubAbility$ Choice2 | StackDescription$ None
+SVar:Choice2:DB$ GenericChoice | Choices$ PayLife,RevealCard | Defined$ Targeted | ConditionCheckSVar$ X | ConditionSVarCompare$ GE10 | ConditionDefined$ Self | ConditionPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19970101 | SubAbility$ PrintedChoice | StackDescription$ None
+# R&D's Secret Lair: the printed card also lets the opponent prevent it by conceding the game.
+SVar:PrintedChoice:DB$ GenericChoice | Choices$ RevealCard,Concede | Defined$ Targeted | ConditionCheckSVar$ X | ConditionSVarCompare$ LT10 | ConditionDefined$ Self | ConditionPresent$ Card.Self+PrintedTextActive+PrintedBefore 19970101 | SubAbility$ PrintedChoice2 | StackDescription$ None
+SVar:PrintedChoice2:DB$ GenericChoice | Choices$ PayLife,RevealCard,Concede | Defined$ Targeted | ConditionCheckSVar$ X | ConditionSVarCompare$ GE10 | ConditionDefined$ Self | ConditionPresent$ Card.Self+PrintedTextActive+PrintedBefore 19970101 | StackDescription$ None
+SVar:Concede:DB$ LosesGame | Defined$ Targeted | SubAbility$ DBCleanup | SpellDescription$ Concede the game.
 SVar:X:PlayerCountRemembered$LifeTotal
 SVar:PayLife:DB$ LoseLife | LifeAmount$ 10 | Defined$ Targeted | SubAbility$ DBCleanup | SpellDescription$ Pay 10 life.
 SVar:RevealCard:DB$ Reveal | Random$ True | RememberRevealed$ True | Defined$ Targeted | SubAbility$ ExchangeOwn1 | StackDescription$ SpellDescription | SpellDescription$ Reveal a card at random from your hand. Permanently exchange ownership of the revealed card and CARDNAME.

@@ -4,6 +4,9 @@ Types:Enchantment Aura
 K:Enchant:Land
 SVar:AttachAILogic:Curse
 T:Mode$ Taps | ValidCard$ Card.AttachedBy | Execute$ TrigDestroy | TriggerDescription$ When enchanted land becomes tapped, destroy it.
-SVar:TrigDestroy:DB$ Destroy | Defined$ TriggeredCardLKICopy
+SVar:TrigDestroy:DB$ Destroy | Defined$ TriggeredCardLKICopy | ConditionDefined$ Self | ConditionPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19990421 | SubAbility$ DBPrintedDelay
+# R&D's Secret Lair: before Sixth Edition the tapped land "is destroyed at the end of the turn".
+SVar:DBPrintedDelay:DB$ DelayedTrigger | Mode$ Phase | Phase$ End of Turn | RememberObjects$ TriggeredCardLKICopy | Execute$ TrigPrintedDestroy | ConditionDefined$ Self | ConditionPresent$ Card.Self+PrintedTextActive+PrintedBefore 19990421 | TriggerDescription$ Destroy that land at the beginning of the next end step.
+SVar:TrigPrintedDestroy:DB$ Destroy | Defined$ DelayTriggerRememberedLKI
 SVar:NonStackingAttachEffect:True
 Oracle:Enchant land\nWhen enchanted land becomes tapped, destroy it.

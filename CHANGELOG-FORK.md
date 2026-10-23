@@ -327,7 +327,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   that carried the corrected text. 30th Anniversary Edition reprints use modern wording (mtg.wiki), so the cutoffs
   treat them as modern. Printed variants of statics use `ActiveDescription$`, so they show only while they apply.
   - *Castle* (before 6ED): attacking creatures lose the bonus.
-  - *Consecrate Land* (before TSB): destroys the other enchantments on the land as it enters.
+  - *Consecrate Land*: its printed "All enchantments on target land are destroyed" was briefly added as an
+    enters trigger and then removed again - the Oracle "can't be enchanted by other Auras" already sends them to
+    the graveyard through the state-based check (`GameAction`'s attach legality pass).
   - *Animate Artifact* (before 3ED): also sets an artifact creature's P/T to its mana value.
   - *Clone* (before ONS): can't be cast while no creatures are on the battlefield.
   - *Volcanic Eruption* (before 3ED): deals X damage, however many Mountains actually died.
@@ -376,6 +378,23 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Left as Oracle: Mono Artifact abilities (tap implied), Armageddon Clock's "end of your upkeep" (the draw-step
     trigger is that), Titania's Song lasting until the next untap step (only the cleanup step differs), Hurkyl's
     Recall's timing line, and the old mechanics of Tawnos's Coffin, Transmute Artifact and Goblin Artisans.
+- **Set review: Celebration Cards (PCEL)** - the four scripted cards (1996 World Champion, Deb Thomas, Robot Chicken,
+  Shichifukujin Dragon) needed no changes; Fraternal Exaltation, Phoenix Heart, Proposal and Splendid Genesis have
+  no script yet.
+- **Set review: Legends** (all 310 new names, `LegendsAuditTest`):
+  - *Glyph of Destruction* prevented the combat damage the Wall dealt (`ValidSource$`) instead of all damage dealt
+    to it, cancelling its own +10/+0, and could target an opponent's blocking Wall. Now `ValidTarget$`, any
+    damage, and `+YouCtrl`.
+  - *Axelrod Gunnarson*'s "creature it damaged dies" trigger had no `TriggerZones$`, so it also fired from the
+    graveyard or hand.
+  - R&D's Secret Lair printed text: *Blight* (before 6ED) destroys the tapped land at the beginning of the next end
+    step; *Greed* (before 4ED) is `{B}`: draw a card and lose 2 life (no life payment, so it works at 1 life);
+    *Kobold Drill Sergeant* and *Kobold Taskmaster* (before TSB) pump themselves too ("All your Kobolds");
+    *Tempest Efreet* lets the opponent concede the game instead.
+  - Left as Oracle: Anti-Magic Aura's printed "All enchantments on target creature are destroyed" (the
+    state-based check already removes them), Wall of Tombstones (printed 0/1+*, same as Oracle), and the old
+    mechanics of Imprison, Enchantment Alteration and Gaseous Form.
+- **Set review: Dragon Con (PDRC)** - Nalathni Dragon needed no changes.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

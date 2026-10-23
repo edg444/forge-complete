@@ -2,7 +2,9 @@ Name:Kobold Taskmaster
 ManaCost:1 R
 Types:Creature Kobold
 PT:1/2
-S:Mode$ Continuous | Affected$ Creature.Kobold+Other+YouCtrl | AddPower$ 1 | Description$ Other Kobold creatures you control get +1/+0.
+S:Mode$ Continuous | Affected$ Creature.Kobold+Other+YouCtrl | AddPower$ 1 | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20061006 | Description$ Other Kobold creatures you control get +1/+0.
+# R&D's Secret Lair: before Time Spiral it said "All your Kobolds", this one included.
+S:Mode$ Continuous | Affected$ Creature.Kobold+YouCtrl | AddPower$ 1 | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20061006 | ActiveDescription$ (As printed) All your Kobolds get +1/+0, this one included.
 SVar:PlayMain1:TRUE
 DeckHints:Type$Kobold
 Oracle:Other Kobold creatures you control get +1/+0.
