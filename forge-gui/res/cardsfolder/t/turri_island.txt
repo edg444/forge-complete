@@ -2,7 +2,10 @@ Name:Turri Island
 ManaCost:no cost
 Types:Plane Ir
 S:Mode$ ReduceCost | EffectZone$ Command | ValidCard$ Creature | Type$ Spell | Amount$ 2 | Description$ Creature spells cost {2} less to cast.
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, reveal the top three cards of your library. Put all creature cards revealed this way into your hand and the rest into your graveyard.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, reveal the top three cards of your library. Put all creature cards revealed this way into your hand and the rest into your graveyard.
+# R&D's Secret Lair: printings before March of the Machine Commander say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, reveal the top three cards of your library. Put all creature cards revealed this way into your hand and the rest into your graveyard.
 SVar:RolledChaos:DB$ Dig | DigNum$ 3 | Reveal$ True | ChangeNum$ All | ChangeValid$ Creature | DestinationZone2$ Graveyard
 SVar:AIRollPlanarDieParams:Mode$ Random
 Oracle:Creature spells cost {2} less to cast.\nWhenever chaos ensues, reveal the top three cards of your library. Put all creature cards revealed this way into your hand and the rest into your graveyard.

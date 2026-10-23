@@ -5,7 +5,10 @@ T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Command | Execu
 SVar:TrigPutCounter:DB$ PutCounter | CounterType$ FLAME | CounterNum$ 1 | SubAbility$ DBDmg
 SVar:DBDmg:DB$ DealDamage | Defined$ You | NumDmg$ Y
 SVar:Y:Count$CardCounters.FLAME
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, CARDNAME deals 3 damage to target player or planeswalker.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, CARDNAME deals 3 damage to target player or planeswalker.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, CARDNAME deals 3 damage to target player or planeswalker.
 SVar:RolledChaos:DB$ DealDamage | ValidTgts$ Player,Planeswalker | TgtPrompt$ Select target player or planeswalker | NumDmg$ 3
 SVar:AIRollPlanarDieParams:Mode$ Always
 Oracle:At the beginning of your upkeep, put a flame counter on Naar Isle, then Naar Isle deals damage to you equal to the number of flame counters on it.\nWhenever chaos ensues, Naar Isle deals 3 damage to target player or planeswalker.

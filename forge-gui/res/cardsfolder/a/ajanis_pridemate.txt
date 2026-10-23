@@ -2,7 +2,9 @@ Name:Ajani's Pridemate
 ManaCost:1 W
 Types:Creature Cat Soldier
 PT:2/2
-T:Mode$ LifeGained | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ Whenever you gain life, put a +1/+1 counter on this creature.
+T:Mode$ LifeGained | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPutCounter | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20190503 | TriggerDescription$ Whenever you gain life, put a +1/+1 counter on this creature.
+# R&D's Secret Lair: printings before War of the Spark make the counter optional.
+T:Mode$ LifeGained | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPutCounter | OptionalDecider$ You | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20190503 | TriggerDescription$ (As printed) Whenever you gain life, you may put a +1/+1 counter on CARDNAME.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1
 DeckHas:Ability$Counters
 DeckHints:Ability$LifeGain

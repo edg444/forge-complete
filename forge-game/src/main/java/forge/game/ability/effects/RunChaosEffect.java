@@ -19,7 +19,7 @@ public class RunChaosEffect extends SpellAbilityEffect {
         List<SpellAbility> validSA = Lists.newArrayList();
         for (final Card c : getTargetCards(sa)) {
             for (Trigger t : c.getTriggers()) {
-                if (t.getMode() == TriggerType.ChaosEnsues) {
+                if (t.getMode() == TriggerType.ChaosEnsues && t.requirementsCheck(c.getGame())) {
                     SpellAbility triggerSA = t.ensureAbility().copy(sa.getActivatingPlayer());
 
                     Player decider = sa.getActivatingPlayer();

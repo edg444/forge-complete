@@ -3,7 +3,10 @@ ManaCost:no cost
 Types:Plane Dominaria
 T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | TriggerZones$ Command | IsPresent$ Card.YouOwn | PresentZone$ Hand | PresentCompare$ EQ0 | Execute$ AcademicDraw | TriggerDescription$ At the beginning of your end step, if you have no cards in hand, draw seven cards.
 SVar:AcademicDraw:DB$ Draw | Defined$ You | NumCards$ 7
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigDiscard | TriggerDescription$ Whenever chaos ensues, discard your hand.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigDiscard | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, discard your hand.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigDiscard | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, discard your hand.
 SVar:TrigDiscard:DB$ Discard | Mode$ Hand | Defined$ You
 SVar:AIRollPlanarDieParams:Mode$ Always | LowPriority$ True | CardsInHandLE$ 2
 DeckHas:Ability$Discard

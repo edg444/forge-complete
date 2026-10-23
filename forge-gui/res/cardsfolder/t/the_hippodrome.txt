@@ -2,7 +2,10 @@ Name:The Hippodrome
 ManaCost:no cost
 Types:Plane Segovia
 S:Mode$ Continuous | EffectZone$ Command | Affected$ Creature | AddPower$ -5 | Description$ All creatures get -5/-0.
-T:Mode$ ChaosEnsues | OptionalDecider$ You | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, you may destroy target creature if its power is 0 or less.
+T:Mode$ ChaosEnsues | OptionalDecider$ You | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, you may destroy target creature if its power is 0 or less.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | OptionalDecider$ You | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, you may destroy target creature if its power is 0 or less.
 SVar:RolledChaos:DB$ Destroy | ValidTgts$ Creature | ConditionCheckSVar$ TgtPow | ConditionSVarCompare$ EQ1 | AITgts$ Creature.OppCtrl+powerLE0
 SVar:TgtPow:Targeted$Valid Creature.powerLE0
 SVar:AIRollPlanarDieParams:Mode$ Always

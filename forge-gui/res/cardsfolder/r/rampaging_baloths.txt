@@ -3,6 +3,8 @@ ManaCost:4 G G
 Types:Creature Beast
 PT:6/6
 K:Trample
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Land.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigToken | TriggerDescription$ Landfall — Whenever a land you control enters, create a 4/4 green Beast creature token.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Land.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigToken | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20250801 | TriggerDescription$ Landfall — Whenever a land you control enters, create a 4/4 green Beast creature token.
+# R&D's Secret Lair: printings before Edge of Eternities Commander make the token optional.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Land.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigToken | OptionalDecider$ You | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20250801 | TriggerDescription$ (As printed) Landfall — Whenever a land you control enters, you may create a 4/4 green Beast creature token.
 SVar:TrigToken:DB$ Token | TokenScript$ g_4_4_beast | TokenOwner$ You
 Oracle:Trample\nLandfall — Whenever a land you control enters, create a 4/4 green Beast creature token.

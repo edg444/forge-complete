@@ -3,7 +3,10 @@ ManaCost:no cost
 Types:Plane Mirrodin
 T:Mode$ PlaneswalkedTo | ValidCard$ Card.Self | Execute$ PanopticonDraw | TriggerDescription$ When you planeswalk to CARDNAME, draw a card.
 T:Mode$ Phase | Phase$ Draw | ValidPlayer$ You | Execute$ PanopticonDraw | TriggerZones$ Command | TriggerDescription$ At the beginning of your draw step, draw an additional card.
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ PanopticonDraw | TriggerDescription$ Whenever chaos ensues, draw a card.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ PanopticonDraw | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, draw a card.
+# R&D's Secret Lair: printings before March of the Machine Commander say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ PanopticonDraw | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, draw a card.
 SVar:PanopticonDraw:DB$ Draw
 SVar:AIRollPlanarDieParams:Mode$ Always
 Oracle:When you planeswalk to Panopticon, draw a card.\nAt the beginning of your draw step, draw an additional card.\nWhenever chaos ensues, draw a card.

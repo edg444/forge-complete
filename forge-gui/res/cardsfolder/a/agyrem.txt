@@ -10,7 +10,10 @@ T:Mode$ ChangesZone | ValidCard$ Creature.nonWhite | Origin$ Battlefield | Desti
 SVar:TrigDelay2:DB$ Effect | Name$ Agyrem's Effect — Nonwhite Creatures Rebirthed | Triggers$ TrigEOT2 | RememberObjects$ TriggeredCard | Duration$ Permanent
 SVar:TrigEOT2:Mode$ Phase | Phase$ End of Turn | Execute$ AgyremReturn2 | TriggerDescription$ Return creature to its owner's hand at the beginning of the next end step.
 SVar:AgyremReturn2:DB$ ChangeZone | Defined$ Remembered | Origin$ Graveyard | Destination$ Hand | SubAbility$ AgyremCleanup
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, creatures can't attack you until a player planeswalks.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, creatures can't attack you until a player planeswalks.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, creatures can't attack you until a player planeswalks.
 SVar:RolledChaos:DB$ Effect | Name$ Agyrem's Effect — None Can Attack You | StaticAbilities$ STCantAttack | Triggers$ TrigPlaneswalk | Duration$ Permanent
 SVar:STCantAttack:Mode$ CantAttack | ValidCard$ Creature | Target$ You | Description$ Creatures can't attack you until a player planeswalks.
 SVar:TrigPlaneswalk:Mode$ PlaneswalkedTo | Execute$ AgyremCleanup | Static$ True

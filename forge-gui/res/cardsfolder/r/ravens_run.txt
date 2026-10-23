@@ -2,7 +2,10 @@ Name:Raven's Run
 ManaCost:no cost
 Types:Plane Shadowmoor
 S:Mode$ Continuous | EffectZone$ Command | Affected$ Creature | AddKeyword$ Wither | Description$ All creatures have wither (They deal damage to creatures in the form of -1/-1 counters.)
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigPutCounter | TriggerDescription$ Whenever chaos ensues, put a -1/-1 counter on target creature, two -1/-1 counters on another target creature, and three -1/-1 counters on a third target creature.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigPutCounter | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, put a -1/-1 counter on target creature, two -1/-1 counters on another target creature, and three -1/-1 counters on a third target creature.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigPutCounter | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, put a -1/-1 counter on target creature, two -1/-1 counters on another target creature, and three -1/-1 counters on a third target creature.
 SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Creature | TargetUnique$ True | CounterType$ M1M1 | SubAbility$ DBPutTwo
 SVar:DBPutTwo:DB$ PutCounter | ValidTgts$ Creature | TgtPrompt$ Select another target creature | TargetUnique$ True | CounterType$ M1M1 | CounterNum$ 2 | SubAbility$ DBPutThree
 SVar:DBPutThree:DB$ PutCounter | ValidTgts$ Creature | TgtPrompt$ Select a third target creature | TargetUnique$ True | CounterType$ M1M1 | CounterNum$ 3

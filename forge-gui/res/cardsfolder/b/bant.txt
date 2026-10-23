@@ -2,7 +2,10 @@ Name:Bant
 ManaCost:no cost
 Types:Plane Alara
 S:Mode$ Continuous | EffectZone$ Command | Affected$ Creature | AddKeyword$ Exalted | Description$ All creatures have exalted.
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, put a divinity counter on target green, white, or blue creature. That creature has indestructible for as long as it has a divinity counter on it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, put a divinity counter on target green, white, or blue creature. That creature has indestructible for as long as it has a divinity counter on it.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, put a divinity counter on target green, white, or blue creature. That creature has indestructible for as long as it has a divinity counter on it.
 SVar:RolledChaos:DB$ PutCounter | ValidTgts$ Creature.Green,Creature.White,Creature.Blue | CounterType$ DIVINITY | CounterNum$ 1 | SubAbility$ DivineCharacter
 SVar:DivineCharacter:DB$ Animate | Defined$ Targeted | staticAbilities$ IndestructibleAspect | Duration$ Permanent
 SVar:IndestructibleAspect:Mode$ Continuous | EffectZone$ Battlefield | AffectedDefined$ Self | Affected$ Card.counters_GE1_DIVINITY | AddKeyword$ Indestructible

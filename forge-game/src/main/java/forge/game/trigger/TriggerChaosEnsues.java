@@ -1,6 +1,7 @@
 package forge.game.trigger;
 
 import forge.game.GameObject;
+import forge.game.PlanarDice;
 import forge.game.ability.AbilityKey;
 import forge.game.card.Card;
 import forge.game.spellability.SpellAbility;
@@ -31,6 +32,10 @@ public class TriggerChaosEnsues extends Trigger {
     @Override
     public boolean performTest(Map<AbilityKey, Object> runParams) {
         if (!matchesValidParam("ValidPlayer", runParams.get(AbilityKey.Player))) {
+            return false;
+        }
+        // R&D's Secret Lair: "Whenever you roll {CHAOS}" planes ignore chaos that ensues without a chaos roll
+        if (hasParam("RolledOnly") && runParams.get(AbilityKey.Result) != PlanarDice.Chaos) {
             return false;
         }
         // Polis the Planeshifter: its plane's chaos abilities aren't affected by rolls of the planar die

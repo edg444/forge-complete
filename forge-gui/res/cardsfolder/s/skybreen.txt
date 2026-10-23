@@ -3,7 +3,10 @@ ManaCost:no cost
 Types:Plane Kaldheim
 S:Mode$ Continuous | EffectZone$ Command | Affected$ Card.TopLibrary | AffectedZone$ Library | MayLookAt$ Player | Description$ Players play with the top card of their libraries revealed.
 S:Mode$ CantBeCast | EffectZone$ Command | ValidCard$ Card.sharesCardTypeWith EachTopLibrary | Description$ Spells that share a card type with the top card of a library can't be cast.
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, target player loses life equal to the number of cards in their hand.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, target player loses life equal to the number of cards in their hand.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, target player loses life equal to the number of cards in their hand.
 SVar:RolledChaos:DB$ LoseLife | ValidTgts$ Player | LifeAmount$ Y
 SVar:Y:TargetedPlayer$CardsInHand
 SVar:AIRollPlanarDieParams:Mode$ Always | LowPriority$ True | MaxRollsPerTurn$ 9

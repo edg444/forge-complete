@@ -3,7 +3,10 @@ ManaCost:no cost
 Types:Plane Mirrodin
 T:Mode$ SpellCast | ValidSA$ Instant.singleTarget,Sorcery.singleTarget | Execute$ TrigCopy | TriggerZones$ Command | TriggerDescription$ Whenever a player casts an instant or sorcery spell with a single target, that player copies that spell for each other spell, permanent, card not on the battlefield, and/or player the spell could target. Each copy targets a different one of them.
 SVar:TrigCopy:DB$ CopySpellAbility | Defined$ TriggeredSpellAbility | Controller$ TriggeredActivator | CopyForEachCanTarget$ Spell,Permanent,Card,Player
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, choose target creature. Each player except that creature's controller creates a token that's a copy of that creature.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, choose target creature. Each player except that creature's controller creates a token that's a copy of that creature.
+# R&D's Secret Lair: printings before March of the Machine Commander say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, choose target creature. Each player except that creature's controller creates a token that's a copy of that creature.
 SVar:RolledChaos:DB$ RepeatEach | RepeatPlayers$ NonTargetedController | RepeatSubAbility$ DBCopy | ValidTgts$ Creature | ChangeZoneTable$ True
 SVar:DBCopy:DB$ CopyPermanent | Defined$ ParentTarget | Controller$ Remembered
 AI:RemoveDeck:All

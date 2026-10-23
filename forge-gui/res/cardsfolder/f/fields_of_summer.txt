@@ -3,7 +3,10 @@ ManaCost:no cost
 Types:Plane Moag
 T:Mode$ SpellCast | OptionalDecider$ TriggeredActivator | TriggerZones$ Command | Execute$ LifeSummer | TriggerDescription$ Whenever a player casts a spell, that player may gain 2 life.
 SVar:LifeSummer:DB$ GainLife | Defined$ TriggeredActivator | LifeAmount$ 2
-T:Mode$ ChaosEnsues | TriggerZones$ Command | OptionalDecider$ You | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, you may gain 10 life.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | OptionalDecider$ You | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, you may gain 10 life.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | OptionalDecider$ You | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, you may gain 10 life.
 SVar:RolledChaos:DB$ GainLife | LifeAmount$ 10 | Defined$ You
 SVar:AIRollPlanarDieParams:Mode$ Always | LowPriority$ True | MaxRollsPerTurn$ 9
 Oracle:Whenever a player casts a spell, that player may gain 2 life.\nWhenever chaos ensues, you may gain 10 life.

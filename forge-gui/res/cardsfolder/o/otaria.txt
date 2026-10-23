@@ -3,7 +3,10 @@ ManaCost:no cost
 Types:Plane Dominaria
 S:Mode$ Continuous | Affected$ Instant,Sorcery | EffectZone$ Command | AffectedZone$ Graveyard | AddKeyword$ Flashback | Description$ Instant and sorcery cards in graveyards have flashback. The flashback cost is equal to the card's mana cost. (Its owner may cast the card from their graveyard for its mana cost. Then they exile it.)
 S:Mode$ Continuous | Affected$ Instant.wasCastFromGraveyard,Sorcery.wasCastFromGraveyard | EffectZone$ Command | AffectedZone$ Stack | AddKeyword$ Flashback | Secondary$ True
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, take an extra turn after this one.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, take an extra turn after this one.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, take an extra turn after this one.
 SVar:RolledChaos:DB$ AddTurn | NumTurns$ 1
 SVar:AIRollPlanarDieParams:Mode$ Always
 Oracle:Instant and sorcery cards in graveyards have flashback. The flashback cost is equal to the card's mana cost. (Its owner may cast the card from their graveyard for its mana cost. Then they exile it.)\nWhenever chaos ensues, take an extra turn after this one.

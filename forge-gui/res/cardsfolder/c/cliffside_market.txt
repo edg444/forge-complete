@@ -4,7 +4,10 @@ Types:Plane Mercadia
 T:Mode$ PlaneswalkedTo | ValidCard$ Card.Self | Execute$ TrigLife | OptionalDecider$ You | TriggerDescription$ When you planeswalk to CARDNAME and at the beginning of your upkeep, you may exchange life totals with target player.
 T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | Execute$ TrigLife | TriggerZones$ Command | Secondary$ True | OptionalDecider$ You | TriggerDescription$ When you planeswalk to CARDNAME and at the beginning of your upkeep, you may exchange life totals with target player.
 SVar:TrigLife:DB$ ExchangeLife | ValidTgts$ Player | TgtPrompt$ Select target player to exchange life totals with
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, exchange control of two target permanents that share a card type.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, exchange control of two target permanents that share a card type.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, exchange control of two target permanents that share a card type.
 SVar:RolledChaos:DB$ ExchangeControl | TargetMin$ 2 | TargetMax$ 2 | ValidTgts$ Permanent | TgtPrompt$ Select target permanents that share a permanent type | TargetsWithSameCardType$ True
 AI:RemoveDeck:All
 AI:RemoveDeck:Random

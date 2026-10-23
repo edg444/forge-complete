@@ -2,7 +2,10 @@ Name:Horizon Boughs
 ManaCost:no cost
 Types:Plane Pyrulea
 S:Mode$ UntapOtherPlayer | ValidCard$ Permanent | EffectZone$ Command | Description$ All permanents untap during each player's untap step.
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ DBFetch | TriggerDescription$ Whenever chaos ensues, you may search your library for up to three basic land cards, put them onto the battlefield tapped, then shuffle.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ DBFetch | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, you may search your library for up to three basic land cards, put them onto the battlefield tapped, then shuffle.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ DBFetch | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, you may search your library for up to three basic land cards, put them onto the battlefield tapped, then shuffle.
 SVar:DBFetch:DB$ ChangeZone | Origin$ Library | Destination$ Battlefield | Tapped$ True | ChangeType$ Land.Basic | ChangeTypeDesc$ basic land | ChangeNum$ 3 | ShuffleNonMandatory$ True
 SVar:AIRollPlanarDieParams:Mode$ Always | LowPriority$ True | MaxRollsPerTurn$ 9
 Oracle:All permanents untap during each player's untap step.\nWhenever chaos ensues, you may search your library for up to three basic land cards, put them onto the battlefield tapped, then shuffle.

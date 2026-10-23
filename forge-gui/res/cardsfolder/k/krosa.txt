@@ -2,7 +2,10 @@ Name:Krosa
 ManaCost:no cost
 Types:Plane Dominaria
 S:Mode$ Continuous | EffectZone$ Command | Affected$ Creature | AddPower$ 2 | AddToughness$ 2 | Description$ All creatures get +2/+2.
-T:Mode$ ChaosEnsues | TriggerZones$ Command | OptionalDecider$ You | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, you may add {W}{U}{B}{R}{G}.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | OptionalDecider$ You | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, you may add {W}{U}{B}{R}{G}.
+# R&D's Secret Lair: printings before March of the Machine Commander say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | OptionalDecider$ You | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, you may add {W}{U}{B}{R}{G}.
 SVar:RolledChaos:DB$ Mana | Produced$ W U B R G
 SVar:AIRollPlanarDieParams:Mode$ Always | RollInMain1$ True
 Oracle:All creatures get +2/+2.\nWhenever chaos ensues, you may add {W}{U}{B}{R}{G}.

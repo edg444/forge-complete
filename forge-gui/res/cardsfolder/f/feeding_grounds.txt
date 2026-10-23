@@ -3,7 +3,10 @@ ManaCost:no cost
 Types:Plane Muraganda
 S:Mode$ ReduceCost | EffectZone$ Command | ValidCard$ Card.Green | Type$ Spell | Amount$ 1 | Description$ Green spells cost {1} less to cast.
 S:Mode$ ReduceCost | EffectZone$ Command | ValidCard$ Card.Red | Type$ Spell | Amount$ 1 | Description$ Red spells cost {1} less to cast.
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ DBPutCounter | TriggerDescription$ Whenever chaos ensues, put X +1/+1 counters on target creature, where X is that creature's mana value.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ DBPutCounter | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, put X +1/+1 counters on target creature, where X is that creature's mana value.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ DBPutCounter | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, put X +1/+1 counters on target creature, where X is that creature's mana value.
 SVar:DBPutCounter:DB$ PutCounter | ValidTgts$ Creature | CounterType$ P1P1 | CounterNum$ Y
 SVar:Y:Targeted$CardManaCost
 SVar:AIRollPlanarDieParams:Mode$ Always | HasCreatureInPlay$ True

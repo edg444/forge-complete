@@ -3,7 +3,10 @@ ManaCost:no cost
 Types:Plane Ravnica
 T:Mode$ SpellCast | ValidCard$ Instant,Sorcery | ValidActivatingPlayer$ Player | Execute$ TrigCopy | TriggerZones$ Command | TriggerDescription$ Whenever a player casts an instant or sorcery spell, that player copies it. The player may choose new targets for the copy.
 SVar:TrigCopy:DB$ CopySpellAbility | Defined$ TriggeredSpellAbility | Controller$ TriggeredActivator | MayChooseTarget$ True
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, instant and sorcery spells you cast this turn cost {3} less to cast.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, instant and sorcery spells you cast this turn cost {3} less to cast.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, instant and sorcery spells you cast this turn cost {3} less to cast.
 SVar:RolledChaos:DB$ Effect | StaticAbilities$ ReduceSPCost
 SVar:ReduceSPCost:Mode$ ReduceCost | ValidCard$ Instant,Sorcery | Type$ Spell | Activator$ You | Amount$ 3 | Description$ Instant and sorcery spells you cast this turn cost {3} less to cast.
 SVar:AIRollPlanarDieParams:Mode$ Always | RollInMain1$ True

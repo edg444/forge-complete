@@ -3,7 +3,10 @@ ManaCost:no cost
 Types:Plane Shandalar
 T:Mode$ TapsForMana | ValidCard$ Permanent | Execute$ TrigMana | TriggerZones$ Command | Static$ True | TriggerDescription$ Whenever a player taps a permanent for mana, that player adds one mana of any type that permanent produced.
 SVar:TrigMana:DB$ ManaReflected | ColorOrType$ Type | ReflectProperty$ Produced | Defined$ TriggeredActivator
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, target player can't cast spells until a player planeswalks.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, target player can't cast spells until a player planeswalks.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, target player can't cast spells until a player planeswalks.
 SVar:RolledChaos:DB$ Effect | ValidTgts$ Player | IsCurse$ True | StaticAbilities$ STCantCast | Triggers$ TrigPlaneswalk | RememberObjects$ Targeted | Duration$ Permanent
 SVar:STCantCast:Mode$ CantBeCast | ValidCard$ Card | Caster$ Player.IsRemembered | Description$ Target player can't cast spells until a player planeswalks.
 SVar:TrigPlaneswalk:Mode$ PlaneswalkedTo | Execute$ ExileSelf | Static$ True

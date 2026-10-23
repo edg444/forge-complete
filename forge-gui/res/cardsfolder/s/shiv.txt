@@ -3,7 +3,10 @@ ManaCost:no cost
 Types:Plane Dominaria
 S:Mode$ Continuous | Affected$ Creature | EffectZone$ Command | AddAbility$ Pump | Description$ All creatures have "{R}: This creature gets +1/+0 until end of turn."
 SVar:Pump:AB$ Pump | Cost$ R | NumAtt$ +1 | SpellDescription$ This creature gets +1/+0 until end of turn.
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, create a 5/5 red Dragon creature token with flying.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, create a 5/5 red Dragon creature token with flying.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, create a 5/5 red Dragon creature token with flying.
 SVar:RolledChaos:DB$ Token | TokenScript$ r_5_5_dragon_flying
 SVar:AIRollPlanarDieParams:Mode$ Always | LowPriority$ True | MaxRollsPerTurn$ 9
 Oracle:All creatures have "{R}: This creature gets +1/+0 until end of turn."\nWhenever chaos ensues, create a 5/5 red Dragon creature token with flying.

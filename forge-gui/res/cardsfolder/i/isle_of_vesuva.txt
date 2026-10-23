@@ -3,7 +3,10 @@ ManaCost:no cost
 Types:Plane Dominaria
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.!token | TriggerZones$ Command | Execute$ TrigVesuvaCopy | TriggerDescription$ Whenever a nontoken creature enters, its controller creates a token that's a copy of that creature.
 SVar:TrigVesuvaCopy:DB$ CopyPermanent | Defined$ TriggeredCardLKICopy | Controller$ TriggeredCardController
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, destroy target creature and all other creatures with the same name as that creature.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, destroy target creature and all other creatures with the same name as that creature.
+# R&D's Secret Lair: printings before March of the Machine Commander say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, destroy target creature and all other creatures with the same name as that creature.
 SVar:RolledChaos:DB$ Destroy | ValidTgts$ Creature | SubAbility$ DestroyOtherAll
 SVar:DestroyOtherAll:DB$ DestroyAll | ValidCards$ Targeted.sameName+Other
 SVar:AIRollPlanarDieParams:Mode$ Always | OppHasCreatureInPlay$ True

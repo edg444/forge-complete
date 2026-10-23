@@ -3,7 +3,10 @@ ManaCost:no cost
 Types:Plane Zendikar
 T:Mode$ ChangesZone | ValidCard$ Creature.!token | Origin$ Any | Destination$ Battlefield | TriggerZones$ Command | Execute$ TrigRamp | OptionalDecider$ TriggeredCardController | TriggerDescription$ Whenever a nontoken creature enters, its controller may search their library for a basic land card, put it onto the battlefield tapped, then shuffle.
 SVar:TrigRamp:DB$ ChangeZone | Origin$ Library | Destination$ Battlefield | Tapped$ True | ChangeType$ Land.Basic | ChangeTypeDesc$ basic land | DefinedPlayer$ TriggeredCardController | ShuffleNonMandatory$ True
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, target land becomes a 4/4 creature that's still a land.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, target land becomes a 4/4 creature that's still a land.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, target land becomes a 4/4 creature that's still a land.
 SVar:RolledChaos:DB$ Animate | ValidTgts$ Land | Power$ 4 | Toughness$ 4 | Types$ Creature | Duration$ Permanent
 SVar:AIRollPlanarDieParams:Mode$ Always
 Oracle:Whenever a nontoken creature enters, its controller may search their library for a basic land card, put it onto the battlefield tapped, then shuffle.\nWhenever chaos ensues, target land becomes a 4/4 creature that's still a land.

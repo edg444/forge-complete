@@ -1,8 +1,13 @@
 Name:Etherwrought Page
 ManaCost:1 W U B
 Types:Artifact
-T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | Execute$ TrigCharm | TriggerZones$ Battlefield | TriggerDescription$ At the beginning of your upkeep, ABILITY
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | Execute$ TrigCharm | TriggerZones$ Battlefield | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20090501 | TriggerDescription$ At the beginning of your upkeep, ABILITY
 SVar:TrigCharm:DB$ Charm | Choices$ DBGainLife,DBSurveil,DBLoseLife
+# R&D's Secret Lair: Alara Reborn's printing (its only one) looks at the top card and may put it into the graveyard,
+# which isn't a surveil, so "whenever you surveil" doesn't trigger.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | Execute$ TrigPrintedCharm | TriggerZones$ Battlefield | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20090501 | TriggerDescription$ (As printed) At the beginning of your upkeep, ABILITY
+SVar:TrigPrintedCharm:DB$ Charm | Choices$ DBGainLife,DBLook,DBLoseLife
+SVar:DBLook:DB$ Dig | DigNum$ 1 | NoReveal$ True | DestinationZone$ Graveyard | Optional$ True | LibraryPosition2$ 0 | SpellDescription$ Look at the top card of your library, then you may put that card into your graveyard.
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 2 | SpellDescription$ You gain 2 life.
 SVar:DBSurveil:DB$ Surveil | Amount$ 1 | SpellDescription$ Surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)
 SVar:DBLoseLife:DB$ LoseLife | Defined$ Player.Opponent | LifeAmount$ 1 | SpellDescription$ Each opponent loses 1 life.

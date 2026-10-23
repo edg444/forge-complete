@@ -2,7 +2,10 @@ Name:Naya
 ManaCost:no cost
 Types:Plane Alara
 S:Mode$ Continuous | Affected$ You | EffectZone$ Command | AdjustLandPlays$ Unlimited | Description$ You may play any number of lands on each of your turns.
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, target red, green, or white creature you control gets +1/+1 until end of turn for each land you control.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, target red, green, or white creature you control gets +1/+1 until end of turn for each land you control.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, target red, green, or white creature you control gets +1/+1 until end of turn for each land you control.
 SVar:RolledChaos:DB$ Pump | ValidTgts$ Creature.Red+YouCtrl,Creature.Green+YouCtrl,Creature.White+YouCtrl | TgtPrompt$ Select target red, green, or white creature you control | NumAtt$ +Y | NumDef$ +Y
 SVar:Y:Count$Valid Land.YouCtrl
 SVar:AIRollPlanarDieParams:Mode$ Always | HasColorCreatureInPlay$ RGW

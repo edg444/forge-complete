@@ -2,7 +2,10 @@ Name:The Great Forest
 ManaCost:no cost
 Types:Plane Lorwyn
 S:Mode$ CombatDamageToughness | ValidCard$ Creature | Description$ Each creature assigns combat damage equal to its toughness rather than its power.
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, creatures you control get +0/+2 and gain trample until end of turn.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, creatures you control get +0/+2 and gain trample until end of turn.
+# R&D's Secret Lair: printings before March of the Machine Commander say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, creatures you control get +0/+2 and gain trample until end of turn.
 SVar:RolledChaos:DB$ PumpAll | ValidCards$ Creature.ActivePlayerCtrl | NumDef$ +2 | KW$ Trample
 SVar:AIRollPlanarDieParams:Mode$ Always | MinTurn$ 3 | RollInMain1$ True
 Oracle:Each creature assigns combat damage equal to its toughness rather than its power.\nWhenever chaos ensues, creatures you control get +0/+2 and gain trample until end of turn.

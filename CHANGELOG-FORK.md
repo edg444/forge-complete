@@ -886,6 +886,78 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     Thornling's "is indestructible this turn", Maelstrom Archangel's "play a nonland card", Banefire's, Goblin
     Razerunners', Quenchable Fire's, Exploding Borders' and Nicol Bolas's "target player" / "creature or player",
     and "at end of turn" timing (Wall of Reverence, Goblin Razerunners, Hellspark Elemental, unearth).
+- **Set review: Alara Reborn Promos (Dragon Broodmother) and Alara Reborn** (141 new names, `AlaraRebornAuditTest`):
+  - Fixed: *Blitz Hellion* only shuffled itself away at your own end step (it's every end step); *Godtracker of Jund*
+    ignored itself entering with power 5 or greater.
+  - R&D's Secret Lair printed text: *Etherwrought Page* (Alara Reborn only) looks at the top card and may put it into
+    your graveyard, which isn't a surveil; *Lorescale Coatl* (before Core Set 2021) makes its counter optional.
+  - Left as Oracle: Aven Mimeomancer's "is 3/1", Monstrous Carabid's "each turn", Sen Triplets' "can't play spells
+    or activated abilities", Glassdust Hulk's "is unblockable", Dauntless Escort's "are indestructible", Mage
+    Slayer's "defending player", Lich Lord of Unx's and Nemesis of Reason's top-cards-into-graveyard (rule 701.17a
+    defines that as mill), "of their choice" sacrifices (Defiler of Souls, Thraximundar), "creature or player" and
+    "at end of turn" timing (Lightning Reaver, Blitz Hellion, Predatory Advantage, Slave of Bolas).
+- **Set review: 2009 promos (Spellbreaker Behemoth, Rampaging Baloths), Magic 2010 Promos (Vampire Nocturnus, Honor
+  of the Pure, Ant Queen) and Magic 2010** (113 new names):
+  - In-game text: *Undead Slayer* ("Skeleton, Vampire     or Zombie").
+  - R&D's Secret Lair printed text: *Rampaging Baloths* (before Edge of Eternities Commander) makes its Beast
+    optional.
+  - Left as Oracle: Harm's Way's "you or a permanent you control" (the same shield), Protean Hydra's "the end
+    step", Sphinx Ambassador's "names a card", Indestructibility's "is indestructible", Berserkers of Blood Ridge's
+    "each turn", Tome Scour's top-cards-into-graveyard (rule 701.17a) and Yawning Fissure's "sacrifices a land".
+- **Set review: Planechase (Kor Sanctifiers, Whiplash Trap, Hideous End, Beast Hunt previews) and Planechase Planes**
+  (44 new names, `PlanechaseAuditTest`):
+  - In-game text: *The Fourth Sphere*'s chaos ability ("put a 2/2 black zombie token onto the battlefield").
+  - R&D's Secret Lair printed text: all forty Planechase planes (through Planechase Anthology, or before March of the
+    Machine Commander for its ten reprints) say "Whenever you roll {CHAOS}", so chaos that ensues any other way -
+    Missy, the Will of the Planeswalkers sorceries, Fixed Point in Time - doesn't trigger them. New chaos-trigger
+    param `RolledOnly$ True` (the planar die now marks its chaos roll), and revealed planes' chaos abilities
+    (Pools of Becoming) now respect their trigger conditions.
+  - Left as Oracle: "and/or" vs "or" for the planeswalk-and-upkeep triggers (The Aether Flues, Cliffside Market, The
+    Maelstrom), Naya's "additional lands", Stronghold Furnace's "creature or player", Bant's "is indestructible",
+    Sokenzan's "After this main phase" and Lethe Lake's top-cards-into-graveyard.
+- **Set review: 2009-2011 DCI promo planes and schemes** (11 new names):
+  - In-game text: *Perhaps You've Met My Cohort* ("and put that card onto the battlefield").
+  - R&D's Secret Lair printed text: *Celestine Reef*, *Horizon Boughs*, *Mirrored Depths*, *Tazeem* and *Tember City*
+    (through Planechase Anthology) say "Whenever you roll {CHAOS}", as above. The five schemes' printed text matches
+    Oracle (checked on the scans); Tormented Soul's "is unblockable" left as Oracle.
+- **Set review: Zendikar** (219 new names):
+  - In-game text: *Quest for the Holy Relic* said "then shuffle. Then shuffle your library."
+  - R&D's Secret Lair printed text: *Lotus Cobra* (before Zendikar Rising) makes its mana optional.
+  - Left as Oracle: Quest for Pure Flame's "creature or player" (as with Furnace of Rath), Oracle of Mul Daya's "play
+    the top card of your library if it's a land card", Sorin Markov's "control target player's next turn",
+    Gigantiform's "is 8/8", Eldrazi Monument's "are indestructible", Aether Figment's "is unblockable", "of their
+    choice" sacrifices (World Queller, Gatekeeper of Malakir) and Archive Trap's and Hedron Crab's
+    top-cards-into-graveyard.
+- **Set review: Worldwake Promos (Celestial Colonnade, Comet Storm) and Worldwake** (142 new names):
+  - Fixed: *Mordant Dragon* dealt damage equal to its power instead of the combat damage it dealt; *Dead Reckoning*
+    wasn't optional, and declining it still dealt the damage.
+  - Left as Oracle: the Zendikons' "is put into a graveyard" (it's on the battlefield, so it dies), Summit Apes'
+    menace wording, Creeping Tar Pit's and Terra Eternal's "is unblockable" / "are indestructible", Omnath's "doesn't
+    empty from your mana pool", Wrexial's "if that card would be put into a graveyard this turn" (it differs only if
+    the card leaves the stack another way and reaches a graveyard later that turn), "of their choice" sacrifices
+    (Anowon, Butcher of Malakir) and Searing Blaze's, Cosi's Ravager's and Razor Boomerang's "target player" /
+    "creature or player".
+- **Set review: 2010 promos (Emrakul, the Aeons Torn), Rise of the Eldrazi Promos (Lord of Shatterskull Pass) and Rise
+  of the Eldrazi** (220 new names): no script changes.
+  - Left as Oracle: totem armor (now umbra armor - keywords follow current rules), Splinter Twin's "That token has
+    haste" (granted, as with Kiki-Jiki), Realms Uncharted's "four land cards" (an exact count in a hidden search),
+    Training Grounds' "up to {2}", World at War's "first postcombat main phase", Gigantomancer's "becomes 7/7",
+    Transcendent Master's and Deathless Angel's "is indestructible", Ulamog's Crusher's and Lust for War's "each
+    turn", Raid Bombardment's "defending player" and "creature or player" (Forked Bolt, Explosive Revelation).
+- **Set review: Archenemy (Reassembling Skeleton, Plummet, Sorcerer's Strongbox, Chandra's Outrage previews) and
+  Archenemy Schemes** (49 new names):
+  - In-game text: *The Iron Guardian Stirs* ("put a 4/6 colorless Golem creature token onto the battlefield"),
+    *Introductions Are in Order*'s second mode ("or you may put").
+  - Left as Oracle: "of their choice" sacrifices (May Civilization Collapse, Feed the Machine, Only Blood Ends Your
+    Nightmares), Which of You Burns Brightest?'s "target opponent" and My Undead Horde Awakens' "is put into a
+    graveyard".
+- **Set review: Magic 2011 Promos (Sun Titan, Ancient Hellkite) and Magic 2011** (105 new names):
+  - In-game text: *Fauna Shaman* said "then shuffle. Then shuffle."
+  - R&D's Secret Lair printed text: *Ajani's Pridemate* (before War of the Spark) makes its counter optional.
+  - Left as Oracle: Leyline of Sanctity's and Sacred Wolf's hexproof wording, Knight Exemplar's and Phylactery
+    Lich's "are/is indestructible", Leyline of Anticipation's "nonland cards", Diminish's "becomes 1/1", Elixir of
+    Immortality's "into your library" (a card only goes to its owner's library), "of their choice" sacrifices
+    (Destructive Force) and "creature or player" (Inferno Titan, Ember Hauler).
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

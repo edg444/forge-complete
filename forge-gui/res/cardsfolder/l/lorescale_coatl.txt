@@ -2,7 +2,9 @@ Name:Lorescale Coatl
 ManaCost:1 G U
 Types:Creature Snake
 PT:2/2
-T:Mode$ Drawn | ValidCard$ Card.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ Whenever you draw a card, put a +1/+1 counter on this creature.
+T:Mode$ Drawn | ValidCard$ Card.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigPutCounter | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20200703 | TriggerDescription$ Whenever you draw a card, put a +1/+1 counter on this creature.
+# R&D's Secret Lair: printings before Core Set 2021 make the counter optional.
+T:Mode$ Drawn | ValidCard$ Card.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigPutCounter | OptionalDecider$ You | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20200703 | TriggerDescription$ (As printed) Whenever you draw a card, you may put a +1/+1 counter on CARDNAME.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1
 DeckHas:Ability$Counters
 Oracle:Whenever you draw a card, put a +1/+1 counter on this creature.

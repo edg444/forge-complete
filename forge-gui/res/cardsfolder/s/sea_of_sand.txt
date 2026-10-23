@@ -9,7 +9,10 @@ T:Mode$ Drawn | ValidCard$ Card.Land | TriggerZones$ Command | Execute$ TrigGain
 SVar:TrigGain:DB$ GainLife | Defined$ TriggeredCardController | LifeAmount$ 3
 T:Mode$ Drawn | ValidCard$ Card.nonLand | TriggerZones$ Command | Execute$ TrigLose | TriggerDescription$ Whenever a player draws a nonland card, that player loses 3 life.
 SVar:TrigLose:DB$ LoseLife | Defined$ TriggeredCardController | LifeAmount$ 3
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, put target permanent on top of its owner's library.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, put target permanent on top of its owner's library.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, put target permanent on top of its owner's library.
 SVar:RolledChaos:DB$ ChangeZone | ValidTgts$ Permanent | Origin$ Battlefield | Destination$ Library | LibraryPosition$ 0
 SVar:AIRollPlanarDieParams:Mode$ Always
 Oracle:Players reveal each card they draw.\nWhenever a player draws a land card, that player gains 3 life.\nWhenever a player draws a nonland card, that player loses 3 life.\nWhenever chaos ensues, put target permanent on top of its owner's library.

@@ -2,7 +2,10 @@ Name:The Eon Fog
 ManaCost:no cost
 Types:Plane Equilor
 R:Event$ BeginPhase | ActiveZones$ Command | Phase$ Untap | Skip$ True | Description$ Players skip their untap steps.
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, untap all permanents you control.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, untap all permanents you control.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, untap all permanents you control.
 SVar:RolledChaos:DB$ UntapAll | ValidCards$ Permanent.YouCtrl
 SVar:AIRollPlanarDieParams:Mode$ Always | LowPriority$ True | MaxRollsPerTurn$ 9
 Oracle:Players skip their untap steps.\nWhenever chaos ensues, untap all permanents you control.

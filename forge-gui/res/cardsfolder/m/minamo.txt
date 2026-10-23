@@ -3,7 +3,10 @@ ManaCost:no cost
 Types:Plane Kamigawa
 T:Mode$ SpellCast | ValidCard$ Card | ValidActivatingPlayer$ Player | TriggerZones$ Command | Execute$ TrigDraw | TriggerDescription$ Whenever a player casts a spell, that player may draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ TriggeredActivator | OptionalDecider$ True
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, each player may return a blue card from their graveyard to their hand.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, each player may return a blue card from their graveyard to their hand.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, each player may return a blue card from their graveyard to their hand.
 SVar:RolledChaos:DB$ RepeatEach | RepeatPlayers$ Player | RepeatSubAbility$ DBChoose | SubAbility$ DBChangeZoneAll
 SVar:DBChoose:DB$ ChooseCard | Choices$ Card.RememberedPlayerCtrl+Blue | ChoiceZone$ Graveyard | Defined$ Player.IsRemembered | Amount$ 1 | RememberChosen$ True
 SVar:DBChangeZoneAll:DB$ ChangeZoneAll | ChangeType$ Card.IsRemembered | Origin$ Graveyard | Destination$ Hand | SubAbility$ DBCleanup

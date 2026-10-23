@@ -2,6 +2,8 @@ Name:Lotus Cobra
 ManaCost:1 G
 Types:Creature Snake
 PT:2/1
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Land.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigMana | TriggerDescription$ Landfall — Whenever a land you control enters, add one mana of any color.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Land.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigMana | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20200925 | TriggerDescription$ Landfall — Whenever a land you control enters, add one mana of any color.
+# R&D's Secret Lair: printings before Zendikar Rising make the mana optional.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Land.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigMana | OptionalDecider$ You | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20200925 | TriggerDescription$ (As printed) Landfall — Whenever a land you control enters, you may add one mana of any color.
 SVar:TrigMana:DB$ Mana | Produced$ Any
 Oracle:Landfall — Whenever a land you control enters, add one mana of any color.

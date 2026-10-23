@@ -3,7 +3,10 @@ ManaCost:no cost
 Types:Plane Dominaria
 S:Mode$ Continuous | Affected$ Creature | EffectZone$ Command | AddAbility$ LlanowarAb | Description$ All creatures have "{T}: Add {G}{G}."
 SVar:LlanowarAb:AB$ Mana | Cost$ T | Amount$ 2 | Produced$ G | SpellDescription$ Add {G}{G}.
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, untap all creatures you control.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, untap all creatures you control.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, untap all creatures you control.
 SVar:RolledChaos:DB$ UntapAll | ValidCards$ Creature.YouCtrl
 SVar:AIRollPlanarDieParams:Mode$ Always | HasCreatureInPlay$ True
 Oracle:All creatures have "{T}: Add {G}{G}."\nWhenever chaos ensues, untap all creatures you control.

@@ -2,7 +2,10 @@ Name:Sokenzan
 ManaCost:no cost
 Types:Plane Kamigawa
 S:Mode$ Continuous | EffectZone$ Command | Affected$ Creature | AddPower$ 1 | AddToughness$ 1 | AddKeyword$ Haste | Description$ All creatures get +1/+1 and have haste.
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, untap all creatures that attacked this turn. After this main phase, there is an additional combat phase followed by an additional main phase.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, untap all creatures that attacked this turn. After this main phase, there is an additional combat phase followed by an additional main phase.
+# R&D's Secret Lair: printings before March of the Machine Commander say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, untap all creatures that attacked this turn. After this main phase, there is an additional combat phase followed by an additional main phase.
 SVar:RolledChaos:DB$ UntapAll | ValidCards$ Creature.attackedThisTurn | SubAbility$ DBAddCombat
 SVar:DBAddCombat:DB$ AddPhase | ExtraPhase$ Combat | FollowedBy$ Main2 | ConditionPhases$ Main1,Main2
 SVar:AIRollPlanarDieParams:Mode$ Always | LowPriority$ True | MaxRollsPerTurn$ 9

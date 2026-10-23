@@ -4,7 +4,10 @@ Types:Plane Valla
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature | TriggerZones$ Command | Execute$ TrigDamage | OptionalDecider$ TriggeredCardController | TriggerDescription$ Whenever a creature enters, that creature's controller may have it deal damage equal to its power to any target of their choice.
 SVar:TrigDamage:DB$ DealDamage | ValidTgts$ Any | NumDmg$ Y | DamageSource$ TriggeredCardLKICopy | TargetingPlayer$ TriggeredCardController
 SVar:Y:TriggeredCard$CardPower
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, exile target creature, then return it to the battlefield under its owner's control.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, exile target creature, then return it to the battlefield under its owner's control.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, exile target creature, then return it to the battlefield under its owner's control.
 SVar:RolledChaos:DB$ ChangeZone | ValidTgts$ Creature | Origin$ Battlefield | Destination$ Exile | RememberTargets$ True | SubAbility$ RestorationReturn
 SVar:RestorationReturn:DB$ ChangeZone | Defined$ Remembered | Origin$ Exile | Destination$ Battlefield | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
