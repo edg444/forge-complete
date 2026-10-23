@@ -1,0 +1,12 @@
+Name:Kozilek, Compleated
+ManaCost:8 C/P C/P
+Types:Legendary Creature Phyrexian Eldrazi
+PT:12/12
+T:Mode$ SpellCast | ValidCard$ Card.Self | Execute$ TrigPoison | TriggerDescription$ When you cast this spell, each opponent gets two poison counters, then each opponent with more than two cards in hand discards cards equal to the difference.
+SVar:TrigPoison:DB$ Poison | Defined$ Opponent | Num$ 2 | SubAbility$ DBDiscardEach
+# the difference is counted as the trigger resolves; two or fewer, nothing (rulings)
+SVar:DBDiscardEach:DB$ RepeatEach | RepeatPlayers$ Player.Opponent | RepeatSubAbility$ DBDiscard
+SVar:DBDiscard:DB$ Discard | Defined$ Remembered | NumCards$ X | Mode$ TgtChoose | ConditionCheckSVar$ X | ConditionSVarCompare$ GE1
+SVar:X:PlayerCountRemembered$CardsInHand/Minus.2
+K:Annihinfect
+Oracle:({C/P} can be paid with either {C} or 2 life.)\nWhen you cast this spell, each opponent gets two poison counters, then each opponent with more than two cards in hand discards cards equal to the difference.\nAnnihinfect (Whenever this creature attacks, defending player sacrifices a permanent for each poison counter they have.)

@@ -156,6 +156,8 @@ public enum FSkinProp {
     IMG_MANA_PHRYX     (new int[] {166, 822, 80, 80}, PropType.MANAICONS),
     IMG_MANA_PHRYX_U   (new int[] {330, 248, 80, 80}, PropType.MANAICONS),
     IMG_MANA_PHRYX_W   (new int[] {412, 248, 80, 80}, PropType.MANAICONS),
+    // the white one recolored to the colorless gray, in a spare corner of the default sprite sheet
+    IMG_MANA_PHRYX_C   (new int[] {96, 904, 80, 80}, PropType.MANAICONS),
     IMG_MANA_PHRYX_R   (new int[] {412, 166, 80, 80}, PropType.MANAICONS),
     IMG_MANA_PHRYX_G   (new int[] {330, 166, 80, 80}, PropType.MANAICONS),
     IMG_MANA_PHRYX_B   (new int[] {248, 84, 80, 80}, PropType.MANAICONS),
@@ -683,6 +685,7 @@ public enum FSkinProp {
             .put(ManaCostShard.BP, IMG_MANA_PHRYX_B)
             .put(ManaCostShard.RP, IMG_MANA_PHRYX_R)
             .put(ManaCostShard.GP, IMG_MANA_PHRYX_G)
+            .put(ManaCostShard.CP, IMG_MANA_PHRYX_C)
 
             .put(ManaCostShard.BGP, IMG_MANA_PHRYX_BG)
             .put(ManaCostShard.BRP, IMG_MANA_PHRYX_BR)

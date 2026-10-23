@@ -15,6 +15,7 @@ public enum Keyword {
     AGGRESSIVE("Aggressive", SimpleKeyword.class, true, "During your turn, there is an additional combat phase after the first, and only creatures with aggressive may attack during it."),
     AFTERMATH("Aftermath", SimpleKeyword.class, false, "Cast this spell only from your graveyard. Then exile it."),
     AMPLIFY("Amplify", Amplify.class, false, "As this creature enters, put {%d:+1/+1 counter} on it for each %s card you reveal in your hand."),
+    ANNIHINFECT("Annihinfect", SimpleKeyword.class, false, "Whenever this creature attacks, defending player sacrifices a permanent for each poison counter they have."),
     ANNIHILATOR("Annihilator", KeywordWithAmount.class, false, "Whenever this creature attacks, defending player sacrifices {%d:permanent}."),
     ART_MENACE("Art menace", SimpleKeyword.class, true, "This creature can't be blocked except by creatures with two or more visible figures in their art."),
     ASCEND("Ascend", SimpleKeyword.class, true, "If you control ten or more permanents, you get the city's blessing for the rest of the game."),

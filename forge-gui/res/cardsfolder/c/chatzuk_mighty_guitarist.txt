@@ -1,0 +1,14 @@
+Name:Chatzuk, Mighty Guitarist
+ManaCost:1 G W
+Types:Legendary Creature Human Bard
+PT:2/2
+K:Banding
+# only the generic part of the cost goes down (rulings)
+S:Mode$ ReduceCost | ValidCard$ Creature.withBanding | Type$ Spell | Activator$ You | Amount$ 2 | Description$ Creature spells you cast with banding cost {2} less to cast.
+T:Mode$ AttackersDeclared | AttackingPlayer$ You | CheckSVar$ InBands | SVarCompare$ GE2 | TriggerZones$ Battlefield | Execute$ DBEachBander | TriggerDescription$ Whenever two or more creatures you control attack in a band, each creature in that band gets +1/+1 until end of turn for each creature in that band.
+SVar:DBEachBander:DB$ RepeatEach | RepeatCards$ Creature.attacking+YouCtrl+inBandGE2 | Zone$ Battlefield | RepeatSubAbility$ DBPump
+SVar:DBPump:DB$ Pump | Defined$ Remembered | NumAtt$ +X | NumDef$ +X
+SVar:X:Count$BandSize.Remembered
+SVar:InBands:Count$Valid Creature.attacking+YouCtrl+inBandGE2
+DeckHints:Keyword$Banding
+Oracle:Banding (Just ask around until you find someone who knows.)\nCreature spells you cast with banding cost {2} less to cast.\nWhenever two or more creatures you control attack in a band, each creature in that band gets +1/+1 until end of turn for each creature in that band.

@@ -615,6 +615,15 @@ public class CardFactoryUtil {
 
             trigger.setOverridingAbility(AbilityFactory.getAbility(effect, card));
             inst.addTrigger(trigger);
+        } else if (keyword.equals("Annihinfect")) {
+            // Kozilek, Compleated: sacrificed before blockers are declared (rulings)
+            final String trig = "Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Secondary$ True"
+                    + " | TriggerDescription$ Annihinfect (" + inst.getReminderText() + ")";
+            final SpellAbility sac = AbilityFactory.getAbility("DB$ Sacrifice | Defined$ TriggeredDefendingPlayer | SacValid$ Permanent | Amount$ X", card);
+            sac.setSVar("X", "PlayerCountDefinedTriggeredDefendingPlayer$Counters.POISON");
+            final Trigger trigger = TriggerHandler.parseTrigger(trig, card, intrinsic);
+            trigger.setOverridingAbility(sac);
+            inst.addTrigger(trigger);
         } else if (keyword.startsWith("Annihilator")) {
             final String[] k = keyword.split(":");
             final String n = k[1];

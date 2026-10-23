@@ -162,6 +162,31 @@ public class RollDiceEffect extends SpellAbilityEffect {
             return 0;
         }
 
+        // Pokey, the Scallywagg: a coin instead of each d20, tails 1 and heads 20. It's a flip, not a roll, so no
+        // roll triggers or modifications (rulings)
+        if (sides == 20 && !player.getController().isAI()
+                && forge.game.staticability.StaticAbilityCoinDieSwap.applies(player, forge.game.staticability.StaticAbilityMode.D20AsCoinFlip)
+                && player.getController().confirmAction(sa, null, "Flip a coin instead of rolling the d20? (tails is 1, heads is 20)", null)) {
+            int total = modifier;
+            forge.game.staticability.StaticAbilityCoinDieSwap.setSwapping(true);
+            try {
+                for (int i = 0; i < amount; i++) {
+                    final boolean heads = forge.util.MyRandom.getRandom().nextBoolean();
+                    player.getGame().fireEvent(new forge.game.event.GameEventFlipCoin(player.getView(), heads, false));
+                    player.getGame().getAction().notifyOfValue(sa, player, heads ? "Heads (20)" : "Tails (1)", null);
+                    player.flip();
+                    final int value = heads ? 20 : 1;
+                    total += value;
+                    if (rollsResult != null) {
+                        rollsResult.add(value);
+                    }
+                }
+            } finally {
+                forge.game.staticability.StaticAbilityCoinDieSwap.setSwapping(false);
+            }
+            return total;
+        }
+
         Map<Player, Integer> ignoreChosenMap = Maps.newHashMap();
         Set<Card> dicePTExchanges = new HashSet<>();
 

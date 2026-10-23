@@ -109,6 +109,9 @@ public enum StaticAbilityMode {
     CantBeChosen,
     // Intangible Vibes
     AreTokens,
+    // Pokey, the Scallywagg
+    CoinFlipAsD20,
+    D20AsCoinFlip,
 
     // StaticAbilityColorlessDamageSource
     ColorlessDamageSource,

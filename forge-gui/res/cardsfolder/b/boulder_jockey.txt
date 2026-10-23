@@ -1,0 +1,10 @@
+Name:Boulder Jockey
+ManaCost:2 R
+Types:Creature Goblin
+PT:4/4
+# {D} is an additional cost (giving up a land drop), not mana, so the mana value is 3 (rulings)
+A:SP$ PermanentCreature | Cost$ 2 R LandDrop<1>
+Text:({D} is a land drop. You may give up one potential land drop this turn to pay for {D}.)
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigBoulder | TriggerDescription$ Whenever CARDNAME attacks, you may pay {D}. If you do, create a 3/3 colorless Construct artifact creature token named Boulder that's tapped and attacking. Sacrifice that token at the beginning of the next end step.
+SVar:TrigBoulder:DB$ Token | TokenScript$ c_3_3_a_construct_boulder | TokenTapped$ True | TokenAttacking$ True | AtEOT$ Sacrifice | UnlessCost$ LandDrop<1> | UnlessPayer$ You | UnlessSwitched$ True
+Oracle:({D} is a land drop. You may give up one potential land drop this turn to pay for {D}.)\nWhenever Boulder Jockey attacks, you may pay {D}. If you do, create a 3/3 colorless Construct artifact creature token named Boulder that's tapped and attacking. Sacrifice that token at the beginning of the next end step.

@@ -28,6 +28,7 @@ public interface ICostVisitor<T> {
     T visit(CostAddMana cost);
     T visit(CostPayLife cost);
     T visit(CostPayEnergy cost);
+    T visit(CostGiveUpLandDrop cost);
     T visit(CostPaySpeed cost);
     T visit(CostGainLife cost);
     T visit(CostGiveFromCollection cost);
@@ -159,6 +160,10 @@ public interface ICostVisitor<T> {
         }
         @Override
         public T visit(CostPayEnergy cost) {
+            return null;
+        }
+        @Override
+        public T visit(CostGiveUpLandDrop cost) {
             return null;
         }
         @Override

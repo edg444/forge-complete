@@ -312,6 +312,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Mystery Booster 2 playtest cards (MB2), part 9: Kozilek, Compleated, Pokey, the Scallywagg, Chatzuk, Mighty
+  Guitarist, Luxior, Ignited, Orb of Origin, Boulder Jockey, Keeper of the Crown, All-Star Kicker.**
+  - New mana symbols: `{C/P}` (colorless Phyrexian; a gray icon made from the white Phyrexian one, in a spare spot of
+    the default mana sprite sheet) and `{L}` (one mana from a legendary source; drawn placeholder icons on desktop
+    and mobile, payment rules alongside `{Z}`).
+  - Keyword `Annihinfect`. Supertypes Poly, Mono (activated abilities cost an additional {T}) and Continuous. Cost
+    `LandDrop<N>` (give up a land drop; only on your turn). `Cost.add` now refreshes whether the cost has {T}.
+  - Static modes `CoinFlipAsD20` and `D20AsCoinFlip` (people are asked; the swapped event isn't swapped back).
+  - Card property `inBandGE<N>` and `Count$BandSize.<Defined>`. `SVar:AssistKicker:<n>`: another player may help pay
+    the kicker part. New effect `PassTheBall` (a teammate gives a permanent or a card in hand to another).
+
 - **Mystery Booster 2 playtest cards (MB2), part 8: Flavor Disaster, Immersturm Battlefield, Vuzzle Spaceship, Fludge,
   Gunk Guardian (and the Gunk card it makes), Glade of the Pump Spells, Pyromancy 101, Zone of Flame, Meandered
   Towershell.**

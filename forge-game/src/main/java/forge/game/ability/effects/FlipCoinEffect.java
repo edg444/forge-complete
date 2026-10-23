@@ -206,6 +206,27 @@ public class FlipCoinEffect extends SpellAbilityEffect {
         Set<Boolean> flipResults = new HashSet<>();
         boolean noCall = sa.hasParam("NoCall");
         boolean choice = true;
+
+        // Pokey, the Scallywagg: a d20 instead, 1-10 tails and 11-20 heads. It's a die roll, not a flip, to everything
+        // but the effect that asked for the flip; outside 1-20 it's neither heads nor tails (rulings)
+        if (fixedResult == null && !flipper.getController().isAI()
+                && forge.game.staticability.StaticAbilityCoinDieSwap.applies(flipper, forge.game.staticability.StaticAbilityMode.CoinFlipAsD20)
+                && flipper.getController().confirmAction(sa, null, "Roll a d20 instead of flipping a coin? (1-10 is tails, 11-20 is heads)", null)) {
+            if (!noCall) {
+                choice = flipper.getController().chooseBinary(sa, sa.getHostCard().getDisplayName() + " - " + Localizer.getInstance().getMessage("lblCallCoinFlip") + info, PlayerController.BinaryChoiceType.HeadsOrTails);
+            }
+            final int roll;
+            forge.game.staticability.StaticAbilityCoinDieSwap.setSwapping(true);
+            try {
+                roll = RollDiceEffect.rollDiceForPlayer(sa, flipper, 1, 20);
+            } finally {
+                forge.game.staticability.StaticAbilityCoinDieSwap.setSwapping(false);
+            }
+            if (roll < 1 || roll > 20) {
+                return false;
+            }
+            return (roll >= 11) == choice;
+        }
         if (fixedResult != null) {
             flipResults.add(fixedResult);
         } else {

@@ -1,0 +1,8 @@
+Name:Pokey, the Scallywagg
+ManaCost:U R
+Types:Legendary Creature Brushwagg Pirate
+PT:2/2
+K:Menace
+S:Mode$ CoinFlipAsD20 | ValidPlayer$ You | Description$ If you would flip a coin, you may instead roll a d20. 1−10 is tails and 11−20 is heads. (It counts as rolling a die, not flipping a coin.)
+S:Mode$ D20AsCoinFlip | ValidPlayer$ You | Description$ If you would roll a d20, you may instead flip a coin. Tails is 1 and heads is 20. (It counts as flipping a coin, not rolling a die.)
+Oracle:Menace\nIf you would flip a coin, you may instead roll a d20. 1−10 is tails and 11−20 is heads. (It counts as rolling a die, not flipping a coin.)\nIf you would roll a d20, you may instead flip a coin. Tails is 1 and heads is 20. (It counts as flipping a coin, not rolling a die.)

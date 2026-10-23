@@ -3089,6 +3089,13 @@ public class CardProperty {
             if (card.getBank() != 2) {
                 return false;
             }
+        } else if (property.startsWith("inBandGE")) {
+            // Chatzuk, Mighty Guitarist: attacking in a band of at least N creatures
+            final forge.game.combat.Combat bandCombat = card.getGame().getCombat();
+            final forge.game.combat.AttackingBand band = bandCombat == null ? null : bandCombat.getBandOfAttacker(card);
+            if (band == null || band.getAttackers().size() < Integer.parseInt(property.substring(8))) {
+                return false;
+            }
         } else if (property.equals("TaughtBySource")) {
             // Teach: the creature the source was taught to, while both stay where they are
             final Card taught = source.getTaughtTo();

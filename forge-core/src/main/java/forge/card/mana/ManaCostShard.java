@@ -73,6 +73,7 @@ public enum ManaCostShard {
     // Snow and colorless
     S(ManaAtom.IS_SNOW, "S"),
     Z(ManaAtom.IS_MULTI_SOURCE, "Z"),
+    L(ManaAtom.IS_LEGENDARY_SOURCE, "L"),
     GENERIC(ManaAtom.GENERIC, "1"),
 
     /* Phyrexian */
@@ -81,6 +82,8 @@ public enum ManaCostShard {
     BP(ManaAtom.BLACK | ManaAtom.OR_2_LIFE, "B/P"),
     RP(ManaAtom.RED | ManaAtom.OR_2_LIFE, "R/P"),
     GP(ManaAtom.GREEN | ManaAtom.OR_2_LIFE, "G/P"),
+    // Kozilek, Compleated: payable with {C} or 2 life
+    CP(ManaAtom.COLORLESS | ManaAtom.OR_2_LIFE, "C/P"),
     BGP(ManaAtom.BLACK | ManaAtom.GREEN | ManaAtom.OR_2_LIFE, "B/G/P"),
     BRP(ManaAtom.BLACK | ManaAtom.RED | ManaAtom.OR_2_LIFE, "B/R/P"),
     GUP(ManaAtom.GREEN | ManaAtom.BLUE | ManaAtom.OR_2_LIFE, "G/U/P"),
@@ -223,6 +226,7 @@ public enum ManaCostShard {
                 case 'P': atoms |= ManaAtom.OR_2_LIFE;      break;
                 case 'S': atoms |= ManaAtom.IS_SNOW;        break;
                 case 'Z': atoms |= ManaAtom.IS_MULTI_SOURCE; break;
+                case 'L': atoms |= ManaAtom.IS_LEGENDARY_SOURCE; break;
                 case 'X': atoms |= ManaAtom.IS_X;           break;
                 case 'C': atoms |= ManaAtom.COLORLESS;      break;
                 case 'H': atoms |= ManaAtom.IS_HALF;        break;
@@ -320,6 +324,11 @@ public enum ManaCostShard {
         return isOfKind(ManaAtom.IS_MULTI_SOURCE);
     }
 
+    /** {L}: paid with one mana of any type from a legendary source (Keeper of the Crown). */
+    public boolean isLegendarySource() {
+        return isOfKind(ManaAtom.IS_LEGENDARY_SOURCE);
+    }
+
     /** True for an Unhinged half shard such as Little Girl's {HW}. */
     public boolean isHalf() {
         return isOfKind(ManaAtom.IS_HALF);
@@ -350,7 +359,8 @@ public enum ManaCostShard {
 
 
     public boolean isGeneric() {
-    	return isOfKind(ManaAtom.GENERIC) || isOfKind(ManaAtom.IS_X) || this.isSnow() || this.isMultiColorSource() || this.isOr2Generic();
+    	return isOfKind(ManaAtom.GENERIC) || isOfKind(ManaAtom.IS_X) || this.isSnow() || this.isMultiColorSource()
+                || this.isLegendarySource() || this.isOr2Generic();
     }
     public boolean isOr2Generic() {
         return isOfKind(ManaAtom.OR_2_GENERIC);

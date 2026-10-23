@@ -1,0 +1,14 @@
+Name:All-Star Kicker
+ManaCost:1 R
+Types:Creature Orc Athlete
+PT:2/2
+K:Kicker:3
+# assist kicker: another player may help pay just the kicker part (CostAdjustment)
+SVar:AssistKicker:3
+Text:Assist kicker {3} (You and up to one other player can spend mana to pay this kicker cost.)
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPass | TriggerDescription$ When CARDNAME enters the battlefield, your team may pass the ball. Then if CARDNAME was kicked, creatures your team controls get +1/+1 and gain haste until end of turn. (To pass the ball, one of the players on your team gives a permanent or card in hand to another player on your team.)
+# with no teammates the ball can't be passed, but a kicked one still pumps (rulings)
+SVar:TrigPass:DB$ PassTheBall | SubAbility$ DBPump
+SVar:DBPump:DB$ PumpAll | ValidCards$ Creature.YourTeamCtrl | NumAtt$ +1 | NumDef$ +1 | KW$ Haste | ConditionCheckSVar$ WasKicked | ConditionSVarCompare$ EQ1
+SVar:WasKicked:Count$Kicked.1.0
+Oracle:Assist kicker {3} (You and up to one other player can spend mana to pay this kicker cost.)\nWhen All-Star Kicker enters the battlefield, your team may pass the ball. Then if All-Star Kicker was kicked, creatures your team controls get +1/+1 and gain haste until end of turn. (To pass the ball, one of the players on your team gives a permanent or card in hand to another player on your team.)

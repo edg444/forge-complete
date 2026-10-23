@@ -95,6 +95,11 @@ public record Mana(byte color, Card sourceCard, AbilityManaPart manaAbility, Pla
         return this.sourceCard.couldProduceTwoOrMoreColors();
     }
 
+    /** Can pay {L}: its source is legendary - a creature made legendary counts (Keeper of the Crown's rulings). */
+    public boolean isFromLegendarySource() {
+        return this.sourceCard.getType().isLegendary();
+    }
+
     public boolean isRestricted() {
         return this.manaAbility != null && (!manaAbility.getManaRestrictions().isEmpty() || !manaAbility.getExtraManaRestriction().isEmpty());
     }

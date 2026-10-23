@@ -360,6 +360,10 @@ public class Cost implements Serializable {
             final String[] splitStr = abCostParse(parse, 1);
             return new CostPaySpeed(splitStr[0]);
         }
+        if (parse.startsWith("LandDrop<")) {
+            final String[] splitStr = abCostParse(parse, 1);
+            return new CostGiveUpLandDrop(splitStr[0]);
+        }
         if (parse.startsWith("PayEnergy<")) {
             // Payenergy<EnergyCost>
             final String[] splitStr = abCostParse(parse, 1);
@@ -1151,6 +1155,8 @@ public class Cost implements Serializable {
         }
         costParts.removeAll(toRemove);
         this.sort();
+        // an added {T} (Orb of Origin's mono) has to show up for summoning sickness and the like too
+        cacheTapCost();
         return this;
     }
 

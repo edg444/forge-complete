@@ -67,6 +67,19 @@ public class CardFaceSymbols {
         return SkinImage.fromImage(img);
     }
 
+    /** Keeper of the Crown's {L}: no art for it anywhere, so a gray disc with an L. */
+    static SkinImage legendarySourcePlaceholder() {
+        final java.awt.image.BufferedImage img = new java.awt.image.BufferedImage(
+                DRAWN_SYMBOL_SIZE, DRAWN_SYMBOL_SIZE, java.awt.image.BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = startSymbol(img, new Color(203, 198, 193), new Color(90, 84, 80));
+        g.setColor(new Color(35, 35, 35));
+        g.setFont(new java.awt.Font(java.awt.Font.SERIF, java.awt.Font.BOLD, DRAWN_SYMBOL_SIZE * 2 / 3));
+        final java.awt.FontMetrics fm = g.getFontMetrics();
+        g.drawString("L", (DRAWN_SYMBOL_SIZE - fm.stringWidth("L")) / 2, (DRAWN_SYMBOL_SIZE + fm.getAscent() - fm.getDescent()) / 2);
+        g.dispose();
+        return SkinImage.fromImage(img);
+    }
+
     /** Experiment Five's {Z}: no art for it anywhere, so a disc of the five colors, one wedge each. */
     static SkinImage multiColorSourcePlaceholder() {
         final java.awt.image.BufferedImage img = new java.awt.image.BufferedImage(
@@ -166,6 +179,7 @@ public class CardFaceSymbols {
         // gold (the Sword of Dungeons & Dragons Dragon) likewise has no symbol of its own
         MANA_IMAGES.put("O", goldPlaceholder());
         MANA_IMAGES.put("Z", multiColorSourcePlaceholder());
+        MANA_IMAGES.put("L", legendarySourcePlaceholder());
         MANA_IMAGES.put("A", acornSymbol());
         for (final int n : OVERSIZED_GENERIC) {
             MANA_IMAGES.put(String.valueOf(n), genericNumberSymbol(n));

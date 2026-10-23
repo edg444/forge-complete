@@ -118,6 +118,14 @@ public class Player extends GameEntity implements Comparable<Player> {
     private List<Card> spellsCastSinceBeginningOfLastTurn = Lists.newArrayList();
     private int investigatedThisTurn;
     private boolean wayBehindThisTurn;
+    // Boulder Jockey: land drops given up this turn ({D})
+    private int landDropsGivenUp = 0;
+    public int getLandDropsGivenUp() {
+        return landDropsGivenUp;
+    }
+    public void addLandDropsGivenUp(final int n) {
+        landDropsGivenUp += n;
+    }
     // You Compleat Me: "For the rest of the game, your maximum life total is 10."
     private Integer maxLifeTotal = null;
     // Creepy Crawler: the players this one is afraid of this turn
@@ -2328,7 +2336,7 @@ public class Player extends GameEntity implements Comparable<Player> {
         }
 
         // check for adjusted max lands play per turn
-        return getLandsPlayedThisTurn() < getMaxLandPlays();
+        return getLandsPlayedThisTurn() + landDropsGivenUp < getMaxLandPlays();
     }
 
     public final int getMaxLandPlays() {
@@ -3457,6 +3465,7 @@ public class Player extends GameEntity implements Comparable<Player> {
         resetLandsPlayedThisTurn();
         investigatedThisTurn = 0;
         wayBehindThisTurn = false;
+        landDropsGivenUp = 0;
         afraidOfThisTurn.clear();
         scryThisTurn = 0;
         surveilThisTurn = 0;

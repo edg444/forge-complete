@@ -47,6 +47,11 @@ public class CostAdjustment {
         Cost result = cost.copy();
         boolean isStateChangeToFaceDown = false;
 
+        // Orb of Origin: a mono permanent's activated abilities cost an additional {T}, unless they already include it
+        if (sa.isActivatedAbility() && host.getType().hasSupertype(forge.card.CardType.Supertype.Mono) && !result.hasTapCost()) {
+            result.add(new Cost("T", false));
+        }
+
         if (sa.isSpell()) {
             if (sa.isCastFaceDown() && !host.isFaceDown()) {
                 // Turn face down to apply cost modifiers correctly
@@ -311,6 +316,18 @@ public class CostAdjustment {
         if (sa.isSpell()) {
             if (host.hasKeyword(Keyword.ASSIST) && !adjustCostByAssist(cost, sa, test)) {
                 return false;
+            }
+            // All-Star Kicker's assist kicker: another player may help pay only the kicker part (rulings)
+            if (host.hasSVar("AssistKicker") && sa.isKicked() && !test) {
+                final int kicker = Integer.parseInt(host.getSVar("AssistKicker"));
+                final int genericLeft = Math.min(kicker, cost.getUnpaidShards(ManaCostShard.GENERIC));
+                if (genericLeft > 0) {
+                    final Player assistant = sa.getActivatingPlayer().getController().choosePlayerToAssistPayment(
+                            sa.getActivatingPlayer().getAllOtherPlayers(), sa, "Choose a player to help pay the kicker cost", genericLeft);
+                    if (assistant != null && !assistant.getController().helpPayForAssistSpell(cost, sa, genericLeft, genericLeft)) {
+                        return false;
+                    }
+                }
             }
 
             if (host.hasKeyword(Keyword.DELVE)) {

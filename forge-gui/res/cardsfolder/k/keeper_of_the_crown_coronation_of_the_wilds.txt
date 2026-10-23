@@ -1,0 +1,20 @@
+Name:Keeper of the Crown
+ManaCost:2 L
+Colors:green
+Types:Creature Human Noble
+PT:3/4
+# {L} is paid with one mana of any type from a legendary source; its color indicator makes it green everywhere (rulings)
+S:Mode$ Continuous | Affected$ Creature.Legendary+Other+YouCtrl | AddPower$ 1 | AddToughness$ 1 | AddKeyword$ Indestructible | Description$ Other legendary creatures you control get +1/+1 and have indestructible.
+AlternateMode:Adventure
+Oracle:({L} can be paid with one mana from a legendary source.)\nOther legendary creatures you control get +1/+1 and have indestructible.
+
+ALTERNATE
+
+Name:Coronation of the Wilds
+ManaCost:2 G
+Types:Sorcery Adventure
+# it lasts until the creature leaves the battlefield (rulings)
+A:SP$ Animate | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | Types$ Legendary,Noble | Abilities$ ABMana | Duration$ Permanent | SubAbility$ DBDraw | SpellDescription$ Target creature you control becomes a legendary Noble in addition to its other types and gains "{T}: Add one mana of any color." Draw a card.
+SVar:ABMana:AB$ Mana | Cost$ T | Produced$ Any | SpellDescription$ Add one mana of any color.
+SVar:DBDraw:DB$ Draw
+Oracle:Target creature you control becomes a legendary Noble in addition to its other types and gains "{T}: Add one mana of any color."\nDraw a card.

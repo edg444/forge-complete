@@ -28,6 +28,8 @@ public abstract class ManaAtom {
     public static final int IS_HALF = 1 << 12;
     // Experiment Five's {Z}: one mana from a source that could produce two or more colors
     public static final int IS_MULTI_SOURCE = 1 << 13;
+    // Keeper of the Crown's {L}: one mana from a legendary source
+    public static final int IS_LEGENDARY_SOURCE = 1 << 14;
 
     public static byte fromName(final char c) {
         switch (Character.toLowerCase(c)) {

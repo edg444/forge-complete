@@ -1,0 +1,10 @@
+Name:Luxior, Ignited
+ManaCost:4
+Types:Legendary Artifact Planeswalker Equipment Luxior
+Loyalty:1
+# still a planeswalker while attached, so it can be attacked - even by the creature it's attached to (rulings)
+S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddPower$ X | AddToughness$ X | Description$ Equipped creature gets +1/+1 for each counter on CARDNAME.
+SVar:X:Count$CardCounters.ALL
+A:AB$ Attach | Cost$ AddCounter<1/LOYALTY> | Planeswalker$ True | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select up to one target creature you control | TargetMin$ 0 | TargetMax$ 1 | AILogic$ Pump | SpellDescription$ Attach this Equipment to up to one target creature you control.
+A:AB$ Pump | Cost$ SubCounter<2/LOYALTY> | Planeswalker$ True | Defined$ Equipped | NumAtt$ +2 | NumDef$ +2 | KW$ Double Strike | SpellDescription$ Equipped creature gets +2/+2 and gains double strike until end of turn.
+Oracle:Equipped creature gets +1/+1 for each counter on Luxior, Ignited.\n[+1]: Attach this Equipment to up to one target creature you control.\n[−2]: Equipped creature gets +2/+2 and gains double strike until end of turn.

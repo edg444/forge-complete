@@ -565,7 +565,8 @@ public class ManaCostBeingPaid {
     }
     
     public final ManaCostShard payManaViaConvoke(final byte color) {
-        Predicate<ManaCostShard> predCanBePaid = ms -> !ms.isSnow() && !ms.isMultiColorSource() && !ms.isColorless() && ms.canBePaidWithManaOfColor(color);
+        Predicate<ManaCostShard> predCanBePaid = ms -> !ms.isSnow() && !ms.isMultiColorSource() && !ms.isLegendarySource()
+                && !ms.isColorless() && ms.canBePaidWithManaOfColor(color);
         return tryPayMana(color, IterableUtil.filter(unpaidShards.keySet(), predCanBePaid), (byte)0xFF);
     }
 
@@ -645,6 +646,9 @@ public class ManaCostBeingPaid {
             return false;
         }
         if (shard.isMultiColorSource() && !mana.isFromMultiColorSource()) {
+            return false;
+        }
+        if (shard.isLegendarySource() && !mana.isFromLegendarySource()) {
             return false;
         }
         if (mana.isRestricted() && !mana.getManaAbility().meetsManaShardRestrictions(shard, mana.getColor())) {

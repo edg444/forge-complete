@@ -1735,6 +1735,13 @@ public class AbilityUtils {
             // Count$WordsInName.<DefinedCards> - Bosom Buddy counts the words in a spell's name,
             // Wordmail in a static ability. Kept outside the SpellAbility-only block below, which a
             // static never enters. Split/double-faced names keep their "//" separator out of it.
+            // Count$BandSize.<Defined> - Chatzuk: how many creatures attack in the band the card is in
+            if (sq[0].equals("BandSize")) {
+                final List<Card> defined = getDefinedCards(c, sq[1], ctb);
+                final forge.game.combat.Combat combat = c.getGame().getCombat();
+                final forge.game.combat.AttackingBand band = defined.isEmpty() || combat == null ? null : combat.getBandOfAttacker(defined.get(0));
+                return doXMath(band == null ? 0 : band.getAttackers().size(), expr, c, ctb);
+            }
             // Count$MatchesUncrossedDigit.<Defined> - Duelists' Convocation International
             if (sq[0].equals("MatchesUncrossedDigit")) {
                 final List<Card> defined = getDefinedCards(c, sq[1], ctb);

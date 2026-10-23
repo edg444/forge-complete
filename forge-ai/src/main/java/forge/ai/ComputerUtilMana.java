@@ -1108,6 +1108,9 @@ public class ComputerUtilMana {
         if (toPay.isMultiColorSource() && !sourceCard.couldProduceTwoOrMoreColors()) {
             return false;
         }
+        if (toPay.isLegendarySource() && !sourceCard.getType().isLegendary()) {
+            return false;
+        }
 
         AbilityManaPart m = ma.getManaPart();
         if (!m.meetsManaRestrictions(sa)) {
@@ -1355,6 +1358,10 @@ public class ComputerUtilMana {
             }
             if (shard == ManaCostShard.Z) {
                 res.putAll(shard, manaAbilityMap.get(ManaAtom.IS_MULTI_SOURCE));
+                continue;
+            }
+            if (shard == ManaCostShard.L) {
+                res.putAll(shard, manaAbilityMap.get(ManaAtom.IS_LEGENDARY_SOURCE));
                 continue;
             }
 
@@ -1789,6 +1796,9 @@ public class ComputerUtilMana {
                 if (m.getHostCard().couldProduceTwoOrMoreColors()) {
                     manaMap.put(ManaAtom.IS_MULTI_SOURCE, m);
                 }
+                if (m.getHostCard().getType().isLegendary()) {
+                    manaMap.put(ManaAtom.IS_LEGENDARY_SOURCE, m);
+                }
                 if (DEBUG_MANA_PAYMENT) {
                     System.out.println("DEBUG_MANA_PAYMENT: groupSourcesByManaColor manaMap  = " + manaMap);
                 }
@@ -1946,7 +1956,7 @@ public class ComputerUtilMana {
         if (creatures && !artifacts) {
             // Run for convoke but not improvise or waterbending
             for (ManaCostShard toPay : cost) {
-                if (toPay.isSnow() || toPay.isMultiColorSource() || toPay.isColorless()) {
+                if (toPay.isSnow() || toPay.isMultiColorSource() || toPay.isLegendarySource() || toPay.isColorless()) {
                     continue;
                 }
                 for (Card c : list) {

@@ -121,7 +121,11 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
         Legendary("lblLegendary"),
         Snow("lblSnow"),
         Ongoing("lblOngoing"),
-        World("lblWorld");
+        World("lblWorld"),
+        // Orb of Origin
+        Poly("lblPoly"),
+        Mono("lblMono"),
+        Continuous("lblContinuous");
 
         public final String label;
 
