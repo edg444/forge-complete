@@ -9,7 +9,9 @@ import forge.game.card.CardCollection;
 import forge.game.card.CardLists;
 import forge.game.card.CardUtil;
 import forge.game.combat.Combat;
+import forge.game.combat.CombatUtil;
 import forge.game.cost.Cost;
+import forge.game.keyword.Keyword;
 import forge.game.phase.PhaseHandler;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
@@ -179,6 +181,24 @@ public class DebuffAi extends SpellAbilityAi {
             list = CardLists.filter(list, c -> {
                 return c.hasAnyKeyword(kws); // don't add duplicate negative keywords
             });
+        }
+        if (kws.size() == 1 && kws.contains("Flying")) {
+            // Adarkar Windform: only worth it before blocks, on an attacker the AI could then block or a flyer that
+            // could otherwise block the AI's flying attackers
+            final Game game = ai.getGame();
+            final Combat combat = game.getCombat();
+            if (combat == null || !game.getPhaseHandler().is(PhaseType.COMBAT_DECLARE_ATTACKERS)) {
+                return new CardCollection();
+            }
+            if (game.getPhaseHandler().isPlayerTurn(ai)) {
+                final CardCollection flyers = CardLists.getKeyword(combat.getAttackers(), Keyword.FLYING);
+                list = CardLists.filter(list, c -> c.isUntapped() && !c.hasKeyword(Keyword.REACH)
+                        && flyers.anyMatch(a -> CombatUtil.canBlock(a, c)));
+            } else {
+                final boolean groundBlocker = ai.getCreaturesInPlay().anyMatch(b -> b.isUntapped()
+                        && !b.hasKeyword(Keyword.FLYING) && !b.hasKeyword(Keyword.REACH) && CombatUtil.canBlock(b));
+                list = groundBlocker ? CardLists.filter(list, combat::isAttacking) : new CardCollection();
+            }
         }
         return list;
     }

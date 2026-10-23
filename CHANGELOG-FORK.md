@@ -331,6 +331,24 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     on a creature whose power equals its toughness, and won't switch a self-switcher back the same turn. Mass
     switching (Mannichi) goes off when it kills more of the opponent's creatures than the AI's. This replaces the
     old `AILogic$ SwitchPT`, which only limited the switch to combat.
+  - *A, part 1* (`NoAiBatch02Test`):
+    - Thran Portal (and A-): a basic land type chosen with no `AILogic` is now the color the AI's own spells use the
+      most (it was always Island).
+    - Alrund, God of the Cosmos (and A-): a card type chosen for a reveal-from-library effect is the type the library
+      holds the most of.
+    - Abundance, Abundant Harvest: new `AILogic$ LandOrNonland` takes a land while the AI has none in hand and is
+      short of mana for its hand, otherwise a spell.
+    - Acidic Soil: new RepeatEach `AILogic$ EachPlayerHurt` works out each player's damage or life loss and casts it
+      when the opponents take more and the AI stays out of danger, or when it's lethal.
+    - Ad Nauseam: new `AILogic$ AdNauseam` casts it at the end of the opponent's turn and keeps revealing while even
+      the costliest card left in the library can't drop the AI below 5 life (the AI used to stop after one card).
+    - Acorn Catapult: damage that hands the player a token only goes face for the kill.
+    - Adarkar Windform (and any "loses flying" debuff): only before blocks, on an attacker the AI can then block or a
+      flyer that could block the AI's flying attackers.
+    - Act of Authority: its upkeep exile only takes an opponent's permanent of mana value 3 or more, since the AI
+      gives the enchantment away for it.
+    - Act on Impulse, Adanto Vanguard, Aeon Chronicler, Aether Tide, Aethermage's Touch: the existing AI already
+      plays them sensibly.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

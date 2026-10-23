@@ -336,6 +336,30 @@ public class ChooseGenericAi extends SpellAbilityAi {
                 }
             }
             return spells.get(0);
+        } else if ("LandOrNonland".equals(logic)) {
+            // Abundance, Abundant Harvest: a land while short of mana for the hand, otherwise a spell
+            final int lands = CardLists.count(player.getCardsIn(ZoneType.Battlefield), Card::isLand);
+            final CardCollectionView hand = player.getCardsIn(ZoneType.Hand);
+            final int landsInHand = CardLists.count(hand, Card::isLand);
+            int topCmc = 0;
+            for (final Card c : hand) {
+                if (!c.isLand()) {
+                    topCmc = Math.max(topCmc, c.getCMC());
+                }
+            }
+            final CardCollectionView library = player.getCardsIn(ZoneType.Library);
+            boolean wantLand = landsInHand == 0 && (lands < 4 || lands < topCmc);
+            if (!library.anyMatch(Card::isLand)) {
+                wantLand = false;
+            } else if (!library.anyMatch(c -> !c.isLand())) {
+                wantLand = true;
+            }
+            for (final SpellAbility each : spells) {
+                if (wantLand != each.getParamOrDefault("Valid", "").contains("nonLand")) {
+                    return each;
+                }
+            }
+            return spells.get(0);
         } else if ("Philosopher".equals(logic)) {
             // The Salubrious Philosopher: lands until it has five, then removal while opponents have creatures
             final int lands = CardLists.count(player.getCardsIn(ZoneType.Battlefield), Card::isLand)

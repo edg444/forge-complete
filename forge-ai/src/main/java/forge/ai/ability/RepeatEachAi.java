@@ -2,6 +2,7 @@ package forge.ai.ability;
 
 import forge.ai.*;
 import forge.game.ability.AbilityUtils;
+import forge.game.ability.ApiType;
 import forge.game.card.*;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
@@ -84,6 +85,8 @@ public class RepeatEachAi extends SpellAbilityAi {
             } else {
                 return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
             }
+        } else if ("EachPlayerHurt".equals(logic)) {
+            return eachPlayerHurt(aiPlayer, sa);
         } else if ("TargetBestCreatures".equals(logic)) {
             // Park Re-Entry: the best creature cards it may target, limited to AITgts$ - the ones it can vouch for
             // without seeing the art
@@ -114,6 +117,47 @@ public class RepeatEachAi extends SpellAbilityAi {
 
         // TODO Add some normal AI variability here
 
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    // Acidic Soil: each player takes damage (or loses life) worked out per player - worth it when the opponents' share
+    // outweighs the AI's own and the AI stays out of danger, or when it's lethal
+    private static AiAbilityDecision eachPlayerHurt(final Player ai, final SpellAbility sa) {
+        final Card source = sa.getHostCard();
+        final SpellAbility repeat = sa.getAdditionalAbility("RepeatSubAbility");
+        if (repeat == null) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final boolean damage = repeat.getApi() == ApiType.DealDamage;
+        final String amount = repeat.getParam(damage ? "NumDmg" : "LifeAmount");
+        int own = 0;
+        int theirs = 0;
+        boolean lethal = false;
+        for (final Player p : AbilityUtils.getDefinedPlayers(source, sa.getParam("RepeatPlayers"), sa)) {
+            source.addRemembered(p);
+            int n = AbilityUtils.calculateAmount(source, amount, repeat);
+            source.removeRemembered(p);
+            if (!p.canLoseLife()) {
+                n = 0;
+            } else if (damage) {
+                n = ComputerUtilCombat.predictDamageTo(p, n, source, false);
+            }
+            if (p.equals(ai)) {
+                own = n;
+            } else if (p.isOpponentOf(ai)) {
+                theirs += n;
+                lethal |= n > 0 && n >= p.getLife() && !p.cantLoseForZeroOrLessLife();
+            }
+        }
+        if (own >= ai.getLife() && !ai.cantLoseForZeroOrLessLife()) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        if (lethal) {
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
+        if (ai.getLife() - own <= AiProfileUtil.getIntProperty(ai, AiProps.AI_IN_DANGER_THRESHOLD) || theirs <= own) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
 

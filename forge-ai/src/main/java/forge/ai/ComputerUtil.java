@@ -2531,6 +2531,17 @@ public class ComputerUtil {
         return getCardsToDiscardFromOpponent(aiChooser, p, sa, validCards, min, max);
     }
 
+    // the choice feeds a Dig/DigUntil that takes the chosen type off the top of the library
+    private static boolean revealsChosenTypeFromLibrary(final SpellAbility sa) {
+        for (SpellAbility sub = sa.getSubAbility(); sub != null; sub = sub.getSubAbility()) {
+            if ((sub.getApi() == ApiType.Dig || sub.getApi() == ApiType.DigUntil)
+                    && (sub.getParamOrDefault("ChangeValid", "") + sub.getParamOrDefault("Valid", "")).contains("ChosenType")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static String chooseSomeType(Player ai, String kindOfType, SpellAbility sa, Collection<String> validTypes) {
         final String logic = sa.getParam("AILogic");
 
@@ -2667,6 +2678,19 @@ public class ComputerUtil {
                 CardType.CoreType chosenCore = ComputerUtilCard.getMostProminentCardType(evalList, List.of(CardType.CoreType.Creature, CardType.CoreType.Planeswalker));
                 // if in doubt, choose Creature, I guess
                 chosen = chosenCore == null ? "Creature" : chosenCore.toString();
+            } else if (revealsChosenTypeFromLibrary(sa)) {
+                // Alrund: name the type its library holds the most of
+                final List<CardType.CoreType> valid = Lists.newArrayList();
+                for (final String t : validTypes) {
+                    final CardType.CoreType core = CardType.CoreType.getEnum(t);
+                    if (core != null) {
+                        valid.add(core);
+                    }
+                }
+                final CardType.CoreType chosenCore = ComputerUtilCard.getMostProminentCardType(ai.getCardsIn(ZoneType.Library), valid);
+                if (chosenCore != null) {
+                    chosen = chosenCore.toString();
+                }
             } else {
                 // Are we picking a type to reduce costs for that type?
                 boolean reducingCost = false;
@@ -2798,7 +2822,18 @@ public class ComputerUtil {
             }
 
             if (!CardType.isABasicLandType(chosen) || !validTypes.contains(chosen)) {
-                chosen = "Island";
+                // Thran Portal: the land type of the color its own spells use the most
+                final List<String> colors = Lists.newArrayList();
+                for (final String t : validTypes) {
+                    final int i = MagicColor.Constant.BASIC_LANDS.indexOf(t);
+                    if (i >= 0) {
+                        colors.add(MagicColor.Constant.ONLY_COLORS.get(i));
+                    }
+                }
+                final String color = colors.isEmpty() ? null : ComputerUtilCard.getMostProminentColor(
+                        CardLists.filter(ai.getAllCards(), CardPredicates.NON_LANDS), colors);
+                final int i = color == null ? -1 : MagicColor.Constant.ONLY_COLORS.indexOf(color);
+                chosen = i >= 0 ? MagicColor.Constant.BASIC_LANDS.get(i) : "Island";
             }
         }
         else if (kindOfType.equals("Land")) {
