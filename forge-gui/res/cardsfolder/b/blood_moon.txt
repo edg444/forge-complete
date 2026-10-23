@@ -1,7 +1,9 @@
 Name:Blood Moon
 ManaCost:2 R
 Types:Enchantment
-S:Mode$ Continuous | Affected$ Land.nonBasic | AddType$ Mountain | RemoveLandTypes$ True | Description$ Nonbasic lands are Mountains.
+S:Mode$ Continuous | Affected$ Land.nonBasic | AddType$ Mountain | RemoveLandTypes$ True | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19950701 | Description$ Nonbasic lands are Mountains.
+# R&D's Secret Lair: The Dark's printing says "All non-basic lands are now basic mountains" - basic, too.
+S:Mode$ Continuous | Affected$ Land.nonBasic | AddType$ Mountain & Basic | RemoveLandTypes$ True | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19950701 | ActiveDescription$ (As printed) Nonbasic lands are basic Mountains.
 SVar:NonStackingEffect:True
 AI:RemoveDeck:Random
 DeckHints:Keyword$Landwalk:Mountain

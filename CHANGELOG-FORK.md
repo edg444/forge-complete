@@ -395,6 +395,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     state-based check already removes them), Wall of Tombstones (printed 0/1+*, same as Oracle), and the old
     mechanics of Imprison, Enchantment Alteration and Gaseous Form.
 - **Set review: Dragon Con (PDRC)** - Nalathni Dragon needed no changes.
+- **Set review: The Dark** (all 119 new names, `TheDarkAuditTest`):
+  - *Rag Man* could target any player, itself included; Oracle says target opponent.
+  - R&D's Secret Lair printed text: *Blood Moon* (The Dark only; Chronicles changed it) makes nonbasic lands
+    *basic* Mountains; *Eater of the Dead* (before MB2) has no "if it's tapped", so it works untapped too;
+    *Orc General* (The Dark's printing) can sacrifice itself and pumps all Orcs, itself included.
+  - Left as Oracle: Ball Lightning's "buried at the end of the turn it's summoned" (the end-step sacrifice is
+    the same in practice) and Mana Clash's "target player".
+- **Set review: Fallen Empires and HarperPrism promos (PHPR)** (107 new names, `FallenEmpiresAuditTest`):
+  - *Thelon's Curse*'s choice prompt asked for "tapped nongreen creatures"; it's tapped blue ones.
+  - R&D's Secret Lair printed text: *Thelonite Monk* (Fallen Empires) turns the land into a *basic* Forest.
+  - Left as Oracle: Night Soil's "two creatures in any graveyard" (reads either way; Commander 2013 settled it as
+    a single graveyard), and "bury"/"destroy" upkeep wording (Deep Spawn, Seasinger).
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

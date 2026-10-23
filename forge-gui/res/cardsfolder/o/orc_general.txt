@@ -2,7 +2,9 @@ Name:Orc General
 ManaCost:2 R
 Types:Creature Orc Warrior
 PT:2/2
-A:AB$ PumpAll | Cost$ T Sac<1/Goblin.Other;Orc.Other/another Orc or Goblin> | ValidCards$ Creature.Orc+StrictlyOther | NumAtt$ +1 | NumDef$ +1 | SpellDescription$ Other Orc creatures get +1/+1 until end of turn.
+A:AB$ PumpAll | Cost$ T Sac<1/Goblin.Other;Orc.Other/another Orc or Goblin> | ValidCards$ Creature.Orc+StrictlyOther | NumAtt$ +1 | NumDef$ +1 | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19950101 | SpellDescription$ Other Orc creatures get +1/+1 until end of turn.
+# R&D's Secret Lair: The Dark's printing sacrifices "one Orc or Goblin" (itself included) to give "all Orcs" +1/+1.
+A:AB$ PumpAll | Cost$ T Sac<1/Goblin;Orc/Orc or Goblin> | ValidCards$ Creature.Orc | NumAtt$ +1 | NumDef$ +1 | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19950101 | SpellDescription$ (As printed) All Orcs get +1/+1 until end of turn.
 AI:RemoveDeck:Random
 DeckHas:Ability$Sacrifice
 DeckHints:Type$Goblin

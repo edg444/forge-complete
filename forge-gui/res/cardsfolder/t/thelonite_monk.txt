@@ -2,7 +2,9 @@ Name:Thelonite Monk
 ManaCost:2 G G
 Types:Creature Insect Monk Cleric
 PT:1/2
-A:AB$ Animate | Cost$ T Sac<1/Creature.Green/green creature> | ValidTgts$ Land | Types$ Forest | RemoveLandTypes$ True | Duration$ Permanent | SpellDescription$ Target land becomes a Forest. (This effect lasts indefinitely.)
+A:AB$ Animate | Cost$ T Sac<1/Creature.Green/green creature> | ValidTgts$ Land | Types$ Forest | RemoveLandTypes$ True | Duration$ Permanent | ConditionDefined$ Self | ConditionPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19950101 | SubAbility$ DBPrintedAnimate | SpellDescription$ Target land becomes a Forest. (This effect lasts indefinitely.)
+# R&D's Secret Lair: Fallen Empires says "turn a target land into a basic forest" - basic, too.
+SVar:DBPrintedAnimate:DB$ Animate | Defined$ Targeted | Types$ Forest,Basic | RemoveLandTypes$ True | Duration$ Permanent | ConditionDefined$ Self | ConditionPresent$ Card.Self+PrintedTextActive+PrintedBefore 19950101 | StackDescription$ None
 SVar:AIPreference:SacCost$Creature.Green+token
 AI:RemoveDeck:All
 Oracle:{T}, Sacrifice a green creature: Target land becomes a Forest. (This effect lasts indefinitely.)
