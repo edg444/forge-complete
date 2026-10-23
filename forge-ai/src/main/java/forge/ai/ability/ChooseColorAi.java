@@ -3,9 +3,12 @@ package forge.ai.ability;
 import forge.ai.*;
 import forge.card.MagicColor;
 import forge.game.Game;
+import forge.game.ability.ApiType;
+import forge.game.card.Card;
 import forge.game.card.CardCollectionView;
 import forge.game.card.CardLists;
 import forge.game.card.CardPredicates;
+import forge.game.combat.Combat;
 import forge.game.phase.PhaseHandler;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
@@ -74,6 +77,19 @@ public class ChooseColorAi extends SpellAbilityAi {
                     return new AiAbilityDecision(0, AiPlayDecision.WaitForMain2);
                 }
             }
+        } else if (logic.equals("MostProminentAttackers") && sa.findSubAbilityByType(ApiType.ProtectionAll) != null) {
+            // Akroma's Blessing, Brave the Elements: once blocks are known, when the protection saves one of its blockers
+            final Combat combat = game.getCombat();
+            if (combat == null || !ph.is(PhaseType.COMBAT_DECLARE_BLOCKERS) || !combat.getAttackingPlayer().isOpponentOf(ai)) {
+                return new AiAbilityDecision(0, AiPlayDecision.WaitForCombat);
+            }
+            final String valid = sa.findSubAbilityByType(ApiType.ProtectionAll).getParamOrDefault("ValidCards", "Creature.YouCtrl");
+            boolean saves = false;
+            for (final Card blocker : combat.getAllBlockers()) {
+                saves |= blocker.getController().equals(ai) && blocker.isValid(valid, ai, sa.getHostCard(), sa)
+                        && ComputerUtilCombat.blockerWouldBeDestroyed(ai, blocker, combat);
+            }
+            return saves ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.DoesntImpactCombat);
         } else if (logic.equals("HighestDevotionToColor")) {
             // currently only works more or less reliably in Main2 to cast own spells
             if (!ph.is(PhaseType.MAIN2, ai)) {

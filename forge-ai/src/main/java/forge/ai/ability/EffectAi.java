@@ -114,6 +114,12 @@ public class EffectAi extends SpellAbilityAi {
                 if (!fogAi.canPlay(ai, sa).willingToPlay()) {
                     return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
                 }
+                // Al-abara's Carpet only stops attackers without flying
+                if (sa.hasParam("ReplacementEffects") && sa.getSVar(sa.getParam("ReplacementEffects")).contains("withoutFlying")
+                        && !game.getCombat().getAttackers().anyMatch(c -> !c.hasKeyword(Keyword.FLYING)
+                        && ai.equals(game.getCombat().getDefenderPlayerByAttacker(c)) && game.getCombat().isUnblocked(c))) {
+                    return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+                }
 
                 final TargetRestrictions tgt = sa.getTargetRestrictions();
                 if (tgt != null) {

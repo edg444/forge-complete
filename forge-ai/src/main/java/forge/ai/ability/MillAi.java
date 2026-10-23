@@ -8,6 +8,7 @@ import forge.game.card.Card;
 import forge.game.card.CardCollectionView;
 import forge.game.card.CardLists;
 import forge.game.card.CardPredicates;
+import forge.game.cost.CostSacrifice;
 import forge.game.keyword.Keyword;
 import forge.game.phase.PhaseHandler;
 import forge.game.phase.PhaseType;
@@ -60,6 +61,10 @@ public class MillAi extends SpellAbilityAi {
     
     @Override
     protected boolean checkPhaseRestrictions(final Player ai, final SpellAbility sa, final PhaseHandler ph) {
+        if (millsBySacrifice(sa)) {
+            // the sacrifice cost check only lets a creature go that's dying anyway, whenever that is
+            return true;
+        }
         if ("ExileAndPlayUntilEOT".equals(sa.getParam("AILogic"))) {
             return ph.is(PhaseType.MAIN1) && ph.isPlayerTurn(ai); // try to maximize the chance of being able to play the card this turn
         } else if ("ExileAndPlayOrDealDamage".equals(sa.getParam("AILogic"))) {
@@ -97,6 +102,17 @@ public class MillAi extends SpellAbilityAi {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
         
+        if (millsBySacrifice(sa) && sa.usesTargeting()) {
+            sa.resetTargets();
+            for (final Player opp : ai.getOpponents()) {
+                if (sa.canTarget(opp)) {
+                    sa.getTargets().add(opp);
+                    return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+                }
+            }
+            return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
+        }
+
         if (sa.usesTargeting() && !targetAI(ai, sa, false)) {
             return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
         }
@@ -111,6 +127,13 @@ public class MillAi extends SpellAbilityAi {
             }
         }
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    // Altar of Dementia: mills the sacrificed creature's power, so nothing can be counted before paying
+    private static boolean millsBySacrifice(final SpellAbility sa) {
+        final String num = sa.getParamOrDefault("NumCards", "");
+        return sa.getSVar(num).startsWith("Sacrificed$") && sa.getPayCosts() != null
+                && sa.getPayCosts().getCostPartByType(CostSacrifice.class) != null;
     }
 
     private boolean targetAI(final Player ai, final SpellAbility sa, final boolean mandatory) {

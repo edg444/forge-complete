@@ -2531,6 +2531,18 @@ public class ComputerUtil {
         return getCardsToDiscardFromOpponent(aiChooser, p, sa, validCards, min, max);
     }
 
+    private static boolean forbidsCastingChosenType(final Card host) {
+        if (host == null) {
+            return false;
+        }
+        for (final StaticAbility st : host.getStaticAbilities()) {
+            if (st.checkMode(StaticAbilityMode.CantBeCast) && "Card.ChosenType".equals(st.getParam("ValidCard"))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // the choice feeds a Dig/DigUntil that takes the chosen type off the top of the library
     private static boolean revealsChosenTypeFromLibrary(final SpellAbility sa) {
         for (SpellAbility sub = sa.getSubAbility(); sub != null; sub = sub.getSubAbility()) {
@@ -2678,6 +2690,19 @@ public class ComputerUtil {
                 CardType.CoreType chosenCore = ComputerUtilCard.getMostProminentCardType(evalList, List.of(CardType.CoreType.Creature, CardType.CoreType.Planeswalker));
                 // if in doubt, choose Creature, I guess
                 chosen = chosenCore == null ? "Creature" : chosenCore.toString();
+            } else if (forbidsCastingChosenType(sa.getHostCard())) {
+                // Archon of Valor's Reach: the type the AI's own deck needs least and the opponents have shown most
+                int best = Integer.MIN_VALUE;
+                for (final String t : validTypes) {
+                    final int own = CardLists.count(ai.getAllCards(), c -> c.getType().hasStringType(t));
+                    final int theirs = CardLists.count(ai.getOpponents().getCardsIn(Arrays.asList(ZoneType.Battlefield,
+                            ZoneType.Graveyard, ZoneType.Exile)), c -> c.getType().hasStringType(t));
+                    final int score = 2 * theirs - own;
+                    if (score > best) {
+                        best = score;
+                        chosen = t;
+                    }
+                }
             } else if (revealsChosenTypeFromLibrary(sa)) {
                 // Alrund: name the type its library holds the most of
                 final List<CardType.CoreType> valid = Lists.newArrayList();

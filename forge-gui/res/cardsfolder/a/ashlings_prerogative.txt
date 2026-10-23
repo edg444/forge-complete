@@ -6,5 +6,4 @@ SVar:ChooseEvenOdd:DB$ ChooseEvenOdd | Defined$ You | AILogic$ CMCInHand | Spell
 S:Mode$ Continuous | Affected$ Creature.cmcChosenEvenOdd | AddKeyword$ Haste | Description$ Each creature with mana value of the chosen quality has haste.
 R:Event$ Moved | ValidCard$ Creature.cmcNotChosenEvenOdd | Destination$ Battlefield | ReplaceWith$ ETBTapped | ReplacementResult$ Updated | ActiveZones$ Battlefield | Description$ Each creature without mana value of the chosen quality enters tapped.
 SVar:ETBTapped:DB$ Tap | ETB$ True | Defined$ ReplacedCard
-AI:RemoveDeck:All
 Oracle:As this enchantment enters, choose odd or even. (Zero is even.)\nEach creature with mana value of the chosen quality has haste.\nEach creature without mana value of the chosen quality enters tapped.

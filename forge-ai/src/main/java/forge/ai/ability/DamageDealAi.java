@@ -14,6 +14,7 @@ import forge.game.card.*;
 import forge.game.cost.Cost;
 import forge.game.cost.CostPartMana;
 import forge.game.cost.CostPutCounter;
+import forge.game.cost.CostSacrifice;
 import forge.game.keyword.Keyword;
 import forge.game.phase.PhaseHandler;
 import forge.game.phase.PhaseType;
@@ -252,6 +253,25 @@ public class DamageDealAi extends DamageAiBase {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
 
+        // Artillerize, Airdrop Condor: work out what the AI would sacrifice (for Airdrop Condor that's also the damage)
+        Card fodder = null;
+        final CostSacrifice sacPart = abCost == null ? null : abCost.getCostPartByType(CostSacrifice.class);
+        if (sacPart != null && !sacPart.payCostFromSource() && "1".equals(sacPart.getAmount())) {
+            final CardCollectionView pick = ComputerUtil.chooseSacrificeType(ai, sacPart.getType(), sa, null, false, 1, null);
+            if (pick == null || pick.isEmpty()) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantAfford);
+            }
+            fodder = pick.getFirst();
+        }
+        if (fodder != null && damage != null && sa.getSVar(damage).startsWith("Sacrificed$")) {
+            final String svar = sa.getSVar(damage);
+            final String property = svar.substring("Sacrificed$".length()).split("/")[0];
+            final int base = property.equals("CardToughness") ? fodder.getNetToughness()
+                    : property.equals("CardManaCost") ? fodder.getCMC() : fodder.getNetPower();
+            // Freyalise Supplicant: "half the sacrificed creature's power"
+            dmg = svar.contains("/") ? AbilityUtils.doXMath(base, svar.substring(svar.indexOf('/') + 1), source, sa) : base;
+        }
+
         if (dmg <= 0) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
@@ -261,7 +281,7 @@ public class DamageDealAi extends DamageAiBase {
             return new AiAbilityDecision(0, AiPlayDecision.CantAfford);
         }
 
-        if (!ComputerUtilCost.checkSacrificeCost(ai, abCost, source, sa)) {
+        if (fodder == null && !ComputerUtilCost.checkSacrificeCost(ai, abCost, source, sa)) {
             return new AiAbilityDecision(0, AiPlayDecision.CantAfford);
         }
 
@@ -323,6 +343,12 @@ public class DamageDealAi extends DamageAiBase {
             }
         }
 
+        if (fodder != null && !ComputerUtilCost.checkSacrificeCost(ai, abCost, source, sa) && !flingIsWorthIt(ai, sa, fodder, dmg)) {
+            // a creature it wouldn't sacrifice anyway has to buy a kill worth more than itself, or the game
+            sa.resetTargets();
+            return new AiAbilityDecision(0, AiPlayDecision.CostNotAcceptable);
+        }
+
         if ("DiscardCMCX".equals(sa.getParam("AILogic"))) {
             final int cmc = sa.getXManaCostPaid();
              if (!ai.getZone(ZoneType.Hand).contains(CardPredicates.hasCMC(cmc))) {
@@ -331,6 +357,23 @@ public class DamageDealAi extends DamageAiBase {
         }
 
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    private static boolean flingIsWorthIt(final Player ai, final SpellAbility sa, final Card fodder, final int dmg) {
+        for (final GameObject o : sa.getTargets()) {
+            if (o instanceof Player p) {
+                if (p.isOpponentOf(ai) && p.canLoseLife() && !p.cantLoseForZeroOrLessLife()
+                        && ComputerUtilCombat.predictDamageTo(p, dmg, sa.getHostCard(), false) >= p.getLife()) {
+                    return true;
+                }
+            } else if (o instanceof Card c && c.isCreature() && c.getController().isOpponentOf(ai)
+                    && ComputerUtilCombat.getEnoughDamageToKill(c, dmg, sa.getHostCard(), false, false) <= dmg
+                    && ComputerUtilCard.evaluateCreature(c) > (fodder.isCreature() ? ComputerUtilCard.evaluateCreature(fodder)
+                    : ComputerUtilCard.evaluatePermanentList(new CardCollection(fodder)))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

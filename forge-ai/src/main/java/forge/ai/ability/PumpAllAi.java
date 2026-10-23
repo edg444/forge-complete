@@ -4,6 +4,7 @@ import forge.ai.*;
 import forge.game.Game;
 import forge.game.GameObject;
 import forge.game.ability.AbilityUtils;
+import forge.game.ability.ApiType;
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
 import forge.game.card.CardLists;
@@ -143,6 +144,17 @@ public class PumpAllAi extends PumpAiBase {
 
         boolean result = ai.getCreaturesInPlay().anyMatch(c -> c.isValid(valid, source.getController(), source, sa)
                 && ComputerUtilCard.shouldPumpCard(ai, sa, c, defense, power, keywords));
+        if (!result && combat != null && game.getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS)
+                && keywords.stream().anyMatch(k -> k.startsWith("Afterlife"))) {
+            // Afterlife Insurance: a token for each of its creatures about to die in this combat
+            result = comp.anyMatch(c -> (combat.isAttacking(c) || combat.isBlocking(c))
+                    && ComputerUtilCombat.combatantWouldBeDestroyed(ai, c, combat));
+        }
+        if (!result && sa.findSubAbilityByType(ApiType.Draw) != null && game.getPhaseHandler().is(PhaseType.END_OF_TURN)
+                && game.getPhaseHandler().getNextTurn().equals(ai)) {
+            // with a cantrip attached it can just be cycled at the end of the opponent's turn
+            result = true;
+        }
         return result ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
     }
 

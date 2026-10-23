@@ -1162,6 +1162,9 @@ public class PlayerControllerAi extends PlayerController {
                             break;
                     }
                 }
+                if (source != null && holdsDownAnOpponentsCard(source)) {
+                    return false;
+                }
                 return defaultVal != null && defaultVal;
             case LeftOrRight: return brains.chooseDirection(sa);
             case OddsOrEvens: return brains.chooseEvenOdd(sa);
@@ -1171,6 +1174,21 @@ public class PlayerControllerAi extends PlayerController {
             default:
                 return MyRandom.getRandom().nextBoolean();
         }
+    }
+
+    // Amber Prison, Sand Squid: an effect of its own lasting "for as long as it remains tapped" still holds an opponent's permanent
+    private static boolean holdsDownAnOpponentsCard(final Card source) {
+        for (final Card effect : source.getGame().getCardsIn(ZoneType.Command)) {
+            if (!source.equals(effect.getEffectSource())) {
+                continue;
+            }
+            for (final Object o : effect.getRemembered()) {
+                if (o instanceof Card c && c.isInPlay() && c.getController().isOpponentOf(source.getController())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private static boolean shouldUntapStorageLand(Card source) {

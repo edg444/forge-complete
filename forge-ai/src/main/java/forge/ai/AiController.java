@@ -932,6 +932,12 @@ public class AiController {
             return AiPlayDecision.NeedsToPlayCriteriaNotMet;
         }
 
+        if (!sa.isCopied() && sa.getParamOrDefault("AnnounceType", "").contains("CreatureType")) {
+            // Aphetto Dredging, Selective Snare: the type is announced as it's cast, but targets are picked here, so
+            // the AI has to settle on it first
+            card.setChosenType(ComputerUtil.chooseSomeType(player, "Creature", sa, CardType.getAllCreatureTypes()));
+        }
+
         if (sa.getApi() != null) {
             String msg = "AiController:canPlaySa: AI checks for if can PlaySa";
             Breadcrumb bread = new Breadcrumb(msg);
