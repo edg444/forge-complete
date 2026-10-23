@@ -2,7 +2,13 @@ Name:Mox Diamond
 ManaCost:0
 Types:Artifact
 A:AB$ Mana | Cost$ T | Produced$ Any | SpellDescription$ Add one mana of any color.
-R:Event$ Moved | Destination$ Battlefield | ValidCard$ Card.Self | ReplaceWith$ PayBeforeETB | Description$ If this artifact would enter, you may discard a land card instead. If you do, put this artifact onto the battlefield. If you don't, put it into its owner's graveyard.
+R:Event$ Moved | Destination$ Battlefield | ValidCard$ Card.Self | ReplaceWith$ PayBeforeETB | IsPresent$ Card.PrintedTextActive+SourcePrintedBefore 20100827 | PresentCompare$ EQ0 | Description$ If this artifact would enter, you may discard a land card instead. If you do, put this artifact onto the battlefield. If you don't, put it into its owner's graveyard.
+# R&D's Secret Lair: Stronghold's printing is a trigger ("When Mox Diamond comes into play, choose and discard a
+# land card or sacrifice Mox Diamond"), so it's already in play and can be tapped for mana before that resolves.
+# The replacement asks about this card's printing with SourcePrintedBefore - it isn't on the battlefield yet.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20100827 | Execute$ TrigPrintedDiscard | TriggerDescription$ (As printed) When CARDNAME comes into play, choose and discard a land card or sacrifice CARDNAME.
+SVar:TrigPrintedDiscard:DB$ Discard | DiscardValid$ Land | Mode$ TgtChoose | RememberDiscarded$ True | Optional$ True | AILogic$ Always | SubAbility$ DBPrintedSac
+SVar:DBPrintedSac:DB$ Sacrifice | ConditionCheckSVar$ X | ConditionSVarCompare$ EQ0 | SubAbility$ DBCleanup
 SVar:PayBeforeETB:DB$ Discard | DiscardValid$ Land | Mode$ TgtChoose | RememberDiscarded$ True | Optional$ True | AILogic$ Always | SubAbility$ MoveToGraveyard
 SVar:MoveToGraveyard:DB$ ChangeZone | Origin$ All | Destination$ Graveyard | Defined$ ReplacedCard | ConditionCheckSVar$ X | ConditionSVarCompare$ EQ0 | SubAbility$ MoveToBattlefield
 SVar:MoveToBattlefield:DB$ ChangeZone | Origin$ All | Destination$ Battlefield | Defined$ ReplacedCard | ConditionCheckSVar$ X | ConditionSVarCompare$ EQ1 | SubAbility$ DBCleanup

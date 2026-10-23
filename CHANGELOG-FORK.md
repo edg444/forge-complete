@@ -506,6 +506,36 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     of Terror, Heart of Bogardan - same numbers as the age counters), Doomsday's life "cost", "target opponent"
     on permanents (Aura of Silence, Mana Web), and the "all damage from one source" shields (Kithkin Armor,
     Desperate Gambit).
+- **Set review: Tempest Promos (Dirtcowl Wurm) and Tempest** (299 new names, `TempestAuditTest`):
+  - *Mindwhip Sliver*'s granted ability had no sorcery-speed restriction. *Thalakos Lowlands*' in-game text read
+    "Add {W} or {U}. or {U}.".
+  - R&D's Secret Lair printed text:
+    - *Hand to Hand* (Tempest is its only paper printing): stops "abilities requiring an activation cost" during
+      combat, mana abilities included (as on Abeyance).
+    - *Flickering Ward* (before MB2): no "This effect doesn't remove Flickering Ward", so choosing white makes it
+      fall off.
+    - *Blood Frenzy* (Tempest only): no "Cast this spell only before the combat damage step".
+    - *Escaped Shapeshifter* (Tempest only): no "not named Escaped Shapeshifter", so it copies abilities from
+      another Escaped Shapeshifter too.
+  - Left as Oracle: "target opponent" on permanents (Havoc, Warmth, Insight, Pallimud, Booby Trap, Maddening Imp),
+    costs that were old templating (Meditate, Scorched Earth, Abandon Hope, Worthy Cause, Spontaneous Combustion)
+    and "When you play" choices (Dracoplasm, Minion of the Wastes), creature types gained since (Eladamri, Selenia,
+    Orim, Metallic Sliver, Mongrel Pack's Hounds), Static Orb's missing "as long as it's untapped" (tapped
+    artifacts were off), Dauthi Mindripper and Soltari Guerrillas' abilities that became triggers, the "all damage
+    from one source" shields (Circle of Protection: Shadow, Invulnerability), and Ertai's Meddling's old mechanics.
+- **Set review: Judge Gift Cards 1998, Stronghold Promos (Revenant) and Stronghold** (139 new names,
+  `StrongholdAuditTest`) - scripts needed no changes. R&D's Secret Lair printed text:
+  - *Mox Diamond* (Stronghold's printing; From the Vault: Relics changed it): "When Mox Diamond comes into play,
+    choose and discard a land card or sacrifice Mox Diamond" is a trigger, so it's in play first and can be tapped
+    for mana in response.
+  - *Skeleton Scavengers* (Stronghold only): puts the +1/+1 counter on as the ability resolves, whether or not it
+    regenerates.
+  - Left as Oracle: Pursuit of Knowledge's "Skip drawing a card:" (old templating for the replacement), Mogg
+    Flunkies' "during a turn in which no other creature you control attacks or blocks" (differs only with extra
+    combats), the "all damage from one source" redirects and shields (Shaman en-Kor, Samite Blessing, Hidden
+    Retreat), Silver Wyvern's interrupt, Thalakos Deceiver's ability that became a trigger, Volrath's Laboratory's
+    "When you play" choice, creature types gained since (Crovax, Sliver Queen, Shifting Wall, Hornet Cannon's Insect,
+    Sword of the Chosen's "target legend"), and Volrath's Shapeshifter's old copy wording.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

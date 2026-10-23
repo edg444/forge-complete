@@ -3,7 +3,11 @@ ManaCost:2 B
 Types:Creature Skeleton
 PT:0/0
 K:etbCounter:P1P1:1
-A:AB$ Regenerate | Cost$ Mana<1\NumTimes> | CostDesc$ Pay {1} for each +1/+1 counter on this creature: | RegenerationAbility$ DBImmediateTrigger | StackDescription$ SpellDescription | SpellDescription$ Regenerate this creature. When it regenerates this way, put a +1/+1 counter on it.
+A:AB$ Regenerate | Cost$ Mana<1\NumTimes> | CostDesc$ Pay {1} for each +1/+1 counter on this creature: | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19980303 | RegenerationAbility$ DBImmediateTrigger | StackDescription$ SpellDescription | SpellDescription$ Regenerate this creature. When it regenerates this way, put a +1/+1 counter on it.
+# R&D's Secret Lair: Stronghold's printing (its only one) puts the counter on as the ability resolves, whether
+# or not the creature ever regenerates.
+A:AB$ Regenerate | Cost$ Mana<1\NumTimes> | CostDesc$ Pay {1} for each +1/+1 counter on this creature: | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19980303 | SubAbility$ DBPrintedCounter | StackDescription$ SpellDescription | SpellDescription$ (As printed) Regenerate CARDNAME and put a +1/+1 counter on it.
+SVar:DBPrintedCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1
 SVar:DBImmediateTrigger:DB$ ImmediateTrigger | Execute$ TrigPutCounter | TriggerDescription$ When it regenerates this way, put a +1/+1 counter on it.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ EffectSource | CounterType$ P1P1 | CounterNum$ 1
 SVar:NumTimes:Count$CardCounters.P1P1
