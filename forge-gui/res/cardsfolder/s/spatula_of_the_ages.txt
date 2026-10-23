@@ -1,5 +1,8 @@
 Name:Spatula of the Ages
 ManaCost:4
 Types:Artifact
-A:AB$ ChangeZone | Cost$ 4 T Sac<1/CARDNAME> | Origin$ Hand | Destination$ Battlefield | ChangeType$ Permanent.SilverBordered+YouCtrl | ChangeNum$ 1 | SpellDescription$ You may put a silver-bordered or acorn permanent card from your hand onto the battlefield.
+A:AB$ ChangeZone | Cost$ 4 T Sac<1/CARDNAME> | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19980812 | Origin$ Hand | Destination$ Battlefield | ChangeType$ Permanent.SilverBordered+YouCtrl | ChangeNum$ 1 | SpellDescription$ You may put a silver-bordered or acorn permanent card from your hand onto the battlefield.
+# R&D's Secret Lair: Unglued's printing (its only one) says "any card from an Unglued supplement" - Unglued
+# printings, not every silver-bordered or acorn card.
+A:AB$ ChangeZone | Cost$ 4 T Sac<1/CARDNAME> | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19980812 | Origin$ Hand | Destination$ Battlefield | ChangeType$ Permanent.PrintingIs UGL+YouCtrl | ChangeNum$ 1 | SpellDescription$ (As printed) Put into play from your hand any card from an Unglued supplement.
 Oracle:{4}, {T}, Sacrifice this artifact: You may put a silver-bordered or acorn permanent card from your hand onto the battlefield.

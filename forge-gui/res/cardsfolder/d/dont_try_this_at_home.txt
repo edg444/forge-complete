@@ -7,7 +7,7 @@ Types:Enchantment
 R:Event$ DamageDone | ActiveZones$ Battlefield | ValidSource$ Card.YouCtrl+HotInArt | ReplaceWith$ DmgPlus1 | Description$ If a hot source you control would deal damage to a permanent or player, it deals that much damage plus 1 instead. (Something is hot if it has hot things in its art, like fire or explosions.)
 R:Event$ DamageDone | ActiveZones$ Battlefield | ValidSource$ Card.YouCtrl+ArtUntagged | ReplaceWith$ AskHot | Secondary$ True | Description$ If a hot source you control would deal damage to a permanent or player, it deals that much damage plus 1 instead.
 SVar:AskHot:DB$ GenericChoice | Defined$ You | Choices$ NotHot,IsHot | ChoicePrompt$ Is the source hot? (Hot things in its art, like fire or explosions.)
-SVar:NotHot:DB$ Pump | SpellDescription$ It isn't hot
+SVar:NotHot:DB$ ReplaceEffect | VarName$ DamageAmount | VarValue$ ReplaceCount$DamageAmount | SpellDescription$ It isn't hot
 SVar:IsHot:DB$ ReplaceEffect | VarName$ DamageAmount | VarValue$ X | SpellDescription$ It's hot
 SVar:DmgPlus1:DB$ ReplaceEffect | VarName$ DamageAmount | VarValue$ X
 SVar:X:ReplaceCount$DamageAmount/Plus.1

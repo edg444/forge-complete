@@ -2,7 +2,17 @@ Name:Goblin Bowling Team
 ManaCost:3 R
 Types:Creature Goblin
 PT:1/1
-R:Event$ DamageDone | ActiveZones$ Battlefield | ValidSource$ Card.Self | ReplaceWith$ RollDamage | Description$ If this creature would deal damage to a permanent or player, it deals that much damage plus the result of a six-sided die roll to that permanent or player instead.
+R:Event$ DamageDone | ActiveZones$ Battlefield | ValidSource$ Card.Self | ReplaceWith$ RollDamage | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19980812 | Description$ If this creature would deal damage to a permanent or player, it deals that much damage plus the result of a six-sided die roll to that permanent or player instead.
+# R&D's Secret Lair: Unglued's printing (its only one) is a trigger - "Whenever Goblin Bowling Team damages any
+# creature or player, roll a six-sided die. Goblin Bowling Team deals to that creature or player additional damage
+# equal to the die roll." Read literally the additional damage triggers it again, an endless loop against anything
+# that survives it (indestructible, can't lose), so PrintedRolling keeps the trigger from seeing its own damage.
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Creature,Player | TriggerZones$ Battlefield | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19980812 | CheckSVar$ PrintedRolling | SVarCompare$ EQ0 | Execute$ TrigPrintedRoll | TriggerDescription$ (As printed) Whenever CARDNAME damages any creature or player, roll a six-sided die. CARDNAME deals to that creature or player additional damage equal to the die roll.
+SVar:TrigPrintedRoll:DB$ RollDice | ResultSVar$ PrintedResult | SubAbility$ DBPrintedDamage
+SVar:DBPrintedDamage:DB$ StoreSVar | SVar$ PrintedRolling | Type$ Number | Expression$ 1 | SubAbility$ DBPrintedDeal
+SVar:DBPrintedDeal:DB$ DealDamage | Defined$ TriggeredTarget | NumDmg$ PrintedResult | SubAbility$ DBPrintedDone
+SVar:DBPrintedDone:DB$ StoreSVar | SVar$ PrintedRolling | Type$ Number | Expression$ 0
+SVar:PrintedRolling:Number$0
 SVar:RollDamage:DB$ RollDice | ResultSVar$ Result | SubAbility$ DmgPlus
 SVar:DmgPlus:DB$ ReplaceEffect | VarName$ DamageAmount | VarValue$ X
 SVar:X:ReplaceCount$DamageAmount/Plus.Result

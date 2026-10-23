@@ -361,8 +361,12 @@ public class ReplacementHandler {
 
         if (effectSA != null) {
             ApiType apiType = effectSA.getApi();
+            // a ReplaceEffect further down the chain or among the choices still rewrites this event, after
+            // whatever it needs first (Goblin Bowling Team rolls the die it adds, Don't Try This at Home
+            // asks whether the source is hot) - buffering it would erase the damage
             if (replacementEffect.getMode() != ReplacementType.DamageDone ||
-                (apiType == ApiType.ReplaceDamage || apiType == ApiType.ReplaceSplitDamage || apiType == ApiType.ReplaceEffect)) {
+                (apiType == ApiType.ReplaceDamage || apiType == ApiType.ReplaceSplitDamage || apiType == ApiType.ReplaceEffect)
+                || containsReplaceEffect(effectSA, Sets.newIdentityHashSet())) {
                 effectSA.setActivatingPlayer(host.getController());
                 player.getController().playSpellAbilityNoStack(effectSA, true);
             } else {
@@ -408,6 +412,33 @@ public class ReplacementHandler {
         for (final SpellAbility additional : sa.getAdditionalAbilities().values()) {
             spreadReplacingObjects(re, additional, runParams, seen);
         }
+        for (final List<AbilitySub> list : sa.getAdditionalAbilityLists().values()) {
+            for (final AbilitySub additional : list) {
+                spreadReplacingObjects(re, additional, runParams, seen);
+            }
+        }
+    }
+
+    private static boolean containsReplaceEffect(final SpellAbility sa, final Set<SpellAbility> seen) {
+        if (sa == null || !seen.add(sa)) {
+            return false;
+        }
+        if (sa.getApi() == ApiType.ReplaceEffect || containsReplaceEffect(sa.getSubAbility(), seen)) {
+            return true;
+        }
+        for (final SpellAbility additional : sa.getAdditionalAbilities().values()) {
+            if (containsReplaceEffect(additional, seen)) {
+                return true;
+            }
+        }
+        for (final List<AbilitySub> list : sa.getAdditionalAbilityLists().values()) {
+            for (final AbilitySub additional : list) {
+                if (containsReplaceEffect(additional, seen)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void getPossibleReplaceDamageList(PlayerCollection players, final boolean isCombat, final CardDamageTable damageMap, final SpellAbility cause) {
