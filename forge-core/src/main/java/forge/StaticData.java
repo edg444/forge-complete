@@ -130,6 +130,29 @@ public class StaticData {
 
             commonCards = new CardDb(regularRules, editions, filtered);
             variantCards = new CardDb(variantRules, editions, filtered);
+            // Artist Alley is an Unknown Event land and a Black Lotus Unknown Planechase plane: an edition's printing of a
+            // name both have goes to whichever kind most of that edition's other cards are
+            final Set<String> shared = new HashSet<>(regularRules.keySet());
+            shared.retainAll(variantRules.keySet());
+            if (!shared.isEmpty()) {
+                final Map<String, Boolean> variantEdition = new HashMap<>();
+                final java.util.function.Predicate<CardEdition> isVariantEdition = e -> variantEdition.computeIfAbsent(e.getCode(), c -> {
+                    int variants = 0, regulars = 0;
+                    for (CardEdition.EditionEntry cis : e.getAllCardsInSet()) {
+                        if (shared.contains(cis.name())) {
+                            continue;
+                        }
+                        if (variantRules.containsKey(cis.name())) {
+                            variants++;
+                        } else if (regularRules.containsKey(cis.name())) {
+                            regulars++;
+                        }
+                    }
+                    return variants > regulars;
+                });
+                commonCards.setPrintingFilter((e, name) -> !shared.contains(name) || !isVariantEdition.test(e));
+                variantCards.setPrintingFilter((e, name) -> !shared.contains(name) || isVariantEdition.test(e));
+            }
 
             commonCards.setCardArtPreference(cardArtPreference);
             variantCards.setCardArtPreference(cardArtPreference);

@@ -312,6 +312,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Black Lotus Unknown Planechase (PUNK): Unknown Event, The Pro Tour, Royal Booster, Year-End Review, Artist Alley.
+  Every PUNK card is now in.**
+  - OpenBooster `ExileUpTo$` (each player keeps cards of their own pack exiled face down that only they may look at and
+    play; `Exactly$`, `WithoutManaCost$`, `IgnoreManaType$`), `BoosterDeck$` (a shuffled pack kept on an effect that
+    has the monarch draw from it at their end step, any type of mana spendable on those cards) and `DrawFromUnder$`;
+    `Player.drawFromOutsideGame` counts and triggers like a draw. Property `StandardLegal`.
+  - A plane may share its name with a nonplane card (Artist Alley, user ruling 2026-10-22): the loader keeps them apart,
+    each edition's printing of a shared name goes to the kind most of that edition's cards are, and upstream's
+    playtest-clash spelling "P-<name>" in an edition file resolves to the card of that name.
+
 - **Black Lotus Unknown Planechase (PUNK): Pin Collector's Booth, Pin Trading, Shrinking Plane, Windmill Farm, New
   Player's Journey, Welcome to Valley, Sorin's Remastered Manor, Multiversal High Council, Stroopwafel Cafe, Mad Labs.**
   - New effect `MatchNumber` (a real-world number a person gives once per match, the AI's random within

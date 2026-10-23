@@ -1487,6 +1487,18 @@ public class Player extends GameEntity implements Comparable<Player> {
     public final CardCollectionView drawCards(final int n, PlayerZone zone) {
         return drawCards(n, null, AbilityKey.newMap(), zone);
     }
+    /** Royal Booster: a card drawn from outside the game (the booster deck), counted and triggered like any draw. */
+    public final Card drawFromOutsideGame(final Card c, final SpellAbility cause) {
+        final Card drawn = game.getAction().moveTo(ZoneType.Hand, c, cause, AbilityKey.newMap());
+        numDrawnThisTurn++;
+        view.updateNumDrawnThisTurn(this);
+        final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(this);
+        runParams.put(AbilityKey.Card, drawn);
+        runParams.put(AbilityKey.Number, numDrawnThisTurn);
+        game.getTriggerHandler().runTrigger(TriggerType.Drawn, runParams, false);
+        return drawn;
+    }
+
     public final CardCollectionView drawCards(final int n, SpellAbility cause, Map<AbilityKey, Object> params) {
         return drawCards(n, cause, params, this.getZone(ZoneType.Hand));
     }

@@ -1,0 +1,12 @@
+Name:Year-End Review
+ManaCost:no cost
+Types:Phenomenon
+# it has no "when you encounter" but says to planeswalk away after it, so it's what happens as it's encountered
+T:Mode$ PlaneswalkedTo | ValidCard$ Card.Self | Execute$ TrigRepeat | TriggerDescription$ Each player may choose a nontoken creature they own on the battlefield, reveal a creature card from their hand, or choose a creature card in their graveyard. Those cards become promoted to commander. Each player may put their new commander into the command zone. Then planeswalk away from this phenomenon. (All original commanders are still commanders.)
+SVar:TrigRepeat:DB$ RepeatEach | RepeatPlayers$ Player | StartingWithYou$ True | RepeatSubAbility$ DBChoose | SubAbility$ PWAway
+SVar:DBChoose:DB$ ChooseCard | Defined$ Remembered | Choices$ Creature.!token+RememberedPlayerOwn+!IsCommander | ChoiceZone$ Battlefield,Hand,Graveyard | MinAmount$ 0 | Amount$ 1 | ChoiceTitle$ Choose a creature to promote to commander | Reveal$ True | SubAbility$ DBPromote
+SVar:DBPromote:DB$ AlterAttribute | Defined$ ChosenCard | Attributes$ Commander | SubAbility$ DBCommandZone
+SVar:DBCommandZone:DB$ ChangeZone | Defined$ ChosenCard | Origin$ Battlefield,Hand,Graveyard | Destination$ Command | Optional$ True | Chooser$ Remembered | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+SVar:PWAway:DB$ Planeswalk
+Oracle:Each player may choose a nontoken creature they own on the battlefield, reveal a creature card from their hand, or choose a creature card in their graveyard. Those cards become promoted to commander. Each player may put their new commander into the com- mand zone. Then planeswalk away from this phenom- enon. (All original commanders are still commanders.)

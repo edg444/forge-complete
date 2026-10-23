@@ -209,6 +209,13 @@ public class CardProperty {
             if (universe == null || universe.equals(forge.card.PrintingTraits.MAGIC_UNIVERSE)) {
                 return false;
             }
+        } else if (property.equals("StandardLegal")) {
+            // The Pro Tour: "Standard-legal cards" - legal in the current Standard, whatever format the game is
+            final forge.game.GameFormat standard = forge.game.GameFormat.currentStandard();
+            if (standard == null || card.getRules() == null
+                    || !standard.getLegalFrontFaceNames().contains(card.getRules().getMainPart().getName())) {
+                return false;
+            }
         } else if (property.equals("CorePrinting")) {
             // New Player's Journey: "a card from Foundations or a core set (including Alpha!)"
             final forge.card.CardEdition ed = forge.StaticData.instance().getEditions().get(card.getSetCode());

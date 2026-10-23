@@ -1,0 +1,18 @@
+Name:Artist Alley
+ManaCost:no cost
+Types:Plane MagicCon
+# shares its name with the Unknown Event land: planes and other cards are loaded and printed apart (user ruling 2026-10-22)
+T:Mode$ PlaneswalkedTo | ValidCard$ Card.Self | Execute$ TrigExile | TriggerDescription$ Whenever you planeswalk here and at the beginning of your upkeep, exile the top card of your library. You may play that card this turn.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Command | Execute$ TrigExile | Secondary$ True | TriggerDescription$ Whenever you planeswalk here and at the beginning of your upkeep, exile the top card of your library. You may play that card this turn.
+SVar:TrigExile:DB$ Dig | Defined$ You | DigNum$ 1 | ChangeNum$ All | DestinationZone$ Exile | RememberChanged$ True | SubAbility$ DBEffect
+SVar:DBEffect:DB$ Effect | RememberObjects$ Remembered | StaticAbilities$ STPlay | ForgetOnMoved$ Exile | SubAbility$ DBCleanup
+SVar:STPlay:Mode$ Continuous | MayPlay$ True | Affected$ Card.IsRemembered | AffectedZone$ Exile | Description$ You may play that card this turn.
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+# the opponent's favorite art is theirs to say; an AI opponent picks at random
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigSix | TriggerDescription$ Whenever Chaos ensues, exile the top six cards of your library. An opponent or player outside the game chooses a nonland card with their favorite art. Then you may cast that spell without paying its mana cost.
+SVar:TrigSix:DB$ Dig | Defined$ You | DigNum$ 6 | ChangeNum$ All | DestinationZone$ Exile | RememberChanged$ True | SubAbility$ DBChooseOpponent
+SVar:DBChooseOpponent:DB$ ChoosePlayer | Defined$ You | Choices$ Player.Opponent | ChoiceTitle$ Choose an opponent to pick the card with their favorite art | SubAbility$ DBPick
+SVar:DBPick:DB$ ChooseCard | Defined$ ChosenPlayer | Choices$ Card.nonLand+IsRemembered | ChoiceZone$ Exile | Mandatory$ True | AILogic$ Random | ChoiceTitle$ Choose the nonland card with your favorite art | SubAbility$ DBCast
+SVar:DBCast:DB$ Play | Defined$ ChosenCard | ValidSA$ Spell | WithoutManaCost$ True | Optional$ True | SubAbility$ DBCleanupChaos
+SVar:DBCleanupChaos:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True | ClearChosenPlayer$ True
+Oracle:Whenever you planeswalk here and at the beginning of your upkeep, exile the top card of your library. You may play that card this turn.\nWhenever Chaos ensues, exile the top six cards of your library. An opponent or player outside the game chooses a nonland card with their favorite art. Then you may cast that spell without paying its mana cost.

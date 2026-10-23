@@ -1,0 +1,9 @@
+Name:Unknown Event
+ManaCost:no cost
+Types:Phenomenon
+# each player's pack is of a set they pick (the AI's at random), and each may look at and play only their own exiled
+# cards (user rulings 2026-10-22)
+T:Mode$ PlaneswalkedTo | ValidCard$ Card.Self | Execute$ TrigOpen | TriggerDescription$ When you encounter this, Each player opens a Magic the Gathering booster pack. They may select up to two cards from that pack and exile them face down. For the rest of the game, players may look at and play cards exiled this way without paying their mana costs. (Then Planeswalk away from this phenomenon.)
+SVar:TrigOpen:DB$ OpenBooster | ExileUpTo$ 2 | WithoutManaCost$ True | EffectDescription$ For the rest of the game, you may look at and play the cards you exiled with Unknown Event without paying their mana costs. | SubAbility$ PWAway
+SVar:PWAway:DB$ Planeswalk
+Oracle:When you encounter this, Each player opens a Magic the Gathering booster pack. They may select up to two cards from that pack and exile them face down. For the rest of the game, players may look at and play cards exiled this way without paying their mana costs. (Then Planeswalk away from this phenomenon.)

@@ -263,7 +263,9 @@ public class CardStorageReader {
         // Report relevant numbers to progress monitor model.
 
         final Set<CardRules> result;
-        result = new TreeSet<>(Comparator.comparing(CardRules::getNormalizedName, String.CASE_INSENSITIVE_ORDER));
+        // a plane may share its name with a nonplane card (Artist Alley), so the two are kept apart
+        result = new TreeSet<>(Comparator.comparing(CardRules::getNormalizedName, String.CASE_INSENSITIVE_ORDER)
+                .thenComparing(CardRules::isVariant));
 
         final List<File> allFiles = collectCardFiles(new ArrayList<>(), this.cardsfolder);
         if (!allFiles.isEmpty()) {

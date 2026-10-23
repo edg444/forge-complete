@@ -1,0 +1,10 @@
+Name:Royal Booster
+ManaCost:no cost
+Types:Phenomenon
+# the pack is of a set its encounterer picks (the AI's at random, user ruling 2026-10-22); the cards a player draws from
+# it are theirs for the game
+T:Mode$ PlaneswalkedTo | ValidCard$ Card.Self | Execute$ TrigOpen | TriggerDescription$ When you encounter this phenomenon, open a Magic: The Gathering booster pack and shuffle it without looking at its contents. Those cards become the booster deck. You become the monarch. For the rest of the game, at the beginning of the monarch's end step, that player draws a card from the booster deck. They may spend mana of any type to cast those cards. (Then Planeswalk away from this phenomenon.)
+SVar:TrigOpen:DB$ OpenBooster | BoosterDeck$ True | SubAbility$ DBMonarch
+SVar:DBMonarch:DB$ BecomeMonarch | Defined$ You | SubAbility$ PWAway
+SVar:PWAway:DB$ Planeswalk
+Oracle:When you encounter this phenomenon, open a Magic: The Gathering booster pack and shuffle it without looking at its contents. Those cards become the booster deck. You become the monarch. For the rest of the game, at the beginning of the monarch's end step, that player draws a card from the booster deck. They may spend mana of any type to cast those cards. (Then Planeswalk away from this phenomenon.)

@@ -363,6 +363,13 @@ public final class CardDb implements ICardDatabase, IDeckGenPool {
         }
     }
 
+    /** Which edition entries are this database's (a name both databases have goes to one per edition). */
+    private java.util.function.BiPredicate<CardEdition, String> printingFilter = (e, name) -> true;
+
+    public void setPrintingFilter(final java.util.function.BiPredicate<CardEdition, String> filter) {
+        printingFilter = filter;
+    }
+
     public CardDb(Map<String, CardRules> rules, CardEdition.Collection editions0, Set<String> filteredCards) {
         this.filtered = filteredCards;
         this.rulesByPrimaryName = rules;
@@ -490,7 +497,7 @@ public final class CardDb implements ICardDatabase, IDeckGenPool {
             return false;
         boolean added = false;
         for (EditionEntry cis : cardsInSet) {
-            if (containsPrinting(cr, ed.getCode(), cis.collectorNumber())) {
+            if (containsPrinting(cr, ed.getCode(), cis.collectorNumber()) || !printingFilter.test(ed, cis.name())) {
                 continue;
             }
             addSetCard(ed, cis, cr);
@@ -627,8 +634,21 @@ public final class CardDb implements ICardDatabase, IDeckGenPool {
                 CardRules cr = rulesByPrimaryName.get(cis.name());
                 if (cr == null)
                     cr = rulesByAltName.get(cis.name()); //Entry written using a flavor name
+                String printedName = cis.name();
+                if (cr == null && printedName.startsWith("P-")) {
+                    // upstream writes a playtest printing as "P-<name>" when another card has the name (UNK's Artist
+                    // Alley); this fork loads both under the real name, kept apart by the printing filter
+                    printedName = printedName.substring(2);
+                    cr = rulesByPrimaryName.get(printedName);
+                    if (cr != null && !printingFilter.test(e, printedName)) {
+                        continue;
+                    }
+                }
                 if (cr == null) {
                     missingCards.add(cis.name());
+                    continue;
+                }
+                if (!printingFilter.test(e, printedName)) {
                     continue;
                 }
                 if (cr.hasFunctionalVariants()) {

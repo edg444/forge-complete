@@ -68,6 +68,18 @@ public class OpenBoosterEffect extends SpellAbilityEffect {
             openToBoosterPile(sa);
             return;
         }
+        if (sa.hasParam("ExileUpTo")) {
+            openAndExile(sa);
+            return;
+        }
+        if (sa.hasParam("BoosterDeck")) {
+            openBoosterDeck(sa);
+            return;
+        }
+        if (sa.hasParam("DrawFromUnder")) {
+            drawFromUnder(sa);
+            return;
+        }
         final Card host = sa.getHostCard();
         final Game game = host.getGame();
         final String setCode = host.getChosenExpansion();
@@ -254,6 +266,104 @@ public class OpenBoosterEffect extends SpellAbilityEffect {
         pile.shuffle();
         p.getGame().getGameLog().add(forge.game.GameLogEntryType.INFORMATION,
                 p + " opens a " + code + " booster pack and shuffles its " + pack.size() + " cards into their booster pile.");
+    }
+
+    /**
+     * Unknown Event (phenomenon) and The Pro Tour: each player opens a pack of a set they pick (the AI's at random) and
+     * exiles up to ExileUpTo$ of its cards face down (exactly that many with Exactly$); the rest stay out of the game.
+     * Each may look at and play only their own (user rulings 2026-10-22): free with WithoutManaCost$, with mana of any
+     * type with IgnoreManaType$.
+     */
+    private static void openAndExile(final SpellAbility sa) {
+        final Card host = sa.getHostCard();
+        final Game game = host.getGame();
+        final int max = forge.game.ability.AbilityUtils.calculateAmount(host, sa.getParam("ExileUpTo"), sa);
+        final int min = sa.hasParam("Exactly") ? max : 0;
+        for (final Player p : game.getPlayersInTurnOrder(sa.getActivatingPlayer())) {
+            final String code = chooseSet(sa, p);
+            final List<PaperCard> pack = openPack(code);
+            if (pack.isEmpty()) {
+                continue;
+            }
+            final CardCollection shown = new CardCollection();
+            for (final PaperCard pc : pack) {
+                shown.add(Card.fromPaperCard(pc, p));
+            }
+            final CardCollection kept = new CardCollection(p.getController().chooseCardsForEffect(shown, sa,
+                    "Choose " + (min == 0 ? "up to " : "") + max + " card" + (max == 1 ? "" : "s") + " to exile face down",
+                    Math.min(min, shown.size()), max, min == 0, null));
+            if (kept.isEmpty()) {
+                continue;
+            }
+            final CardCollection exiled = new CardCollection();
+            for (final Card c : kept) {
+                final Card moved = game.getAction().moveTo(ZoneType.Exile, c, sa, AbilityKey.newMap());
+                moved.turnFaceDown(true);
+                exiled.add(moved);
+            }
+            game.getGameLog().add(forge.game.GameLogEntryType.INFORMATION, p + " opens a " + code + " booster pack and exiles "
+                    + exiled.size() + " of its cards face down.");
+            final Card eff = createEffect(sa, p, host.getName() + "'s Cards", host.getImageKey());
+            eff.addRemembered(exiled);
+            String play = "Mode$ Continuous | Affected$ Card.IsRemembered | AffectedZone$ Exile | EffectZone$ Command"
+                    + " | MayLookAt$ You | MayPlay$ True";
+            if (sa.hasParam("WithoutManaCost")) {
+                play += " | MayPlayWithoutManaCost$ True";
+            }
+            if (sa.hasParam("IgnoreManaType")) {
+                play += " | MayPlayIgnoreType$ True";
+            }
+            eff.addStaticAbility(play + " | Description$ " + sa.getParamOrDefault("EffectDescription", "You may look at and play those cards."));
+            // "for as long as it remains exiled"
+            addForgetOnMovedTrigger(eff, "Exile");
+            addForgetOnCastTrigger(eff, "Card.IsRemembered");
+            game.getAction().moveToCommand(eff, sa);
+        }
+    }
+
+    /**
+     * Royal Booster: a pack of the set its encounterer picks (the AI's at random, user ruling 2026-10-22), shuffled unseen,
+     * is the booster deck for the rest of the game - kept on an effect that has the monarch draw from it at the
+     * beginning of their end step, with mana of any type spendable on the cards drawn.
+     */
+    private static void openBoosterDeck(final SpellAbility sa) {
+        final Card host = sa.getHostCard();
+        final Game game = host.getGame();
+        final Player p = sa.getActivatingPlayer();
+        final String code = chooseSet(sa, p);
+        final List<PaperCard> pack = new java.util.ArrayList<>(openPack(code));
+        if (pack.isEmpty()) {
+            return;
+        }
+        java.util.Collections.shuffle(pack, forge.util.MyRandom.getRandom());
+        final Card eff = createEffect(sa, p, host.getName() + "'s Booster Deck", host.getImageKey());
+        eff.getPackUnder().addAll(pack);
+        final forge.game.trigger.Trigger draw = forge.game.trigger.TriggerHandler.parseTrigger("Mode$ Phase | Phase$ End of Turn"
+                + " | ValidPlayer$ Player.isMonarch | TriggerZones$ Command | TriggerDescription$ At the beginning of the monarch's"
+                + " end step, that player draws a card from the booster deck.", eff, true);
+        final SpellAbility drawSA = forge.game.ability.AbilityFactory.getAbility("DB$ OpenBooster | DrawFromUnder$ True | Defined$ TriggeredPlayer", eff);
+        draw.setOverridingAbility(drawSA);
+        eff.addTrigger(draw);
+        eff.addStaticAbility("Mode$ ManaConvert | EffectZone$ Command | ValidPlayer$ Player | ValidCard$ Card.IsRemembered | ValidSA$ Spell"
+                + " | ManaConversion$ AnyType->AnyType | Description$ They may spend mana of any type to cast those cards.");
+        game.getAction().moveToCommand(eff, sa);
+        game.getGameLog().add(forge.game.GameLogEntryType.INFORMATION, p + " opens a " + code
+                + " booster pack and shuffles it unseen: it's the booster deck.");
+    }
+
+    /** Royal Booster: the defined player draws the top card of the host's booster deck, which is theirs for the game. */
+    private static void drawFromUnder(final SpellAbility sa) {
+        final Card host = sa.getHostCard();
+        final Game game = host.getGame();
+        final List<PaperCard> deck = host.getPackUnder();
+        for (final Player p : getDefinedPlayersOrTargeted(sa)) {
+            if (deck.isEmpty()) {
+                return;
+            }
+            final Card drawn = p.drawFromOutsideGame(Card.fromPaperCard(deck.remove(0), p), sa);
+            host.addRemembered(drawn);
+            game.getGameLog().add(forge.game.GameLogEntryType.INFORMATION, p + " draws a card from the booster deck.");
+        }
     }
 
     /** The Chaos Keeper: the pack under it is revealed and its controller puts one of its cards into their hand. */
