@@ -118,6 +118,8 @@ public class Player extends GameEntity implements Comparable<Player> {
     private List<Card> spellsCastSinceBeginningOfLastTurn = Lists.newArrayList();
     private int investigatedThisTurn;
     private boolean wayBehindThisTurn;
+    // You Compleat Me: "For the rest of the game, your maximum life total is 10."
+    private Integer maxLifeTotal = null;
     // Creepy Crawler: the players this one is afraid of this turn
     private final Set<Player> afraidOfThisTurn = Sets.newHashSet();
     private int scryThisTurn;
@@ -749,6 +751,11 @@ public class Player extends GameEntity implements Comparable<Player> {
             break;
         default:
             return false;
+        }
+
+        // You Compleat Me: never above the maximum life total
+        if (maxLifeTotal != null) {
+            lifeGain = Math.max(0, Math.min(lifeGain, maxLifeTotal - lifeTotal.life));
         }
 
         if (lifeGain < 0 || (lifeGain == 0 && !fractional)) {
@@ -3378,6 +3385,13 @@ public class Player extends GameEntity implements Comparable<Player> {
      * more creatures or three more cards in hand. Checked whenever state-based actions are, which every game action
      * runs through.
      */
+    public Integer getMaxLifeTotal() {
+        return maxLifeTotal;
+    }
+    public void setMaxLifeTotal(final int max) {
+        maxLifeTotal = maxLifeTotal == null ? max : Math.min(maxLifeTotal, max);
+    }
+
     public boolean isAfraidOf(final Player p) {
         return afraidOfThisTurn.contains(p);
     }

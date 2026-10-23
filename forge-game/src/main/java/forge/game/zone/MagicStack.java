@@ -18,6 +18,7 @@
 package forge.game.zone;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 import forge.game.*;
@@ -393,6 +394,18 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
             for (Entry<Player, Long> entry : expendPlayers.entrySet()) {
                 entry.getKey().addExpentThisTurn((int)(long)entry.getValue(), sp);
             }
+        }
+
+        // Toofer: the cards everyone had before this spell (still in hand then, if it was cast from there)
+        if (sp.isSpell() && !sp.isCopied()) {
+            final Map<Player, Integer> cards = Maps.newHashMap();
+            for (final Player p : game.getPlayers()) {
+                cards.put(p, cardAdvantageCount(p));
+            }
+            if (source.getCastFrom() != null && source.getCastFrom().is(ZoneType.Hand)) {
+                cards.merge(sp.getActivatingPlayer(), 1, Integer::sum);
+            }
+            sp.setCardsAtCast(cards);
         }
 
         // Tax Taker: a cost increase someone else's permanent or spell made was paid as this was cast or activated
@@ -847,6 +860,9 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
 
         // remove SA and card from the stack
         removeCardFromStack(sa, si, fizzle);
+        if (!fizzle) {
+            checkCardAdvantage(sa);
+        }
 
         if (si != null) {
             remove(si);
@@ -860,6 +876,34 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
         game.getPhaseHandler().onStackResolved();
 
         curResolvingCard = null;
+    }
+
+    /** Toofer: the cards a player has - in hand, and nontoken permanents they control (tokens aren't cards). */
+    private static int cardAdvantageCount(final Player p) {
+        return p.getCardsIn(ZoneType.Hand).size()
+                + forge.game.card.CardLists.count(p.getCardsIn(ZoneType.Battlefield), c -> !c.isToken());
+    }
+
+    /**
+     * Toofer (user ruling 2026-10-23): a resolved spell gave its controller card advantage if their net change in cards
+     * since it was cast beats at least one opponent's.
+     */
+    private void checkCardAdvantage(final SpellAbility sa) {
+        final Map<Player, Integer> before = sa.getCardsAtCast();
+        sa.setCardsAtCast(null);
+        final Player you = sa.getActivatingPlayer();
+        if (before == null || you == null || !before.containsKey(you)) {
+            return;
+        }
+        final int mine = cardAdvantageCount(you) - before.get(you);
+        for (final Player opp : you.getOpponents()) {
+            if (before.containsKey(opp) && mine > cardAdvantageCount(opp) - before.get(opp)) {
+                final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(you);
+                runParams.put(AbilityKey.Card, sa.getHostCard());
+                game.getTriggerHandler().runTrigger(TriggerType.CardAdvantage, runParams, false);
+                return;
+            }
+        }
     }
 
     private void removeCardFromStack(final SpellAbility sa, final SpellAbilityStackInstance si, final boolean fizzle) {

@@ -3991,6 +3991,24 @@ public class AbilityUtils {
         if (spliceCost == null)
             return;
 
+        // Lifening Elemental: a permanent card's "abilities" are its keywords (lifelink), which the spell has while it's
+        // on the stack; it's still just an instant or sorcery (rulings)
+        if (!c.isInstant() && !c.isSorcery()) {
+            final List<String> kws = Lists.newArrayList();
+            for (final KeywordInterface inst : c.getKeywords()) {
+                if (inst.getKeyword() != Keyword.SPLICE) {
+                    kws.add(inst.getOriginal());
+                }
+            }
+            sa.getHostCard().addChangedCardKeywords(kws, Lists.newArrayList(), false,
+                    sa.getHostCard().getGame().getNextTimestamp(), null);
+            sa.setBasicSpell(false);
+            sa.getPayCosts().add(spliceCost);
+            sa.setDescription(sa.getDescription() + " (Splicing " + c + " onto it)");
+            sa.addSplicedCards(c);
+            return;
+        }
+
         SpellAbility firstSpell = c.getFirstSpellAbility();
         Map<String, String> params = Maps.newHashMap(firstSpell.getMapParams());
         ApiType api = AbilityRecordType.getRecordType(params).getApiTypeOf(params);

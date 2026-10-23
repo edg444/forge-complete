@@ -222,6 +222,8 @@ public enum ApiType {
     Introduce (IntroduceEffect.class),
     BuddyList (BuddyListEffect.class),
     WrittenNumber (WrittenNumberEffect.class),
+    MaxLife (MaxLifeEffect.class),
+    CopyChapter (CopyChapterEffect.class),
     MadLabs (MadLabsEffect.class),
     Mana (ManaEffect.class),
     MatchNumber (MatchNumberEffect.class),

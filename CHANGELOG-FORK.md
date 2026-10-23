@@ -312,6 +312,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Mystery Booster 2 playtest cards (MB2), part 7: Lich's Duel Mastery, Lifening Elemental, The Many Deeds of
+  Belzenlok, Toofer, Keeper of the Full Grip, Yawgmoth's Day Planner, You Compleat Me, Boltfire, Toddler's Rage.**
+  - Splice from a permanent card adds its keywords to the spell while it's on the stack (Lifening Elemental's lifelink).
+  - New effects `CopyChapter` (copy a Saga card's chapter N ability, wherever the card is) and `MaxLife` (a maximum life
+    total for the rest of the game; gains stop there).
+  - New trigger `CardAdvantage`: a resolved spell left its controller's net change in cards (hand plus nontoken
+    permanents, from just before it was cast) ahead of at least one opponent's.
+  - MayPlay `MayPlayLifeLossManaOnly$`: only mana from abilities that make you lose life (paid life, or damage or life
+    loss to you in the effect) can pay for it.
+  - Keyword `Flashforward` (cast from exile for its cost, then to the bottom of the library). Tantrum's combat rule: a
+    blocker with tantrum assigns lethal to what it blocks and the rest to the attacking player (AI, desktop and mobile
+    damage dialogs).
+
 - **Mystery Booster 2 playtest cards (MB2), part 6: Catch of the Day, Duelists' Convocation International, Heart of a
   Duelist, Map to Lorthos's Temple, Night of the Flying Merfolk, No-Regrets Egret, Search Elemental, Creepy Crawler.**
   - Static mode `DrawFromAnywhere` (a person picks the position, blind; the AI draws from the top). Keyword

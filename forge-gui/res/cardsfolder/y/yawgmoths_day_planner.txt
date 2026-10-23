@@ -1,0 +1,11 @@
+Name:Yawgmoth's Day Planner
+ManaCost:3 B
+Types:Artifact
+A:AB$ Mana | Cost$ T PayLife<2> | Produced$ B | Amount$ 2 | SpellDescription$ Add {B}{B}.
+# "abilities that caused you to lose life" is read from the mana ability: life paid as a cost, or damage or life loss
+# to you in its effect (AbilityManaPart.causesLifeLoss)
+S:Mode$ Continuous | Affected$ Card.nonLand+YouOwn | AffectedZone$ Graveyard | MayPlay$ True | MayPlayLifeLossManaOnly$ True | Description$ You may cast spells from your graveyard. Only mana produced by abilities that caused you to lose life may be spent to cast spells this way. (Damage causes loss of life.)
+R:Event$ Moved | ActiveZones$ Battlefield | Destination$ Graveyard | ValidCard$ Card.!token+YouOwn | ReplaceWith$ Exile | Description$ If a card would be put into your graveyard from anywhere, exile it instead.
+SVar:Exile:DB$ ChangeZone | Hidden$ True | Origin$ All | Destination$ Exile | Defined$ ReplacedCard
+AI:RemoveDeck:Random
+Oracle:{T}, Pay 2 life: Add {B}{B}.\nYou may cast spells from your graveyard. Only mana produced by abilities that caused you to lose life may be spent to cast spells this way. (Damage causes loss of life.)\nIf a card would be put into your graveyard from anywhere, exile it instead.

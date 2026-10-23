@@ -1,0 +1,8 @@
+Name:Lifening Elemental
+ManaCost:5 B
+Types:Creature Vampire Elemental
+PT:4/6
+K:Lifelink
+# spliced, the spell gets lifelink (its only ability); it stays an instant or sorcery (rulings)
+K:Splice:Instant,Sorcery:1 B:instant or sorcery
+Oracle:Lifelink\nSplice onto instant or sorcery {1}{B} (As you cast an instant or sorcery spell, you may reveal this card from your hand and pay its splice cost. If you do, add this card's abilities to that spell. It's still an instant or sorcery spell.)

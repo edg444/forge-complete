@@ -1,0 +1,9 @@
+Name:Toofer, Keeper of the Full Grip
+ManaCost:1 B
+Types:Legendary Creature Human Gamer
+PT:2/1
+# cards = hand plus nontoken permanents; it's card advantage when your net change beats at least one opponent's
+# (user ruling 2026-10-23), counted from just before the spell was cast to just after it resolved (MagicStack)
+T:Mode$ CardAdvantage | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDrain | TriggerDescription$ Whenever a spell you control causes you to gain card advantage, each opponent loses 2 life. (You gain card advantage each time a spell you control resolves and you end up having more cards relative to your opponents than before that spell resolved. Divination, Annihilate, and Wrath of God can all be card advantage. And remember: tokens aren't cards!)
+SVar:TrigDrain:DB$ LoseLife | Defined$ Opponent | LifeAmount$ 2
+Oracle:Whenever a spell you control causes you to gain card advantage, each opponent loses 2 life. (You gain card advantage each time a spell you control resolves and you end up having more cards relative to your opponents than before that spell resolved. Divination, Annihilate, and Wrath of God can all be card advantage. And remember: tokens aren't cards!)

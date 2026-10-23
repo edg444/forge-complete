@@ -1882,6 +1882,15 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
         isCastFromPlayEffect = b;
     }
 
+    // Toofer: each player's cards (hand and nontoken permanents) as this spell was cast
+    private Map<Player, Integer> cardsAtCast = null;
+    public Map<Player, Integer> getCardsAtCast() {
+        return cardsAtCast;
+    }
+    public void setCardsAtCast(final Map<Player, Integer> m) {
+        cardsAtCast = m;
+    }
+
     // Tax Taker: the cost increase each player's permanents and spells made to this, as last worked out
     private Map<Player, Integer> costRaisedBy = Map.of();
     public Map<Player, Integer> getCostRaisedBy() {

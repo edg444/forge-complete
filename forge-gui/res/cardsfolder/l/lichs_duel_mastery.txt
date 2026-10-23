@@ -1,0 +1,18 @@
+Name:Lich's Duel Mastery
+ManaCost:3 B B B
+Types:Legendary Enchantment
+K:Hexproof
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigShields | TriggerDescription$ When CARDNAME enters the battlefield, exile the top five cards of your library face down as shields.
+SVar:TrigShields:DB$ Dig | Defined$ You | DigNum$ 5 | ChangeNum$ All | DestinationZone$ Exile | ExileFaceDown$ True | NoReveal$ True | NoLooking$ True
+# the shield is picked at random, since they're face down (user ruling 2026-10-23); any life loss, of any size, is
+# replaced by one shield
+R:Event$ LifeReduced | ActiveZones$ Battlefield | ValidPlayer$ You | ReplaceWith$ DBSacIfNone | Description$ If you would lose life, instead put one of your shields into your hand. If you can't, sacrifice CARDNAME.
+SVar:DBSacIfNone:DB$ Sacrifice | SacValid$ Self | ConditionCheckSVar$ Shields | ConditionSVarCompare$ EQ0 | SubAbility$ DBPickShield
+SVar:DBPickShield:DB$ ChooseCard | Defined$ You | Choices$ Card.ExiledWithSource | ChoiceZone$ Exile | AtRandom$ True | Amount$ 1 | SubAbility$ DBShieldToHand
+SVar:DBShieldToHand:DB$ ChangeZone | Defined$ ChosenCard | Origin$ Exile | Destination$ Hand | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+SVar:Shields:Count$ValidExile Card.ExiledWithSource
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigLose | TriggerDescription$ When CARDNAME leaves the battlefield, you lose the game.
+SVar:TrigLose:DB$ LosesGame | Defined$ You
+AI:RemoveDeck:Random
+Oracle:Hexproof\nWhen Lich's Duel Mastery enters the battlefield, exile the top five cards of your library face down as shields.\nIf you would lose life, instead put one of your shields into your hand. If you can't, sacrifice Lich's Duel Mastery.\nWhen Lich's Duel Mastery leaves the battlefield, you lose the game.

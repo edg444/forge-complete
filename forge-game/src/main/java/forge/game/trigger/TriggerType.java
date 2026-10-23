@@ -103,6 +103,7 @@ public enum TriggerType {
     LandPlayed(TriggerLandPlayed.class),
     LifeGained(TriggerLifeGained.class),
     TaxPaid(TriggerTaxPaid.class),
+    CardAdvantage(TriggerCardAdvantage.class),
     LifeLost(TriggerLifeLost.class),
     LifeLostAll(TriggerLifeLostAll.class),
     LosesGame(TriggerLosesGame.class),

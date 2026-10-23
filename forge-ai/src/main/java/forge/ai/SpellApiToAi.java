@@ -224,6 +224,8 @@ public enum SpellApiToAi {
             .put(ApiType.Introduce, AlwaysPlayAi.class)
             .put(ApiType.BuddyList, AlwaysPlayAi.class)
             .put(ApiType.WrittenNumber, AlwaysPlayAi.class)
+            .put(ApiType.MaxLife, AlwaysPlayAi.class)
+            .put(ApiType.CopyChapter, AlwaysPlayAi.class)
             .put(ApiType.DecideMatch, AlwaysPlayAi.class)
             .put(ApiType.Mana, ManaAi.class)
             .put(ApiType.ManaReflected, CannotPlayAi.class)

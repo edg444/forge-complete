@@ -193,6 +193,21 @@ public final class GameActionUtil {
                         }
 
                         alternatives.add(getGraveyardSpellByKeyword(inst, sa, activator, AlternativeCost.Flashback));
+                    } else if (keyword.startsWith("Flashforward")) {
+                        // Boltfire: cast from exile for its flashforward cost, timing as usual (rulings)
+                        if (!source.isInZone(ZoneType.Exile)) {
+                            continue;
+                        }
+                        final Cost forwardCost = new Cost(keyword.split(":")[1], false);
+                        final SpellAbility forward = sa.copyWithManaCostReplaced(activator, forwardCost);
+                        forward.setAlternativeCost(AlternativeCost.Flashforward);
+                        forward.getRestrictions().setZone(ZoneType.Exile);
+                        forward.putParam("PrecostDesc", "Flashforward ");
+                        forward.putParam("CostDesc", forwardCost.toSimpleString());
+                        forward.setDescription("Flashforward " + forwardCost.toSimpleString() + " (" + inst.getReminderText() + ")");
+                        forward.putParam("AfterDescription", "(Flashforward)");
+                        forward.setIntrinsic(inst.isIntrinsic());
+                        alternatives.add(forward);
                     } else if (keyword.startsWith("Harmonize")) {
                         if (!source.isInZone(ZoneType.Graveyard)) {
                             continue;

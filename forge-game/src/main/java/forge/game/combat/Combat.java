@@ -784,6 +784,9 @@ public class Combat {
                 if (divideCombatDamageAsChoose) {
                     defender = blocker.getController().getController().chooseSingleEntityForEffect(attackingPlayer.getOpponents(), null, Localizer.getInstance().getMessage("lblChoosePlayer"), null);
                     attackers = defender.getCreaturesInPlay();
+                } else if (blocker.hasKeyword(Keyword.TANTRUM) && isBlocking(blocker)) {
+                    // Toddler's Rage (user ruling 2026-10-23): like trample, but the rest goes to the attacking player
+                    defender = attackingPlayer;
                 }
 
                 if (AttackingBand.isValidBand(attackers, true))

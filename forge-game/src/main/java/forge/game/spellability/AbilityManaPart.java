@@ -404,7 +404,33 @@ public class AbilityManaPart implements java.io.Serializable {
     }
 
     public boolean meetsManaRestrictions(final SpellAbility sa) {
+        // Yawgmoth's Day Planner: a spell cast with its permission takes only mana from abilities that made you lose life
+        if (sa != null && sa.isSpell() && sa.getMayPlay() != null && sa.getMayPlay().hasParam("MayPlayLifeLossManaOnly")
+                && !causesLifeLoss(getSourceSA())) {
+            return false;
+        }
         return meetsManaRestrictions(sa, this.manaRestrictions) && meetsManaRestrictions(sa, this.extraManaRestrictions);
+    }
+
+    /**
+     * Whether the mana ability makes its activator lose life: life paid as a cost, or damage or life loss to "You" in
+     * its effects (a painland). Read from the script, so a prevented ping still counts.
+     */
+    public static boolean causesLifeLoss(final SpellAbility manaAb) {
+        if (manaAb == null) {
+            return false;
+        }
+        final SpellAbility root = manaAb.getRootAbility();
+        if (root.getPayCosts() != null && root.getPayCosts().hasSpecificCostType(forge.game.cost.CostPayLife.class)) {
+            return true;
+        }
+        for (SpellAbility sub = root; sub != null; sub = sub.getSubAbility()) {
+            if ((sub.getApi() == ApiType.DealDamage && "You".equals(sub.getParam("Defined")))
+                    || (sub.getApi() == ApiType.LoseLife && "You".equals(sub.getParamOrDefault("Defined", "You")))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

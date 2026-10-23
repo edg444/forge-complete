@@ -1,0 +1,12 @@
+Name:The Many Deeds of Belzenlok
+ManaCost:1 B
+Types:Enchantment Saga
+K:Chapter:3:DBExile1,DBExile2,DBExile3
+SVar:DBExile1:DB$ ChangeZone | ValidTgts$ Card.Saga | TgtPrompt$ Select up to one target Saga card in a graveyard | TargetMin$ 0 | TargetMax$ 1 | TgtZone$ Graveyard | Origin$ Graveyard | Destination$ Exile | RememberChanged$ True | SubAbility$ DBCopy1 | SpellDescription$ Exile up to one target Saga card from a graveyard. Copy its chapter I ability.
+SVar:DBCopy1:DB$ CopyChapter | Defined$ Remembered | Chapter$ 1 | SubAbility$ DBCleanup
+SVar:DBExile2:DB$ ChangeZone | ValidTgts$ Card.Saga | TgtPrompt$ Select up to one target Saga card in a graveyard | TargetMin$ 0 | TargetMax$ 1 | TgtZone$ Graveyard | Origin$ Graveyard | Destination$ Exile | RememberChanged$ True | SubAbility$ DBCopy2 | SpellDescription$ Exile up to one target Saga card from a graveyard. Copy its chapter II ability.
+SVar:DBCopy2:DB$ CopyChapter | Defined$ Remembered | Chapter$ 2 | SubAbility$ DBCleanup
+SVar:DBExile3:DB$ ChangeZone | ValidTgts$ Card.Saga | TgtPrompt$ Select up to one target Saga card in a graveyard | TargetMin$ 0 | TargetMax$ 1 | TgtZone$ Graveyard | Origin$ Graveyard | Destination$ Exile | RememberChanged$ True | SubAbility$ DBCopy3 | SpellDescription$ Exile up to one target Saga card from a graveyard. Copy its chapter III ability.
+SVar:DBCopy3:DB$ CopyChapter | Defined$ Remembered | Chapter$ 3 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)\nI — Exile up to one target Saga card from a graveyard. Copy its chapter I ability.\nII — Exile up to one target Saga card from a graveyard. Copy its chapter II ability.\nIII — Exile up to one target Saga card from a graveyard. Copy its chapter III ability.

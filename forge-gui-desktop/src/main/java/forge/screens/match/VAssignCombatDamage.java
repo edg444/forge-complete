@@ -163,7 +163,8 @@ public class VAssignCombatDamage {
         defender = defender0;
         attackerHasDeathtouch = attacker.getCurrentState().hasDeathtouch();
         attackerHasInfect = attacker.getCurrentState().hasInfect();
-        attackerHasTrample = defender != null && attacker.getCurrentState().hasTrample();
+        attackerHasTrample = defender != null && (attacker.getCurrentState().hasTrample()
+                || attacker.getCurrentState().hasKeyword(forge.game.keyword.Keyword.TANTRUM));
         attackerHasDivideDamage = attacker.getCurrentState().hasDivideDamage();
         overrideCombatantOrder = overrideOrder;
 

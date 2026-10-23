@@ -2141,11 +2141,12 @@ public class ComputerUtilCombat {
         boolean isAttacking = defender != null;
 
         // Check for Banding, Defensive Formation
-        boolean isAttackingMe = isAttacking && combat.getDefenderPlayerByAttacker(combatant).equals(self);
+        boolean isAttackingMe = isAttacking && combatant.isAttacking() && self.equals(combat.getDefenderPlayerByAttacker(combatant));
         boolean isBlockingMyBand = combatant.getController().isOpponentOf(self) && AttackingBand.isValidBand(opposedCombatants, true);
         final boolean aiDistributesBandingDmg = isAttackingMe || isBlockingMyBand;
 
-        final boolean hasTrample = combatant.hasKeyword(Keyword.TRAMPLE);
+        final boolean hasTrample = combatant.hasKeyword(Keyword.TRAMPLE)
+                || (combatant.hasKeyword(Keyword.TANTRUM) && combat != null && combat.isBlocking(combatant));
 
         if (combat != null && remaining != null && hasTrample && combatant.isAttacking() && !aiDistributesBandingDmg) {
             // if attacker has trample and some of its blockers are also blocking others it's generally a good idea

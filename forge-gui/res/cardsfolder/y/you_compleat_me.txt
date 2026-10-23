@@ -1,0 +1,11 @@
+Name:You Compleat Me
+ManaCost:1 B B
+Types:Sorcery
+A:SP$ MaxLife | Defined$ You | Amount$ 10 | SubAbility$ DBEmblem | SpellDescription$ If your life total is greater than 10, it becomes 10. For the rest of the game, your maximum life total is 10.
+SVar:DBEmblem:DB$ Effect | Name$ Emblem — You Compleat Me | Abilities$ ABMana | Triggers$ TrigUpkeep | Duration$ Permanent | SpellDescription$ You get an emblem with "Pay 2 life: Add one mana of any color" and "At the beginning of your upkeep, you draw a card and you lose 1 life."
+SVar:ABMana:AB$ Mana | Cost$ PayLife<2> | Produced$ Any | ActivationZone$ Command | SpellDescription$ Add one mana of any color.
+SVar:TrigUpkeep:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Command | Execute$ TrigDraw | TriggerDescription$ At the beginning of your upkeep, you draw a card and you lose 1 life.
+SVar:TrigDraw:DB$ Draw | Defined$ You | SubAbility$ DBLoseLife
+SVar:DBLoseLife:DB$ LoseLife | Defined$ You | LifeAmount$ 1
+AI:RemoveDeck:All
+Oracle:If your life total is greater than 10, it becomes 10. For the rest of the game, your maximum life total is 10. You get an emblem with "Pay 2 life: Add one mana of any color" and "At the beginning of your upkeep, you draw a card and you lose 1 life."

@@ -1,0 +1,8 @@
+Name:Toddler's Rage
+ManaCost:1 R
+Types:Enchantment Aura
+K:Flash
+K:Enchant:Creature
+SVar:AttachAILogic:Pump
+S:Mode$ Continuous | Affected$ Creature.EnchantedBy | AddPower$ 2 | AddToughness$ 1 | AddKeyword$ Tantrum | Description$ Enchanted creature gets +2/+1 and has tantrum. (It's like trample but for blocking.)
+Oracle:Flash\nEnchant creature\nEnchanted creature gets +2/+1 and has tantrum. (It's like trample but for blocking.)

@@ -2354,6 +2354,20 @@ public class CardFactoryUtil {
             re.setOverridingAbility(saExile);
 
             inst.addReplacement(re);
+        } else if (keyword.startsWith("Flashforward")) {
+            // whether it resolves, is countered or leaves the stack some other way (rulings)
+            final Cost cost = new Cost(keyword.split(":")[1], false);
+            final String repeffstr = "Event$ Moved | ValidCard$ Card.Self | Origin$ Stack | ExcludeDestination$ Library"
+                    + " | ValidStackSa$ Spell.Flashforward+castKeyword | Description$ Flashforward " + cost.toSimpleString()
+                    + " (" + inst.getReminderText() + ")";
+            final SpellAbility saBottom = AbilityFactory.getAbility(
+                    "DB$ ChangeZone | Defined$ Self | Origin$ Stack | Destination$ Library | LibraryPosition$ -1", card);
+            if (!intrinsic) {
+                saBottom.setIntrinsic(false);
+            }
+            final ReplacementEffect re = ReplacementHandler.parseReplacement(repeffstr, host, intrinsic, card);
+            re.setOverridingAbility(saBottom);
+            inst.addReplacement(re);
         } else if (keyword.startsWith("Graft")) {
             final String[] k = keyword.split(":");
             final String m = k[1];

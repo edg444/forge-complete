@@ -83,6 +83,8 @@ public class SpellAbilityProperty {
             return sa.isBeamMeUp();
         } else if (property.equals("Flashback")) {
             return sa.isFlashback();
+        } else if (property.equals("Flashforward")) {
+            return sa.isAlternativeCost(AlternativeCost.Flashforward);
         } else if (property.equals("Harmonize")) {
             return sa.isHarmonize();
         } else if (property.equals("Jumpstart")) {

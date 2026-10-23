@@ -92,7 +92,8 @@ public class VAssignCombatDamage extends FDialog {
         attackerHasDeathtouch = attacker.getCurrentState().hasDeathtouch();
         attackerHasDivideDamage = attacker.getCurrentState().hasDivideDamage();
         attackerHasInfect = attacker.getCurrentState().hasInfect();
-        attackerHasTrample = defender != null && attacker.getCurrentState().hasTrample();
+        attackerHasTrample = defender != null && (attacker.getCurrentState().hasTrample()
+                || attacker.getCurrentState().hasKeyword(forge.game.keyword.Keyword.TANTRUM));
         overrideCombatantOrder = overrideOrder;
 
         pnlAttacker = add(new AttDefCardPanel(attacker));

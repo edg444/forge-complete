@@ -99,6 +99,7 @@ public enum Keyword {
     FLANKING("Flanking", SimpleKeyword.class, false, "Whenever this creature becomes blocked by a creature without flanking, the blocking creature gets -1/-1 until end of turn."),
     FLASH("Flash", SimpleKeyword.class, true, "You may cast this spell any time you could cast an instant."),
     FLASHBACK("Flashback", KeywordWithCost.class, false, "You may cast this card from your graveyard for its flashback cost. Then exile it."),
+    FLASHFORWARD("Flashforward", KeywordWithCost.class, false, "You may cast this card from exile for its flashforward cost. Then put it on the bottom of your library."),
     FLYING("Flying", SimpleKeyword.class, true, "This creature can't be blocked except by creatures with flying or reach."),
     FOR_MIRRODIN("For Mirrodin", SimpleKeyword.class, false, "When this Equipment enters, create a 2/2 red Rebel creature token, then attach this to it."),
     FORETELL("Foretell", KeywordWithCost.class, false, "During your turn, you may pay {2} and exile this card from your hand face down. Cast it on a later turn for its foretell cost."),
