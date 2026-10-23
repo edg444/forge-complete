@@ -1,7 +1,10 @@
 Name:Gate to Phyrexia
 ManaCost:B B
 Types:Enchantment
-A:AB$ Destroy | Cost$ Sac<1/Creature> | ValidTgts$ Artifact | ActivationPhases$ Upkeep | ActivationLimit$ 1 | PlayerTurn$ True | SpellDescription$ Destroy target artifact. Activate only during your upkeep and only once each turn.
+A:AB$ Destroy | Cost$ Sac<1/Creature> | ValidTgts$ Artifact | ActivationPhases$ Upkeep | ActivationLimit$ GateLimit | PlayerTurn$ True | SpellDescription$ Destroy target artifact. Activate only during your upkeep and only once each turn.
+# R&D's Secret Lair: the Antiquities card has no "only once each turn".
+SVar:GateLimit:Count$Compare PrintedText GE1.99.1
+SVar:PrintedText:Count$Valid Card.Self+PrintedTextActive+PrintedBefore 19950101
 SVar:NonStackingEffect:True
 AI:RemoveDeck:Random
 DeckHas:Ability$Sacrifice

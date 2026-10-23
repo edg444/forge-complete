@@ -4,5 +4,8 @@ Types:Artifact Creature Construct
 PT:4/4
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigAddMana | TriggerDescription$ When this creature dies, add {C}{C}{C}{C}.
 SVar:TrigAddMana:DB$ Mana | Produced$ C | Amount$ 4
+# R&D's Secret Lair: as printed it says "If Su-Chi goes to the graveyard" - from anywhere.
+T:Mode$ ChangesZone | Origin$ Hand,Library,Stack,Exile,Command,Sideboard | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigPrintedMana | TriggerDescription$ (As printed) If Su-Chi goes to the graveyard from anywhere, its controller adds {C}{C}{C}{C}.
+SVar:TrigPrintedMana:DB$ Mana | Produced$ C | Amount$ 4 | ConditionDefined$ Self | ConditionPresent$ Card.Self+PrintedTextActive+PrintedBefore 19950401
 SVar:SacMe:4
 Oracle:When this creature dies, add {C}{C}{C}{C}.

@@ -4,7 +4,9 @@ Types:Artifact Creature Shapeshifter
 PT:*/7-*
 K:ETBReplacement:Other:ChooseNumber
 T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ ChooseNumber | TriggerDescription$ At the beginning of your upkeep, you may choose a number between 0 and 7.
-SVar:ChooseNumber:DB$ ChooseNumber | Defined$ You | Min$ 0 | Max$ 7 | AILogic$ Min | SpellDescription$ As this creature enters, choose a number between 0 and 7.
+SVar:ChooseNumber:DB$ ChooseNumber | Defined$ You | Min$ 0 | Max$ 7 | ConditionDefined$ Self | ConditionPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19950401 | SubAbility$ DBPrintedChoose | AILogic$ Min | SpellDescription$ As this creature enters, choose a number between 0 and 7.
+# R&D's Secret Lair: the Antiquities card's * is "any number from 0 to 6", so its toughness never drops to 0.
+SVar:DBPrintedChoose:DB$ ChooseNumber | Defined$ You | Min$ 0 | Max$ 6 | AILogic$ Min | ConditionDefined$ Self | ConditionPresent$ Card.Self+PrintedTextActive+PrintedBefore 19950401
 S:Mode$ Continuous | CharacteristicDefining$ True | SetPower$ X | SetToughness$ Y | Description$ CARDNAME's power is equal to the last chosen number and its toughness is equal to 7 minus that number.
 SVar:X:Count$ChosenNumber
 SVar:Y:Number$7/Minus.X

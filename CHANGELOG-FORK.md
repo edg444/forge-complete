@@ -365,6 +365,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   ("This creature gets +0/+3 as long as it's untapped."). Checked and left as they are: Drop of Honey skipping
   indestructible creatures matches its 2021 ruling; Nafs Asp's effect removes itself when its draw-step trigger
   fires (`OneOff$`).
+- **Set review: Antiquities** (all 85 new names) - scripts needed no changes. R&D's Secret Lair printed text
+  (`SecretLairAntiquitiesPrintedTextTest`, same method as Alpha):
+  - *Gate to Phyrexia*: no "only once each turn" (`ActivationLimit$` is now an SVar).
+  - *Golgothian Sylex*: takes "all cards from the Antiquities expansion" - ATQ printings (`PrintingIs ATQ`), not
+    every card with an Antiquities name.
+  - *Onulet* (before 4ED) and *Su-Chi*: "If it goes to the graveyard" - from any zone, not just when it dies.
+  - *Shapeshifter* (before 4ED): the number is 0 to 6.
+  - *Tawnos's Wand* (before 4ED): artifact creatures can still block the creature.
+  - Left as Oracle: Mono Artifact abilities (tap implied), Armageddon Clock's "end of your upkeep" (the draw-step
+    trigger is that), Titania's Song lasting until the next untap step (only the cleanup step differs), Hurkyl's
+    Recall's timing line, and the old mechanics of Tawnos's Coffin, Transmute Artifact and Goblin Artisans.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

@@ -1,7 +1,10 @@
 Name:Tawnos's Wand
 ManaCost:4
 Types:Artifact
-A:AB$ Effect | Cost$ 2 T | ValidTgts$ Creature.powerLE2 | TgtPrompt$ Select target creature with power 2 or less | RememberObjects$ Targeted | ExileOnMoved$ Battlefield | StaticAbilities$ Unblockable | AILogic$ MakeUnblockable | StackDescription$ {c:Targeted} can't be blocked this turn. | SpellDescription$ Target creature with power 2 or less can't be blocked this turn.
+A:AB$ Effect | Cost$ 2 T | ValidTgts$ Creature.powerLE2 | TgtPrompt$ Select target creature with power 2 or less | RememberObjects$ Targeted | ExileOnMoved$ Battlefield | StaticAbilities$ Unblockable | ConditionDefined$ Self | ConditionPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19950401 | SubAbility$ DBPrintedEffect | AILogic$ MakeUnblockable | StackDescription$ {c:Targeted} can't be blocked this turn. | SpellDescription$ Target creature with power 2 or less can't be blocked this turn.
+# R&D's Secret Lair: the Antiquities card makes it "unblockable by all creatures except artifact creatures".
+SVar:DBPrintedEffect:DB$ Effect | RememberObjects$ Targeted | ExileOnMoved$ Battlefield | StaticAbilities$ PrintedUnblockable | ConditionDefined$ Self | ConditionPresent$ Card.Self+PrintedTextActive+PrintedBefore 19950401
+SVar:PrintedUnblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | ValidBlocker$ Creature.nonArtifact | Description$ This creature can't be blocked this turn except by artifact creatures.
 SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | Description$ This creature can't be blocked this turn.
 AI:RemoveDeck:Random
 Oracle:{2}, {T}: Target creature with power 2 or less can't be blocked this turn.

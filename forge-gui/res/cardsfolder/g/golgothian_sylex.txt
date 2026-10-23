@@ -1,7 +1,9 @@
 Name:Golgothian Sylex
 ManaCost:4
 Types:Artifact
-A:AB$ SacrificeAll | Cost$ 1 T | ValidCards$ Permanent.!token+setATQ | SpellDescription$ Each nontoken permanent with a name originally printed in the Antiquities expansion is sacrificed by its controller.
+A:AB$ SacrificeAll | Cost$ 1 T | ValidCards$ Permanent.!token+setATQ | ConditionDefined$ Self | ConditionPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19950101 | SubAbility$ DBPrintedSacrifice | SpellDescription$ Each nontoken permanent with a name originally printed in the Antiquities expansion is sacrificed by its controller.
+# R&D's Secret Lair: as printed it takes "all cards from the Antiquities expansion" - the physical printing, not the name.
+SVar:DBPrintedSacrifice:DB$ SacrificeAll | ValidCards$ Permanent.!token+PrintingIs ATQ | ConditionDefined$ Self | ConditionPresent$ Card.Self+PrintedTextActive+PrintedBefore 19950101 | StackDescription$ None
 AI:RemoveDeck:All
 SVar:NonStackingEffect:True
 AI:RemoveDeck:Random
