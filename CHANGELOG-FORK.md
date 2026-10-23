@@ -312,6 +312,22 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
+  - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
+    during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).
+  - Chaos Orb flipped (animation and destruction) even if it had left the battlefield before resolving; the flip
+    now needs it still there, as the Oracle text says.
+  - Meekstone's AI play check used `PowerGE3` (no such property), so the AI never cast it.
+  - Mana Vault's draw-step trigger had no `TriggerZones$`; Ivory Cup's life-gain deck hint was filed as a
+    keyword; in-game text: Chaoslace's reminder, Flight's stray reminder, and the trigger Farmstead grants (it
+    read "Enchanted land has ..." on the land itself).
+- **Set review: Limited Edition Beta** (its two new cards, Circle of Protection: Black and Volcanic Island) - no
+  changes needed.
+- **Set review: Arabian Nights** (all 77 new names) - Giant Tortoise's in-game text now reads as its Oracle text
+  ("This creature gets +0/+3 as long as it's untapped."). Checked and left as they are: Drop of Honey skipping
+  indestructible creatures matches its 2021 ruling; Nafs Asp's effect removes itself when its draw-step trigger
+  fires (`OneOff$`).
+
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 
 - **Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie (SLD 1537-1539)** - the last cards from released sets
