@@ -52,9 +52,23 @@ public class Phase implements java.io.Serializable {
     private final Multimap<Player, GameCommand> untilEndMap = MultimapBuilder.hashKeys().arrayListValues().build();
     private final Multimap<Player, GameCommand> registerMap = MultimapBuilder.hashKeys().arrayListValues().build();
 
+    // Runed Terror: who the turn of an effect beginning now belongs to, while turns of several players are under way
+    private transient java.util.function.Supplier<Player> turnScope = null;
+    private final Multimap<Player, GameCommand> scopedUntil = MultimapBuilder.hashKeys().arrayListValues().build();
+
+    public final void setTurnScope(final java.util.function.Supplier<Player> scope) {
+        turnScope = scope;
+    }
+
+    /** Ends the effects scoped to p's turn (see addUntil). */
+    public final void executeScopedUntil(final Player p) {
+        excute(scopedUntil.get(p));
+    }
+
     public void clearCommands() {
         at.clear();
         until.clear();
+        scopedUntil.clear();
         untilMap.clear();
         untilEndMap.clear();
         registerMap.clear();
@@ -90,7 +104,12 @@ public class Phase implements java.io.Serializable {
      *            a {@link forge.GameCommand} object.
      */
     public final void addUntil(final GameCommand c) {
-        this.until.add(c);
+        final Player scope = turnScope == null ? null : turnScope.get();
+        if (scope != null) {
+            scopedUntil.put(scope, c);
+        } else {
+            this.until.add(c);
+        }
     }
 
     /**

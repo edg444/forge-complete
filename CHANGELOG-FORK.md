@@ -312,6 +312,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Mystery Booster 2 playtest cards (MB2), part 12: Runed Terror - Mystery Booster 2 playtest cards complete.**
+  - While a permanent with `SVar:SequentialPhases` is on the battlefield, players take their phases one after another:
+    as each phase ends the next player in turn order becomes active and takes it, and once all have, the first takes
+    the next phase. A turn begins when a player becomes active and ends with their cleanup step; "until end of turn"
+    effects end with the turn of whoever was active when they began, and per-turn counts reset only for that player.
+    When it leaves, the active player continues their turn as normal. Extra turns wait until it has left.
+
 - **Mystery Booster 2 playtest cards (MB2), part 11: Panglacial Shinobi, There // They're // Their, Blurry Visionary,
   Starting Town NPC, Cleaver Blow.**
   - `LibraryNinjutsu$` (ninjutsu from the library while searching it, shuffling the attacker away) and cost position

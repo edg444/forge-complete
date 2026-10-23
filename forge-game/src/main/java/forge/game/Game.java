@@ -1585,7 +1585,10 @@ public class Game {
         clearGlobalDamageHistory();
         // some cards need this info updated even after a player lost, so don't skip them
         for (Player player : getRegisteredPlayers()) {
-            player.onCleanupPhase();
+            // Runed Terror: other players' turns are still under way, so only this turn's player resets
+            if (!getPhaseHandler().isSequentialPhases() || getPhaseHandler().isPlayerTurn(player)) {
+                player.onCleanupPhase();
+            }
         }
         for (final Card c : getCardsIncludePhasingIn(ZoneType.Battlefield)) {
             c.onCleanupPhase(getPhaseHandler().getPlayerTurn());

@@ -109,6 +109,14 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     private transient List<PhaseType> stolenPhaseSteps = null;
     private transient boolean upkeepSwitched = false;
 
+    // Runed Terror: players take their phases one after another. Each phase goes first to the leader (the active
+    // player when it began), then to each next player in turn order. A player's turn runs from when they become
+    // active until their cleanup step ends; turns of several players are under way at once (rulings).
+    private transient Player seqLeader = null;
+    private final transient Set<Player> seqTurnsUnderway = new HashSet<>();
+    private transient PhaseType seqNextPhase = null;
+    private transient boolean seqNewTurn = false;
+
     // priority player
 
     private transient Player pPlayerPriority = null;
@@ -251,6 +259,12 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     extraPhases.remove(phase);
                 }
                 setPhase(nextPhase);
+            } else if (seqNextPhase != null) {
+                // Runed Terror: the next player takes this phase, or the leader takes the next one
+                turnEnded = seqNewTurn;
+                setPhase(seqNextPhase);
+                seqNextPhase = null;
+                seqNewTurn = false;
             } else {
                 turnEnded = PhaseType.isLast(phase, isTopsy);
                 if (turnEnded) {
@@ -529,6 +543,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     // gone, exactly as the effects would end in paper once it leaves
                     if (!StaticAbilityStayingPower.anyStayingPower(game)) {
                         game.getEndOfTurn().executeUntil();
+                        game.getEndOfTurn().executeScopedUntil(playerTurn);
                         game.getEndOfTurn().executeUntilEndOfPhase(playerTurn);
                     }
                     game.getEndOfTurn().registerUntilEndCommand(playerTurn);
@@ -682,21 +697,11 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     expireStolenPhases(playerTurn);
                     // only call onCleanupPhase when Cleanup is not repeated
                     game.onCleanupPhase();
-                    // set previous player
-                    playerPreviousTurn = this.getPlayerTurn();
-                    setPlayerTurn(handleNextTurn());
-
-                    // start effects for next turn (do this first for ControlPlayer)
-                    game.getCleanup().executeUntil();
-                    // done this after check state effects, so it only has effect next check
-                    game.getCleanup().executeUntil(playerTurn);
-
-                    handleMultiplayerEffects();
-
-                    // "Trigger" for begin turn to get around a phase skipping
-                    for (final Player active : getActivePlayers()) {
-                        final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(active);
-                        game.getTriggerHandler().runTrigger(TriggerType.TurnBegin, runParams, false);
+                    if (!sequentialHandOff()) {
+                        // set previous player
+                        playerPreviousTurn = this.getPlayerTurn();
+                        setPlayerTurn(handleNextTurn());
+                        startTurnEffects();
                     }
                 }
                 planarDiceSpecialActionThisTurn = 0;
@@ -706,6 +711,81 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 break;
             default: // no action
         }
+        if (phase != PhaseType.CLEANUP && !bRepeatCleanup && !extraPhases.containsKey(phase)
+                && !(phase == PhaseType.COMBAT_DAMAGE && lastStrikeDamageStep)) {
+            sequentialHandOff();
+        }
+    }
+
+    private void startTurnEffects() {
+        // start effects for next turn (do this first for ControlPlayer)
+        game.getCleanup().executeUntil();
+        // done this after check state effects, so it only has effect next check
+        game.getCleanup().executeUntil(playerTurn);
+
+        handleMultiplayerEffects();
+
+        // "Trigger" for begin turn to get around a phase skipping
+        for (final Player active : getActivePlayers()) {
+            final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(active);
+            game.getTriggerHandler().runTrigger(TriggerType.TurnBegin, runParams, false);
+        }
+    }
+
+    /** Whether players are taking their phases one after another (Runed Terror). */
+    public final boolean isSequentialPhases() {
+        return seqLeader != null;
+    }
+
+    /**
+     * Runed Terror: as the last step of a phase ends while one is on the battlefield, the next player in turn order
+     * becomes the active player and takes that same phase; once every player has, the leader takes the next phase.
+     * Without one, the active player just continues their turn (rulings). Returns whether the active player changed.
+     */
+    private boolean sequentialHandOff() {
+        if (playerTurn == null || playerTurn.isPhasesReversed()) {
+            return false;
+        }
+        int group = -1;
+        for (int i = 0; i < STEALABLE_PHASES.size(); i++) {
+            final List<PhaseType> steps = STEALABLE_PHASES.get(i);
+            if (steps.get(steps.size() - 1) == phase) {
+                group = i;
+            }
+        }
+        if (group < 0) {
+            return false;
+        }
+        final boolean terror = game.getCardsIn(ZoneType.Battlefield).anyMatch(c -> c.hasSVar("SequentialPhases"));
+        if (!terror) {
+            seqLeader = null;
+            seqTurnsUnderway.clear();
+            return false;
+        }
+        if (seqLeader == null) {
+            seqLeader = playerTurn;
+            seqTurnsUnderway.add(playerTurn);
+            // "until end of turn" now means the end of the turn of whoever was active when the effect began
+            game.getEndOfTurn().setTurnScope(() -> seqLeader != null ? playerTurn : null);
+        } else if (!seqLeader.isInGame()) {
+            seqLeader = playerTurn;
+        }
+        if (phase == PhaseType.CLEANUP) {
+            seqTurnsUnderway.remove(playerTurn);
+        }
+        final Player next = game.getNextPlayerAfter(playerTurn);
+        final int nextGroup = next.equals(seqLeader) ? (group + 1) % STEALABLE_PHASES.size() : group;
+        seqNextPhase = STEALABLE_PHASES.get(nextGroup).get(0);
+        seqNewTurn = seqTurnsUnderway.add(next);
+        if (next.equals(playerTurn)) {
+            return false;
+        }
+        playerPreviousTurn = playerTurn;
+        setPlayerTurn(next);
+        if (seqNewTurn) {
+            startTurnEffects();
+        }
+        return true;
     }
 
     private void declareAttackersTurnBasedAction() {

@@ -1,0 +1,10 @@
+Name:Runed Terror
+ManaCost:6
+Types:Artifact Creature Elemental Champion
+PT:6/6
+# PhaseHandler.sequentialHandOff: as each phase ends, the next player takes it, then the leader starts the next phase.
+# A turn runs from becoming active through that player's cleanup; "until end of turn" effects end with the turn of
+# whoever was active when they began (rulings).
+SVar:SequentialPhases:True
+Text:Instead of taking turns as normal, players take their phases sequentially. (For example, you take your beginning phase as the active player, then the next player in turn order becomes the active player and takes their beginning phase. After each player had a beginning phase, do the same for first main, combat phase, second main, ending phase, and then beginning phase again. If this creature leaves the battlefield, the active player continues their turn as normal.)
+Oracle:Instead of taking turns as normal, players take their phases sequentially. (For example, you take your beginning phase as the active player, then the next player in turn order becomes the active player and takes their beginning phase. After each player had a beginning phase, do the same for first main, combat phase, second main, ending phase, and then beginning phase again. If this creature leaves the battlefield, the active player continues their turn as normal.)
