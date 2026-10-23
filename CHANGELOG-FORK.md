@@ -317,6 +317,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   echoed pairs): the slot deals one whole pair, the partner taken from the same sheet as the card that rolled
   (so borderless brings borderless), and fills its other cards from different pairs
   (`BoosterGenerator.generatePairedSlot`).
+- **Partners open together** (edition metadata `BoosterPartnersTogether=True` and `UncommonPartnerPairChance=<%>`,
+  Battlebond; `BoosterGenerator.keepPartnersTogether`): a "partner with" card in a pack brings its partner, with the
+  same foil state and in collector number order. A rare or mythic pair takes an uncommon's place, a foil pair a
+  common's, and packs without a rare pair get an uncommon pair at the given chance in place of two uncommons. Sheet
+  operator `PartnerWith` matches cards with "partner with" (`Uncommon:!PartnerWith` keeps them out of a slot).
 
 ---
 
@@ -333,6 +338,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   prerelease use it. Also fixed two misspelled names in the echoed pair sheet ("Lyla, Tolarian Archangel" and
   "Winter, Tormented Lover"): the sheet dropped them, so Lyra and Winter never came from the echoed pairs slot and
   were dealt by the ordinary rare and uncommon slots instead.
+- **Battlebond packs keep partners together** (`BattlebondPartnersTest`). Partner pairs always open in the same pack
+  (mtg.wiki; Gavin Verhey: a foil partner's partner is foil too), and upstream dealt each card on its own. Rates and
+  layout follow the lethe.xyz collation project, the only pack-level study found (at least 9 boxes): a rare or mythic
+  pair in 1 of 10 packs, with two uncommons instead of three; an uncommon pair, from its own run, in 29 of 139 packs,
+  taking two uncommon slots; never both in one pack. The rare sheet now gives each pair one sheet position and rares
+  twice a mythic's weight, which yields exactly Lethe's 1/10 and its assumed 7/55 mythic rate. Upstream weighted
+  each rare 8 times a mythic, so a mythic turned up in about 1 pack in 29. Still not handled: a foil Will and Rowan
+  pair uses the regular #1/#2 printings instead of the foil-only alternate art (#255/#256), and a foil uncommon partner
+  pair can't open, since the uncommon sheet the foil is drawn from leaves partners out.
+
 
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only

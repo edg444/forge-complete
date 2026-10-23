@@ -4,7 +4,10 @@ Date=2018-06-08
 Name=Battlebond
 Type=Draft
 BoosterCovers=3
-Booster=10 Common, 3 Uncommon, 1 fromSheet("BBD RareMythicDistribution"), 1 BasicLand
+Booster=10 Common, 3 Uncommon:!PartnerWith, 1 fromSheet("BBD RareMythicDistribution"), 1 BasicLand
+#https://www.lethe.xyz/mtg/collation/bbd.html - an uncommon pair in 29/139 of packs, never one with a rare pair
+BoosterPartnersTogether=True
+UncommonPartnerPairChance=23.18
 ScryfallCode=BBD
 
 [cards]
@@ -270,72 +273,72 @@ ScryfallCode=BBD
 [RareMythicDistribution]
 1 Will Kenrith|BBD|[1]
 1 Rowan Kenrith|BBD|[2]
-8 Regna, the Redeemer|BBD
-8 Krav, the Unredeemed|BBD
-8 Zndrsplt, Eye of Wisdom|BBD
-8 Okaun, Eye of Chaos|BBD
-8 Virtus the Veiled|BBD
-8 Gorm the Great|BBD
-8 Khorvath Brightflame|BBD
-8 Sylvia Brightspear|BBD
-8 Pir, Imaginative Rascal|BBD
-8 Toothy, Imaginary Friend|BBD
-1 Arena Rector|BBD
-1 Brightling|BBD
-8 Play of the Game|BBD
-8 Regna's Sanction|BBD
-8 Together Forever|BBD
-1 Arcane Artisan|BBD
-8 Game Plan|BBD
-8 Spellseeker|BBD
-8 Zndrsplt's Judgment|BBD
-1 Archfiend of Despair|BBD
-8 Mindblade Render|BBD
-1 Stunning Reversal|BBD
-8 Thrilling Encore|BBD
-8 Virtus's Maneuver|BBD
-8 Bonus Round|BBD
-8 Khorvath's Fury|BBD
-1 Najeela, the Blade-Blossom|BBD
-8 Stolen Strategy|BBD
-1 Bramble Sovereign|BBD
-8 Generous Patron|BBD
-1 Grothama, All-Devouring|BBD
-8 Pir's Whim|BBD
-8 Archon of Valor's Reach|BBD
-8 Last One Standing|BBD
-8 Sentinel Tower|BBD
-8 Victory Chimes|BBD
-8 Bountiful Promenade|BBD
-8 Luxury Suite|BBD
-8 Morphic Pool|BBD
-8 Sea of Clouds|BBD
-8 Spire Garden|BBD
-8 Angelic Chorus|BBD
-8 Kor Spiritdancer|BBD
-1 Land Tax|BBD
-8 Mangara of Corondor|BBD
-8 Mystic Confluence|BBD
-8 Sower of Temptation|BBD
-8 Tidespout Tyrant|BBD
-1 True-Name Nemesis|BBD
-8 Diabolic Intent|BBD
-1 Nirkana Revenant|BBD
-8 Noosegraf Mob|BBD
-8 Nyxathid|BBD
-8 Goblin Razerunners|BBD
-8 Magmatic Force|BBD
-8 War's Toll|BBD
-1 Doubling Season|BBD
-8 Greater Good|BBD
-8 Magus of the Candelabra|BBD
-8 Seedborn Muse|BBD
-8 Vigor|BBD
-8 Apocalypse Hydra|BBD
-8 Evil Twin|BBD
-8 Gwafa Hazid, Profiteer|BBD
-8 Mind's Eye|BBD
-1 Mycosynth Lattice|BBD
+2 Regna, the Redeemer|BBD
+2 Krav, the Unredeemed|BBD
+2 Zndrsplt, Eye of Wisdom|BBD
+2 Okaun, Eye of Chaos|BBD
+2 Virtus the Veiled|BBD
+2 Gorm the Great|BBD
+2 Khorvath Brightflame|BBD
+2 Sylvia Brightspear|BBD
+2 Pir, Imaginative Rascal|BBD
+2 Toothy, Imaginary Friend|BBD
+2 Arena Rector|BBD
+2 Brightling|BBD
+4 Play of the Game|BBD
+4 Regna's Sanction|BBD
+4 Together Forever|BBD
+2 Arcane Artisan|BBD
+4 Game Plan|BBD
+4 Spellseeker|BBD
+4 Zndrsplt's Judgment|BBD
+2 Archfiend of Despair|BBD
+4 Mindblade Render|BBD
+2 Stunning Reversal|BBD
+4 Thrilling Encore|BBD
+4 Virtus's Maneuver|BBD
+4 Bonus Round|BBD
+4 Khorvath's Fury|BBD
+2 Najeela, the Blade-Blossom|BBD
+4 Stolen Strategy|BBD
+2 Bramble Sovereign|BBD
+4 Generous Patron|BBD
+2 Grothama, All-Devouring|BBD
+4 Pir's Whim|BBD
+4 Archon of Valor's Reach|BBD
+4 Last One Standing|BBD
+4 Sentinel Tower|BBD
+4 Victory Chimes|BBD
+4 Bountiful Promenade|BBD
+4 Luxury Suite|BBD
+4 Morphic Pool|BBD
+4 Sea of Clouds|BBD
+4 Spire Garden|BBD
+4 Angelic Chorus|BBD
+4 Kor Spiritdancer|BBD
+2 Land Tax|BBD
+4 Mangara of Corondor|BBD
+4 Mystic Confluence|BBD
+4 Sower of Temptation|BBD
+4 Tidespout Tyrant|BBD
+2 True-Name Nemesis|BBD
+4 Diabolic Intent|BBD
+2 Nirkana Revenant|BBD
+4 Noosegraf Mob|BBD
+4 Nyxathid|BBD
+4 Goblin Razerunners|BBD
+4 Magmatic Force|BBD
+4 War's Toll|BBD
+2 Doubling Season|BBD
+4 Greater Good|BBD
+4 Magus of the Candelabra|BBD
+4 Seedborn Muse|BBD
+4 Vigor|BBD
+4 Apocalypse Hydra|BBD
+4 Evil Twin|BBD
+4 Gwafa Hazid, Profiteer|BBD
+4 Mind's Eye|BBD
+2 Mycosynth Lattice|BBD
 
 [tokens]
 1 w_1_1_spirit_flying @Ryan Yee

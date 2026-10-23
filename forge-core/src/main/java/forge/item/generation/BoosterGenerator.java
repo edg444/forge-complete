@@ -379,6 +379,10 @@ public class BoosterGenerator {
             result.addAll(foilCardGeneratedAndHeld);
         }
 
+        if (edition != null && edition.getBoosterPartnersTogether()) {
+            keepPartnersTogether(result, edition);
+        }
+
         // Guaranteed cards, e.g. Dominaria guaranteed legendary creatures
         if (edition != null) {
             String boosterMustContain = edition.getBoosterMustContain();
@@ -538,6 +542,66 @@ public class BoosterGenerator {
 
     private static Map<String, Long> bulkSlotReplacement(BoosterSlot boosterSlot, int numCards) {
         return Stream.generate(boosterSlot::replaceSlot).limit(numCards).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+    }
+
+    /**
+     * Battlebond printed each "partner with" pair side by side, so a pack never splits one (lethe.xyz collation
+     * project): a rare or mythic partner brings its partner in place of an uncommon, a foil one brings its foil
+     * partner in place of a common, and packs without a rare pair may get an uncommon pair, from its own run, in
+     * place of two uncommons. The pair keeps collector number order.
+     */
+    private static void keepPartnersTogether(List<PaperCard> booster, CardEdition edition) {
+        boolean pairInPack = false;
+        for (PaperCard card : Lists.newArrayList(booster)) {
+            String partnerName = card.getRules().getPartnerWith();
+            if (partnerName.isEmpty() || booster.stream().anyMatch(pc -> pc.getName().equals(partnerName) && pc.isFoil() == card.isFoil())) {
+                continue;
+            }
+            PaperCard partner = StaticData.instance().getCommonCards().getCard(partnerName, edition.getCode(), card.getArtIndex());
+            if (partner == null) {
+                continue;
+            }
+            if (card.isFoil()) {
+                partner = partner.getFoiled();
+            } else {
+                pairInPack = true;
+            }
+            removeFirst(booster, card.isFoil() ? PaperCardPredicates.IS_COMMON : PaperCardPredicates.IS_UNCOMMON);
+            insertPair(booster, card, partner);
+        }
+
+        if (!pairInPack && MyRandom.getRandom().nextDouble() < edition.getUncommonPartnerPairChance()) {
+            List<PaperCard> pairs = getPrintSheet("Uncommon:PartnerWith " + edition.getCode()).random(1, true);
+            if (pairs.isEmpty()) {
+                return;
+            }
+            PaperCard card = pairs.get(0);
+            PaperCard partner = StaticData.instance().getCommonCards().getCard(card.getRules().getPartnerWith(), edition.getCode());
+            if (partner == null) {
+                return;
+            }
+            removeFirst(booster, PaperCardPredicates.IS_UNCOMMON);
+            removeFirst(booster, PaperCardPredicates.IS_UNCOMMON);
+            int at = IterableUtil.indexOf(booster, PaperCardPredicates.IS_UNCOMMON);
+            booster.add(at < 0 ? booster.size() : at, card);
+            insertPair(booster, card, partner);
+        }
+    }
+
+    private static void removeFirst(List<PaperCard> booster, Predicate<PaperCard> rarity) {
+        for (int i = 0; i < booster.size(); i++) {
+            PaperCard pc = booster.get(i);
+            if (!pc.isFoil() && rarity.test(pc) && pc.getRules().getPartnerWith().isEmpty()) {
+                booster.remove(i);
+                return;
+            }
+        }
+    }
+
+    private static void insertPair(List<PaperCard> booster, PaperCard inPack, PaperCard partner) {
+        int at = booster.indexOf(inPack);
+        boolean partnerFirst = partner.getCollectorNumberSortingKey().compareTo(inPack.getCollectorNumberSortingKey()) < 0;
+        booster.add(partnerFirst ? at : at + 1, partner);
     }
 
     private static void ensureGuaranteedCardInBooster(List<PaperCard> result, SealedTemplate template, String boosterMustContain) {
@@ -786,6 +850,7 @@ public class BoosterGenerator {
             } else if (operator.equalsIgnoreCase(BoosterSlots.RARE)) {          toAdd = PaperCardPredicates.IS_RARE;
             } else if (operator.equalsIgnoreCase(BoosterSlots.UNCOMMON)) {      toAdd = PaperCardPredicates.IS_UNCOMMON;
             } else if (operator.equalsIgnoreCase(BoosterSlots.COMMON)) {        toAdd = PaperCardPredicates.IS_COMMON;
+            } else if (operator.equalsIgnoreCase("PartnerWith")) {             toAdd = card -> !card.getRules().getPartnerWith().isEmpty();
             } else if (operator.startsWith("name(")) {
                 operator = StringUtils.strip(operator.substring(4), "() ");
                 String[] cardNames = TextUtil.splitWithParenthesis(operator, ',', '"', '"');

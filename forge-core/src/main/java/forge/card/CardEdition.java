@@ -327,6 +327,8 @@ public final class CardEdition implements Comparable<CardEdition> {
     private String slotReplaceCommonWith = "Common";
     private String additionalSheetForFoils = "";
     private String boosterMustContain = "";
+    private boolean boosterPartnersTogether = false;
+    private double uncommonPartnerPairChance = 0;
     private String boosterReplaceSlotFromPrintSheet = "";
     private String sheetReplaceCardFromSheet = "";
     private String sheetReplaceCardFromSheet2 = "";
@@ -424,6 +426,8 @@ public final class CardEdition implements Comparable<CardEdition> {
     public String getAdditionalSheetForFoils() { return additionalSheetForFoils; }
     public String getAdditionalUnlockSet() { return additionalUnlockSet; }
     public String getBoosterMustContain() { return boosterMustContain; }
+    public boolean getBoosterPartnersTogether() { return boosterPartnersTogether; }
+    public double getUncommonPartnerPairChance() { return uncommonPartnerPairChance; }
     public String getBoosterReplaceSlotFromPrintSheet() { return boosterReplaceSlotFromPrintSheet; }
     public String getSheetReplaceCardFromSheet() { return sheetReplaceCardFromSheet; }
     public String getSheetReplaceCardFromSheet2() { return sheetReplaceCardFromSheet2; }
@@ -906,6 +910,8 @@ public final class CardEdition implements Comparable<CardEdition> {
             res.smallSetOverride = metadata.getBoolean("TreatAsSmallSet", false); // for "small" sets with over 200 cards (e.g. Eldritch Moon)
 
             res.boosterMustContain = metadata.get("BoosterMustContain", ""); // e.g. Dominaria guaranteed legendary creature
+            res.boosterPartnersTogether = metadata.getBoolean("BoosterPartnersTogether", false); // e.g. Battlebond "partner with" pairs
+            res.uncommonPartnerPairChance = metadata.getDouble("UncommonPartnerPairChance", 0) / 100.0F;
             res.boosterReplaceSlotFromPrintSheet = metadata.get("BoosterReplaceSlotFromPrintSheet", ""); // e.g. Zendikar Rising guaranteed double-faced card
             res.sheetReplaceCardFromSheet = metadata.get("SheetReplaceCardFromSheet", "");
             res.sheetReplaceCardFromSheet2 = metadata.get("SheetReplaceCardFromSheet2", "");
