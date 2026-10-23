@@ -1,0 +1,8 @@
+Name:Abbot of the Sacred Meeple
+ManaCost:1 W
+Types:Creature Human Monk
+PT:2/2
+# sinecure, the Monk Track, sheep, buildings and production phases belong to a board game a Magic game doesn't have
+S:Mode$ Continuous | Affected$ Card.Self | Description$ Sinecure (This creature can occupy a space two spaces higher on the Monk Track than its power.)
+S:Mode$ Continuous | Affected$ Card.Self | Description$ Once on each of your odd-numbered (beige) production phases, you may spend two additional sheep when constructing a building. If you do, you may activate the lesser production ability of any building of prestige 5 or lower you control. Exceptions: Apiary, Cobbler (but not Shoemaker), Wainwright.
+Oracle:Sinecure (This creature can occupy a space two spaces higher on the Monk Track than its power.)\nOnce on each of your odd-numbered (beige) production phases, you may spend two additional sheep when constructing a building. If you do, you may activate the lesser production ability of any building of prestige 5 or lower you control. Exceptions: Apiary, Cobbler (but not Shoemaker), Wainwright.

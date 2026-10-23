@@ -1,0 +1,13 @@
+Name:Two by Four
+ManaCost:1 U
+Types:Instant
+# a base power/toughness counter sets that base value in layer 7b from when it's put on (rulings), so a lasting effect
+# does it for as long as the counter stays
+A:SP$ Charm | MinCharmNum$ 1 | CharmNum$ 2 | Choices$ DBPower,DBToughness
+SVar:DBPower:DB$ PutCounter | ValidTgts$ Creature | TgtPrompt$ Select target creature (base power 4) | CounterType$ Base Power 4 | CounterNum$ 1 | SubAbility$ DBPowerEffect | SpellDescription$ Put a base power 4 counter on target creature.
+SVar:DBPowerEffect:DB$ Effect | Name$ Base Power 4 Counter | RememberObjects$ ParentTarget | ForgetCounter$ Base Power 4 | StaticAbilities$ BasePower | Duration$ Permanent
+SVar:BasePower:Mode$ Continuous | Affected$ Card.IsRemembered | SetPower$ 4 | Description$ Its base power is 4.
+SVar:DBToughness:DB$ PutCounter | ValidTgts$ Creature | TgtPrompt$ Select target creature (base toughness 4) | CounterType$ Base Toughness 4 | CounterNum$ 1 | SubAbility$ DBToughnessEffect | SpellDescription$ Put a base toughness 4 counter on target creature.
+SVar:DBToughnessEffect:DB$ Effect | Name$ Base Toughness 4 Counter | RememberObjects$ ParentTarget | ForgetCounter$ Base Toughness 4 | StaticAbilities$ BaseToughness | Duration$ Permanent
+SVar:BaseToughness:Mode$ Continuous | Affected$ Card.IsRemembered | SetToughness$ 4 | Description$ Its base toughness is 4.
+Oracle:Choose one or both —\n• Put a base power 4 counter on target creature.\n• Put a base toughness 4 counter on target creature.

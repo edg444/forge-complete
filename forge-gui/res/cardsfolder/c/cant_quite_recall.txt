@@ -1,0 +1,6 @@
+Name:Can't Quite Recall
+ManaCost:U
+Types:Instant
+K:Forbidden
+A:SP$ Draw | ValidTgts$ Player | TgtPrompt$ Select target player | NumCards$ 3 | SpellDescription$ Target player draws three cards.
+Oracle:Forbidden (This card can't be in your starting deck. Yes, you read that right. You need to figure out a way to get it into the game without it being in your deck.)\nTarget player draws three cards.

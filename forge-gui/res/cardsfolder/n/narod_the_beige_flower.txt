@@ -1,0 +1,7 @@
+Name:Narod, the Beige Flower
+ManaCost:W U B
+Types:Legendary Creature Plant Rogue
+PT:0/5
+# with Doran too, a creature's controller would choose; Forge takes whichever of the two is greater
+S:Mode$ CombatDamageManaValue | ValidCard$ Creature | Description$ Each creature assigns combat damage equal to its mana value rather than its power.
+Oracle:Each creature assigns combat damage equal to its mana value rather than its power.

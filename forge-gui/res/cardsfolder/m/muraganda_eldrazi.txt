@@ -1,0 +1,12 @@
+Name:Muraganda Eldrazi
+ManaCost:4 W
+Types:Creature Eldrazi Dinosaur
+PT:6/5
+K:Devoid
+K:Deworded
+T:Mode$ SpellCast | ValidCard$ Card.Self | Execute$ TrigCounter | TriggerDescription$ When you cast this spell, put a primeval counter on target creature. (A creature with a primeval counter loses all abilities and can't gain abilities.)
+SVar:TrigCounter:DB$ PutCounter | ValidTgts$ Creature | TgtPrompt$ Select target creature | CounterType$ PRIMEVAL | CounterNum$ 1 | IsCurse$ True | SubAbility$ DBPrimeval
+# primeval counters work wherever Muraganda Eldrazi is (rulings): a lasting effect does it, from the counter's timestamp
+SVar:DBPrimeval:DB$ Effect | Name$ Primeval Counters | RememberObjects$ Targeted | ForgetCounter$ PRIMEVAL | StaticAbilities$ Primeval | Duration$ Permanent
+SVar:Primeval:Mode$ Continuous | Affected$ Card.IsRemembered+counters_GE1_PRIMEVAL | RemoveAllAbilities$ True | CantGainAbilities$ True | Description$ A creature with a primeval counter loses all abilities and can't gain abilities.
+Oracle:Devoid (This card has no color.)\nDeworded (This creature counts as having no abilities.)\nWhen you cast this spell, put a primeval counter on target creature. (A creature with a primeval counter loses all abilities and can't gain abilities.)

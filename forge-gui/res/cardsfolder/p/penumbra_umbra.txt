@@ -1,0 +1,8 @@
+Name:Penumbra Umbra
+ManaCost:1 G
+Types:Enchantment Aura
+K:Enchant:Creature.YouCtrl:creature you control
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigCopy | TriggerDescription$ When Penumbra Umbra is put into a graveyard from the battlefield, create a token that's a copy of enchanted creature, except the token is black.
+SVar:TrigCopy:DB$ CopyPermanent | Defined$ Enchanted | SetColor$ Black
+K:Umbra armor
+Oracle:Enchant creature you control\nWhen Penumbra Umbra is put into a graveyard from the battlefield, create a token that's a copy of enchanted creature, except the token is black.\nUmbra armor (If enchanted creature would be destroyed, instead remove all damage from it and destroy this Aura.)

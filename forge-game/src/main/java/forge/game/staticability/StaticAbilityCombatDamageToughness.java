@@ -28,4 +28,17 @@ public class StaticAbilityCombatDamageToughness {
         }
         return true;
     }
+
+    /** Narod, the Beige Flower: "Each creature assigns combat damage equal to its mana value rather than its power." */
+    public static boolean combatDamageManaValue(final Card card) {
+        final Game game = card.getGame();
+        for (final Card ca : game.getCardsIn(ZoneType.STATIC_ABILITIES_SOURCE_ZONES)) {
+            for (final StaticAbility stAb : ca.getStaticAbilities()) {
+                if (stAb.checkConditions(StaticAbilityMode.CombatDamageManaValue) && stAb.matchesValidParam("ValidCard", card)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

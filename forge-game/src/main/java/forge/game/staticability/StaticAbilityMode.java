@@ -103,6 +103,8 @@ public enum StaticAbilityMode {
     // StaticAbilityCombatDamageToughness
     CombatDamageToughness,
     CombatDamageNegatePower,
+    // Narod, the Beige Flower
+    CombatDamageManaValue,
 
     // StaticAbilityColorlessDamageSource
     ColorlessDamageSource,

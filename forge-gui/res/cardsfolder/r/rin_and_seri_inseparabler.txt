@@ -1,0 +1,9 @@
+Name:Rin and Seri, Inseparabler
+ManaCost:R/G G/W
+Types:Legendary Creature Dog Cat Scientist
+PT:3/2
+S:Mode$ Continuous | Affected$ Creature.Cat+YouCtrl | AddType$ Dog | Description$ All Cats you control are Dogs in addition to their other types.
+S:Mode$ Continuous | Affected$ Creature.Dog+YouCtrl | AddType$ Cat | Description$ All Dogs you control are Cats in addition to their other types.
+S:Mode$ Continuous | Affected$ Creature.Cat+YouCtrl,Creature.Dog+YouCtrl | AddKeyword$ Haste | Description$ Cats and Dogs you control have haste.
+DeckHints:Type$Cat|Dog
+Oracle:All Cats you control are Dogs in addition to their other types.\nAll Dogs you control are Cats in addition to their other types.\nCats and Dogs you control have haste.

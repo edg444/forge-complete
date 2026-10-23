@@ -1,0 +1,8 @@
+Name:Wowzer, the Aspirational
+ManaCost:C W U B R G S
+Types:Legendary Snow Creature Wurm
+PT:10/10
+T:Mode$ Attacks | ValidCard$ Card.Self | CheckSVar$ HasAll | SVarCompare$ EQ1 | Execute$ TrigWin | TriggerZones$ Battlefield | TriggerDescription$ Whenever CARDNAME attacks, if you have an {E}, control a Blood, a Clue, a Food, a Map, a Powerstone, and a Treasure, are the monarch, and have the city's blessing and the initiative, you win the game.
+SVar:TrigWin:DB$ WinsGame | Defined$ You | ConditionCheckSVar$ HasAll | ConditionSVarCompare$ EQ1
+SVar:HasAll:Count$YouHaveAll Energy_Blood_Clue_Food_Map_Powerstone_Treasure_Monarch_Blessing_Initiative
+Oracle:Whenever Wowzer, the Aspirational attacks, if you have an {E}, control a Blood, a Clue, a Food, a Map, a Powerstone, and a Treasure, are the monarch, and have the city's blessing and the initiative, you win the game.

@@ -312,6 +312,22 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Mystery Booster 2 playtest cards (MB2), part 2: Naturalize 2, Microscope, Lazotep Archway, Processing Plant,
+  Penumbra Umbra, Narod, the Beige Flower, Hish of the Snake Cult, Wowzer, the Aspirational.**
+  - Static mode `CombatDamageManaValue` (with Doran's too, the greater of the two); keyword `Daunt`; count
+    `Count$YouHaveAll <things>` (energy, monarch, city's blessing, initiative, or a permanent subtype you control).
+  - MB2 edition adds the land type Ulamog's.
+
+- **Mystery Booster 2 playtest cards (MB2), part 1: Wrath of Leknif, Spuzzem Strategist, Abbot of the Sacred Meeple,
+  Dairy Cow, Rin and Seri, Inseparabler, TL;DR, Subgoyf, Plain Walker, Can't Quite Recall, Muraganda Eldrazi, Sliver of
+  Hope, Two by Four.**
+  - Keywords `Deworded` (`Card.hasNoAbilities()` is true in every zone), `Forbidden` (a deck-conformance problem when it's
+    in the main deck), `Hope` (all damage to the attacking creature is prevented).
+  - Property `HasNonKeywordAbility`; count `$NonCreatureSubtypes`; Landwalk:Planeswalker is planeswalkerwalk.
+  - Primeval and base power/toughness 4 counters work through lasting effects that follow the counter (`ForgetCounter$`).
+  - Abbot of the Sacred Meeple's board-game text and Spuzzem Strategist's line are text only (nothing in a Magic game for
+    them to do). MB2 edition adds the creature type Spuzzem.
+
 - **MagicFest 2025 (PF25): Second City, All-You-Can-Eat Buffet, Spaghetti Junction. MagicFest 2026 (PF26): In Residence,
   Bicycle Elemental, Auspicious Aquarium.**
   - Property `SecondSpellThisTurn` (mana restriction), `HasChosenWord` (a whole word in the name, type line or rules

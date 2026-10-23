@@ -2865,6 +2865,20 @@ public class AbilityUtils {
         if (sq[0].equals("CurrentYear")) {
             return doXMath(java.time.LocalDate.now().getYear(), expr, c, ctb);
         }
+        // Wowzer, the Aspirational: 1 if the player has every one of the listed things, else 0
+        if (l[0].startsWith("YouHaveAll ")) {
+            boolean all = true;
+            for (final String thing : l[0].substring("YouHaveAll ".length()).split("_")) {
+                all &= switch (thing) {
+                    case "Energy" -> player.getCounters(forge.game.card.CounterEnumType.ENERGY) > 0;
+                    case "Monarch" -> player.isMonarch();
+                    case "Blessing" -> player.hasBlessing();
+                    case "Initiative" -> player.hasInitiative();
+                    default -> player.getCardsIn(ZoneType.Battlefield).anyMatch(x -> x.getType().hasSubtype(thing));
+                };
+            }
+            return doXMath(all ? 1 : 0, expr, c, ctb);
+        }
         if (sq[0].equals("YourAge")) {
             // asked here rather than on resolution because the cost needs it while it's being paid
             return doXMath(player.askPersonalFact("Age", "Choose your age in years", 0, 120), expr, c, ctb);
@@ -4563,6 +4577,19 @@ public class AbilityUtils {
             return countCardTypesFromList(paidList, false) +
                     countSuperTypesFromList(paidList) +
                     countSubTypesFromList(paidList);
+        }
+
+        if (def.startsWith("NonCreatureSubtypes")) {
+            // Subgoyf: the different subtypes other than creature types among them
+            final Set<String> subtypes = Sets.newHashSet();
+            for (final Card card : paidList) {
+                for (final String st : card.getType().getSubtypes()) {
+                    if (!forge.card.CardType.isACreatureType(st)) {
+                        subtypes.add(st);
+                    }
+                }
+            }
+            return doXMath(subtypes.size(), CardFactoryUtil.extractOperators(def), source, ctb);
         }
 
         if (def.startsWith("CouncilUniverseCount")) {

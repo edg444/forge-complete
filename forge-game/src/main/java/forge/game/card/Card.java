@@ -3072,6 +3072,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.equals("Increment")
                         || keyword.equals("Choose a Background") || keyword.equals("Compleated")
                         || keyword.equals("Precious") || keyword.equals("Create a Character")
+                        || keyword.equals("Deworded") || keyword.equals("Forbidden") || keyword.equals("Hope")
+                        || keyword.equals("Daunt")
                         || keyword.equals("Space sculptor") || keyword.equals("Doctor's companion")
                         || keyword.equals("Start your engines") || keyword.startsWith("Modular")
                         || keyword.startsWith("Bloodthirst") || keyword.startsWith("Dredge")
@@ -3954,6 +3956,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
 
     public boolean hasNoAbilities() {
+        // Muraganda Eldrazi: "Deworded (This creature counts as having no abilities.)", in every zone
+        if (hasKeyword(Keyword.DEWORDED)) {
+            return true;
+        }
         if (!getUnhiddenKeywords().isEmpty()) {
             return false;
         }
@@ -5102,6 +5108,11 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         if (assignNoCombatDamage()) {
             return 0;
         }
+        if (StaticAbilityCombatDamageToughness.combatDamageManaValue(this)) {
+            // a creature's controller would choose between Narod and Doran; Forge takes the greater
+            final int byManaValue = getCMC() * 2;
+            return toughnessAssignsDamage() ? Math.max(byManaValue, getNetToughnessInHalves()) : byManaValue;
+        }
         if (toughnessAssignsDamage()) {
             return getNetToughnessInHalves();
         }
@@ -5493,7 +5504,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public final int getNetCombatDamage() {
         // Loot the Anomaly (upstream): the whole power is negated, not the negated halves floored, so a
         // 1.5-power creature deals -1 as in upstream's whole-number math
-        if (!assignNoCombatDamage() && !toughnessAssignsDamage() && negateCombatAssignedDamage()) {
+        if (!assignNoCombatDamage() && !toughnessAssignsDamage() && negateCombatAssignedDamage()
+                && !StaticAbilityCombatDamageToughness.combatDamageManaValue(this)) {
             return -Math.floorDiv(getNetPowerInHalves(), 2);
         }
         return Math.floorDiv(getNetCombatDamageInHalves(), 2);

@@ -283,6 +283,13 @@ public enum DeckFormat {
             noBasicLands = conspiracies.countByName(SOVREALM) > 0;
         }
 
+        // Can't Quite Recall: "Forbidden (This card can't be in your starting deck.)"
+        for (final Entry<PaperCard, Integer> cp : deck.get(DeckSection.Main)) {
+            if (cp.getKey().getRules().hasKeyword("Forbidden")) {
+                return "contains " + cp.getKey().getName() + ", which is Forbidden (it can't be in your starting deck)";
+            }
+        }
+
         if (noBasicLands) {
             for (final Entry<PaperCard, Integer> cp : deck.get(DeckSection.Main)) {
                 if (cp.getKey().getRules().getType().isBasicLand()) {

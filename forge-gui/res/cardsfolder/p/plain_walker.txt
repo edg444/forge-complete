@@ -1,0 +1,9 @@
+Name:Plain Walker
+ManaCost:2 W
+Types:Creature Kithkin Rogue
+PT:2/3
+K:Landwalk:Plains
+K:Landwalk:Planeswalker
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player,Planeswalker | CombatDamage$ True | Execute$ TrigPlaneswalk | TriggerZones$ Battlefield | TriggerDescription$ Whenever CARDNAME deals combat damage to a player or planeswalker, planeswalk. (If you're playing Planechase, proceed to the next plane.)
+SVar:TrigPlaneswalk:DB$ Planeswalk
+Oracle:Plainswalk\nPlaneswalkerwalk (This creature can't be blocked as long as defending player controls a planeswalker.)\nWhenever Plain Walker deals combat damage to a player or planeswalker, planeswalk. (If you're playing Planechase, proceed to the next plane.)

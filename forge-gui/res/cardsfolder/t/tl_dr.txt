@@ -1,0 +1,5 @@
+Name:TL;DR
+ManaCost:B B
+Types:Instant
+A:SP$ ChangeZone | ValidTgts$ Creature | TgtPrompt$ Select target creature | Origin$ Battlefield | Destination$ Exile | ConditionDefined$ Targeted | ConditionPresent$ Card.HasNonKeywordAbility | SpellDescription$ Exile target creature if it has any abilities other than keywords. (Flying, protection, and partner are all keywords. See rule 702 for details. Landfall and scry aren't keywords; they're an ability word and a keyword action respectively. Yes, there's a difference.)
+Oracle:Exile target creature if it has any abilities other than keywords. (Flying, protection, and partner are all keywords. See rule 702 for details. Landfall and scry aren't keywords; they're an ability word and a keyword action respectively. Yes, there's a difference.)

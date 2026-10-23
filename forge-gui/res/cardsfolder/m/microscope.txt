@@ -1,0 +1,6 @@
+Name:Microscope
+ManaCost:2
+Types:Artifact
+A:AB$ Surveil | Cost$ T | Amount$ 1 | SpellDescription$ Surveil 1.
+A:AB$ Animate | Cost$ T | ValidTgts$ Permanent | TgtZone$ Graveyard | TgtPrompt$ Select target permanent card in a graveyard | Power$ 0 | Toughness$ 0 | Types$ Creature,Germ | Colors$ Black | SpellDescription$ Target permanent card in a graveyard becomes a 0/0 black Germ creature in addition to its other colors and types until end of turn. (This effect ends if it leaves the graveyard.)
+Oracle:{T}: Surveil 1.\n{T}: Target permanent card in a graveyard becomes a 0/0 black Germ creature in addition to its other colors and types until end of turn. (This effect ends if it leaves the graveyard.)

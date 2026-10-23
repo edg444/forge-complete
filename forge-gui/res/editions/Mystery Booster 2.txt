@@ -396,7 +396,9 @@ F621 R Value Town @Hélio Frazão
 
 [CreatureTypes]
 Armored:Armored
+Spuzzem:Spuzzems
 [LandTypes]
 Omenpath:Omenpaths
+Ulamog's:Ulamog's
 [WalkerTypes]
 You

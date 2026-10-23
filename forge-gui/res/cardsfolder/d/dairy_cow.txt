@@ -1,0 +1,7 @@
+Name:Dairy Cow
+ManaCost:G
+Types:Creature Cow
+PT:2/1
+K:etbCounter:MILK:X:no Condition:Grazing type (This creature enters the battlefield with five milk counters on it for each Forest and/or Plant you control.)
+SVar:X:Count$Valid Forest.YouCtrl,Plant.YouCtrl/Times.5
+Oracle:Grazing type (This creature enters the battlefield with five milk counters on it for each Forest and/or Plant you control.)

@@ -1,0 +1,8 @@
+Name:Lazotep Archway
+ManaCost:no cost
+Types:Land
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ Lazotep Archway enters the battlefield tapped.
+SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
+A:AB$ Mana | Cost$ T | Produced$ Combo W B | SpellDescription$ Add {W} or {B}.
+K:Eternalize:3 W B
+Oracle:Lazotep Archway enters the battlefield tapped.\n{T}: Add {W} or {B}.\nEternalize {3}{W}{B} ({3}{W}{B}, Exile this card from your graveyard: Create a token that's a copy of it, except it's a 4/4 black Zombie creature and loses all other card types. Eternalize only as a sorcery. And don't forget it still enters tapped!)

@@ -2534,6 +2534,12 @@ public class CardFactoryUtil {
             ReplacementEffect cardre = createETBReplacement(card, ReplacementLayer.Other, effect, false, true, intrinsic, "Card.Self", "");
 
             inst.addReplacement(cardre);
+        } else if (keyword.equals("Hope")) {
+            // Sliver of Hope: all damage, not just combat damage (rulings)
+            String rep = "Event$ DamageDone | Prevent$ True | ActiveZones$ Battlefield | ValidTarget$ Card.Self+attacking"
+                    + " | Secondary$ True | Description$ Hope (" + inst.getReminderText() + ")";
+            ReplacementEffect re = ReplacementHandler.parseReplacement(rep, host, intrinsic, card);
+            inst.addReplacement(re);
         } else if (keyword.equals("Umbra armor")) {
             String repeffstr = "Event$ Destroy | ActiveZones$ Battlefield | ValidCard$ Card.EnchantedBy | Secondary$ True"
                     + " | Description$ Umbra armor (" + inst.getReminderText() + ")";
@@ -4078,6 +4084,10 @@ public class CardFactoryUtil {
             String effect = "Mode$ CantTarget | ValidTarget$ Card.Self | Secondary$ True"
                     + sbValid.toString() + " | Activator$ Opponent | Description$ "
                     + inst.getTitle() + " (" + inst.getReminderText() + ")";
+            inst.addStaticAbility(StaticAbility.create(effect, state.getCard(), state, intrinsic));
+        } else if (keyword.equals("Daunt")) {
+            String effect = "Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.powerLE2 | Secondary$ True "
+                    + " | Description$ Daunt (" + inst.getReminderText() + ")";
             inst.addStaticAbility(StaticAbility.create(effect, state.getCard(), state, intrinsic));
         } else if (keyword.equals("Horsemanship")) {
             String effect = "Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.withoutHorsemanship | Secondary$ True " +

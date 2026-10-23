@@ -209,6 +209,22 @@ public class CardProperty {
             if (universe == null || universe.equals(forge.card.PrintingTraits.MAGIC_UNIVERSE)) {
                 return false;
             }
+        } else if (property.equals("HasNonKeywordAbility")) {
+            // TL;DR: an ability that isn't a keyword (its own spell ability doesn't count, it's how a card is cast)
+            boolean found = card.getTriggers().anyMatch(t -> t.getKeyword() == null)
+                    || card.getStaticAbilities().anyMatch(st -> st.getKeyword() == null)
+                    || card.getReplacementEffects().anyMatch(r -> r.getKeyword() == null);
+            if (!found) {
+                for (final SpellAbility sa : card.getSpellAbilities()) {
+                    if (!sa.isSpell() && sa.getKeyword() == null && !sa.isLandAbility()) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            if (!found) {
+                return false;
+            }
         } else if (property.equals("SecondSpellThisTurn")) {
             // Second City: "your second spell in a turn" - while it's being paid for, one spell has been cast before it
             if (card.getController() == null || card.getController().getSpellsCastThisTurn() != 1) {

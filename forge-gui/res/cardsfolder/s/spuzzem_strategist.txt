@@ -1,0 +1,7 @@
+Name:Spuzzem Strategist
+ManaCost:3 G
+Types:Creature Spuzzem Advisor
+PT:4/4
+# a controller already makes every choice for their permanents in Forge, R&D's Secret Lair and Floral Spuzzem included
+S:Mode$ Continuous | Affected$ Card.Self | Description$ You make all choices for Spuzzems you control.
+Oracle:You make all choices for Spuzzems you control.

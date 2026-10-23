@@ -1,0 +1,12 @@
+Name:Processing Plant
+ManaCost:no cost
+Types:Land Ulamog's Power-Plant
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ Processing Plant enters the battlefield tapped.
+SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigProcess | TriggerDescription$ When Processing Plant enters the battlefield, you may put a card an opponent owns from exile into that player's graveyard. If you do, untap Processing Plant. Otherwise, exile the top card of each opponent's library.
+SVar:TrigProcess:DB$ ChangeZone | Origin$ Exile | Destination$ Graveyard | ChangeType$ Card.OppOwn | ChangeNum$ 1 | Hidden$ True | Optional$ True | RememberChanged$ True | SubAbility$ DBUntap
+SVar:DBUntap:DB$ Untap | Defined$ Self | ConditionDefined$ Remembered | ConditionPresent$ Card | SubAbility$ DBExileTop
+SVar:DBExileTop:DB$ Dig | Defined$ Opponent | DigNum$ 1 | ChangeNum$ All | DestinationZone$ Exile | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ EQ0 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+A:AB$ Mana | Cost$ T | Produced$ Combo W U B C | SpellDescription$ Add {W}, {U}, {B}, or {C}.
+Oracle:Processing Plant enters the battlefield tapped.\nWhen Processing Plant enters the battlefield, you may put a card an opponent owns from exile into that player's graveyard. If you do, untap Processing Plant. Otherwise, exile the top card of each opponent's library.\n{T}: Add {W}, {U}, {B}, or {C}.

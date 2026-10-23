@@ -1,0 +1,9 @@
+Name:Naturalize 2
+ManaCost:1 G
+Types:Instant
+# gameplay trackers can't be targeted, so they're a second mode picked from the ones in the game (rulings: the
+# monarch, the city's blessing, dungeons, day/night and the initiative)
+A:SP$ Charm | Choices$ DBObject,DBTracker
+SVar:DBObject:DB$ DestroyAnything | ValidTgts$ Artifact,Enchantment,Emblem,Dungeon | TgtZone$ Battlefield,Command | TgtPrompt$ Select target artifact, enchantment, emblem, or dungeon | SpellDescription$ Destroy target artifact, enchantment, emblem, or dungeon.
+SVar:DBTracker:DB$ DestroyAnything | Designation$ True | SpellDescription$ Destroy a gameplay tracker: the monarch, the initiative, a city's blessing, or day/night.
+Oracle:Destroy target artifact, enchantment, emblem, or gameplay tracker. (Trackers include play aids such as dungeons, city's blessing, and monarch. When you destroy it, the associated object or designation is removed from the game.)

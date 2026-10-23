@@ -1,0 +1,8 @@
+Name:Hish of the Snake Cult
+ManaCost:2 B G U
+Types:Legendary Creature Snake
+PT:2/5
+S:Mode$ Continuous | Affected$ Creature.Naga+YouCtrl,Creature.Serpent+YouCtrl | AddType$ Snake | Description$ Nagas and Serpents you control are Snakes. (We'll errata this to be true.)
+S:Mode$ Continuous | Affected$ Creature.Snake+YouCtrl | AddKeyword$ Daunt & Deathtouch & Poisonous:2 | Description$ Snakes you control have daunt, deathtouch, and poisonous 2. (A creature with daunt can't be blocked by creatures with power 2 or less. Whenever a creature with poisonous 2 deals combat damage to a player, that player gets two poison counters.)
+DeckHints:Type$Snake|Naga|Serpent
+Oracle:Nagas and Serpents you control are Snakes. (We'll errata this to be true.)\nSnakes you control have daunt, deathtouch, and poisonous 2. (A creature with daunt can't be blocked by creatures with power 2 or less. Whenever a creature with poisonous 2 deals combat damage to a player, that player gets two poison counters.)
