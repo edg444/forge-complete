@@ -3,7 +3,10 @@ ManaCost:no cost
 Types:Plane Ravnica
 T:Mode$ PlaneswalkedFrom | ValidCard$ Plane.Self | Execute$ OrzhovaDeal | TriggerDescription$ When you planeswalk away from CARDNAME, each player returns all creature cards from their graveyard to the battlefield.
 SVar:OrzhovaDeal:DB$ ChangeZoneAll | Origin$ Graveyard | Destination$ Battlefield | ChangeType$ Creature
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, for each opponent, exile up to one target creature card from that player's graveyard.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, for each opponent, exile up to one target creature card from that player's graveyard.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, for each opponent, exile up to one target creature card from that player's graveyard.
 SVar:RolledChaos:DB$ ChangeZone | Origin$ Graveyard | Destination$ Exile | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature each opponent controls. | TargetMin$ 0 | TargetMax$ OneEach | TargetsForEachPlayer$ True
 SVar:OneEach:PlayerCountOpponents$Amount
 SVar:AIRollPlanarDieParams:Mode$ Always

@@ -280,6 +280,16 @@ public final class CardEdition implements Comparable<CardEdition> {
             return extraParams != null && "acorn".equalsIgnoreCase(extraParams.get("stamp"));
         }
 
+        /**
+         * Per-printing release date (yyyy-MM-dd), for editions that span years under one date - every
+         * Secret Lair Drop printing shares the edition's 2019 date, even ones printed after an errata.
+         */
+        public String getPrintDate() {
+            if (extraParams == null)
+                return null;
+            return extraParams.get("printdate");
+        }
+
         /** Per-printing border, for editions that mix borders (J17's Rules Lawyer is silver in a black set). */
         public BorderColor getBorderOverride() {
             if (extraParams == null || !extraParams.containsKey("border"))

@@ -3,7 +3,10 @@ ManaCost:no cost
 Types:Plane Belenon
 R:Event$ Untap | ActiveZones$ Command | ValidCard$ Creature.YouCtrl | ReplaceWith$ RepPutCounter | ValidStepTurnToController$ You | Description$ If a creature you control would untap during your untap step, put two +1/+1 counters on it instead.
 SVar:RepPutCounter:DB$ PutCounter | Defined$ ReplacedCard | CounterType$ P1P1 | CounterNum$ 2
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, untap each creature you control.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, untap each creature you control.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, untap each creature you control.
 SVar:RolledChaos:DB$ UntapAll | ValidCards$ Creature.YouCtrl
 SVar:AIRollPlanarDieParams:Mode$ Always | HasCreatureInPlay$ True
 Oracle:If a creature you control would untap during your untap step, put two +1/+1 counters on it instead.\nWhenever chaos ensues, untap each creature you control.

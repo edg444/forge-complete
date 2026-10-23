@@ -2,7 +2,10 @@ Name:Kessig
 ManaCost:no cost
 Types:Plane Innistrad
 R:Event$ DamageDone | Prevent$ True | IsCombat$ True | ValidSource$ Creature.nonWerewolf | ActiveZones$ Command | Description$ Prevent all combat damage that would be dealt by non-Werewolf creatures.
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, each creature you control gets +2/+2, gains trample, and becomes a Werewolf in addition to its other types until end of turn.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, each creature you control gets +2/+2, gains trample, and becomes a Werewolf in addition to its other types until end of turn.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, each creature you control gets +2/+2, gains trample, and becomes a Werewolf in addition to its other types until end of turn.
 SVar:RolledChaos:DB$ AnimateAll | ValidCards$ Creature.YouCtrl | Types$ Werewolf | SubAbility$ DBPump
 SVar:DBPump:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Trample | NumAtt$ +2 | NumDef$ +2
 SVar:AIRollPlanarDieParams:Mode$ Always | RollInMain1$ True | HasCreatureInPlay$ True

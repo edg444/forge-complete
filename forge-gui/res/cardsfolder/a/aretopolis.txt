@@ -8,7 +8,10 @@ SVar:ScrollsOfLife:DB$ GainLife | Defined$ You | LifeAmount$ NumScrolls
 SVar:NumScrolls:Count$CardCounters.SCROLL
 T:Mode$ Always | TriggerZones$ Command | CheckSVar$ NumScrolls | SVarCompare$ GE10 | Execute$ RolledWalk | TriggerDescription$ When CARDNAME has ten or more scroll counters on it, planeswalk.
 SVar:RolledWalk:DB$ Planeswalk
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigPutCounter | TriggerDescription$ Whenever chaos ensues, put a scroll counter on CARDNAME, then draw cards equal to the number of scroll counters on it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigPutCounter | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, put a scroll counter on CARDNAME, then draw cards equal to the number of scroll counters on it.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ TrigPutCounter | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, put a scroll counter on CARDNAME, then draw cards equal to the number of scroll counters on it.
 SVar:TrigPutCounter:DB$ PutCounter | CounterType$ SCROLL | SubAbility$ ScrollsOfKnowledge
 SVar:ScrollsOfKnowledge:DB$ Draw | NumCards$ NumScrolls
 SVar:AIRollPlanarDieParams:Mode$ Always | LowPriority$ True | MaxRollsPerTurn$ 9

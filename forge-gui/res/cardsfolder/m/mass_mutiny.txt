@@ -1,6 +1,10 @@
 Name:Mass Mutiny
 ManaCost:3 R R
 Types:Sorcery
-A:SP$ GainControl | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls to gain control of. | TargetMin$ 0 | TargetMax$ OneEach | TargetsForEachPlayer$ True | LoseControl$ EOT | Untap$ True | AddKWs$ Haste | SpellDescription$ For each opponent, gain control of up to one target creature that player controls until end of turn. Untap those creatures. They gain haste until end of turn.
+A:SP$ GainControl | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20131101 | PresentDefined$ Self | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls to gain control of. | TargetMin$ 0 | TargetMax$ OneEach | TargetsForEachPlayer$ True | LoseControl$ EOT | Untap$ True | AddKWs$ Haste | SpellDescription$ For each opponent, gain control of up to one target creature that player controls until end of turn. Untap those creatures. They gain haste until end of turn.
 SVar:OneEach:PlayerCountOpponents$Amount
+# R&D's Secret Lair: Planechase 2012's printing targets a creature for each opponent rather than up to one, so
+# every opponent who controls a creature loses one.
+A:SP$ GainControl | IsPresent$ Card.PrintedTextActive+PrintedBefore 20131101 | PresentDefined$ Self | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls to gain control of. | TargetMin$ OppsWithCreatures | TargetMax$ OneEach | TargetsForEachPlayer$ True | LoseControl$ EOT | Untap$ True | AddKWs$ Haste | SpellDescription$ (As printed) For each opponent, gain control of target creature that player controls until end of turn. Untap those creatures. They gain haste until end of turn.
+SVar:OppsWithCreatures:PlayerCountOpponents$Condition Valid Creature.YouCtrl
 Oracle:For each opponent, gain control of up to one target creature that player controls until end of turn. Untap those creatures. They gain haste until end of turn.

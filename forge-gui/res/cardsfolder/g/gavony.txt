@@ -2,7 +2,10 @@ Name:Gavony
 ManaCost:no cost
 Types:Plane Innistrad
 S:Mode$ Continuous | EffectZone$ Command | Affected$ Creature | AddKeyword$ Vigilance | Description$ All creatures have vigilance.
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, creatures you control gain indestructible until end of turn.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, creatures you control gain indestructible until end of turn.
+# R&D's Secret Lair: printings before March of the Machine Commander say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, creatures you control gain indestructible until end of turn.
 SVar:RolledChaos:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Indestructible
 SVar:AIRollPlanarDieParams:Mode$ Always
 Oracle:All creatures have vigilance.\nWhenever chaos ensues, creatures you control gain indestructible until end of turn.

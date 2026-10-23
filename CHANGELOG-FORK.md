@@ -1007,6 +1007,34 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Left as Oracle: Counterlash's "nonland card in your hand", Grafdigger's Cage's "can't enter the battlefield from
     graveyards or libraries", Pyreheart Wolf's menace wording, Immerwolf's "Other Wolf and Werewolf creatures",
     "is/are indestructible" (Break of Day, Falkenrath Aristocrat, Predator Ooze) and Hellrider's "defending player".
+- **Set review: Avacyn Restored Promos, the 2012 Helvault promos and Avacyn Restored** (216 new names,
+  `AvacynRestoredAuditTest`):
+  - Fixed: *Dread Slaver*'s return trigger had no trigger zone; *Ghostly Touch*'s "you may tap or untap" wasn't
+    optional.
+  - In-game text: *Herald of War* ("Angels and Humans you cast cost 1 less").
+  - R&D's Secret Lair printed text: *Descendants' Path* (before the 2022 Secret Lair printing) says "Otherwise, put
+    that card on the bottom", so a creature card you could cast but don't stays on top.
+  - Secret Lair Drop printings can now carry their own release date (`printDate` in the edition file), since the
+    edition's single 2019 date made every later Secret Lair reprint count as an old printing. Set for the Secret Lair
+    printings of Descendants' Path, Grim Tutor, Lotus Cobra, Rampaging Baloths and Zombie Master, which were all
+    printed with the corrected text.
+  - Left as Oracle: Reforge the Soul's "and draws", Alchemist's Refuge's "nonland cards", Avacyn's "are
+    indestructible", Ghostform's "are unblockable", "each turn" (Guise of Fire, Tormentor's Trident), "of their
+    choice" sacrifices (Grave Exchange, Rite of Ruin) and "target player" / "creature or player" (Bonfire of the
+    Damned, Vigilante Justice, Gang of Devils).
+- **Set review: Planechase 2012 Planes, Planechase 2012 and its promo plane (Stairs to Infinity)** (62 new names,
+  `Planechase2012AuditTest`):
+  - R&D's Secret Lair printed text: the 32 Planechase 2012 planes (through Planechase Anthology, or before March of
+    the Machine Commander for its ten reprints) say "Whenever you roll {CHAOS}", like the 2009 planes; *Mass Mutiny*
+    (before Commander 2013) targets a creature for each opponent rather than up to one.
+  - Left as Oracle: Kilnspire District's "precombat main phase", Windriddle Palaces' "play the top card", Akoum's
+    "enchantment cards", Sakashima's Student's "still a Ninja", Silent-Blade Oni's "nonland card", totem armor (now
+    umbra armor), Gavony's "are indestructible" and "target player" (Stensia, Kilnspire District).
+- **Set review: Magic 2013 Promos (Mwonvuli Beast Tracker, Magmaquake, Cathedral of War, Staff of Nin, Xathrid
+  Gorgon) and Magic 2013** (107 new names): no script changes.
+  - Left as Oracle: Omniscience's and Yeva's "cards", Mindclaw Shaman's "instant or sorcery card from it",
+    Reckless Brute's "each turn", "of their choice" sacrifices (Nefarox) and "target player" / "creature or player"
+    (Chandra's Fury, Flames of the Firebrand).
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

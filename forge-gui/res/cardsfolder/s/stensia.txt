@@ -5,7 +5,10 @@ T:Mode$ DamageDone | ValidSource$ Creature.!IsRemembered | ValidTarget$ Player |
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ TriggeredSourceLKICopy | CounterType$ P1P1 | CounterNum$ 1 | RememberCards$ True
 T:Mode$ Phase | Phase$ End of Turn | Execute$ DBCleanup | TriggerZones$ Command | Static$ True
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, each creature you control gains "{T}: This creature deals 1 damage to target player or planeswalker" until end of turn.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, each creature you control gains "{T}: This creature deals 1 damage to target player or planeswalker" until end of turn.
+# R&D's Secret Lair: printings before March of the Machine Commander say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, each creature you control gains "{T}: This creature deals 1 damage to target player or planeswalker" until end of turn.
 SVar:RolledChaos:DB$ AnimateAll | ValidCards$ Creature.YouCtrl | Abilities$ LVAbs | SpellDescription$ Until end of turn, creatures you control gain "{T}: This creature deals 1 damage to target player or planeswalker."
 SVar:LVAbs:AB$ DealDamage | Cost$ T | ValidTgts$ Player,Planeswalker | TgtPrompt$ Select target player or planeswalker | NumDmg$ 1 | SpellDescription$ This creature deals 1 damage to target player or planeswalker.
 Oracle:Whenever a creature deals damage to one or more players for the first time each turn, put a +1/+1 counter on it.\nWhenever chaos ensues, each creature you control gains "{T}: This creature deals 1 damage to target player or planeswalker" until end of turn.

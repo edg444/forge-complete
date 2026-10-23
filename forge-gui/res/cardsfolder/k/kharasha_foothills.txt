@@ -7,7 +7,10 @@ SVar:DBCopy:DB$ CopyPermanent | Defined$ TriggeredAttackerLKICopy | TokenAttacki
 # The DelayedTrigger is for all player, not just for each attacking, so can't use AtEOT there
 SVar:DelTrig:DB$ DelayedTrigger | Mode$ Phase | Phase$ End Of Turn | Execute$ TrigExile | RememberObjects$ ImprintedLKI | TriggerDescription$ At the beginning of the next end step, exile those tokens. | SubAbility$ DBCleanup
 SVar:TrigExile:DB$ ChangeZone | Defined$ DelayTriggerRememberedLKI | Origin$ Battlefield | Destination$ Exile
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, you may sacrifice any number of creatures. If you do, CARDNAME deals that much damage to target creature.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, you may sacrifice any number of creatures. If you do, CARDNAME deals that much damage to target creature.
+# R&D's Secret Lair: printings before March of the Machine Commander say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, you may sacrifice any number of creatures. If you do, CARDNAME deals that much damage to target creature.
 SVar:RolledChaos:DB$ Sacrifice | Defined$ You | Amount$ SacX | SacValid$ Creature | RememberSacrificed$ True | Optional$ True | SubAbility$ DBDmg
 SVar:SacX:Count$Valid Creature.YouCtrl
 SVar:DBDmg:DB$ DealDamage | ValidTgts$ Creature | NumDmg$ DmgX | SubAbility$ DBCleanup

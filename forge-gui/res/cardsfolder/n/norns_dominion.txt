@@ -4,7 +4,10 @@ Types:Plane New Phyrexia
 T:Mode$ PlaneswalkedFrom | ValidCard$ Plane.Self | Execute$ TrigDestroy | TriggerDescription$ When you planeswalk away from CARDNAME, destroy each nonland permanent without a fate counter on it, then remove all fate counters from all permanents.
 SVar:TrigDestroy:DB$ DestroyAll | ValidCards$ Permanent.nonLand+counters_LT1_FATE | SubAbility$ DBRemove
 SVar:DBRemove:DB$ RemoveCounterAll | ValidCards$ Permanent | CounterType$ FATE | AllCounters$ True
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | OptionalDecider$ You | TriggerDescription$ Whenever chaos ensues, you may put a fate counter on target permanent.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | OptionalDecider$ You | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, you may put a fate counter on target permanent.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | OptionalDecider$ You | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, you may put a fate counter on target permanent.
 SVar:RolledChaos:DB$ PutCounter | ValidTgts$ Permanent | CounterType$ FATE | CounterNum$ 1
 SVar:AIRollPlanarDieParams:Mode$ Always
 Oracle:When you planeswalk away from Norn's Dominion, destroy each nonland permanent without a fate counter on it, then remove all fate counters from all permanents.\nWhenever chaos ensues, you may put a fate counter on target permanent.

@@ -5,7 +5,10 @@ T:Mode$ PlaneswalkedTo | ValidCard$ Card.Self | Execute$ PutCounter | TriggerDes
 T:Mode$ Phase | Phase$ Main1 | ValidPlayer$ You | TriggerZones$ Command | Execute$ PutCounter | Secondary$ True | TriggerDescription$ When you planeswalk to CARDNAME or at the beginning of your precombat main phase, put a charge counter on CARDNAME, then add {R} for each charge counter on it.
 SVar:PutCounter:DB$ PutCounter | Defined$ Self | CounterType$ CHARGE | CounterNum$ 1 | SubAbility$ DBMana
 SVar:DBMana:DB$ Mana | Produced$ R | Amount$ Y
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, you may pay {X}. If you do, CARDNAME deals X damage to any target.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, you may pay {X}. If you do, CARDNAME deals X damage to any target.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, you may pay {X}. If you do, CARDNAME deals X damage to any target.
 SVar:RolledChaos:AB$ DealDamage | Cost$ X | ValidTgts$ Any | NumDmg$ X
 SVar:X:Count$xPaid
 SVar:Y:Count$CardCounters.CHARGE

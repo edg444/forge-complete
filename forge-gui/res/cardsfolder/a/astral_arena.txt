@@ -3,7 +3,10 @@ ManaCost:no cost
 Types:Plane Kolbahan
 S:Mode$ AttackRestrict | EffectZone$ Command | MaxAttackers$ 1 | Description$ No more than one creature can attack each combat.
 S:Mode$ BlockRestrict | EffectZone$ Command | MaxBlockers$ 1 | Description$ No more than one creature can block each combat.
-T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | TriggerDescription$ Whenever chaos ensues, CARDNAME deals 2 damage to each creature.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ Whenever chaos ensues, CARDNAME deals 2 damage to each creature.
+# R&D's Secret Lair: printings through Planechase Anthology say "Whenever you roll {CHAOS}", so chaos that ensues
+# any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
+T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, CARDNAME deals 2 damage to each creature.
 SVar:RolledChaos:DB$ DamageAll | NumDmg$ 2 | ValidCards$ Creature
 SVar:AIRollPlanarDieParams:Mode$ Random | MinTurn$ 5
 Oracle:No more than one creature can attack each combat.\nNo more than one creature can block each combat.\nWhenever chaos ensues, Astral Arena deals 2 damage to each creature.

@@ -10,6 +10,7 @@ import forge.game.Game;
 import forge.game.card.Card;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
+import forge.item.IPaperCard;
 
 /**
  * R&D's Secret Lair - "Play cards as written. Ignore all errata."
@@ -119,7 +120,15 @@ public class StaticAbilityIgnoreErrata {
             return false;
         }
         try {
-            return ed.getDate().before(new java.text.SimpleDateFormat("yyyyMMdd").parse(yyyymmdd));
+            Date printed = ed.getDate();
+            final IPaperCard pc = source.getPaperCard();
+            if (pc != null) {
+                final CardEdition.EditionEntry entry = ed.getCardFromCollectorNumber(pc.getCollectorNumber());
+                if (entry != null && entry.getPrintDate() != null) {
+                    printed = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(entry.getPrintDate());
+                }
+            }
+            return printed.before(new java.text.SimpleDateFormat("yyyyMMdd").parse(yyyymmdd));
         } catch (final java.text.ParseException e) {
             return false;
         }
