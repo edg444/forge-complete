@@ -3,6 +3,8 @@ ManaCost:4 W
 Types:Creature Angel
 PT:3/3
 K:Flying
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ When this creature enters, you gain 3 life.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19990701 | Execute$ TrigGainLife | TriggerDescription$ When this creature enters, you gain 3 life.
+# R&D's Secret Lair: Portal Second Age's printing (until S99 reworded it) says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19990701 | Execute$ TrigGainLife | TriggerDescription$ (As printed) When this creature comes into play from your hand, you gain 3 life.
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 3
 Oracle:Flying\nWhen this creature enters, you gain 3 life.

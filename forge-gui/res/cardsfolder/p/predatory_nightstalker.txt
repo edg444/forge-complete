@@ -2,7 +2,11 @@ Name:Predatory Nightstalker
 ManaCost:3 B B
 Types:Creature Nightstalker
 PT:3/2
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSac | OptionalDecider$ You | TriggerDescription$ When this creature enters, you may have target opponent sacrifice a creature of their choice.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19980625 | Execute$ TrigSac | OptionalDecider$ You | TriggerDescription$ When this creature enters, you may have target opponent sacrifice a creature of their choice.
+# R&D's Secret Lair: Portal Second Age's printing (its only one) says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19980625 | Execute$ TrigSac | OptionalDecider$ You | TriggerDescription$ (As printed) When this creature comes into play from your hand, you may have target opponent sacrifice a creature of their choice.
+# Return of the Nightstalkers' printed text treats the Nightstalkers it returns "as though they just came into play from your hand".
+T:Mode$ ChangesZone | Origin$ Graveyard | Destination$ Battlefield | ValidCard$ Card.Self | ValidCause$ Spell.namedReturn of the Nightstalkers+PrintedBefore 19980625 | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19980625 | Secondary$ True | Execute$ TrigSac | OptionalDecider$ You | TriggerDescription$ (As printed) When this creature comes into play from your hand, you may have target opponent sacrifice a creature of their choice.
 SVar:TrigSac:DB$ Sacrifice | ValidTgts$ Opponent | SacValid$ Creature
 SVar:PlayMain1:TRUE
 Oracle:When this creature enters, you may have target opponent sacrifice a creature of their choice.

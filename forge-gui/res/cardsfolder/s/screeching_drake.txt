@@ -3,7 +3,9 @@ ManaCost:3 U
 Types:Creature Drake
 PT:2/2
 K:Flying
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When this creature enters, draw a card, then discard a card.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19980625 | Execute$ TrigDraw | TriggerDescription$ When this creature enters, draw a card, then discard a card.
+# R&D's Secret Lair: Portal Second Age's printing (its only one) says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19980625 | Execute$ TrigDraw | TriggerDescription$ (As printed) When this creature comes into play from your hand, draw a card, then discard a card.
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1 | SubAbility$ DBDiscard
 SVar:DBDiscard:DB$ Discard | Defined$ You | NumCards$ 1 | Mode$ TgtChoose
 Oracle:Flying\nWhen this creature enters, draw a card, then discard a card.

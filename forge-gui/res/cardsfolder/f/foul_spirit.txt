@@ -3,6 +3,8 @@ ManaCost:2 B
 Types:Creature Spirit
 PT:3/2
 K:Flying
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ When this creature enters, sacrifice a land.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19980625 | Execute$ TrigSac | TriggerDescription$ When this creature enters, sacrifice a land.
+# R&D's Secret Lair: Portal Second Age's printing (its only one) says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19980625 | Execute$ TrigSac | TriggerDescription$ (As printed) When this creature comes into play from your hand, sacrifice a land.
 SVar:TrigSac:DB$ Sacrifice | SacValid$ Land | ChangeNum$ 1
 Oracle:Flying\nWhen this creature enters, sacrifice a land.

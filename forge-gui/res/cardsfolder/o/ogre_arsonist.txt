@@ -2,6 +2,8 @@ Name:Ogre Arsonist
 ManaCost:4 R
 Types:Creature Ogre
 PT:3/3
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDestroy | TriggerDescription$ When this creature enters, destroy target land.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19980625 | Execute$ TrigDestroy | TriggerDescription$ When this creature enters, destroy target land.
+# R&D's Secret Lair: Portal Second Age's printing (its only one) says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19980625 | Execute$ TrigDestroy | TriggerDescription$ (As printed) When this creature comes into play from your hand, destroy target land.
 SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Land
 Oracle:When this creature enters, destroy target land.

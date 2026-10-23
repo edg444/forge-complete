@@ -2,7 +2,9 @@ Name:Goblin Matron
 ManaCost:2 R
 Types:Creature Goblin
 PT:1/1
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChange | OptionalDecider$ You | TriggerDescription$ When this creature enters, you may search your library for a Goblin card, reveal that card, put it into your hand, then shuffle.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19981012 | Execute$ TrigChange | OptionalDecider$ You | TriggerDescription$ When this creature enters, you may search your library for a Goblin card, reveal that card, put it into your hand, then shuffle.
+# R&D's Secret Lair: Portal Second Age's printing (until USG reworded it) says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19981012 | Execute$ TrigChange | OptionalDecider$ You | TriggerDescription$ (As printed) When this creature comes into play from your hand, you may search your library for a Goblin card, reveal that card, put it into your hand, then shuffle.
 SVar:TrigChange:DB$ ChangeZone | Origin$ Library | Destination$ Hand | ChangeType$ Card.Goblin | ChangeNum$ 1 | ShuffleNonMandatory$ True
 DeckHints:Type$Goblin
 Oracle:When this creature enters, you may search your library for a Goblin card, reveal that card, put it into your hand, then shuffle.

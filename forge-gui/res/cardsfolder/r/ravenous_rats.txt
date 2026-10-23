@@ -2,6 +2,8 @@ Name:Ravenous Rats
 ManaCost:1 B
 Types:Creature Rat
 PT:1/1
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDiscard | TriggerDescription$ When this creature enters, target opponent discards a card.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19990607 | Execute$ TrigDiscard | TriggerDescription$ When this creature enters, target opponent discards a card.
+# R&D's Secret Lair: Portal Second Age's printing (until UDS reworded it) says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19990607 | Execute$ TrigDiscard | TriggerDescription$ (As printed) When this creature comes into play from your hand, target opponent discards a card.
 SVar:TrigDiscard:DB$ Discard | ValidTgts$ Opponent | NumCards$ 1 | Mode$ TgtChoose
 Oracle:When this creature enters, target opponent discards a card.

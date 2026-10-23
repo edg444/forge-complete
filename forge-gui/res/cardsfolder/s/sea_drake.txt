@@ -3,6 +3,8 @@ ManaCost:2 U
 Types:Creature Drake
 PT:4/3
 K:Flying
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigBounce | TriggerDescription$ When this creature enters, return two target lands you control to their owner's hand.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20210618 | Execute$ TrigBounce | TriggerDescription$ When this creature enters, return two target lands you control to their owner's hand.
+# R&D's Secret Lair: Portal Second Age's printing (until MH2 reworded it) says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20210618 | Execute$ TrigBounce | TriggerDescription$ (As printed) When this creature comes into play from your hand, return two target lands you control to their owner's hand.
 SVar:TrigBounce:DB$ ChangeZone | Origin$ Battlefield | Destination$ Hand | ValidTgts$ Land.YouCtrl | TgtPrompt$ Select target land you control | TargetMin$ 2 | TargetMax$ 2
 Oracle:Flying\nWhen this creature enters, return two target lands you control to their owner's hand.
