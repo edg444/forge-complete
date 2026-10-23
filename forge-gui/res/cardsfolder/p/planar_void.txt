@@ -1,8 +1,14 @@
 Name:Planar Void
 ManaCost:B
 Types:Enchantment
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Graveyard | TriggerZones$ Battlefield | ValidCard$ Card.!token+Other | Execute$ TrigChange | TriggerDescription$ Whenever another card is put into a graveyard from anywhere, exile that card.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Graveyard | TriggerZones$ Battlefield | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19981013 | ValidCard$ Card.!token+Other | Execute$ TrigChange | TriggerDescription$ Whenever another card is put into a graveyard from anywhere, exile that card.
+# R&D's Secret Lair: Urza's Saga's printing (its only one) has no "another" - Planar Void exiles itself too.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Graveyard | TriggerZones$ Battlefield | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19981013 | ValidCard$ Card.!token | Execute$ TrigChange | TriggerDescription$ (As printed) Whenever a card is put into a graveyard, remove that card from the game.
+# Its own move from the battlefield needs a trigger that looks back in time, gated on this card's printing with
+# SourcePrintedBefore since it's no longer on the battlefield to be found.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | IsPresent$ Card.PrintedTextActive+SourcePrintedBefore 19981013 | Execute$ TrigPrintedExileSelf | Secondary$ True | TriggerDescription$ (As printed) Whenever a card is put into a graveyard, remove that card from the game.
 SVar:TrigChange:DB$ ChangeZone | Defined$ TriggeredCardLKICopy | Origin$ Graveyard | Destination$ Exile
+SVar:TrigPrintedExileSelf:DB$ ChangeZone | Defined$ TriggeredNewCardLKICopy | Origin$ Graveyard | Destination$ Exile
 AI:RemoveDeck:Random
 SVar:NonStackingEffect:True
 Oracle:Whenever another card is put into a graveyard from anywhere, exile that card.

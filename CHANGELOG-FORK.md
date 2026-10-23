@@ -546,6 +546,91 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     Mirri's creature types, discard-phase timing (Manabond, Necrologia, Spellbook), Cunning's "at end of turn",
     Scrivener's "instant or interrupt", interrupt speed (Ertai, Null Brooch), cost templating (Hatred, Aether Tide,
     Sonic Burst, Culling the Weak) and the "any one source" redirects and shields (Kor Chant, Penance).
+- **Set review: Portal Second Age** (all 112 new names, `PortalSecondAgeAuditTest`) - scripts needed no changes.
+  R&D's Secret Lair printed text:
+  - "When CARDNAME comes into play from your hand", as on Portal - not from anywhere else: *Screeching Drake*,
+    *Talas Explorer*, *Brutal Nightstalker*, *Foul Spirit*, *Predatory Nightstalker* and *Ogre Arsonist* (Portal
+    Second Age only), *Goblin Matron* (before USG), *Ravenous Rats* (UDS), *Angel of Mercy* and *Denizen of the
+    Deep* (S99), *Vampiric Spirit* (8ED), *Magma Giant* (5DN), *Temple Acolyte* (DDF) and *Sea Drake* (MH2).
+  - *Return of the Nightstalkers*' printed reminder - "Treat these Nightstalkers as though they just came into play
+    from your hand" - so Brutal and Predatory Nightstalker's triggers still happen when it returns them.
+  - Left as Oracle: Portal's "destroy" for sacrifice (Cruel Edict, Predatory Nightstalker, Foul Spirit, Wildfire,
+    Goblin Firestarter), two-player wording ("your opponent", Extinguish and False Summoning's "another player"),
+    "any one" meaning target, and Goblin Matron's search without "may" (finding nothing was always allowed).
+- **Set review: Oversized League Prizes, Oversized 90's Promos (Incoming!) and Unglued** (83 new names,
+  `UngluedAuditTest`):
+  - *Goblin Bowling Team* dealt no damage at all: a damage replacement only runs when its ability is a
+    ReplaceEffect, and this one rolls the die first, so the event was buffered and erased. The replacement handler
+    now runs any whose chain or choices hold a ReplaceEffect, and passes the replaced event to choices too. The
+    same bug hit *Don't Try This at Home* (UNF) on a source whose art Tagger hasn't tagged - "It's hot" and
+    "It isn't hot" both erased the damage; "It isn't hot" now leaves it as it is (not tested in game).
+  - In-game text: *Free-for-All*'s trigger left out "face down".
+  - R&D's Secret Lair printed text:
+    - *Goblin Bowling Team* (Unglued only): a trigger - "Whenever Goblin Bowling Team damages any creature or
+      player, roll a six-sided die. Goblin Bowling Team deals to that creature or player additional damage equal
+      to the die roll." Read literally that extra damage triggers it again, an endless loop against anything that
+      survives it, so the extra damage doesn't retrigger (a choice; no ruling covers it).
+    - *Spatula of the Ages* (Unglued only): "any card from an Unglued supplement" - Unglued printings, not every
+      silver-bordered or acorn card.
+  - Left as Oracle: Urza's Contact Lenses' missing "as long as it's untapped" (tapped artifacts were off), the
+    honor-system wording changes (Sex Appeal's "players in the room of the opposite sex", Miss Demeanor's "during
+    each other player's turn"), Chicken creature types (Fowl Play, Chicken à la King, Chicken Egg), Denied!'s "only as
+    any opponent casts", "When you play" templating (Jumbo Imp, Temp of the Damned, Elvish Impersonators) and the
+    "any one source" shields (Knight of the Hokey Pokey, Clay Pigeon).
+- **Set review: Urza's Saga Promos (Lightning Dragon) and Urza's Saga** (307 new names, `UrzasSagaAuditTest`):
+  - *Soul Sculptor*'s effect ended only when you cast a creature spell; it's any player. *Goblin Cadets*'
+    "becomes blocked" trigger fired once per blocker. In-game text: *Wall of Junk*'s "it's owner's hand".
+  - R&D's Secret Lair printed text:
+    - *Gilded Drake* (Urza's Saga only): "exchange control of Gilded Drake for target creature one of your opponents
+      controls or sacrifice Gilded Drake" - no "still resolves if its target becomes illegal", so the trigger is
+      countered and the Drake stays if the target is gone, and it never triggers with nothing to target.
+    - *Lifeline* (Urza's Saga only): "return that creature from your graveyard" - only creatures you own.
+    - *Planar Void* (Urza's Saga only): no "another", so it exiles itself too.
+  - Left as Oracle: Mishra's Helix's untargeted "Tap X lands", Phyrexian Processor's "When it comes into play, pay
+    any amount of life" (a trigger, but nothing can use the gap), Carpet of Flowers' "During your main phase"
+    (one use, kept by the errata), discard-phase and "at end of turn" timing (Antagonism, Grafted Skullcap, Thran
+    Quarry, Waylay), creature types gained since (the Opals and Hiddens, Mobile Fort, Barrin), echo's old
+    reminder, and the "any one source" shields (the Runes of Protection, Sanctum Guardian, Redeem).
+- **Set review: Urza's Legacy Promos (Beast of Burden) and Urza's Legacy** (140 new names) - no changes needed.
+  Left as Oracle: Viashino Bey's printed "When Viashino Bey attacks, all creatures you control attack if able" (a
+  trigger would come too late to make anything attack), Thran War Machine's "attacks each turn", creature types
+  gained since (Opal Avenger's Guardian, Radiant), interrupts (Hidden Gibbons) and the "any one source" shields
+  (Martyr's Cause).
+- **Set review: Portal Three Kingdoms Promos (Lu Bu, Master-at-Arms) and Portal Three Kingdoms** (151 new names,
+  `PortalThreeKingdomsAuditTest`) - scripts needed no changes. R&D's Secret Lair printed text: *Zodiac Dragon*
+  (Portal Three Kingdoms only) says "If Zodiac Dragon is put into your graveyard" with no "from play", so it also
+  comes back when discarded or milled. Left as Oracle: Portal's vocabulary ("any one" for target, "destroy" for
+  sacrifice, "your opponent", Taoist Hermit and Zuo Ci's "can't choose" for hexproof, Preemptive Strike's "another
+  player") and "at the end of that turn" timing (Warrior's Oath).
+- **Set review: Urza's Destiny Promos (False Prophet) and Urza's Destiny** (142 new names, `UrzasDestinyAuditTest`):
+  - *Mark of Fury* only returned at your own end step; it's "the end step", whoever's turn it is. In-game text:
+    *Opposition* read "Tap target artifact, creature     or land."
+  - Checked and left as they are (tested): Private Research still counts the Aura's counters after the creature
+    dies (Incendiary reads them the same way), and Scour finds the exiled enchantment's controller.
+  - No R&D's Secret Lair changes: the printed texts differ only in old templating ("global enchantment",
+    "enchant creature card", "at end of turn") and creature types (Lurking Jackals' Hound).
+- **Set review: Starter 1999** (26 new names, `Starter1999AuditTest`) - scripts needed no changes. R&D's Secret
+  Lair printed text: *Grim Tutor* (before M21) says "Search your library for any card and put that card into your
+  hand" - no shuffle.
+- **Set review: Mercadian Masques Promos (Overtaker), Media and Collaboration Promos (PMEI) and Mercadian Masques**
+  (317 new names, the ten PMEI ones being modern Universes Beyond promos) - no changes needed. Left as Oracle: the
+  Ramosian and Cateran tutors' "Rebel card" / "Mercenary card" (no non-permanent ones exist), Strongarm Thug's
+  untargeted "return a Mercenary card", Flaming Sword's misprinted "Target creature", creature types (Monkey Cage's
+  Apes), "your opponent" (Thieves' Auction) and "at end of turn" timing.
+- **Set review: Nemesis Promos (Rathi Assassin) and Nemesis** (143 new names) - no changes needed. Left as Oracle:
+  the tutors' "Rebel card" / "Mercenary card" / "Goblin card" wording, Stronghold Gambit's singular "the creature
+  card ... with the lowest converted mana cost" (ties read either way) and "at the end of each player's turn"
+  timing (Mana Cache).
+- **Set review: Prophecy Promos (Avatar of Hope) and Prophecy** (143 new names, `ProphecyAuditTest`):
+  - In-game text: *Verdant Field*'s granted ability had no description; *Windscouter* ("it's owner's"), *Spitting
+    Spider* ("each creature and with flying") and *Troubled Healer*'s target prompt.
+  - R&D's Secret Lair printed text: *Rhystic Cave* (Prophecy only) is "{T}: Add one mana of any color to your mana
+    pool unless any player pays {1}" - a mana ability, usable while paying for a spell, without "Activate only as
+    an instant".
+  - Left as Oracle: Hollow Warrior's "tap an untapped creature you control" (the printed wording would let a
+    vigilant attacker, or itself, pay - too unclear to follow), creature types gained since (Chimeric Idol's
+    Turtle), "at the end of your turn" timing (Citadel of Pain, Wells, Troublesome Spirit) and Informers'
+    "black/white spells or abilities".
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

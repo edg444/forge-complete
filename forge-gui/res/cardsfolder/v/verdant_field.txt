@@ -4,5 +4,5 @@ Types:Enchantment Aura
 K:Enchant:Land
 SVar:AttachAILogic:Pump
 S:Mode$ Continuous | AffectedDefined$ Enchanted | AddAbility$ Pump | Description$ Enchanted land has "{T}: Target creature gets +1/+1 until end of turn."
-SVar:Pump:AB$ Pump | Cost$ T | ValidTgts$ Creature | NumAtt$ +1 | NumDef$ +1
+SVar:Pump:AB$ Pump | Cost$ T | ValidTgts$ Creature | NumAtt$ +1 | NumDef$ +1 | SpellDescription$ Target creature gets +1/+1 until end of turn.
 Oracle:Enchant land\nEnchanted land has "{T}: Target creature gets +1/+1 until end of turn."

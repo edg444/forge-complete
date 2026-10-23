@@ -3,5 +3,9 @@ ManaCost:7 R R
 Types:Creature Dragon
 PT:8/8
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self+YouOwn | Execute$ TrigReturn | OptionalDecider$ You | TriggerDescription$ When this creature is put into your graveyard from the battlefield, you may return it to your hand.
+# R&D's Secret Lair: Portal Three Kingdoms' printing (its only one) says "If Zodiac Dragon is put into your
+# graveyard" with no "from play" - it also comes back from being discarded or milled. The battlefield case is
+# the trigger above either way.
+T:Mode$ ChangesZone | Origin$ Hand,Library,Exile,Stack,Command | Destination$ Graveyard | ValidCard$ Card.Self+YouOwn | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19990502 | PresentZone$ Graveyard | Execute$ TrigReturn | OptionalDecider$ You | TriggerDescription$ (As printed) If CARDNAME is put into your graveyard, you may return CARDNAME to your hand.
 SVar:TrigReturn:DB$ ChangeZone | Defined$ TriggeredNewCardLKICopy | Origin$ Graveyard | Destination$ Hand
 Oracle:When this creature is put into your graveyard from the battlefield, you may return it to your hand.
