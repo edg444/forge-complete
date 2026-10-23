@@ -1,0 +1,11 @@
+Name:Heroes of Kamigawa
+ManaCost:1 W U B
+Types:Legendary Planeswalker Kaito Wanderer
+Loyalty:4
+S:Mode$ ReduceCost | ValidCard$ Card.NamePrintedIn CHK BOK SOK NEO | Type$ Spell | Activator$ You | Amount$ 1 | Description$ Each spell you cast with a name printed in a Kamigawa expansion costs {1} less to cast.
+# the sealed pack is a real booster of the Kamigawa expansion the player picks (the AI's at random, user ruling 2026-10-22)
+A:AB$ OpenBooster | Cost$ AddCounter<2/LOYALTY> | Planeswalker$ True | ToBoosterPile$ True | UpToOne$ True | Sets$ CHK,BOK,SOK,NEO | SubAbility$ DBDig | StackDescription$ SpellDescription | SpellDescription$ Open up to one sealed Kamigawa booster pack and shuffle those cards into your booster pile. Look at the top four cards of your booster pile. Put two of those cards into your hand and the rest into your graveyard.
+SVar:DBDig:DB$ Dig | SourceZone$ BoosterPile | DigNum$ 4 | ChangeNum$ 2 | DestinationZone$ Hand | DestinationZone2$ Graveyard
+A:AB$ ChangeZone | Cost$ SubCounter<3/LOYALTY> | Planeswalker$ True | Origin$ Graveyard | Destination$ Battlefield | ChangeType$ Creature.YouOwn+NamePrintedIn CHK BOK SOK NEO | ChangeNum$ 1 | Hidden$ True | Mandatory$ True | SpellDescription$ Return a creature card with a name printed in a Kamigawa expansion from your graveyard to the battlefield.
+Text:CARDNAME can be your commander.
+Oracle:Each spell you cast with a name printed in a Kamigawa expansion costs {1} less to cast.\n[+2]: Open up to one sealed Kamigawa booster pack and shuffle those cards into your booster pile. Look at the top four cards of your booster pile. Put two of those cards into your hand and the rest into your graveyard.\n[−3]: Return a creature card with a name printed in a Kamigawa expansion from your graveyard to the battlefield.\nHeroes of Kamigawa can be your commander.

@@ -47,6 +47,7 @@ public enum Keyword {
     CONVOKE("Convoke", SimpleKeyword.class, true, "Your creatures can help cast this spell. Each creature you tap while playing this spell reduces its cost by {1} or by one mana of that creature's color."),
     UNTAP_CONVOKE("Untap Convoke", SimpleKeyword.class, true, "Each tapped creature that you untap while casting this spell pays for {1} or one mana of that creature's color. This counts as convoke."),
     CRAFT("Craft", Craft.class, false, "%s, Exile this artifact, %s: Return this card transformed under its owner's control. Craft only as a sorcery."),
+    CREATE_A_CHARACTER("Create a Character", SimpleKeyword.class, true, "Any nonlegendary creature can choose this as its Background. It becomes legendary and can be your commander."),
     CREW("Crew", KeywordWithAmount.class, false, "Tap any number of creatures you control with total power %1$d or more: This Vehicle becomes an artifact creature until end of turn."),
     CUMULATIVE_UPKEEP("Cumulative upkeep", KeywordWithCost.class, false, "At the beginning of your upkeep, put an age counter on this permanent, then sacrifice it unless you pay its upkeep cost for each age counter on it."),
     CYCLING("Cycling", KeywordWithCost.class, false, "%s, Discard this card: Draw a card."), //Typecycling reminder text handled by Cycling class
@@ -163,6 +164,7 @@ public enum Keyword {
     PHASING("Phasing", SimpleKeyword.class, true, "This phases in or out before you untap during each of your untap steps. While it's phased out, it's treated as though it doesn't exist."),
     PLOT("Plot", KeywordWithCost.class, false, "You may pay %s and exile this card from your hand. Cast it as a sorcery on a later turn without paying its mana cost. Plot only as a sorcery."),
     POISONOUS("Poisonous", KeywordWithAmount.class, false, "Whenever this creature deals combat damage to a player, that player gets {%d:poison counter}."),
+    PRECIOUS("Precious", SimpleKeyword.class, true, "You can have two commanders if the other one is a legendary noncreature artifact."),
     PROTECTION("Protection", Protection.class, true, "This creature can't be blocked, targeted, dealt damage, or equipped/enchanted by %s."),
     PROTOTYPE("Prototype", KeywordWithCost.class, false, "You may cast this spell with different mana cost, color, and size. It keeps its abilities and types."),
     PROVOKE("Provoke", SimpleKeyword.class, false, "Whenever this creature attacks, you may have target creature defending player controls untap and block it if able."),

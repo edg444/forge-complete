@@ -64,6 +64,10 @@ public class OpenBoosterEffect extends SpellAbilityEffect {
             draftPack(sa);
             return;
         }
+        if (sa.hasParam("ToBoosterPile")) {
+            openToBoosterPile(sa);
+            return;
+        }
         final Card host = sa.getHostCard();
         final Game game = host.getGame();
         final String setCode = host.getChosenExpansion();
@@ -210,7 +214,12 @@ public class OpenBoosterEffect extends SpellAbilityEffect {
     /** A set to open a pack of: the player's pick, or a random one for the AI (user ruling 2026-10-22). */
     private static String chooseSet(final SpellAbility sa, final Player p) {
         final Map<String, String> byLabel = new java.util.LinkedHashMap<>();
-        for (final String code : boosterSetCodes()) {
+        List<String> codes = boosterSetCodes();
+        if (sa.hasParam("Sets")) {
+            final List<String> allowed = java.util.Arrays.asList(sa.getParam("Sets").split(","));
+            codes = allowed.stream().filter(codes::contains).toList();
+        }
+        for (final String code : codes) {
             final CardEdition ed = StaticData.instance().getEditions().get(code);
             byLabel.put((ed == null ? code : ed.getName()) + " (" + code + ")", code);
         }
@@ -221,6 +230,30 @@ public class OpenBoosterEffect extends SpellAbilityEffect {
         final String label = p.getController().isAI() ? forge.util.Aggregates.random(labels)
                 : p.getController().chooseSomeType("Magic set", sa, labels);
         return label == null ? null : byLabel.get(label);
+    }
+
+    /**
+     * Heroes of Kamigawa: "Open up to one sealed Kamigawa booster pack and shuffle those cards into your booster pile." The
+     * player picks one of Sets$ (the AI at random, user ruling 2026-10-22); the AI always opens one.
+     */
+    private static void openToBoosterPile(final SpellAbility sa) {
+        final Player p = sa.getActivatingPlayer();
+        if (sa.hasParam("UpToOne") && !p.getController().isAI()
+                && !p.getController().confirmAction(sa, null, "Open a sealed booster pack?", null)) {
+            return;
+        }
+        final String code = chooseSet(sa, p);
+        final List<PaperCard> pack = openPack(code);
+        if (pack.isEmpty()) {
+            return;
+        }
+        final forge.game.zone.PlayerZone pile = p.getZone(ZoneType.BoosterPile);
+        for (final PaperCard pc : pack) {
+            pile.add(Card.fromPaperCard(pc, p));
+        }
+        pile.shuffle();
+        p.getGame().getGameLog().add(forge.game.GameLogEntryType.INFORMATION,
+                p + " opens a " + code + " booster pack and shuffles its " + pack.size() + " cards into their booster pile.");
     }
 
     /** The Chaos Keeper: the pack under it is revealed and its controller puts one of its cards into their hand. */

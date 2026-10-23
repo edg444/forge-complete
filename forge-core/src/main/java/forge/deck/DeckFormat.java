@@ -737,12 +737,20 @@ public enum DeckFormat {
         if (isLegalCommander(rules)) {
             return true;
         }
-        if (this == DeckFormat.Oathbreaker || cardPoolFilter != null && !cardPoolFilter.test(rules)
-                || !rules.canBeCommanderIfLegendary()) {
+        if (this == DeckFormat.Oathbreaker || cardPoolFilter != null && !cardPoolFilter.test(rules)) {
             return false;
         }
         for (PaperCard other : commanders) {
-            if (other.getRules() != rules && other.getRules().hasLegendaryPartner() && isLegalCommander(other.getRules())) {
+            if (other.getRules() == rules || !isLegalCommander(other.getRules())) {
+                continue;
+            }
+            if (other.getRules().hasPrecious() && rules.canBePrecious()) {
+                return true;
+            }
+            if (other.getRules().createsACharacter() && rules.canBeCreature() && !rules.getType().isLegendary()) {
+                return true;
+            }
+            if (other.getRules().hasLegendaryPartner() && rules.canBeCommanderIfLegendary()) {
                 return true;
             }
         }

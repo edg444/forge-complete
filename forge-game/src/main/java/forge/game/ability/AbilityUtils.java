@@ -4541,6 +4541,19 @@ public class AbilityUtils {
                     countSubTypesFromList(paidList);
         }
 
+        if (def.startsWith("ArtistsAmong")) {
+            // Convention Maro: each person credited counts once, so a co-illustrated card names two artists
+            final Set<String> artists = Sets.newHashSet();
+            for (final Card card : paidList) {
+                for (final String a : card.getArtist().split(" & ")) {
+                    if (!a.isBlank()) {
+                        artists.add(a.trim().toLowerCase(java.util.Locale.ROOT));
+                    }
+                }
+            }
+            return doXMath(artists.size(), CardFactoryUtil.extractOperators(def), source, ctb);
+        }
+
         if (def.startsWith("CardTypes")) {
             return doXMath(countCardTypesFromList(paidList, def.startsWith("CardTypesPermanent")), CardFactoryUtil.extractOperators(def), source, ctb);
         }

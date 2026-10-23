@@ -1415,6 +1415,7 @@ public class GameAction {
 
     public final void controllerChangeZoneCorrection(final Card c) {
         System.out.println("Correcting zone for " + c.toString());
+        final Player giver = c.takeControlGiver();
         final Zone oldBattlefield = game.getZoneOf(c);
 
         if (oldBattlefield == null || oldBattlefield.is(ZoneType.Stack)) {
@@ -1464,6 +1465,9 @@ public class GameAction {
 
         final Map<AbilityKey, Object> runParams = AbilityKey.mapFromCard(c);
         runParams.put(AbilityKey.OriginalController, original);
+        if (original.equals(giver)) {
+            runParams.put(AbilityKey.Donor, giver);
+        }
         game.getTriggerHandler().runTrigger(TriggerType.ChangesController, runParams, false);
 
         game.getTriggerHandler().clearSuppression(TriggerType.ChangesZone);
@@ -3511,6 +3515,9 @@ public class GameAction {
                 if (c.hasKeyword(Keyword.LEGACY) && c.getLegacyWord() == null && !c.isInZone(ZoneType.Sideboard)) {
                     writeLegacyWord(takesAction, c, all);
                 }
+                if (c.hasSVar("DeckChoiceA") && takesAction.equals(c.getOwner())) {
+                    chooseDeckOptions(takesAction, c, all);
+                }
             }
             takesAction = game.getNextPlayerAfter(takesAction);
         } while (takesAction != first);
@@ -3773,6 +3780,58 @@ public class GameAction {
             }
         }
         return result;
+    }
+
+    /**
+     * Convention Maro: "As you create your deck, choose an [A] and a [B]". The owner picks each DeckChoice<letter> SVar's
+     * option once per match, as the game begins (user ruling 2026-10-22), for every copy of that card name. The AI picks
+     * the option whose DeckChoiceAIValid<letter> matches the most of its nonland cards, or the first one.
+     */
+    public void chooseDeckOptions(final Player owner, final Card c, final CardCollectionView theirs) {
+        final String key = "DeckChoices:" + c.getName();
+        if (owner.getMatchNote(key) != null) {
+            return;
+        }
+        final List<String> chosen = Lists.newArrayList();
+        for (char letter = 'A'; c.hasSVar("DeckChoice" + letter); letter++) {
+            final List<String> options = Arrays.asList(c.getSVar("DeckChoice" + letter).split(";"));
+            int pick = 0;
+            if (owner.isAI()) {
+                final String[] valid = c.getSVar("DeckChoiceAIValid" + letter).split(";");
+                int best = -1;
+                for (int i = 0; i < options.size() && i < valid.length; i++) {
+                    final String v = valid[i];
+                    final int n = v.equals("None") ? 0 : CardLists.count(theirs, x -> !x.isLand()
+                            && x.getOwner().equals(owner) && x.isValid(v.split(","), owner, c, null));
+                    if (n > best) {
+                        best = n;
+                        pick = i;
+                    }
+                }
+            } else {
+                final SpellAbility sa = new SpellAbility.EmptySa(ApiType.ChooseType, c, owner);
+                final List<String> labels = Lists.newArrayList();
+                for (int i = 0; i < options.size(); i++) {
+                    labels.add("[" + letter + (i + 1) + "] " + options.get(i));
+                }
+                final String label = owner.getController().chooseSomeType(c.getTranslatedName() + ": choose an [" + letter + "]",
+                        sa, labels);
+                pick = Math.max(0, labels.indexOf(label));
+            }
+            chosen.add("" + letter + (pick + 1));
+            game.getGameLog().add(GameLogEntryType.INFORMATION, owner + " chooses [" + letter + (pick + 1) + "] \""
+                    + options.get(pick) + "\" for " + c + ".");
+        }
+        owner.setMatchNote(key, chosen);
+    }
+
+    /** The options chosen for this card's name by its owner (Convention Maro), or none. */
+    @SuppressWarnings("unchecked")
+    public static List<String> deckChoicesOf(final Card c) {
+        if (c.getOwner() == null || !(c.getOwner().getMatchNote("DeckChoices:" + c.getName()) instanceof List<?> l)) {
+            return List.of();
+        }
+        return (List<String>) l;
     }
 
     /**

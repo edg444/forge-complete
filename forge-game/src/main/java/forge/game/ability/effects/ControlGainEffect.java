@@ -150,6 +150,9 @@ public class ControlGainEffect extends SpellAbilityEffect {
             }
 
             final Player before = tgtC.getController();
+            if (before.equals(activator) && !newController.equals(before)) {
+                tgtC.setControlGiver(activator);
+            }
             long tStamp = game.getNextTimestamp();
             tgtC.addTempController(newController, tStamp);
 

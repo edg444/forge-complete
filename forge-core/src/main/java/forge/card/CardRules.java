@@ -386,6 +386,21 @@ public final class CardRules implements ICardCharacteristics {
         return mainPart.getOracleText().contains("any other legend with one color identity or less as your commanders as though they each had partner");
     }
 
+    /** Ormacar, Relic Wraith: "You can have two commanders if the other one is a legendary noncreature artifact." */
+    public boolean hasPrecious() {
+        return hasKeyword("Precious");
+    }
+
+    public boolean canBePrecious() {
+        CardType type = mainPart.getType();
+        return type.isLegendary() && type.isArtifact() && !type.isCreature();
+    }
+
+    /** Wizard from Beyond: any nonlegendary creature can choose this as its Background and becomes legendary. */
+    public boolean createsACharacter() {
+        return canBeBackground() && hasKeyword("Create a Character");
+    }
+
     /** The Knight of Land Drops: "Partner with Knight" - any legendary Knight may be its partner. */
     public boolean partnersWithKnights() {
         return mainPart.getOracleText().contains("You may select any legendary Knight to be this creature's partner.");
@@ -398,6 +413,14 @@ public final class CardRules implements ICardCharacteristics {
         }
         if (findsFriends() && canBeCommander() && b.canBeCommander() && b.getColorIdentity().countColors() <= 1
                 || b.findsFriends() && b.canBeCommander() && canBeCommander() && getColorIdentity().countColors() <= 1) {
+            return true;
+        }
+        if (hasPrecious() && canBeCommander() && b.canBePrecious()
+                || b.hasPrecious() && b.canBeCommander() && canBePrecious()) {
+            return true;
+        }
+        if (createsACharacter() && b.canBeCreature() && !b.getType().isLegendary()
+                || b.createsACharacter() && canBeCreature() && !getType().isLegendary()) {
             return true;
         }
         if (hasLegendaryPartner() && canBeCommander() && b.canBeCommanderIfLegendary()
@@ -447,7 +470,7 @@ public final class CardRules implements ICardCharacteristics {
         }
         // Barce, Friend Finder can pair with any commander of one color or less, so those may be a second commander
         return hasKeyword("Partner") || !this.partnerWith.isEmpty() || !this.partnerType.isEmpty() || hasLegendaryPartner() ||
-                findsFriends() || getColorIdentity().countColors() <= 1 || partnersWithKnights()
+                findsFriends() || hasPrecious() || getColorIdentity().countColors() <= 1 || partnersWithKnights()
                 || canBeCommander() && getType().hasCreatureType("Knight") ||
                 hasKeyword("Choose a Background") || hasKeyword("Doctor's companion") || isDoctor();
     }

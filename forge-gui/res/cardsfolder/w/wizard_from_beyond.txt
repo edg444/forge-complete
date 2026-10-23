@@ -1,0 +1,9 @@
+Name:Wizard from Beyond
+ManaCost:W U B R G
+Types:Legendary Enchantment Background
+K:Create a Character
+S:Mode$ Continuous | Affected$ Creature.IsCommander+YouOwn | AddType$ Cleric & Rogue & Warrior & Wizard | Description$ Commander creatures you own are Clerics, Rogues, Warriors, and Wizards in addition to their other types.
+S:Mode$ Panharmonicon | ValidCard$ Creature.YouCtrl | CheckSVar$ X | SVarCompare$ EQ4 | Description$ As long as you have a full party, if an ability of a creature you control triggers, that ability triggers an additional time.
+SVar:X:Count$Party
+DeckHas:Ability$Party
+Oracle:Create a Character (Any nonlegendary creature can choose this as its Background. It becomes legendary and can be your commander.)\nCommander creatures you own are Clerics, Rogues, Warriors, and Wizards in addition to their other types.\nAs long as you have a full party, if an ability of a creature you control triggers, that ability triggers an additional time.

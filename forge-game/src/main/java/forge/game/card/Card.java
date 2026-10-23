@@ -338,6 +338,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     private Player owner;
     private Player controller;
+    private Player controlGiver;
     private long controllerTimestamp;
     private NavigableMap<Long, Player> tempControllers = Maps.newTreeMap();
 
@@ -3070,6 +3071,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.equals("Daybound") || keyword.equals("Nightbound")
                         || keyword.equals("Increment")
                         || keyword.equals("Choose a Background") || keyword.equals("Compleated")
+                        || keyword.equals("Precious") || keyword.equals("Create a Character")
                         || keyword.equals("Space sculptor") || keyword.equals("Doctor's companion")
                         || keyword.equals("Start your engines") || keyword.startsWith("Modular")
                         || keyword.startsWith("Bloodthirst") || keyword.startsWith("Dredge")
@@ -4265,6 +4267,17 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         controller = player;
         controllerTimestamp = tstamp;
         view.updateController(this);
+    }
+
+    /** Elusen, the Giving: the player whose own spell or ability is giving this away (donating it), until the move. */
+    public final void setControlGiver(final Player giver) {
+        controlGiver = giver;
+    }
+
+    public final Player takeControlGiver() {
+        final Player giver = controlGiver;
+        controlGiver = null;
+        return giver;
     }
 
     public final void addTempController(final Player player, final long tstamp) {
@@ -8689,6 +8702,12 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     public boolean isPlaytestCard() {
         final PrintingTraits.Traits t = getPrintingTraits();
         return t != null && t.isPlaytest();
+    }
+
+    /** A printing with a 1993 or 1997 frame (Treizeci, Sun of Serra), per Scryfall's frame data. */
+    public boolean hasRetroFrame() {
+        final PrintingTraits.Traits t = getPrintingTraits();
+        return t != null && t.isRetroFrame();
     }
 
     /** The plane this card's printing's set is on (Minnea, Planar Tourist), or null for a set on several or none. */

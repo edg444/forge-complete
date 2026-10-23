@@ -203,6 +203,12 @@ public class CardProperty {
             if (!card.hasPaperFoil()) {
                 return false;
             }
+        } else if (property.equals("Nostalgic")) {
+            // Treizeci, Sun of Serra: "Retro frames, legends, and artifacts are nostalgic." Legends are legendary cards
+            // (user ruling 2026-10-22)
+            if (!card.getType().isLegendary() && !card.isArtifact() && !card.hasRetroFrame()) {
+                return false;
+            }
         } else if (property.equals("BoosterFun")) {
             if (!card.isBoosterFun()) {
                 return false;
@@ -521,6 +527,24 @@ public class CardProperty {
             if (!card.isMotivatedBy(sourceController)) {
                 return false;
             }
+        } else if (property.startsWith("NamePrintedIn ")) {
+            // Heroes of Kamigawa: "with a name printed in a Kamigawa expansion" - the name, in any of the sets' card lists
+            final java.util.Set<String> names = new java.util.HashSet<>();
+            names.add(card.getName());
+            if (card.getPaperCard() != null) {
+                names.add(card.getPaperCard().getName());
+            }
+            boolean printed = false;
+            for (final String code : property.substring("NamePrintedIn ".length()).split(" ")) {
+                final forge.card.CardEdition ed = forge.StaticData.instance().getEditions().get(code);
+                if (ed != null && names.stream().anyMatch(n -> !ed.getCardInSet(n).isEmpty())) {
+                    printed = true;
+                    break;
+                }
+            }
+            if (!printed) {
+                return false;
+            }
         } else if (property.equals("ModifiedFromPrinted")) {
             // Louvaq, the Aberrant: different from its printed power, toughness or abilities
             if (!card.isModifiedFromPrinted()) {
@@ -565,6 +589,20 @@ public class CardProperty {
             }
         } else if (property.equals("Watermarked")) {
             if (card.getWatermarks().isEmpty()) {
+                return false;
+            }
+        } else if (property.equals("Landscape")) {
+            // Convention Maro: a card printed in landscape orientation - split cards (Rooms too) other than aftermath
+            // ones, and battles
+            final forge.card.CardStateName right = forge.card.CardStateName.RightSplit;
+            final boolean split = card.isSplitCard() && !(card.hasState(right)
+                    && card.hasKeyword(forge.game.keyword.Keyword.AFTERMATH, card.getState(right)));
+            if (!split && !card.isBattle()) {
+                return false;
+            }
+        } else if (property.startsWith("DeckChoice_")) {
+            // Convention Maro: an option its owner chose "as you create your deck"
+            if (!forge.game.GameAction.deckChoicesOf(card).contains(property.substring("DeckChoice_".length()))) {
                 return false;
             }
         } else if (property.equals("sharesWatermarkWith")) {

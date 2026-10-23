@@ -312,6 +312,20 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **2022 Heroes of the Realm (PH22): Treizeci, Sun of Serra; Elusen, the Giving; Heroes of Kamigawa; Wizard from
+  Beyond. 2023 Heroes of the Realm (PH23): Ormacar, Relic Wraith. MagicFest 2024 (PF24): Convention Maro.**
+  - Printing trait `retroframe` (Scryfall's 1993 and 1997 frames; `Card.hasRetroFrame()`) and property `Nostalgic`:
+    legendary, artifact, or a retro-frame printing (user ruling 2026-10-22).
+  - Donating: a control change made by the old controller's own spell or ability (GainControl, or the exchanger's side
+    of an exchange) carries a donor (`AbilityKey.Donor`, `TriggeredDonor`); ChangesController `Donated$ True`.
+  - OpenBooster `ToBoosterPile$` (`Sets$` limits the sets the player picks from, `UpToOne$`); property
+    `NamePrintedIn <codes>` (the name is in any of those sets' card lists).
+  - Keywords `Precious` (the other commander may be a legendary noncreature artifact) and `Create a Character` (any
+    nonlegendary creature can choose the Background, and becomes legendary like a Legendary partner's other one).
+  - "As you create your deck, choose an [A] and a [B]": SVars `DeckChoiceA`/`DeckChoiceB`, asked once per match as the
+    game begins (user ruling 2026-10-22), property `DeckChoice_<letter><n>`; property `Landscape` (split cards and
+    Rooms but not aftermath, battles) and count `$ArtistsAmong`.
+
 - **Mobile Settings: one "Alternate Player Zone Layout" again.** The fork's zone-tabs-on-the-left option
   (`UI_ZONE_TABS_LEFT`) is gone; upstream restored its own setting of that name (`UI_ALT_PLAYERZONETABS`), and the two
   showed with the same label. Hand, Library, Graveyard and Exile tabs are on the right edge, as upstream has them.

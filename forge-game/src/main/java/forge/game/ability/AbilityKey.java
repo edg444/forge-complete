@@ -60,6 +60,7 @@ public enum AbilityKey {
     DefendingPlayer("DefendingPlayer"),
     Destination("Destination"),
     Devoured("Devoured"),
+    Donor("Donor"),
     DicePTExchanges("DicePTExchanges"),
     Discard("Discard"),
     DiscardedBefore("DiscardedBefore"),

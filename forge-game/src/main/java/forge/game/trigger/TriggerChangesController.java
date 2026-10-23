@@ -60,6 +60,10 @@ public class TriggerChangesController extends Trigger {
         if (!matchesValidParam("ValidOriginalController", runParams.get(AbilityKey.OriginalController))) {
             return false;
         }
+        // Elusen, the Giving: "Whenever a player donates a permanent to another player"
+        if (hasParam("Donated") && !runParams.containsKey(AbilityKey.Donor)) {
+            return false;
+        }
 
         return true;
     }
@@ -67,7 +71,7 @@ public class TriggerChangesController extends Trigger {
     /** {@inheritDoc} */
     @Override
     public final void setTriggeringObjects(final SpellAbility sa, Map<AbilityKey, Object> runParams) {
-        sa.setTriggeringObjectsFrom(runParams, AbilityKey.Card, AbilityKey.OriginalController);
+        sa.setTriggeringObjectsFrom(runParams, AbilityKey.Card, AbilityKey.OriginalController, AbilityKey.Donor);
     }
 
     @Override

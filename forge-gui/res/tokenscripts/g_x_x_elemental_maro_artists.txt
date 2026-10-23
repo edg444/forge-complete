@@ -1,0 +1,8 @@
+Name:Maro
+ManaCost:no cost
+Colors:green
+Types:Creature Elemental
+PT:*/*
+S:Mode$ Continuous | CharacteristicDefining$ True | SetPower$ X | SetToughness$ X | Description$ This creature's power and toughness are each equal to the number of artists among nonland, nontoken permanents you control.
+SVar:X:Count$Valid Permanent.nonLand+!token+YouCtrl$ArtistsAmong
+Oracle:This creature's power and toughness are each equal to the number of artists among nonland, nontoken permanents you control.

@@ -64,6 +64,7 @@ public final class PrintingTraits {
         private boolean backUntaggedArt = false;
         private boolean boosterFun = false;
         private boolean playtest = false;
+        private boolean retroFrame = false;
         private String plane = null;
         private String universe = null;
         private java.util.Set<String> characters = java.util.Collections.emptySet();
@@ -170,6 +171,11 @@ public final class PrintingTraits {
         /** A playtest card (The Unknown Wizard): Scryfall's playtest promo type. */
         public boolean isPlaytest() {
             return playtest;
+        }
+
+        /** A retro frame (Treizeci, Sun of Serra's nostalgic cards): Scryfall's 1993 or 1997 frame. */
+        public boolean isRetroFrame() {
+            return retroFrame;
         }
 
         /** Minnea, Planar Tourist: the plane of the printing's set, when that set is on one plane; null otherwise. */
@@ -300,6 +306,8 @@ public final class PrintingTraits {
                     t.boosterFun = true;
                 } else if (trait.equals("playtest")) {
                     t.playtest = true;
+                } else if (trait.equals("retroframe")) {
+                    t.retroFrame = true;
                 } else if (trait.startsWith("plane=")) {
                     t.plane = trait.substring(6);
                 } else if (trait.startsWith("universe=")) {

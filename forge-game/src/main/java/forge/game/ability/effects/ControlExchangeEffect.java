@@ -91,6 +91,13 @@ public class ControlExchangeEffect extends SpellAbilityEffect {
             return;
         }
 
+        // the one who exchanges gives their own object away; the other one's is taken
+        final Player exchanger = sa.getActivatingPlayer();
+        if (exchanger.equals(player1) && !player1.equals(player2)) {
+            object1.setControlGiver(player1);
+        } else if (exchanger.equals(player2) && !player1.equals(player2)) {
+            object2.setControlGiver(player2);
+        }
         final long tStamp = game.getNextTimestamp();
         object2.addTempController(player1, tStamp);
         object1.addTempController(player2, tStamp);

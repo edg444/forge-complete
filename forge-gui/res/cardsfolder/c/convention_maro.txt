@@ -1,0 +1,24 @@
+Name:Convention Maro
+ManaCost:1 G 2/U 2/R
+Types:Legendary Creature Elemental Gamer
+PT:3/3
+# "As you create your deck": asked once per match as the game begins (user ruling 2026-10-22); each option is a DeckChoice_<letter><n>
+SVar:DeckChoiceA:is an Elemental;has a watermark or landscape orientation;targets a creature you control
+SVar:DeckChoiceB:cards in your hand;card types among cards in your graveyard;artists among nonland, nontoken permanents you control
+SVar:DeckChoiceAIValidA:Card.Elemental;Card.Watermarked,Card.Landscape;None
+SVar:DeckChoiceAIValidB:Card;None;None
+S:Mode$ Continuous | Affected$ Card.Self | Description$ Whenever you cast a spell that [CHOICE A], create a green Elemental creature token named Maro with "This creature's power and toughness are each equal to the number of [CHOICE B]."
+S:Mode$ Continuous | Affected$ Card.Self | IsPresent$ Card.Self+DeckChoice_A1 | ActiveDescription$ [A]: "is an Elemental"
+S:Mode$ Continuous | Affected$ Card.Self | IsPresent$ Card.Self+DeckChoice_A2 | ActiveDescription$ [A]: "has a watermark or landscape orientation"
+S:Mode$ Continuous | Affected$ Card.Self | IsPresent$ Card.Self+DeckChoice_A3 | ActiveDescription$ [A]: "targets a creature you control"
+S:Mode$ Continuous | Affected$ Card.Self | IsPresent$ Card.Self+DeckChoice_B1 | ActiveDescription$ [B]: "cards in your hand"
+S:Mode$ Continuous | Affected$ Card.Self | IsPresent$ Card.Self+DeckChoice_B2 | ActiveDescription$ [B]: "card types among cards in your graveyard"
+S:Mode$ Continuous | Affected$ Card.Self | IsPresent$ Card.Self+DeckChoice_B3 | ActiveDescription$ [B]: "artists among nonland, nontoken permanents you control"
+T:Mode$ SpellCast | ValidCard$ Card.Elemental | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | PresentDefined$ Self | IsPresent$ Card.DeckChoice_A1 | Execute$ TrigToken | Secondary$ True | TriggerDescription$ Whenever you cast a spell that is an Elemental, create a Maro token.
+T:Mode$ SpellCast | ValidCard$ Card.Watermarked,Card.Landscape | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | PresentDefined$ Self | IsPresent$ Card.DeckChoice_A2 | Execute$ TrigToken | Secondary$ True | TriggerDescription$ Whenever you cast a spell that has a watermark or landscape orientation, create a Maro token.
+T:Mode$ SpellCast | TargetsValid$ Creature.YouCtrl+inZoneBattlefield | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | PresentDefined$ Self | IsPresent$ Card.DeckChoice_A3 | Execute$ TrigToken | Secondary$ True | TriggerDescription$ Whenever you cast a spell that targets a creature you control, create a Maro token.
+SVar:TrigToken:DB$ Token | TokenScript$ g_x_x_elemental_maro_hand | ConditionDefined$ Self | ConditionPresent$ Card.DeckChoice_B1 | SubAbility$ DBToken2
+SVar:DBToken2:DB$ Token | TokenScript$ g_x_x_elemental_maro_graveyard_types | ConditionDefined$ Self | ConditionPresent$ Card.DeckChoice_B2 | SubAbility$ DBToken3
+SVar:DBToken3:DB$ Token | TokenScript$ g_x_x_elemental_maro_artists | ConditionDefined$ Self | ConditionPresent$ Card.DeckChoice_B3
+DeckHas:Ability$Token & Type$Elemental
+Oracle:Whenever you cast a spell that [CHOICE A], create a green Elemental creature token named Maro with "This creature's power and toughness are each equal to the number of [CHOICE B]."\n— As you create your deck, choose an [A] and a [B] —\n• [A1] "is an Elemental" | [A2] "has a watermark or landscape orientation" | [A3] "targets a creature you control"\n• [B1] "cards in your hand" | [B2] "card types among cards in your graveyard" | [B3] "artists among nonland, nontoken permanents you control"

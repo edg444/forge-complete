@@ -3748,9 +3748,13 @@ public class Player extends GameEntity implements Comparable<Player> {
         game.fireEvent(new GameEventAddLog(GameLogEntryType.INFORMATION, this + " and " + other + " became friends."));
     }
 
-    /** Legendary partner: "The other one is promoted to legendary." - for the whole game, in every zone. */
+    /**
+     * Legendary partner: "The other one is promoted to legendary." - for the whole game, in every zone. A creature that
+     * chose Wizard from Beyond (Create a Character) as its Background "becomes legendary" the same way.
+     */
     public void promoteLegendaryPartners() {
-        if (commanders.size() != 2 || commanders.stream().noneMatch(c -> c.hasKeyword(Keyword.LEGENDARY_PARTNER))) {
+        if (commanders.size() != 2 || commanders.stream().noneMatch(c -> c.hasKeyword(Keyword.LEGENDARY_PARTNER)
+                || c.hasKeyword(Keyword.CREATE_A_CHARACTER))) {
             return;
         }
         for (Card c : commanders) {
