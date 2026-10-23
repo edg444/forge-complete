@@ -312,6 +312,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-23, fifteenth deploy (desktop, Android, GitHub) — Mystery Booster 2 playtest complete (parts 6–12); AI and random-deck fixes; Exclude The List setting; 5-commit upstream merge
+
+- **Upstream merge (5 commits).** No conflicts.
+
 - **AI: mass zone changes wait for Main 2 on the AI's own turn.** `ChangeZoneAllAi` held a battlefield sweep back
   only in Main 1, so an instant-speed one (Perilous Vault) fired in upkeep and exiled creatures that could have
   attacked first. Now everything before Main 2 on its own turn waits (`AILogic$ Main1` and cast-from-effect still go).
