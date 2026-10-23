@@ -228,6 +228,7 @@ public enum ApiType {
     PassTheBall (PassTheBallEffect.class),
     BecomeBackFace (BecomeBackFaceEffect.class),
     Sleeve (SleeveEffect.class),
+    Toy (ToyEffect.class),
     CopyChapter (CopyChapterEffect.class),
     MadLabs (MadLabsEffect.class),
     Mana (ManaEffect.class),

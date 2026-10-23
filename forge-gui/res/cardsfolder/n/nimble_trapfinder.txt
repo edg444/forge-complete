@@ -8,7 +8,7 @@ T:Mode$ Phase | Phase$ BeginCombat | ValidPlayer$ You | TriggerZones$ Battlefiel
 SVar:TrigAnimateAll:DB$ AnimateAll | ValidCards$ Creature.YouCtrl | Triggers$ TrigCDPlayer
 SVar:TrigCDPlayer:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigDraw | TriggerZones$ Battlefield | TriggerDescription$ Whenever this creature deals combat damage to a player, draw a card.
 SVar:TrigDraw:DB$ Draw
-SVar:X:Count$Party
+SVar:X:Count$PartyFull
 DeckHas:Ability$Party
 DeckHints:Type$Cleric|Warrior|Wizard
 Oracle:This creature can't be blocked if you had another Cleric, Rogue, Warrior, or Wizard enter the battlefield under your control this turn.\nAt the beginning of combat on your turn, if you have a full party, creatures you control gain "Whenever this creature deals combat damage to a player, draw a card" until end of turn.

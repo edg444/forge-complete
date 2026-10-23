@@ -1,0 +1,11 @@
+Name:Applejack
+ManaCost:2 G W
+Types:Legendary Creature Pony
+PT:4/4
+# Toys are listed once per match as the game begins (SVar:ToyBox, user ruling); a toy whose token is still on the
+# battlefield can't be put there again. The AI owns a fixed random set of My Little Pony toys (ToyEffect).
+SVar:ToyBox:True
+T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigToy | TriggerDescription$ Family Gathering — At the beginning of your end step, put a toy you own onto the battlefield as a 2/2 creature token with that toy's name, colors, and creature types. If the toy has wings, the token has flying. If the toy has a horn, scry 2. If it has neither, create a Food token.
+SVar:TrigToy:DB$ Toy
+DeckHas:Ability$Token|Food
+Oracle:Family Gathering — At the beginning of your end step, put a toy you own onto the battlefield as a 2/2 creature token with that toy's name, colors, and creature types. If the toy has wings, the token has flying. If the toy has a horn, scry 2. If it has neither, create a Food token.

@@ -108,6 +108,10 @@ public class ChooseCardEffect extends SpellAbilityEffect {
             if (!p.isInGame()) {
                 p = getNewChooser(sa, p);
             }
+            // an honor-system question about what's in a card's art: the AI can't look, so it picks nothing
+            if (sa.hasParam("PeopleOnly") && p.getController().isAI()) {
+                pChoices = new CardCollection();
+            }
             if (sa.hasParam("ControlledByPlayer")) {
                 final String param = sa.getParam("ControlledByPlayer");
                 if (param.equals("Chooser")) {

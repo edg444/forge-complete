@@ -9,7 +9,7 @@ S:Mode$ ReduceCost | ValidCard$ Cleric,Rogue,Warrior,Wizard | Type$ Spell | Acti
 T:Mode$ Phase | Phase$ BeginCombat | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigPumpAll | TriggerDescription$ At the beginning of combat on your turn, creatures you control get +1/+0 until end of turn. If you have a full party, creatures you control get +3/+0 until end of turn instead.
 SVar:TrigPumpAll:DB$ PumpAll | ValidCards$ Creature.YouCtrl | NumAtt$ +X
 SVar:X:Count$Compare Y EQ4.3.1
-SVar:Y:Count$Party
+SVar:Y:Count$PartyFull
 SVar:BuffedBy:Cleric,Rogue,Wizard
 DeckHas:Ability$Party
 DeckHints:Type$Cleric|Rogue|Warrior|Wizard

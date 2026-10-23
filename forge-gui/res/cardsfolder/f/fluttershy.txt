@@ -1,0 +1,17 @@
+Name:Fluttershy
+ManaCost:1 G W
+Types:Legendary Creature Pegasus
+PT:0/4
+K:Defender
+K:Flying
+# A tail Scryfall Tagger finds in a creature's art counts. For creatures whose art Tagger hasn't tagged at all (tokens
+# too) the activator says which have tails (honor system); the AI can't look, so it picks none. Staring a creature down
+# keeps it from attacking or blocking until end of turn.
+A:AB$ PutCounterAll | Cost$ 1 T | ValidTgts$ Player | TgtPrompt$ Select target player | ValidCards$ Creature.KnownArtObject_tail | CounterType$ P1P1 | CounterNum$ 1 | SubAbility$ DBAsk | SpellDescription$ Put a +1/+1 counter on each creature with a tail target player controls. Stare down up to one target creature until end of turn. (It can't attack or block as long as you're looking directly at it.)
+SVar:DBAsk:DB$ ChooseCard | Defined$ You | Choices$ Creature.TargetedPlayerCtrl+ArtUntagged | MinAmount$ 0 | Amount$ Untagged | PeopleOnly$ True | ChoiceTitle$ Choose each of these creatures with a tail in its art | SubAbility$ DBCounter
+SVar:DBCounter:DB$ PutCounter | Defined$ ChosenCard | CounterType$ P1P1 | CounterNum$ 1 | SubAbility$ DBStare
+SVar:DBStare:DB$ Pump | ValidTgts$ Creature | TgtPrompt$ Select up to one target creature to stare down | TargetMin$ 0 | TargetMax$ 1 | IsCurse$ True | KW$ HIDDEN CARDNAME can't attack or block. | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+SVar:Untagged:Count$Valid Creature.TargetedPlayerCtrl+ArtUntagged
+DeckHas:Ability$Counters
+Oracle:Defender, flying\n{1}, {T}: Put a +1/+1 counter on each creature with a tail target player controls. Stare down up to one target creature until end of turn. (It can't attack or block as long as you're looking directly at it.)

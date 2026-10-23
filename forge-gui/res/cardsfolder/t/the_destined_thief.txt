@@ -10,7 +10,7 @@ SVar:TrigBranch:DB$ Branch | BranchConditionSVar$ X | BranchConditionSVarCompare
 SVar:DBDraw1:DB$ Draw | NumCards$ 3
 SVar:DBDraw2:DB$ Draw | SubAbility$ DBDiscard
 SVar:DBDiscard:DB$ Discard | Defined$ You | Mode$ TgtChoose | NumCards$ 1
-SVar:X:Count$Party
+SVar:X:Count$PartyFull
 SVar:BuffedBy:Cleric,Warrior,Wizard
 DeckHas:Ability$Party
 DeckHints:Type$Cleric|Warrior|Wizard

@@ -3571,6 +3571,10 @@ public class GameAction {
                 if (c.hasSVar("BuildOptions") && takesAction.equals(c.getOwner())) {
                     buildCard(takesAction, c, all);
                 }
+                // Applejack: the toys its owner owns, listed once per match as the game begins (user ruling)
+                if (c.hasSVar("ToyBox") && takesAction.equals(c.getOwner()) && !c.isInZone(ZoneType.Sideboard)) {
+                    forge.game.ability.effects.ToyEffect.toyBox(takesAction, c);
+                }
                 if (c.hasSVar("DeckChoiceA") && takesAction.equals(c.getOwner())) {
                     chooseDeckOptions(takesAction, c, all);
                 }

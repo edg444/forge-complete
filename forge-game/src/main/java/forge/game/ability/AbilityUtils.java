@@ -3266,6 +3266,13 @@ public class AbilityUtils {
             return doXMath(count, expr, c, ctb);
         }
 
+        // Pinkie Pie: your party is each creature you control, and it's always full - even with just one (user ruling).
+        // Full-party checks read PartyFull: 4 when the party is full, otherwise the party's size.
+        if ((sq[0].equals("Party") || sq[0].equals("PartyFull"))
+                && player.getCardsIn(ZoneType.Battlefield).anyMatch(x -> x.hasSVar("PartyIsEveryCreature"))) {
+            final int creatures = player.getCreaturesInPlay().size();
+            return doXMath(sq[0].equals("PartyFull") && creatures > 0 ? 4 : creatures, expr, c, ctb);
+        }
         if (sq[0].contains("Party")) {
             Set<String> chosenParty = Sets.newHashSet();
             int wildcard = 0;

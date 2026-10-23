@@ -800,6 +800,11 @@ public class CardProperty {
             if (!same) {
                 return false;
             }
+        } else if (property.startsWith("KnownArtObject_")) {
+            // Scryfall Tagger's tag of that name (or under it) on the art - Pinkie Pie's smile, Fluttershy's tail
+            if (!card.hasKnownArtObject(property.substring("KnownArtObject_".length()))) {
+                return false;
+            }
         } else if (property.equals("ArtHasChosenObject")) {
             if (!source.hasChosenType() || !card.hasKnownArtObject(source.getChosenType())) {
                 return false;

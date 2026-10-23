@@ -1,0 +1,16 @@
+Name:Pinkie Pie
+ManaCost:R W
+Types:Legendary Creature Pony
+PT:2/2
+# A smile Scryfall Tagger finds in the spell's art (smile, with grin and smiley face under it) needs no question. Art
+# Tagger hasn't tagged at all is asked about (honor system, the caster can see it); the AI can't look, so it answers no.
+# Your party is each creature you control and is always full, even of one (user ruling; Count$Party, Count$PartyFull).
+T:Mode$ SpellCast | ValidCard$ Card.KnownArtObject_smile,Card.ArtUntagged | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigKnown | TriggerDescription$ Whenever you cast a spell with a smile in its art, create a tapped Treasure token.
+SVar:TrigKnown:DB$ Token | TokenScript$ c_a_treasure_sac | TokenTapped$ True | ConditionDefined$ TriggeredCard | ConditionPresent$ Card.KnownArtObject_smile | SubAbility$ DBAsk
+SVar:DBAsk:DB$ GenericChoice | Defined$ You | Choices$ NoSmile,Smile | ChoicePrompt$ Is there a smile in the art of the spell you cast? | ConditionDefined$ TriggeredCard | ConditionPresent$ Card.!KnownArtObject_smile
+SVar:NoSmile:DB$ Pump | SpellDescription$ No smile
+SVar:Smile:DB$ Token | TokenScript$ c_a_treasure_sac | TokenTapped$ True | SpellDescription$ There's a smile: create a tapped Treasure token
+SVar:PartyIsEveryCreature:True
+Text:Everypony's Invited — Your party consists of each creature you control, and your party is always full.
+DeckHas:Ability$Token|Party
+Oracle:Whenever you cast a spell with a smile in its art, create a tapped Treasure token.\nEverypony's Invited — Your party consists of each creature you control, and your party is always full.

@@ -230,6 +230,7 @@ public enum SpellApiToAi {
             .put(ApiType.PassTheBall, AlwaysPlayAi.class)
             .put(ApiType.BecomeBackFace, AlwaysPlayAi.class)
             .put(ApiType.Sleeve, AlwaysPlayAi.class)
+            .put(ApiType.Toy, AlwaysPlayAi.class)
             .put(ApiType.CopyChapter, AlwaysPlayAi.class)
             .put(ApiType.DecideMatch, AlwaysPlayAi.class)
             .put(ApiType.Mana, ManaAi.class)

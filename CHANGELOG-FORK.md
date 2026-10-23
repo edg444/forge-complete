@@ -312,6 +312,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie (SLD 1537-1539)** - the last cards from released sets
+  missing besides Alchemy: Reality Fracture.
+  - PrintingTraits art objects `smile` and `tail` (Scryfall Tagger trees) and property `KnownArtObject_<object>`;
+    untagged art is asked about (ChooseCard `PeopleOnly$`: the AI picks nothing).
+  - New effect `Toy`: toys listed once per match as the game begins (`SVar:ToyBox`), one at a time while its token
+    stays; the AI owns four random My Little Pony toys.
+  - `SVar:PartyIsEveryCreature`: your party is every creature you control and always full, even of one. Full-party
+    checks now read `Count$PartyFull` (13 scripts), which equals `Count$Party` without it.
+
 ### 2026-10-23, fifteenth deploy (desktop, Android, GitHub) — Mystery Booster 2 playtest complete (parts 6–12); AI and random-deck fixes; Exclude The List setting; 5-commit upstream merge
 
 - **Upstream merge (5 commits).** No conflicts.
