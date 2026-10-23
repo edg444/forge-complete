@@ -41,6 +41,10 @@ public class PlayerProperty {
             if (!same) {
                 return false;
             }
+        } else if (property.equals("IsAfraidOfYou")) {
+            if (!player.isAfraidOf(sourceController)) {
+                return false;
+            }
         } else if (property.equals("NeighborsEliminated")) {
             // Team-Up!: the players to their left and right in the original seating have both left the game
             final List<Player> seats = game.getRegisteredPlayers();

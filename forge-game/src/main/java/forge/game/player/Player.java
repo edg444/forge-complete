@@ -118,6 +118,8 @@ public class Player extends GameEntity implements Comparable<Player> {
     private List<Card> spellsCastSinceBeginningOfLastTurn = Lists.newArrayList();
     private int investigatedThisTurn;
     private boolean wayBehindThisTurn;
+    // Creepy Crawler: the players this one is afraid of this turn
+    private final Set<Player> afraidOfThisTurn = Sets.newHashSet();
     private int scryThisTurn;
     private int surveilThisTurn;
     private int committedCrimeThisTurn;
@@ -1602,6 +1604,12 @@ public class Player extends GameEntity implements Comparable<Player> {
 
             if (libraryOf == this && drawsFromBottom()) {
                 c = library.get(library.size() - 1);
+            } else if (libraryOf == this && gameStarted && library.size() > 1 && !getController().isAI()
+                    && StaticAbilityDrawFromBottom.drawsFromAnywhere(this)) {
+                // Heart of a Duelist: blind, by position, one card at a time (rulings); the AI, knowing no more, takes the top
+                final int n = getController().chooseNumber(sa, "Draw the card this far from the top of your library (1 = top, "
+                        + library.size() + " = bottom)", 1, library.size());
+                c = library.get(Math.max(1, Math.min(n, library.size())) - 1);
             } else {
                 c = library.get(0);
             }
@@ -3370,6 +3378,21 @@ public class Player extends GameEntity implements Comparable<Player> {
      * more creatures or three more cards in hand. Checked whenever state-based actions are, which every game action
      * runs through.
      */
+    public boolean isAfraidOf(final Player p) {
+        return afraidOfThisTurn.contains(p);
+    }
+    /**
+     * Creepy Crawler: a Horror, Nightmare, enchantment or face-down creature of theirs entered (every opponent) or
+     * attacked this player this turn - not a planeswalker or battle (rulings).
+     */
+    public void becomeAfraidOf(final Player p) {
+        afraidOfThisTurn.add(p);
+    }
+    public static boolean isScary(final Card c) {
+        return c.isCreature() && (c.getType().hasCreatureType("Horror") || c.getType().hasCreatureType("Nightmare")
+                || c.isEnchantment() || c.isFaceDown());
+    }
+
     public boolean isWayBehindThisTurn() {
         return wayBehindThisTurn;
     }
@@ -3420,6 +3443,7 @@ public class Player extends GameEntity implements Comparable<Player> {
         resetLandsPlayedThisTurn();
         investigatedThisTurn = 0;
         wayBehindThisTurn = false;
+        afraidOfThisTurn.clear();
         scryThisTurn = 0;
         surveilThisTurn = 0;
         resetDiscardedThisTurn();

@@ -407,7 +407,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     // CR 703.4f
                     for (final Player active : getActivePlayers()) {
                         for (Card c : active.getCardsIn(ZoneType.Battlefield)) {
-                            if (c.isSaga() && c.hasChapter()) {
+                            if (c.isSaga() && c.hasChapter() && !c.hasKeyword(Keyword.BEDTIME_STORY)) {
                                 c.addCounter(CounterEnumType.LORE, 1, active, table);
                             }
                         }
@@ -489,6 +489,16 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
                 case END_OF_TURN:
                     nEndOfTurnsThisTurn++;
+                    // Bedtime story (Night of the Flying Merfolk): the lore counter comes at the beginning of the end step
+                    final GameEntityCounterTable bedtime = new GameEntityCounterTable();
+                    for (final Player active : getActivePlayers()) {
+                        for (Card c : active.getCardsIn(ZoneType.Battlefield)) {
+                            if (c.isSaga() && c.hasChapter() && c.hasKeyword(Keyword.BEDTIME_STORY)) {
+                                c.addCounter(CounterEnumType.LORE, 1, active, bedtime);
+                            }
+                        }
+                    }
+                    bedtime.replaceCounterEffect(game, null);
                     game.getEndOfTurn().executeUntil(playerTurn);
                     for (final Player active : getActivePlayers()) {
                         active.getController().resetAtEndOfTurn();
@@ -833,6 +843,11 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 }
             } while (!success);
             game.firePendingTaxes();
+            for (final Card attacker : combat.getAttackers()) {
+                if (combat.getDefenderByAttacker(attacker) instanceof Player defender && Player.isScary(attacker)) {
+                    defender.becomeAfraidOf(attacker.getController());
+                }
+            }
 
             CardCollection tapped = new CardCollection();
             for (final Card attacker : combat.getAttackers()) {

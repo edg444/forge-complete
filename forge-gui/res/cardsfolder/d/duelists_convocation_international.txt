@@ -1,0 +1,10 @@
+Name:Duelists' Convocation International
+ManaCost:2 U
+Types:Enchantment
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigWrite | TriggerDescription$ When CARDNAME enters the battlefield, choose a 10-digit number at random and write it down.
+SVar:TrigWrite:DB$ WrittenNumber | Mode$ Write
+T:Mode$ SpellCast | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCross | TriggerDescription$ Whenever you play a land or cast a spell, if it shares a mana value with one or more uncrossed digits in the chosen number, cross out one of those digits and draw a card. Then if all ten digits are crossed out, you win the game.
+T:Mode$ LandPlayed | ValidCard$ Land.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigCross | Secondary$ True | TriggerDescription$ Whenever you play a land or cast a spell, if it shares a mana value with one or more uncrossed digits in the chosen number, cross out one of those digits and draw a card. Then if all ten digits are crossed out, you win the game.
+# the "if" is checked as the trigger resolves (WrittenNumberEffect); nothing happens when no digit matches
+SVar:TrigCross:DB$ WrittenNumber | Mode$ Cross | Defined$ TriggeredCard
+Oracle:When Duelists' Convocation International enters the battlefield, choose a 10-digit number at random and write it down.\nWhenever you play a land or cast a spell, if it shares a mana value with one or more uncrossed digits in the chosen number, cross out one of those digits and draw a card. Then if all ten digits are crossed out, you win the game.

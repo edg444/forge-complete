@@ -620,7 +620,7 @@ public class CardState implements GameObject, IHasSVars, ITranslatable {
             if (type.isBattle()) {
                 list.add(state.getDefenseRep());
             }
-            if (type.isSaga() && !state.hasKeyword(Keyword.READ_AHEAD)) {
+            if (type.isSaga() && !state.hasKeyword(Keyword.READ_AHEAD) && !state.hasKeyword(Keyword.BEDTIME_STORY)) {
                 list.add(state.getSagaRep());
             }
             return list;
@@ -971,7 +971,9 @@ public class CardState implements GameObject, IHasSVars, ITranslatable {
         for (ReplacementEffect re : source.replacementEffects) {
             if (re.isIntrinsic()) {
                 ReplacementEffect reCopy = re.copy(card, lki);
-                if (re.equals(runRE) && runRE.hasRun()) {
+                // Catch of the Day: a second copy made by the same replacement copies the first copy, whose effect is
+                // already marked as run, so that mark carries over too
+                if (re.equals(runRE) && runRE.hasRun() || runRE != null && runRE.hasRun() && re.hasRun()) {
                     // CR 208.2b prevent loop from card copying itself
                     reCopy.setHasRun(true);
                 }

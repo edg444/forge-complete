@@ -1735,6 +1735,11 @@ public class AbilityUtils {
             // Count$WordsInName.<DefinedCards> - Bosom Buddy counts the words in a spell's name,
             // Wordmail in a static ability. Kept outside the SpellAbility-only block below, which a
             // static never enters. Split/double-faced names keep their "//" separator out of it.
+            // Count$MatchesUncrossedDigit.<Defined> - Duelists' Convocation International
+            if (sq[0].equals("MatchesUncrossedDigit")) {
+                final List<Card> defined = getDefinedCards(c, sq[1], ctb);
+                return doXMath(!defined.isEmpty() && forge.game.ability.effects.WrittenNumberEffect.matchesUncrossed(c, defined.get(0)) ? 1 : 0, expr, c, ctb);
+            }
             // Count$OnBuddyList.<Defined> - Champion of the Hareish: 1 if one of its creature types is on your buddy list
             if (sq[0].equals("OnBuddyList")) {
                 final Player you = ctb instanceof SpellAbility sa ? sa.getActivatingPlayer() : c.getController();

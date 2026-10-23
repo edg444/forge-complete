@@ -1,0 +1,9 @@
+Name:No-Regrets Egret
+ManaCost:1 U
+Types:Creature Bird Scout
+PT:2/2
+K:Flying
+# offered before each keep-or-mulligan decision while it's in hand (MulliganService)
+SVar:MulliganPeek:2
+Text:Any time you could mulligan and No-Regrets Egret is in your hand, you may reveal No-Regrets Egret. If you do, look at the top two cards of your library. (Put those cards back in the same order. You can still mulligan.)
+Oracle:Flying\nAny time you could mulligan and No-Regrets Egret is in your hand, you may reveal No-Regrets Egret. If you do, look at the top two cards of your library. (Put those cards back in the same order. You can still mulligan.)

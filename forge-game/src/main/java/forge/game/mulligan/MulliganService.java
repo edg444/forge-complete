@@ -2,13 +2,18 @@ package forge.game.mulligan;
 
 import java.util.List;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import forge.MulliganDefs;
 import forge.StaticData;
 import forge.game.Game;
 import forge.game.GameType;
+import forge.game.card.Card;
+import forge.game.card.CardCollection;
 import forge.game.player.Player;
+import forge.game.spellability.SpellAbility;
+import forge.game.zone.ZoneType;
 
 public class MulliganService {
     Player firstPlayer;
@@ -79,6 +84,9 @@ public class MulliganService {
                 }
 
                 Player p = mulligan.getPlayer();
+                if (mulligan.canMulligan()) {
+                    offerMulliganPeeks(p);
+                }
 
                 boolean keep = !mulligan.canMulligan() ||
                         p.getController().mulliganKeepHand(
@@ -115,6 +123,9 @@ public class MulliganService {
                 if (mulligan.hasKept()) {
                     continue;
                 }
+                if (mulligan.canMulligan()) {
+                    offerMulliganPeeks(mulligan.getPlayer());
+                }
                 final boolean keep = !mulligan.canMulligan()
                         || mulligan.getPlayer().getController().mulliganKeepHand(firstPlayer, mulligan.tuckCardsDuringMulligan());
                 if (game.isGameOver()) {
@@ -133,6 +144,30 @@ public class MulliganService {
             for (AbstractMulligan mulligan : taking) {
                 mulligan.mulligan();
             }
+        }
+    }
+
+    /**
+     * No-Regrets Egret: any time its owner could mulligan with it in hand, they may reveal it to look at the top
+     * SVar:MulliganPeek cards of their library, which stay in order. The AI, which wouldn't use what it saw, doesn't.
+     */
+    private void offerMulliganPeeks(final Player p) {
+        if (p.getController().isAI()) {
+            return;
+        }
+        for (final Card c : p.getCardsIn(ZoneType.Hand)) {
+            if (!c.hasSVar("MulliganPeek") || p.getCardsIn(ZoneType.Library).isEmpty()) {
+                continue;
+            }
+            final int n = Integer.parseInt(c.getSVar("MulliganPeek"));
+            final SpellAbility sa = new SpellAbility.EmptySa(c, p);
+            if (!p.getController().confirmAction(sa, null, "Reveal " + c.getTranslatedName() + " to look at the top "
+                    + n + " cards of your library?", null)) {
+                continue;
+            }
+            game.getAction().reveal(new CardCollection(c), p, true, c.getTranslatedName() + " - revealed by ");
+            final CardCollection top = new CardCollection(Iterables.limit(p.getCardsIn(ZoneType.Library), n));
+            p.getController().reveal(top, ZoneType.Library, p, "Top of your library: ", false);
         }
     }
 

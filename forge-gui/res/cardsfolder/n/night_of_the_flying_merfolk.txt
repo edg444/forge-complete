@@ -1,0 +1,10 @@
+Name:Night of the Flying Merfolk
+ManaCost:2 U
+Types:Enchantment Saga
+K:Bedtime story
+K:Chapter:3:DBToken,DBFlying,DBDraw
+SVar:DBToken:DB$ Token | TokenAmount$ 2 | TokenScript$ u_1_1_merfolk | SpellDescription$ Create two 1/1 blue Merfolk creature tokens.
+SVar:DBFlying:DB$ PutCounterAll | ValidCards$ Creature.tapped+YouCtrl | CounterType$ Flying | CounterNum$ 1 | SpellDescription$ Put a flying counter on each tapped creature you control.
+SVar:DBDraw:DB$ Draw | NumCards$ X | SpellDescription$ Draw a card for each creature you control that dealt combat damage to a player this turn.
+SVar:X:Count$Valid Creature.YouCtrl+dealtCombatDamageThisTurn Player
+Oracle:Bedtime story (Don't put a lore counter on this Saga as it enters. Put a lore counter on it at the beginning of your end step rather than your main phase. Sacrifice after III.)\nI — Create two 1/1 blue Merfolk creature tokens.\nII — Put a flying counter on each tapped creature you control.\nIII — Draw a card for each creature you control that dealt combat damage to a player this turn.

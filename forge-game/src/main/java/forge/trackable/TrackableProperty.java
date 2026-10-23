@@ -117,6 +117,7 @@ public enum TrackableProperty {
     NeedsTapAnimation(TrackableTypes.BooleanType, FreezeMode.IgnoresFreeze),
     MarkedColors(TrackableTypes.ColorSetType),
     LegacyWord(TrackableTypes.StringType),
+    WrittenDown(TrackableTypes.StringType),
     Nodes(TrackableTypes.StringType),
     TrackerCovered(TrackableTypes.StringType),
 

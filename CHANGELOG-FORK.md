@@ -312,6 +312,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Mystery Booster 2 playtest cards (MB2), part 6: Catch of the Day, Duelists' Convocation International, Heart of a
+  Duelist, Map to Lorthos's Temple, Night of the Flying Merfolk, No-Regrets Egret, Search Elemental, Creepy Crawler.**
+  - Static mode `DrawFromAnywhere` (a person picks the position, blind; the AI draws from the top). Keyword
+    `Bedtime story` (no lore counter as the Saga enters; one at the beginning of your end step instead of your main
+    phase). `SVar:MulliganPeek:<n>` (reveal from hand before a mulligan decision to look at the top n; people only).
+  - "Afraid of you" per turn (`Player.isAfraidOf`, property `IsAfraidOfYou`): a Horror, Nightmare, enchantment or
+    face-down creature you control entered (every opponent) or attacked that player.
+  - New effect `WrittenNumber` (`Mode$ Write`/`Cross`) and `Card.writtenDown`, shown in card detail as "Written down".
+    The random 10-digit number never starts with 0.
+  - A replacement that copies its card more than once (several `Clone`s as it enters) no longer re-applies to its own
+    later copies. MB2 edition adds the Quest enchantment type.
+
 ### 2026-10-22, fourteenth deploy (desktop, Android, GitHub) — Unknown Event complete; promos (PH22, PH23, PF24, PUNK, PF25, PF26); Mystery Booster 2 playtest parts 1–5; 16-commit upstream merge
 
 - **Upstream merge (16 commits).** Three conflicts: Defend the Celestus and Infernal Denizen keep upstream's fixes

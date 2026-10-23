@@ -579,6 +579,12 @@ public class CardView extends GameEntityView {
     public String getLegacyWord() {
         return get(TrackableProperty.LegacyWord);
     }
+    public String getWrittenDown() {
+        return get(TrackableProperty.WrittenDown);
+    }
+    void updateWrittenDown(Card c) {
+        set(TrackableProperty.WrittenDown, c.getWrittenDown());
+    }
     void updateLegacyWord(Card c) {
         set(TrackableProperty.LegacyWord, c.getLegacyWord());
     }

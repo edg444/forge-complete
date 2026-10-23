@@ -29,6 +29,7 @@ public enum Keyword {
     BARGAIN("Bargain", SimpleKeyword.class, false, "You may sacrifice an artifact, enchantment, or token as you cast this spell."),
     BATTLE_CRY("Battle cry", SimpleKeyword.class, false, "Whenever this creature attacks, each other attacking creature gets +1/+0 until end of turn."),
     BEAM_ME_UP("Beam me up", KeywordWithCost.class, false, "You may cast this card from your graveyard for %s if you also return a creature you control to its owner's hand. Then exile this spell."),
+    BEDTIME_STORY("Bedtime story", SimpleKeyword.class, true, "Don't put a lore counter on this Saga as it enters. Put a lore counter on it at the beginning of your end step rather than your main phase. Sacrifice after %s."),
     BESTOW("Bestow", KeywordWithCost.class, false, "If you cast this card for its bestow cost, it's an Aura spell with enchant creature. It becomes a creature again if it's not attached to a creature."),
     BLITZ("Blitz", KeywordWithCost.class, false, "If you cast this spell for its blitz cost, it gains haste and \"When this creature dies, draw a card.\" Sacrifice it at the beginning of the next end step."),
     BLOODTHIRST("Bloodthirst", KeywordWithAmount.class, false, "If an opponent was dealt damage this turn, this creature enters with {%d:+1/+1 counter} on it."),

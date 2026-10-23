@@ -358,6 +358,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     private List<String> chosenColors;
     private ColorSet markedColor;
     private String legacyWord;
+    // Duelists' Convocation International: what's written down for this permanent, for everyone to see
+    private String writtenDown = null;
     private int markedNodes;
     private List<String> chosenName = new ArrayList<>();
     private Integer chosenNumber;
@@ -2655,6 +2657,14 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return markedColor != null && !markedColor.isColorless();
     }
 
+    public final String getWrittenDown() {
+        return writtenDown;
+    }
+    public final void setWrittenDown(final String text) {
+        writtenDown = text;
+        view.updateWrittenDown(this);
+    }
+
     /** The word written in this card's legacy word blank (Inspirational Antelope), or null while it's blank. */
     public final String getLegacyWord() {
         return legacyWord;
@@ -3207,6 +3217,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.startsWith("Station") || keyword.startsWith("Warp") || keyword.startsWith("Devour")
                         || keyword.startsWith("Affinity") || keyword.startsWith("Augment")) {
                     // keyword parsing takes care of adding a proper description
+                } else if (keyword.equals("Bedtime story")) {
+                    sb.append("Bedtime story (").append(String.format(Keyword.BEDTIME_STORY.getReminderText(), TextUtil.toRoman(getFinalChapterNr())));
+                    sb.append(")").append("\r\n\r\n");
                 } else if (keyword.equals("Read ahead")) {
                     sb.append(Localizer.getInstance().getMessage("lblReadAhead")).append(" (").append(Localizer.getInstance().getMessage("lblReadAheadDesc"));
                     sb.append(" ").append(Localizer.getInstance().getMessage("lblSagaFooter")).append(" ").append(TextUtil.toRoman(getFinalChapterNr())).append(".");
@@ -3394,7 +3407,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         }
 
         // Check if the saga card does not have the keyword Read ahead
-        if (type.hasSubtype("Saga") && !state.hasKeyword(Keyword.READ_AHEAD) && state.getFinalChapterNr() > 0) {
+        if (type.hasSubtype("Saga") && !state.hasKeyword(Keyword.READ_AHEAD) && !state.hasKeyword(Keyword.BEDTIME_STORY)
+                && state.getFinalChapterNr() > 0) {
             sb.append("(").append(Localizer.getInstance().getMessage("lblSagaHeader"));
             if (!state.getCard().isTransformable()) {
                 sb.append(" ").append(Localizer.getInstance().getMessage("lblSagaFooter")).append(" ").append(TextUtil.toRoman(state.getFinalChapterNr())).append(".");

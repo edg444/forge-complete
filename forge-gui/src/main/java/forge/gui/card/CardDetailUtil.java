@@ -523,6 +523,9 @@ public class CardDetailUtil {
         if (!StringUtils.isEmpty(card.getLegacyWord())) {
             area.append("\n(Written: ").append(card.getLegacyWord()).append(")");
         }
+        if (!StringUtils.isEmpty(card.getWrittenDown())) {
+            area.append("\n(Written down: ").append(card.getWrittenDown()).append(")");
+        }
         if (!StringUtils.isEmpty(card.getNodes())) {
             area.append("\n(Marked nodes: ").append(card.getNodes()).append(")");
         }

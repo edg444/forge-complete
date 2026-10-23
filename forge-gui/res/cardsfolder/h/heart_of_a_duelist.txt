@@ -1,0 +1,7 @@
+Name:Heart of a Duelist
+ManaCost:1 U
+Types:Enchantment
+S:Mode$ DrawFromAnywhere | ValidPlayer$ You | Description$ You may draw cards from anywhere in your library. (You don't get to look at them or reorder them while doing so.)
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDraw | TriggerDescription$ When CARDNAME enters the battlefield, draw a card.
+SVar:TrigDraw:DB$ Draw
+Oracle:You may draw cards from anywhere in your library. (You don't get to look at them or reorder them while doing so.)\nWhen Heart of a Duelist enters the battlefield, draw a card.

@@ -1,0 +1,26 @@
+Name:Catch of the Day
+ManaCost:5 U
+Types:Creature Serpent
+PT:*/*
+# choices made as it enters are copiable values (Layer$ Copy, like Primal Clay): a copy keeps them, and one entering
+# as a copy chooses again on top (rulings)
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | Layer$ Copy | ReplacementResult$ Updated | ReplaceWith$ ChooseKeyword | Description$ As CARDNAME enters the battlefield, choose one for each of the following. Keyword → Vigilance; ward {3}; or islandwalk. Whenever this creature attacks → Scry 2; goad target creature an opponent controls; or tap target creature an opponent controls. Size → 6/2; 4/4; or 2/6.
+SVar:ChooseKeyword:DB$ GenericChoice | Defined$ You | Choices$ KVigilance,KWard,KIslandwalk | SubAbility$ ChooseAttack
+SVar:KVigilance:DB$ Clone | Defined$ Self | AddKeywords$ Vigilance | SpellDescription$ Keyword: vigilance.
+SVar:KWard:DB$ Clone | Defined$ Self | AddKeywords$ Ward:3 | SpellDescription$ Keyword: ward {3}.
+SVar:KIslandwalk:DB$ Clone | Defined$ Self | AddKeywords$ Landwalk:Island | SpellDescription$ Keyword: islandwalk.
+SVar:ChooseAttack:DB$ GenericChoice | Defined$ You | Choices$ AScry,AGoad,ATap | SubAbility$ ChooseSize
+SVar:AScry:DB$ Clone | Defined$ Self | AddTriggers$ TrigAttackScry | AddSVars$ DBScry | SpellDescription$ Whenever this creature attacks, scry 2.
+SVar:AGoad:DB$ Clone | Defined$ Self | AddTriggers$ TrigAttackGoad | AddSVars$ DBGoad | SpellDescription$ Whenever this creature attacks, goad target creature an opponent controls.
+SVar:ATap:DB$ Clone | Defined$ Self | AddTriggers$ TrigAttackTap | AddSVars$ DBTap | SpellDescription$ Whenever this creature attacks, tap target creature an opponent controls.
+SVar:TrigAttackScry:Mode$ Attacks | ValidCard$ Card.Self | Execute$ DBScry | TriggerDescription$ Whenever this creature attacks, scry 2.
+SVar:TrigAttackGoad:Mode$ Attacks | ValidCard$ Card.Self | Execute$ DBGoad | TriggerDescription$ Whenever this creature attacks, goad target creature an opponent controls.
+SVar:TrigAttackTap:Mode$ Attacks | ValidCard$ Card.Self | Execute$ DBTap | TriggerDescription$ Whenever this creature attacks, tap target creature an opponent controls.
+SVar:DBScry:DB$ Scry | ScryNum$ 2
+SVar:DBGoad:DB$ Goad | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls
+SVar:DBTap:DB$ Tap | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls
+SVar:ChooseSize:DB$ GenericChoice | Defined$ You | Choices$ S62,S44,S26
+SVar:S62:DB$ Clone | Defined$ Self | SetPower$ 6 | SetToughness$ 2 | SpellDescription$ Size: 6/2.
+SVar:S44:DB$ Clone | Defined$ Self | SetPower$ 4 | SetToughness$ 4 | SpellDescription$ Size: 4/4.
+SVar:S26:DB$ Clone | Defined$ Self | SetPower$ 2 | SetToughness$ 6 | SpellDescription$ Size: 2/6.
+Oracle:As Catch of the Day enters the battlefield, choose one for each of the following.\nKeyword → Vigilance; ward {3}; or islandwalk.\nWhenever this creature attacks → Scry 2; goad target creature an opponent controls; or tap target creature an opponent controls.\nSize → 6/2; 4/4; or 2/6.

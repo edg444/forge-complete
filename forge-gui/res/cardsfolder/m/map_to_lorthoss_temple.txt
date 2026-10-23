@@ -1,0 +1,19 @@
+Name:Map to Lorthos's Temple
+ManaCost:U
+Types:Enchantment Quest
+# each box is checked once (an SVar on the card); the third check sacrifices it for the token
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Artifact.YouCtrl | TriggerZones$ Battlefield | CheckSVar$ DivingGear | SVarCompare$ EQ0 | Execute$ CheckDivingGear | TriggerDescription$ Whenever you complete one of the following objectives, check it off. If all three are checked off, sacrifice CARDNAME. If you do, create a Lorthos, the Tidemaker token. ☐ Diving Gear — An artifact enters the battlefield under your control.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Merfolk.YouCtrl | TriggerZones$ Battlefield | CheckSVar$ Merfolk | SVarCompare$ EQ0 | Execute$ CheckMerfolk | TriggerDescription$ ☐ Merfolk — A Merfolk enters the battlefield under your control.
+T:Mode$ SpellCast | ValidCard$ Instant,Sorcery | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | CheckSVar$ Ritual | SVarCompare$ EQ0 | Execute$ CheckRitual | TriggerDescription$ ☐ Ritual — You cast an instant or sorcery spell.
+SVar:CheckDivingGear:DB$ StoreSVar | SVar$ DivingGear | Type$ Number | Expression$ 1 | SubAbility$ DBSac
+SVar:CheckMerfolk:DB$ StoreSVar | SVar$ Merfolk | Type$ Number | Expression$ 1 | SubAbility$ DBSac
+SVar:CheckRitual:DB$ StoreSVar | SVar$ Ritual | Type$ Number | Expression$ 1 | SubAbility$ DBSac
+SVar:DBSac:DB$ Sacrifice | SacValid$ Self | RememberSacrificed$ True | ConditionCheckSVar$ Checked | ConditionSVarCompare$ EQ3 | SubAbility$ DBLorthos
+SVar:DBLorthos:DB$ CopyPermanent | DefinedName$ Lorthos, the Tidemaker | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ GE1 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:DivingGear:Number$0
+SVar:Merfolk:Number$0
+SVar:Ritual:Number$0
+SVar:GearAndMerfolk:SVar$DivingGear/Plus.Merfolk
+SVar:Checked:SVar$GearAndMerfolk/Plus.Ritual
+Oracle:Whenever you complete one of the following objectives, check it off. If all three are checked off, sacrifice Map to Lorthos's Temple. If you do, create a Lorthos, the Tidemaker token.\n☐ Diving Gear — An artifact enters the battlefield under your control.\n☐ Merfolk — A Merfolk enters the battlefield under your control.\n☐ Ritual — You cast an instant or sorcery spell.

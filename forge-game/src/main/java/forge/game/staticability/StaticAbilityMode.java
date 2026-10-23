@@ -169,6 +169,8 @@ public enum StaticAbilityMode {
 
     // StaticAbilityDrawFromBottom
     DrawFromBottom,
+    // Heart of a Duelist
+    DrawFromAnywhere,
 
     // StaticAbilityCantDiscard
     CantDiscard,

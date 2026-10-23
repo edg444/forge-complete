@@ -737,6 +737,11 @@ public class GameAction {
         // CR 603.6b
         if (toBattlefield && !unnoticed) {
             zoneTo.saveLKI(copied, lastKnownInfo);
+            if (Player.isScary(copied)) {
+                for (final Player opp : copied.getController().getOpponents()) {
+                    opp.becomeAfraidOf(copied.getController());
+                }
+            }
             if (copied.isRoom() && copied.getCastSA() != null) {
                 copied.unlockRoom(copied.getCastSA().getActivatingPlayer(), copied.getCastSA().getCardStateName());
             }
