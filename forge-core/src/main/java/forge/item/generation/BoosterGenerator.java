@@ -443,6 +443,11 @@ public class BoosterGenerator {
 
             BoosterSlot boosterSlot = boosterSlots.get(slotType);
 
+            if (boosterSlot.hasPairs() && numCards >= 2) {
+                result.addAll(generatePairedSlot(boosterSlot, numCards, template.getEdition(), convertAllToFoil));
+                continue;
+            }
+
             List<PaperCard> paperCards = Lists.newArrayList();
             for(Map.Entry<String, Long> entry : bulkSlotReplacement(boosterSlot, numCards).entrySet()) {
                 String determineSheet = entry.getKey();
@@ -459,14 +464,7 @@ public class BoosterGenerator {
                     convertThisToFoil = true;
                 }
 
-                String setCode = template.getEdition();
-                PrintSheet ps;
-                try {
-                    // Apply the edition to the sheet name by default. We'll try again if that's not a real sheet
-                    ps = getPrintSheet(determineSheet + " " + setCode);
-                } catch (Exception e) {
-                    ps = getPrintSheet(determineSheet);
-                }
+                PrintSheet ps = getSlotSheet(determineSheet, template.getEdition());
                 if (convertAllToFoil || convertThisToFoil) {
                     for (PaperCard pc : ps.random(numCardsToGenerate, true)) {
                         paperCards.add(pc.getFoiled());
@@ -478,6 +476,63 @@ public class BoosterGenerator {
             result.addAll(paperCards);
         }
 
+        return result;
+    }
+
+    private static PrintSheet getSlotSheet(String sheet, String setCode) {
+        try {
+            // Apply the edition to the sheet name by default. We'll try again if that's not a real sheet
+            return getPrintSheet(sheet + " " + setCode);
+        } catch (Exception e) {
+            return getPrintSheet(sheet);
+        }
+    }
+
+    /**
+     * A slot with Pair= lines deals one whole pair and fills the rest with cards from other pairs, as Reality
+     * Fracture's echoed pairs sheet prints the two cards side by side. Each card still rolls the slot's sheet
+     * odds; its partner is taken from the same sheet, so a borderless card brings its borderless partner.
+     */
+    private static List<PaperCard> generatePairedSlot(BoosterSlot boosterSlot, int numCards, String setCode, boolean convertAllToFoil) {
+        List<PaperCard> result = new ArrayList<>();
+        Set<String> dealt = new HashSet<>();
+        boolean pairDealt = false;
+        for (int attempt = 0; result.size() < numCards && attempt < 1000; attempt++) {
+            String determineSheet = boosterSlot.replaceSlot();
+            if (determineSheet == null || determineSheet.isEmpty()) {
+                continue;
+            }
+            boolean foil = convertAllToFoil;
+            if (determineSheet.endsWith("+")) {
+                determineSheet = determineSheet.substring(0, determineSheet.length() - 1);
+                foil = true;
+            }
+            List<PaperCard> picked = getSlotSheet(determineSheet, setCode).random(1, true);
+            if (picked.isEmpty()) {
+                continue;
+            }
+            PaperCard card = picked.get(0);
+            String partnerName = boosterSlot.getPartner(card.getName());
+            if (dealt.contains(card.getName()) || (partnerName != null && dealt.contains(partnerName))) {
+                continue;
+            }
+
+            PaperCard partner = null;
+            if (!pairDealt && partnerName != null && result.size() + 2 <= numCards) {
+                partner = getSlotSheet(determineSheet, setCode).find(pc -> pc.getName().equals(partnerName));
+                if (partner == null) {
+                    continue;
+                }
+            }
+
+            dealt.add(card.getName());
+            result.add(foil ? card.getFoiled() : card);
+            if (partner != null) {
+                pairDealt = true;
+                dealt.add(partnerName);
+                result.add(foil ? partner.getFoiled() : partner);
+            }
+        }
         return result;
     }
 

@@ -33,7 +33,49 @@ Replace=0.014F Mythic:fromSheet("FRA echoed pair")
 Replace=0.017F Uncommon:fromSheet("FRA borderless echoed pair")
 Replace=0.0094F Rare:fromSheet("FRA borderless echoed pair")
 Replace=0.0036F Mythic:fromSheet("FRA borderless echoed pair")
-#This is known to be incorrect, but currently unable to assign these cards as a pair, so this will at least fill the slot
+Pair=Ajani Resolute|Ajani Unrelenting
+Pair=Chandra, Torch of Defiance|Chandra, Chill of Compliance
+Pair=Garruk, Curse Breaker|Garruk, Veiled Butcher
+Pair=Lyra, Archangel of Dawn|Lyra, Tolarian Archangel
+Pair=Gideon's Memorial|Gideon the Oathless
+Pair=Jace, Reality Sculptor|Tam, the Possibility
+Pair=Liliana the Repentant|Liliana the Faultless
+Pair=Samut, Hazoret's Champion|Samut, Tyrant of Naktamun
+Pair=Vraska, the Cutting Glare|Vraska, Soul of Stone
+Pair=Karn, Argent Defender|Karn, Gilded Guardian
+Pair=Thalia, the Survivor|Geist of Saint Thalia
+Pair=Danitha, Sword of Hope|Danitha, Spear of Agony
+Pair=Teyo, Lightshield Expert|Teyo, Diamondblade Mage
+Pair=Tomik, Orzhov Lawmage|Tomik, Izzet Sparkmage
+Pair=Yoshimaru, Beloved Companion|Yoshimaru, Scrappy Stray
+Pair=Proft, Consulting Detective|Proft, Sinister Mastermind
+Pair=Tetsuko Umezawa, Fugitive|Tetsuko Umezawa, Pursuer
+Pair=Fblthp, Impossibly Lost|Fblthp, Knows the Way
+Pair=Yuriko, Hope from the Shadows|Yuriko, Blade of the Mighty
+Pair=Winter, Tormented Loner|Winter, Team Player
+Pair=Tinybones, Pocket Nuisance|Titanbones, Towering Heart
+Pair=Massacre Girl, Most Wanted|Rescue Girl, First Responder
+Pair=Yargle, Glutton of Urborg|Yargle, Goliath of Otaria
+Pair=Pia, Determined Rebuilder|Pia, Aether Ascetic
+Pair=Koth, the Geomancer|Koth of the Homestead
+Pair=Arni, Renowned Champion|Arni, Humble Scribe
+Pair=Gallia, the Merrymaker|Gallia, Tragic Host
+Pair=Ghalta the Unstoppable|Ghalta the Immovable
+Pair=Ruric Thar, Magecrusher|Ruric Thar, Biomagus
+Pair=Loot, the Nexus|Loot, the Anomaly
+Pair=Marwyn, the Preserver|Marwyn, the Clearcutter
+Pair=Jiang Yanggu, Never Alone|Jiang Yanggu, Alone
+Pair=Edgar, Ancient Bloodlord|Edgar, Moonlit Sovereign
+Pair=Saheeli, Jewel of Avishkar|Saheeli, Consul of Oversight
+Pair=Hapatra, the Desert Fang|Hapatra, the Desert Frost
+Pair=Mabel, Valley Hero|Mabel, Bitter Recluse
+Pair=Kiora of Salt and Sand|Kiora of Fire and Ashes
+Pair=Traxos, Scourge Eternal|Traxos, Academy Guardian
+Pair=Way of the Mentor|Way of the Warlord
+Pair=Way of the Mind Sculptor|Way of the Paradox
+Pair=Way of the Necromancer|Way of the Healer
+Pair=Way of the Pyromancer|Way of the Cryomancer
+Pair=Way of the Wildspeaker|Way of the Deathbringer
 
 [RareMythic]
 Base=Rare:fromSheet("FRA cards"):!fromSheet("FRA echoed pair")
@@ -718,7 +760,7 @@ Replace=.055F fromSheet("FRA tower")+
 1 Geist of Saint Thalia|FRA|[214]
 1 Hapatra, the Desert Frost|FRA|[215]
 1 Jace, Reality Sculptor|FRA|[216]
-1 Lyla, Tolarian Archangel|FRA|[217]
+1 Lyra, Tolarian Archangel|FRA|[217]
 1 Proft, Consulting Detective|FRA|[218]
 1 Ruric Thar, Biomagus|FRA|[219]
 1 Samut, Tyrant of Naktamun|FRA|[220]
@@ -741,7 +783,7 @@ Replace=.055F fromSheet("FRA tower")+
 1 Tinybones, Pocket Nuisance|FRA|[237]
 1 Way of the Deathbringer|FRA|[238]
 1 Way of the Necromancer|FRA|[239]
-1 Winter, Tormented Lover|FRA|[240]
+1 Winter, Tormented Loner|FRA|[240]
 1 Yargle, Glutton of Urborg|FRA|[241]
 1 Ajani Unrelenting|FRA|[242]
 1 Arni, Renowned Champion|FRA|[243]

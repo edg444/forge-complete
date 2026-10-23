@@ -313,12 +313,26 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   Ability property `CastSpell` = a spell that was cast, not a copy.
 - **Everypony wins**: `WinsGame | Defined$ Player` no longer turns the other winners into losers; GameWinAi skips a
   win whose condition doesn't hold.
+- **Paired booster slots** (`Pair=<card>|<card>` lines in an edition's booster-slot section, Reality Fracture's
+  echoed pairs): the slot deals one whole pair, the partner taken from the same sheet as the card that rolled
+  (so borderless brings borderless), and fills its other cards from different pairs
+  (`BoosterGenerator.generatePairedSlot`).
 
 ---
 
 ## Log
 
 ### Unreleased
+
+- **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three
+  EchoedPair cards were three independent picks (its edition file said "known to be incorrect, but currently unable to
+  assign these cards as a pair"). Now each pack has one whole pair plus a card from a different pair, as Wizards'
+  *Collecting Reality Fracture* describes; each card keeps the slot's published odds (uncommon 88.9%, rare 6.7%,
+  mythic 1.4%, borderless). The 43 pairs come from mtg.wiki's echoed pairs table, checked against Scryfall: each pair
+  shares its rarity and artist, and together they're exactly the 86 cards at FRA #195-280. Draft, sealed and the
+  prerelease use it. Also fixed two misspelled names in the echoed pair sheet ("Lyla, Tolarian Archangel" and
+  "Winter, Tormented Lover"): the sheet dropped them, so Lyra and Winter never came from the echoed pairs slot and
+  were dealt by the ordinary rare and uncommon slots instead.
 
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only

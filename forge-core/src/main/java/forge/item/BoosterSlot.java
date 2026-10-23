@@ -1,6 +1,8 @@
 package forge.item;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 import forge.util.MyRandom;
@@ -10,6 +12,7 @@ public class BoosterSlot {
     private String baseRarity;
     private float startRange = 0.0f;
     private final TreeMap<Float, String> slotPercentages = new TreeMap<>();
+    private final Map<String, String> partners = new HashMap<>();
 
     public BoosterSlot(final String slotName, final List<String> contents) {
         this.slotName = slotName;
@@ -42,8 +45,21 @@ public class BoosterSlot {
                 float pct = Float.parseFloat(replaceParts[0]);
                 startRange += pct;
                 slotPercentages.put(startRange, replaceParts[1]);
+            } else if (key.equalsIgnoreCase("Pair")) {
+                // Pair=<card>|<card>: whenever this slot deals one, the other comes with it (Reality Fracture echoed pairs)
+                String[] names = value.split("\\|");
+                partners.put(names[0].trim(), names[1].trim());
+                partners.put(names[1].trim(), names[0].trim());
             }
         }
+    }
+
+    public boolean hasPairs() {
+        return !partners.isEmpty();
+    }
+
+    public String getPartner(final String cardName) {
+        return partners.get(cardName);
     }
 
     public String replaceSlot() {
