@@ -663,6 +663,17 @@ public class Game {
      * Gets the players who participated in match (regardless of outcome).
      * <i>Use this in UI and after match calculations</i>
      */
+    // Snap Judgment: "The player who wins this game also wins the match."
+    private boolean winnerWinsMatch = false;
+
+    public boolean isWinnerWinsMatch() {
+        return winnerWinsMatch;
+    }
+
+    public void setWinnerWinsMatch(final boolean value) {
+        winnerWinsMatch = value;
+    }
+
     public final PlayerCollection getRegisteredPlayers() {
         return allPlayers;
     }
@@ -833,6 +844,7 @@ public class Game {
 
         final GameOutcome result = new GameOutcome(reason, getRegisteredPlayers());
         result.setTurnsPlayed(getPhaseHandler().getTurn());
+        result.setDecidesMatch(winnerWinsMatch);
 
         outcome = result;
         if (maingame == null) {

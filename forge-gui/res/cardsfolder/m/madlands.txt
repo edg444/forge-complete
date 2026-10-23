@@ -1,0 +1,9 @@
+Name:Madlands
+ManaCost:no cost
+Types:Land
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ Madlands enters the battlefield tapped.
+SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
+A:AB$ Mana | Cost$ T | Produced$ Combo B R | SpellDescription$ Add {B} or {R}.
+# played as a land, so only during your turn with a land play left (rulings)
+K:Madness:0
+Oracle:Madlands enters the battlefield tapped.\n{T}: Add {B} or {R}.\nMadness {0} (If you discard this card, discard it into exile. When you do, play it for its madness cost or put it into your graveyard. You can play a land only during your turn and only if you have an available land play remaining.)

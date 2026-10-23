@@ -1759,6 +1759,9 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
                 if (srcSA.hasParam("Shuffle") && "True".equals(srcSA.getParam("Shuffle"))) {
                     tgtHost.getOwner().shuffle(srcSA);
                 }
+            } else if (destination == ZoneType.Command) {
+                // Essence of Ajani: an emblem card goes to the command zone as it resolves
+                movedCard = game.getAction().moveTo(ZoneType.Command, tgtHost, srcSA, params);
             } else {
                 throw new IllegalArgumentException("AbilityFactory_ChangeZone: Invalid Destination argument for card "
                         + srcSA.getHostCard().getName());

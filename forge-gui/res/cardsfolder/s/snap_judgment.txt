@@ -1,0 +1,7 @@
+Name:Snap Judgment
+ManaCost:4 R
+Types:Instant
+A:SP$ DecideMatch | SpellDescription$ The player who wins this game also wins the match. (A player may concede the game at any time. If the game ends while this spell is on the stack, it never resolves.)
+K:Cycling:1
+AI:RemoveDeck:All
+Oracle:The player who wins this game also wins the match. (A player may concede the game at any time. If the game ends while this spell is on the stack, it never resolves.)\nCycling {1}

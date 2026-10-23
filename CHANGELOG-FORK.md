@@ -312,6 +312,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Mystery Booster 2 playtest cards (MB2), part 3: Madlands, Maestros' Totally Safe Hideout, Snap Judgment, Terry Pin,
+  Turboturtle, Essence of Ajani, Rule with an Even Hand, Phyrexian Seedling, Mothers Yamazaki.**
+  - Madness on a land plays it (a land play). AttackRestrict `EvenAttackers$` (`GlobalAttackRestrictions.isEvenOnly`;
+    the AI drops its weakest attacker from an odd attack). New effect `DecideMatch` (Game/GameOutcome flag the Match
+    reads). SpellAbility property `SorcerySpeed`. Keywords `Proliferatelink` (proliferate per damage, with lifelink, before
+    lethal damage is checked) and `Partner with itself` (two copies in a Commander deck, both commanders;
+    `Deck.getCommanders` lists a commander once per copy).
+  - An emblem card (`SVar:EmblemCard`) counts as an emblem in the command zone, where ChangeZone from the stack can now
+    put a resolving spell.
+
 - **Mystery Booster 2 playtest cards (MB2), part 2: Naturalize 2, Microscope, Lazotep Archway, Processing Plant,
   Penumbra Umbra, Narod, the Beige Flower, Hish of the Snake Cult, Wowzer, the Aspirational.**
   - Static mode `CombatDamageManaValue` (with Doran's too, the greater of the two); keyword `Daunt`; count

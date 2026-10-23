@@ -152,7 +152,10 @@ public class Deck extends DeckBase implements Iterable<Entry<DeckSection, CardPo
             return result;
         }
         for (final Entry<PaperCard, Integer> c : cp) {
-            result.add(c.getKey());
+            // Mothers Yamazaki: two copies of one card can both be commanders
+            for (int i = 0; i < c.getValue(); i++) {
+                result.add(c.getKey());
+            }
         }
         if (result.size() > 1) { //sort by type so signature spell comes after oathbreaker
             result.sort(Comparator.comparing(c -> c.getRules().canBeSignatureSpell()));

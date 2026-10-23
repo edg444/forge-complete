@@ -85,6 +85,16 @@ public final class GameOutcome implements Iterable<Entry<RegisteredPlayer, Playe
 
     private final Map<RegisteredPlayer, AnteResult> anteResult = new HashMap<>();
     private GameEndReason winCondition;
+    // Snap Judgment: this game's winner also wins the match
+    private boolean decidesMatch = false;
+
+    public boolean isDecidesMatch() {
+        return decidesMatch;
+    }
+
+    public void setDecidesMatch(final boolean value) {
+        decidesMatch = value;
+    }
 
     public GameOutcome(GameEndReason reason, final Iterable<Player> players) {
         winCondition = reason;

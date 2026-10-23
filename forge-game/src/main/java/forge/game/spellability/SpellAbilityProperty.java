@@ -118,6 +118,10 @@ public class SpellAbilityProperty {
             return sa.isKeyword(Keyword.MODULAR);
         } else if (property.equals("Equip")) {
             return sa.isEquip();
+        } else if (property.equals("SorcerySpeed")) {
+            // Terry Pin: an ability whose own text says "Activate only as a sorcery" - not a keyword's "equip only as a
+            // sorcery" or a loyalty ability's timing
+            return sa.isActivatedAbility() && sa.getRestrictions().isSorcerySpeed() && sa.getKeyword() == null && !sa.isPwAbility();
         } else if (property.equals("Augment")) {
             return sa.getApi() == ApiType.Augment;
         } else if (property.equals("Boast")) {

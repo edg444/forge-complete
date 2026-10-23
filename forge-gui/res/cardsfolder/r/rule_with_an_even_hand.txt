@@ -1,0 +1,8 @@
+Name:Rule with an Even Hand
+ManaCost:no cost
+Types:Conspiracy
+S:Mode$ AttackRestrict | EffectZone$ Command | EvenAttackers$ True | ValidPlayer$ You | Description$ You can't attack with an odd number of creatures.
+T:Mode$ AttackersDeclared | AttackingPlayer$ You | TriggerZones$ Command | Execute$ TrigDouble | TriggerDescription$ Whenever you attack, double target creature's power until end of turn.
+SVar:TrigDouble:DB$ Pump | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumAtt$ +X
+SVar:X:Targeted$CardPower
+Oracle:(Start the game with this conspiracy face up in the command zone.)\nYou can't attack with an odd number of creatures.\nWhenever you attack, double target creature's power until end of turn.

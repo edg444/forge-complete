@@ -963,6 +963,13 @@ public class PlayerControllerAi extends PlayerController {
     @Override
     public void declareAttackers(Player attacker, Combat combat) {
         brains.declareAttackers(attacker, combat);
+        // Rule with an Even Hand: an odd attack is illegal, so the weakest attacker stays home
+        if (combat.getAttackers().size() % 2 != 0
+                && forge.game.staticability.StaticAbilityAttackRestrict.evenAttackersOnly(attacker)) {
+            final CardCollection attackers = new CardCollection(combat.getAttackers());
+            forge.game.card.CardLists.sortByPowerAsc(attackers);
+            combat.removeFromCombat(attackers.get(0));
+        }
     }
 
     @Override

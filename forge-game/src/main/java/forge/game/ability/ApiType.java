@@ -218,6 +218,7 @@ public enum ApiType {
     LosePerpetual (LosePerpetualEffect.class),
     LosesGame (GameLossEffect.class),
     MakeCard (MakeCardEffect.class),
+    DecideMatch (DecideMatchEffect.class),
     Introduce (IntroduceEffect.class),
     MadLabs (MadLabsEffect.class),
     Mana (ManaEffect.class),

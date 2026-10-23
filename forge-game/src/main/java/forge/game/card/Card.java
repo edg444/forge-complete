@@ -3073,7 +3073,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.equals("Choose a Background") || keyword.equals("Compleated")
                         || keyword.equals("Precious") || keyword.equals("Create a Character")
                         || keyword.equals("Deworded") || keyword.equals("Forbidden") || keyword.equals("Hope")
-                        || keyword.equals("Daunt")
+                        || keyword.equals("Daunt") || keyword.equals("Proliferatelink")
                         || keyword.equals("Space sculptor") || keyword.equals("Doctor's companion")
                         || keyword.equals("Start your engines") || keyword.startsWith("Modular")
                         || keyword.startsWith("Bloodthirst") || keyword.startsWith("Dredge")
@@ -7020,7 +7020,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                 return testFailed;
             }
         } else if (incR[0].equals("Emblem")) {
-            if (!isEmblem()) {
+            // Essence of Ajani: an emblem card (Emblem isn't a card type, so the script marks it) once it's in the
+            // command zone
+            if (!isEmblem() && !(hasSVar("EmblemCard") && isInZone(ZoneType.Command))) {
                 return testFailed;
             }
         } else if (incR[0].equals("Boon")) {

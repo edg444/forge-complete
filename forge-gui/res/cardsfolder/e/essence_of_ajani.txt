@@ -1,0 +1,10 @@
+Name:Essence of Ajani
+ManaCost:2 W
+Types:Emblem
+# an emblem card: cast like a sorcery, and when it resolves it goes to the command zone, where its owner controls it
+A:SP$ ChangeZone | Defined$ Self | Origin$ Stack | Destination$ Command | StackDescription$ SpellDescription | SpellDescription$ (As this spell resolves, put it into the command zone.)
+T:Mode$ SpellCast | ValidActivatingPlayer$ You | TriggerZones$ Command | Execute$ TrigGainLife | TriggerDescription$ Whenever you cast a spell, you gain 1 life.
+SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 1
+SVar:EmblemCard:True
+DeckHas:Ability$LifeGain
+Oracle:(As this spell resolves, put it into the command zone.)\nWhenever you cast a spell, you gain 1 life.

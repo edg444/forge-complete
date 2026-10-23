@@ -415,6 +415,9 @@ public final class CardRules implements ICardCharacteristics {
                 || b.findsFriends() && b.canBeCommander() && canBeCommander() && getColorIdentity().countColors() <= 1) {
             return true;
         }
+        if (hasKeyword("Partner with itself") && getName().equals(b.getName())) {
+            return true; // Mothers Yamazaki
+        }
         if (hasPrecious() && canBeCommander() && b.canBePrecious()
                 || b.hasPrecious() && b.canBeCommander() && canBePrecious()) {
             return true;
@@ -470,7 +473,7 @@ public final class CardRules implements ICardCharacteristics {
         }
         // Barce, Friend Finder can pair with any commander of one color or less, so those may be a second commander
         return hasKeyword("Partner") || !this.partnerWith.isEmpty() || !this.partnerType.isEmpty() || hasLegendaryPartner() ||
-                findsFriends() || hasPrecious() || getColorIdentity().countColors() <= 1 || partnersWithKnights()
+                findsFriends() || hasPrecious() || hasKeyword("Partner with itself") || getColorIdentity().countColors() <= 1 || partnersWithKnights()
                 || canBeCommander() && getType().hasCreatureType("Knight") ||
                 hasKeyword("Choose a Background") || hasKeyword("Doctor's companion") || isDoctor();
     }

@@ -1,0 +1,12 @@
+Name:Maestros' Totally Safe Hideout
+ManaCost:no cost
+Types:Land
+# the copy has land casualty too, so it can be done again as the copy enters
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ DBCasualty | Description$ Land casualty 2 (As this land enters, you may sacrifice a creature with power 2 or greater. If you do, create a token that's a copy of this land.)
+SVar:DBCasualty:DB$ Sacrifice | SacValid$ Creature.powerGE2 | Defined$ You | Optional$ True | SacMessage$ creature with power 2 or greater (land casualty 2) | RememberSacrificed$ True | SubAbility$ DBCopy
+SVar:DBCopy:DB$ CopyPermanent | Defined$ Self | ConditionDefined$ Remembered | ConditionPresent$ Card | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ Maestros' Totally Safe Hideout enters the battlefield tapped.
+SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
+A:AB$ Mana | Cost$ T | Produced$ Combo U B R | SpellDescription$ Add {U}, {B}, or {R}.
+Oracle:Land casualty 2 (As this land enters, you may sacrifice a creature with power 2 or greater. If you do, create a token that's a copy of this land.)\nMaestros' Totally Safe Hideout enters the battlefield tapped.\n{T}: Add {U}, {B}, or {R}.

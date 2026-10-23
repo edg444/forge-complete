@@ -16,9 +16,16 @@ public class GlobalAttackRestrictions {
 
     private final Integer max;
     private final Map<GameEntity, Integer> defenderMax;
-    private GlobalAttackRestrictions(final Integer max, final Map<GameEntity, Integer> defenderMax) {
+    private final boolean evenOnly;
+    private GlobalAttackRestrictions(final Integer max, final Map<GameEntity, Integer> defenderMax, final boolean evenOnly) {
         this.max = max;
         this.defenderMax = defenderMax;
+        this.evenOnly = evenOnly;
+    }
+
+    /** Rule with an Even Hand: only an even number of attackers (zero included) is legal. */
+    public boolean isEvenOnly() {
+        return evenOnly;
     }
 
     public Integer getMax() {
@@ -30,6 +37,9 @@ public class GlobalAttackRestrictions {
 
     public boolean isLegal(final Map<Card, GameEntity> attackers) {
         if (max != null && attackers.size() > max) {
+            return false;
+        }
+        if (evenOnly && attackers.size() % 2 != 0) {
             return false;
         }
 
@@ -72,6 +82,6 @@ public class GlobalAttackRestrictions {
             max = Math.min(Objects.requireNonNullElse(max, Integer.MAX_VALUE), defenderMax.values().stream().mapToInt(Integer::intValue).sum());
         }
 
-        return new GlobalAttackRestrictions(max, defenderMax);
+        return new GlobalAttackRestrictions(max, defenderMax, StaticAbilityAttackRestrict.evenAttackersOnly(attackingPlayer));
     }
 }

@@ -4227,6 +4227,15 @@ public class GameAction {
             if (sum > 0 && (sourceLKI.hasKeyword(Keyword.LIFELINK) || StaticAbilityLifelinkDamage.isLifelinkDamage(sourceLKI))) {
                 sourceLKI.getController().gainLife(sum, sourceLKI, cause);
             }
+            // Phyrexian Seedling's proliferatelink: like lifelink, part of the damage event, so it's before lethal
+            // damage is checked - once for each damage dealt
+            if (sum > 0 && sourceLKI.hasKeyword(Keyword.PROLIFERATELINK)) {
+                final SpellAbility proliferate = AbilityFactory.getAbility("DB$ Proliferate", game.getCardState(sourceLKI));
+                proliferate.setActivatingPlayer(sourceLKI.getController());
+                for (int i = 0; i < sum; i++) {
+                    AbilityUtils.resolve(proliferate);
+                }
+            }
         }
 
         // for Zangief do this before runWaitingTriggers DamageDone

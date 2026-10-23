@@ -189,6 +189,11 @@ public class Match {
     }
 
     public boolean isMatchOver() {
+        for (GameOutcome go : getOutcomes()) {
+            if (go.isDecidesMatch() && go.getWinningPlayer() != null) {
+                return true;
+            }
+        }
         int[] victories = new int[players.size()];
         for (GameOutcome go : getOutcomes()) {
             int i = 0;
@@ -230,6 +235,11 @@ public class Match {
     }
 
     public boolean isWonBy(LobbyPlayer questPlayer) {
+        for (GameOutcome go : getOutcomes()) {
+            if (go.isDecidesMatch() && go.getWinningPlayer() != null) {
+                return go.isWinner(questPlayer);
+            }
+        }
         return getGamesWonBy(questPlayer) >= rules.getGamesToWinMatch();
     }
 

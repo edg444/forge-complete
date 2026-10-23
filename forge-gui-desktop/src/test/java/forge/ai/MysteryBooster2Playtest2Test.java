@@ -98,8 +98,10 @@ public class MysteryBooster2Playtest2Test extends AITest {
         plant.tap(true, null, null);
         final Card theirs = addCardToZone("Grizzly Bears", human, ZoneType.Exile);
         final int exiledBefore = human.getCardsIn(ZoneType.Exile).size();
+        final int yardBefore = human.getCardsIn(ZoneType.Graveyard).size();
         AbilityUtils.resolve(svar(plant, "TrigProcess", ai));
-        if (game.getCardState(theirs).isInZone(ZoneType.Graveyard)) {
+        // either of their two exiled cards may be the one put back
+        if (human.getCardsIn(ZoneType.Graveyard).size() == yardBefore + 1) {
             AssertJUnit.assertFalse("put back, so it untaps", plant.isTapped());
         } else {
             AssertJUnit.assertTrue("otherwise their top card is exiled", plant.isTapped() && human.getCardsIn(ZoneType.Exile).size() == exiledBefore + 1);

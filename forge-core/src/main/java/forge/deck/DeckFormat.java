@@ -229,6 +229,8 @@ public enum DeckFormat {
             return canHaveSpecificNumberInDeck(card);
         if (canHaveAnyNumberOf(card))
             return Integer.MAX_VALUE;
+        if (hasCommander() && card.getRules().hasKeyword("Partner with itself"))
+            return Math.max(2, this.getMaxCardCopies());
         if (card.getRules().isVariant()) {
             DeckSection section = DeckSection.matchingSection(card);
             if(section == DeckSection.Planes && card.getRules().getType().isPhenomenon())
@@ -407,6 +409,11 @@ public enum DeckFormat {
             }
 
             if (canHaveAnyNumberOf(simpleCard) || anySlivers && simpleCard.getRules().getType().hasCreatureType("Sliver")) {
+                continue;
+            }
+
+            // Mothers Yamazaki: "Partner with itself (... A Commander deck can include two of this card ...)"
+            if (hasCommander() && simpleCard.getRules().hasKeyword("Partner with itself") && cp.getValue() <= 2) {
                 continue;
             }
 

@@ -1,0 +1,12 @@
+Name:Mothers Yamazaki
+ManaCost:2 R W
+Types:Legendary Creature Human Samurai
+PT:2/2
+K:Partner with itself
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSearch | Secondary$ True | TriggerDescription$ When this enters, target player may put Mothers Yamazaki into their hand from their library, then shuffle.
+SVar:TrigSearch:DB$ ChangeZone | ValidTgts$ Player | TgtPrompt$ Select target player | Origin$ Library | Destination$ Hand | ChangeType$ Card.namedMothers Yamazaki | ChangeNum$ 1 | DefinedPlayer$ Targeted | Chooser$ Targeted | Optional$ True | Shuffle$ True
+S:Mode$ IgnoreLegendRule | ValidCard$ Permanent.namedMothers Yamazaki+YouCtrl | IsPresent$ Permanent.namedMothers Yamazaki+YouCtrl | PresentCompare$ EQ2 | Description$ As long as you control exactly two permanents named Mothers Yamazaki, the "legend rule" doesn't apply to them, and Samurai you control get +2/+2 and have vigilance and haste.
+S:Mode$ Continuous | Affected$ Creature.Samurai+YouCtrl | AddPower$ 2 | AddToughness$ 2 | AddKeyword$ Vigilance & Haste | IsPresent$ Permanent.namedMothers Yamazaki+YouCtrl | PresentCompare$ EQ2 | Secondary$ True
+SVar:AILegendaryException:TwoCopiesAllowed
+DeckHints:Name$Mothers Yamazaki|Type$Samurai
+Oracle:Partner with itself (When this enters, target player may put Mothers Yamazaki into their hand from their library, then shuffle. A Commander deck can include two of this card, and they can be your commanders.)\nAs long as you control exactly two permanents named Mothers Yamazaki, the "legend rule" doesn't apply to them, and Samurai you control get +2/+2 and have vigilance and haste.

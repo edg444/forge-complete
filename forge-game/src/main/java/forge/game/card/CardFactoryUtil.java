@@ -1416,7 +1416,9 @@ public class CardFactoryUtil {
 
             final String trigStr = "Mode$ Exiled | ValidCard$ Card.Self | Secondary$ True | TriggerDescription$ " + desc.toString();
 
-            final String playMadnessStr = "DB$ Play | Defined$ Self | ValidSA$ Spell | PlayCost$ " + manacost +
+            // Madlands: a land with madness is played (a land play) rather than cast
+            final String playMadnessStr = "DB$ Play | Defined$ Self" + (card.getType().isLand() ? "" : " | ValidSA$ Spell")
+                    + " | PlayCost$ " + manacost +
                     " | ConditionDefined$ Self | ConditionPresent$ Card.StrictlySelf+inZoneExile" +
                     " | Optional$ True | RememberPlayed$ True";
 

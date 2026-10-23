@@ -1,0 +1,8 @@
+Name:Terry Pin, Turboturtle
+ManaCost:2 U R
+Types:Legendary Creature Turtle Athlete
+PT:4/3
+K:Flash
+K:Haste
+S:Mode$ CastWithFlash | ValidSA$ Activated.SorcerySpeed | Caster$ You | Description$ You may ignore the words "Activate only as a sorcery" while activating abilities.
+Oracle:Flash\nHaste\nYou may ignore the words "Activate only as a sorcery" while activating abilities.
