@@ -3,7 +3,10 @@ ManaCost:1 R
 Types:Enchantment Aura
 K:Enchant:Creature.YouCtrl:creature you control
 SVar:AttachAILogic:Pump
-S:Mode$ Continuous | AffectedDefined$ Enchanted | AddAbility$ ABDamage | Description$ Enchanted creature has "{T}: This creature deals 1 damage to any target."
+S:Mode$ Continuous | AffectedDefined$ Enchanted | AddAbility$ ABDamage | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20061006 | Description$ Enchanted creature has "{T}: This creature deals 1 damage to any target."
+# R&D's Secret Lair: before Time Spiral the tap is a cost of the Aura's own ability ("Tap enchanted creature:"),
+# so a creature that just came under your control can pay it.
+A:AB$ DealDamage | Cost$ tapXType<1/Creature.EnchantedBy/enchanted creature> | ValidTgts$ Any | NumDmg$ 1 | DamageSource$ Enchanted | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20061006 | SpellDescription$ (As printed) Tap enchanted creature: Enchanted creature deals 1 damage to target creature or player.
 SVar:ABDamage:AB$ DealDamage | Cost$ T | NumDmg$ 1 | ValidTgts$ Any | SpellDescription$ This creature deals 1 damage to any target.
 A:AB$ DealDamage | Cost$ Sac<1/CARDNAME> | ValidTgts$ Any | NumDmg$ 1 | SpellDescription$ It deals 1 damage to any target.
 Oracle:Enchant creature you control\nEnchanted creature has "{T}: This creature deals 1 damage to any target."\nSacrifice this Aura: It deals 1 damage to any target.

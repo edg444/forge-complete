@@ -1,7 +1,9 @@
 Name:Rowen
 ManaCost:2 G G
 Types:Enchantment
-T:Mode$ Drawn | ValidCard$ Card.YouOwn | Number$ 1 | Static$ True | Execute$ DBReveal | ForReveal$ True | TriggerZones$ Battlefield | TriggerDescription$ Reveal the first card you draw each turn. Whenever you reveal a basic land card this way, draw a card.
+T:Mode$ Drawn | ValidCard$ Card.YouOwn | Number$ 1 | Static$ True | Execute$ DBReveal | ForReveal$ True | TriggerZones$ Battlefield | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19990421 | TriggerDescription$ Reveal the first card you draw each turn. Whenever you reveal a basic land card this way, draw a card.
+# R&D's Secret Lair: Visions' printing reveals only the first card you draw during your draw phase.
+T:Mode$ Drawn | ValidCard$ Card.YouOwn | FirstCardInDrawStep$ True | Static$ True | Execute$ DBReveal | ForReveal$ True | TriggerZones$ Battlefield | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19990421 | TriggerDescription$ (As printed) During your draw phase, reveal the first card you draw to all players. If that card is a basic land, draw a card.
 SVar:DBReveal:DB$ Reveal | Defined$ You | RevealDefined$ TriggeredCard | RememberRevealed$ True | SubAbility$ DBTrigger
 SVar:DBTrigger:DB$ ImmediateTrigger | ConditionDefined$ Remembered | ConditionPresent$ Land.Basic+YouCtrl | SubAbility$ DBCleanup | Execute$ TrigDraw | TriggerDescription$ Whenever you reveal a basic land card this way, draw a card.
 SVar:TrigDraw:DB$ Draw

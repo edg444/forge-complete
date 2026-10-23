@@ -2,6 +2,8 @@ Name:Wood Elves
 ManaCost:2 G
 Types:Creature Elf Scout
 PT:1/1
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChange | TriggerDescription$ When this creature enters, search your library for a Forest card, put that card onto the battlefield, then shuffle.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19980615 | Execute$ TrigChange | TriggerDescription$ When this creature enters, search your library for a Forest card, put that card onto the battlefield, then shuffle.
+# R&D's Secret Lair: Portal's printing (until EXO reworded it) says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19980615 | Execute$ TrigChange | TriggerDescription$ (As printed) When this creature comes into play from your hand, search your library for a Forest card, put that card onto the battlefield, then shuffle.
 SVar:TrigChange:DB$ ChangeZone | Origin$ Library | Destination$ Battlefield | ChangeType$ Card.Forest | ChangeNum$ 1
 Oracle:When this creature enters, search your library for a Forest card, put that card onto the battlefield, then shuffle.

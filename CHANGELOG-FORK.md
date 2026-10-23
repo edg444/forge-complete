@@ -441,6 +441,71 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     "bury" for "sacrifice" (Retribution, Hungry Mist), Giant Oyster's upkeep counter (now the draw step), targeted
     old templating (Coral Reef, Drudge Spell), Daughter of Autumn's untargeted "a white creature", and the old
     mechanics of Giant Albatross, Chain Stasis and Timmerian Fiends.
+- **Set review: Alliances** (all 144 new names, `AlliancesAuditTest`):
+  - *Wandering Mage*'s {U} ability could target a noncreature Cleric or Wizard (a kindred card); it's "target
+    Cleric or Wizard creature". *Tidal Control*'s target prompt said "red of green".
+  - R&D's Secret Lair printed text:
+    - *Heart of Yavimaya*, *Lake of the Dead*, *Kjeldoran Outpost*, *Balduvian Trading Post* and *Soldevi
+      Excavations* (Alliances is their only paper printing): "When it comes into play, sacrifice a land or bury it"
+      is a trigger, so the land is in play first and can be tapped for mana in response. *Sheltered Valley*
+      likewise buries the other Valleys with a trigger. Same handling as Lotus Vale.
+    - *Soldevi Sentry* (Alliances' printing): the opponent may draw whether or not it regenerates.
+    - *Mystic Compass* (before 6ED): targets only a mana-producing land.
+  - Left as Oracle: Martyrdom's old redirect mechanics, Burnout's "interrupt", Phyrexian Devourer's single
+    "+X/+X counter", untargeted "any creature" prevention (Soldevi Heretic, Wandering Mage), targeted old costs
+    (Balduvian Dead, Benthic Explorers), Lord of Tresserhorn's "pay 2 life", and Seasoned Tactician's "all damage
+    ... from one source" (Pentagram of the Ages shows it meant the next damage).
+- **Set review: Mirage** (all 313 new names, `MirageAuditTest`):
+  - *Radiant Essence* only noticed an opponent's black *creature*; it's any black permanent.
+  - *Kukemssa Pirates*' unblocked trigger forced you to take an artifact (and lose the combat damage); it's "you
+    may". *Wall of Resistance*'s end-step trigger now only runs from the battlefield.
+  - In-game text: *Cadaverous Bloom*'s {B}{B} ability read "Add {B}{B} or {G}{G}", and *Subterranean Spirit*'s
+    stack text said "each creature and without flying".
+  - R&D's Secret Lair printed text:
+    - *Lion's Eye Diamond* (Mirage's printing): "Play this ability as a mana source" - a true mana ability, usable
+      while paying for a spell, without "Activate only as an instant".
+    - *Psychic Transfer* (before 6ED): also needs you to have at least 1 life.
+    - *Forbidden Crypt* (before 6ED): exiling your cards is a trigger ("Whenever a card is put into your
+      graveyard"), so they do reach the graveyard first - your creatures die.
+  - Left as Oracle: the "target opponent" choices on permanents, upkeep/draw-step timing lines (Misers' and
+    Paupers' Cage, Preferred Selection), "bury" for "sacrifice" (Basalt Golem, the flash Auras), Unyaro Griffin's
+    old interrupt targeting, Infernal Contract's life "cost", Consuming Ferocity's end-of-upkeep check, and
+    Shadowbane/Reflect Damage/Bone Mask's "all damage from one source".
+- **Set review: Multiverse Gift Box and Visions** (167 new names, `VisionsAuditTest`):
+  - *Mob Mentality* pumped by the number of non-Wall creatures you control; it's the number of attacking creatures.
+    *Equipoise*'s artifact prompt read "Choose a artifact".
+  - R&D's Secret Lair printed text: *Rowen* (before 6ED) reveals only the first card you draw during your draw
+    phase, not the first card each turn.
+  - Left as Oracle: Blanket of Night's "each mana-producing land", costs that were old templating (Chronatog,
+    Vampiric Tutor), Relentless Assault's "additional attack during your main phase", Sands of Time's "beginning
+    of each player's turn", Breathstealer's Crypt's draw trigger, and Necromancy's old mechanics.
+- **Set review: MicroProse promo (Aswan Jaguar) and Portal** (159 new names, `PortalAuditTest`):
+  - *Gift of Estates* added up all opponents' lands; it's "an opponent controls more lands than you", so it now
+    compares against the opponent with the most (as Land Tax does).
+  - R&D's Secret Lair printed text:
+    - Portal's "When CARDNAME comes into play from your hand" - the trigger doesn't happen when the card enters
+      from anywhere else: *Spiritual Guardian*, *Mercenary Knight*, *Fire Dragon*, *Fire Imp*, *Pillaging Horde*,
+      *Plant Elemental*, *Thundering Wurm* (Portal only), *Venerable Monk* and *Serpent Warrior* (before STH),
+      *Gravedigger* (TMP), *Thundermare* (WTH), *Wood Elves* (EXO), *Ingenious Thief*, *Owl Familiar* and
+      *Dread Reaper* (S99), *Primeval Force* (8ED), *Ebon Dragon* (DRB) and *Serpent Assassin* (J25).
+    - *Blessed Reversal* (before ULG): "Play only after you're attacked, before you declare interceptors."
+  - Left as Oracle: Portal's two-player wording ("your opponent", "you" for target player - Mind Rot, Natural
+    Spring, Lava Axe, Final Strike), "any one" meaning target, and "destroy" for sacrifice on the Forest/Island
+    costs (Plant Elemental, Primeval Force, Thing from the Deep).
+- **Set review: Weatherlight** (all 161 new names, `WeatherlightAuditTest`):
+  - In-game text: *Betrothed of Fire*'s first ability read "Enchanted creature get  +2/+0".
+  - R&D's Secret Lair printed text:
+    - *Scorched Ruins* (Weatherlight is its only paper printing): "When it comes into play, sacrifice two untapped
+      lands or bury it" is a trigger, as on Lotus Vale - it can be tapped for mana first.
+    - *Fire Whip* (before TSB): "Tap enchanted creature:" is the Aura's own ability, so it works even while the
+      creature has summoning sickness.
+    - *Abeyance* (Weatherlight's printing): stops "abilities requiring an activation cost", mana abilities
+      included.
+  - Left as Oracle: the attacking-and-unblocked activated abilities that became triggers (Ophidian, Bone Dancer,
+    Goblin Vandal, Goblin Grenadiers), "last paid cumulative upkeep" wording (Revered Unicorn, Mwonvuli Ooze, Wave
+    of Terror, Heart of Bogardan - same numbers as the age counters), Doomsday's life "cost", "target opponent"
+    on permanents (Aura of Silence, Mana Web), and the "all damage from one source" shields (Kithkin Armor,
+    Desperate Gambit).
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

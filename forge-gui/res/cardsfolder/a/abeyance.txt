@@ -1,8 +1,11 @@
 Name:Abeyance
 ManaCost:1 W
 Types:Instant
-A:SP$ Effect | ValidTgts$ Player | StaticAbilities$ STCantBeCast,STCantBeActivated | RememberObjects$ Targeted | AILogic$ BeginningOfOppTurn | SubAbility$ DBDraw | SpellDescription$ Until end of turn, target player can't cast instant or sorcery spells, and that player can't activate abilities that aren't mana abilities.
+A:SP$ Effect | ValidTgts$ Player | StaticAbilities$ STCantBeCast,STCantBeActivated | RememberObjects$ Targeted | AILogic$ BeginningOfOppTurn | SubAbility$ DBPrintedEffect | SpellDescription$ Until end of turn, target player can't cast instant or sorcery spells, and that player can't activate abilities that aren't mana abilities.
 SVar:STCantBeCast:Mode$ CantBeCast | ValidCard$ Instant,Sorcery | Caster$ Player.IsRemembered | Description$ Target player can't cast instant or sorcery spells, and that player can't activate abilities that aren't mana abilities.
 SVar:STCantBeActivated:Mode$ CantBeActivated | ValidCard$ Card | ValidSA$ Activated.!ManaAbility | Activator$ Player.IsRemembered
+# R&D's Secret Lair: Weatherlight's printing stops "abilities requiring an activation cost" - mana abilities too.
+SVar:DBPrintedEffect:DB$ Effect | StaticAbilities$ STPrintedCantBeActivated | RememberObjects$ Targeted | ConditionDefined$ Self | ConditionPresent$ Card.Self+PrintedTextActive+PrintedBefore 19970610 | SubAbility$ DBDraw
+SVar:STPrintedCantBeActivated:Mode$ CantBeActivated | ValidCard$ Card | ValidSA$ Activated | Activator$ Player.IsRemembered | Description$ (As printed) Target player can't play abilities requiring an activation cost.
 SVar:DBDraw:DB$ Draw | SpellDescription$ Draw a card.
 Oracle:Until end of turn, target player can't cast instant or sorcery spells, and that player can't activate abilities that aren't mana abilities.\nDraw a card.

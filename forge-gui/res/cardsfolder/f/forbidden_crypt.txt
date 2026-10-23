@@ -5,7 +5,11 @@ R:Event$ Draw | ActiveZones$ Battlefield | ValidPlayer$ You | ReplaceWith$ Check
 SVar:CheckLoseCondition:DB$ LosesGame | Defined$ You | ConditionCheckSVar$ CardsInGrave | ConditionSVarCompare$ EQ0 | SubAbility$ ForbiddenPractice
 SVar:ForbiddenPractice:DB$ ChangeZone | Hidden$ True | Mandatory$ True | ChangeType$ Card.YouOwn | ChangeNum$ 1 | Origin$ Graveyard | Destination$ Hand
 SVar:CardsInGrave:Count$ValidGraveyard Card.YouOwn
-R:Event$ Moved | ActiveZones$ Battlefield | Destination$ Graveyard | ValidCard$ Card.!token+YouOwn | ReplaceWith$ CryptExile | Description$ If a card would be put into your graveyard from anywhere, exile that card instead.
+R:Event$ Moved | ActiveZones$ Battlefield | Destination$ Graveyard | ValidCard$ Card.!token+YouOwn | ReplaceWith$ CryptExile | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19990421 | Description$ If a card would be put into your graveyard from anywhere, exile that card instead.
+# R&D's Secret Lair: before Classic Sixth Edition this is a trigger ("Whenever a card is put into your graveyard"),
+# so the card does reach the graveyard - creatures die - before it's removed from the game.
+T:Mode$ ChangesZone | Destination$ Graveyard | ValidCard$ Card.!token+YouOwn | TriggerZones$ Battlefield | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19990421 | Execute$ TrigPrintedExile | TriggerDescription$ (As printed) Whenever a card is put into your graveyard, remove that card from the game.
+SVar:TrigPrintedExile:DB$ ChangeZone | Defined$ TriggeredCard | Origin$ Graveyard | Destination$ Exile
 SVar:CryptExile:DB$ ChangeZone | Hidden$ True | Origin$ All | Destination$ Exile | Defined$ ReplacedCard
 SVar:NonStackingEffect:True
 AI:RemoveDeck:All

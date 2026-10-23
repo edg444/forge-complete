@@ -2,7 +2,9 @@ Name:Pillaging Horde
 ManaCost:2 R R
 Types:Creature Human Barbarian
 PT:5/5
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ When this creature enters, sacrifice it unless you discard a card at random.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19970502 | Execute$ TrigSac | TriggerDescription$ When this creature enters, sacrifice it unless you discard a card at random.
+# R&D's Secret Lair: Portal's printing says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19970502 | Execute$ TrigSac | TriggerDescription$ (As printed) When this creature comes into play from your hand, sacrifice it unless you discard a card at random.
 SVar:TrigSac:DB$ Sacrifice | SacValid$ Self | UnlessCost$ Discard<1/Random> | UnlessPayer$ You
 SVar:X:Remembered$Amount
 SVar:NeedsToPlayVar:Y GE2

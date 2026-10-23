@@ -3,6 +3,8 @@ ManaCost:3 B B B
 Types:Creature Horror
 PT:6/5
 K:Flying
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigLoseLife | TriggerDescription$ When this creature enters, you lose 5 life.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19990701 | Execute$ TrigLoseLife | TriggerDescription$ When this creature enters, you lose 5 life.
+# R&D's Secret Lair: Portal's printing (until S99 reworded it) says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19990701 | Execute$ TrigLoseLife | TriggerDescription$ (As printed) When this creature comes into play from your hand, you lose 5 life.
 SVar:TrigLoseLife:DB$ LoseLife | LifeAmount$ 5
 Oracle:Flying\nWhen this creature enters, you lose 5 life.

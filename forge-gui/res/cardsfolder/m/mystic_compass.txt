@@ -1,7 +1,10 @@
 Name:Mystic Compass
 ManaCost:2
 Types:Artifact
-A:AB$ ChooseType | Cost$ 1 T | Defined$ You | Type$ Basic Land | SubAbility$ DBAnimate | SpellDescription$ Target land becomes the basic land type of your choice until end of turn.
+A:AB$ ChooseType | Cost$ 1 T | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19990421 | Defined$ You | Type$ Basic Land | SubAbility$ DBAnimate | SpellDescription$ Target land becomes the basic land type of your choice until end of turn.
+# R&D's Secret Lair: before Classic Sixth Edition it targets only a mana-producing land.
+A:AB$ ChooseType | Cost$ 1 T | Defined$ You | Type$ Basic Land | SubAbility$ DBPrintedAnimate | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19990421 | SpellDescription$ (As printed) Target mana-producing land becomes a basic land type of your choice until end of turn.
+SVar:DBPrintedAnimate:DB$ Animate | ValidTgts$ Land.hasManaAbility | TgtPrompt$ Select target mana-producing land | Types$ ChosenType | RemoveLandTypes$ True
 SVar:DBAnimate:DB$ Animate | ValidTgts$ Land | Types$ ChosenType | RemoveLandTypes$ True
 AI:RemoveDeck:All
 Oracle:{1}, {T}: Target land becomes the basic land type of your choice until end of turn.

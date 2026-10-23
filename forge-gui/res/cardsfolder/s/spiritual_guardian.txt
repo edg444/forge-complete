@@ -2,6 +2,8 @@ Name:Spiritual Guardian
 ManaCost:3 W W
 Types:Creature Spirit
 PT:3/4
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigGainLife | TriggerDescription$ When this creature enters, you gain 4 life.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19970502 | Execute$ TrigGainLife | TriggerDescription$ When this creature enters, you gain 4 life.
+# R&D's Secret Lair: Portal's printing says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19970502 | Execute$ TrigGainLife | TriggerDescription$ (As printed) When this creature comes into play from your hand, you gain 4 life.
 SVar:TrigGainLife:DB$ GainLife | LifeAmount$ 4
 Oracle:When this creature enters, you gain 4 life.

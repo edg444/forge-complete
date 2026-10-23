@@ -2,5 +2,9 @@ Name:Blessed Reversal
 ManaCost:1 W
 Types:Instant
 A:SP$ GainLife | LifeAmount$ X | SpellDescription$ You gain 3 life for each creature attacking you.
+# R&D's Secret Lair: before Urza's Legacy it says "Play Blessed Reversal only after you're attacked, before you declare interceptors."
+S:Mode$ CantBeCast | ValidCard$ Card.Self | EffectZone$ All | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19990215 | PresentZone$ Hand,Stack,Graveyard,Exile,Library,Command,Battlefield | Phases$ Untap->BeginCombat,Declare Blockers-> | ActiveDescription$ (As printed) Play this spell only after you're attacked, before you declare interceptors.
+S:Mode$ CantBeCast | ValidCard$ Card.Self | EffectZone$ All | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19990215 | PresentZone$ Hand,Stack,Graveyard,Exile,Library,Command,Battlefield | CheckSVar$ PrintedAttacked | SVarCompare$ EQ0 | Secondary$ True
+SVar:PrintedAttacked:PlayerCountPropertyYou$HasPropertyBeenAttackedThisCombat
 SVar:X:Count$Valid Creature.attackingYou/Times.3
 Oracle:You gain 3 life for each creature attacking you.

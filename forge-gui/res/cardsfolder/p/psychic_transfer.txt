@@ -2,7 +2,12 @@ Name:Psychic Transfer
 ManaCost:4 U
 Types:Sorcery
 A:SP$ ExchangeLife | ValidTgts$ Player | ConditionCheckSVar$ X | ConditionSVarCompare$ LE5 | SpellDescription$ If the difference between your life total and target player's life total is 5 or less, exchange life totals with that player.
-SVar:X:SVar$Y/Abs
+SVar:X:Count$Compare PrintedBlock GE2.99.Diff
+# R&D's Secret Lair: before Classic Sixth Edition it also needs you to have at least 1 life.
+SVar:Diff:SVar$Y/Abs
+SVar:PrintedBlock:Count$ValidStack Card.Self+PrintedTextActive+PrintedBefore 19990421/Plus.NoLife
+SVar:NoLife:Count$Compare MyLife LE0.1.0
+SVar:MyLife:Count$YourLifeTotal
 SVar:Y:Count$YourLifeTotal/Minus.Z
 SVar:Z:TargetedPlayer$LifeTotal
 AI:RemoveDeck:All

@@ -2,7 +2,9 @@ Name:Fire Imp
 ManaCost:2 R
 Types:Creature Imp
 PT:2/1
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDealDamage | TriggerDescription$ When this creature enters, it deals 2 damage to target creature.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19970502 | Execute$ TrigDealDamage | TriggerDescription$ When this creature enters, it deals 2 damage to target creature.
+# R&D's Secret Lair: Portal's printing says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19970502 | Execute$ TrigDealDamage | TriggerDescription$ (As printed) When this creature comes into play from your hand, it deals 2 damage to target creature.
 SVar:TrigDealDamage:DB$ DealDamage | ValidTgts$ Creature | NumDmg$ 2
 SVar:PlayMain1:TRUE
 Oracle:When this creature enters, it deals 2 damage to target creature.

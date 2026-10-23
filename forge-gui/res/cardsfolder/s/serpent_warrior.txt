@@ -2,6 +2,8 @@ Name:Serpent Warrior
 ManaCost:2 B
 Types:Creature Snake Warrior
 PT:3/3
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigLoseLife | TriggerDescription$ When this creature enters, you lose 3 life.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19980302 | Execute$ TrigLoseLife | TriggerDescription$ When this creature enters, you lose 3 life.
+# R&D's Secret Lair: Portal's printing (until STH reworded it) says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19980302 | Execute$ TrigLoseLife | TriggerDescription$ (As printed) When this creature comes into play from your hand, you lose 3 life.
 SVar:TrigLoseLife:DB$ LoseLife | Defined$ You | LifeAmount$ 3
 Oracle:When this creature enters, you lose 3 life.

@@ -2,7 +2,10 @@ Name:Soldevi Sentry
 ManaCost:1
 Types:Artifact Creature Soldier
 PT:1/1
-A:AB$ Regenerate | Cost$ 1 | ValidTgts$ Opponent | Defined$ Self | RegenerationAbility$ DBImmediateTrigger | RememberObjects$ TargetedPlayer | StackDescription$ SpellDescription | SpellDescription$ Choose target opponent. Regenerate this creature. When it regenerates this way, that player may draw a card.
+A:AB$ Regenerate | Cost$ 1 | ValidTgts$ Opponent | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19960611 | Defined$ Self | RegenerationAbility$ DBImmediateTrigger | RememberObjects$ TargetedPlayer | StackDescription$ SpellDescription | SpellDescription$ Choose target opponent. Regenerate this creature. When it regenerates this way, that player may draw a card.
+# R&D's Secret Lair: Alliances' printing lets the opponent draw whether or not it regenerates.
+A:AB$ Regenerate | Cost$ 1 | Defined$ Self | SubAbility$ DBPrintedDraw | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19960611 | SpellDescription$ (As printed) Regenerate. Target opponent may draw a card.
+SVar:DBPrintedDraw:DB$ Draw | ValidTgts$ Opponent | OptionalDecider$ Opponent
 SVar:DBImmediateTrigger:DB$ ImmediateTrigger | RememberObjects$ Remembered | Execute$ TrigDraw | TriggerDescription$ When it regenerates this way, that player may draw a card.
 SVar:TrigDraw:DB$ Draw | Defined$ DelayTriggerRemembered | NumCards$ 1 | OptionalDecider$ True | SpellDescription$ When it regenerates this way, that player may draw a card.
 Oracle:{1}: Choose target opponent. Regenerate this creature. When it regenerates this way, that player may draw a card.

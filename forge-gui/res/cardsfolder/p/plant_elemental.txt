@@ -2,7 +2,9 @@ Name:Plant Elemental
 ManaCost:1 G
 Types:Creature Plant Elemental
 PT:3/4
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSacUnless | TriggerDescription$ When this creature enters, sacrifice it unless you sacrifice a Forest.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19970502 | Execute$ TrigSacUnless | TriggerDescription$ When this creature enters, sacrifice it unless you sacrifice a Forest.
+# R&D's Secret Lair: Portal's printing says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19970502 | Execute$ TrigSacUnless | TriggerDescription$ (As printed) When this creature comes into play from your hand, sacrifice it unless you sacrifice a Forest.
 SVar:TrigSacUnless:DB$ Sacrifice | UnlessCost$ Sac<1/Forest> | UnlessPayer$ You
 SVar:NeedsToPlay:Forest.YouCtrl
 Oracle:When this creature enters, sacrifice it unless you sacrifice a Forest.

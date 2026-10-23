@@ -2,7 +2,14 @@ Name:Scorched Ruins
 ManaCost:no cost
 Types:Land
 A:AB$ Mana | Cost$ T | Produced$ C | Amount$ 4 | SpellDescription$ Add {C}{C}{C}{C}.
-R:Event$ Moved | Destination$ Battlefield | ValidCard$ Card.Self | ReplaceWith$ PayBeforeETB | Description$ If this land would enter, sacrifice two untapped lands instead. If you do, put this land onto the battlefield. If you don't, put it into its owner's graveyard.
+R:Event$ Moved | Destination$ Battlefield | ValidCard$ Card.Self | ReplaceWith$ PayBeforeETB | IsPresent$ Card.PrintedTextActive | PresentCompare$ EQ0 | Description$ If this land would enter, sacrifice two untapped lands instead. If you do, put this land onto the battlefield. If you don't, put it into its owner's graveyard.
+# R&D's Secret Lair: as printed this is a trigger ("When Scorched Ruins comes into play, sacrifice two untapped
+# lands or bury Scorched Ruins"), so it can be tapped for mana in response. Same handling as Lotus Vale.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive | Execute$ TrigPrintedSac | TriggerDescription$ (As printed) When CARDNAME comes into play, sacrifice two untapped lands or bury CARDNAME.
+SVar:TrigPrintedSac:DB$ Sacrifice | Defined$ You | SacValid$ Land.untapped | SacMessage$ two untapped lands | Amount$ 2 | StrictAmount$ True | Optional$ True | RememberSacrificed$ True | SubAbility$ DBPrintedBury
+SVar:DBPrintedBury:DB$ Destroy | Defined$ Self | NoRegen$ True | ConditionCheckSVar$ PrintedSacked | ConditionSVarCompare$ LT2 | SubAbility$ DBPrintedCleanup
+SVar:DBPrintedCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:PrintedSacked:Remembered$Amount
 SVar:PayBeforeETB:DB$ Sacrifice | SacValid$ Land.untapped | Defined$ You | RememberSacrificed$ True | Amount$ 2 | StrictAmount$ True | SubAbility$ MoveToGraveyard
 SVar:MoveToGraveyard:DB$ ChangeZone | Origin$ All | Destination$ Graveyard | Defined$ ReplacedCard | ConditionCheckSVar$ X | ConditionSVarCompare$ LT2 | SubAbility$ MoveToBattlefield
 SVar:MoveToBattlefield:DB$ ChangeZone | Origin$ All | Destination$ Battlefield | Defined$ ReplacedCard | ConditionCheckSVar$ X | ConditionSVarCompare$ GE2 | SubAbility$ DBCleanup

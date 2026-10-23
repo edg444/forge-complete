@@ -2,7 +2,9 @@ Name:Primeval Force
 ManaCost:2 G G G
 Types:Creature Elemental
 PT:8/8
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSacUnless | TriggerDescription$ When this creature enters, sacrifice it unless you sacrifice three Forests.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20030728 | Execute$ TrigSacUnless | TriggerDescription$ When this creature enters, sacrifice it unless you sacrifice three Forests.
+# R&D's Secret Lair: Portal's printing (until 8ED reworded it) says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20030728 | Execute$ TrigSacUnless | TriggerDescription$ (As printed) When this creature comes into play from your hand, sacrifice it unless you sacrifice three Forests.
 SVar:TrigSacUnless:DB$ Sacrifice | UnlessCost$ Sac<3/Forest> | UnlessPayer$ You
 SVar:NeedsToPlayVar:Y GE3
 SVar:Y:Count$Valid Forest.YouCtrl

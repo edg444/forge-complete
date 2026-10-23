@@ -2,6 +2,8 @@ Name:Gravedigger
 ManaCost:3 B
 Types:Creature Zombie
 PT:2/2
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigChangeZone | OptionalDecider$ You | TriggerDescription$ When this creature enters, you may return target creature card from your graveyard to your hand.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19971014 | Execute$ TrigChangeZone | OptionalDecider$ You | TriggerDescription$ When this creature enters, you may return target creature card from your graveyard to your hand.
+# R&D's Secret Lair: Portal's printing (until TMP reworded it) says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19971014 | Execute$ TrigChangeZone | OptionalDecider$ You | TriggerDescription$ (As printed) When this creature comes into play from your hand, you may return target creature card from your graveyard to your hand.
 SVar:TrigChangeZone:DB$ ChangeZone | Origin$ Graveyard | Destination$ Hand | ValidTgts$ Creature.YouCtrl
 Oracle:When this creature enters, you may return target creature card from your graveyard to your hand.

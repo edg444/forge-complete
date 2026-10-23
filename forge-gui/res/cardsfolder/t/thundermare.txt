@@ -3,6 +3,8 @@ ManaCost:5 R
 Types:Creature Elemental Horse
 PT:5/5
 K:Haste
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigTapAll | TriggerDescription$ When this creature enters, tap all other creatures.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19970609 | Execute$ TrigTapAll | TriggerDescription$ When this creature enters, tap all other creatures.
+# R&D's Secret Lair: Portal's printing (until WTH reworded it) says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19970609 | Execute$ TrigTapAll | TriggerDescription$ (As printed) When this creature comes into play from your hand, tap all other creatures.
 SVar:TrigTapAll:DB$ TapAll | ValidCards$ Creature.StrictlyOther
 Oracle:Haste (This creature can attack and {T} as soon as it comes under your control.)\nWhen this creature enters, tap all other creatures.

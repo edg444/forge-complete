@@ -3,6 +3,8 @@ ManaCost:1 U
 Types:Creature Human Rogue
 PT:1/1
 K:Flying
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPeek | TriggerDescription$ When this creature enters, look at target player's hand.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19990701 | Execute$ TrigPeek | TriggerDescription$ When this creature enters, look at target player's hand.
+# R&D's Secret Lair: Portal's printing (until S99 reworded it) says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19990701 | Execute$ TrigPeek | TriggerDescription$ (As printed) When this creature comes into play from your hand, look at target player's hand.
 SVar:TrigPeek:DB$ RevealHand | ValidTgts$ Player | Look$ True
 Oracle:Flying\nWhen this creature enters, look at target player's hand.

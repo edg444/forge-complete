@@ -3,6 +3,8 @@ ManaCost:5 B B
 Types:Creature Dragon
 PT:5/4
 K:Flying
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | OptionalDecider$ You | Execute$ TrigDiscard | TriggerDescription$ When this creature enters, you may have target opponent discard a card.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20080829 | OptionalDecider$ You | Execute$ TrigDiscard | TriggerDescription$ When this creature enters, you may have target opponent discard a card.
+# R&D's Secret Lair: Portal's printing (until DRB reworded it) says "comes into play from your hand" - not from anywhere else.
+T:Mode$ ChangesZone | Origin$ Hand | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20080829 | OptionalDecider$ You | Execute$ TrigDiscard | TriggerDescription$ (As printed) When this creature comes into play from your hand, you may have target opponent discard a card.
 SVar:TrigDiscard:DB$ Discard | ValidTgts$ Opponent | NumCards$ 1 | Mode$ TgtChoose
 Oracle:Flying\nWhen this creature enters, you may have target opponent discard a card.
