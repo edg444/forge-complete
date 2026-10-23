@@ -958,6 +958,55 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     Lich's "are/is indestructible", Leyline of Anticipation's "nonland cards", Diminish's "becomes 1/1", Elixir of
     Immortality's "into your library" (a card only goes to its owner's library), "of their choice" sacrifices
     (Destructive Force) and "creature or player" (Inferno Titan, Ember Hauler).
+- **Set review: From the Vault: Relics (Sword of Body and Mind), Duel Decks: Elspeth vs. Tezzeret (Contagion Clasp,
+  Kemba's Skyguard), Scars of Mirrodin Promos (Wurmcoil Engine, Steel Hellkite, Memoricide), Scars of Mirrodin and
+  its Poison Counter, and the 2011 FNM promo (Go for the Throat)** (219 new names, `ScarsOfMirrodinAuditTest`):
+  - Fixed: *Argent Sphinx* came back under its owner's control; it returns under the control of whoever exiled it.
+  - In-game text: *Vedalken Certarch* ("creature     or land").
+  - Left as Oracle: Glint Hawk Idol's untyped "2/2 artifact creature" and the untyped Wurm/Insect tokens (Wurmcoil
+    Engine, Carrion Call, Trigon of Infestation - creature-type updates), Echo Circlet's missing "each combat",
+    Contagion Engine's "proliferate, then proliferate again", Asceticism's hexproof wording, "is indestructible" and
+    "each turn" (Darksteel Juggernaut, Flameborn Hellion), "of their choice" sacrifices (Dispense Justice) and "target
+    player" / "creature or player" (Vulshok Replica, Arc Trail, Galvanic Blast).
+- **Set review: Mirrodin Besieged Promos (Glissa, the Traitor, Hero of Bladehold, Mirran Crusader, Thopter Assembly)
+  and Mirrodin Besieged** (141 new names):
+  - Fixed: *Rot Wolf*'s draw trigger had no trigger zone, so it also worked from your hand or graveyard.
+  - Left as Oracle: Cryptoplasm's "gains this ability" (granted, as with Dimir Doppelganger), Tezzeret, Agent of
+    Bolas's "becomes a 5/5", the untyped Horror/Zombie/Myr tokens and Inkmoth Nexus's Blinkmoth (creature-type
+    updates), Kemba's Legion's missing "each combat", "is indestructible", "each turn" (Kuldotha Ringleader,
+    Phyrexian Juggernaut) and "target player" / "creature or player" (Concussive Bolt, Red Sun's Zenith, Kuldotha
+    Flamefiend).
+- **Set review: New Phyrexia Promos (Surgical Extraction, Pristine Talisman, Phyrexian Metamorph, Sheoldred,
+  Whispering One) and New Phyrexia** (162 new names): no script changes.
+  - Left as Oracle: Impaler Shrike's "When" (a trigger word, same as "Whenever"), Praetor's Grasp's "look at and
+    play", Chancellor of the Tangle's missing "of the game", the Shrines' "or", the untyped Golem/Myr/Insect/Germ
+    tokens (creature-type updates), "of their choice" sacrifices (Geth's Verdict, Phyrexian Obliterator), Trespassing
+    Souleater's "is unblockable" and "creature or player" (Gut Shot, Rage Extractor).
+- **Set review: Commander 2011, its oversized commanders and promos** (51 new names): no script changes.
+  - Left as Oracle: Karador's "cast one creature card", Zedruu's {R}{W}{U} cost order, the Vows' "or a
+    planeswalker", Avatar of Slaughter's "each turn", "of their choice" sacrifices (Martyr's Bond, Syphon Flesh,
+    Tribute to the Wild) and Acorn Catapult's "creature or player".
+- **Set review: Magic 2012 Promos (Bloodlord of Vaasgoth, Chandra's Phoenix, Garruk's Horde) and Magic 2012** (97
+  new names): no script changes.
+  - Left as Oracle: Phantasmal Image's "gains" (as with Dimir Doppelganger), Turn to Frog's and Skinshifter's
+    "becomes a 1/1 / 4/4", Aegis Angel's "is indestructible", Stormblood Berserker's menace wording, Scepter of
+    Empires' "target player" and "creature or player" (Warstorm Surge, Chandra, the Firebrand).
+- **Set review: From the Vault: Legends (Mikaeus, the Lunarch), Innistrad Promos, Innistrad and the 2011 Wizards Play
+  Network promos** (240 new names, `InnistradAuditTest`):
+  - Fixed: a stolen *Mirror-Mad Phantasm* revealed cards from its controller's library; it's its owner's library.
+  - Left as Oracle: Nevermore's "The named card can't be cast", Curse of the Pierced Heart's player-only damage,
+    Evil Twin's "gains" (as with Dimir Doppelganger), Angelic Overseer's, Creepy Doll's and Manor Gargoyle's "is
+    indestructible", "each turn" (Curse of the Nightly Hunt, Furor of the Bitten, Galvanic Juggernaut), "of their
+    choice" sacrifices (Tribute to Hunger) and "target player" / "creature or player" (Brimstone Volley, Heretic's
+    Punishment, Stensia Bloodhall).
+- **Set review: the 2012 FNM and Wizards Play Network promos, Dark Ascension Promos and Dark Ascension** (155 new
+  names, `DarkAscensionAuditTest`):
+  - Fixed: *Elbrus, the Binding Blade* transformed without unattaching first; *Withengar Unbound*'s lose-the-game
+    trigger had no trigger zone.
+  - In-game text: *Dawntreader Elk* and *Jar of Eyeballs* (stray spaces).
+  - Left as Oracle: Counterlash's "nonland card in your hand", Grafdigger's Cage's "can't enter the battlefield from
+    graveyards or libraries", Pyreheart Wolf's menace wording, Immerwolf's "Other Wolf and Werewolf creatures",
+    "is/are indestructible" (Break of Day, Falkenrath Aristocrat, Predator Ooze) and Hellrider's "defending player".
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

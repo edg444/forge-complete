@@ -3,8 +3,9 @@ ManaCost:7
 Types:Legendary Artifact Equipment
 K:Equip:1
 S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddPower$ 1 | Description$ Equipped creature gets +1/+0.
-T:Mode$ DamageDone | ValidSource$ Creature.AttachedBy | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigTransform | TriggerZones$ Battlefield | TriggerDescription$ Whenever equipped creature deals combat damage to a player, transform CARDNAME.
-SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform
+T:Mode$ DamageDone | ValidSource$ Creature.AttachedBy | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigTransform | TriggerZones$ Battlefield | TriggerDescription$ When equipped creature deals combat damage to a player, unattach NICKNAME, then transform it.
+SVar:TrigTransform:DB$ Unattach | Defined$ Self | SubAbility$ DBTransform
+SVar:DBTransform:DB$ SetState | Defined$ Self | Mode$ Transform
 AlternateMode:DoubleFaced
 Oracle:Equipped creature gets +1/+0.\nWhen equipped creature deals combat damage to a player, unattach Elbrus, then transform it.\nEquip {1}
 
@@ -18,6 +19,6 @@ PT:13/13
 K:Flying
 K:Trample
 K:Intimidate
-T:Mode$ LosesGame | Execute$ TrigCounter | TriggerDescription$ Whenever a player loses the game, put thirteen +1/+1 counters on CARDNAME.
+T:Mode$ LosesGame | TriggerZones$ Battlefield | Execute$ TrigCounter | TriggerDescription$ Whenever a player loses the game, put thirteen +1/+1 counters on CARDNAME.
 SVar:TrigCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ 13
 Oracle:Flying, intimidate, trample (A creature with intimidate can't be blocked except by artifact creatures and/or creatures that share a color with it.)\nWhenever a player loses the game, put thirteen +1/+1 counters on Withengar Unbound.
