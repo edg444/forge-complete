@@ -365,6 +365,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     private Player enchantedZoneOwner = null;
     // Teach (Pyromancy 101): the creature this exiled card was taught to
     private Card taughtTo = null;
+    // Plant a Sapling: shuffled in transformed, it keeps its back face up wherever it goes
+    private boolean staysTransformed = false;
+    private SpellAbility backFaceSpell = null;
     private int markedNodes;
     private List<String> chosenName = new ArrayList<>();
     private Integer chosenNumber;
@@ -606,6 +609,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     public CardStateName getAlternateStateName() {
         if (hasAlternateState()) {
+            // Werewhat: a back face given to a single-faced card
+            if (backFaceSource != null) {
+                return currentStateName == CardStateName.Backside ? CardStateName.Original : CardStateName.Backside;
+            }
             if (isSplitCard()) {
                 return currentStateName == CardStateName.RightSplit ? CardStateName.LeftSplit : CardStateName.RightSplit;
             } else if (getRules() != null) {
@@ -1227,7 +1234,25 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
 
     public final boolean isTransformable() {
-        return getRules() != null && getRules().isTransformable();
+        return (getRules() != null && getRules().isTransformable()) || backFaceSource != null;
+    }
+
+    // Built Bear: the options circled for this physical card, re-printed on each new object
+    private List<Integer> builtOptions = null;
+    public final List<Integer> getBuiltOptions() {
+        return builtOptions;
+    }
+    public final void setBuiltOptions(final List<Integer> picked) {
+        builtOptions = picked;
+    }
+
+    // Werewhat: the card exiled to be this one's back face, while it's on the battlefield
+    private Card backFaceSource = null;
+    public final Card getBackFaceSource() {
+        return backFaceSource;
+    }
+    public final void setBackFaceSource(final Card c) {
+        backFaceSource = c;
     }
 
     public final boolean isMeldable() {
@@ -2662,6 +2687,13 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return markedColor != null && !markedColor.isColorless();
     }
 
+    public final boolean isStaysTransformed() {
+        return staysTransformed;
+    }
+    public final void setStaysTransformed(final boolean b) {
+        staysTransformed = b;
+    }
+
     public final Card getTaughtTo() {
         return taughtTo;
     }
@@ -3119,6 +3151,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.equals("Deworded") || keyword.equals("Forbidden") || keyword.equals("Hope")
                         || keyword.equals("Daunt") || keyword.equals("Proliferatelink") || keyword.equals("Nimble")
                         || keyword.equals("Tantrum") || keyword.equals("Thoughtweft") || keyword.equals("Buddy list")
+                        || keyword.equals("Positioning")
                         || keyword.equals("Space sculptor") || keyword.equals("Doctor's companion")
                         || keyword.equals("Start your engines") || keyword.startsWith("Modular")
                         || keyword.startsWith("Bloodthirst") || keyword.startsWith("Dredge")
@@ -7178,6 +7211,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                 return true;
             }
         }
+        if (c1.hasAllCardNames()) {
+            return hasAllCardNames() || (!isToken() && StaticData.instance().getCommonCards().getFaceByName(getName()) != null);
+        }
         if (c1.hasCopiedNames()) {
             for (final String name : c1.getNames()) {
                 if (sharesNameWith(name)) {
@@ -7189,10 +7225,19 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return sharesNameWith(c1.getName());
     }
 
+    /** Omnipresent Impostor: it has every card name, in every zone (a characteristic-defining ability). */
+    public final boolean hasAllCardNames() {
+        return hasSVar("HasAllCardNames") && !hasNameOverwrite();
+    }
+
     public final boolean sharesNameWith(final String name) {
         // the name is null or empty
         if (name == null || name.isEmpty()) {
             return false;
+        }
+        // every card's name - the faces of double-faced cards too - but not a token's (rulings)
+        if (hasAllCardNames() && StaticData.instance().getCommonCards().getFaceByName(name) != null) {
+            return true;
         }
 
         boolean shares = getName().equals(name) || ((isCombinedWhole() || hasCopiedNames()) && getNames().contains(name));
@@ -9500,6 +9545,14 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                 continue; // skip since it's already on adventure
             }
             consumer.accept(sa);
+        }
+        // Plant a Sapling: kept transformed, it's cast as its back face (which has a mana cost of its own)
+        if (staysTransformed && !isInPlay() && getCurrentStateName() == CardStateName.Backside
+                && abilities.stream().noneMatch(SpellAbility::isSpell)) {
+            if (backFaceSpell == null) {
+                backFaceSpell = new forge.game.spellability.SpellPermanent(this, getState(CardStateName.Backside));
+            }
+            consumer.accept(backFaceSpell);
         }
 
         if (isFaceDown() && isInZone(ZoneType.Exile)) {

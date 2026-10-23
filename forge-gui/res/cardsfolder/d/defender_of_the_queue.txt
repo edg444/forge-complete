@@ -1,0 +1,9 @@
+Name:Defender of the Queue
+ManaCost:3 W
+Types:Creature Centaur Soldier
+PT:3/3
+# the line is kept whenever state-based actions are checked; creatures entering together are placed one at a time
+# (rulings). Each creature shows its place in the line.
+K:Positioning
+S:Mode$ Continuous | Affected$ Creature.AdjacentToSource | AddPower$ 1 | AddToughness$ 1 | AddKeyword$ Vigilance | Description$ Adjacent creatures to the left and right of CARDNAME get +1/+1 and have vigilance.
+Oracle:Positioning (As this creature enters, lock your creatures in order from left to right for as long as you control a creature with positioning. Each time a creature enters or comes under your control, position it to the left or right of another creature you control.)\nAdjacent creatures to the left and right of Defender of the Queue get +1/+1 and have vigilance.

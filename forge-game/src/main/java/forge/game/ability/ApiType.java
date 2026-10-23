@@ -226,6 +226,7 @@ public enum ApiType {
     EnchantZone (EnchantZoneEffect.class),
     Teach (TeachEffect.class),
     PassTheBall (PassTheBallEffect.class),
+    BecomeBackFace (BecomeBackFaceEffect.class),
     CopyChapter (CopyChapterEffect.class),
     MadLabs (MadLabsEffect.class),
     Mana (ManaEffect.class),

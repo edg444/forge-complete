@@ -1,0 +1,11 @@
+Name:Omnipresent Impostor
+ManaCost:2
+Types:Basic Creature Shapeshifter
+PT:2/1
+K:Changeling
+# every card name, faces included but not tokens', in all zones and outside the game (Card.sharesNameWith); found in
+# place of any card searched for in its owner's library (ChangeZoneEffect); basic, so any number in a deck (rulings)
+SVar:HasAllCardNames:True
+SVar:SearchStandIn:True
+Text:Omnipresent Impostor has all card names.\nAs you search your library for one or more cards, you may choose Omnipresent Impostor as one of those cards. (For example, if you search for two land cards, you may find Omnipresent Impostor and a land card.)
+Oracle:Changeling\nOmnipresent Impostor has all card names.\nAs you search your library for one or more cards, you may choose Omnipresent Impostor as one of those cards. (For example, if you search for two land cards, you may find Omnipresent Impostor and a land card.)

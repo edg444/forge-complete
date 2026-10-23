@@ -788,6 +788,13 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
                 if (sa.hasParam("ExileFaceDown") || sa.hasParam("FaceDown")) {
                     movedCard.turnFaceDown(true);
                 }
+                // Plant a Sapling: "shuffle this spell into its owner's library transformed" - upside down in its
+                // sleeve, it stays that way from zone to zone
+                if (sa.hasParam("StaysTransformed") && movedCard.isTransformable()) {
+                    movedCard.setStaysTransformed(true);
+                    movedCard.setState(CardStateName.Backside, true);
+                    movedCard.setBackSide(true);
+                }
                 if (sa.hasParam("Foretold")) {
                     movedCard.setForetold(true);
                     if (sa.hasParam("ForetoldCost")) {
@@ -1122,12 +1129,21 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
                 runParams.put(AbilityKey.Target, player);
                 game.getTriggerHandler().runTrigger(TriggerType.SearchedLibrary, runParams, false);
             }
+            final boolean searchingOwnLibrary = searchedLibrary && player.equals(decider);
             if (searchedLibrary && sa.hasParam("Searched")) {
                 searchedLibrary = false;
             }
 
             if (!defined && !changeType.isEmpty() && !changeType.startsWith("EACH")) {
                 fetchList = (CardCollection)AbilityUtils.filterListByType(fetchList, sa.getParam("ChangeType"), sa);
+            }
+            // Omnipresent Impostor: it may be found in place of any card searched for in its owner's library (rulings)
+            if (searchingOwnLibrary) {
+                for (final Card c : player.getCardsIn(ZoneType.Library)) {
+                    if (c.hasSVar("SearchStandIn") && !fetchList.contains(c)) {
+                        fetchList.add(c);
+                    }
+                }
             }
             fetchList.sort();
 

@@ -868,6 +868,12 @@ public class HumanCostDecision extends CostDecisionMakerBase {
     }
 
     @Override
+    public PaymentDecision visit(final CostChangeToughness cost) {
+        final int c = cost.getAbilityAmount(ability);
+        return cost.canPay(ability, player, isEffect()) ? PaymentDecision.number(c) : null;
+    }
+
+    @Override
     public PaymentDecision visit(final CostGiveUpLandDrop cost) {
         final int c = cost.getAbilityAmount(ability);
         if (cost.canPay(ability, player, isEffect()) && controller.confirmPayment(cost, cost + "?", ability)) {

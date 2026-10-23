@@ -1,0 +1,19 @@
+Name:Planeswalkerificate
+ManaCost:2 R R
+Types:Enchantment Aura
+K:Enchant:Creature.YouCtrl:creature you control
+SVar:AttachAILogic:Pump
+# its toughness is its loyalty: loyalty costs change toughness (CostChangeToughness), damage lowers it for good
+# (DamageLowersToughness), and 0 toughness, not 0 loyalty counters, is what kills it (rulings)
+S:Mode$ Continuous | Affected$ Creature.EnchantedBy | AddType$ Planeswalker | AddAbility$ PWPlus & PWMinus & PWMinusX | AddSVar$ X & DBMayPlay & STPlay & DBCleanup | Description$ Enchanted creature is a planeswalker in addition to its other types. Its toughness becomes its loyalty. (You change its toughness to activate loyalty abilities. Damage lowers toughness. Toughness doesn't heal at end of turn.) It can't block and gains the following abilities — [+1]: Add {R}{R}. [−1]: Exile the top card of your library. You may play it this turn. [−X]: This planeswalker deals X damage to any target.
+S:Mode$ IgnorePlaneswalkerZeroLoyaltyRule | ValidCard$ Creature.EnchantedBy | Secondary$ True
+S:Mode$ DamageLowersToughness | ValidCard$ Creature.EnchantedBy | Secondary$ True
+S:Mode$ CantBlock | ValidCard$ Creature.EnchantedBy | Secondary$ True
+SVar:PWPlus:AB$ Mana | Cost$ AddToughness<1> | Planeswalker$ True | Produced$ R | Amount$ 2 | SpellDescription$ Add {R}{R}.
+SVar:PWMinus:AB$ Dig | Cost$ SubToughness<1> | Planeswalker$ True | Defined$ You | DigNum$ 1 | ChangeNum$ All | DestinationZone$ Exile | RememberChanged$ True | SubAbility$ DBMayPlay | SpellDescription$ Exile the top card of your library. You may play it this turn.
+SVar:DBMayPlay:DB$ Effect | RememberObjects$ Remembered | StaticAbilities$ STPlay | ForgetOnMoved$ Exile | SubAbility$ DBCleanup
+SVar:STPlay:Mode$ Continuous | Affected$ Card.IsRemembered | AffectedZone$ Exile | MayPlay$ True | Description$ You may play the exiled card this turn.
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:PWMinusX:AB$ DealDamage | Cost$ SubToughness<X> | Planeswalker$ True | ValidTgts$ Any | NumDmg$ X | SpellDescription$ This planeswalker deals X damage to any target.
+SVar:X:Count$xPaid
+Oracle:Enchant creature you control\nEnchanted creature is a planeswalker in addition to its other types. Its toughness becomes its loyalty. (You change its toughness to activate loyalty abilities. Damage lowers toughness. Toughness doesn't heal at end of turn.) It can't block and gains the following abilities —\n[+1]: Add {R}{R}.\n[−1]: Exile the top card of your library. You may play it this turn.\n[−X]: This planeswalker deals X damage to any target.

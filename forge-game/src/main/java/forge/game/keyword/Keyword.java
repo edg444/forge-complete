@@ -172,6 +172,7 @@ public enum Keyword {
     PARADIGM("Paradigm", SimpleKeyword.class, false, "Then exile this spell. After you first resolve a spell with this name, you may cast a copy of it from exile without paying its mana cost at the beginning of each of your first main phases."),
     PARTNER("Partner", Partner.class, true, "You can have two commanders if both have partner."),
     PARTNER_WITH("Partner with", KeywordWithType.class, false, "When this creature enters, target player may put %s into their hand from their library, then shuffle."),
+    POSITIONING("Positioning", SimpleKeyword.class, true, "As this creature enters, lock your creatures in order from left to right for as long as you control a creature with positioning. Each time a creature enters or comes under your control, position it to the left or right of another creature you control."),
     PERSIST("Persist", SimpleKeyword.class, false, "When this creature dies, if it had no -1/-1 counters on it, return it to the battlefield under its owner's control with a -1/-1 counter on it."),
     PHASING("Phasing", SimpleKeyword.class, true, "This phases in or out before you untap during each of your untap steps. While it's phased out, it's treated as though it doesn't exist."),
     PLOT("Plot", KeywordWithCost.class, false, "You may pay %s and exile this card from your hand. Cast it as a sorcery on a later turn without paying its mana cost. Plot only as a sorcery."),

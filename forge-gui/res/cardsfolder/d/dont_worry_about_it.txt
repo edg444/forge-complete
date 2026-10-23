@@ -1,0 +1,10 @@
+Name:Don't Worry About It
+ManaCost:1 G U
+Types:Enchantment Aura
+K:Enchant:Card.YouOwn+inZoneHand:card in your hand
+SVar:AuraSpell:SP$ Attach | ValidTgts$ Card.YouOwn | TgtZone$ Hand | TgtPrompt$ Select target card in your hand | AILogic$ Pump
+Text:(This Aura remains on the battlefield. If you play enchanted card or it otherwise leaves your hand, put this Aura into the graveyard.)
+S:Mode$ ReduceCost | ValidCard$ Card.EnchantedBy | Type$ Spell | Activator$ You | Amount$ 1 | Description$ Enchanted card costs {1} less to cast.
+T:Mode$ SpellCast | ValidCard$ Card.EnchantedBy | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCopy | TriggerDescription$ When you cast enchanted card, copy it.
+SVar:TrigCopy:DB$ CopySpellAbility | Defined$ TriggeredSpellAbility | MayChooseTarget$ True
+Oracle:Enchant card in your hand (This Aura remains on the battlefield. If you play enchanted card or it otherwise leaves your hand, put this Aura into the graveyard.)\nEnchanted card costs {1} less to cast.\nWhen you cast enchanted card, copy it.

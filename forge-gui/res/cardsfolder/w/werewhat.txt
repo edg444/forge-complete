@@ -1,0 +1,15 @@
+Name:Werewhat
+ManaCost:3 G
+Types:Creature Werewolf
+PT:4/3
+K:Daybound
+# the exiled card becomes this creature's back face for as long as it's on the battlefield (BecomeBackFaceEffect);
+# when it leaves, the two separate and both go to the new zone. An instant or sorcery face can't be transformed into
+# (rulings). Drawing before the exile is the same as after: the choice is already made.
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ DBChoose | Description$ As CARDNAME enters the battlefield, you may exile a creature card from your graveyard or hand. If you do, that card becomes this creature's back face and that back face has nightbound. If you exiled a card from your hand this way, draw a card.
+SVar:DBChoose:DB$ ChooseCard | Defined$ You | Choices$ Creature.YouOwn | ChoiceZone$ Graveyard,Hand | MinAmount$ 0 | Amount$ 1 | ChoiceTitle$ You may exile a creature card from your graveyard or hand | SubAbility$ DBDraw
+SVar:DBDraw:DB$ Draw | Defined$ You | ConditionDefined$ ChosenCard | ConditionPresent$ Card.inZoneHand | ConditionCompare$ GE1 | SubAbility$ DBExile
+SVar:DBExile:DB$ ChangeZone | Defined$ ChosenCard | Origin$ Graveyard,Hand | Destination$ Exile | RememberChanged$ True | SubAbility$ DBBackFace
+SVar:DBBackFace:DB$ BecomeBackFace | Defined$ Remembered | AddKeyword$ Nightbound | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
+Oracle:Daybound\nAs Werewhat enters the battlefield, you may exile a creature card from your graveyard or hand. If you do, that card becomes this creature's back face and that back face has nightbound. If you exiled a card from your hand this way, draw a card.

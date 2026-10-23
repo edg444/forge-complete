@@ -29,6 +29,7 @@ public interface ICostVisitor<T> {
     T visit(CostPayLife cost);
     T visit(CostPayEnergy cost);
     T visit(CostGiveUpLandDrop cost);
+    T visit(CostChangeToughness cost);
     T visit(CostPaySpeed cost);
     T visit(CostGainLife cost);
     T visit(CostGiveFromCollection cost);
@@ -164,6 +165,10 @@ public interface ICostVisitor<T> {
         }
         @Override
         public T visit(CostGiveUpLandDrop cost) {
+            return null;
+        }
+        @Override
+        public T visit(CostChangeToughness cost) {
             return null;
         }
         @Override

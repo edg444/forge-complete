@@ -360,6 +360,12 @@ public class Cost implements Serializable {
             final String[] splitStr = abCostParse(parse, 1);
             return new CostPaySpeed(splitStr[0]);
         }
+        if (parse.startsWith("AddToughness<")) {
+            return new CostChangeToughness(abCostParse(parse, 1)[0], true);
+        }
+        if (parse.startsWith("SubToughness<")) {
+            return new CostChangeToughness(abCostParse(parse, 1)[0], false);
+        }
         if (parse.startsWith("LandDrop<")) {
             final String[] splitStr = abCostParse(parse, 1);
             return new CostGiveUpLandDrop(splitStr[0]);

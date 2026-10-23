@@ -118,6 +118,11 @@ public class Player extends GameEntity implements Comparable<Player> {
     private List<Card> spellsCastSinceBeginningOfLastTurn = Lists.newArrayList();
     private int investigatedThisTurn;
     private boolean wayBehindThisTurn;
+    // Defender of the Queue: this player's creatures, left to right, while they control one with positioning
+    private final List<Card> creatureOrder = Lists.newArrayList();
+    public List<Card> getCreatureOrder() {
+        return creatureOrder;
+    }
     // Boulder Jockey: land drops given up this turn ({D})
     private int landDropsGivenUp = 0;
     public int getLandDropsGivenUp() {

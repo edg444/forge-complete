@@ -646,7 +646,8 @@ public enum DeckFormat {
     }
 
     public static boolean canHaveAnyNumberOf(final IPaperCard iCard) {
-        return iCard.getRules().getType().isBasicLand()
+        // the basic supertype on anything (Omnipresent Impostor), not just lands
+        return iCard.getRules().getType().isBasic()
             || Iterables.contains(iCard.getRules().getMainPart().getKeywords(),
                 "A deck can have any number of cards named CARDNAME.");
     }

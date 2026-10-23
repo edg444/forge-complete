@@ -323,6 +323,9 @@ public class GameAction {
             }
 
             copied = new CardCopyService(c).copyCard(false);
+            if (c.getBuiltOptions() != null) {
+                applyBuild(copied, c.getBuiltOptions());
+            }
 
             copied.setGameTimestamp(c.getGameTimestamp());
 
@@ -363,6 +366,11 @@ public class GameAction {
                         }
                     }
                 }
+            } else if (c.isStaysTransformed()) {
+                // Plant a Sapling: still upside down in its sleeve
+                copied.setStaysTransformed(true);
+                copied.setState(CardStateName.Backside, false);
+                copied.setBackSide(true);
             } else if (copied.getCurrentStateName() != CardStateName.PreparedSpell) {
                 // when a card leaves the battlefield, ensure it's in its original state
                 copied.setState(CardStateName.Original, false);
@@ -683,6 +691,7 @@ public class GameAction {
             // order here is important so it doesn't unattach cards that might have returned from UntilHostLeavesPlay
             unattachCardLeavingBattlefield(copied, c);
             c.runLeavesPlayCommands();
+            separateBackFace(c, zoneTo, cause);
 
             if (copied.isTapped()) {
                 copied.setTapped(false); //untap card after it leaves the battlefield if needed
@@ -938,6 +947,19 @@ public class GameAction {
                 p.setEmbodied(null);
             }
             c.setEmbodiedBy(null);
+        }
+    }
+
+    /** Werewhat: leaving the battlefield, the card that was its back face separates and goes to the same zone. */
+    private void separateBackFace(final Card old, final Zone zoneTo, final SpellAbility cause) {
+        final Card face = old.getBackFaceSource();
+        if (face == null) {
+            return;
+        }
+        old.setBackFaceSource(null);
+        final Card current = game.getCardState(face, null);
+        if (current != null && current.isInZone(ZoneType.Exile) && current.equalsWithGameTimestamp(face)) {
+            moveTo(zoneTo.getZoneType(), current, cause, null);
         }
     }
 
@@ -1993,6 +2015,12 @@ public class GameAction {
                     // checked", so it has to lapse now or the creature would die the moment the protection ends
                     c.setHasBeenDealtDeathtouchDamage(false);
                 }
+                if (c.isCreature() && c.getDamage() > 0
+                        && forge.game.staticability.StaticAbilityDamageLowersToughness.applies(c)) {
+                    c.addPTBoost(0, -c.getDamage(), game.getNextTimestamp(), 0);
+                    c.setDamage(0);
+                    c.updatePTforView();
+                }
                 if (c.isCreature() && !ignoresSBA) {
                     // Rule 704.5f - Put into grave (no regeneration) for toughness <= 0
                     // (1/2 toughness is above 0, so Little Girl doesn't die on arrival)
@@ -2190,6 +2218,7 @@ public class GameAction {
         for (final Player p : game.getPlayers()) {
             p.updateWayBehind();
         }
+        forge.game.player.Positioning.sync(game);
         game.getTriggerHandler().resetActiveTriggers();
         // Resetting triggers may result in needing to check static abilities again. For example,
         // if the legendary rule was invoked on a Thespian's Stage that just copied Dark Depths, the
@@ -3530,6 +3559,9 @@ public class GameAction {
                 if (c.hasKeyword(Keyword.LEGACY) && c.getLegacyWord() == null && !c.isInZone(ZoneType.Sideboard)) {
                     writeLegacyWord(takesAction, c, all);
                 }
+                if (c.hasSVar("BuildOptions") && takesAction.equals(c.getOwner())) {
+                    buildCard(takesAction, c, all);
+                }
                 if (c.hasSVar("DeckChoiceA") && takesAction.equals(c.getOwner())) {
                     chooseDeckOptions(takesAction, c, all);
                 }
@@ -3857,6 +3889,89 @@ public class GameAction {
         }
         owner.setGameNote("SecretMission:" + c.getId(), pick + 1);
         game.getGameLog().add(GameLogEntryType.INFORMATION, owner + " secretly chooses a mission for " + c + ".");
+    }
+
+    /**
+     * Built Bear's legacy: options circled while building the deck - asked once per match as the game begins, one
+     * set per copy (user ruling); the AI circles a fixed build. SVar:BuildOptions lists "points|label|kind|value" per
+     * option (an Ability or Trigger value names an SVar; a Trigger's fifth part names its Execute SVar). One point is free; every two more raise the mana cost by {1}. What's circled is printed (copiable).
+     */
+    public void buildCard(final Player owner, final Card c, final CardCollectionView all) {
+        final List<Card> copies = CardLists.filter(all, x -> x.getName().equals(c.getName()) && x.getOwner().equals(owner));
+        copies.sort(java.util.Comparator.comparingInt(Card::getId));
+        final String key = "Build:" + c.getName() + "#" + copies.indexOf(c);
+        final List<String[]> options = Lists.newArrayList();
+        for (final String o : c.getSVar("BuildOptions").split(";")) {
+            options.add(o.split("\\|"));
+        }
+        @SuppressWarnings("unchecked")
+        List<Integer> picked = owner.getMatchNote(key) instanceof List<?> l ? (List<Integer>) l : null;
+        if (picked == null) {
+            picked = Lists.newArrayList();
+            if (owner.isAI()) {
+                for (final String i : c.getSVar("BuildAIPicks").split(",")) {
+                    picked.add(Integer.parseInt(i));
+                }
+            } else {
+                final List<SpellAbility> labels = Lists.newArrayList();
+                for (final String[] o : options) {
+                    final SpellAbility label = new SpellAbility.EmptySa(c, owner);
+                    label.setDescription(o[1] + " (" + o[0] + (o[0].equals("1") ? " point)" : " points)"));
+                    labels.add(label);
+                }
+                final List<SpellAbility> chosen = owner.getController().chooseSpellAbilitiesForEffect(labels,
+                        new SpellAbility.EmptySa(c, owner), c.getTranslatedName() + ": circle any number of options (1 point is free, then {1} per 2 points)",
+                        labels.size(), java.util.Map.of("MinChoiceAmount", 0));
+                for (final SpellAbility s : chosen) {
+                    picked.add(labels.indexOf(s));
+                }
+            }
+            owner.setMatchNote(key, picked);
+        }
+        applyBuild(c, picked);
+        game.getGameLog().add(GameLogEntryType.INFORMATION, owner + " built " + c + ".");
+    }
+
+    /** Built Bear: the circled options, printed on this object (again after each zone change, see changeZone). */
+    public static void applyBuild(final Card c, final List<Integer> picked) {
+        final List<String[]> options = Lists.newArrayList();
+        for (final String o : c.getSVar("BuildOptions").split(";")) {
+            options.add(o.split("\\|"));
+        }
+        c.setBuiltOptions(picked);
+        final CardState state = c.getState(CardStateName.Original);
+        int points = 0;
+        for (final int i : picked) {
+            final String[] o = options.get(i);
+            points += Integer.parseInt(o[0]);
+            switch (o[2]) {
+                case "Keyword" -> state.addIntrinsicKeyword(o[3], true);
+                case "Ability" -> state.addSpellAbility(AbilityFactory.getAbility(c.getSVar(o[3]), c));
+                case "PT" -> {
+                    final String[] pt = o[3].split("/");
+                    state.setBasePower(state.getBasePower() + Integer.parseInt(pt[0]));
+                    state.setBaseToughness(state.getBaseToughness() + Integer.parseInt(pt[1]));
+                }
+                case "Trigger" -> {
+                    final forge.game.trigger.Trigger t = forge.game.trigger.TriggerHandler.parseTrigger(c.getSVar(o[3]), c, true);
+                    t.setOverridingAbility(AbilityFactory.getAbility(c.getSVar(o[4]), c));
+                    state.addTrigger(t);
+                }
+                default -> { }
+            }
+        }
+        final int extra = points / 2;
+        if (extra > 0) {
+            final forge.card.mana.ManaCost cost = forge.card.mana.ManaCost.combine(state.getManaCost(), forge.card.mana.ManaCost.get(extra));
+            state.setManaCost(cost);
+            for (final SpellAbility sa : state.getSpellAbilities()) {
+                if (sa.isSpell()) {
+                    sa.setPayCosts(new forge.game.cost.Cost(cost, false));
+                }
+            }
+        }
+        c.updateKeywordsCache(state);
+        c.updateStateForView();
     }
 
     /** The options chosen for this card's name by its owner (Convention Maro), or none. */

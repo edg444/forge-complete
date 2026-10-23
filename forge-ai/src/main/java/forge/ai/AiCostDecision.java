@@ -452,6 +452,14 @@ public class AiCostDecision extends CostDecisionMakerBase {
     }
 
     @Override
+    public PaymentDecision visit(CostChangeToughness cost) {
+        if (!cost.canPay(ability, player, isEffect())) {
+            return null;
+        }
+        return PaymentDecision.number(cost.getAbilityAmount(ability));
+    }
+
+    @Override
     public PaymentDecision visit(CostGiveUpLandDrop cost) {
         if (!cost.canPay(ability, player, isEffect())) {
             return null;

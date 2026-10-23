@@ -1,0 +1,19 @@
+Name:Plant a Sapling
+ManaCost:G
+Types:Sorcery
+A:SP$ ChangeZone | Origin$ Library | Destination$ Hand | ChangeType$ Land.Basic | ChangeNum$ 1 | SubAbility$ DBShuffleIn | SpellDescription$ Search your library for a basic land card, reveal it, put it into your hand, then shuffle this spell into its owner's library transformed. (For playtesting purposes, put it into its sleeve upside down.)
+# shuffling it in transformed is the only way to its back face, which then stays up (ChangeZone StaysTransformed$)
+SVar:DBShuffleIn:DB$ ChangeZone | Defined$ Self | Origin$ Stack | Destination$ Library | Shuffle$ True | StaysTransformed$ True
+AlternateMode:DoubleFaced
+Oracle:Search your library for a basic land card, reveal it, put it into your hand, then shuffle this spell into its owner's library transformed. (For playtesting purposes, put it into its sleeve upside down.)
+
+ALTERNATE
+
+Name:Fully-Grown Treefolk
+ManaCost:G
+Colors:green
+Types:Creature Treefolk
+PT:*/*
+S:Mode$ Continuous | EffectZone$ All | CharacteristicDefining$ True | SetPower$ X | SetToughness$ X | Description$ Fully-Grown Treefolk's power and toughness are each equal to the number of lands you control.
+SVar:X:Count$Valid Land.YouCtrl
+Oracle:(You can't cast this face unless it's been transformed by the front face.)\nFully-Grown Treefolk's power and toughness are each equal to the number of lands you control.

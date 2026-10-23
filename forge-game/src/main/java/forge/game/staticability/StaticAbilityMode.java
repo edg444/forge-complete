@@ -109,6 +109,8 @@ public enum StaticAbilityMode {
     CantBeChosen,
     // Intangible Vibes
     AreTokens,
+    // Planeswalkerificate
+    DamageLowersToughness,
     // Pokey, the Scallywagg
     CoinFlipAsD20,
     D20AsCoinFlip,

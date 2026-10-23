@@ -1,0 +1,15 @@
+Name:A Girl and Her Dogs
+ManaCost:4 W
+Types:Creature Human
+PT:3/3
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDog | TriggerDescription$ When CARDNAME enters the battlefield and at the beginning of your upkeep, create a 1/1 white legendary Dog creature token and name it.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDog | Secondary$ True | TriggerDescription$ When CARDNAME enters the battlefield and at the beginning of your upkeep, create a 1/1 white legendary Dog creature token and name it.
+# any name goes, a Magic card's too - and the legend rule still applies to two Dogs with one name (rulings)
+SVar:TrigDog:DB$ Token | TokenScript$ w_1_1_dog_legendary | RememberTokens$ True | SubAbility$ DBName
+SVar:DBName:DB$ NameIt | Defined$ Remembered | Prompt$ Name your Dog: | AINames$ Booster;Bryn;Comet;Jasper;Killer;Pax;Pi;Ranger;Rocket;Sgt. Pepper;Isamaru, Hound of Konda | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ Whenever CARDNAME attacks, it gets +1/+1 until end of turn for each legendary creature you control.
+SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +X | NumDef$ +X
+SVar:X:Count$Valid Creature.Legendary+YouCtrl
+DeckHas:Ability$Token & Type$Dog
+Oracle:When A Girl and Her Dogs enters the battlefield and at the beginning of your upkeep, create a 1/1 white legendary Dog creature token and name it.\nWhenever A Girl and Her Dogs attacks, it gets +1/+1 until end of turn for each legendary creature you control.

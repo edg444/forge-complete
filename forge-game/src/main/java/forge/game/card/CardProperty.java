@@ -3089,6 +3089,11 @@ public class CardProperty {
             if (card.getBank() != 2) {
                 return false;
             }
+        } else if (property.equals("AdjacentToSource")) {
+            // Defender of the Queue: right next to the source in its controller's line
+            if (!forge.game.player.Positioning.adjacent(card, source)) {
+                return false;
+            }
         } else if (property.startsWith("inBandGE")) {
             // Chatzuk, Mighty Guitarist: attacking in a band of at least N creatures
             final forge.game.combat.Combat bandCombat = card.getGame().getCombat();

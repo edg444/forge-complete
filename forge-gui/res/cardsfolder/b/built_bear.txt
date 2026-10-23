@@ -1,0 +1,14 @@
+Name:Built Bear
+ManaCost:1 G
+Types:Creature Bear
+PT:2/2
+# circled once per match as the game begins, one set per copy (user ruling); circled options are printed and copiable,
+# and every two points past the free one raise the mana cost by {1} (GameAction.buildCard). The AI circles
+# deathtouch, reach and vigilance for {2}{G}.
+SVar:BuildOptions:1|Flash|Keyword|Flash;1|Deathtouch|Keyword|Deathtouch;1|Reach|Keyword|Reach;1|Vigilance|Keyword|Vigilance;1|Ward {2}|Keyword|Ward:2;2|{T}: Add one mana of any color.|Ability|BuildMana;3|+1/+1|PT|1/1;3|+0/+2|PT|0/2;4|When this creature enters the battlefield, draw a card.|Trigger|BuildETB|BuildDraw
+SVar:BuildAIPicks:1,2,3
+SVar:BuildMana:AB$ Mana | Cost$ T | Produced$ Any | SpellDescription$ Add one mana of any color.
+SVar:BuildETB:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ BuildDraw | TriggerDescription$ When this creature enters the battlefield, draw a card.
+SVar:BuildDraw:DB$ Draw
+Text:Legacy (During deckbuilding, circle any number of the following. You can spend 1 point for free. For every 2 points spent beyond that, increase this card's mana cost by {1}.)\n1 point each → Flash; deathtouch; reach; vigilance; or ward {2}\n2 points → {T}: Add one mana of any color.\n3 points each → +1/+1; or +0/+2\n4 points → When this creature enters the battlefield, draw a card.
+Oracle:Legacy (During deckbuilding, circle any number of the following. You can spend 1 point for free. For every 2 points spent beyond that, increase this card's mana cost by {1}.)\n1 point each → Flash; deathtouch; reach; vigilance; or ward {2}\n2 points → {T}: Add one mana of any color.\n3 points each → +1/+1; or +0/+2\n4 points → When this creature enters the battlefield, draw a card.

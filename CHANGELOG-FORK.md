@@ -312,6 +312,22 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Mystery Booster 2 playtest cards (MB2), part 10: Omnipresent Impostor, A Girl and Her Dogs, Alberix, the Trade
+  Planet, Don't Worry About It, Plant a Sapling // Fully-Grown Treefolk, Planeswalkerificate, Werewhat, Defender of the
+  Queue, Built Bear.**
+  - `SVar:HasAllCardNames` (shares every card name, faces included, not tokens') and `SVar:SearchStandIn` (can be
+    found in place of any card searched for in its owner's library). The basic supertype on any card allows any number
+    in a deck.
+  - NameIt `AINames$` (the AI takes the first name it doesn't already control). An Aura can enchant a card in hand
+    (`AuraSpell` with `TgtZone$ Hand`).
+  - ChangeZone `StaysTransformed$`: a transforming card shuffled in transformed keeps its back face up from zone to zone
+    and can be cast as it.
+  - Costs `AddToughness<N>` / `SubToughness<N|X>` (loyalty costs on toughness) and static `DamageLowersToughness`.
+  - New effect `BecomeBackFace` (a single-faced permanent gets an exiled card as its back face; they separate on
+    leaving). Keyword `Positioning` (a left-to-right line kept with state-based actions; property `AdjacentToSource`).
+  - `SVar:BuildOptions` / `BuildAIPicks`: options picked once per match as the game begins, printed on the card and
+    re-applied after each zone change, raising the mana cost {1} per two points past the free one.
+
 - **Mystery Booster 2 playtest cards (MB2), part 9: Kozilek, Compleated, Pokey, the Scallywagg, Chatzuk, Mighty
   Guitarist, Luxior, Ignited, Orb of Origin, Boulder Jockey, Keeper of the Crown, All-Star Kicker.**
   - New mana symbols: `{C/P}` (colorless Phyrexian; a gray icon made from the white Phyrexian one, in a spare spot of
