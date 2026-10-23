@@ -320,6 +320,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **AI for cards marked `AI:RemoveDeck:All`** (2,510 at the start, list and probe in `_tools/noai-audit`). The flag
+  keeps a card out of AI decks and makes `AiController` skip every spell and ability it has, so the AI never used
+  these at all. Each card below now has AI that uses it sensibly, and its flag is gone.
+  - *Switching power and toughness* (`SwitchPowerToughnessAiTest`): About Face, Aquamoeba, Calcite Snapper, Crag
+    Puca, Crookclaw Transmuter, Dwarven Thaumaturgist, Fluxcharger, Inside Out, Mannichi, the Fevered Dream,
+    Merfolk Thaumaturgist, Myr Quadropod, Strange Inversion, Transmutation, Turtleshell Changeling, Twisted Image.
+    `PumpAi` now treats a plain switch as its own effect: it kills a creature whose power is 0 or no more than its
+    damage, switches combatants when that saves or kills one (or adds lethal damage), cycles the cantrip switches
+    on a creature whose power equals its toughness, and won't switch a self-switcher back the same turn. Mass
+    switching (Mannichi) goes off when it kills more of the opponent's creatures than the AI's. This replaces the
+    old `AILogic$ SwitchPT`, which only limited the switch to combat.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

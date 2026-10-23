@@ -47,6 +47,19 @@ public class PumpAllAi extends PumpAiBase {
             }
         }
         
+        if (PumpAi.isPlainSwitch(sa)) {
+            // Mannichi: worth it when it kills more of theirs than ours (new toughness = old power)
+            int value = 0;
+            for (Card c : CardLists.getValidCards(game.getCardsIn(ZoneType.Battlefield), sa.getParamOrDefault("ValidCards", ""),
+                    source.getController(), source, sa)) {
+                if (c.isCreature() && c.getNetPower() != c.getNetToughness() && (c.getNetPower() <= 0
+                        || (c.getDamage() >= c.getNetPower() && !c.hasKeyword(Keyword.INDESTRUCTIBLE)))) {
+                    value += (c.getController().isOpponentOf(ai) ? 1 : -1) * ComputerUtilCard.evaluateCreature(c);
+                }
+            }
+            return value > 0 ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+
         final Player opp = ai.getStrongestOpponent();
 
         if (sa.usesTargeting()) {
