@@ -2,8 +2,11 @@ Name:Zombie Master
 ManaCost:1 B B
 Types:Creature Zombie
 PT:2/3
-S:Mode$ Continuous | Affected$ Creature.Zombie+Other | AddKeyword$ Landwalk:Swamp | Description$ Other Zombie creatures have swampwalk. (They can't be blocked as long as defending player controls a Swamp.)
-S:Mode$ Continuous | Affected$ Card.Zombie+Other | AddAbility$ Regenerate | Description$ Other Zombies have "{B}: Regenerate this permanent."
+S:Mode$ Continuous | Affected$ Creature.Zombie+Other | AddKeyword$ Landwalk:Swamp | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20221128 | Description$ Other Zombie creatures have swampwalk. (They can't be blocked as long as defending player controls a Swamp.)
+S:Mode$ Continuous | Affected$ Card.Zombie+Other | AddAbility$ Regenerate | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20221128 | Description$ Other Zombies have "{B}: Regenerate this permanent."
+# R&D's Secret Lair: through Sixth Edition it read "All zombies in play", itself included.
+S:Mode$ Continuous | Affected$ Creature.Zombie | AddKeyword$ Landwalk:Swamp | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20221128 | ActiveDescription$ (As printed) All Zombies have swampwalk and "{B}: Regenerate this permanent," this one included.
+S:Mode$ Continuous | Affected$ Card.Zombie | AddAbility$ Regenerate | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20221128
 SVar:Regenerate:AB$ Regenerate | Cost$ B | SpellDescription$ Regenerate this permanent.
 SVar:PlayMain1:TRUE
 DeckHas:Keyword$Landwalk:Swamp

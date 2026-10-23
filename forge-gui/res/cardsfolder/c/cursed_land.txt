@@ -3,6 +3,9 @@ ManaCost:2 B B
 Types:Enchantment Aura
 K:Enchant:Land
 SVar:AttachAILogic:Curse
-T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ Player.EnchantedController | TriggerZones$ Battlefield | Execute$ TrigDamage | TriggerDescription$ At the beginning of the upkeep of enchanted land's controller, this Aura deals 1 damage to that player.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ Player.EnchantedController | TriggerZones$ Battlefield | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19940411 | Execute$ TrigDamage | TriggerDescription$ At the beginning of the upkeep of enchanted land's controller, this Aura deals 1 damage to that player.
+# R&D's Secret Lair: before Revised the damage comes during each upkeep, not just in that player's upkeep.
+T:Mode$ Phase | Phase$ Upkeep | TriggerZones$ Battlefield | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19940411 | Execute$ TrigPrintedDamage | TriggerDescription$ (As printed) This Aura deals 1 damage to the enchanted permanent's controller during each upkeep.
+SVar:TrigPrintedDamage:DB$ DealDamage | Defined$ EnchantedController | NumDmg$ 1
 SVar:TrigDamage:DB$ DealDamage | Defined$ TriggeredPlayer | NumDmg$ 1
 Oracle:Enchant land\nAt the beginning of the upkeep of enchanted land's controller, this Aura deals 1 damage to that player.

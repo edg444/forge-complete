@@ -6,6 +6,9 @@ SVar:AttachAILogic:Pump
 S:Mode$ Continuous | AffectedDefined$ Enchanted | Affected$ Land | AddKeyword$ Indestructible | Description$ Enchanted land has indestructible.
 S:Mode$ CantAttach | ValidCard$ Aura.Other | Target$ Land.EnchantedBy | Description$ Enchanted land can't be enchanted by other Auras.
 SVar:NonStackingAttachEffect:True
+# R&D's Secret Lair: the printed card (before Time Spiral) first destroys all enchantments on the land.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20061006 | Execute$ TrigPrintedDestroy | TriggerDescription$ (As printed) All enchantments on target land are destroyed.
+SVar:TrigPrintedDestroy:DB$ DestroyAll | ValidCards$ Enchantment.Other+AttachedTo Card.EnchantedBy
 AI:RemoveDeck:Random
 DeckHas:Keyword$Indestructible
 Oracle:Enchant land\nEnchanted land has indestructible and can't be enchanted by other Auras.

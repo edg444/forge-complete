@@ -2,7 +2,9 @@ Name:Lord of Atlantis
 ManaCost:U U
 Types:Creature Merfolk
 PT:2/2
-S:Mode$ Continuous | Affected$ Card.Merfolk+Other | AddPower$ 1 | AddToughness$ 1 | AddKeyword$ Landwalk:Island | Description$ Other Merfolk get +1/+1 and have islandwalk. (They can't be blocked as long as defending player controls an Island.)
+S:Mode$ Continuous | Affected$ Card.Merfolk+Other | AddPower$ 1 | AddToughness$ 1 | AddKeyword$ Landwalk:Island | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20061006 | Description$ Other Merfolk get +1/+1 and have islandwalk. (They can't be blocked as long as defending player controls an Island.)
+# R&D's Secret Lair: before Time Spiral it read "All Merfolk in play", itself included.
+S:Mode$ Continuous | Affected$ Card.Merfolk | AddPower$ 1 | AddToughness$ 1 | AddKeyword$ Landwalk:Island | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20061006 | ActiveDescription$ (As printed) All Merfolk get +1/+1 and have islandwalk, this one included.
 SVar:PlayMain1:TRUE
 DeckHas:Keyword$Landwalk:Island
 DeckHints:Type$Merfolk

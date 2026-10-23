@@ -2,7 +2,12 @@ Name:Demonic Attorney
 ManaCost:1 B B
 Types:Sorcery
 K:Remove CARDNAME from your deck before playing if you're not playing for ante.
-A:SP$ Dig | Defined$ Player | DigNum$ 1 | ChangeNum$ All | DestinationZone$ Ante | SpellDescription$ Each player antes the top card of their library.
+A:SP$ RepeatEach | RepeatPlayers$ Opponent | RepeatSubAbility$ DBConcede | ConditionDefined$ Self | ConditionPresent$ Card.Self+PrintedTextActive+PrintedBefore 19950401 | SubAbility$ DBAnte | StackDescription$ SpellDescription | SpellDescription$ Each player antes the top card of their library.
+# R&D's Secret Lair: the printed card begins "If opponent doesn't concede the game immediately".
+SVar:DBConcede:DB$ GenericChoice | Defined$ Remembered | Choices$ DBKeepPlaying,DBConcedeGame | StackDescription$ None
+SVar:DBKeepPlaying:DB$ Cleanup | SpellDescription$ Don't concede.
+SVar:DBConcedeGame:DB$ LosesGame | Defined$ Remembered | SpellDescription$ Concede the game.
+SVar:DBAnte:DB$ Dig | Defined$ Player | DigNum$ 1 | ChangeNum$ All | DestinationZone$ Ante
 AI:RemoveDeck:All
 AI:RemoveDeck:Random
 Oracle:Remove this card from your deck before playing if you're not playing for ante.\nEach player antes the top card of their library.

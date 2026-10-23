@@ -4,7 +4,9 @@ Types:Enchantment Aura
 K:Enchant:Artifact
 SVar:AttachAITgts:Card.nonCreature
 SVar:AttachAILogic:Animate
-S:Mode$ Continuous | AffectedDefined$ AttachedBy Self | Affected$ Card.nonCreature | SetPower$ AffectedX | SetToughness$ AffectedX | AddType$ Creature | Description$ As long as enchanted artifact isn't a creature, it's an artifact creature with power and toughness each equal to its mana value.
+S:Mode$ Continuous | AffectedDefined$ AttachedBy Self | Affected$ Card.nonCreature | SetPower$ AffectedX | SetToughness$ AffectedX | AddType$ Creature | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19940411 | Description$ As long as enchanted artifact isn't a creature, it's an artifact creature with power and toughness each equal to its mana value.
+# R&D's Secret Lair: before Revised it had no "isn't a creature" clause, so it sets an artifact creature's P/T too.
+S:Mode$ Continuous | AffectedDefined$ AttachedBy Self | SetPower$ AffectedX | SetToughness$ AffectedX | AddType$ Creature | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19940411 | ActiveDescription$ (As printed) This also affects an artifact that's already a creature.
 SVar:AffectedX:Count$CardManaCost
 AI:RemoveDeck:Random
 DeckNeeds:Type$Artifact

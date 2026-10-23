@@ -4,4 +4,7 @@ Types:Creature Shapeshifter
 PT:0/0
 K:ETBReplacement:Copy:DBCopy:Optional
 SVar:DBCopy:DB$ Clone | Choices$ Creature.Other | SpellDescription$ You may have this creature enter as a copy of any creature on the battlefield.
+# R&D's Secret Lair: printings before Onslaught say "Clone cannot be played if there are no creatures in play."
+S:Mode$ CantBeCast | ValidCard$ Card.Self | EffectZone$ All | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20021007 | PresentZone$ Hand,Stack,Graveyard,Exile,Library,Command,Battlefield | CheckSVar$ PrintedCreatures | SVarCompare$ EQ0 | ActiveDescription$ (As printed) This spell can't be cast while there are no creatures on the battlefield.
+SVar:PrintedCreatures:Count$Valid Creature
 Oracle:You may have this creature enter as a copy of any creature on the battlefield.

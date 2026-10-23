@@ -2,6 +2,8 @@ Name:Goblin Balloon Brigade
 ManaCost:R
 Types:Creature Goblin Warrior
 PT:1/1
-A:AB$ Pump | Cost$ R | KW$ Flying | Defined$ Self | SpellDescription$ This creature gains flying until end of turn.
+A:AB$ Pump | Cost$ R | KW$ Flying | Defined$ Self | ConditionDefined$ Self | ConditionPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19940411 | SubAbility$ DBPrintedPumpAll | SpellDescription$ This creature gains flying until end of turn.
+# R&D's Secret Lair: before Revised it read "{R} Goblins gain flying ability until end of turn." - all of them.
+SVar:DBPrintedPumpAll:DB$ PumpAll | ValidCards$ Creature.Goblin | KW$ Flying | ConditionDefined$ Self | ConditionPresent$ Card.Self+PrintedTextActive+PrintedBefore 19940411 | StackDescription$ None
 DeckHas:Keyword$Flying
 Oracle:{R}: This creature gains flying until end of turn.

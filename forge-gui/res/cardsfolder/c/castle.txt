@@ -1,5 +1,7 @@
 Name:Castle
 ManaCost:3 W
 Types:Enchantment
-S:Mode$ Continuous | Affected$ Creature.untapped+YouCtrl | AddToughness$ 2 | Description$ Untapped creatures you control get +0/+2.
+S:Mode$ Continuous | Affected$ Creature.untapped+YouCtrl | AddToughness$ 2 | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19990421 | Description$ Untapped creatures you control get +0/+2.
+# R&D's Secret Lair: printings before Sixth Edition add "Attacking creatures lose this bonus."
+S:Mode$ Continuous | Affected$ Creature.untapped+YouCtrl+!attacking | AddToughness$ 2 | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19990421 | ActiveDescription$ (As printed) Attacking creatures lose this bonus.
 Oracle:Untapped creatures you control get +0/+2.

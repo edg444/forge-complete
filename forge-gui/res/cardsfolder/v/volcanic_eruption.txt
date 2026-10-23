@@ -2,7 +2,9 @@ Name:Volcanic Eruption
 ManaCost:X U U U
 Types:Sorcery
 A:SP$ Destroy | TargetMin$ X | TargetMax$ X | ValidTgts$ Mountain | TgtPrompt$ Select target Mountain | RememberTargets$ True | SpellDescription$ Destroy X target Mountains. CARDNAME deals damage to each creature and each player equal to the number of Mountains put into a graveyard this way. | SubAbility$ DBDamage
-SVar:DBDamage:DB$ DamageAll | NumDmg$ Y | ValidCards$ Creature | ValidPlayers$ Player | ValidDescription$ each creature and each player. | SubAbility$ DBCleanup
+SVar:DBDamage:DB$ DamageAll | NumDmg$ Y | ValidCards$ Creature | ValidPlayers$ Player | ValidDescription$ each creature and each player. | ConditionDefined$ Self | ConditionPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19940411 | SubAbility$ DBPrintedDamage
+# R&D's Secret Lair: before Revised it deals X damage, however many Mountains actually went to the graveyard.
+SVar:DBPrintedDamage:DB$ DamageAll | NumDmg$ X | ValidCards$ Creature | ValidPlayers$ Player | ValidDescription$ each creature and each player. | ConditionDefined$ Self | ConditionPresent$ Card.Self+PrintedTextActive+PrintedBefore 19940411 | StackDescription$ None | SubAbility$ DBCleanup
 SVar:X:Count$xPaid
 SVar:Y:Count$ValidGraveyard Mountain.IsRemembered
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True

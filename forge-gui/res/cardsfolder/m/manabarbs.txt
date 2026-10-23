@@ -1,7 +1,10 @@
 Name:Manabarbs
 ManaCost:3 R
 Types:Enchantment
-T:Mode$ TapsForMana | ValidCard$ Land | TriggerZones$ Battlefield | Execute$ TrigDamage | TriggerDescription$ Whenever a player taps a land for mana, this enchantment deals 1 damage to that player.
+T:Mode$ TapsForMana | ValidCard$ Land | TriggerZones$ Battlefield | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19940411 | Execute$ TrigDamage | TriggerDescription$ Whenever a player taps a land for mana, this enchantment deals 1 damage to that player.
+# R&D's Secret Lair: before Revised it read "Whenever any land is tapped" - for mana or not - and hit the land's controller.
+T:Mode$ Taps | ValidCard$ Land | TriggerZones$ Battlefield | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19940411 | Execute$ TrigPrintedDamage | TriggerDescription$ (As printed) Whenever any land is tapped, this enchantment deals 1 damage to the land's controller.
+SVar:TrigPrintedDamage:DB$ DealDamage | Defined$ TriggeredCardController | NumDmg$ 1
 SVar:TrigDamage:DB$ DealDamage | Defined$ TriggeredActivator | NumDmg$ 1
 AI:RemoveDeck:Random
 Oracle:Whenever a player taps a land for mana, this enchantment deals 1 damage to that player.

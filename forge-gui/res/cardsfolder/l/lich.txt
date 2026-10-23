@@ -8,13 +8,23 @@ R:Event$ GameLoss | ActiveZones$ Battlefield | ValidPlayer$ You | ValidLoseReaso
 R:Event$ GainLife | ActiveZones$ Battlefield | ValidPlayer$ You | AILogic$ LichDraw | ReplaceWith$ Draw | Description$ If you would gain life, draw that many cards instead.
 SVar:Draw:DB$ Draw | Defined$ You | NumCards$ X
 SVar:X:ReplaceCount$LifeGained
-T:Mode$ DamageDoneOnce | ValidTarget$ You | TriggerZones$ Battlefield | Execute$ TrigLoseOrSac | TriggerDescription$ Whenever you're dealt damage, sacrifice that many nontoken permanents. If you can't, you lose the game.
+T:Mode$ DamageDoneOnce | ValidTarget$ You | TriggerZones$ Battlefield | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19940411 | Execute$ TrigLoseOrSac | TriggerDescription$ Whenever you're dealt damage, sacrifice that many nontoken permanents. If you can't, you lose the game.
 SVar:TrigLoseOrSac:DB$ LosesGame | Defined$ You | ConditionCheckSVar$ PermanentsToSac | ConditionSVarCompare$ GTY | SubAbility$ DBSacrificePerm
 SVar:DBSacrificePerm:DB$ Sacrifice | Amount$ PermanentsToSac | SacValid$ Permanent.!token | ConditionCheckSVar$ PermanentsToSac | ConditionSVarCompare$ LEY
 SVar:PermanentsToSac:TriggerCount$DamageAmount
 SVar:Y:Count$Valid Permanent.!token+YouCtrl
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigLose | TriggerDescription$ When this enchantment is put into a graveyard from the battlefield, you lose the game.
-SVar:TrigLose:DB$ LosesGame | Defined$ You
+SVar:TrigLose:DB$ LosesGame | Defined$ You | ConditionDefined$ Self | ConditionPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19940411
+# R&D's Secret Lair: as printed each point of damage DESTROYS one of your cards in play (no regeneration),
+# you lose if a point goes unpaid, and only Lich's destruction - not its sacrifice - loses you the game.
+T:Mode$ DamageDoneOnce | ValidTarget$ You | TriggerZones$ Battlefield | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19940411 | Execute$ TrigPrintedDestroy | TriggerDescription$ (As printed) For each point of damage you suffer, you must destroy one of your cards in play. Creatures destroyed in this way can't be regenerated. You lose if you suffer a point of damage without sending a card to the graveyard.
+SVar:TrigPrintedDestroy:DB$ ChooseCard | Defined$ You | Choices$ Permanent.!token+YouCtrl | Amount$ PermanentsToSac | Mandatory$ True | ChoiceTitle$ Choose a card to destroy for each point of damage | SubAbility$ DBPrintedDestroy
+SVar:DBPrintedDestroy:DB$ Destroy | Defined$ ChosenCard | NoRegen$ True | RememberDestroyed$ True | SubAbility$ DBPrintedLose
+SVar:DBPrintedLose:DB$ LosesGame | Defined$ You | ConditionCheckSVar$ PrintedDestroyed | ConditionSVarCompare$ LTPermanentsToSac | SubAbility$ DBPrintedCleanup
+SVar:DBPrintedCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
+SVar:PrintedDestroyed:Count$ValidGraveyard Card.IsRemembered
+T:Mode$ Destroyed | ValidCard$ Card.Self | Execute$ TrigPrintedLose | TriggerDescription$ (As printed) You lose if this enchantment is destroyed.
+SVar:TrigPrintedLose:DB$ LosesGame | Defined$ You | ConditionDefined$ Self | ConditionPresent$ Card.Self+PrintedTextActive+PrintedBefore 19940411
 AI:RemoveDeck:Random
 SVar:NonStackingEffect:True
 Oracle:As this enchantment enters, you lose life equal to your life total.\nYou don't lose the game for having 0 or less life.\nIf you would gain life, draw that many cards instead.\nWhenever you're dealt damage, sacrifice that many nontoken permanents. If you can't, you lose the game.\nWhen this enchantment is put into a graveyard from the battlefield, you lose the game.

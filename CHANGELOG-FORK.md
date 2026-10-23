@@ -321,6 +321,44 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Mana Vault's draw-step trigger had no `TriggerZones$`; Ivory Cup's life-gain deck hint was filed as a
     keyword; in-game text: Chaoslace's reminder, Flight's stray reminder, and the trigger Farmstead grants (it
     read "Enchanted land has ..." on the land itself).
+- **R&D's Secret Lair: Limited Edition Alpha printed text** (`SecretLairAlphaPrintedTextTest`). Every LEA card's
+  printed text was compared with its Oracle text using MTGJSON `originalText` for every paper printing (Scryfall
+  lists the printings); each change below is gated on `PrintedTextActive` plus `PrintedBefore` the first printing
+  that carried the corrected text. 30th Anniversary Edition reprints use modern wording (mtg.wiki), so the cutoffs
+  treat them as modern. Printed variants of statics use `ActiveDescription$`, so they show only while they apply.
+  - *Castle* (before 6ED): attacking creatures lose the bonus.
+  - *Consecrate Land* (before TSB): destroys the other enchantments on the land as it enters.
+  - *Animate Artifact* (before 3ED): also sets an artifact creature's P/T to its mana value.
+  - *Clone* (before ONS): can't be cast while no creatures are on the battlefield.
+  - *Volcanic Eruption* (before 3ED): deals X damage, however many Mountains actually died.
+  - *Nether Shadow* (before 3ED): returns only if you pay its casting cost, {B}{B}.
+  - *Lord of Atlantis* (before TSB) and *Zombie Master* (before 30A): "All Merfolk/Zombies in play", themselves
+    included.
+  - *Earthbind* (before 3ED): can target only a flying creature (a targeting restriction, not Enchant, or it would
+    fall off once it removed the flying).
+  - *Goblin Balloon Brigade* (before 3ED): `{R}` gives every Goblin flying.
+  - *Manabarbs* (before 3ED): any land becoming tapped, for mana or not, damages that land's controller.
+  - *Living Artifact* (before 4ED): counts life lost rather than damage, and the counters go on the artifact.
+  - *Kormus Bell* (before 4ED): the Swamps are colorless.
+  - *Mana Vault* (before 3ED): `{4}: Untap` works at any time instead of the upkeep trigger. Its printed damage
+    ("if Mana Vault remains tapped during upkeep") is what the draw-step trigger already models.
+  - *Island Sanctuary* (Alpha only; Beta changed it): creatures without flying or islandwalk can't damage you,
+    rather than not attack you.
+  - *White Ward* (before 4ED): nothing exempts White Ward from the protection, so it falls off.
+  - *Gloom* (before 3ED): the extra {3} applies to Circles of Protection, whatever their color, not to white
+    enchantments.
+  - *Warp Artifact*, *Cursed Land*, *Feedback* (before 3ED): damage at every player's upkeep ("each turn" /
+    "each upkeep").
+  - *Demonic Attorney*: each opponent may concede first ("If opponent doesn't concede the game immediately");
+    the AI never does.
+  - *Lich*: each point of damage destroys (not sacrifices) one of your nontoken permanents, without regeneration,
+    and you lose if a point goes unpaid; you lose when Lich is destroyed, not when it's sacrificed.
+  - Left as Oracle on purpose: differences the old rules made moot (Mono Artifact abilities tapped implicitly,
+    tapped Continuous Artifacts were off, walls couldn't attack, "interrupt" speed), "destroyed" vs "sacrificed"
+    on upkeep costs, and texts whose literal reading is unclear: "during upkeep" without "your" (Rock Hydra,
+    Cyclopean Tomb, Black Vise), Reverse Damage's retroactive gain, Sacrifice's "black creature", Personal
+    Incarnation, Camouflage and False Orders' old mechanics, and Lich's missing "you don't lose at 0 life" (the
+    card can't work without it).
 - **Set review: Limited Edition Beta** (its two new cards, Circle of Protection: Black and Volcanic Island) - no
   changes needed.
 - **Set review: Arabian Nights** (all 77 new names) - Giant Tortoise's in-game text now reads as its Oracle text
