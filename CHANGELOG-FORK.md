@@ -1,13 +1,21 @@
 # Fork changelog
 
 Everything this fork adds on top of upstream [Card-Forge/forge](https://github.com/Card-Forge/forge).
-Upstream's own daily changes are **not** listed here — only work done in this fork.
+Upstream's own daily changes are **not** listed here — only work done in this fork, plus a note per
+upstream merge (commit count, conflict resolutions, a short line on what came in).
 
 - `origin` → `https://github.com/edg444/forge-complete.git` (this fork)
 - `upstream` → `https://github.com/Card-Forge/forge.git` (merged in regularly; see README of the workflow below)
 
-Reconstructed 2026-08-06 from git history (`git log --no-merges HEAD --not upstream/master`),
-which remains the authoritative record if this file and the commits ever disagree.
+First reconstructed 2026-08-06 from git history (`git log --no-merges HEAD --not upstream/master`).
+**Completed 2026-10-23:** every fork commit up to `7b3a3caa50e` (574 of them) and every upstream merge
+was checked against this log. Missing changes were added in place, and the thinly summarized early
+history (2026-07-21 to 2026-09-25) was rebuilt from the commits, with big squashed commits listed card
+by card. Upstream merge counts include upstream's own merge commits (`git rev-list --count M^1..M^2`).
+Corrections made then: 2026-08-05 no longer lists Face to Face (upstream since 2021) and uses the
+`Name:` spellings "Stop That" and "Bloodletter"; Maro's Gone Nuts moved 74 doubling scripts to
+`/Doubled`, not 76. Git history remains the authoritative record if this file and the commits ever
+disagree.
 
 **Keeping this current:** add to *Unreleased* as work lands, and date a section when it's built and
 deployed. The one-line rule: if it changed behavior, it belongs here.
@@ -444,10 +452,22 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     stays; the AI owns four random My Little Pony toys.
   - `SVar:PartyIsEveryCreature`: your party is every creature you control and always full, even of one. Full-party
     checks now read `Count$PartyFull` (13 scripts), which equals `Count$Party` without it.
+  - Which card uses what: Applejack the `Toy` effect; Fluttershy `KnownArtObject_tail`; Pinkie Pie
+    `KnownArtObject_smile` and `SVar:PartyIsEveryCreature`.
+  - The 12 existing scripts moved to `Count$PartyFull`: Archpriest of Iona, Coveted Prize, Linvala, Shield of Sea
+    Gate, Multiclass Baldric, Nalia de'Arnise, Nimble Trapfinder, Squad Commander, The Destined Black Mage, The
+    Destined Thief, The Destined Warrior, The Destined White Mage, Wizard from Beyond (Pinkie Pie is the 13th).
+  - `PrintingTraits.txt` regenerated with the two new art objects: 14,604 printing lines gain `smile` and/or
+    `tail`.
+  - **Tests:** `SecretLairPoniesTest`.
 
 ### 2026-10-23, fifteenth deploy (desktop, Android, GitHub) — Mystery Booster 2 playtest complete (parts 6–12); AI and random-deck fixes; Exclude The List setting; 5-commit upstream merge
 
 - **Upstream merge (5 commits).** No conflicts.
+  - Upstream brought: a fix for `Highest`/`Lowest` with a double operator and Mod by zero in `AbilityUtils`
+    (#12371); a "confine mouse in fullscreen" preference for the mobile UI on a computer (#12383; mobile Settings,
+    Adventure settings, `forge-gui-mobile-dev` launcher); Un-card docs list updates, including which version of a
+    plane is implemented.
 
 - **AI: mass zone changes wait for Main 2 on the AI's own turn.** `ChangeZoneAllAi` held a battlefield sweep back
   only in Main 1, so an instant-speed one (Perilous Vault) fired in upkeep and exiled creatures that could have
@@ -468,6 +488,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   make their cards more likely, too), and generated decks swap any List printing for another printing of the card
   (`DeckgenUtil.dropTheListPrintings`, after the card art pass) with the generator's own picks filtered
   (`DeckGeneratorBase.setPrintingFilter`, `PaperCardPredicates.NOT_ON_THE_LIST`).
+  The desktop deck editor's generator (`CDeckgen`) and `DeckProxy` honor it too.
+- **Tests:** `PerilousVaultTimingTest`, `MasterOfWindsAiTest`, `BorderPayoffDeckGenTest`, `ExcludeTheListTest`,
+  `MysteryBooster2Playtest6Test` through `MysteryBooster2Playtest12Test`. `BorderPayoffDeckGenTest` was fixed in the
+  Exclude The List commit: it read borders by edition only, but PrintingTraits knows List reprints of white-bordered
+  cards.
 
 - **Mystery Booster 2 playtest cards (MB2), part 12: Runed Terror - Mystery Booster 2 playtest cards complete.**
   - While a permanent with `SVar:SequentialPhases` is on the battlefield, players take their phases one after another:
@@ -502,6 +527,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     leaving). Keyword `Positioning` (a left-to-right line kept with state-based actions; property `AdjacentToSource`).
   - `SVar:BuildOptions` / `BuildAIPicks`: options picked once per match as the game begins, printed on the card and
     re-applied after each zone change, raising the mana cost {1} per two points past the free one.
+  - New token: legendary 1/1 white Dog (`w_1_1_dog_legendary`, A Girl and Her Dogs).
 
 - **Mystery Booster 2 playtest cards (MB2), part 9: Kozilek, Compleated, Pokey, the Scallywagg, Chatzuk, Mighty
   Guitarist, Luxior, Ignited, Orb of Origin, Boulder Jockey, Keeper of the Crown, All-Star Kicker.**
@@ -513,6 +539,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Static modes `CoinFlipAsD20` and `D20AsCoinFlip` (people are asked; the swapped event isn't swapped back).
   - Card property `inBandGE<N>` and `Count$BandSize.<Defined>`. `SVar:AssistKicker:<n>`: another player may help pay
     the kicker part. New effect `PassTheBall` (a teammate gives a permanent or a card in hand to another).
+  - New token: Boulder, a 3/3 colorless Construct artifact creature (`c_3_3_a_construct_boulder`, Boulder Jockey).
+    MB2 edition adds the creature type Champion and the planeswalker type Luxior; Poly, Mono and Continuous get UI
+    labels.
 
 - **Mystery Booster 2 playtest cards (MB2), part 8: Flavor Disaster, Immersturm Battlefield, Vuzzle Spaceship, Fludge,
   Gunk Guardian (and the Gunk card it makes), Glade of the Pump Spells, Pyromancy 101, Zone of Flame, Meandered
@@ -555,6 +584,22 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Upstream merge (16 commits).** Three conflicts: Defend the Celestus and Infernal Denizen keep upstream's fixes
   (targets you control; `GainControl` `Chooser$`) with the fork's wording, and the mobile MatchScreen keeps both the
   fork's Advanced Tactics grid tab and upstream's compact icon tabs.
+  - Upstream brought: a unified phase indicator and compact menu-bar tabs for the mobile Compact layout
+    (`VUnifiedPhase`, `FMenuBar`, `FMenuTab`; a fix for it clashing with the open stack, new stack icon); organizing
+    Main Deck and Sideboard during desktop drafts (#12046); a refused netplay client no longer reconnects (#12361);
+    rules fixes - `VotePlayer$ Other`, taking the initiative on a lost player, RestartGame beginning-of-combat
+    commands (#12380), checking and redirecting a spell's targets (#12378), three SwitchBlockEffect defects
+    (Sorrow's Path, General Jarkeld; #12375), The Wrath of Khan's delayed trigger (#12369), "Some fixes" (#12382:
+    goad AI, counters, GainControl, Infernal Denizen, Lobotomy, Needle Drop, Stardew Valley, ...), creature-target
+    fixes (Defend the Celestus, Rally the Monastery, Windborne Charge; #12360); Magik's exile now `ForgetOnMoved`;
+    Adventure sideboss maps treated as dungeons (#12358); edition updates (PRM, PSPL, TRK); smaller skin PNGs.
+
+- **Tests:** `UnknownEventBatch30Test` through `UnknownEventBatch58Test` and `UnknownEventScriptsLoadTest`;
+  `HeroesOfTheRealm2022Test`; `BlackLotusUnknownPlanechaseTest`, `BlackLotusUnknownPlanechase2Test`,
+  `BlackLotusUnknownPlanechase3Test`; `MagicFestPromosTest`; `MysteryBooster2PlaytestTest` and
+  `MysteryBooster2Playtest2Test` through `MysteryBooster2Playtest5Test`. Test fixes: Heroes of Kamigawa's test no
+  longer depends on what its +2 mills; Processing Plant's test no longer assumes which of the two exiled cards the AI
+  returns; `UnknownEventBatch33Test`'s Unstickerify test tolerates a random noncreature beneath the sticker.
 
 - **Mystery Booster 2 playtest cards (MB2), part 5: Friarball, Knight of Lost Causes, Champion of the Hareish,
   Marchesa's Surprise Party, Arcanum Things, Intangible Vibes, Tax Taker.**
@@ -588,6 +633,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     `Deck.getCommanders` lists a commander once per copy).
   - An emblem card (`SVar:EmblemCard`) counts as an emblem in the command zone, where ChangeZone from the stack can now
     put a resolving spell.
+  - Maestros' Totally Safe Hideout's land casualty is scripted as an enters replacement (the token copy has it too).
+    `CardRules`: a card with `Partner with itself` partners with a copy of itself and is offered as a second
+    commander.
 
 - **Mystery Booster 2 playtest cards (MB2), part 2: Naturalize 2, Microscope, Lazotep Archway, Processing Plant,
   Penumbra Umbra, Narod, the Beige Flower, Hish of the Snake Cult, Wowzer, the Aspirational.**
@@ -613,6 +661,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     `IntroducedSubAbility$`) and per-game player notes (`Player.getGameNote`/`setGameNote`).
   - Auspicious Aquarium's twelve different creatures are differently named (user ruling 2026-10-22); the PF26 edition
     adds the creature type Shrimp.
+  - New tokens: Deep Dish Pizza, a Food with "{3}, {T}, Sacrifice: gain 3 life and draw a card" (Second City), and
+    Atlantakul, a legendary 20/20 colorless Eldrazi with annihilator 2 (Spaghetti Junction).
 
 - **Black Lotus Unknown Planechase (PUNK): Unknown Event, The Pro Tour, Royal Booster, Year-End Review, Artist Alley.
   Every PUNK card is now in.**
@@ -623,6 +673,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - A plane may share its name with a nonplane card (Artist Alley, user ruling 2026-10-22): the loader keeps them apart,
     each edition's printing of a shared name goes to the kind most of that edition's cards are, and upstream's
     playtest-clash spelling "P-<name>" in an edition file resolves to the card of that name.
+  - Year-End Review's "promoted to commander" is scripted with the existing AlterAttribute `Commander` (each player
+    may then put the new commander into the command zone).
 
 - **Black Lotus Unknown Planechase (PUNK): Pin Collector's Booth, Pin Trading, Shrinking Plane, Windmill Farm, New
   Player's Journey, Welcome to Valley, Sorin's Remastered Manor, Multiversal High Council, Stroopwafel Cafe, Mad Labs.**
@@ -635,6 +687,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     target restriction `TargetsWithDifferentUniverses$`; Continuous `MayLookAt$ Owner`.
   - New effect `MadLabs` (the three blind choices, then a token copy for each player); `CounterKeywordType.keywordCounterNames()`.
   - Stroopwafel Cafe's top-of-library Food mills itself as its cost: a card in a library can't be tapped or sacrificed.
+  - New tokens: Pin, an Aura with enchant creature and +1/+1 (Pin Collector's Booth), and Tulip Petal, an artifact
+    with "{T}, Sacrifice: add one mana of any color" (Windmill Farm). The PUNK edition adds the enchantment type Pin;
+    `PrintingTraits.txt` marks 77 Secret Lair printings `dnd`.
 
 - **Black Lotus Unknown Planechase (PUNK): High and Dry Black Market, Team-Up!, Probability Flux, Clamilton Estate,
   Event Horizon, The Sphere, Game Knights Live, The Command Zone, High Noon At Thunder Junction.**
@@ -646,6 +701,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     order may say it; the first one clashes) and `RememberWinner$`.
   - Phenomena whose text has no "planeswalk away" still planeswalk away after their trigger (CR 704.6f). Event Horizon's
     nonbasic lands become Wastes: named Wastes, basic, only "{T}: Add {C}" (user ruling 2026-10-22).
+  - New tokens: 1/1 black Assassin (High Noon At Thunder Junction) and 0/0 red Fan Army (The Sphere). The PUNK edition
+    adds the planar types Clamhattan, Foldaria, Foundations and Universia Beyondia and the creature type Fan.
 
 - **2022 Heroes of the Realm (PH22): Treizeci, Sun of Serra; Elusen, the Giving; Heroes of Kamigawa; Wizard from
   Beyond. 2023 Heroes of the Realm (PH23): Ormacar, Relic Wraith. MagicFest 2024 (PF24): Convention Maro.**
@@ -660,6 +717,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - "As you create your deck, choose an [A] and a [B]": SVars `DeckChoiceA`/`DeckChoiceB`, asked once per match as the
     game begins (user ruling 2026-10-22), property `DeckChoice_<letter><n>`; property `Landscape` (split cards and
     Rooms but not aftermath, battles) and count `$ArtistsAmong`.
+  - `PrintingTraits.txt` regenerated with the new trait: `retroframe` is on 14,300 printing lines. New tokens: three
+    green \*/\* Elementals named Maro for Convention Maro's deck choice (power and toughness equal to cards in your
+    hand, card types in your graveyard, or artists among your nonland, nontoken permanents). The PH22 edition adds the
+    planeswalker type Wanderer.
 
 - **Mobile Settings: one "Alternate Player Zone Layout" again.** The fork's zone-tabs-on-the-left option
   (`UI_ZONE_TABS_LEFT`) is gone; upstream restored its own setting of that name (`UI_ALT_PLAYERZONETABS`), and the two
@@ -679,6 +740,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     orthogonal neighbors. The grid has its own view: a "Grid" tab next to Stack, Combat and Log on desktop (doc
     `REPORT_GRID`, only there while a grid exists), a "Grid" tab in the menu bar on mobile (new game event
     `GameEventTacticsGrid`, `IGuiGame.updateTacticsGrid`).
+  - The first version showed the desktop grid in a separate popup window (`TacticsGridWindow`); a follow-up commit
+    made it the Grid tab (`CTacticsGrid`, `views/VTacticsGrid`, `EDocID.REPORT_GRID`).
 
 - **Unknown Event: Occupation of Kulrath, Occupation of Llanowar, Sort of _____ and _____, The Whiteboarder, The
   Chaos Keeper, The Charitable Drafter, The Rhystic Storyteller, The Game-Changing Host, Clear, Fair Magic, The
@@ -695,6 +758,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - New effect `DestroyAnything`: destroys permanents and command-zone objects, or a designation picked from a list.
   - New trigger `GuessedWrong` and effect `GuessedWrong`: every guess effect reports a wrong guess, and Liar's Pendulum
     and Master of Predicaments now do too. New effect `RecommendDeck` (saved Commander decks or a random precon).
+  - `FModel` gives `RecommendDeck` the saved Commander decks from every deck subfolder, or
+    `DeckgenUtil.getRandomCommanderPreconDeck()`. The battle type Control Point is added to `TypeLists.txt`.
 
 - **Unknown Event: Blue Screen of Death, The Snapstone Wielder, Welcome to Australia, The Sprinkler of Stardust, The
   Fact Checker, The Convention Enthusiast, The Policy Maker, The Beleaguered Boxer, The Multiplayer Nitpickers (UNK
@@ -730,6 +795,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Unknown Event: Chicago Loop, ______, The Playful Winners, Huge Truck, Split into Three Parts (UNK).**
   - Orange is a color (`MagicColor.ORANGE`, the color byte's top bit; `ColorSet` masks with `0xFF`), with the
     other Un-colors. New tokens: a 2/2 orange Bear with haste, a 3/1 green Dinosaur Skeleton with trample.
+    Protection from orange works; orange shows the colorless mana icon and watermark; new UI label "Orange".
   - New cost `PaySpeed<X>`: the payer's speed goes down by X, to as low as 0.
   - Written on the card in the deck, like a Legacy word: `PaperCard` flags `name` (an all-underscore name becomes
     it; new effect `WriteName`, card property `writtenNameAllows`) and `tally` (`Count$TallyMarks`; the winner's
@@ -747,6 +813,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - CastAs `RaiseCost$` (more on top of the copied card's cost), `Perpetual$` (that card for the rest of the game),
     and a land cast as a spell that puts itself onto the battlefield.
   - New effect `AiTakeover`: an AI plays for its player until the end of their next turn (the GUI supplies the AI).
+    `FModel` creates it as an AI player named "Grumpy Co-player".
   - ReplaceToken `Type$ Instead` (none created; the count is the host's `ReplacedTokens`). RandomCards `Defined$`,
     and any Magic card without `LegalIn$`.
   - Rafi uses the existing `ManaBurn` and `CombatDamageUsesStack` statics.
@@ -841,6 +908,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Card properties `unsharedKeywordOrAbilityWord` (keyword abilities a card has plus ability words it's printed
     with; enchant left out, as for The Horizon Seeker) and `wouldCounterASpell`.
   - Psychic damage (`DealDamage | Psychic$ True`): no loss of life; a player dealt 20 of it loses the game.
+    It's logged, and kept in game snapshots.
+  - Fix: `TriggerHandler` runs waiting triggers from a copy of the list, since The Fish Brewer's taps, made while
+    counting, can add waiting triggers of their own.
   - `K:Level up:<cost>:SplitSecond`: the level up ability can't be responded to.
   - New static `ActivateAsController` (`ValidCard$`, `Activator$`): activate abilities of others' permanents. Mana
     abilities of them aren't offered while paying costs.
@@ -1014,6 +1084,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     the match scoreboard.
   - New effect `ResetCommanderDamage` (`DamagedPlayer$`).
   - New creature type Windmill.
+  - New token: Windmill Slam's 4/4 artifact creature Windmill with defender.
   - Ransack, the Lab is in `ransack_the_lab_unknown_event.txt`: its file name collides with Ransack the Lab's.
 - **Unknown Event: Groaaaaag, Hungry Monster, Monet, Sensei of the Sewers, The Mystery Raceway, Crow Scarer (UNK).**
   - `K:Ninjutsu:<cost>:FixedCommander` and `K:Suspend:N:<cost>:Commander`: from the command zone they pay the
@@ -1022,11 +1093,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - The Mystery Raceway's "Team X won the race" is your own race team (user ruling).
   - Crow Scarer's Cowards can't attack you or your planeswalkers and battles, and can't block your creatures (user
     ruling).
+  - Commander Suspend gets its own label ("Commander Suspend N"), and is offered from the command zone as well as
+    the hand.
+  - New tokens: a 1/1 black flying Bird (Crow Scarer) and a 1/1 green Turtle with training (Monet).
 - **Unknown Event: Bag of Stroopwafels, Famous Museum, Guilded Lotus, Kibo's Bananamobile, Sawtooth Avenger, Tinfoil
   Helm, Power Level Analyzer, Twenty Lessons, That Which Was Compleated (UNK uncommons).**
   - `Play AnySupportedCard$ Type:<type>` (every card with that type or subtype) and `XIs$` (the value of X when
     the played spell has X in its mana cost).
   - Player property `hasConspiracyInCommand`.
+  - New Banana token for Kibo's Bananamobile: an artifact with "{T}, Sacrifice this token: Add {R} or {G}. You gain
+    2 life."
 - **Unknown Event: Ano'thr, Equipment Commander, Zimone's Homework, First Stage of Magic Design, The Dogronmaster
   (UNK rares).**
   - `Count$YourLifeIn.LazyCaterer|Fibonacci|Square`; card property `powerEqualsToughness`.
@@ -1035,12 +1111,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - New effect `PassLibraries`: each player's library, in order, goes to the next player in turn order; the cards
     keep their owners.
   - Card property `Damaged <defined>`: cards that dealt damage this turn to the defined card.
+  - New tokens: a 1/1 green-blue flying Bird (The Bird Champion) and Cobra Coil, a 1/1 blue Serpent (The Cobra King).
 - **Unknown Event: Genevieve, Conniving Dragon, Margle, Cousin of Yargle, The Knight of Commentary, The Judge of
   Height, Tarkiran Towelsbane, Drop Bear (UNK rares).**
   - Continuous statics take `CantGainAbilities$`: from that effect on, nothing in layer 6 gives the card abilities
     back, whatever its timestamp (Pump grants included).
   - `Count$ShorterCreatures`: creatures whose toughness plus mana value is less than the source's.
   - New creature types Artist, Athlete, Chef, Judge and Koala, printed on UNK cards; Forge dropped them before.
+  - New 1/1 red Human Rebel token (Tarkiran Towelsbane).
 - **Unknown Event: The Majestic Duo, The Zabulous Cosplayer, Shen, Wish Granter, The Goblin Mastermind, The Brewing
   Chef (UNK rares).**
   - Card property `CreatesToken`: an ability that makes a token (Token, CopyPermanent, Amass, Investigate,
@@ -1051,16 +1129,25 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   Snowfall, The Joiner of Cats, The Bus Runner, The River Warlock (UNK rares).**
   - Evy's "draw on it" is an honor-system choice of what you drew; a creature that has shared its feelings
     (The Sad Creaturez) keeps a "Shares its feelings" marker while it stays on the battlefield.
+  - New Desert Vehicle token for The Bus Runner: a 4/4 artifact land with crew 2 and {T}: Add {C}. Whenever it or a
+    Gamer you control becomes tapped it loses an hour counter; with none left, each opponent loses 1 life, you gain
+    1, and it gets eight hour counters again.
 - **Unknown Event: The Fifth Alias, Gomif, Fast Racer, The Mox Painter, Efteekay, Flame of the Kav, Frie, Displaced
   in Time, Pirk, Heroic Captain, The Cookout Creator, The Wizardly Barge (UNK rares).**
   - A deck with SVar `AsksSecretList:N` secretly lists N nonland cards as the game begins; card property
     `OnYourSecretList`.
   - New static `SpeedUncapped`: speed can rise past 4, which still counts as max speed.
+    - Past 4 the speed display shows the number instead of "Max speed", and the speed-increase trigger now checks
+      whether speed can still rise (`Count$YourSpeedCanIncrease`) instead of "less than 4".
   - `NameCard ExcludeControlled$`; `LegalIn$` now takes any format by name (Vintage for "tournament-legal").
   - `Count$DifferentNames <valid>`.
   - Warp's end-step exile is marked `WarpExile` (spell property) for "exiled because it was warped".
   - `CounterAddedOnce FullyStations$`: the counters took a Spacecraft to its highest station number.
   - New effect `NameIt`: a player gives a permanent a name of their own.
+    - **AI:** it picks one of six ready-made names (Starhopper, Lucky Comet, Void Runner, Silver Lantern, Wandering
+      Star, The Long Shot).
+  - New tokens: Pirk's legendary 2/2 Spacecraft (Station 6, a flying artifact creature at 6+) and The Cookout
+    Creator's 1/1 colorless Human.
 - **Unknown Event: The Asker of More Mana, The Keeper of Favorite Cards, The Water Maro, The Vegetable Car, Jiffy,
   Vehicle Repairer, The Bearded Teakeeper, Uh, Squen & Cragg Made a Card, The Herald of Numot, The Caffeinated
   Runner, The Weekly Princess, The Milling Runner (UNK rares).**
@@ -1069,9 +1156,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - A per-game favorites list on each player: `NameCard AddToFavorites$`, card property `YourFavorite`.
   - Card property `nameHasWord_<word>`.
   - New keyword Onionfect: the damage is still dealt, but it becomes Food tokens for the source's controller.
+    Deathtouch on the source still counts for a creature it damages.
   - New static `InvertPTCounters`, which turns +1/+1 and -1/-1 counters around.
   - New static `JumpStartNotExiled`; jump-start's exile now checks spell property `JumpstartExiled`.
   - `DayTime Value$ Neither` stops tracking day and night, and the match background goes back to normal.
+    - `GameEventDayTimeChanged` now carries null for "neither"; no day or night sound plays then.
   - `DayTimeChanges` triggers take `To$ Day|Night`.
 - **Unknown Event: The Sixth Seraph, The Keeper of Four Scythes, The Knight of Weeks, The Highland Runner, Crux of
   Mirrodin, The Curve Keeper, Theopholos, Order Acolyte, Agoraphobic Phyrexian (UNK white rares).**
@@ -1105,10 +1194,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - **Releases (user ruling):** property `releasesGE<n>` counts the sets Forge has a card in, digital-only ones too, but
     not promos, custom sets or other-language sets. `ReduceCost` `Color$ AnyOneColored` takes off one colored symbol.
   - "can be your Commander" with a capital C now makes a card commander-eligible too.
+  - New tokens: The Bear Force Pilot Runner's 0/0 flying Vehicle (crew 2, +1/+1 for each Bear you control) and
+    Emrakul and Chatterfang's 1/1 green Eldrazi Squirrel Scion ("Sacrifice this creature: Add {G} or {B}.").
 - **Unknown Event: Guild Pact, The Five Stages of Grief, Call Up Emrakul to Help, Everyone's an Impostor, Pulse of the
   Hunter Maze, The Paradise Bird, Phyrexian Cytoshaper, Maître Tree, Grek the Ogre, Land Station.**
   - Everyone's an Impostor humors its own reminder text: granted changeling gives every creature type.
   - New Donkey and Ogre Noble tokens.
+  - **Fix:** Catch-Up Mechanic's Oracle text drops the space before its em dash ("choose any number instead—").
 - **Unknown Event: Another Night in Vegas, Yet Another Night in Vegas, A Chaotic Night in Vegas, The Archenemy's
   Charm, Monster Mash-Up, The Zassacre Zirl.**
   - `Cleanup` `ResetChosenModes$` lets every mode be chosen again; `SetInMotion` `DefinedName$` sets a named scheme in
@@ -1135,6 +1227,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - **Playtest cards:** a new `playtest` printing trait, from Scryfall's playtest promo type (property `Playtest`).
   - **Planes:** a new `plane=` printing trait, from the MTG Wiki's set infoboxes (`_tools/printing-traits/set-planes.json`;
     sets on several planes are left out). It's ready for Minnea, Planar Tourist.
+  - **Tooling:** `PrintingTraits.txt` was regenerated with both traits. The generator
+    (`_tools/printing-traits/generate.js`) and `set-planes.json` were committed with this batch, then untracked again
+    in the next commit, since `_tools` is git-ignored; they stay in the local checkout only.
   - **Delphia:** the Phyrexians won the February 18th, 2023 event (MTG Wiki), so its Phyrexian Victory sets apply.
     New property `originallyPrintedIn_` (the set a card's name was first printed in).
   - **Gen:** `Count$DifferentReleaseYears`, by each permanent's own printing.
@@ -1209,12 +1304,26 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - You keep one card in hand; the rest of the pack stays out of the game.
   - **AI:** its container holds sets at random; it opens it in its second main phase and keeps the best card (new
     `OpenBoosterAi`; other pack-opening cards are still left alone).
+- **Tests:** one new test class per batch, `UnknownEventBatch1Test` through `UnknownEventBatch29Test` (29 classes, in
+  `forge-gui-desktop/src/test/java/forge/ai/`).
+
 ### 2026-10-21, twelfth deploy (desktop, Android, GitHub) — Unfinity complete; 24-commit upstream merge
 
 - **Upstream merge (24 commits).** Five card-script conflicts, resolved by keeping upstream's fixes with the fork's
   Scryfall wording: Bell Borca, Spectral Sergeant (`CharacteristicDefining$`), Fear of Change (`Origin$ Battlefield`
   on its dies trigger), Overclocked Electromancer (`CombatDamage$ True`); Disciple of Perdition and Urza, Academy
   Headmaster kept the fork's text, upstream's change already being in it.
+  - Upstream brought (per its commit subjects): Star Trek (TRK) cards and edition updates for SDS, TRC and TRK (Borg
+    Cube among them); card fixes (Bell Borca, Sutured Ghoul and Unlicensed Hearse P/T statics marked
+    characteristic-defining; Righteous Indignation; Experimental Frenzy and The Belligerent; Fear of Change, My
+    Champion Stands Supreme, Death or Glory, Become Anonymous and Wake to Slaughter; Bleeding Effect, Mondo Gecko and
+    Party Dude; Oglor and Quandrix Command; Mole Module, Overclocked Electromancer and Raphael; Your Mistake Is My
+    Triumph, Disciple of Perdition and Last Rites; Magik, Illyana Rasputin); a TargetSelection/InputSelectTargets update
+    fixing Chaoslace and similar cards; selectable players marked in entity-list prompts; a centralized User-Agent
+    (with a UI identifier) for image and data downloads; Realm of Legends 1.081 Adventure-mode fixes; an LDA
+    deck-generation data update for
+    Reality Fracture (Standard/Modern); a new splash screen and a Start-button text fix.
+  - Count: 22 non-merge upstream commits plus 2 upstream merge commits (24 in `M^1..M^2`).
 - **Unfinity: Truss, Chief Engineer (UNF #181).** New `AdjustNumber` effect. It reaches power, toughness, loyalty, a
   spell's generic mana, and the literal numbers in the target's abilities (damage, cards, life, counters, tokens, dice
   and sides, pumps and the like - user ruling).
@@ -1228,6 +1337,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Every name: `Card.getNames` and name sharing see each one, and so do the word-count and first-letter checks
     (rulings).
   - **AI:** it caps X at the creatures there are to copy (new `AIXMax` SVar for permanent spells).
+    - It picks the best creatures to copy (`CloneCombinedAi`).
 - **Unfinity: Log Flume (UNF #220).** New `JumpInLog` effect and `FlumeLog`.
   - **Blocking:** attacking logmates are blocked all together or not at all; one that isn't attacking doesn't count
     (CombatUtil.validateBlocks). The AI unblocks a log it has only partly blocked.
@@ -1313,6 +1423,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - **AI:** it counts only known hats, and wears one half the time.
 - **Unfinity: Angelic Harold (UNF #162).** New `wordsInName` card property; a token's name ends in "Token" (CR 111.4).
 - **Fix: Well Done (UNF #128)** dealt its extra 3 damage for rares but not mythic rares.
+  - Its script checked `RarityMythic`, which no card has; mythic rares are `RarityMythicRare`.
+    `UnfinityRedGreenBatchTest` gained a mythic case (Baneslayer Angel from M10).
 - **Unfinity: Tug of War (UNF #159).** New Subgame parameter `StartingPermanents$ N`.
   - Each player sets aside up to N permanent cards with different names from their library. Those go onto the
     subgame battlefield once mulligans are done, starting player first.
@@ -1331,6 +1443,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - A {T} cost can be paid from it instead of tapping the permanent, so an already-tapped permanent's ability can be
     activated too, but never a summoning-sick creature's (rulings).
   - The player is asked whenever they could do either.
+  - Spending one is logged, and a {T} spent on a cost that's then backed out goes back to the pool.
   - **AI:** it activates Sole Performer only when it has another permanent with a non-mana {T} ability, and always
     spends a {T} it has before tapping.
 - **Unfinity: Plot Armor (UNF #152).** Blockers need flavor text on their printing; stickers neither add nor remove it
@@ -1501,6 +1614,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - the statics and triggers of the Auras and Equipment on it. Their "enchanted/equipped creature" now means the
     photocopy itself, so Bonesplitter's +2/+0 and a Pacifism come along.
   - **Known gap:** other counters, such as stun or shield, aren't in the picture yet.
+  - **AI:** it photocopies the best creature it can target, anyone's, since the copy is its own either way
+    (`PhotocopyAi`).
 - **Unfinity: Phone a Friend (UNF #55).** A Charm with a new `PhoneAFriend$` option (`CharmEffect.phoneAFriend`).
   - A person calls someone real and enters which legal mode they picked, or that nobody answered (honor system).
     Only legal modes can be picked (rulings).
@@ -1662,6 +1777,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - **Ruling applied everywhere:** a name now begins with its first letter once spaces and punctuation, blank lines
     included, are skipped. So `_____ Goblin` begins with G, and a name that is only a blank still begins with nothing
     (Stet's ruling).
+    - A name whose first letter-or-digit is a digit has no initial letter.
   - That rule lives in `NameLetters.initial`, which `nameStartsWithChosenLetter` (Monkey Monkey Monkey, Katerina) and
     the `MostCommonInitial` AI now use too. The property used to compare the raw first character.
   - **AI:** new letter logic, `MostCommonSpellInitial`, picks the commonest initial among the nonland cards it has yet
@@ -1693,6 +1809,21 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     or a 50% chance an absent one comes back, from one stored roll whose ranges don't overlap. You're notified of
     each change.
   - No engine change.
+- **Tests:** 63 new test classes in `forge-gui-desktop/src/test/java/forge/ai/`, one per card or batch:
+  `GobsmackedTest`, `HatTrickTest`, `ImpoundingLotBotTest`, `JetpackJanitorTest`, `KaterinaOfMyrasMarvelsTest`,
+  `KnightInBlankArmorTest`, `LeadingPerformanceTest`, `MainEventHorizonTest`, `NowYouSeeMeTest`, `ParkReEntryTest`,
+  `SolafloraTest`, `SurprisePartyTest`, `TapperTest`, `TrapezeArtistTest`, `AnimateObjectTest`, `AstroquariumTest`,
+  `BagCheckTest`, `BlufferfishTest`, `BustedTest`, `DecisionsDecisionsTest`, `FocusedFunambulistTest`,
+  `ParThreeTest`, `OctoOpusTest`, `PhoneAFriendTest`, `PlateSpinningTest`, `AnimateGraveyardTest`,
+  `MobileCloneTest`, `UnfinityBlackBatchTest`, `UnfinityBlackBatch2Test`, `UnfinityBlueBlackBatchTest`,
+  `AmpedUpTest`, `UnfinityBatch3Test`, `UnfinityRedBatchTest`, `UnfinityRedBatch2Test`, `UnfinityRedBatch3Test`,
+  `UnfinityRedGreenBatchTest`, `VorthosStewardOfMythTest`, `HardyOfMyrasMarvelsTest`, `AnIncidentHasOccurredTest`,
+  `IcingManipulatorTest`, `JermanePrideOfTheCircusTest`, `UnfinityGreenBatchTest`, `SolePerformerTest`,
+  `TchotchkeElementalTest`, `SpellingBeeTest`, `TugOfWarTest`, `ClaireDLoonTest`, `UnfinityWhiteBatchTest`,
+  `LilaHospitalityHostessTest`, `UnfinityMulticolorBatchTest`, `D00DLCaricaturistTest`, `ParkMapTest`,
+  `SouvenirTShirtTest`, `GreatestShowInTheMultiverseTest`, `WickerPickerTest`, `UnfinityAttractionsTest`,
+  `UnfinityAttractions2Test`, `UnfinityAttractions3Test`, `UrzasFunHouseTest`, `GrandMarshalMacieTest`,
+  `LogFlumeTest`, `ItCameFromPlanetGlurgTest`, `TrussChiefEngineerTest`.
 
 ### 2026-10-20, eleventh deploy (desktop, Android, GitHub) — Heroes of the Realm 2019–2021; Unfinity #1–#10 begun; Universes and artifact-creature art data
 
@@ -1822,15 +1953,44 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   early); Chaos Confetti's pieces can no longer hit Chaos Confetti itself (it destroyed itself mid-throws); Landfill's
   AI picks the land type it has most of (`AILogic$ MostProminentComputerControls` for land types; it always chose
   Island).
+  - Script changes for the styles: Chaos Confetti's throw is `Pieces$ True`; Landfill repeats with
+    `UseImprinted$ True` so each throw is the dropped land (`FlipCard$ Imprinted`), and now clears its remembered
+    cards at the end; Clay Pigeon tosses itself (`TossCard`, 2 flips) before the "did you catch it" question;
+    Orcish Paratroopers' clean landing is a 1-flip toss face up, the bad drop a 0-flip toss landing face down,
+    then the sacrifice. `IGuiGame.showFlipOntoBattlefield` gained a `TossStyle` overload that falls back to the
+    plain card throw, so desktop and other GUIs are unaffected.
+- **Fix: `TossStyle` is serializable.** Game events travel in replays and netplay, and
+  `GameEventSerializationTest` caught the new record not implementing `java.io.Serializable`.
+- **Tests:** new GetYourHeadInTheGameTest, FormOfTheApproachTest, FarOutTest, AssembledEnsembleTest,
+  StandardProcedureTest, HeroesOfTheRealm2021Test (Byode), TheListAuditTest, HeroesOfTheRealm2019Test and
+  ThrowAnimationEventsTest; InterplanarBrushwaggTest extended for the zone leaving the screen. (Bar Entry and The
+  Secret Lair are script-only, with no test of their own.)
+
 ### 2026-10-20, tenth deploy (desktop, Android, GitHub) — Unsanctioned complete; 22-commit upstream merge
 
 - **Upstream merge** (22 commits, 85888fdfa0a): 11 card-script conflicts resolved keeping the fork's Scryfall wording
   and taking upstream's fixes; Oracle lines re-synced to Scryfall 2026-10-20 (26 cards: Alchemy "perpetually gains
   prismatic" rewording, spark costs as "[+1]:"). Tests: 1454 run, 0 failed, 7 skipped.
+  - Conflicts resolved (per the merge message): Bog Badger's stray Flash, Genestealer Patriarch's P/T, Stronghold
+    Arena's stray P/T, Tarnation Vista's types, Needle Drop's targets, and upstream's Charm `Defined$` cleanup. The
+    Java side merged without conflicts.
+  - What upstream brought: assimilate (`AssimilateEffect`/`AssimilateAi`) and Borg Queen, Perfection Manifest;
+    Captain Jean-Luc Picard; Fluros of Myra's Marvels; card fixes (#12325–#12331: "up to one target" abilities
+    allow zero targets, printed P/T, loyalty, mana cost, types and keywords of 18 cards, Roadside Blowout / Venom
+    Blast / Enroot as sorceries, Kutzil's Flanker, Sarkhan's Dragonfire, Twigwalker, Resounding Wave, Storm the
+    Citadel, Needle Drop, Toralf, Blast from the Past, Dream Beavers, Tresserhorn's Lord); CantPutCounter with
+    simultaneous ETB (#12301); an endless loop fixed in ChooseSourceEffect when sources run out, with
+    `TargetControls$` removed (#12083, new ChooseSourceEffectShould test); Charm scripts dropping an unread
+    `Defined$ You` (#12312); Magik's TrigDigUntil SVar fix; quest worlds for The Hobbit and Reality Fracture; two
+    draft cubes (Arena Powered Cube v7.0 2026-10, MTGO Vintage Cube 2026-10); puzzle PS_FRA2; an adventure map fix;
+    mobile start button, theme and splash-screen logo updates.
 - **Imaginary Friends (Plane) AI.** No strategy, just random: from hand it's offered the first three cards that can
   be cast right now from a random order of the choices its deck builder isn't told to leave out (`AI:RemoveDeck:All`),
   kept for the turn, as ordinary cast-as spells its usual logic weighs. For the chaos free cast, `PlayAi.chooseCardName`
   tries the choices in random order (up to 30) and takes the first whose spell it would cast.
+  - From hand it looks at most 15 names down that per-turn order to find its three
+    (`StaticAbilityCastAs.aiPlayableChoices`); the chaos free cast falls back to the first allowed name if it
+    wouldn't cast any of the 30 it tried.
 - **Flavor Judge (UND #4).** Checked against Scryfall and its 2 rulings 2026-10-20. Honor system for a human (they ask
   a real person and enter the answer); the AI's simulated person says no half the time (user ruling). GenericChoice
   `AILogic$ FlavorJudge` targets the top opponent spell or ability that targets an AI permanent. A targeted
@@ -1911,6 +2071,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   SpellAbility.SilverBordered` (spells and every kind of ability of a silver-bordered or acorn card). Known gap: Forge
   never lets restricted mana pay a cost demanded while something resolves (unless costs), so neither can this.
   **Unsanctioned is complete** (und/75 Who // What // When // Where // Why was already scripted from Unhinged).
+- **Tests:** new FlavorJudgeTest, StruttingTurkeyTest, SyrCadianTest, AlexanderClamiltonTest, RingsABellTest,
+  AcorneliaTest, BatAugmentTest, InfernusSpawningtonTest, AbstractIguanartTest, BoomstackerTest, StetTest,
+  PippaTest, SpiritOfTheSeasonTest, SurgeonGeneralCommanderTest and UnderdomeTest; SecretLairShowcasePlanesTest
+  gained the Imaginary Friends AI cases (three random picks held all turn; the chaos card cast as another and back
+  to itself after); GarbageElementalTest moved to Relentless Rats and Garbage Elemental D/B for the new line count.
 
 ### 2026-10-19, ninth deploy (desktop, Android, GitHub) — Secret Lair Showcase Planes; info panel fix
 
@@ -1928,8 +2093,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - `Count$YouRollPlanarDieThisTurn` (Li'l Giri, sAnS mERcY): every planar die roll by that player, including
     Wall of Fortune rerolls and rolls from other effects, not only the {X} special action.
   - `Draw | FromBottom$ True` (Finally!).
+  - The ten planes: Deceptive Divination; Fblthp: Completely, Utterly, Totally Lost; Finally! Left-Handed Magic
+    Cards; Happy Yargle Day!; Imaginary Friends (Plane); Li'l Giri Saves the Day; Math is for Blockers (Plane);
+    Mycosynthwave; sAnS mERcY; We Hope You Like Squirrels. New token `lil_giri` (Li'l Giri, a legendary 1/1
+    Food Warrior artifact creature).
+  - Planar die rolls are counted per player per turn (`Player.rollPlanarDie`, reset with the turn's other roll
+    count) in `PlanarDice.roll`, Wall of Fortune rerolls included; the draw-from-bottom flag is set only while the
+    `FromBottom$` draw runs (`Player.setDrawingFromBottom`).
 - **Info panel**: "(Covered: )" and "(Written: )" no longer show on every card - unset string view properties read
   back as "", not null.
+- **Tests:** `SecretLairShowcasePlanesTest` (11 tests).
 
 ### 2026-10-19, eighth deploy (desktop, Android, GitHub) — upstream merge (26 commits)
 
@@ -1995,6 +2168,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Rift** (CMB1 #119), the last unscripted Mystery Booster playtest card. Pre-game `MayEffectFromOpeningDeck` puts it in
   hand; whatever is in hand as the opening hand is drawn is recorded (`Player.setOpeningHandStarters`) and takes the
   place of a draw for the opening hand and each mulligan, and mulligans don't shuffle it back (its rulings).
+- **Pithing Spyglass UI:** the human's prompt reads "Name a keyword ability or ability word", and card detail shows
+  the named word as "(named: ...)" rather than "(chosen type: ...)". Zyym's AI target orders its hand by shuffling
+  (`PlayerControllerAi.orderMoveToZoneList`) so its reveal order carries no pattern.
+- **Edition file:** Mystery Booster Playtest Cards #100 and #101 renamed to `P-Smelt // Herd // P-Saw` and
+  `P-Start // P-Fire` to match the scripts.
+- **Tests:** `LouvaqTest`, `PickYourPoisonTest`, `SeekBolassCounselTest`, `SmeltHerdSawTest`, `StartFireTest`,
+  `ZyymTest`, `ChronobotTest`, `PithingSpyglassTest`, `NonTokenFilterTest`, `WeaponizedScrapTest`, `BarrysLandTest`,
+  `GoldMineTest`, `RiftTest`. Test fixes: `SummonThePackTest` no longer fails when a random pick is a card that
+  stops being a creature by its own text (Arixmethes, a land while it slumbers) - it checks the printed type, and the
+  Zombie type only while it's a creature; `SeekBolassCounselTest` counts the chosen modes in the sub-ability chain,
+  since a mode can carry sub-abilities of its own.
+
 ### 2026-10-15, sixth deploy (desktop, Android, GitHub) — upstream merge (5 commits); Mystery Booster playtest cards #67–94; Innkeeper's Talent AI
 
 - **Upstream merge** (5 commits, incl. Realm of Legends 1.077, restored alternate landscape layout on mobile,
@@ -2066,7 +2251,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   engine doubles: MultiplyCounter's default multiplier, Pump `NumAtt$/NumDef$ Double`, ReplaceToken's default
   `Amount`, ReplaceMana `ReplaceAmount$ 2`. Scripts: new math `Doubled` (x factor) and `DoubledExtra` (x factor-1,
   for doubling written as adding as much again), and `Count$DoublingFactor`. `/Twice` stays plain x2, since 217
-  cards that don't double use it: 76 doubling cards ("double that damage", "twice that many ... instead", "double
+  cards that don't double use it: 74 doubling cards ("double that damage", "twice that many ... instead", "double
   your life total", "double the value of X") now use `/Doubled` instead, plus Increasing Confusion and The Keeper of
   Dark Pacts. Left at x2, as making twice as many of something isn't doubling (ruling 3): Borborygmos and Fblthp,
   Fangorn, Galloping Lizrog, Lulu, Struggle for Project Purity, Tainted Adversary, Unassuming Gelatinous Serpent,
@@ -2111,6 +2296,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   (StaticCommandCheck on `Card.Self+Haunted`). Fixed: a card now stops haunting whenever it leaves exile
   (CR 702.55c, in `GameAction.changeZone`) - the Haunt keyword's static unhaunt trigger looked at the new object,
   which never had the haunting, so creatures stayed haunted.
+- **Localization:** zone name "whammy deck" (`lblWhammyDeckZone`) and card type label "Elemental"
+  (`lblElementalCard`).
+- **Tests:** `AiPlayReportsTest.testCountersSkipACreatureThatCantAttackOrBlock`, plus `TranscantationTest`,
+  `TrialAndErrorTest`, `WhammyBurnTest`, `AggressiveTest`, `ExperimentFiveTest`, `InspirationalAntelopeTest`,
+  `InterplanarBrushwaggTest`, `MarosGoneNutsTest`, `PatientTurtleTest`, `SoulmatesTest`, `AGoodThingTest`,
+  `AbianTest`, `BucketListTest`, `KayaGhostHaunterTest`.
 
 ### 2026-10-13, fifth deploy (desktop, Android, GitHub) — upstream merge (41 commits); Mystery Booster playtest cards #51–66
 
@@ -2185,6 +2376,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   and new `ReplacesSpellAbility$` keeps a spell that became a Missile on the stack from resolving, since its Missile
   ability has no target (ruling 5). A granted spell needs its own `Cost$` or it keeps the printed mana cost. AI:
   `AILogic$ Bombardment` (CloneAi) casts it only when the Missiles it can then afford are lethal.
+- **AI simulation:** `GameCopier` copies Lazier Goblin's motivated players and Problematic Volcano's chosen sides
+  onto the simulated game's cards.
+- **Tests:** `BombardmentTest` (5), `HighTrollerTest`, `LazierGoblinTest`, `LightningColtTest`, `ManaAbundanceTest`,
+  `ProblematicVolcanoTest`, `QueueOfBeetlesTest`, `RedHerringTest`, `SeasonedWeaponsmithTest`, `SiegeElementalTest`,
+  `ThroatWolfTest`, `TibaltTheChaoticTest`.
 
 ### 2026-10-13, fourth deploy (desktop, Android, GitHub) — Mystery Booster playtest cards #31–50; zone tabs on the left; deck-gen and AI fixes
 
@@ -2249,6 +2445,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   (`DeckGeneratorBase.meetsColorNeeds` is shared).
 - **Call from the Grave AI:** the self-damage (`Remembered$CardManaCost`) reads 0 while the AI decides, so it cast it at
   2 life and died. `DamageDealAi` now plans for the costliest card the parent ChangeZone could move.
+- **Blood Poet cost payment:** `SubCounterYou` is paid by the AI only when it has enough of its own counters, and a
+  human confirms the payment.
+- **Tests:** `CallFromTheGraveAiTest`, `ColorlessDeckNeedsTest` (Watchwing Scarecrow kept out of a black-red pool,
+  allowed in white-black), `TruthOrDareTest`, `VisitorFromPlanetQTest`, `BloodPoetTest`, `BuriedOgreTest`,
+  `EverlastingLichTest`, `GunkSlugTest`, `LargepoxTest`, `SpellmorphTest`, `SunimretTest`, `SwarmOfLocusTest`,
+  `WittyDemonTest`.
+
 
 ### 2026-10-10, third deploy (desktop, Android, GitHub) — upstream merge (11 commits); Mystery Booster playtest cards #16–30
 
@@ -2256,34 +2459,69 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   entry, MDD spoilers): conflicts kept both sides. Phyrexian Adapter takes upstream's `AddType$` fix with the Oracle
   wording; the mobile life labels keep the fork's hundredths and fitting on upstream's single life font; the pay-life
   prompt keeps the fork's half-life affordability check with upstream's `confirmPayment`.
+  The other conflicts were trivial: `ChangeZoneAi` imports (both sides' kept), `CardView.updateToughness` (the fork's
+  `HasHalfToughness` line kept, upstream's explanatory comment dropped), and `TypeLists.txt` (the fork's Mime and
+  upstream's Mindless-One both kept).
 - **Memory Bank** (CMB1 #27): new keyword bank. Cast from your hand, it's exiled for the rest of the match instead of
   going to the graveyard (not if countered); each later game of the match starts with it in exile, where you may
   cast it.
+  - **Engine:** `K:Bank` builds a Moved replacement (stack to graveyard, not countered, `ValidLKI$` cast from your
+    hand) running `DB$ Bank` (`BankEffect`), plus a static letting an earlier game's banked card be cast from exile.
+    `Card.getBank`, card properties `Banked`/`BankedEarlier`, a "Banked" marker in exile, `Match.recordBank` at game
+    end and `Match.startBanked` at the next game's start. `MemoryBankTest` (2).
 - **The Grand Tour** (CMB1 #30, upstream script): fixed. A nontoken permanent never finished the tour; it stayed in
   exile, because each step looked for the object from before its last move. Each step now follows the card's newest
-  object. It can also target tokens now (ruling: a token stops at exile).
+  object. It can also target tokens now (ruling: a token stops at exile). `TheGrandTourTest` (1).
 - **Squidnapper** (CMB1 #29): takes an opponent's creature until it leaves the battlefield or that player pays the
   ransom ({6} and 2 life, any time they have priority, without using the stack).
+  - **Engine:** GainControl `LoseControl$ Ransom` (`ControlGainEffect`, `Card.addRansom`/`payRansom`); special action
+    `ST$ Ransom` (`RansomEffect`) with new player property `HeldForRansom`. **AI** (`RansomAi`): pays when the
+    creature is worth it and the life can be spared. `SquidnapperTest` (2).
 - **Loopy Lobster** (CMB1 #26): new keyword four-faced; each stage's stats and abilities come from its own static.
+  - **Engine:** `K:Four-faced` (a Taps trigger), the object's stage (`Card.getStage`, a "Stage N" marker on the
+    battlefield), `DB$ AdvanceStage` (`AdvanceStageEffect`, 1→2→3→4→1), and `Stage$ N` on static abilities.
+    `LoopyLobsterTest` (2).
 - **Learned Learner** (CMB1 #25): has "{T}: Draw a card." while your maximum hand size isn't 7; no maximum hand
   size counts (user's call). Its Cephalid type is Octopus, as real Cephalids now are.
+  - **Engine:** player property `maxHandSize <cmp><n>`, computed from the hand-size effects themselves
+    (`StaticAbilityContinuous.projectedMaxHandSize`); static abilities now accept `CheckDefinedPlayer$`.
+    `LearnedLearnerTest` (1).
 - **Innocuous Insect** (CMB1 #23): script only. Its ruling says a bought-back permanent spell goes to your hand
   instead of the battlefield, but the current rules (CR 702.27a) only return a spell that would go to the graveyard
   as it resolves, so buyback does nothing and the Insect enters the battlefield (rules over rulings). AI: it never
   pays buyback on a permanent spell, or holds one back hoping to.
+  - The AI change is general: `SpellAbilityAi` skips the buyback optional cost on any permanent spell, and
+    `AiController`'s preserve-buyback-spells check no longer applies to permanents. `InnocuousInsectTest` (2).
 - **Form of the Mulldrifter** (CMB1 #22): creature cards in your hand can be cast as Mulldrifter, or evoked as one.
   On the stack and the battlefield they are Mulldrifters, and stay that way if the Form leaves.
+  - **Engine:** static `Mode$ CastAs` (`StaticAbilityCastAs`, `SpellAbility.getCastAs`): matching cards get the named
+    card's spells, alternative costs included, and take its copiable values as a clone state on the stack.
+    `FormOfTheMulldrifterTest` (2).
 - **Do-Over** (CMB1 #20): restarts the turn, back to exactly how it began. Every card goes back where it was, as
   it was (the engine knows every hidden card, so nothing is left to chance). Tokens, copies and effects made this
   turn are gone; effects and delayed triggers from before the turn still apply, and life totals and turn counts go
   back. AI: it casts Do-Over when the turn has cost it clearly more than its opponents, in life and permanents.
+  - **Engine:** `SP$ RestartTurn` (`RestartTurnEffect`, `RestartTurnAi`); `forge.game.TurnRestart` snapshots the game
+    between turns (only in a game with a card that can restart one) and restores the same card and player objects
+    field by field. The restart waits for the spell to finish resolving (`PhaseHandler.requestTurnRestart`, run at
+    the end of `MagicStack.resolveStack`), then begins the turn again at its untap step; nothing triggers while the
+    turn is undone. `DoOverTest` (3).
 - **Command the Chaff** (CMB1 #18, upstream script): fixed - it could play a land from the sideboard (ruling: you
   can't); now only spells (`ValidSA$ Spell`).
 - **Biting Remark** (CMB1 #17): new keyword Scrycast. AI: a permanent spell cast by an effect no longer waits for
   main phase 2 (it's now or never).
+  - **Engine:** `K:Scrycast:<cost>` (`Keyword`, reminder text in `Card`), handled in `GameAction.scry`: after the
+    cards are seen and before they're arranged, each Scrycast card may be cast for its cost; the rest are scried and
+    no further card is looked at (ruling). The AI change is `PermanentAi` (`isCastFromPlayEffect`).
+    `BitingRemarkTest` (2).
 - **Animate Spell** (CMB1 #16): an Aura on a spell; the card becomes a creature on the battlefield and its owner casts it
   or sacrifices it when the Aura leaves (rulings: P/T from the mana value on the stack, X included; the Aura's enchant
   ability swaps to the permanent; no cast if the creature left first or at the same time).
+  - **Engine:** Aura spells can target a spell on the stack (`AttachEffect` attaches to its card); ChangeZone
+    `AllowNonPermanent$ True` lets an instant or sorcery onto the battlefield (`GameAction`, 101.1 over 304.4); Play
+    `CastFromBattlefield$ True` (`SpellAbility.setCastFromBattlefield`, `Spell.canPlayFromHost`, the zone
+    restriction and `PlayAi`), and an animated instant isn't cast as a creature spell; player definition
+    `AttachedBy <cards>Owner/Controller` (`AbilityUtils`). `AnimateSpellTest` (3).
 
 ### 2026-10-10, second deploy (desktop, Android, GitHub) — 2018 Heroes of the Realm (Optimus Prime, Sol); Ponies: The Galloping; Mystery Booster playtest cards #1–15
 
@@ -2293,30 +2531,80 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 - **Stack of Paperwork** (CMB1 #13), with #11 Sarah's Wings and #12 Scaled Destruction (upstream) verified; Scaled
   Destruction's modes-in-order ruling now has a test.
+  - **Engine:** static `Mode$ CombatDamageUsesStack`: while a permanent with it is on the battlefield, each combat
+    damage step's assignment goes on the stack as one object controlled by no player
+    (`forge.game.combat.CombatDamageOnStack`, pushed by `MagicStack.addCombatDamage` without cast triggers or
+    activation counts; `Combat`, `PhaseHandler`) and is dealt when it resolves. A source that left deals damage as it
+    last existed; damage to a permanent that left or stopped being a creature/planeswalker/battle isn't dealt
+    (rulings). `StackOfPaperworkTest` (4), `ScaledDestructionTest` (1).
 - **Ruff, Underdog Champ** (CMB1 #10): "All Hounds are Dogs" is already true in Forge (no Hound type left), so it's
   text only. New count `Count$YouLostAGameThisMatch` (`GameOutcome.isLoser`: a drawn game has no loser).
+  `RuffUnderdogChampTest` (3).
 - **Priority Avenger** (CMB1 #9): new count `Count$StackSize` (spells and abilities on the stack).
+  `PriorityAvengerTest` (1).
 - **Metagamer** (CMB1 #8), with #6 Frontier Explorer and #7 Imaginary Friends (upstream) verified. User rulings: the
   latest Pro Tour (only), kept current. Today that's Pro Tour Marvel Super Heroes, whose finals were a draft, so the
   deck is Yuuki Ichikawa's 40-card draft deck (names checked against Scryfall).
+  - **Engine:** `forge.card.WinningDeck` and card property `InLatestWinningDeck`, filled by
+    `forge.model.MetagamerDeckLoader` (started from `FModel`): at startup from the user-folder cache
+    (`metagamer-winning-deck.txt`) or the shipped `res/lists/MetagamerWinningDeck.txt`, then refreshed at most daily
+    in the background from magic.gg (the event archive's newest finished Pro Tour, its winner, that event's Top 8
+    deck page and the winner's main deck); offline keeps the old deck. `MetagamerTest` (2),
+    `MetagamerDeckLoaderTest` (3, against saved archive and Top 8 page samples).
 - **Five Kids in a Trenchcoat** (CMB1 #5). User rulings: five creatures in anyone's count of the creatures you
   control, filtered counts and thresholds included; counts of all creatures see one.
+  - **Engine:** static `Mode$ CountsAsCreatures | Amount$ N` (`CountsAsCreatures.count`), applied in `Count$Valid`,
+    per-player `Valid` counts, `CreaturesInPlay` and the IsPresent checks of triggers, statics, conditions and
+    restrictions; Java-coded creature counts still see one. `FiveKidsInATrenchcoatTest` (2).
 - **Enroll in the Coalition** (CMB1 #4): you're a Flagbearer (not a creature); with Coalition Honor Guards out,
   opponents may target you or any Flagbearer creature (ruling). Honor Guard on its own still means creatures.
-- **Baneslayer Aspirant** (CMB1 #3): only your own emblems count.
+  - **Engine:** static `Mode$ PlayerType` gives a player a subtype (`StaticAbilityPlayerType.hasType`); MustTarget
+    `IncludePlayers$ True` lets such players meet the requirement, and same-type requirements merge
+    (`StaticAbilityMustTarget`, rewritten for it). The human targeting input keeps allowed players clickable
+    (`InputSelectTargets`, `TargetSelection`), and the AI's must-target filter covers players.
+    `EnrollInTheCoalitionTest` (5).
+- **Baneslayer Aspirant** (CMB1 #3): only your own emblems count. `BaneslayerAspirantTest` (1).
 - **Ral's Vanguard** (Mystery Booster playtest, CMB1 #1): first of the set's 60 unscripted cards. Copies don't draw
   or deal extra (ruling); the requirement is checked as the game begins.
+  - **Engine:** card line `VanguardRequirement:<types>` (`CardRules`): every main-deck card must have one of the
+    types, or the vanguard is left out at game start with a log line (`RegisteredPlayer.getUnmetVanguardAvatars`).
+    DrawCards replacements now get the drawing ability as `Cause` (so `ValidCause$` works on them); ability property
+    `CastSpell` = a spell that was cast, not a copy. `RalsVanguardTest` (3).
 
 - **Ponies: The Galloping** (new edition PTG, silver-bordered): Nightmare Moon // Princess Luna, Princess Twilight
   Sparkle, Rarity. New creature types Alicorn and Pony. User rulings: nighttime = real local clock 6 PM to 6 AM;
   friendship is mutual; the AI owns a pony toy half the time, with colors fixed for the game; only Tagger-confirmed
   moons can be chosen for Luna. `PrintingTraits.txt` regenerated (moons, PTG, and Arena Promos/@FRA printings the
   last run predated); no existing line lost a trait.
+  - **Friends** (Nightmare Moon): mutual, all-game `Player.addFriend` (logged, copied by `GameCopier`), player
+    property `Friend`; `BecomeFriend$ True` makes an ability's activator and payment helpers the host controller's
+    friends when it goes on the stack (`MagicStack`).
+  - **Anyone helps pay** (`AnyPlayerHelpsPay$ True`, `CostAdjustment`): Assist's payment (702.132a) offered to every
+    other player in turn order, for activated abilities too; helpers are recorded (`SpellAbility.getPaymentHelpers`).
+  - **Play with permission** (`MayPlayWithPermission$` on a MayPlay static, Princess Luna): `MayPlayPermission.ask`
+    asks the owner as a human (`PlaySpellAbility`) or AI (`ComputerUtil`) starts casting; a refusal holds for the
+    turn. The AI lends only to non-opponents.
+  - **Real-world nighttime**: `Count$RealWorldNighttime` (6 PM to 6 AM local) on a replaceable clock,
+    `AbilityUtils.realWorldTime`, which `CurrentHour` now reads too.
+  - **Moon in the art**: printing trait `moon`/`backmoon` (`PrintingTraits`), card property `KnownMoonInArt`.
+  - **Toy colors** (`Protection | Gains$ ToyColors`, `ProtectEffect`, Rarity): a human picks the colors at resolution;
+    the AI's toy comes from `PlayerController.getKnownToyColors`, fixed per game (`SpellAbilityAi.gameSeed`).
+  - **Everypony wins** (Princess Twilight Sparkle): `WinsGame | Defined$ Player` no longer turns the other winners
+    into losers (`GameAction`), and `GameWinAi` won't activate a win whose resolution condition doesn't hold.
+  - `PoniesTheGallopingTest` (8).
 
 - **Optimus Prime, Inspiring Leader** and **Sol, Advocate Eternal** (2018 Heroes of the Realm). User rulings:
   Optimus's "turn to its other face" is convert (any double-faced permanent, MDFCs included) and also turns a
   face-down permanent face up; Sol's partner can be anything that could be a commander if it were legendary,
   and it's legendary all game in every zone. Desktop and mobile deck editors accept the nonlegendary partner.
+  - **Engine:** `SetState | Mode$ OtherFace` (`SetStateEffect`): face-down turns face up, double-faced (MDFCs
+    included) converts under 701.28a, anything else is skipped. **AI** (`SetStateAi`): only turns a card to a
+    strictly better face, so a repeatable ability doesn't flip it back and forth.
+  - **Engine:** keyword `Legendary partner`: the other commander only has to be a would-be commander
+    (`CardRules.canBeCommanderIfLegendary`, `DeckFormat.isLegalCommanderWith`, also used by the desktop
+    `CEditorConstructed` and the Adventure duel's commander check) and is made perpetually legendary at game start
+    (`Player.promoteLegendaryPartners`). Card property `IsPartner` = the source's owner's other commander.
+  - `HeroesOfTheRealm2018Test` (12).
 
 ### 2026-10-10 (deployed: desktop, Android, GitHub) — Two-Headed Giant seating and team scoring; ∞ on mobile; AI twin-trigger targets; Arena Promos
 
@@ -2328,6 +2616,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   sideboarding (which no longer dereferences a missing winner after a drawn game). The win screen's "Team 0 won!"
   now uses the lobby's numbering (Team 1).
 - **∞ on mobile**: the life, counter and mana ∞ rendered as nothing because the generated fonts didn't include it.
+  ∞ is now in the baked character lists (`FSkinFont.getCharacterSet`, `Assets.COUNTER_FONT_CHARS`), and the
+  font-cache marker is bumped to `v2-inf` (`FSkin`) so fonts cached without it regenerate once.
+- Engine side of team scoring: `GameOutcome.getWinningPlayers`/`isWinner`, used by `Match`, the outcome summary
+  (`GameEventGameOutcome`), the win-streak count in `AbilityUtils` and `PlayerControllerAi`'s sideboarding. Seating:
+  `MatchController.seatGiantTeamsTogether` (mobile), `CMatchUI.sortPlayersForGiantTeams` and `VMatchUI.giantSide`
+  (desktop). AI twin targets: `ComputerUtil.targetedByPendingTwins`, used by `AnimateAi` and `PumpAi`.
 - **AI targets with twin triggers**: two Voices of the Vermin attacking both made the same creature 4/4. Effects that
   set something (Animate, keyword-only pumps) now pick a different target from an identical trigger already on the
   stack when there is one. `PendingTwinTargetsTest`, `GiantTeamSeatingTest`, `TwoHeadedGiantTest` (11).
@@ -2378,6 +2672,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   so the starting team goes first for mulligans and opening-hand actions, "if you're not the starting player" means
   the starting team (103.1a), and team games declare every mulligan before any is taken (805.3a).
   `TwoHeadedGiantTest` (10).
+  - **What the first commit built:** a `GameType.TwoHeadedGiant` lobby variant (desktop `VLobby` checkbox, mobile
+    `LobbyScreen`, saved in preferences; it and Archenemy exclude each other). `GameLobby` takes equal lobby teams of
+    two or more, or pairs seats 1+2 vs 3+4 when every slot is on its own team, seats teammates together, and refuses
+    other setups with a message. `Game.formGiantTeam` gives a team 30 life (+15 per head beyond two) and a poison
+    limit of 5n + 5. Shared team turns (`PhaseHandler`, `Untap`: each head phases and untaps,
+    day/night looks at the whole previous team; `TriggerPhase`/`TriggerTurnBegin`), a shared life total and poison
+    count (`Player`), one combined attack (the human `InputAttack` only calls back its own attackers), blocks for
+    either head (`CombatUtil`; AI `AiBlockController` and `ComputerUtilCombat` count attackers aimed at the
+    teammate), team wins and losses (`GameAction`, CR 810.8a) and teammates seeing each other's hands (`CardView`,
+    `PlayerView`, 810.5).
+  - **Players joining mid-game:** `Game.addOutsidePlayer` (an AI from the `OutsidePlayers` factory FModel plugs in)
+    and `GameEventPlayerAdded`, which adds a field on desktop (`CMatchUI`) and a panel on mobile (`MatchScreen`,
+    `MatchController`). Better Than One (below) is its first user. `TwoHeadedGiantTest` was 8 tests in this commit.
 - **Better Than One** (ust/128; previously deferred, not scripted upstream). `SP$ GainTeammate`: the caster picks
   hand cards, a number of cards from the top of their library and permanents; an AI-played person from outside the
   game (user ruling) joins beside the caster's team, owns those cards (set directly, not as an ante ownership change -
@@ -2520,6 +2827,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     (`wanted = flew ? hit.size() : 0`), so a 0 there would have made Slaying Mantis miss everything on Android.
   - Ashling's Prerogative, Demonic Pact: upstream's param fixes with the fork's self-reference wording.
   - Oracle sync afterwards: Accident-Prone Apprentice, Agent of Raffine (Scryfall retemplates).
+    Applied by `oracle-drift.js` against the 2026-10-09 oracle-cards bulk file ("this card is in exile"; "Mana of
+    any type can be spent to cast this spell").
   - Suite after the merge: 1055 run, 0 failed, 6 skipped.
 - **The Grand Calcutron** (ust/131; previously deferred, not scripted upstream).
   - **Programs**: `DB$ ReorderZone | Zone$ Hand | Program$ True` has each player order their hand and records the
@@ -2881,6 +3190,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   useful target, whenever it lands (it stays tapped until that untap step either way).
 - **Marble Priest / Talruum Piper text.** `MustBeBlockedByAll:<valid>:<description>` printed the whole
   keyword as card text (upstream too); only the description prints now.
+- **Tests:** `AugmentTest` gains a Deck Editor (display-only) Zombified check; new `DoesntUntapCurseAiTest`,
+  `ColorlessDeckNeedsTest` and `MustBeBlockedByAllTextTest`.
 
 ### 2026-10-01, third build (deployed: desktop, Android, GitHub) — augment P/T fix
 
@@ -2899,6 +3210,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   alone, the real P/T shows as before. New tracked `CardStateView.getAugmentPT()` (null on the battlefield).
 
 ### 2026-10-01 (deployed: desktop, Android, GitHub) — upstream merge (15 commits, 2.0.16-SNAPSHOT); Unstable black complete (Dirty Rat through Zombified); functional keyword text restored; doubled cost words; AI fixes
+
+- **Upstream merge 2026-10-01** (15 commits): loading decks from a URL in the deck importer (with ghost text
+  listing the four supported providers), Adventure New Game+ offering the main quest again, better AI choices for
+  Memories Returning, a TargetingOverlay update, an adventure data backup update and an "MTG Card Fetch Bot"
+  GitHub workflow. No conflicts.
 
 - **Functional keyword text restored** (found 2026-10-01: Amber Prison's untap choice was gone). The 2026-09-30
   in-game text retemplating rewrote K: lines to Oracle wording, but a K: line is engine input: its head is
@@ -3164,6 +3480,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     `canDestroyAttacker`/`canDestroyBlocker`, the wither predictions and the gang-block filter, so it knows a
     creature that kills the Zombie takes no damage from it. `CreatureEvaluator` values last strike as a
     drawback (-5 per power). `LastStrikeTest` (7). Suite: 821 run, 0 failed, 6 skipped.
+  - Last strike is listed in `NonStackingKWList.txt` (a second instance adds nothing).
 - **Dirty Rat** (ust/53) was already in from upstream; script checked against Scryfall, no change.
 
 ### 2026-09-30 (deployed: desktop, Android, GitHub) — upstream merge (2.0.16-SNAPSHOT); capital offense; Oracle: line sync; in-game ability text sync
@@ -3236,6 +3553,23 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     ("protection from white and from blue"). Periods on "Adapt 1.", "Monstrosity 4.", "Buyback—Sacrifice a
     land."; "Mill a card"; "0:" loyalty; "Living weapon", "Power-up", "Web-slinging", "Start your engines!";
     Aftermath printed once; NICKNAME filled in on keyword lines.
+  - *More engine wording*: a self-sacrifice joins onto a self-cost ("... from this enchantment and sacrifice
+    it"); "Equip—Sacrifice a creature." and "Cumulative upkeep—Put a -1/-1 counter on this creature." closed up
+    and ended like sentences; "Bolster 1.", "Support 2.", "Populate."; "Strive — This spell costs ..."; "You may
+    cast this spell as though it had flash"; "protection from artifacts"; instants and sorceries end a non-mana
+    keyword cost with a period too ("Entwine—Sacrifice three lands."); "Equip {3}. Activate only ..." loses a
+    stray space; "Choose up to five {P} worth of modes." The Eldrazi Spawn, Scion and Sliver, Lander and Syr
+    Acha token scripts say "this token", as their Oracle does.
+  - *Script batches*: 799 template-only lines in 793 scripts, then 163 in 148 more (Saga chapters and
+    ability-word abilities behind engine-built prefixes); 1,030 reviewed lines in 985 scripts (spelling,
+    capitalization, short names, missing ability words, and text that was simply stale - Bride's Gown said
+    deathtouch for first strike, Oscorp Research Team "Draw a card." for two, Conclave Cavalier "green and green"
+    tokens); 37 lines in 35 scripts, among them the Unhinged **Gotcha** abilities, which now print as Oracle
+    does ('If an opponent laughs, you may say "Gotcha!" When you do, return this card ...', via `CostDesc$`; the
+    prompt is unchanged); and 111 lines in 103 scripts from the audit below, which also stated restrictions the
+    scripts enforced but never printed ("Activate only as a sorcery.", "Activate only once each turn.") on 11
+    abilities, gave 8 draw steps a "Draw a card." description, and brought Garbage Elemental's variant text
+    and `Oracle:` lines to Scryfall.
   - *Scripts*: about 2,100 display fields reworded (`SpellDescription$` and the like, and the description
     part of `K:` lines). Template-only edits were applied automatically; everything else was read first, and
     checked against the script where a rules-bearing word changed. Every rewritten line was verified to
@@ -3265,6 +3599,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### 2026-09-27 (deployed: desktop, Android, GitHub) — self-reference sweep; AI combat and equip fixes; Unstable white 12–25; Animate Library; Blurry Beeble; Clocknapper; Crafty Octopus; Defective Detective; Five-Finger Discount; Graveyard Busybody; Half-Shark, Half-; Kindly Cognician; Magic Word; More or Less; S.N.E.A.K. Dispatcher; Socketed Sprocketer; Spy Eye; Very Cryptic Command; Wall of Fortune
 
+- **Upstream merge 2026-09-25** (4 commits, right after the 2026-09-25 changelog): one-line script updates to
+  Elvish Elegy and three upcoming cards (Venser, Fervent Forger; Living Library; Budding Insurgent). No conflicts.
+- **Upstream merge 2026-09-26** (17 commits): match duration in the game log, Command the Stage (FRA), Loot the
+  Anomaly, Sanctum Lurker's `IgnorePlaneswalkerZeroLoyaltyRule` param name, an FSkinFont glyph guard and other
+  graphics/font updates. Conflicts: `Card.getNetCombatDamage` keeps the fork's half-value path with upstream's
+  new `negateCombatAssignedDamage` folded in; 9 card scripts take upstream's lines with the self-reference
+  wording reapplied by the oracle-audit tools.
 - **Upstream merge 2026-09-27** (12 commits): upstream's card-script linter (#12048) strips params it doesn't
   know, including the fork's `Host$ True` on every host's enter trigger, which augment relied on. A host
   trigger is now also recognized by shape (`CardFactory.isHostTrigger`: a Host card's trigger for itself
@@ -3434,6 +3775,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 - **Unstable white, ust/12–25**: Knight of the Kitchen Sink (all six variants), Knight of the Widget,
   Oddly Uneven, Old Guard, Ordinary Pony, Rhino-, Sacrifice Play, Side Quest, Success!, Teacher's Pet.
+  - **Printing traits** (new; see the *Printing traits* index entry): `res/lists/PrintingTraits.txt`
+    (`forge.card.PrintingTraits`, loaded lazily like `CardFlavorText`, 25,136 rows) records per printing the
+    watermark (and back-face watermark), open-mouth art (Scryfall Tagger) and the printed border where Scryfall
+    disagrees with the edition files; `CardEdition.BorderColor` gains `BORDERLESS` and `YELLOW`. New card
+    properties `BlackBordered`, `CollectorNumberEven`/`Odd`, `Watermarked`, `Watermark_<name>`, `OpenMouthArt`,
+    and `nameWords_Odd`/`_Even` (Oddly Uneven).
   - Knight of the Kitchen Sink's protections read the new printing traits (above). Knight of the
     Widget counts `Watermark_orderofthewidget`.
   - Word counts keep "Token" in a generated token's name: CR 111.4 (effective 2026-08-07) names a
@@ -3473,6 +3820,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     line identical to Scryfall.
   - Every changed script line was checked parameter by parameter: only display-text keys or the
     `Oracle:` line differ.
+  - In all, the sweep touched 1,984 script files (2,449 lines), counting the token-text and `Secondary$` edits.
 - **One line instead of two**: Keldon Marauders ("enters or leaves the battlefield") and Tergrid
   ("sacrifices a nontoken permanent or discards a permanent card") showed each trigger as its own
   line; the second is now `Secondary$ True` with the joined Oracle sentence, as the 14 other
@@ -3494,53 +3842,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   Lobe Lobber): a second copy's ability can never be used alongside the first.
 - New `CombatRemovalAndEquipAiTest` (7 tests; 6 fail on the old code, Velukan Dragon guards the formula). Suite: 734 run, 0 failed, 6 skipped.
 
-### 2026-09-25 — Unhinged colorless; more Un-cards; pink and gold; errata reversal; Oracle retemplate
+### 2026-09-24 to 09-25 (deployed 2026-09-25) — more Un-cards; pink and gold; network fix; Oracle retemplate; upstream merges (28 and 4 commits)
 
-- **All remaining Unhinged colorless cards** (unh/121–135): Gleemax, Letter Bomb, Mox Lotus,
-  My First Tome, Pointy Finger of Doom, Rod of Spanking, Time Machine, Togglodyte, Toy Boat,
-  Urza's Hot Tub, Water Gun Balloon Game, World-Bottling Kit, City of Ass, R&D's Secret Lair.
-- **Pink** as a sixth color, for the Giant Teddy Bear token.
-- **Mox Lotus** produces genuinely infinite colorless mana, shown as ∞.
-- **Time Machine** returns cards in a *later game*, queued on the `Match` by card name (a card
-  object doesn't survive into the next game) and rebuilt as a Command-zone trigger keyed on the
-  turn number.
-- Card flags that survive the copy every zone change makes: `signed` (Letter Bomb),
-  `switchedOn` (Togglodyte), `chosenExpansion` (World-Bottling Kit).
-- **Errata reversal under R&D's Secret Lair**, printing-specific:
-  - *Every pre-Dominaria printing* — "target creature or player" can't hit planeswalkers or battles.
-  - *Debt of Loyalty* — control is gained unconditionally, not only on a successful regeneration.
-  - *Bloodvial Purveyor* — the attack buff is permanent, with no "until end of turn".
-  - *Marath, Will of the Wild* — a second ability with no `XMin1`, so X may be 0.
-  - *Goblin King* (printed before Ninth Edition) — **all** Goblins get +1/+1 and mountainwalk,
-    including itself; "Other" was added in 9ED.
-  - *Relic Bind* (Legends printing only) — enchants **any** artifact, including your own; the
-    opponent-only restriction was power-level errata applied in Fourth Edition.
-  - *Lotus Vale* — a triggered ability rather than a replacement effect, so the land is already in
-    play when it resolves and can be tapped for mana in response, then buried.
-  - *Ashnod's Coupon* — the target player pays for the drink, not you.
-  - *Celestial Dawn* — the printed card changes the **costs themselves** ("All colored mana symbols
-    in all costs on all of these cards and permanents are {W}") rather than what mana may be spent
-    on them. So the pips really are white — devotion, colored-pip counting and color identity all
-    see {W} — and the Oracle version's "other mana only as colorless" restriction doesn't exist.
-    Needed a new `SetColoredSymbolsTo$` continuous static (a *transform* of whatever the card
-    happens to cost, unlike `ManaCost$`, which sets a fixed one).
-
-- **Misprints under the Lair**, via a new `PrintingIs <SET>[:<collectorNumber>]` property. A misprint
-  is printing-specific in a way errata isn't: only the physical copy carrying the mistake plays as
-  written, so identity is the whole problem. All three are expressed as *boosts and cost reductions*
-  gated on the printing, never as `SetPower`/`SetToughness`/`ManaCost$`, so they layer cleanly and
-  the card is untouched without the Lair.
-  - *Gríma Wormtongue* — the Secret Lair bonus card (SLD #734) was printed 2/4. Every SLD copy is
-    misprinted, and Forge already had that printing.
-  - *Orcish Oriflamme* — Alpha (LEA #166) printed the cost as {1}{R}; Beta corrected it to {3}{R}.
-    Every Alpha copy is misprinted.
-  - *Corpse Knight* — only **some** M20 #206 copies are 2/3, and they share a set and collector
-    number with the correct ones, so this one needed a printing of its own: a new
-    `206a … ${"variant": "Misprint"}` edition entry (following the existing `F203a`/`F203b`
-    precedent) plus a `Variant:Misprint:` block to mark it. The toughness stays Lair-gated — the
-    variant marks *which copy you own*, not what it does.
-
-- Known cosmetic gap: the split-card *image* renderer still draws two halves for the five-face card.
+- This deploy also shipped everything in the sections below, back to 2026-08-07: all of it sat under
+  the log's "Unreleased" heading until this deploy dated it.
 
 - **More Un-cards**: Rules Lawyer, Grimlock (Dinobot Leader), Nerf War, By Gnome Means,
   Chivalrous Chevalier, Do-It-Yourself Seraph, Gimme Five, GO TO JAIL, and the Unstable augments
@@ -3569,6 +3874,53 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **13 missing creature types** added to `TypeLists` (Autobot, Cyborg, Automaton, Brainiac, Chicken,
   Custodes, Head, Naga, Reveler, Rukh, Teddy, Urzan, Walrus); type checks against them silently
   failed before.
+- **The rest of the new Un-cards:**
+  - *Grimlock, Dinobot Leader // Grimlock, Ferocious King* — "{2}, Convert a Transformers toy you own
+    to its other mode" is an honor-system `FlavorAction` cost on both faces, transforming back and forth.
+    The lord bonus covers *other* Dinosaurs, Vehicles, Autobots and More Than Meets the Eye creatures
+    you control (a first version buffed itself). AI: converts at `GameChance.50.TransformersToy`.
+    `Autobot` and `Cyborg` were added to `TypeLists` for it; before that `Creature.Autobot` never
+    matched and Rules Lawyer's Cyborg type was display-only.
+  - *GO TO JAIL* — exiles target creature an opponent controls until it leaves; at the upkeep of the
+    exiled card's owner that player rolls two six-sided dice, and doubles sacrifice the enchantment.
+  - *Chivalrous Chevalier* — "unless you compliment an opponent" is an honor-system `FlavorAction`
+    unless-cost; paying it rolls a d30 to show one of 30 courtly compliments. The AI pays 90% of the
+    time and never bounces the Chevalier itself.
+  - *Gimme Five* — you enter how many people high-fived you (0–99) and gain that much life; each other
+    player gains 1 life by confirming they high-fived you. AI `HighFives` number logic picks 0–3 ("the
+    few people plausibly near a computer"), and AI players never confirm a high five.
+  - *Half-Kitten, Half-* (Augment {2}{W}) and *Humming-* (Augment {3}{W}) — the first augment cards.
+  - *Augment, more*: `AugmentAi` only augments hosts it controls (the combined creature belongs to the
+    host's controller). Gnome-Made Engine's token owner is now `You` rather than the ETB trigger's
+    context. New `AugmentTest` (5 tests: combined characteristics, an artifact host, the host's ETB
+    completing the augment's condition, both cards leaving together and a lone augment dying, the AI
+    only augmenting its own hosts).
+  - *Nerf War* — `ShootAtLibraryAi` fires at the opponent with the lowest life total and a nonempty
+    library, since every card knocked off is also ½ damage. The stack text's ® had been written as a mangled escape (`Nerf00AE`); fixed.
+  - *Rules Lawyer* — deathtouch and empty-library flags still lapse while protected. New
+    `RulesLawyerTest` (2 tests: SBAs skip the protected player and permanents; the Lawyer itself isn't
+    protected, and the protection ends).
+- **Gold, more**: `MagicColor.GOLD` is bit 7, outside `ALL_COLORS` like pink, with 64 more `ColorSet`
+  constants to keep ordinal == mask, a drawn {O} symbol on desktop and mobile, and the multicolor gold
+  shade in the detail panel. The Dragon token had been scripted colorless; it was renamed
+  `c_4_4_dragon_flying` → `gold_4_4_dragon_flying`, and the Unstable, Unsanctioned and HasCon 2017
+  edition lines follow it. Also: `lblPink`/`lblGold` were missing from `en-US.properties`; the AI mana
+  planner no longer files pink or gold under generic for any-color sources; Planar Conquest's (mobile)
+  AEther color filter no longer lists pink/gold combinations.
+- **Pink and gold, more**: protection from pink or gold and the `Card.Pink`/`Card.Gold` properties work
+  (protection threw "unknown protection keyword"). A silver-bordered game is detected by
+  `Game.isSilverBorderedGame()`.
+- **Border, more**: the 13 silver-bordered cards in black-bordered sets are J17 Rules Lawyer, P30M
+  Richard Garfield, Ph.D., six PAL04 cards (Circle of Protection: Art, Mise, Booster Tutor, Goblin
+  Mime, Granny's Payback, Ashnod's Coupon) and five SLD cards (Discord, Lord of Disharmony; Applejack;
+  Fluttershy; Pinkie Pie; Rainbow Dash). The 296 acorn printings are UNF 279, MB2 7 and MBC 10.
+  `Card.isSilverBorderedOrAcorn` backs both the silver-bordered-game check and the `SilverBordered`
+  property (Spatula of the Ages, Ass Whuppin'), which used to match any `Type=Funny` edition,
+  including black-bordered Heroes of the Realm promos, playtest cards and Unfinity/MB2's
+  tournament-legal cards.
+- **Fix: images for funny-card variant numbers.** Upstream widened its funny-card collector-number
+  pattern to `^F\d+[a-z]?` (variants like `F203a`), but the fork's `ImageUtil.getScryfallCardRef` kept
+  `^F\d+` through the 2026-09-24 merge (end of this section); it now uses upstream's pattern.
 
 - **Test suite back to green** (`mvn -pl forge-gui-desktop -am test`: 721 run, 0 failed). Of the 18
   failures, 8 were the fork's and 10 were environmental, reproducing identically on upstream:
@@ -3624,6 +3976,309 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     unaffected (backslash isn't one of its marks).
   - New `TextBoxTest` (5 tests). Test suite: 727 run, 0 failed, 6 skipped.
 
+- **Upstream merge (28 commits, 2026-09-24).** Conflicts: `ImageUtil` (kept the fork's
+  `ScryfallCardRef` refactor, which dropped upstream's new pattern, restored above); `CardView` (kept
+  the fork's five-face `SPLIT_STATE_PROPS` and took upstream's removal of `hasBackSide()`); Bond of
+  Passion (kept the fork's `Any.!targetedBy`, so the 2 damage really goes to "any *other* target").
+- **Upstream merge (4 commits, 2026-09-25)**, no conflicts.
+
+### 2026-09-23 (released 2026-09-25) — upstream merge (51 commits)
+
+- **Conflict resolution:**
+  - *Aetherflame Wall* — took upstream's `CanBlockIfShadow` static. The fork's side was a plain `K:`
+    string with no matching keyword, so it displayed the ability but never let the wall block a
+    shadow creature.
+  - *Sylvan Primordial* — took upstream's current-printing wording (search for up to X Forests) over
+    the fork's older one-Forest-per-permanent text; checked against live Oracle.
+  - `Card.java` — kept the fork's `addPTBoostHalves`/`getTempPowerBoostHalves`/
+    `getTempToughnessBoostHalves`, which the half-P/T layer calls and upstream doesn't have.
+  - Mobile `CardImageRenderer`/`CardRenderer` `drawPtBox` — the fork's side referred to an undeclared
+    `pieces` variable (a latent bug the merge surfaced); took upstream's `ptPieces`/`listItemPtPieces`
+    with the fork's `getPowerString()`/`getToughnessString()`, which also show half P/T.
+  - Mobile 180° flip rendering — upstream renamed `CardRendererUtils.drawFoil` (boolean) to
+    `getFoilIndex` (int); took that with the fork's `f_x/f_y/f_w/f_h` footprint (a 180° flip must not
+    inherit the enlargement meant for a 90° rotation).
+  - Mobile damage display — kept the fork's `hasHalfDamage()`/`getDamageString()`.
+
+### 2026-09-19 (released 2026-09-25) — upstream merge (20 commits): 829 script conflicts; split-card face fix
+
+- **Upstream merge (20 commits).** 829 card-script conflicts came from two orthogonal mass edits on the
+  same lines: upstream moved static abilities from `Affected$ Card.Self` to `AffectedDefined$ Self`,
+  while the fork had reworded `CARDNAME`/`NICKNAME` to Scryfall's "this creature" wording. A script
+  took upstream's structure and the fork's wording only where the difference was provably just those
+  two changes; afterwards, across the 827 auto-resolved files exactly 876 lines differed from the
+  fork's side, every one a pure `Affected`/`AffectedDefined` change. Hand-resolved, each against live
+  Scryfall Oracle text:
+  - *Rebound Auras (Rancor and others), Camato Scout, Duplicant, Glint-Raker, Forgeborn Phoenix,
+    The Space Family Goblinson, Basilisk Collar, Jackhammer, Circle of the Moon Druid* — upstream's
+    wording differed from Oracle (or dropped reminder text), so the fork's text was kept on upstream's
+    structure.
+  - *Nascent Metamorph* — upstream's cleanup pointed `SubAbility$` at `DBCleanup` but defined
+    `DBCleanupOne`, a dangling reference; kept the cleanup under a correctly named SVar. Without it a
+    later trigger would clone the previously revealed creature.
+  - *Providence of Night* — took upstream's renamed `CostsHybridMana` property.
+  - `ChooseCardNameEffect` — upstream's per-alternative `ValidCards` loop combined with the fork's
+    `ManaCost=Chosen` branch (Richard Garfield, Ph.D.), using a labeled `continue nextPlayer` so
+    "nothing chosen" still skips the whole player.
+  - `CardUtil.turnToRightFace` (upstream's new shared helper) had the split-card bug the fork had fixed
+    in dev mode on 2026-08-10: the combined "Left // Right" name never matches a single face, so the
+    left half always became the right half. Fixed inside the helper, so all four callers benefit.
+- **Fix: duplicate hybrid-mana helpers.** Both sides had added `ManaCost.hasHybrid()` and
+  `ManaCostShard.isHybrid()`; they merged textually clean but didn't compile. `hasHybrid()` was
+  identical, so one copy went. For `isHybrid()` upstream's version was kept: it counts hybrid
+  Phyrexian symbols such as {G/W/P} as hybrid (rule 107.4f), while the fork's `isPhyrexian()` guard
+  also excluded them, more broadly than its own comment intended. Only Providence of Night uses it.
+
+### 2026-09-11 to 09-18 (released 2026-09-25) — upstream merges (15, 60 and 20 commits); Steel Hellkite
+
+- **Upstream merge (15 commits, 2026-09-11)**, no conflicts.
+- **Upstream merge (60 commits, 2026-09-15).** *Steel Hellkite*: neither side's `ValidCards` property
+  for "whose controller was dealt combat damage by this creature this turn" existed (the fork's
+  `controllerWasDealtCombatDamageByThisTurn` and upstream's `wasDealtCombatDamageThisTurnBySource`), so
+  the {X} ability silently destroyed nothing either way. Now uses the real `PlayerProperty`
+  `wasDealtCombatDamageThisCombatBy Self`, which is scoped to this combat rather than this turn: Forge
+  has no per-turn tracking, and Glen Elendra's script already accepts the same precision. Kept the
+  fork's "this creature" wording on the pump ability and the `Oracle:` line.
+- **Upstream merge (20 commits, 2026-09-18).** Mobile `CardImageRenderer` 180° flip: took upstream's
+  `drawCardRoundRect(…, foil)` call with the fork's `f_x/f_y/f_w/f_h` footprint.
+
+### 2026-09-10 (released 2026-09-25) — upstream merge (55 commits): adopt upstream's CdnUuidCache image system
+
+- **Images: the fork's Scryfall CDN path (2026-08-10) retired for upstream's.** Upstream's
+  `CdnUuidCache`/`ScryfallSetSync`/`ScryfallRateLimiter` solve the same problem more completely:
+  per-language resolution with English fallback, negative caching of misses with retry-after, real
+  per-face UUIDs for DFCs, endpoint-aware rate limiting and a bulk-sync path. `ScryfallImageIndex` and
+  `MiniJson` were deleted along with every call site (`ImageFetcher`, `SwingImageFetcher`,
+  `LibGDXImageFetcher`, the two `ForgeConstants` URLs); two token-image call sites that had merged
+  silently now call `CdnUuidCache` directly.
+- **Card-script conflicts (12 scripts).** Most were upstream bringing back `CARDNAME` where Oracle reads
+  "this creature"/"this artifact"/"this Siege" or a short name (checked live on Scryfall for all nine
+  such cards): Endurance, Flamewave Invoker, Goblin Razerunners, Invasion of Arcavios, Kazandu Stomper,
+  Nascent Metamorph, Rocco, Cabaretti Caterer, Sandstalker Moloch, Spawning Pit. Three also carried a
+  real upstream fix the fork had missed: `ChangeZone` reads `SelectPrompt$` and `Dig` reads
+  `PrimaryPrompt$`, and Kazandu Stomper, Rocco and Sandstalker Moloch had them backwards (a silent no-op
+  each); took upstream's parameter names with the Oracle wording on top. Kazandu Stomper's `Oracle:`
+  line also gained trample's reminder text, and The Seventh Doctor's reads "Whenever" rather than
+  "When".
+- **Invented parameters dropped.** Five of the fork's script parameters turned out to be read by no
+  effect class: `TokenController$` (Orochi Hatchery, Spawning Pit), `Reveal$` on `DigUntil` (Nascent
+  Metamorph), `Guess$` on `ChooseCard` (The Seventh Doctor), `ChoiceOptional$` on `ChooseCard`
+  (Thunderwave) and `AlternativeMessage$` on `ChangeZone` (Invasion of Arcavios). Orochi Hatchery's
+  "This artifact enters with X charge counters on it" needed a custom description on its
+  `etbCounter` keyword, whose auto-text always uses the card's name.
+- *Thunderwave* — upstream's side wrote its d20 rows with `VERT`; the merge kept the fork's literal
+  `|` instead, taking `VERT` for corruption. That was wrong: `VERT` is Forge's placeholder for a printed
+  `|`, and the fork's change was reverted on 2026-09-30 (see that entry).
+- **`ChangeTargetsEffect`** — the fork's `RandomTarget` branch (absent upstream) had two bugs that only
+  showed once the merge forced a recompile: a missing `GameEntity` import, and `sa.getHostCard()` passed
+  where `updateTarget` expects the shared `Set<GameObject>` the other branches thread through. Fixed
+  both; kept `RandomTarget` and the fork's `resolveMagnet()` player-redirect fix.
+- Verified: every module compiles and test-compiles. Full `mvn test` showed 9 failures in upstream's
+  new `ScryfallSetSyncTest` (`NoClassDefFoundError` on `ForgeConstants` through
+  `FModel.getPreferences()`), unrelated to the merge.
+
+### 2026-09-03 to 09-04 (released 2026-09-25) — Charm info view; Shard of Broken Glass AI; bestow P/T; upstream merges (13 and 13 commits)
+
+- **Fix: Charm modes vanishing from the card text.** `CharmEffect.makePossibleOptions` applied
+  CR 603.3c legality filtering even when only describing the printed text, so a mode needing an
+  opponent's permanent (Tiller Engine's tap mode) disappeared from the info view whenever no opponent
+  controlled one. New `checkLegality` parameter: choosing (`makeChoices`, `CharmAi`) still filters; the
+  description builders (stack text and the card's rules text) always show every printed mode.
+- **AI: Shard of Broken Glass** milled itself every time, since `MillAi` never asks whether self-mill
+  is wanted. New `AILogic$ SelfMillIfGraveyardMatters`, checked in `MillAi.confirmAction` (the real
+  decision point for an `Optional$` ability at resolution): it accepts only when delirium or threshold
+  already apply, or the AI has seen a graveyard-payoff keyword (Flashback, Escape, Delve, Dredge and so
+  on) this game.
+- **Fix: bestow P/T display.** `Card.animateBestow`/`unanimateBestow` switched a bestow permanent
+  between Aura and Creature without refreshing the view's cached P/T, so a creature falling off what it
+  enchanted showed 0/0 until something unrelated refreshed it. Both now call `updatePTforView()`.
+- **Upstream merges (13 commits, 2026-09-03; 13 commits, 2026-09-04)**, no conflicts.
+
+### 2026-08-27 to 09-01 (released 2026-09-25) — Conspiracy-format rules; Conspiracy Draft block; upstream merges (3 and 22 commits)
+
+- **Sovereign's Realm** had `K:` lines but no backing logic. Its "deck can't have basic land cards"
+  clause is now a deck-validation check in `DeckFormat` ("can't include basic land cards while
+  Sovereign's Realm is in the command zone"), and "starting hand size is five" is set before the
+  opening hand in `GameAction`, next to the existing Advantageous Proclamation / Power Play /
+  Emissary's Ploy special cases.
+- **Conspiracy Draft block** — CNS and CN2 as one draftable/sealed pool, as the format is played (each
+  set was only draftable on its own).
+- **Innistrad block** now lists ISD DKA AVR on one line; Avacyn Restored had been its own standalone
+  block, unlike every other three-set block.
+- Oracle wording drifts found while auditing all 25 Conspiracy-type cards: Hold the Perimeter's token
+  reads "This token can't block", and Secret Summoning "a creature you control with the chosen name".
+- **Upstream merge (3 commits, 2026-08-28)**, no conflicts.
+- **Upstream merge (22 commits, 2026-09-01).** `StaticAbilityMode`: the fork's `ChoosesTargets`/
+  `IgnoreErrata` alongside upstream's new `ManaRestriction`. *Celestial Dawn*: kept the fork's split
+  Oracle/as-printed statics (the `PrintedTextActive` pair) over upstream's single `AffectedZone$ All`
+  rewrite. *Hogaak, Arisen Necropolis*: took upstream's new `ManaRestriction` static for "You can't
+  spend mana to cast this spell" with the fork's "this card" wording.
+
+### 2026-08-13 to 08-26 (released 2026-09-25) — upstream merges (17, 57, 8, 2, 7, 9 and 30 commits)
+
+- **Upstream merges** on 2026-08-13 (17 commits), 08-19 (8), 08-20 (2 and 7) and 08-23 (9), no
+  conflicts.
+- **Upstream merge (57 commits, 2026-08-18).** *Nether Traitor*: took upstream's `Creature.YouOwn` fix
+  ("put into *your* graveyard" means you own it) with the fork's "this card" wording. *Weathered
+  Sentinels*: took upstream's `Defined$ Self` on the attack pump.
+- **Upstream merge (30 commits, 2026-08-26).** `AiCardMemory.clearAllRemembered`: upstream's
+  per-player `memoryMap` iteration, still skipping the fork's `HELD_MANA_SOURCES_FOR_OBLIGATION`, which
+  spans turns by design. `SpellAbilityAi`/`ChangeZoneAi`: both sides' imports. *Wormfang Newt* and
+  *Wormfang Turtle*: took upstream's simpler exile (hidden `ChangeZone`, returned via `ExiledWith`) over
+  the fork's choose-then-remember version, with the fork's "this creature" wording.
+
+### 2026-08-10 (released 2026-09-25) — Happy Holidays; Super Secret Tech; Scryfall CDN images; upstream merge (11 commits)
+
+- **Cards:** Super Secret Tech (unh/141) and the whole Happy Holidays set — Gifts Given, Evil Presents,
+  Snow Mercy, Yule Ooze, Naughty // Nice, Stocking Tiger, Mishra's Toy Workshop, Goblin Sleigh Ride,
+  Thopter Pie Network, Some Disassembly Required, Bog Humbugs, Decorated Knight // Present Arms,
+  Topdeck the Halls, Last-Minute Chopping, Chaos Wrap, Seasonal Sequels, Eggnogger's 'Stache and Cheer.
+  Their `Oracle:` text matches Scryfall verbatim.
+  - *Super Secret Tech* — "premium" is the card being foil, tracked per printing (new `Premium`
+    property); neither clause is limited to your own cards.
+  - *Goblin Sleigh Ride* — new `SlideOntoBattlefield` dexterity effect, modeled on how Forge already
+    stands in for Chaos Orb and Falling Star: chance decides whether the rider stayed on (70%) and what
+    it touched, and a rider that stayed on deals damage equal to its toughness to each other creature
+    it touched.
+  - *Snow Mercy* — new `TapSequence<…>` cost (`CostTapSequence`): literal {T}/{Q} sequences that sorted
+    cost parts can't express, paid in printed order with a short pause per step so the shake is
+    visible; `GLOBE` counter.
+  - *Chaos Wrap* — new `SLEEVE` counter with its own damage/destroy replacement, behaving like a shield
+    counter; how many sleeves you used is asked.
+  - *Evil Presents* — new `AttacksItsController` static mode: a creature that may and must attack its
+    own controller, an exception CR 506.2 needs in two places (`CombatUtil`'s defender list and
+    `StaticAbilityMustAttack`).
+  - *Stocking Tiger* — new `OpenBooster` effect: the chosen set's own booster template generates a real
+    pack (the draft/sealed generator); `ChooseExpansion` gained `WithBoosters` to offer only sets that
+    can produce one.
+  - *Decorated Knight // Present Arms* — new `SwapLibraryWithDeck` (exchange your library with one of
+    your saved constructed decks, searched through deck folders; the displaced library goes to the
+    sideboard, Forge's "outside the game"; the AI declines) and `DrawFromOutsideGame` (draws the top of
+    that original deck back). New `DisplacedFromLibrary` and `Decorated` (foil, alternate art or a promo
+    edition) properties.
+  - *Some Disassembly Required* — new `DistributeKeywords` effect: each of the sacrificed creature's
+    keywords goes to exactly one recipient, repeated instances handed out separately; new
+    `Count$CurrentMonth` for its December check.
+  - *Mishra's Toy Workshop* — new `MakesToken` spell-ability property that walks the whole ability tree,
+    so a Charm mode that creates tokens counts.
+  - *Seasonal Sequels* — `CopySpellAbility` `NameEachCopy`: each copy takes the title you typed.
+  - *Topdeck the Halls* — miracle is no longer offered on lands, which can't be cast (CR 702.94a).
+  - Also: `ManifestBase` `Optional`/`OptionalPrompt`; the `Present` creature type; the chosen set shown
+    in the card detail panel. Gifts Given, Naughty and Last-Minute Chopping hand a card's ownership over
+    before moving it, since a card only ever moves to its owner's hand.
+- **Images from Scryfall's CDN.** New `ScryfallImageIndex` built card image URLs on
+  `cards.scryfall.io` from MTGJSON's per-set Scryfall ids, so downloading art no longer depended on the
+  Scryfall API being reachable; it cached a per-set index on disk, refreshed it on a miss, and resolved
+  ids off the UI thread. English printings only. New `MiniJson` reader, since forge-core/forge-gui
+  carry no JSON library. (Replaced by upstream's `CdnUuidCache` on 2026-09-10.)
+- **Fix: dev mode** — picking the left half of a split card to put onto the battlefield no longer
+  gives you the right half.
+- **AI:** `ChooseCard` needs enough valid choices before casting (Spry and Mighty was cast with no
+  creatures), plus a `PowerDifference` logic for Spry and Mighty that picks the strongest and weakest
+  creatures; `PlayAi` applies `ValidSA`/`WithTotalCMC` to the pool `ValidZone` selects (it had been
+  casting "cast an instant or sorcery from your graveyard" with none there); `SlideOntoBattlefield` is
+  never played by the AI.
+- **Oracle text:** 166 faces in 164 scripts synced to Scryfall (self-references, reminder text, line
+  breaks), `Oracle:` lines only; the commit calls them Alchemy faces (58 are `A-` rebalanced cards).
+- **Upstream merge (11 commits, 2026-08-10).** Image fetchers: kept the fork's CDN placeholder
+  resolution and shared naming for both Scryfall hosts, and adopted upstream's new `inScryfallCooldown`
+  helper.
+
+### 2026-08-07 to 08-09 (released 2026-09-25) — Unhinged colorless; pink; errata reversal; upstream merge (43 commits)
+
+- **All remaining Unhinged colorless cards** (unh/121–135): Gleemax, Letter Bomb, Mox Lotus,
+  My First Tome, Pointy Finger of Doom, Rod of Spanking, Time Machine, Togglodyte, Toy Boat,
+  Urza's Hot Tub, Water Gun Balloon Game, World-Bottling Kit, City of Ass, R&D's Secret Lair.
+- **Pink** as a sixth color, for the Giant Teddy Bear token.
+- **Mox Lotus** produces genuinely infinite colorless mana, shown as ∞.
+- **Time Machine** returns cards in a *later game*, queued on the `Match` by card name (a card
+  object doesn't survive into the next game) and rebuilt as a Command-zone trigger keyed on the
+  turn number.
+- Card flags that survive the copy every zone change makes: `signed` (Letter Bomb),
+  `switchedOn` (Togglodyte), `chosenExpansion` (World-Bottling Kit).
+- **Errata reversal under R&D's Secret Lair**, printing-specific:
+  - *Every pre-Dominaria printing* — "target creature or player" can't hit planeswalkers or battles.
+  - *Debt of Loyalty* — control is gained unconditionally, not only on a successful regeneration.
+  - *Bloodvial Purveyor* — the attack buff is permanent, with no "until end of turn".
+  - *Marath, Will of the Wild* — a second ability with no `XMin1`, so X may be 0.
+  - *Goblin King* (printed before Ninth Edition) — **all** Goblins get +1/+1 and mountainwalk,
+    including itself; "Other" was added in 9ED.
+  - *Relic Bind* (Legends printing only) — enchants **any** artifact, including your own; the
+    opponent-only restriction was power-level errata applied in Fourth Edition.
+  - *Lotus Vale* — a triggered ability rather than a replacement effect, so the land is already in
+    play when it resolves and can be tapped for mana in response, then buried.
+  - *Ashnod's Coupon* — the target player pays for the drink, not you.
+  - *Celestial Dawn* — the printed card changes the **costs themselves** ("All colored mana symbols
+    in all costs on all of these cards and permanents are {W}") rather than what mana may be spent
+    on them. So the pips really are white — devotion, colored-pip counting and color identity all
+    see {W} — and the Oracle version's "other mana only as colorless" restriction doesn't exist.
+    Needed a new `SetColoredSymbolsTo$` continuous static (a *transform* of whatever the card
+    happens to cost, unlike `ManaCost$`, which sets a fixed one).
+
+- **Misprints under the Lair**, via a new `PrintingIs <SET>[:<collectorNumber>]` property. A misprint
+  is printing-specific in a way errata isn't: only the physical copy carrying the mistake plays as
+  written, so identity is the whole problem. All three are expressed as *boosts and cost reductions*
+  gated on the printing, never as `SetPower`/`SetToughness`/`ManaCost$`, so they layer cleanly and
+  the card is untouched without the Lair.
+  - *Gríma Wormtongue* — the Secret Lair bonus card (SLD #734) was printed 2/4. Every SLD copy is
+    misprinted, and Forge already had that printing.
+  - *Orcish Oriflamme* — Alpha (LEA #166) printed the cost as {1}{R}; Beta corrected it to {3}{R}.
+    Every Alpha copy is misprinted.
+  - *Corpse Knight* — only **some** M20 #206 copies are 2/3, and they share a set and collector
+    number with the correct ones, so this one needed a printing of its own: a new
+    `206a … ${"variant": "Misprint"}` edition entry (following the existing `F203a`/`F203b`
+    precedent) plus a `Variant:Misprint:` block to mark it. The toughness stays Lair-gated — the
+    variant marks *which copy you own*, not what it does.
+
+- Known cosmetic gap: the split-card *image* renderer still draws two halves for the five-face card.
+
+- **New effects and properties for the Unhinged colorless cards:**
+  - *Gleemax* — new `ChoosesTargets` static mode: its controller picks the targets of every spell and
+    ability in the game (the newest Gleemax wins if two contradict). The handover also covers the AI's
+    own spells (`ComputerUtil`, after it commits to casting; it keeps its own targets if the new chooser
+    can't pick legally) and its triggers (`PlayerControllerAi`), not only the human path through
+    `SpellAbility.setupTargets`.
+  - *My First Tome* — new `GuessName` effect, shaped like `GuessArtist`: the guesser sees only the
+    flavor text, and the verdict names the guess. A new `hasFlavorText` property keeps cards without
+    flavor text out of the choice. The AI's `guessString` now guesses a card name when asked for one
+    (it had always guessed an artist).
+  - *Letter Bomb* — new `SignCard` effect; the `signed` flag shows as "(signed)" in the detail panel.
+  - *Togglodyte* — new `ToggleSwitch` effect; `turnedOn`/`turnedOff` properties (a card with no switch
+    is neither); "(turned ON)"/"(turned OFF)" in the detail panel.
+  - *World-Bottling Kit* — new `ChooseExpansion` effect (every set is offered) and `ExpansionIsChosen`
+    property.
+  - *Time Machine* — new `QueueNextGameReturn` effect.
+  - *Urza's Hot Tub* — new `sharesWordInNameWith` property (whole words, case-insensitive).
+  - *Water Gun Balloon Game* — new `POP` counter, kept on players; the detail panel lists counters a
+    card keeps on players (`InfoPlayerCounters` SVar). Its Giant Teddy Bear token
+    (`p_5_5_giant_teddy_bear`) and the `Teddy Bear` creature type.
+  - *Mox Lotus* — `Produced$ Infinity`. Generic costs are settled in bulk from an infinite pool, since
+    every payment path otherwise spends generic one point at a time and Gleemax's {1000000} took a
+    million trips through the payment machinery. ∞ shows in the desktop player panel and the mobile
+    mana pool.
+- **Engine, more:**
+  - Pink is `MagicColor.PINK` with 32 new `ColorSet` constants (indices 32–63), and a pink shade in the
+    card detail panel.
+  - `SetColoredSymbolsTo` and `ManaCost` are now registered in `StaticAbility.generateLayer`; without
+    that those statics were assigned no layer and silently never ran.
+  - `CardView.updateManaCost` reports the changed cost as `ManaCost` and the printed one as
+    `OriginalManaCost`; they were the wrong way round, which only showed once a card had a changed cost.
+    The desktop card-image renderer now honors the "Perpetual Changes to Mana Cost" overlay preference,
+    so a rewritten cost (Celestial Dawn as printed) matches the battlefield overlay.
+  - Drawn mana symbols for pink and for generic costs past {20}, on desktop and mobile (new
+    `FDrawnSymbol`): neither exists in any skin sprite, and on mobile a missing symbol raised a bug
+    report.
+  - Under R&D's Secret Lair, an illegal target pick explains the errata reason instead of quoting the
+    card's own (overridden) target wording.
+- **Fixes:** Ashnod's Coupon and Urza's Contact Lenses were declared "no cost" rather than {0}, making
+  them permanently uncastable.
+- **Upstream merge (43 commits, 2026-08-09).** Upstream added a `cause` (`SpellAbility`) parameter to
+  `Player.loseLife`; the fork threaded it through the half-life paths (`changeLifeByHalves`, the
+  private fractional overload, `LifeExchangeEffect`) and kept its half-life branch in `LifeLoseEffect`,
+  half-aware mana burn in `PhaseHandler` and the half reset in `setLife`. Kept the fork's
+  `entersWithCounters` property in `CardProperty`; `Teddy Bear` slotted in beside upstream's new
+  Talosian and Tellarite types.
+
 ### 2026-08-06 — Unhinged green and multicolor; five-face splits
 
 - **Cards:** B-I-N-G-O, Creature Guy, Elvish House Party, Fat Ass, Fraction Jackson, Gluetius
@@ -3642,23 +4297,186 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   alone; picks a letter for letter-choosing cards instead of choosing nothing.
 - **Deck generation:** random decks reinforce orphaned typal payoffs with some enablers (a Zombie
   lord no longer arrives with no Zombies). Random-color piles are preserved by design.
+- **Card details (36fdd4c2369):** B-I-N-G-O puts a "chip" on each cast spell's mana value with the new
+  `DB$ RememberNumber` and gets +9/+9 per `Count$CardBingoLines`; Elvish House Party is */* equal to
+  `Count$CurrentHour`; S.N.O.T. reuses the mutate machinery and squares `Count$MergedCount`; Symbol
+  Status creates a token per `Count$DifferentExpansionSymbols` (new `c_1_1_expansion_symbol` token
+  script); Fraction Jackson uses `HasHalfSymbol`; Monkey Monkey Monkey chooses a letter and counts
+  `nameStartsWithChosenLetter`; Stone-Cold Basilisk uses `fewerLettersInNameThanSource`; Rare-B-Gone
+  uses `Rarity<name>`; Keeper of the Sacred Word and Meddling Kids take a typed word (`FreeInput$`,
+  Meddling Kids with `MinLetters$ 4` and `textHasChosenWord`). Who // What // When // Where // Why is
+  a single script with five faces (Who {X}{W}, What {2}{R}, When {2}{U}, Where {3}{B}, Why {1}{G}).
+  The long-name Elemental's script is
+  `our_market_research_shows_that_players_like_really_long_card_names_so_we_made_this_card_to_have_the_absolute_longest_card_name_ever_elemental.txt`.
+- **Existing scripts touched (36fdd4c2369):** the Gotcha rewording covers Cardpecker, Deal Damage, Kill!
+  Destroy!, Number Crunch, Save Life, Spell Counter, Stop That and Touch and Go (the cost now reads
+  e.g. `If an opponent says "kill" or "destroy," say "Gotcha!"` instead of `Confirm an opponent
+  said …`). Dumb Ass's attack choice gets `AILogic$ HinderAttacker`; Frazzled Editor gets the reminder
+  "(Something is wordy if it has four or more lines of rules text.)"; Goblin S.W.A.T. Team now
+  announces whether the table was swatted in time (`UnlessResolveSubs$ WhenNotPaid` plus the new
+  `UnlessPaidSubAbility`); Yet Another Aether Vortex's "not implemented" note is replaced by the
+  `TopLibraryPermanentsOnBattlefield` static; `Rotate180:True` on `role_cursed`, `role_sorcerer` and
+  `role_young_hero`; `Expansion-Symbol` added to `TypeLists.txt`.
+- **Engine, five-face splits in detail (9b3e57424d1):** `CardStateName` gains `Split3`/`Split4`/`Split5`
+  and a `SPLIT_STATES` list. Code that hardcoded the LeftSplit/RightSplit pair now loops over the
+  states a card has: perpetual mana-cost adjustment, intrinsic keywords, `sharesNameWith` off the
+  battlefield, `CardCopyService` copies, `CardFactory` image/set/rarity setup and state copying, and
+  `CardState`'s spell abilities, triggers, statics and replacement effects. `CardRules` combines name,
+  mana cost, color, color identity and type over every face, and a card script's `ALTERNATE` now
+  advances to the next face (previously it always jumped to face 1). `CardFactory` builds the extra
+  states and the combined Oracle text over all faces; `CardView` gains `Split3State`–`Split5State`,
+  lists every face in card text, and fills the face views in a separate pass before rendering ability
+  text (a face's text can read a sibling). The desktop detail panel lists all five mana costs.
+- **Engine, dual residency in detail (9b3e57424d1):** new static mode `TopLibraryPermanentsOnBattlefield`
+  (`StaticAbilityTopLibraryOnBattlefield`; instants and sorceries never qualify, CR 304.4/307.4). Each
+  state-based check moves a qualifying top library card onto the battlefield and re-lists it in the
+  library as a shadow resident (`Card.shadowZone`, `Zone.addShadow`), so the library keeps its size and
+  top card; a shadowed card that is no longer on top goes back to its library position and leaves the
+  battlefield properly. A nontoken permanent put from the battlefield on top of its owner's library
+  while the static applies just gains the shadow, with no leave or enter triggers. `Zone.remove` ends
+  residency; a shuffled library leaves the battlefield as the card's primary zone.
+- **Engine, other (9b3e57424d1):** `Count$CurrentHour` uses the twelve-hour clock (midnight and noon are
+  12); `Count$MergedCount` is 1 for an unmerged card; `Count$DifferentExpansionSymbols` skips tokens;
+  B-I-N-G-O's tracker (1 4 7 / 8 5 3 / 2 0 6, eight lines) lives in `getBingoLineCount`, with marks
+  kept as remembered numbers rather than counters so proliferate can't touch them. `HasHalfSymbol`
+  matches a half in printed P/T, a half mana shard, or ½ in rules text. `MinLetters$` re-asks a
+  too-short typed word (up to 10 tries). `NotifyMessage` now pops up for any resolved ability, not only
+  a RollDice result branch (the old RollDice-only code is removed). New additional ability
+  `UnlessPaidSubAbility` resolves when an Unless cost was paid. Card scripts can set `Rotate180:True`.
+- **UI (9b3e57424d1):** Rotate180 tokens are drawn turned 180° on desktop (picture panel and zoomer)
+  and mobile, and offer the flip control to show them as physically printed. On mobile a card shown
+  flipped 180° no longer renders 38% larger than its own front face. The chosen-type kind is tracked
+  (`ChosenTypeKind`) for the "chosen word"/"chosen letter" label. The stack now shows "Kicked" or
+  "Kicked xN" for multikicker spells. Dev mode's add-card falls back to the face's real name and then
+  to any printing instead of throwing when a name lookup returns nothing.
+- **AI (9b3e57424d1):** the attacks-alone fix drops a creature whose "attacking alone" evasion (a
+  `CantBlockBy` static with an `attacking … EQ0` condition, e.g. Gutter Skulker) was lost and that a
+  blocker would kill, unless its solo hit is lethal, in which case everything else stays home. Letter
+  choices: `MostCommonInitial` picks the most common nonland initial on the battlefield (Monkey Monkey
+  Monkey), otherwise a random letter (When Fluffy Bunnies Attack). New `HinderAttacker` choice logic
+  (Dumb Ass): force the attack only when the AI has a blocker that kills it and survives, otherwise
+  forbid it. Attack-damage prediction now counts attack-trigger Animate effects that set power (Shadow
+  Puppeteers). Forcefield-style shields are no longer re-activated for an attacker the same source
+  already shields (it used to keep paying until out of mana).
+- **Deck generation in detail (9b3e57424d1):** `reinforceTypalPayoffs` finds the creature type most
+  referenced in the deck's rules text (a card's own name ignored), and if the deck has fewer than
+  max(4, size/10) creatures of that type, swaps random filler (not lands, payoffs or the theme) for
+  on-color creatures of it. Only the single strongest theme is reinforced.
+- **Upstream merge (12 commits, 2f2dc6d1df5).** No conflicts. Includes Hobbit draft rankings, MBC cards
+  (Glava, Five-Advents Mage and the 5th August batch), Venser, Visionary Traveler, and several
+  Hobbit card script updates.
 
 ### 2026-08-05 — Unhinged red; half mana production
 
-- **Cards:** Assquatch, Curse of the Fire Penguin, Deal Damage, Dumb Ass, Face to Face, Frazzled
+- **Cards:** Assquatch, Curse of the Fire Penguin, Deal Damage, Dumb Ass, Frazzled
   Editor, Goblin S.W.A.T. Team, Mana Flair, Mons's Goblin Waiters, Orcish Paratroopers, Punctuate,
   Pygmy Giant, Red-Hot Hottie, Rocket-Powered Turbo Slug, Sauté, Six-y Beast, Touch and Go, Yet
   Another Aether Vortex (first two clauses), Zzzyxas's Abyss, Zombie Fanboy, Working Stiff, When
-  Fluffy Bunnies Attack, Wet Willie of the Damned, Vile Bile, Tainted Monkey, Stop That!, Phyrexian
+  Fluffy Bunnies Attack, Wet Willie of the Damned, Vile Bile, Tainted Monkey, Stop That, Phyrexian
   Librarian, Persecute Artist, Necro-Impotence.
 - Half mana **production**; half life fixes (cost prompt, affordability, copy, set, repaint).
 - Flavor text data available in-game.
 - Oracle text sync rounds 4–5 (self-reference pronouns, retemplating).
 - Chosen artist shown in the detail panel.
+- **Single-card commits:**
+  - Necro-Impotence (9448f10be64): new `PayLifeHalves<N>` cost (`CostPayLife` halves mode, paid through
+    `changeLifeByHalves`; payable at 1/2 life, not at 0); the exile-and-return half is Necropotence's.
+    Follow-up b5c0348ddc5: the human and AI cost prompts read the amount in halves (it asked "Pay 1
+    life" and refused at 1/2 life), and the upkeep untap now uses an explicit untap-up-to choice (it
+    untapped nothing).
+  - Persecute Artist (e44083fd71a): reuses the artist picker and `ArtistIsChosen`, with a new
+    `ExcludeArtist` param so it can't name its own illustrator; 032b71cea4a also excludes the database's
+    alternate credit `Rebecca "Don't Mess with Me" Guay` and capitalizes `lblReveal` ("Reveal …'s
+    hand").
+  - Phyrexian Librarian (370e305a620): upkeep exiles the top card as the balanced pile (listed on the
+    card via remembered cards); the falling half is an any-player honor-system ability.
+  - Stop That (8c345c0598e): targeted discard plus the Gotcha graveyard return.
+  - Tainted Monkey (cfa91ee7553): new `textHasChosenWord` property, matched on whole words. Follow-ups:
+    f982890ae24 adds `FreeInput$` to ChooseType so a human types the word (the list stays as the AI's
+    vocabulary); 2ebac10b8dd adds a `Chooser$` param so the Monkey's controller, not the targeted
+    player, picks; f370a17a3f2 matches the generated rules text as well as the stored Oracle field.
+  - Vile Bile (137bcae903f): 2½/2½ Ooze; touching it is an any-player ability whose activator loses 2
+    life.
+  - Wet Willie of the Damned (0214d5f2039): `Halves` on both DealDamage and GainLife.
+  - When Fluffy Bunnies Attack (cb3e12235b6): new `Count$ChosenLetterInName` (occurrences of the chosen
+    letter in a card's displayed name); the caster picks from a 26-letter list.
+  - Working Stiff (2d739356ca4): the arm-straightening instruction is a `Text` line; bending an elbow is
+    the any-player honor-system sacrifice.
+  - Zombie Fanboy (914e2c233a7): ETB artist choice plus `ArtistIsChosen` on a dies trigger.
+  - Zzzyxas's Abyss (12091d4f6ff): new `alphabeticallyFirstNonLand` property (ties all qualify; compares
+    displayed names).
+- **Red cards in detail (33a3aacc417, unh/71–91):** Assquatch (+1½/+1½ to other Donkeys via
+  `AddPowerHalves`/`AddToughnessHalves`), Curse of the Fire Penguin (6/5 trampling Penguin with all
+  abilities removed; returns from the graveyard attached to a creature when the enchanted creature
+  dies; a second state for the zoom view), Deal Damage and Touch and Go (Gotcha cards), Dumb Ass (coin
+  flip; an opponent decides whether it attacks), Frazzled Editor (protection from `wordy`, four or more
+  text-box lines measured like Lexivore), Goblin S.W.A.T. Team (say-the-name honor cost, opponent may
+  swat), Mana Flair (artist choice, {R} per nonland permanent by that artist), Mons's Goblin Waiters
+  (sacrifice for {HR}), Orcish Paratroopers (ETB drop resolved as a two-sided roll), Punctuate
+  (`Count$CardPunctuationMarks`, halved damage), Pygmy Giant (`TextBoxNumbersOf$` choice from the
+  sacrificed creature's text box), Red-Hot Hottie (new `third-degree-burn` counter, label BURN, plus a
+  permanent scream-or-sacrifice trigger), Rocket-Powered Turbo Slug (super haste: put onto the
+  battlefield attacking, lose next turn unless its cost is paid), Sauté (3½ damage), Six-y Beast
+  (secret 0–6 counters, opponent guesses), Yet Another Aether Vortex (haste and revealed top card).
+- **Engine in detail (33a3aacc417):**
+  - Half P/T boosts: `addPTBoostHalves` keeps a leftover half per Layer 7c boost; net power, net
+    toughness and combat damage are computed from a halves total (fixing two +1½ boosts on a 3½
+    toughness reading 5 instead of 6), and the card view shows a half from boosts, not only printed.
+  - Half mana production: a produced `H<color>` token is no longer misread as two whole colors; a
+    second half of a color merges into a whole mana; with mana burn on, unspent halves burn for
+    1/2 life each when the pool empties; a lone floating half now repaints the mana pool display.
+  - Flavor text: `CardFlavorText` loads `res/lists/FlavorText.txt` (55,662 printings keyed by set and
+    collector number, generated by `_tools/flavor-text/extract.js`) lazily; `Card.getTextBoxContents`
+    is rules text plus flavor text, and the chosen-word check reads it too.
+  - `getPunctuationMarkCount` (the marks Punctuate lists, straight and curly quotes included) and
+    `getTextBoxNumbers` (numerals plus spelled-out number words) for Punctuate and Pygmy Giant; new
+    `wordy` card property for Frazzled Editor.
+  - `ChosenNumber` is read before the LKI swap in xCount; replacement effects hand replacing objects to
+    additional abilities as well as the SubAbility chain (fixes ETB counters from
+    `ChooseNumberSubAbility`, which died with an NPE); a ChooseNumber `Guesser` without
+    `RemoveChoices` now gets to guess.
+  - New `THIRDDEGREEBURN` counter type; creature types Bureaucrat, Paratrooper, Penguin and Waiter.
+- **NICKNAME sweep (33a3aacc417):** 764 existing legendary card scripts changed, 855 script lines
+  (`CARDNAME` → `NICKNAME` in display text, the commit message counts 856 fields), so they read with
+  the shortened name current Oracle uses (e.g. Ace, Fearless Rebel; Zurgo Helmsmasher).
+- **AI (33a3aacc417 and single commits):** super haste reserves the mana for next turn's payment
+  (`HELD_MANA_SOURCES_FOR_OBLIGATION`, kept across turns until the debt comes due) and only attacks
+  if every colored pip can be matched to a separate source and the Slug survives any block; Pygmy
+  Giant's `AILogic$ Max` takes the largest number; Mana Flair's `MostProminentNonLand` artist logic
+  counts nonland permanents on both sides. `LifeLoseAi` accepts an honor-system life loss once a
+  `Chance.N` roll has decided to (not if it would leave the AI below 5 life), only in its own main
+  phase (a4d69f26da7, 13368cdd47f).
+- **Half-life fixes in detail:** `setLife` clears the leftover half (95a47dbc577); a life total copied
+  from another player keeps its half through a new `LifeTotalHalves` count and `setLifeInHalves`
+  (f4e11f7cd72, Repay in Kind); changing only the half fires a stats-changed event so the life panel
+  repaints (7f5a0b2debc); a player's half damage is applied immediately rather than waiting for later
+  damage (8542b8ece60, Wet Willie dealt 2 instead of 2½).
+- **UI:** the chosen artist is carried on the card view and printed in the card detail panel
+  (7eef4b5d34d). Desktop battlefield zoom no longer hardcodes `mayFlip=false`, and the zoomer applies
+  the flip rotation after rebuilding the image panel, so CTRL-rotate works on flip cards again
+  (33a3aacc417).
+- **Oracle sync rounds in detail:** round 4 (e1e6a418921, after refreshing the Scryfall bulk data, now
+  gzipped JSONL) changed 47 display fields in 38 scripts that still named the card where Oracle uses a
+  pronoun, mostly the fork's own Un-set scripts (e.g. Bloodletter, Farewell to Arms, Loose Lips,
+  Mother of Goons, The Fallen Apart, Greater Morphling) and the Eldrazi Scion family. Round 5
+  (91b45f4f066) changed 93 fields in 78 scripts that needed a second change with the pronoun: token
+  self-reference ("This token" inside a token's quoted text), When/Whenever corrections, "upkeep or
+  whenever" → "and whenever", and small wording fixes; deletion clusters were left out on purpose.
+  Display-only keys; no `Cost`, `K:` or `AddHiddenKeyword` changes.
+- **Upstream merge (25 commits, 31a58c2c4bc).** One conflict, Shimian Specter: resolved with upstream's
+  new reveal/choose logic and the fork's "Whenever this creature deals combat damage" trigger text.
+  Includes the first MBC cards, TappedOut and MTGGoldfish deck URL loading, the JSONL Scryfall price
+  generator, and "only let a card be cast from its owner's hand or graveyard".
+- **Upstream merge (2 commits, 91acb961cb8).** No conflicts (Óin the Brave update; Silvan Reveler loses
+  Flying).
 
 ### 2026-08-02
 
 - AI stops attacking into walls that just absorb it.
+- In detail (35257a92fcf): at aggression 4 a defending power of 0 no longer justifies an attack as
+  "free" by itself (a Faerie Miscreant kept swinging into a 0/5 reach defender). Blockers that neither
+  die to the attacker nor kill it count as absorbing the attack only when there are enough of them to
+  soak up everything the AI could send, so surplus attackers still go in.
 
 ### 2026-08-01
 
@@ -3668,21 +4486,95 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - AI battle handling: don't let a battle swallow the whole attack step; send leftover attackers;
   only commit the whole attack to a battle it can finish.
 - Four AI fixes: prowess timing, vehicle reanimation, named card legality, tap-ability hoarding.
+- **Card details:**
+  - Farewell to Arms (e321d2d592d): honor-system card built like Handcuffs; choose an opponent as it
+    enters, and any player may sacrifice it (cost: confirming the chosen hand isn't behind its owner's
+    back) to make that player discard their hand. acd1a197149 has it also choose which hand, through
+    ChooseDirection with new optional `ChoiceTitle` and `NoTurnOrderInfo` params; 86c33b76c20 adds a
+    `DirectionLabel` param carried through the card view, so the infobox reads "Chosen hand: Left".
+  - Infernal Spawn of Infernal Spawn of Evil (e1dd55869f6): the mid-search window ChangeZoneEffect
+    opens for Panglacial Wurm now also offers activated abilities marked `ActivateWhileSearching`,
+    leaving the card in the library; new `RevealFromLibrary` cost variant. d9e94f04e19 keeps the card
+    face up to all players until end of turn after it activates from the library.
+  - Kill! Destroy! (22a78768110): Destroy plus the Gotcha graveyard return.
+  - Mother of Goons (80a747a6006): whenever an opponent's creature dies, pick one of 34 insults and
+    confirm you said it or sacrifice her.
+  - Mouth to Mouth (d2ecb382940) and Eye to Eye (9d1cc5464fe): the contest is a real coin flip with
+    `NoCall` instead of the caster declaring the winner.
+  - Loose Lips (48b91b5f810): the AI says the sentence 95% of the time (was 30%).
+- **`Chance.N` in detail:** the roll moved into `canPlayWithSubs`, which every AI decision passes
+  through, because most API classes override `canPlay` and never reached it (ControlGain never rolled,
+  so the AI took Question Elemental? back at once); GenericChoice is excluded since it reads `Chance.N`
+  at resolution (898a33853fd). The roll is seeded by card, turn and ability, so it is one decision per
+  turn rather than one per priority (6bae7fc0cde), and the AI gets one attempt per turn, the same check
+  `AILogic$ Once` uses; the seed is avalanche-mixed (e158b2ab25c).
+- **Four AI fixes in detail (e713165386c):** cast-in-main-1 treats any noncreature spell as a prowess
+  trigger, and only when the prowess creature can attack; the hidden-trigger check judges remembered
+  cards directly (Nautiloid Ship exiles an opponent's graveyard); the `chooseCardName` fallback respects
+  `ValidCards` (Psychic Paper named a sorcery); attacking is skipped for a tap ability only when the AI
+  also wants to use it (Sterling Keykeeper never attacked).
+- **Battle attacks in detail:** a battle is only the chosen defender when some creature can attack it,
+  with a fallback to the protecting player (350843303ac); battles the AI or an ally controls join the
+  leftover-attacker rotation, fewest defense counters first (6d82a9bd705); the whole attack goes at a
+  battle only when available power covers its remaining defense counters (42826c765a1).
+- **Upstream merge (42 commits, ebb60df6e2d).** Conflicts in Cogwork Tracker and Fleshformer, both
+  resolved by taking upstream's scripts (Cogwork Tracker's Dog type, Fleshformer's "activate only during
+  your turn"). Includes Hobbit (HOB/HOC) cards and the enduring story mechanic, several AI simulation
+  improvements, and conspiracy cards in custom cube drafts.
 
 ### 2026-07-31
 
 - Dev mode can pick which printing to add.
 - Framed! chooses its mode at resolution.
 - Flavor names count in name-based mechanics.
+- In detail: the add-a-card and cast-a-spell dev tools show a printing chooser when a card has more
+  than one printing; cancelling keeps the default printing and repeat-last reuses the chosen one
+  (2d3339cb0c7). Framed!'s Charm was a plain SubAbility, so its mode was never chosen; it is now a
+  GenericChoice made after the artist is picked (c74d54f6b82). Every name-reading Un mechanic uses the
+  displayed name, so a flavor name counts as printed (Goro Rel, Scourge to Spiders reads five words)
+  unless an effect has overwritten the name; Seven Questions accepts either name as the guess
+  (ad31579576b).
 
 ### 2026-07-28 to 07-30
 
-- **Cards:** The Fallen Apart, Eye to Eye, Duh, Bloodletter of Nesting Vampires, Bad Ass, Aesthetic
+- **Cards:** The Fallen Apart, Eye to Eye, Duh, Bloodletter, Bad Ass, Aesthetic
   Consultation.
 - Half damage shown on creatures; half kept when power becomes damage; `WordsInName` readable from a
   static ability.
 - Head to Head prevention as a named effect; Man of Measure rules text; granted land types read from
   the card.
+- **Card details:**
+  - Aesthetic Consultation (f1086f587a4) and Eye to Eye (7bdb7a53e88): new scripts.
+  - Bad Ass (e3244bd458a), with its growl prompt reworded in 2b9ffc1c167.
+  - Bloodletter (2b9ffc1c167): new `MostSharedInitial` count (the largest group of nonland permanents
+    sharing a first letter) so its state trigger is an ordinary CheckSVar.
+  - Duh (1ff80103d55): new `hasReminderText` property reading the parenthesized text in a card's Oracle
+    field; ea5ab1985cb lets tokens qualify through their keywords' own reminder text, since token
+    scripts carry none.
+  - The Fallen Apart (b66c7d8d14b): arm and leg custom counters. 8c59991047d: Charm drops modes whose
+    own condition can't be met, and the trigger checks for a limb left to lose. 9445d66aec3: new static
+    `ActiveDescription` param, an extra line shown only while the static's conditions hold, so it
+    reads "This creature can't block." once its arms are gone; counter changes rebuild the card text.
+  - Fascist Art Director (39ff06da451): its protection names the picked artist ("protection from Rob
+    Alexander"), via a `ChosenArtist` option for Pump's `DefinedKW`.
+  - Head to Head: the asker can stop and guess before six questions (428422ba954); the prevention gets
+    a named effect card and the chosen card is cleared afterward (4d9a1dd74b8).
+  - Man of Measure (5a1eefaea74): two description-only statics show its rules text on the card.
+- **Half values:** the mobile floating avatar number shows half life changes as fractions
+  (e4318ec4527). Save Life's leftover half shield also prevents ordinary damage, leaving half damage
+  marked (14985d03e55), and marked half damage now shows on the battlefield overlay and in the detail
+  panel on desktop and mobile (9da18989666). Damage "equal to its power" is re-read in halves
+  automatically, and Fight reads both fighters' power in halves, covering the ~400 cards worded that way
+  without editing upstream scripts (a31a6d6a112). `WordsInName` moved out of xCount's
+  SpellAbility-only block, so Wordmail's static bonus works (a9c411b646c).
+- **Granted land types:** 39ff06da451 spelled out a basic land type's mana reminder for land types a
+  card wasn't printed with, and f70aeb029b0 read the granted type from the card rather than the text
+  state (Yedora, Grave Gardener); 9445d66aec3 then dropped that reminder again, since it only reached
+  the hidden front face. A "refresh cached card text when a static attaches" change (22d29047d22) was
+  reverted the same day (8ab999f9b07).
+- **Upstream merge (11 commits, 09ac715c447).** No conflicts. Includes snapshot fixes (restoring a
+  snapshot taken before a card existed, melded permanents), early Hobbit (HOB/HOC) cards, Suspend
+  tweaks and Realm of Legends 1.065.
 
 ### 2026-07-26 to 07-27 — the half-value layer and Unhinged white/blue
 
@@ -3696,15 +4588,242 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - The half-value layer built out: half P/T on the card state, real half mana shards, half mana
   symbols in both UIs, half-aware prevention.
 - Child registered as a creature type; half set-P/T params registered with the P/T layer.
+- **Upstream merge (26 commits)**, 07-27, no conflicts.
+- **Cards, in detail (white):**
+  - **Collector Protector** — `{W}` plus giving an opponent a nonland card "from outside the game"
+    prevents the next 1 damage to you or it; the card comes from your whole collection (see the
+    `GiveFromCollection` cost below).
+  - **Drawn Together** (creatures by the chosen artist get +2/+2) and **Fascist Art Director**
+    (protection from an artist of your choice) reuse the `ChooseArtist` API.
+  - **Erase (Not the Urza's Legacy One)** — free to cast if you control two or more white
+    permanents that share an artist; **First Come, First Served** — first strike for the attacking
+    or blocking creature with the lowest collector number.
+  - **Emcee** — "Presenting . . ." is an honor-system `FlavorAction` unless-cost for the +1/+1
+    counter.
+  - **Head to Head** — Seven Questions played for real: the engine answers up to six yes-or-no
+    questions from a catalog truthfully from the actual top card, then you guess the name; works
+    against the AI. **Frankie Peanuts** — rolls a d30 for one of thirty yes-or-no questions and
+    takes the target player's answer; abiding by it stays honor system.
+  - **Ladies' Knight** — each player is asked as it enters; those who say yes get a per-player
+    {1} cost reduction for as long as it's on the battlefield.
+  - **Little Girl** — printed `{HW}` mana cost and .5/.5 P/T.
+  - **Look at Me, I'm R&D** — choose a number and one a step either side; every printed instance of
+    it is changed (whole numbers, not digits, so 20 survives a 2→3 swap; 0 may become −1; fractions
+    such as ½ → 1½ or −½ allowed). See the number-swap engine bullet below.
+  - **Man of Measure** — your height against your opponents' is declared as it enters (shorter,
+    taller, both, neither) and grants the matching bonuses.
+  - **Save Life** — modal: gain 2½ life, or prevent the next 2½ damage to a creature; Gotcha
+    returns it from the graveyard.
+  - **Standing Army** — standing up and sitting down are two honor-system abilities that toggle a
+    STANDING counter; vigilance while it's there.
+  - **Staying Power** — "until end of turn" and "this turn" effects don't end (new static mode).
+  - **Wordmail** — +1/+1 for each word in the enchanted creature's name (`Count$WordsInName`).
+- **Cards, in detail (blue):**
+  - **_____** — `{1}`: its name becomes the card name of your choice, activatable from any zone.
+  - **Ambiguity** — triggers on a spell that counters a spell, and on a spell that will enter with
+    counters (looked at while still on the stack); the player who caused it chooses "counter the
+    next spell" or "put an additional counter on a permanent that already has one".
+  - **Artful Looter** — looter that untaps when a permanent sharing an artist with another of yours
+    enters.
+  - **Avatar of Me** — costs {1} more per ten years of your age; power is your height in feet and
+    toughness your American shoe size, both rounded to the nearest ½; its color is your eye color
+    (colorless if that isn't a Magic color, which is recorded and shown; can change at instant speed
+    per ruling 4; heterochromia supported).
+  - **Brushstroke Paintermage** — a target permanent's artist becomes one of your choice until end
+    of turn.
+  - **Bursting Beebles** — unblockable while the defending player controls two or more nonland
+    permanents that share an artist.
+  - **Carnivorous Death-Parrot** — sacrifice unless you say its flavor text (honor-system unless
+    cost; the AI says it 85% of the time).
+  - **Cheatyface** — sneaks from hand onto the battlefield for free; as that resolves the opponent
+    is asked whether they caught you, and exiles it if so (reworked from an opponent-activated
+    ability, which the AI never considered, so the AI now catches it 50% of the time; both outcomes
+    now describe themselves on the stack).
+  - **Double Header** — may bounce a permanent with a two-word name.
+  - **Flaccify** — counter unless its controller pays `{3}{½}` (new half-generic shard).
+  - **Framed!** — choose an artist; tap all untapped or untap all tapped permanents by that artist.
+  - **Greater Morphling** — seven `{2}` abilities: a keyword from its list (landwalk of a chosen
+    type, protection from a chosen color, …), colors, creature type, expansion symbol, artist,
+    +2/−2 or −2/+2, untap.
+  - **Loose Lips** — flying aura; a sentence is chosen from a list as it enters, and an opponent it
+    damages either says it or you draw two.
+  - **Magical Hacker** — swaps every + and − in a target spell or permanent until end of turn.
+  - **Moniker Mage** — saying a middle name is the honor-system part of each ability's cost.
+  - **Mouth to Mouth** — the breath-holding contest is answered as a yes/no choice; winning gains
+    control of the target creature.
+  - **Now I Know My ABC's** — wins at upkeep if your permanents' names cover all 26 letters.
+  - **Number Crunch** and **Spell Counter** — Gotcha returns from the graveyard.
+  - **Question Elemental?** — an opponent may take control of it by confirming you said something
+    that wasn't a question.
+  - **Richard Garfield, Ph.D.** — Mental Magic: pick a card in hand, name a different card with the
+    same mana cost, exile the original and cast the named one; names can't repeat.
+  - **Smart Ass** (2½/1) — names a card on attack; a defending player without it either reveals
+    their hand or it can't be blocked this turn.
+- **Engine — half mana:**
+  - `ManaCostBeingPaid` carries a half beyond its whole shards; paying it takes a whole mana and
+    the unused half becomes change. First built as a separate remainder (which hung casting
+    Little Girl, since nothing could ever pay it off), then reworked so a half is an ordinary
+    `ManaCostShard` in the cost map — payment, counting, display and cancellation use the existing
+    machinery, and Little Girl's printed `{HW}` and Cheap Ass's `{½}` reduction are the same object.
+  - `ManaPool` holds floating halves per color, spendable on a later half cost and emptied with the
+    rest of the pool at end of phase. No change is given during trial (test) payments, which had
+    deposited a phantom half and made unaffordable cards look castable.
+  - `ManaAtom.IS_HALF` and a half shard of each color (parsed from an `H` prefix, contributing 0 to
+    mana value), plus a half-generic `{½}` shard payable with any color (Flaccify).
+  - `CostAdjustment` keeps an odd `{½}` reduction via `reduceByHalf` instead of flooring it.
+  - Floating halves now fire pool events, trigger the end-of-phase mana-loss warning, and show in
+    the mobile zone tab.
+- **Engine — other half values:**
+  - Half power/toughness moved from `Card` onto `CardState`, beside base P/T, so copies, clones and
+    alternate faces carry them; `CardState.copyFrom` copies them; setting a half refreshes the view.
+  - `PreventDamage` gained `Halves$ True`: the whole part is a normal shield, the odd half is held on
+    the target and consumed by a fractional creature's leftover half; cleared at cleanup.
+- **Engine — new APIs, costs and properties:**
+  - `GiveFromCollection` cost: choose from the whole card pool (like dev mode's picker), created in
+    the receiving opponent's sideboard. `ExileFromSideboard` added as a general cost keyword.
+  - `SevenQuestions` (Head to Head), `ChangeNumber` (Look at Me, I'm R&D), `AskFact` and
+    `ChooseEyeColor` (Avatar of Me), `SetArtist` (Brushstroke Paintermage), `SetExpansion` (a
+    display-only expansion-symbol override, separate from the real set code; Greater Morphling).
+  - Number swap held on the `Game` (in halves) and applied wherever a printed number is read:
+    literal numbers in `AbilityUtils.calculateAmount`, base P/T, the generic part of a mana cost in
+    `CostAdjustment`, and the collector number; displayed rules text rewritten on the view, and the
+    chosen pair shown on the enchantment.
+  - `StayingPower` static mode: end-of-turn commands aren't run while it's out, so they all run at
+    the first cleanup after it leaves; damage still wears off.
+  - Player facts (age, height, shoe size) asked once and kept for the game; `SetPowerHalves`/
+    `SetToughnessHalves` static params, registered with the characteristic-defining P/T layer.
+  - `Card.getArtist` can now differ from the printed artist and every artist check reads it;
+    `ChooseArtist` offers every artist in the card database (falling back to an in-game scan), and
+    its AI takes `AILogic$ MostProminentYouCtrl` for pump effects.
+  - Card properties: `sharesArtistWith` and `sharesArtistWithOther` (measured from the tested card's
+    controller, with the nonland requirement built in so the restriction holds no `+`),
+    `attackingOrBlocking`, `LowestCollectorNumberAmong` (digits only; no printed number never counts
+    as lowest; tokens have numbers too), `entersWithCounters`, `nameWords`.
+  - `AdditionalActivationZone` accepts a list; `Animate` takes `Name$ ChosenName`; the "Flashback
+    and others" zone now lists cards with additional activation zones, and cards naming Library work
+    at any depth, not just on top.
+  - `Charm`'s `Chooser` accepts any defined player, not just Opponent.
+  - Magical Hacker's flip folded into `ChangeText`: it flips displayed text, Pump amounts, +1/+1
+    counters, anthem statics and loyalty costs (a flipped −N gains loyalty; a flipped +N needs the
+    counters; payment adds counters through a counter table), and the stack and ability menu
+    re-render.
+  - `Count$AlphabetCoverage`; `ChooseCardName` gained a `ManaCost$ Chosen` filter and name
+    exclusion; `MakeCard` gained `LastNamedCard`.
+  - Creature type Elemental? registered.
+- **UI:**
+  - Half P/T shown in the remaining render paths (the card-state view, mobile
+    `CardImageRenderer`, and the shared detail text in `CardDetailUtil`): a bare ½ with no whole
+    part, −½ when negative.
+  - Floating half mana shown in both mana pools (desktop details label gained a `displayText` hook).
+  - Half mana symbols: desktop draws `{HW}` as a half sign beside the color's symbol (a bare
+    fraction for the generic half), Android maps half shards to the color's texture; an unknown
+    symbol is now skipped instead of crashing the window.
+  - Save Life's shield reads 2½ in its text and on the stack.
+  - Mobile: battlefield creatures of different colors no longer stack into one tile.
+- **Fixes:**
+  - Crash on drawing any card (number-swap and collector-number lookups on a UI-only card with no
+    game) and hang on casting Little Girl.
+  - NPE reading a set code during card construction, on every card at game start.
+  - Cancelling Richard Garfield's card pick no longer crashes.
+  - Avatar of Me: age cost used a nonexistent `Div` xMath op ({34} instead of {3}); its questions
+    moved to ETB (a continuous static can't prompt, so it died as a 0/0); `EffectZone` dropped from
+    its P/T and color statics.
+  - Bursting Beebles: the restriction's `+` leaked out through both card and player valid-string
+    splitting.
+  - Greater Morphling: chosen landwalk type now substituted; chosen type and color cleared when the
+    effects end, off the stack.
+  - Ambiguity's counter-next-spell mode was a blank row in the mode list.
 
 ### 2026-07-25
 
 - Unhinged/Arena promo cards; half life support; half power and toughness.
+- **Upstream merge (34 commits)**, no conflicts.
+- **Cards:** Atinlay Igpay (sacrificed when you speak a non-Pig-Latin word), Bosom Buddy (gain ½
+  life per word in a cast spell's name), Cardpecker (Gotcha), Circle of Protection: Art (choose an
+  artist; prevent damage from a source by them), Goblin Mime (sacrificed when you speak), Granny's
+  Payback (gain life equal to your age), Cheap Ass (spells cost `{½}` less; first a floor-based
+  reduction that discarded an odd half, superseded minutes later by real half mana).
+- **Fixes:** Ass Whuppin' now matches its Oracle text ("silver-bordered or acorn"), which its
+  literal silver-border check couldn't target.
+- **Engine:** `ChooseArtist` API, `Card.chosenArtist` and the `ArtistIsChosen` property; the AI
+  weights an artist by the opposing permanents they drew. `Count$WordsInName`. `AILogic$ Age` so an
+  AI asked for a real-world number doesn't answer with the maximum.
+- **Half life:** a separate 0-or-1 half rides alongside the int life total; a fractional
+  gain/loss still runs replacements and fires life triggers, with the amount reported downstream
+  rounded down (107.1b). `Halves$` on GainLife/LoseLife. Life shows as e.g. "19½" on desktop and
+  mobile.
+- **Half power and toughness:** `PT:1.5/1` parsed, halves set at card creation; net P/T and
+  lethal damage computed in halves (704.5f and the lethal-damage SBA compare in halves), respecting
+  P/T switching; combat deals a fractional creature's leftover ½ (as ½ life loss against a player),
+  and a ½-power attacker is no longer dropped for dealing 0 whole damage; "1½" rendered on desktop
+  and mobile. Cardpecker restored to its printed 1½/1.
+- Creature types Mime, Igpay and Donkey registered.
 
 ### 2026-07-23
 
 - **The full Unglued (UGL) silver-bordered set.**
 - In-game ability text synced to current Scryfall Oracle wording.
+- **Upstream merge (11 commits)**: conflict in Fear of Falling resolved by keeping this fork's
+  "this creature" description and upstream's `Duration$ UntilYourNextTurn` on the −2/−0.
+- **Unglued cards added (49):** Ashnod's Coupon, B.F.M. (Big Furry Monster), Bronze Calendar,
+  Bureaucracy, Burning Cinder Fury of Crimson Chaos Fire, Censorship, Chaos Confetti, Charm School,
+  Checks and Balances, Clam-I-Am, Clam Session, Clay Pigeon, Common Courtesy, Deadhead, Double
+  Cross, Double Deal, Double Dip, Double Play, Double Take, Free-Range Chicken, Gerrymandering, Get
+  a Life, Ghazbán Ogress, Giant Fan, Goblin Bookie, Gus, Handcuffs, Hurloon Wrangler, I'm Rubber,
+  You're Glue, Infernal Spawn of Evil, Jalum Grifter, Jester's Sombrero, Knight of the Hokey Pokey,
+  Landfill, Lexivore, Mesa Chicken, Mirror Mirror, Miss Demeanor, Ow, Prismatic Wardrobe, Psychic
+  Network, Ricochet, Sex Appeal, Sorry, Squirrel Farm, Team Spirit, The Ultimate Nightmare of
+  Wizards of the Coast® Customer Service, Urza's Contact Lenses, Volrath's Motion Sensor.
+- **Unglued cards updated (17):** self-references reworded to current Oracle ("this creature",
+  "this artifact", …) on Blacker Lotus, Chicken Egg, Clambassadors, Elvish Impersonators,
+  Free-for-All, Goblin Bowling Team, Hungry Hungry Heifer, Jack-in-the-Mox, Jumbo Imp, Krazy Kow,
+  Mine, Mine, Mine!, Temp of the Damned (also "equal to the result") and Urza's Science Fair
+  Project; Organ Harvest now repeats over your team rather than non-opponents; Poultrygeist's roll
+  is optional; Spatula of the Ages finds "silver-bordered or acorn" permanent cards. The Unglued
+  edition file drops B.F.M.'s A/B suffixes and adds the ® to The Ultimate Nightmare.
+- **Engine (Unglued):**
+  - `CostFlavorAction`: an unenforceable physical/verbal action cost (Mesa Chicken, Bronze
+    Calendar, Clay Pigeon, Knight of the Hokey Pokey, …); the AI can always "pay" it.
+  - `PlayerController.guessString` and the `GuessArtist` API: a free-text guess compared with a
+    hidden fact (Squirrel Farm); the AI guesses an artist from the cards it can see.
+  - `Gerrymander` API: per-player-count land redistribution (Gerrymandering).
+  - Cast-time `Announce$`/RaiseCost for `{X}{Y}{Z}` costs, with announced-value caps checked across
+    chained sub-abilities (The Ultimate Nightmare…).
+  - "First upkeep of your next game in this match": `NextGameFirstUpkeep` on GainLife, Draw,
+    Discard, DealDamage and ChangeZone queues the effect on the `Match`, delivered as a real
+    Command-zone trigger at the next game's first upkeep (the Double cycle).
+  - `Match.getOutcomesInOrder`, games-won-this-match and per-opponent loss-streak counts (Ghazbán
+    Ogress, Gus), scoped to the current match.
+  - Card properties `SilverBordered` (any Funny-type edition, covering acorn too),
+    `TargetedPlayerTeamCtrl` (Spatula of the Ages, Team Spirit) and `mostLinesOfText` (Lexivore;
+    lines estimated by word-wrapping the Oracle text at 40 characters per line).
+  - Counter-type conversion on move, read from the destination's printed text (Giant Fan).
+  - `ZoneExchangeAll` API (hand/library/graveyard ownership swap) and an exchange-everything `All`
+    mode on the control-exchange effect (Mirror Mirror).
+  - Wholesale sideboard removal via `RemoveFromMatch` (Jester's Sombrero).
+  - Per-card `MayLookAt` "other players" mode, hiding a zone from its own owner only (Psychic
+    Network).
+  - Team life exchange as a cyclic rotation (Get a Life); `DefinedMagnet` can redirect to a player
+    (Ricochet); dice rolls gained lowest-player rerolls to break ties (Ricochet), a repeat-total
+    flag (Free-Range Chicken), per-result notify messages (Knight of the Hokey Pokey), Clam-I-Am's
+    free reroll of 3s, and Goblin Bookie's reflip/reroll (coin flips too); `ChooseSource`
+    `Accumulate`; a tapped-a-nonland-permanent-this-turn player property; `ControllerIsAI` trigger
+    condition (I'm Rubber, You're Glue); tap triggers expose the tapping player.
+  - Multiword creature subtypes registered for B.F.M. and Lady of Proper Etiquette.
+- **AI (Unglued):** `AILogic$ Chance.N` for honor-system abilities, unless-costs and generic
+  choices (attempt N% of the time instead of never); Lexivore attack logic that holds back when its
+  trigger would be forced onto one of the AI's own valuable permanents; `AvoidTargetColors` color
+  choice (Prismatic Wardrobe).
+- **UI:** a popup summarizing what a scry did (cards kept on top, in order, and put on the bottom).
+- **In-game ability text sync:** 10,531 scripts (10,528 cards, 3 Eldrazi tokens) changed, 12,707
+  lines, almost all in `TriggerDescription$` (7,683), `SpellDescription$` (2,866) and
+  `Description$` (2,061); 12,319 lines replace `CARDNAME` with the Oracle self-reference ("this
+  creature", "This land", "this Aura", "it", …); 123 lines of granted-ability text on Eldrazi
+  Spawn/Scion-style tokens change "Sacrifice this creature:" to "Sacrifice this token:" (also in 61
+  `Oracle:` lines); 45 lines change "enters" to "enters the battlefield"; about 100 lines of other
+  wording drift and typo fixes; 78 `Oracle:` lines touched in all. 121 d20
+  result-row descriptions had their `VERT` placeholder replaced with a literal `|` (restored
+  2026-09-30).
 
 ### 2026-07-21 — first changes
 
@@ -3713,6 +4832,31 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - Android debug build made self-contained and update-safe — bundles this fork's own
   `assets.zip` so the app never silently replaces it with upstream's card database, and uses a
   timestamp-based versionCode so installs are genuine in-place updates.
+- **Upstream merge (5 commits)**, no conflicts.
+- **Cards:** Cloudsculpt Armorer, Limitless Rekindling, Opulent Clomper, Providence of Night,
+  Summitfest Closing Ceremony, The Mystical Archive, Ursine Guide // Ranger's Merit; Circadian
+  Struggle fixed (a dangling `SubAbility$ DBEffect` removed from its cleanup).
+- **Engine:**
+  - `LosePerpetualEffect`: `Defined$` targeting, triggers matched by their Execute SVar rather than
+    object identity, and the ability text refreshed after removal — so Runeblade Raiser can strip
+    its own perpetual dies-trigger while changing zones.
+  - Perpetual keyword grants (Animate, Pump, PumpAll) hand their own derived keywords to
+    `PerpetualKeywords` as its initial cache, so a granted Evoke, Echo, Dethrone, Demonstrate or
+    Double team no longer fires twice (found via Aquatic Subtlety).
+  - `MakeCard` `RandomSet$` (with `RandomSetTypes$`): conjure at random from whole editions
+    (Limitless Rekindling).
+  - `ChooseColor` `ExcludeOwnColors` (Opulent Clomper).
+  - Starting-deck tracking: library cards are flagged at match setup and keep the flag across zone
+    changes and copies; prepared copies inherit it; new `notFromStartingDeck` property (Ursine
+    Guide, The Mystical Archive).
+  - `ManaCost.hasHybrid`/`ManaCostShard.isHybrid` (Phyrexian excluded) and a `hasHybridManaCost`
+    property (Providence of Night).
+- **Android:** the bundled `assets.zip` is built by an antrun step at `initialize`; the app
+  extracts it instead of downloading; versionCode is `yyyyMMddHH`; in-plugin signing turned off
+  (it corrupts signatures under JDK 9+) in favor of `apksigner`.
+- **Tooling:** `.gitignore` entries for the local `/dist`, `/devrun` and `/_tools` folders and the
+  generated `assets.zip`.
+
 
 ---
 
