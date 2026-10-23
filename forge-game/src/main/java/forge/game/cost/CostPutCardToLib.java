@@ -76,6 +76,10 @@ public class CostPutCardToLib extends CostPartWithList {
     public final String toString() {
         final StringBuilder sb = new StringBuilder();
         final Integer i = convertAmount();
+        final String desc0 = getTypeDescription() == null ? getType() : getTypeDescription();
+        if (libPosition.equals("Shuffle")) {
+            return "Shuffle " + Cost.convertAmountTypeToWords(i, getAmount(), desc0) + " into its owner's library";
+        }
         sb.append("Put ");
         
         final String desc = getTypeDescription() == null ? getType() : getTypeDescription();
@@ -162,6 +166,12 @@ public class CostPutCardToLib extends CostPartWithList {
     protected Card doPayment(Player payer, SpellAbility ability, Card targetCard, final boolean effect) {
         Map<AbilityKey, Object> moveParams = AbilityKey.newMap();
         AbilityKey.addCardZoneTableParams(moveParams, table);
+        if (libPosition.equals("Shuffle")) {
+            final Player owner = targetCard.getOwner();
+            final Card moved = targetCard.getGame().getAction().moveToLibrary(targetCard, -1, null, moveParams);
+            owner.shuffle(ability);
+            return moved;
+        }
         return targetCard.getGame().getAction().moveToLibrary(targetCard, Integer.parseInt(getLibPos()), null, moveParams);
     }
 

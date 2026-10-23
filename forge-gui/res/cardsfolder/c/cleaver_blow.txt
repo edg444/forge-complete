@@ -1,0 +1,19 @@
+Name:Cleaver Blow
+ManaCost:1 B
+Types:Instant
+# multicleave is chosen as it's cast (PlaySpellAbility.chooseCleaves); each removed set is checked with
+# Cleave<i>_ properties and Count$Cleaved. The AI casts it with nothing removed.
+SVar:Multicleave:1|nonblack;with mana value 3 or less;an opponent controls;and its controller each;and lose 2 life;tapped
+A:SP$ Destroy | ValidTgts$ Creature.Cleave1_nonBlack+Cleave2_cmcLE3+Cleave3_OppCtrl | TgtPrompt$ Select target creature | SubAbility$ DBDraw | SpellDescription$ Destroy target [nonblack] creature [with mana value 3 or less] [an opponent controls]. You [and its controller each] draw a card [and lose 2 life]. Create a [tapped] 1/1 white Spirit creature token with flying.
+SVar:DBDraw:DB$ Draw | Defined$ You | SubAbility$ DBDrawThem
+SVar:DBDrawThem:DB$ Draw | Defined$ TargetedController | ConditionCheckSVar$ C4 | ConditionSVarCompare$ EQ0 | SubAbility$ DBLoseYou
+SVar:DBLoseYou:DB$ LoseLife | Defined$ You | LifeAmount$ 2 | ConditionCheckSVar$ C5 | ConditionSVarCompare$ EQ0 | SubAbility$ DBLoseThem
+SVar:DBLoseThem:DB$ LoseLife | Defined$ TargetedController | LifeAmount$ 2 | ConditionCheckSVar$ C45 | ConditionSVarCompare$ EQ0 | SubAbility$ DBTokenTapped
+SVar:DBTokenTapped:DB$ Token | TokenScript$ w_1_1_spirit_flying | TokenTapped$ True | ConditionCheckSVar$ C6 | ConditionSVarCompare$ EQ0 | SubAbility$ DBToken
+SVar:DBToken:DB$ Token | TokenScript$ w_1_1_spirit_flying | ConditionCheckSVar$ C6 | ConditionSVarCompare$ EQ1
+SVar:C4:Count$Cleaved.4
+SVar:C5:Count$Cleaved.5
+SVar:C45:Count$Cleaved.4.5
+SVar:C6:Count$Cleaved.6
+Text:Multicleave {1} (You may pay an additional {1} any number of times as you cast this spell. For each time you do, choose a paired set of square brackets and remove the words in between.)
+Oracle:Multicleave {1} (You may pay an additional {1} any number of times as you cast this spell. For each time you do, choose a paired set of square brackets and remove the words in between.)\nDestroy target [nonblack] creature [with mana value 3 or less] [an opponent controls]. You [and its controller each] draw a card [and lose 2 life]. Create a [tapped] 1/1 white Spirit creature token with flying.

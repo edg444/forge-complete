@@ -1,0 +1,26 @@
+Name:There
+ManaCost:U
+Types:Instant Lesson
+A:SP$ ChangeZone | ValidTgts$ Creature.YouCtrl | Origin$ Battlefield | Destination$ Exile | TgtPrompt$ Select target creature you control | RememberChanged$ True | SubAbility$ DBReturn | SpellDescription$ Exile target creature you control, then return it to the battlefield under its owner's control.
+SVar:DBReturn:DB$ ChangeZone | Defined$ Remembered | Origin$ Exile | Destination$ Battlefield | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+AlternateMode:Split
+Oracle:Exile target creature you control, then return it to the battlefield under its owner's control.
+
+ALTERNATE
+
+Name:They're
+ManaCost:1 U
+Types:Instant Lesson
+A:SP$ Effect | ValidTgts$ Creature | TgtPrompt$ Select up to three target creatures | TargetMin$ 0 | TargetMax$ 3 | RememberObjects$ Targeted | StaticAbilities$ Unblockable | ForgetOnMoved$ Battlefield | SpellDescription$ Up to three target creatures can't be blocked this turn.
+SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Card.IsRemembered | Description$ These creatures can't be blocked this turn.
+Oracle:Up to three target creatures can't be blocked this turn.
+
+ALTERNATE
+
+Name:Their
+ManaCost:2 U
+Types:Instant Lesson
+A:SP$ Pump | ValidTgts$ Opponent | TgtPrompt$ Select target opponent | SubAbility$ DBGiveControl | AILogic$ DonateTargetPlayer | StackDescription$ None | SpellDescription$ Target opponent gains control of target creature you control.
+SVar:DBGiveControl:DB$ GainControl | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | Defined$ Targeted | NewController$ ParentTarget | AILogic$ DonateTargetPerm
+Oracle:Target opponent gains control of target creature you control.

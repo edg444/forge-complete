@@ -592,6 +592,10 @@ public class SpellAbilityRestriction extends SpellAbilityVariables {
             return false;
         }
 
+        if (sa.hasParam("ActivateWhileSearching") && !activator.isSearchingOwnLibrary()) {
+            return false;
+        }
+
         if (!sa.canCastTiming(c, activator) && !StaticAbilityCastWithFlash.anyWithFlashNeedsInfo(sa, c, activator)) {
             return false;
         }

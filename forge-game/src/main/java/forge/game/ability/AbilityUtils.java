@@ -1800,6 +1800,17 @@ public class AbilityUtils {
             }
 
             if (sa != null) {
+                // Cleaver Blow: Count$Cleaved.<i>[.<j>...], how many of those bracket sets were removed as it was cast
+                if (sq[0].equals("Cleaved")) {
+                    final java.util.Set<Integer> cleaved = sa.getRootAbility().getCleaved();
+                    int n = 0;
+                    for (int i = 1; i < sq.length; i++) {
+                        if (cleaved.contains(Integer.parseInt(sq[i]))) {
+                            n++;
+                        }
+                    }
+                    return doXMath(n, expr, c, ctb);
+                }
                 // special logic for xPaid in SpellAbility
                 if (sq[0].contains("xPaid")) {
                     SpellAbility root = sa.getRootAbility();

@@ -1596,6 +1596,10 @@ public class PlayerControllerAi extends PlayerController {
             }
             return false; // didn't play spell
         }
+        // abilities activated from the library mid-search (Infernal Spawn, library ninjutsu) go on the stack like any other
+        if (tgtSA.hasParam("ActivateWhileSearching")) {
+            return ComputerUtil.playStack(tgtSA, player, getGame());
+        }
         return true;
     }
 

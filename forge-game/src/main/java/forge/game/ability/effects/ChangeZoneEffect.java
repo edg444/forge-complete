@@ -730,8 +730,8 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
                     }
                 }
                 if (sa.isNinjutsu()) {
-                    // Ninjutsu need to get the Defender of the Returned Creature
-                    final Card returned = sa.getPaidList("Returned", true).getFirst();
+                    // Ninjutsu need to get the Defender of the Returned Creature; library ninjutsu shuffles it away instead
+                    final Card returned = sa.getPaidList(sa.hasParam("LibraryNinjutsu") ? "CardPutToLib" : "Returned", true).getFirst();
                     final GameEntity defender = game.getCombat().getDefenderByAttacker(returned);
                     game.getCombat().addAttacker(movedCard, defender);
                     game.getCombat().getBandOfAttacker(movedCard).setBlocked(false);
@@ -1120,7 +1120,12 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
                     // should only count the number of searching player's own library
                     decider.incLibrarySearched();
 
-                    handleCastWhileSearching(fetchList, decider);
+                    decider.setSearchingOwnLibrary(true);
+                    try {
+                        handleCastWhileSearching(fetchList, decider);
+                    } finally {
+                        decider.setSearchingOwnLibrary(false);
+                    }
                 }
                 if (sa.hasParam("RememberSearched")) {
                     source.addRemembered(player);
@@ -1683,7 +1688,7 @@ public class ChangeZoneEffect extends SpellAbilityEffect {
                 if (!sa.canPlay()) {
                     continue;
                 }
-                if (!decider.getController().confirmAction(sa, null, Localizer.getInstance()
+                if (!decider.getController().confirmAction(sa, PlayerActionConfirmMode.CastFromSearch, Localizer.getInstance()
                         .getMessage("lblDoYouWantActivateAbilityOf", tgtCard.getTranslatedName()), null)) {
                     continue;
                 }

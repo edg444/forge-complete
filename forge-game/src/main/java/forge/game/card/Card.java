@@ -609,8 +609,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     public CardStateName getAlternateStateName() {
         if (hasAlternateState()) {
-            // Werewhat: a back face given to a single-faced card
-            if (backFaceSource != null) {
+            // Werewhat: a back face given to a single-faced card; Blurry Visionary: two cards in one sleeve
+            if (backFaceSource != null || sleeveBack != null) {
                 return currentStateName == CardStateName.Backside ? CardStateName.Original : CardStateName.Backside;
             }
             if (isSplitCard()) {
@@ -1234,7 +1234,61 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
 
     public final boolean isTransformable() {
-        return (getRules() != null && getRules().isTransformable()) || backFaceSource != null;
+        return (getRules() != null && getRules().isTransformable() && sleeveBack == null) || backFaceSource != null;
+    }
+
+    // Blurry Visionary: sleeved back to back with another card, a modal double-faced card for the rest of the game.
+    // The faces are kept apart from any one object so each new object the card becomes gets them again.
+    private CardState sleeveFront = null;
+    private CardState sleeveBack = null;
+    public final CardState getSleeveFront() {
+        return sleeveFront;
+    }
+    public final CardState getSleeveBack() {
+        return sleeveBack;
+    }
+
+    // Starting Town NPC: an Adventure this card has in hand ("name|cost|types|spell"), kept while it's cast as that
+    // Adventure and sent on it, so it can still be cast from exile after the NPC leaves (rulings)
+    private String grantedAdventure = null;
+    public final String getGrantedAdventure() {
+        return grantedAdventure;
+    }
+
+    public static void applyGrantedAdventure(final Card c, final String spec) {
+        final String[] parts = spec.split("\\|", 4);
+        c.addAlternateState(CardStateName.Secondary, false);
+        final CardState adventure = c.getState(CardStateName.Secondary);
+        adventure.setName(parts[0]);
+        final forge.card.mana.ManaCost cost = new forge.card.mana.ManaCost(new forge.card.mana.ManaCostParser(parts[1]));
+        adventure.setManaCost(cost);
+        adventure.setColor(forge.card.ColorSet.fromManaCost(cost));
+        adventure.setType(forge.card.CardType.parse(parts[2], false));
+        final SpellAbility spell = AbilityFactory.getAbility(parts[3], adventure);
+        adventure.addSpellAbility(spell);
+        adventure.setOracleText(spell.getParam("SpellDescription"));
+        c.grantedAdventure = spec;
+        c.updateStateForView();
+    }
+
+    public static void removeGrantedAdventure(final Card c) {
+        c.clearStates(CardStateName.Secondary, false);
+        c.grantedAdventure = null;
+        c.updateStateForView();
+    }
+
+    /** Make c the modal double-faced card: front replaces its front face when given, back becomes its back face. */
+    public static void applySleeve(final Card c, final CardState front, final CardState back) {
+        if (front != null) {
+            c.getState(CardStateName.Original).copyFrom(front, false);
+        }
+        c.addAlternateState(CardStateName.Backside, false);
+        c.getState(CardStateName.Backside).copyFrom(back, false);
+        c.sleeveFront = front;
+        c.sleeveBack = back;
+        c.updateKeywordsCache(c.getState(CardStateName.Original));
+        c.updateKeywordsCache(c.getState(CardStateName.Backside));
+        c.updateStateForView();
     }
 
     // Built Bear: the options circled for this physical card, re-printed on each new object
@@ -1260,7 +1314,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
 
     public final boolean isModal() {
-        return getRules() != null && getRules().getSplitType() == CardSplitType.Modal;
+        return (getRules() != null && getRules().getSplitType() == CardSplitType.Modal) || sleeveBack != null;
     }
 
     public final boolean isDoubleFaced() {

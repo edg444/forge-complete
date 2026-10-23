@@ -57,6 +57,9 @@ public class CardCopyService {
         }
 
         out.setZone(copyFrom.getZone());
+        if (copyFrom.getSleeveBack() != null) {
+            Card.applySleeve(out, copyFrom.getSleeveFront(), copyFrom.getSleeveBack());
+        }
         out.setState(copyFrom.getFaceupCardStateName(), true);
         out.setBackSide(copyFrom.isBackSide());
         out.setGamePieceType(copyFrom.getGamePieceType());

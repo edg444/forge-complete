@@ -635,8 +635,17 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
         return this.hasParam("PowerUp");
     }
 
+    // Cleaver Blow: the bracket sets (numbered from 1) removed by paying multicleave as this was cast
+    private java.util.Set<Integer> cleaved = java.util.Collections.emptySet();
+    public java.util.Set<Integer> getCleaved() {
+        return cleaved;
+    }
+    public void setCleaved(final java.util.Set<Integer> brackets) {
+        cleaved = brackets;
+    }
+
     public boolean isNinjutsu() {
-        return this.isKeyword(Keyword.NINJUTSU);
+        return this.isKeyword(Keyword.NINJUTSU) || hasParam("LibraryNinjutsu");
     }
 
     public boolean isCumulativeUpkeep() {

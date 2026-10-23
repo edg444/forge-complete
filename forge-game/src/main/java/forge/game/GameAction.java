@@ -288,6 +288,10 @@ public class GameAction {
         // and returning to hand (to recreate their spell ability information)
         if (toBattlefield || (suppress && zoneTo.getZoneType().isHidden())) {
             copied = c;
+            // Starting Town NPC's Adventure stays behind once the creature spell resolves (the same object)
+            if (toBattlefield && c.getGrantedAdventure() != null) {
+                Card.removeGrantedAdventure(c);
+            }
 
             if (lastKnownInfo == null) {
                 lastKnownInfo = CardCopyService.getLKICopy(c);
@@ -325,6 +329,10 @@ public class GameAction {
             copied = new CardCopyService(c).copyCard(false);
             if (c.getBuiltOptions() != null) {
                 applyBuild(copied, c.getBuiltOptions());
+            }
+            if (c.getGrantedAdventure() != null && (zoneTo.is(ZoneType.Stack)
+                    || zoneTo.is(ZoneType.Exile) && zoneFrom != null && zoneFrom.is(ZoneType.Stack))) {
+                Card.applyGrantedAdventure(copied, c.getGrantedAdventure());
             }
 
             copied.setGameTimestamp(c.getGameTimestamp());
@@ -2219,6 +2227,7 @@ public class GameAction {
             p.updateWayBehind();
         }
         forge.game.player.Positioning.sync(game);
+        syncGrantedAdventures();
         game.getTriggerHandler().resetActiveTriggers();
         // Resetting triggers may result in needing to check static abilities again. For example,
         // if the legendary rule was invoked on a Thespian's Stage that just copied Dark Depths, the
@@ -3933,6 +3942,30 @@ public class GameAction {
     }
 
     /** Built Bear: the circled options, printed on this object (again after each zone change, see changeZone). */
+    /**
+     * Starting Town NPC: creature cards in a player's hand have the Adventure a permanent that player controls gives them
+     * (SVar:HandAdventure), and lose it when no such permanent is left.
+     */
+    private void syncGrantedAdventures() {
+        for (final Player p : game.getPlayers()) {
+            String spec = null;
+            for (final Card c : p.getCardsIn(ZoneType.Battlefield)) {
+                if (c.hasSVar("HandAdventure")) {
+                    spec = c.getSVar("HandAdventure");
+                    break;
+                }
+            }
+            for (final Card c : p.getCardsIn(ZoneType.Hand)) {
+                if (c.getGrantedAdventure() != null && (spec == null || !c.isCreature())) {
+                    Card.removeGrantedAdventure(c);
+                } else if (spec != null && c.getGrantedAdventure() == null && c.isCreature()
+                        && !c.hasState(CardStateName.Secondary) && !c.hasAnySplitState()) {
+                    Card.applyGrantedAdventure(c, spec);
+                }
+            }
+        }
+    }
+
     public static void applyBuild(final Card c, final List<Integer> picked) {
         final List<String[]> options = Lists.newArrayList();
         for (final String o : c.getSVar("BuildOptions").split(";")) {

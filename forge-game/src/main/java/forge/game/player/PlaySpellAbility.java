@@ -161,7 +161,39 @@ public class PlaySpellAbility {
             list = c.chooseOptionalCosts(choosen, list);
         }
 
-        return GameActionUtil.addOptionalCosts(choosen, list);
+        return chooseCleaves(p, GameActionUtil.addOptionalCosts(choosen, list));
+    }
+
+    /**
+     * Cleaver Blow's multicleave: an optional additional {N} any number of times, each removing a set of bracketed
+     * words chosen by the caster (SVar:Multicleave "N|words;words;..."). The AI casts it whole.
+     */
+    private static SpellAbility chooseCleaves(final Player p, final SpellAbility sa) {
+        if (sa == null || !sa.isSpell() || !sa.getHostCard().hasSVar("Multicleave") || p.getController().isAI()) {
+            return sa;
+        }
+        final String[] spec = sa.getHostCard().getSVar("Multicleave").split("\\|", 2);
+        final String[] brackets = spec[1].split(";");
+        final List<SpellAbility> labels = new java.util.ArrayList<>();
+        for (final String b : brackets) {
+            final SpellAbility label = new SpellAbility.EmptySa(sa.getHostCard(), p);
+            label.setDescription("[" + b + "]");
+            labels.add(label);
+        }
+        final List<SpellAbility> chosen = p.getController().chooseSpellAbilitiesForEffect(labels, sa,
+                "Multicleave {" + spec[0] + "}: choose any number of bracket sets to remove ({" + spec[0] + "} each)",
+                labels.size(), java.util.Map.of("MinChoiceAmount", 0));
+        if (chosen.isEmpty()) {
+            return sa;
+        }
+        final SpellAbility result = sa.copy();
+        final java.util.Set<Integer> cleaved = new java.util.TreeSet<>();
+        for (final SpellAbility s : chosen) {
+            cleaved.add(labels.indexOf(s) + 1);
+            result.getPayCosts().add(new forge.game.cost.Cost(spec[0], false));
+        }
+        result.setCleaved(cleaved);
+        return result;
     }
 
     public static boolean payCostDuringAbilityResolve(final PlayerController controller, final Player p, final Cost cost, SpellAbility sourceAbility, String prompt) {

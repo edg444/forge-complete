@@ -3577,6 +3577,14 @@ public class Player extends GameEntity implements Comparable<Player> {
         return controlledWhileSearching.lastEntry();
     }
 
+    private boolean searchingOwnLibrary;
+    public boolean isSearchingOwnLibrary() {
+        return searchingOwnLibrary;
+    }
+    public void setSearchingOwnLibrary(final boolean searching) {
+        searchingOwnLibrary = searching;
+    }
+
     public void addControlledWhileSearching(long timestamp, Player pl) {
         controlledWhileSearching.put(timestamp, pl);
     }

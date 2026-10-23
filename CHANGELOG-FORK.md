@@ -312,6 +312,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Mystery Booster 2 playtest cards (MB2), part 11: Panglacial Shinobi, There // They're // Their, Blurry Visionary,
+  Starting Town NPC, Cleaver Blow.**
+  - `LibraryNinjutsu$` (ninjutsu from the library while searching it, shuffling the attacker away) and cost position
+    `Shuffle` for `PutCardToLib`. `ActivateWhileSearching$` abilities can now be activated only while their
+    controller searches their own library, and the AI uses them.
+  - New effect `Sleeve` (the top two cards become one modal double-faced card for the rest of the game, kept on each
+    new object). `SVar:HandAdventure` gives creature cards in hand an Adventure, kept while it's cast and on that
+    Adventure.
+  - `SVar:Multicleave` (pay {N} per bracket set removed as it's cast, people only); `Cleave<i>_` properties and
+    `Count$Cleaved` check what's left.
+
 - **Mystery Booster 2 playtest cards (MB2), part 10: Omnipresent Impostor, A Girl and Her Dogs, Alberix, the Trade
   Planet, Don't Worry About It, Plant a Sapling // Fully-Grown Treefolk, Planeswalkerificate, Werewhat, Defender of the
   Queue, Built Bear.**

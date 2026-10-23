@@ -1,0 +1,10 @@
+Name:Starting Town NPC
+ManaCost:2 G
+Types:Creature Human Peasant
+PT:3/3
+# given in hand by GameAction.syncGrantedAdventures (a creature card with an Adventure of its own keeps that one); Fetch Herbs is kept while cast and on its Adventure (rulings)
+SVar:HandAdventure:Fetch Herbs|1 G|Sorcery Adventure|SP$ GainLife | LifeAmount$ 2 | SpellDescription$ You gain 2 life.
+Text:Each creature card in your hand has a {1}{G} Adventure sorcery named Fetch Herbs with "You gain 2 life." (You may cast it as the Adventure for {1}{G}. Then exile it, and you may cast the creature later from exile.)
+K:ETBReplacement:Other:AddExtraCounter:Mandatory:Battlefield:Creature.YouCtrl+wasCastFromExile
+SVar:AddExtraCounter:DB$ PutCounter | ETB$ True | Defined$ ReplacedCard | CounterType$ P1P1 | CounterNum$ 1 | SpellDescription$ Each creature card you cast from exile enters the battlefield with an additional +1/+1 counter on it.
+Oracle:Each creature card in your hand has a {1}{G} Adventure sorcery named Fetch Herbs with "You gain 2 life." (You may cast it as the Adventure for {1}{G}. Then exile it, and you may cast the creature later from exile.)\nEach creature card you cast from exile enters the battlefield with an additional +1/+1 counter on it.

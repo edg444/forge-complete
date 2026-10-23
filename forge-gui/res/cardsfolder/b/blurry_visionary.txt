@@ -1,0 +1,7 @@
+Name:Blurry Visionary
+ManaCost:3 U
+Types:Creature Human Wizard
+PT:3/2
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSleeve | TriggerDescription$ When CARDNAME enters the battlefield, look at the top two cards of your library and put them back-to-back in the same sleeve with either card in front. They become a modal double-faced card for the rest of the game. Then put that card into your hand. (You can play either face of that double-faced card. Make sure to reset it when the game ends.)
+SVar:TrigSleeve:DB$ Sleeve
+Oracle:When Blurry Visionary enters the battlefield, look at the top two cards of your library and put them back-to-back in the same sleeve with either card in front. They become a modal double-faced card for the rest of the game. Then put that card into your hand. (You can play either face of that double-faced card. Make sure to reset it when the game ends.)

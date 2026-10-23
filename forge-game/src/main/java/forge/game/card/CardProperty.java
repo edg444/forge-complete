@@ -92,6 +92,14 @@ public class CardProperty {
     }
 
     public static boolean cardHasProperty(Card card, String property, Player sourceController, Card source, CardTraitBase spellAbility) {
+        // Cleaver Blow: Cleave<i>_<property> holds unless bracket set i was removed when the spell was cast
+        if (property.startsWith("Cleave") && property.contains("_")) {
+            final int i = Integer.parseInt(property.substring(6, property.indexOf('_')));
+            if (spellAbility instanceof SpellAbility sa && sa.getRootAbility().getCleaved().contains(i)) {
+                return true;
+            }
+            return card.hasProperty(property.substring(property.indexOf('_') + 1), sourceController, source, spellAbility);
+        }
         final Game game = card.getGame();
         final Combat combat = game.getCombat();
         // lki can't be null but it does return this
