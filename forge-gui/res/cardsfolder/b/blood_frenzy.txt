@@ -1,5 +1,7 @@
 Name:Blood Frenzy
 ManaCost:1 R
 Types:Instant
-A:SP$ Pump | ActivationPhases$ Upkeep->Declare Blockers | ActivationFirstCombat$ True | ValidTgts$ Creature.attacking,Creature.blocking | TgtPrompt$ Select target attacking or blocking creature | NumAtt$ +4 | AtEOT$ Destroy | SpellDescription$ Cast this spell only before the combat damage step. Target attacking or blocking creature gets +4/+0 until end of turn. Destroy that creature at the beginning of the next end step.
+A:SP$ Pump | ActivationPhases$ Upkeep->Declare Blockers | ActivationFirstCombat$ True | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 19971015 | PresentDefined$ Self | ValidTgts$ Creature.attacking,Creature.blocking | TgtPrompt$ Select target attacking or blocking creature | NumAtt$ +4 | AtEOT$ Destroy | SpellDescription$ Cast this spell only before the combat damage step. Target attacking or blocking creature gets +4/+0 until end of turn. Destroy that creature at the beginning of the next end step.
+# R&D's Secret Lair: Tempest's printing has no "Cast this spell only before the combat damage step."
+A:SP$ Pump | IsPresent$ Card.PrintedTextActive+PrintedBefore 19971015 | PresentDefined$ Self | ValidTgts$ Creature.attacking,Creature.blocking | TgtPrompt$ Select target attacking or blocking creature | NumAtt$ +4 | AtEOT$ Destroy | SpellDescription$ (As printed) Target attacking or blocking creature gets +4/+0 until end of turn. At end of turn, destroy that creature.
 Oracle:Cast this spell only before the combat damage step.\nTarget attacking or blocking creature gets +4/+0 until end of turn. Destroy that creature at the beginning of the next end step.

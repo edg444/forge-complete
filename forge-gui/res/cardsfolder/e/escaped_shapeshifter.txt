@@ -2,5 +2,7 @@ Name:Escaped Shapeshifter
 ManaCost:3 U U
 Types:Creature Shapeshifter
 PT:3/4
-S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Flying & First Strike & Trample & ProtectionColor | SharedKeywordsZone$ Battlefield | SharedRestrictions$ Creature.!namedEscaped Shapeshifter+OppCtrl | Description$ As long as an opponent controls a creature with flying not named Escaped Shapeshifter, this creature has flying. The same is true for first strike, trample, and protection from any color.
+S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Flying & First Strike & Trample & ProtectionColor | SharedKeywordsZone$ Battlefield | SharedRestrictions$ Creature.!namedEscaped Shapeshifter+OppCtrl | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19971015 | Description$ As long as an opponent controls a creature with flying not named Escaped Shapeshifter, this creature has flying. The same is true for first strike, trample, and protection from any color.
+# R&D's Secret Lair: Tempest's printing (its only one) has no "not named Escaped Shapeshifter".
+S:Mode$ Continuous | AffectedDefined$ Self | AddKeyword$ Flying & First Strike & Trample & ProtectionColor | SharedKeywordsZone$ Battlefield | SharedRestrictions$ Creature.OppCtrl | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19971015 | Description$ (As printed) As long as your opponent controls any creatures with flying, Escaped Shapeshifter gains flying. The same is true for first strike, trample, and protection from any color.
 Oracle:As long as an opponent controls a creature with flying not named Escaped Shapeshifter, this creature has flying. The same is true for first strike, trample, and protection from any color.
