@@ -438,6 +438,11 @@ public class Deck extends DeckBase implements Iterable<Entry<DeckSection, CardPo
      * @param allowedSetCodes  if not null/empty, only prints from these sets are used (e.g. the format's sets)
      */
     public void optimiseCardArt(List<String> allowedSetCodes) {
+        optimiseCardArt(allowedSetCodes, Collections.emptySet());
+    }
+
+    /** @param keepPrinting names whose print was picked on purpose (white-bordered for The Whiteboarder) */
+    public void optimiseCardArt(List<String> allowedSetCodes, Set<String> keepPrinting) {
         if (!StaticData.instance().isEnabledCardArtSmartSelection()) {
             //System.out.println("[CardArt] optimiseCardArt skipped: smart card art selection is OFF");
             return;
@@ -446,7 +451,8 @@ public class Deck extends DeckBase implements Iterable<Entry<DeckSection, CardPo
         for (Entry<DeckSection, CardPool> part : parts.entrySet()) {
             ArrayList<String> names = new ArrayList<>();
             for (Entry<PaperCard, Integer> cp : part.getValue())
-                names.add(cp.getKey().getName());
+                if (!keepPrinting.contains(cp.getKey().getName()))
+                    names.add(cp.getKey().getName());
             if (!names.isEmpty())
                 allNames.put(part.getKey(), names);
         }

@@ -312,6 +312,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **AI: mass zone changes wait for Main 2 on the AI's own turn.** `ChangeZoneAllAi` held a battlefield sweep back
+  only in Main 1, so an instant-speed one (Perilous Vault) fired in upkeep and exiled creatures that could have
+  attacked first. Now everything before Main 2 on its own turn waits (`AILogic$ Main1` and cast-from-effect still go).
+- **AI: Master of Winds (and A-Master of Winds) uses its P/T switch.** New GenericChoice `AILogic$ BestPT`: big
+  power for an attack nothing can safely block or when unblocked, the form that wins a declared fight, else the
+  toughest form or decline. Without a logic the AI declined the "may" every time.
+- **Random decks: border payoffs get their borders.** `DeckGeneratorBase.reinforceBorderPayoffs` (after the typal
+  pass): a deck with a card whose script asks for a border (`WhiteBordered`, `BorderColorWhite/Silver/Black` - The
+  Whiteboarder, Border Guardian) moves its other cards to printings with that border from the full card database
+  (the generator pool keeps one print per name), creatures only when the payoff only counts creatures, then trades
+  filler for cards that have one until a tenth of the deck (min 4) does. Those names are pinned:
+  `Deck.optimiseCardArt(allowedSets, keepPrinting)` leaves them alone, so the coherent-border art pass can't undo it.
+
 - **Mystery Booster 2 playtest cards (MB2), part 12: Runed Terror - Mystery Booster 2 playtest cards complete.**
   - While a permanent with `SVar:SequentialPhases` is on the battlefield, players take their phases one after another:
     as each phase ends the next player in turn order becomes active and takes it, and once all have, the first takes

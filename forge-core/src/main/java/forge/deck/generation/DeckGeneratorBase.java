@@ -54,6 +54,8 @@ public abstract class DeckGeneratorBase {
 
     protected ColorSet colors;
     protected final CardPool tDeck = new CardPool();
+    /** Cards whose print was picked on purpose, for Deck.optimiseCardArt to leave alone. */
+    protected final Set<String> pinnedPrintings = new HashSet<>();
     protected final IDeckGenPool pool;
     protected IDeckGenPool landPool;
     protected final DeckFormat format;
@@ -73,6 +75,10 @@ public abstract class DeckGeneratorBase {
         pool = new DeckGenPool(format0.getCardPool(pool0).getAllCards());
         format = format0;
         fullCardDB = pool0;
+    }
+
+    public Set<String> getPinnedPrintings() {
+        return pinnedPrintings;
     }
 
     public void setSingleton(boolean singleton) {
@@ -102,6 +108,7 @@ public abstract class DeckGeneratorBase {
         trace.append(String.format("Current deck size: %d... should be %f%n", tDeck.countAll(), size * (getCreaturePercentage() + getSpellPercentage())));
 
         reinforceTypalPayoffs(size, forAi);
+        reinforceBorderPayoffs(size, forAi);
     }
 
     /**
@@ -160,12 +167,135 @@ public abstract class DeckGeneratorBase {
         int added = 0;
         for (int attempt = 0; added < want - have && attempt < candidates.size() * 4; attempt++) {
             final PaperCard cp = candidates.get(MyRandom.getRandom().nextInt(candidates.size()));
-            if (!addOneCopy(cp) || !removeOneFiller(payoffNames, wanted)) {
+            if (!addOneCopy(cp) || !removeOneFiller(c -> payoffNames.contains(c.getName())
+                    || c.getRules().getType().hasCreatureType(wanted))) {
                 continue;
             }
             added++;
         }
         trace.append("Reinforced with ").append(added).append(" ").append(wanted).append("(s)\n");
+    }
+
+    private static final Map<CardEdition.BorderColor, List<String>> BORDER_PAYOFF_PROPERTIES = Map.of(
+            CardEdition.BorderColor.WHITE, List.of("WhiteBordered", "BorderColorWhite"),
+            CardEdition.BorderColor.SILVER, List.of("BorderColorSilver"),
+            CardEdition.BorderColor.BLACK, List.of("BorderColorBlack"));
+
+    /**
+     * The Whiteboarder pumps white-bordered creatures, Border Guardian rewards casting spells of a border. Neither
+     * does anything in a pile of whatever printings came up, so when the deck has one, move its other cards to
+     * printings with that border where they exist and, if it's still short, trade filler for cards that have one.
+     */
+    protected void reinforceBorderPayoffs(int size, boolean forAi) {
+        final Map<CardEdition.BorderColor, Integer> payoffWeight = new EnumMap<>(CardEdition.BorderColor.class);
+        final Set<String> payoffNames = new HashSet<>();
+        boolean creaturesOnly = true;
+        for (Entry<PaperCard, Integer> e : tDeck) {
+            final String script = scriptText(e.getKey().getRules());
+            for (Entry<CardEdition.BorderColor, List<String>> b : BORDER_PAYOFF_PROPERTIES.entrySet()) {
+                for (String property : b.getValue()) {
+                    if (script.contains(property)) {
+                        increment(payoffWeight, b.getKey(), e.getValue());
+                        payoffNames.add(e.getKey().getName());
+                        creaturesOnly &= script.contains("Creature." + property);
+                        break;
+                    }
+                }
+            }
+        }
+        if (payoffWeight.isEmpty()) {
+            return;
+        }
+        // a card that rewards every border (Border Guardian) leans white, the one most printings don't have
+        CardEdition.BorderColor wanted = null;
+        for (CardEdition.BorderColor b : List.of(CardEdition.BorderColor.WHITE, CardEdition.BorderColor.SILVER,
+                CardEdition.BorderColor.BLACK)) {
+            if (payoffWeight.containsKey(b) && (wanted == null || payoffWeight.get(b) > payoffWeight.get(wanted))) {
+                wanted = b;
+            }
+        }
+        final CardEdition.BorderColor border = wanted;
+        final boolean onlyCreatures = creaturesOnly;
+        final Predicate<PaperCard> counts = c -> !payoffNames.contains(c.getName())
+                && (onlyCreatures ? c.getRules().getType().isCreature() : !c.getRules().getType().isLand());
+
+        // the pool keeps one preferred print per name, so other borders are only in the full database
+        final Map<String, List<PaperCard>> reprints = new HashMap<>();
+        for (PaperCard pc : fullCardDB.getAllCards(pc -> printedBorder(pc) == border)) {
+            reprints.computeIfAbsent(pc.getName(), k -> new ArrayList<>()).add(pc);
+        }
+        int have = 0;
+        for (Entry<PaperCard, Integer> e : Lists.newArrayList(tDeck)) {
+            final PaperCard pc = e.getKey();
+            if (!counts.test(pc)) {
+                continue;
+            }
+            final List<PaperCard> options = reprints.get(pc.getName());
+            if (printedBorder(pc) != border && options != null) {
+                tDeck.remove(pc, e.getValue());
+                tDeck.add(options.get(MyRandom.getRandom().nextInt(options.size())), e.getValue());
+                trace.append("Reprinted ").append(pc.getName()).append(" with a ").append(border).append(" border\n");
+            }
+            if (printedBorder(pc) == border || options != null) {
+                have += e.getValue();
+                pinnedPrintings.add(pc.getName());
+            }
+        }
+
+        final int want = Math.max(4, size / 10);
+        if (have >= want) {
+            return;
+        }
+        trace.append("Reinforcing ").append(border).append(" borders: have ").append(have).append(", want ").append(want).append("\n");
+        final List<PaperCard> candidates = Lists.newArrayList(IterableUtil.filter(
+                selectCardsOfMatchingColorForPlayer(forAi), c -> counts.test(c) && reprints.containsKey(c.getName())));
+        if (candidates.isEmpty()) {
+            return;
+        }
+        int added = 0;
+        for (int attempt = 0; added < want - have && attempt < candidates.size() * 4; attempt++) {
+            final String name = candidates.get(MyRandom.getRandom().nextInt(candidates.size())).getName();
+            final int newCount = cardCounts.getOrDefault(name, 0) + 1;
+            if (newCount > maxDuplicates
+                    || !removeOneFiller(c -> payoffNames.contains(c.getName()) || printedBorder(c) == border)) {
+                continue;
+            }
+            final List<PaperCard> options = reprints.get(name);
+            tDeck.add(options.get(MyRandom.getRandom().nextInt(options.size())));
+            cardCounts.put(name, newCount);
+            pinnedPrintings.add(name);
+            added++;
+        }
+        trace.append("Reinforced with ").append(added).append(" ").append(border).append("-bordered card(s)\n");
+    }
+
+    private static String scriptText(CardRules rules) {
+        final StringBuilder sb = new StringBuilder();
+        for (ICardFace face : rules.getAllFaces()) {
+            if (face == null) {
+                continue;
+            }
+            for (Iterable<String> lines : List.of(face.getStaticAbilities(), face.getTriggers(), face.getAbilities(),
+                    face.getReplacements())) {
+                for (String line : lines) {
+                    sb.append(line).append('\n');
+                }
+            }
+            for (Entry<String, String> v : face.getVariables()) {
+                sb.append(v.getValue()).append('\n');
+            }
+        }
+        return sb.toString();
+    }
+
+    /** The border printed on this printing, as Card.printedBorderColor works it out in a game. */
+    private static CardEdition.BorderColor printedBorder(PaperCard pc) {
+        final PrintingTraits.Traits t = PrintingTraits.get(pc.getEdition(), pc.getCollectorNumber(), false);
+        if (t != null && t.getBorder() != null) {
+            return t.getBorder();
+        }
+        final CardEdition edition = StaticData.instance().getEditions().get(pc.getEdition());
+        return edition == null ? CardEdition.BorderColor.BLACK : edition.getBorderColor(pc.getCollectorNumber());
     }
 
     /** Creature types this card's rules text singles out, ignoring its own type line and name. */
@@ -204,12 +334,11 @@ public abstract class DeckGeneratorBase {
         return true;
     }
 
-    /** Drop one random card that is neither a land, a payoff, nor part of the theme we're building. */
-    private boolean removeOneFiller(Set<String> payoffNames, String theme) {
+    /** Drop one random card that is neither a land nor one to keep (a payoff, or part of the theme we're building). */
+    private boolean removeOneFiller(Predicate<PaperCard> keep) {
         final List<PaperCard> candidates = Lists.newArrayList();
         for (PaperCard c : tDeck.toFlatList()) {
-            if (c.getRules().getType().isLand() || payoffNames.contains(c.getName())
-                    || c.getRules().getType().hasCreatureType(theme)) {
+            if (c.getRules().getType().isLand() || keep.test(c)) {
                 continue;
             }
             candidates.add(c);
@@ -449,7 +578,7 @@ public abstract class DeckGeneratorBase {
         return res;
     }
 
-    protected static void increment(Map<String, Integer> map, String key, int delta) {
+    protected static <K> void increment(Map<K, Integer> map, K key, int delta) {
         map.merge(key, delta, Integer::sum);
     }
 

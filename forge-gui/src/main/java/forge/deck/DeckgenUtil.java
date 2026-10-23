@@ -365,7 +365,7 @@ public class DeckgenUtil {
             deck = new Deck("Random deck : " + deckName);
             deck.setDirectory("generated/color");
             deck.getMain().addAll(cards);
-            deck.optimiseCardArt(null);  // follow the Card Art Preference, coherent era and border
+            deck.optimiseCardArt(null, gen.getPinnedPrintings());  // follow the Card Art Preference, coherent era and border
             return deck;
         }
         catch (Exception e) {
@@ -774,7 +774,7 @@ public class DeckgenUtil {
             deck.get(DeckSection.Commander).add(selectedPartner);
         }
 
-        deck.optimiseCardArt(null);  // follow the Card Art Preference, coherent era and border
+        deck.optimiseCardArt(null, gen.getPinnedPrintings());  // follow the Card Art Preference, coherent era and border
         return deck;
     }
 
