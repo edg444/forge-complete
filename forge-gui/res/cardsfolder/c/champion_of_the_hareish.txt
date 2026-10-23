@@ -1,0 +1,10 @@
+Name:Champion of the Hareish
+ManaCost:W
+Types:Creature Rabbit Soldier
+PT:1/1
+K:Buddy list
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.Other+YouCtrl | TriggerZones$ Battlefield | Execute$ TrigCounter | TriggerDescription$ Whenever another creature enters the battlefield under your control, put a +1/+1 counter on CARDNAME if one of that creature's creature types is on your buddy list. Otherwise, write one of its creature types on your buddy list.
+SVar:TrigCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | ConditionCheckSVar$ X | ConditionSVarCompare$ EQ1 | SubAbility$ DBWrite
+SVar:DBWrite:DB$ BuddyList | Defined$ TriggeredCard | ConditionCheckSVar$ X | ConditionSVarCompare$ EQ0
+SVar:X:Count$OnBuddyList.TriggeredCard
+Oracle:Buddy list (As this creature enters, if any of its creature types isn't on your buddy list, write one of them on your buddy list.)\nWhenever another creature enters the battlefield under your control, put a +1/+1 counter on Champion of the Hareish if one of that creature's creature types is on your buddy list. Otherwise, write one of its creature types on your buddy list.

@@ -832,6 +832,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     }
                 }
             } while (!success);
+            game.firePendingTaxes();
 
             CardCollection tapped = new CardCollection();
             for (final Card attacker : combat.getAttackers()) {
@@ -899,6 +900,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 }
             }
         }
+        game.firePendingTaxes();
         if (!tapped.isEmpty()) {
             final Map<AbilityKey, Object> runParams = AbilityKey.newMap();
             runParams.put(AbilityKey.Cards, tapped);
@@ -957,6 +959,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     }
                 }
             }
+            game.firePendingTaxes();
 
             // We may need to do multiple iterations removing blockers, since removing one may invalidate
             // others. The loop below is structured so that if no blockers were removed, no extra passes

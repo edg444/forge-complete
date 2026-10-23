@@ -1,0 +1,8 @@
+Name:Knight of Lost Causes
+ManaCost:W W
+Types:Creature Human Knight
+PT:2/2
+K:Vigilance
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ 3 | AddToughness$ 3 | AddKeyword$ Indestructible | CheckSVar$ X | SVarCompare$ EQ1 | Description$ As long as you are way behind, CARDNAME gets +3/+3 and has indestructible. (You are way behind if, at any point during this turn, an opponent had 10 or more life than you, controlled at least three more creatures than you, or had at least three more cards in hand than you.)
+SVar:X:Count$YouAreWayBehind
+Oracle:Vigilance\nAs long as you are way behind, Knight of Lost Causes gets +3/+3 and has indestructible. (You are way behind if, at any point during this turn, an opponent had 10 or more life than you, controlled at least three more creatures than you, or had at least three more cards in hand than you.)

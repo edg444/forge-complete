@@ -3089,6 +3089,11 @@ public class CardProperty {
             if (card.getBank() != 2) {
                 return false;
             }
+        } else if (property.startsWith("SecretMission_")) {
+            // Marchesa's Surprise Party: the mission its owner secretly chose this game (GameAction)
+            if (card.getOwner() == null || !Integer.valueOf(property.substring(14)).equals(card.getOwner().getGameNote("SecretMission:" + card.getId()))) {
+                return false;
+            }
         } else if (property.startsWith("wasCastFrom")) {
             boolean byYou = property.contains("ByYou");
             String strZone = property.substring(11);

@@ -1,0 +1,5 @@
+Name:Intangible Vibes
+ManaCost:1 W
+Types:Enchantment
+S:Mode$ AreTokens | ValidCard$ Creature | Description$ All creatures are tokens. (They're considered tokens for spells and abilities. After a creature leaves the battlefield, it ceases to exist.)
+Oracle:All creatures are tokens. (They're considered tokens for spells and abilities. After a creature leaves the battlefield, it ceases to exist.)

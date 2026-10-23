@@ -1,0 +1,17 @@
+Name:Marchesa's Surprise Party
+ManaCost:no cost
+Types:Conspiracy Secret Mission
+# chosen secretly as each game begins (GameAction); turning it face down ends the mission, since a face-down
+# conspiracy has no abilities
+SVar:SecretMissions:You've cast three or more spells this turn.;An opponent lost 6 or more life this turn.;There are nine or more cards in your graveyard.
+T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | TriggerZones$ Command | IsPresent$ Card.Self+SecretMission_1 | PresentZone$ Command | CheckSVar$ Spells | SVarCompare$ GE3 | OptionalDecider$ You | Execute$ TrigReveal | Secondary$ True | TriggerDescription$ During your end step, if you meet the condition, you may reveal your choice and turn this card face down. When you do, collect the reward. (Mission: you've cast three or more spells this turn.)
+T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | TriggerZones$ Command | IsPresent$ Card.Self+SecretMission_2 | PresentZone$ Command | CheckSVar$ OppLifeLost | SVarCompare$ GE6 | OptionalDecider$ You | Execute$ TrigReveal | Secondary$ True | TriggerDescription$ During your end step, if you meet the condition, you may reveal your choice and turn this card face down. When you do, collect the reward. (Mission: an opponent lost 6 or more life this turn.)
+T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | TriggerZones$ Command | IsPresent$ Card.Self+SecretMission_3 | PresentZone$ Command | CheckSVar$ Yard | SVarCompare$ GE9 | OptionalDecider$ You | Execute$ TrigReveal | Secondary$ True | TriggerDescription$ During your end step, if you meet the condition, you may reveal your choice and turn this card face down. When you do, collect the reward. (Mission: there are nine or more cards in your graveyard.)
+SVar:TrigReveal:DB$ SetState | Defined$ Self | Mode$ TurnFaceDown | AILogic$ Always | RememberChanged$ True | SubAbility$ DBDraw
+SVar:DBDraw:DB$ Draw | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ GE1 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:Spells:Count$ThisTurnCast_Card.YouCtrl
+SVar:OppLifeLost:PlayerCountRegisteredOpponents$HighestLifeLostThisTurn
+SVar:Yard:Count$InYourYard
+Text:Start the game with this conspiracy face up in the command zone. Before the game, secretly choose one of the following. During your end step, if you meet the condition, you may reveal your choice and turn this card face down. When you do, collect the reward.\n• You've cast three or more spells this turn.\n• An opponent lost 6 or more life this turn.\n• There are nine or more cards in your graveyard.\nReward — Draw a card.
+Oracle:(Start the game with this conspiracy face up in the command zone. Before the game, secretly choose one of the following. During your end step, if you meet the condition, you may reveal your choice and turn this card face down. When you do, collect the reward.)\n• You've cast three or more spells this turn.\n• An opponent lost 6 or more life this turn.\n• There are nine or more cards in your graveyard.\nReward — Draw a card.

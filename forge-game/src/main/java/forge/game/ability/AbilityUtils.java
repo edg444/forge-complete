@@ -1530,7 +1530,11 @@ public class AbilityUtils {
                 String halfup = Integer.toString(Math.max(0,(int) Math.ceil(payer.getLife() / 2.0)));
                 cost = new Cost("PayLife<" + halfup + ">", true);
             }
-            alreadyPaid |= payer.getController().payCostToPreventEffect(cost, sa, alreadyPaid, allPayers);
+            final boolean paid = payer.getController().payCostToPreventEffect(cost, sa, alreadyPaid, allPayers);
+            if (paid && !alreadyPaid && cost.hasManaCost()) {
+                game.payTax(java.util.Map.of(sa.getActivatingPlayer(), cost.getTotalMana().getCMC()), payer);
+            }
+            alreadyPaid |= paid;
         }
 
         if (alreadyPaid == isSwitched) {
@@ -1731,6 +1735,12 @@ public class AbilityUtils {
             // Count$WordsInName.<DefinedCards> - Bosom Buddy counts the words in a spell's name,
             // Wordmail in a static ability. Kept outside the SpellAbility-only block below, which a
             // static never enters. Split/double-faced names keep their "//" separator out of it.
+            // Count$OnBuddyList.<Defined> - Champion of the Hareish: 1 if one of its creature types is on your buddy list
+            if (sq[0].equals("OnBuddyList")) {
+                final Player you = ctb instanceof SpellAbility sa ? sa.getActivatingPlayer() : c.getController();
+                final List<Card> defined = getDefinedCards(c, sq[1], ctb);
+                return doXMath(!defined.isEmpty() && forge.game.ability.effects.BuddyListEffect.onBuddyList(you, defined.get(0)) ? 1 : 0, expr, c, ctb);
+            }
             // Count$UniqueVowelsInName.<Defined> - Disemvowel: how many of A, E, I, O, U and Y are in the name
             if (sq[0].equals("UniqueVowelsInName")) {
                 int vowels = 0;
@@ -2864,6 +2874,9 @@ public class AbilityUtils {
         // New Player's Journey: the AI has played Magic for up to (this year - 1993) years (user ruling 2026-10-22)
         if (sq[0].equals("CurrentYear")) {
             return doXMath(java.time.LocalDate.now().getYear(), expr, c, ctb);
+        }
+        if (sq[0].equals("YouAreWayBehind")) {
+            return doXMath(player.isWayBehindThisTurn() ? 1 : 0, expr, c, ctb);
         }
         // Wowzer, the Aspirational: 1 if the player has every one of the listed things, else 0
         if (l[0].startsWith("YouHaveAll ")) {

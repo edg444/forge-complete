@@ -1882,6 +1882,15 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
         isCastFromPlayEffect = b;
     }
 
+    // Tax Taker: the cost increase each player's permanents and spells made to this, as last worked out
+    private Map<Player, Integer> costRaisedBy = Map.of();
+    public Map<Player, Integer> getCostRaisedBy() {
+        return costRaisedBy;
+    }
+    public void setCostRaisedBy(final Map<Player, Integer> m) {
+        costRaisedBy = m;
+    }
+
     // a field rather than a param: copies share their param map with the card's own ability
     private int extraCharmModes = 0;
     public int getExtraCharmModes() {

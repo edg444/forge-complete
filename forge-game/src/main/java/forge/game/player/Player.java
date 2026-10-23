@@ -117,6 +117,7 @@ public class Player extends GameEntity implements Comparable<Player> {
     private int spellsCastLastTurn;
     private List<Card> spellsCastSinceBeginningOfLastTurn = Lists.newArrayList();
     private int investigatedThisTurn;
+    private boolean wayBehindThisTurn;
     private int scryThisTurn;
     private int surveilThisTurn;
     private int committedCrimeThisTurn;
@@ -3364,6 +3365,29 @@ public class Player extends GameEntity implements Comparable<Player> {
         return drawnOwnLastTurn;
     }
 
+    /**
+     * Knight of Lost Causes: way behind if, at any point this turn, an opponent had 10 or more life than you, three
+     * more creatures or three more cards in hand. Checked whenever state-based actions are, which every game action
+     * runs through.
+     */
+    public boolean isWayBehindThisTurn() {
+        return wayBehindThisTurn;
+    }
+    public void updateWayBehind() {
+        if (wayBehindThisTurn || hasLost()) {
+            return;
+        }
+        final int creatures = getCreaturesInPlay().size();
+        final int hand = getCardsIn(ZoneType.Hand).size();
+        for (final Player opp : getOpponents()) {
+            if (opp.getLife() - getLife() >= 10 || opp.getCreaturesInPlay().size() - creatures >= 3
+                    || opp.getCardsIn(ZoneType.Hand).size() - hand >= 3) {
+                wayBehindThisTurn = true;
+                return;
+            }
+        }
+    }
+
     public void onCleanupPhase() {
         revealedThisTurn.clear();
         if (game.getPhaseHandler().isPlayerTurn(this)) {
@@ -3395,6 +3419,7 @@ public class Player extends GameEntity implements Comparable<Player> {
         setLandsPlayedLastTurn(getLandsPlayedThisTurn());
         resetLandsPlayedThisTurn();
         investigatedThisTurn = 0;
+        wayBehindThisTurn = false;
         scryThisTurn = 0;
         surveilThisTurn = 0;
         resetDiscardedThisTurn();

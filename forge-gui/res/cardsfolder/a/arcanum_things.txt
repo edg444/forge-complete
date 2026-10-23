@@ -1,0 +1,10 @@
+Name:Arcanum Things
+ManaCost:1 W
+Types:Artifact Equipment
+S:Mode$ Continuous | Affected$ Creature.EquippedBy | AddKeyword$ Flying | Description$ Equipped creature has flying.
+K:Equip:2
+# you may reveal an Equipment card; if you don't, or this isn't yours on the battlefield, nothing happens (rulings)
+A:AB$ ChangeZone | Cost$ 2 W | Origin$ Hand | Destination$ Battlefield | ChangeType$ Equipment.YouOwn | ChangeNum$ 1 | Hidden$ True | AttachedTo$ Equipped | ConditionDefined$ Self | ConditionPresent$ Card.YouOwn+inZoneBattlefield | RememberChanged$ True | SubAbility$ DBReturn | PrecostDesc$ Equipment swap | SpellDescription$ (Exchange this Equipment with an Equipment card in your hand. If this Equipment was attached to a creature, attach the new Equipment to that creature.)
+SVar:DBReturn:DB$ ChangeZone | Defined$ Self | Origin$ Battlefield | Destination$ Hand | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ GE1 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Equipped creature has flying.\nEquip {2}\nEquipment swap {2}{W} ({2}{W}: Exchange this Equipment with an Equipment card in your hand. If this Equipment was attached to a creature, attach the new Equipment to that creature.)

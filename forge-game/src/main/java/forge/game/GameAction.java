@@ -1718,6 +1718,9 @@ public class GameAction {
         }
         // TODO filter out old copies from zone change
 
+        // after the layers, so it sees which permanents are creatures
+        forge.game.staticability.StaticAbilityAreTokens.sync(game);
+
         if (runEvents && !affectedCards.isEmpty()) {
             game.fireEvent(new GameEventCardStatsChanged(affectedCards));
         }
@@ -2177,6 +2180,9 @@ public class GameAction {
 
         if (game.getAge() != GameStage.Play) {
             return false;
+        }
+        for (final Player p : game.getPlayers()) {
+            p.updateWayBehind();
         }
         game.getTriggerHandler().resetActiveTriggers();
         // Resetting triggers may result in needing to check static abilities again. For example,
@@ -3504,6 +3510,9 @@ public class GameAction {
                 if (c.hasSVar("AsksFaction") && c.isCommander()) {
                     chooseFaction(takesAction, c, all);
                 }
+                if (c.hasSVar("SecretMissions") && c.isInZone(ZoneType.Command) && takesAction.equals(c.getOwner())) {
+                    chooseSecretMission(takesAction, c);
+                }
                 // The Convincing General: "As the game begins, if this creature is your commander, ..."
                 if (c.hasSVar("AtGameStartIfCommander") && c.isCommander()) {
                     final SpellAbility start = AbilityFactory.getAbility(c.getSVar("AtGameStartIfCommander"), c);
@@ -3823,6 +3832,25 @@ public class GameAction {
                     + options.get(pick) + "\" for " + c + ".");
         }
         owner.setMatchNote(key, chosen);
+    }
+
+    /**
+     * Marchesa's Surprise Party: "Before the game, secretly choose one of the following" - each game, kept from the
+     * other players (the log only says a mission was chosen). The AI picks at random.
+     */
+    private void chooseSecretMission(final Player owner, final Card c) {
+        final List<String> missions = Arrays.asList(c.getSVar("SecretMissions").split(";"));
+        int pick;
+        if (owner.isAI()) {
+            pick = forge.util.MyRandom.getRandom().nextInt(missions.size());
+        } else {
+            final SpellAbility sa = new SpellAbility.EmptySa(ApiType.ChooseType, c, owner);
+            final String label = owner.getController().chooseSomeType(c.getTranslatedName() + ": secretly choose a mission",
+                    sa, missions, false);
+            pick = Math.max(0, missions.indexOf(label));
+        }
+        owner.setGameNote("SecretMission:" + c.getId(), pick + 1);
+        game.getGameLog().add(GameLogEntryType.INFORMATION, owner + " secretly chooses a mission for " + c + ".");
     }
 
     /** The options chosen for this card's name by its owner (Convention Maro), or none. */

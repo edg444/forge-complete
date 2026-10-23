@@ -102,6 +102,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     private CardState currentState;
     private CardStateName currentStateName = CardStateName.Original;
     private GamePieceType gamePieceType = GamePieceType.CARD;
+    // Intangible Vibes: a card that's a token only while an effect says so (StaticAbilityAreTokens)
+    private boolean tokenByEffect = false;
 
     private Zone castFrom;
     private boolean textBoxStolen;
@@ -1184,6 +1186,13 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         }
         return gamePieceType == GamePieceType.TOKEN;
     }
+    public final boolean isTokenByEffect() {
+        return tokenByEffect;
+    }
+    public final void setTokenByEffect(final boolean b) {
+        tokenByEffect = b;
+    }
+
     public final boolean isRealToken() {
         return gamePieceType == GamePieceType.TOKEN;
     }
@@ -3074,7 +3083,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.equals("Precious") || keyword.equals("Create a Character")
                         || keyword.equals("Deworded") || keyword.equals("Forbidden") || keyword.equals("Hope")
                         || keyword.equals("Daunt") || keyword.equals("Proliferatelink") || keyword.equals("Nimble")
-                        || keyword.equals("Tantrum") || keyword.equals("Thoughtweft")
+                        || keyword.equals("Tantrum") || keyword.equals("Thoughtweft") || keyword.equals("Buddy list")
                         || keyword.equals("Space sculptor") || keyword.equals("Doctor's companion")
                         || keyword.equals("Start your engines") || keyword.startsWith("Modular")
                         || keyword.startsWith("Bloodthirst") || keyword.startsWith("Dredge")
@@ -3781,6 +3790,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                     sbAfter.append("exile it haunting target creature.");
                     sbAfter.append(")");
                     sbAfter.append("\r\n");
+                } else if (keyword.equals("Coststorm")) {
+                    sbAfter.append("Coststorm (").append(Keyword.COSTSTORM.getReminderText()).append(")\r\n");
                 } else if (keyword.equals("Storm")) {
                     sbAfter.append("Storm (");
                     sbAfter.append("When you cast this spell, copy it for each spell cast before it this turn.");

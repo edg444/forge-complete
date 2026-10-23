@@ -1121,6 +1121,30 @@ public class Game {
         return all;
     }
 
+    // Tax Taker: mana paid as attack or block costs, gathered per declaration since they're paid all at once
+    private final Map<Player, Map<Player, Integer>> pendingTaxes = Maps.newLinkedHashMap();
+
+    /** Mana a player paid extra because of what another player controls, per that player (the taxer). */
+    public void payTax(final Map<Player, Integer> byTaxer, final Player payer) {
+        for (final Map.Entry<Player, Integer> e : byTaxer.entrySet()) {
+            if (e.getValue() > 0 && !e.getKey().equals(payer)) {
+                final Map<AbilityKey, Object> runParams = AbilityKey.mapFromPlayer(payer);
+                runParams.put(AbilityKey.Taxer, e.getKey());
+                runParams.put(AbilityKey.Amount, e.getValue());
+                getTriggerHandler().runTrigger(TriggerType.TaxPaid, runParams, false);
+            }
+        }
+    }
+    public void addPendingTax(final Map<Player, Integer> byTaxer, final Player payer) {
+        final Map<Player, Integer> owed = pendingTaxes.computeIfAbsent(payer, k -> Maps.newLinkedHashMap());
+        byTaxer.forEach((taxer, n) -> owed.merge(taxer, n, Integer::sum));
+    }
+    public void firePendingTaxes() {
+        final Map<Player, Map<Player, Integer>> due = Maps.newLinkedHashMap(pendingTaxes);
+        pendingTaxes.clear();
+        due.forEach((payer, byTaxer) -> payTax(byTaxer, payer));
+    }
+
     public final GameAction getAction() {
         return action;
     }

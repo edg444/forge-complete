@@ -247,6 +247,7 @@ public class TriggerSpellAbilityCastOrCopy extends Trigger {
                 AbilityKey.CardLKI,
                 AbilityKey.Activator,
                 AbilityKey.CurrentStormCount,
+                AbilityKey.CurrentCoststormCount,
                 AbilityKey.CurrentCastSpells
                 );
     }

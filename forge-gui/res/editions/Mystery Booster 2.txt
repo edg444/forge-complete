@@ -402,3 +402,5 @@ Omenpath:Omenpaths
 Ulamog's:Ulamog's
 [WalkerTypes]
 You
+[ConspiracyTypes]
+Secret Mission:Secret Missions

@@ -1,0 +1,8 @@
+Name:Tax Taker
+ManaCost:W
+Types:Creature Rat Advisor
+PT:1/2
+T:Mode$ TaxPaid | ValidPayer$ Opponent | ValidTaxer$ You | TriggerZones$ Battlefield | Execute$ TrigTreasure | TriggerDescription$ Whenever an opponent pays a tax from a spell or permanent you control, create a number of Treasure tokens equal to the amount of mana they paid. (This happens each time a spell you control or an ability of a permanent you control causes an opponent to pay extra mana. Cards that can tax opponents include Mana Tithe, Esper Sentinel, and Ghostly Prison.)
+SVar:TrigTreasure:DB$ Token | TokenScript$ c_a_treasure_sac | TokenAmount$ X
+SVar:X:TriggerCount$Amount
+Oracle:Whenever an opponent pays a tax from a spell or permanent you control, create a number of Treasure tokens equal to the amount of mana they paid. (This happens each time a spell you control or an ability of a permanent you control causes an opponent to pay extra mana. Cards that can tax opponents include Mana Tithe, Esper Sentinel, and Ghostly Prison.)

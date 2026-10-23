@@ -725,6 +725,9 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
         if (hasType(CoreType.Universewalker)) {
             allowedTypes = allowedTypes.or(CardType::isAUniversewalkerType);
         }
+        if (isConspiracy()) {
+            allowedTypes = allowedTypes.or(Constant.CONSPIRACY_TYPES::contains);
+        }
 
         subtypes.removeIf(allowedTypes.negate());
     }
@@ -906,6 +909,8 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
         public static final Set<String> PLANAR_TYPES = Sets.newHashSet();
         public static final Set<String> ELEMENTAL_TYPES = Sets.newHashSet();
         public static final Set<String> UNIVERSEWALKER_TYPES = Sets.newHashSet();
+        // Marchesa's Surprise Party: "Conspiracy - Secret Mission"
+        public static final Set<String> CONSPIRACY_TYPES = Sets.newHashSet();
 
         public static final Set<String> MultiwordTypes = Sets.newHashSet();
 
@@ -962,6 +967,7 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
             tmp.addAll(Constant.PLANAR_TYPES);
             tmp.addAll(Constant.ELEMENTAL_TYPES);
             tmp.addAll(Constant.UNIVERSEWALKER_TYPES);
+            tmp.addAll(Constant.CONSPIRACY_TYPES);
             sortedSubTypes = ImmutableList.copyOf(tmp);
         }
         return sortedSubTypes;
@@ -1106,6 +1112,9 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
                     break;
                 case "UniversewalkerTypes":
                     addToSection = CardType.Constant.UNIVERSEWALKER_TYPES;
+                    break;
+                case "ConspiracyTypes":
+                    addToSection = CardType.Constant.CONSPIRACY_TYPES;
                     break;
             }
 

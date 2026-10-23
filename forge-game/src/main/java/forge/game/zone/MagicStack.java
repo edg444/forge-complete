@@ -395,9 +395,16 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
             }
         }
 
+        // Tax Taker: a cost increase someone else's permanent or spell made was paid as this was cast or activated
+        if (!sp.isCopied() && !sp.isTrigger() && !sp.getCostRaisedBy().isEmpty()) {
+            game.payTax(sp.getCostRaisedBy(), sp.getActivatingPlayer());
+            sp.setCostRaisedBy(Map.of());
+        }
+
         runParams.put(AbilityKey.Activator, activator);
         runParams.put(AbilityKey.SpellAbility, sp);
         runParams.put(AbilityKey.CurrentStormCount, thisTurnCast.size());
+        runParams.put(AbilityKey.CurrentCoststormCount, coststormCount(sp, activator));
         runParams.put(AbilityKey.CurrentCastSpells, getSpellCardsCastThisTurn());
 
         game.updateStackForView();
@@ -1143,6 +1150,24 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
     public final List<SpellAbility> getSpellsCastThisTurn() {
         return thisTurnCast;
     }
+    /**
+     * Friarball's coststorm: the different mana values among the other spells its caster cast this turn and the lands
+     * they played (a land's is 0). Spells that didn't resolve still count (rulings).
+     */
+    private int coststormCount(final SpellAbility sp, final Player caster) {
+        final java.util.Set<Integer> values = new java.util.HashSet<>();
+        for (final SpellAbility cast : thisTurnCast) {
+            if (cast == sp || sp.equals(cast) || !caster.equals(cast.getActivatingPlayer())) {
+                continue;
+            }
+            values.add(cast.getHostCard().getCMC());
+        }
+        if (caster.getLandsPlayedThisTurn() > 0) {
+            values.add(0);
+        }
+        return values.size();
+    }
+
     public final List<Card> getSpellCardsCastThisTurn() {
         return thisTurnCast.stream().map(SpellAbility::getHostCard).collect(Collectors.toList());
     }

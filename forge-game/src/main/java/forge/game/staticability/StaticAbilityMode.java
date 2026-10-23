@@ -107,6 +107,8 @@ public enum StaticAbilityMode {
     CombatDamageManaValue,
     // Glimpse, the Unthinkable
     CantBeChosen,
+    // Intangible Vibes
+    AreTokens,
 
     // StaticAbilityColorlessDamageSource
     ColorlessDamageSource,

@@ -2,6 +2,7 @@ package forge.game.cost;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import forge.card.CardStateName;
 import forge.card.mana.ManaAtom;
 import forge.card.mana.ManaCost;
@@ -96,9 +97,17 @@ public class CostAdjustment {
             result.add(inc);
         }
 
+        // Tax Taker: how much of the increase each player's permanents and spells make (user ruling 2026-10-22)
+        final Map<Player, Integer> raisedBy = Maps.newLinkedHashMap();
         for (final StaticAbility stAb : raiseAbilities) {
+            final int before = result.getTotalMana().getCMC();
             applyRaiseCostAbility(result, sa, stAb);
+            final int raised = result.getTotalMana().getCMC() - before;
+            if (raised > 0) {
+                raisedBy.merge(stAb.getHostCard().getController(), raised, Integer::sum);
+            }
         }
+        sa.setCostRaisedBy(raisedBy);
 
         // Reset card state (if changed)
         if (isStateChangeToFaceDown) {

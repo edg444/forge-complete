@@ -1190,6 +1190,16 @@ public class CardFactoryUtil {
             trigger.setOverridingAbility(AbilityFactory.getAbility(sb.toString(), card));
 
             inst.addTrigger(trigger);
+        } else if (keyword.equals("Coststorm")) {
+            String trigStr = "Mode$ SpellCast | ValidCard$ Card.Self | TriggerZones$ Stack | TriggerDescription$ Coststorm (" + inst.getReminderText() + ")";
+            String copyStr = "DB$ CopySpellAbility | Defined$ TriggeredSpellAbility | Amount$ CoststormCount | MayChooseTarget$ True";
+
+            SpellAbility copySa = AbilityFactory.getAbility(copyStr, card);
+            copySa.setSVar("CoststormCount", "TriggerCount$CurrentCoststormCount");
+
+            final Trigger trigger = TriggerHandler.parseTrigger(trigStr, card, intrinsic);
+            trigger.setOverridingAbility(copySa);
+            inst.addTrigger(trigger);
         } else if (keyword.startsWith("Gravestorm")) {
             String trigStr = "Mode$ SpellCast | ValidCard$ Card.Self | TriggerZones$ Stack | TriggerDescription$ Gravestorm (" + inst.getReminderText() + ")";
             String copyStr = "DB$ CopySpellAbility | Defined$ TriggeredSpellAbility | Amount$ GravestormCount | MayChooseTarget$ True";
@@ -2273,6 +2283,12 @@ public class CardFactoryUtil {
 
             re.setOverridingAbility(sacrificeSA);
 
+            inst.addReplacement(re);
+        } else if (keyword.equals("Buddy list")) {
+            final String repeffstr = "Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated"
+                    + " | Description$ Buddy list (" + inst.getReminderText() + ")";
+            final ReplacementEffect re = ReplacementHandler.parseReplacement(repeffstr, host, intrinsic, card);
+            re.setOverridingAbility(AbilityFactory.getAbility("DB$ BuddyList | Defined$ Self", card));
             inst.addReplacement(re);
         } else if (keyword.startsWith("Fading")) {
             final String[] k = keyword.split(":");

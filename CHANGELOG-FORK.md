@@ -312,6 +312,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Mystery Booster 2 playtest cards (MB2), part 5: Friarball, Knight of Lost Causes, Champion of the Hareish,
+  Marchesa's Surprise Party, Arcanum Things, Intangible Vibes, Tax Taker.**
+  - Keywords `Coststorm` (copies per different mana value among your other spells and lands played this turn) and
+    `Buddy list` (new effect `BuddyList`, `Count$OnBuddyList.<Defined>`; the list is per game). `Count$YouAreWayBehind`
+    (checked with state-based actions, kept for the turn).
+  - Conspiracy subtypes (`[ConspiracyTypes]`, Secret Mission). `SVar:SecretMissions` is chosen secretly as each game
+    begins (property `SecretMission_<n>`; the AI picks at random).
+  - Static mode `AreTokens`: matching cards are tokens on the battlefield and cease to exist once they leave.
+  - New trigger `TaxPaid` (`ValidPayer$`, `ValidTaxer$`, `TriggerCount$Amount`): mana paid for an "unless" cost, for
+    attack or block costs (once per declaration) or for a cost increase from another player's permanent or spell.
+  - New token: 2/2 white Monk.
+
 - **Mystery Booster 2 playtest cards (MB2), part 4: Chea, Friend to Maybe Too Many, Lutri, Pauper Otter, Avacyn's Collar,
   the Symbol of Her Church, Wormhole Warp, Your Wish Is My Command, Oddric, Lunar Marquis, Brigid, Who's Seen Some
   Stuff, Jeskai Baller, Glimpse, the Unthinkable.**

@@ -18,6 +18,7 @@
 package forge.game.combat;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import forge.card.mana.ManaCost;
 import forge.game.Game;
 import forge.game.GameEntity;
@@ -286,8 +287,21 @@ public class CombatUtil {
         fakeSA.setPayCosts(attackCost);
         // prevent recalculating X
         fakeSA.setSVar("X", "0");
-        return attacker.getController().getController().payCombatCost(attacker, attackCost, fakeSA,
+        final boolean paid = attacker.getController().getController().payCombatCost(attacker, attackCost, fakeSA,
                 "Pay additional cost to declare " + attacker + " an attacker");
+        if (paid) {
+            final Map<Player, Integer> byTaxer = Maps.newLinkedHashMap();
+            for (final Card card : game.getCardsIn(ZoneType.STATIC_ABILITIES_SOURCE_ZONES)) {
+                for (final StaticAbility stAb : card.getStaticAbilities()) {
+                    final Cost part = stAb.getAttackCost(attacker, combat.getDefenderByAttacker(attacker), attackersWithOptionalCost);
+                    if (part != null && part.hasManaCost()) {
+                        byTaxer.merge(card.getController(), part.getTotalMana().getCMC(), Integer::sum);
+                    }
+                }
+            }
+            game.addPendingTax(byTaxer, attacker.getController());
+        }
+        return paid;
     }
 
     public static Cost getAttackCost(final Game game, final Card attacker, final GameEntity defender) {
@@ -349,7 +363,20 @@ public class CombatUtil {
         fakeSA.setCardState(blocker.getCurrentState());
         fakeSA.setPayCosts(blockCost);
         fakeSA.setSVar("X", "0");
-        return blocker.getController().getController().payCombatCost(blocker, blockCost, fakeSA, "Pay cost to declare " + blocker + " a blocker. ");
+        final boolean paid = blocker.getController().getController().payCombatCost(blocker, blockCost, fakeSA, "Pay cost to declare " + blocker + " a blocker. ");
+        if (paid) {
+            final Map<Player, Integer> byTaxer = Maps.newLinkedHashMap();
+            for (final Card card : game.getCardsIn(ZoneType.STATIC_ABILITIES_SOURCE_ZONES)) {
+                for (final StaticAbility stAb : card.getStaticAbilities()) {
+                    final Cost part = stAb.getBlockCost(blocker, attacker);
+                    if (part != null && part.hasManaCost()) {
+                        byTaxer.merge(card.getController(), part.getTotalMana().getCMC(), Integer::sum);
+                    }
+                }
+            }
+            game.addPendingTax(byTaxer, blocker.getController());
+        }
+        return paid;
     }
 
     public static Cost getBlockCost(Game game, Card blocker, Card attacker) {

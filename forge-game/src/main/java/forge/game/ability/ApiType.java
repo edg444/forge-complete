@@ -220,6 +220,7 @@ public enum ApiType {
     MakeCard (MakeCardEffect.class),
     DecideMatch (DecideMatchEffect.class),
     Introduce (IntroduceEffect.class),
+    BuddyList (BuddyListEffect.class),
     MadLabs (MadLabsEffect.class),
     Mana (ManaEffect.class),
     MatchNumber (MatchNumberEffect.class),
