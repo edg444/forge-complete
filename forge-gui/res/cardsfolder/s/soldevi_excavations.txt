@@ -2,7 +2,10 @@ Name:Soldevi Excavations
 ManaCost:no cost
 Types:Land
 A:AB$ Mana | Cost$ T | Produced$ C U | SpellDescription$ Add {C}{U}.
-A:AB$ Scry | Cost$ 1 T | ScryNum$ 1 | SpellDescription$ Scry 1.
+A:AB$ Scry | Cost$ 1 T | ScryNum$ 1 | IsPresent$ Card.Self+!PrintedTextActive | SpellDescription$ Scry 1.
+# R&D's Secret Lair: the printed "Look at the top card of your library. You may put that card on the bottom" isn't a
+# scry, so "whenever you scry" doesn't trigger.
+A:AB$ Dig | Cost$ 1 T | DigNum$ 1 | NoReveal$ True | DestinationZone$ Library | Optional$ True | LibraryPosition$ -1 | LibraryPosition2$ 0 | IsPresent$ Card.Self+PrintedTextActive | SpellDescription$ (As printed) Look at the top card of your library. You may put that card on the bottom of your library.
 R:Event$ Moved | Destination$ Battlefield | ValidCard$ Card.Self | ReplaceWith$ PayBeforeETB | IsPresent$ Card.PrintedTextActive | PresentCompare$ EQ0 | Description$ If this land would enter, sacrifice an untapped Island instead. If you do, put this land onto the battlefield. If you don't, put it into its owner's graveyard.
 # R&D's Secret Lair: Alliances' printing is a trigger ("When CARDNAME comes into play, sacrifice ... or bury
 # CARDNAME"), so the land is already in play and can be tapped for mana before it resolves. The replacement is

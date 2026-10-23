@@ -1,8 +1,12 @@
 Name:Think Tank
 ManaCost:2 U
 Types:Enchantment
-T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigSurveil | TriggerDescription$ At the beginning of your upkeep, surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigSurveil | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20011002 | TriggerDescription$ At the beginning of your upkeep, surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)
 SVar:TrigSurveil:DB$ Surveil | Amount$ 1
+# R&D's Secret Lair: Odyssey's printing (its only one) looks at the top card and may put it into the graveyard,
+# which isn't a surveil, so "whenever you surveil" doesn't trigger.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigLook | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20011002 | TriggerDescription$ (As printed) At the beginning of your upkeep, look at the top card of your library. You may put that card into your graveyard.
+SVar:TrigLook:DB$ Dig | DigNum$ 1 | NoReveal$ True | DestinationZone$ Graveyard | Optional$ True | LibraryPosition2$ 0
 AI:RemoveDeck:All
 DeckHas:Ability$Surveil|Graveyard
 Oracle:At the beginning of your upkeep, surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)

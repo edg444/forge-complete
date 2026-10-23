@@ -455,6 +455,8 @@ public abstract class SpellAbilityEffect {
                 sb.append("Shuffle ");
             } else if (location.equals("SacrificeCtrl")) {
                 sb.append("Its controller sacrifices ");
+            } else if (location.equals("Graveyard")) {
+                sb.append("Put ");
             } else {
                 sb.append(location).append(" ");
             }
@@ -463,6 +465,8 @@ public abstract class SpellAbilityEffect {
                 sb.append(" to your hand");
             } else if (location.equals("Library")) {
                 sb.append(" into your library");
+            } else if (location.equals("Graveyard")) {
+                sb.append(" into its owner's graveyard");
             }
             sb.append(" at the ");
             if (combat) {
@@ -509,6 +513,9 @@ public abstract class SpellAbilityEffect {
             trigSA = "DB$ ChangeZone | Defined$ DelayTriggerRememberedLKI | Origin$ Battlefield | Destination$ Exile";
         } else if (location.equals("Destroy")) {
             trigSA = "DB$ Destroy | Defined$ DelayTriggerRememberedLKI";
+        } else if (location.equals("Graveyard")) {
+            // put there, not sacrificed (Cauldron Dance as printed)
+            trigSA = "DB$ ChangeZone | Defined$ DelayTriggerRememberedLKI | Origin$ Battlefield | Destination$ Graveyard";
         }
         if (sa.isWarp() && location.equals("Exile")) {
             // Frie, Displaced in Time asks whether a card was exiled because it was warped

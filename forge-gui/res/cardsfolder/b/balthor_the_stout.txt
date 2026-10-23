@@ -2,6 +2,10 @@ Name:Balthor the Stout
 ManaCost:1 R R
 Types:Legendary Creature Dwarf Barbarian
 PT:2/2
-S:Mode$ Continuous | Affected$ Creature.Barbarian+Other | AddPower$ 1 | AddToughness$ 1 | Description$ Other Barbarian creatures get +1/+1.
-A:AB$ Pump | Cost$ R | NumAtt$ +1 | TgtPrompt$ Choose another target Barbarian creature | ValidTgts$ Creature.Barbarian+Other | SpellDescription$ Another target Barbarian creature gets +1/+0 until end of turn.
+S:Mode$ Continuous | Affected$ Creature.Barbarian+Other | AddPower$ 1 | AddToughness$ 1 | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20020205 | Description$ Other Barbarian creatures get +1/+1.
+A:AB$ Pump | Cost$ R | NumAtt$ +1 | TgtPrompt$ Choose another target Barbarian creature | ValidTgts$ Creature.Barbarian+Other | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20020205 | SpellDescription$ Another target Barbarian creature gets +1/+0 until end of turn.
+# R&D's Secret Lair: Torment's printing (its only one) is "All Barbarians get +1/+1" and "{R}: Target Barbarian gets
+# +1/+0 until end of turn" - Balthor is a Barbarian, so it pumps itself and can target itself.
+S:Mode$ Continuous | Affected$ Creature.Barbarian | AddPower$ 1 | AddToughness$ 1 | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20020205 | Description$ (As printed) All Barbarians get +1/+1.
+A:AB$ Pump | Cost$ R | NumAtt$ +1 | TgtPrompt$ Choose target Barbarian | ValidTgts$ Creature.Barbarian | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20020205 | SpellDescription$ (As printed) Target Barbarian gets +1/+0 until end of turn.
 Oracle:Other Barbarian creatures get +1/+1.\n{R}: Another target Barbarian creature gets +1/+0 until end of turn.

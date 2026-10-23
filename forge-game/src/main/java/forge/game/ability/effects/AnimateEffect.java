@@ -355,6 +355,8 @@ public class AnimateEffect extends AnimateEffectBase {
                 sb.append("Return ").append(pronoun).append(" to your hand");
             } else if (eot.equals("SacrificeCtrl")) {
                 sb.append(justOne ? "Its controller sacrifices it" : "Their controllers sacrifice them");
+            } else if (eot.equals("Graveyard")) {
+                sb.append("Put ").append(pronoun).append(" into ").append(justOne ? "its owner's graveyard" : "their owners' graveyards");
             } else { //Sacrifice,Exile
                 sb.append(eot).append(" ").append(pronoun);
             }

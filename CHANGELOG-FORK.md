@@ -661,6 +661,132 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     Turtle), "at the end of your turn" timing (Citadel of Pain, Wells, Troublesome Spirit) and Informers'
     "black/white spells or abilities".
 
+- **Set review: Invasion** (310 new names, `InvasionAuditTest`):
+  - Fixed: *Saproling Infestation* only counted kicked spells you controlled; "Whenever a player kicks a spell" is
+    anyone's.
+  - **Engine:** delayed "at the beginning of the next end step" moves (`AtEOT$`) take `Graveyard` - put into its
+    owner's graveyard, not sacrificed.
+  - R&D's Secret Lair printed text: *Elvish Champion* ("All Elves", so it pumps itself, through Eighth Edition),
+    *Kangee, Aerie Keeper* ("All Birds", Invasion only), *Opt* (looks at the top card and may bottom it, which isn't a
+    scry, until Ixalan), *Cauldron Dance* (the creature from your hand isn't optional and is put into your
+    graveyard at end of turn, not sacrificed, until Commander 2017) and *Psychic Battle* (Invasion only: without
+    its last sentence, a target it changes triggers Psychic Battles again).
+  - Left as Oracle: Dueling Grounds' "each turn" and Urborg Drake's "attacks each turn" (as with Thran War
+    Machine), "creature or player" damage wording, Legend-type wording (Tsabo Tavoc, Empress Galina, Captain
+    Sisay), Firebrand Ranger's non-optional land and "at end of turn" timing (Liberate, Skizzik, Spinal Embrace).
+
+- **Set review: Planeshift** (142 new names, `PlaneshiftAuditTest`):
+  - Fixed: *Questing Phelddagrif*'s Hippo went to every opponent instead of the targeted one.
+  - In-game text: *Dominaria's Judgment* ("an Swamp", "an Mountain", "an Forest").
+  - R&D's Secret Lair printed text: *Lord of the Undead* ("All Zombies", so it pumps itself, through Eighth
+    Edition).
+  - Left as Oracle: Surprise Deployment's non-optional creature (as with Firebrand Ranger), Sparkcaster's "target
+    player", "at end of turn" timing (Keldon Twilight, Planeswalker's Mischief) and the Lairs' "is a Lair in
+    addition to its land type" (the type line does that).
+
+- **Set review: Apocalypse** (142 new names) - no changes needed. Left as Oracle: False Dawn's printed "Colored
+  mana symbols on all permanents you control and on all cards you own that aren't in play become {W}" (a text change
+  to mana symbols the engine has no way to apply), Dragon Arch's non-optional creature (as with Firebrand Ranger),
+  Quicksilver Dagger's "target player" and the Flagbearers' "could target a Flagbearer" wording.
+
+- **Set review: Odyssey** (321 new names, `OdysseyAuditTest`):
+  - In-game text: *Childhood Horror*, *Dirty Wererat* and *Frightcrawler* ("Enchanted Threshold"), *Phantom Whelp*
+    ("it's owner's").
+  - R&D's Secret Lair printed text: *Think Tank* (Odyssey only) looks at the top card and may put it into your
+    graveyard, which isn't a surveil.
+  - Left as Oracle: Liquid Fire's "5 damage divided as you choose between target creature and that creature's
+    controller" (the same choice, made as you cast it), Aboshan's "Cephalid", Testament of Faith's Wall wording,
+    Otarian Juggernaut's "attacks each turn", Puppeteer's non-optional tap or untap and "at end of turn" timing
+    (Bloodcurdler, Mad Dog, Shifty Doppelganger). Millikin and Charmed Pendant aren't mana abilities by today's rules
+    (a cost that mills), which their printed text doesn't change.
+
+- **Set review: Torment** (142 new names, `TormentAuditTest`):
+  - In-game text: *Temporary Insanity*'s target prompt said "less than or equal to".
+  - R&D's Secret Lair printed text: *Balthor the Stout* (Torment only) is "All Barbarians get +1/+1" and "{R}: Target
+    Barbarian gets +1/+0", so it pumps itself and can target itself.
+  - Left as Oracle: Carrion Rats' and Carrion Wurm's "deals no combat damage", Gurzigost's "deal its combat damage to
+    defending player", Far Wanderings' "three" basic lands, Equal Treatment's "creature or player" and "at end of
+    turn" timing (Shambling Swarm, False Memories, Ichorid, Dawn of the Dead).
+
+- **Set review: Judgment** (141 new names):
+  - Fixed: *Cephalid Constable* returned up to its power in permanents instead of up to the damage it dealt;
+    *Spurnmage Advocate*, *Pulsemage Advocate* and *Nullmage Advocate* could take their cards from more than one
+    opponent's graveyard.
+  - In-game text: *Shaman's Trance* ("Other players cast spells from their graveyards").
+  - Left as Oracle: Wormfang Crab's printing lets the opponent exile the Crab itself, which then returns and triggers
+    again (the loop the "other than this creature" erratum exists to stop), Nomad Mythmaker's "enchant creature
+    card", Krosan Wayfarer's non-optional land, the Wishes' "Choose ... reveal" wording, Nantuko Monastery's missing
+    creature types and Firecat Blitz's "Cat" tokens.
+
+- **Set review: Onslaught Promos (Silent Specter) and Onslaught** (320 new names, `OnslaughtAuditTest`):
+  - Fixed: *Ixidor's Will* counted only your Wizards ("{2} for each Wizard on the battlefield"); *Misery Charm*
+    could return a Cleric card from any graveyard; *Skirk Commando*'s and *Snapping Thragg*'s "you may have it deal"
+    damage wasn't optional.
+  - R&D's Secret Lair printed text: *Rummaging Wizard* (Onslaught only) looks at the top card and may put it into
+    your graveyard, which isn't a surveil.
+  - Left as Oracle: "other than Legend or Wall" (Artificial Evolution, Imagecrafter, Mistform Mutant, Standardize -
+    Legend is no longer a creature type), Aurification's Wall wording, Grand Melee's "each turn", Piety Charm's
+    "target enchant creature" and "target creature or player" / "target player" damage.
+
+- **Set review: Friday Night Magic 2003 (Withered Wretch), Arena League 2003 (Elvish Aberration, Skirk Marauder,
+  Bonesplitter), Legions Promos (Feral Throwback) and Legions** (146 new names) - no changes needed. Left as Oracle:
+  Mistform Ultimus's "may attack as though it weren't a Wall", Skirk Drill Sergeant's "Goblin card" (a Goblin instant
+  or sorcery can't be put onto the battlefield), Celestial Gatekeeper's "Bird and/or Cleric cards" and "target player"
+  damage.
+
+- **Set review: Scourge Promos (Soul Collector) and Scourge** (141 new names):
+  - Fixed: *Decree of Savagery*'s cycling trigger ("you may put four +1/+1 counters") wasn't optional.
+  - Left as Oracle: Upwelling's printed "Mana pools don't empty at the end of phases or turns" (written when mana only
+    emptied between phases), "Whenever a creature is turned face up" (Aven Farseer, Aphetto Runecaster, Bonethorn
+    Valesk), Ageless Sentinels' Wall wording, Dragonstorm's "Dragon card", Goblin Brigand's "attacks each turn" and
+    "at end of turn" timing (Form of the Dragon, Lingering Death, Force Bubble, Call to the Grave).
+
+- **Set review: Mirrodin Promos (Sword of Kaldra) and Mirrodin** (268 new names, `MirrodinAuditTest`):
+  - Fixed: *Groffskithur* could return a card named Groffskithur from any graveyard, not just yours.
+  - R&D's Secret Lair printed text: *Loxodon Warhammer* (Mirrodin and Ninth Edition) grants "Whenever this creature
+    deals damage, you gain that much life" - a trigger, not lifelink.
+  - Left as Oracle: Grim Reminder's "played a card" (the revealed card is nonland, so it's the same as casting),
+    Duplicant's "a creature card is imprinted" (it only matters after a second imprint), Spellweaver Helix's "a card is
+    played", Mindslaver's mana burn reminder and "at end of turn" timing (Jinxed Choker, Glimmervoid, Quicksilver
+    Fountain, Dross Harvester).
+
+- **Set review: Arena League 2004 (Mise, Glacial Ray, Booster Tutor, Goblin Mime, Serum Visions, Darksteel Ingot,
+  Granny's Payback, Circle of Protection: Art), Darksteel Promos (Shield of Kaldra) and Darksteel** (169 new names,
+  `DarksteelAuditTest`):
+  - R&D's Secret Lair printed text: *Darksteel Pendant* (Darksteel only) looks at the top card and may bottom it,
+    which isn't a scry. A sweep for the same erratum on older cards found *Soldevi Excavations*, missed in the
+    Alliances review; it gets the same printed ability.
+  - Left as Oracle: Chimeric Egg's and Gemini Engine's missing Construct type and "at end of turn" timing (Tears of
+    Rage, Nim Abomination).
+
+- **Set review: Fifth Dawn Promos (Helm of Kaldra) and Fifth Dawn** (161 new names) - no changes needed. Left as
+  Oracle: Helm of Kaldra's "Avatar Legend" token, Chimeric Coils' and Ensouled Scimitar's missing creature types,
+  Grafted Wargear's "unattached from a creature" and "at end of turn" timing (Possessed Portal, Endless Whispers,
+  Chimeric Coils).
+
+- **Set review: Champions of Kamigawa Promos (Ryusei, the Falling Star) and Champions of Kamigawa** (282 new
+  names):
+  - Fixed: *Hana Kami* could return an Arcane card from any graveyard, not just yours; *Teller of Tales*' "you may
+    tap or untap target creature" wasn't optional.
+  - Left as Oracle: Kiki-Jiki's printed "That creature token has haste" (a granted ability rather than part of the
+    copy - it only matters if the token itself is copied), Reweave's "a card that shares a card type", Through the
+    Breach's and Psychic Puppetry's non-optional wording, Gifts Ungiven's and Kodama's Reach's exact counts, Tide of
+    War's "defending player sacrifices" and "at end of turn" timing (Otherworldly Journey, Hikari, Junkyo Bell).
+
+- **Set review: Unhinged** - skipped here; its cards are being checked one by one in the Unhinged scripting pass.
+- **Set review: Arena League 2005 (Skyknight Legionnaire, Genju of the Spires, Okina Nightwatch), Betrayers of
+  Kamigawa Promos (Budoka Pupil, Ink-Eyes, Servant of Oni) and Betrayers of Kamigawa** (161 new names) - no changes
+  needed. Left as Oracle: Toshiro Umezawa's "If that card would be put into a graveyard this turn", Toils of Night and
+  Day's non-optional tap or untap, Slumbering Tora's missing Cat type, Overblaze's "creature or player", Fumiko's
+  "attacks each turn" and "at end of turn" timing (Mark of the Oni, Shirei).
+- **Set review: Saviors of Kamigawa Promos (Ghost-Lit Raider, Kiyomaro) and Saviors of Kamigawa** (162 new names):
+  - Fixed: *Choice of Damnations*' life-loss choice read "That player lose that much life".
+  - Left as Oracle: Erayo's Essence's printed "Counter the first spell played by each opponent each turn",
+    Matsu-Tribe Birdstalker's "may block as though it had flying" (reach), Iname as One's "Spirit card", Shape
+    Stealer's "change power and toughness", Pain's Reward's bidding wording, "of their choice" sacrifices (Thoughts
+    of Ruin, Michiko Konda, Exile into Darkness) and "at end of turn" timing (Ideas Unbound, Glitterfang, Footsteps
+    of the Goryo).
+
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 
 - **Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie (SLD 1537-1539)** - the last cards from released sets

@@ -2,7 +2,10 @@ Name:Rummaging Wizard
 ManaCost:3 U
 Types:Creature Human Wizard
 PT:2/2
-A:AB$ Surveil | Cost$ 2 U | Amount$ 1 | SpellDescription$ Surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)
+A:AB$ Surveil | Cost$ 2 U | Amount$ 1 | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20021008 | SpellDescription$ Surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)
+# R&D's Secret Lair: Onslaught's printing (its only one) looks at the top card and may put it into the graveyard,
+# which isn't a surveil.
+A:AB$ Dig | Cost$ 2 U | DigNum$ 1 | NoReveal$ True | DestinationZone$ Graveyard | Optional$ True | LibraryPosition2$ 0 | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20021008 | SpellDescription$ (As printed) Look at the top card of your library. You may put that card into your graveyard.
 AI:RemoveDeck:All
 DeckHas:Ability$Surveil|Graveyard
 Oracle:{2}{U}: Surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)

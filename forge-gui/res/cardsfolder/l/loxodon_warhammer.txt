@@ -2,5 +2,11 @@ Name:Loxodon Warhammer
 ManaCost:3
 Types:Artifact Equipment
 K:Equip:3
-S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddPower$ 3 | AddKeyword$ Trample & Lifelink | Description$ Equipped creature gets +3/+0 and has trample and lifelink.
+S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddPower$ 3 | AddKeyword$ Trample & Lifelink | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20070713 | Description$ Equipped creature gets +3/+0 and has trample and lifelink.
+# R&D's Secret Lair: Mirrodin and Ninth Edition printed a triggered ability, "Whenever this creature deals damage, you
+# gain that much life", instead of lifelink; Tenth Edition (2007-07-13) first printed lifelink.
+S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddPower$ 3 | AddKeyword$ Trample | AddTrigger$ PrintedLifeTrig | AddSVar$ PrintedLifeGain & PrintedLifeX | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20070713 | Description$ (As printed) Equipped creature gets +3/+0, has trample, and has "Whenever this creature deals damage, you gain that much life."
+SVar:PrintedLifeTrig:Mode$ DamageDealtOnce | ValidSource$ Card.Self | Execute$ PrintedLifeGain | TriggerZones$ Battlefield | TriggerDescription$ Whenever this creature deals damage, you gain that much life.
+SVar:PrintedLifeGain:DB$ GainLife | Defined$ You | LifeAmount$ PrintedLifeX
+SVar:PrintedLifeX:TriggerCount$DamageAmount
 Oracle:Equipped creature gets +3/+0 and has trample and lifelink.\nEquip {3}

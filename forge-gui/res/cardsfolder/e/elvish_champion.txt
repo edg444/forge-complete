@@ -2,7 +2,10 @@ Name:Elvish Champion
 ManaCost:1 G G
 Types:Creature Elf
 PT:2/2
-S:Mode$ Continuous | Affected$ Creature.Elf+Other | AddPower$ 1 | AddToughness$ 1 | AddKeyword$ Landwalk:Forest | Description$ Other Elf creatures get +1/+1 and have forestwalk.
+S:Mode$ Continuous | Affected$ Creature.Elf+Other | AddPower$ 1 | AddToughness$ 1 | AddKeyword$ Landwalk:Forest | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20050729 | Description$ Other Elf creatures get +1/+1 and have forestwalk.
+# R&D's Secret Lair: Invasion through Eighth Edition printed "All Elves get +1/+1 and have forestwalk", so it pumps
+# itself too; Ninth Edition (2005-07-29) first printed "Other Elves".
+S:Mode$ Continuous | Affected$ Creature.Elf | AddPower$ 1 | AddToughness$ 1 | AddKeyword$ Landwalk:Forest | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20050729 | Description$ (As printed) All Elves get +1/+1 and have forestwalk.
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Elf
 Oracle:Other Elf creatures get +1/+1 and have forestwalk. (They can't be blocked as long as defending player controls a Forest.)

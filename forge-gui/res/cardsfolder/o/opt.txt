@@ -1,6 +1,9 @@
 Name:Opt
 ManaCost:U
 Types:Instant
-A:SP$ Scry | ScryNum$ 1 | SubAbility$ DBDraw | SpellDescription$ Scry 1.
+A:SP$ Scry | ScryNum$ 1 | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20170929 | PresentDefined$ Self | SubAbility$ DBDraw | SpellDescription$ Scry 1.
+# R&D's Secret Lair: Invasion printed "Look at the top card of your library. You may put that card on the bottom of
+# your library." - not a scry, so "whenever you scry" doesn't trigger; Ixalan (2017-09-29) first printed "Scry 1".
+A:SP$ Dig | DigNum$ 1 | NoReveal$ True | DestinationZone$ Library | Optional$ True | LibraryPosition$ -1 | LibraryPosition2$ 0 | IsPresent$ Card.PrintedTextActive+PrintedBefore 20170929 | PresentDefined$ Self | SubAbility$ DBDraw | SpellDescription$ (As printed) Look at the top card of your library. You may put that card on the bottom of your library.
 SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1 | SpellDescription$ Draw a card.
 Oracle:Scry 1. (Look at the top card of your library. You may put that card on the bottom.)\nDraw a card.

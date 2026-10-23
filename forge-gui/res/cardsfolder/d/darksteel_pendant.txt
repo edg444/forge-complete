@@ -2,5 +2,8 @@ Name:Darksteel Pendant
 ManaCost:2
 Types:Artifact
 K:Indestructible
-A:AB$ Scry | Cost$ 1 T | ScryNum$ 1 | SpellDescription$ Scry 1. (Look at the top card of your library. You may put that card on the bottom.)
+A:AB$ Scry | Cost$ 1 T | ScryNum$ 1 | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20040207 | SpellDescription$ Scry 1. (Look at the top card of your library. You may put that card on the bottom.)
+# R&D's Secret Lair: Darksteel's printing (its only one) looks at the top card and may bottom it, which isn't a
+# scry.
+A:AB$ Dig | Cost$ 1 T | DigNum$ 1 | NoReveal$ True | DestinationZone$ Library | Optional$ True | LibraryPosition$ -1 | LibraryPosition2$ 0 | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20040207 | SpellDescription$ (As printed) Look at the top card of your library. You may put that card on the bottom of your library.
 Oracle:Indestructible (Effects that say "destroy" don't destroy this artifact.)\n{1}, {T}: Scry 1. (Look at the top card of your library. You may put that card on the bottom.)
