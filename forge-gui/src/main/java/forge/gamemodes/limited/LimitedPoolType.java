@@ -1,5 +1,11 @@
 package forge.gamemodes.limited;
 
+import forge.item.PaperCardPredicates;
+import forge.item.SealedTemplate;
+import forge.item.generation.IUnOpenedProduct;
+import forge.item.generation.UnOpenedProduct;
+import forge.localinstance.properties.ForgePreferences.FPref;
+import forge.model.FModel;
 import forge.util.Localizer;
 
 public enum LimitedPoolType {
@@ -43,6 +49,14 @@ public enum LimitedPoolType {
             }
         }
         return draftableFormats;
+    }
+
+    /** Packs for a Full card pool draft or sealed: every printing, less The List's when the preference says so. */
+    public static IUnOpenedProduct fullCardpoolBooster() {
+        if (FModel.getPreferences().getPrefBoolean(FPref.EXCLUDE_THE_LIST)) {
+            return new UnOpenedProduct(SealedTemplate.genericDraftBooster, PaperCardPredicates.NOT_ON_THE_LIST);
+        }
+        return new UnOpenedProduct(SealedTemplate.genericDraftBooster);
     }
 
     @Override

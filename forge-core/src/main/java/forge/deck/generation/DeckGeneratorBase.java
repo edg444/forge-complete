@@ -56,6 +56,7 @@ public abstract class DeckGeneratorBase {
     protected final CardPool tDeck = new CardPool();
     /** Cards whose print was picked on purpose, for Deck.optimiseCardArt to leave alone. */
     protected final Set<String> pinnedPrintings = new HashSet<>();
+    protected Predicate<PaperCard> printingFilter = x -> true;
     protected final IDeckGenPool pool;
     protected IDeckGenPool landPool;
     protected final DeckFormat format;
@@ -79,6 +80,11 @@ public abstract class DeckGeneratorBase {
 
     public Set<String> getPinnedPrintings() {
         return pinnedPrintings;
+    }
+
+    /** Printings the generator may pick on its own (the Exclude The List preference). */
+    public void setPrintingFilter(Predicate<PaperCard> filter) {
+        printingFilter = filter;
     }
 
     public void setSingleton(boolean singleton) {
@@ -221,7 +227,7 @@ public abstract class DeckGeneratorBase {
 
         // the pool keeps one preferred print per name, so other borders are only in the full database
         final Map<String, List<PaperCard>> reprints = new HashMap<>();
-        for (PaperCard pc : fullCardDB.getAllCards(pc -> printedBorder(pc) == border)) {
+        for (PaperCard pc : fullCardDB.getAllCards(pc -> printingFilter.test(pc) && printedBorder(pc) == border)) {
             reprints.computeIfAbsent(pc.getName(), k -> new ArrayList<>()).add(pc);
         }
         int have = 0;
@@ -289,7 +295,7 @@ public abstract class DeckGeneratorBase {
     }
 
     /** The border printed on this printing, as Card.printedBorderColor works it out in a game. */
-    private static CardEdition.BorderColor printedBorder(PaperCard pc) {
+    static CardEdition.BorderColor printedBorder(PaperCard pc) {
         final PrintingTraits.Traits t = PrintingTraits.get(pc.getEdition(), pc.getCollectorNumber(), false);
         if (t != null && t.getBorder() != null) {
             return t.getBorder();

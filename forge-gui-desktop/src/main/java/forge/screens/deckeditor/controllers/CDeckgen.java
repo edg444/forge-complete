@@ -6,6 +6,7 @@ import forge.card.MagicColor;
 import forge.deck.Deck;
 import forge.deck.DeckBase;
 import forge.deck.DeckFormat;
+import forge.deck.DeckgenUtil;
 import forge.deck.generation.DeckGenerator2Color;
 import forge.deck.generation.DeckGenerator3Color;
 import forge.deck.generation.DeckGenerator5Color;
@@ -101,7 +102,9 @@ public enum CDeckgen implements ICDoc {
         if( null != gen ) {
             gen.setSingleton(FModel.getPreferences().getPrefBoolean(FPref.DECKGEN_SINGLETONS));
             gen.setUseArtifacts(!FModel.getPreferences().getPrefBoolean(FPref.DECKGEN_ARTIFACTS));
+            DeckgenUtil.applyPrintingPreferences(gen);
             genConstructed.getMain().addAll(gen.getDeck(60, false));
+            DeckgenUtil.dropTheListPrintings(genConstructed);
         }
 
         final ACEditorBase<TItem, TModel> ed = (ACEditorBase<TItem, TModel>) CDeckEditorUI.SINGLETON_INSTANCE.getCurrentEditorController();

@@ -45,6 +45,43 @@ import java.util.function.Predicate;
 public class DeckgenUtil {
     private static List<DeckProxy> advPrecons = Lists.newArrayList(), advThemes = Lists.newArrayList(), geneticAI = Lists.newArrayList();
 
+    private static boolean excludeTheList() {
+        return FModel.getPreferences().getPrefBoolean(FPref.EXCLUDE_THE_LIST);
+    }
+
+    /** Applies the Exclude The List preference to a generator, before it picks printings of its own. */
+    public static void applyPrintingPreferences(DeckGeneratorBase gen) {
+        if (excludeTheList()) {
+            gen.setPrintingFilter(PaperCardPredicates.NOT_ON_THE_LIST);
+        }
+    }
+
+    /**
+     * Every card on The List is printed somewhere else too, so with the Exclude The List preference on, a generated
+     * deck just gets another printing of it. Run after the card art pass, which can pick a List printing itself.
+     */
+    public static void dropTheListPrintings(Deck deck) {
+        if (!excludeTheList()) {
+            return;
+        }
+        final CardDb db = FModel.getMagicDb().getCommonCards();
+        for (Map.Entry<DeckSection, CardPool> part : deck) {
+            final CardPool pool = part.getValue();
+            for (Map.Entry<PaperCard, Integer> e : Lists.newArrayList(pool)) {
+                final PaperCard pc = e.getKey();
+                if (PaperCardPredicates.NOT_ON_THE_LIST.test(pc)) {
+                    continue;
+                }
+                final PaperCard other = db.getCardFromEditions(pc.getName(), db.getCardArtPreference(),
+                        PaperCardPredicates.NOT_ON_THE_LIST);
+                if (other != null) {
+                    pool.remove(pc, e.getValue());
+                    pool.add(pc.isFoil() ? other.getFoiled() : other, e.getValue());
+                }
+            }
+        }
+    }
+
     public static Deck buildCardGenDeck(GameFormat format, boolean isForAI){
         try {
             List<String> keys      = new ArrayList<>(CardArchetypeLDAGenerator.ldaPools.get(format.getName()).keySet());
@@ -211,6 +248,7 @@ public class DeckgenUtil {
         }
         // keep the era / card border of the generated deck coherent, following the Card Art Preference
         deck.optimiseCardArt(format.getAllowedSetCodes());
+        dropTheListPrintings(deck);
         return deck;
     }
 
@@ -313,6 +351,7 @@ public class DeckgenUtil {
         }
         // keep the era / card border of the generated deck coherent, following the Card Art Preference
         deck.optimiseCardArt(format.getAllowedSetCodes());
+        dropTheListPrintings(deck);
         return deck;
     }
 
@@ -355,6 +394,7 @@ public class DeckgenUtil {
             }
             gen.setSingleton(FModel.getPreferences().getPrefBoolean(FPref.DECKGEN_SINGLETONS));
             gen.setUseArtifacts(!FModel.getPreferences().getPrefBoolean(FPref.DECKGEN_ARTIFACTS));
+            applyPrintingPreferences(gen);
             final CardPool cards = gen.getDeck(60, forAi);
 
             if (null == deckName) {
@@ -366,6 +406,7 @@ public class DeckgenUtil {
             deck.setDirectory("generated/color");
             deck.getMain().addAll(cards);
             deck.optimiseCardArt(null, gen.getPinnedPrintings());  // follow the Card Art Preference, coherent era and border
+            dropTheListPrintings(deck);
             return deck;
         }
         catch (Exception e) {
@@ -758,6 +799,7 @@ public class DeckgenUtil {
         DeckGeneratorBase gen = new CardThemedCommanderDeckBuilder(commander, selectedPartner, preSelectedCards, forAi, format);
         gen.setSingleton(true);
         gen.setUseArtifacts(!FModel.getPreferences().getPrefBoolean(FPref.DECKGEN_ARTIFACTS));
+        applyPrintingPreferences(gen);
         CardPool cards = gen.getDeck(format.getMainRange().getMaximum(), forAi);
 
         // After generating card lists, build deck.
@@ -775,6 +817,7 @@ public class DeckgenUtil {
         }
 
         deck.optimiseCardArt(null, gen.getPinnedPrintings());  // follow the Card Art Preference, coherent era and border
+        dropTheListPrintings(deck);
         return deck;
     }
 

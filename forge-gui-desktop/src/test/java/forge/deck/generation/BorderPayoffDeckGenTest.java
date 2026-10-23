@@ -26,16 +26,19 @@ public class BorderPayoffDeckGenTest extends AITest {
             return null;
         }
 
+        // black-bordered, so the pass has something to move (the payoff itself is printed white-bordered)
         PaperCard seed(String name, int count) {
-            PaperCard pc = printing(name, CardEdition.BorderColor.BLACK);
+            PaperCard pc = name.equals("The Whiteboarder") ? fullCardDB.getCard(name) : printing(name, CardEdition.BorderColor.BLACK);
+            AssertJUnit.assertNotNull(name, pc);
             tDeck.add(pc, count);
             cardCounts.put(name, count);
             return pc;
         }
     }
 
+    // per printing (PrintingTraits), not just the edition: a List reprint of a white-bordered card is white-bordered
     private static CardEdition.BorderColor border(PaperCard pc) {
-        return StaticData.instance().getEditions().get(pc.getEdition()).getBorderColor(pc.getCollectorNumber());
+        return DeckGeneratorBase.printedBorder(pc);
     }
 
     @Test

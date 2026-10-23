@@ -324,6 +324,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   (the generator pool keeps one print per name), creatures only when the payoff only counts creatures, then trades
   filler for cards that have one until a tenth of the deck (min 4) does. Those names are pinned:
   `Deck.optimiseCardArt(allowedSets, keepPrinting)` leaves them alone, so the coherent-border art pass can't undo it.
+- **Setting: Exclude The List** (`FPref.EXCLUDE_THE_LIST`, off by default; desktop Preferences and mobile Settings,
+  under Random Deck Generation). Every card on The List (PLST) and The List (Unfinity Foil Edition) (ULST) is also
+  printed elsewhere, so this drops printings, not cards: Full card pool draft and sealed packs come from every
+  printing but those (`LimitedPoolType.fullCardpoolBooster()`, also used by Full metasets; the List printings used to
+  make their cards more likely, too), and generated decks swap any List printing for another printing of the card
+  (`DeckgenUtil.dropTheListPrintings`, after the card art pass) with the generator's own picks filtered
+  (`DeckGeneratorBase.setPrintingFilter`, `PaperCardPredicates.NOT_ON_THE_LIST`).
 
 - **Mystery Booster 2 playtest cards (MB2), part 12: Runed Terror - Mystery Booster 2 playtest cards complete.**
   - While a permanent with `SVar:SequentialPhases` is on the battlefield, players take their phases one after another:

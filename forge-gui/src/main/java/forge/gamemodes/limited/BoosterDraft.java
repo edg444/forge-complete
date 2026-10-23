@@ -115,7 +115,7 @@ public class BoosterDraft implements IBoosterDraft {
     protected boolean generateProduct() {
         switch (this.draftFormat) {
             case Full: // Draft from all cards in Forge
-                final IUnOpenedProduct s = new UnOpenedProduct(SealedTemplate.genericDraftBooster);
+                final IUnOpenedProduct s = LimitedPoolType.fullCardpoolBooster();
 
                 for (int i = 0; i < 3; i++) {
                     this.product.add(s);

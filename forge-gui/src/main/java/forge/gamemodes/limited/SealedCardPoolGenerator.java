@@ -167,7 +167,7 @@ public class SealedCardPoolGenerator {
         switch(poolType) {
             case Full:
                 // Choose number of boosters
-                if (!chooseNumberOfBoosters(new UnOpenedProduct(SealedTemplate.genericDraftBooster))) {
+                if (!chooseNumberOfBoosters(LimitedPoolType.fullCardpoolBooster())) {
                     return;
                 }
                 landSetCode = CardEdition.Predicates.getRandomSetWithAllBasicLands(FModel.getMagicDb().getEditions()).getCode();

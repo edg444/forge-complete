@@ -19,6 +19,7 @@
 package forge.model;
 
 import forge.gamemodes.limited.CustomLimited;
+import forge.gamemodes.limited.LimitedPoolType;
 import forge.gamemodes.limited.SealedCardPoolGenerator;
 import forge.item.PaperCard;
 import forge.item.PaperCardPredicates;
@@ -165,7 +166,7 @@ public class MetaSet {
 
         switch(type) {
             case Full:
-                return new UnOpenedProduct(SealedTemplate.genericDraftBooster);
+                return LimitedPoolType.fullCardpoolBooster();
 
             case Booster:
                 return new UnOpenedProduct(FModel.getMagicDb().getBoosters().get(data));
