@@ -2,6 +2,8 @@ Name:Anaba Ancestor
 ManaCost:1 R
 Types:Creature Minotaur Spirit
 PT:1/1
-A:AB$ Pump | Cost$ T | NumAtt$ +1 | NumDef$ +1 | ValidTgts$ Creature.Minotaur+Other | TgtPrompt$ Select another target Minotaur creature | SpellDescription$ Another target Minotaur creature gets +1/+1 until end of turn.
+A:AB$ Pump | Cost$ T | NumAtt$ +1 | NumDef$ +1 | ValidTgts$ Creature.Minotaur+Other | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19951002 | TgtPrompt$ Select another target Minotaur creature | SpellDescription$ Another target Minotaur creature gets +1/+1 until end of turn.
+# R&D's Secret Lair: Homelands' printing says "Target Minotaur" - it can target itself.
+A:AB$ Pump | Cost$ T | NumAtt$ +1 | NumDef$ +1 | ValidTgts$ Creature.Minotaur | TgtPrompt$ Select target Minotaur | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19951002 | SpellDescription$ (As printed) Target Minotaur gets +1/+1 until end of turn.
 AI:RemoveDeck:All
 Oracle:{T}: Another target Minotaur creature gets +1/+1 until end of turn.

@@ -1,6 +1,8 @@
 Name:Apocalypse Chime
 ManaCost:2
 Types:Artifact
-A:AB$ DestroyAll | Cost$ 2 T Sac<1/CARDNAME> | ValidCards$ Permanent.!token+setHML | NoRegen$ True | SpellDescription$ Destroy all nontoken permanents with a name originally printed in the Homelands expansion. They can't be regenerated.
+A:AB$ DestroyAll | Cost$ 2 T Sac<1/CARDNAME> | ValidCards$ Permanent.!token+setHML | NoRegen$ True | ConditionDefined$ Self | ConditionPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19951002 | SubAbility$ DBPrintedBury | SpellDescription$ Destroy all nontoken permanents with a name originally printed in the Homelands expansion. They can't be regenerated.
+# R&D's Secret Lair: as printed it buries "all cards from the Homelands expansion" - the physical printing, not the name.
+SVar:DBPrintedBury:DB$ DestroyAll | ValidCards$ Permanent.!token+PrintingIs HML | NoRegen$ True | ConditionDefined$ Self | ConditionPresent$ Card.Self+PrintedTextActive+PrintedBefore 19951002 | StackDescription$ None
 AI:RemoveDeck:Random
 Oracle:{2}, {T}, Sacrifice this artifact: Destroy all nontoken permanents with a name originally printed in the Homelands expansion. They can't be regenerated.

@@ -1,5 +1,7 @@
 Name:Pit Trap
 ManaCost:2
 Types:Artifact
-A:AB$ Destroy | Cost$ 2 T Sac<1/CARDNAME> | ValidTgts$ Creature.attacking+withoutFlying | TgtPrompt$ Select target attacking creature without flying | NoRegen$ True | SpellDescription$ Destroy target attacking creature without flying. It can't be regenerated.
+A:AB$ Destroy | Cost$ 2 T Sac<1/CARDNAME> | ValidTgts$ Creature.attacking+withoutFlying | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19981012 | TgtPrompt$ Select target attacking creature without flying | NoRegen$ True | SpellDescription$ Destroy target attacking creature without flying. It can't be regenerated.
+# R&D's Secret Lair: before Urza's Saga the creature has to be attacking you.
+A:AB$ Destroy | Cost$ 2 T Sac<1/CARDNAME> | ValidTgts$ Creature.attackingYou+withoutFlying | TgtPrompt$ Select target creature without flying that's attacking you | NoRegen$ True | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19981012 | SpellDescription$ (As printed) Bury target creature without flying that is attacking you.
 Oracle:{2}, {T}, Sacrifice this artifact: Destroy target attacking creature without flying. It can't be regenerated.

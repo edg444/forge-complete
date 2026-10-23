@@ -2,7 +2,10 @@ Name:Enduring Renewal
 ManaCost:2 W W
 Types:Enchantment
 S:Mode$ Continuous | AffectedZone$ Hand | Affected$ Card.YouOwn | MayLookAt$ Player | Description$ Play with your hand revealed.
-R:Event$ Draw | ActiveZones$ Battlefield | ValidPlayer$ You | ReplaceWith$ EnduringRevealTop | Description$ If you would draw a card, reveal the top card of your library instead. If it's a creature card, put it into your graveyard. Otherwise, draw a card.
+R:Event$ Draw | ActiveZones$ Battlefield | ValidPlayer$ You | ReplaceWith$ EnduringRevealTop | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20061006 | Description$ If you would draw a card, reveal the top card of your library instead. If it's a creature card, put it into your graveyard. Otherwise, draw a card.
+# R&D's Secret Lair: Ice Age's printing draws the creature card and then discards it.
+T:Mode$ Drawn | ValidCard$ Creature.YouOwn | TriggerZones$ Battlefield | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20061006 | Execute$ TrigPrintedDiscard | TriggerDescription$ (As printed) If you draw a creature card from your library, discard it.
+SVar:TrigPrintedDiscard:DB$ Discard | Defined$ You | Mode$ Defined | DefinedCards$ TriggeredCard | ConditionDefined$ TriggeredCard | ConditionPresent$ Card.inZoneHand | ConditionCompare$ EQ1
 SVar:EnduringRevealTop:DB$ PeekAndReveal | NoPeek$ True | RememberRevealed$ True | SubAbility$ DBEnduringGraveyard
 SVar:DBEnduringGraveyard:DB$ ChangeZone | Defined$ Remembered | ConditionDefined$ Remembered | ConditionPresent$ Creature | Origin$ Library | Destination$ Graveyard | SubAbility$ DBEnduringDraw
 SVar:DBEnduringDraw:DB$ Draw | ConditionDefined$ Remembered | ConditionPresent$ Creature | ConditionCompare$ EQ0 | SubAbility$ DBEnduringCleanup

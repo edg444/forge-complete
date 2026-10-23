@@ -3,7 +3,10 @@ ManaCost:2 G
 Types:Creature Faerie Noble
 PT:1/2
 K:Flying
-S:Mode$ Continuous | Affected$ Creature.Faerie+Other+YouCtrl | AddToughness$ 1 | Description$ Other Faerie creatures you control get +0/+1.
-A:AB$ PumpAll | Cost$ T | ValidCards$ Creature.Faerie+StrictlyOther+YouCtrl | NumAtt$ +1 | SpellDescription$ Other Faerie creatures you control get +1/+0 until end of turn.
+S:Mode$ Continuous | Affected$ Creature.Faerie+Other+YouCtrl | AddToughness$ 1 | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19951002 | Description$ Other Faerie creatures you control get +0/+1.
+# R&D's Secret Lair: Homelands' printing says "All Faeries you control", itself included.
+S:Mode$ Continuous | Affected$ Creature.Faerie+YouCtrl | AddToughness$ 1 | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19951002 | ActiveDescription$ (As printed) All Faeries you control get +0/+1.
+A:AB$ PumpAll | Cost$ T | ValidCards$ Creature.Faerie+StrictlyOther+YouCtrl | NumAtt$ +1 | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19951002 | SpellDescription$ Other Faerie creatures you control get +1/+0 until end of turn.
+A:AB$ PumpAll | Cost$ T | ValidCards$ Creature.Faerie+YouCtrl | NumAtt$ +1 | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19951002 | SpellDescription$ (As printed) All Faeries you control get +1/+0 until end of turn.
 AI:RemoveDeck:Random
 Oracle:Flying\nOther Faerie creatures you control get +0/+1.\n{T}: Other Faerie creatures you control get +1/+0 until end of turn.

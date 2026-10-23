@@ -407,6 +407,32 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - R&D's Secret Lair printed text: *Thelonite Monk* (Fallen Empires) turns the land into a *basic* Forest.
   - Left as Oracle: Night Soil's "two creatures in any graveyard" (reads either way; Commander 2013 settled it as
     a single graveyard), and "bury"/"destroy" upkeep wording (Deep Spawn, Seasinger).
+- **Set review: Ice Age** (all 346 new names, `IceAgeAuditTest`):
+  - *Word of Blasting*'s Wall could be regenerated; Oracle says it can't.
+  - *Dwarven Armory* worked only in your own upkeep; it's "any upkeep step".
+  - In-game text: *Orcish Farmer*'s ability had no description, *Mind Warp* now reads as its Oracle text, and
+    *Reality Twist*'s Mountain line said the wrong color.
+  - R&D's Secret Lair printed text: *Enduring Renewal* (before TSB) draws the creature card and then discards it;
+    *Zur's Weirding* (before 6ED) lets the card be drawn, and another player's 2 life makes its owner discard it;
+    *Hecatomb* (Ice Age only; 5ED added "or bury Hecatomb") just sacrifices four creatures and stays;
+    *Pit Trap* (before USG) needs the creature to be attacking you.
+  - Left as Oracle: the Walls printed without defender (Illusionary Wall, Thunder Wall, Wall of Lava, Drift of the
+    Dead), Auras' old "choose target land" and "{0}: Tap land ... enchants" templating (Caribou Range, Mystic Might,
+    Earthlore, Forbidden Lore, Hot Springs), "target opponent" on permanents, Necropotence's discard-phase return
+    and "remove from the game" discards, the "when attack or defense is announced" timing lines, and the old
+    mechanics of General Jarkeld, Melee, Dance of the Dead and Touch of Vitae.
+- **Set review: Homelands** (all 115 new names, `HomelandsAuditTest`) - scripts needed no changes. R&D's Secret Lair
+  printed text:
+  - *Faerie Noble* (Homelands' printing): "All Faeries you control" - both bonuses include itself.
+  - *Anaba Ancestor* and *Baron Sengir* (Homelands' printing): "target Minotaur" / "target Vampire", so they can
+    target themselves.
+  - *Sengir Autocrat* (before 6ED): the Serfs are buried (destroyed, so they die) rather than exiled.
+  - *Apocalypse Chime* (Homelands' printing): buries "all cards from the Homelands expansion" - Homelands printings
+    (`PrintingIs HML`), not every card with a Homelands name.
+  - Left as Oracle: creature types renamed since (Soraya the Falconer's Falcons, Aysen Crusader's Heroes),
+    "bury" for "sacrifice" (Retribution, Hungry Mist), Giant Oyster's upkeep counter (now the draw step), targeted
+    old templating (Coral Reef, Drudge Spell), Daughter of Autumn's untargeted "a white creature", and the old
+    mechanics of Giant Albatross, Chain Stasis and Timmerian Fiends.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

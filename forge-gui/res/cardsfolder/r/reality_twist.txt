@@ -7,7 +7,7 @@ R:Event$ ProduceMana | ActiveZones$ Battlefield | ValidCard$ Plains | ReplaceWit
 SVar:ProduceR:DB$ ReplaceMana | ReplaceType$ R
 R:Event$ ProduceMana | ActiveZones$ Battlefield | ValidCard$ Swamp | ReplaceWith$ ProduceG | Secondary$ True | Description$ If tapped for mana, Swamps produce G.
 SVar:ProduceG:DB$ ReplaceMana | ReplaceType$ G
-R:Event$ ProduceMana | ActiveZones$ Battlefield | ValidCard$ Mountain | ReplaceWith$ ProduceW | Secondary$ True | Description$ If tapped for mana, Mountains produce U.
+R:Event$ ProduceMana | ActiveZones$ Battlefield | ValidCard$ Mountain | ReplaceWith$ ProduceW | Secondary$ True | Description$ If tapped for mana, Mountains produce W.
 SVar:ProduceW:DB$ ReplaceMana | ReplaceType$ W
 R:Event$ ProduceMana | ActiveZones$ Battlefield | ValidCard$ Forest | ReplaceWith$ ProduceB | Secondary$ True | Description$ If tapped for mana, Forests produce B.
 SVar:ProduceB:DB$ ReplaceMana | ReplaceType$ B
