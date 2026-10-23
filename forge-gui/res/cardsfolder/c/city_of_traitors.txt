@@ -1,7 +1,10 @@
 Name:City of Traitors
 ManaCost:no cost
 Types:Land
-T:Mode$ LandPlayed | ValidCard$ Land.Other+YouCtrl | TriggerZones$ Battlefield | Execute$ TrigSac | TriggerDescription$ When you play another land, sacrifice this land.
+T:Mode$ LandPlayed | ValidCard$ Land.Other+YouCtrl | TriggerZones$ Battlefield | Execute$ TrigSac | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 19980616 | TriggerDescription$ When you play another land, sacrifice this land.
+# R&D's Secret Lair: Exodus's printing (its only one) says "If you play a land" - with no "another", playing
+# City of Traitors itself triggers it.
+T:Mode$ LandPlayed | ValidCard$ Land.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigSac | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 19980616 | TriggerDescription$ (As printed) If you play a land, sacrifice CARDNAME.
 SVar:TrigSac:DB$ Sacrifice
 A:AB$ Mana | Cost$ T | Produced$ C | Amount$ 2 | SpellDescription$ Add {C}{C}.
 AI:RemoveDeck:All

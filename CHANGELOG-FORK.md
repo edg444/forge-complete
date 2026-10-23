@@ -536,6 +536,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     Retreat), Silver Wyvern's interrupt, Thalakos Deceiver's ability that became a trigger, Volrath's Laboratory's
     "When you play" choice, creature types gained since (Crovax, Sliver Queen, Shifting Wall, Hornet Cannon's Insect,
     Sword of the Chosen's "target legend"), and Volrath's Shapeshifter's old copy wording.
+- **Set review: Exodus Promos (Monstrous Hound) and Exodus** (138 new names, `ExodusAuditTest`):
+  - In-game text: *Survival of the Fittest* read "then shuffle. Then shuffle."; target prompts on *Oath of
+    Scholars* ("more life than you" - it's cards in hand), *Oath of Lieges* and *Elven Palisade*.
+  - R&D's Secret Lair printed text: *City of Traitors* (Exodus only) says "If you play a land" with no "another",
+    so playing it triggers its own sacrifice.
+  - Left as Oracle: the Keepers' and Oaths' "Play this ability only if" / "if ... target opponent" conditions (the
+    same choice, made as a target), Scalding Salamander's ability that became a trigger, Thopter Squadron's and
+    Mirri's creature types, discard-phase timing (Manabond, Necrologia, Spellbook), Cunning's "at end of turn",
+    Scrivener's "instant or interrupt", interrupt speed (Ertai, Null Brooch), cost templating (Hatred, Aether Tide,
+    Sonic Burst, Culling the Weak) and the "any one source" redirects and shields (Kor Chant, Penance).
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 
