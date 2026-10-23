@@ -4,10 +4,13 @@ import com.google.common.collect.Lists;
 import forge.ai.*;
 import forge.card.MagicColor;
 import forge.game.Game;
+import forge.game.ability.AbilityUtils;
 import forge.game.card.Card;
+import forge.game.card.CardCollection;
 import forge.game.card.CardCollectionView;
 import forge.game.card.CardLists;
 import forge.game.card.CardPredicates;
+import forge.game.combat.Combat;
 import forge.game.combat.CombatUtil;
 import forge.game.cost.Cost;
 import forge.game.keyword.Keyword;
@@ -40,8 +43,124 @@ public class ChooseGenericAi extends SpellAbilityAi {
             return true;
         } else if ("FlavorJudge".equals(aiLogic)) {
             return chooseFlavorJudgeTarget(ai, sa);
+        } else if ("BestPT".equals(aiLogic)) {
+            return chooseBestPT(ai, sa.getAdditionalAbilityList("Choices")) != null;
         }
         return false;
+    }
+
+    /**
+     * Master of Winds: which "base power and toughness become X/Y until end of turn" choice to take, or null to
+     * leave the creature as it is. Big power for an attack nothing can safely block, the form that wins a fight
+     * already set up, else the toughest form. Plain arithmetic (first strike and deathtouch only), not a simulation.
+     */
+    private static SpellAbility chooseBestPT(final Player ai, final List<? extends SpellAbility> choices) {
+        final List<SpellAbility> options = Lists.newArrayList();
+        for (SpellAbility sp : choices) {
+            if (sp.hasParam("Power") && sp.hasParam("Toughness")) {
+                options.add(sp);
+            }
+        }
+        if (options.isEmpty()) {
+            return null;
+        }
+        final Card host = options.get(0).getHostCard();
+        if (!host.isCreature() || !host.isInPlay() || !host.getController().equals(ai)) {
+            return null;
+        }
+        SpellAbility mostPower = options.get(0);
+        SpellAbility mostToughness = options.get(0);
+        for (SpellAbility sp : options) {
+            if (ptPower(host, sp) > ptPower(host, mostPower)) {
+                mostPower = sp;
+            }
+            if (ptToughness(host, sp) > ptToughness(host, mostToughness)) {
+                mostToughness = sp;
+            }
+        }
+        final SpellAbility tougher = ptToughness(host, mostToughness) > host.getNetToughness() ? mostToughness : null;
+
+        final Game game = ai.getGame();
+        final Combat combat = game.getCombat();
+        final PhaseType phase = game.getPhaseHandler().getPhase();
+        final boolean inCombat = combat != null && (combat.isAttacking(host) || combat.isBlocking(host));
+        if (inCombat && phase.isAfter(PhaseType.COMBAT_DECLARE_ATTACKERS) && phase.isBefore(PhaseType.COMBAT_END)) {
+            final CardCollection foes = combat.isAttacking(host) ? combat.getBlockers(host) : combat.getAttackersBlockedBy(host);
+            if (foes.isEmpty()) {
+                return ptPower(host, mostPower) > host.getNetPower() ? mostPower : null;
+            }
+            SpellAbility best = null;
+            int bestScore = fightScore(host, host.getNetPower(), host.getNetToughness(), foes);
+            for (SpellAbility sp : options) {
+                final int score = fightScore(host, ptPower(host, sp), ptToughness(host, sp), foes);
+                if (score > bestScore) {
+                    best = sp;
+                    bestScore = score;
+                }
+            }
+            return best;
+        }
+
+        final boolean mayAttack = inCombat && combat.isAttacking(host)
+                || game.getPhaseHandler().isPlayerTurn(ai) && phase.isBefore(PhaseType.COMBAT_DECLARE_ATTACKERS)
+                        && CombatUtil.canAttack(host);
+        if (mayAttack && ptPower(host, mostPower) > host.getNetPower()) {
+            final int toughness = ptToughness(host, mostPower) - host.getDamage();
+            boolean safe = true;
+            for (Card blocker : ai.getOpponents().getCreaturesInPlay()) {
+                if (CombatUtil.canBlock(host, blocker) && host.canBeDestroyed() && (blocker.getNetPower() >= toughness
+                        || blocker.getNetPower() > 0 && blocker.hasKeyword(Keyword.DEATHTOUCH))) {
+                    safe = false;
+                    break;
+                }
+            }
+            if (safe) {
+                return mostPower;
+            }
+        }
+        return tougher;
+    }
+
+    private static int ptPower(final Card host, final SpellAbility sp) {
+        return AbilityUtils.calculateAmount(host, sp.getParam("Power"), sp) + host.getNetPower() - host.getBasePower();
+    }
+
+    private static int ptToughness(final Card host, final SpellAbility sp) {
+        return AbilityUtils.calculateAmount(host, sp.getParam("Toughness"), sp) + host.getNetToughness() - host.getBaseToughness();
+    }
+
+    // value of the foes it kills, plus its own value if it lives
+    private static int fightScore(final Card host, final int power, final int toughness, final CardCollection foes) {
+        final boolean hostFirst = host.hasFirstStrike() || host.hasDoubleStrike();
+        final boolean hostDeathtouch = host.hasKeyword(Keyword.DEATHTOUCH);
+        int incoming = 0;
+        boolean deadlyFoe = false;
+        boolean foeFirst = false;
+        for (Card foe : foes) {
+            incoming += Math.max(0, foe.getNetPower());
+            deadlyFoe |= foe.getNetPower() > 0 && foe.hasKeyword(Keyword.DEATHTOUCH);
+            foeFirst |= foe.hasFirstStrike() || foe.hasDoubleStrike();
+        }
+        final boolean survives = toughness > 0
+                && (!host.canBeDestroyed() || incoming < toughness - host.getDamage() && !deadlyFoe);
+        int score = survives ? ComputerUtilCard.evaluateCreature(host) : 0;
+        if (!survives && foeFirst && !hostFirst) {
+            return score;
+        }
+        final List<Card> byToughness = Lists.newArrayList(foes);
+        byToughness.sort((a, b) -> Integer.compare(a.getNetToughness() - a.getDamage(), b.getNetToughness() - b.getDamage()));
+        int remaining = power;
+        for (Card foe : byToughness) {
+            final int need = hostDeathtouch ? 1 : Math.max(1, foe.getNetToughness() - foe.getDamage());
+            if (remaining < need) {
+                break;
+            }
+            remaining -= need;
+            if (foe.canBeDestroyed()) {
+                score += ComputerUtilCard.evaluateCreature(foe);
+            }
+        }
+        return score;
     }
 
     private static boolean chooseFlavorJudgeTarget(final Player ai, final SpellAbility sa) {
@@ -420,6 +539,19 @@ public class ChooseGenericAi extends SpellAbilityAi {
             if (!filtered.isEmpty()) {
                 return filtered.get(0);
             }
+        } else if ("BestPT".equals(logic)) {
+            final SpellAbility best = chooseBestPT(player, spells);
+            if (best != null) {
+                return best;
+            }
+            // made to pick (no "may"): the toughest form is the safe one
+            SpellAbility toughest = spells.get(0);
+            for (SpellAbility sp : spells) {
+                if (sp.hasParam("Toughness") && toughest.hasParam("Toughness") && ptToughness(host, sp) > ptToughness(host, toughest)) {
+                    toughest = sp;
+                }
+            }
+            return toughest;
         } else if ("FoodOrTreasure".equals(logic)) {
             // Tireless Provisioner
             // TODO: implement a better way to check for possible benefits in each case. If made generic, replace

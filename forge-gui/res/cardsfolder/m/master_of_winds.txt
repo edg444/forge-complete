@@ -7,7 +7,7 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 2 | SubAbility$ DBDiscard
 SVar:DBDiscard:DB$ Discard | Defined$ You | NumCards$ 1 | Mode$ TgtChoose
 T:Mode$ SpellCast | ValidCard$ Instant,Sorcery,Wizard | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigChoose | TriggerDescription$ Whenever you cast an instant, sorcery, or Wizard spell, you may have this creature's base power and toughness become 4/1 or 1/4 until end of turn.
-SVar:TrigChoose:DB$ GenericChoice | Defined$ You | Choices$ Animate41,Animate14
+SVar:TrigChoose:DB$ GenericChoice | Defined$ You | Choices$ Animate41,Animate14 | AILogic$ BestPT
 SVar:Animate41:DB$ Animate | Defined$ Self | Power$ 4 | Toughness$ 1 | SpellDescription$ CARDNAME's base power and toughness become 4/1 until end of turn.
 SVar:Animate14:DB$ Animate | Defined$ Self | Power$ 1 | Toughness$ 4 | SpellDescription$ CARDNAME's base power and toughness become 1/4 until end of turn.
 SVar:BuffedBy:Instant,Sorcery,Wizard
