@@ -3,6 +3,6 @@ ManaCost:1 U B
 Types:Creature Spirit
 PT:2/2
 T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigDrawDiscard | TriggerDescription$ Whenever this creature deals combat damage to a player, that player discards a card and you draw a card.
-SVar:TrigDrawDiscard:DB$ Draw | Defined$ You | NumCards$ 1 | SubAbility$ DBDiscard
-SVar:DBDiscard:DB$ Discard | Defined$ TriggeredTarget | NumCards$ 1 | Mode$ TgtChoose
+SVar:TrigDrawDiscard:DB$ Discard | Defined$ TriggeredTarget | NumCards$ 1 | Mode$ TgtChoose | SubAbility$ DBDraw
+SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1
 Oracle:Whenever this creature deals combat damage to a player, that player discards a card and you draw a card.

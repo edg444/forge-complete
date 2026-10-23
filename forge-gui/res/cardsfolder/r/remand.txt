@@ -1,6 +1,12 @@
 Name:Remand
 ManaCost:1 U
 Types:Instant
-A:SP$ Counter | TargetType$ Spell | TgtPrompt$ Select target spell | ValidTgts$ Card | Destination$ Hand | SubAbility$ DBDraw | AITgts$ Card.cmcGE2 | SpellDescription$ Counter target spell. If that spell is countered this way, put it into its owner's hand instead of into that player's graveyard. Draw a card.
+A:SP$ Counter | TargetType$ Spell | TgtPrompt$ Select target spell | ValidTgts$ Card | Destination$ Hand | SubAbility$ DBDraw | AITgts$ Card.cmcGE2 | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20140314 | PresentDefined$ Self | SpellDescription$ Counter target spell. If that spell is countered this way, put it into its owner's hand instead of into that player's graveyard. Draw a card.
 SVar:DBDraw:DB$ Draw
+# R&D's Secret Lair: Ravnica printed "Counter target spell. If you do, return that spell card to its owner's hand." -
+# the card is countered into the graveyard first; Duel Decks: Jace vs. Vraska (2014-03-14) first printed today's wording.
+A:SP$ Counter | TargetType$ Spell | TgtPrompt$ Select target spell | ValidTgts$ Card | RememberCountered$ True | SubAbility$ PrintedReturn | AITgts$ Card.cmcGE2 | IsPresent$ Card.PrintedTextActive+PrintedBefore 20140314 | PresentDefined$ Self | SpellDescription$ (As printed) Counter target spell. If you do, return that spell card to its owner's hand. Draw a card.
+SVar:PrintedReturn:DB$ ChangeZone | Defined$ Remembered | Origin$ Graveyard | Destination$ Hand | SubAbility$ PrintedDraw
+SVar:PrintedDraw:DB$ Draw | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 Oracle:Counter target spell. If that spell is countered this way, put it into its owner's hand instead of into that player's graveyard.\nDraw a card.

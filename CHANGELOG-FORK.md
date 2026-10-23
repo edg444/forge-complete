@@ -786,6 +786,106 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     Stealer's "change power and toughness", Pain's Reward's bidding wording, "of their choice" sacrifices (Thoughts
     of Ruin, Michiko Konda, Exile into Darkness) and "at end of turn" timing (Ideas Unbound, Glitterfang, Footsteps
     of the Goryo).
+- **Set review: Ravnica Promos (Gleancrawler) and Ravnica: City of Guilds** (278 new names, `RavnicaAuditTest`):
+  - Fixed: *Dimir Cutpurse* drew before the player discarded; the discard comes first.
+  - R&D's Secret Lair printed text: *Remand* (through Duel Decks: Jace vs. Vraska) counters the spell into its owner's
+    graveyard and then returns the card to their hand, so "put into a graveyard" triggers see it; *Incite Hysteria*
+    (Ravnica only) affects creatures that share a color with the target, so a colorless target is untouched.
+  - Left as Oracle: Ghosts of the Innocent's "creature or player", Dimir Doppelganger's "gains this ability" (rather
+    than a copy exception), Circu's "target library", Grifter's Blade's "comes into play equipping", Sabertooth
+    Alley Cat's "attacks each turn", "of their choice" sacrifices (Woebringer Demon, Savra, Twisted Justice,
+    Stoneshaker Shaman) and "at end of turn" timing (Transluminant, Voyager Staff, Flickerform, Necroplasm).
+- **Set review: Arena League 2006 (Coiling Oracle, Castigate, Wee Dragonauts, Surging Flame), Guildpact Promos (Djinn
+  Illuminatus, Gruul Guildmage) and Guildpact** (159 new names):
+  - Fixed: *Pillory of the Sleepless* showed "Enchanted creature can't attack or block." twice in its card text.
+  - Left as Oracle: Electrolyze's "any number of target creatures and/or players" (2 damage still means one or two
+    targets), Predatory Focus's "deal their combat damage to defending player", Sword of the Paruns' non-optional tap
+    or untap, Mizzium Transreliquat's "gains this ability", Graven Dominator's "becomes 1/1", Leyline of the Void's
+    missing "from anywhere" and "at end of turn" timing (Ghostway, Thunderheads, Killer Instinct, Ghost Council of
+    Orzhova).
+- **Set review: Dissension Promos (Avatar of Discord) and Dissension** (175 new names, `DissensionAuditTest`):
+  - R&D's Secret Lair printed text: *Palliation Accord* (Dissension only) uses shield counters, which under today's
+    rules also keep the enchantment from being damaged or destroyed.
+  - Not done yet: Flash Foliage's printing has no "Cast this spell only during combat after blockers are declared",
+    but a token put onto the battlefield blocking before blockers are declared would be cleared when the AI declares
+    its blockers, so it keeps the Oracle restriction for now. Curtain of Light (Saviors) also lacks the line, but an
+    attacking creature isn't "unblocked" until blockers are declared, so nothing changes there.
+  - Left as Oracle: Anthem of Rakdos's "creature or player", Omnibian's "becomes a 3/3 Frog", Aethermage's Touch's
+    "into play with" wording, "of their choice" sacrifices (Rakdos the Defiler, Rakdos Riteknife, Hit) and "at end
+    of turn" timing (Ignorant Bliss, Rakdos Guildmage).
+- **Set review: Coldsnap Promos (Allosaurus Rider) and Coldsnap** (147 new names) - no changes needed. Left as Oracle:
+  the printed {Si} "one mana from a snow permanent" (today's "snow source"), Thrumming Stone's "Spells you control",
+  Haakon's "Knight cards", Rimewind Taskmage's non-optional tap or untap, Lovisa Coldeyes' and Field Marshal's
+  "Barbarians, Warriors, and Berserkers"/"Other Soldiers" and "at end of turn" timing (Lightning Serpent, Phyrexian
+  Etchings, Magmatic Core, Brooding Saurian).
+- **Set review: Time Spiral Promos (Lotus Bloom) and Time Spiral** (280 new names, `TimeSpiralAuditTest`):
+  - Fixed: *Scion of the Ur-Dragon* could find any Dragon card, including a changeling kindred spell, rather than a
+    Dragon permanent card; *Durkwood Tracker* only checked "if this creature is on the battlefield" when activated, so
+    it still dealt damage after leaving; *Coral Trickster*'s "you may tap or untap target permanent" wasn't optional.
+  - R&D's Secret Lair printed text: *Scion of the Ur-Dragon* (through Commander 2017) searches for a "Dragon card" -
+    finding a changeling kindred spell makes it a copy of that spell, which stays on the battlefield (rule 110.4b).
+  - Left as Oracle: the suspend reminder's "When you remove the last, play it" (keywords follow today's rules), Amrou
+    Scout's "Rebel card" (a Rebel spell can't be put onto the battlefield anyway), Dralnu's flashback wording,
+    Plated Pegasus's "creature or player", Sudden Spoiling's "become 0/2", "of their choice" sacrifices (Smallpox,
+    Curse of the Cabal) and "at end of turn" timing (Magus of the Jar, Norin the Wary). MTGJSON's printed text for
+    Venser's Sliver is another card's Spanish text, so it wasn't compared.
+- **Set review: Happy Holidays** - no changes; these cards were scripted one by one in the fork, and MTGJSON has no
+  printed text for them to compare.
+- **Set review: Planar Chaos Promos (Hedge Troll, Oros) and Planar Chaos** (163 new names):
+  - Fixed: *Firefright Mage* could only target a creature you control (it's any target creature); *Porphyry Nodes*
+    skipped indestructible creatures when finding the least power, so with a tie you couldn't choose the indestructible
+    one and destroy nothing.
+  - Left as Oracle: the printed "All Slivers" / "this creature" Sliver wording (only creatures are Slivers today),
+    Cautery Sliver's and Healing Leaves' "creature or player", Blightspeaker's "Rebel card", Voidstone Gargoyle's
+    "named card can't be played", "of their choice" sacrifices (Shivan Wumpus, Brain Gorgers) and "at end of turn"
+    timing (Treacherous Urge, Fatal Frenzy, Molten Firebird, Pyrohemia, Groundbreaker).
+- **Set review: Future Sight Promos (Korlash) and Future Sight** (179 new names):
+  - Fixed: *Scourge of Kher Ridges*' first ability read "each creature and without flying".
+  - Left as Oracle: Glittering Wish's non-optional "Choose a multicolored card", Emberwilde Augur's "target player",
+    Pyromancer's Swath's and Riddle of Lightning's "creature or player", Steamflogger Boss's "Rigger creatures", the
+    suspend/madness reminder wording and "at end of turn" timing (Saltskitter, Nacatl War-Pride, Sparkspitter).
+- **Set review: Lorwyn Promos (Shriekmaw, Wren's Run Packmaster) and Lorwyn** (278 new names):
+  - Fixed: *Wanderer's Twig*'s text ended "then shuffle. Then shuffle."; *Caterwauling Boggart* listed its menace
+    grant twice, once as "Elemental creatures".
+  - Left as Oracle: Heat Shimmer's printed "It has haste and..." (granted rather than part of the copy, as with
+    Kiki-Jiki), Purity's "If a spell or ability would deal damage to you" (noncombat damage), the printed hideaway
+    and deathtouch reminders (keywords follow today's rules), Chandra Nalaar's, Brion Stoutarm's and Incendiary
+    Command's "target player", Lignify's and Mirror Entity's "is/becomes X/X" and "at end of turn" timing (Galepowder
+    Mage, Incandescent Soulstoke, Lowland Oaf, Colfenor's Urn, Merrow Commerce).
+- **Set review: Morningtide Promos (Door of Destinies) and Morningtide** (147 new names):
+  - Fixed: *Rage Forger*'s "you may have that creature deal 1 damage" wasn't optional.
+  - Left as Oracle: Everbark Shaman's and Scapeshift's exact land counts, Shard Volley's "creature or player" and "at
+    end of turn" timing (Stenchskipper).
+- **Set review: Shadowmoor Promos (Demigod of Revenge) and Shadowmoor** (273 new names):
+  - Fixed: *Medicine Runner*'s "you may remove a counter" wasn't optional; *Firespout*'s flying half said "if {R} was
+    spent" in its text.
+  - Left as Oracle: Cemetery Puca's "gains this ability" (as with Dimir Doppelganger), Godhead of Awe's and Inkfathom
+    Witch's "become 1/1 / 4/1", Rite of Consumption's and Flame Javelin's "target player" / "creature or player",
+    "of their choice" sacrifices (Din of the Fireherd) and "at end of turn" timing (Puppeteer Clique, Wound
+    Reflection, Sygg, Turn to Mist, Mistmeadow Witch, Elemental Mastery, Impromptu Raid).
+- **Set review: Eventide Promos (Overbeing of Myth) and Eventide** (178 new names):
+  - Fixed: *Swirling Spriggan* could recolor any creature; it's "target creature you control".
+  - Left as Oracle: Figure of Destiny's and the Mimics' "becomes N/N", Fire at Will's "any number of target" creatures
+    (3 damage still means one to three), Pyrrhic Revival's "with a -1/-1 counter" (it adds to any others either way),
+    Ward of Bones' and Moonhold's "can't play ... cards" and Crackleburr's "creature or player".
+- **Set review: From the Vault: Dragons (Hellkite Overlord) and Shards of Alara** (224 new names,
+  `ShardsOfAlaraAuditTest`):
+  - Fixed: *Mighty Emergence*'s "you may put two +1/+1 counters" wasn't optional; Elspeth, Knight-Errant's emblem
+    read "are indestructible" where the card says "have indestructible".
+  - R&D's Secret Lair printed text: *Elspeth, Knight-Errant* (through Duel Decks: Elspeth vs. Tezzeret) has no emblem -
+    her -8 makes the artifacts, creatures, enchantments, and lands you control as it resolves indestructible for the
+    rest of the game, and permanents you get later aren't covered (rule 611.2c).
+  - Left as Oracle: Minion Reflector's "That token has haste and..." (granted, as with Heat Shimmer), Brilliant
+    Ultimatum's "play any number of cards", Death Baron's "Skeleton creatures", Blightning's, Ajani Vengeant's and
+    Exuberant Firestoker's "target player" / "creature or player", "of their choice" sacrifices (Fleshbag Marauder,
+    Cruel Ultimatum) and "at end of turn" timing (Hell's Thunder, unearth, Sphinx Sovereign, Drumhunter).
+- **Set review: Conflux Promos (Malfegor) and Conflux** (140 new names):
+  - Fixed: *Bloodhall Ooze*'s "you may put a +1/+1 counter" triggers weren't optional; *Exploding Borders* said
+    "Then shuffle." twice.
+  - Left as Oracle: Ignite Disorder's "any number of target" creatures (3 damage still means one to three),
+    Thornling's "is indestructible this turn", Maelstrom Archangel's "play a nonland card", Banefire's, Goblin
+    Razerunners', Quenchable Fire's, Exploding Borders' and Nicol Bolas's "target player" / "creature or player",
+    and "at end of turn" timing (Wall of Reverence, Goblin Razerunners, Hellspark Elemental, unearth).
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 
