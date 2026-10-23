@@ -2354,6 +2354,18 @@ public class CardFactoryUtil {
             re.setOverridingAbility(saExile);
 
             inst.addReplacement(re);
+        } else if (keyword.startsWith("Teach")) {
+            // only a resolving spell is taught: countered or fizzled, it goes to the graveyard as usual (rulings)
+            final Cost cost = new Cost(keyword.split(":")[1], false);
+            final String repeffstr = "Event$ Moved | ValidCard$ Card.Self+!copiedSpell | Origin$ Stack | Destination$ Graveyard | Fizzle$ False"
+                    + " | Description$ Teach " + cost.toSimpleString() + " (" + inst.getReminderText() + ")";
+            final SpellAbility saTeach = AbilityFactory.getAbility("DB$ Teach | Defined$ ReplacedCard", card);
+            if (!intrinsic) {
+                saTeach.setIntrinsic(false);
+            }
+            final ReplacementEffect re = ReplacementHandler.parseReplacement(repeffstr, host, intrinsic, card);
+            re.setOverridingAbility(saTeach);
+            inst.addReplacement(re);
         } else if (keyword.startsWith("Flashforward")) {
             // whether it resolves, is countered or leaves the stack some other way (rulings)
             final Cost cost = new Cost(keyword.split(":")[1], false);
@@ -2428,9 +2440,11 @@ public class CardFactoryUtil {
             re.setOverridingAbility(AbilityFactory.getAbility(sVarMadness, card));
 
             inst.addReplacement(re);
-        } else if (keyword.startsWith("Megamorph")) {
-            String repeffStr =  "Event$ TurnFaceUp | ValidCard$ Card.Self | ValidCause$ SpellAbility.SameKeyword | Decription$ Megamorph";
-            String counterStr = "DB$ PutCounter | CounterType$ P1P1 | CounterNum$ 1";
+        } else if (keyword.startsWith("Megamorph") || keyword.startsWith("Negamorph")) {
+            // Flavor Disaster: negamorph is megamorph with a -1/-1 counter (a morph variant, rulings)
+            final boolean nega = keyword.startsWith("Negamorph");
+            String repeffStr =  "Event$ TurnFaceUp | ValidCard$ Card.Self | ValidCause$ SpellAbility.SameKeyword | Decription$ " + (nega ? "Negamorph" : "Megamorph");
+            String counterStr = "DB$ PutCounter | CounterType$ " + (nega ? "M1M1" : "P1P1") + " | CounterNum$ 1";
             SpellAbility countersSA = AbilityFactory.getAbility(counterStr, card);
 
             if (!intrinsic) {
@@ -3226,9 +3240,10 @@ public class CardFactoryUtil {
             cast.setCastFromBattlefield(true);
             cast.setIntrinsic(intrinsic);
             inst.addSpellAbility(cast);
-        } else if (keyword.startsWith("Megamorph") && inst instanceof KeywordWithCost withCost) {
+        } else if ((keyword.startsWith("Megamorph") || keyword.startsWith("Negamorph")) && inst instanceof KeywordWithCost withCost) {
             inst.addSpellAbility(abilityCastFaceDown(card, intrinsic, "Morph"));
-            SpellAbility morphUp = abilityTurnFaceUp(card, withCost.getCost(), "MorphUp", "Megamorph", "morph");
+            SpellAbility morphUp = abilityTurnFaceUp(card, withCost.getCost(), "MorphUp",
+                    keyword.startsWith("Negamorph") ? "Negamorph" : "Megamorph", "morph");
             morphUp.setIntrinsic(intrinsic);
             inst.addSpellAbility(morphUp);
         } else if (keyword.startsWith("More Than Meets the Eye")) {

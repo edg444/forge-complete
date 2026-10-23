@@ -1,0 +1,12 @@
+Name:Flavor Disaster
+ManaCost:4 G
+Types:Enchantment Creature Elemental Pirate
+PT:4/3
+K:Reach
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ When CARDNAME enters the battlefield or when it's turned face up, target creature gets +X/+X until end of turn, where X is CARDNAME's power.
+T:Mode$ TurnFaceUp | ValidCard$ Card.Self | Execute$ TrigPump | Secondary$ True | TriggerDescription$ When CARDNAME enters the battlefield or when it's turned face up, target creature gets +X/+X until end of turn, where X is CARDNAME's power.
+# X is read as it resolves, from its last known power if it's gone (rulings)
+SVar:TrigPump:DB$ Pump | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumAtt$ +X | NumDef$ +X
+SVar:X:Count$CardPower
+K:Negamorph:1 G
+Oracle:Reach\nWhen Flavor Disaster enters the battlefield or when it's turned face up, target creature gets +X/+X until end of turn, where X is Flavor Disaster's power.\nNegamorph {1}{G} (You may cast this card face down as a 2/2 creature for {3}. Turn it face up any time for its negamorph cost and put a -1/-1 counter on it.)

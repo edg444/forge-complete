@@ -3089,6 +3089,12 @@ public class CardProperty {
             if (card.getBank() != 2) {
                 return false;
             }
+        } else if (property.equals("TaughtBySource")) {
+            // Teach: the creature the source was taught to, while both stay where they are
+            final Card taught = source.getTaughtTo();
+            if (taught == null || !source.isInZone(ZoneType.Exile) || !taught.equalsWithGameTimestamp(card)) {
+                return false;
+            }
         } else if (property.startsWith("SecretMission_")) {
             // Marchesa's Surprise Party: the mission its owner secretly chose this game (GameAction)
             if (card.getOwner() == null || !Integer.valueOf(property.substring(14)).equals(card.getOwner().getGameNote("SecretMission:" + card.getId()))) {

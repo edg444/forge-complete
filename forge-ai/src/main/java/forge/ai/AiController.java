@@ -498,6 +498,11 @@ public class AiController {
                     return false;
                 }
             }
+            // Glade of the Pump Spells: only a land whose play cost it can pay
+            if (c.hasSVar("PayManaCostToPlay") && !ComputerUtilCost.canPayCost(
+                    new forge.game.cost.Cost(c.getManaCost(), false), new SpellAbility.EmptySa(c, player), player, true)) {
+                return false;
+            }
             return c.getAllPossibleAbilities(player, true).stream().anyMatch(
                     la -> la.isLandAbility() && saSideEffects(c, la).willingToPlay()
             );

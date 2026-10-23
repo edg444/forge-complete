@@ -1,0 +1,10 @@
+Name:Glade of the Pump Spells
+ManaCost:2 G
+Types:Land
+# paid as it's played as the land drop (LandAbility); an effect putting it onto the battlefield pays nothing (rulings)
+SVar:PayManaCostToPlay:True
+Text:(You have to pay {2}{G} to play this land as your land drop. It's green.)
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ When CARDNAME enters the battlefield, up to one target creature gets +2/+2 and gains trample until end of turn.
+SVar:TrigPump:DB$ Pump | ValidTgts$ Creature | TgtPrompt$ Select up to one target creature | TargetMin$ 0 | TargetMax$ 1 | NumAtt$ +2 | NumDef$ +2 | KW$ Trample
+A:AB$ Mana | Cost$ T | Produced$ G | Amount$ 2 | SpellDescription$ Add {G}{G}.
+Oracle:(You have to pay {2}{G} to play this land as your land drop. It's green.)\nWhen Glade of the Pump Spells enters the battlefield, up to one target creature gets +2/+2 and gains trample until end of turn.\n{T}: Add {G}{G}.

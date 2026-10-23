@@ -1,0 +1,9 @@
+Name:Immersturm Battlefield
+ManaCost:1 R
+Types:Enchantment Realm
+# a hosted creature stays hosted until it or the Realm leaves the battlefield (rulings): remembered by the Realm
+S:Mode$ Continuous | Affected$ Creature.IsRemembered | AddPower$ 2 | AddKeyword$ Haste | Description$ Hosted creatures get +2/+0 and have haste.
+A:AB$ Pump | Cost$ 1 R | ValidTgts$ Creature | TgtPrompt$ Select target creature to host | SorcerySpeed$ True | RememberObjects$ Targeted | PrecostDesc$ Host | SpellDescription$ (Host target creature at this Realm. A Realm can host any number of creatures. Host only as a sorcery.)
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Creature.IsRemembered | Static$ True | Execute$ DBForget
+SVar:DBForget:DB$ Cleanup | ForgetDefined$ TriggeredCard
+Oracle:Hosted creatures get +2/+0 and have haste.\nHost {1}{R} ({1}{R}: Host target creature at this Realm. A Realm can host any number of creatures. Host only as a sorcery.)

@@ -1,0 +1,10 @@
+Name:Pyromancy 101
+ManaCost:R
+Types:Sorcery Lesson
+A:SP$ DealDamage | ValidTgts$ Any | NumDmg$ 1 | SpellDescription$ CARDNAME deals 1 damage to any target.
+K:Teach:1 R
+# while it stays exiled, the creature it was taught to has this; the copy is cast as the ability resolves, so timing
+# doesn't matter (rulings)
+S:Mode$ Continuous | EffectZone$ Exile | Affected$ Creature.TaughtBySource | AddAbility$ TeachCopy | Secondary$ True | Description$ The creature this card was taught to has "{T}: Copy the exiled card. You may cast the copy for its teach cost."
+SVar:TeachCopy:AB$ Play | Cost$ T | Defined$ OriginalHost | CopyCard$ True | PlayCost$ 1 R | ValidSA$ Spell | Optional$ True | SpellDescription$ Copy the exiled card. You may cast the copy for its teach cost.
+Oracle:Pyromancy 101 deals 1 damage to any target.\nTeach {1}{R} (Then exile this spell taught to a creature you control. For as long as this card remains exiled, that creature has "{T}: Copy the exiled card. You may cast the copy for its teach cost.")

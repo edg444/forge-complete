@@ -85,6 +85,28 @@ public class TriggerChangesZoneAll extends Trigger {
 
         final String valid = this.getParam("ValidCards");
 
+        // Zone of Flame: cards entering or leaving the zone its host enchants (that player's, for one of theirs)
+        if (hasParam("EnchantedZone")) {
+            final ZoneType zone = getHostCard().getEnchantedZone();
+            final forge.game.player.Player owner = getHostCard().getEnchantedZoneOwner();
+            final CardCollection moved = new CardCollection();
+            if (zone == null) {
+                return moved;
+            }
+            final List<ZoneType> only = List.of(zone);
+            for (final Card c : table.filterCards(only, null, valid, getHostCard(), this)) {
+                if (owner == null || owner.equals(c.getOwner())) {
+                    moved.add(c);
+                }
+            }
+            for (final Card c : table.filterCards(null, only, valid, getHostCard(), this)) {
+                if ((owner == null || owner.equals(c.getOwner())) && !moved.contains(c)) {
+                    moved.add(c);
+                }
+            }
+            return moved;
+        }
+
         return table.filterCards(origin, destination, valid, getHostCard(), this);
     }
 }

@@ -223,6 +223,8 @@ public enum ApiType {
     BuddyList (BuddyListEffect.class),
     WrittenNumber (WrittenNumberEffect.class),
     MaxLife (MaxLifeEffect.class),
+    EnchantZone (EnchantZoneEffect.class),
+    Teach (TeachEffect.class),
     CopyChapter (CopyChapterEffect.class),
     MadLabs (MadLabsEffect.class),
     Mana (ManaEffect.class),

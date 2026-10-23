@@ -1,0 +1,13 @@
+Name:Vuzzle Spaceship
+ManaCost:4 R R
+Types:Artifact Creature Construct
+PT:0/0
+K:etbCounter:P1P1:6:no Condition:Spaceship 6 (This creature enters with six +1/+1 counters. If it would be dealt damage, remove that many +1/+1 counters instead. Its abilities are active as long as it has at least that many +1/+1 counters.)
+R:Event$ DamageDone | ActiveZones$ Battlefield | ValidTarget$ Card.Self | ReplaceWith$ DBRemoveCounters | Secondary$ True | Description$ If it would be dealt damage, remove that many +1/+1 counters instead.
+SVar:DBRemoveCounters:DB$ RemoveCounter | Defined$ Self | CounterType$ P1P1 | CounterNum$ X
+SVar:X:ReplaceCount$DamageAmount
+# blocking a flier, losing flying later doesn't undo the block; a laser shot already on the stack still resolves (rulings)
+S:Mode$ Continuous | Affected$ Card.Self | AddKeyword$ Flying | IsPresent$ Card.Self+counters_GE6_P1P1 | Description$ Thrusters [6] → Flying
+T:Mode$ Attacks | ValidCard$ Card.Self | IsPresent$ Card.Self+counters_GE3_P1P1 | Execute$ TrigLaser | TriggerDescription$ Lasers [3] → Whenever CARDNAME attacks, it deals 1 damage to any target.
+SVar:TrigLaser:DB$ DealDamage | ValidTgts$ Any | NumDmg$ 1
+Oracle:Spaceship 6 (This creature enters with six +1/+1 counters. If it would be dealt damage, remove that many +1/+1 counters instead. Its abilities are active as long as it has at least that many +1/+1 counters.)\nThrusters [6] → Flying\nLasers [3] → Whenever Vuzzle Spaceship attacks, it deals 1 damage to any target.

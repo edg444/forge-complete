@@ -312,6 +312,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Mystery Booster 2 playtest cards (MB2), part 8: Flavor Disaster, Immersturm Battlefield, Vuzzle Spaceship, Fludge,
+  Gunk Guardian (and the Gunk card it makes), Glade of the Pump Spells, Pyromancy 101, Zone of Flame, Meandered
+  Towershell.**
+  - Keywords `Negamorph` (megamorph with a -1/-1 counter) and `Teach` (a resolving spell is exiled taught to a creature
+    you control; property `TaughtBySource` while both stay put).
+  - `SVar:PayManaCostToPlay` on a land: its mana cost is paid to play it as a land drop (the AI only picks it when it
+    can pay).
+  - "Enchant zone": an Aura whose `AuraSpell` is the new `EnchantZone` effect picks a zone as it resolves and stays on the
+    battlefield unattached; ChangesZoneAll `EnchantedZone$` triggers on cards entering or leaving that zone.
+  - MB2 edition: Realm enchantment type, Gunk spell type, Gunk in `[conjured]`.
+
 - **Mystery Booster 2 playtest cards (MB2), part 7: Lich's Duel Mastery, Lifening Elemental, The Many Deeds of
   Belzenlok, Toofer, Keeper of the Full Grip, Yawgmoth's Day Planner, You Compleat Me, Boltfire, Toddler's Rage.**
   - Splice from a permanent card adds its keywords to the spell while it's on the stack (Lifening Elemental's lifelink).

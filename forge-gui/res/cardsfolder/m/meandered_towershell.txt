@@ -1,0 +1,16 @@
+Name:Meandered Towershell
+ManaCost:G
+Types:Enchantment Aura
+K:Enchant:Creature
+SVar:AttachAILogic:Pump
+S:Mode$ Continuous | Affected$ Creature.EnchantedBy | AddKeyword$ Landwalk:Island | AddTrigger$ TrigMeander | AddSVar$ DBExile & DBExileAura & DelReturn & DBReturn & DBReattach & DBCleanup | Description$ Enchanted creature has islandwalk and "Whenever this creature attacks, exile it and Meandered Towershell. Return it to the battlefield under your control tapped and attacking at the beginning of the declare attackers step on your next turn, then return Meandered Towershell to the battlefield under its owner's control attached to that creature."
+SVar:TrigMeander:Mode$ Attacks | ValidCard$ Card.Self | Execute$ DBExile | TriggerDescription$ Whenever this creature attacks, exile it and Meandered Towershell. Return it to the battlefield under your control tapped and attacking at the beginning of the declare attackers step on your next turn, then return Meandered Towershell to the battlefield under its owner's control attached to that creature.
+# the Aura granting this is the one that goes along (OriginalHost); a creature returned attacking wasn't declared as
+# an attacker, so it doesn't trigger again (rulings)
+SVar:DBExile:DB$ ChangeZone | Defined$ Self | Origin$ Battlefield | Destination$ Exile | RememberChanged$ True | SubAbility$ DBExileAura
+SVar:DBExileAura:DB$ ChangeZone | Defined$ OriginalHost | Origin$ Battlefield | Destination$ Exile | RememberChanged$ True | SubAbility$ DelReturn
+SVar:DelReturn:DB$ DelayedTrigger | Mode$ Phase | Phase$ Declare Attackers | DelayedTriggerDefinedPlayer$ You | RememberObjects$ Remembered | Execute$ DBReturn | SubAbility$ DBCleanup | TriggerDescription$ At the beginning of the declare attackers step on your next turn, return the exiled creature to the battlefield under your control tapped and attacking, then return Meandered Towershell to the battlefield under its owner's control attached to that creature.
+SVar:DBReturn:DB$ ChangeZone | Defined$ ValidExile Creature.IsTriggerRemembered | Origin$ Exile | Destination$ Battlefield | GainControl$ True | Tapped$ True | Attacking$ True | RememberChanged$ True | SubAbility$ DBReattach
+SVar:DBReattach:DB$ ChangeZone | Defined$ ValidExile Aura.IsTriggerRemembered | Origin$ Exile | Destination$ Battlefield | AttachedTo$ Remembered | ConditionDefined$ Remembered | ConditionPresent$ Creature | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+Oracle:Enchant creature\nEnchanted creature has islandwalk and "Whenever this creature attacks, exile it and Meandered Towershell. Return it to the battlefield under your control tapped and attacking at the beginning of the declare attackers step on your next turn, then return Meandered Towershell to the battlefield under its owner's control attached to that creature."

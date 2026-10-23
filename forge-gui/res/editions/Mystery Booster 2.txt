@@ -404,5 +404,10 @@ Ulamog's:Ulamog's
 You
 [EnchantmentTypes]
 Quest:Quests
+Realm:Realms
+[SpellTypes]
+Gunk:Gunk
 [ConspiracyTypes]
 Secret Mission:Secret Missions
+[conjured]
+GUNK C Gunk

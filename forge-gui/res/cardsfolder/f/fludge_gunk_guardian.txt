@@ -1,0 +1,10 @@
+Name:Fludge, Gunk Guardian
+ManaCost:3 B G
+Types:Legendary Creature Slug Ooze
+PT:5/5
+# Gunk cards are real cards (not tokens), owned by whoever first had one shuffled in, and stay for the game (rulings)
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self,Slug.Other+YouCtrl,Ooze.Other+YouCtrl,Fungus.Other+YouCtrl,Mutant.Other+YouCtrl | TriggerZones$ Battlefield | Execute$ TrigGunk | TriggerDescription$ Whenever CARDNAME or another Slug, Ooze, Fungus, or Mutant enters the battlefield under your control, each opponent shuffles three Gunk cards into their library. (Gunk is a colorless sorcery card with no mana cost that has cycling {4}.)
+SVar:TrigGunk:DB$ MakeCard | Defined$ Opponent | Name$ Gunk | Amount$ 3 | Zone$ Library | SubAbility$ DBShuffle
+SVar:DBShuffle:DB$ Shuffle | Defined$ Opponent
+DeckHints:Type$Slug|Ooze|Fungus|Mutant
+Oracle:Whenever Fludge, Gunk Guardian or another Slug, Ooze, Fungus, or Mutant enters the battlefield under your control, each opponent shuffles three Gunk cards into their library. (Gunk is a colorless sorcery card with no mana cost that has cycling {4}.)

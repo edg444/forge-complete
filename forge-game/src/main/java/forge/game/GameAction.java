@@ -397,7 +397,8 @@ public class GameAction {
 
         // Aura entering indirectly
         // need to check before it enters
-        if (copied.isAura() && !copied.isAttachedToEntity() && toBattlefield && (zoneFrom == null || !zoneFrom.is(ZoneType.Stack))) {
+        if (copied.isAura() && !copied.isAttachedToEntity() && copied.getEnchantedZone() == null && toBattlefield
+                && (zoneFrom == null || !zoneFrom.is(ZoneType.Stack))) {
             boolean found = false;
             if (game.getPlayers().stream().anyMatch(PlayerPredicates.canBeAttached(copied, null))) {
                 found = true;
@@ -508,7 +509,7 @@ public class GameAction {
 
         // Aura entering as Copy from stack
         // without targets it is sent to graveyard
-        if (copied.isAura() && !copied.isAttachedToEntity() && toBattlefield) {
+        if (copied.isAura() && !copied.isAttachedToEntity() && copied.getEnchantedZone() == null && toBattlefield) {
             if (zoneFrom != null && zoneFrom.is(ZoneType.Stack) && game.getStack().isResolving(c)) {
                 boolean found = false;
                 if (game.getPlayers().stream().anyMatch(PlayerPredicates.canBeAttached(copied, null))) {
@@ -2064,7 +2065,7 @@ public class GameAction {
                 }
 
                 // cleanup aura
-                if (!ignoresSBA && c.isAura() && c.isInPlay() && !c.isEnchanting()) {
+                if (!ignoresSBA && c.isAura() && c.isInPlay() && !c.isEnchanting() && c.getEnchantedZone() == null) {
                     noRegCreats.add(c);
                     checkAgainCard = true;
                 }
@@ -2077,7 +2078,7 @@ public class GameAction {
                 u.unattachFromEntity(u.getEntityAttachedTo());
 
                 // cleanup aura
-                if (u.isAura() && u.isInPlay() && !u.isEnchanting()
+                if (u.isAura() && u.isInPlay() && !u.isEnchanting() && u.getEnchantedZone() == null
                         && !StaticAbilityIgnoreStateBasedActions.ignoresStateBasedActions(u)) {
                     noRegCreats.add(u);
                     checkAgain = true;

@@ -1,0 +1,10 @@
+Name:Zone of Flame
+ManaCost:4 R R R
+Types:Enchantment Aura
+# a zone isn't an object, so nothing is targeted: the zone is picked as the spell resolves (EnchantZoneEffect)
+SVar:AuraSpell:SP$ EnchantZone | SpellDescription$ Enchant zone
+Text:Enchant zone (Battlefield, command, exile, and stack are shared zones. Each player has their own graveyard, hand, and library zones.)
+T:Mode$ ChangesZoneAll | EnchantedZone$ True | ValidCards$ Card.!token | TriggerZones$ Battlefield | Execute$ TrigDamage | TriggerDescription$ Whenever one or more cards enter or leave enchanted zone, CARDNAME deals 1 damage to each opponent. (Tokens aren't cards.)
+SVar:TrigDamage:DB$ DealDamage | Defined$ Opponent | NumDmg$ 1
+AI:RemoveDeck:Random
+Oracle:Enchant zone (Battlefield, command, exile, and stack are shared zones. Each player has their own graveyard, hand, and library zones.)\nWhenever one or more cards enter or leave enchanted zone, Zone of Flame deals 1 damage to each opponent. (Tokens aren't cards.)

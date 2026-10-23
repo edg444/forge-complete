@@ -60,8 +60,24 @@ public class LandAbility extends AbilityStatic {
         return p.canPlayLand(land, false, this);
     }
 
+    // Glade of the Pump Spells: its mana cost is paid to play it as a land drop (but not when an effect puts it onto
+    // the battlefield)
+    private static forge.game.cost.Cost landPlayCost(final Card land) {
+        return new forge.game.cost.Cost(land.getManaCost(), false);
+    }
+
     @Override
     public void resolve() {
+        if (getHostCard().hasSVar("PayManaCostToPlay")) {
+            final Player p = getActivatingPlayer();
+            final forge.game.cost.Cost cost = landPlayCost(getHostCard());
+            final SpellAbility pay = new SpellAbility.EmptySa(getHostCard(), p);
+            pay.setPayCosts(cost);
+            if (!p.getController().payCombatCost(getHostCard(), cost, pay,
+                    "Pay " + cost.toSimpleString() + " to play " + getHostCard().getTranslatedName())) {
+                return;
+            }
+        }
         getHostCard().setSplitStateToPlayAbility(this);
         final Card result = getActivatingPlayer().playLand(getHostCard(), this);
 

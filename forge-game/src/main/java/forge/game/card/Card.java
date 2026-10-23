@@ -360,6 +360,11 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     private String legacyWord;
     // Duelists' Convocation International: what's written down for this permanent, for everyone to see
     private String writtenDown = null;
+    // Zone of Flame: the zone this Aura enchants (and whose, for a graveyard, hand or library), or null
+    private forge.game.zone.ZoneType enchantedZone = null;
+    private Player enchantedZoneOwner = null;
+    // Teach (Pyromancy 101): the creature this exiled card was taught to
+    private Card taughtTo = null;
     private int markedNodes;
     private List<String> chosenName = new ArrayList<>();
     private Integer chosenNumber;
@@ -2657,6 +2662,26 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return markedColor != null && !markedColor.isColorless();
     }
 
+    public final Card getTaughtTo() {
+        return taughtTo;
+    }
+    public final void setTaughtTo(final Card c) {
+        taughtTo = c;
+    }
+
+    public final forge.game.zone.ZoneType getEnchantedZone() {
+        return enchantedZone;
+    }
+    public final Player getEnchantedZoneOwner() {
+        return enchantedZoneOwner;
+    }
+    public final void setEnchantedZone(final forge.game.zone.ZoneType zone, final Player owner) {
+        enchantedZone = zone;
+        enchantedZoneOwner = owner;
+        setWrittenDown(zone == null ? null : "enchants " + (owner == null ? "the " : owner.getName() + "'s ")
+                + zone.getTranslatedName().toLowerCase());
+    }
+
     public final String getWrittenDown() {
         return writtenDown;
     }
@@ -2972,7 +2997,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                 } else if (keyword.startsWith("Enchant") && inst instanceof KeywordWithType kwt) {
                     String desc = kwt.getTypeDescription();
                     sbLong.append("Enchant ").append(desc).append("\r\n");
-                } else if (keyword.startsWith("Morph") || keyword.startsWith("Megamorph")
+                } else if (keyword.startsWith("Morph") || keyword.startsWith("Megamorph") || keyword.startsWith("Negamorph")
                         || keyword.startsWith("Multikicker") || keyword.startsWith("Echo")
                         || keyword.startsWith("Disguise") || keyword.startsWith("Reflect")
                         || keyword.startsWith("Mayhem") || keyword.startsWith("Recover")
@@ -7884,7 +7909,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
             String set = getCastSA().getCardState().getSetCode();
             if (getCastSA().isKeyword(Keyword.DISGUISE)) {
                 return StaticData.instance().getOtherImageKey(ImageKeys.CLOAKED_IMAGE, set);
-            } else if (getCastSA().isKeyword(Keyword.MORPH) || getCastSA().isKeyword(Keyword.MEGAMORPH)) {
+            } else if (getCastSA().isKeyword(Keyword.MORPH) || getCastSA().isKeyword(Keyword.MEGAMORPH)
+                    || getCastSA().isKeyword(Keyword.NEGAMORPH)) {
                 return StaticData.instance().getOtherImageKey(ImageKeys.MORPH_IMAGE, set);
             }
         }
