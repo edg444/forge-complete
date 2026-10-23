@@ -1,0 +1,9 @@
+Name:Avacyn's Collar, the Symbol of Her Church
+ManaCost:1 W
+Types:Artifact Equipment
+S:Mode$ CantAttack | ValidCard$ Creature.EquippedBy | Description$ Equipped creature can't attack, block, or transform, and its activated abilities can't be activated.
+S:Mode$ CantBlock | ValidCard$ Creature.EquippedBy | Secondary$ True
+S:Mode$ CantTransform | ValidCard$ Creature.EquippedBy | Secondary$ True
+S:Mode$ CantBeActivated | ValidCard$ Creature.EquippedBy | ValidSA$ Activated | Secondary$ True
+A:AB$ Attach | Cost$ 3 | ValidTgts$ Creature.YouDontCtrl | TgtPrompt$ Select target creature you don't control | SorcerySpeed$ True | AILogic$ Curse | PrecostDesc$ Shackle | SpellDescription$ (Attach to target creature you don't control. Shackle only as a sorcery.)
+Oracle:Equipped creature can't attack, block, or transform, and its activated abilities can't be activated.\nShackle {3} ({3}: Attach to target creature you don't control. Shackle only as a sorcery.)

@@ -155,6 +155,9 @@ public class ChooseCardNameEffect extends SpellAbilityEffect {
                     final Predicate<ICardFace> notNamed = f -> !host.getNamedCards().contains(f.getName());
                     cpp = cpp.and(notNamed);
                 }
+                // Glimpse, the Unthinkable: its name can't be chosen
+                final forge.game.Game theGame = host.getGame();
+                cpp = cpp.and(f -> !forge.game.staticability.StaticAbilityCantBeChosen.nameCantBeChosen(theGame, f.getName()));
                 if (randomChoice) {
                     StaticData.instance().ensureAllCardsLoaded();
                     chosen = StaticData.instance().getCommonCards().streamAllFaces()

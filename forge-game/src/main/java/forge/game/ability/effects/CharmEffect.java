@@ -277,6 +277,8 @@ public class CharmEffect extends SpellAbilityEffect {
         boolean canRepeat = sa.hasParam("CanRepeatModes");
         int num = AbilityUtils.calculateAmount(source, sa.getParamOrDefault("CharmNum", "1"), sa);
         int min = sa.hasParam("MinCharmNum") ? AbilityUtils.calculateAmount(source, sa.getParam("MinCharmNum"), sa) : num;
+        // Your Wish Is My Command: "you may choose an additional mode", so the minimum stays put
+        num += sa.getExtraCharmModes();
 
         // The chooser comes first: a mode can target whoever chooses (Truth or Dare), so which modes are legal
         // depends on who that is

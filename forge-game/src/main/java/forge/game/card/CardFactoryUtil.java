@@ -2458,8 +2458,11 @@ public class CardFactoryUtil {
 
             inst.addReplacement(re);
         } else if (keyword.equals("Rebound")) {
+            // Jeskai Baller: a permanent spell with rebound is exiled instead of entering (rulings); only resolving
+            // moves it there, while Fizzle$ is only reported for an instant or sorcery leaving the stack, and an ETB
+            // replacement needs ValidCard$ Card.Self to apply to its own host entering
             String repeffstr = "Event$ Moved | ValidLKI$ Card.Self+wasCastFromHand+YouOwn+YouCtrl "
-            + " | Origin$ Stack | Destination$ Graveyard | Fizzle$ False "
+            + " | Origin$ Stack | Destination$ " + (card.getType().isPermanent() ? "Battlefield | ValidCard$ Card.Self" : "Graveyard | Fizzle$ False")
             + " | Description$ Rebound (" + inst.getReminderText() + ")";
 
             String abExile = "DB$ ChangeZone | Defined$ ReplacedCard | Origin$ Stack | Destination$ Exile | RememberChanged$ True";
@@ -4086,6 +4089,14 @@ public class CardFactoryUtil {
             String effect = "Mode$ CantTarget | ValidTarget$ Card.Self | Secondary$ True"
                     + sbValid.toString() + " | Activator$ Opponent | Description$ "
                     + inst.getTitle() + " (" + inst.getReminderText() + ")";
+            inst.addStaticAbility(StaticAbility.create(effect, state.getCard(), state, intrinsic));
+        } else if (keyword.equals("Nimble")) {
+            String effect = "Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.powerGE3 | Secondary$ True "
+                    + " | Description$ Nimble (" + inst.getReminderText() + ")";
+            inst.addStaticAbility(StaticAbility.create(effect, state.getCard(), state, intrinsic));
+        } else if (keyword.equals("Thoughtweft")) {
+            String effect = "Mode$ Continuous | Affected$ Card.Self | GainsPrintedKeywordsOf$ Creature.Other+YouCtrl+withThoughtweft"
+                    + " | Secondary$ True | Description$ Thoughtweft (" + inst.getReminderText() + ")";
             inst.addStaticAbility(StaticAbility.create(effect, state.getCard(), state, intrinsic));
         } else if (keyword.equals("Daunt")) {
             String effect = "Mode$ CantBlockBy | ValidAttacker$ Creature.Self | ValidBlocker$ Creature.powerLE2 | Secondary$ True "

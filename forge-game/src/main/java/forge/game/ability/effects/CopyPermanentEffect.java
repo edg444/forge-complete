@@ -19,6 +19,7 @@ import forge.card.CardStateName;
 import forge.game.Game;
 import forge.game.ability.AbilityUtils;
 import forge.game.card.Card;
+import forge.game.card.CardCollection;
 import forge.game.card.CardCollectionView;
 import forge.game.card.CardFactory;
 import forge.game.card.CardLists;
@@ -29,6 +30,7 @@ import forge.game.event.GameEventCombatChanged;
 import forge.game.player.Player;
 import forge.game.player.PlayerActionConfirmMode;
 import forge.game.spellability.SpellAbility;
+import forge.game.staticability.StaticAbilityCantBeChosen;
 import forge.game.zone.ZoneType;
 import forge.item.PaperCard;
 
@@ -207,6 +209,7 @@ public class CopyPermanentEffect extends TokenEffectBase {
                 // For Mimic Vat with mutated creature, need to choose one imprinted card
                 CardCollectionView choices = sa.hasParam("Defined") ? getDefinedCardsOrTargeted(sa) : game.getCardsIn(ZoneType.Battlefield);
                 choices = CardLists.getValidCards(choices, sa.getParam("Choices"), activator, host, sa);
+                choices = StaticAbilityCantBeChosen.filter(new CardCollection(choices));
                 if (!choices.isEmpty()) {
                     String title = sa.hasParam("ChoiceTitle") ? sa.getParam("ChoiceTitle") : Localizer.getInstance().getMessage("lblChooseaCard");
 

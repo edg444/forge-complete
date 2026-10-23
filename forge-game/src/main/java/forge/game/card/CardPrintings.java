@@ -103,4 +103,29 @@ public final class CardPrintings {
                 return false;
         }
     }
+
+    /**
+     * Lutri, Pauper Otter: a silver, gold, orange or purple expansion symbol - an uncommon, rare, mythic or special
+     * printing from Exodus on (before it every symbol is black, and Alpha-Fifth Edition have none).
+     */
+    public static boolean hasSilverGoldOrangeOrPurpleSymbol(final Card c) {
+        final String code = c.getSetCode();
+        if (code == null || code.isEmpty() || NO_SYMBOL.contains(code) || c.isToken()) {
+            return false;
+        }
+        final CardEdition ed = StaticData.instance().getEditions().get(code);
+        final CardEdition exodus = StaticData.instance().getEditions().get("EXO");
+        if (ed != null && exodus != null && ed.getDate() != null && ed.getDate().before(exodus.getDate())) {
+            return false;
+        }
+        switch (c.getRarity()) {
+            case Uncommon:
+            case Rare:
+            case MythicRare:
+            case Special:
+                return true;
+            default:
+                return false;
+        }
+    }
 }

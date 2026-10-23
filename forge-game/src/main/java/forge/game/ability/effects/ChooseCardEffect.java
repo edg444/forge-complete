@@ -21,6 +21,7 @@ import forge.game.player.Player;
 import forge.game.player.PlayerActionConfirmMode;
 import forge.game.player.PlayerCollection;
 import forge.game.spellability.SpellAbility;
+import forge.game.staticability.StaticAbilityCantBeChosen;
 import forge.game.zone.ZoneType;
 import forge.util.Aggregates;
 import forge.util.Lang;
@@ -71,6 +72,7 @@ public class ChooseCardEffect extends SpellAbilityEffect {
         CardCollectionView choices = sa.hasParam("AllCards") ? game.getCardsInGame() : game.getCardsIn(choiceZone);
         if (sa.hasParam("Choices")) {
             choices = CardLists.getValidCards(choices, sa.getParam("Choices"), activator, host, sa);
+            choices = StaticAbilityCantBeChosen.filter(new CardCollection(choices));
         }
         if (sa.hasParam("TargetControls")) {
             choices = CardLists.filterControlledBy(choices, tgtPlayers);

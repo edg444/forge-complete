@@ -54,6 +54,7 @@ public class CharmAi extends SpellAbilityAi {
         } else {
             num = AbilityUtils.calculateAmount(source, sa.getParamOrDefault("CharmNum", "1"), sa);
             min = sa.hasParam("MinCharmNum") ? AbilityUtils.calculateAmount(source, sa.getParam("MinCharmNum"), sa) : num;
+            num += sa.getExtraCharmModes();
         }
 
         boolean timingRight = sa.isTrigger(); //is there a reason to play the charm now?
@@ -119,6 +120,22 @@ public class CharmAi extends SpellAbilityAi {
              */
             chosenList = min > 1 ? chooseMultipleOptionsAi(sa, choices, ai, min)
                     : chooseOptionsAi(sa, choices, ai, timingRight, num, min);
+            // Your Wish Is My Command: the picks above stop at the minimum, so top up with any extra mode it wants
+            if (sa.getExtraCharmModes() > 0 && chosenList != null && chosenList.size() >= min) {
+                for (final AbilitySub sub : choices) {
+                    if (chosenList.size() >= num) {
+                        break;
+                    }
+                    if (chosenList.contains(sub)) {
+                        continue;
+                    }
+                    sub.setActivatingPlayer(ai);
+                    if (SpellApiToAi.Converter.get(sub).canPlayWithSubs(ai, sub).willingToPlay()
+                            && canPayForAdditionalMode(sa, chosenList, sub, ai)) {
+                        chosenList.add(sub);
+                    }
+                }
+            }
         }
 
         if (chosenList.isEmpty()) {

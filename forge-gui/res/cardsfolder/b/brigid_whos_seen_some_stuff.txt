@@ -1,0 +1,9 @@
+Name:Brigid, Who's Seen Some Stuff
+ManaCost:2 W W
+Types:Legendary Creature Kithkin Archer
+PT:3/3
+K:Vigilance
+K:Nimble
+S:Mode$ Continuous | Affected$ Creature.Kithkin+YouCtrl | AddKeyword$ Thoughtweft | Description$ Kithkin you control have thoughtweft. (A creature with thoughtweft has all printed keyword abilities of other creatures you control with thoughtweft.)
+DeckHints:Type$Kithkin
+Oracle:Vigilance\nNimble (This creature can't be blocked by creatures with power 3 or greater.)\nKithkin you control have thoughtweft. (A creature with thoughtweft has all printed keyword abilities of other creatures you control with thoughtweft.)

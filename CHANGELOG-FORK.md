@@ -312,6 +312,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Mystery Booster 2 playtest cards (MB2), part 4: Chea, Friend to Maybe Too Many, Lutri, Pauper Otter, Avacyn's Collar,
+  the Symbol of Her Church, Wormhole Warp, Your Wish Is My Command, Oddric, Lunar Marquis, Brigid, Who's Seen Some
+  Stuff, Jeskai Baller, Glimpse, the Unthinkable.**
+  - Keywords `Nimble` (can't be blocked by power 3 or greater), `Thoughtweft` (new Continuous `GainsPrintedKeywordsOf$`:
+    the printed keywords of the other matching creatures) and `Tantrum` (a keyword for now, its combat rule comes with
+    Toddler's Rage). Rebound on a permanent spell exiles it instead of entering.
+  - Static mode `CantBeChosen` (`ValidCard$` filters ChooseCard, Clone and CopyPermanent choices; `ValidName$` filters
+    card-name choices). Play `ExtraModes$` (one more mode for a modal spell it casts; the AI tops its picks up).
+  - Properties `SilverGoldOrangeOrPurpleSymbol` (uncommon or better from Exodus on, by printing) and
+    `HasSacSelfForColorless`. New token: 1/1 white Athlete.
+
 - **Mystery Booster 2 playtest cards (MB2), part 3: Madlands, Maestros' Totally Safe Hideout, Snap Judgment, Terry Pin,
   Turboturtle, Essence of Ajani, Rule with an Even Hand, Phyrexian Seedling, Mothers Yamazaki.**
   - Madness on a land plays it (a land play). AttackRestrict `EvenAttackers$` (`GlobalAttackRestrictions.isEvenOnly`;

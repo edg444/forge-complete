@@ -1,0 +1,10 @@
+Name:Chea, Friend to Maybe Too Many
+ManaCost:1 W B G
+Types:Legendary Creature Human Wizard
+PT:2/4
+S:Mode$ CastWithFlash | ValidCard$ Creature.Bat,Creature.Bird,Creature.Cat,Creature.Dragon,Creature.Faerie,Creature.Fox,Creature.Frog,Creature.Imp,Creature.Lizard,Creature.Spider,Creature.nameHasWord_Familiar | ValidSA$ Spell | Caster$ You | Description$ Familiar spells you cast have flash. (Bats, Birds, Cats, Dragons, Faeries, Foxes, Frogs, Imps, Lizards, and Spiders are familiars, as well as any creature with "Familiar" in its name.)
+A:AB$ Mana | Cost$ T | Produced$ G | Amount$ X | SubAbility$ DBLoseLife | SpellDescription$ Add X {G} and each opponent loses X life, where X is the number of familiars you control.
+SVar:DBLoseLife:DB$ LoseLife | Defined$ Opponent | LifeAmount$ X
+SVar:X:Count$Valid Creature.Bat+YouCtrl,Creature.Bird+YouCtrl,Creature.Cat+YouCtrl,Creature.Dragon+YouCtrl,Creature.Faerie+YouCtrl,Creature.Fox+YouCtrl,Creature.Frog+YouCtrl,Creature.Imp+YouCtrl,Creature.Lizard+YouCtrl,Creature.Spider+YouCtrl,Creature.nameHasWord_Familiar+YouCtrl
+DeckHints:Type$Bat|Bird|Cat|Dragon|Faerie|Fox|Frog|Imp|Lizard|Spider
+Oracle:Familiar spells you cast have flash. (Bats, Birds, Cats, Dragons, Faeries, Foxes, Frogs, Imps, Lizards, and Spiders are familiars, as well as any creature with "Familiar" in its name.)\n{T}: Add X {G} and each opponent loses X life, where X is the number of familiars you control.

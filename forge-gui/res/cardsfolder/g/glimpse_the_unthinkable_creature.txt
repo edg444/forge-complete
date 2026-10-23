@@ -1,0 +1,10 @@
+Name:Glimpse, the Unthinkable
+ManaCost:2 U B
+Types:Legendary Creature Illusion Rogue
+PT:4/5
+K:Shroud
+# choosing it ("choose a creature", Call to the Void, Vesuvan Shapeshifter) and choosing its name (Meddling Mage) -
+# only while it's on the battlefield (rulings); game rules like attacking and blocking aren't choices
+S:Mode$ CantBeChosen | ValidCard$ Card.Self | Description$ Glimpse, the Unthinkable can't be chosen.
+S:Mode$ CantBeChosen | ValidName$ Glimpse, the Unthinkable | Description$ The name Glimpse, the Unthinkable can't be chosen.
+Oracle:Shroud (This creature can't be the target of spells or abilities.)\nGlimpse, the Unthinkable can't be chosen.\nThe name Glimpse, the Unthinkable can't be chosen.

@@ -382,6 +382,24 @@ public final class StaticAbilityContinuous {
                 }
             }
 
+            if (params.containsKey("GainsPrintedKeywordsOf")) {
+                // Thoughtweft: the printed keyword abilities of each other creature matching it
+                for (final Card source : CardLists.getValidCards(game.getCardsIn(ZoneType.Battlefield),
+                        params.get("GainsPrintedKeywordsOf"), hostCard.getController(), hostCard, stAb)) {
+                    for (final KeywordInterface ki : source.getState(source.getCurrentStateName()).getIntrinsicKeywords()) {
+                        if (ki.getKeyword() == Keyword.THOUGHTWEFT) {
+                            continue;
+                        }
+                        if (addKeywords == null) {
+                            addKeywords = Lists.newArrayList();
+                        }
+                        if (!addKeywords.contains(ki.getOriginal())) {
+                            addKeywords.add(ki.getOriginal());
+                        }
+                    }
+                }
+            }
+
             if (params.containsKey("GainsStickerAbilitiesOf") || params.containsKey("GainsStickerAbilitiesOfDefined")) {
                 CardCollection sources = cardsGainedFrom(params.containsKey("GainsStickerAbilitiesOfDefined")
                         ? "GainsStickerAbilitiesOfDefined" : "GainsStickerAbilitiesOf", params, hostCard, stAb, game);

@@ -1,0 +1,5 @@
+Name:Your Wish Is My Command
+ManaCost:1 U
+Types:Sorcery
+A:SP$ Play | Valid$ Instant.YouOwn,Sorcery.YouOwn | ValidZone$ Sideboard | ValidSA$ Spell | Optional$ True | ExtraModes$ 1 | SpellDescription$ You may cast an instant or sorcery spell from your sideboard. If you cast a modal spell this way, you may choose an additional mode. (A modal spell lets you choose one or more modes from a bulleted list.)
+Oracle:You may cast an instant or sorcery spell from your sideboard. If you cast a modal spell this way, you may choose an additional mode. (A modal spell lets you choose one or more modes from a bulleted list.)

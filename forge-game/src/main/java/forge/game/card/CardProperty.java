@@ -209,6 +209,23 @@ public class CardProperty {
             if (universe == null || universe.equals(forge.card.PrintingTraits.MAGIC_UNIVERSE)) {
                 return false;
             }
+        } else if (property.equals("HasSacSelfForColorless")) {
+            // Oddric, Lunar Marquis: the activated ability "Sacrifice this creature: Add {C}."
+            boolean has = false;
+            for (final SpellAbility sa : card.getManaAbilities()) {
+                if (sa.getPayCosts() != null && sa.getPayCosts().hasOnlySpecificCostType(forge.game.cost.CostSacrifice.class)
+                        && sa.getManaPart() != null && "C".equals(sa.getManaPart().getOrigProduced())) {
+                    has = true;
+                    break;
+                }
+            }
+            if (!has) {
+                return false;
+            }
+        } else if (property.equals("SilverGoldOrangeOrPurpleSymbol")) {
+            if (!CardPrintings.hasSilverGoldOrangeOrPurpleSymbol(card)) {
+                return false;
+            }
         } else if (property.equals("HasNonKeywordAbility")) {
             // TL;DR: an ability that isn't a keyword (its own spell ability doesn't count, it's how a card is cast)
             boolean found = card.getTriggers().anyMatch(t -> t.getKeyword() == null)

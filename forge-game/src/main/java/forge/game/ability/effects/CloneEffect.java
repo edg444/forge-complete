@@ -15,6 +15,7 @@ import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.SpellAbilityStackInstance;
 import forge.game.spellability.TargetChoices;
+import forge.game.staticability.StaticAbilityCantBeChosen;
 import forge.game.staticability.StaticAbilityCastAs;
 import forge.game.trigger.TriggerType;
 import forge.game.zone.ZoneType;
@@ -100,6 +101,7 @@ public class CloneEffect extends SpellAbilityEffect {
 
             if (lastState == null) {
                 choices = CardLists.getValidCards(choices, sa.getParam("Choices"), activator, host, sa);
+                choices = StaticAbilityCantBeChosen.filter(new CardCollection(choices));
             } else {
                 // CR 614.12a what it can copy is decided by how they looked before the event
                 choices.retainAll(CardLists.getValidCards(lastState, sa.getParam("Choices"), activator, host, sa));

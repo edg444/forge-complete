@@ -19,6 +19,7 @@ import forge.game.Game;
 import forge.game.ability.AbilityFactory;
 import forge.game.ability.AbilityKey;
 import forge.game.ability.AbilityUtils;
+import forge.game.ability.ApiType;
 import forge.game.ability.SpellAbilityEffect;
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
@@ -391,6 +392,13 @@ public class PlayEffect extends SpellAbilityEffect {
             // illegal action, cancel early
             if (altCost && tgtSA.costHasManaX() && tgtSA.getPayCosts().getCostMana().getXMin() > 0) {
                 continue;
+            }
+
+            if (sa.hasParam("ExtraModes") && tgtSA.getApi() == ApiType.Charm) {
+                tgtSA = tgtSA.copy();
+                tgtSA.setExtraCharmModes(AbilityUtils.calculateAmount(source, sa.getParam("ExtraModes"), sa));
+                // the AI picked its modes while deciding to cast, before it had the extra one
+                tgtSA.setChosenList(null);
             }
 
             if (sa.hasParam("WithoutManaCost")) {

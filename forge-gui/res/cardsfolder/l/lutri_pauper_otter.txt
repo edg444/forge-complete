@@ -1,0 +1,10 @@
+Name:Lutri, Pauper Otter
+ManaCost:3 U/R U/R
+Types:Legendary Creature Elemental Otter
+PT:3/4
+# the symbol's color, not the rarity: no symbol (Alpha-Fifth Edition) and everything before Exodus are fine (rulings)
+K:Companion:Card.!SilverGoldOrangeOrPurpleSymbol:Your starting deck contains no cards with a silver, gold, orange, or purple expansion symbol. (If this card is your chosen companion, you may put it into your hand from outside the game for {3} as a sorcery.)
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigDiscard | TriggerDescription$ When CARDNAME enters the battlefield, discard your hand, then draw three cards.
+SVar:TrigDiscard:DB$ Discard | Mode$ Hand | Defined$ You | SubAbility$ DBDraw
+SVar:DBDraw:DB$ Draw | NumCards$ 3
+Oracle:Companion — Your starting deck contains no cards with a silver, gold, orange, or purple expansion symbol. (If this card is your chosen companion, you may put it into your hand from outside the game for {3} as a sorcery.)\nWhen Lutri, Pauper Otter enters the battlefield, discard your hand, then draw three cards.

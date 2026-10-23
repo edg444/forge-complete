@@ -279,7 +279,7 @@ public class StaticEffect {
             if (layers.contains(StaticAbilityLayer.ABILITIES)) {
                 // remove keywords
                 boolean abilitiesChanged = false;
-                if (hasParam("AddKeyword") || hasParam("RemoveKeyword") || hasParam("LoseKeywordOrAbilityWord")
+                if (hasParam("AddKeyword") || hasParam("RemoveKeyword") || hasParam("LoseKeywordOrAbilityWord") || hasParam("GainsPrintedKeywordsOf")
                         || hasParam("ShareRememberedKeywords") || hasParam("RemoveAllAbilities") || hasParam("RemoveNonManaAbilities")) {
                     abilitiesChanged |= affectedCard.removeChangedCardKeywords(getTimestamp(), ability.getId(), false);
                 }

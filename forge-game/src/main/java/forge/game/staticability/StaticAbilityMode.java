@@ -105,6 +105,8 @@ public enum StaticAbilityMode {
     CombatDamageNegatePower,
     // Narod, the Beige Flower
     CombatDamageManaValue,
+    // Glimpse, the Unthinkable
+    CantBeChosen,
 
     // StaticAbilityColorlessDamageSource
     ColorlessDamageSource,

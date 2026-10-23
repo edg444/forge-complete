@@ -1,0 +1,42 @@
+Name:Oddric, Lunar Marquis
+ManaCost:2 B
+Types:Legendary Creature Human Soldier
+PT:3/3
+# the five basic landwalks are the landwalk variants it shares; each one is checked on its own (rulings)
+T:Mode$ Phase | Phase$ BeginCombat | TriggerZones$ Battlefield | Execute$ TrigBanding | TriggerDescription$ At the beginning of each combat, creatures you control gain banding until end of turn if a creature you control has banding. The same is true for changeling, devoid, fear, flanking, horsemanship, ingest, intimidate, landwalk, shroud, tantrum, wither, and the activated ability "Sacrifice this creature: Add {C}."
+SVar:TrigBanding:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Banding | ConditionCheckSVar$ HasBanding | ConditionSVarCompare$ GE1 | SubAbility$ DBChangeling
+SVar:DBChangeling:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Changeling | ConditionCheckSVar$ HasChangeling | ConditionSVarCompare$ GE1 | SubAbility$ DBDevoid
+SVar:DBDevoid:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Devoid | ConditionCheckSVar$ HasDevoid | ConditionSVarCompare$ GE1 | SubAbility$ DBFear
+SVar:DBFear:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Fear | ConditionCheckSVar$ HasFear | ConditionSVarCompare$ GE1 | SubAbility$ DBFlanking
+SVar:DBFlanking:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Flanking | ConditionCheckSVar$ HasFlanking | ConditionSVarCompare$ GE1 | SubAbility$ DBHorsemanship
+SVar:DBHorsemanship:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Horsemanship | ConditionCheckSVar$ HasHorsemanship | ConditionSVarCompare$ GE1 | SubAbility$ DBIngest
+SVar:DBIngest:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Ingest | ConditionCheckSVar$ HasIngest | ConditionSVarCompare$ GE1 | SubAbility$ DBIntimidate
+SVar:DBIntimidate:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Intimidate | ConditionCheckSVar$ HasIntimidate | ConditionSVarCompare$ GE1 | SubAbility$ DBPlainswalk
+SVar:DBPlainswalk:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Landwalk:Plains | ConditionCheckSVar$ HasPlainswalk | ConditionSVarCompare$ GE1 | SubAbility$ DBIslandwalk
+SVar:DBIslandwalk:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Landwalk:Island | ConditionCheckSVar$ HasIslandwalk | ConditionSVarCompare$ GE1 | SubAbility$ DBSwampwalk
+SVar:DBSwampwalk:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Landwalk:Swamp | ConditionCheckSVar$ HasSwampwalk | ConditionSVarCompare$ GE1 | SubAbility$ DBMountainwalk
+SVar:DBMountainwalk:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Landwalk:Mountain | ConditionCheckSVar$ HasMountainwalk | ConditionSVarCompare$ GE1 | SubAbility$ DBForestwalk
+SVar:DBForestwalk:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Landwalk:Forest | ConditionCheckSVar$ HasForestwalk | ConditionSVarCompare$ GE1 | SubAbility$ DBShroud
+SVar:DBShroud:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Shroud | ConditionCheckSVar$ HasShroud | ConditionSVarCompare$ GE1 | SubAbility$ DBTantrum
+SVar:DBTantrum:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Tantrum | ConditionCheckSVar$ HasTantrum | ConditionSVarCompare$ GE1 | SubAbility$ DBWither
+SVar:DBWither:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Wither | ConditionCheckSVar$ HasWither | ConditionSVarCompare$ GE1 | SubAbility$ DBSacMana
+SVar:DBSacMana:DB$ AnimateAll | ValidCards$ Creature.YouCtrl | Abilities$ SacForC | ConditionCheckSVar$ HasSacForC | ConditionSVarCompare$ GE1
+SVar:SacForC:AB$ Mana | Cost$ Sac<1/CARDNAME/this creature> | Produced$ C | SpellDescription$ Add {C}.
+SVar:HasBanding:Count$Valid Creature.YouCtrl+withBanding
+SVar:HasChangeling:Count$Valid Creature.YouCtrl+withChangeling
+SVar:HasDevoid:Count$Valid Creature.YouCtrl+withDevoid
+SVar:HasFear:Count$Valid Creature.YouCtrl+withFear
+SVar:HasFlanking:Count$Valid Creature.YouCtrl+withFlanking
+SVar:HasHorsemanship:Count$Valid Creature.YouCtrl+withHorsemanship
+SVar:HasIngest:Count$Valid Creature.YouCtrl+withIngest
+SVar:HasIntimidate:Count$Valid Creature.YouCtrl+withIntimidate
+SVar:HasPlainswalk:Count$Valid Creature.YouCtrl+withLandwalk:Plains
+SVar:HasIslandwalk:Count$Valid Creature.YouCtrl+withLandwalk:Island
+SVar:HasSwampwalk:Count$Valid Creature.YouCtrl+withLandwalk:Swamp
+SVar:HasMountainwalk:Count$Valid Creature.YouCtrl+withLandwalk:Mountain
+SVar:HasForestwalk:Count$Valid Creature.YouCtrl+withLandwalk:Forest
+SVar:HasShroud:Count$Valid Creature.YouCtrl+withShroud
+SVar:HasTantrum:Count$Valid Creature.YouCtrl+withTantrum
+SVar:HasWither:Count$Valid Creature.YouCtrl+withWither
+SVar:HasSacForC:Count$Valid Creature.YouCtrl+HasSacSelfForColorless
+Oracle:At the beginning of each combat, creatures you control gain banding until end of turn if a creature you control has banding. The same is true for changeling, devoid, fear, flanking, horsemanship, ingest, intimidate, landwalk, shroud, tantrum, wither, and the activated ability "Sacrifice this creature: Add {C}."

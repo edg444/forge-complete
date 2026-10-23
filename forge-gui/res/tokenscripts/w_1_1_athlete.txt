@@ -1,0 +1,6 @@
+Name:Athlete Token
+ManaCost:no cost
+Colors:white
+Types:Creature Athlete
+PT:1/1
+Oracle:

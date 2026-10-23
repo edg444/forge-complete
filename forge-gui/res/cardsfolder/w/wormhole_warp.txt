@@ -1,0 +1,9 @@
+Name:Wormhole Warp
+ManaCost:2 R
+Types:Instant
+# revealing at random until a nonland card is finding a random nonland card there; no sideboard, nothing (rulings)
+A:SP$ ChangeZone | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Select target creature an opponent controls | Origin$ Battlefield | Destination$ Exile | SubAbility$ DBReveal | SpellDescription$ Exile target creature an opponent controls. That player reveals cards from their sideboard at random until they reveal a nonland card. They may cast that card without paying its mana cost.
+SVar:DBReveal:DB$ ChooseCard | Defined$ TargetedController | Choices$ Card.nonLand+OwnedBy TargetedController | ChoiceZone$ Sideboard | AtRandom$ True | Reveal$ True | SubAbility$ DBCast
+SVar:DBCast:DB$ Play | Defined$ ChosenCard | ZoneRegardless$ True | Controller$ TargetedController | ValidSA$ Spell | WithoutManaCost$ True | Optional$ True | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+Oracle:Exile target creature an opponent controls. That player reveals cards from their sideboard at random until they reveal a nonland card. They may cast that card without paying its mana cost.

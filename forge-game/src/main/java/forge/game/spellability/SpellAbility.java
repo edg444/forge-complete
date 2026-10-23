@@ -1882,6 +1882,15 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
         isCastFromPlayEffect = b;
     }
 
+    // a field rather than a param: copies share their param map with the card's own ability
+    private int extraCharmModes = 0;
+    public int getExtraCharmModes() {
+        return extraCharmModes;
+    }
+    public void setExtraCharmModes(int n) {
+        extraCharmModes = n;
+    }
+
     public boolean isCopied() {
         return isCopied;
     }
