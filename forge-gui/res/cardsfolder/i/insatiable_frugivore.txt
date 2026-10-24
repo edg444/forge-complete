@@ -8,7 +8,7 @@ SVar:DBStoreSVar:DB$ StoreSVar | SVar$ CheckNotPaid | Type$ Number | Expression$
 SVar:DBRepeat:DB$ Repeat | RepeatSubAbility$ DBToken | RepeatCheckSVar$ CheckNotPaid | RepeatSVarCompare$ GT0
 SVar:DBToken:DB$ Token | TokenOwner$ You | UnlessCost$ ExileFromGrave<3/Card> | UnlessPayer$ You | UnlessSwitched$ True | UnlessResolveSubs$ WhenNotPaid | SubAbility$ DBStoreSVarT | TokenScript$ c_a_food_sac
 SVar:DBStoreSVarT:DB$ StoreSVar | SVar$ CheckNotPaid | Type$ Number | Expression$ 0
-A:AB$ PumpAll | Cost$ 3 B Sac<X/Food> | ValidCards$ Creature.YouCtrl | NumAtt$ +X | KW$ Menace | SpellDescription$ Creatures you control get +X/+0 and gain menace until end of turn.
+A:AB$ PumpAll | Cost$ 3 B Sac<X/Food> | CostDesc$ {3}{B}, Sacrifice X Foods: | ValidCards$ Creature.YouCtrl | NumAtt$ +X | KW$ Menace | SpellDescription$ Creatures you control get +X/+0 and gain menace until end of turn.
 SVar:CheckNotPaid:Number$1
 SVar:X:Count$xPaid
 Oracle:When this creature enters, create a Food token, then you may exile three cards from your graveyard. If you do, repeat this process.\n{3}{B}, Sacrifice X Foods: Creatures you control get +X/+0 and gain menace until end of turn.

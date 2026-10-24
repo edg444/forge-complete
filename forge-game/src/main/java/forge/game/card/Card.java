@@ -3091,7 +3091,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.startsWith("Emerge") || keyword.startsWith("More Than Meets the Eye")
                         || keyword.startsWith("Level up") || keyword.startsWith("Plot") || keyword.startsWith("Motivate")
                         || keyword.startsWith("Impending") || keyword.equals("Suspend")
-                        || keyword.startsWith("Replicate")) {
+                        || keyword.startsWith("Replicate") || keyword.startsWith("Splice")) {
                     sbLong.append(inst.getTitle());
                     // Oracle ends a keyword with a non-mana cost like a sentence: "Buyback—Sacrifice a land."
                     if (inst instanceof KeywordWithCostInterface kwc && kwc.getCost() != null && kwc.isComplexCost()) {

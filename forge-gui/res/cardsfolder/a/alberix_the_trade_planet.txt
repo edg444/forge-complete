@@ -4,9 +4,9 @@ Types:World Enchantment
 # resources are exiled face up and stay tied to this object (ExiledWithSource)
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigResources | TriggerDescription$ Planet (When this permanent enters, exile the top five cards of your library as its resources.)
 SVar:TrigResources:DB$ Dig | Defined$ You | DigNum$ 5 | ChangeNum$ All | DestinationZone$ Exile
-T:Mode$ Phase | Phase$ Main1 | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigTrade | TriggerDescription$ Trade Routes — At the beginning of your precombat main phase, choose one — • Discard a card. If you do, put two of CARDNAME's resources into its owner's hand. • Exile the top card of your library as a resource.
+T:Mode$ Phase | Phase$ Main1 | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigTrade | TriggerDescription$ Trade Routes — At the beginning of your precombat main phase, choose one — • Discard a card. If you do, put two of NICKNAME's resources into its owner's hand. • Exile the top card of your library as a resource.
 SVar:TrigTrade:DB$ Charm | Choices$ DBDiscard,DBMoreResources
-SVar:DBDiscard:DB$ Discard | Defined$ You | NumCards$ 1 | Mode$ TgtChoose | RememberDiscarded$ True | SubAbility$ DBChoose | SpellDescription$ Discard a card. If you do, put two of CARDNAME's resources into its owner's hand.
+SVar:DBDiscard:DB$ Discard | Defined$ You | NumCards$ 1 | Mode$ TgtChoose | RememberDiscarded$ True | SubAbility$ DBChoose | SpellDescription$ Discard a card. If you do, put two of NICKNAME's resources into its owner's hand.
 SVar:DBChoose:DB$ ChooseCard | Defined$ You | Choices$ Card.ExiledWithSource | ChoiceZone$ Exile | Amount$ 2 | Mandatory$ True | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ GE1 | SubAbility$ DBToHand
 SVar:DBToHand:DB$ ChangeZone | Defined$ ChosenCard | Origin$ Exile | Destination$ Hand | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ GE1 | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True

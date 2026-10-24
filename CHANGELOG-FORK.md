@@ -435,6 +435,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   *Sokrates* ("Sokratic Dialogue —") and *Towering Viewpoint* ("Leap of Faith —"); "Sacrifice Apple of Eden", "Exile
   Senu"; *Templar Knight*'s "attacking creatures you control named Templar Knight".
 
+- **Set review: Bloomburrow and its Promos** (257 new names, `BloomburrowAuditTest`): *Calamitous Tide*'s draw and
+  discard were missing from its text; a "sacrifice any number of" cost now uses its description ("nonland
+  permanents", *Rottenmouth Viper*; was "permanent.nonlands"). Left as Oracle: Threshold's printed "seven or more cards
+  are in", *Zinnia*'s clarified "gain offspring {2} as you cast them", keyword order on *Frilled Sparkshooter* and *The
+  Odd Acorn Gang*.
+- **Set review: Bloomburrow Commander** (41 new names): cost order on *Hazel of the Rootbloom* ("{T}, Pay 2 life, Tap X
+  untapped tokens you control") and *Insatiable Frugivore* ("Sacrifice X Foods").
+- **Set review: Mystery Booster 2** (114 new names, `BloomburrowAuditTest`): Splice on a permanent showed as raw
+  "Splice:Instant,Sorcery:1 B:..." (*Lifening Elemental*); "Alberix's resources"; *Jund 'Em Out* showed literal "\n".
+  Left as implemented: the playtest cards' deliberate presentations (*Naturalize 2*, *Flanking Licid*,
+  *Planeswalkerificate*, Shackle/Host keyword colons).
+- **Set review: MagicFest 2024** (1 new name): no changes.
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three

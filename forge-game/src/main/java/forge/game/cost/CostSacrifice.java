@@ -100,8 +100,10 @@ public class CostSacrifice extends CostPartWithList {
             // legends keep their name: Sac<1/CARDNAME/NICKNAME> is "Sacrifice Vohar"
             sb.append(getTypeDescription() == null ? getType() : getTypeDescription());
         } else if (getAmount().equals("X")) {
-            String typeDesc = getType().toLowerCase().replace(";","s and/or ");
-            sb.append("any number of ").append(typeDesc).append("s");
+            // a description names the type when the type is a filter: "nonland permanents" (Rottenmouth Viper)
+            String typeDesc = getTypeDescription() != null ? Lang.getPlural(getTypeDescription())
+                    : getType().toLowerCase().replace(";","s and/or ") + "s";
+            sb.append("any number of ").append(typeDesc);
         } else {
             String desc;
             if (this.getTypeDescription() == null) {
