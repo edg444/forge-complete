@@ -650,6 +650,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       Riot Control, Serene Sunset, Shielded Passage, Sivvi's Ruse, Subdue, Terrifying Presence: use it.
     - Embolden, Martyr's Cause, Panacea, Pollen Remedy, Prismatic Circle, Remedy, Rhystic Circle, Righteous Aura,
       Serra's Hymn: the existing prevention AI already handles them.
+  - *Cluster: name a card* (`NoAiNameCardTest`): name-a-card spells and abilities were never used without an
+    `AILogic$`; each now has one.
+    - Brain Pry, Cabal Therapy, Dementia Sliver, Dispossess, Foreshadow, Infinite Obliteration, Lammastide Weave, Lost
+      Legacy, Memoricide, Predict, Runed Halo, Slaughter Games, Stain the Mind, Thought Hemorrhage: name the most
+      common card (of the allowed kind) in the opponent's deck.
+    - Desperate Research, Diviner's Lockbox: the most common card in the AI's own deck; Wood Sage: its most common
+      creature; Cheering Fanatic, Demonic Consultation, Divining Witch: its most common nonland card (new
+      `MostProminentNonLandInComputerDeck`).
+    - Demonic Consultation, Divining Witch: only when that card has at least three copies left in the library, since
+      missing it exiles the rest of the library.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

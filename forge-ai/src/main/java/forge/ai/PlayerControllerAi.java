@@ -1803,6 +1803,9 @@ public class PlayerControllerAi extends PlayerController {
             String name = "";
             if (logic.equals("MostProminentInComputerDeck")) {
                 name = ComputerUtilCard.getMostProminentCardName(aiLibrary);
+            } else if (logic.equals("MostProminentNonLandInComputerDeck")) {
+                // Demonic Consultation, Cheering Fanatic: a land is a hit nobody casts for
+                name = ComputerUtilCard.getMostProminentCardName(CardLists.filter(aiLibrary, CardPredicates.NON_LANDS));
             } else if (logic.equals("MostProminentInHumanDeck")) {
                 name = ComputerUtilCard.getMostProminentCardName(oppLibrary);
             } else if (logic.equals("MostProminentCreatureInComputerDeck")) {
