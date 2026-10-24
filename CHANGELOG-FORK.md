@@ -1152,6 +1152,47 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     *Enduring Victory*, which relied on it, now says it itself); *Daghatar the Adamant*'s "Daghatar enters".
   - Left as Oracle: Renowned Weaponsmith's "{2}", Ainok Guide's "on top of it", "with flying you control" and
     mill / token templating.
+- **Set review: Fate Reforged Promos** (15 new names): in-game text only — *Flamerush Rider* said "Exile the token
+  at end of combat" twice.
+- **Set review: Dragons of Tarkir and Dragons of Tarkir Promos** (228 new names): in-game text only, no rules
+  changes.
+  - In-game text: *Hedonist's Trove*'s "You can't cast more than one spell this way each turn", *Learn from the
+    Past*'s doubled "Draw a card.", *Corpseweft*'s cost ("Exile one or more creature cards"), a typo in *Revealing
+    Wind*'s prompt; *Pinion Feast* is fixed by the bolster change above.
+  - Left as Oracle: Hedonist's Trove's "land cards" / "nonland cards", Illusory Gains, Narset Transcendent's "cast
+    your next", menace wording.
+- **Set review: Magic Origins Clash Pack, Magic Origins and Magic Origins Promos** (178 new names): in-game text
+  only, no rules changes.
+  - In-game text: missing spaces in *Flameshadow Conjuring*, *Psychic Rebuttal* and *Send to Sleep*; *Despoiler of
+    Souls*' cost ("Exile two other creature cards").
+  - Left as Oracle: Sphinx's Tutelage's "If they're both", Mage-Ring Network's printed "Remove X", Talent
+    of the Telepath's "card", Prickleboar, Hixus and token / mill templating.
+- **Set review: Duel Decks: Zendikar vs. Eldrazi, Battle for Zendikar, Zendikar Expeditions and Battle for
+  Zendikar Promos** (228 new names): in-game text only, no rules changes.
+  - In-game text: *Titan's Presence*'s cost ("reveal a colorless creature card"), *Transgress the Mind* showed only
+    "Target player reveals their hand."
+  - Left as Oracle: the printed "{2}" mana of Kozilek's Channeler, Hedron Archive and others, Brutal Expulsion's
+    "put into a graveyard", Conduit of Ruin's "on top of it".
+- **Set review: Commander 2015 and its oversized commanders** (56 new names):
+  - Fixed: *Broodbirth Viper* drew only on combat damage to an opponent; it's any player (combat damage can be
+    redirected to its controller).
+  - In-game text: *Gigantoplasm*'s granted ability ("base power and toughness X/X"), *Centaur Vinecrasher*'s "a number
+    of +1/+1 counters", *Karlov of the Ghost Council*'s cost ("from Karlov").
+  - Left as Oracle: Ezuri's Predation's Phyrexian Beasts (a creature type gained since), Dream Pillager's "nonland
+    cards", Mirror Match's and Gigantoplasm's templating, mill / token wording.
+- **Set review: Commander 2015 Tokens** — not in Forge: its one new card, *Experience*, is a counter reminder card, not
+  a game object.
+- **Set review: Friday Night Magic 2016, Oath of the Gatewatch and Oath of the Gatewatch Promos** (176 new names,
+  `OathOfTheGatewatchAuditTest`):
+  - R&D's Secret Lair printed text: *Goblin Dark-Dwellers* (Oath of the Gatewatch, Commander 2020 and their promos,
+    before The Lord of the Rings Commander's "that spell") exiles "that card" if it would be put into your graveyard
+    any time that turn, even after it left the stack some other way or if you didn't cast it.
+  - In-game text: *Nissa's Judgment* ("Choose up to one target creature an opponent controls" ... "that creature"),
+    *Dazzling Reflection*'s missing prevention sentence, *Kozilek, the Great Distortion*'s cost ("Discard a card with
+    mana value X"), *Grip of the Roil* repeated "Draw a card." after its surge line.
+  - Left as Oracle: Iona's Blessing's "each combat", Eldrazi Mimic's "become equal to", Fall of the Titans'
+    "targets", Loam Larva's "on top of it", Ruins of Oran-Rief's "entered this turn", token templating.
+- **Set review: Duel Decks: Blessed vs. Cursed** (6 new names): no changes.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 
