@@ -343,6 +343,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     lines Forge renders one per line (*Kevin*, *Emrakul and Chatterfang*); Oracle's own typos and spacing ("Tapped four",
     "choose one—").
 
+- **Set review: March of the Machine Jumpstart Front Cards** (5 new names): theme cards, not game pieces; not in Forge.
+- **Set review: March of the Machine Commander** (82 new names): "another artifact" (*Filigree Vector*; was "an other
+  artifact"); *Esper*'s "their other types".
+- **Set review: March of the Machine and its Promos** (271 new names): *Pile On*'s "Surveil 2." was missing from its
+  text; "Sacrifice Realmbreaker"; "an artifact or creature" (*Dreg Recycler*). Left as Oracle: the Sieges' printed
+  self-references and "of their choice" on *The Pit* and *The Wilds*.
+- **Set review: March of the Machine: The Aftermath** (49 new names): no changes. Left as Oracle: *Tolarian
+  Contempt*'s "their choice of", *Feast of the Victorious Dead*'s "any number of".
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three
