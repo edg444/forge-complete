@@ -788,6 +788,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       for.
     - `AILogic$ WipeX` (Forced March, Gaze of Granite): every affordable X is tried, and the lowest X with the best
       result for the two sides is chosen.
+    - `AILogic$ DiscardForX` (Nostalgic Dreams, Restless Dreams, Sickening Dreams, Turbulent Dreams, Vengeful Dreams,
+      `NoAiDiscardForXTest`): new `DiscardForXAi`. X is never more than the cards it would discard anyway, so each
+      spare card buys a worthwhile target: their attackers exiled, their best permanents bounced, its best cards back
+      from the graveyard, or the X that does the most as a sweep.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).
