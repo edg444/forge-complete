@@ -21,6 +21,7 @@ Town:Towns
 Urza's
 [CreatureTypes]
 Advisor:Advisors
+Aenar:Aenars
 Aetherborn:Aetherborn
 Alicorn:Alicorns
 Alien:Aliens
@@ -371,6 +372,7 @@ Time Lord:Time Lords
 Tosk:Tosks
 Toy:Toys
 Treefolk:Treefolk
+Trill:Trills
 Trilobite:Trilobites
 Triskelavite:Triskelavites
 Troll:Trolls
