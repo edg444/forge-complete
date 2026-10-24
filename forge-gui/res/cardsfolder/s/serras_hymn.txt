@@ -7,5 +7,4 @@ A:AB$ PreventDamage | Cost$ Sac<1/CARDNAME> | ValidTgts$ Any | TgtPrompt$ Select
 SVar:X:Count$CardCounters.VERSE
 SVar:MaxTgts:PlayerCountPlayers$Amount/Plus.MaxPermanents
 SVar:MaxPermanents:Count$Valid Any
-AI:RemoveDeck:All
 Oracle:At the beginning of your upkeep, you may put a verse counter on this enchantment.\nSacrifice this enchantment: Prevent the next X damage that would be dealt this turn to any number of targets, divided as you choose, where X is the number of verse counters on this enchantment.

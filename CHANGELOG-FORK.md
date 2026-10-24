@@ -638,6 +638,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       plays them sensibly. Tidal Visionary, Tidal Warrior, Tideshaper Mystic, Tundra Kavu, Urza's Avenger, Warrior
       en-Kor, Weaver of Lies, Willbender, Wirewood Symbiote, Zealous Inquisitor, Zhalfirin Crusader, Zombie
       Trailblazer: unflagged for their bodies (the redirects, type changes and keyword trades are never activated).
+  - *Cluster: combat damage prevention* (`NoAiCombatPreventionTest`):
+    - New `AILogic$ PreventCombat` (`CombatPreventionAi`): once blocks are declared, the card's prevention - read
+      from its damage-prevention replacements and "Prevent all ... damage" keywords, on the root or a sub-ability -
+      is scored against that combat: the AI's life (everything if it stops lethal) and creatures it saves, less the
+      opposing life and creatures it saves. A spell has to save about a creature's worth, a repeatable ability less;
+      targeted ones pick the targets that save the most (greedily for "up to" and X targets).
+    - Benalish Missionary, Blinding Fog, Boros Fury-Shield, Brace for Impact, Divine Light, Ebony Horse, Elvish Scout,
+      Energy Arc, Forfend, Foxfire, Gossamer Chains, Hunter's Ambush, Inquisitor's Snare, Ith, High Arcanist, Lady
+      Evangela, Luminesce, Moonmist (no longer needs Humans to be cast), Radiant Kavu, Redeem, Repel the Abominable,
+      Riot Control, Serene Sunset, Shielded Passage, Sivvi's Ruse, Subdue, Terrifying Presence: use it.
+    - Embolden, Martyr's Cause, Panacea, Pollen Remedy, Prismatic Circle, Remedy, Rhystic Circle, Righteous Aura,
+      Serra's Hymn: the existing prevention AI already handles them.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).
