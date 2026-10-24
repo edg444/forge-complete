@@ -329,6 +329,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **AI fixes from an AI vs AI game** (`WarpAndBranchAiTest`): the AI no longer warps a creature that does nothing
+  this turn - *Starwinder* with no creatures was held to Main 2 (`PlayMain1`) and warped after combat, only to be
+  exiled. Warp now needs an enters/leaves trigger; without one, it's only used before combat when the normal cost
+  can't be paid and the creature attacks (haste) or other creatures do. *Thought-Stalker Warlock*'s trigger was dropped ("failed to target"): `BranchAi`
+  never chose targets, so every targeted Branch without its own AILogic fizzled for the AI (*Epicenter*, *Rancid
+  Earth*, *Jon Irenicus*, *Grey Knight Paragon*, ...); it now aims at an opponent or their best card.
 - **Set review: Unknown Event** (505 new names, `UnknownEventReviewTest`):
   - In-game text: a Charm whose description words its own header now still lists its modes (*Mindslaver Toolkit*'s
     "Choose any number —", *Blustering Barnyard*'s {P} modes), and triggered Charms list theirs through ABILITY

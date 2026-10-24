@@ -14,6 +14,8 @@ import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.staticability.StaticAbility;
 import forge.game.staticability.StaticAbilityMode;
+import forge.game.trigger.Trigger;
+import forge.game.trigger.TriggerType;
 import forge.game.zone.ZoneType;
 import forge.util.MyRandom;
 import org.apache.commons.lang3.StringUtils;
@@ -54,6 +56,10 @@ public class PermanentCreatureAi extends PermanentAi {
             return false;
         }
 
+        if (sa.isWarp() && !warpPaysOffThisTurn(ai, sa, ph)) {
+            return false;
+        }
+
         // Prevent the computer from summoning Ball Lightning type creatures
         // after attacking
         if (card.hasSVar("EndOfTurnLeavePlay")
@@ -83,6 +89,46 @@ public class PermanentCreatureAi extends PermanentAi {
         }
 
         return super.checkPhaseRestrictions(ai, sa, ph);
+    }
+
+    /**
+     * A warped creature is exiled at the next end step, so warp only buys what it does this turn: an enters or
+     * leaves trigger, a hasty attack, or a static/trigger riding on this turn's combat (Starwinder drawing off the
+     * other attackers). With none of those - no attackers, or nothing printed - it is mana for nothing.
+     */
+    private static boolean warpPaysOffThisTurn(final Player ai, final SpellAbility sa, final PhaseHandler ph) {
+        final Card card = sa.getHostCard();
+        if (card.hasETBTrigger(false) || hasLeavesTrigger(card)) {
+            return true;
+        }
+        if (!ph.isPlayerTurn(ai) || !ph.getPhase().isBefore(PhaseType.COMBAT_DECLARE_ATTACKERS)
+                || ai.getGame().getReplacementHandler().wouldPhaseBeSkipped(ai, PhaseType.COMBAT_BEGIN)) {
+            return false;
+        }
+        if (ComputerUtilCost.canPayCost(card.getSpellPermanent(), ai, false)) {
+            // without an enters/leaves payoff, keeping it beats a one-turn rental
+            return false;
+        }
+        if (card.hasKeyword(Keyword.HASTE)) {
+            Card warped = CardCopyService.getLKICopy(card);
+            warped.setSickness(false);
+            return ComputerUtilCard.doesSpecifiedCreatureAttackAI(ai, warped);
+        }
+        if (card.getTriggers().isEmpty() && card.getStaticAbilities().isEmpty()) {
+            return false;
+        }
+        final Combat predicted = ((PlayerControllerAi) ai.getController()).getAi().getPredictedCombat();
+        return predicted != null && !predicted.getAttackers().isEmpty();
+    }
+
+    private static boolean hasLeavesTrigger(final Card card) {
+        for (final Trigger tr : card.getTriggers()) {
+            if (tr.getMode() == TriggerType.ChangesZone && "Battlefield".equals(tr.getParam("Origin"))
+                    && tr.getParamOrDefault("ValidCard", "").contains("Self")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean doAdvancedFlashLogic(Card card, final Player ai, SpellAbility sa) {
