@@ -2563,6 +2563,13 @@ public class ComputerUtil {
 
         final Game game = ai.getGame();
         String chosen = "";
+        if ("ForceAttack".equals(logic)) {
+            // Walking Desecration: the type it decided on
+            final String meant = forge.ai.ability.ForcedCombatAi.chosenType(sa.getHostCard());
+            if (meant != null && validTypes.contains(meant)) {
+                return meant;
+            }
+        }
         if ("MostCommonWordInDeck".equals(logic)) {
             // Bicycle Elemental: the word the most of its cards have in their name, type line or rules text
             final java.util.Set<String> skip = java.util.Set.of("this", "that", "with", "your", "from", "each", "into",

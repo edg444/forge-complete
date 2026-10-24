@@ -79,6 +79,9 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         if ("RedirectCombat".equals(sa.getParam("AILogic"))) {
             return forge.ai.ability.RedirectCombatAi.decide(aiPlayer, sa);
         }
+        if (forge.ai.ability.ForcedCombatAi.handles(sa.getParam("AILogic"))) {
+            return forge.ai.ability.ForcedCombatAi.decide(aiPlayer, sa);
+        }
         AiAbilityDecision decision = canPlay(aiPlayer, sa);
         if (!decision.willingToPlay() && !"PlayForSub".equals(sa.getParam("AILogic"))) {
             return decision;

@@ -672,6 +672,23 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       Crusader: these creatures were already in AI decks for their bodies, and now their abilities are used too.
     - "The next 1 damage" abilities (Daughter of Autumn, the en-Kor, Vassal's Duty, Ward of Piety) are activated again
       until enough damage has moved. A "next time" or "all damage" shield isn't made twice.
+  - *Cluster: must attack / must block* (`NoAiForcedCombatTest`): new `ForcedCombatAi`, judged by the combat each card
+    forces.
+    - Made to attack (`AILogic$ ForceAttack`): Alluring Siren, Arcum's Whistle, Courtly Provocateur, Imps' Taunt,
+      Incite, Incite War, Instigator, Into the Fray, Maddening Imp, Nettling Imp, Norritt, Siren's Call, Taunt, Walking
+      Desecration. Used as the opponent's combat begins (Taunt: for their next turn). The value is in their creatures
+      that would attack into a blocker that kills them and survives, and, for the cards that destroy what didn't
+      attack, their creatures that can't attack. Not when the attack it forces could be lethal for the AI. Walking
+      Desecration names the creature type it planned for.
+    - Made to block (`AILogic$ ForceBlock`): Courtly Provocateur, Culling Mark, Hunt Down, Mark for Death, Provoke.
+      The blocker the AI's attack kills, taking whichever block is worst for the AI. Sorceries plan the attack in the
+      first main phase; Provoke and Courtly Provocateur wait for attackers to be declared. Mark for Death also counts
+      the attack its "other creatures can't block" makes lethal.
+    - Lures (`AILogic$ Lure`): Alluring Scent, Bloodscent, Roar of Challenge, Taunting Challenge. Used when the rest
+      of the attack is then lethal, or the lured creature survives (Roar's ferocious indestructible counts) and kills
+      blockers. The attack AI's all-out check now counts the blockers a lure takes up.
+    - Irresistible Prey (`AILogic$ MustBeBlocked`): an attacker that kills whichever blocker it gets and survives.
+    - Auriok Siege Sled: its "blocks this creature" ability already had AI; the flag only kept it from being used.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).
