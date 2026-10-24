@@ -66,7 +66,10 @@ public class CostExileFromStack extends CostPart {
         final String desc = this.getTypeDescription() == null ? this.getType() : this.getTypeDescription();
         sb.append(Cost.convertAmountTypeToWords(i, this.getAmount(), desc));
 
-        sb.append(" from stack");
+        // a spell is on the stack by definition: "Exile a spell you control" (Synthesis Pod)
+        if (!desc.contains("spell")) {
+            sb.append(" from stack");
+        }
 
         return sb.toString();
     }

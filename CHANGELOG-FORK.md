@@ -1636,6 +1636,21 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   *Thraxodemon*'s "another creature or artifact". Left as Oracle: *Defabricate*, *Desynchronize* and *Hurkyl's Final
   Meditation*'s printed wordings (same rules).
 - **Set review: The Brothers' War Jumpstart Front Cards** (5 new names): theme cards, not game pieces; not in Forge.
+- **Set review: Jumpstart 2022 Front Cards** (43 new names): theme cards, not game pieces; not in Forge.
+- **Set review: Jumpstart 2022** (51 new names): *Magnanimous Magistrate* entered with "five repr counters" (now
+  "reprieve"); *Ashcoat of the Shadow Swarm*'s "Ashcoat" and "until end of turn". Left as Oracle: *Brazen Cannonade*'s
+  printed "attacked with a creature", *Kibo*'s "of their choice".
+- **Set review: Phyrexia: All Will Be One and its Promos** (251 new names, `AllWillBeOneAuditTest`): *Oil-Gorger
+  Troll*'s draw clause was missing from its text; *Gleeful Demolition* and *Hazardous Blast* repeated their second
+  sentence (the first with a "creature three" typo); "another artifact or creature" (*Cutthroat Centurion*); *The
+  Filigree Sylex*'s "and sacrifice The Filigree Sylex". MTGJSON's printed text for the set's first 12 collector numbers
+  belongs to other cards; their images match Oracle.
+- **Set review: Phyrexia: All Will Be One Jumpstart Front Cards** (5 new names): theme cards, not game pieces; not in
+  Forge.
+- **Set review: Phyrexia: All Will Be One Commander** (28 new names, `AllWillBeOneAuditTest`):
+  - Fixed: *Norn's Choirmaster* watched commanders you own instead of commanders you control.
+  - In-game text: exiling a spell as a cost no longer adds "from stack" (*Synthesis Pod*; *Nivmagus Elemental*'s "spell
+    you control").
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 
