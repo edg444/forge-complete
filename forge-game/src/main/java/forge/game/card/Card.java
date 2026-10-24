@@ -3097,6 +3097,11 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                     if (inst instanceof KeywordWithCostInterface kwc && kwc.getCost() != null && kwc.isComplexCost()) {
                         sbLong.append(".");
                     }
+                    // Disguise:<cost>:<reduction>:<its text> (Fugitive Codebreaker)
+                    final String[] kd = keyword.split(":");
+                    if (keyword.startsWith("Disguise") && kd.length > 3) {
+                        sbLong.append(". ").append(kd[3]);
+                    }
                     sbLong.append(" (").append(inst.getReminderText()).append(")");
                     sbLong.append("\r\n");
                 } else if (keyword.startsWith("Escape") || keyword.startsWith("Foretell:")
@@ -4016,6 +4021,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                 } else if (keyword.startsWith("DeckLimit")) {
                     final String[] k = keyword.split(":");
                     sbBefore.append(k[2]).append("\r\n");
+                } else if (keyword.startsWith("A deck can have any number of cards named")) {
+                    // Slime Against Humanity: Oracle prints it after the spell's effect
+                    sbAfter.append(CardFactoryUtil.keywordAsPrinted(keyword, state)).append("\r\n");
                 }
             } catch (Exception e) {
                 String msg = "Card:abilityTextInstantSorcery: crash in Keyword parsing";

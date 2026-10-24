@@ -392,6 +392,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   or creature" (*Dusk Rose Reliquary*). Left as Oracle: *Bitter Triumph*'s and *Annihilating Glare*'s cost order (the
   keyword line is engine input), "This token can't block" Fungus tokens.
 
+- **Set review: Jurassic World Collection** (20 new names): no changes. (Its six double-sided land/Command Tower
+  printings aren't new names.)
+- **Set review: Murders at Karlov Manor Commander** (45 new names): *Take the Bait*'s casting restriction was missing
+  from its text.
+- **Set review: Murders at Karlov Manor and its Promos** (268 new names, `KarlovManorAuditTest`): text was missing for
+  *Behind the Mask*'s evidence clause, *Fugitive Codebreaker*'s disguise cost reduction, *Slime Against Humanity*'s
+  "A deck can have any number" (a sorcery's text dropped that keyword) and *Urgent Necropsy*'s "where X is the total
+  mana value of the permanents this spell targets"; *Case of the Burning Masks*'s "Solved — Sacrifice this Case"
+  (now gated like the other Cases, `Activation$ Solved`). Left as Oracle: *Delney*'s printed "an ability" (only
+  triggered abilities trigger), the token "This creature" templates.
+- **Set review: Ravnica: Clue Edition and its Front Cards** (56 new names): no changes; the ten guild front cards
+  aren't game pieces.
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three
