@@ -448,6 +448,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   *Planeswalkerificate*, Shackle/Host keyword colons).
 - **Set review: MagicFest 2024** (1 new name): no changes.
 
+- **Set review: Duskmourn: House of Horror Commander** (72 new names): *You Exist Only to Amuse*'s "choose one. If you
+  control six or more lands". Left as Oracle: the Devil tokens' "this token".
+- **Set review: Duskmourn: House of Horror and its Promos** (264 new names): *Monstrous Emergence*'s cost order
+  ("choose a creature you control or reveal a creature card"); *Say Its Name*'s "Exile this card and two other cards
+  named Say Its Name" (was a raw filter). Left as Oracle: Room layouts, *Rendmaw*'s keyword order.
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three
