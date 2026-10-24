@@ -2,7 +2,7 @@ Name:Tectonic Giant
 ManaCost:2 R R
 Types:Creature Elemental Giant
 PT:3/4
-T:Mode$ Attacks | ValidCard$ Card.Self | ValidSource$ Card.OppCtrl | Execute$ TrigChoose | TriggerZones$ Battlefield | TriggerDescription$ Whenever this creature attacks or becomes the target of a spell an opponent controls, ABILITY
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigChoose | TriggerZones$ Battlefield | TriggerDescription$ Whenever this creature attacks or becomes the target of a spell an opponent controls, ABILITY
 T:Mode$ BecomesTarget | ValidTarget$ Card.Self | ValidSource$ Spell.OppCtrl | TriggerZones$ Battlefield | Execute$ TrigChoose | Secondary$ True | TriggerDescription$ Whenever this creature attacks or becomes the target of a spell an opponent controls, ABILITY
 SVar:TrigChoose:DB$ Charm | Choices$ DBDamage,DBExilePlay
 SVar:DBDamage:DB$ DamageAll | ValidPlayers$ Player.Opponent | NumDmg$ 3 | SpellDescription$ This creature deals 3 damage to each opponent.

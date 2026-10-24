@@ -1,7 +1,11 @@
 Name:Eat to Extinction
 ManaCost:3 B
 Types:Instant
-A:SP$ ChangeZone | ValidTgts$ Creature,Planeswalker | TgtPrompt$ Select target creature or planeswalker | Origin$ Battlefield | Destination$ Exile | SubAbility$ DBSurveil | SpellDescription$ Exile target creature or planeswalker. Surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)
+A:SP$ ChangeZone | ValidTgts$ Creature,Planeswalker | TgtPrompt$ Select target creature or planeswalker | Origin$ Battlefield | Destination$ Exile | SubAbility$ DBSurveil | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20200208 | PresentDefined$ Self | SpellDescription$ Exile target creature or planeswalker. Surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)
 SVar:DBSurveil:DB$ Surveil | Amount$ 1
+# R&D's Secret Lair: every printing so far (Theros Beyond Death, its promos) spells out "Look at the top card of
+# your library. You may put that card into your graveyard." That isn't a surveil, so surveil triggers don't see it.
+A:SP$ ChangeZone | ValidTgts$ Creature,Planeswalker | TgtPrompt$ Select target creature or planeswalker | Origin$ Battlefield | Destination$ Exile | SubAbility$ DBLook | IsPresent$ Card.PrintedTextActive+PrintedBefore 20200208 | PresentDefined$ Self | SpellDescription$ (As printed) Exile target creature or planeswalker. Look at the top card of your library. You may put that card into your graveyard.
+SVar:DBLook:DB$ Dig | DigNum$ 1 | NoReveal$ True | DestinationZone$ Graveyard | Optional$ True | LibraryPosition2$ 0
 DeckHas:Ability$Surveil|Graveyard
 Oracle:Exile target creature or planeswalker. Surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)

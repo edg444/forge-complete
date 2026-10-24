@@ -1384,6 +1384,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     "If this card is in your opening hand" text); *Command the Chaff*'s "Exile Command the Chaff."; *Personal Decoy*'s
     "You can't be attacked."; *Underdark Beholder*'s Oracle wording.
 - **Set review: Game Night 2019** (5 new names): no changes.
+- **Set review: Theros Beyond Death and Theros Beyond Death Promos** (246 new names, `TherosBeyondDeathAuditTest`):
+  - Fixed: *Rage-Scarred Berserker* and *Nylea's Huntmaster* could target any creature, not just one you control;
+    *Kiora Bests the Sea God*'s chapter II kept only creatures tapped, not every nonland permanent; *Uro, Titan of
+    Nature's Wrath*'s attack trigger was optional.
+  - R&D's Secret Lair: *Eat to Extinction* (every printing says "Look at the top card of your library. You may put
+    that card into your graveyard.", not "Surveil 1") doesn't surveil, so surveil triggers don't see it.
+  - In-game text: *Erebos's Intervention*'s first mode dropped "You gain X life."; *Skophos Warleader* and
+    *Slaughter-Priest of Mogis* say "another creature or an enchantment"; *Underworld Charger*'s escape cost says
+    "three other cards".
+  - Cleanup: *Tectonic Giant*'s attack trigger carried an unused source filter.
+- **Set review: Theros Beyond Death Tokens** (1 new name): no changes. *Acorn Stash* is a play aid for acorn counters
+  with no rules text, so it isn't in Forge.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 
