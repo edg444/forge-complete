@@ -1035,6 +1035,96 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Left as Oracle: Omniscience's and Yeva's "cards", Mindclaw Shaman's "instant or sorcery card from it",
     Reckless Brute's "each turn", "of their choice" sacrifices (Nefarox) and "target player" / "creature or player"
     (Chandra's Fury, Flames of the Firebrand).
+- **Set review: Duel Decks: Izzet vs. Golgari** (Jarad, Golgari Lich Lord; Izzet Charm; Goblin Electromancer; Dreg
+  Mangler; Korozda Guildmage; Street Spasm): no script changes.
+  - Left as Oracle: Izzet Charm's modes and Korozda Guildmage's token wording (templating).
+- **Set review: Return to Ravnica Promos (Archon of the Triumvirate, Supreme Verdict, Hypersonic Dragon)**: no
+  script changes.
+- **Set review: Return to Ravnica** (221 new names): in-game text only, no rules changes.
+  - In-game text: *Teleportal*'s stack text said +2/+0 (it gives +1/+0); *Sphinx of the Chimes*' cost was missing
+    its colon. A populate sub-ability no longer adds its own "Populate." line to the card text, which showed it twice
+    on *Coursers' Accord*, *Druid's Deliverance*, *Eyes in the Skies*, *Horncaller's Chant*, *Sundering Growth*,
+    *Trostani's Judgment* and other later cards (`CopyPermanentEffect`).
+  - Left as Oracle: Epic Experiment's "instant and sorcery card with converted mana cost X or less" (CR 709.3a only
+    evaluates the half being cast, so it's the same as "spells"), Rootborn Defenses' "are indestructible", Palisade Giant's and Sphere of Safety's "or" wording,
+    Rest in Peace's "all cards from all graveyards", Volatile Rig's "each turn", Oak Street Innkeeper's "as long
+    as it's not your turn", Slaughter Games' "name a nonland card", "can't be countered by spells or abilities"
+    (Abrupt Decay, Counterflux), "target player" (Hellhole Flailer, Rakdos's Return), "of their choice"
+    sacrifices (Desecration Demon, Slum Reaper) and mill wording.
+- **Set review: Friday Night Magic 2013 (Experiment One, Sin Collector, Ghor-Clan Rampager, Dimir Charm), Duels of the
+  Planeswalkers 2014 Promos (Ogre Battledriver, Bonescythe Sliver) and Gatecrash Promos** (13 new names): no script
+  changes.
+- **Set review: Gatecrash** (219 new names): in-game text only, no rules changes.
+  - In-game text: *Domri Rade*'s emblem (stray spaces, missing comma); *Rust Scarab*'s and *Simic Manipulator*'s
+    target prompts; *Simic Manipulator*'s cost showed "{0}" and "any number of" counters; *Voidwalk*'s "at the
+    beginning of the next end step".
+  - Left as Oracle: Thespian's Stage's and Lazav's "gains this ability" / "gains hexproof", Biomass Mutation's
+    "become X/X", Sylvan Primordial's one search per destroyed permanent, Diluvian Primordial's "card cast this way
+    ... this turn", Crypt Ghast's "add {B}", "are indestructible" (Frontline Medic, Boros Charm, Gideon,
+    Champion of Justice), "is unblockable", "target player" / "creature or player" and "of their choice"
+    sacrifices.
+- **Set review: Dragon's Maze Promos (Trostani's Summoner, Melek, Izzet Paragon, Maze's End, Render Silent, Breaking
+  // Entering) and Dragon's Maze** (136 new names): in-game text only, no rules changes.
+  - In-game text: *Hired Torturer* (stray spaces), *Master of Cruelties* ("this combat"), *Korozda Gorgon*'s cost,
+    *Legion's Initiative*'s delayed trigger, *Reap Intellect*, *Armed // Dangerous*, *Toil // Trouble*, "of their
+    choice" (*Catch // Release*, *Far // Away*), *Rot Farm Skeleton*'s "Mill four cards" and *Blood Baron of
+    Vizkopa*'s protection order.
+  - Left as Oracle: Melek's "cast the top card of your library if it's an instant or sorcery card" (CR 715.3a and
+    712.11c only evaluate the Adventure or face being cast, so it's the same as "spells"), Council of the Absolute's "name a card other than a creature or land card" and "cast cards",
+    Plasm Capture's "precombat main phase", Vorel's "put another of those counters", Progenitor Mimic's "gains",
+    Dragonshift's and Turn's "becomes a 4/4" / "0/1", Blood Scrivener's and Voice of Resurgence's wording.
+- **Set review: Magic 2014 Promos (Hive Stirrings, Colossal Whale, Megantic Sliver, Goblin Diplomats), San Diego
+  Comic-Con 2013 (Chandra, Pyromaster; Garruk, Caller of Beasts) and Magic 2014** (109 new names): in-game text
+  only, no rules changes.
+  - In-game text: *Colossal Whale*'s target prompt, *Savage Summoning*'s "additional +1/+1 counter", *Shadowborn
+    Apostle*'s cost ("Shadowborn Apostles").
+  - Left as Oracle: Jace's Mindseeker's "instant or sorcery card" (same as "spell" under CR 715.3a and 712.11c),
+    Corpse Hauler's "another" (it's already sacrificed), Savage Summoning's "creature card",
+    Liliana's Reaver's and Xathrid Necromancer's "token tapped", Dragon Egg's "It has", "of their choice"
+    sacrifices and "target creature or player".
+- **Set review: Duel Decks: Heroes vs. Monsters (Ordeal of Purphoros, Polukranos, Satyr Hedonist, Cavalry Pegasus,
+  Anax and Cymede), Theros Promos and Theros** (214 new names; the Theros Hero's Path cards aren't game cards):
+  - Fixed: *Fate Foretold* had two SVars named TrigDraw, so its enter trigger used the dies trigger's draw (same
+    player, but by accident).
+  - Left as Oracle: Prophet of Kruphix's "creature cards" (CR 601.3e), Artisan of Forms' "gain this ability",
+    "each turn" (Deathbellow Raider), menace and "target creature or player" / "target player" wording, and "of
+    their choice" sacrifices.
+- **Set review: Face the Hydra**: its 10 Hydra deck cards aren't in Forge.
+- **Set review: Commander 2013 and its oversized commanders** (51 new names, `Commander2013AuditTest`):
+  - R&D's Secret Lair printed text: *Marath, Will of the Wild*'s "X may be 0" printed text now stops at Commander
+    Legends, which added "X can't be 0"; the Magic Online promo (December 2020) gets a `printDate` too.
+  - Left as Oracle: Darksteel Mutation's "is a 0/1 Insect artifact creature" (it already replaces the other types),
+    Tempt with Immortality's and Tempt with Vengeance's "for each player who does", Opal Palace's "a number of
+    +1/+1 counters", Jeleva's "instant or sorcery card", Hooded Horror's "if" and Primal Vigor's token wording.
+- **Set review: Friday Night Magic 2014, Born of the Gods Promos and Born of the Gods** (163 new names,
+  `BornOfTheGodsAuditTest`; the Born of the Gods Hero's Path cards aren't game cards):
+  - Fixed: *Kraken of the Straits* also stopped creatures whose power equaled the number of Islands from blocking.
+  - In-game text: *Forgestoker Dragon* said its damage couldn't be regenerated; *Noble Quarry*'s two lure lines are
+    one, as on the card.
+  - Left as Oracle: Courser of Kruphix's "play the top card of your library if it's a land card" (only the face
+    played counts, as with spells), Oracle of Bones' "instant or sorcery card", Gild's Gold token, Brimaz's
+    "attacking" / "blocking" tokens, "each turn" and "target creature or player" wording.
+- **Set review: Battle the Horde**: only Unquenchable Fury is in Forge (no changes); the other Horde deck cards aren't.
+- **Set review: Journey into Nyx Promos and Journey into Nyx** (157 new names; the Hero's Path cards aren't game
+  cards): in-game text only, no rules changes.
+  - In-game text: *Font of Fertility* (stray spaces), and target prompts or sub-ability text on *Reviving Melody*,
+    *Leonin Iconoclast* and *Quarry Colossus*.
+  - Left as Oracle: Twinflame's "Those tokens have haste", Godsend's "cast cards", Wildfire Cerberus's "creature
+    your opponents control", Market Festival's "adds two mana", Kruphix's mana-pool wording, menace and "each turn".
+- **Set review: Defeat a God**: its 8 Xenagos deck cards aren't in Forge.
+- **Set review: Conspiracy** (65 new names): in-game text only, no rules changes.
+  - In-game text: the hidden agendas *Immediate Action*, *Secrets of Paradise* and *Brago's Favor* ("with the
+    chosen name"), *Worldknit*'s condition and "any color", *Marchesa, the Black Rose*'s garbled return trigger,
+    *Grenzo, Dungeon Warden*'s "Grenzo enters".
+  - Left as Oracle: Brago's "When", Dack's Duplicate's "gains haste and dethrone", Muzzio's "reveal an artifact
+    card" and "of their choice" sacrifices. The draft-matters text isn't shown in game (Forge doesn't run drafts
+    with it).
+- **Set review: San Diego Comic-Con 2014, Duels of the Planeswalkers 2015 Promos, the M15 Prerelease Challenge (Garruk
+  the Slayer), Magic 2015 Promos and Magic 2015** (142 new names): in-game text only, no rules changes.
+  - In-game text: *Yisan, the Wanderer Bard*'s cost ("Put a Verse counter on this creature").
+  - Left as Oracle: Aetherspouts' "top or bottom", Generator Servant's "If that mana", Act on Impulse's "cards
+    exiled this way", Spectra Ward's "all colors", Mercurial Pretender's "gains", Avarice Amulet's "When",
+    menace, "each turn" and "target creature or player" wording.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

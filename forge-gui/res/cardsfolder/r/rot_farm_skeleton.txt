@@ -3,6 +3,6 @@ ManaCost:2 B G
 Types:Creature Plant Skeleton
 PT:4/1
 S:Mode$ CantBlock | ValidCard$ Card.Self | Description$ This creature can't block.
-A:AB$ ChangeZone | Cost$ 2 B G Mill<4> | Origin$ Graveyard | Destination$ Battlefield | ActivationZone$ Graveyard | SorcerySpeed$ True | SpellDescription$ Return this card from your graveyard to the battlefield. Activate only as a sorcery.
+A:AB$ ChangeZone | Cost$ 2 B G Mill<4> | CostDesc$ {2}{B}{G}, Mill four cards: | Origin$ Graveyard | Destination$ Battlefield | ActivationZone$ Graveyard | SorcerySpeed$ True | SpellDescription$ Return this card from your graveyard to the battlefield. Activate only as a sorcery.
 DeckHas:Ability$Graveyard
 Oracle:This creature can't block.\n{2}{B}{G}, Mill four cards: Return this card from your graveyard to the battlefield. Activate only as a sorcery.

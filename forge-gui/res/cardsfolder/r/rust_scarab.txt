@@ -3,6 +3,6 @@ ManaCost:4 G
 Types:Creature Insect
 PT:4/5
 T:Mode$ AttackerBlocked | ValidCard$ Card.Self | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigDestroy | TriggerDescription$ Whenever this creature becomes blocked, you may destroy target artifact or enchantment defending player controls.
-SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Artifact.ControlledBy TriggeredDefendingPlayer,Enchantment.ControlledBy TriggeredDefendingPlayer | TgtPrompt$ Select target artifact or enchantment defending player control
+SVar:TrigDestroy:DB$ Destroy | ValidTgts$ Artifact.ControlledBy TriggeredDefendingPlayer,Enchantment.ControlledBy TriggeredDefendingPlayer | TgtPrompt$ Select target artifact or enchantment defending player controls
 SVar:HasAttackEffect:Blocked
 Oracle:Whenever this creature becomes blocked, you may destroy target artifact or enchantment defending player controls.

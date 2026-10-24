@@ -29,6 +29,7 @@ import forge.game.card.TokenCreateTable;
 import forge.game.event.GameEventCombatChanged;
 import forge.game.player.Player;
 import forge.game.player.PlayerActionConfirmMode;
+import forge.game.spellability.AbilitySub;
 import forge.game.spellability.SpellAbility;
 import forge.game.staticability.StaticAbilityCantBeChosen;
 import forge.game.zone.ZoneType;
@@ -330,7 +331,8 @@ public class CopyPermanentEffect extends TokenEffectBase {
         if (sa.hasParam("Populate")) {
             sa.putParam("Choices", "Creature.token+YouCtrl");
             sa.putParam("ChoiceTitle", "Choose a creature token to copy");
-            if (!sa.hasParam("SpellDescription")) {
+            // a sub-ability's populate is already in its parent's description, so it'd be shown twice
+            if (!sa.hasParam("SpellDescription") && !(sa instanceof AbilitySub)) {
                 StringBuilder sb = new StringBuilder("Populate");
                 sb.append(". (Create a token that's a copy of a creature token you control.)");
                 sa.putParam("SpellDescription", sb.toString());

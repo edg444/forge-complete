@@ -1919,7 +1919,7 @@ ScryfallCode=PRM
 86194 M Prossh, Skyraider of Kher @Todd Lockwood
 86196 M Zur the Enchanter @Josu Hernaiz
 86198 M Derevi, Empyrial Tactician @Michael Komarck
-86200 M Marath, Will of the Wild @Tyler Jacobson
+86200 M Marath, Will of the Wild @Tyler Jacobson ${"printDate": "2020-12-15"}
 86202 M Karametra, God of Harvests @Eric Deschamps
 86204 M Xenagos, God of Revels @Jason Chan
 86206 M Brago, King Eternal @Karla Ortiz
