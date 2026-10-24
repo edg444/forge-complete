@@ -518,6 +518,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   "blue and black" (it already made that token); "Pay 1 life, Blight 2" (*Champion of the Weird*); "Tap another
   untapped creature you control" (*Wanderbrine Trapper*).
 
+- **Set review: Teenage Mutant Ninja Turtles Eternal Front Cards** (5 new names): theme cards; not in Forge.
+- **Set review: Teenage Mutant Ninja Turtles Eternal** (72 new names): *Turtle Tracks* had no text.
+- **Set review: Teenage Mutant Ninja Turtles** (185 new names, `TurtlesAuditTest`):
+  - Fixed: *Shredder's Armor* could equip any number of times each turn - its keyword was a field short, so the
+    once-each-turn limit landed in the description slot and printed as "Equip ActivationLimit$ 1".
+  - In-game text: equip reminders with an empty type field said "Attach to target  you control" (now "creature", as
+    the ability already targeted; 13 cards such as *Arm-Mounted Anchor* and *Bloodthorn Flail*); *The Cloning
+    of Shredder*'s chapters II and III had no text. Left as Oracle: *Lita*'s "choose one that hasn't been chosen this
+    turn." punctuation.
+- **Set review: MagicFest 2026** (2 new names, the fork's): no changes.
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three
