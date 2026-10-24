@@ -329,6 +329,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
+
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three
   EchoedPair cards were three independent picks (its edition file said "known to be incorrect, but currently unable to
   assign these cards as a pair"). Now each pack has one whole pair plus a card from a different pair, as Wizards'
