@@ -22,6 +22,7 @@ import forge.game.card.Card;
 import forge.game.card.CounterEnumType;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
+import forge.util.Lang;
 
 
 public class CostPayEnergy extends CostPart {
@@ -62,7 +63,9 @@ public class CostPayEnergy extends CostPart {
         if (getAmount().equals("X")) {
             sb.append("X {E}");
         } else {
-            sb.append(Strings.repeat("{E}", Integer.parseInt(getAmount())));
+            final int amount = Integer.parseInt(getAmount());
+            // Oracle writes up to five symbols, then a number ("Pay eight {E}")
+            sb.append(amount > 5 ? Lang.getNumeral(amount) + " {E}" : Strings.repeat("{E}", amount));
         }
         return sb.toString();
     }

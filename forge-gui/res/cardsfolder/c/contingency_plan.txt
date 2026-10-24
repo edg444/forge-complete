@@ -1,7 +1,10 @@
 Name:Contingency Plan
 ManaCost:1 U
 Types:Sorcery
-A:SP$ Surveil | Amount$ 5 | SpellDescription$ Surveil 5. (Look at the top five cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)
+A:SP$ Surveil | Amount$ 5 | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20200927 | PresentDefined$ Self | SpellDescription$ Surveil 5. (Look at the top five cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)
+# R&D's Secret Lair: every printing (Eldritch Moon's, also on The List) looks at the top five cards and puts any
+# number into the graveyard, which isn't a surveil, so "whenever you surveil" doesn't trigger.
+A:SP$ Dig | DigNum$ 5 | ChangeNum$ Any | DestinationZone$ Graveyard | LibraryPosition2$ 0 | NoReveal$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20200927 | PresentDefined$ Self | SpellDescription$ (As printed) Look at the top five cards of your library. Put any number of them into your graveyard and the rest back on top of your library in any order.
 AI:RemoveDeck:All
 DeckHas:Ability$Surveil|Graveyard
 Oracle:Surveil 5. (Look at the top five cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)

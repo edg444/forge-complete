@@ -3,13 +3,6 @@ ManaCost:3 R R
 Types:Creature Goblin
 PT:4/4
 K:Menace
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPlay | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20230623 | TriggerDescription$ When this creature enters, you may cast target instant or sorcery card with mana value 3 or less from your graveyard without paying its mana cost. If that spell would be put into your graveyard, exile it instead.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPlay | TriggerDescription$ When this creature enters, you may cast target instant or sorcery card with mana value 3 or less from your graveyard without paying its mana cost. If that spell would be put into your graveyard, exile it instead.
 SVar:TrigPlay:DB$ Play | TgtZone$ Graveyard | ValidTgts$ Instant.YouCtrl+cmcLE3,Sorcery.YouCtrl+cmcLE3 | ValidSA$ Spell | TgtPrompt$ Choose target instant or sorcery card with mana value 3 or less from your graveyard | WithoutManaCost$ True | Optional$ True | ReplaceGraveyard$ Exile | AILogic$ ReplaySpell
-# R&D's Secret Lair: Oath of the Gatewatch's and Commander 2020's printings exile "that card" if it would be put into
-# your graveyard any time this turn, even after it left the stack some other way (or if you didn't cast it).
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigPlayPrinted | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20230623 | TriggerDescription$ (As printed) When this creature enters, you may cast target instant or sorcery card with mana value 3 or less from your graveyard without paying its mana cost. If that card would be put into your graveyard this turn, exile it instead.
-SVar:TrigPlayPrinted:DB$ Play | TgtZone$ Graveyard | ValidTgts$ Instant.YouCtrl+cmcLE3,Sorcery.YouCtrl+cmcLE3 | ValidSA$ Spell | TgtPrompt$ Choose target instant or sorcery card with mana value 3 or less from your graveyard | WithoutManaCost$ True | Optional$ True | AILogic$ ReplaySpell | SubAbility$ DBPrintedEffect
-SVar:DBPrintedEffect:DB$ Effect | RememberObjects$ Targeted | ReplacementEffects$ PrintedReplaceGraveyard
-SVar:PrintedReplaceGraveyard:Event$ Moved | ValidCard$ Card.IsRemembered+YouOwn | Destination$ Graveyard | ReplaceWith$ PrintedExile | Description$ If that card would be put into your graveyard this turn, exile it instead.
-SVar:PrintedExile:DB$ ChangeZone | Hidden$ True | Origin$ All | Destination$ Exile | Defined$ ReplacedCard
 Oracle:Menace (This creature can't be blocked except by two or more creatures.)\nWhen this creature enters, you may cast target instant or sorcery card with mana value 3 or less from your graveyard without paying its mana cost. If that spell would be put into your graveyard, exile it instead.

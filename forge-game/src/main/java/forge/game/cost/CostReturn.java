@@ -24,6 +24,7 @@ import forge.game.card.CardLists;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
+import forge.util.Lang;
 
 import java.util.Map;
 
@@ -88,7 +89,9 @@ public class CostReturn extends CostPartWithList {
                     pronoun = "their";
                 }
             } else {
-                sb.append(Cost.convertAmountTypeToWords(this.getAmount(), desc));
+                // an amount like X counts several permanents ("return X Swamps you control to their owner's hand")
+                sb.append(Lang.nounWithNumeral(this.getAmount(), desc));
+                pronoun = "their";
             }
 
             sb.append(" you control");

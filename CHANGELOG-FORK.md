@@ -1182,17 +1182,71 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     cards", Mirror Match's and Gigantoplasm's templating, mill / token wording.
 - **Set review: Commander 2015 Tokens** — not in Forge: its one new card, *Experience*, is a counter reminder card, not
   a game object.
-- **Set review: Friday Night Magic 2016, Oath of the Gatewatch and Oath of the Gatewatch Promos** (176 new names,
-  `OathOfTheGatewatchAuditTest`):
-  - R&D's Secret Lair printed text: *Goblin Dark-Dwellers* (Oath of the Gatewatch, Commander 2020 and their promos,
-    before The Lord of the Rings Commander's "that spell") exiles "that card" if it would be put into your graveyard
-    any time that turn, even after it left the stack some other way or if you didn't cast it.
+- **Set review: Friday Night Magic 2016, Oath of the Gatewatch and Oath of the Gatewatch Promos** (176 new names):
   - In-game text: *Nissa's Judgment* ("Choose up to one target creature an opponent controls" ... "that creature"),
     *Dazzling Reflection*'s missing prevention sentence, *Kozilek, the Great Distortion*'s cost ("Discard a card with
     mana value X"), *Grip of the Roil* repeated "Draw a card." after its surge line.
-  - Left as Oracle: Iona's Blessing's "each combat", Eldrazi Mimic's "become equal to", Fall of the Titans'
-    "targets", Loam Larva's "on top of it", Ruins of Oran-Rief's "entered this turn", token templating.
+  - Left as Oracle: Goblin Dark-Dwellers' printed "If that card would be put into your graveyard this turn" (the
+    effect can follow the card onto the stack and no further, CR 400.7h, so it's the Oracle "that spell"), Iona's
+    Blessing's "each combat", Eldrazi Mimic's "become equal to", Fall of the Titans' "targets", Loam Larva's "on top
+    of it", Ruins of Oran-Rief's "entered this turn", token templating.
 - **Set review: Duel Decks: Blessed vs. Cursed** (6 new names): no changes.
+- **Set review: Shadows over Innistrad Promos and Shadows over Innistrad** (260 new names): in-game text only, no rules
+  changes.
+  - In-game text: *Avacyn's Judgment*'s madness damage is "divided as you choose among those permanents and/or
+    players", *Essence Flux*'s missing "If it's a Spirit, put a +1/+1 counter on it.", *Sinister Concoction*'s cost
+    order.
+  - Left as Oracle: Not Forgotten's "your choice of the top or bottom", Tireless Tracker's Landfall ability word,
+    Brain in a Jar's "card", Fevered Visions' "him or her", mill / token / "any target" templating.
+- **Set review: Eldritch Moon and Eldritch Moon Promos** (199 new names, `EldritchMoonAuditTest`):
+  - R&D's Secret Lair printed text: *Contingency Plan* (every printing) and *Grim Flayer* (before Duskmourn
+    Commander; Double Masters 2022 still printed the old text) look at the top cards and put any number into the
+    graveyard, which isn't a surveil, so "whenever you surveil" doesn't trigger.
+  - In-game text: a cost with an amount like X now counts plurally — "discard X cards" (*Nahiri's Wrath*, *Firestorm*,
+    *Conflagrate*, *Gix, Yawgmoth Praetor*, *Devastating Dreams*' "at random" and others), "return X Swamps you
+    control to their owner's hand" (*Infernal Harvest*), "remove X loyalty counters from among" (*Light Up the
+    Night*, *Hierophant Bio-Titan*; the stray double space before "among" is gone for every amount).
+  - Left as Oracle: Gisa and Geralf's "Once during each of your turns" (the release notes already read the printed
+    text that way), Coax from the Blind Eternities' "face-up" (a face-down exiled card has no characteristics, so it
+    was never an Eldrazi card; CR 406.3a), Tamiyo's emblem "spells", mill / token templating.
+- **Set review: Conspiracy: Take the Crown** (79 new names, `ConspiracyTakeTheCrownAuditTest`):
+  - R&D's Secret Lair printed text: *Volatile Chimera* (its only printing) becomes a copy and then gains its ability,
+    so the ability isn't part of the copy: something that copies the Chimera doesn't get it.
+  - In-game text: *Garbage Fire* showed no text (its description was in the wrong field), *Caller of the
+    Untamed*'s missing colon, *Assemble the Rank and Vile*'s "create a tapped 2/2 black Zombie creature token".
+  - Left as Oracle: Sovereign's Realm's "Your deck", Hold the Perimeter's "This creature can't block", Custodi
+    Soulcaller's "attacked with a creature", Regal Behemoth's "add one mana" (no "additional"). The draft-matters
+    text (Animus of Predation, Leovold's Operative and the rest) isn't shown, as Forge doesn't run that part.
+- **Set review: Kaladesh, Kaladesh Inventions and Kaladesh Promos** (248 new names):
+  - In-game text: an energy payment of six or more reads "Pay eight {E}" instead of a row of symbols (*Aetherworks
+    Marvel*, *Aethersquall Ancient*, *Aethertorch Renegade*, *Architect of the Untamed*, *Era of Innovation* and
+    later cards); *Failed Inspection*'s missing "then discard a card", *Disappearing Act*'s "a permanent".
+  - Left as Oracle: Torrential Gearhulk's printed "that card ... this turn" (CR 400.7h, as Goblin Dark-Dwellers),
+    Aether Meltdown's "Enchanted permanent", Rashmi's "nonland card", Gonti's "look at it",
+    Aetherworks Marvel's "card", Chandra, Pyrogenius's and Aethertorch Renegade's "target player", Authority of the
+    Consuls' "enters under an opponent's control", mill / token / "any target" templating.
+- **Set review: Commander 2016 and its oversized commanders** (56 new names):
+  - Fixed: *Vial Smasher the Fierce* could only damage the randomly chosen opponent; it may hit a planeswalker that
+    player controls instead.
+  - In-game text: *Reyhan, Last of the Abzan*'s "Reyhan enters".
+  - Left as Oracle: Magus of the Will's "play cards", Tymna's "your postcombat main phase", Grip of Phyresis'
+    Phyrexian Germ, Frenzied Fugue's "or", Faerie Artisans' "enters under an opponent's control".
+- **Set review: Friday Night Magic 2017** (3 new names): no changes.
+- **Set review: Judge Gift Cards 2017** (1 new name, *Rules Lawyer*): no changes.
+- **Set review: Aether Revolt and Aether Revolt Promos** (182 new names): in-game text only, no rules changes.
+  - In-game text: *Gonti's Aether Heart*'s "Pay eight {E}" (the energy change above); *Pacification Array*'s and *Heart
+    of Kiran*'s prompts.
+  - Left as Oracle: Revolt's "a permanent you controlled left the battlefield", the Expertises' "card", Kari Zev's
+    Ragavan wording, Winding Constrictor's "placed", Pia's Revolution's "him or her".
+- **Set review: Amonkhet, Amonkhet Invocations and Amonkhet Promos** (244 new names, `AmonkhetAuditTest`):
+  - Fixed: *Watchers of the Dead* also exiled its controller's graveyard; only opponents' graveyards are affected.
+    *Dispossess* could target yourself; it's "target opponent".
+  - R&D's Secret Lair printed text: *Naga Oracle* (every printing) looks at the top three cards and puts any number
+    into the graveyard, which isn't a surveil, so "whenever you surveil" doesn't trigger.
+  - In-game text: *Commit // Memory*'s "hand and graveyard".
+  - Left as Oracle: Bounty of the Luxa's "precombat main phase" (now "first main phase"), Vizier of the Menagerie's
+    "cast the top card ... if it's a creature card", Injury's "target player", Cruel Reality's "of their choice",
+    mill / token templating.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

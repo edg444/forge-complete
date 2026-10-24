@@ -8,8 +8,14 @@ SVar:DBChoose:DB$ ChooseCard | MinAmount$ 3 | Amount$ X | Choices$ Creature.YouO
 SVar:DBExile:DB$ ChangeZone | Origin$ Sideboard | Destination$ Exile | Defined$ Remembered | ConditionCheckSVar$ Y | ConditionSVarCompare$ GE3 | SubAbility$ DBPump
 SVar:DBPump:DB$ Pump | NoteCards$ Remembered | NoteCardsFor$ VolatileChimera | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-A:AB$ ChooseCard | Cost$ 1 R | ChoiceZone$ Exile | AtRandom$ True | Choices$ Card.YouOwn+NotedForVolatileChimera | SubAbility$ DBClone | SpellDescription$ Choose a card at random you exiled with cards named CARDNAME. This creature becomes a copy of that card, except it has this ability.
+A:AB$ ChooseCard | Cost$ 1 R | ChoiceZone$ Exile | AtRandom$ True | Choices$ Card.YouOwn+NotedForVolatileChimera | SubAbility$ DBClone | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20160827 | SpellDescription$ Choose a card at random you exiled with cards named CARDNAME. This creature becomes a copy of that card, except it has this ability.
 SVar:DBClone:DB$ Clone | Defined$ ChosenCard | GainThisAbility$ True
+# R&D's Secret Lair: Conspiracy: Take the Crown's printing (its only one) becomes a copy and then gains this ability,
+# so the ability isn't part of the copy - something copying it doesn't get the ability.
+A:AB$ ChooseCard | Cost$ 1 R | ChoiceZone$ Exile | AtRandom$ True | Choices$ Card.YouOwn+NotedForVolatileChimera | SubAbility$ DBPrintedClone | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20160827 | SpellDescription$ (As printed) Choose a card at random you exiled with cards named CARDNAME. CARDNAME becomes a copy of that card and gains this ability.
+SVar:DBPrintedClone:DB$ Clone | Defined$ ChosenCard | SubAbility$ DBPrintedGain
+SVar:DBPrintedGain:DB$ Animate | Defined$ Self | Abilities$ PrintedChimera | Duration$ Permanent
+SVar:PrintedChimera:AB$ ChooseCard | Cost$ 1 R | ChoiceZone$ Exile | AtRandom$ True | Choices$ Card.YouOwn+NotedForVolatileChimera | SubAbility$ DBPrintedClone | SpellDescription$ Choose a card at random you exiled with cards named Volatile Chimera. This creature becomes a copy of that card and gains this ability.
 SVar:X:Count$ValidSideboard Card.YouOwn
 SVar:Y:Count$RememberedSize
 Oracle:Before you shuffle your deck to start the game, you may reveal this card from your deck and exile three or more creature cards you drafted that aren't in your deck.\n{1}{R}: Choose a card at random you exiled with cards named Volatile Chimera. This creature becomes a copy of that card, except it has this ability.

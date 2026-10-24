@@ -2,7 +2,11 @@ Name:Naga Oracle
 ManaCost:3 U
 Types:Creature Snake Cleric
 PT:2/4
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSurveil | TriggerDescription$ When this creature enters, surveil 3. (Look at the top three cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigSurveil | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20200814 | TriggerDescription$ When this creature enters, surveil 3. (Look at the top three cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)
 SVar:TrigSurveil:DB$ Surveil | Amount$ 3
+# R&D's Secret Lair: every printing (Amonkhet's, Amonkhet Remastered's) looks at the top three cards and puts any
+# number into the graveyard, which isn't a surveil, so "whenever you surveil" doesn't trigger.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigLook | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20200814 | TriggerDescription$ (As printed) When this creature enters, look at the top three cards of your library. Put any number of them into your graveyard and the rest back on top of your library in any order.
+SVar:TrigLook:DB$ Dig | DigNum$ 3 | ChangeNum$ Any | DestinationZone$ Graveyard | LibraryPosition2$ 0 | NoReveal$ True
 DeckHas:Ability$Surveil|Graveyard
 Oracle:When this creature enters, surveil 3. (Look at the top three cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)

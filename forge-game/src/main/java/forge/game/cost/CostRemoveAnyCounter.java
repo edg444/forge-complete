@@ -115,14 +115,16 @@ public class CostRemoveAnyCounter extends CostPart {
         if (oneOrMore) {
             sb.append("one or more ").append(Lang.getPlural(counters));
         } else {
-            sb.append(Cost.convertAmountTypeToWords(this.convertAmount(), this.getAmount(), counters));
+            // an amount like X counts several counters ("remove X loyalty counters")
+            sb.append(this.convertAmount() == null ? Lang.nounWithNumeral(this.getAmount(), counters)
+                    : Cost.convertAmountTypeToWords(this.convertAmount(), this.getAmount(), counters));
         }
         sb.append(" from ");
         if (payCostFromSource()) { // TODO use THISTYPE
             sb.append(getDescriptiveType(multiple));
         } else {
             if (multiple) {
-                sb.append(" among ");
+                sb.append("among ");
             }
             sb.append(getDescriptiveType(multiple));
             sb.append(" you control");

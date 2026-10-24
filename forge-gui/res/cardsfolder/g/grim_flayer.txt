@@ -3,8 +3,12 @@ ManaCost:B G
 Types:Creature Human Warrior
 PT:2/2
 K:Trample
-T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | Execute$ TrigSurveil | CombatDamage$ True | TriggerDescription$ Whenever this creature deals combat damage to a player, surveil 3. (Look at the top three cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | Execute$ TrigSurveil | CombatDamage$ True | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20240927 | TriggerDescription$ Whenever this creature deals combat damage to a player, surveil 3. (Look at the top three cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)
 SVar:TrigSurveil:DB$ Surveil | Amount$ 3
+# R&D's Secret Lair: printings before Duskmourn Commander's (Eldritch Moon's, Double Masters 2022's) look at the top
+# three cards and put any number into the graveyard, which isn't a surveil, so "whenever you surveil" doesn't trigger.
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | Execute$ TrigLook | CombatDamage$ True | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20240927 | TriggerDescription$ (As printed) Whenever this creature deals combat damage to a player, look at the top three cards of your library. Put any number of them into your graveyard and the rest back on top of your library in any order.
+SVar:TrigLook:DB$ Dig | DigNum$ 3 | ChangeNum$ Any | DestinationZone$ Graveyard | LibraryPosition2$ 0 | NoReveal$ True
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ 2 | AddToughness$ 2 | Condition$ Delirium | Description$ Delirium — This creature gets +2/+2 as long as there are four or more card types among cards in your graveyard.
 DeckHas:Ability$Surveil|Graveyard
 Oracle:Trample\nWhenever this creature deals combat damage to a player, surveil 3. (Look at the top three cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)\nDelirium — This creature gets +2/+2 as long as there are four or more card types among cards in your graveyard.

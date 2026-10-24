@@ -2,10 +2,12 @@ Name:Vial Smasher the Fierce
 ManaCost:1 B R
 Types:Legendary Creature Goblin Berserker
 PT:2/3
-T:Mode$ SpellCast | ValidActivatingPlayer$ You | ActivatorThisTurnCast$ EQ1 | ValidCard$ Card | Execute$ TrigChoose | TriggerZones$ Battlefield | TriggerDescription$ Whenever you cast your first spell each turn, choose an opponent at random. CARDNAME deals damage equal to that spell's mana value to that player or a planeswalker that player controls.
-SVar:TrigChoose:DB$ ChoosePlayer | Defined$ You | Choices$ Player.Opponent | Random$ True | SubAbility$ DBDealDamage
-SVar:DBDealDamage:DB$ DealDamage | Defined$ ChosenPlayer | NumDmg$ X | SubAbility$ DBCleanup
-SVar:DBCleanup:DB$ Cleanup | ClearChosenPlayer$ True
+T:Mode$ SpellCast | ValidActivatingPlayer$ You | ActivatorThisTurnCast$ EQ1 | ValidCard$ Card | Execute$ TrigChoose | TriggerZones$ Battlefield | TriggerDescription$ Whenever you cast your first spell each turn, choose an opponent at random. NICKNAME deals damage equal to that spell's mana value to that player or a planeswalker that player controls.
+SVar:TrigChoose:DB$ ChoosePlayer | Defined$ You | Choices$ Player.Opponent | Random$ True | SubAbility$ DBChoosePlaneswalker
+SVar:DBChoosePlaneswalker:DB$ ChooseCard | Choices$ Planeswalker.ChosenCtrl | Amount$ 1 | ChoiceTitle$ Choose a planeswalker to deal the damage to instead, or none | SubAbility$ DBDealDamage
+SVar:DBDealDamage:DB$ DealDamage | Defined$ ChosenPlayer | NumDmg$ X | ConditionDefined$ ChosenCard | ConditionPresent$ Card | ConditionCompare$ EQ0 | SubAbility$ DBDamagePlaneswalker
+SVar:DBDamagePlaneswalker:DB$ DealDamage | Defined$ ChosenCard | NumDmg$ X | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenPlayer$ True | ClearChosenCard$ True
 SVar:X:TriggeredSpellAbility$CardManaCostLKI
 K:Partner
 Oracle:Whenever you cast your first spell each turn, choose an opponent at random. Vial Smasher deals damage equal to that spell's mana value to that player or a planeswalker that player controls.\nPartner (You can have two commanders if both have partner.)

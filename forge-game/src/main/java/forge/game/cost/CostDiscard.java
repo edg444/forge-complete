@@ -24,6 +24,7 @@ import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.trigger.TriggerType;
 import forge.game.zone.ZoneType;
+import forge.util.Lang;
 import forge.util.TextUtil;
 
 import java.util.List;
@@ -116,7 +117,9 @@ public class CostDiscard extends CostPartWithList {
                 }
             }
 
-            sb.append(Cost.convertAmountTypeToWords(i, this.getAmount(), desc.toString()));
+            // an amount like X counts several cards ("discard X cards")
+            sb.append(i == null ? Lang.nounWithNumeral(this.getAmount(), desc.toString())
+                    : Cost.convertAmountTypeToWords(i, this.getAmount(), desc.toString()));
 
             if (this.getType().equals("Random")) {
                 sb.append(" at random");
