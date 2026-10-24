@@ -329,6 +329,20 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Set review: Unknown Event** (505 new names, `UnknownEventReviewTest`):
+  - In-game text: a Charm whose description words its own header now still lists its modes (*Mindslaver Toolkit*'s
+    "Choose any number —", *Blustering Barnyard*'s {P} modes), and triggered Charms list theirs through ABILITY
+    (*Bin Chicken*, *Rankle, Master of Pranksters*, *Gerrard and Hanna*, *The Cobra King*); commander suspend showed
+    twice (*Groaaaaag*); short names on *Enolc*, *Falko*, *Groaaaaag*, *Lorthos*, *Maeve*, *Mana Max*, *Mr. Wiggles*,
+    *Mzed*, *Noyd*, *Rafi* ("Sacrifice Rafi"), *Slobad* ("Remove 3 rebuilding counters from Slobad") and
+    *Theopholos*; missing text on *Gingerbehemoth* (its cost reduction), *Guild Pact* (the upkeep payment) and
+    *Investi-Gate* ("Investigate."); "Discard a signed card" (*The Collector*); curly apostrophes on eight cards;
+    *Who's That Praetor?* showed a literal "\n" between its choices.
+  - Left as implemented: charm modes that Oracle names after other cards (*Innistrad Charm* and the other plane
+    charms) show the effects instead; *Dialogue Tree*'s modes (a spell's reflexive trigger can't list them); keyword
+    lines Forge renders one per line (*Kevin*, *Emrakul and Chatterfang*); Oracle's own typos and spacing ("Tapped four",
+    "choose one—").
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three

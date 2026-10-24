@@ -2,7 +2,7 @@ Name:Guild Pact
 ManaCost:0
 Types:Instant
 # Choosing two colors is choosing one of the ten pairs.
-A:SP$ GenericChoice | Defined$ You | Choices$ WU,WB,UB,UR,BR,BG,RG,RW,GW,GU | ChoicePrompt$ Choose two colors | SpellDescription$ Choose two colors. Add a mana of each of the chosen colors.
+A:SP$ GenericChoice | Defined$ You | Choices$ WU,WB,UB,UR,BR,BG,RG,RW,GW,GU | ChoicePrompt$ Choose two colors | SpellDescription$ Choose two colors. Add a mana of each of the chosen colors. At the beginning of your next upkeep, pay one mana of each of the chosen colors. If you don't, you lose the game.
 SVar:WU:DB$ Mana | Produced$ W U | SubAbility$ DelayWU | SpellDescription$ White and blue
 SVar:DelayWU:DB$ DelayedTrigger | Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | Execute$ PayWU | TriggerDescription$ At the beginning of your next upkeep, pay {W}{U}. If you don't, you lose the game.
 SVar:PayWU:DB$ LosesGame | Defined$ You | UnlessCost$ W U | UnlessPayer$ You

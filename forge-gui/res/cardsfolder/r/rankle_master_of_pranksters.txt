@@ -4,7 +4,7 @@ Types:Legendary Creature Faerie Rogue
 PT:3/3
 K:Flying
 K:Haste
-T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigCharm | TriggerZones$ Battlefield | TriggerDescription$ Whenever CARDNAME deals combat damage to a player, choose one at random —
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigCharm | TriggerZones$ Battlefield | TriggerDescription$ Whenever CARDNAME deals combat damage to a player, ABILITY
 SVar:TrigCharm:DB$ Charm | Random$ True | Choices$ DBGlen,DBPyretic,DBSpiteful
 SVar:DBGlen:DB$ CopyPermanent | DefinedName$ Glen Elendra Pranksters | Controller$ Player | SpellDescription$ Each player creates a token that's a copy of Glen Elendra Pranksters.
 SVar:DBPyretic:DB$ CopyPermanent | DefinedName$ Pyretic Prankster | Controller$ Player | SpellDescription$ Each player creates a token that's a copy of Pyretic Prankster.

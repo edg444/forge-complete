@@ -12,6 +12,6 @@ SVar:Gruul:DB$ CopyPermanent | DefinedName$ Gruul Guildgate | SpellDescription$ 
 SVar:Boros:DB$ CopyPermanent | DefinedName$ Boros Guildgate | SpellDescription$ Boros (red and white)
 SVar:Selesnya:DB$ CopyPermanent | DefinedName$ Selesnya Guildgate | SpellDescription$ Selesnya (green and white)
 SVar:Simic:DB$ CopyPermanent | DefinedName$ Simic Guildgate | SpellDescription$ Simic (green and blue)
-SVar:DBInvestigate:DB$ Investigate
+SVar:DBInvestigate:DB$ Investigate | SpellDescription$ Investigate.
 DeckHas:Ability$Investigate|Token
 Oracle:Name two Ravnica Guilds. Create two copies that are copies of their gates. (Ravnica guildgates are lands that enter the battlefield tapped and tap for the two colors of the guild.)\nInvestigate.

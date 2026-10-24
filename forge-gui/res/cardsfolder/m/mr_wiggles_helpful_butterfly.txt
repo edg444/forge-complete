@@ -3,7 +3,7 @@ ManaCost:2 G
 Types:Legendary Creature Insect
 PT:1/1
 # As the game begins it's in the command zone as a commander; the first upkeep is the player's first turn's.
-T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Command | IsPresent$ Card.Self+IsCommander | PresentZone$ Command | CheckSVar$ FirstTurn | SVarCompare$ EQ1 | Execute$ TrigSearch | TriggerDescription$ Mono Eminence — As the game begins, if CARDNAME is your commander and your deck's color identity is monogreen, at the beginning of your first upkeep, search your library for a Forest card, put it onto the battlefield tapped, then shuffle.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Command | IsPresent$ Card.Self+IsCommander | PresentZone$ Command | CheckSVar$ FirstTurn | SVarCompare$ EQ1 | Execute$ TrigSearch | TriggerDescription$ Mono Eminence — As the game begins, if NICKNAME is your commander and your deck's color identity is monogreen, at the beginning of your first upkeep, search your library for a Forest card, put it onto the battlefield tapped, then shuffle.
 SVar:TrigSearch:DB$ ChangeZone | Origin$ Library | Destination$ Battlefield | Tapped$ True | ChangeType$ Card.Forest | ChangeNum$ 1 | ConditionCheckSVar$ MonoGreen | ConditionSVarCompare$ EQ1
 SVar:FirstTurn:Count$YourTurns
 SVar:MonoGreen:Count$DeckIdentityMono.green

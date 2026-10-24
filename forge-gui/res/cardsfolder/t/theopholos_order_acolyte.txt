@@ -6,7 +6,7 @@ PT:3/3
 SVar:StartingLifeBonus:10
 SVar:StartingLifeIfMono:white
 Text:Mono Eminence — As the game begins, if Theopholos is your commander and your deck's color identity is mono-white, your starting life total is increased by 10.
-T:Mode$ Attacks | ValidCard$ Card.Self | CheckSVar$ AboveStart | SVarCompare$ GE1 | Execute$ TrigPump | TriggerDescription$ Whenever CARDNAME attacks, if your life total is greater than your starting life total, creatures you control get +1/+1 until end of turn.
+T:Mode$ Attacks | ValidCard$ Card.Self | CheckSVar$ AboveStart | SVarCompare$ GE1 | Execute$ TrigPump | TriggerDescription$ Whenever NICKNAME attacks, if your life total is greater than your starting life total, creatures you control get +1/+1 until end of turn.
 SVar:TrigPump:DB$ PumpAll | ValidCards$ Creature.YouCtrl | NumAtt$ +1 | NumDef$ +1
 SVar:AboveStart:SVar$Life/Minus.Start
 SVar:Life:Count$YourLifeTotal

@@ -3,8 +3,8 @@ ManaCost:1 B R
 Types:Legendary Creature Goblin Artificer
 PT:3/3
 S:Mode$ SacrificeInterchangeably | ValidPlayer$ You | Description$ You can sacrifice creatures and artifacts interchangeably. (If an effect asks you to sacrifice one of them, you can sacrifice either.)
-A:AB$ PutCounter | Cost$ 1 T Sac<1/Artifact.Other;Creature.Other/another artifact or creature> | Defined$ Self | CounterType$ REBUILDING | CounterNum$ 1 | SpellDescription$ Put a rebuilding counter on CARDNAME.
-A:AB$ CopyPermanent | Cost$ T SubCounter<3/REBUILDING> | DefinedName$ Bosh, Iron Golem | SpellDescription$ Create a token that's a copy of Bosh, Iron Golem.
+A:AB$ PutCounter | Cost$ 1 T Sac<1/Artifact.Other;Creature.Other/another artifact or creature> | Defined$ Self | CounterType$ REBUILDING | CounterNum$ 1 | SpellDescription$ Put a rebuilding counter on NICKNAME.
+A:AB$ CopyPermanent | Cost$ T SubCounter<3/REBUILDING> | CostDesc$ {T}, Remove 3 rebuilding counters from NICKNAME: | DefinedName$ Bosh, Iron Golem | SpellDescription$ Create a token that's a copy of Bosh, Iron Golem.
 DeckHas:Ability$Sacrifice|Token|Counters
 DeckHints:Type$Artifact
 Oracle:You can sacrifice creatures and artifacts interchangeably. (If an effect asks you to sacrifice one of them, you can sacrifice either.)\n{1}, {T}, Sacrifice another artifact or creature: Put a rebuilding counter on Slobad.\n{T}, Remove 3 Rebuilding Counters from Slobad: Create a token that's a copy of Bosh, Iron Golem.

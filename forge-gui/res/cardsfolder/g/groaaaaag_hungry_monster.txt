@@ -4,7 +4,7 @@ Types:Legendary Creature Ooze
 PT:4/4
 # Commander Suspend: also from the command zone, paying the commander tax and counting toward it (user ruling)
 K:Suspend:4:B G:Commander
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ Whenever CARDNAME attacks, you may sacrifice any number of other creatures. Draw that many cards, gain that much life, and put that many +1/+1 counters on CARDNAME.
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigSac | TriggerDescription$ Whenever CARDNAME attacks, you may sacrifice any number of other creatures. Draw that many cards, gain that much life, and put that many +1/+1 counters on NICKNAME.
 SVar:TrigSac:DB$ Sacrifice | Defined$ You | Amount$ Others | SacValid$ Creature.Other | SacMessage$ any number of other creatures | Optional$ True | RememberSacrificed$ True | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | NumCards$ Eaten | SubAbility$ DBGain
 SVar:DBGain:DB$ GainLife | LifeAmount$ Eaten | SubAbility$ DBCounters

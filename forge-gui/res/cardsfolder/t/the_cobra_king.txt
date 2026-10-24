@@ -2,7 +2,7 @@ Name:The Cobra King
 ManaCost:4 G U
 Types:Legendary Creature Snake Hawk Warrior
 PT:5/2
-T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ Player | TriggerZones$ Battlefield | Execute$ TrigCoil | TriggerDescription$ At the beginning of each player's upkeep, create a 1/1 blue Serpent creature token named Cobra Coil. When you do, if you control five or more Snakes and/or Serpents, choose one —
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ Player | TriggerZones$ Battlefield | Execute$ TrigCoil | TriggerDescription$ At the beginning of each player's upkeep, create a 1/1 blue Serpent creature token named Cobra Coil. When you do, if you control five or more Snakes and/or Serpents, ABILITY
 SVar:TrigCoil:DB$ Token | TokenScript$ u_1_1_serpent_cobra_coil | RememberTokens$ True | SubAbility$ DBImmediate
 SVar:DBImmediate:DB$ ImmediateTrigger | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ GE1 | Execute$ TrigStrike | SubAbility$ DBCleanup | TriggerDescription$ When you do, if you control five or more Snakes and/or Serpents, choose one —
 SVar:TrigStrike:DB$ Charm | Choices$ StrikeFirst,StrikeHard | ConditionCheckSVar$ Snakes | ConditionSVarCompare$ GE5

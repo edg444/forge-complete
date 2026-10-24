@@ -281,6 +281,11 @@ public final class AbilityFactory {
             spellAbility.setDescription(desc);
         } else if (spellAbility.hasParam("SpellDescription")) {
             spellAbility.rebuiltDescription();
+            // a Charm that words its own header still lists its modes (Mindslaver Toolkit's "Choose any number —")
+            if (api == ApiType.Charm && (spellAbility.getParam("SpellDescription").trim().endsWith("—")
+                    || spellAbility.hasParam("PawprintExact"))) {
+                spellAbility.setDescription(spellAbility.getDescription() + CharmEffect.makeModeLines(spellAbility));
+            }
         } else if (api == ApiType.Charm) {
             spellAbility.setDescription(CharmEffect.makeFormatedDescription(spellAbility));
         } else {

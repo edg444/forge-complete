@@ -105,6 +105,21 @@ public class CharmEffect extends SpellAbilityEffect {
     public static String makeFormatedDescription(SpellAbility sa) {
         return makeFormatedDescription(sa, true);
     }
+
+    /** The mode list alone, for a Charm whose SpellDescription words its own header ("Choose any number —"). */
+    public static String makeModeLines(SpellAbility sa) {
+        StringBuilder sb = new StringBuilder();
+        for (AbilitySub sub : makePossibleOptions(sa, false)) {
+            sb.append("\r\n");
+            if (sub.hasParam("Pawprint")) {
+                sb.append(StringUtils.repeat("{P}", Integer.parseInt(sub.getParam("Pawprint")))).append(" — ");
+            } else {
+                sb.append("• ");
+            }
+            sb.append(sub.getParam("SpellDescription"));
+        }
+        return sb.toString();
+    }
     public static String makeFormatedDescription(SpellAbility sa, boolean includeChosen) {
         Card source = sa.getHostCard();
 

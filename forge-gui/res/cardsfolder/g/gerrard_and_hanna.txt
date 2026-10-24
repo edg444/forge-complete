@@ -2,7 +2,7 @@ Name:Gerrard and Hanna
 ManaCost:3 W
 Types:Legendary Creature Human Soldier Artificer
 PT:3/4
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigGain | TriggerDescription$ Whenever CARDNAME attacks, you gain 1 life for each card in target opponent's hand. Then, choose one —
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigGain | TriggerDescription$ Whenever CARDNAME attacks, you gain 1 life for each card in target opponent's hand. Then, ABILITY
 SVar:TrigGain:DB$ GainLife | ValidTgts$ Opponent | TgtPrompt$ Select target opponent | Defined$ You | LifeAmount$ X | SubAbility$ DBCharm
 SVar:X:TargetedPlayer$CardsInHand
 SVar:DBCharm:DB$ Charm | Choices$ DBReturn,DBTap

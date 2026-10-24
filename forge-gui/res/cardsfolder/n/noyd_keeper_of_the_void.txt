@@ -4,7 +4,7 @@ Types:Legendary Creature Alien Rabbit
 PT:2/2
 # a real 30-minute timer (user ruling 2026-10-21), checked when a player would receive priority; TimerExpires is what
 # happens when it runs out
-T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigTimer | TriggerDescription$ When CARDNAME enters, if you don't have a timer running, start a 30-minute timer. When it runs out, CARDNAME delivers himself and all Food tokens you control to exile. You can't cast CARDNAME or create Food tokens for the rest of the game.
+T:Mode$ ChangesZone | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigTimer | TriggerDescription$ When NICKNAME enters, if you don't have a timer running, start a 30-minute timer. When it runs out, NICKNAME delivers himself and all Food tokens you control to exile. You can't cast NICKNAME or create Food tokens for the rest of the game.
 SVar:TrigTimer:DB$ StartTimer | Minutes$ 30
 SVar:TimerExpires:DB$ ChangeZone | Defined$ Self | Origin$ Battlefield,Graveyard,Hand,Library,Command | Destination$ Exile | SubAbility$ DBFood
 SVar:DBFood:DB$ ChangeZoneAll | ChangeType$ Food.token+YouCtrl | Origin$ Battlefield | Destination$ Exile | SubAbility$ DBForever

@@ -3781,6 +3781,8 @@ public class CardFactoryUtil {
             suspend.getRestrictions().setZone(suspendFrom);
             if (suspendFrom == ZoneType.Command) {
                 suspend.putParam("CommanderTaxApplies", "True");
+                // one ability on the card, so the hand version's text is the only one shown
+                suspend.putParam("Secondary", "True");
             }
             inst.addSpellAbility(suspend);
             }
