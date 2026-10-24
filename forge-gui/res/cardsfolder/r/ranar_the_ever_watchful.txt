@@ -5,7 +5,11 @@ PT:2/3
 K:Flying
 K:Vigilance
 S:Mode$ ReduceCost | ValidCard$ Card | Type$ Foretell | Amount$ 2 | FirstForetell$ True | Activator$ You | Description$ The first card you foretell each turn costs {0} to foretell.
-T:Mode$ ChangesZoneAll | Origin$ Hand | Destination$ Exile | ValidCards$ Card.YouOwn | Execute$ TrigToken | TriggerZones$ Battlefield | TriggerDescription$ Whenever one or more cards are put into exile from your hand or a spell or ability you control exiles one or more permanents from the battlefield, create a 1/1 white Spirit creature token with flying.
+T:Mode$ ChangesZoneAll | Origin$ Hand | Destination$ Exile | ValidCards$ Card.YouOwn | Execute$ TrigToken | TriggerZones$ Battlefield | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20210206 | TriggerDescription$ Whenever one or more cards are put into exile from your hand or a spell or ability you control exiles one or more permanents from the battlefield, create a 1/1 white Spirit creature token with flying.
+# R&D's Secret Lair: its only printing (Kaldheim Commander) says "Whenever you exile one or more cards from your
+# hand and/or permanents from the battlefield" - cards leaving your hand count only when a spell or ability you
+# control exiles them (Oracle update, 2021-06-18: any exile from your hand counts).
+T:Mode$ ChangesZoneAll | ValidCause$ SpellAbility.YouCtrl | Origin$ Hand | Destination$ Exile | ValidCards$ Card.YouOwn | Execute$ TrigToken | TriggerZones$ Battlefield | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20210206 | TriggerDescription$ (As printed) Whenever you exile one or more cards from your hand and/or permanents from the battlefield, create a 1/1 white Spirit creature token with flying.
 T:Mode$ ChangesZoneAll | ValidCause$ SpellAbility.YouCtrl | Origin$ Battlefield | Destination$ Exile | Execute$ TrigToken | TriggerZones$ Battlefield | Secondary$ True | TriggerDescription$ Whenever one or more cards are put into exile from your hand or a spell or ability you control exiles one or more permanents from the battlefield, create a 1/1 white Spirit creature token with flying.
 SVar:TrigToken:DB$ Token | TokenScript$ w_1_1_spirit_flying | TokenOwner$ You
 DeckHas:Ability$Token

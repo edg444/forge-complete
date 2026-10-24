@@ -4,5 +4,7 @@ Types:Creature Giant Berserker
 PT:7/6
 K:Trample
 T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigDealDamage | TriggerDescription$ When this creature dies, it deals 7 damage to a creature an opponent controls chosen at random.
-SVar:TrigDealDamage:DB$ DealDamage | NumDmg$ 7 | ValidTgts$ Creature.OppCtrl | TargetsAtRandom$ True
+SVar:TrigDealDamage:DB$ ChooseCard | Choices$ Creature.OppCtrl | AtRandom$ True | SubAbility$ DBDamage
+SVar:DBDamage:DB$ DealDamage | Defined$ ChosenCard | NumDmg$ 7 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 Oracle:Trample\nWhen this creature dies, it deals 7 damage to a creature an opponent controls chosen at random.

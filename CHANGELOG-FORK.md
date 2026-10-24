@@ -1455,6 +1455,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Left as Oracle: the printed "Golem" tokens (now Phyrexian Golem), Sphinx of the Second Sun's and Belbe's
     postcombat main phase wording, the Wills' "choose both" without "instead"; Nevinyrral still lists its three
     hexproof qualities on separate lines.
+- **Set review: Kaldheim Commander** (16 new names, `KaldheimAuditTest`):
+  - R&D's Secret Lair: *Hero of Bretagard* and *Ranar the Ever-Watchful* (their only printing says "Whenever you
+    exile one or more cards from your hand and/or permanents from the battlefield") count cards leaving your hand only
+    when a spell or ability you control exiles them (Oracle update, 2021-06-18: any exile from your hand counts).
+- **Set review: Kaldheim and Kaldheim Promos** (287 new names, `KaldheimAuditTest`):
+  - Fixed: *Spectral Steel* could never return an Aura (malformed target filter); *Cinderheart Giant* targeted its
+    random creature, so hexproof creatures were never picked (Oracle doesn't target); *Rampage of the Valkyries*
+    made only opponents sacrifice, not each other player; *Arni Brokenbrow*'s boast wasn't optional.
+  - In-game text: *Blizzard Brawl* reads in Oracle order; *Great Hall of Starnheim*'s "Sacrifice this land and a
+    creature you control"; *Icebreaker Kraken*'s "snow lands" (was "Land.Snows"); *Brinebarrow Intruder*'s target
+    prompt.
+  - Left as Oracle: the Sagas' "this Saga", "precombat" and "enters the battlefield" wording, Run Ashore's "their
+    choice of", Bounty of Skemfar's "up to one".
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 
