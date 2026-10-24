@@ -1125,6 +1125,33 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Left as Oracle: Aetherspouts' "top or bottom", Generator Servant's "If that mana", Act on Impulse's "cards
     exiled this way", Spectra Ward's "all colors", Mercurial Pretender's "gains", Avarice Amulet's "When",
     menace, "each turn" and "target creature or player" wording.
+- **Set review: Duel Decks: Speed vs. Cunning (Mardu Heart-Piercer, Mystic Monastery, Nomad Outpost, Zurgo
+  Helmsmasher, Thousand Winds, Jeskai Elder), Khans of Tarkir and Khans of Tarkir Promos** (228 new names,
+  `KhansOfTarkirAuditTest`):
+  - R&D's Secret Lair printed text: *Taigam's Scheming* and *Sultai Ascendancy* (Khans of Tarkir, their only
+    printing) look at the top cards and put any number into the graveyard, which isn't a surveil, so "whenever you
+    surveil" doesn't trigger.
+  - In-game text: *Howl of the Horde* ("You may choose new targets for the copy"), *Narset, Enlightened Master*,
+    *Quiet Contemplation*, the costs of *Necropolis Fiend* ("Exile X cards") and *Retribution of the Ancients*
+    ("counters"), *Sorin, Solemn Visitor*'s emblem ("of their choice"), stray spaces in *Embodiment of Spring* and
+    *Abzan Banner*.
+  - Left as Oracle: Raid's "attacked with a creature", Anafenza's graveyard replacement (its 2014 ruling already
+    read it the Oracle way), Villainous Wealth's "nonland cards", Ashcloud Phoenix's "under your control", Lens of
+    Clarity's "any time". The five Morph—Reveal cards still say "from your hand" (Oracle: "in your hand").
+- **Set review: Commander 2014 and its oversized commanders** (59 new names): in-game text only, no rules changes.
+  - In-game text: an instant or sorcery's casting restriction (`Text:`) is its own paragraph instead of running into
+    the spell's text (*Wake the Dead*, and older *Aleatory*, *Chaotic Strike*, *Choking Vines*, *Curtain of Light*,
+    *Dazzling Beauty*, *Disharmony*, *False Orders*, *Festival*, *Fog Patch*, *Panic*, *Rapid Fire*, *Savage Beating*,
+    *Suffocation*); *Domineering Will* no longer repeats "They block this turn if able."
+  - Left as Oracle: Masterwork of Ingenuity's and Containment Priest's "enter the battlefield", Assault Suit's "a
+    planeswalker you control", "of their choice" sacrifices and token templating.
+- **Set review: Friday Night Magic 2015, Ugin's Fate and Fate Reforged** (145 new names):
+  - Fixed: *Lightning Shrieker* shuffled itself away only at your own end step; it's every end step.
+  - In-game text: a bolster or adapt sub-ability no longer adds its own "Bolster N." / "Adapt N." line (*Abzan
+    Advantage*, *Honor's Reward*, *Map the Wastes*, and later *Pinion Feast* and *Jetfire, Ingenious Scientist*;
+    *Enduring Victory*, which relied on it, now says it itself); *Daghatar the Adamant*'s "Daghatar enters".
+  - Left as Oracle: Renowned Weaponsmith's "{2}", Ainok Guide's "on top of it", "with flying you control" and
+    mill / token templating.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

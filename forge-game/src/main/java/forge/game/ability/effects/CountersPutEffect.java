@@ -22,6 +22,7 @@ import forge.game.keyword.Keyword;
 import forge.game.player.Player;
 import forge.game.player.PlayerActionConfirmMode;
 import forge.game.player.PlayerController;
+import forge.game.spellability.AbilitySub;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.TargetRestrictions;
 import forge.game.staticability.StaticAbilityAdapt;
@@ -759,7 +760,8 @@ public class CountersPutEffect extends SpellAbilityEffect {
             if (!sa.hasParam("StackDescription")) {
                 sa.putParam("StackDescription", "SpellDescription");
             }
-            if (!sa.hasParam("SpellDescription")) {
+            // a sub-ability's keyword action is already in its parent's description, so it'd be shown twice
+            if (!sa.hasParam("SpellDescription") && !(sa instanceof AbilitySub)) {
                 sa.putParam("SpellDescription", "Adapt " + n + ".");
             }
         } else if (sa.hasParam("Bolster")) {
@@ -769,7 +771,7 @@ public class CountersPutEffect extends SpellAbilityEffect {
             sa.putParam("Choices", "Creature.leastToughnessControlledByYou");
             sa.putParam("ChoiceTitle", Localizer.getInstance().getMessage("lblChooseACreatureWithLeastToughness"));
             sa.putParam("SkipReceiveCounters", "True");
-            if (!sa.hasParam("SpellDescription")) {
+            if (!sa.hasParam("SpellDescription") && !(sa instanceof AbilitySub)) {
                 StringBuilder sb = new StringBuilder("Bolster");
                 sb.append(" ").append(n);
                 String desc = Lang.nounWithNumeralExceptOne(n, "+1/+1 counter");

@@ -3815,6 +3815,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         if (spellText.contains("(NOTE: ") && spellText.endsWith(".)") && !spellText.endsWith("\r\n")) {
             sb.append("\r\n");
         }
+        // a casting restriction (Wake the Dead's "Cast this spell only during combat ...") is its own paragraph
+        if (sb.length() > 0 && sb.charAt(sb.length() - 1) != '\n') {
+            sb.append("\r\n\r\n");
+        }
 
         final StringBuilder sbSpell = new StringBuilder();
 
