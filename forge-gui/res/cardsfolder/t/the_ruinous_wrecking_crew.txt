@@ -3,7 +3,7 @@ ManaCost:X B R
 Types:Legendary Creature Human Villain
 PT:2/2
 K:etbCounter:P1P1:X:no Condition:CARDNAME enters with X +1/+1 counters on it.
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When NICKNAME enters, ABILITY
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigCharm | TriggerDescription$ When CARDNAME enters, ABILITY
 SVar:TrigCharm:DB$ Charm | MinCharmNum$ 0 | CharmNum$ X | Choices$ DBDiscard,DBLoseLife,DBDestroy,DBSac
 SVar:DBDiscard:DB$ Discard | Mode$ TgtChoose | SubAbility$ DBDraw | SpellDescription$ Discard a card, then draw a card.
 SVar:DBDraw:DB$ Draw

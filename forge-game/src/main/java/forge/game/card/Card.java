@@ -3091,7 +3091,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.startsWith("Emerge") || keyword.startsWith("More Than Meets the Eye")
                         || keyword.startsWith("Level up") || keyword.startsWith("Plot") || keyword.startsWith("Motivate")
                         || keyword.startsWith("Impending") || keyword.equals("Suspend")
-                        || keyword.startsWith("Replicate") || keyword.startsWith("Splice")) {
+                        || keyword.startsWith("Replicate") || keyword.startsWith("Splice") || keyword.startsWith("Teamwork")) {
                     sbLong.append(inst.getTitle());
                     // Oracle ends a keyword with a non-mana cost like a sentence: "Buyback—Sacrifice a land."
                     if (inst instanceof KeywordWithCostInterface kwc && kwc.getCost() != null && kwc.isComplexCost()) {
@@ -3977,6 +3977,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                     }
                     sbAfter.append(titleAsPrinted(inst)).append(" (").append(reminder).append(")");
                     sbAfter.append("\r\n");
+                } else if (keyword.startsWith("Teamwork")) {
+                    sbBefore.append(inst.getTitle()).append(" (").append(inst.getReminderText()).append(")\r\n");
                 } else if (keyword.equals("Gift")) {
                     sbBefore.append(keyword);
                     if (state.getFirstAbility().hasAdditionalAbility("GiftAbility")) {

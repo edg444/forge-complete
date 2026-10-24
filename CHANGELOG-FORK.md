@@ -535,6 +535,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   or sorcery card" (*Postmortem Professor*; was "instant;sorcery"). Left as Oracle: keyword order on the Archaics,
   *Colorstorm Stallion* and *Old-Growth Educator*.
 
+- **Set review: Marvel Super Heroes Jumpstart Front Cards** (54 new names): theme cards; not in Forge.
+- **Set review: Marvel Super Heroes Commander** (384 new names, `MarvelSuperHeroesAuditTest`): Teamwork wasn't shown on
+  any card (17 across both Marvel sets; missing on spells, raw "Teamwork:2" on permanents); *The Fantastic Four*'s modes weren't listed;
+  *Rhino*'s trample clause and *Criminal Enterprise*'s closing parenthesis; "Remove two +1/+1 counters from Darwin";
+  "Equip Hero {3}" (*Hulkbuster Armor*); *Origin of Thor*'s chapter I had a "Discard a card:" prefix.
+- **Set review: Marvel Super Heroes** (266 new names, `MarvelSuperHeroesAuditTest`): teamwork modal spells read
+  "Choose X" (now "Choose one", still exactly both with teamwork: *Atlantis Attacks*, *Go Nuts!*, *HULK SMASH!*,
+  *Murdock's Crusade*, *Widow's Bite*); *Bullseye*'s "Sacrifice an artifact or discard a nonland card"; "Put a stun
+  counter on Jessica Jones"; "Equip worthy {1}" (*Mjölnir*); "The Ruinous Wrecking Crew enters" (was "The enters").
+- **Set review: Spotlight Series** (1 new name): no changes.
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three

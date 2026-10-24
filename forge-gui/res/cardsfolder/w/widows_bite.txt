@@ -2,7 +2,7 @@ Name:Widow's Bite
 ManaCost:1 B
 Types:Instant
 K:Teamwork:3
-A:SP$ Charm | CharmNum$ X | Choices$ DBPump,DBDebuff | AdditionalDescription$ . If this spell was cast using teamwork, choose both instead.
+A:SP$ Charm | MinCharmNum$ Count$Teamwork.2.1 | CharmNum$ Count$Teamwork.2.1 | Choices$ DBPump,DBDebuff | AdditionalDescription$ . If this spell was cast using teamwork, choose both instead.
 SVar:DBPump:DB$ Pump | ValidTgts$ Creature | KW$ Deathtouch | SpellDescription$ Target creature gains deathtouch until end of turn.
 SVar:DBDebuff:DB$ Pump | ValidTgts$ Creature | IsCurse$ True | NumAtt$ -2 | NumDef$ -2 | SpellDescription$ Target creature gets -2/-2 until end of turn.
 SVar:X:Count$Teamwork.2.1

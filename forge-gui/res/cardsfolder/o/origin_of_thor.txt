@@ -2,7 +2,7 @@ Name:Origin of Thor
 ManaCost:2 R
 Types:Enchantment Saga
 K:Chapter:3:DBDraw,DBEffect,DBPump
-SVar:DBDraw:AB$ Draw | Cost$ Discard<1/Card> | NumCards$ 2 | SpellDescription$ You may discard a card. If you do, draw two cards.
+SVar:DBDraw:AB$ Draw | Cost$ Discard<1/Card> | CostDesc$ | NumCards$ 2 | SpellDescription$ You may discard a card. If you do, draw two cards.
 SVar:DBEffect:DB$ Effect | Triggers$ CastTrigger | SpellDescription$ Whenever you cast a spell this turn, put a +1/+1 counter on target creature you control.
 SVar:CastTrigger:Mode$ SpellCast | ValidCard$ Card | ValidActivatingPlayer$ You | TriggerZones$ Command | Execute$ TrigPutCounter | TriggerDescription$ Whenever you cast a spell this turn, put a +1/+1 counter on target creature you control.
 SVar:TrigPutCounter:DB$ PutCounter | ValidTgts$ Creature.YouCtrl | ValidTgtsDesc$ creature you control | CounterType$ P1P1 | CounterNum$ 1
