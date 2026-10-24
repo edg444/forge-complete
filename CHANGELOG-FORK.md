@@ -689,6 +689,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       blockers. The attack AI's all-out check now counts the blockers a lure takes up.
     - Irresistible Prey (`AILogic$ MustBeBlocked`): an attacker that kills whichever blocker it gets and survives.
     - Auriok Siege Sled: its "blocks this creature" ability already had AI; the flag only kept it from being used.
+  - *Cluster: change targets* (`NoAiChangeTargetsTest`): the AI can now choose new targets for a spell or ability
+    (before, it always left them unchanged). New `RetargetAi` scores each possible target by how good it is for the AI
+    that the spell hits it: a harmful spell is best on the opponent's most valuable thing it can kill, a helpful one on
+    the AI's own. It only changes to something better. A change-targets card is used on an opponent's spell on top of
+    the stack when the change is worth it.
+    - Bolt Bend, Deflection, Divert, Goblin Flectomancer, Imp's Mischief, Meddle, Misdirection, Rebound, Redirect,
+      Reflecting Mirror, Reroute, Shunt, Sideswipe, Swerve, Wild Ricochet, Boltbender: now used.
+    - Imp's Mischief counts the life it costs; Goblin Flectomancer needs a gain worth sacrificing itself for; Wild
+      Ricochet adds the value of its copy; Meddle only for a spell whose one target is a creature.
+    - Cards that already had change-target abilities but no AI to use them now use them too: Quicksilver Dragon, Silver
+      Wyvern, Willbender, Deflecting Swat, Redirect Lightning, Ricochet Trap, Untimely Malfunction's mode, and others.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

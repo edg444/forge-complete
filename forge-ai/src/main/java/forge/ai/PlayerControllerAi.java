@@ -1628,8 +1628,22 @@ public class PlayerControllerAi extends PlayerController {
 
     @Override
     public TargetChoices chooseNewTargetsFor(SpellAbility ability, Predicate<GameObject> filter, boolean optional) {
-        // AI currently can't do this. But when it can it will need to be based on Ability API
-        return null;
+        final SpellAbility sa = ability.isWrapper() ? ((WrappedAbility) ability).getWrappedAbility() : ability;
+        // only ever a change for the better: an unchanged spell keeps its targets
+        final List<GameObject> pick = forge.ai.ability.RetargetAi.best(player, sa, filter);
+        if (pick == null) {
+            return null;
+        }
+        final List<Integer> divided = sa.isDividedAsYouChoose() ? new ArrayList<>(sa.getTargets().getDividedValues()) : null;
+        final int total = sa.isDividedAsYouChoose() ? sa.getTotalDividedValue() : 0;
+        sa.resetTargets();
+        for (int i = 0; i < pick.size(); i++) {
+            sa.getTargets().add(pick.get(i));
+            if (divided != null) {
+                sa.addDividedAllocation(pick.get(i), pick.size() == 1 ? total : i < divided.size() ? divided.get(i) : 0);
+            }
+        }
+        return sa.getTargets();
     }
 
     @Override

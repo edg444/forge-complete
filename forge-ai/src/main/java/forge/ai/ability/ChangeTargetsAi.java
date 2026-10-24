@@ -26,6 +26,19 @@ public class ChangeTargetsAi extends SpellAbilityAi {
         if ("Self".equals(sa.getParam("DefinedMagnet"))) {
             return doSpellMagnet(sa, topSa, ai);
         }
+        if (sa.usesTargeting() && !sa.hasParam("DefinedMagnet") && !sa.hasParam("RandomTarget") && topSa != null) {
+            return doRetarget(sa, topSa, ai);
+        }
+        if ("ValidStack SpellAbility".equals(sa.getParam("Defined"))) {
+            // Boltbender: any number of them, each changed only if that's better
+            for (final forge.game.spellability.SpellAbilityStackInstance si : game.getStack()) {
+                final SpellAbility s = si.getSpellAbility();
+                if (s.getActivatingPlayer() != null && s.getActivatingPlayer().isOpponentOf(ai) && RetargetAi.gain(ai, s, null) >= 30) {
+                    return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+                }
+            }
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
 
         // The AI can't otherwise play this ability, but should at least not
         // miss mandatory activations (e.g. triggers).
@@ -33,6 +46,71 @@ public class ChangeTargetsAi extends SpellAbilityAi {
             return new AiAbilityDecision(50, AiPlayDecision.MandatoryPlay);
         }
         return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+    }
+
+    @Override
+    protected boolean willPayCosts(Player payer, SpellAbility sa, forge.game.cost.Cost cost, Card source) {
+        if (ComputerUtilCost.isSacrificeSelfCost(cost) && sa.usesTargeting() && !sa.hasParam("DefinedMagnet")) {
+            // Goblin Flectomancer: doRetarget already weighs the retarget against the card itself
+            return ComputerUtilCost.checkLifeCost(payer, cost, source, 4, sa) && ComputerUtilCost.checkDiscardCost(payer, cost, source, sa);
+        }
+        return super.willPayCosts(payer, sa, cost, source);
+    }
+
+    @Override
+    public boolean confirmAction(Player player, SpellAbility sa, forge.game.player.PlayerActionConfirmMode mode, String message,
+            java.util.Map<String, Object> params) {
+        // "you may choose new targets": the new targets are only taken if they're better
+        return true;
+    }
+
+    // Deflection, Meddle, Redirect, Willbender: the opponent's spell on top of the stack, if new targets are worth it
+    private AiAbilityDecision doRetarget(SpellAbility sa, SpellAbility topSa, Player ai) {
+        final Player caster = topSa.getActivatingPlayer();
+        if (caster == null || !caster.isOpponentOf(ai) || !sa.canTarget(topSa)) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final Card host = sa.getHostCard();
+        // Meddle, Quicksilver Dragon: only a spell whose one target is a creature (or this) changes at all
+        if (sa.hasParam("ConditionTargetValidTargeting")) {
+            final String[] valid = sa.getParam("ConditionTargetValidTargeting").split(",");
+            final TargetChoices now = topSa.getTargets();
+            if (now.isEmpty() || sa.hasParam("ConditionTargetsSingleTarget") && now.size() != 1
+                    || !now.getTargetCards().stream().allMatch(c -> c.isValid(valid, ai, host, sa)) || now.getTargetCards().size() != now.size()) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            }
+        }
+        final Card source = topSa.getTargetCard() != null ? topSa.getTargetCard() : host;
+        final java.util.function.Predicate<forge.game.GameObject> filter = sa.hasParam("TargetRestriction")
+                ? forge.game.GameObjectPredicates.restriction(sa.getParam("TargetRestriction").split(","), ai, source, sa) : null;
+        int gain = RetargetAi.gain(ai, topSa, filter);
+        boolean draws = false;
+        for (SpellAbility sub = sa.getSubAbility(); sub != null; sub = sub.getSubAbility()) {
+            if (sub.getApi() == forge.game.ability.ApiType.CopySpellAbility) {
+                // Wild Ricochet: a copy with the best targets on top
+                gain += RetargetAi.copyValue(ai, topSa, null);
+            } else if (sub.getApi() == forge.game.ability.ApiType.LoseLife) {
+                // Imp's Mischief: life equal to the spell's mana value
+                final int life = topSa.getHostCard().getCMC();
+                if (ai.getLife() <= life + 3) {
+                    return new AiAbilityDecision(0, AiPlayDecision.CurseEffects);
+                }
+                gain -= life * 6;
+            } else if (sub.getApi() == forge.game.ability.ApiType.Draw) {
+                draws = true;
+            }
+        }
+        int threshold = sa.isSpell() && !draws ? 60 : 30;
+        if (host.isCreature() && sa.getPayCosts() != null && sa.getPayCosts().hasSpecificCostType(forge.game.cost.CostSacrifice.class)) {
+            // Goblin Flectomancer gives itself up for it
+            threshold += ComputerUtilCard.evaluateCreature(host) / 2;
+        }
+        if (gain < threshold) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        sa.resetTargets();
+        sa.getTargets().add(topSa);
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
 
     private AiAbilityDecision doSpellMagnet(SpellAbility sa, SpellAbility topSa, Player aiPlayer) {
