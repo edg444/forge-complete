@@ -6,7 +6,7 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigChangeZone:DB$ Token | TokenScript$ voja_friend_to_elves | TokenOwner$ You
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Wolf.YouCtrl | TriggerZones$ Battlefield | Execute$ TrigGainLife | TriggerDescription$ Whenever a Wolf you control enters, you gain 3 life and that creature fights up to one target creature you don't control.
 SVar:TrigGainLife:DB$ GainLife | Defined$ You | LifeAmount$ 3 | SubAbility$ DBFight
-SVar:DBFight:DB$ Fight | Defined$ TriggeredCardLKICopy | ValidTgts$ Creature.OppCtrl | TgtPrompt$ Choose target creature an opponent controls | TargetMin$ 0 | TargetMax$ 1
+SVar:DBFight:DB$ Fight | Defined$ TriggeredCardLKICopy | ValidTgts$ Creature.YouDontCtrl | TgtPrompt$ Choose target creature you don't control | TargetMin$ 0 | TargetMax$ 1
 SVar:PlayMain1:TRUE
 DeckHints:Type$Wolf
 DeckHas:Ability$Token|LifeGain

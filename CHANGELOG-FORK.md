@@ -1339,6 +1339,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     "shuffle their library" wording. The Lockets' printed hybrid costs are a data artifact, not a difference.
 - **Set review: M19 Gift Pack** (5 new names): no changes.
 - **Set review: Game Night** (5 new names): no changes.
+- **Set review: Ravnica Allegiance and Ravnica Allegiance Promos** (242 new names, `WarOfTheSparkAuditTest`):
+  - Fixed: *Orzhov Locket*'s draw ability didn't tap it, so it could also be tapped for mana that turn.
+  - In-game text: *Amplifire*'s "its base toughness becomes twice that card's toughness".
+- **Set review: Mythic Edition** (2 new names): no changes.
+- **Set review: War of the Spark and War of the Spark Promos** (245 new names, `WarOfTheSparkAuditTest`):
+  - Fixed: *Tolsimir, Friend to Wolves* could only fight an opponent's creature, not any creature you don't control.
+  - In-game text: *Finale of Revelation*'s "Exile Finale of Revelation.", *Time Wipe* repeated "Destroy all
+    creatures.", *Soul Diviner*'s cost comma, *Courage in Crisis*'s proliferate reminder; *Prison Realm*'s target
+    prompt mentions planeswalkers.
+  - Left as Oracle: "amass N" (now "amass Zombies N"), Karn, the Great Creator's "in exile" (a face-down card has no
+    characteristics, CR 406.3a), Vivien, Champion of the Wilds' "you may look at that card", Bolas's Citadel's "play
+    the top card", Dreadhorde Arcanist's and Finale of Promise's "card ... this turn" (CR 400.7h), Spark Double's
+    "if that permanent is legendary", ability words, mill wording.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 
