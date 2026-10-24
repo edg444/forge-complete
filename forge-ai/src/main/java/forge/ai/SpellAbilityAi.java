@@ -72,6 +72,10 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
                 sa.getHostCard().getController(), sa.getHostCard(), sa)) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
+        // a pact is only cast with next upkeep's payment in hand
+        if (!forge.ai.ability.PactAi.canPayLater(aiPlayer, sa)) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
         final AiAbilityDecision whole = wholeCardLogic(aiPlayer, sa, false);
         if (whole != null) {
             return whole;
@@ -320,6 +324,9 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         }
         if (forge.ai.ability.SacrificePayoffAi.handles(logic)) {
             return forge.ai.ability.SacrificePayoffAi.decide(ai, sa);
+        }
+        if ("Blink".equals(logic)) {
+            return forge.ai.ability.BlinkAi.decide(ai, sa);
         }
 
         return null;

@@ -728,6 +728,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       the opponent's end step. The cost then sacrifices the creature it planned on.
     - `AILogic$ SacrificeAny` (Last-Ditch Effort, Landslide): "sacrifice any number" for damage, when that's lethal,
       sacrificing no more than it takes.
+  - *Cluster: blink own permanents, pacts* (`NoAiBlinkPactTest`):
+    - `AILogic$ Blink` (Ghostly Flicker, Ghostway, Illusionist's Stratagem, Siren's Ruse): new `BlinkAi`. A blink is
+      worth it for a permanent about to be destroyed (in answer to removal), an enters-the-battlefield trigger to use
+      again, an opponent's Aura to shed, or a tapped land that comes back untapped. Its own Auras and Equipment falling
+      off count against it, and tokens are never blinked. Ghostway answers a sweeper. Ghostly Flicker's second target
+      can be a free one.
+    - Pacts (Intervention Pact, Pact of Negation, Pact of the Titan, Slaughter Pact, Summoner's Pact): new `PactAi`.
+      A pact is cast only when its lands can pay next upkeep's cost in full and in color, on top of any pact already
+      owed. The AI already pays that cost when it can, and each pact's own effect already had AI.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).
