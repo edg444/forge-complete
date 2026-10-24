@@ -1352,6 +1352,26 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     characteristics, CR 406.3a), Vivien, Champion of the Wilds' "you may look at that card", Bolas's Citadel's "play
     the top card", Dreadhorde Arcanist's and Finale of Promise's "card ... this turn" (CR 400.7h), Spark Double's
     "if that permanent is legendary", ability words, mill wording.
+- **Set review: Modern Horizons** (209 new names, `Commander2019AuditTest`):
+  - In-game text: *Vengeful Devil*'s "Morbid —", *Kaya's Guile*'s "Exile all opponents' graveyards.", *Pyrophobia*
+    repeated "Cowards can't block this turn." Engine: entwine's reminder says "Choose all" rather than "Choose both"
+    on a charm with more than two modes (Kaya's Guile; Untap, Upkeep, Draw's Oracle says "all of them").
+  - Left as Oracle: Watcher for Tomorrow's printed "Hideaway" (it already included entering tapped), Cabal
+    Therapist's "precombat main phase", Collected Conjuring's "sorcery cards", Splicer's Skill's Golem type (the token
+    gained Phyrexian later), "Totem armor", shuffle wording.
+- **Set review: Core Set 2020 and Core Set 2020 Promos** (174 new names):
+  - Fixed: *Cavalier of Thorns* didn't reveal the cards it looks at.
+  - In-game text: *Goldmane Griffin* named "Ajani, Valiant" instead of Ajani, Inspiring Leader; *Noxious Grasp*
+    repeated "You gain 1 life."
+  - Left as Oracle: Mystic Forge's "cast the top card ... if it's an artifact card or a colorless nonland card",
+    Aether Gust's "on the top or bottom", Vivien, Arkbow Ranger's "choose ... reveal it", Chandra, Acolyte of Flame's
+    "that card ... this turn" (CR 400.7h), Omnath's ability word, mill wording.
+- **Set review: 2018 Heroes of the Realm** (4 new names, `Commander2019AuditTest`):
+  - Fixed: *The Legend of Arena*'s planeswalker got its extra loyalty after entering instead of entering with it;
+    its chapters' second sentences weren't shown.
+- **Set review: Commander 2019** (57 new names): no changes.
+  - Left as Oracle: Elsha of the Infinite's "cast the top card ... if it's a noncreature, nonland card", Chainer's
+    "creature card", Wall of Stolen Identity's "any creature".
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

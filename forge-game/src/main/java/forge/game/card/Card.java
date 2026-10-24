@@ -3903,7 +3903,14 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.startsWith("Plot") || keyword.startsWith("Mayhem")
                         || keyword.startsWith("Splice") || keyword.startsWith("Spellmorph")
                         || keyword.startsWith("Reverse miracle")) {
-                    sbAfter.append(titleAsPrinted(inst)).append(" (").append(inst.getReminderText()).append(")");
+                    String reminder = inst.getReminderText();
+                    // "both" only fits a two-mode charm (Kaya's Guile has four)
+                    SpellAbility charm = state.getFirstAbility();
+                    if (keyword.startsWith("Entwine") && charm != null && charm.getApi() == ApiType.Charm
+                            && charm.getAdditionalAbilityList("Choices").size() > 2) {
+                        reminder = reminder.replace("Choose both", "Choose all");
+                    }
+                    sbAfter.append(titleAsPrinted(inst)).append(" (").append(reminder).append(")");
                     sbAfter.append("\r\n");
                 } else if (keyword.equals("Gift")) {
                     sbBefore.append(keyword);
