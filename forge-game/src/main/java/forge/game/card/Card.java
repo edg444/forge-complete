@@ -3377,8 +3377,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                     if (keyword.contains("Strike")) {
                         keyword = keyword.replace("Strike", "strike");
                     }
-                    sb.append(i !=0 && sb.length() !=0 ? ", " : "");
-                    sb.append(i > 0 && sb.length() !=0 ? StringUtils.uncapitalize(keyword) : keyword);
+                    // a long-form keyword after Flash still counts in i, so check the line itself ("Flash", Kicker, Flying)
+                    final boolean midLine = i != 0 && sb.length() != 0 && sb.charAt(sb.length() - 1) != '\n';
+                    sb.append(midLine ? ", " : "");
+                    sb.append(midLine ? StringUtils.uncapitalize(keyword) : keyword);
                 }
                 if (sbLong.length() > 0) {
                     sbLong.append("\r\n");
@@ -3413,8 +3415,45 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         final String keywordLine = joinPairedFrom(joinPairedFrom(sb.toString(), "protection"), "hexproof");
         sb.setLength(0);
         sb.append(keywordLine);
-        sb.append(sbLong);
+        sb.append(joinProtectionLines(sbLong.toString()));
         return CardTranslation.translateMultipleDescriptionText(sb.toString(), this);
+    }
+
+    // Oracle prints consecutive protections as one ability: "Protection from Spirits and from Arcane",
+    // "Protection from Vampires, from Werewolves, and from Zombies".
+    private static String joinProtectionLines(final String text) {
+        final String prefix = "Protection from ";
+        final String[] lines = text.split("\r\n", -1);
+        final List<String> out = new ArrayList<>();
+        for (int n = 0; n < lines.length; n++) {
+            if (!lines[n].startsWith(prefix)) {
+                out.add(lines[n]);
+                continue;
+            }
+            final List<String> froms = new ArrayList<>();
+            froms.add(lines[n].substring(prefix.length()));
+            int next = n + 1;
+            while (true) {
+                int look = next;
+                while (look < lines.length && lines[look].isEmpty()) {
+                    look++;
+                }
+                if (look >= lines.length || !lines[look].startsWith(prefix)) {
+                    break;
+                }
+                froms.add(lines[look].substring(prefix.length()));
+                n = look;
+                next = look + 1;
+            }
+            if (froms.size() == 1) {
+                out.add(lines[n]);
+            } else if (froms.size() == 2) {
+                out.add(prefix + froms.get(0) + " and from " + froms.get(1));
+            } else {
+                out.add(prefix + String.join(", from ", froms.subList(0, froms.size() - 1)) + ", and from " + froms.get(froms.size() - 1));
+            }
+        }
+        return String.join("\r\n", out);
     }
 
     // Oracle joins exactly two of these: "protection from white and from blue", "hexproof from artifacts and

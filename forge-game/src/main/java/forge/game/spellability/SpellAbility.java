@@ -1100,7 +1100,10 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
             }
         }
         if (hasParam("CostDesc")) {
-            sb.append(getParam("CostDesc")).append(" ");
+            // an empty CostDesc hides a cost the SpellDescription already words ("Tap any number of ... When you do")
+            if (!getParam("CostDesc").isEmpty()) {
+                sb.append(getParam("CostDesc")).append(" ");
+            }
         } else {
             if (hasParam("AlternateCost")) {
                 Cost alternateCost = new Cost(getParam("AlternateCost"), payCosts.isAbility());

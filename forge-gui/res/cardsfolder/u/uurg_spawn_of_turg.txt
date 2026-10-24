@@ -3,8 +3,12 @@ ManaCost:B B G
 Types:Legendary Creature Frog Beast
 PT:*/5
 S:Mode$ Continuous | CharacteristicDefining$ True | SetPower$ X | Description$ NICKNAME's power is equal to the number of land cards in your graveyard.
-T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigSurveil | TriggerDescription$ At the beginning of your upkeep, surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigSurveil | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20250801 | TriggerDescription$ At the beginning of your upkeep, surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)
 SVar:TrigSurveil:DB$ Surveil | Amount$ 1
+# R&D's Secret Lair: printings before Edge of Eternities Commander's say "look at the top card" instead of
+# "surveil 1", so surveil triggers don't see them.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigLookPrinted | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20250801 | TriggerDescription$ (As printed) At the beginning of your upkeep, look at the top card of your library. You may put that card into your graveyard.
+SVar:TrigLookPrinted:DB$ Dig | DigNum$ 1 | ChangeNum$ Any | DestinationZone$ Graveyard | LibraryPosition2$ 0 | NoReveal$ True
 A:AB$ GainLife | Cost$ B G Sac<1/Land> | LifeAmount$ 2 | SpellDescription$ You gain 2 life.
 SVar:X:Count$ValidGraveyard Land.YouOwn
 DeckHas:Ability$LifeGain|Graveyard|Sacrifice

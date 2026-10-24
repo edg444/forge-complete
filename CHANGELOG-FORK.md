@@ -1575,6 +1575,28 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     gaining the Book type, Black Market Connections' "precombat main phase".
 - **Set review: Battle for Baldur's Gate Tokens** (1 new name): *Baldur's Gate Wilderness* (a 20-room paper dungeon)
   isn't in Forge.
+- **Set review: Double Masters 2022** (1 new name): no changes.
+- **Set review: 30th Anniversary Play Promos** (1 new name): no changes.
+- **Set review: Dominaria United Commander** (48 new names): no script changes; *Greensleeves, Maro-Sorcerer*'s
+  protections now read as one ability (see Dominaria United). Left as Oracle: *Tiller Engine*'s printed "enters tapped
+  and under your control" (same ability).
+- **Set review: Dominaria United and its Promos** (243 new names, `DominariaUnitedAuditTest`):
+  - Fixed: *Aggressive Sabotage* could only target an opponent (Oracle says "target player").
+  - R&D's Secret Lair: *Uurg, Spawn of Turg*'s printings before Edge of Eternities Commander's look at the top card
+    instead of surveilling, so surveil triggers don't see them.
+  - In-game text: a keyword after Flash and a long-form keyword no longer starts with a comma (*Cleaving Skyrider*'s
+    ", flying"); consecutive protections join the way Oracle prints them ("Protection from planeswalkers and from
+    Wizards", "from Vampires, from Werewolves, and from Zombies"; also *Baneslayer Angel*, *Kitsune Riftwalker*,
+    *Emrakul, the World Anew*, *Balefang the Unslayable*); legends' self-sacrifice costs keep the name ("Sacrifice
+    Vohar", *King Darien*, plus the *Nivea*, *Pizza Face*, *Professor Zei*, *Kirk* and *Lander Rizzi* descriptions that
+    weren't showing); an empty cost description no longer leaves a double space (*Yotia Declares War*, *Founding of
+    Omashu*, *Summon: G.F. Ifrit*); *Sheoldred's Restoration* had no text; *Colossal Growth*'s and *Rundvelt
+    Hordemaster*'s second sentences; *Protect the Negotiators* repeated its counter clause; "another Cleric"
+    (*Shadow-Rite Priest*); "{1}," (*The Ever-Changing 'Dane*); Domain on *Jodah's Codex* and *Radha's Firebrand*;
+    *The Lady of Otaria*'s "You may put".
+  - Left as Oracle: *Argivian Phalanx*'s spelled-out affinity, Sagas' printed self-references, *Yotia Declares War*'s
+    "becomes a creature", *Najal*'s "when you cast your next".
+- **Set review: Dominaria United Jumpstart Front Cards** (10 new names): theme cards, not game pieces; not in Forge.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

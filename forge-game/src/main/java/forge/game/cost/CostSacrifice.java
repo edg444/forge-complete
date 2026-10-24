@@ -97,8 +97,8 @@ public class CostSacrifice extends CostPartWithList {
         }
 
         if (payCostFromSource()) {
-            sb.append(getTypeDescription() == null || !getTypeDescription().startsWith("this")
-                    ? getType() : getTypeDescription());
+            // legends keep their name: Sac<1/CARDNAME/NICKNAME> is "Sacrifice Vohar"
+            sb.append(getTypeDescription() == null ? getType() : getTypeDescription());
         } else if (getAmount().equals("X")) {
             String typeDesc = getType().toLowerCase().replace(";","s and/or ");
             sb.append("any number of ").append(typeDesc).append("s");
