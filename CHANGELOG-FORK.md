@@ -460,6 +460,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   ("choose a creature you control or reveal a creature card"); *Say Its Name*'s "Exile this card and two other cards
   named Say Its Name" (was a raw filter). Left as Oracle: Room layouts, *Rendmaw*'s keyword order.
 
+- **Set review: Foundations and its Promos** (135 new names): no changes. Left as Oracle: *Tragic Banshee*'s and
+  *Ashroot Animist*'s clarified wordings.
+- **Set review: Foundations Front Cards and Jumpstart Front Cards** (41 new names): theme cards, not game pieces; not
+  in Forge.
+- **Set review: Foundations Jumpstart** (53 new names): "Remove a +1/+1 counter from Brigone".
+- **Set review: MagicFest 2025** (3 new names, the fork's playtest planes): no changes.
+- **Set review: Aetherdrift and its Promos** (255 new names): "Sacrifice one or more artifacts" (*Radiant Lotus*);
+  *Guidelight Pathmaker*'s "If you search your library this way, shuffle"; "Tap three other untapped creatures"
+  (*Voyager Glidecar*; was "other untapped other"). Left as Oracle: *Pit Automaton*'s printing lacks "that isn't a mana
+  ability", but Forge never fires activation triggers for mana abilities, so a printed version would play the same;
+  *Sire of Seven Deaths*' keyword lines.
+- **Set review: Aetherdrift Commander** (20 new names): no changes.
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three
