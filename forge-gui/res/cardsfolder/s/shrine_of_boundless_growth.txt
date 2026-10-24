@@ -6,5 +6,4 @@ T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | E
 SVar:TrigAddCounter:DB$ PutCounter | CounterType$ CHARGE | CounterNum$ 1
 A:AB$ Mana | Cost$ T Sac<1/CARDNAME> | Produced$ C | Amount$ X | SpellDescription$ Add {C} for each charge counter on this artifact.
 SVar:X:Count$CardCounters.CHARGE
-AI:RemoveDeck:All
 Oracle:At the beginning of your upkeep and whenever you cast a green spell, put a charge counter on this artifact.\n{T}, Sacrifice this artifact: Add {C} for each charge counter on this artifact.

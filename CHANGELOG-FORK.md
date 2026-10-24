@@ -568,6 +568,28 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       plays them sensibly. Outrider en-Kor, Pili-Pala, Quarum Trench Gnomes, Quicksilver Dragon, Rainbow Crow, Razia,
       Boros Archangel, Resistance Fighter: unflagged for their bodies (the redirects, the untap-symbol mana, the color
       change and the damage prevention are never activated).
+  - *R and S*:
+    - Singing Tree: the Island of Wak-Wak check (zero the power of the biggest attacker).
+    - Saproling Cluster: now `AI:RemoveDeck:Random`, so the AI uses an opponent's.
+    - Righteousness, Rimehorn Aurochs, Rimewind Taskmage, Ring of Gix, Rishadan Port, Rith's Attendant, Ritual of the
+      Machine, River's Grasp, Roar of Jukai, Roar of the Kha, Rock Hydra, Roiling Horror, Role Reversal, Rootrunner,
+      Rootwater Mystic, Rotting Giant, Rouse, Rugged Prairie, Ruins of Trokair, Rummaging Wizard, the seven Runes of
+      Protection, Ruric Thar, the Unbowed, Rushwood Herbalist, Rust, Ruthless Invasion, Sage of Ancient Lore,
+      Saheeli's Lattice, Saltcrusted Steppe, Samite Censer-Bearer, Sanctum Guardian, Sanctum of Eternity, Sandsower,
+      Sandstone Deadfall, Sandstone Needle, Sandstorm Eidolon, Sanguimancy, Sapphire Charm, Saprazzan Skerry, Saproling
+      Burst, Sarulf, Realm Eater, Satyr Piper, Savage Beating, Scab-Clan Giant, Scarwood Bandits, School of the Unseen,
+      Scrounging Bandar, Scryb Ranger, Scrying Sheets, Scuttling Death, Sea Scryer, Sealed Fate, Séance, Search
+      Warrant, Searing Rays, Searing Spear Askari, Second Wind, See Beyond, Seedling Charm, Seedtime, Segmented Wurm,
+      Seismic Stomp, Selesnya Eulogist, Selfless Cathar, Sengir Nosferatu, Sentinel, Serene Master, Serum Powder,
+      Sewerdreg, Shadowblood Egg, Shambling Swarm, Shaper Parasite, Shapesharer, Shield Wall, Shielded by Faith, Shields
+      of Velis Vel, Shifting Loyalties, Shifty Doppelganger, Shimmering Grotto, Shinen of Life's Roar, Shred Memory,
+      Shrine of Boundless Growth, Shrine of Piercing Vision, Shrouded Lore, Signpost Scarecrow, Silverglade Pathfinder,
+      Simic Basilisk, Siren Song Lyre, Sisay's Ingenuity, Skeletal Scrying, Skinshifter, Skirk Volcanist, Skirsdag
+      Flayer, Skulltap, Skycloud Egg, Skyship Plunderer, Skyshroud Elf, Slate of Ancestry, Slaughter-Priest of Mogis,
+      Slingbow Trap, Slinking Skirge, Slobad, Goblin Tinkerer, Slumbering Tora, Smite, Social Snub: the existing AI
+      already plays them sensibly. Scarecrow, Shaman en-Kor, Shield Dancer, Shieldmage Elder, Silent Assassin, Silver
+      Wyvern: unflagged for their bodies (the redirects, the damage prevention and the end-of-combat removal are never
+      activated).
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

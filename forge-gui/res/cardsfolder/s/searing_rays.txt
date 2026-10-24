@@ -5,5 +5,4 @@ A:SP$ ChooseColor | Defined$ You | SubAbility$ DBDmgEach | AILogic$ MostProminen
 SVar:DBDmgEach:DB$ RepeatEach | RepeatPlayers$ Player | RepeatSubAbility$ DBDmg | DamageMap$ True
 SVar:DBDmg:DB$ DealDamage | Defined$ Remembered | NumDmg$ X
 SVar:X:Count$Valid Creature.RememberedPlayerCtrl+ChosenColor
-AI:RemoveDeck:All
 Oracle:Choose a color. Searing Rays deals damage to each player equal to the number of creatures of that color that player controls.
