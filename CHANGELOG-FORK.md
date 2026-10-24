@@ -473,6 +473,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   *Sire of Seven Deaths*' keyword lines.
 - **Set review: Aetherdrift Commander** (20 new names): no changes.
 
+- **Set review: Secret Lair Showcase Planes** (10 new names, the fork's): no changes.
+- **Set review: Tarkir: Dragonstorm Commander** (50 new names): *Will of the Jeskai*'s first mode read another card's
+  text ("If embark gets more votes ... draw seven cards"; it already drew five). Left as Oracle: *Avenger of the
+  Fallen*'s "Mobilize X, where X is" (the keyword line can't carry it).
+- **Set review: Tarkir: Dragonstorm and its Promos** (251 new names): *Desperate Measures* repeated its "When it
+  dies" sentence. Left as Oracle: Omen layouts, *Mardu Siegebreaker*'s "your end step" (the same end step).
+- **Set review: Pro Tour Promos** (1 new name): no changes.
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three
