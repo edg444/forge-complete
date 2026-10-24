@@ -529,6 +529,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     turn." punctuation.
 - **Set review: MagicFest 2026** (2 new names, the fork's): no changes.
 
+- **Set review: Secrets of Strixhaven Commander** (60 new names): *Furygale Flocking* had no text for its effect;
+  *Immoral Bargain*'s "sacrifice X creatures" (was "any number of"); *Nexus Mentality*'s "Choose one. If ... instead".
+- **Set review: Secrets of Strixhaven and its Promos** (254 new names): *Suspend Aggression* had no text; "an instant
+  or sorcery card" (*Postmortem Professor*; was "instant;sorcery"). Left as Oracle: keyword order on the Archaics,
+  *Colorstorm Stallion* and *Old-Growth Educator*.
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three
