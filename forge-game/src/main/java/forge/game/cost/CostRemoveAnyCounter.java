@@ -161,7 +161,8 @@ public class CostRemoveAnyCounter extends CostPart {
                 types = types.stream().map(CardType::getPluralType).collect(Collectors.toList());
             typeDesc = Lang.getInstance().buildValidDesc(types, multiple);
         }
-        if (!multiple && !typeDesc.startsWith("an")) { // skip adding to "another"
+        // skip adding to "another" and to a self-reference ("this creature")
+        if (!multiple && !typeDesc.startsWith("an") && !typeDesc.startsWith("this ")) {
             typeDesc = (Lang.startsWithVowel(typeDesc) ? "an " : "a ") + typeDesc;
         }
         return typeDesc;

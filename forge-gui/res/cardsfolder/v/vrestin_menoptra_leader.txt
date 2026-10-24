@@ -3,7 +3,7 @@ ManaCost:X G G W
 Types:Legendary Creature Alien Insect Scout
 PT:0/0
 K:Flying
-K:etbCounter:P1P1:X
+K:etbCounter:P1P1:X:no Condition:NICKNAME enters with X +1/+1 counters on it.
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When NICKNAME enters, create X 1/1 green and white Alien Insect creature tokens with flying.
 SVar:TrigToken:DB$ Token | TokenAmount$ X | TokenScript$ gw_1_1_alien_insect_flying | TokenOwner$ You
 SVar:X:Count$xPaid

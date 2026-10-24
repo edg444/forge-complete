@@ -1020,7 +1020,8 @@ public class Cost implements Serializable {
         final StringBuilder sb = new StringBuilder();
 
         if (i >= Cost.NUM_NAMES.length) {
-            sb.append(i);
+            // Oracle spells out counts through twenty ("Untap fifteen tapped creatures")
+            sb.append(i <= 20 ? Lang.getNumeral(i) : String.valueOf(i));
         }
         else if (i == 1 && Lang.startsWithVowel(type)) {
             sb.append("an");

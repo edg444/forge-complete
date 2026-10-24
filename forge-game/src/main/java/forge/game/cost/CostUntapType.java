@@ -57,7 +57,7 @@ public class CostUntapType extends CostPartWithList {
         final Integer i = convertAmount();
         final String desc = getDescriptiveType();
 
-        sb.append(Cost.convertAmountTypeToWords(i, getAmount(), " tapped " + desc));
+        sb.append(Cost.convertAmountTypeToWords(i, getAmount(), "tapped " + desc));
 
         if (getType().contains("OppCtrl")) {
             sb.append(" an opponent controls");

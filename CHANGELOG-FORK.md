@@ -1546,6 +1546,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     from any graveyard; *Storyweave*'s extra counters went on any player's enchantment creatures.
   - In-game text: *March of Reckless Joy* described its play permission twice; *Shigeki*'s "Return Shigeki";
     *Kappa Tech-Wrecker*'s prompt.
+- **Set review: Game Day Promos 2022** (5 new names): no changes.
+- **Set review: New Capenna Commander and its Promos** (93 new names): *Vivien's Stampede* didn't show its draw clause;
+  *Gavel of the Righteous* read "remove a counter from a this equipment" (fixed in the remove-a-counter cost, which also
+  fixes "a this creature" on 12 other cards); *Extravagant Replication*'s prompt; *False Floor* defined its tap
+  replacement twice under one name.
+- **Set review: Streets of New Capenna and its Promos** (251 new names, `StreetsOfNewCapennaAuditTest`):
+  - R&D's Secret Lair: *Sanguine Spy* (its physical printings say "Look at the top card") doesn't surveil (Think Tank
+    precedent).
+  - In-game text: *Halo Fountain* read "Untap two tapped creaturess" and "Untap 15 tapped creatures" (counts eleven
+    through twenty are now spelled out in costs, as Oracle does, and the untap cost lost a stray space); *Rooftop
+    Nuisance* described its untap clause twice; *Falco Spara* and *Rigo* said "This creature enters with a shield
+    counter" - every legendary card that relied on the default text (24, from *Dark Depths* to *Zack Fair*) now
+    uses its Oracle wording and name.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

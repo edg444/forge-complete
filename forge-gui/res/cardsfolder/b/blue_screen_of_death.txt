@@ -2,7 +2,7 @@ Name:Blue Screen of Death
 ManaCost:4 U B
 Types:Legendary Instant Artifact Enchantment
 Text:(It's like flash but more card types.)
-K:etbCounter:CURSE:108
+K:etbCounter:CURSE:108:no Condition:CARDNAME enters with 108 curse counters.
 A:AB$ RemoveCounter | Cost$ 1 | Defined$ Self | CounterType$ CURSE | CounterNum$ 1 | SpellDescription$ Remove a curse counter from CARDNAME.
 # real seconds with priority, summed over the active player's turn (Player.getPrioritySecondsThisTurn; user ruling
 # 2026-10-22: paused with the game, and the AI's time counts)

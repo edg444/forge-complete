@@ -2,7 +2,7 @@ Name:Thorna and Twigtooth
 ManaCost:1 R W B
 Types:Legendary Creature Giant Treefolk
 PT:6/7
-K:etbCounter:M1M1:2
+K:etbCounter:M1M1:2:no Condition:CARDNAME enters with two -1/-1 counters on it.
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigRemoveCounter | TriggerDescription$ Whenever CARDNAME attacks, remove all counters from target creature you control. Each opponent loses X life, you gain X life, and the topmost creature card in your library perpetually gets +X/+X, where X is the number of counters removed this way.
 SVar:TrigRemoveCounter:DB$ RemoveCounter | ValidTgts$ Creature.YouCtrl | ValidTgtsDesc$ creature you control | CounterType$ All | CounterNum$ All | RememberAmount$ True | SubAbility$ DBDrain
 SVar:DBDrain:DB$ LoseLife | Defined$ Player.Opponent | LifeAmount$ X | SubAbility$ DBGainLife

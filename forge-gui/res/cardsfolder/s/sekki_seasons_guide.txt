@@ -2,7 +2,7 @@ Name:Sekki, Seasons' Guide
 ManaCost:5 G G G
 Types:Legendary Creature Spirit
 PT:0/0
-K:etbCounter:P1P1:8
+K:etbCounter:P1P1:8:no Condition:NICKNAME enters with eight +1/+1 counters on it.
 R:Event$ DamageDone | ActiveZones$ Battlefield | ValidTarget$ Card.Self | ReplaceWith$ SekkiCounters | PreventionEffect$ True | AlwaysReplace$ True | Description$ If damage would be dealt to NICKNAME, prevent that damage, remove that many +1/+1 counters from NICKNAME, and create that many 1/1 colorless Spirit creature tokens.
 SVar:SekkiCounters:DB$ RemoveCounter | CounterType$ P1P1 | CounterNum$ SekkiX | SubAbility$ DBSekkiToken
 SVar:DBSekkiToken:DB$ Token | TokenAmount$ SekkiX | TokenScript$ c_1_1_spirit

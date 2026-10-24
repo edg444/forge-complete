@@ -2,7 +2,7 @@ Name:Maga, Traitor to Mortals
 ManaCost:X B B B
 Types:Legendary Creature Human Wizard
 PT:0/0
-K:etbCounter:P1P1:X
+K:etbCounter:P1P1:X:no Condition:NICKNAME enters with X +1/+1 counters on it.
 SVar:X:Count$xPaid
 T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigDrain | TriggerDescription$ When NICKNAME enters, target player loses life equal to the number of +1/+1 counters on it.
 SVar:TrigDrain:DB$ LoseLife | ValidTgts$ Player | LifeAmount$ Y
