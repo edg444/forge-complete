@@ -1489,6 +1489,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Left as Oracle: Uvilda's "hone counters" (now refine), Hofri's printed "your graveyard" (a card always goes to its
     owner's, CR 400.3), Team Pennant's "token creature" equip text.
 - **Set review: Strixhaven Mystical Archive** (1 new name): no changes.
+- **Set review: Modern Horizons 2 and Modern Horizons 2 Promos** (255 new names, `ModernHorizons2AuditTest`):
+  - Fixed: *Magus of the Bridge* missed your nontoken creatures that died under an opponent's control (it checked
+    controller, not "your graveyard").
+  - In-game text: *Chatterfang* and *Lonis* read "You may sacrifice any number of" for "Sacrifice X"; *Scion of
+    Draco*'s keyword grant is one Oracle line, not five; *Smell Fear* described its fight twice; *Svyelun*'s Oracle
+    wording; *Disciple of the Sun*'s prompt.
+  - Left as Oracle (no Secret Lair versions): printed "amass 2" (now Amass Zombies), Harmonic Prodigy's "an ability"
+    (abilities that trigger are triggered abilities), Subtlety's "top or bottom" (still the owner's choice).
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 
