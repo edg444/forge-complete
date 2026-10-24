@@ -7,6 +7,5 @@ T:Mode$ Taps | ValidCard$ Card.AttachedBy | TriggerZones$ Battlefield | Execute$
 SVar:TrigCharm:DB$ Charm | Choices$ DBDamage,DBGain
 SVar:DBDamage:DB$ DealDamage | ValidTgts$ Player,Planeswalker | TgtPrompt$ Select target player or planeswalker | NumDmg$ 1 | SpellDescription$ This Aura deals 1 damage to target player or planeswalker.
 SVar:DBGain:DB$ GainLife | ValidTgts$ Player | LifeAmount$ 1 | SpellDescription$ Target player gains 1 life.
-AI:RemoveDeck:All
 DeckHas:Ability$LifeGain
 Oracle:Enchant artifact an opponent controls\nWhenever enchanted artifact becomes tapped, choose one —\n• This Aura deals 1 damage to target player or planeswalker.\n• Target player gains 1 life.

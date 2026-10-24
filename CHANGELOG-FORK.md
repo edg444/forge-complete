@@ -524,7 +524,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       Awakening, Mana Cylix, Mana Prism, Mana Short, Manascape Refractor, Manifold Key, Manor Gargoyle, Maraleaf Rider,
       Maraxus of Keld, March of the Drowned, Mardu Blazebringer, Marker Beetles, Market Festival, Maro, Marsh Flitter,
       Marsh Lurker, Marshal's Anthem, Martyred Rusalka, Martyrs' Tomb, Mask of Immolation, Master of the Veil,
-      Masterful Replication, Masticore: the existing AI already plays them sensibly.
+      Masterful Replication, Masticore: the existing AI already plays them sensibly. Lancers en-Kor: unflagged for its
+      body (its redirect is never activated).
   - *M, N and O*:
     - Masumaro, First to Live, Medicine Bag, Mental Discipline, Merchant Scroll, Merciless Resolve, Mesmeric Sliver,
       Mesmeric Trance, Metamorphose, Meteor Crater, Mind Games, Mind Over Matter, Mind Slash, Mindlink Mech,
@@ -543,9 +544,30 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       Ornate Kanzashi, Orochi Leafcaller, Orzhov Charm: the existing AI already plays them sensibly. Mirror Entity,
       Mirrorwood Treefolk, Mistform Dreamer, Mistform Mutant, Mistform Seaswift, Mistform Shrieker, Mistform Skyreaver,
       Mistform Sliver, Mistform Wakecaster, Mistform Warchief, Moonlight Geist, Mountain Titan, Nantuko Mentor, Nomads
-      en-Kor, Opal-Eye, Konda's Yojimbo, Oracle's Attendants: unflagged for their bodies (the X animate, the redirects, the type changes, the damage prevention and the pumps
-      are never activated). Lancers en-Kor: unflagged for its body (its redirect is never
-      activated).
+      en-Kor, Opal-Eye, Konda's Yojimbo, Oracle's Attendants: unflagged for their bodies (the X animate, the
+      redirects, the type changes, the damage prevention and the pumps are never activated).
+  - *O, P, Q and R*:
+    - Recurring Insight: rescripted as a plain draw that targets the opponent, so the draw-by-their-hand-size check
+      covers it; Repentance: covered by the Kiku check above.
+    - Orzhov Pontiff, Overgrown Estate, Overwhelm, Oxidda Daredevil, Painted Bluffs, Paleontologist's Pick-Axe,
+      Parallax Tide, Parallax Wave, Pardic Lancer, Pardic Miner, Pardic Swordsmith, Paroxysm, Patriarch's Desire, the
+      five Patrons (Akki, Kitsune, Moon, Nezumi, Orochi), Peat Bog, Peek, Peregrine Mask, Perpetual Timepiece,
+      Petrahydrox, Phantasmal Mount, Phantatog, Phyrexia's Core, Phyrexian Plaguelord, Phyrexian Reclamation,
+      Phyrexian Scrapyard, Phyrexian Tower, Phyrexian Vault, Piety, Pitchstone Wall, Plaguemaw Beast, Planeswalker's
+      Fury, Polymorph, Powder Keg, Praetor's Grasp, Precognition, Priest of Yawgmoth, Primal Adversary, Primal Cocoon,
+      Primordial Mist, Prism Array, Prismatic Lens, Prismite, Proclamation of Rebirth, Profane Command, Prohibit,
+      Promise of Power, Prophetic Prism, Prophetic Ravings, Proteus Staff, Psychatog, Psychic Intrusion, Psychic
+      Possession, Psychic Puppetry, Psychic Surgery, Psychic Theft, Psychosis Crawler, Psychotic Episode, Pteron Ghost,
+      Pulse of Llanowar, Puppet Strings, Puppeteer, Putrid Imp, Putrid Leech, Putrid Warrior, Quagmire Druid, Quirion
+      Ranger, Ragamuffyn, Ragnar, Raiding Schemes, Rain of Daggers, Rain of Rust, Rakalite, Rakdos Augermage, Rakdos
+      Charm, Rakdos Riteknife, Ramosian Rally, Ransack, Rapid Decay, Rapid Fire, Rath's Edge, Rats' Feast, Ravenous
+      Vampire, Raze, Razormane Masticore, Reality Spasm, Reckless Abandon, Reckless Assault, Reckless Barbarian, Redcap
+      Melee, Reins of the Vinesteed, Reject Imperfection, Relic Bind, Relic Ward, Repudiate // Replicate, Resilient
+      Wanderer, Resounding Roar, Resounding Scream, Resounding Silence, Restore Balance, Retraced Image, Rhystic
+      Deluge, Rhystic Lightning, Rhystic Shield, Ria Ivor, Bane of Bladehold, Rift Elemental: the existing AI already
+      plays them sensibly. Outrider en-Kor, Pili-Pala, Quarum Trench Gnomes, Quicksilver Dragon, Rainbow Crow, Razia,
+      Boros Archangel, Resistance Fighter: unflagged for their bodies (the redirects, the untap-symbol mana, the color
+      change and the damage prevention are never activated).
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

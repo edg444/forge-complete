@@ -8,5 +8,4 @@ SVar:DBWeaken:DB$ Pump | ValidTgts$ Creature | TgtPrompt$ Select target creature
 SVar:DBSearch:DB$ Pump | ValidTgts$ Creature | TargetMin$ 0 | TargetMax$ X | KW$ Fear | TgtPrompt$ Select up to X target creatures to gain fear | SpellDescription$ Up to X target creatures gain fear until end of turn. (They can't be blocked except by artifact creatures and/or black creatures.)
 SVar:X:Count$xPaid
 # X Will get overwritten by Announce
-AI:RemoveDeck:All
 Oracle:Choose two —\n• Target player loses X life.\n• Return target creature card with mana value X or less from your graveyard to the battlefield.\n• Target creature gets -X/-X until end of turn.\n• Up to X target creatures gain fear until end of turn. (They can't be blocked except by artifact creatures and/or black creatures.)
