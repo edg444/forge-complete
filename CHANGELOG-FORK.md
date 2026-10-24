@@ -329,6 +329,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Gentler foil effect** (desktop and Android): foil cards no longer look painted over. Android's streaky rainbow
+  shader and desktop's full-card rainbow overlay (both its new- and old-style foil sprites) are replaced by one soft
+  rainbow gradient with a gentle highlight band. The effect stays off dark ink, so rules text and art read as they do
+  on a non-foil card. Each foil still gets its own angle and highlight position, and *Display Foil Overlay* still
+  turns the effect off. Desktop now applies the effect to the card image itself (cached per image) instead of
+  painting a sprite over the card. The deck editor's card picture now shows foils too; before, it only did for a
+  flipped card. Replaces upstream's look.
+
 ### 2026-10-24, nineteenth deploy (desktop, Android, GitHub) — random color decks get their lands; 1-commit upstream merge
 
 - **Random color decks always get their lands** (`ColorDeckLandsTest`): a mono-black or mono-green AI deck could

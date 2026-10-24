@@ -21,8 +21,6 @@ import java.awt.BorderLayout;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.WritableRaster;
 
 import javax.swing.JPanel;
 
@@ -33,10 +31,10 @@ import forge.item.InventoryItem;
 import forge.item.PaperCard;
 import forge.localinstance.properties.ForgePreferences.FPref;
 import forge.model.FModel;
-import forge.toolbox.CardFaceSymbols;
 import forge.toolbox.imaging.FImagePanel;
 import forge.toolbox.imaging.FImagePanel.AutoSizeImageMode;
 import forge.toolbox.imaging.FImageUtil;
+import forge.toolbox.imaging.FoilEffect;
 import forge.util.ImageFetcher;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -58,6 +56,7 @@ public final class CardPicturePanel extends JPanel implements ImageFetcher.Callb
 
     private final FImagePanel panel;
     private BufferedImage currentImage;
+    private boolean currentFlipped;
 
     public CardPicturePanel() {
         super(new BorderLayout());
@@ -74,6 +73,7 @@ public final class CardPicturePanel extends JPanel implements ImageFetcher.Callb
 
     public void setItem(final BufferedImage image) {
         this.currentImage = image;
+        this.currentFlipped = false;
         this.panel.setImage(image, getAutoSizeImageMode());
         this.displayed = null;
         this.mayView = false;
@@ -96,26 +96,15 @@ public final class CardPicturePanel extends JPanel implements ImageFetcher.Callb
         this.mayView = mayView;
 
         final BufferedImage image = getImage();
-        if (image != null && image != this.currentImage) {
-            if (displayed instanceof PaperCard) {
-                ColorModel cm = image.getColorModel();
-                boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
-                WritableRaster raster = image.copyData(image.getRaster().createCompatibleWritableRaster());
-                final BufferedImage displayedimage = new BufferedImage(cm, raster, isAlphaPremultiplied, null)
-                        .getSubimage(0, 0, image.getWidth(), image.getHeight());
-                this.currentImage = displayedimage;
-                this.panel.setImage(isFlipped ? rotateImage180(displayedimage) : image, getAutoSizeImageMode());
-                PaperCard card = (PaperCard) displayed;
-                if (FModel.getPreferences().getPrefBoolean(FPref.UI_OVERLAY_FOIL_EFFECT)) {
-                    if (card.isFoil()) {
-                        CardFaceSymbols.drawOther(displayedimage.getGraphics(), String.format("foil%02d", 1), 0, 0,
-                                displayedimage.getWidth(), displayedimage.getHeight());
-                    }
-                }
-            } else {
-                this.currentImage = image;
-                this.panel.setImage(isFlipped ? rotateImage180(image) : image, getAutoSizeImageMode());
-            }
+        if (image == null) {
+            return;
+        }
+        // foil and non-foil printings share one source image, so compare what is actually shown
+        final BufferedImage shown = displayed instanceof PaperCard pc && pc.isFoil() ? FoilEffect.apply(image, 1) : image;
+        if (shown != this.currentImage || isFlipped != this.currentFlipped) {
+            this.currentImage = shown;
+            this.currentFlipped = isFlipped;
+            this.panel.setImage(isFlipped ? rotateImage180(shown) : shown, getAutoSizeImageMode());
         }
     }
 

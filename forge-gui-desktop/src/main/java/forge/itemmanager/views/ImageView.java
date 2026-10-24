@@ -25,6 +25,7 @@ import forge.toolbox.*;
 import forge.toolbox.FSkin.SkinColor;
 import forge.toolbox.FSkin.SkinFont;
 import forge.toolbox.FSkin.SkinImage;
+import forge.toolbox.imaging.FoilEffect;
 import forge.toolbox.special.CardZoomer;
 import forge.util.Localizer;
 import forge.view.arcane.CardPanel;
@@ -1125,6 +1126,23 @@ public class ImageView<T extends InventoryItem> extends ItemView<T> {
             }
         }
 
+        private int getFoilIndex(InventoryItem item) {
+            if (!(item instanceof IPaperCard paperCard) || !paperCard.isFoil()) {
+                return 0;
+            }
+            final CardView card = CardView.getCardForUi(paperCard);
+            if (card.getCurrentState().getFoilIndex() == 0) { //if foil finish not yet established, assign a random one
+                // FIXME should assign a random foil here in all cases
+                // (currently assigns 1 for the deck editors where foils "flicker" otherwise)
+                if (item instanceof Card) {
+                    card.getCurrentState().setFoilIndexOverride(-1); //-1 to set random foil
+                } else {
+                    card.getCurrentState().setFoilIndexOverride(1);
+                }
+            }
+            return card.getCurrentState().getFoilIndex();
+        }
+
         private void drawItemImage(Graphics2D g, ItemInfo itemInfo) {
             Rectangle bounds = itemInfo.getBounds();
             final int itemWidth = bounds.width;
@@ -1165,7 +1183,7 @@ public class ImageView<T extends InventoryItem> extends ItemView<T> {
             BufferedImage img = ImageCache.getImage(item, imageWidth, imageHeight, itemInfo.alt);
 
             if (img != null) {
-                g.drawImage(img, drawX, drawY, drawWidth, drawHeight, null);
+                g.drawImage(FoilEffect.apply(img, getFoilIndex(item)), drawX, drawY, drawWidth, drawHeight, null);
             }
             else {
                 if (deckSelectMode) {
@@ -1220,23 +1238,9 @@ public class ImageView<T extends InventoryItem> extends ItemView<T> {
                 g.setClip(clip);
             }
 
-            //draw foil effect if needed
             if (item instanceof IPaperCard) {
                 IPaperCard paperCard = (IPaperCard)item;
-                if (paperCard.isFoil()) {
-                    final CardView card = CardView.getCardForUi(paperCard);
-                    if (card.getCurrentState().getFoilIndex() == 0) { //if foil finish not yet established, assign a random one
-                        // FIXME should assign a random foil here in all cases
-                        // (currently assigns 1 for the deck editors where foils "flicker" otherwise)
-                        if (item instanceof Card) {
-                            card.getCurrentState().setFoilIndexOverride(-1); //-1 to set random foil
-                        } else if (item instanceof IPaperCard) {
-                            card.getCurrentState().setFoilIndexOverride(1);
-                        }
-                    }
-                    CardPanel.drawFoilEffect(g, card, bounds.x, bounds.y, bounds.width, bounds.height, borderSize);
-                }
-                
+
                 // Draw key card indicator if applicable
                 if (paperCard instanceof PaperCard pc) {
                     drawKeyCardIndicator(g, pc, bounds);

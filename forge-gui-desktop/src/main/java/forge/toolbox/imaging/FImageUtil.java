@@ -20,7 +20,6 @@ package forge.toolbox.imaging;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -31,9 +30,6 @@ import forge.ImageCache;
 import forge.ImageKeys;
 import forge.game.card.CardView.CardStateView;
 import forge.item.PaperCard;
-import forge.localinstance.properties.ForgePreferences;
-import forge.model.FModel;
-import forge.toolbox.CardFaceSymbols;
 import forge.toolbox.FSkin.SkinIcon;
 import forge.util.ImageUtil;
 
@@ -141,15 +137,7 @@ public final class FImageUtil {
      * Applies a foil effect to a card image.
      */
     private static BufferedImage getImageWithFoilEffect(BufferedImage plainImage, int foilIndex) {
-        if (!FModel.getPreferences().getPrefBoolean(ForgePreferences.FPref.UI_OVERLAY_FOIL_EFFECT)) {
-            return plainImage;
-        }
-
-        ColorModel cm = plainImage.getColorModel();
-        BufferedImage foilImage = new BufferedImage(cm, plainImage.copyData(plainImage.getRaster().createCompatibleWritableRaster()), cm.isAlphaPremultiplied(), null);
-        final String fl = String.format("foil%02d", foilIndex);
-        CardFaceSymbols.drawOther(foilImage.getGraphics(), fl, 0, 0, foilImage.getWidth(), foilImage.getHeight());
-        return foilImage;
+        return FoilEffect.apply(plainImage, foilIndex);
     }
 
     public static SkinIcon getMenuIcon(SkinIcon sourceIcon) {

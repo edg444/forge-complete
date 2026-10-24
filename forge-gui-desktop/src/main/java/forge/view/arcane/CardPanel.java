@@ -72,6 +72,7 @@ import forge.toolbox.CardFaceSymbols;
 import forge.toolbox.FSkin;
 import forge.toolbox.FSkin.SkinnedPanel;
 import forge.toolbox.IDisposable;
+import forge.toolbox.imaging.FoilEffect;
 import forge.util.CardTranslation;
 import forge.view.arcane.util.OutlinedLabel;
 
@@ -260,10 +261,12 @@ public class CardPanel extends SkinnedPanel implements CardContainer, IDisposabl
     }
 
     private void setImage(final BufferedImage srcImage) {
-        if (imagePanel == null || imagePanel.getSrcImage() == srcImage) {
+        final BufferedImage shown = srcImage != null && card != null && matchUI.mayView(card)
+                ? FoilEffect.apply(srcImage, card.getCurrentState().getFoilIndex()) : srcImage;
+        if (imagePanel == null || imagePanel.getSrcImage() == shown) {
             return;
         }
-        imagePanel.setImage(srcImage);
+        imagePanel.setImage(shown);
         repaint();
     }
 
@@ -462,11 +465,6 @@ public class CardPanel extends SkinnedPanel implements CardContainer, IDisposabl
         if (zoneBannerText != null) {
             drawZoneBanner(g);
         }
-        if (canShow) {
-            drawFoilEffect(g, card, cardXOffset, cardYOffset,
-                    cardWidth, cardHeight, Math.round(cardWidth * BLACK_BORDER_SIZE));
-        }
-
         boolean nonselectable = matchUI.isSelecting() && !matchUI.isSelectable(getCard());
         // if selecting, darken non-selectable cards
         if (nonselectable) {
@@ -476,16 +474,6 @@ public class CardPanel extends SkinnedPanel implements CardContainer, IDisposabl
             final int offset = isTapped() && (!noBorderPref || cardImgHasAlpha) ? 1 : 0;
             g.setColor(new Color(0.0f,0.0f,0.0f,0.6f));
             g.fillRoundRect(cardXOffset, cardYOffset  + offset, cardWidth, cardHeight, cornerSize, cornerSize);
-        }
-    }
-
-    public static void drawFoilEffect(final Graphics g, final CardView card2, final int x, final int y, final int width, final int height, final int borderSize) {
-        if (isPreferenceEnabled(FPref.UI_OVERLAY_FOIL_EFFECT)) {
-            final int foil = card2.getCurrentState().getFoilIndex();
-            if (foil > 0) {
-                CardFaceSymbols.drawOther(g, String.format("foil%02d", foil),
-                        x + borderSize, y + borderSize, width - 2 * borderSize, height - 2 * borderSize);
-            }
         }
     }
 
