@@ -816,6 +816,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Inner Struggle (`SelfDamage`): their creature whose own power kills it. Hubris (`BounceWithAuras`): their
       creature worth bouncing with its Auras. Hatred (`PayLifePump`): exactly the life an unblocked attacker needs for
       lethal, when the AI can spare it.
+    - Mandate of Peace: new `EndCombatAi` (`AILogic$ EndCombat`). The opponent's combat ends, once blocks are known,
+      when the AI stands to lose more there than it gains (lethal above all).
+    - Martyr of Ashes, Martyr of Frost, Martyr of Sands: new `RevealX`, with X the cards of their color in hand.
+      - Sands: gains 3X life when in danger.
+      - Frost: counters a spell of mana value 3 or more when X beats the caster's open mana.
+      - Ashes: picks the X that does the most to creatures without flying.
+    - Meltdown: `WipeX`. Living Destiny: `RevealFor`.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

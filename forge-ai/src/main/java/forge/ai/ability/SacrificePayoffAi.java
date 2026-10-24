@@ -50,7 +50,7 @@ public final class SacrificePayoffAi {
 
     public static boolean handles(final String logic) {
         return "SacrificeFor".equals(logic) || "SacrificeAny".equals(logic) || "RevealFor".equals(logic) || "ExileForX".equals(logic)
-                || "ExileFor".equals(logic);
+                || "ExileFor".equals(logic) || "RevealX".equals(logic);
     }
 
     /** What the AI decided to sacrifice for this card, if anything. */
@@ -66,6 +66,7 @@ public final class SacrificePayoffAi {
             case "SacrificeAny" -> sacrificeAny(ai, sa);
             case "ExileForX" -> exileForX(ai, sa);
             case "ExileFor" -> exileFor(ai, sa);
+            case "RevealX" -> revealX(ai, sa);
             default -> sacrificeFor(ai, sa);
         };
     }
@@ -308,6 +309,70 @@ public final class SacrificePayoffAi {
         }
         payoff(ai, sa, List.of(bestCard));
         PLANNED.put(host.getId(), new CardCollection(bestCard));
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    // The Martyrs: X cards of a color revealed from hand, the creature itself sacrificed
+    private static AiAbilityDecision revealX(final Player ai, final SpellAbility sa) {
+        final forge.game.cost.CostReveal reveal = costPart(sa, forge.game.cost.CostReveal.class);
+        if (reveal == null) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final Card host = sa.getHostCard();
+        final int max = CardLists.getValidCards(ai.getCardsIn(ZoneType.Hand), reveal.getType().split(";"), ai, host, sa).size();
+        if (max < 1) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final int body = ComputerUtilCard.evaluateCreature(host);
+        int x = 0;
+        switch (sa.getApi()) {
+            case GainLife -> {
+                // Martyr of Sands: three times X, when the life matters
+                if (ComputerUtil.aiLifeInDanger(ai, false, 0) || ai.getLife() <= 5) {
+                    x = max;
+                }
+            }
+            case Counter -> {
+                // Martyr of Frost: counter unless they pay X - more than they have open
+                if (sa.usesTargeting() && !ai.getGame().getStack().isEmpty()) {
+                    final SpellAbility top = ai.getGame().getStack().peekAbility();
+                    if (top.getActivatingPlayer().isOpponentOf(ai) && sa.canTargetSpellAbility(top)
+                            && top.getHostCard().getCMC() >= 3) {
+                        final int open = forge.ai.ComputerUtilMana.getAvailableManaEstimate(top.getActivatingPlayer(), false);
+                        if (open < max) {
+                            x = open + 1;
+                            sa.resetTargets();
+                            sa.getTargets().add(top);
+                        }
+                    }
+                }
+            }
+            case DamageAll -> {
+                // Martyr of Ashes: the X that does the most to the creatures it hits
+                int best = 0;
+                for (int n = 1; n <= max; n++) {
+                    int v = -body;
+                    for (final Card c : CardLists.getValidCards(ai.getGame().getCardsIn(ZoneType.Battlefield), sa.getParamOrDefault("ValidCards", "Creature"),
+                            ai, host, sa)) {
+                        if (!c.equals(host) && n >= c.getLethalDamage() && c.canBeDestroyed()) {
+                            v += side(ai, c) * ComputerUtilCard.evaluateCreature(c);
+                        }
+                    }
+                    if (v > best) {
+                        best = v;
+                        x = n;
+                    }
+                }
+                if (best < 100) {
+                    x = 0;
+                }
+            }
+            default -> { }
+        }
+        if (x < 1) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        sa.setXManaCostPaid(x);
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
 
