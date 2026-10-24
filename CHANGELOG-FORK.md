@@ -1396,6 +1396,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Cleanup: *Tectonic Giant*'s attack trigger carried an unused source filter.
 - **Set review: Theros Beyond Death Tokens** (1 new name): no changes. *Acorn Stash* is a play aid for acorn counters
   with no rules text, so it isn't in Forge.
+- **Set review: Unsanctioned** (16 new names, `Commander2020AuditTest`):
+  - In-game text: *B.O.B. (Bevy of Beebles)* showed its loyalty line twice.
+  - Left as Oracle: *Underdome*'s printing says "silver-bordered costs"; Un-costs are the same thing, since acorn
+    counts as silver-bordered.
+- **Set review: Commander 2020** (71 new names, `Commander2020AuditTest`):
+  - Fixed: *Jirina Kudro* made Human tokens instead of Human Soldiers; *Selective Adaptation* skipped double strike;
+    *Spellpyre Phoenix*'s return wasn't optional.
+  - In-game text: a cost that puts a counter names it in lowercase, as removing one already did (*Netherborn Altar*'s
+    "Put a soul counter", *Mazemind Tome*, *Bloodletter Quill*, *Jessica Jones*, *Yisan*); *Souvenir Snatcher*'s
+    target prompt says "noncreature artifact".
+  - Left as Oracle: Haldan's "play noncreature cards ... if you exiled them", Tayam's mill wording.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

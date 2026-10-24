@@ -89,7 +89,7 @@ public class CostPutCounter extends CostPartWithList {
         } else {
             sb.append("Put ");
             final Integer i = this.convertAmount();
-            sb.append(Cost.convertAmountTypeToWords(i, this.getAmount(), this.counter.getName() + " counter"));
+            sb.append(Cost.convertAmountTypeToWords(i, this.getAmount(), this.counter.getName().toLowerCase() + " counter"));
 
             sb.append(" on ");
             if (this.payCostFromSource()) {
