@@ -1247,6 +1247,26 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Left as Oracle: Bounty of the Luxa's "precombat main phase" (now "first main phase"), Vizier of the Menagerie's
     "cast the top card ... if it's a creature card", Injury's "target player", Cruel Reality's "of their choice",
     mill / token templating.
+- **Set review: Archenemy: Nicol Bolas Schemes** (19 new names, `HourOfDevastationAuditTest`):
+  - Fixed: *Pay Tribute to Me* made each opponent sacrifice a second creature whenever you controlled any land; it
+    takes six or more. *Every Dream a Nightmare* never drew you any cards for discarded lands.
+  - Left as Oracle: Know Evil's "You can't target any player more than once", Power Without Equal's and When Will
+    You Learn?'s "nonland cards".
+- **Set review: Hour of Devastation and Hour of Devastation Promos** (183 new names, `HourOfDevastationAuditTest`):
+  - Fixed: *Hour of Glory* never exiled a God's same-named cards from its controller's hand.
+  - In-game text: *Unesh, Criosphinx Sovereign*'s "top four cards"; *Dust*'s target count reads its -1/-1 counters
+    properly (it already allowed every legal target).
+  - Left as Oracle: Nicol Bolas, God-Pharaoh's "target opponent or creature an opponent controls", Majestic
+    Myriarch's intervening "if" (it only moves when the condition is checked), Hazoret's Undying Fury's, Wildfire
+    Eternal's and Abandoned Sarcophagus' "cards", Neheb's "your postcombat main phase", mill templating.
+- **Set review: Commander 2017 and its oversized commander** (56 new names): no changes.
+  - Left as Oracle: Kess, Dissident Mage's printed "During each of your turns ... If a card cast this way would be put
+    into your graveyard this turn" (its rulings already allow one card a turn, and "that card" can't be followed past
+    the stack, CR 400.7h), Portal Mage's "player or planeswalker", Teferi's Protection's "have protection", Kheru
+    Mind-Eater's and Magus of the Mind's "play cards".
+- **Set review: HasCon 2017** (3 new names): no changes.
+- **Set review: 2016 Heroes of the Realm** (3 new names): no changes (Dungeon Master shows its "1d4" loyalty roll as
+  a line of its own).
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

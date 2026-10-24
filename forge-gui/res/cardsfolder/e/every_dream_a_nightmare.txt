@@ -6,5 +6,5 @@ SVar:DBRepeat:DB$ RepeatEach | RepeatPlayers$ Player.Opponent | RepeatSubAbility
 SVar:Dream:DB$ Discard | Defined$ Player.IsRemembered | Mode$ TgtChoose | NumCards$ 1 | Mandatory$ True | RememberDiscarded$ True
 SVar:Nightmare:DB$ Draw | NumCards$ X | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-SVar:X:Remembered$Valid Land.RememberedPlayerCtrl
+SVar:X:Remembered$Valid Land
 Oracle:When you set this scheme in motion, each opponent discards a card. You draw a card for each land card discarded this way.
