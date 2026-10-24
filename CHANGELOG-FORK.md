@@ -329,6 +329,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-24, twentieth deploy (desktop, Android, GitHub) — gentler foil effect
+
 - **Gentler foil effect** (desktop and Android): foil cards no longer look painted over. Android's streaky rainbow
   shader and desktop's full-card rainbow overlay (both its new- and old-style foil sprites) are replaced by one soft
   rainbow gradient with a gentle highlight band. The effect stays off dark ink, so rules text and art read as they do
