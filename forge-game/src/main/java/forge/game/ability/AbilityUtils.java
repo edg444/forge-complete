@@ -2209,28 +2209,6 @@ public class AbilityUtils {
             return doXMath(num, expr, c, ctb);
         }
 
-        if (sq[0].startsWith("RememberedWithSharedCardType")) {
-            int maxNum = 1;
-            for (final Object o : c.getRemembered()) {
-                if (o instanceof Card) {
-                    int num = 1;
-                    Card firstCard = (Card) o;
-                    for (final Object p : c.getRemembered()) {
-                        if (p instanceof Card) {
-                            Card secondCard = (Card) p;
-                            if (!firstCard.equals(secondCard) && firstCard.sharesCardTypeWith(secondCard)) {
-                                num++;
-                            }
-                        }
-                    }
-                    if (num > maxNum) {
-                        maxNum = num;
-                    }
-                }
-            }
-            return doXMath(maxNum, expr, c, ctb);
-        }
-
         // A chosen number lives on the real card, not on a zone-change snapshot, so it has to be
         // read before the LKI swap below. Pygmy Giant sacrifices itself to pay for its own ability,
         // so by resolution the LKI copy is what xCount would otherwise see - and that copy never had
@@ -4682,6 +4660,22 @@ public class AbilityUtils {
 
         if (def.startsWith("CardTypes")) {
             return doXMath(countCardTypesFromList(paidList, def.startsWith("CardTypesPermanent")), CardFactoryUtil.extractOperators(def), source, ctb);
+        }
+
+        if (def.startsWith("SharesCardTypes")) {
+            int maxNum = 1;
+            for (final Card c1 : paidList) {
+                int num = 1;
+                for (final Card c2 : paidList) {
+                    if (!c1.equals(c2) && c1.sharesCardTypeWith(c2)) {
+                        num++;
+                    }
+                }
+                if (num > maxNum) {
+                    maxNum = num;
+                }
+            }
+            return doXMath(maxNum, CardFactoryUtil.extractOperators(def), source, ctb);
         }
 
         if (def.startsWith("CreatureType")) {

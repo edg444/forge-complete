@@ -243,6 +243,8 @@ public class DeckgenUtil {
             System.out.println("Too many lands "+deck.getMain().countAll(PaperCardPredicates.IS_LAND));
             deck=buildLDACArchetypeDeck(format,isForAI);
         }
+        // spells of a colour the lands cannot make are dead cards (and a fetch land with nothing to find is a tapped land)
+        DeckManaBase.fix(deck);
         while(deck.get(DeckSection.Sideboard).countAll()>15){
             deck.get(DeckSection.Sideboard).remove(deck.get(DeckSection.Sideboard).get(0));
         }
@@ -346,6 +348,8 @@ public class DeckgenUtil {
             System.out.println("Too many lands "+deck.getMain().countAll(PaperCardPredicates.IS_LAND));
             deck=buildLDACArchetypeDeck(format,isForAI);
         }
+        // spells of a colour the lands cannot make are dead cards (and a fetch land with nothing to find is a tapped land)
+        DeckManaBase.fix(deck);
         while(deck.get(DeckSection.Sideboard).countAll()>15){
             deck.get(DeckSection.Sideboard).remove(deck.get(DeckSection.Sideboard).get(0));
         }
