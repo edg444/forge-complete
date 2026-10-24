@@ -119,6 +119,19 @@ public class RepeatEachAi extends SpellAbilityAi {
 
         // TODO Add some normal AI variability here
 
+        if (sa.usesTargeting() && logic == null && sa.getParamOrDefault("ValidTgts", "").startsWith("Player")
+                && sa.getTargets().isEmpty()) {
+            // Kaboom!: "any number of target players" means every opponent, never the AI itself
+            for (final Player opp : aiPlayer.getOpponents()) {
+                if (sa.canTarget(opp) && sa.canAddMoreTarget()) {
+                    sa.getTargets().add(opp);
+                }
+            }
+            if (sa.getTargets().isEmpty()) {
+                return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
+            }
+        }
+
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
 

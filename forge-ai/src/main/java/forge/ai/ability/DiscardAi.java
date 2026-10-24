@@ -14,6 +14,7 @@ import forge.game.card.CardPredicates;
 import forge.game.cost.Cost;
 import forge.game.cost.CostDamage;
 import forge.game.cost.CostDraw;
+import forge.game.phase.PhaseHandler;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
 import forge.game.player.PlayerActionConfirmMode;
@@ -59,14 +60,8 @@ public class DiscardAi extends SpellAbilityAi {
                     // the ai should only be using something like this if he has
                     // few cards in hand,
                     // cards like this better have a good drawback to be in the AIs deck
-                    final SpellAbility search = sa.findSubAbilityByType(ApiType.ChangeZone);
-                    if ("Hand".equals(sa.getParam("Mode")) && search != null && "Hand".equals(search.getParam("Destination"))) {
-                        // Behold the Beyond: trading the hand for N searched cards needs fewer than N others in it
-                        final int n = AbilityUtils.calculateAmount(source, search.getParamOrDefault("ChangeNum", "1"), search);
-                        final int others = ai.getCardsIn(ZoneType.Hand).size() - (source.isInZone(ZoneType.Hand) ? 1 : 0);
-                        if (others >= n) {
-                            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
-                        }
+                    if (handTradeLosesCards(ai, sa)) {
+                        return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
                     }
                 } else {
                     // defined to the human, so that's fine as long the human has cards
@@ -74,8 +69,8 @@ public class DiscardAi extends SpellAbilityAi {
                         return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
                     }
                 }
-            } else {
-                // Both players discard, any restrictions?
+            } else if ("Hand".equals(sa.getParam("Mode")) && !wheelIsWorthIt(ai, sa, players)) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
             }
         }
 
@@ -183,6 +178,9 @@ public class DiscardAi extends SpellAbilityAi {
                 }
             }
         } else {
+            if (!mandatory && "You".equals(sa.getParamOrDefault("Defined", "You")) && handTradeLosesCards(ai, sa)) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            }
             if (sa.hasParam("AILogic")) {
             	if ("AtLeast2".equals(sa.getParam("AILogic"))) {
             		final List<Player> players = AbilityUtils.getDefinedPlayers(sa.getHostCard(), sa.getParam("Defined"), sa);
@@ -222,6 +220,68 @@ public class DiscardAi extends SpellAbilityAi {
             return true;
         }
         return super.confirmAction(player, sa, mode, message, params);
+    }
+
+    private static boolean handTradeLosesCards(final Player ai, final SpellAbility sa) {
+        final Card source = sa.getHostCard();
+        SpellAbility search = sa.findSubAbilityByType(ApiType.ChangeZone);
+        if (search == null || !"Hand".equals(search.getParam("Destination"))) {
+            search = sa.findSubAbilityByType(ApiType.Draw);
+        }
+        final String drawn = search == null ? "" : search.getParamOrDefault(search.getApi() == ApiType.Draw ? "NumCards" : "ChangeNum", "1");
+        // Heartwarming Redemption counts what was discarded, so it never comes out behind
+        if (!"Hand".equals(sa.getParam("Mode")) || search == null || search.getSVar(drawn).contains("Remembered")
+                || (search.getApi() != ApiType.Draw && !"Hand".equals(search.getParam("Destination")))) {
+            return false;
+        }
+        // Behold the Beyond, Dangerous Wager: trading the hand for N cards needs fewer than N others in it
+        int n = AbilityUtils.calculateAmount(source, drawn, search);
+        if (search.getSVar(drawn).startsWith("TargetedPlayer$DamageThisTurn")) {
+            // Knollspine Dragon: draws as many as the damage dealt to the opponent it will target
+            for (final Player opp : ai.getOpponents()) {
+                n = Math.max(n, opp.getAssignedDamage());
+            }
+        }
+        final int others = ai.getCardsIn(ZoneType.Hand).size() - (source.isInZone(ZoneType.Hand) ? 1 : 0);
+        return others >= n;
+    }
+
+    // Wheel of Fortune, Windfall, Jace's Archivist: everyone trades their hand for N fresh cards
+    private static boolean wheelIsWorthIt(final Player ai, final SpellAbility sa, final List<Player> players) {
+        final SpellAbility draw = sa.findSubAbilityByType(ApiType.Draw);
+        if (draw == null || !"Player".equals(draw.getParam("Defined"))) {
+            return true;
+        }
+        final Card source = sa.getHostCard();
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        // Magus of the Wheel goes off whenever its sacrifice cost allows, e.g. when it would die anyway
+        if (!ComputerUtilCost.isSacrificeSelfCost(sa.getPayCosts()) && (!ph.isPlayerTurn(ai) || !ph.getPhase().isMain())) {
+            return false;
+        }
+        final int mine = ai.getCardsIn(ZoneType.Hand).size() - (source.isInZone(ZoneType.Hand) ? 1 : 0);
+        final String num = draw.getParamOrDefault("NumCards", "1");
+        int n;
+        if (draw.getSVar(num).contains("Remembered")) {
+            // draws as many as the biggest hand discarded
+            n = mine;
+            for (final Player p : players) {
+                if (p != ai) {
+                    n = Math.max(n, p.getCardsIn(ZoneType.Hand).size());
+                }
+            }
+        } else {
+            n = AbilityUtils.calculateAmount(source, num, draw);
+        }
+        if (ai.getCardsIn(ZoneType.Library).size() <= n + 3) {
+            return false;
+        }
+        int theirs = Integer.MIN_VALUE;
+        for (final Player p : players) {
+            if (p.isOpponentOf(ai)) {
+                theirs = Math.max(theirs, n - p.getCardsIn(ZoneType.Hand).size());
+            }
+        }
+        return n - mine >= 2 && n - mine >= theirs;
     }
 
     @Override

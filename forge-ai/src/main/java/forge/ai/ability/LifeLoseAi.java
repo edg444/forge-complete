@@ -83,6 +83,13 @@ public class LifeLoseAi extends SpellAbilityAi {
             return false;
         }
 
+        // Kaervek's Spite: a kill is worth sacrificing everything for
+        final Player tgt = sa.usesTargeting() ? sa.getTargets().getFirstTargetedPlayer() : null;
+        if (tgt != null && tgt.isOpponentOf(payer) && tgt.canLoseLife() && !tgt.cantLoseForZeroOrLessLife()
+                && amount >= tgt.getLife()) {
+            return true;
+        }
+
         // other cost as the same
         return super.willPayCosts(payer, sa, cost, source);
     }

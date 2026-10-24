@@ -6,5 +6,4 @@ K:Defender
 S:Mode$ Continuous | AffectedDefined$ Self | Affected$ Card.withDefender | AddKeyword$ Indestructible | Description$ This creature has indestructible as long as it has defender.
 A:AB$ Debuff | Cost$ 1 | Keywords$ Defender | Defined$ Self | SubAbility$ DBFlight | SpellDescription$ Until end of turn, this creature loses defender and gains flying.
 SVar:DBFlight:DB$ Pump | Defined$ Self | KW$ Flying
-AI:RemoveDeck:All
 Oracle:Defender\nThis creature has indestructible as long as it has defender.\n{1}: Until end of turn, this creature loses defender and gains flying.

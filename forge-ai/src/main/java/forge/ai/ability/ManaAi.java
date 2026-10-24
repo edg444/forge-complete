@@ -151,12 +151,15 @@ public class ManaAi extends SpellAbilityAi {
             numManaSrcs--;
         }
         int manaReceived = sa.hasParam("Amount") ? AbilityUtils.calculateAmount(host, sa.getParam("Amount"), sa) : 1;
-        manaReceived *= sa.getParam("Produced").split(" ").length;
+        // "Combo Any" (Manamorphose) is one choice of colors for the whole Amount, not one mana per word
+        if (!sa.getParam("Produced").startsWith("Combo")) {
+            manaReceived *= sa.getParam("Produced").split(" ").length;
+        }
 
         int selfCost = sa.getRootAbility().getPayCosts().getCostMana() != null ? sa.getRootAbility().getPayCosts().getCostMana().getMana().getCMC() : 0;
 
         String produced = sa.getParam("Produced");
-        byte producedColor = produced.equals("Any") ? MagicColor.ALL_COLORS : MagicColor.fromName(produced);
+        byte producedColor = produced.equals("Any") || produced.equals("Combo Any") ? MagicColor.ALL_COLORS : MagicColor.fromName(produced);
 
         int numCounters = 0;
         int manaSurplus = 0;

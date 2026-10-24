@@ -4,6 +4,5 @@ Types:Creature Elf Knight
 PT:3/1
 A:AB$ MustBlock | Cost$ Sac<1/Food> | ValidTgts$ Creature | SpellDescription$ Target creature blocks this creature this turn if able.
 SVar:AIPreference:SacCost$Card.Food
-AI:RemoveDeck:All
 DeckHints:Ability$Food
 Oracle:Sacrifice a Food: Target creature blocks this creature this turn if able.

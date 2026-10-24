@@ -84,14 +84,16 @@ public class NoAiBatch06Test extends AITest {
         }
         game.getPhaseHandler().devModeSet(PhaseType.MAIN2, ai);
         AssertJUnit.assertNotSame(AiPlayDecision.WillPlay, decide(ai, sa));
-        for (Card c : ai.getCardsIn(ZoneType.Hand)) {
-            if (c.getName().equals("Grizzly Bears")) {
-                game.getAction().moveToGraveyard(c, null);
-                break;
+        for (int i = 0; i < 2; i++) {
+            for (Card c : ai.getCardsIn(ZoneType.Hand)) {
+                if (c.getName().equals("Grizzly Bears")) {
+                    game.getAction().moveToGraveyard(c, null);
+                    break;
+                }
             }
         }
-        game.getAction().moveToGraveyard(ai.getCardsIn(ZoneType.Hand).get(ai.getCardsIn(ZoneType.Hand).size() - 1), null);
         AssertJUnit.assertEquals(2, ai.getCardsIn(ZoneType.Hand).size());
+        AssertJUnit.assertTrue(ai.getCardsIn(ZoneType.Hand).contains(sa.getHostCard()));
         AssertJUnit.assertEquals(AiPlayDecision.WillPlay, decide(ai, sa));
     }
 

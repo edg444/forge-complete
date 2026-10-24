@@ -423,6 +423,108 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       Consuming Ferocity, Contagion, Contingency Plan, Contraband Livestock: the existing AI (with the sacrifice and
       damage checks above) already plays them sensibly. Bonds of Mortality, Burning-Tree Bloodscale: unflagged for
       their card draw and body (their abilities are never activated).
+  - *C, D and E* (`NoAiBatch19Test`):
+    - Brutal Deceiver, Callous Deceiver, Cruel Deceiver: a paid look at its own top card happens once a turn at the end
+      of the opponent's turn (the AI used to pay for it in every window), and reveal-for-a-bonus waits for blocks with
+      the creature in the fight.
+    - Dangerous Wager: the discard-the-hand check now also covers "then draw N".
+    - Echoing Decay: its -2/-2 was missing `IsCurse$ True`, so the AI read it as a pump.
+    - Dread Charge: uses the existing `AILogic$ Evasion`.
+    - Copperhoof Vorrac, Coral Fighters, Coral Trickster, Corpse Blockade, Corpse Traders, Corrupted Grafstone, Cosmic
+      Larva, Covetous Urge, Cranial Archive, Crater Elemental, Crazed Armodon, Cream of the Crop, Crested Craghorn,
+      Crosis's Attendant, Crossbow Ambush, the Crowns (Ascension, Awe, Convergence, Doom, Fury, Suspicion, Vigor),
+      Crucible of the Spirit Dragon, Cruel Fate, Cruel Sadist, Crypt Creeper, Crypt of Agadeem, Cryptic Gateway,
+      Crystal Quarry, Crystal Shard, Crystal Vein, Culling Dais, Cunning Giant, Cuombajj Witches, Curse of Chaos,
+      Curse of Echoes, Curse of the Swine, Cursecloth Wrappings, Customs Depot, Cytoplast Manipulator, Dakmor Salvage,
+      Dakra Mystic, Daretti, Scrap Savant, Darigaaz's Attendant, Dark Privilege, Darkheart Sliver, Darksteel Mutation,
+      Darkwater Egg, Dauntless Escort, Dawn's Reflection, Dawnfluke, Dawnglare Invoker, Deadly Wanderings, Deadshot,
+      Death-Mask Duplicant, Deathknell Kami, Deathmark Prelate, Decaying Soil, Deceiver of Form, Decree of Pain,
+      Deftblade Elite, Descendant of Masumaro, Detainment Spell, Detritivore, Devastating Summons, Devoted Caretaker,
+      Devoted Druid, Devouring Greed, Devout Decree, Diabolic Revelation, Dimir Charm, Dimir Doppelganger, Dimir
+      Machinations, Disallow, Disappearing Act, Dispatch, Dispersal Shield, Dispersing Orb, Divebomber Griffin,
+      Diversionary Tactics, Djinn Illuminatus, Djinn of Wishes, Doomsday Confluence, Dovin, Hand of Control, Dragon
+      Mask, Dralnu, Lich Lord, Drawn from Dreams, Dreadship Reef, Dream Salvage, Dream Stalker, Dream's Grip,
+      Dreamcatcher, Dromar, the Banisher, Dromar's Attendant, Drowned Rusalka, Dryad's Caress, Dwarven Armorer, Dwarven
+      Armory, Dwarven Ruins, Earthbrawn, Eater of Hope, Ebon Stronghold, Ebony Charm, Edge of Autumn,
+      Eight-and-a-Half-Tails, Elder Druid, Elite Arcanist, Elsewhere Flask, Elusive Tormentor, Elven Palisade, Ember
+      Gale, Embercleave, Emerald Charm, Empty City Ruse, Endling, Endure, Energy Chamber, Enervate: the existing AI
+      already plays them sensibly. Dark Maze: unflagged as a defender (its attack ability is never activated).
+  - *E, F, G and H* (`NoAiBatch25Test`):
+    - Fireblade Artist, Crovax the Cursed: an optional "you may sacrifice a creature" is only accepted when the AI has
+      a creature it can spare (the AI always said yes, so with no other creature it fed the card to itself).
+    - Final Fortune: covered by the losing-extra-turn check above.
+    - Ghostly Possession: attaches as a curse (the creature deals and takes no combat damage), not a pump.
+    - Feral Deceiver, Harsh Deceiver: the Deceiver peek fix above (the reveal-for-a-bonus check also covers an untap).
+    - Heartwarming Redemption: the discard-the-hand check leaves alone a draw that counts the discarded cards.
+    - Damage equal to a sacrificed creature's chroma (Fiery Bombardment) is no longer read as its power.
+    - Enigma Eidolon, Epic Experiment, Epiphany Storm, Errand of Duty, Ertai, the Corrupted, Esix, Fractal Bloom, Esper
+      Sojourners, Essence Bottle, Ethereal Champion, Etherwrought Page, Evasive Maneuvers, Evershrike, Evolution Charm,
+      Evolutionary Leap, Exert Influence, Experiment Kraj, Extravagant Spirit, Eye of Ojer Taq, Eye of Ramos, Eye Spy,
+      Eyekite, Eyes of the Watcher, Fabrication Foundry, Faith Healer, Falkenrath Torturer, False Peace, Falter,
+      Familiar's Ruse, Famished Ghoul, Fanatical Devotion, Faramir, Prince of Ithilien, Farrelite Priest, Fatal
+      Attraction, Fatal Lore, Fatestitcher, Fatigue, Fault Riders, Feed the Pack, Fend Off, Fertile Ground, Fetid Heath,
+      Fettergeist, Final Flare, Fire Sprites, Fire-Lit Thicket, Firecat Blitz, Firemind Vessel, the Flailing Manticore,
+      Ogre and Soldier, Flameshot, Flash of Defiance, Flash of Insight, Fleeting Spirit, Flicker, Flicker of Fate,
+      Flickerform, Flickering Ward, Floating Shield, Flooded Grove, Flurry of Wings, Footbottom Feast, Forbid, Force of
+      Virtue, Foresight, Forgotten Lore, Fortitude, Frantic Salvage, Funeral Pyre, Fungal Reaches, Fungus Elemental,
+      Fury Charm, Gabriel Angelfire, Galepowder Mage, Gargantuan Gorilla, General's Regalia, Generator Servant, Ghave,
+      Guru of Spores, Ghost Tactician, Ghostly Touch, Ghoulcaller's Chant, Giant Caterpillar, Giant Slug, Giant Trap Door
+      Spider, Gideon, Champion of Justice, Gift of Doom, Gilded Light, Gitaxian Probe, Give // Take, Glare of Subdual,
+      Glarewielder, Glen Elendra Pranksters, Gnathosaur, Goblin Bangchuckers, Goblin Bombardment, Goblin Clearcutter,
+      Goblin Dynamo, Goblin Legionnaire, Gore Vassal, Grab the Reins, Graceful Antelope, Grave Servitude, Graven Cairns,
+      Gravepurge, Grazing Kelpie, Greel, Mind Raker, Greenseeker, Gremlin Mine, Grenzo, Dungeon Warden, Grinning Totem,
+      Grixis Charm, Guild Globe, Hankyu, Hapless Researcher, Hard Cover, Haunted Crossroads, Havengul Lich, Havenwood
+      Battleground, Head Games, Heap Doll, Heart of Ramos, Heart Warden, Heartwood Shard, Helionaut: the existing AI
+      already plays them sensibly. Fylamarid: unflagged for its body (its recolor is never activated).
+  - *H, I and J* (`NoAiBatch36Test`):
+    - Windfall, Whispering Madness, Jace's Archivist, Magus of the Wheel: "each player discards their hand, then
+      draws" is only used when the AI gains at least two cards and no opponent gains more (this also tightens Wheel of
+      Fortune). Magus of the Wheel goes off when its sacrifice cost allows it, e.g. when it would die anyway.
+    - Island of Wak-Wak: sets the power of the biggest creature attacking the AI to 0.
+    - Intimidation Bolt: "other creatures can't attack this turn" waits until the AI's own creatures have attacked.
+    - Irencrag Feat: cast as a ritual only for a spell it then pays for.
+    - An optional "you may sacrifice a creature" that costs life when declined (Pillar Tombs of Aku) is accepted
+      again; the spare-creature check above only covers the AI's own cards.
+    - Hell-Bent Raider, Helvault, Henge of Ramos, Heretic's Punishment, Heritage Druid, Heroic Defiance, Hex Parasite,
+      Hidden Strings, Hisoka, Minamo Sensei, Hobbit's Sting, Hollowhenge Spirit, Holy Justiciar, Homing Sliver, Horn of
+      Ramos, Horror of Horrors, Hua Tuo, Honored Physician, Hull Breach, Hundred-Talon Strike, Hydromorph Guardian,
+      Hydromorph Gull, Hyperion Blacksmith, Hypochondria, Ib Halfheart, Goblin Tactician, Idol of Endurance, Ignition
+      Team, Iizuka the Ruthless, Illuminated Folio, Illuminated Wings, Implements of Sacrifice, Imprison, Improbable
+      Alliance, Improvised Club, Iname, Death Aspect, Incandescent Soulstoke, Infernal Tribute, Infernal Tutor, Inferno
+      Trap, Infused Arrows, Initiates of the Ebon Hand, Inkfathom Witch, Innocent Blood, Inspired Sprite, Interdict,
+      Interplanar Beacon, Ion Storm, Iron-Heart Chimera, Ivory Charm, Ivory Gargoyle, Jace, the Living Guildpact,
+      Jalira, Master Polymorphist, Jamuraan Lion: the existing AI already plays them sensibly.
+  - *J and K* (`NoAiBatch37Test`):
+    - Kaervek's Spite: sacrifices everything only when the 5 life loss kills the target.
+    - Kaboom!: "any number of target players" targets every opponent and never the AI.
+    - Kiku, Night's Flower, Kiku's Shadow: aimed at an opposing creature its own power kills.
+    - Jinxed Idol, Jinxed Ring, Jinxed Choker: now `AI:RemoveDeck:Random`, so an AI handed one passes it back, while
+      generated decks still leave them out.
+    - Jandor's Saddlebags, Jangling Automaton, Jar of Eyeballs, Jeweled Spirit, Jolrael, Mwonvuli Recluse, Jolt,
+      Jolting Merfolk, Journey of Discovery, Jund Charm, Kagemaro, First to Suffer, Kagemaro's Clutch, Kaleidostone,
+      Kami of Ancient Law, Karn, Silver Golem, Karn's Touch, Karplusan Minotaur, Kavu Recluse, Kaya, Ghost Assassin,
+      Kazuul's Toll Collector, Keldon Necropolis, Kenrith's Transformation, Kheru Spellsnatcher, Killing Glare, Kiora's
+      Follower, Kithkin Armor, Kjeldoran Javelineer: the existing AI already plays them sensibly. Kill-Suit Cultist:
+      unflagged for its body (its sacrifice ability is never activated).
+  - *K, L and M* (`NoAiBatch37Test`):
+    - Knollspine Dragon: its optional "discard your hand and draw" is only taken when the damage dealt this turn beats
+      the hand (an optional discard-the-hand trigger used to be accepted every time).
+    - Magmasaur, Junk Golem: cast again - the "remove a +1/+1 counter or sacrifice it" upkeep check no longer looks for
+      counters on the card while it is still in hand.
+    - Manamorphose: cast as a free cantrip on the way to another spell (the ritual check also stops reading "two mana
+      in any combination" as four mana of no color).
+    - Land's Edge: now `AI:RemoveDeck:Random`, so the AI uses an opponent's.
+    - Kor Outfitter, Koskun Keep, Krark-Clan Engineers, Krark-Clan Ironworks, Krark-Clan Ogre, Krark-Clan Shaman,
+      Krark-Clan Stoker, Krasis Incubation, Kris Mage, Krosan Archer, Krosan Restorer, Krovikan Sorcerer, Kry Shield,
+      Kukemssa Serpent, Kuldotha Flamefiend, Lady Sun, Lake of the Dead, Last Chance, Latulla, Keldon Overseer, Launch
+      Party, Lead-Belly Chimera, Lieutenant Kirtar, Lightning Dart, Lim-Dûl's Paladin, Limestone Golem, Lithatog,
+      Lithomantic Barrage, Llanowar Druid, Loathsome Catoblepas, Long-Term Plans, Lotus Blossom, Loxodon Lifechanter,
+      Lumengrid Augur, Mad Prophet, Mageta the Lion, Magewright's Stone, Magma Burst, Magma Giant, Magma Vein,
+      Magmatic Channeler, Magmatic Chasm, Magmatic Insight, Magmaw, Magus of the Unseen, Malakir Soothsayer, Malevolent
+      Awakening, Mana Cylix, Mana Prism, Mana Short, Manascape Refractor, Manifold Key, Manor Gargoyle, Maraleaf Rider,
+      Maraxus of Keld, March of the Drowned, Mardu Blazebringer, Marker Beetles, Market Festival, Maro, Marsh Flitter,
+      Marsh Lurker, Marshal's Anthem, Martyred Rusalka, Martyrs' Tomb, Mask of Immolation, Master of the Veil,
+      Masterful Replication, Masticore: the existing AI already plays them sensibly.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

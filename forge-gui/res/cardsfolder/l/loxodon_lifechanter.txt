@@ -7,5 +7,4 @@ SVar:TrigLife:DB$ SetLife | Defined$ You | LifeAmount$ Y
 SVar:Y:Count$Valid Creature.YouCtrl$CardToughness
 A:AB$ Pump | Cost$ 5 W | NumAtt$ +X | NumDef$ +X | SpellDescription$ This creature gets +X/+X until end of turn, where X is your life total.
 SVar:X:Count$YourLifeTotal
-AI:RemoveDeck:All
 Oracle:When this creature enters, you may have your life total become the total toughness of creatures you control.\n{5}{W}: This creature gets +X/+X until end of turn, where X is your life total.

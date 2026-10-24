@@ -8,6 +8,5 @@ SVar:CloneArmy:DB$ RepeatEach | UseImprinted$ True | RepeatCards$ Creature.YouCt
 SVar:DBCopy:DB$ Clone | Defined$ Remembered | CloneTarget$ Imprinted | Duration$ UntilEndOfTurn
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | SubAbility$ FakeScry
 SVar:FakeScry:DB$ Dig | DigNum$ 1 | ChangeNum$ Any | DestinationZone$ Library | LibraryPosition2$ 0
-AI:RemoveDeck:All
 DeckNeeds:Ability$Mana.Colorless
 Oracle:({C} represents colorless mana.)\nAt the beginning of combat on your turn, reveal the top card of your library. If a creature card is revealed this way, you may have creatures you control other than this creature become copies of that card until end of turn. You may put that card on the bottom of your library.

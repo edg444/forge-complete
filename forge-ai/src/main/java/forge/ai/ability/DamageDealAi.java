@@ -128,7 +128,15 @@ public class DamageDealAi extends DamageAiBase {
         final Card source = sa.getHostCard();
         final String sourceName = ComputerUtilAbility.getAbilitySourceName(sa);
 
+        if (stopsOwnAttack(ai, sa)) {
+            return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
+        }
+
         final String damage = sa.getParam("NumDmg");
+        if ("Targeted".equals(sa.getParam("DamageSource")) && "Targeted$CardPower".equals(sa.getSVar(damage))
+                && sa.usesTargeting()) {
+            return killsItself(ai, sa);
+        }
         int dmg = calculateDamageAmount(sa, source, damage);
 
         if (damage.equals("X") || (dmg == 0 && source.getSVar("X").equals("Count$xPaid"))) {
@@ -266,10 +274,13 @@ public class DamageDealAi extends DamageAiBase {
         if (fodder != null && damage != null && sa.getSVar(damage).startsWith("Sacrificed$")) {
             final String svar = sa.getSVar(damage);
             final String property = svar.substring("Sacrificed$".length()).split("/")[0];
-            final int base = property.equals("CardToughness") ? fodder.getNetToughness()
-                    : property.equals("CardManaCost") ? fodder.getCMC() : fodder.getNetPower();
-            // Freyalise Supplicant: "half the sacrificed creature's power"
-            dmg = svar.contains("/") ? AbilityUtils.doXMath(base, svar.substring(svar.indexOf('/') + 1), source, sa) : base;
+            final Integer base = property.equals("CardPower") ? Integer.valueOf(fodder.getNetPower())
+                    : property.equals("CardToughness") ? Integer.valueOf(fodder.getNetToughness())
+                    : property.equals("CardManaCost") ? Integer.valueOf(fodder.getCMC()) : null;
+            if (base != null) {
+                // Freyalise Supplicant: "half the sacrificed creature's power"
+                dmg = svar.contains("/") ? AbilityUtils.doXMath(base, svar.substring(svar.indexOf('/') + 1), source, sa) : base;
+            }
         }
 
         if (dmg <= 0) {
@@ -357,6 +368,38 @@ public class DamageDealAi extends DamageAiBase {
         }
 
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    // Kiku, Night's Flower: "target creature deals damage to itself equal to its power"
+    private static AiAbilityDecision killsItself(final Player ai, final SpellAbility sa) {
+        sa.resetTargets();
+        final CardCollection dies = CardLists.filter(
+                CardLists.getTargetableCards(ai.getOpponents().getCreaturesInPlay(), sa),
+                c -> c.getNetPower() > 0 && ComputerUtilCombat.getEnoughDamageToKill(c, c.getNetPower(), c, false) <= c.getNetPower());
+        if (dies.isEmpty()) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        sa.getTargets().add(ComputerUtilCard.getBestCreatureAI(dies));
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    // Intimidation Bolt: "other creatures can't attack this turn" also binds the AI's own attackers
+    private static boolean stopsOwnAttack(final Player ai, final SpellAbility sa) {
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        if (!ph.isPlayerTurn(ai) || !ph.getPhase().isBefore(PhaseType.COMBAT_DECLARE_ATTACKERS)) {
+            return false;
+        }
+        for (SpellAbility sub = sa.getSubAbility(); sub != null; sub = sub.getSubAbility()) {
+            if (sub.getApi() == ApiType.Effect && sub.hasParam("StaticAbilities")) {
+                for (final String st : sub.getParam("StaticAbilities").split(",")) {
+                    final String svar = sub.getSVar(st);
+                    if (svar.contains("Mode$ CantAttack") && !svar.contains("OppCtrl")) {
+                        return ai.getCreaturesInPlay().anyMatch(c -> ComputerUtilCard.doesCreatureAttackAI(ai, c));
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     private static boolean flingIsWorthIt(final Player ai, final SpellAbility sa, final Card fodder, final int dmg) {

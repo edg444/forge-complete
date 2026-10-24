@@ -7,6 +7,5 @@ SVar:ChooseColor:DB$ ChooseColor | Defined$ You | SpellDescription$ As this Aura
 SVar:AttachAILogic:Pump
 S:Mode$ Continuous | AffectedDefined$ Enchanted | Affected$ Creature | AddKeyword$ Protection:Card.ChosenColor:chosenColor:Card.CardUID_HostCardUID | Description$ Enchanted creature has protection from the chosen color. This effect doesn't remove this Aura.
 A:AB$ Protection | Cost$ Sac<1/CARDNAME> | ValidTgts$ Creature | Gains$ ChosenColor | SpellDescription$ Target creature gains protection from the chosen color until end of turn.
-AI:RemoveDeck:All
 SVar:ChosenProtection:True
 Oracle:Enchant creature\nAs this Aura enters, choose a color.\nEnchanted creature has protection from the chosen color. This effect doesn't remove this Aura.\nSacrifice this Aura: Target creature gains protection from the chosen color until end of turn.

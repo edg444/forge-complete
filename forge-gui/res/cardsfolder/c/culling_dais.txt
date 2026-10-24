@@ -4,5 +4,4 @@ Types:Artifact
 A:AB$ PutCounter | Cost$ T Sac<1/Creature> | CounterType$ CHARGE | CounterNum$ 1 | SpellDescription$ Put a charge counter on this artifact.
 A:AB$ Draw | Cost$ 1 Sac<1/CARDNAME> | NumCards$ X | SpellDescription$ Draw a card for each charge counter on this artifact.
 SVar:X:Count$CardCounters.CHARGE
-AI:RemoveDeck:All
 Oracle:{T}, Sacrifice a creature: Put a charge counter on this artifact.\n{1}, Sacrifice this artifact: Draw a card for each charge counter on this artifact.

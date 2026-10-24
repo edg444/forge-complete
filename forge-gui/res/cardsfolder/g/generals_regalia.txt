@@ -7,5 +7,4 @@ SVar:GeneralDamage:Event$ DamageDone | ValidSource$ Card.ChosenCardStrict,Emblem
 SVar:GeneralDmg:DB$ ReplaceEffect | VarName$ Affected | VarValue$ Remembered | VarType$ Card | SubAbility$ ExileEffect
 SVar:ExileEffect:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
-AI:RemoveDeck:All
 Oracle:{3}: The next time a source of your choice would deal damage to you this turn, that damage is dealt to target creature you control instead.

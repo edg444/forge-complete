@@ -9,6 +9,5 @@ S:Mode$ Continuous | AffectedDefined$ Equipped | AddAbility$ Damage | Descriptio
 SVar:Damage:AB$ DealDamage | Cost$ Sac<1/CARDNAME> | ValidTgts$ Any | NumDmg$ 1 | SpellDescription$ It deals 1 damage to any target.
 SVar:NonStackingAttachEffect:True
 K:Equip:2
-AI:RemoveDeck:All
 DeckHas:Ability$Sacrifice|Token & Type$Elemental
 Oracle:When this Equipment enters, create a 1/1 red Elemental creature token, then attach this Equipment to it.\nEquipped creature has "Sacrifice this creature: It deals 1 damage to any target."\nEquip {2} ({2}: Attach to target creature you control. Equip only as a sorcery.)

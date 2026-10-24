@@ -29,6 +29,8 @@ import forge.util.FileSection;
 import forge.util.collect.FCollectionView;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -166,6 +168,21 @@ public class AnimateAi extends SpellAbilityAi {
             ComputerUtilCost.setMaxXValue(sa, aiPlayer, sa.isTrigger());
         }
 
+        if (sa.usesTargeting() && isZeroPowerOnly(sa)) {
+            // Island of Wak-Wak: blank the biggest creature attacking the AI
+            sa.resetTargets();
+            if (!ph.is(PhaseType.COMBAT_DECLARE_ATTACKERS) || !ph.getPlayerTurn().isOpponentOf(aiPlayer) || game.getCombat() == null) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            }
+            final List<Card> attackers = CardLists.filter(CardLists.getTargetableCards(game.getCombat().getAttackersOf(aiPlayer), sa),
+                    c -> c.getNetCombatDamage() > 0);
+            if (attackers.isEmpty()) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            }
+            sa.getTargets().add(Collections.max(attackers, Comparator.comparingInt(Card::getNetCombatDamage)));
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
+
         if (sa.usesTargeting()) {
             sa.resetTargets();
             final AiAbilityDecision decision = animateTgtAI(sa);
@@ -265,6 +282,12 @@ public class AnimateAi extends SpellAbilityAi {
                 && !sa.hasParam("Duration") && !sa.hasParam("Power") && !sa.hasParam("Toughness") && !sa.hasParam("RemoveTypes")
                 && !sa.hasParam("RemoveCreatureTypes") && !sa.hasParam("RemoveKeywords") && !sa.hasParam("RemoveAllAbilities")
                 && !sa.getParamOrDefault("Types", "").contains("Creature");
+    }
+
+    private static boolean isZeroPowerOnly(final SpellAbility sa) {
+        return "0".equals(sa.getParam("Power")) && !sa.hasParam("Toughness") && !sa.hasParam("Types")
+                && !sa.hasParam("Keywords") && !sa.hasParam("Abilities") && !sa.hasParam("Triggers")
+                && !sa.hasParam("staticAbilities") && !sa.hasParam("Colors") && sa.getSubAbility() == null;
     }
 
     // an effect that only sets P/T can shrink the AI's own creature
