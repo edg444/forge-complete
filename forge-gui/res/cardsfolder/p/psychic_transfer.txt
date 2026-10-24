@@ -10,5 +10,4 @@ SVar:NoLife:Count$Compare MyLife LE0.1.0
 SVar:MyLife:Count$YourLifeTotal
 SVar:Y:Count$YourLifeTotal/Minus.Z
 SVar:Z:TargetedPlayer$LifeTotal
-AI:RemoveDeck:All
 Oracle:If the difference between your life total and target player's life total is 5 or less, exchange life totals with that player.

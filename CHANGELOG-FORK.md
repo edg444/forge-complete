@@ -756,6 +756,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       Vitae, Verdant Rebirth): new `CantripAi`. Cast at the opponent's end step with mana that would go unused, for the
       card. Verdant Rebirth also answers removal on its creature, and Skyshroud Blessing answers an effect aimed at its
       land.
+  - *Cluster: phase out, exchange life totals* (`NoAiPhaseLifeTest`):
+    - `PhasesAi` never chose a target for a targeted phase-out (its preference was an empty stub), so these cards were
+      never used. Now:
+      - Oubliette's "won't phase back in" is removal on their best creature.
+      - Otherwise a phase-out saves its own permanent from removal.
+      - In the opponent's combat, it takes their biggest attacker out (when it's worth at least 4 damage, or the AI is
+        in danger).
+      - In its own combat, it phases out a blocker that would kill its attacker.
+      - Reality Ripple, Vodalian Illusionist, Oubliette, and every other targeted phase-out card.
+    - `LifeExchangeAi` now gives "two target players" (Soul Conduit, Profane Transfusion) both targets: itself and the
+      opponent. Psychic Transfer is cast when the opponent is 3 to 5 life ahead, the only case where its condition
+      lets it work.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

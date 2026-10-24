@@ -94,23 +94,68 @@ public class PhasesAi extends SpellAbilityAi {
 
     private boolean phasesPrefTargeting(final TargetRestrictions tgt, final SpellAbility sa,
             final boolean mandatory) {
-        // Card source = sa.getHostCard();
-
-        // List<Card> phaseList =
-        // AllZoneUtil.getCardsIn(Zone.Battlefield).getTargetableCards(source)
-        // .getValidCards(tgt.getValidTgts(), source.getController(), source);
-
-        // List<Card> aiPhaseList =
-        // phaseList.getController(AllZone.getComputerPlayer());
-
-        // If Something in the Phase List might die from a bad combat, or a
-        // spell on the stack save it
-
-        // List<Card> humanPhaseList =
-        // phaseList.getController(AllZone.getHumanPlayer());
-
-        // If something in the Human List is causing issues, phase it out
-
+        final Player ai = sa.getActivatingPlayer();
+        final Game game = ai.getGame();
+        sa.resetTargets();
+        final List<Card> list = CardLists.getTargetableCards(game.getCardsIn(ZoneType.Battlefield), sa);
+        final List<Card> theirs = CardLists.filter(list, c -> c.getController().isOpponentOf(ai));
+        // Oubliette: gone until it leaves, so it's removal
+        if (sa.hasParam("WontPhaseInNormal")) {
+            final Card best = ComputerUtilCard.getBestCreatureAI(theirs);
+            if (best != null) {
+                sa.getTargets().add(best);
+                return true;
+            }
+            return false;
+        }
+        // its own permanent, out of the way of removal
+        if (!game.getStack().isEmpty()) {
+            final List<forge.game.GameObject> doomed = ComputerUtil.predictThreatenedObjects(ai, null, true);
+            final Card save = ComputerUtilCard.getBestAI(CardLists.filter(list, c -> c.getController().equals(ai) && doomed.contains(c)));
+            if (save != null) {
+                sa.getTargets().add(save);
+                return true;
+            }
+            return false;
+        }
+        final forge.game.combat.Combat combat = game.getCombat();
+        if (combat == null) {
+            return false;
+        }
+        if (ai.equals(combat.getAttackingPlayer())) {
+            // a blocker that would kill its attacker: the attacker stays blocked, but lives
+            if (!game.getPhaseHandler().is(forge.game.phase.PhaseType.COMBAT_DECLARE_BLOCKERS)) {
+                return false;
+            }
+            for (final Card att : combat.getAttackers()) {
+                for (final Card b : combat.getBlockers(att)) {
+                    if (theirs.contains(b) && ComputerUtilCombat.canDestroyAttacker(ai, att, b, combat, false)) {
+                        sa.getTargets().add(b);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        // their biggest attacker leaves combat
+        Card worst = null;
+        int most = 0;
+        for (final Card att : theirs) {
+            if (!combat.isAttacking(att)) {
+                continue;
+            }
+            final int dmg = combat.isUnblocked(att) ? ComputerUtilCombat.damageIfUnblocked(att, ai, combat, false) : 0;
+            final boolean killsBlocker = combat.getBlockers(att).anyMatch(b -> ComputerUtilCombat.canDestroyBlocker(ai, b, att, combat, false));
+            final int v = dmg + (killsBlocker ? 4 : 0);
+            if (v > most) {
+                most = v;
+                worst = att;
+            }
+        }
+        if (worst != null && (most >= 4 || ComputerUtilCombat.lifeInDanger(ai, combat))) {
+            sa.getTargets().add(worst);
+            return true;
+        }
         return false;
     }
 

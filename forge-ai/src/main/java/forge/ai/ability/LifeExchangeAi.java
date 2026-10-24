@@ -37,11 +37,24 @@ public class LifeExchangeAi extends SpellAbilityAi {
         if (sa.usesTargeting()) {
             sa.resetTargets();
             if (opponent != null && opponent.canLoseLife()) {
-                // never target self, that would be silly for exchange
                 sa.getTargets().add(opponent);
+                // Soul Conduit, Profane Transfusion: "two target players" - itself and them
+                if (sa.getMinTargets() >= 2) {
+                    if (!sa.canTarget(aiPlayer)) {
+                        return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
+                    }
+                    sa.getTargets().add(aiPlayer);
+                }
             } else {
                 return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
             }
+        }
+
+        // Psychic Transfer: only when the difference is 5 or less, so any gain within that
+        if ("LE5".equals(sa.getParam("ConditionSVarCompare"))) {
+            final int diff = hLife - myLife;
+            return diff >= 3 && diff <= 5 ? new AiAbilityDecision(100, AiPlayDecision.WillPlay)
+                    : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
 
         // if life is in danger, always activate
