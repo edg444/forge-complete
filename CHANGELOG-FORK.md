@@ -329,6 +329,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-24, nineteenth deploy (desktop, Android, GitHub) — random color decks get their lands; 1-commit upstream merge
+
 - **Random color decks always get their lands** (`ColorDeckLandsTest`): a mono-black or mono-green AI deck could
   come out with no lands at all, padded to 60 with extra spells (seen as a deck of colorless artifacts and *Orb of
   Origin*). The basics came from the first card's edition with a Plains, which might print no Swamp or Forest
