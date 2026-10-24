@@ -155,7 +155,7 @@ public abstract class Lang {
         }
         if (CardType.Constant.pluralTypes.values().stream().anyMatch(p -> p.equalsIgnoreCase(last))
                 || last.equalsIgnoreCase("cards") || last.equalsIgnoreCase("tokens") || last.equalsIgnoreCase("spells")
-                || last.equalsIgnoreCase("permanents")) {
+                || last.equalsIgnoreCase("permanents") || last.equalsIgnoreCase("names")) {
             return noun;
         }
         return noun + (noun.endsWith("s") && !noun.endsWith("ds") || noun.endsWith("x") || noun.endsWith("ch") ? "es"

@@ -101,7 +101,7 @@ public class CostDiscard extends CostPartWithList {
             sb.append("the last card you drew this turn");
         }
         else if (this.getType().contains("+WithDifferentNames")) {
-            sb.append(Cost.convertAmountTypeToWords(i, this.getAmount(), "Card")).append(" with different names");
+            sb.append(Cost.convertAmountTypeToWords(i, this.getAmount(), "card")).append(" with different names");
         }
         else {
             final StringBuilder desc = new StringBuilder();

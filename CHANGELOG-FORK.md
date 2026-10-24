@@ -1407,6 +1407,39 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     "Put a soul counter", *Mazemind Tome*, *Bloodletter Quill*, *Jessica Jones*, *Yisan*); *Souvenir Snatcher*'s
     target prompt says "noncreature artifact".
   - Left as Oracle: Haldan's "play noncreature cards ... if you exiled them", Tayam's mill wording.
+- **Set review: Ikoria: Lair of Behemoths and Ikoria Promos** (228 new names):
+  - Fixed: *Kaheera, the Orphanguard* would pump itself if it became an Elemental.
+  - R&D's Secret Lair: *Titans' Nest* (its only printing looks at the top card and may put it into the graveyard)
+    doesn't surveil, so surveil triggers don't see it (Think Tank precedent).
+  - In-game text: a "reveal a creature card" cost no longer says "Creature card" (*Charge of the Forever-Beast*,
+    *Disaster Radius*, *Induce Despair*, *Living Destiny*); *Indatha Crystal*'s mana text had stray spaces;
+    *Wingspan Mentor*'s and *Duskfang Mentor*'s target prompts say "you control".
+  - Left as Oracle: Lurrus's "During each of your turns, you may cast one permanent spell", Gyruda's and Skull
+    Prophet's mill wording, Lavabrink Venturer's "chosen value".
+- **Set review: Jumpstart Front Cards** (46 new names): no changes. The theme cards have no rules text and aren't in
+  Forge.
+- **Set review: Core Set 2021 and Core Set 2021 Promos** (183 new names, `ZendikarRisingAuditTest`):
+  - Fixed: *Warden of the Woods*' draw wasn't optional; *Barrin, Tolarian Archmage* could return itself if it was
+    also a planeswalker.
+  - In-game text: *Rookie Mistake* and *Gnarled Sage* read in Oracle order; *Invigorating Surge*'s target prompt.
+  - Left as Oracle: Chandra, Flame's Catalyst's "would be put into your graveyard this turn" (CR 400.7h), Sanctum of
+    All's "an ability", the Sanctums' "precombat main phase".
+- **Set review: Jumpstart** (37 new names, `ZendikarRisingAuditTest`):
+  - Fixed: *Archaeomender* targeted "an artifact you control" in the graveyard; it's an artifact card you own.
+  - In-game text: a "with different names" cost reads "cards" and "names" (*Ormos, Archive Keeper*'s "Discard three
+    cards with different names", *Transmutation Font*'s "artifact tokens with different names" instead of
+    "nameses").
+  - Left as Oracle: Scholar of the Lost Trove's "this turn" (CR 400.7h), the Thriving lands' "enters the battlefield
+    tapped".
+- **Set review: 2019 Heroes of the Realm** (7 new names): no changes.
+- **Set review: Zendikar Rising and Zendikar Rising Promos** (255 new names, `ZendikarRisingAuditTest`):
+  - In-game text: kicker shows "X can't be 0." (*Thieving Skydiver*); *Tazri, Beacon of Unity* lists Wizard;
+    *Pyroclastic Hellion* and *Sea Gate Stormcaller* show their full triggers; *Grakmaw*'s "Grakmaw enters with",
+    *Mesa Lynx*'s and *Shatterskull Charger*'s Oracle wording; *Zareth San*'s cost said "you control" twice.
+  - Left as Oracle: Drana, the Last Bloodchief's "a +1/+1 counter" (it adds to other enters-with counters either
+    way), "enters the battlefield" wording.
+- **Set review: Zendikar Rising Substitute Cards** (1 new name): no changes. The substitute card isn't a game object.
+- **Set review: Zendikar Rising Commander** (6 new names): no changes.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

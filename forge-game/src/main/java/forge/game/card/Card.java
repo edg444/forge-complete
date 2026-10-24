@@ -3443,6 +3443,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         final String costStr = cost.toSimpleString();
         final boolean manaOnly = cost.isOnlyManaCost();
         sbx.append("Kicker").append(manaOnly ? " " + costStr : "—" + costStr + ".");
+        if (n[1].contains("XMin1")) {
+            sbx.append(". X can't be 0.");
+        }
         if (Lists.newArrayList(n).size() > 2) {
             sbx.append(" and/or ");
             final Cost cost2 = new Cost(n[2], false);
