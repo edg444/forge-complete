@@ -546,6 +546,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   counter on Jessica Jones"; "Equip worthy {1}" (*Mjölnir*); "The Ruinous Wrecking Crew enters" (was "The enters").
 - **Set review: Spotlight Series** (1 new name): no changes.
 
+- **Set review: The Hobbit** (184 new names): *Lake-town Lookout*'s recruit reminder lacked its closing parenthesis;
+  "Equip Wizard {1}" (*Wizard's Staff*); *Key to the Side-Door*'s discard cost ended "... you control card".
+- **Set review: The Hobbit Eternal** (21 new names): no changes.
+- **Set review: Reality Fracture** (268 new names): text for the graveyard abilities of *Campus Crier* ("Empower Jace
+  2.") and *Seasoned Cryomancer* ("Exile this card from your graveyard: Draw two cards."); *Recursive Recruitment*
+  showed a literal "\nFlashback {6}{U}{B}" (the keyword already shows it); curly apostrophes on *Desperate
+  Futurescribe*, *Ghalta the Immovable* and *Karn, Argent Defender*.
+- **Set review: Reality Fracture Commander** (18 new names): "Sacrifice Ginger".
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three
