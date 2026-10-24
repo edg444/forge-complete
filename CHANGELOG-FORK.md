@@ -792,6 +792,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       `NoAiDiscardForXTest`): new `DiscardForXAi`. X is never more than the cards it would discard anyway, so each
       spare card buys a worthwhile target: their attackers exiled, their best permanents bounced, its best cards back
       from the graveyard, or the X that does the most as a sweep.
+  - *Second pass over the remaining todos* (`NoAiBatch84Test` onward), reusing the cluster logics where they fit:
+    - Black Sun's Zenith: `WipeX` now also covers -1/-1 counter and -X/-X sweeps (toughness X or less dies,
+      indestructible or not).
+    - Azorius Ploy: `PreventCombat`. Aether Tradewinds: `BounceBoth`. Abandon Hope: `DiscardForX` (X of their cards
+      for X spare ones, X also paid in mana).
+    - Anurid Brushhopper: `Blink`, now also for an ability that blinks itself out of the way of removal.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

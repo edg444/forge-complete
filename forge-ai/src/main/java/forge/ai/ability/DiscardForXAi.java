@@ -77,6 +77,23 @@ public final class DiscardForXAi {
             sa.setXManaCostPaid(bestX);
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
+        if (sa.getApi() == ApiType.Discard && sa.usesTargeting()) {
+            // Abandon Hope: X of their cards for X of its spare ones, X paid in mana too
+            final int base = sa.getPayCosts().getTotalMana() == null ? 0 : sa.getPayCosts().getTotalMana().getCMC();
+            final int mana = forge.ai.ComputerUtilMana.getAvailableManaEstimate(ai, false) - base;
+            final Player opp = ai.getWeakestOpponent();
+            sa.resetTargets();
+            if (opp == null || !sa.canTarget(opp)) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            }
+            final int x = Math.min(spare, Math.min(mana, opp.getCardsIn(ZoneType.Hand).size()));
+            if (x < 1) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            }
+            sa.setXManaCostPaid(x);
+            sa.getTargets().add(opp);
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
         if (sa.getApi() != ApiType.ChangeZone || !sa.usesTargeting()) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }

@@ -64,11 +64,13 @@ public final class XChoiceAi {
             sa.getTargets().add(bestTarget);
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
-        for (int x = 0; x <= max; x++) {
+        // Black Sun's Zenith: -1/-1 counters (or -X/-X) kill what has toughness X or less, indestructible or not
+        final boolean shrinks = sa.getApi() == forge.game.ability.ApiType.PutCounterAll || sa.getApi() == forge.game.ability.ApiType.PumpAll;
+        for (int x = shrinks ? 1 : 0; x <= max; x++) {
             sa.setXManaCostPaid(x);
             int v = 0;
             for (final Card c : CardLists.getValidCards(ai.getGame().getCardsIn(ZoneType.Battlefield), sa.getParam("ValidCards"), ai, sa.getHostCard(), sa)) {
-                if (!c.canBeDestroyed()) {
+                if (shrinks ? c.getNetToughness() > x : !c.canBeDestroyed()) {
                     continue;
                 }
                 final int w = c.isCreature() ? ComputerUtilCard.evaluateCreature(c) : ExchangeTradeAi.value(c);

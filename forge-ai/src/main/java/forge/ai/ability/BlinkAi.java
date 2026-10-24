@@ -86,7 +86,10 @@ public final class BlinkAi {
             return v >= 150 ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
         if (!sa.usesTargeting()) {
-            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            // Anurid Brushhopper: itself, out of the way of removal
+            final boolean self = "Self".equals(sa.getParam("Defined"));
+            return self && doomed.contains(sa.getHostCard()) ? new AiAbilityDecision(100, AiPlayDecision.WillPlay)
+                    : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
         sa.resetTargets();
         final List<Card> options = new ArrayList<>(CardLists.filter(CardUtil.getValidCardsToTarget(sa), c -> c.getController().equals(ai)));
