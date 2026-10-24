@@ -11,5 +11,4 @@ SVar:Unblockable:Mode$ CantBlockBy | ValidAttacker$ Creature | Description$ Crea
 A:AB$ Effect | Cost$ SubCounter<8/LOYALTY> | Planeswalker$ True | Ultimate$ True | Name$ Emblem — Venser, the Sojourner | Image$ emblem_venser_the_sojourner | Triggers$ TrigSpellCast | Duration$ Permanent | AILogic$ Always | SpellDescription$ You get an emblem with "Whenever you cast a spell, exile target permanent."
 SVar:TrigSpellCast:Mode$ SpellCast | ValidActivatingPlayer$ You | Execute$ EffSpellCast | TriggerDescription$ Whenever you cast a spell, exile target permanent.
 SVar:EffSpellCast:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | ValidTgts$ Permanent
-AI:RemoveDeck:All
 Oracle:[+2]: Exile target permanent you own. Return it to the battlefield under your control at the beginning of the next end step.\n[-1]: Creatures can't be blocked this turn.\n[-8]: You get an emblem with "Whenever you cast a spell, exile target permanent."

@@ -608,6 +608,36 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       Teferi's Veil, Temporary Truce, Tendrils of Despair, Tergrid's Shadow, Terrarion: the existing AI already plays
       them sensibly. Soltari Guerrillas, Spirit en-Kor, Stonewise Fortifier: unflagged for their bodies (the redirects
       and the damage prevention are never activated).
+  - *T through Z* (the alphabetical pass is done):
+    - Wrack with Madness: the Kiku check above. Wall of Vipers, Wishmonger: now `AI:RemoveDeck:Random`, so the AI uses
+      an opponent's.
+    - Testament of Faith, Thalakos Mistfolk, Thassa's Ire, Thaumatog, The Chain Veil, The Enigma Jewel, The Kingpin of
+      Crime, The Prismatic Piper, The Royal Scions, Thermopod, Think Tank, Thought Courier, Thought Dissector,
+      Thoughtpicker Witch, Thran Forge, Three Wishes, Through the Breach, Throwing Knife, Thrull Wizard, Thunderheads,
+      Thundering Djinn, Thwart the Enemy, Tidal Bore, Tidal Control, Tidal Flats, Tidal Wave, Tideforce Elemental,
+      Tidewater Minion, Timebender, Timecrafting, Timely Interference, Timely Ward, Tin Street Market, Tin-Wing Chimera,
+      Tinder Wall, Titans' Nest, Toils of Night and Day, Tomb Robber, Tomb of Urami, Tomorrow, Azami's Familiar, Tooth
+      of Ramos, Torchling, Torpid Moloch, Tortoise Formation, Tortured Existence, Tower Defense, Trace of Abundance,
+      Trade Routes, Trading Post, Tranquil Frillback, Transluminant, Trash for Treasure, Treacherous Link, Treacherous
+      Terrain, Treacherous Vampire, Treetop Defense, Trenching Steed, Treva's Attendant, Treva's Charm, Triad of Fates,
+      Trial // Error, Tribal Unity, Trickbind, Trickery Charm, Trickster Mage, Triton Tactics, Tropical Storm, Troubled
+      Healer, Truce, Twiddle, Twilight Mire, Twinning Glass, Twitch, Unbender Tine, Undergrowth, Undying Evil, Unearthly
+      Blizzard, Unerring Sling, Unfulfilled Desires, Unlikely Alliance, Unmask, Unspeakable Symbol, Unstable Frontier,
+      Urborg, Urborg Panther, Urza's Bauble, Valleymaker, Vampire Lacerator, Vampire Warlord, Vampiric Tutor, Vanish
+      into Memory, Vanishing, Vault 21: House Gambit, Veil of Secrecy, Venarian Glimmer, Venser, the Sojourner,
+      Ventifact Bottle, Verdant Eidolon, Verdant Haven, Veteran's Voice, Vexing Arcanix, Viashino Skeleton, Vigilant
+      Martyr, Vine Snare, Viridian Acolyte, Viscera Seer, Vish Kal, Blood Arbiter, Vision Charm, Visions, Vitalize,
+      Vivisection, Vizier of Tumbling Sands, Voidmage Apprentice, Voidmage Prodigy, Volrath's Gardens, Volrath's
+      Stronghold, Vona's Hunger, Vortex Elemental, Voyager Staff, Waker of Waves, Walk the Aeons, Wall of Limbs, Wall of
+      Shadows, Wall of Vapor, Wand of Denial, Wandering Eye, Warbreak Trumpeter, Ward of Lights, Warren Weirding,
+      Warrior's Oath, Warrior's Stand, Waterfront Bouncer, Wave Elemental, Wave of Indifference, Weapon Rack, Welcome to
+      the Fold, Whetwheel, Whirlpool Warrior, Whirlpool Whelm, Wicked Reward, Wild Growth, Wild Guess, Wild Magic Surge,
+      Winding Canyons, Wings of Hubris, Winnow, Winter, Cynical Opportunist, Wisedrafter's Will, Wizard Mentor, Wizard
+      Replica, Wizard's Rockets, Wizards' School, Wooded Bastion, Xathrid Slyblade, Xenagos, the Reveler, Xenic
+      Poltergeist, Zedruu the Greathearted, Zephyr Scribe, Zombie Boa, Zombie Infestation: the existing AI already
+      plays them sensibly. Tidal Visionary, Tidal Warrior, Tideshaper Mystic, Tundra Kavu, Urza's Avenger, Warrior
+      en-Kor, Weaver of Lies, Willbender, Wirewood Symbiote, Zealous Inquisitor, Zhalfirin Crusader, Zombie
+      Trailblazer: unflagged for their bodies (the redirects, type changes and keyword trades are never activated).
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

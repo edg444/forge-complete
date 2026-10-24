@@ -6,5 +6,4 @@ SVar:DBLibrary:DB$ ChangeZone | DefinedPlayer$ TargetedController | Origin$ Batt
 SVar:DBDeclined:DB$ ChangeZone | Defined$ Targeted | Origin$ Battlefield | Destination$ Hand | ConditionCheckSVar$ X | ConditionSVarCompare$ EQ0 | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Amount
-AI:RemoveDeck:All
 Oracle:Clash with an opponent, then return target creature to its owner's hand. If you win, you may put that creature on top of its owner's library instead. (Each clashing player reveals the top card of their library, then puts that card on their choice of the top or bottom. A player wins if their card had a greater mana value.)
