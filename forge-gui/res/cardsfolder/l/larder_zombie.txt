@@ -3,7 +3,10 @@ ManaCost:U
 Types:Creature Zombie
 PT:1/3
 K:Defender
-A:AB$ Surveil | Cost$ tapXType<3/Creature/creature> | Amount$ 1 | SpellDescription$ Surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)
+A:AB$ Surveil | Cost$ tapXType<3/Creature/creature> | Amount$ 1 | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20220129 | SpellDescription$ Surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)
+# R&D's Secret Lair: its printings (Innistrad: Midnight Hunt's and Double Feature's) say "Look at the top card"
+# instead of "Surveil 1", so surveil triggers don't see it (Think Tank precedent).
+A:AB$ Dig | Cost$ tapXType<3/Creature/creature> | DigNum$ 1 | ChangeNum$ Any | DestinationZone$ Graveyard | LibraryPosition2$ 0 | NoReveal$ True | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20220129 | SpellDescription$ (As printed) Look at the top card of your library. You may put it into your graveyard.
 DeckHas:Ability$Surveil|Graveyard
 DeckHints:Keyword$Decayed
 Oracle:Defender\nTap three untapped creatures you control: Surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)

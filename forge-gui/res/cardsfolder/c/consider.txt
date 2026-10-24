@@ -1,7 +1,10 @@
 Name:Consider
 ManaCost:U
 Types:Instant
-A:SP$ Surveil | Amount$ 1 | SubAbility$ DBDraw | SpellDescription$ Surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)
+A:SP$ Surveil | Amount$ 1 | SubAbility$ DBDraw | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20230623 | PresentDefined$ Self | SpellDescription$ Surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)
 SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ 1 | SpellDescription$ Draw a card.
+# R&D's Secret Lair: printings before The Lord of the Rings Commander's say "Look at the top card" instead of
+# "Surveil 1", so surveil triggers don't see them (Think Tank precedent).
+A:SP$ Dig | DigNum$ 1 | ChangeNum$ Any | DestinationZone$ Graveyard | LibraryPosition2$ 0 | NoReveal$ True | SubAbility$ DBDraw | IsPresent$ Card.PrintedTextActive+PrintedBefore 20230623 | PresentDefined$ Self | SpellDescription$ (As printed) Look at the top card of your library. You may put that card into your graveyard.
 DeckHas:Ability$Surveil|Graveyard
 Oracle:Surveil 1. (Look at the top card of your library. You may put it into your graveyard.)\nDraw a card.

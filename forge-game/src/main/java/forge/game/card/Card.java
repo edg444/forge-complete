@@ -3541,7 +3541,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                     if (first.hasParam("AdditionalDesc")) {
                         additionalDesc = first.getParam("AdditionalDesc");
                     }
-                    sb.append(cost.toString().replace("\n", "")).append(" ").append(additionalDesc);
+                    sb.append(first.hasParam("CostDesc") ? first.getParam("CostDesc") : cost.toString().replace("\n", ""));
+                    sb.append(" ").append(additionalDesc);
                     sb.append(linebreak);
                 }
             }

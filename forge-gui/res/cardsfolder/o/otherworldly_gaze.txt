@@ -2,6 +2,9 @@ Name:Otherworldly Gaze
 ManaCost:U
 Types:Instant
 K:Flashback:1 U
-A:SP$ Surveil | Amount$ 3 | SpellDescription$ Surveil 3. (Look at the top three cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)
+A:SP$ Surveil | Amount$ 3 | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20240209 | PresentDefined$ Self | SpellDescription$ Surveil 3. (Look at the top three cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)
+# R&D's Secret Lair: printings before Murders at Karlov Manor Commander's say "Look at the top three cards" instead
+# of "Surveil 3", so surveil triggers don't see them (Think Tank precedent).
+A:SP$ Dig | DigNum$ 3 | ChangeNum$ Any | DestinationZone$ Graveyard | LibraryPosition2$ 0 | NoReveal$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20240209 | PresentDefined$ Self | SpellDescription$ (As printed) Look at the top three cards of your library. Put any number of them into your graveyard and the rest back on top of your library in any order.
 DeckHas:Ability$Surveil|Graveyard
 Oracle:Surveil 3. (Look at the top three cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)\nFlashback {1}{U} (You may cast this card from your graveyard for its flashback cost. Then exile it.)

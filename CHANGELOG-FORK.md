@@ -1510,6 +1510,24 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Left as Oracle: The Book of Vile Darkness's printed "It gains all triggered abilities" (differs only when Vecna is
     copied), Druid Class's missing Landfall label, Earth-Cult Elemental's and Acererak's "sacrifices a permanent"
     (always their choice).
+- **Set review: Adventures in the Forgotten Realms Tokens** (1 new name): *Tomb of Annihilation*'s Oubliette and
+  Sandfall Cell rooms now read as Oracle ("a creature, an artifact, and a land"; "of their choice").
+- **Set review: 2020 Heroes of the Realm** (3 new names): no changes.
+- **Set review: Midnight Hunt Commander** (38 new names, `MidnightHuntAuditTest`):
+  - Fixed: *Curse of Clinging Webs* watched creatures the enchanted player owns, not controls (a misspelled
+    "EnchantedPlayerCtr"); *Tomb Tyrant* could return a noncreature Zombie card.
+  - In-game text: *Gorex, the Tombshell* lacked "you may" (a permanent spell's additional-cost line now honors its own
+    cost description); *Cleaver Skaab*'s "Zombie".
+- **Set review: Innistrad: Midnight Hunt and its Promos** (249 new names, `MidnightHuntAuditTest`):
+  - Fixed: *Sunrise Cavalier* could put its counter on any creature (it says "target creature you control").
+  - R&D's Secret Lair: *Consider* (before The Lord of the Rings Commander), *Otherworldly Gaze* (before Murders at
+    Karlov Manor Commander) and *Larder Zombie* (all its printings) say "Look at the top card(s)" instead of surveil,
+    so surveil triggers don't see them (Think Tank precedent).
+  - In-game text: *Corpse Cobble*'s "you may sacrifice"; *Homestead Courage* was missing its vigilance; *Slogurk*'s
+    "Remove three +1/+1 counters from Slogurk".
+  - Left as Oracle: Siphon Insight's printed "look at and play" (you looked at the card before exiling it face down,
+    so CR 406.3 already lets you keep looking),
+    Florian's "your postcombat main phase" (every postcombat main phase is one).
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 
