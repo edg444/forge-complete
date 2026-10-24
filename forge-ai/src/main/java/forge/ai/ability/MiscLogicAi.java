@@ -43,7 +43,8 @@ public final class MiscLogicAi {
     private MiscLogicAi() { }
 
     public static boolean handles(final String logic) {
-        return "BounceBoth".equals(logic) || "GraveShuffle".equals(logic) || "RemoveCombatant".equals(logic) || "CashIn".equals(logic);
+        return "BounceBoth".equals(logic) || "GraveShuffle".equals(logic) || "RemoveCombatant".equals(logic) || "CashIn".equals(logic)
+                || "WipeWithSub".equals(logic) || "RecycleForDamage".equals(logic) || "EchoDestroy".equals(logic);
     }
 
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
@@ -51,6 +52,9 @@ public final class MiscLogicAi {
             case "BounceBoth" -> bounceBoth(ai, sa);
             case "GraveShuffle" -> graveShuffle(ai, sa);
             case "RemoveCombatant" -> removeCombatant(ai, sa);
+            case "WipeWithSub" -> wipeWithSub(ai, sa);
+            case "RecycleForDamage" -> recycleForDamage(ai, sa);
+            case "EchoDestroy" -> echoDestroy(ai, sa);
             default -> cashIn(ai, sa);
         };
     }
@@ -261,6 +265,85 @@ public final class MiscLogicAi {
             return no();
         }
         sa.getTargets().add(best);
+        return yes();
+    }
+
+    // ---- Calming Verse: each DestroyAll of the chain counts, its own included ----
+
+    private static AiAbilityDecision wipeWithSub(final Player ai, final SpellAbility sa) {
+        int v = 0;
+        for (SpellAbility s = sa; s != null; s = s.getSubAbility()) {
+            if (s.getApi() != forge.game.ability.ApiType.DestroyAll) {
+                continue;
+            }
+            for (final Card c : CardLists.getValidCards(ai.getGame().getCardsIn(ZoneType.Battlefield), s.getParam("ValidCards"), ai, sa.getHostCard(), s)) {
+                if (c.canBeDestroyed()) {
+                    final int w = c.isCreature() ? ComputerUtilCard.evaluateCreature(c) : ExchangeTradeAi.value(c);
+                    v += c.getController().isOpponentOf(ai) ? w : -w;
+                }
+            }
+        }
+        return v >= 100 ? yes() : no();
+    }
+
+    // ---- Dead Reckoning: a creature card back on top of the library, its power to a creature ----
+
+    private static AiAbilityDecision recycleForDamage(final Player ai, final SpellAbility sa) {
+        final SpellAbility dmg = sa.getSubAbility();
+        if (!sa.usesTargeting() || dmg == null || !dmg.usesTargeting()) {
+            return no();
+        }
+        sa.resetTargets();
+        dmg.resetTargets();
+        int best = 0;
+        Card bestCard = null;
+        Card bestTarget = null;
+        for (final Card c : CardUtil.getValidCardsToTarget(sa)) {
+            for (final Card t : CardUtil.getValidCardsToTarget(dmg)) {
+                if (t.getController().isOpponentOf(ai) && c.getNetPower() >= t.getLethalDamage() && t.canBeDestroyed()) {
+                    final int v = ComputerUtilCard.evaluateCreature(t);
+                    if (v > best) {
+                        best = v;
+                        bestCard = c;
+                        bestTarget = t;
+                    }
+                }
+            }
+        }
+        if (bestCard == null || best < 80) {
+            return no();
+        }
+        sa.getTargets().add(bestCard);
+        dmg.getTargets().add(bestTarget);
+        return yes();
+    }
+
+    // ---- Echoing Calm, Echoing Ruin: the target and everything sharing its name ----
+
+    private static AiAbilityDecision echoDestroy(final Player ai, final SpellAbility sa) {
+        if (!sa.usesTargeting()) {
+            return no();
+        }
+        sa.resetTargets();
+        int best = 0;
+        Card bestT = null;
+        for (final Card t : CardUtil.getValidCardsToTarget(sa)) {
+            int v = 0;
+            for (final Card c : ai.getGame().getCardsIn(ZoneType.Battlefield)) {
+                if ((c.equals(t) || c.sharesNameWith(t) && c.sharesCardTypeWith(t)) && c.canBeDestroyed()) {
+                    final int w = c.isCreature() ? ComputerUtilCard.evaluateCreature(c) : ExchangeTradeAi.value(c);
+                    v += c.getController().isOpponentOf(ai) ? w : -w;
+                }
+            }
+            if (v > best) {
+                best = v;
+                bestT = t;
+            }
+        }
+        if (bestT == null || best < 60) {
+            return no();
+        }
+        sa.getTargets().add(bestT);
         return yes();
     }
 

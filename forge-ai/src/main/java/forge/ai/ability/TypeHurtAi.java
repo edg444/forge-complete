@@ -36,10 +36,39 @@ public final class TypeHurtAi {
         return c.getController().isOpponentOf(ai) ? 1 : c.getController().equals(ai) ? -1 : 0;
     }
 
+    // Creeping Renaissance: the permanent type that brings back the most from its graveyard
+    private static AiAbilityDecision cardType(final Player ai, final SpellAbility sa, final SpellAbility effect) {
+        if (effect.getApi() != ApiType.ChangeZoneAll || !effect.getParamOrDefault("Origin", "").contains("Graveyard")) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        int best = 0;
+        String bestType = null;
+        for (final String type : new String[] {"Creature", "Artifact", "Enchantment", "Land", "Planeswalker", "Battle"}) {
+            int v = 0;
+            for (final Card c : ai.getCardsIn(ZoneType.Graveyard)) {
+                if (c.getType().hasStringType(type)) {
+                    v += c.isCreature() ? ComputerUtilCard.evaluateCreature(c) : c.isLand() ? 40 : 30 + c.getCMC() * 25;
+                }
+            }
+            if (v > best) {
+                best = v;
+                bestType = type;
+            }
+        }
+        if (bestType == null || best < 200) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        CHOSEN.put(sa.getHostCard().getId(), bestType);
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
         final SpellAbility effect = sa.getSubAbility();
         if (sa.getApi() != ApiType.ChooseType || effect == null) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        if ("Card".equals(sa.getParam("Type"))) {
+            return cardType(ai, sa, effect);
         }
         final Set<String> types = new LinkedHashSet<>();
         for (final Card c : ai.getGame().getCardsIn(ZoneType.Battlefield)) {
@@ -75,6 +104,17 @@ public final class TypeHurtAi {
                     effect.resetTargets();
                     final Card t = ComputerUtilCard.getBestCreatureAI(CardLists.filter(CardUtil.getValidCardsToTarget(effect),
                             c -> c.getController().isOpponentOf(ai) && c.getNetToughness() <= n));
+                    if (t != null) {
+                        v = ComputerUtilCard.evaluateCreature(t);
+                        target = t;
+                    }
+                }
+                case DealDamage -> {
+                    // Coordinated Barrage: damage for each permanent of the type it controls
+                    final int n = CardLists.filter(ai.getCardsIn(ZoneType.Battlefield), c -> c.getType().hasCreatureType(type)).size();
+                    effect.resetTargets();
+                    final Card t = ComputerUtilCard.getBestCreatureAI(CardLists.filter(CardUtil.getValidCardsToTarget(effect),
+                            c -> c.getController().isOpponentOf(ai) && c.getLethalDamage() <= n && c.canBeDestroyed()));
                     if (t != null) {
                         v = ComputerUtilCard.evaluateCreature(t);
                         target = t;

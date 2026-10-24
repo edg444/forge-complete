@@ -23,7 +23,7 @@ public final class XChoiceAi {
     private XChoiceAi() { }
 
     public static boolean handles(final String logic) {
-        return "StealX".equals(logic) || "WipeX".equals(logic);
+        return "StealX".equals(logic) || "WipeX".equals(logic) || "DestroyX".equals(logic);
     }
 
     private static int maxX(final Player ai, final SpellAbility sa) {
@@ -39,6 +39,22 @@ public final class XChoiceAi {
         int best = Integer.MIN_VALUE;
         int bestX = -1;
         Card bestTarget = null;
+        if ("DestroyX".equals(sa.getParam("AILogic"))) {
+            // Dregs of Sorrow: as many of their worthwhile creatures as it can pay for
+            sa.setXManaCostPaid(Math.max(1, max));
+            sa.resetTargets();
+            final java.util.List<Card> picks = CardLists.filter(forge.game.card.CardUtil.getValidCardsToTarget(sa),
+                    c -> c.getController().isOpponentOf(ai) && c.canBeDestroyed() && ComputerUtilCard.evaluateCreature(c) >= 100);
+            picks.sort(java.util.Comparator.comparingInt((Card c) -> ComputerUtilCard.evaluateCreature(c)).reversed());
+            final int x = Math.min(max, picks.size());
+            if (x < 1) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            }
+            sa.setXManaCostPaid(x);
+            sa.resetTargets();
+            picks.stream().limit(x).forEach(c -> sa.getTargets().add(c));
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
         if ("StealX".equals(sa.getParam("AILogic"))) {
             for (final Card c : CardLists.filter(ai.getGame().getCardsIn(ZoneType.Battlefield), c -> c.isCreature() && c.getController().isOpponentOf(ai))) {
                 if (c.getCMC() > max) {

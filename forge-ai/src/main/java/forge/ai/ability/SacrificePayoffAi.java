@@ -49,7 +49,8 @@ public final class SacrificePayoffAi {
     private SacrificePayoffAi() { }
 
     public static boolean handles(final String logic) {
-        return "SacrificeFor".equals(logic) || "SacrificeAny".equals(logic) || "RevealFor".equals(logic) || "ExileForX".equals(logic);
+        return "SacrificeFor".equals(logic) || "SacrificeAny".equals(logic) || "RevealFor".equals(logic) || "ExileForX".equals(logic)
+                || "ExileFor".equals(logic);
     }
 
     /** What the AI decided to sacrifice for this card, if anything. */
@@ -64,6 +65,7 @@ public final class SacrificePayoffAi {
         return switch (sa.getParam("AILogic")) {
             case "SacrificeAny" -> sacrificeAny(ai, sa);
             case "ExileForX" -> exileForX(ai, sa);
+            case "ExileFor" -> exileFor(ai, sa);
             default -> sacrificeFor(ai, sa);
         };
     }
@@ -80,7 +82,8 @@ public final class SacrificePayoffAi {
         }
         v = v.startsWith("-") ? v.substring(1) : v;
         final String expr = s.hasSVar(v) ? s.getSVar(v) : v;
-        if (!expr.startsWith("Sacrificed$") && !expr.startsWith("RememberedLKI$") && !expr.startsWith("Revealed$")) {
+        if (!expr.startsWith("Sacrificed$") && !expr.startsWith("RememberedLKI$") && !expr.startsWith("Revealed$")
+                && !expr.startsWith("Exiled$")) {
             return AbilityUtils.calculateAmount(s.getHostCard(), v, s);
         }
         final String[] parts = expr.substring(expr.indexOf('$') + 1).split("/");
@@ -200,6 +203,24 @@ public final class SacrificePayoffAi {
                         }
                     }
                 }
+                case Destroy -> {
+                    // Death Bomb: their best creature it may target
+                    if (s.usesTargeting()) {
+                        s.resetTargets();
+                        final Card t = ComputerUtilCard.getBestCreatureAI(CardLists.filter(CardUtil.getValidCardsToTarget(s),
+                                c -> c.getController().isOpponentOf(ai) && c.canBeDestroyed() && !sac.contains(c)));
+                        if (t != null) {
+                            s.getTargets().add(t);
+                            total += ComputerUtilCard.evaluateCreature(t);
+                        }
+                    }
+                }
+                case ChangeZone -> {
+                    // Diabolic Intent: a tutor
+                    if (s.getParamOrDefault("Origin", "").contains("Library") && "Hand".equals(s.getParam("Destination"))) {
+                        total += 110;
+                    }
+                }
                 case Token -> total += x(s, "TokenAmount", sac) * tokenValue(s.getParam("TokenScript"));
                 case Draw -> total += x(s, "NumCards", sac) * 50;
                 case Discard -> {
@@ -277,6 +298,30 @@ public final class SacrificePayoffAi {
                 continue;
             }
             final int v = payoff(ai, sa, List.of(c));
+            if (v > best) {
+                best = v;
+                bestCard = c;
+            }
+        }
+        if (bestCard == null || best < (sa.isSpell() ? 60 : 30)) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        payoff(ai, sa, List.of(bestCard));
+        PLANNED.put(host.getId(), new CardCollection(bestCard));
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    // Corpse Lunge: X is the exiled creature card's power, so the card from its graveyard that does the most
+    private static AiAbilityDecision exileFor(final Player ai, final SpellAbility sa) {
+        final forge.game.cost.CostExile exile = costPart(sa, forge.game.cost.CostExile.class);
+        if (exile == null) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final Card host = sa.getHostCard();
+        int best = Integer.MIN_VALUE;
+        Card bestCard = null;
+        for (final Card c : CardLists.getValidCards(ai.getCardsIn(ZoneType.Graveyard), exile.getType().split(";"), ai, host, sa)) {
+            final int v = payoff(ai, sa, List.of(c)) - 10;
             if (v > best) {
                 best = v;
                 bestCard = c;

@@ -54,11 +54,34 @@ public final class RadianceAi {
         sa.resetTargets();
         int best = Integer.MIN_VALUE;
         Card bestT = null;
+        // Brightflame: X is picked with the target
+        final boolean xDamage = sa.getApi() == forge.game.ability.ApiType.DealDamage && "Count$xPaid".equals(sa.getSVar(sa.getParamOrDefault("NumDmg", "")));
+        final int maxX = !xDamage ? 0 : forge.ai.ComputerUtilMana.getAvailableManaEstimate(ai, false)
+                - (sa.getPayCosts().getTotalMana() == null ? 0 : sa.getPayCosts().getTotalMana().getCMC());
+        int bestX = 0;
         for (final Card t : CardUtil.getValidCardsToTarget(sa)) {
             final CardCollection g = group(ai, t);
             int v = 0;
+            int xHere = 0;
             switch (sa.getApi()) {
                 case DealDamage -> {
+                    if (xDamage) {
+                        int bestHere = Integer.MIN_VALUE;
+                        for (int x = 1; x <= maxX; x++) {
+                            int here = -x * 5;
+                            for (final Card c : g) {
+                                if (x >= c.getLethalDamage() && c.canBeDestroyed()) {
+                                    here += side(ai, c) * worth(c);
+                                }
+                            }
+                            if (here > bestHere) {
+                                bestHere = here;
+                                xHere = x;
+                            }
+                        }
+                        v = bestHere;
+                        break;
+                    }
                     final int dmg = AbilityUtils.calculateAmount(sa.getHostCard(), sa.getParam("NumDmg"), sa);
                     for (final Card c : g) {
                         if (dmg >= c.getLethalDamage() && c.canBeDestroyed()) {
@@ -110,11 +133,15 @@ public final class RadianceAi {
             if (v > best) {
                 best = v;
                 bestT = t;
+                bestX = xHere;
             }
         }
         final int threshold = sa.isSpell() ? 60 : 30;
         if (bestT == null || best < threshold) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        if (xDamage) {
+            sa.setXManaCostPaid(bestX);
         }
         sa.getTargets().add(bestT);
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);

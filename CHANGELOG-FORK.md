@@ -798,6 +798,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Azorius Ploy: `PreventCombat`. Aether Tradewinds: `BounceBoth`. Abandon Hope: `DiscardForX` (X of their cards
       for X spare ones, X also paid in mana).
     - Anurid Brushhopper: `Blink`, now also for an ability that blinks itself out of the way of removal.
+    - Brightflame: `Radiance` now picks X with the target. Coordinated Barrage: `HurtType` gains a damage case.
+      Creeping Renaissance: `HurtType` also takes a card-type choice (the type bringing the most back from its
+      graveyard).
+    - Daring Thief: `ExchangePair` on its inspired trigger. Corpse Lunge: new `ExileFor`, for the graveyard creature
+      card whose power does the most, which the cost then exiles.
+    - Calming Verse: new `WipeWithSub`, which counts every sweep in the card, including the one that hits its own
+      enchantments. Dead Reckoning: new `RecycleForDamage`, a graveyard creature whose power kills their best creature.
+    - Death Bomb, Diabolic Intent: `SacrificeFor` now also values a targeted destroy and a tutor, sacrificing the
+      cheapest creature (nothing, if one is about to die anyway). Deadly Tempest: `WipeWithSub`.
+    - Dregs of Sorrow: new `DestroyX`, X as many of their worthwhile creatures as it can pay for. Echoing Calm,
+      Echoing Ruin: new `EchoDestroy`, the target with the most copies of theirs (less any of its own).
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

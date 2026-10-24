@@ -191,6 +191,12 @@ public class AiCostDecision extends CostDecisionMakerBase {
         if (cost.payCostFromSource()) {
             return PaymentDecision.card(source);
         }
+        // Corpse Lunge: the card whose power it planned on
+        final CardCollection planned = forge.ai.ability.SacrificePayoffAi.planned(ability);
+        if (planned != null && !planned.isEmpty() && "ExileFor".equals(ability.getRootAbility().getParam("AILogic"))
+                && player.getCardsIn(cost.getFrom()).containsAll(planned)) {
+            return PaymentDecision.card(planned);
+        }
 
         if (type.equals("All")) {
             return PaymentDecision.card(player.getCardsIn(cost.getFrom()));
