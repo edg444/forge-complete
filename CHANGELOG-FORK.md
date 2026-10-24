@@ -1372,6 +1372,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Set review: Commander 2019** (57 new names): no changes.
   - Left as Oracle: Elsha of the Infinite's "cast the top card ... if it's a noncreature, nonland card", Chainer's
     "creature card", Wall of Stolen Identity's "any creature".
+- **Set review: Throne of Eldraine and Throne of Eldraine Promos** (269 new names):
+  - In-game text: *Yorvo, Lord of Garenbrig*'s "Yorvo enters with four +1/+1 counters"; *Escape to the Wilds*' effect
+    text was garbled; *Ogre Errant*'s target prompt says "Knight".
+  - Left as Oracle: Bartered Cow's "dies or when you discard it", Hushbringer's and Mirrormade's "enters the
+    battlefield", Archon of Absolution's "you or a planeswalker", affinity spelled out on The Circle of Loyalty and
+    Emry, mill and shuffle wording.
+- **Set review: Ponies: The Galloping** (3 new names): no changes.
+- **Set review: Mystery Booster Playtest Cards 2019** (119 new names, `ThroneOfEldraineAuditTest`):
+  - In-game text: *Time Sidewalk*'s opening-hand ability wasn't shown (engine: an instant or sorcery now shows its
+    "If this card is in your opening hand" text); *Command the Chaff*'s "Exile Command the Chaff."; *Personal Decoy*'s
+    "You can't be attacked."; *Underdark Beholder*'s Oracle wording.
+- **Set review: Game Night 2019** (5 new names): no changes.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

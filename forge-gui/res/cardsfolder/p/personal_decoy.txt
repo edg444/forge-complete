@@ -6,7 +6,7 @@ Text:CARDNAME enters with a number of loyalty counters on it equal to your life 
 SVar:X:Count$YourLifeTotal
 R:Event$ Moved | ActiveZones$ Battlefield | Origin$ Battlefield | ExcludeDestination$ Exile | ValidCard$ Card.Self | ReplaceWith$ ToExile | Description$ If it would leave the battlefield, exile it instead of putting it anywhere else.
 SVar:ToExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | Defined$ ReplacedCard
-S:Mode$ CantAttack | ValidCard$ Creature | Target$ You | Description$ Creatures can't attack you.
+S:Mode$ CantAttack | ValidCard$ Creature | Target$ You | Description$ You can't be attacked.
 A:AB$ GainLife | Cost$ AddCounter<1/LOYALTY> | Planeswalker$ True | LifeAmount$ 1 | SpellDescription$ You gain 1 life.
 A:AB$ Draw | Cost$ SubCounter<4/LOYALTY> | Planeswalker$ True | Defined$ You | NumCards$ 1 | Ultimate$ True | SpellDescription$ Draw a card.
 Oracle:Personal Decoy enters with a number of loyalty counters on it equal to your life total. If it would leave the battlefield, exile it instead of putting it anywhere else. You can't be attacked.\n[+1]: You gain 1 life.\n[-4]: Draw a card.

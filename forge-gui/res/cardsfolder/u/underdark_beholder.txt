@@ -2,8 +2,8 @@ Name:Underdark Beholder
 ManaCost:4 B B
 Types:Creature Beholder
 PT:6/6
-K:etbCounter:EYESTALK:10
-R:Event$ DamageDone | ActiveZones$ Battlefield | ValidTarget$ Card.Self | ReplaceWith$ Counters | Description$ If damage would be dealt to CARDNAME, instead remove that many eyestalk counters from it. If you can't, sacrifice it.
+K:etbCounter:EYESTALK:10:no Condition:CARDNAME enters the battlefield with ten eyestalk counters on it.
+R:Event$ DamageDone | ActiveZones$ Battlefield | ValidTarget$ Card.Self | ReplaceWith$ Counters | Description$ If CARDNAME would be dealt damage, remove that many eyestalk counters from it instead. If you can't, sacrifice it.
 SVar:Counters:DB$ RemoveCounter | Defined$ ReplacedTarget | CounterType$ EYESTALK | CounterNum$ X | RememberRemoved$ True | SubAbility$ DBSac
 SVar:DBSac:DB$ Sacrifice | SacValid$ Self | ConditionCheckSVar$ Y | ConditionSVarCompare$ LTX | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True

@@ -3896,6 +3896,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                     // Pseudo keywords, only print Reminder
                     sbBefore.append(inst.getReminderText());
                     sbBefore.append("\r\n");
+                } else if (keyword.startsWith("MayEffectFromOpening")) {
+                    sbAfter.append(AbilityFactory.getMapParams(getSVar(keyword.split(":")[1])).get("SpellDescription"));
+                    sbAfter.append("\r\n");
                 } else if (keyword.startsWith("Entwine") || keyword.startsWith("Madness")
                         || keyword.startsWith("Miracle") || keyword.startsWith("Recover")
                         || keyword.startsWith("Escape") || keyword.startsWith("Foretell:")
