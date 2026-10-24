@@ -405,6 +405,22 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Set review: Ravnica: Clue Edition and its Front Cards** (56 new names): no changes; the ten guild front cards
   aren't game pieces.
 
+- **Set review: Black Lotus Unknown Planechase** (46 new names): *The Food Court* repeated "Sacrifice three Foods:";
+  *Event Horizon*'s chaos modes weren't listed; *Elvish Impersonation Contest*'s "Thank You Very Much —"; planes say
+  "here" and "this phenomenon" ("this phenome-nom" on *That's Enough Slices*) the way Oracle does. Left as Oracle: its
+  shorthand ("Chaos:") and spacing, *High and Dry Black Market*'s per-player mode list.
+- **Set review: Fallout** (154 new names): *Vault 11: Voter's Dilemma*'s chapter I had no text; *Brotherhood
+  Scribe*'s "Activate only if you control three or more artifacts."; *Curie*'s "Exile another nontoken artifact
+  creature you control" (was "exile a select another target ..."); "Exile Paladin Danse"; "four cards" (*Ruthless
+  Radrat*'s squad cost; was "cardss"); *Vault 87*'s "this Saga".
+- **Set review: Wizards Play Network 2024** (2 new names) and **The Big Score** (25 new names): no changes.
+- **Set review: Outlaws of Thunder Junction Commander** (40 new names, `ThunderJunctionAuditTest`): R&D's Secret Lair:
+  *Thunderclap Drake*'s printings before Secrets of Strixhaven Commander's don't let you choose new targets for its
+  copies.
+- **Set review: Outlaws of Thunder Junction and its Promos** (258 new names): no changes. Left as Oracle: the Mounts'
+  and Vehicles' printed self-references, *Kirri*'s "your postcombat main phase", *Geyser Drake*'s "As long as it's not
+  your turn".
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three
