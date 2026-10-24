@@ -155,6 +155,24 @@ public class ComputerUtilCost {
                 if (type.equals("Hand")) {
                     typeList = hand;
                     num = hand.size();
+                } else if (type.equals("Random")) {
+                    // Amok, Frenetic Ogre: any card could go, so only when at least half the hand is a card it would
+                    // discard anyway
+                    num = AbilityUtils.calculateAmount(source, disc.getAmount(), sa);
+                    if (hand.size() < num) {
+                        return false;
+                    }
+                    final CardCollection junk = new CardCollection(hand);
+                    int discardable = 0;
+                    for (Card pref = ComputerUtil.getCardPreference(ai, source, "DiscardCost", junk); pref != null;
+                            pref = ComputerUtil.getCardPreference(ai, source, "DiscardCost", junk)) {
+                        junk.remove(pref);
+                        discardable++;
+                    }
+                    if (discardable * 2 < hand.size()) {
+                        return false;
+                    }
+                    continue;
                 } else {
                     if (type.equals("CARDNAME")) {
                         if (source.getAbilityText().contains("Bloodrush")) {

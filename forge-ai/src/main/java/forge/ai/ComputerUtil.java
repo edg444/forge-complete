@@ -2563,9 +2563,10 @@ public class ComputerUtil {
 
         final Game game = ai.getGame();
         String chosen = "";
-        if ("ForceAttack".equals(logic)) {
-            // Walking Desecration: the type it decided on
-            final String meant = forge.ai.ability.ForcedCombatAi.chosenType(sa.getHostCard());
+        if ("ForceAttack".equals(logic) || "HurtType".equals(logic)) {
+            // Walking Desecration, Outbreak: the type it decided on
+            final String meant = "HurtType".equals(logic) ? forge.ai.ability.TypeHurtAi.chosenType(sa.getHostCard())
+                    : forge.ai.ability.ForcedCombatAi.chosenType(sa.getHostCard());
             if (meant != null && validTypes.contains(meant)) {
                 return meant;
             }

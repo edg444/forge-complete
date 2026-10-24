@@ -737,6 +737,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Pacts (Intervention Pact, Pact of Negation, Pact of the Titan, Slaughter Pact, Summoner's Pact): new `PactAi`.
       A pact is cast only when its lands can pay next upkeep's cost in full and in color, on top of any pact already
       owed. The AI already pays that cost when it can, and each pact's own effect already had AI.
+  - *Cluster: radiance, a creature type to hurt, random-discard costs* (`NoAiRadianceTypeTest`):
+    - `AILogic$ Radiance` (Cleansing Beam, Incite Hysteria, Leave No Trace, Wojek Embermage, Wojek Siren): new
+      `RadianceAi`. Each possible target is judged by the whole group sharing its color, its own permanents included.
+      Incite Hysteria goes for an attack its group can't block that's then lethal; Wojek Siren waits for blocks.
+    - `AILogic$ HurtType` (Outbreak, Pack's Disdain, Pact of the Serpent, Tsabo's Decree): new `TypeHurtAi`. Every
+      creature type in play (and in their hand, for Tsabo's Decree) is tried for what the effect does with it, and that
+      type is the one chosen.
+    - A "discard a card at random" cost (Amok, Canyon Drake, Coral Helm, Frenetic Ogre, and any other card with one)
+      was always refused. It's now paid when at least half the hand is cards the AI would discard anyway, such as lands
+      it doesn't need.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

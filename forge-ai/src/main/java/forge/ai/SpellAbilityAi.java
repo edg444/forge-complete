@@ -328,6 +328,12 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         if ("Blink".equals(logic)) {
             return forge.ai.ability.BlinkAi.decide(ai, sa);
         }
+        if ("Radiance".equals(logic)) {
+            return forge.ai.ability.RadianceAi.decide(ai, sa);
+        }
+        if ("HurtType".equals(logic)) {
+            return forge.ai.ability.TypeHurtAi.decide(ai, sa);
+        }
 
         return null;
     }
