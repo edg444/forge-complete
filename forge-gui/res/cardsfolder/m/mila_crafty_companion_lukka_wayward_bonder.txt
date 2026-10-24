@@ -19,7 +19,9 @@ A:AB$ Discard | Cost$ AddCounter<1/LOYALTY> | Planeswalker$ True | NumCards$ 1 |
 SVar:DBDraw:DB$ Draw | ConditionDefined$ Remembered | ConditionPresent$ Card.nonCreature | ConditionCompare$ GE1 | SubAbility$ DBDraw2
 SVar:DBDraw2:DB$ Draw | NumCards$ 2 | ConditionDefined$ Remembered | ConditionPresent$ Creature | ConditionCompare$ GE1 | StackDescription$ None | SubAbility$ DBCleanup
 A:AB$ ChangeZone | Cost$ SubCounter<2/LOYALTY> | Planeswalker$ True | Origin$ Graveyard | Destination$ Battlefield | ValidTgts$ Creature.YouCtrl | GainControl$ True | SubAbility$ DBPump | RememberChanged$ True | AILogic$ BeforeCombat | SpellDescription$ Return target creature card from your graveyard to the battlefield. It gains haste. Exile it at the beginning of your next upkeep.
-SVar:DBPump:DB$ Animate | Keywords$ Haste | Defined$ Remembered | Duration$ Permanent | AtEOT$ Exile | SubAbility$ DBCleanup
+SVar:DBPump:DB$ Animate | Keywords$ Haste | Defined$ Remembered | Duration$ Permanent | SubAbility$ DBUpkeepExile
+SVar:DBUpkeepExile:DB$ DelayedTrigger | Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | RememberObjects$ Remembered | Execute$ TrigUpkeepExile | TriggerDescription$ Exile it at the beginning of your next upkeep. | SubAbility$ DBCleanup
+SVar:TrigUpkeepExile:DB$ ChangeZone | Defined$ DelayTriggerRemembered | Origin$ Battlefield | Destination$ Exile
 A:AB$ Effect | Cost$ SubCounter<7/LOYALTY> | Planeswalker$ True | Ultimate$ True | Name$ Emblem — Lukka, Wayward Bonder | Image$ emblem_lukka_wayward_bonder | Triggers$ LukkaCreatureETB | sVars$ LukkaDmg | Duration$ Permanent | AILogic$ Always | SpellDescription$ You get an emblem with "Whenever a creature you control enters, it deals damage equal to its power to any target."
 SVar:LukkaCreatureETB:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Creature.YouCtrl | TriggerZones$ Command | Execute$ LukkaDmg | TriggerDescription$ Whenever a creature you control enters, it deals damage equal to its power to any target.
 SVar:LukkaDmg:DB$ DealDamage | ValidTgts$ Any | NumDmg$ X | DamageSource$ TriggeredCard

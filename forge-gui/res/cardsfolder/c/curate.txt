@@ -1,7 +1,10 @@
 Name:Curate
 ManaCost:1 U
 Types:Instant
-A:SP$ Surveil | Amount$ 2 | SubAbility$ DBDraw | SpellDescription$ Surveil 2. (Look at the top two cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)
+A:SP$ Surveil | Amount$ 2 | SubAbility$ DBDraw | IsPresent$ Card.!PrintedTextActive,Card.!PrintedBefore 20221118 | PresentDefined$ Self | SpellDescription$ Surveil 2. (Look at the top two cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)
 SVar:DBDraw:DB$ Draw | SpellDescription$ Draw a card.
+# R&D's Secret Lair: Strixhaven's printing looks at the top two cards instead of surveilling (The Brothers' War's
+# is the first to say "Surveil 2"), so surveil triggers don't see it (Think Tank precedent).
+A:SP$ Dig | DigNum$ 2 | ChangeNum$ Any | DestinationZone$ Graveyard | LibraryPosition2$ 0 | NoReveal$ True | SubAbility$ DBDraw | IsPresent$ Card.PrintedTextActive+PrintedBefore 20221118 | PresentDefined$ Self | SpellDescription$ (As printed) Look at the top two cards of your library. Put any number of them into your graveyard and the rest back on top of your library in any order.
 DeckHas:Ability$Surveil|Graveyard
 Oracle:Surveil 2. (Look at the top two cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)\nDraw a card.

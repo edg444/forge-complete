@@ -1468,6 +1468,27 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     prompt.
   - Left as Oracle: the Sagas' "this Saga", "precombat" and "enters the battlefield" wording, Run Ashore's "their
     choice of", Bounty of Skemfar's "up to one".
+- **Set review: Commander 2021** (81 new names, `StrixhavenAuditTest`):
+  - Fixed: *Author of Shadows* exiled every graveyard you don't own (a Two-Headed Giant teammate's too), not just
+    opponents'.
+  - R&D's Secret Lair: *Laelia, the Blade Reforged* (Commander 2021's printing says "Whenever you exile one or more
+    cards from your library and/or your graveyard") counts only exiles a spell or ability you control makes; Battle
+    for Baldur's Gate's printing and Oracle count any.
+  - In-game text: *Sly Instigator* said "can't be blocked this turn" (it lasts until your next turn).
+- **Set review: Strixhaven: School of Mages and Strixhaven Promos** (274 new names, `StrixhavenAuditTest`):
+  - Fixed: *Lukka, Wayward Bonder*'s -2 exiled the creature at the next end step, not your next upkeep;
+    *Letter of Acceptance*'s draw ability didn't need {T}; *Dueling Coach* could only target creatures you control.
+  - R&D's Secret Lair: *Curate* (Strixhaven's printing looks at the top two cards; The Brothers' War's is the first to
+    say "Surveil 2") doesn't surveil; *Elemental Expressionist* (its printings say "When you exile this creature")
+    makes its Elemental only when a spell or ability its controller controls exiles the creature (Oracle update,
+    2021-04-16).
+  - In-game text: *Infuse with Vitality*, *Show of Confidence*, *Snow Day*, *Mage Hunters' Onslaught* and *Draconic
+    Intervention* showed only part of their text; *Draconic Intervention*'s "Instant;Sorcery card"; *Rootha*'s
+    "spell you control"; *Academic Probation*'s and *Hofri Ghostforge*'s Oracle wording; prompts on *Tenured
+    Inkcaster* and *Vanishing Verse*.
+  - Left as Oracle: Uvilda's "hone counters" (now refine), Hofri's printed "your graveyard" (a card always goes to its
+    owner's, CR 400.3), Team Pennant's "token creature" equip text.
+- **Set review: Strixhaven Mystical Archive** (1 new name): no changes.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

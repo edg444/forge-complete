@@ -2,12 +2,17 @@ Name:Elemental Expressionist
 ManaCost:UR UR UR UR
 Types:Creature Orc Wizard
 PT:4/4
-T:Mode$ SpellCastOrCopy | ValidCard$ Instant,Sorcery | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigAnimate | TriggerDescription$ Magecraft — Whenever you cast or copy an instant or sorcery spell, choose target creature you control. Until end of turn, it gains "If this creature would leave the battlefield, exile it instead of putting it anywhere else" and "When this creature is put into exile, create a 4/4 blue and red Elemental creature token." (Each instance of that ability triggers separately.)
+T:Mode$ SpellCastOrCopy | ValidCard$ Instant,Sorcery | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigAnimate | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20210424 | TriggerDescription$ Magecraft — Whenever you cast or copy an instant or sorcery spell, choose target creature you control. Until end of turn, it gains "If this creature would leave the battlefield, exile it instead of putting it anywhere else" and "When this creature is put into exile, create a 4/4 blue and red Elemental creature token." (Each instance of that ability triggers separately.)
 SVar:TrigAnimate:DB$ Animate | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Choose target creature you control | Replacements$ Exile | Triggers$ Exiled
 SVar:Exile:Event$ Moved | ValidCard$ Card.Self | ActiveZones$ Battlefield | Origin$ Battlefield | ExcludeDestination$ Exile | ReplaceWith$ DBChangeZone | Description$ If this creature would leave the battlefield, exile it instead of putting it anywhere else.
 SVar:DBChangeZone:DB$ ChangeZone | Defined$ ReplacedCard | Origin$ Battlefield | Destination$ Exile
 SVar:Exiled:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Exile | ValidCard$ Card.Self | Execute$ DBToken | TriggerDescription$ When this creature is put into exile, create a 4/4 blue and red Elemental creature token.
 SVar:DBToken:DB$ Token | TokenScript$ ur_4_4_elemental
+# R&D's Secret Lair: Strixhaven's printings (its only ones) say "When you exile this creature" - the token comes only
+# when a spell or ability its controller controls exiles it (Oracle update, 2021-04-16: any exile counts).
+T:Mode$ SpellCastOrCopy | ValidCard$ Instant,Sorcery | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigAnimatePrinted | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20210424 | TriggerDescription$ (As printed) Magecraft — Whenever you cast or copy an instant or sorcery spell, choose target creature you control. Until end of turn, it gains "If this creature would leave the battlefield, exile it instead of putting it anywhere else" and "When you exile this creature, create a 4/4 blue and red Elemental creature token."
+SVar:TrigAnimatePrinted:DB$ Animate | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Choose target creature you control | Replacements$ Exile | Triggers$ ExiledPrinted
+SVar:ExiledPrinted:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Exile | ValidCard$ Card.Self | ValidCause$ SpellAbility.YouCtrl | Execute$ DBToken | TriggerDescription$ When you exile this creature, create a 4/4 blue and red Elemental creature token.
 DeckHas:Ability$Token
 DeckNeeds:Type$Instant|Sorcery
 Oracle:Magecraft — Whenever you cast or copy an instant or sorcery spell, choose target creature you control. Until end of turn, it gains "If this creature would leave the battlefield, exile it instead of putting it anywhere else" and "When this creature is put into exile, create a 4/4 blue and red Elemental creature token." (Each instance of that ability triggers separately.)
