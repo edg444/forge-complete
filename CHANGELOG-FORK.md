@@ -660,6 +660,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       `MostProminentNonLandInComputerDeck`).
     - Demonic Consultation, Divining Witch: only when that card has at least three copies left in the library, since
       missing it exiles the rest of the library.
+  - *Cluster: damage redirection* (`NoAiRedirectTest`): new `AILogic$ RedirectCombat` judges a redirection against
+    what it would change. Damage comes from the combat once blockers are declared, or from an opponent's burn on top of
+    the stack. The card's redirection is applied to it, and the creatures that die and the life lost on each side are
+    compared, with lethal outweighing everything. Every choice of targets, and of the source for "a source of your
+    choice", is tried. The source picked is the one chosen when the card resolves.
+    - Carom, Glarecaster, Harm's Way, Jade Monolith, Kor Chant, Kor Dirge, Mirror Strike, Reflect Damage, Sivvi's
+      Valor, Vassal's Duty, Ward of Piety, Daughter of Autumn: now used.
+    - The redirect abilities of Lancers, Nomads, Outrider, Shaman, Spirit and Warrior en-Kor, Mirrorwood Treefolk,
+      Opal-Eye, Oracle's Attendants, Razia, Shield Dancer, Soltari Guerrillas, Zealous Inquisitor and Zhalfirin
+      Crusader: these creatures were already in AI decks for their bodies, and now their abilities are used too.
+    - "The next 1 damage" abilities (Daughter of Autumn, the en-Kor, Vassal's Duty, Ward of Piety) are activated again
+      until enough damage has moved. A "next time" or "all damage" shield isn't made twice.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

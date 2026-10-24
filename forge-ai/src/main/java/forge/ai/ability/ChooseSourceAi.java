@@ -99,6 +99,14 @@ public class ChooseSourceAi extends SpellAbilityAi {
 
     @Override
     public Card chooseSingleCard(final Player aiChoser, SpellAbility sa, Iterable<Card> options, boolean isOptional, Player targetedPlayer, Map<String, Object> params) {
+        if ("RedirectCombat".equals(sa.getParam("AILogic"))) {
+            final Card meant = RedirectCombatAi.chosenSource(sa.getHostCard());
+            for (final Card c : options) {
+                if (c.equals(meant)) {
+                    return c;
+                }
+            }
+        }
         if ("NeedsPrevention".equals(sa.getParam("AILogic"))) {
             final Player ai = sa.getActivatingPlayer();
             final Game game = ai.getGame();
