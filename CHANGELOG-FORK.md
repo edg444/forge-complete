@@ -329,6 +329,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-24, eighteenth deploy (desktop, Android, GitHub) — set review UNK through Reality Fracture (complete for released sets); AI for no-AI cards (A, about 110 cards); AI warp/Branch fixes; 7-commit upstream merge
+
 - **AI fixes from an AI vs AI game** (`WarpAndBranchAiTest`): the AI no longer warps a creature that does nothing
   this turn - *Starwinder* with no creatures was held to Main 2 (`PlayMain1`) and warped after combat, only to be
   exiled. Warp now needs an enters/leaves trigger; without one, it's only used before combat when the normal cost
