@@ -1326,6 +1326,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Left as Oracle: Saheeli, the Gifted's printed "costs {1} less ... for each artifact" (the same as affinity),
     Ever-Watching Threshold's trigger condition, Xantcha's "As ... enters, an opponent ... gains control of it",
     Aminatou's Augury's "card", Boreas Charger's split sentences, "Totem armor".
+- **Set review: Guilds of Ravnica and Guilds of Ravnica Promos** (234 new names, `GuildsOfRavnicaAuditTest`):
+  - Fixed: *Torch Courier* could target itself (it gives another creature haste).
+  - R&D's Secret Lair: *Invert* (its only printing has no "until end of turn") switches power and toughness
+    indefinitely (CR 611.2a).
+  - In-game text: *Intervention* said "Target player deals 3 damage"; *Mephitic Vapors* didn't show "Surveil 2.";
+    *Cosmotronic Wave*, *Gruesome Menagerie*, *Mission Briefing*, *Vraska's Stoneglare* and *Experimental Frenzy*
+    repeated part of their text; *Thief of Sanity*, *Mnemonic Betrayal*, *Dispersal* and *Statue* now match Oracle;
+    *Moodmark Painter*'s "can't be blocked" reminder; *Mausoleum Secrets*' search prompt says "your graveyard".
+  - Left as Oracle: Experimental Frenzy's "play the top card" / "can't play cards from your hand", Omnispell Adept's
+    and Mnemonic Betrayal's "cards", Thief of Sanity's "you may look at it", Kraul Harpooner's word order, mill and
+    "shuffle their library" wording. The Lockets' printed hybrid costs are a data artifact, not a difference.
+- **Set review: M19 Gift Pack** (5 new names): no changes.
+- **Set review: Game Night** (5 new names): no changes.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

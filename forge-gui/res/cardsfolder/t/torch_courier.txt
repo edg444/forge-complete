@@ -3,5 +3,5 @@ ManaCost:R
 Types:Creature Goblin
 PT:1/1
 K:Haste
-A:AB$ Pump | Cost$ Sac<1/CARDNAME> | ValidTgts$ Creature | KW$ Haste | SpellDescription$ Another target creature gains haste until end of turn.
+A:AB$ Pump | Cost$ Sac<1/CARDNAME> | ValidTgts$ Creature.Other | TgtPrompt$ Select another target creature | KW$ Haste | SpellDescription$ Another target creature gains haste until end of turn.
 Oracle:Haste\nSacrifice this creature: Another target creature gains haste until end of turn.

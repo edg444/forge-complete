@@ -10,5 +10,5 @@ ALTERNATE
 Name:Statue
 ManaCost:2 B G
 Types:Instant
-A:SP$ Destroy | ValidTgts$ Artifact,Creature,Enchantment | TgtPrompt$ Select target artifact, creature or enchantment | SpellDescription$ Destroy target artifact, creature or enchantment.
+A:SP$ Destroy | ValidTgts$ Artifact,Creature,Enchantment | TgtPrompt$ Select target artifact, creature, or enchantment | SpellDescription$ Destroy target artifact, creature, or enchantment.
 Oracle:Destroy target artifact, creature, or enchantment.
