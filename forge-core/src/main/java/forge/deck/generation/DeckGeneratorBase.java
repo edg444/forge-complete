@@ -362,6 +362,11 @@ public abstract class DeckGeneratorBase {
         return null; // all but theme deck do override this method
     }
 
+    /**
+     * Use this edition's basics only if it has all five. Checking for Plains alone let an edition with a Plains but
+     * no Swamp (Ultimate Masters, Commander Legends, most Duel Decks) be picked, and a mono-black deck then got no
+     * lands at all: the missing Swamp came back null and adjustDeckSize padded the deck with spells instead.
+     */
     protected boolean setBasicLandPool(String edition){
         Predicate<PaperCard> isSetBasicLand;
         if (edition != null){
@@ -371,8 +376,14 @@ public abstract class DeckGeneratorBase {
             isSetBasicLand = PaperCardPredicates.IS_BASIC_LAND;
         }
 
-        landPool = new DeckGenPool(StaticData.instance().getCommonCards().getAllCards(isSetBasicLand));
-        return landPool.contains("Plains");
+        final DeckGenPool basics = new DeckGenPool(StaticData.instance().getCommonCards().getAllCards(isSetBasicLand));
+        for (String basic : MagicColor.Constant.BASIC_LANDS) {
+            if (!basics.contains(basic)) {
+                return false;
+            }
+        }
+        landPool = basics;
+        return true;
     }
 
     protected int addSome(int cnt, List<PaperCard> source) {
@@ -470,7 +481,7 @@ public abstract class DeckGeneratorBase {
             // just to prevent a null exception by the deck size fixing code
             cardCounts.put(basicLandName, nLand);
 
-            if (!landPool.contains("Plains")) {//in case none of the cards came from a set with all basic lands
+            if (landPool == null || !landPool.contains(basicLandName)) {//in case none of the cards came from a set with all basic lands
                 setBasicLandPool("BFZ");
                 basicLandEdition="BFZ";
             }
@@ -488,6 +499,10 @@ public abstract class DeckGeneratorBase {
         int actualSize = tDeck.countAll();
         if (actualSize < targetSize) {
             addSome(targetSize - actualSize, tDeck.toFlatList());
+            // singletons can't add another copy of anything, so the rest of a short deck is basics
+            if (tDeck.countAll() < targetSize) {
+                addBasicLand(targetSize - tDeck.countAll());
+            }
         }
         else if (actualSize > targetSize) {
             for (int i = 0; i < 3 && actualSize > targetSize; i++) {

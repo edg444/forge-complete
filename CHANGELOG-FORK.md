@@ -331,6 +331,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### 2026-10-24, eighteenth deploy (desktop, Android, GitHub) — set review UNK through Reality Fracture (complete for released sets); AI for no-AI cards (A, about 110 cards); AI warp/Branch fixes; 7-commit upstream merge
 
+- **Random color decks always get their lands** (`ColorDeckLandsTest`): a mono-black or mono-green AI deck could
+  come out with no lands at all, padded to 60 with extra spells (seen as a deck of colorless artifacts and *Orb of
+  Origin*). The basics came from the first card's edition with a Plains, which might print no Swamp or Forest
+  (*Commander Legends*, most Duel Decks); now an edition supplies the basics only if it has all five. Singleton decks
+  that ran out of cards stopped short of 60; the rest is now basics. Upstream bug.
 - **AI fixes from an AI vs AI game** (`WarpAndBranchAiTest`): the AI no longer warps a creature that does nothing
   this turn - *Starwinder* with no creatures was held to Main 2 (`PlayMain1`) and warped after combat, only to be
   exiled. Warp now needs an enters/leaves trigger; without one, it's only used before combat when the normal cost
