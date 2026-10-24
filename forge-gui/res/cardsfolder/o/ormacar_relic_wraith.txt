@@ -6,6 +6,6 @@ K:Vigilance
 K:Menace
 K:Lifelink
 K:Precious
-S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | AddToughness$ X | IsPresent$ Card.IsPartner+YouCtrl | Description$ As long as you control your Precious, CARDNAME gets +X/+X, where X is the mana value of your Precious.
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | AddToughness$ X | IsPresent$ Card.IsPartner+YouCtrl | Description$ As long as you control your Precious, NICKNAME gets +X/+X, where X is the mana value of your Precious.
 SVar:X:Count$Valid Card.IsPartner+YouCtrl$CardManaCost
 Oracle:Vigilance, menace, lifelink\nPrecious (You can have two commanders if the other one is a legendary noncreature artifact.)\nAs long as you control your Precious, Ormacar gets +X/+X, where X is the mana value of your Precious.

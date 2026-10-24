@@ -490,6 +490,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   start on their own lines after its shared text (*Vincent's Limit Break*).
 - **Set review: FIN Standard Showdown** (1 new name) and **URL/Convention Promos** (4 new names): no changes.
 
+- **Set review: Edge of Eternities Commander** (24 new names): no changes (in-game text only; no MTGJSON printed
+  text).
+- **Set review: Edge of Eternities and its Promos** (251 new names): a warp cost that isn't just mana ends with a
+  period ("Warp—{B}, Pay 2 life.", *Timeline Culler*). Left as is: Forge's "STATION 8+" layout for Oracle's "8+ |".
+- **Set review: 2023 Heroes of the Realm** (2 new names, the fork's): "Ormacar gets +X/+X".
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three

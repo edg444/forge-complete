@@ -3870,8 +3870,8 @@ public class CardFactoryUtil {
             }
 
             newSA.putParam("PrecostDesc", sbCost.toString());
-            newSA.putParam("CostDesc", warpCost.toString());
-            // need to add the "."?
+            // Oracle ends a non-mana warp cost like a sentence: "Warp—{B}, Pay 2 life." (Timeline Culler)
+            newSA.putParam("CostDesc", warpCost.toString() + (warpCost.isOnlyManaCost() ? "" : "."));
 
             // makes new SpellDescription
             final StringBuilder desc = new StringBuilder();
