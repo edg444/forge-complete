@@ -590,6 +590,24 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       already plays them sensibly. Scarecrow, Shaman en-Kor, Shield Dancer, Shieldmage Elder, Silent Assassin, Silver
       Wyvern: unflagged for their bodies (the redirects, the damage prevention and the end-of-combat removal are never
       activated).
+  - *S and T*:
+    - Squallmonger: now `AI:RemoveDeck:Random`, so the AI uses an opponent's.
+    - Soldevi Adnate, Soldevi Excavations, Soldevi Sage, Soldier Replica, Solidarity, Sophic Centaur, Soramaro, First
+      to Dream, Soratami Cloud Chariot, Soratami Cloudskater, Sorcerer's Broom, Soul Channeling, Soul Kiss, Soul
+      Seizer, Soulbright Flamekin, Spare from Evil, Spark of Creativity, Spawnbinder Mage, Spawning Pit, Specter's
+      Shriek, Spectral Adversary, Spectral Searchlight, Spell Contortion, Spellshift, Sphinx's Decree, Spike Rogue,
+      Spincrusher, Spinning Darkness, Spiteflame Witch, Spitting Slug, Spitting Spider, Spoils of Evil, Springjack
+      Pasture, Springleaf Drum, Spurred Wolverine, Squealing Devil, Stalking Yeti, Starke of Rath, Stasis Cell,
+      Steadfastness, Steal Enchantment, Steeling Stance, Stifle, Stir the Pride, Stitcher's Apprentice, Stonybrook
+      Angler, Stormwatch Eagle, Strands of Night, Strategic Planning, Street Sweeper, Strongarm Tactics, Stronghold
+      Assassin, Sudden Demise, Suicidal Charge, Sultai Ascendancy, Summoner's Egg, Sunbird Standard, Sungrass Egg,
+      Sunken Ruins, Sunscape Apprentice, Suppress, Surveyor's Scope, Survivor of the Unseen, Svogthos, the Restless
+      Tomb, Svyelunite Temple, Swan Song, Swashbuckler Extraordinaire, Sword of the Paruns, Sworn Defender, Sylvan
+      Safekeeper, Sylvan Yeti, Syr Elenora, the Discerning, Tahngarth's Rage, Taigam's Scheming, Taigam, Sidisi's
+      Hand, Tainted Adversary, Takklemaggot, Talon of Pain, Tamiyo, Collector of Tales, Teardrop Kami, Teferi's Care,
+      Teferi's Veil, Temporary Truce, Tendrils of Despair, Tergrid's Shadow, Terrarion: the existing AI already plays
+      them sensibly. Soltari Guerrillas, Spirit en-Kor, Stonewise Fortifier: unflagged for their bodies (the redirects
+      and the damage prevention are never activated).
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

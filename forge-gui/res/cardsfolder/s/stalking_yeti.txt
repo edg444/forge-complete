@@ -8,5 +8,4 @@ SVar:DBDamage:DB$ DealDamage | Defined$ Self | DamageSource$ Targeted | NumDmg$ 
 A:AB$ ChangeZone | Cost$ 2 S | Origin$ Battlefield | Destination$ Hand | SorcerySpeed$ True | SpellDescription$ Return this creature to its owner's hand. Activate only as a sorcery.
 SVar:X:Count$CardPower
 SVar:Y:Targeted$CardPower
-AI:RemoveDeck:All
 Oracle:When this creature enters, if it's on the battlefield, it deals damage equal to its power to target creature an opponent controls and that creature deals damage equal to its power to this creature.\n{2}{S}: Return this creature to its owner's hand. Activate only as a sorcery. ({S} can be paid with one mana from a snow source.)

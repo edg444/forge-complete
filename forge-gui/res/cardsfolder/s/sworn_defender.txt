@@ -6,5 +6,4 @@ A:AB$ Pump | Cost$ 1 | ValidTgts$ Creature.blockedBySource,Creature.blockingSour
 SVar:DBAnimate:DB$ Animate | Defined$ Self | Power$ X | Toughness$ Y
 SVar:X:Targeted$CardToughness/Minus.1
 SVar:Y:Targeted$CardPower/Plus.1
-AI:RemoveDeck:All
 Oracle:{1}: This creature's power becomes the toughness of target creature blocking or being blocked by this creature minus 1 until end of turn, and its toughness becomes 1 plus the power of that creature until end of turn.
