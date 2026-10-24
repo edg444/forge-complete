@@ -421,6 +421,20 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   and Vehicles' printed self-references, *Kirri*'s "your postcombat main phase", *Geyser Drake*'s "As long as it's not
   your turn".
 
+- **Set review: Modern Horizons 3 Commander** (60 new names, `ModernHorizons3AuditTest`): an unearth cost that isn't
+  mana showed as "Unearth {0}" (*Salvation Colossus*; now "Unearth—Pay eight {E}." - the cost itself was right).
+- **Set review: Modern Horizons 3 and its Promos** (255 new names): text on *Chthonian Nightmare* (cost order),
+  *Depth Defiler* ("choose one. If it was kicked"), *Echoes of Eternity* ("copy it. You may choose"), *Nyxborn
+  Hydra* ("This permanent enters"), *Ral and the Implicit Maze*'s chapter II (no "Discard a card:" cost prefix) and
+  *Wheel of Potential* ("draw a number of cards"). Left as Oracle: the Eldrazi Spawn/Scion "this token" templates,
+  *Ulamog, the Defiler*'s printed "half their library", *Emrakul, the World Anew*'s madness and *Volatile
+  Stormdrake*'s hexproof keyword lines, *Nethergoyf*'s escape cost wording, *Razorfield Ripper*'s reconfigure spacing,
+  *Genku*'s mode punctuation.
+- **Set review: Assassin's Creed** (105 new names, `ModernHorizons3AuditTest`): *What Must Be Done*'s Release Juno mode
+  showed as "null"; *Fall of the First Civilization*'s chapter III didn't say it destroys the rest; ability words on
+  *Sokrates* ("Sokratic Dialogue —") and *Towering Viewpoint* ("Leap of Faith —"); "Sacrifice Apple of Eden", "Exile
+  Senu"; *Templar Knight*'s "attacking creatures you control named Templar Knight".
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three

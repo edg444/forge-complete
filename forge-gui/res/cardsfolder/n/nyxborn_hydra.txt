@@ -5,7 +5,7 @@ PT:0/1
 K:Bestow:X G G
 K:Reach
 K:Trample
-K:etbCounter:P1P1:X
+K:etbCounter:P1P1:X:no Condition:This permanent enters with X +1/+1 counters on it.
 S:Mode$ Continuous | AffectedDefined$ Enchanted | AddPower$ Y | AddToughness$ Y | AddKeyword$ Reach & Trample | Description$ Enchanted creature gets +1/+1 for each +1/+1 counter on this Aura and has reach and trample.
 SVar:X:Count$xPaid
 SVar:Y:Count$CardCounters.P1P1

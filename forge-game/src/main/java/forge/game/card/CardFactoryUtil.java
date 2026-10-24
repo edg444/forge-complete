@@ -3840,10 +3840,14 @@ public class CardFactoryUtil {
         } else if (keyword.startsWith("Unearth")) {
             final String[] k = keyword.split(":");
             final String manacost = k[1];
+            // a non-mana unearth cost reads like a sentence: "Unearth—Pay eight {E}." (Salvation Colossus)
+            final Cost unearthCost = new Cost(manacost, true);
+            final String unearthDesc = unearthCost.isOnlyManaCost() ? "PrecostDesc$ Unearth | CostDesc$ " + ManaCostParser.parse(manacost)
+                    : "PrecostDesc$ Unearth— | CostDesc$ " + unearthCost.toSimpleString() + ".";
 
             String effect = "AB$ ChangeZone | Cost$ " + manacost + " | Defined$ Self" +
                     " | Origin$ Graveyard | Destination$ Battlefield | SorcerySpeed$ True" +
-                    " | ActivationZone$ Graveyard | PrecostDesc$ Unearth | CostDesc$ " + ManaCostParser.parse(manacost)
+                    " | ActivationZone$ Graveyard | " + unearthDesc
                     + " | StackDescription$ Unearth: Return CARDNAME to the battlefield. | SpellDescription$" +
                     " (" + inst.getReminderText() + ")";
 
