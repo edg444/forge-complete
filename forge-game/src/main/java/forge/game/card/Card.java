@@ -3949,7 +3949,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                 } else if (keyword.startsWith("Replicate")) {
                     final String[] n = keyword.split(":");
                     final Cost cost = new Cost(n[1], false);
-                    sbBefore.append("Replicate ").append(cost.toSimpleString());
+                    sbBefore.append("Replicate").append(cost.isOnlyManaCost() ? " " + cost.toSimpleString() : "—" + cost.toSimpleString() + ".");
                     sbBefore.append(" (When you cast this spell, copy it for each time you paid its replicate cost.");
                     if (strSpell.contains("Target") || strSpell.contains("target")) {
                         sbBefore.append(" You may choose new targets for the copies.");

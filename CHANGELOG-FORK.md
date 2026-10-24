@@ -1559,6 +1559,22 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     Nuisance* described its untap clause twice; *Falco Spara* and *Rigo* said "This creature enters with a shield
     counter" - every legendary card that relied on the default text (24, from *Dark Depths* to *Zack Fair*) now
     uses its Oracle wording and name.
+- **Set review: Commander Legends: Battle for Baldur's Gate and its Promos** (344 new names,
+  `BattleForBaldursGateAuditTest`):
+  - Fixed: *Kenku Artificer* could only target noncreature artifacts you control (Oracle has no such limit).
+  - R&D's Secret Lair: *Veteran Soldier*'s printings make its tokens attack "that player" (the one your commander
+    attacked) instead of each opponent.
+  - In-game text: *Overwhelming Encounter*'s 10-19 and 20 results described +2/+2 instead of their counters;
+    *Cone of Cold*'s 20 result, *Jon Irenicus*'s goad clause, *Wyll's Reversal*'s copy and *Gale's Redirection*'s
+    wording were incomplete; *Thunderwave*'s 10-19 row; Replicate with a non-mana cost now reads "Replicate—Tap an
+    untapped Horror you control." (*Psionic Ritual*); roll tables with hyphens (*Contraband Livestock*, *Journey to the
+    Lost City*, *Druid of the Emerald Grove*'s "9 or less" and "20+"); ability words on *Stirge* and *Myrkul's
+    Invoker*; *Safana*'s word order; prompts on *Livaan* and *Psionic Ritual*; Veteran Soldier's Oracle "that
+    opponent".
+  - Left as Oracle: Windshaper Planetar's printed "player or planeswalker" (battle-era errata), Volo's Journal
+    gaining the Book type, Black Market Connections' "precombat main phase".
+- **Set review: Battle for Baldur's Gate Tokens** (1 new name): *Baldur's Gate Wilderness* (a 20-room paper dungeon)
+  isn't in Forge.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

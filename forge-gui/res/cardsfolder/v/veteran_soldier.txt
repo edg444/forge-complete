@@ -1,10 +1,16 @@
 Name:Veteran Soldier
 ManaCost:1 W
 Types:Legendary Enchantment Background
-S:Mode$ Continuous | Affected$ Creature.IsCommander+YouOwn | AddTrigger$ AttacksPlayer | Description$ Commander creatures you own have "Whenever this creature attacks a player, if no opponent has more life than that player, for each opponent, create a 1/1 white Soldier creature token that's tapped and attacking that opponent."
-SVar:AttacksPlayer:Mode$ Attacks | ValidCard$ Card.Self | Attacked$ Player | Condition$ NoOpponentHasMoreLifeThanAttacked | Execute$ TrigRepeat | TriggerDescription$ Whenever this creature attacks a player, if no opponent has more life than that player, for each opponent, create a 1/1 white Soldier creature token that's tapped and attacking that player.
+S:Mode$ Continuous | Affected$ Creature.IsCommander+YouOwn | AddTrigger$ AttacksPlayer | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20220611 | Description$ Commander creatures you own have "Whenever this creature attacks a player, if no opponent has more life than that player, for each opponent, create a 1/1 white Soldier creature token that's tapped and attacking that opponent."
+SVar:AttacksPlayer:Mode$ Attacks | ValidCard$ Card.Self | Attacked$ Player | Condition$ NoOpponentHasMoreLifeThanAttacked | Execute$ TrigRepeat | TriggerDescription$ Whenever this creature attacks a player, if no opponent has more life than that player, for each opponent, create a 1/1 white Soldier creature token that's tapped and attacking that opponent.
 SVar:TrigRepeat:DB$ RepeatEach | RepeatPlayers$ Opponent | ChangeZoneTable$ True | RepeatSubAbility$ DBToken
 SVar:DBToken:DB$ Token | TokenScript$ w_1_1_soldier | TokenTapped$ True | TokenAttacking$ Remembered
+# R&D's Secret Lair: Commander Legends: Battle for Baldur's Gate's printings (its only ones) say the tokens are attacking
+# "that player" (the one this creature attacked), not each opponent.
+S:Mode$ Continuous | Affected$ Creature.IsCommander+YouOwn | AddTrigger$ AttacksPlayerPrinted | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20220611 | Description$ (As printed) Commander creatures you own have "Whenever this creature attacks a player, if no opponent has more life than that player, for each opponent, create a 1/1 white Soldier creature token that's tapped and attacking that player."
+SVar:AttacksPlayerPrinted:Mode$ Attacks | ValidCard$ Card.Self | Attacked$ Player | Condition$ NoOpponentHasMoreLifeThanAttacked | Execute$ TrigRepeatPrinted | TriggerDescription$ Whenever this creature attacks a player, if no opponent has more life than that player, for each opponent, create a 1/1 white Soldier creature token that's tapped and attacking that player.
+SVar:TrigRepeatPrinted:DB$ RepeatEach | RepeatPlayers$ Opponent | ChangeZoneTable$ True | RepeatSubAbility$ DBTokenPrinted
+SVar:DBTokenPrinted:DB$ Token | TokenScript$ w_1_1_soldier | TokenTapped$ True | TokenAttacking$ TriggeredDefender
 AI:RemoveDeck:NonCommander
 DeckHas:Ability$Token & Type$Soldier
 Oracle:Commander creatures you own have "Whenever this creature attacks a player, if no opponent has more life than that player, for each opponent, create a 1/1 white Soldier creature token that's tapped and attacking that opponent."
