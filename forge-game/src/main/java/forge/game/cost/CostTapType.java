@@ -26,6 +26,7 @@ import forge.game.trigger.TriggerType;
 import forge.game.zone.ZoneType;
 import forge.util.Lang;
 import forge.util.TextUtil;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
 
@@ -113,10 +114,14 @@ public class CostTapType extends CostPartWithList {
         } else if (amt.equals("X")) {
             sb.append("X untapped ").append(Lang.getPlural(desc)).append(" you control");
         } else {
-            sb.append(Lang.nounWithNumeralExceptOne(amt, "untapped " + desc));
-            // a description can place it itself: "creature you control that has a hat" (T.A.P.P.E.R.)
+            // a description can place "you control" itself, already plural where it needs to be: "creature you control
+            // that has a hat" (T.A.P.P.E.R.), "Advisors, Artificers, and/or Monks you control" (The Archimandrite)
             if (!desc.contains("you control")) {
-                sb.append(" you control");
+                sb.append(Lang.nounWithNumeralExceptOne(amt, "untapped " + desc)).append(" you control");
+            } else if (amt.equals("1")) {
+                sb.append(Lang.nounWithNumeralExceptOne(amt, "untapped " + desc));
+            } else {
+                sb.append(StringUtils.isNumeric(amt) ? Lang.getNumeral(Integer.parseInt(amt)) : amt).append(" untapped ").append(desc);
             }
         }
         if (type.contains("sharesCreatureTypeWith")) {

@@ -1625,6 +1625,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     *Scavenger Hunt* and *Trivia Contest* naming themselves (most of their Oracle variants do), *Push Your Luck*'s and
     *Squirrel Stack*'s missing "!" (an Oracle typo), *Saw in Half*'s "base", *Storybook Ride*'s and *Myra the
     Magnificent*'s clarifications.
+- **Set review: Game Night: Free-for-All** (5 new names): no changes. Left as Oracle: *Zamriel*'s printed "As long
+  as it's your turn".
+- **Set review: Transformers** (15 new names, `BrothersWarAuditTest`): *Arcee*'s "Remove one or more +1/+1 counters
+  from Arcee" (was "any number ... from this creature"). Left as Oracle: *Megatron*'s printed "your postcombat main
+  phase" (every main phase after combat is one, CR 505.1a).
+- **Set review: The Brothers' War Commander** (28 new names, `BrothersWarAuditTest`): a plural tap cost whose
+  description names "you control" no longer reads "Monks you controls" (*The Archimandrite*).
+- **Set review: The Brothers' War and its Promos** (253 new names, `BrothersWarAuditTest`): "Sacrifice Hajar";
+  *Thraxodemon*'s "another creature or artifact". Left as Oracle: *Defabricate*, *Desynchronize* and *Hurkyl's Final
+  Meditation*'s printed wordings (same rules).
+- **Set review: The Brothers' War Jumpstart Front Cards** (5 new names): theme cards, not game pieces; not in Forge.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 
