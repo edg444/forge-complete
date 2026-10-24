@@ -510,6 +510,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Set review: Avatar: The Last Airbender Eternal** (137 new names): *Reckless Blaze*'s mana clause was missing from
   its text.
 
+- **Set review: Wizards Play Network 2026** (2 new names): no changes.
+- **Set review: Lorwyn Eclipsed Commander** (24 new names): "Sacrifice this artifact" (*Wickersmith's Tools*; was
+  "Sacrifice a Card.Self").
+- **Set review: Lorwyn Eclipsed and its Promos** (251 new names): *Celestial Reunion* had no text; *Pyrrhic Strike*'s
+  header read "Choose X" (now "Choose one", still exactly both once blight is paid); *Bitterbloom Bearer*'s token is
+  "blue and black" (it already made that token); "Pay 1 life, Blight 2" (*Champion of the Weird*); "Tap another
+  untapped creature you control" (*Wanderbrine Trapper*).
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three
