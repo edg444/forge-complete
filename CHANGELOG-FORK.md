@@ -831,6 +831,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Roar of the Crowd: `HurtType`, whose damage case now considers the player too.
     - Vigean Intuition, Winding Way: `HurtType`, picking the card type its library is heaviest in for the cards
       revealed off the top.
+    - Diminish, Snakeform, Turn to Frog: new `ShrinkAi` (`AILogic$ Shrink`). Once blocks are known, their combatant
+      becomes a 1/1 that its creature kills, or that no longer kills its creature, or does next to no damage
+      unblocked.
+    - Strip Bare: `StripAttachments`, for the creature with the most of their Auras and Equipment on it, its own
+      creature held down by theirs above all.
+    - Square Up, Wings of Velis Vel: `Upgrade`. Djinn of Infinite Deceits: `ExchangePair`.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).
