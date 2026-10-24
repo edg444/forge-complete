@@ -496,6 +496,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   period ("Warp—{B}, Pay 2 life.", *Timeline Culler*). Left as is: Forge's "STATION 8+" layout for Oracle's "8+ |".
 - **Set review: 2023 Heroes of the Realm** (2 new names, the fork's): "Ormacar gets +X/+X".
 
+- **Set review: Wizards Play Network 2025** (2 new names) and **Marvel's Spider-Man Eternal** (26 new names): no
+  changes.
+- **Set review: Marvel's Spider-Man and its Promos** (182 new names): *Radioactive Spider*'s "Fateful Bite —" and
+  "library" (was "libary").
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three
