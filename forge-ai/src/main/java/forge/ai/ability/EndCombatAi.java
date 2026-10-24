@@ -19,7 +19,31 @@ public final class EndCombatAi {
 
     private EndCombatAi() { }
 
+    // Moment of Silence: before their combat, against an attack that could be lethal
+    private static AiAbilityDecision skipCombat(final Player ai, final SpellAbility sa) {
+        final forge.game.phase.PhaseHandler ph = ai.getGame().getPhaseHandler();
+        final Player active = ph.getPlayerTurn();
+        if (!active.isOpponentOf(ai) || !ph.is(PhaseType.MAIN1) || !sa.usesTargeting() || !sa.canTarget(active)) {
+            return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
+        }
+        int coming = 0;
+        for (final Card c : active.getCreaturesInPlay()) {
+            if (forge.game.combat.CombatUtil.canAttack(c, ai)) {
+                coming += ComputerUtilCombat.damageIfUnblocked(c, ai, null, false);
+            }
+        }
+        if (coming < ai.getLife() || !ai.canLoseLife()) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        sa.resetTargets();
+        sa.getTargets().add(active);
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
+        if (sa.getApi() == forge.game.ability.ApiType.SkipPhase) {
+            return skipCombat(ai, sa);
+        }
         final Combat combat = ai.getGame().getCombat();
         if (combat == null || ai.equals(combat.getAttackingPlayer()) || !ai.getGame().getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS)) {
             return new AiAbilityDecision(0, AiPlayDecision.WaitForCombat);

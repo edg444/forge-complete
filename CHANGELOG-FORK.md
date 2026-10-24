@@ -823,6 +823,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       - Frost: counters a spell of mana value 3 or more when X beats the caster's open mana.
       - Ashes: picks the X that does the most to creatures without flying.
     - Meltdown: `WipeX`. Living Destiny: `RevealFor`.
+    - Moment of Silence: `EndCombat`, which now also has the opponent skip combat ahead of an attack that could be
+      lethal. Orcish Settlers: `DestroyX`, which now takes lands too and counts {X}{X} as two mana per X; a creature
+      that sacrifices itself wants at least two targets. Monstrous Emergence: `RevealFor`.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

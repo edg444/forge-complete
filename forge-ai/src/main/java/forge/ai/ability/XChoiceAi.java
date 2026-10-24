@@ -27,8 +27,16 @@ public final class XChoiceAi {
     }
 
     private static int maxX(final Player ai, final SpellAbility sa) {
-        final int base = sa.getPayCosts() == null || sa.getPayCosts().getTotalMana() == null ? 0 : sa.getPayCosts().getTotalMana().getCMC();
-        return ComputerUtilMana.getAvailableManaEstimate(ai, false) - base;
+        if (sa.getPayCosts() == null || sa.getPayCosts().getTotalMana() == null) {
+            return ComputerUtilMana.getAvailableManaEstimate(ai, false);
+        }
+        final forge.card.mana.ManaCost mana = sa.getPayCosts().getTotalMana();
+        // Orcish Settlers pays {X}{X}
+        return (ComputerUtilMana.getAvailableManaEstimate(ai, false) - mana.getCMC()) / Math.max(1, mana.countX());
+    }
+
+    private static int worth(final Card c) {
+        return c.isCreature() ? ComputerUtilCard.evaluateCreature(c) : ExchangeTradeAi.value(c);
     }
 
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
@@ -40,14 +48,16 @@ public final class XChoiceAi {
         int bestX = -1;
         Card bestTarget = null;
         if ("DestroyX".equals(sa.getParam("AILogic"))) {
-            // Dregs of Sorrow: as many of their worthwhile creatures as it can pay for
+            // Dregs of Sorrow, Orcish Settlers: as many of their worthwhile creatures (or lands) as it can pay for
             sa.setXManaCostPaid(Math.max(1, max));
             sa.resetTargets();
             final java.util.List<Card> picks = CardLists.filter(forge.game.card.CardUtil.getValidCardsToTarget(sa),
-                    c -> c.getController().isOpponentOf(ai) && c.canBeDestroyed() && ComputerUtilCard.evaluateCreature(c) >= 100);
-            picks.sort(java.util.Comparator.comparingInt((Card c) -> ComputerUtilCard.evaluateCreature(c)).reversed());
+                    c -> c.getController().isOpponentOf(ai) && c.canBeDestroyed() && worth(c) >= 100);
+            picks.sort(java.util.Comparator.comparingInt(XChoiceAi::worth).reversed());
             final int x = Math.min(max, picks.size());
-            if (x < 1) {
+            // a creature that gives itself up for it wants more than one
+            final int least = sa.getHostCard().isCreature() && forge.ai.ComputerUtilCost.isSacrificeSelfCost(sa.getPayCosts()) ? 2 : 1;
+            if (x < least) {
                 return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
             }
             sa.setXManaCostPaid(x);
