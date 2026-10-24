@@ -293,6 +293,14 @@ public class PlayerControllerAi extends PlayerController {
 
     @Override
     public CardCollectionView choosePermanentsToSacrifice(SpellAbility sa, int min, int max, CardCollectionView validTargets, String message) {
+        // Last-Ditch Effort: "any number", as many as it decided on
+        final CardCollection planned = forge.ai.ability.SacrificePayoffAi.planned(sa);
+        if (planned != null && "SacrificeAny".equals(sa.getRootAbility().getParam("AILogic"))) {
+            final CardCollection chosen = CardLists.filter(planned, validTargets::contains);
+            if (chosen.size() >= min && chosen.size() <= max) {
+                return chosen;
+            }
+        }
         return ComputerUtil.choosePermanentsToSacrifice(player, validTargets, max, sa, false, min == 0);
     }
 

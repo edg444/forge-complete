@@ -318,6 +318,9 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         if (forge.ai.ability.AttachmentMoveAi.handles(logic)) {
             return forge.ai.ability.AttachmentMoveAi.decide(ai, sa);
         }
+        if (forge.ai.ability.SacrificePayoffAi.handles(logic)) {
+            return forge.ai.ability.SacrificePayoffAi.decide(ai, sa);
+        }
 
         return null;
     }

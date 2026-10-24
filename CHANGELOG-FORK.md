@@ -718,6 +718,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       at the opponent's end step, or in answer to removal. A "Choices" move attaches where it decided.
     - `AILogic$ Licid` (all 13 licids): the target is the one AttachAi picks for that Aura, used only when it's worth
       more than the licid's own body (Dominating Licid: their creature over its 1/1).
+  - *Cluster: X from the sacrificed card* (`NoAiSacrificePayoffTest`): new `SacrificePayoffAi`. Before, the payoff was
+    judged with X = 0, since nothing had been sacrificed yet.
+    - `AILogic$ SacrificeFor` (Call for Blood, Carrion, Ghoulcaller Gisa, Greater Good, Homarid Spawning Bed, Ichor
+      Explosion, Life's Legacy, Lyzolda, Mind Extraction, Momentous Fall, Sanguine Praetor, Scourge of Skola Vale,
+      Shrine of Limitless Power, Soulblast, Worthy Cause): each creature it could sacrifice is tried. The value is the
+      payoff with that creature's power, toughness, mana value or color, less what the creature is worth. A creature
+      about to be destroyed costs nothing, so these answer removal; otherwise they wait for the second main phase or
+      the opponent's end step. The cost then sacrifices the creature it planned on.
+    - `AILogic$ SacrificeAny` (Last-Ditch Effort, Landslide): "sacrifice any number" for damage, when that's lethal,
+      sacrificing no more than it takes.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

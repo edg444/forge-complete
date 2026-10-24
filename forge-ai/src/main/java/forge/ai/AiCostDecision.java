@@ -588,6 +588,11 @@ public class AiCostDecision extends CostDecisionMakerBase {
         if (cost.getType().equals("OriginalHost")) {
             return PaymentDecision.card(ability.getOriginalHost());
         }
+        // Carrion, Soulblast: X is what's sacrificed, so the AI already chose it when it decided
+        final CardCollection planned = forge.ai.ability.SacrificePayoffAi.planned(ability);
+        if (planned != null && !planned.isEmpty() && planned.allMatch(c -> c.isInPlay() && c.getController().equals(player))) {
+            return PaymentDecision.card(planned);
+        }
         if (cost.getAmount().equals("All")) {
             // Does the AI want to use Sacrifice All?
             return null;
