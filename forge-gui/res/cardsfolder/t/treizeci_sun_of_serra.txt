@@ -4,7 +4,7 @@ Types:Legendary Creature Human Knight
 PT:3/3
 K:Companion:Card.Nostalgic:Your starting deck contains only nostalgic cards. (Retro frames, legends, and artifacts are nostalgic.)
 K:Vigilance
-T:Mode$ SpellCast | ValidCard$ Card.Nostalgic | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCounter | TriggerDescription$ Whenever you cast a nostalgic spell, you may pay {2}. If you do, put a +1/+1 counter on CARDNAME, then for each +1/+1 counter on it, create a Serra Angel token.
+T:Mode$ SpellCast | ValidCard$ Card.Nostalgic | ValidActivatingPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCounter | TriggerDescription$ Whenever you cast a nostalgic spell, you may pay {2}. If you do, put a +1/+1 counter on NICKNAME, then for each +1/+1 counter on it, create a Serra Angel token.
 SVar:TrigCounter:AB$ PutCounter | Cost$ 2 | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1 | SubAbility$ DBToken
 SVar:DBToken:DB$ CopyPermanent | DefinedName$ Serra Angel | NumCopies$ X
 SVar:X:Count$CardCounters.P1P1

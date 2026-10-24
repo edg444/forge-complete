@@ -362,6 +362,21 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   "Equip Halfling {1}". Left as Oracle: printed self-references, "As long as it's your turn" and Elven Farsight/Doors of
   Durin's "If it's a creature card" (clarified wording, same rules).
 
+- **Set review: 2022 Heroes of the Realm** (5 new names): "Svega can be your commander" and "put a +1/+1 counter on
+  Treizeci" (short names); a curly apostrophe on *Svega*.
+- **Set review: Commander Masters** (40 new names, `WildsOfEldraineAuditTest`): Replicate on a permanent showed as raw
+  "Replicate:1 G" (*Hatchery Sliver*); "Sacrifice another enchantment" (*Demon of Fate's Design*).
+- **Set review: Wizards Play Network 2023** (1 new name): no changes.
+- **Set review: Wilds of Eldraine Commander Tokens and Tokens** (5 new names): double-sided Role token pairs; Forge
+  has each Role as its own token, not the paper pairings.
+- **Set review: Wilds of Eldraine Commander** (28 new names, `WildsOfEldraineAuditTest`): a "cast as though it had
+  flash" cost that isn't mana now reads as Oracle words it (*Tegwyll's Scouring*'s "by tapping three untapped creatures
+  you control with flying"; also *Molten Exhale*'s behold) instead of "if you pay Tap three ... more".
+- **Set review: Wilds of Eldraine and its Promos** (264 new names): "Sacrifice an Aura attached to this creature"
+  (*Faunsbane Troll*). Left as Oracle: printed "This creature can't block" Rat and Faerie tokens, *Misleading Motes*'
+  "their choice of", *Tough Cookie*'s word order.
+- **Set review: MagicFest 2023** (1 new name): no changes.
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three

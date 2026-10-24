@@ -3090,7 +3090,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.startsWith("Sneak") || keyword.startsWith("Squad")
                         || keyword.startsWith("Emerge") || keyword.startsWith("More Than Meets the Eye")
                         || keyword.startsWith("Level up") || keyword.startsWith("Plot") || keyword.startsWith("Motivate")
-                        || keyword.startsWith("Impending") || keyword.equals("Suspend")) {
+                        || keyword.startsWith("Impending") || keyword.equals("Suspend")
+                        || keyword.startsWith("Replicate")) {
                     sbLong.append(inst.getTitle());
                     // Oracle ends a keyword with a non-mana cost like a sentence: "Buyback—Sacrifice a land."
                     if (inst instanceof KeywordWithCostInterface kwc && kwc.getCost() != null && kwc.isComplexCost()) {
@@ -3187,8 +3188,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                     sbLong.append("Companion — ");
                     sbLong.append(((Companion)inst).getDescription());
                 } else if (keyword.startsWith("MayFlash")) {
-                    // Pseudo keywords, only print Reminder
-                    sbLong.append(inst.getReminderText()).append("\r\n");
+                    // Pseudo keywords, only print Reminder; a non-mana cost words its own (MayFlashCost:<cost>:<text>)
+                    final String[] k = keyword.split(":");
+                    sbLong.append(keyword.startsWith("MayFlashCost") && k.length > 2 ? k[2] : inst.getReminderText()).append("\r\n");
                 } else if (keyword.equals("Provoke") || keyword.equals("Ingest") || keyword.equals("Unleash")
                         || keyword.equals("Living Weapon") || keyword.equals("Myriad") || keyword.equals("Exploit")
                         || keyword.equals("Changeling") || keyword.equals("Delve") || keyword.equals("Decayed")
@@ -3947,8 +3949,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                                 ? ", or " : n + 2 == costs.length ? " or " : ", ");
                     }
                 } else if (keyword.startsWith("MayFlash")) {
-                    // Pseudo keywords, only print Reminder
-                    sbBefore.append(inst.getReminderText());
+                    // Pseudo keywords, only print Reminder; a non-mana cost words its own (MayFlashCost:<cost>:<text>)
+                    final String[] k = keyword.split(":");
+                    sbBefore.append(keyword.startsWith("MayFlashCost") && k.length > 2 ? k[2] : inst.getReminderText());
                     sbBefore.append("\r\n");
                 } else if (keyword.startsWith("MayEffectFromOpening")) {
                     sbAfter.append(AbilityFactory.getMapParams(getSVar(keyword.split(":")[1])).get("SpellDescription"));
