@@ -700,6 +700,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       Ricochet adds the value of its copy; Meddle only for a spell whose one target is a creature.
     - Cards that already had change-target abilities but no AI to use them now use them too: Quicksilver Dragon, Silver
       Wyvern, Willbender, Deflecting Swat, Redirect Lightning, Ricochet Trap, Untimely Malfunction's mode, and others.
+  - *Cluster: exchange control* (`NoAiExchangeTest`): new `ExchangeTradeAi`.
+    - `AILogic$ ExchangePair` (Legerdemain, Political Trickery, Puca's Mischief, Shifting Borders, Shrewd Negotiation,
+      Spawnbroker, Vedalken Plotter): the best of its permanents-for-theirs pairs the targeting allows (shared type,
+      lesser power or mana value), for what theirs is worth over what it gives. A mandatory trigger takes the best
+      pair there is.
+    - `AILogic$ SwapArmies` (Reins of Power, Twist Allegiance): cast in its first main phase when the opponent's
+      creatures, attacking into its own, are lethal and its own attack isn't.
+    - Whole-card AI logics (combat prevention, redirection, forced combat, exchanges) now also judge triggered
+      abilities, not only spells and activations.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

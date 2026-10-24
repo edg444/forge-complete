@@ -330,7 +330,7 @@ public final class ForcedCombatAi {
     // ---- lures ----
 
     // unblocked damage if each blocker takes the biggest attacker it can
-    private static int assault(final List<Card> attackers, final List<Card> blockers, final Player opp) {
+    public static int assault(final List<Card> attackers, final List<Card> blockers, final Player opp) {
         final List<Card> left = new ArrayList<>(attackers);
         left.sort(Comparator.comparingInt((Card c) -> damage(c, opp)).reversed());
         for (final Card b : blockers) {

@@ -72,15 +72,9 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
                 sa.getHostCard().getController(), sa.getHostCard(), sa)) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
-        // a prevention shield is judged as a whole against the combat it would change, whatever API carries it
-        if ("PreventCombat".equals(sa.getParam("AILogic"))) {
-            return forge.ai.ability.CombatPreventionAi.decide(aiPlayer, sa);
-        }
-        if ("RedirectCombat".equals(sa.getParam("AILogic"))) {
-            return forge.ai.ability.RedirectCombatAi.decide(aiPlayer, sa);
-        }
-        if (forge.ai.ability.ForcedCombatAi.handles(sa.getParam("AILogic"))) {
-            return forge.ai.ability.ForcedCombatAi.decide(aiPlayer, sa);
+        final AiAbilityDecision whole = wholeCardLogic(aiPlayer, sa, false);
+        if (whole != null) {
+            return whole;
         }
         AiAbilityDecision decision = canPlay(aiPlayer, sa);
         if (!decision.willingToPlay() && !"PlayForSub".equals(sa.getParam("AILogic"))) {
@@ -305,7 +299,32 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         return doTriggerNoCostWithSubs(aiPlayer, sa, mandatory).willingToPlay();
     }
 
+    // AILogics that judge the card as a whole, whatever API carries them (a prevention shield against the combat it
+    // would change, a two-target exchange...)
+    private static AiAbilityDecision wholeCardLogic(final Player ai, final SpellAbility sa, final boolean mandatory) {
+        final String logic = sa.getParam("AILogic");
+        if ("PreventCombat".equals(logic)) {
+            return forge.ai.ability.CombatPreventionAi.decide(ai, sa);
+        }
+        if ("RedirectCombat".equals(logic)) {
+            return forge.ai.ability.RedirectCombatAi.decide(ai, sa);
+        }
+        if (forge.ai.ability.ForcedCombatAi.handles(logic)) {
+            return forge.ai.ability.ForcedCombatAi.decide(ai, sa);
+        }
+        if (forge.ai.ability.ExchangeTradeAi.handles(logic)) {
+            return forge.ai.ability.ExchangeTradeAi.decide(ai, sa, mandatory);
+        }
+
+        return null;
+    }
+
     public final AiAbilityDecision doTriggerNoCostWithSubs(final Player aiPlayer, final SpellAbility sa, final boolean mandatory) {
+        final AiAbilityDecision whole = wholeCardLogic(aiPlayer, sa, mandatory);
+        // a mandatory trigger the logic turns down still needs its targets from the usual path
+        if (whole != null && (whole.willingToPlay() || !mandatory)) {
+            return whole;
+        }
         AiAbilityDecision decision = doTriggerNoCost(aiPlayer, sa, mandatory);
 
         if (!decision.willingToPlay() && !"Always".equals(sa.getParam("AILogic"))) {
