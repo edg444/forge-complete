@@ -1440,6 +1440,21 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     way), "enters the battlefield" wording.
 - **Set review: Zendikar Rising Substitute Cards** (1 new name): no changes. The substitute card isn't a game object.
 - **Set review: Zendikar Rising Commander** (6 new names): no changes.
+- **Set review: Secret Lair Drop** (73 cards first printed there, `CommanderLegendsAuditTest`; its reversible reprints
+  were already reviewed in their own sets):
+  - Fixed: *The Celestial Toymaker* never put the chosen pile into your hand (it looked for the exiled cards in the
+    library).
+  - In-game text: partner variants read "Partner—Survivors" like Oracle (was "Partner — Survivors"), and the
+    Unknown Event's *Ready to run* shows as itself with its own reminder text.
+  - Left as Oracle: the Universes Within names' printed text (Greymond, Hansk, ...), which only differs in the name.
+- **Set review: Commander Legends** (171 new names, `CommanderLegendsAuditTest`):
+  - In-game text: *Alharu, Solemn Ritualist*'s token trigger wasn't shown; an X tap cost reads "Tap X untapped
+    artifacts you control" (*Glacian*, *Merchant's Dockhand*, *Aryel*, *Hazel of the Rootbloom*, ...; *Glacian* said
+    "artifacts you controls you control"); *Jeska's Will* and *Gnostro*'s choose-one text; *Slurrk*'s "Slurrk enters
+    with"; *Keskit*'s "artifacts and/or creatures".
+  - Left as Oracle: the printed "Golem" tokens (now Phyrexian Golem), Sphinx of the Second Sun's and Belbe's
+    postcombat main phase wording, the Wills' "choose both" without "instead"; Nevinyrral still lists its three
+    hexproof qualities on separate lines.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

@@ -111,7 +111,7 @@ public class CostTapType extends CostPartWithList {
                 sb.append(" you control");
             }
         } else if (amt.equals("X")) {
-            sb.append("any number of untapped ").append(desc).append("s you control");
+            sb.append("X untapped ").append(Lang.getPlural(desc)).append(" you control");
         } else {
             sb.append(Lang.nounWithNumeralExceptOne(amt, "untapped " + desc)).append(" you control");
         }
