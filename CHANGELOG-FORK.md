@@ -501,6 +501,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Set review: Marvel's Spider-Man and its Promos** (182 new names): *Radioactive Spider*'s "Fateful Bite —" and
   "library" (was "libary").
 
+- **Set review: Avatar: The Last Airbender Beginner Box and Jumpstart Front Cards** (55 new names): theme cards, not
+  game pieces; not in Forge.
+- **Set review: Avatar: The Last Airbender and its Promos** (269 new names): text was missing for *Crashing
+  Wave*'s whole effect and *Bumi*'s "where X is the number of Lesson cards in your
+  graveyard"; "Sacrifice Hakoda". Left as Oracle: *Deadly Precision*'s cost order (the keyword line is engine input),
+  *The Unagi of Kyoshi Island*'s "Ward—Waterbend {4}." punctuation, keyword order on *Ozai* and *The Lion-Turtle*.
+- **Set review: Avatar: The Last Airbender Eternal** (137 new names): *Reckless Blaze*'s mana clause was missing from
+  its text.
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three
