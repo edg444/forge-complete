@@ -709,6 +709,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       creatures, attacking into its own, are lethal and its own attack isn't.
     - Whole-card AI logics (combat prevention, redirection, forced combat, exchanges) now also judge triggered
       abilities, not only spells and activations.
+  - *Cluster: move Auras and Equipment, licids* (`NoAiAttachmentMoveTest`): new `AttachmentMoveAi`.
+    - `AILogic$ MoveAttachment` (Aura Finesse, Aura Graft, Auriok Windwalker, Brass Squire, Crown of the Ages,
+      Enchantment Alteration, Kitsune Mystic's flip side, Kjeldoran Pride, Magnetic Theft, Simic Guildmage): each move
+      is scored by whom the attachment helps. A helpful Aura or Equipment belongs on the AI's best creature, a harmful
+      one on the opponent's. Control Magic-style Auras count for whoever controls them. An attachment on a permanent
+      about to be destroyed counts for nothing where it is, so the move answers removal. Used in its first main phase,
+      at the opponent's end step, or in answer to removal. A "Choices" move attaches where it decided.
+    - `AILogic$ Licid` (all 13 licids): the target is the one AttachAi picks for that Aura, used only when it's worth
+      more than the licid's own body (Dominating Licid: their creature over its 1/1).
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

@@ -315,6 +315,9 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         if (forge.ai.ability.ExchangeTradeAi.handles(logic)) {
             return forge.ai.ability.ExchangeTradeAi.decide(ai, sa, mandatory);
         }
+        if (forge.ai.ability.AttachmentMoveAi.handles(logic)) {
+            return forge.ai.ability.AttachmentMoveAi.decide(ai, sa);
+        }
 
         return null;
     }

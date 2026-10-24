@@ -16,6 +16,5 @@ Name:Autumn-Tail, Kitsune Sage
 ManaCost:3 W
 Types:Legendary Creature Fox Wizard
 PT:4/5
-A:AB$ Attach | Cost$ 1 | ValidTgts$ Aura.AttachedTo Creature | TgtPrompt$ Select target Aura attached to a creature | Object$ Targeted | Choices$ Creature | Move$ True | StackDescription$ SpellDescription | SpellDescription$ Attach target Aura attached to a creature to another creature.
-AI:RemoveDeck:All
+A:AB$ Attach | AILogic$ MoveAttachment | Cost$ 1 | ValidTgts$ Aura.AttachedTo Creature | TgtPrompt$ Select target Aura attached to a creature | Object$ Targeted | Choices$ Creature | Move$ True | StackDescription$ SpellDescription | SpellDescription$ Attach target Aura attached to a creature to another creature.
 Oracle:{1}: Attach target Aura attached to a creature to another creature.
