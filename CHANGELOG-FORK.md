@@ -377,6 +377,21 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   "their choice of", *Tough Cookie*'s word order.
 - **Set review: MagicFest 2023** (1 new name): no changes.
 
+- **Set review: Doctor Who** (228 new names, `DoctorWhoAuditTest`):
+  - Fixed: *Ood Sphere*'s Red-Eye lasted until end of turn; Oracle's errata makes it "until your next turn" (the
+    script and its Oracle line predated it).
+  - R&D's Secret Lair: *Ood Sphere*'s only printing keeps "Until end of turn".
+  - In-game text: *The Tenth Doctor* repeated "Timey-Wimey — {7}:"; *The Fourth Doctor*'s ability word had a stray
+    ". . ?"; "Donna Noble" (not "Donna"); "Target creature's owner" (*This Is How It Ends*); *Trenzalore Clocktower*'s
+    "Remove twelve time counters from Trenzalore Clocktower and exile it". Left as Oracle: the Sagas' and Vehicles'
+    printed self-references, "precombat main phase", the Alien Angel token's own "this permanent".
+- **Set review: The Lost Caverns of Ixalan Commander** (48 new names, `DoctorWhoAuditTest`): *Wayta, Trainer
+  Prodigy*'s cost reduction was missing from its text; "Sacrifice another creature" (*Master of Dark Rites*, *Xavier
+  Sal*).
+- **Set review: The Lost Caverns of Ixalan and its Promos** (274 new names): "Descend 8 —" (*Uchbenbak*); "an artifact
+  or creature" (*Dusk Rose Reliquary*). Left as Oracle: *Bitter Triumph*'s and *Annihilating Glare*'s cost order (the
+  keyword line is engine input), "This token can't block" Fungus tokens.
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three
