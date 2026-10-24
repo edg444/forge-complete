@@ -525,6 +525,27 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       Maraxus of Keld, March of the Drowned, Mardu Blazebringer, Marker Beetles, Market Festival, Maro, Marsh Flitter,
       Marsh Lurker, Marshal's Anthem, Martyred Rusalka, Martyrs' Tomb, Mask of Immolation, Master of the Veil,
       Masterful Replication, Masticore: the existing AI already plays them sensibly.
+  - *M, N and O*:
+    - Masumaro, First to Live, Medicine Bag, Mental Discipline, Merchant Scroll, Merciless Resolve, Mesmeric Sliver,
+      Mesmeric Trance, Metamorphose, Meteor Crater, Mind Games, Mind Over Matter, Mind Slash, Mindlink Mech,
+      Mindreaver, Minions' Murmurs, Mirage Mirror, Mire Shade, Mirozel, Mirror of the Forebears, Mischievous Quanar,
+      Mishra's Bauble, Mistbreath Elder, Mistform Stalker, Mistform Wall, Mitotic Manipulation, Mizzium Transreliquat,
+      Mogg Raider, Mogg Squad, Mogis's Warhound, Molten Firebird, Molten Slagheap, Moonring Island, Moratorium Stone,
+      Morgue Thrull, Morgue Toad, Morinfen, Moriok Replica, Mossfire Egg, Mourning, Murderous Betrayal, Myojin of
+      Life's Web, Myojin of Seeing Winds, Mystic Gate, Nacatl Hunt-Pride, Nahiri, the Lithomancer, Narcissism,
+      Nature's Chosen, Necromancer's Stockpile, Need for Speed, Nemata, Grove Guardian, Nethergoyf, Neurok Replica,
+      Niblis of the Breath, Night Soil, Nightbird's Clutches, Nightscape Apprentice, Nightshade Assassin, Nihilistic
+      Glee, Nim Replica, Nim Shambler, Nissa's Judgment, Niveous Wisps, Nivix, Aerie of the Firemind, Noble Ox, Nomad
+      Stadium, Nomadic Elf, Nullmage Shepherd, Nyx Weaver, Ob Nixilis of the Black Oath, Oblivion Crown, Oblivion
+      Stone, Oboro Envoy, Obscuring Aether, Odunos River Trawler, Offalsnout, Ogre Battlecaster, Omnath, Locus of Mana,
+      Omnibian, Ophidian, Opposition, Oppressive Will, Orcish Bloodpainter, Orcish Lumberjack, Orcish Mechanics,
+      Ore-Rich Stalactite, Oread of Mountain's Blaze, Oreskos Explorer, Oriss, Samite Guardian, Ormos, Archive Keeper,
+      Ornate Kanzashi, Orochi Leafcaller, Orzhov Charm: the existing AI already plays them sensibly. Mirror Entity,
+      Mirrorwood Treefolk, Mistform Dreamer, Mistform Mutant, Mistform Seaswift, Mistform Shrieker, Mistform Skyreaver,
+      Mistform Sliver, Mistform Wakecaster, Mistform Warchief, Moonlight Geist, Mountain Titan, Nantuko Mentor, Nomads
+      en-Kor, Opal-Eye, Konda's Yojimbo, Oracle's Attendants: unflagged for their bodies (the X animate, the redirects, the type changes, the damage prevention and the pumps
+      are never activated). Lancers en-Kor: unflagged for its body (its redirect is never
+      activated).
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

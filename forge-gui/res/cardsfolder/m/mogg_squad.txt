@@ -5,5 +5,4 @@ PT:3/3
 S:Mode$ Continuous | AffectedDefined$ Self | AddPower$ -X | AddToughness$ -X | Description$ This creature gets -1/-1 for each other creature on the battlefield.
 SVar:X:Count$Valid Creature.Other
 SVar:AntiBuffedBy:Creature
-AI:RemoveDeck:All
 Oracle:This creature gets -1/-1 for each other creature on the battlefield.

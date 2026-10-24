@@ -7,5 +7,4 @@ SVar:DBEffect:DB$ Effect | ValidTgts$ Creature | TgtPrompt$ Select target creatu
 SVar:SelflessDamage:Event$ DamageDone | ValidTarget$ Creature.IsRemembered | ValidSource$ Card.ChosenCardStrict,Emblem.ChosenCard | ReplaceWith$ SelflessDmg | DamageTarget$ EffectSource | Description$ The next time a source of your choice would deal damage to target creature this turn, that damage is dealt to EFFECTSOURCE instead.
 SVar:SelflessDmg:DB$ ReplaceEffect | VarName$ Affected | VarValue$ EffectSource | VarType$ Card
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
-AI:RemoveDeck:All
 Oracle:{T}: All damage that would be dealt to target creature this turn by a source of your choice is dealt to this creature instead.
