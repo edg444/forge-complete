@@ -240,6 +240,9 @@ public class CharmEffect extends SpellAbilityEffect {
                     sb.append(" \u2014");
                 }
                 sb.append("\r\n");
+            } else if (tiered && additionalDesc) {
+                // the tiers start on their own lines after the shared text (Vincent's Limit Break)
+                sb.append("\r\n");
             }
             for (AbilitySub sub : list) {
                 if (spree) {

@@ -2798,7 +2798,9 @@ public class CardFactoryUtil {
             }
 
             final StringBuilder desc = new StringBuilder();
-            desc.append("Blitz ").append(blitzCost.toSimpleString()).append(" (");
+            // a non-mana blitz cost reads like a sentence: "Blitz—{2}{R}{R}, Discard a card." (Sabin)
+            desc.append(blitzCost.isOnlyManaCost() ? "Blitz " + blitzCost.toSimpleString()
+                    : "Blitz—" + blitzCost.toSimpleString() + ".").append(" (");
             desc.append(inst.getReminderText());
             desc.append(")");
 

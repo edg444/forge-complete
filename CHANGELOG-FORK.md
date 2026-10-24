@@ -481,6 +481,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   dies" sentence. Left as Oracle: Omen layouts, *Mardu Siegebreaker*'s "your end step" (the same end step).
 - **Set review: Pro Tour Promos** (1 new name): no changes.
 
+- **Set review: Final Fantasy Commander** (124 new names, `FinalFantasyAuditTest`): MTGJSON has no printed text from
+  this set on, so only the in-game text was checked. A blitz cost that isn't just mana reads "Blitz—{2}{R}{R}, Discard
+  a card." (*Sabin*); *Summon: Esper Valigarmanda*'s chapter I had no text; ability-word dashes on *Blitzball Stadium*
+  ("Go for the Goal! —"), *Sephiroth, Fallen Hero*, *Strago and Relm* and *Urianger Augurelt*; "two creature cards"
+  (*Coin of Fate*; was "cardss").
+- **Set review: Final Fantasy and its Promos** (300 new names, `FinalFantasyAuditTest`): a tiered spell's tiers now
+  start on their own lines after its shared text (*Vincent's Limit Break*).
+- **Set review: FIN Standard Showdown** (1 new name) and **URL/Convention Promos** (4 new names): no changes.
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three
