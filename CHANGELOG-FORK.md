@@ -747,6 +747,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - A "discard a card at random" cost (Amok, Canyon Drake, Coral Helm, Frenetic Ogre, and any other card with one)
       was always refused. It's now paid when at least half the hand is cards the AI would discard anyway, such as lands
       it doesn't need.
+  - *Cluster: cast from a graveyard, minor cantrips* (`NoAiGraveCastTest`, `NoAiCantripTest`):
+    - `AILogic$ CastFromGraveyard` (Mizzix's Mastery, Psionic Ritual, Sins of the Past, Spelltwine): new
+      `GraveCastAi`. Each instant or sorcery it could cast free is asked, without its mana cost, whether the AI would
+      cast it now. One it would is worth its mana value, and the card is used when that beats the card's own cost. New
+      `SpellAbilityAi.canPlayFromElsewhere` judges a spell its zone restrictions would otherwise turn down.
+    - `AILogic$ Cantrip` (Quicken, Scout's Warning, Skyshroud Blessing, Spiritualize, Sway of Illusion, Touch of
+      Vitae, Verdant Rebirth): new `CantripAi`. Cast at the opponent's end step with mana that would go unused, for the
+      card. Verdant Rebirth also answers removal on its creature, and Skyshroud Blessing answers an effect aimed at its
+      land.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

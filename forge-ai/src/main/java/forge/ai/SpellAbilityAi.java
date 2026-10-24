@@ -104,6 +104,22 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         return canPlayWithoutRestrict(ai, sa);
     }
 
+    /**
+     * As canPlayWithSubs, for a spell cast from somewhere its own restrictions don't allow (Mizzix's Mastery casting a
+     * copy from a graveyard).
+     */
+    public final AiAbilityDecision canPlayFromElsewhere(final Player ai, final SpellAbility sa) {
+        AiAbilityDecision decision = canPlayWithSubs(ai, sa);
+        if (decision.decision() != AiPlayDecision.CantPlaySa) {
+            return decision;
+        }
+        decision = canPlayWithoutRestrict(ai, sa);
+        if (!decision.willingToPlay() || sa.getSubAbility() == null) {
+            return decision;
+        }
+        return chkDrawbackWithSubs(ai, sa.getSubAbility());
+    }
+
     private AiAbilityDecision canPlayWithoutRestrict(final Player ai, final SpellAbility sa) {
         final Card source = sa.getHostCard();
 
@@ -333,6 +349,12 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         }
         if ("HurtType".equals(logic)) {
             return forge.ai.ability.TypeHurtAi.decide(ai, sa);
+        }
+        if ("CastFromGraveyard".equals(logic)) {
+            return forge.ai.ability.GraveCastAi.decide(ai, sa);
+        }
+        if ("Cantrip".equals(logic)) {
+            return forge.ai.ability.CantripAi.decide(ai, sa);
         }
 
         return null;
