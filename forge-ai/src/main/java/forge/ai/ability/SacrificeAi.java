@@ -21,6 +21,8 @@ import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 import forge.util.collect.FCollectionView;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -131,6 +133,15 @@ public class SacrificeAi extends SpellAbilityAi {
 
             List<Card> humanList = CardLists.getValidCards(ai.getStrongestOpponent().getCardsIn(ZoneType.Battlefield), valid, sa.getActivatingPlayer(), source, sa);
 
+            if (defined.equals("Player")) {
+                // Barter in Blood: everyone gives up their least valuable ones, so it's worth it when theirs are worth more
+                final List<Card> computerList = CardLists.getValidCards(ai.getCardsIn(ZoneType.Battlefield), valid, sa.getActivatingPlayer(), source, sa);
+                computerList.remove(source);
+                final int theirs = leastValuable(humanList, amount);
+                return !humanList.isEmpty() && theirs > leastValuable(computerList, amount) + 50
+                        ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            }
+
             // Since all of the cards have AI:RemoveDeck:All, I enabled 1 for 1
             // (or X for X) trades for special decks
             return humanList.size() >= amount ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
@@ -169,6 +180,20 @@ public class SacrificeAi extends SpellAbilityAi {
     @Override
     public boolean confirmAction(Player player, SpellAbility sa, PlayerActionConfirmMode mode, String message, Map<String, Object> params) {
         return true;
+    }
+
+    // what a player loses sacrificing the cheapest `amount` of these
+    private static int leastValuable(final List<Card> list, final int amount) {
+        final List<Integer> values = new ArrayList<>();
+        for (final Card c : list) {
+            values.add(c.isCreature() ? ComputerUtilCard.evaluateCreature(c) : ComputerUtilCard.evaluatePermanentList(new CardCollection(c)));
+        }
+        Collections.sort(values);
+        int sum = 0;
+        for (int i = 0; i < Math.min(amount, values.size()); i++) {
+            sum += values.get(i);
+        }
+        return sum;
     }
 
     public static AiAbilityDecision doSacOneEachLogic(Player ai, SpellAbility sa) {

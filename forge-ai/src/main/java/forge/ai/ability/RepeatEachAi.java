@@ -87,6 +87,8 @@ public class RepeatEachAi extends SpellAbilityAi {
             }
         } else if ("EachPlayerHurt".equals(logic)) {
             return eachPlayerHurt(aiPlayer, sa);
+        } else if ("EachPlayerSetLife".equals(logic)) {
+            return eachPlayerSetLife(aiPlayer, sa);
         } else if ("TargetBestCreatures".equals(logic)) {
             // Park Re-Entry: the best creature cards it may target, limited to AITgts$ - the ones it can vouch for
             // without seeing the art
@@ -159,6 +161,42 @@ public class RepeatEachAi extends SpellAbilityAi {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    // Biorhythm: every life total becomes a number worked out per player - for the win, or when it leaves the AI
+    // ahead of where it was against the opponents
+    private static AiAbilityDecision eachPlayerSetLife(final Player ai, final SpellAbility sa) {
+        final Card source = sa.getHostCard();
+        final SpellAbility repeat = sa.getAdditionalAbility("RepeatSubAbility");
+        if (repeat == null || repeat.getApi() != ApiType.SetLife) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        int own = ai.getLife();
+        boolean lethal = false;
+        int worstOppBefore = Integer.MAX_VALUE;
+        int worstOppAfter = Integer.MAX_VALUE;
+        for (final Player p : AbilityUtils.getDefinedPlayers(source, sa.getParam("RepeatPlayers"), sa)) {
+            source.addRemembered(p);
+            final int n = AbilityUtils.calculateAmount(source, repeat.getParam("LifeAmount"), repeat);
+            source.removeRemembered(p);
+            if (p.equals(ai)) {
+                own = ai.canLoseLife() || n > ai.getLife() ? n : ai.getLife();
+            } else if (p.isOpponentOf(ai)) {
+                final int after = p.canLoseLife() || n > p.getLife() ? n : p.getLife();
+                lethal |= after <= 0 && !p.cantLoseForZeroOrLessLife();
+                worstOppBefore = Math.min(worstOppBefore, p.getLife());
+                worstOppAfter = Math.min(worstOppAfter, after);
+            }
+        }
+        if (own <= 0 && !ai.cantLoseForZeroOrLessLife()) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        if (lethal) {
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
+        final boolean better = own - worstOppAfter > ai.getLife() - worstOppBefore
+                && own > AiProfileUtil.getIntProperty(ai, AiProps.AI_IN_DANGER_THRESHOLD);
+        return better ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import forge.ai.*;
 import forge.game.ability.AbilityUtils;
+import forge.game.ability.ApiType;
 import forge.game.card.Card;
 import forge.game.card.CardCollectionView;
 import forge.game.card.CardLists;
@@ -58,6 +59,15 @@ public class DiscardAi extends SpellAbilityAi {
                     // the ai should only be using something like this if he has
                     // few cards in hand,
                     // cards like this better have a good drawback to be in the AIs deck
+                    final SpellAbility search = sa.findSubAbilityByType(ApiType.ChangeZone);
+                    if ("Hand".equals(sa.getParam("Mode")) && search != null && "Hand".equals(search.getParam("Destination"))) {
+                        // Behold the Beyond: trading the hand for N searched cards needs fewer than N others in it
+                        final int n = AbilityUtils.calculateAmount(source, search.getParamOrDefault("ChangeNum", "1"), search);
+                        final int others = ai.getCardsIn(ZoneType.Hand).size() - (source.isInZone(ZoneType.Hand) ? 1 : 0);
+                        if (others >= n) {
+                            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+                        }
+                    }
                 } else {
                     // defined to the human, so that's fine as long the human has cards
                     if (!humanHasHand) {

@@ -50,7 +50,7 @@ public class DrawAi extends SpellAbilityAi {
             return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
         }
 
-        if (sa.usesTargeting()) {
+        if (sa.usesTargeting() && !"You".equals(sa.getParam("Defined"))) {
             final Player player = sa.getTargets().getFirstTargetedPlayer();
             if (player != null && player.isOpponentOf(ai)) {
                 return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
@@ -271,6 +271,31 @@ public class DrawAi extends SpellAbilityAi {
         //if a spell is used don't count the card
         if (sa.isSpell() && source.isInZone(ZoneType.Hand)) {
             computerHandSize -= 1;
+        }
+
+        if (sa.usesTargeting() && "You".equals(sa.getParam("Defined")) && sa.hasParam("NumCards")
+                && sa.getSVar(sa.getParam("NumCards")).contains("Targeted")) {
+            // Balance of Power: the AI draws, the target only decides how many - pick the opponent worth the most
+            Player best = null;
+            int most = 0;
+            for (final Player opp : ai.getOpponents()) {
+                if (!sa.canTarget(opp)) {
+                    continue;
+                }
+                sa.resetTargets();
+                sa.getTargets().add(opp);
+                final int n = AbilityUtils.calculateAmount(source, sa.getParam("NumCards"), sa);
+                if (n > most) {
+                    most = n;
+                    best = opp;
+                }
+            }
+            sa.resetTargets();
+            if (best == null || ((most < 2 || most > computerLibrarySize - 3) && !mandatory)) {
+                return false;
+            }
+            sa.getTargets().add(best);
+            return true;
         }
 
         int numCards = 1;

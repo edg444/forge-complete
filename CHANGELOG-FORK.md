@@ -390,6 +390,20 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       Auriok Transfixer, Aurora Eidolon, Avarice Totem, Aven Liberator, Aven Windreader, Awe for the Guilds, Axis of
       Mortality: the existing AI already plays them sensibly. Autumn Willow, Avacyn, Guardian Angel: unflagged for
       their bodies (their abilities are never activated).
+  - *B, part 1* (`NoAiBatch06Test`):
+    - Barter in Blood: an "each player sacrifices" spell now weighs what each side gives up (everyone sacrifices
+      their least valuable) and is cast when the opponent loses more; it used to need only that the opponent had
+      enough to sacrifice.
+    - Battle Cry: untapping its own creatures waits for the AI's main 2 or end of combat, when it turns attackers
+      into blockers (it was cast whenever one was tapped, and an untap-all with nothing attached was never cast).
+    - Balance of Power: a draw spell that targets an opponent only to count cards (the AI draws) picks the
+      opponent worth the most and wants at least two cards; the targeting used to read as "the opponent draws".
+    - Behold the Beyond: discarding the hand to search for N cards needs fewer than N other cards in hand.
+    - Biorhythm: new RepeatEach `AILogic$ EachPlayerSetLife` works out every new life total: cast for the win or
+      when it leaves the AI further ahead, never into its own loss.
+    - Aysen Abbey, Bag of Holding, Barbed Sextant, Barrage of Expendables, Barrenton Medic, Barrin, Master Wizard,
+      Beacon of Destiny, Beast Within, Birchlore Rangers, Blasting Station, Blessed Reincarnation, Blighted
+      Burgeoning, Blinding Beam: the existing AI (and the sacrifice-cost check above) already plays them sensibly.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).
