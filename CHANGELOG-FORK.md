@@ -586,8 +586,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Left as Oracle: Portal's "destroy" for sacrifice (Cruel Edict, Predatory Nightstalker, Foul Spirit, Wildfire,
     Goblin Firestarter), two-player wording ("your opponent", Extinguish and False Summoning's "another player"),
     "any one" meaning target, and Goblin Matron's search without "may" (finding nothing was always allowed).
-- **Set review: Oversized League Prizes, Oversized 90's Promos (Incoming!) and Unglued** (83 new names,
-  `UngluedAuditTest`):
+- **Set review: Unglued** (83 new names, `UngluedAuditTest`):
   - *Goblin Bowling Team* dealt no damage at all: a damage replacement only runs when its ability is a
     ReplaceEffect, and this one rolls the die first, so the event was buffered and erased. The replacement handler
     now runs any whose chain or choices hold a ReplaceEffect, and passes the replaced event to choices too. The
@@ -982,7 +981,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     play", Chancellor of the Tangle's missing "of the game", the Shrines' "or", the untyped Golem/Myr/Insect/Germ
     tokens (creature-type updates), "of their choice" sacrifices (Geth's Verdict, Phyrexian Obliterator), Trespassing
     Souleater's "is unblockable" and "creature or player" (Gut Shot, Rage Extractor).
-- **Set review: Commander 2011, its oversized commanders and promos** (51 new names): no script changes.
+- **Set review: Commander 2011 and its promos** (51 new names): no script changes.
   - Left as Oracle: Karador's "cast one creature card", Zedruu's {R}{W}{U} cost order, the Vows' "or a
     planeswalker", Avatar of Slaughter's "each turn", "of their choice" sacrifices (Martyr's Bond, Syphon Flesh,
     Tribute to the Wild) and Acorn Catapult's "creature or player".
@@ -1090,7 +1089,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     "each turn" (Deathbellow Raider), menace and "target creature or player" / "target player" wording, and "of
     their choice" sacrifices.
 - **Set review: Face the Hydra**: its 10 Hydra deck cards aren't in Forge.
-- **Set review: Commander 2013 and its oversized commanders** (51 new names, `Commander2013AuditTest`):
+- **Set review: Commander 2013** (51 new names, `Commander2013AuditTest`):
   - R&D's Secret Lair printed text: *Marath, Will of the Wild*'s "X may be 0" printed text now stops at Commander
     Legends, which added "X can't be 0"; the Magic Online promo (December 2020) gets a `printDate` too.
   - Left as Oracle: Darksteel Mutation's "is a 0/1 Insect artifact creature" (it already replaces the other types),
@@ -1138,7 +1137,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Left as Oracle: Raid's "attacked with a creature", Anafenza's graveyard replacement (its 2014 ruling already
     read it the Oracle way), Villainous Wealth's "nonland cards", Ashcloud Phoenix's "under your control", Lens of
     Clarity's "any time". The five Morph—Reveal cards still say "from your hand" (Oracle: "in your hand").
-- **Set review: Commander 2014 and its oversized commanders** (59 new names): in-game text only, no rules changes.
+- **Set review: Commander 2014** (59 new names): in-game text only, no rules changes.
   - In-game text: an instant or sorcery's casting restriction (`Text:`) is its own paragraph instead of running into
     the spell's text (*Wake the Dead*, and older *Aleatory*, *Chaotic Strike*, *Choking Vines*, *Curtain of Light*,
     *Dazzling Beauty*, *Disharmony*, *False Orders*, *Festival*, *Fog Patch*, *Panic*, *Rapid Fire*, *Savage Beating*,
@@ -1173,7 +1172,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     "Target player reveals their hand."
   - Left as Oracle: the printed "{2}" mana of Kozilek's Channeler, Hedron Archive and others, Brutal Expulsion's
     "put into a graveyard", Conduit of Ruin's "on top of it".
-- **Set review: Commander 2015 and its oversized commanders** (56 new names):
+- **Set review: Commander 2015** (56 new names):
   - Fixed: *Broodbirth Viper* drew only on combat damage to an opponent; it's any player (combat damage can be
     redirected to its controller).
   - In-game text: *Gigantoplasm*'s granted ability ("base power and toughness X/X"), *Centaur Vinecrasher*'s "a number
@@ -1225,7 +1224,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     Aether Meltdown's "Enchanted permanent", Rashmi's "nonland card", Gonti's "look at it",
     Aetherworks Marvel's "card", Chandra, Pyrogenius's and Aethertorch Renegade's "target player", Authority of the
     Consuls' "enters under an opponent's control", mill / token / "any target" templating.
-- **Set review: Commander 2016 and its oversized commanders** (56 new names):
+- **Set review: Commander 2016** (56 new names):
   - Fixed: *Vial Smasher the Fierce* could only damage the randomly chosen opponent; it may hit a planeswalker that
     player controls instead.
   - In-game text: *Reyhan, Last of the Abzan*'s "Reyhan enters".
@@ -1259,7 +1258,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Left as Oracle: Nicol Bolas, God-Pharaoh's "target opponent or creature an opponent controls", Majestic
     Myriarch's intervening "if" (it only moves when the condition is checked), Hazoret's Undying Fury's, Wildfire
     Eternal's and Abandoned Sarcophagus' "cards", Neheb's "your postcombat main phase", mill templating.
-- **Set review: Commander 2017 and its oversized commander** (56 new names): no changes.
+- **Set review: Commander 2017** (56 new names): no changes.
   - Left as Oracle: Kess, Dissident Mage's printed "During each of your turns ... If a card cast this way would be put
     into your graveyard this turn" (its rulings already allow one card a turn, and "that card" can't be followed past
     the stack, CR 400.7h), Portal Mage's "player or planeswalker", Teferi's Protection's "have protection", Kheru
@@ -1289,6 +1288,44 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Fixed: *Tetzimoc, Primal Death*'s prey ability didn't actually reveal it.
   - In-game text: *Induced Amnesia*'s "then draws that many cards".
   - Left as Oracle: Angrath's "target opponent", "card"/"spell" wording.
+- **Set review: Dominaria and Dominaria Promos** (231 new names, `DominariaAuditTest`):
+  - Fixed: *The Flame of Keld*'s chapter III also added 2 to opponents' red sources' damage.
+  - R&D's Secret Lair: *Teferi, Hero of Dominaria* printed before Secret Lair's (2021-02-22, now its own print date)
+    untaps exactly two lands, so it must untap two tapped lands if there are any, an opponent's if need be
+    (CR 701.26b).
+  - In-game text: *Fall of the Thran*'s chapters II and III had no text; *Traxos, Scourge of Kroog*'s "enters tapped"
+    showed twice; *Arbor Armament*'s "That creature gains reach until end of turn."; *Darigaaz Reincarnated*'s
+    "this card"; Teferi's delayed trigger says "up to two lands".
+  - Left as Oracle: Muldrotha's "play up to one permanent card of each permanent type", Rona's, Stolen Strategy's
+    and Jaya Ballard's emblem's "cards", Precognition Field, Tatyova's added ability word, Helm of the Host's "if
+    equipped creature is legendary", mill and planeswalker-redirect wording. Firesong and Sunspeaker's "target
+    creature or player" is its Oracle text.
+- **Set review: Battlebond and Battlebond Promos** (85 new names):
+  - In-game text: *Decorated Champion*'s trigger was hidden.
+  - Left as Oracle: Gorm the Great's two "must be blocked" lines (they're keyword lines), "under your team's
+    control", "sacrifices a creature they control".
+- **Set review: Global Series Jiang Yanggu & Mu Yanling** (30 new names):
+  - In-game text: *Sacred White Deer*'s "Activate only if you control a Yanggu planeswalker."
+- **Set review: Core Set 2019 and Core Set 2019 Promos** (181 new names, `CoreSet2019AuditTest`):
+  - Fixed: *Ursine Champion* lost its Berserker type (it became a "Beserker"); *Sarkhan's Dragonfire* let you order
+    the cards it puts on the bottom instead of putting them in a random order.
+  - In-game text: *Bone Dragon*'s "Exile seven other cards", *Vivien Reid*'s "artifact, enchantment, or creature",
+    *Apex of Power*'s "spells from among them", *Vivien's Invocation*'s "damage equal to".
+  - Left as Oracle: Doublecast's "When you next cast", Mirror Image's "any creature", Palladia-Mors' "if",
+    Liliana, Untouched by Death's "Zombie cards", mill wording.
+- **Set review: 2017 Heroes of the Realm** (3 new names):
+  - Fixed: *Inzerva, Master of Insights*'s -2 looked only at opponents' libraries, not each other player's; its "Scry
+    2." wasn't shown.
+- **Set review: Commander 2018** (59 new names, `CoreSet2019AuditTest`):
+  - R&D's Secret Lair: *Yennett, Cryptic Sovereign* printed before Commander Masters draws only when the revealed card's
+    mana value is even, so declining to cast an odd card draws nothing (its Secret Lair printings now carry their own
+    print date).
+  - In-game text: *Echo Storm*'s and *Fury Storm*'s "You may choose new targets for the copies."; *Varchild, Betrayer
+    of Kjeldor*'s and *Xantcha, Sleeper Agent*'s split lines read as one; *Estrid's Invocation*'s "you may" and "its
+    owner's".
+  - Left as Oracle: Saheeli, the Gifted's printed "costs {1} less ... for each artifact" (the same as affinity),
+    Ever-Watching Threshold's trigger condition, Xantcha's "As ... enters, an opponent ... gains control of it",
+    Aminatou's Augury's "card", Boreas Charger's split sentences, "Totem armor".
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

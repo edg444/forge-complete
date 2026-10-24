@@ -5,9 +5,15 @@ PT:3/5
 K:Flying
 K:Vigilance
 K:Menace
-T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigReveal | TriggerDescription$ Whenever NICKNAME attacks, reveal the top card of your library. You may cast it without paying its mana cost if its mana value is odd. If you don't cast it, draw a card.
+T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigReveal | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20230804 | TriggerDescription$ Whenever NICKNAME attacks, reveal the top card of your library. You may cast it without paying its mana cost if its mana value is odd. If you don't cast it, draw a card.
 SVar:TrigReveal:DB$ PeekAndReveal | PeekAmount$ 1 | RevealValid$ Card | RememberRevealed$ True | SubAbility$ DBMayCast
 SVar:DBMayCast:DB$ Play | Defined$ Remembered | ForgetRemembered$ True | ValidSA$ Spell | WithoutManaCost$ True | Optional$ True | ConditionDefined$ Remembered | ConditionPresent$ Card.cmcOdd | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | ConditionDefined$ Remembered | ConditionPresent$ Card | SubAbility$ DBCleanup
+# R&D's Secret Lair: printings before Commander Masters' draw only if the revealed card's mana value is even, so
+# declining to cast an odd card draws nothing.
+T:Mode$ Attacks | ValidCard$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigRevealPrinted | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20230804 | TriggerDescription$ (As printed) Whenever NICKNAME attacks, reveal the top card of your library. If that card's mana value is odd, you may cast it without paying its mana cost. Otherwise, draw a card.
+SVar:TrigRevealPrinted:DB$ PeekAndReveal | PeekAmount$ 1 | RevealValid$ Card | RememberRevealed$ True | SubAbility$ DBMayCastPrinted
+SVar:DBMayCastPrinted:DB$ Play | Defined$ Remembered | ForgetRemembered$ True | ValidSA$ Spell | WithoutManaCost$ True | Optional$ True | ConditionDefined$ Remembered | ConditionPresent$ Card.cmcOdd | SubAbility$ DBDrawPrinted
+SVar:DBDrawPrinted:DB$ Draw | ConditionDefined$ Remembered | ConditionPresent$ Card.cmcEven | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 Oracle:Flying, vigilance, menace\nWhenever Yennett attacks, reveal the top card of your library. You may cast it without paying its mana cost if its mana value is odd. If you don't cast it, draw a card.
