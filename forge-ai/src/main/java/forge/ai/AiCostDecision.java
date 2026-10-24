@@ -627,6 +627,11 @@ public class AiCostDecision extends CostDecisionMakerBase {
             }
             return PaymentDecision.card(source);
         }
+        // Induce Despair: the card whose X it planned on
+        final CardCollection planned = forge.ai.ability.SacrificePayoffAi.planned(ability);
+        if (planned != null && !planned.isEmpty() && hand.containsAll(planned)) {
+            return PaymentDecision.card(planned);
+        }
 
         if (cost.getType().equals("Hand")) {
             return PaymentDecision.card(hand);

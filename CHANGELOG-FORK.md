@@ -768,6 +768,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - `LifeExchangeAi` now gives "two target players" (Soul Conduit, Profane Transfusion) both targets: itself and the
       opponent. Psychic Transfer is cast when the opponent is 3 to 5 life ahead, the only case where its condition
       lets it work.
+  - *Cluster: X from a revealed card, X cards exiled from the graveyard* (`NoAiRevealExileXTest`), in
+    `SacrificePayoffAi`:
+    - `AILogic$ RevealFor` (Charge of the Forever-Beast, Disaster Radius, Induce Despair): revealing costs nothing, so
+      it reveals the creature card in hand whose power or mana value makes the effect do the most, and the cost reveals
+      that card.
+    - `AILogic$ ExileForX` (Chill Haunting, Harvest Pyre, Haunting Misery): X is what the kill takes (lethal damage, or
+      the target's toughness for -X/-X), or lethal or a real chunk to a player, up to the cards its graveyard can spare.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

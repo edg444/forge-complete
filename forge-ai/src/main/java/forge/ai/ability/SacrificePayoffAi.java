@@ -49,7 +49,7 @@ public final class SacrificePayoffAi {
     private SacrificePayoffAi() { }
 
     public static boolean handles(final String logic) {
-        return "SacrificeFor".equals(logic) || "SacrificeAny".equals(logic);
+        return "SacrificeFor".equals(logic) || "SacrificeAny".equals(logic) || "RevealFor".equals(logic) || "ExileForX".equals(logic);
     }
 
     /** What the AI decided to sacrifice for this card, if anything. */
@@ -61,7 +61,11 @@ public final class SacrificePayoffAi {
     }
 
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
-        return "SacrificeAny".equals(sa.getParam("AILogic")) ? sacrificeAny(ai, sa) : sacrificeFor(ai, sa);
+        return switch (sa.getParam("AILogic")) {
+            case "SacrificeAny" -> sacrificeAny(ai, sa);
+            case "ExileForX" -> exileForX(ai, sa);
+            default -> sacrificeFor(ai, sa);
+        };
     }
 
     private static int worth(final Card c) {
@@ -76,7 +80,7 @@ public final class SacrificePayoffAi {
         }
         v = v.startsWith("-") ? v.substring(1) : v;
         final String expr = s.hasSVar(v) ? s.getSVar(v) : v;
-        if (!expr.startsWith("Sacrificed$") && !expr.startsWith("RememberedLKI$")) {
+        if (!expr.startsWith("Sacrificed$") && !expr.startsWith("RememberedLKI$") && !expr.startsWith("Revealed$")) {
             return AbilityUtils.calculateAmount(s.getHostCard(), v, s);
         }
         final String[] parts = expr.substring(expr.indexOf('$') + 1).split("/");
@@ -177,6 +181,16 @@ public final class SacrificePayoffAi {
                         }
                     }
                 }
+                case DamageAll -> {
+                    // Disaster Radius: the revealed card's mana value to each creature it hits
+                    final int n = x(s, "NumDmg", sac);
+                    for (final Card c : CardLists.getValidCards(ai.getGame().getCardsIn(ZoneType.Battlefield),
+                            s.getParamOrDefault("ValidCards", "Creature"), ai, s.getHostCard(), s)) {
+                        if (!sac.contains(c) && n >= c.getLethalDamage() && c.canBeDestroyed()) {
+                            total += side(ai, c) * ComputerUtilCard.evaluateCreature(c);
+                        }
+                    }
+                }
                 case DestroyAll -> {
                     // Sanguine Praetor: each creature with the sacrificed creature's mana value
                     final int n = sac.isEmpty() ? -1 : sac.get(0).getCMC();
@@ -237,7 +251,96 @@ public final class SacrificePayoffAi {
         return null;
     }
 
+    private static <T extends CostPart> T costPart(final SpellAbility sa, final Class<T> kind) {
+        if (sa.getPayCosts() != null) {
+            for (final CostPart part : sa.getPayCosts().getCostParts()) {
+                if (kind.isInstance(part)) {
+                    return kind.cast(part);
+                }
+            }
+        }
+        return null;
+    }
+
+    // Charge of the Forever-Beast, Disaster Radius, Induce Despair: revealing costs nothing, so it's the creature card
+    // in hand whose X does the most
+    private static AiAbilityDecision revealFor(final Player ai, final SpellAbility sa) {
+        final forge.game.cost.CostReveal reveal = costPart(sa, forge.game.cost.CostReveal.class);
+        if (reveal == null || !ai.getGame().getStack().isEmpty()) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final Card host = sa.getHostCard();
+        int best = Integer.MIN_VALUE;
+        Card bestCard = null;
+        for (final Card c : CardLists.getValidCards(ai.getCardsIn(ZoneType.Hand), reveal.getType().split(";"), ai, host, sa)) {
+            if (c.equals(host)) {
+                continue;
+            }
+            final int v = payoff(ai, sa, List.of(c));
+            if (v > best) {
+                best = v;
+                bestCard = c;
+            }
+        }
+        if (bestCard == null || best < (sa.isSpell() ? 60 : 30)) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        payoff(ai, sa, List.of(bestCard));
+        PLANNED.put(host.getId(), new CardCollection(bestCard));
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    // Harvest Pyre, Chill Haunting, Haunting Misery: X cards exiled from its graveyard, so X is what the kill takes
+    private static AiAbilityDecision exileForX(final Player ai, final SpellAbility sa) {
+        final forge.game.cost.CostExile exile = costPart(sa, forge.game.cost.CostExile.class);
+        if (exile == null || !sa.usesTargeting()) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final int available = CardLists.getValidCards(ai.getCardsIn(ZoneType.Graveyard), exile.getType().split(";"), ai, sa.getHostCard(), sa).size();
+        sa.resetTargets();
+        int x = 0;
+        forge.game.GameEntity target = null;
+        int value = 0;
+        if (sa.getApi() == ApiType.DealDamage || sa.getApi() == ApiType.Pump) {
+            final boolean damage = sa.getApi() == ApiType.DealDamage;
+            for (final Card c : CardUtil.getValidCardsToTarget(sa)) {
+                final int need = damage ? c.getLethalDamage() : c.getNetToughness();
+                if (c.getController().isOpponentOf(ai) && need <= available && need > 0 && (!damage || c.canBeDestroyed())) {
+                    final int v = ComputerUtilCard.evaluateCreature(c);
+                    if (v > value) {
+                        value = v;
+                        target = c;
+                        x = need;
+                    }
+                }
+            }
+            if (damage) {
+                for (final Player p : ai.getOpponents()) {
+                    // Haunting Misery: the player, for lethal or a real chunk
+                    if (sa.canTarget(p) && available > 0 && p.canLoseLife()) {
+                        final boolean lethal = available >= p.getLife() && !p.cantLoseForZeroOrLessLife();
+                        final int v = lethal ? 1000 : available >= 4 ? available * 15 : 0;
+                        if (v > value) {
+                            value = v;
+                            target = p;
+                            x = lethal ? p.getLife() : available;
+                        }
+                    }
+                }
+            }
+        }
+        if (target == null || value < 60) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        sa.setXManaCostPaid(x);
+        sa.getTargets().add(target);
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
     private static AiAbilityDecision sacrificeFor(final Player ai, final SpellAbility sa) {
+        if ("RevealFor".equals(sa.getParam("AILogic"))) {
+            return revealFor(ai, sa);
+        }
         final Card host = sa.getHostCard();
         final CostSacrifice cost = sacCost(sa);
         if (cost == null) {
