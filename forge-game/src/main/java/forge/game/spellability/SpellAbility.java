@@ -1194,10 +1194,11 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
         SpellAbility node = this;
 
         while (node != null) {
-            if (node != this) {
+            String desc = node.getDescription();
+            // a silent step mid-chain (like a die roll) would otherwise leave a double space
+            if (node != this && !desc.isEmpty()) {
                 sb.append(" ");
             }
-            String desc = node.getDescription();
             if (node.getHostCard() != null && !desc.isEmpty()) {
                 ITranslatable nameSource = getHostName(node);
                 desc = CardTranslation.translateMultipleDescriptionText(desc, nameSource);

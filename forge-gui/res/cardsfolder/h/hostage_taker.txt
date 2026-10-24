@@ -2,8 +2,11 @@ Name:Hostage Taker
 ManaCost:2 U B
 Types:Creature Human Pirate
 PT:2/3
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigExile | TriggerDescription$ When this creature enters, exile another target creature or artifact until this creature leaves the battlefield. You may cast that card for as long as it remains exiled, and mana of any type can be spent to cast that spell.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigExile | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20210723 | TriggerDescription$ When this creature enters, exile another target creature or artifact until this creature leaves the battlefield. You may cast that card for as long as it remains exiled, and mana of any type can be spent to cast that spell.
 SVar:TrigExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | ValidTgts$ Creature.Other,Artifact.Other | TgtPrompt$ Select another target creature or artifact | Duration$ UntilHostLeavesPlay | RememberChanged$ True | SubAbility$ DBEffect
+# R&D's Secret Lair: printings before Adventures in the Forgotten Realms Commander's can target Hostage Taker itself.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigExilePrinted | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20210723 | TriggerDescription$ (As printed) When this creature enters, exile target artifact or creature until this creature leaves the battlefield. You may cast that card for as long as it remains exiled, and you may spend mana as though it were mana of any type to cast that spell.
+SVar:TrigExilePrinted:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile | ValidTgts$ Artifact,Creature | TgtPrompt$ Select target artifact or creature | Duration$ UntilHostLeavesPlay | RememberChanged$ True | SubAbility$ DBEffect
 SVar:DBEffect:DB$ Effect | StaticAbilities$ STPlay | RememberObjects$ Remembered | Duration$ Permanent | ForgetOnMoved$ Exile | SubAbility$ DBCleanup
 SVar:STPlay:Mode$ Continuous | MayPlay$ True | MayPlayIgnoreType$ True | Affected$ Card.IsRemembered+nonLand | AffectedZone$ Exile | Description$ You may cast that card and you may spend mana as though it were mana of any type to cast it.
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True

@@ -1267,6 +1267,28 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Set review: HasCon 2017** (3 new names): no changes.
 - **Set review: 2016 Heroes of the Realm** (3 new names): no changes (Dungeon Master shows its "1d4" loyalty roll as
   a line of its own).
+- **Set review: Ixalan and Ixalan Promos** (245 new names, `IxalanAuditTest`):
+  - Fixed: *Raiders' Wake*'s raid trigger also fired at each opponent's end step.
+  - R&D's Secret Lair: *Search for Azcanta* printed before Secret Lair's Heart of the Explorer (2023-11-20, now its own
+    print date) looks at the top card and may put it into the graveyard, which isn't a surveil; *Hostage Taker*
+    printed before Adventures in the Forgotten Realms Commander can exile itself.
+  - In-game text: *Ashes of the Abhorrent*'s static reads as one sentence; *Dire Fleet Daredevil*'s replacement says
+    "a graveyard".
+  - Left as Oracle: raid's "attacked with a creature", Sunbird's Invocation's "card", Settle the Wreckage's "their
+    library", Tocatli Honor Guard's "entering the battlefield", Hostage Taker's mana wording.
+- **Set review: Unstable** (241 new names, `UnstableRivalsAuditTest`):
+  - R&D's Secret Lair: *Ordinary Pony* printed before Unsanctioned can flicker the same creature with each Pony
+    trigger.
+  - In-game text: *Box of Free-Range Goblins*, *Steamfloggery*, *Time Out* and Unglued's *Growth Spurt* start with
+    "Roll a six-sided die."; *Hammer Helper*'s "and roll a six-sided die"; *Time Out*'s "where X is the result";
+    *Steamfloggery*'s assemble reminder text. Engine: an ability step with no text of its own (like a die roll
+    mid-chain) no longer leaves a double space.
+  - Left as Oracle: Clocknapper's, X's, Spike's, Gimme Five's and Side Quest's "silver-bordered", Boomflinger's
+    "target player".
+- **Set review: Rivals of Ixalan and Rivals of Ixalan Promos** (178 new names, `UnstableRivalsAuditTest`):
+  - Fixed: *Tetzimoc, Primal Death*'s prey ability didn't actually reveal it.
+  - In-game text: *Induced Amnesia*'s "then draws that many cards".
+  - Left as Oracle: Angrath's "target opponent", "card"/"spell" wording.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

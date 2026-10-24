@@ -2,7 +2,11 @@ Name:Ordinary Pony
 ManaCost:2 W
 Types:Host Creature Horse
 PT:2/3
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigExile | OptionalDecider$ You | Host$ True | TriggerDescription$ When this creature enters, you may exile target non-Horse creature you control that wasn't put onto the battlefield with this ability this turn, then return it to the battlefield under its owner's control.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigExile | OptionalDecider$ You | Host$ True | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20200229 | TriggerDescription$ When this creature enters, you may exile target non-Horse creature you control that wasn't put onto the battlefield with this ability this turn, then return it to the battlefield under its owner's control.
+# R&D's Secret Lair: printings before Unsanctioned's can flicker the same creature again with each Pony trigger.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigExilePrinted | OptionalDecider$ You | Host$ True | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20200229 | TriggerDescription$ (As printed) When this creature enters, you may exile target non-Horse creature you control, then return it to the battlefield under its owner's control.
+SVar:TrigExilePrinted:DB$ ChangeZone | ValidTgts$ Creature.nonHorse+YouCtrl | TgtPrompt$ Select target non-Horse creature you control | Origin$ Battlefield | Destination$ Exile | Imprint$ True | SubAbility$ DBReturnPrinted
+SVar:DBReturnPrinted:DB$ ChangeZone | Defined$ Imprinted | Origin$ Exile | Destination$ Battlefield | SubAbility$ DBCleanup
 SVar:TrigExile:DB$ ChangeZone | ValidTgts$ Creature.nonHorse+YouCtrl+!hasKeywordReturnedByOrdinaryPony | TgtPrompt$ Select target non-Horse creature you control that wasn't put onto the battlefield with this ability this turn | Origin$ Battlefield | Destination$ Exile | Imprint$ True | SubAbility$ DBReturn
 SVar:DBReturn:DB$ ChangeZone | Defined$ Imprinted | Origin$ Exile | Destination$ Battlefield | RememberChanged$ True | SubAbility$ DBMark
 # The errata exists "so you can't flicker creatures more than once each turn" - a Pony that is itself

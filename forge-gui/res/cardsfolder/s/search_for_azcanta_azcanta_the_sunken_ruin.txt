@@ -1,8 +1,12 @@
 Name:Search for Azcanta
 ManaCost:1 U
 Types:Legendary Enchantment
-T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigSurveil | TriggerDescription$ At the beginning of your upkeep, surveil 1. Then if you have seven or more cards in your graveyard, you may transform CARDNAME. (Look at the top card of your library. You may put that card into your graveyard.)
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigSurveil | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20231120 | TriggerDescription$ At the beginning of your upkeep, surveil 1. Then if you have seven or more cards in your graveyard, you may transform CARDNAME. (Look at the top card of your library. You may put that card into your graveyard.)
 SVar:TrigSurveil:DB$ Surveil | Amount$ 1 | SubAbility$ DBTransform | SpellDescription$ Surveil 1. Then if you have seven or more cards in your graveyard, you may transform CARDNAME (Look at the top card of your library. You may put that card into your graveyard.)
+# R&D's Secret Lair: printings before Secret Lair's Heart of the Explorer look at the top card and may put it into the
+# graveyard, which isn't a surveil, so "whenever you surveil" doesn't trigger.
+T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigLook | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20231120 | TriggerDescription$ (As printed) At the beginning of your upkeep, look at the top card of your library. You may put it into your graveyard. Then if you have seven or more cards in your graveyard, you may transform CARDNAME.
+SVar:TrigLook:DB$ Dig | DigNum$ 1 | ChangeNum$ Any | DestinationZone$ Graveyard | LibraryPosition2$ 0 | NoReveal$ True | SubAbility$ DBTransform
 SVar:DBTransform:DB$ SetState | Defined$ Self | Mode$ Transform | Optional$ True | ConditionPresent$ Card.YouOwn | ConditionZone$ Graveyard | ConditionCompare$ GE7
 DeckHas:Ability$Surveil|Graveyard
 AlternateMode:DoubleFaced
