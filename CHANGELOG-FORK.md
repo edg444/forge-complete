@@ -1497,6 +1497,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     wording; *Disciple of the Sun*'s prompt.
   - Left as Oracle (no Secret Lair versions): printed "amass 2" (now Amass Zombies), Harmonic Prodigy's "an ability"
     (abilities that trigger are triggered abilities), Subtlety's "top or bottom" (still the owner's choice).
+- **Set review: Forgotten Realms Commander** (60 new names, `ForgottenRealmsAuditTest`):
+  - Fixed: *Immovable Rod* could target itself (it says "another target permanent").
+  - In-game text: *Clay Golem*'s "Roll 1d8" (now "Roll a d8", in the dice-roll cost itself); *Grim Hireling*'s "You
+    may sacrifice any number of treasures" for "Sacrifice X Treasures"; *Klauth's Will* ran its "choose both" line into
+    "Choose one".
+- **Set review: Adventures in the Forgotten Realms and its Promos** (257 new names, `ForgottenRealmsAuditTest`):
+  - R&D's Secret Lair: *Delina, Wild Mage* (its only printing says "Roll again.") keeps rolling until it gets 1-14;
+    Oracle's "You may roll again." stays optional.
+  - In-game text: *Displacer Beast*'s and *Gelatinous Cube*'s ability words after the cost; *Power of Persuasion*'s
+    10-19 line was missing; *Clever Conjurer*'s prompt said "another".
+  - Left as Oracle: The Book of Vile Darkness's printed "It gains all triggered abilities" (differs only when Vecna is
+    copied), Druid Class's missing Landfall label, Earth-Cult Elemental's and Acererak's "sacrifices a permanent"
+    (always their choice).
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

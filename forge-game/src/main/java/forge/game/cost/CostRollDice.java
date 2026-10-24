@@ -33,7 +33,7 @@ public class CostRollDice extends CostPart {
     public final String toString() {
         final StringBuilder sb = new StringBuilder();
 
-        sb.append("Roll ").append(getAmount());
+        sb.append("Roll ").append("1".equals(getAmount()) ? "a " : getAmount());
 
         if (this.getTypeDescription() == null) {
             sb.append("d").append(getType());
