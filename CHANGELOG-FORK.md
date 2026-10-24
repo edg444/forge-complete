@@ -404,6 +404,25 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Aysen Abbey, Bag of Holding, Barbed Sextant, Barrage of Expendables, Barrenton Medic, Barrin, Master Wizard,
       Beacon of Destiny, Beast Within, Birchlore Rangers, Blasting Station, Blessed Reincarnation, Blighted
       Burgeoning, Blinding Beam: the existing AI (and the sacrifice-cost check above) already plays them sensibly.
+  - *B and C, part 2* (`NoAiBatch08Test`):
+    - Bond of Agony: paying X life to make the others lose X is an even race, so it's cast only with X set to
+      exactly the kill, and only while the AI keeps life to spare.
+    - Bloodflow Connoisseur: its sacrifice outlet eats a creature that's dying anyway.
+    - Cerulean Wisps: the cantrip-cycling fallback above also covers spells that only change colors.
+    - Blinkmoth Well, Blood Celebrant, Blood Rites, Blood Vassal, Basal Thrull, Bloodthirsty Adversary, Bog
+      Elemental, Bog Initiate, Bog Naughty, Bogardan Dragonheart, Bola Warrior, Bone Flute, Bone Shaman, Bosh, Iron
+      Golem, Brand, Brand of Ill Omen, Brave-Kin Duo, Breakthrough, Brilliant Spectrum, Brine Shaman, Browse,
+      Brutalizer Exarch, Bulwark, Burr Grafter, Burst of Speed, Butcher Orgg, Cabal Coffers, Cabal Interrogator,
+      Cabal Patriarch, Cache Raiders, Cagemail, Calciform Pools, Callous Oppressor, Cannibalize, Canopy Claws,
+      Captain of the Mists, Caregiver, Carnage Altar, Carpet of Flowers, Carrion Rats, Cartel Aristocrat, Cascade
+      Bluffs, Castle Sengir, Cave of Temptation, Celestial Prism, Cemetery Puca, Cephalid Broker, Cerebral Vortex,
+      Ceta Disciple, Champion of Stray Souls, Chandra, Pyromaster, Charm Peddler, Chromatic Armor, Chromatic Sphere,
+      Chromatic Star, Chromeshell Crab, Cinderhaze Wretch, Circle of Despair, Civic Guildmage, Civilized Scholar,
+      Clairvoyance, Clock of Omens, Coalhauler Swine, Coastal Wizard, Coffin Puppets, Commune with Lava, Complex
+      Automaton, Composite Golem, Compulsion, Conjured Currency, Conjurer's Closet, Consign to Dream, Conspiracy,
+      Consuming Ferocity, Contagion, Contingency Plan, Contraband Livestock: the existing AI (with the sacrifice and
+      damage checks above) already plays them sensibly. Bonds of Mortality, Burning-Tree Bloodscale: unflagged for
+      their card draw and body (their abilities are never activated).
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

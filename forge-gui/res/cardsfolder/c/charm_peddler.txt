@@ -7,5 +7,4 @@ SVar:DBEffect:DB$ Effect | ValidTgts$ Creature | TgtPrompt$ Select target creatu
 SVar:RPreventNextFromSource:Event$ DamageDone | ValidSource$ Card.ChosenCardStrict,Emblem.ChosenCard | ValidTarget$ Card.IsImprinted | ReplaceWith$ ExileEffect | PreventionEffect$ True | Description$ The next time the chosen source deals damage to the targeted creature, prevent that damage.
 SVar:ExileEffect:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
-AI:RemoveDeck:All
 Oracle:{W}, {T}, Discard a card: The next time a source of your choice would deal damage to target creature this turn, prevent that damage.

@@ -4,5 +4,4 @@ Types:Creature Giant Shaman
 PT:3/3
 A:AB$ Animate | Cost$ B | Defined$ Self | staticAbilities$ BoneShamanStatic | AILogic$ BoneManCantRegenerate | StackDescription$ SpellDescription | SpellDescription$ Until end of turn, this creature gains "Creatures dealt damage by this creature this turn can't be regenerated this turn."
 SVar:BoneShamanStatic:Mode$ CantRegenerate | ValidCard$ Creature.DamagedBy | Description$ Creatures dealt damage by this creature this turn can't be regenerated this turn.
-AI:RemoveDeck:All
 Oracle:{B}: Until end of turn, this creature gains "Creatures dealt damage by this creature this turn can't be regenerated this turn."

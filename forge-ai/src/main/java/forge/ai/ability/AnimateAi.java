@@ -258,12 +258,13 @@ public class AnimateAi extends SpellAbilityAi {
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
 
-    // a spell that just adds a type until end of turn and draws a card
+    // a spell that just adds a type or changes colors until end of turn and draws a card (Argent Mutation, Cerulean Wisps)
     private static boolean isHarmlessCantrip(final SpellAbility sa) {
-        return sa.isSpell() && !sa.isCurse() && sa.findSubAbilityByType(ApiType.Draw) != null && sa.hasParam("Types")
+        return sa.isSpell() && !sa.isCurse() && sa.findSubAbilityByType(ApiType.Draw) != null
+                && (sa.hasParam("Types") || sa.hasParam("Colors"))
                 && !sa.hasParam("Duration") && !sa.hasParam("Power") && !sa.hasParam("Toughness") && !sa.hasParam("RemoveTypes")
                 && !sa.hasParam("RemoveCreatureTypes") && !sa.hasParam("RemoveKeywords") && !sa.hasParam("RemoveAllAbilities")
-                && !sa.getParam("Types").contains("Creature");
+                && !sa.getParamOrDefault("Types", "").contains("Creature");
     }
 
     // an effect that only sets P/T can shrink the AI's own creature
