@@ -352,6 +352,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 - **Set review: March of the Machine: The Aftermath** (49 new names): no changes. Left as Oracle: *Tolarian
   Contempt*'s "their choice of", *Feast of the Victorious Dead*'s "any number of".
 
+- **Set review: Tales of Middle-earth Front Cards** (10 new names): theme cards, not game pieces; not in Forge.
+- **Set review: Tales of Middle-earth Commander** (104 new names): *Galadhrim Ambush*'s missing space; "Exile Bilbo"
+  (*Bilbo, Birthday Celebrant*); *Shelob, Dread Weaver*'s cost read "Put a Creature.ExiledWithSource from exile".
+- **Set review: The Lord of the Rings: Tales of Middle-earth and its Promos** (278 new names): *Horses of the
+  Bruinen* and *War of the Last Alliance* didn't show their Ring temptation (or Horses' scry); "Remove an indestructible
+  counter from Arwen"; "three cards" (*Mines of Moria*; was "cardss"); "two other untapped Halflings" (*Saradoc*);
+  "Sacrifice Boromir"; "Sacrifice Mount Doom and a legendary artifact"; *Rosie Cotton*'s full nickname; *Bilbo's Ring*'s
+  "Equip Halfling {1}". Left as Oracle: printed self-references, "As long as it's your turn" and Elven Farsight/Doors of
+  Durin's "If it's a creature card" (clarified wording, same rules).
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three
