@@ -36,8 +36,38 @@ public final class TypeHurtAi {
         return c.getController().isOpponentOf(ai) ? 1 : c.getController().equals(ai) ? -1 : 0;
     }
 
+    // Winding Way, Vigean Intuition: the type its library has the most of, for the cards revealed off the top
+    private static AiAbilityDecision digType(final Player ai, final SpellAbility sa, final SpellAbility effect) {
+        final var library = ai.getCardsIn(ZoneType.Library);
+        if (library.isEmpty()) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final String[] types = sa.hasParam("ValidTypes") ? sa.getParam("ValidTypes").split(",")
+                : new String[] {"Creature", "Land", "Instant", "Sorcery", "Artifact", "Enchantment", "Planeswalker"};
+        final int dig = Math.min(library.size(), forge.game.ability.AbilityUtils.calculateAmount(sa.getHostCard(), effect.getParamOrDefault("DigNum", "1"), effect));
+        int best = 0;
+        String bestType = null;
+        for (final String type : types) {
+            final long n = library.stream().filter(c -> c.getType().hasStringType(type)).count();
+            // the expected number of them in the cards dug, at half a card's worth for a land
+            final int v = (int) (n * dig * ("Land".equals(type) ? 25 : 50) / library.size());
+            if (v > best) {
+                best = v;
+                bestType = type;
+            }
+        }
+        if (bestType == null || best < 75) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        CHOSEN.put(sa.getHostCard().getId(), bestType);
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
     // Creeping Renaissance: the permanent type that brings back the most from its graveyard
     private static AiAbilityDecision cardType(final Player ai, final SpellAbility sa, final SpellAbility effect) {
+        if (effect.getApi() == ApiType.Dig) {
+            return digType(ai, sa, effect);
+        }
         if (effect.getApi() != ApiType.ChangeZoneAll || !effect.getParamOrDefault("Origin", "").contains("Graveyard")) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
@@ -118,6 +148,16 @@ public final class TypeHurtAi {
                     if (t != null) {
                         v = ComputerUtilCard.evaluateCreature(t);
                         target = t;
+                    }
+                    // Roar of the Crowd: any target, so the player too
+                    for (final Player opp : ai.getOpponents()) {
+                        if (n > 0 && effect.canTarget(opp) && opp.canLoseLife()) {
+                            final int pv = n >= opp.getLife() && !opp.cantLoseForZeroOrLessLife() ? 1000 : n * 12;
+                            if (pv > v) {
+                                v = pv;
+                                target = opp;
+                            }
+                        }
                     }
                 }
                 case Discard -> {

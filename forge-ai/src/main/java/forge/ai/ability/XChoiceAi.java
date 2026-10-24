@@ -27,6 +27,11 @@ public final class XChoiceAi {
     }
 
     private static int maxX(final Player ai, final SpellAbility sa) {
+        // Toxic Deluge: X is paid in life, keeping some back
+        if (sa.getPayCosts() != null && sa.getPayCosts().getCostParts().stream()
+                .anyMatch(p -> p instanceof forge.game.cost.CostPayLife && "X".equals(p.getAmount()))) {
+            return ai.getLife() - 5;
+        }
         if (sa.getPayCosts() == null || sa.getPayCosts().getTotalMana() == null) {
             return ComputerUtilMana.getAvailableManaEstimate(ai, false);
         }

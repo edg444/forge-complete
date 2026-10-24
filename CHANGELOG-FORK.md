@@ -826,6 +826,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Moment of Silence: `EndCombat`, which now also has the opponent skip combat ahead of an attack that could be
       lethal. Orcish Settlers: `DestroyX`, which now takes lands too and counts {X}{X} as two mana per X; a creature
       that sacrifices itself wants at least two targets. Monstrous Emergence: `RevealFor`.
+    - Jinx, Shadow of Doubt, Shimmering Mirage: `Cantrip`. Wake of Destruction: `EchoDestroy`.
+    - Toxic Deluge: `WipeX`, with X paid in life (keeping 5 back).
+    - Roar of the Crowd: `HurtType`, whose damage case now considers the player too.
+    - Vigean Intuition, Winding Way: `HurtType`, picking the card type its library is heaviest in for the cards
+      revealed off the top.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).
