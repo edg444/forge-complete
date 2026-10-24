@@ -809,6 +809,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       cheapest creature (nothing, if one is about to die anyway). Deadly Tempest: `WipeWithSub`.
     - Dregs of Sorrow: new `DestroyX`, X as many of their worthwhile creatures as it can pay for. Echoing Calm,
       Echoing Ruin: new `EchoDestroy`, the target with the most copies of theirs (less any of its own).
+    - Dance of the Skywise, Dragonshift: new `AnimateUpgradeAi` (`AILogic$ Upgrade`). Before attacking, the creature
+      gaining the most from becoming a 4/4 flyer; one with abilities of its own counts the loss.
+    - Feral Contest: `ForceBlock`. Flowstone Slide: `WipeX`. Gaea's Blessing: `GraveShuffle`. Indestructible Aura:
+      `PreventCombat`. Demonic Collusion: its tutor already had AI.
+    - Inner Struggle (`SelfDamage`): their creature whose own power kills it. Hubris (`BounceWithAuras`): their
+      creature worth bouncing with its Auras. Hatred (`PayLifePump`): exactly the life an unblocked attacker needs for
+      lethal, when the AI can spare it.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

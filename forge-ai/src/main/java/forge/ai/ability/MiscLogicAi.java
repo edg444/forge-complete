@@ -44,7 +44,8 @@ public final class MiscLogicAi {
 
     public static boolean handles(final String logic) {
         return "BounceBoth".equals(logic) || "GraveShuffle".equals(logic) || "RemoveCombatant".equals(logic) || "CashIn".equals(logic)
-                || "WipeWithSub".equals(logic) || "RecycleForDamage".equals(logic) || "EchoDestroy".equals(logic);
+                || "WipeWithSub".equals(logic) || "RecycleForDamage".equals(logic) || "EchoDestroy".equals(logic)
+                || "SelfDamage".equals(logic) || "BounceWithAuras".equals(logic) || "PayLifePump".equals(logic);
     }
 
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
@@ -55,6 +56,9 @@ public final class MiscLogicAi {
             case "WipeWithSub" -> wipeWithSub(ai, sa);
             case "RecycleForDamage" -> recycleForDamage(ai, sa);
             case "EchoDestroy" -> echoDestroy(ai, sa);
+            case "SelfDamage" -> selfDamage(ai, sa);
+            case "BounceWithAuras" -> bounceWithAuras(ai, sa);
+            case "PayLifePump" -> payLifePump(ai, sa);
             default -> cashIn(ai, sa);
         };
     }
@@ -345,6 +349,79 @@ public final class MiscLogicAi {
         }
         sa.getTargets().add(bestT);
         return yes();
+    }
+
+    // ---- Inner Struggle: a creature deals its power to itself ----
+
+    private static AiAbilityDecision selfDamage(final Player ai, final SpellAbility sa) {
+        if (!sa.usesTargeting()) {
+            return no();
+        }
+        sa.resetTargets();
+        final Card t = ComputerUtilCard.getBestCreatureAI(CardLists.filter(CardUtil.getValidCardsToTarget(sa),
+                c -> c.getController().isOpponentOf(ai) && c.getNetPower() >= c.getLethalDamage() && c.canBeDestroyed()));
+        if (t == null) {
+            return no();
+        }
+        sa.getTargets().add(t);
+        return yes();
+    }
+
+    // ---- Hubris: a creature and its Auras back to hand ----
+
+    private static AiAbilityDecision bounceWithAuras(final Player ai, final SpellAbility sa) {
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        if (!sa.usesTargeting() || !ai.getGame().getStack().isEmpty()
+                || !(ph.isPlayerTurn(ai) && ph.is(PhaseType.MAIN1)) && !(ph.is(PhaseType.END_OF_TURN) && ph.getNextTurn().equals(ai))) {
+            return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
+        }
+        sa.resetTargets();
+        Card best = null;
+        int bestV = 0;
+        for (final Card c : CardUtil.getValidCardsToTarget(sa)) {
+            if (!c.getController().isOpponentOf(ai)) {
+                continue;
+            }
+            int v = theirBounce(c);
+            for (final Card a : c.getAttachedCards()) {
+                // their own Auras on it go back too
+                v += a.getController().isOpponentOf(ai) ? 40 : -20;
+            }
+            if (v > bestV) {
+                bestV = v;
+                best = c;
+            }
+        }
+        if (best == null || bestV < 120) {
+            return no();
+        }
+        sa.getTargets().add(best);
+        return yes();
+    }
+
+    // ---- Hatred: X life for +X/+0 on an unblocked attacker, just what makes the attack lethal ----
+
+    private static AiAbilityDecision payLifePump(final Player ai, final SpellAbility sa) {
+        final Combat combat = ai.getGame().getCombat();
+        if (combat == null || !ai.equals(combat.getAttackingPlayer()) || !ai.getGame().getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS)
+                || !sa.usesTargeting()) {
+            return new AiAbilityDecision(0, AiPlayDecision.WaitForCombat);
+        }
+        sa.resetTargets();
+        for (final Card att : combat.getAttackers()) {
+            final Player def = combat.getDefenderPlayerByAttacker(att);
+            if (def == null || !combat.isUnblocked(att) || !sa.canTarget(att) || !def.canLoseLife() || def.cantLoseForZeroOrLessLife()) {
+                continue;
+            }
+            final int coming = ComputerUtilCombat.sumDamageIfUnblocked(CardLists.filter(combat.getAttackers(), combat::isUnblocked), def);
+            final int x = def.getLife() - coming;
+            if (x > 0 && ai.getLife() > x + 2) {
+                sa.setXManaCostPaid(x);
+                sa.getTargets().add(att);
+                return yes();
+            }
+        }
+        return no();
     }
 
     // ---- verse counters ----

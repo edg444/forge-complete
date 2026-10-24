@@ -365,6 +365,9 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         if ("DiscardForX".equals(logic)) {
             return forge.ai.ability.DiscardForXAi.decide(ai, sa);
         }
+        if ("Upgrade".equals(logic)) {
+            return forge.ai.ability.AnimateUpgradeAi.decide(ai, sa);
+        }
 
         return null;
     }
