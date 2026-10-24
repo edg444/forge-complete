@@ -6,10 +6,12 @@ K:Flying
 K:Trample
 T:Mode$ SpellCast | ValidActivatingPlayer$ Opponent | TriggerZones$ Battlefield | Execute$ TrigToken | TriggerDescription$ Whenever an opponent casts a spell, that player creates a Blood token. (It's an artifact with "{1}, {T}, Discard a card, Sacrifice this token: Draw a card.")
 SVar:TrigToken:DB$ Token | TokenScript$ c_a_blood_draw | TokenOwner$ TriggeredActivator
-T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | TriggerDescription$ Whenever this creature attacks, it gets +1/+0 until end of turn for each Blood token defending player controls.
-SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +X | ConditionDefined$ Self | ConditionPresent$ Card.Self+!PrintedTextActive | SubAbility$ DBPrintedPump
-# R&D's Secret Lair: printed text left off "until end of turn", so the buff sticks
-SVar:DBPrintedPump:DB$ Pump | Defined$ Self | NumAtt$ +X | Duration$ Permanent | ConditionDefined$ Self | ConditionPresent$ Card.Self+PrintedTextActive
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPump | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20220129 | TriggerDescription$ Whenever this creature attacks, it gets +1/+0 until end of turn for each Blood token defending player controls.
+SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +X
+# R&D's Secret Lair: its printings (Innistrad: Crimson Vow's and Double Feature's) leave off "until end of turn", so
+# the buff sticks
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigPumpPrinted | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20220129 | TriggerDescription$ (As printed) Whenever CARDNAME attacks, it gets +1/+0 for each Blood token defending player controls.
+SVar:TrigPumpPrinted:DB$ Pump | Defined$ Self | NumAtt$ +X | Duration$ Permanent
 SVar:X:Count$Valid Blood.token+DefenderCtrl
 SVar:HasAttackEffect:TRUE
 Oracle:Flying, trample\nWhenever an opponent casts a spell, that player creates a Blood token. (It's an artifact with "{1}, {T}, Discard a card, Sacrifice this token: Draw a card.")\nWhenever this creature attacks, it gets +1/+0 until end of turn for each Blood token defending player controls.

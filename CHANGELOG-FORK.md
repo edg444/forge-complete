@@ -1528,6 +1528,24 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Left as Oracle: Siphon Insight's printed "look at and play" (you looked at the card before exiling it face down,
     so CR 406.3 already lets you keep looking),
     Florian's "your postcombat main phase" (every postcombat main phase is one).
+- **Set review: Crimson Vow Commander** (38 new names): no changes.
+- **Set review: Innistrad: Crimson Vow and its Promos** (253 new names, `CrimsonVowNeonDynastyAuditTest`):
+  - Fixed: *Boarded Window* exiled itself after 4 life lost, not 4 damage dealt to you.
+  - R&D's Secret Lair: *Cruel Witness* (before Foundations Jumpstart) says "look at the top card" instead of
+    "surveil 1", so surveil triggers don't see it (Think Tank precedent); *Bloodvial Purveyor*'s printed version
+    (no "until end of turn" on its printings, so the buff sticks) is now its own "(As printed)" trigger with a
+    printing cutoff.
+  - In-game text: *Alchemist's Gambit* was missing "During that turn, damage can't be prevented."; *Alchemist's
+    Gambit*, *Lunar Rejection* and *Parasitic Grasp* repeated their last sentence on the cleave line; *Chill of the
+    Grave* described its untap clause twice; *Henrika*'s spacing.
+- **Set review: 2021 Heroes of the Realm** (4 new names): no changes.
+- **Set review: Neon Dynasty Commander** (38 new names): *Kappa Cannoneer*'s Oracle wording ("this creature or another
+  artifact").
+- **Set review: Kamigawa: Neon Dynasty and its Promos** (267 new names, `CrimsonVowNeonDynastyAuditTest`):
+  - Fixed: *Kaito Shizuki* phased out at every end step, not just yours; *Satsuki*'s second mode could return a Saga
+    from any graveyard; *Storyweave*'s extra counters went on any player's enchantment creatures.
+  - In-game text: *March of Reckless Joy* described its play permission twice; *Shigeki*'s "Return Shigeki";
+    *Kappa Tech-Wrecker*'s prompt.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

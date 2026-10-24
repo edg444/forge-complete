@@ -3,8 +3,12 @@ ManaCost:2 U U
 Types:Creature Bird Horror
 PT:3/3
 K:Flying
-T:Mode$ SpellCast | ValidCard$ Card.nonCreature | ValidActivatingPlayer$ You | Execute$ TrigSurveil | TriggerZones$ Battlefield | TriggerDescription$ Whenever you cast a noncreature spell, surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)
+T:Mode$ SpellCast | ValidCard$ Card.nonCreature | ValidActivatingPlayer$ You | Execute$ TrigSurveil | TriggerZones$ Battlefield | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20241115 | TriggerDescription$ Whenever you cast a noncreature spell, surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)
 SVar:TrigSurveil:DB$ Surveil | Amount$ 1
+# R&D's Secret Lair: printings before Foundations Jumpstart's say "look at the top card" instead of "surveil 1", so
+# surveil triggers don't see them (Think Tank precedent).
+T:Mode$ SpellCast | ValidCard$ Card.nonCreature | ValidActivatingPlayer$ You | Execute$ TrigLookPrinted | TriggerZones$ Battlefield | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20241115 | TriggerDescription$ (As printed) Whenever you cast a noncreature spell, look at the top card of your library. You may put that card into your graveyard.
+SVar:TrigLookPrinted:DB$ Dig | DigNum$ 1 | ChangeNum$ Any | DestinationZone$ Graveyard | LibraryPosition2$ 0 | NoReveal$ True
 SVar:BuffedBy:Card.nonLand+nonCreature
 DeckHas:Ability$Surveil|Graveyard
 Oracle:Flying\nWhenever you cast a noncreature spell, surveil 1. (Look at the top card of your library. You may put it into your graveyard.)
