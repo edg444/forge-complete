@@ -356,6 +356,12 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         if ("Cantrip".equals(logic)) {
             return forge.ai.ability.CantripAi.decide(ai, sa);
         }
+        if (forge.ai.ability.MiscLogicAi.handles(logic)) {
+            return forge.ai.ability.MiscLogicAi.decide(ai, sa);
+        }
+        if (forge.ai.ability.XChoiceAi.handles(logic)) {
+            return forge.ai.ability.XChoiceAi.decide(ai, sa);
+        }
 
         return null;
     }

@@ -775,6 +775,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       that card.
     - `AILogic$ ExileForX` (Chill Haunting, Harvest Pyre, Haunting Misery): X is what the kill takes (lethal damage, or
       the target's toughness for -X/-X), or lethal or a real chunk to a player, up to the cards its graveyard can spare.
+  - *Smaller clusters* (`NoAiMiscLogicTest`, `NoAiXChoiceTest`): new `MiscLogicAi` and `XChoiceAi`.
+    - `AILogic$ BounceBoth` (Peel from Reality, Rite of Undoing, Run Away Together): its own permanent that's about to
+      be destroyed (or has an enters trigger) and their best one; tokens of its own never.
+    - `AILogic$ GraveShuffle` (Krosan Reclamation, Memory's Journey, Stream of Consciousness): their flashback and other
+      graveyard-castable cards and big reanimation targets, or its own cards when its library is nearly gone.
+    - `AILogic$ RemoveCombatant` (Labyrinth of Skophos, Reconnaissance): once blocks are known, their biggest attacker,
+      a blocker that would kill its attacker, or its own attacker that would die without trading.
+    - `AILogic$ CashIn` (Midsummer Revel, Recantation, Rumbling Crescendo): sacrificed at three verse counters (two
+      when in danger), on the opponent's best permanents.
+    - `AILogic$ StealX` (Dominate, Entrancing Melody): X is the mana value of the best creature of theirs it can pay
+      for.
+    - `AILogic$ WipeX` (Forced March, Gaze of Granite): every affordable X is tried, and the lowest X with the best
+      result for the two sides is chosen.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).
