@@ -4,6 +4,7 @@ import forge.ai.*;
 import forge.game.Game;
 import forge.game.GameObject;
 import forge.game.ability.AbilityUtils;
+import forge.game.ability.ApiType;
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
 import forge.game.card.CardLists;
@@ -47,6 +48,19 @@ public class PumpAllAi extends PumpAiBase {
             }
         }
         
+        if (PumpAi.isPlainSwitch(sa)) {
+            // Mannichi: worth it when it kills more of theirs than ours (new toughness = old power)
+            int value = 0;
+            for (Card c : CardLists.getValidCards(game.getCardsIn(ZoneType.Battlefield), sa.getParamOrDefault("ValidCards", ""),
+                    source.getController(), source, sa)) {
+                if (c.isCreature() && c.getNetPower() != c.getNetToughness() && (c.getNetPower() <= 0
+                        || (c.getDamage() >= c.getNetPower() && !c.hasKeyword(Keyword.INDESTRUCTIBLE)))) {
+                    value += (c.getController().isOpponentOf(ai) ? 1 : -1) * ComputerUtilCard.evaluateCreature(c);
+                }
+            }
+            return value > 0 ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+
         final Player opp = ai.getStrongestOpponent();
 
         if (sa.usesTargeting()) {
@@ -130,6 +144,17 @@ public class PumpAllAi extends PumpAiBase {
 
         boolean result = ai.getCreaturesInPlay().anyMatch(c -> c.isValid(valid, source.getController(), source, sa)
                 && ComputerUtilCard.shouldPumpCard(ai, sa, c, defense, power, keywords));
+        if (!result && combat != null && game.getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS)
+                && keywords.stream().anyMatch(k -> k.startsWith("Afterlife"))) {
+            // Afterlife Insurance: a token for each of its creatures about to die in this combat
+            result = comp.anyMatch(c -> (combat.isAttacking(c) || combat.isBlocking(c))
+                    && ComputerUtilCombat.combatantWouldBeDestroyed(ai, c, combat));
+        }
+        if (!result && sa.findSubAbilityByType(ApiType.Draw) != null && game.getPhaseHandler().is(PhaseType.END_OF_TURN)
+                && game.getPhaseHandler().getNextTurn().equals(ai)) {
+            // with a cantrip attached it can just be cycled at the end of the opponent's turn
+            result = true;
+        }
         return result ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
     }
 

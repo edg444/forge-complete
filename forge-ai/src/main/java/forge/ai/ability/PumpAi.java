@@ -8,6 +8,7 @@ import forge.game.Game;
 import forge.game.ability.AbilityUtils;
 import forge.game.ability.ApiType;
 import forge.game.card.*;
+import forge.game.combat.Combat;
 import forge.game.combat.CombatUtil;
 import forge.game.cost.Cost;
 import forge.game.cost.CostRemoveCounterYou;
@@ -53,12 +54,6 @@ public class PumpAi extends PumpAiBase {
             return SpecialAiLogic.doAristocratLogic(ai, sa);
         } else if (aiLogic.startsWith("AristocratCounters")) {
             return SpecialAiLogic.doAristocratWithCountersLogic(ai, sa).willingToPlay();
-        } else if (aiLogic.equals("SwitchPT")) {
-            // Some more AI would be even better, but this is a good start to prevent spamming
-            if (sa.isActivatedAbility() && sa.getActivationsThisTurn() > 0 && !sa.usesTargeting()) {
-                // Will prevent flipping back and forth
-                return false;
-            }
         }
 
         return super.checkAiLogic(ai, sa, aiLogic);
@@ -67,6 +62,9 @@ public class PumpAi extends PumpAiBase {
     @Override
     protected boolean checkPhaseRestrictions(final Player ai, final SpellAbility sa, final PhaseHandler ph,
                                              final String logic) {
+        if (isPlainSwitch(sa)) {
+            return true;
+        }
         // special Phase check for various AI logics
         if (logic.equals("MoveCounter")) {
             if (ph.inCombat() && ph.getPlayerTurn().isOpponentOf(ai)) {
@@ -79,11 +77,6 @@ public class PumpAi extends PumpAiBase {
             if (!ph.is(PhaseType.COMBAT_DECLARE_BLOCKERS) && !isThreatened) {
                 return false;
             }
-        } else if (logic.equals("SwitchPT")) {
-            // Some more AI would be even better, but this is a good start to prevent spamming
-            if (ph.getPhase().isAfter(PhaseType.COMBAT_FIRST_STRIKE_DAMAGE) || !ph.inCombat()) {
-                return false;
-            }
         }
         return super.checkPhaseRestrictions(ai, sa, ph);
     }
@@ -91,6 +84,10 @@ public class PumpAi extends PumpAiBase {
     @Override
     protected boolean checkPhaseRestrictions(final Player ai, final SpellAbility sa, final PhaseHandler ph) {
         final Game game = ai.getGame();
+        if (isPlainSwitch(sa)) {
+            // switchPT picks its own moment: a kill works any time, a combat switch only once blocks are known
+            return true;
+        }
         if (game.getStack().isEmpty()) {
             boolean isBeforeMyAttack = ph.getPhase().isBefore(PhaseType.COMBAT_DECLARE_ATTACKERS) && ph.isPlayerTurn(ai);
             boolean isBeforeOppCombat = ph.getPhase().isBefore(PhaseType.COMBAT_BEGIN) && ph.getPlayerTurn().isOpponentOf(ai);
@@ -129,6 +126,14 @@ public class PumpAi extends PumpAiBase {
 
         final boolean isFight = "Fight".equals(aiLogic) || "PowerDmg".equals(aiLogic);
         final boolean isBerserk = "Berserk".equals(aiLogic);
+
+        if (isPlainSwitch(sa)) {
+            if (!game.getStack().isEmpty()) {
+                return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
+            }
+            return switchPT(ai, sa, false) ? new AiAbilityDecision(100, AiPlayDecision.WillPlay)
+                    : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
 
         if ("Pummeler".equals(aiLogic)) {
             return SpecialCardAi.ElectrostaticPummeler.consider(ai, sa);
@@ -634,6 +639,10 @@ public class PumpAi extends PumpAiBase {
 
     @Override
     protected AiAbilityDecision doTriggerNoCost(Player ai, SpellAbility sa, boolean mandatory) {
+        if (isPlainSwitch(sa)) {
+            return switchPT(ai, sa, mandatory) ? new AiAbilityDecision(100, AiPlayDecision.WillPlay)
+                    : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
         final SpellAbility root = sa.getRootAbility();
         final String numDefense = sa.getParamOrDefault("NumDef", "");
         final String numAttack = sa.getParamOrDefault("NumAtt", "");
@@ -682,6 +691,136 @@ public class PumpAi extends PumpAiBase {
         }
 
         return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+    }
+
+    private static final String SWITCHED = "CARDNAME's power and toughness are switched";
+
+    // only the switch itself: a pump that also adds +N/+N or other keywords goes through the regular logic
+    static boolean isPlainSwitch(final SpellAbility sa) {
+        return ("HIDDEN " + SWITCHED).equals(sa.getParam("KW")) && !sa.hasParam("NumAtt") && !sa.hasParam("NumDef");
+    }
+
+    // About Face, Crag Puca, Twisted Image...
+    private boolean switchPT(final Player ai, final SpellAbility sa, final boolean mandatory) {
+        final Game game = ai.getGame();
+        final PhaseHandler ph = game.getPhaseHandler();
+        final Card source = sa.getHostCard();
+        if (!sa.usesTargeting()) {
+            for (final Card c : AbilityUtils.getDefinedCards(source, sa.getParam("Defined"), sa)) {
+                // switching back the same turn only undoes the first activation
+                if (sa.isActivatedAbility() && c.getAmountOfKeyword(SWITCHED) % 2 != 0) {
+                    continue;
+                }
+                if (c.isCreature() && switchValue(ai, sa, c) > 0) {
+                    return true;
+                }
+            }
+            return mandatory;
+        }
+
+        sa.resetTargets();
+        final CardCollection options = CardLists.filter(CardLists.getTargetableCards(game.getCardsIn(ZoneType.Battlefield), sa),
+                CardPredicates.CREATURES);
+        final Map<Card, Integer> value = Maps.newHashMap();
+        for (final Card c : options) {
+            value.put(c, switchValue(ai, sa, c));
+        }
+        options.sort(Comparator.comparingInt((Card c) -> value.get(c)).reversed());
+        for (final Card c : options) {
+            if (!sa.canAddMoreTarget() || value.get(c) <= 0) {
+                break;
+            }
+            sa.getTargets().add(c);
+        }
+        if (sa.getTargets().isEmpty() && sa.isSpell() && sa.findSubAbilityByType(ApiType.Draw) != null
+                && (ph.is(PhaseType.MAIN2, ai) || (ph.is(PhaseType.END_OF_TURN) && ph.getNextTurn().equals(ai)))) {
+            // Twisted Image, Inside Out: on a creature whose power equals its toughness it's just a cantrip
+            Card noop = null;
+            for (final Card c : options) {
+                if (c.getNetPower() == c.getNetToughness() && (noop == null || !c.getController().isOpponentOf(ai))) {
+                    noop = c;
+                }
+            }
+            if (noop != null) {
+                sa.getTargets().add(noop);
+            }
+        }
+        if (mandatory) {
+            for (final Card c : options) {
+                if (sa.isMinTargetChosen()) {
+                    break;
+                }
+                if (!sa.getTargets().contains(c)) {
+                    sa.getTargets().add(c);
+                }
+            }
+            return sa.isMinTargetChosen();
+        }
+        return !sa.getTargets().isEmpty() && sa.isMinTargetChosen();
+    }
+
+    // what switching c's power and toughness right now is worth to the AI: positive helps, negative hurts
+    private static int switchValue(final Player ai, final SpellAbility sa, final Card c) {
+        final int power = c.getNetPower();
+        final int toughness = c.getNetToughness();
+        if (power == toughness) {
+            return 0;
+        }
+        final boolean ours = !c.getController().isOpponentOf(ai);
+        final int worth = ComputerUtilCard.evaluateCreature(c);
+        // the new toughness is the old power
+        if (power <= 0 || (c.getDamage() >= power && !c.hasKeyword(Keyword.INDESTRUCTIBLE))) {
+            return ours ? -worth : worth;
+        }
+        if (ours) {
+            return ComputerUtilCard.shouldPumpCard(ai, sa, c, power - toughness, toughness - power, Lists.newArrayList(), false)
+                    ? 1 + Math.abs(toughness - power) : 0;
+        }
+
+        final Game game = ai.getGame();
+        final Combat combat = game.getCombat();
+        if (combat == null || !game.getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS)) {
+            return 0;
+        }
+        final Player owner = c.getController();
+        final Card switched = ComputerUtilCard.getPumpedCreature(ai, sa, c, power - toughness, toughness - power, Lists.newArrayList());
+        final boolean diesAnyway = ComputerUtilCombat.combatantWouldBeDestroyed(owner, c, combat);
+        int saved = 0;
+        if (combat.isAttacking(c)) {
+            final CardCollection blockers = combat.getBlockers(c);
+            if (blockers.isEmpty()) {
+                return power > toughness && ComputerUtilCombat.lifeInDanger(ai, combat) ? power - toughness : 0;
+            }
+            // same artificial combat shouldPumpCard builds, since the copy isn't really in this one
+            final Combat after = new Combat(owner);
+            after.addAttacker(switched, ai);
+            for (final Card b : blockers) {
+                after.addBlocker(switched, b);
+            }
+            if (!diesAnyway && ComputerUtilCombat.attackerWouldBeDestroyed(owner, switched, after)) {
+                return worth;
+            }
+            for (final Card b : blockers) {
+                if (ComputerUtilCombat.blockerWouldBeDestroyed(ai, b, combat) && !ComputerUtilCombat.blockerWouldBeDestroyed(ai, b, after)) {
+                    saved += ComputerUtilCard.evaluateCreature(b);
+                }
+            }
+        } else if (combat.isBlocking(c)) {
+            final Combat after = new Combat(ai);
+            for (final Card a : combat.getAttackersBlockedBy(c)) {
+                after.addAttacker(a, owner);
+                after.addBlocker(a, switched);
+            }
+            if (!diesAnyway && ComputerUtilCombat.blockerWouldBeDestroyed(owner, switched, after)) {
+                return worth;
+            }
+            for (final Card a : combat.getAttackersBlockedBy(c)) {
+                if (ComputerUtilCombat.attackerWouldBeDestroyed(ai, a, combat) && !ComputerUtilCombat.attackerWouldBeDestroyed(ai, a, after)) {
+                    saved += ComputerUtilCard.evaluateCreature(a);
+                }
+            }
+        }
+        return saved;
     }
 
     // -X/-X where X is read off the target itself (Capital Offense, Flunk): before a target is

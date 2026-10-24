@@ -7,5 +7,4 @@ SVar:DBReveal:DB$ Reveal | RevealValid$ Card.Artifact+YouCtrl | AnyNumber$ True 
 SVar:DBPutCounters:DB$ PutCounter | ETB$ True | Defined$ Self | CounterType$ P1P1 | CounterNum$ X | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Amount
-AI:RemoveDeck:All
 Oracle:As this creature enters, you may reveal any number of other artifact cards from your hand. This creature enters with a +1/+1 counter on it for each card revealed this way.

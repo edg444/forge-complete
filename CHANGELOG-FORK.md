@@ -555,6 +555,77 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   Futurescribe*, *Ghalta the Immovable* and *Karn, Argent Defender*.
 - **Set review: Reality Fracture Commander** (18 new names): "Sacrifice Ginger".
 
+- **AI for cards marked `AI:RemoveDeck:All`** (2,510 at the start, list and probe in `_tools/noai-audit`). The flag
+  keeps a card out of AI decks and makes `AiController` skip every spell and ability it has, so the AI never used
+  these at all. Each card below now has AI that uses it sensibly, and its flag is gone.
+  - *Switching power and toughness* (`SwitchPowerToughnessAiTest`): About Face, Aquamoeba, Calcite Snapper, Crag
+    Puca, Crookclaw Transmuter, Dwarven Thaumaturgist, Fluxcharger, Inside Out, Mannichi, the Fevered Dream,
+    Merfolk Thaumaturgist, Myr Quadropod, Strange Inversion, Transmutation, Turtleshell Changeling, Twisted Image.
+    `PumpAi` now treats a plain switch as its own effect: it kills a creature whose power is 0 or no more than its
+    damage, switches combatants when that saves or kills one (or adds lethal damage), cycles the cantrip switches
+    on a creature whose power equals its toughness, and won't switch a self-switcher back the same turn. Mass
+    switching (Mannichi) goes off when it kills more of the opponent's creatures than the AI's. This replaces the
+    old `AILogic$ SwitchPT`, which only limited the switch to combat.
+  - *A, part 1* (`NoAiBatch02Test`):
+    - Thran Portal (and A-): a basic land type chosen with no `AILogic` is now the color the AI's own spells use the
+      most (it was always Island).
+    - Alrund, God of the Cosmos (and A-): a card type chosen for a reveal-from-library effect is the type the library
+      holds the most of.
+    - Abundance, Abundant Harvest: new `AILogic$ LandOrNonland` takes a land while the AI has none in hand and is
+      short of mana for its hand, otherwise a spell.
+    - Acidic Soil: new RepeatEach `AILogic$ EachPlayerHurt` works out each player's damage or life loss and casts it
+      when the opponents take more and the AI stays out of danger, or when it's lethal.
+    - Ad Nauseam: new `AILogic$ AdNauseam` casts it at the end of the opponent's turn and keeps revealing while even
+      the costliest card left in the library can't drop the AI below 5 life (the AI used to stop after one card).
+    - Acorn Catapult: damage that hands the player a token only goes face for the kill.
+    - Adarkar Windform (and any "loses flying" debuff): only before blocks, on an attacker the AI can then block or a
+      flyer that could block the AI's flying attackers.
+    - Act of Authority: its upkeep exile only takes an opponent's permanent of mana value 3 or more, since the AI
+      gives the enchantment away for it.
+    - Act on Impulse, Adanto Vanguard, Aeon Chronicler, Aether Tide, Aethermage's Touch: the existing AI already
+      plays them sensibly.
+  - *A, part 2* (`NoAiBatch03Test`):
+    - Akroma's Blessing, Brave the Elements: the color-choice-then-protection spells wait for blocks and go off when
+      the protection saves one of the AI's blockers (they used to be cast any time).
+    - Alchemist's Gambit: an extra turn that ends in a loss is only taken when the AI's creatures could deal lethal
+      damage on it (one opposing creature stopping one attacker); the cleave version is unchanged.
+    - Afterlife Insurance: a mass afterlife pump goes off when the AI's creatures are about to die in combat, and any
+      mass pump with a draw attached can be cycled at the end of the opponent's turn.
+    - Al-abara's Carpet: plays as a Fog, but only when an unblocked attacker without flying is coming at the AI.
+    - Amber Prison, Deserter's Quarters, Phyrexian Gremlins, Sand Squid: a card that "may choose not to untap" now stays
+      tapped while its own "for as long as it remains tapped" effect still holds an opponent's permanent (the AI
+      always untapped, freeing it at once).
+    - Airdrop Condor, Barrage Tyrant, Bloodshot Cyclops, Final Strike, Freyalise Supplicant: damage equal to the
+      sacrificed creature's power is worked out from the creature the AI would sacrifice (it read as 0 before the
+      cost was paid, so the AI never used them); a creature the AI wouldn't give up anyway has to buy lethal or a kill
+      worth more than itself.
+    - Altar of Dementia: a mill by sacrifice goes off whenever a creature is dying anyway (the sacrifice check lets
+      only those go), aimed at the opponent.
+    - Agent of Shauku, Akki Avalanchers: the existing sacrifice check only gives up a land the AI doesn't need, and the
+      pump logic decides the rest. Agent of Stromgald, Akoum Flameseeker, Alchemist's Apprentice: the existing AI
+      already plays them sensibly. Amoeboid Changeling: unflagged as a changeling body (its type-changing abilities
+      are never activated).
+  - *A, part 3* (`NoAiBatch04Test`, `NoAiBatch05Test`):
+    - Aphetto Dredging (and Selective Snare): a creature type announced as the spell is cast is now picked by the AI
+      before it chooses targets (nothing announced it, so there was never a legal target); Aphetto Dredging also
+      wants at least two creatures back (`AIMinTgts$ 2`).
+    - Archon of Valor's Reach: "players can't cast spells of the chosen type" names the type the opponents have
+      shown the most of against what the AI's own deck uses (it was a random pick).
+    - Argent Mutation: a spell that only adds a type until end of turn and draws a card is cycled at the end of the
+      opponent's turn on one of the AI's own permanents.
+    - Ashling the Pilgrim: new `AILogic$ Ashling` stops at two activations a turn unless the third one's blast is
+      lethal to the opponent and not to the AI.
+    - Artillerize: any damage ability with a sacrifice-one cost now works out what the AI would sacrifice, and a
+      creature or artifact it wouldn't give up anyway still goes for lethal or a kill worth more than itself.
+    - Ancient Spring, Geothermal Crevice, Irrigation Ditch, Sulfur Vent, Tinder Farm: the AI's mana payment already
+      saves a sacrifice-for-two-colors ability for last.
+    - An-Havva Township, Anaba Ancestor, Angel of Salvation (its existing ambush flash logic), Animation Module,
+      Aphetto Alchemist, Aphetto Grifter, Arcane Spyglass, Arcum's Astrolabe, Arcum's Sleigh, Armor of Thorns,
+      Arsenal Thresher, Ashling's Prerogative, Ashnod's Cylix, Astral Slide, Astrolabe, Atalya, Samite Master,
+      Auriok Transfixer, Aurora Eidolon, Avarice Totem, Aven Liberator, Aven Windreader, Awe for the Guilds, Axis of
+      Mortality: the existing AI already plays them sensibly. Autumn Willow, Avacyn, Guardian Angel: unflagged for
+      their bodies (their abilities are never activated).
+
 ### 2026-10-24, seventeenth deploy (desktop, Android, GitHub) — set review LEA through Phyrexia: All Will Be One (R&D's Secret Lair printed text); Reality Fracture echoed pairs; Battlebond partners; 6-commit upstream merge
 
 - **Reality Fracture play boosters deal real echoed pairs** (`RealityFractureEchoedPairsTest`). Upstream's three

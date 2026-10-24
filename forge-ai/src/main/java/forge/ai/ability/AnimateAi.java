@@ -110,6 +110,10 @@ public class AnimateAi extends SpellAbilityAi {
                 }
             }
         }
+        if (sa.usesTargeting() && isHarmlessCantrip(sa)) {
+            // checkApiLogic falls back to cycling it at the end of the opponent's turn
+            return true;
+        }
         // Don't use instant speed animate abilities before AI's COMBAT_BEGIN
         if (!ph.is(PhaseType.COMBAT_BEGIN) && ph.isPlayerTurn(ai) && !isSorcerySpeed(sa, ai)
                 && !sa.hasParam("ActivationPhases") && !"Permanent".equals(sa.getParam("Duration"))) {
@@ -164,7 +168,19 @@ public class AnimateAi extends SpellAbilityAi {
 
         if (sa.usesTargeting()) {
             sa.resetTargets();
-            return animateTgtAI(sa);
+            final AiAbilityDecision decision = animateTgtAI(sa);
+            if (!decision.willingToPlay() && isHarmlessCantrip(sa) && ph.is(PhaseType.END_OF_TURN)
+                    && ph.getNextTurn().equals(aiPlayer)) {
+                // Argent Mutation: only adds a type for the turn, so at worst it cycles on one of the AI's own permanents
+                final CardCollection own = CardLists.filterControlledBy(
+                        CardLists.getTargetableCards(game.getCardsIn(ZoneType.Battlefield), sa), aiPlayer);
+                if (!own.isEmpty()) {
+                    sa.resetTargets();
+                    sa.getTargets().add(ComputerUtilCard.getCheapestPermanentAI(own, sa, false));
+                    return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+                }
+            }
+            return decision;
         }
 
         final List<Card> defined = AbilityUtils.getDefinedCards(source, sa.getParam("Defined"), sa);
@@ -240,6 +256,14 @@ public class AnimateAi extends SpellAbilityAi {
         }
 
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    // a spell that just adds a type until end of turn and draws a card
+    private static boolean isHarmlessCantrip(final SpellAbility sa) {
+        return sa.isSpell() && !sa.isCurse() && sa.findSubAbilityByType(ApiType.Draw) != null && sa.hasParam("Types")
+                && !sa.hasParam("Duration") && !sa.hasParam("Power") && !sa.hasParam("Toughness") && !sa.hasParam("RemoveTypes")
+                && !sa.hasParam("RemoveCreatureTypes") && !sa.hasParam("RemoveKeywords") && !sa.hasParam("RemoveAllAbilities")
+                && !sa.getParam("Types").contains("Creature");
     }
 
     // an effect that only sets P/T can shrink the AI's own creature

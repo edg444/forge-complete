@@ -217,6 +217,16 @@ public class CountersPutAi extends CountersAi {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
 
+        if ("Ashling".equals(logic) && sa.getActivationsThisTurn() >= 2) {
+            // Ashling the Pilgrim: the third time in a turn it deals damage equal to its counters to every creature and
+            // player, itself included - only for the win
+            final int x = source.getCounters(CounterEnumType.P1P1) + 1;
+            final Player opp = ai.getWeakestOpponent();
+            if (opp == null || !opp.canLoseLife() || x < opp.getLife() || x >= ai.getLife()) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            }
+        }
+
         if ("AlwaysWithNoTgt".equals(logic)) {
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         } else if ("AristocratCounters".equals(logic)) {

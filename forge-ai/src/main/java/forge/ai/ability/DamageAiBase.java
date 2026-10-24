@@ -4,6 +4,8 @@ import forge.ai.ComputerUtil;
 import forge.ai.ComputerUtilCombat;
 import forge.ai.SpellAbilityAi;
 import forge.game.Game;
+import forge.game.ability.AbilityUtils;
+import forge.game.ability.ApiType;
 import forge.game.card.Card;
 import forge.game.card.CardCollectionView;
 import forge.game.keyword.Keyword;
@@ -38,6 +40,12 @@ public abstract class DamageAiBase extends SpellAbilityAi {
             if (comp.getLife() * 0.75 < enemy.getLife()) {
                 return !lifelink;
             }
+        }
+        // Acorn Catapult: the player it hits gets a token, so only go face for the kill
+        final SpellAbility token = sa.findSubAbilityByType(ApiType.Token);
+        if (token != null && "TargetedOrController".equals(token.getParam("TokenOwner")) && sa.hasParam("NumDmg")
+                && AbilityUtils.calculateAmount(hostcard, sa.getParam("NumDmg"), sa) < enemy.getLife()) {
+            return true;
         }
         return false;
     }
