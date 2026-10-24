@@ -3325,7 +3325,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.startsWith("Class") || keyword.startsWith("Blitz") || keyword.startsWith("Web-slinging")
                         || keyword.startsWith("Specialize") || keyword.equals("Ravenous") || keyword.startsWith("Firebending")
                         || keyword.equals("For Mirrodin") || keyword.equals("Job select") || keyword.startsWith("Craft")
-                        || keyword.startsWith("Landwalk") || keyword.startsWith("Visit") || keyword.startsWith("Mobilize")
+                        || keyword.startsWith("Landwalk") || keyword.startsWith("Visit") || keyword.startsWith("Prize") || keyword.startsWith("Mobilize")
                         || keyword.startsWith("Station") || keyword.startsWith("Warp") || keyword.startsWith("Devour")
                         || keyword.startsWith("Affinity") || keyword.startsWith("Augment")) {
                     // keyword parsing takes care of adding a proper description
@@ -3372,7 +3372,15 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                     // MustBeBlockedByAll:<valid>:<description> - only the description is card text
                     sbLong.append(CardFactoryUtil.keywordAsPrinted(keyword.split(":", 3)[2], state)).append("\r\n");
                 } else if (keyword.endsWith(".")) {
-                    sbLong.append(CardFactoryUtil.keywordAsPrinted(keyword, state)).append("\r\n");
+                    sbLong.append(CardFactoryUtil.keywordAsPrinted(keyword, state));
+                    // what happens when it's left tapped is part of the same ability (Grand Marshal Macie)
+                    if (keyword.startsWith("You may choose not to untap") && hasSVar("NotUntapped")) {
+                        final String notUntapped = AbilityFactory.getMapParams(getSVar("NotUntapped")).get("SpellDescription");
+                        if (notUntapped != null) {
+                            sbLong.append(" ").append(notUntapped);
+                        }
+                    }
+                    sbLong.append("\r\n");
                 } else {
                     if (keyword.contains("Strike")) {
                         keyword = keyword.replace("Strike", "strike");
@@ -3579,6 +3587,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                     String additionalDesc = "";
                     if (first.hasParam("AdditionalDesc")) {
                         additionalDesc = first.getParam("AdditionalDesc");
+                    }
+                    if (first.hasParam("PrecostDesc")) {
+                        sb.append(first.getParam("PrecostDesc")).append(" ");
                     }
                     sb.append(first.hasParam("CostDesc") ? first.getParam("CostDesc") : cost.toString().replace("\n", ""));
                     sb.append(" ").append(additionalDesc);

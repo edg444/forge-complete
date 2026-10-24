@@ -2,7 +2,7 @@ Name:Costume Shop
 ManaCost:no cost
 Types:Artifact Attraction
 K:Visit:TrigSticker
-SVar:TrigSticker:DB$ PutSticker | Choices$ Permanent.nonLand+YouOwn | ChoiceTitle$ Choose a nonland permanent you own | Optional$ True | SpellDescription$ Visit — You may put a sticker on a nonland permanent you own.
+SVar:TrigSticker:DB$ PutSticker | Choices$ Permanent.nonLand+YouOwn | ChoiceTitle$ Choose a nonland permanent you own | Optional$ True | SpellDescription$ You may put a sticker on a nonland permanent you own.
 Oracle:Visit — You may put a sticker on a nonland permanent you own.
 
 # --- VARIANTS ---

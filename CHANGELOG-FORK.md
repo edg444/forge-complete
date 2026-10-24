@@ -1597,6 +1597,34 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Left as Oracle: *Argivian Phalanx*'s spelled-out affinity, Sagas' printed self-references, *Yotia Declares War*'s
     "becomes a creature", *Najal*'s "when you cast your next".
 - **Set review: Dominaria United Jumpstart Front Cards** (10 new names): theme cards, not game pieces; not in Forge.
+- **Set review: Warhammer 40,000 Commander** (168 new names, `Warhammer40kUnfinityAuditTest`):
+  - R&D's Secret Lair: *Triumph of Saint Katherine*'s printing says "dies", so it also shuffles itself back when it
+    dies under another player's control; *Canoptek Wraith*'s printing searches for basics with the same name as any
+    land you control (two different names allowed) instead of one chosen land.
+  - In-game text: *Tyranid Invasion* had no text; *Sautekh Immortal*'s etbCounter had its description in the condition
+    slot (now "Elite Troops — ..."; *Bringer of Green Zenith's Twilight* had a lowercase "no condition" there too);
+    *Hierophant Bio-Titan*'s "Frenzied Metabolism — ... you may remove any number of ..." (permanent spells' extra costs
+    now show their ability word) and keyword order; "another creature" (*Illuminor Szeras*).
+  - Left as Oracle: *Reaver Titan*'s "Void Shields" ability word (a keyword can't carry one), *Bloodthirster*'s
+    "After this phase", *Canoptek Wraith*'s and Vehicles' printed self-references.
+- **Set review: Unfinity Sticker Sheets** (48 new names): no changes (every sticker checked against Scryfall).
+- **Set review: Unfinity Tokens** (1 new name): *Ticket Bucket-Bot* holds ticket counters in paper; Forge keeps them on
+  the player, so it isn't in Forge.
+- **Set review: Unfinity** (249 new names, `Warhammer40kUnfinityAuditTest`):
+  - R&D's Secret Lair: *Captain Rex Nebula*'s printings have Crash Land deal its damage before the Vehicle is sacrificed,
+    so that damage can trigger Crash Land again.
+  - In-game text: Attractions no longer show a raw "Prize:TrigPrize" line, and five no longer read "Visit — Visit —"
+    (*Bumper Cars*, *Costume Shop*, *Ferris Wheel*, *Gallery of Legends*, *Swinging Ship*); *Gift Shop* repeated "that
+    hasn't been chosen"; *Trash Bin* said "a creature card" (it already returned a random card); *Grand Marshal
+    Macie*'s "If you do" sentence and "Macie" (was "Grand"); "Roxi", "Solaflora" and "Truss" (with "Remove X hack
+    counters"); a tap cost's "you control" goes where the description puts it (*T.A.P.P.E.R.*); self-references in the
+    current Oracle template ("this creature", "this card", "this Aura", "this enchantment", "this Equipment") on 21
+    cards from *A Good Day to Pie* to *_____-o-saurus*; *Goblin Blastronauts*' "enters"; *Haunted House*'s "your next
+    end step"; *Foam Weapons Kiosk*'s "That creature"; curly apostrophes on *Fluros* and *Gallery of Legends*.
+  - Left as Oracle: *Ferris Wheel* (MTGJSON's "phased out this game" isn't what the card says), *The Superlatorium*,
+    *Scavenger Hunt* and *Trivia Contest* naming themselves (most of their Oracle variants do), *Push Your Luck*'s and
+    *Squirrel Stack*'s missing "!" (an Oracle typo), *Saw in Half*'s "base", *Storybook Ride*'s and *Myra the
+    Magnificent*'s clarifications.
 
 ### 2026-10-23, sixteenth deploy (desktop, Android, GitHub) — Secret Lair ponies: Applejack, Fluttershy, Pinkie Pie
 

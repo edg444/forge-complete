@@ -4,9 +4,9 @@ Types:Legendary Creature Vedalken Rogue Employee
 PT:1/3
 # The numbers within reach (user, 2026-10-21): power, toughness, loyalty, a spell's generic mana, and the literal numbers
 # in its abilities. Not an X, a name or a collector number, and never below 1 (rulings; AdjustNumberEffect).
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigHack | TriggerDescription$ Whenever CARDNAME enters or another creature dies, put a hack counter on CARDNAME.
-T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Creature.Other | TriggerZones$ Battlefield | Execute$ TrigHack | Secondary$ True | TriggerDescription$ Whenever CARDNAME enters or another creature dies, put a hack counter on CARDNAME.
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigHack | TriggerDescription$ Whenever CARDNAME enters or another creature dies, put a hack counter on NICKNAME.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Creature.Other | TriggerZones$ Battlefield | Execute$ TrigHack | Secondary$ True | TriggerDescription$ Whenever CARDNAME enters or another creature dies, put a hack counter on NICKNAME.
 SVar:TrigHack:DB$ PutCounter | Defined$ Self | CounterType$ HACK | CounterNum$ 1
-A:AB$ AdjustNumber | Cost$ 2 T SubCounter<X/HACK> | ValidTgts$ Card | TgtZone$ Stack,Battlefield | TgtPrompt$ Select target spell or permanent | Amount$ X | SpellDescription$ Add or subtract X from a number or number word on target spell or permanent until end of turn. This effect can't reduce a number below 1 or a number word below one.
+A:AB$ AdjustNumber | Cost$ 2 T SubCounter<X/HACK> | CostDesc$ {2}, {T}, Remove X hack counters from NICKNAME: | ValidTgts$ Card | TgtZone$ Stack,Battlefield | TgtPrompt$ Select target spell or permanent | Amount$ X | SpellDescription$ Add or subtract X from a number or number word on target spell or permanent until end of turn. This effect can't reduce a number below 1 or a number word below one.
 SVar:X:Count$xPaid
 Oracle:Whenever Truss, Chief Engineer enters or another creature dies, put a hack counter on Truss.\n{2}, {T}, Remove X hack counters from Truss: Add or subtract X from a number or number word on target spell or permanent until end of turn. This effect can't reduce a number below 1 or a number word below one.

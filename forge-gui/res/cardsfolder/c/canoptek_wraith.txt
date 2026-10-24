@@ -3,7 +3,11 @@ ManaCost:3
 Types:Artifact Creature Wraith
 PT:2/1
 S:Mode$ CantBlockBy | ValidAttacker$ Creature.Self | Description$ Wraith Form — This creature can't be blocked.
-T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigSearch | TriggerZones$ Battlefield | TriggerDescription$ Transdimensional Scout — When this creature deals combat damage to a player, you may pay {3} and sacrifice it. If you do, choose a land you control. Then search your library for up to two basic land cards which have the same name as the chosen land, put them onto the battlefield tapped, then shuffle.
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigSearch | TriggerZones$ Battlefield | IsPresent$ Card.Self+!PrintedTextActive,Card.Self+!PrintedBefore 20221008 | TriggerDescription$ Transdimensional Scout — When this creature deals combat damage to a player, you may pay {3} and sacrifice it. If you do, choose a land you control. Then search your library for up to two basic land cards which have the same name as the chosen land, put them onto the battlefield tapped, then shuffle.
+# R&D's Secret Lair: its only printing searches for basics with the same name as any land you control, so the two
+# can have different names.
+T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage$ True | Execute$ TrigSearchPrinted | TriggerZones$ Battlefield | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20221008 | TriggerDescription$ (As printed) Transdimensional Scout — When this creature deals combat damage to a player, you may pay {3} and sacrifice it. If you do, search your library for up to two basic land cards with the same name as a land you control, put them onto the battlefield tapped, then shuffle.
+SVar:TrigSearchPrinted:AB$ ChangeZone | Cost$ 3 Sac<1/CARDNAME> | Origin$ Library | Destination$ Battlefield | ChangeType$ Land.Basic+sharesNameWith Valid Land.YouCtrl | ChangeNum$ 2 | Tapped$ True
 SVar:TrigSearch:AB$ ChooseCard | Cost$ 3 Sac<1/CARDNAME> | Choices$ Land.YouCtrl | Mandatory$ True | SubAbility$ DBChange
 SVar:DBChange:DB$ ChangeZone | Origin$ Library | Destination$ Battlefield | ChangeType$ Land.Basic+sharesNameWith ChosenCard | ChangeNum$ 2 | Tapped$ True | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True

@@ -113,7 +113,11 @@ public class CostTapType extends CostPartWithList {
         } else if (amt.equals("X")) {
             sb.append("X untapped ").append(Lang.getPlural(desc)).append(" you control");
         } else {
-            sb.append(Lang.nounWithNumeralExceptOne(amt, "untapped " + desc)).append(" you control");
+            sb.append(Lang.nounWithNumeralExceptOne(amt, "untapped " + desc));
+            // a description can place it itself: "creature you control that has a hat" (T.A.P.P.E.R.)
+            if (!desc.contains("you control")) {
+                sb.append(" you control");
+            }
         }
         if (type.contains("sharesCreatureTypeWith")) {
             sb.append(" that share a creature type");

@@ -7,7 +7,7 @@ PT:3/3
 S:Mode$ ShareAttachments | ValidAttachment$ Aura.YouCtrl,Equipment.YouCtrl | Affected$ Creature.Other+YouCtrl | Description$ Auras and Equipment you control attached to CARDNAME affect other creatures you control as though those Auras and Equipment were attached to them.
 # Counters: P/T counters and keyword counters. Stickers: ability, power/toughness and name stickers (a name sticker's
 # word goes into each other creature's name at the same spot, rulings). Other kinds of counters aren't shared yet.
-S:Mode$ Continuous | Affected$ Creature.Other+YouCtrl | AddPower$ CounterPower | AddToughness$ CounterToughness | GainsCounterKeywordsOfDefined$ Self | GainsStickerAbilitiesOfDefined$ Self | GainsPTStickersOfDefined$ Self | GainsNameStickersOfDefined$ Self | Description$ Counters and stickers on CARDNAME affect other creatures you control as though those counters and stickers were on them.
+S:Mode$ Continuous | Affected$ Creature.Other+YouCtrl | AddPower$ CounterPower | AddToughness$ CounterToughness | GainsCounterKeywordsOfDefined$ Self | GainsStickerAbilitiesOfDefined$ Self | GainsPTStickersOfDefined$ Self | GainsNameStickersOfDefined$ Self | Description$ Counters and stickers on NICKNAME affect other creatures you control as though those counters and stickers were on them.
 SVar:CounterPower:Count$CounterPowerBonus
 SVar:CounterToughness:Count$CounterToughnessBonus
 DeckHints:Type$Aura|Equipment

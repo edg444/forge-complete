@@ -2,7 +2,7 @@ Name:Gift Shop
 ManaCost:no cost
 Types:Artifact Attraction
 K:Visit:TrigCharm
-SVar:TrigCharm:DB$ Charm | Choices$ DBBalloon,DBTeddy,DBFood,DBTickets,DBSticker | ChoiceRestriction$ ThisGame | AdditionalDescription$ that hasn't been chosen
+SVar:TrigCharm:DB$ Charm | Choices$ DBBalloon,DBTeddy,DBFood,DBTickets,DBSticker | ChoiceRestriction$ ThisGame
 SVar:DBBalloon:DB$ Token | TokenScript$ r_1_1_balloon_flying | TokenOwner$ You | SpellDescription$ Create a 1/1 red Balloon creature token with flying.
 SVar:DBTeddy:DB$ Token | TokenScript$ c_2_2_teddy_bear | TokenOwner$ You | SpellDescription$ Create a 2/2 pink Teddy Bear creature token.
 SVar:DBFood:DB$ Token | TokenAmount$ 2 | TokenScript$ c_a_food_sac | TokenOwner$ You | SpellDescription$ Create two Food tokens.

@@ -2,7 +2,7 @@ Name:Bumper Cars
 ManaCost:no cost
 Types:Artifact Attraction
 K:Visit:TrigMustBeBlocked
-SVar:TrigMustBeBlocked:DB$ Pump | ValidTgts$ Creature | KW$ HIDDEN CARDNAME must be blocked if able. | AILogic$ Pump | SpellDescription$ Visit — Target creature must be blocked this turn if able.
+SVar:TrigMustBeBlocked:DB$ Pump | ValidTgts$ Creature | KW$ HIDDEN CARDNAME must be blocked if able. | AILogic$ Pump | SpellDescription$ Target creature must be blocked this turn if able.
 Oracle:Visit — Target creature must be blocked this turn if able.
 
 # --- VARIANTS ---
