@@ -410,6 +410,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Festival of the Guildpact, Guardian Angel: new `PreventX`, just the X that matters once blocks are known - its
       creature in the fight that would die, or on their turn the damage that would kill it. With nothing to
       prevent, Festival of the Guildpact goes at their end step with X of 0 for the card.
+  - *Second pass, batch 119* (`NoAiBatch119Test`):
+    - Fog Patch, Feint, Angelic Favor: new `CombatTrickAi` (`AILogic$ CombatTrick`). Fog Patch on their attack once
+      blocks are known, when the unblocked attackers would kill it or deal 4 or more; Feint on the fight where it
+      would lose the most of its own (not an even trade); Angelic Favor on their attack before blocks, as a 4/4
+      flying blocker that kills an attacker and lives, or when their attack would kill it.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 
