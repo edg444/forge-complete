@@ -38,7 +38,8 @@ import forge.game.zone.ZoneType;
  * its X, less what the creature itself is worth (nothing when it's about to die anyway). The cost then sacrifices that
  * creature.</li>
  * <li>AILogic$ SacrificeAny (Last-Ditch Effort, Landslide): "sacrifice any number" for damage - when that much is
- * lethal, the least of them that is.</li>
+ * lethal, the least of them that is. For a card or life each (Reprocess, Plunge into Darkness) or Kylox's free spells,
+ * its junk.</li>
  * </ul>
  */
 public final class SacrificePayoffAi {
@@ -54,9 +55,21 @@ public final class SacrificePayoffAi {
                 || "SacForLethal".equals(logic) || "SacPumpLethal".equals(logic) || "SacXJunk".equals(logic);
     }
 
+    /** The logic this ability or its root runs on (Plunge into Darkness: on the Charm's mode, not the Charm). */
+    public static String logicOf(final SpellAbility sa) {
+        if (sa == null) {
+            return null;
+        }
+        if (handles(sa.getParam("AILogic"))) {
+            return sa.getParam("AILogic");
+        }
+        final String root = sa.getRootAbility().getParam("AILogic");
+        return handles(root) ? root : null;
+    }
+
     /** What the AI decided to sacrifice for this card, if anything. */
     public static CardCollection planned(final SpellAbility sa) {
-        if (sa == null || sa.getHostCard() == null || !handles(sa.getRootAbility().getParam("AILogic"))) {
+        if (sa == null || sa.getHostCard() == null || logicOf(sa) == null) {
             return null;
         }
         return PLANNED.get(sa.getHostCard().getId());
@@ -717,7 +730,9 @@ public final class SacrificePayoffAi {
     private static AiAbilityDecision sacrificeForEach(final Player ai, final SpellAbility sa, final CardCollection valid) {
         final SpellAbility next = sa.getSubAbility();
         final CardCollection junk = junk(ai, valid);
-        final boolean draws = next.getApi() == ApiType.Draw;
+        // Kylox, Visionary Inventor: exiling cards to cast free is a draw when its library is mostly spells it can cast
+        final boolean draws = next.getApi() == ApiType.Draw || next.getApi() == ApiType.Dig && CardLists.count(ai.getCardsIn(ZoneType.Library),
+                c -> c.isInstant() || c.isSorcery()) * 3 >= ai.getCardsIn(ZoneType.Library).size();
         final boolean danger = ComputerUtil.aiLifeInDanger(ai, false, 0);
         if (junk.size() < 2 || !draws && !danger) {
             // a mandatory trigger sacrifices nothing
@@ -730,7 +745,8 @@ public final class SacrificePayoffAi {
 
     private static AiAbilityDecision sacrificeAny(final Player ai, final SpellAbility sa) {
         if (sa.getApi() == ApiType.Sacrifice && sa.getSubAbility() != null
-                && (sa.getSubAbility().getApi() == ApiType.Draw || sa.getSubAbility().getApi() == ApiType.GainLife)) {
+                && (sa.getSubAbility().getApi() == ApiType.Draw || sa.getSubAbility().getApi() == ApiType.GainLife
+                || sa.getSubAbility().getApi() == ApiType.Dig)) {
             final CardCollection valid = CardLists.getValidCards(ai.getCardsIn(ZoneType.Battlefield),
                     sa.getParamOrDefault("SacValid", "Permanent").split(","), ai, sa.getHostCard(), sa);
             valid.remove(sa.getHostCard());

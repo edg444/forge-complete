@@ -3,7 +3,7 @@ ManaCost:1 B
 Types:Instant
 K:Entwine:B
 A:SP$ Charm | Choices$ DBSac,DBChooseNumber
-SVar:DBSac:DB$ Sacrifice | Defined$ You | Amount$ SacX | SacValid$ Creature | RememberSacrificed$ True | Optional$ True | SubAbility$ DBGainLife | SpellDescription$ Sacrifice any number of creatures, then you gain 3 life for each sacrificed creature.
+SVar:DBSac:DB$ Sacrifice | AILogic$ SacrificeAny | Defined$ You | Amount$ SacX | SacValid$ Creature | RememberSacrificed$ True | Optional$ True | SubAbility$ DBGainLife | SpellDescription$ Sacrifice any number of creatures, then you gain 3 life for each sacrificed creature.
 SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ GainLifeX | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:SacX:Count$Valid Creature.YouCtrl
@@ -12,5 +12,4 @@ SVar:DBChooseNumber:DB$ ChooseNumber | Defined$ You | ListTitle$ amount of life 
 SVar:DBDig:DB$ Dig | DigNum$ Y | DestinationZone2$ Exile | UnlessCost$ PayLife<Y> | UnlessSwitched$ True | UnlessPayer$ You
 SVar:Y:Count$ChosenNumber
 SVar:LifeAmountX:Count$YourLifeTotal/LimitMin.0
-AI:RemoveDeck:All
 Oracle:Choose one —\n• Sacrifice any number of creatures. You gain 3 life for each creature sacrificed this way.\n• Pay any amount of life, then look at that many cards from the top of your library. Put one of those cards into your hand and exile the rest.\nEntwine {B} (Choose both if you pay the entwine cost.)

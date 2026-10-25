@@ -6,13 +6,12 @@ K:Menace
 K:Ward:2
 K:Haste
 T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigSac | TriggerZones$ Battlefield | TriggerDescription$ Whenever NICKNAME attacks, sacrifice any number of other creatures, then exile the top X cards of your library, where X is their total power. You may cast any number of instant and/or sorcery spells from among the exiled cards without paying their mana costs.
-SVar:TrigSac:DB$ Sacrifice | Defined$ You | Amount$ SacX | SacValid$ Creature.Other | RememberSacrificed$ True | Optional$ True | SubAbility$ DBDig
+SVar:TrigSac:DB$ Sacrifice | AILogic$ SacrificeAny | Defined$ You | Amount$ SacX | SacValid$ Creature.Other | RememberSacrificed$ True | Optional$ True | SubAbility$ DBDig
 SVar:DBDig:DB$ Dig | Defined$ You | DigNum$ X | ChangeNum$ All | DestinationZone$ Exile | Imprint$ True | SubAbility$ DBPlay
 SVar:DBPlay:DB$ Play | Valid$ Card.IsImprinted+YouOwn | ValidZone$ Exile | ValidSA$ Instant,Sorcery | Controller$ You | WithoutManaCost$ True | Optional$ True | Amount$ All | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearImprinted$ True
 SVar:X:RememberedLKI$CardPower
 SVar:SacX:Count$Valid Creature.Other
-AI:RemoveDeck:All
 DeckHas:Ability$Sacrifice
 DeckHints:Type$Instant|Sorcery
 Oracle:Menace, ward {2}, haste\nWhenever Kylox attacks, sacrifice any number of other creatures, then exile the top X cards of your library, where X is their total power. You may cast any number of instant and/or sorcery spells from among the exiled cards without paying their mana costs.

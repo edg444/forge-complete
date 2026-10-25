@@ -355,6 +355,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       Sacred Rites saves its creatures in a combat they would die in; Rites of Initiation goes for lethal with the
       unblocked attackers; Rites of Spring trades spells too big to cast soon for basic lands; Rites of Refusal
       discards enough {3}s that they can't pay, for a spell worth it.
+  - *Second pass, batch 108* (`NoAiBatch108Test`):
+    - Kylox, Visionary Inventor: `SacrificeAny`, its junk creatures when its library is mostly instants and sorceries.
+      Plunge into Darkness: `SacrificeAny` on the Charm's mode (the plan is now found from the mode itself, not only
+      the Charm), its junk creatures for 3 life each when its life is in danger.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 
