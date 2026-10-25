@@ -499,7 +499,52 @@ public final class SacrificePayoffAi {
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
 
+    // what it can give up for nothing much: what's about to die anyway, cheap tokens, lands past what its hand needs,
+    // and cards marked to be sacrificed
+    private static CardCollection junk(final Player ai, final CardCollection valid) {
+        final List<GameObject> doomed = ai.getGame().getStack().isEmpty() ? List.of() : ComputerUtil.predictThreatenedObjects(ai, null);
+        int need = 5;
+        for (final Card c : ai.getCardsIn(ZoneType.Hand)) {
+            if (!c.isLand()) {
+                need = Math.max(need, c.getCMC());
+            }
+        }
+        final CardCollection out = new CardCollection();
+        int lands = CardLists.count(ai.getCardsIn(ZoneType.Battlefield), forge.game.card.CardPredicates.LANDS);
+        for (final Card c : valid) {
+            if (doomed.contains(c) || c.hasSVar("SacMe") || c.isToken() && worth(c) < 100) {
+                out.add(c);
+            } else if (c.isLand() && lands > need) {
+                out.add(c);
+                lands--;
+            }
+        }
+        return out;
+    }
+
+    // Reprocess, God-Eternal Bontu, Renounce: "sacrifice any number" for a card or life each - its junk
+    private static AiAbilityDecision sacrificeForEach(final Player ai, final SpellAbility sa, final CardCollection valid) {
+        final SpellAbility next = sa.getSubAbility();
+        final CardCollection junk = junk(ai, valid);
+        final boolean draws = next.getApi() == ApiType.Draw;
+        final boolean danger = ComputerUtil.aiLifeInDanger(ai, false, 0);
+        if (junk.size() < 2 || !draws && !danger) {
+            // a mandatory trigger sacrifices nothing
+            PLANNED.put(sa.getHostCard().getId(), new CardCollection());
+            return new AiAbilityDecision(sa.isTrigger() ? 100 : 0, sa.isTrigger() ? AiPlayDecision.WillPlay : AiPlayDecision.CantPlayAi);
+        }
+        PLANNED.put(sa.getHostCard().getId(), junk);
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
     private static AiAbilityDecision sacrificeAny(final Player ai, final SpellAbility sa) {
+        if (sa.getApi() == ApiType.Sacrifice && sa.getSubAbility() != null
+                && (sa.getSubAbility().getApi() == ApiType.Draw || sa.getSubAbility().getApi() == ApiType.GainLife)) {
+            final CardCollection valid = CardLists.getValidCards(ai.getCardsIn(ZoneType.Battlefield),
+                    sa.getParamOrDefault("SacValid", "Permanent").split(","), ai, sa.getHostCard(), sa);
+            valid.remove(sa.getHostCard());
+            return sacrificeForEach(ai, sa, valid);
+        }
         if (sa.getApi() != ApiType.Sacrifice || sa.getSubAbility() == null || sa.getSubAbility().getApi() != ApiType.DealDamage) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }

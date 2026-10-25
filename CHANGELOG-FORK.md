@@ -850,6 +850,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       - for the turn only (Wake the Dead as surprise blockers, Postmortem Lunge as a hasty attacker);
       - exiled for tokens or 4/4 copies.
       Shattered Crypt counts its life loss; Suffer the Past drains for each card it exiles from their graveyard.
+    - God-Eternal Bontu, Renounce, Reprocess: `SacrificeAny` now also covers "sacrifice any number" for a card or
+      life each. It sacrifices only junk: permanents about to die anyway, cheap tokens, lands beyond what its hand
+      needs, and cards marked to be sacrificed. Renounce is cast only when the life matters, and Bontu's trigger keeps
+      everything when there's no junk.
+    - Malicious Advice, Mishra's Helix, Synod Artificer: new `TapX`. It taps just the blockers that stand between its
+      attack and lethal, or else their lands as their turn starts (two or more); Malicious Advice's life cost caps X.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

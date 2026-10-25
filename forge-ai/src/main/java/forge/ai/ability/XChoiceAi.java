@@ -24,7 +24,8 @@ public final class XChoiceAi {
     private XChoiceAi() { }
 
     public static boolean handles(final String logic) {
-        return "StealX".equals(logic) || "WipeX".equals(logic) || "DestroyX".equals(logic) || "GraveX".equals(logic);
+        return "StealX".equals(logic) || "WipeX".equals(logic) || "DestroyX".equals(logic) || "GraveX".equals(logic)
+                || "TapX".equals(logic);
     }
 
     private static int maxX(final Player ai, final SpellAbility sa) {
@@ -130,6 +131,55 @@ public final class XChoiceAi {
         return null;
     }
 
+    // Malicious Advice, Mishra's Helix, Synod Artificer: tap X of theirs - just the blockers that keep its attack from
+    // being lethal, or else their lands as their turn starts
+    private static AiAbilityDecision tapX(final Player ai, final SpellAbility sa, final int maxMana) {
+        final forge.game.phase.PhaseHandler ph = ai.getGame().getPhaseHandler();
+        final Player opp = ai.getWeakestOpponent();
+        if (opp == null || !sa.usesTargeting() || maxMana < 1) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        // Malicious Advice: X life too
+        final boolean lifeToo = sa.getSubAbility() != null && sa.getSubAbility().getApi() == forge.game.ability.ApiType.LoseLife;
+        final int max = lifeToo ? Math.min(maxMana, ai.getLife() - 5) : maxMana;
+        sa.setXManaCostPaid(Math.max(1, max));
+        sa.resetTargets();
+        final java.util.List<Card> options = CardLists.filter(forge.game.card.CardUtil.getValidCardsToTarget(sa),
+                c -> c.getController().equals(opp) && c.isUntapped());
+        final java.util.List<Card> picks = new java.util.ArrayList<>();
+        if (ph.isPlayerTurn(ai) && ph.is(PhaseType.MAIN1) && opp.canLoseLife() && !opp.cantLoseForZeroOrLessLife()) {
+            final java.util.List<Card> attackers = CardLists.filter(ai.getCreaturesInPlay(), c -> forge.game.combat.CombatUtil.canAttack(c, opp));
+            final java.util.List<Card> blockers = new java.util.ArrayList<>(CardLists.filter(opp.getCreaturesInPlay(), forge.game.combat.CombatUtil::canBlock));
+            blockers.sort(java.util.Comparator.comparingInt((Card c) -> ComputerUtilCard.evaluateCreature(c)).reversed());
+            for (final Card b : blockers) {
+                if (ForcedCombatAi.assault(attackers, blockers.stream().filter(x -> !picks.contains(x)).toList(), opp) >= opp.getLife()) {
+                    break;
+                }
+                if (options.contains(b) && picks.size() < max) {
+                    picks.add(b);
+                }
+            }
+            final java.util.List<Card> left = blockers.stream().filter(x -> !picks.contains(x)).toList();
+            if (picks.isEmpty() || ForcedCombatAi.assault(attackers, left, opp) < opp.getLife()) {
+                picks.clear();
+            }
+        }
+        if (picks.isEmpty() && !lifeToo && ph.isPlayerTurn(opp) && ph.is(PhaseType.UPKEEP)) {
+            // their mana for the turn
+            options.stream().filter(Card::isLand).limit(max).forEach(picks::add);
+            if (picks.size() < 2) {
+                picks.clear();
+            }
+        }
+        if (picks.isEmpty()) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        sa.setXManaCostPaid(picks.size());
+        sa.resetTargets();
+        picks.forEach(c -> sa.getTargets().add(c));
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
     private static boolean graveTemporary(final SpellAbility take) {
         for (SpellAbility s = take; s != null; s = s.getSubAbility()) {
             if (s.hasParam("AtEOT")) {
@@ -163,6 +213,9 @@ public final class XChoiceAi {
         final int max = maxX(ai, sa);
         if (max < 0) {
             return new AiAbilityDecision(0, AiPlayDecision.CantAfford);
+        }
+        if ("TapX".equals(sa.getParam("AILogic"))) {
+            return tapX(ai, sa, max);
         }
         if ("GraveX".equals(sa.getParam("AILogic"))) {
             return sa.getApi() == forge.game.ability.ApiType.Pump ? drainGraveyard(ai, sa, max) : graveX(ai, sa, max);
