@@ -2479,6 +2479,11 @@ public class AiController {
     }
 
     public int chooseNumber(SpellAbility sa, String title, int min, int max) {
+        // Rites of Initiation: the number of random discards it decided on when casting
+        final Integer planned = forge.ai.ability.DiscardAnyAi.planned(sa);
+        if (planned != null) {
+            return Math.max(min, Math.min(max, planned));
+        }
         final Card source = sa.getHostCard();
         final String logic = sa.getParamOrDefault("AILogic", "Max");
         if ("GainLife".equals(logic)) {

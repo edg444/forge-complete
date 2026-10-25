@@ -726,6 +726,12 @@ public class PlayerControllerAi extends PlayerController {
 
     @Override
     public CardCollection chooseCardsToDiscardFrom(Player p, SpellAbility sa, CardCollection validCards, int min, int max, CardCollectionView visibleToChooser) {
+        // the Odyssey Rites: as many as it decided on when casting
+        final Integer planned = p == player ? forge.ai.ability.DiscardAnyAi.planned(sa) : null;
+        if (planned != null) {
+            final int n = Math.max(min, Math.min(max, planned));
+            return brains.getCardsToDiscard(n, n, validCards, sa);
+        }
         if (p == player) {
             return brains.getCardsToDiscard(min, max, validCards, sa);
         }

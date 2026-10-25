@@ -349,6 +349,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       creature about to be destroyed loses nothing (Bioshift in answer to removal). Spells used to be refused
       outright as not reusable. Nesting Grounds: new `MoveCounterPair`, for the same search when the source is the
       parent's target.
+  - *Second pass, batch 107* (`NoAiBatch107Test`):
+    - Sacred Rites, Rites of Initiation, Rites of Spring, Rites of Refusal: new `DiscardAnyAi` (`AILogic$ DiscardAny`).
+      The AI settles how many cards to discard when it casts the spell and keeps to that number as it resolves.
+      Sacred Rites saves its creatures in a combat they would die in; Rites of Initiation goes for lethal with the
+      unblocked attackers; Rites of Spring trades spells too big to cast soon for basic lands; Rites of Refusal
+      discards enough {3}s that they can't pay, for a spell worth it.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 
