@@ -48,7 +48,8 @@ public final class MiscLogicAi {
                 || "SelfDamage".equals(logic) || "BounceWithAuras".equals(logic) || "PayLifePump".equals(logic)
                 || "DrawOnDamage".equals(logic) || "DamageKill".equals(logic) || "LethalOnly".equals(logic)
                 || "LifeForGraveyard".equals(logic) || "LandLock".equals(logic) || "LifeFromPower".equals(logic)
-                || "LifePerTarget".equals(logic) || "AttackerSweep".equals(logic) || "MassBounce".equals(logic);
+                || "LifePerTarget".equals(logic) || "AttackerSweep".equals(logic) || "MassBounce".equals(logic)
+                || "KeepOneWipe".equals(logic);
     }
 
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
@@ -71,6 +72,7 @@ public final class MiscLogicAi {
             case "LifePerTarget" -> lifePerTarget(ai, sa);
             case "AttackerSweep" -> attackerSweep(ai, sa);
             case "MassBounce" -> massBounce(ai, sa);
+            case "KeepOneWipe" -> keepOneWipe(ai, sa);
             default -> cashIn(ai, sa);
         };
     }
@@ -643,6 +645,25 @@ public final class MiscLogicAi {
         for (final Card c : CardLists.getValidCards(ai.getGame().getCardsIn(ZoneType.Battlefield), sa.getParamOrDefault("ChangeType", "Permanent.nonLand"),
                 ai, sa.getHostCard(), sa)) {
             v += c.getController().isOpponentOf(ai) ? theirBounce(c) : c.getController().equals(ai) ? -theirBounce(c) : 0;
+        }
+        return v >= 200 ? yes() : no();
+    }
+
+    // ---- Divine Reckoning: each player keeps their best creature, the rest are destroyed ----
+
+    private static AiAbilityDecision keepOneWipe(final Player ai, final SpellAbility sa) {
+        int v = 0;
+        for (final Player p : ai.getGame().getPlayers()) {
+            final java.util.List<Card> mine = new java.util.ArrayList<>(CardLists.filter(p.getCreaturesInPlay(), Card::canBeDestroyed));
+            if (mine.isEmpty()) {
+                continue;
+            }
+            mine.sort(Comparator.comparingInt((Card c) -> ComputerUtilCard.evaluateCreature(c)).reversed());
+            int lost = 0;
+            for (int i = 1; i < mine.size(); i++) {
+                lost += ComputerUtilCard.evaluateCreature(mine.get(i));
+            }
+            v += p.isOpponentOf(ai) ? lost : p.equals(ai) ? -lost : 0;
         }
         return v >= 200 ? yes() : no();
     }

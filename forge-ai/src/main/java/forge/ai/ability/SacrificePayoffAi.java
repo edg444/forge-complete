@@ -201,10 +201,13 @@ public final class SacrificePayoffAi {
                     }
                 }
                 case DestroyAll -> {
-                    // Sanguine Praetor: each creature with the sacrificed creature's mana value
+                    // Sanguine Praetor: each creature with the sacrificed creature's mana value; Endemic Plague: each
+                    // sharing a creature type with it
+                    final boolean byType = s.getParamOrDefault("ValidCards", "").contains("sharesCreatureTypeWith Sacrificed");
                     final int n = sac.isEmpty() ? -1 : sac.get(0).getCMC();
                     for (final Card c : ai.getGame().getCardsIn(ZoneType.Battlefield)) {
-                        if (c.isCreature() && !sac.contains(c) && c.getCMC() == n && c.canBeDestroyed()) {
+                        final boolean hit = byType ? !sac.isEmpty() && c.sharesCreatureTypeWith(sac.get(0)) : c.getCMC() == n;
+                        if (c.isCreature() && !sac.contains(c) && hit && c.canBeDestroyed()) {
                             total += side(ai, c) * ComputerUtilCard.evaluateCreature(c);
                         }
                     }

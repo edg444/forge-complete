@@ -884,6 +884,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       permanent spell counts twice (they lose it too), an instant or sorcery counts what new targets would gain. The
       "you may choose new targets" that follows uses `RetargetAi`.
     - Crush of Tentacles: new `MassBounce`, each side's nonland permanents weighed (their tokens gone for good).
+    - Endemic Plague: `SacrificeFor`, whose sweep now also counts "shares a creature type with the sacrificed
+      creature". Divine Reckoning: new `KeepOneWipe`, with each side keeping its best creature.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).
