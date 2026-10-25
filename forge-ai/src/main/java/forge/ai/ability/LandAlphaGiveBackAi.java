@@ -52,7 +52,9 @@ public final class LandAlphaGiveBackAi {
         }
         final boolean everyones = !sa.getParamOrDefault("ValidCards", "").contains("YouCtrl");
         final boolean haste = sa.getParamOrDefault("Keywords", "").contains("Haste");
-        final int cost = sa.getPayCosts() == null || sa.getPayCosts().getTotalMana() == null ? 0 : sa.getPayCosts().getTotalMana().getCMC();
+        // Rude Awakening: a mode, so the spell's own cost
+        final SpellAbility root = sa.getRootAbility();
+        final int cost = root.getPayCosts() == null || root.getPayCosts().getTotalMana() == null ? 0 : root.getPayCosts().getTotalMana().getCMC();
         final List<Card> lands = CardLists.filter(ai.getLandsInPlay(), c -> c.isUntapped() && (haste || !c.hasSickness()) && !c.isCreature());
         final int landAttackers = lands.size() - cost;
         if (landAttackers <= 0) {

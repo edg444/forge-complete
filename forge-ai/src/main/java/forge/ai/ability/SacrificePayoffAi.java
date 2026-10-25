@@ -53,7 +53,17 @@ public final class SacrificePayoffAi {
         return "SacrificeFor".equals(logic) || "SacrificeAny".equals(logic) || "RevealFor".equals(logic) || "ExileForX".equals(logic)
                 || "ExileFor".equals(logic) || "RevealX".equals(logic) || "SacXForX".equals(logic)
                 || "SacForLethal".equals(logic) || "SacPumpLethal".equals(logic) || "SacXJunk".equals(logic)
-                || "SacRitual".equals(logic);
+                || "SacRitual".equals(logic) || "TapFor".equals(logic) || "ReshapeX".equals(logic);
+    }
+
+    // logics decided elsewhere that still leave a sacrifice plan for the cost (Scapegoat)
+    private static boolean plans(final String logic) {
+        return handles(logic) || "SaveBounce".equals(logic);
+    }
+
+    /** Another logic's choice of what the cost sacrifices (Scapegoat: the creature it doesn't save). */
+    public static void plan(final Card host, final Card sacrificed) {
+        PLANNED.put(host.getId(), new CardCollection(sacrificed));
     }
 
     /** The logic this ability or its root runs on (Plunge into Darkness: on the Charm's mode, not the Charm). */
@@ -61,11 +71,11 @@ public final class SacrificePayoffAi {
         if (sa == null) {
             return null;
         }
-        if (handles(sa.getParam("AILogic"))) {
+        if (plans(sa.getParam("AILogic"))) {
             return sa.getParam("AILogic");
         }
         final String root = sa.getRootAbility().getParam("AILogic");
-        return handles(root) ? root : null;
+        return plans(root) ? root : null;
     }
 
     /** What the AI decided to sacrifice for this card, if anything. */
@@ -87,6 +97,8 @@ public final class SacrificePayoffAi {
             case "SacPumpLethal" -> sacPumpLethal(ai, sa);
             case "SacXJunk" -> sacXJunk(ai, sa);
             case "SacRitual" -> sacRitual(ai, sa);
+            case "TapFor" -> tapFor(ai, sa);
+            case "ReshapeX" -> reshape(ai, sa);
             default -> sacrificeFor(ai, sa);
         };
     }
@@ -759,6 +771,70 @@ public final class SacrificePayoffAi {
             }
         }
         return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+    }
+
+    // Impelled Giant: once blocks are known, tap its idle red creature whose power makes the attack lethal or wins the fight
+    private static AiAbilityDecision tapFor(final Player ai, final SpellAbility sa) {
+        final forge.game.combat.Combat combat = ai.getGame().getCombat();
+        final Card host = sa.getHostCard();
+        if (combat == null || !combat.isAttacking(host) || !ai.getGame().getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS)) {
+            return new AiAbilityDecision(0, AiPlayDecision.WaitForCombat);
+        }
+        final forge.game.cost.CostTapType cost = costPart(sa, forge.game.cost.CostTapType.class);
+        if (cost == null) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final List<Card> blockers = combat.getBlockers(host);
+        final Player opp = combat.getDefenderPlayerByAttacker(host);
+        Card best = null;
+        for (final Card c : CardLists.getValidCards(ai.getCardsIn(ZoneType.Battlefield), cost.getType().split(";"), ai, host, sa)) {
+            if (c.equals(host) || c.isTapped() || combat.isAttacking(c) || combat.isBlocking(c)) {
+                continue;
+            }
+            final int p = c.getNetPower();
+            boolean good = false;
+            if ((blockers.isEmpty() || host.hasKeyword(forge.game.keyword.Keyword.TRAMPLE)) && opp != null) {
+                final int need = forge.ai.ComputerUtilCombat.lifeThatWouldRemain(opp, combat);
+                good = need > 0 && p >= need;
+            }
+            if (blockers.size() == 1) {
+                final Card b = blockers.get(0);
+                good |= host.getNetCombatDamage() < b.getLethalDamage() && host.getNetCombatDamage() + p >= b.getLethalDamage();
+            }
+            if (good && (best == null || p < best.getNetPower())) {
+                best = c;
+            }
+        }
+        if (best == null) {
+            return new AiAbilityDecision(0, AiPlayDecision.DoesntImpactCombat);
+        }
+        PLANNED.put(host.getId(), new CardCollection(best));
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    // Reshape: its least valuable artifact for the best artifact its library has within the X it can pay
+    private static AiAbilityDecision reshape(final Player ai, final SpellAbility sa) {
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        if (!ph.isPlayerTurn(ai) || !ph.is(PhaseType.MAIN2)) {
+            return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
+        }
+        final CostSacrifice cost = sacCost(sa);
+        if (cost == null) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final Card host = sa.getHostCard();
+        final CardCollection valid = CardLists.getValidCards(ai.getCardsIn(ZoneType.Battlefield), cost.getTypeFor(ai).split(";"), ai, host, sa);
+        final Card give = valid.isEmpty() ? null : valid.stream().min(java.util.Comparator.comparingInt(SacrificePayoffAi::worth)).orElse(null);
+        final forge.card.mana.ManaCost mana = sa.getPayCosts().getTotalMana();
+        final int x = forge.ai.ComputerUtilMana.getAvailableManaEstimate(ai, false) - mana.getCMC();
+        final Card get = ai.getCardsIn(ZoneType.Library).stream().filter(c -> c.isArtifact() && c.getCMC() <= x)
+                .max(java.util.Comparator.comparingInt(SacrificePayoffAi::worth)).orElse(null);
+        if (give == null || get == null || worth(get) - worth(give) < 100) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        sa.setXManaCostPaid(get.getCMC());
+        PLANNED.put(host.getId(), new CardCollection(give));
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
 
     // what it can give up for nothing much: what's about to die anyway, cheap tokens, lands past what its hand needs,

@@ -444,6 +444,20 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       a card marked to be sacrificed costs nothing to give up), Titan's Presence (`RevealFor`, exiling within the
       revealed power), Rupture (`SacrificeFor`).
     - Kept, with reasons: Camouflage, Batwing Brume, Marath, Will of the Wild.
+  - *Final pass, batch 125* (`NoAiBatch125Test`):
+    - More `XAbilityAi`: Call the Coppercoats, Rally the Ancestors (blockers against their attack), Entrancing Lyre
+      (their best creature locked, X its power), Corpseweft, Biomass Mutation (the least base X/X for lethal), Gift of
+      Tusks (their creature worth clearly more than a vanilla 3/3), Fendeep Summoner, War Tax. Liquid Fire: new
+      `LiquidFire`, just enough of the 5 to kill their creature and the rest to their face. Impelled Giant: new
+      `TapFor`, the creature tapped for the cost is the one whose power wins its fight or the game. Reshape: new
+      `ReshapeX`. Rude Awakening: `LandAlpha` on its animate mode. Minamo Sightbender: `MakeUnblockable` now sets X
+      (its "power X or less" target never matched before).
+    - New `RescueAi`: Planar Guide (when their attack would kill it, or against their sweeper), Portal of Sanctuary
+      and Scapegoat (its creatures back to hand ahead of their removal, Scapegoat sacrificing the cheapest), Valor
+      Made Real, Outmaneuver (the fewest blocked attackers for lethal), Duct Crawler. Bloodfire Infusion:
+      `SacrificeFor`. Thermal Flux: `Cantrip`. Burden of Guilt: a curse on their creature.
+    - Already sound, flag removed: Bargaining Table, Embalmed Brawler, Essence Flare, Convincing Mirage, Aetherplasm,
+      Baron Helmut Zemo, Betrothed of Fire. Kept: Close Encounter, Nebuchadnezzar, Ebonblade Reaper.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 

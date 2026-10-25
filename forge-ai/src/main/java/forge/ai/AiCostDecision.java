@@ -567,6 +567,13 @@ public class AiCostDecision extends CostDecisionMakerBase {
             return null;
         }
 
+        // Impelled Giant: X is the tapped creature's power, so it was chosen when the AI decided
+        final CardCollection planned = forge.ai.ability.SacrificePayoffAi.planned(ability);
+        if (planned != null && !planned.isEmpty() && planned.allMatch(c -> c.isUntapped() && c.getController().equals(player))) {
+            tapped.addAll(planned);
+            return PaymentDecision.card(planned);
+        }
+
         String totalP = "";
         CardCollectionView totap;
         if (isVehicle) {

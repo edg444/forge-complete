@@ -37,7 +37,7 @@ public final class NumberGuessAi {
     private NumberGuessAi() { }
 
     public static boolean handles(final String logic) {
-        return "VoidNumber".equals(logic) || "GuessHandType".equals(logic) || "TypeSave".equals(logic);
+        return "VoidNumber".equals(logic) || "GuessHandType".equals(logic) || "TypeSave".equals(logic) || "LiquidFire".equals(logic);
     }
 
     /** The number the AI decided on for this card, if it decided on one. */
@@ -45,7 +45,8 @@ public final class NumberGuessAi {
         if ("PrelateNumber".equals(sa.getParam("AILogic"))) {
             return prelateNumber(sa.getActivatingPlayer() != null ? sa.getActivatingPlayer() : sa.getHostCard().getController());
         }
-        return "VoidNumber".equals(sa.getRootAbility().getParam("AILogic")) ? NUMBERS.get(sa.getHostCard().getId()) : null;
+        final String root = sa.getRootAbility().getParam("AILogic");
+        return "VoidNumber".equals(root) || "LiquidFire".equals(root) ? NUMBERS.get(sa.getHostCard().getId()) : null;
     }
 
     /** The card type the AI decided on for this card, if it decided on one. */
@@ -75,6 +76,9 @@ public final class NumberGuessAi {
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
         if ("TypeSave".equals(sa.getParam("AILogic"))) {
             return typeSave(ai, sa);
+        }
+        if ("LiquidFire".equals(sa.getParam("AILogic"))) {
+            return liquidFire(ai, sa);
         }
         return "VoidNumber".equals(sa.getParam("AILogic")) ? voidNumber(ai, sa) : guessHand(ai, sa);
     }
@@ -143,6 +147,39 @@ public final class NumberGuessAi {
         if (bestN < 0 || best < 200 || !targetOpponent(ai, sa)) {
             return no(AiPlayDecision.CantPlayAi);
         }
+        NUMBERS.put(sa.getHostCard().getId(), bestN);
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    // Liquid Fire: 5 split between their creature and them - just enough to kill the creature, the rest to the face
+    private static AiAbilityDecision liquidFire(final Player ai, final SpellAbility sa) {
+        Card best = null;
+        int bestN = 0;
+        Card any = null;
+        for (final Card c : forge.game.card.CardUtil.getValidCardsToTarget(sa)) {
+            if (!c.getController().isOpponentOf(ai)) {
+                continue;
+            }
+            any = any == null || c.getController().getLife() < any.getController().getLife() ? c : any;
+            final int n = c.getLethalDamage();
+            if (n <= 5 && c.canBeDestroyed() && (best == null || ComputerUtilCard.evaluateCreature(c) > ComputerUtilCard.evaluateCreature(best))) {
+                best = c;
+                bestN = n;
+            }
+        }
+        // all 5 to their face when that's lethal, or nothing of theirs is worth killing
+        if (any != null && (5 >= any.getController().getLife() || best == null || ComputerUtilCard.evaluateCreature(best) < 120)) {
+            best = any;
+            bestN = 0;
+            if (5 < any.getController().getLife() && ComputerUtilCard.evaluateCreature(any) < 120) {
+                return no(AiPlayDecision.CantPlayAi);
+            }
+        }
+        if (best == null) {
+            return no(AiPlayDecision.TargetingFailed);
+        }
+        sa.resetTargets();
+        sa.getTargets().add(best);
         NUMBERS.put(sa.getHostCard().getId(), bestN);
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }

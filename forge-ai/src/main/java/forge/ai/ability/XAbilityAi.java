@@ -53,7 +53,8 @@ public final class XAbilityAi {
     public static boolean handles(final String logic) {
         return switch (logic == null ? "" : logic) {
             case "AlexiX", "NoCombatX", "GraveShrink", "LiftX", "StealCountersX", "TutorCounters", "DiscardBurn", "DoubleX",
-                    "AttackCount", "DiedCount", "ArtifactCounters", "SpoilsX" -> true;
+                    "AttackCount", "DiedCount", "ArtifactCounters", "SpoilsX", "CoppercoatsX", "RallyX", "LockX", "GraveTokenX",
+                    "BaseX", "Elephantize", "SwampWalls", "AttackTaxX" -> true;
             default -> false;
         };
     }
@@ -71,6 +72,14 @@ public final class XAbilityAi {
             case "AttackCount" -> attackCount(ai, sa);
             case "DiedCount" -> diedCount(ai, sa);
             case "ArtifactCounters" -> artifactCounters(ai, sa);
+            case "CoppercoatsX" -> coppercoats(ai, sa);
+            case "RallyX" -> rally(ai, sa);
+            case "LockX" -> lock(ai, sa);
+            case "GraveTokenX" -> graveToken(ai, sa);
+            case "BaseX" -> baseX(ai, sa);
+            case "Elephantize" -> elephantize(ai, sa);
+            case "SwampWalls" -> swampWalls(ai, sa);
+            case "AttackTaxX" -> attackTax(ai, sa);
             default -> spoils(ai, sa);
         };
     }
@@ -351,6 +360,163 @@ public final class XAbilityAi {
         sa.resetTargets();
         sa.getTargets().add(best);
         sa.addDividedAllocation(best, x);
+        return YES;
+    }
+
+    // ---- group C ----
+
+    private static int xMana(final Player ai, final SpellAbility sa) {
+        final forge.card.mana.ManaCost cost = sa.getPayCosts() == null ? null : sa.getPayCosts().getTotalMana();
+        if (cost == null) {
+            return ComputerUtilMana.getAvailableManaEstimate(ai, false);
+        }
+        return Math.max(0, (ComputerUtilMana.getAvailableManaEstimate(ai, false) - cost.getCMC()) / Math.max(1, cost.countX()));
+    }
+
+    // Call the Coppercoats: a token for each of their creatures, at their end step or as their attack comes in
+    private static AiAbilityDecision coppercoats(final Player ai, final SpellAbility sa) {
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        if (ph.isPlayerTurn(ai) || !ph.is(PhaseType.END_OF_TURN) && !ph.is(PhaseType.COMBAT_DECLARE_ATTACKERS)) {
+            return no(AiPlayDecision.AnotherTime);
+        }
+        final Player opp = ai.getStrongestOpponent();
+        if (opp == null || !sa.canTarget(opp) || opp.getCreaturesInPlay().size() < 3) {
+            return no(AiPlayDecision.CantPlayAi);
+        }
+        sa.resetTargets();
+        sa.getTargets().add(opp);
+        return YES;
+    }
+
+    // Rally the Ancestors: its graveyard's creatures as blockers against their attack (they leave at its upkeep)
+    private static AiAbilityDecision rally(final Player ai, final SpellAbility sa) {
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        final Combat combat = ai.getGame().getCombat();
+        if (ph.isPlayerTurn(ai) || combat == null || !ph.is(PhaseType.COMBAT_DECLARE_ATTACKERS)) {
+            return no(AiPlayDecision.WaitForCombat);
+        }
+        final int x = xMana(ai, sa);
+        final int worth = CardLists.filter(ai.getCardsIn(ZoneType.Graveyard), c -> c.isCreature() && c.getCMC() <= x)
+                .stream().mapToInt(ComputerUtilCard::evaluateCreature).sum();
+        if (worth < 300 && !(worth > 0 && ComputerUtilCombat.lifeInDanger(ai, combat))) {
+            return no(AiPlayDecision.CantPlayAi);
+        }
+        sa.setXManaCostPaid(x);
+        return YES;
+    }
+
+    // Entrancing Lyre: their best creature it can lock down, before its own attack or theirs
+    private static AiAbilityDecision lock(final Player ai, final SpellAbility sa) {
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        if (!ph.getPhase().isBefore(PhaseType.COMBAT_DECLARE_ATTACKERS) || ph.is(PhaseType.UNTAP)) {
+            return no(AiPlayDecision.AnotherTime);
+        }
+        sa.setXManaCostPaid(null);
+        final int mana = ComputerUtilMana.determineLeftoverMana(sa, ai, false);
+        Card best = null;
+        for (final Card c : ai.getOpponents().getCreaturesInPlay()) {
+            final int x = Math.max(0, c.getNetPower());
+            if (x > mana || c.isTapped()) {
+                continue;
+            }
+            sa.setXManaCostPaid(x);
+            if (sa.canTarget(c) && (best == null || ComputerUtilCard.evaluateCreature(c) > ComputerUtilCard.evaluateCreature(best))) {
+                best = c;
+            }
+        }
+        if (best == null || ComputerUtilCard.evaluateCreature(best) < 150) {
+            sa.setXManaCostPaid(null);
+            return no(AiPlayDecision.TargetingFailed);
+        }
+        sa.setXManaCostPaid(Math.max(0, best.getNetPower()));
+        sa.resetTargets();
+        sa.getTargets().add(best);
+        return YES;
+    }
+
+    // Corpseweft: all its graveyard creatures for one big Horror, two or more, at their end step
+    private static AiAbilityDecision graveToken(final Player ai, final SpellAbility sa) {
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        if (!ph.is(PhaseType.END_OF_TURN) || !ph.getNextTurn().equals(ai)) {
+            return no(AiPlayDecision.AnotherTime);
+        }
+        final int n = CardLists.count(ai.getCardsIn(ZoneType.Graveyard), Card::isCreature);
+        if (n < 2) {
+            return no(AiPlayDecision.CantPlayAi);
+        }
+        sa.setXManaCostPaid(n);
+        return YES;
+    }
+
+    // Biomass Mutation: once blocks are known, the least base X/X that makes its unblocked attackers lethal
+    private static AiAbilityDecision baseX(final Player ai, final SpellAbility sa) {
+        final Combat combat = ai.getGame().getCombat();
+        if (combat == null || !combat.getAttackingPlayer().equals(ai) || !ai.getGame().getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS)) {
+            return no(AiPlayDecision.WaitForCombat);
+        }
+        final int mana = xMana(ai, sa);
+        for (final Player opp : ai.getOpponents()) {
+            final List<Card> open = CardLists.filter(combat.getUnblockedAttackers(), a -> opp.equals(combat.getDefenderPlayerByAttacker(a)));
+            if (open.isEmpty() || !opp.canLoseLife()) {
+                continue;
+            }
+            for (int x = 1; x <= mana; x++) {
+                final int each = x;
+                if (open.stream().mapToInt(a -> Math.max(each, a.getNetPower())).sum() >= opp.getLife()) {
+                    sa.setXManaCostPaid(x);
+                    return YES;
+                }
+            }
+        }
+        return no(AiPlayDecision.DoesntImpactCombat);
+    }
+
+    // Gift of Tusks: their creature that's worth much more than a vanilla 3/3
+    private static AiAbilityDecision elephantize(final Player ai, final SpellAbility sa) {
+        final Card elephant = CardUtil.getValidCardsToTarget(sa).stream().filter(c -> c.getController().isOpponentOf(ai))
+                .max(Comparator.comparingInt(ComputerUtilCard::evaluateCreature)).orElse(null);
+        // a vanilla 3/3 rates about 155, so only something worth clearly more
+        if (elephant == null || ComputerUtilCard.evaluateCreature(elephant) < 230) {
+            return no(AiPlayDecision.TargetingFailed);
+        }
+        sa.resetTargets();
+        sa.getTargets().add(elephant);
+        return YES;
+    }
+
+    // Fendeep Summoner: two 3/5 Swamps to block their attack
+    private static AiAbilityDecision swampWalls(final Player ai, final SpellAbility sa) {
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        final Combat combat = ai.getGame().getCombat();
+        if (ph.isPlayerTurn(ai) || combat == null || !ph.is(PhaseType.COMBAT_DECLARE_ATTACKERS)) {
+            return no(AiPlayDecision.WaitForCombat);
+        }
+        final boolean worth = combat.getAttackersOf(ai).stream().anyMatch(a -> a.getNetCombatDamage() < 5
+                && !a.hasKeyword(forge.game.keyword.Keyword.FLYING)) || ComputerUtilCombat.lifeInDanger(ai, combat);
+        final List<Card> swamps = CardLists.filter(CardUtil.getValidCardsToTarget(sa), c -> c.getController().equals(ai) && c.isUntapped());
+        if (!worth || swamps.isEmpty()) {
+            return no(AiPlayDecision.DoesntImpactCombat);
+        }
+        sa.resetTargets();
+        swamps.stream().limit(2).forEach(c -> sa.getTargets().add(c));
+        return YES;
+    }
+
+    // War Tax: before their attack, {X} an attacker when they don't have the mana for all of theirs
+    private static AiAbilityDecision attackTax(final Player ai, final SpellAbility sa) {
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        if (ph.isPlayerTurn(ai) || !ph.getPhase().isBefore(PhaseType.COMBAT_DECLARE_ATTACKERS)) {
+            return no(AiPlayDecision.AnotherTime);
+        }
+        sa.setXManaCostPaid(null);
+        final int x = ComputerUtilMana.determineLeftoverMana(sa, ai, false);
+        final Player opp = (Player) ph.getPlayerTurn();
+        final int attackers = CardLists.count(opp.getCreaturesInPlay(), c -> c.isUntapped() && !c.hasSickness());
+        final int power = opp.getCreaturesInPlay().stream().filter(c -> c.isUntapped() && !c.hasSickness()).mapToInt(Card::getNetCombatDamage).sum();
+        if (x < 2 || attackers == 0 || power < 4 || ComputerUtilMana.getAvailableManaEstimate(opp, false) >= x * attackers) {
+            return no(AiPlayDecision.CantPlayAi);
+        }
+        sa.setXManaCostPaid(x);
         return YES;
     }
 }

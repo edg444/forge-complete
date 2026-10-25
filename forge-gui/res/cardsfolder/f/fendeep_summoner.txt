@@ -2,6 +2,5 @@ Name:Fendeep Summoner
 ManaCost:4 B
 Types:Creature Treefolk Shaman
 PT:3/5
-A:AB$ Animate | Cost$ T | ValidTgts$ Swamp | TargetMin$ 0 | TargetMax$ 2 | TgtPrompt$ Select target Swamp | Power$ 3 | Toughness$ 5 | Types$ Creature,Warrior,Treefolk | SpellDescription$ Up to two target Swamps each become 3/5 Treefolk Warrior creatures in addition to their other types until end of turn.
-AI:RemoveDeck:All
+A:AB$ Animate | AILogic$ SwampWalls | Cost$ T | ValidTgts$ Swamp | TargetMin$ 0 | TargetMax$ 2 | TgtPrompt$ Select target Swamp | Power$ 3 | Toughness$ 5 | Types$ Creature,Warrior,Treefolk | SpellDescription$ Up to two target Swamps each become 3/5 Treefolk Warrior creatures in addition to their other types until end of turn.
 Oracle:{T}: Up to two target Swamps each become 3/5 Treefolk Warrior creatures in addition to their other types until end of turn.

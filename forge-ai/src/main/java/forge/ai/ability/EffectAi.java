@@ -321,6 +321,12 @@ public class EffectAi extends SpellAbilityAi {
                 if (ai.getOpponents().getCreaturesInPlay().isEmpty()) {
                     return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
                 }
+                // Minamo Sightbender: "power X or less" needs X before its targets can be listed
+                final boolean payX = "Count$xPaid".equals(sa.getSVar("X"));
+                if (payX) {
+                    sa.setXManaCostPaid(null);
+                    sa.setXManaCostPaid(ComputerUtilMana.determineLeftoverMana(sa, ai, false));
+                }
                 sa.resetTargets();
                 CardCollection options = new CardCollection(CardUtil.getValidCardsToTarget(sa));
                 options = CardLists.filterControlledBy(options, ai);
@@ -344,6 +350,9 @@ public class EffectAi extends SpellAbilityAi {
                         if (card.getNetPower() >= ai.getWeakestOpponent().getLife() && ai.getWeakestOpponent().canLoseLife() && !ai.getWeakestOpponent().cantLoseForZeroOrLessLife()) {
                             // try to finish off the opponent with an unblockable creature
                             sa.getTargets().add(card);
+                            if (payX) {
+                                sa.setXManaCostPaid(Math.max(0, card.getNetPower()));
+                            }
                             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
                         }
                         final Card copy = CardCopyService.getLKICopy(card);
@@ -353,6 +362,9 @@ public class EffectAi extends SpellAbilityAi {
                         // TODO: also check the case where the AI would attack with the creature but it will be traded, to avoid trading unfavorably?
                         if (predictedLife > 0 && ComputerUtilCard.doesSpecifiedCreatureAttackAI(ai, copy) && !ComputerUtilCard.doesCreatureAttackAI(ai, card)) {
                             sa.getTargets().add(card);
+                            if (payX) {
+                                sa.setXManaCostPaid(Math.max(0, card.getNetPower()));
+                            }
                             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
                         }
                     }

@@ -4,6 +4,5 @@ Types:Creature Illusion
 PT:1/1
 T:Mode$ AttackerBlocked | ValidCard$ Creature | ValidBlocker$ Card.Self | Execute$ TrigBounce | TriggerDescription$ Whenever this creature blocks a creature, you may return this creature to its owner's hand. If you do, you may put a creature card from your hand onto the battlefield blocking that creature.
 SVar:TrigBounce:AB$ ChangeZone | Cost$ Return<1/CARDNAME> | Origin$ Hand | Destination$ Battlefield | ChangeType$ Creature | Blocking$ TriggeredAttacker
-AI:RemoveDeck:All
 SVar:HasBlockEffect:TRUE
 Oracle:Whenever this creature blocks a creature, you may return this creature to its owner's hand. If you do, you may put a creature card from your hand onto the battlefield blocking that creature.
