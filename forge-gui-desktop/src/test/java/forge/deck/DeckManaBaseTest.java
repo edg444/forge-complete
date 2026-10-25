@@ -145,7 +145,8 @@ public class DeckManaBaseTest extends AITest {
         AssertJUnit.assertEquals(0, DeckManaBase.uncastable(deck.getMain()).size());
     }
 
-    /** The ramp deck seen in play: Urza lands, Karn, Ancient Stirrings, and Chromatic Star/Sphere that the AI never casts. */
+    // the fork's AI plays Chromatic Star and Chromatic Sphere, so Scroll Rack and Junkyo Bell stand in as cards it never casts
+    /** The ramp deck seen in play: Urza lands, Karn, Ancient Stirrings, and artifacts that the AI never casts. */
     private Deck rampWithCardsTheAiNeverPlays() {
         initAndCreateGame();
         final Deck deck = new Deck("ramp");
@@ -153,8 +154,8 @@ public class DeckManaBaseTest extends AITest {
         add(deck, "Urza's Tower", 4);
         add(deck, "Urza's Power Plant", 4);
         add(deck, "Forest", 6);
-        add(deck, "Chromatic Star", 4);
-        add(deck, "Chromatic Sphere", 3);
+        add(deck, "Scroll Rack", 4);
+        add(deck, "Junkyo Bell", 3);
         add(deck, "Ancient Stirrings", 4);
         add(deck, "Karn Liberated", 2);
         add(deck, "Wurmcoil Engine", 4);
@@ -168,8 +169,8 @@ public class DeckManaBaseTest extends AITest {
     public void cardsTheAiNeverPlaysAreCountedAsDead() {
         final Deck deck = rampWithCardsTheAiNeverPlays();
         final List<String> dead = DeckManaBase.uncastable(deck.getMain()).stream().map(PaperCard::getName).collect(Collectors.toList());
-        AssertJUnit.assertTrue(dead.toString(), dead.contains("Chromatic Star"));
-        AssertJUnit.assertTrue(dead.toString(), dead.contains("Chromatic Sphere"));
+        AssertJUnit.assertTrue(dead.toString(), dead.contains("Scroll Rack"));
+        AssertJUnit.assertTrue(dead.toString(), dead.contains("Junkyo Bell"));
         AssertJUnit.assertFalse("Mind Stone is a normal card for the AI: " + dead, dead.contains("Mind Stone"));
     }
 
@@ -179,8 +180,8 @@ public class DeckManaBaseTest extends AITest {
         final int size = deck.getMain().countAll();
         DeckManaBase.fix(deck);
         AssertJUnit.assertEquals(size, deck.getMain().countAll());
-        AssertJUnit.assertEquals(0, deck.getMain().count(card("Chromatic Star")));
-        AssertJUnit.assertEquals(0, deck.getMain().count(card("Chromatic Sphere")));
+        AssertJUnit.assertEquals(0, deck.getMain().count(card("Scroll Rack")));
+        AssertJUnit.assertEquals(0, deck.getMain().count(card("Junkyo Bell")));
         AssertJUnit.assertTrue("nothing the AI cannot play is left", DeckManaBase.uncastable(deck.getMain()).isEmpty());
     }
 }

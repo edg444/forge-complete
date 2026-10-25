@@ -329,6 +329,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-25, twenty-third deploy (desktop, Android, GitHub) — 20-commit upstream merge
+
+- **Upstream merge** (20 commits). Cinderheart Giant, Froghemoth, Ghostly Dancers, Knight Rampager and Stockpiling
+  Celebrant take upstream's targeting and trigger fixes with the fork's "this creature" wording and Oracle lines;
+  Campus Crier takes upstream's reminder text (it matches Oracle); Seasoned Cryomancer keeps the fork's cost text.
+  `InputBlock` keeps the fork's check that the chosen attacker isn't the defender's own, with upstream's selection
+  refresh. Upstream's new `DeckManaBaseTest` ramp deck used Chromatic Star and Chromatic Sphere as cards the AI never
+  casts; this fork's AI plays both, so Scroll Rack and Junkyo Bell stand in.
+
 ### 2026-10-25, twenty-second deploy (desktop, Android, GitHub) — AI for no-AI cards finished: the last regular cards, and the fork's Un, holiday and playtest cards
 
 - **AI for cards marked `AI:RemoveDeck:All`, continued** (each card below now has AI that uses it sensibly, and its
