@@ -842,6 +842,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Hunter's Insight, Warriors' Lesson: new `DrawOnDamage`, on its biggest unblocked attacker.
     - Polymorphist's Jest: `Shrink`, now also for a player target (all their creatures in combat). Rally the
       Righteous: `Radiance`, now also with an untap root, judged like its pump.
+    - Ensnare: `EndCombat`, tapping everything as their combat begins, ahead of an attack that could be lethal.
+    - Dance of the Manse, Divergent Equation, Hour of Eternity, Midnight Ritual, Postmortem Lunge, Shattered Crypt,
+      Suffer the Past, Wake the Dead: new `GraveX`. Every affordable X is tried for the best graveyard cards the spell
+      can take, valued by where they go, less the mana:
+      - to hand, or onto the battlefield;
+      - for the turn only (Wake the Dead as surprise blockers, Postmortem Lunge as a hasty attacker);
+      - exiled for tokens or 4/4 copies.
+      Shattered Crypt counts its life loss; Suffer the Past drains for each card it exiles from their graveyard.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

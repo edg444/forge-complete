@@ -6,6 +6,7 @@ import forge.ai.ComputerUtilCard;
 import forge.ai.ComputerUtilMana;
 import forge.game.card.Card;
 import forge.game.card.CardLists;
+import forge.game.phase.PhaseType;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
@@ -23,7 +24,7 @@ public final class XChoiceAi {
     private XChoiceAi() { }
 
     public static boolean handles(final String logic) {
-        return "StealX".equals(logic) || "WipeX".equals(logic) || "DestroyX".equals(logic);
+        return "StealX".equals(logic) || "WipeX".equals(logic) || "DestroyX".equals(logic) || "GraveX".equals(logic);
     }
 
     private static int maxX(final Player ai, final SpellAbility sa) {
@@ -44,10 +45,127 @@ public final class XChoiceAi {
         return c.isCreature() ? ComputerUtilCard.evaluateCreature(c) : ExchangeTradeAi.value(c);
     }
 
+    // what one graveyard card is worth to the effect taking it
+    private static int graveValue(final Player ai, final SpellAbility take, final Card c) {
+        final String dest = take.getParamOrDefault("Destination", "");
+        final SpellAbility next = take.getSubAbility();
+        if ("Exile".equals(dest) && next != null && next.getApi() == forge.game.ability.ApiType.CopyPermanent) {
+            // Hour of Eternity: a 4/4 copy
+            return c.isCreature() ? 170 : 0;
+        }
+        if ("Exile".equals(dest) && next != null && next.getApi() == forge.game.ability.ApiType.Token) {
+            // Midnight Ritual: a 2/2 for each
+            return 80;
+        }
+        if ("Battlefield".equals(dest)) {
+            final int v = worth(c);
+            // Wake the Dead, Postmortem Lunge: only for the turn
+            return take.hasParam("AtEOT") || next != null && next.hasParam("AtEOT") ? v / 3 : v;
+        }
+        if ("Hand".equals(dest)) {
+            return c.isCreature() ? ComputerUtilCard.evaluateCreature(c) / 2 : 30 + c.getCMC() * 20;
+        }
+        return 0;
+    }
+
+    // Shattered Crypt, Midnight Ritual, Hour of Eternity, Divergent Equation, Dance of the Manse, Wake the Dead,
+    // Postmortem Lunge: each X is tried for the best cards it lets the spell take, less the mana
+    private static AiAbilityDecision graveX(final Player ai, final SpellAbility sa, final int max) {
+        final forge.game.phase.PhaseHandler ph = ai.getGame().getPhaseHandler();
+        final SpellAbility take = findTake(sa);
+        if (take == null) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final boolean battlefieldForTheTurn = "Battlefield".equals(take.getParam("Destination")) && graveTemporary(take);
+        if (battlefieldForTheTurn && sa.getHostCard().isInstant()) {
+            // Wake the Dead: blockers, once they attack
+            if (ph.isPlayerTurn(ai) || !ph.is(PhaseType.COMBAT_DECLARE_ATTACKERS)) {
+                return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
+            }
+        } else if (battlefieldForTheTurn && (!ph.isPlayerTurn(ai) || !ph.is(PhaseType.MAIN1))) {
+            // Postmortem Lunge: a hasty attacker
+            return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
+        }
+        // Shattered Crypt: X life too
+        final boolean losesLife = take.getSubAbility() != null && take.getSubAbility().getApi() == forge.game.ability.ApiType.LoseLife;
+        int best = 0;
+        int bestX = -1;
+        java.util.List<Card> bestPicks = null;
+        for (int x = 1; x <= max; x++) {
+            sa.setXManaCostPaid(x);
+            take.resetTargets();
+            final int n = x;
+            final java.util.List<Card> cands = CardLists.filter(forge.game.card.CardUtil.getValidCardsToTarget(take), c -> c.getOwner().equals(ai));
+            cands.sort(java.util.Comparator.comparingInt((Card c) -> graveValue(ai, take, c)).reversed());
+            final int limit = Math.min(n, take.getMaxTargets());
+            if (take.getMinTargets() > cands.size()) {
+                continue;
+            }
+            final java.util.List<Card> picks = new java.util.ArrayList<>(cands.subList(0, Math.min(limit, cands.size())));
+            int v = picks.stream().mapToInt(c -> graveValue(ai, take, c)).sum() - x * 15;
+            if (losesLife) {
+                v -= x * (forge.ai.ComputerUtil.aiLifeInDanger(ai, false, x) ? 50 : 6);
+            }
+            if (v > best) {
+                best = v;
+                bestX = x;
+                bestPicks = picks;
+            }
+        }
+        if (bestX < 0 || best < 80) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        sa.setXManaCostPaid(bestX);
+        take.resetTargets();
+        bestPicks.forEach(c -> take.getTargets().add(c));
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    private static SpellAbility findTake(final SpellAbility sa) {
+        for (SpellAbility s = sa; s != null; s = s.getSubAbility()) {
+            if (s.usesTargeting() && s.getApi() == forge.game.ability.ApiType.ChangeZone && s.getParamOrDefault("Origin", "").contains("Graveyard")) {
+                return s;
+            }
+        }
+        return null;
+    }
+
+    private static boolean graveTemporary(final SpellAbility take) {
+        for (SpellAbility s = take; s != null; s = s.getSubAbility()) {
+            if (s.hasParam("AtEOT")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Suffer the Past: X cards of their graveyard, a point drained for each
+    private static AiAbilityDecision drainGraveyard(final Player ai, final SpellAbility sa, final int max) {
+        final SpellAbility cards = sa.getSubAbility();
+        final Player opp = ai.getWeakestOpponent();
+        if (cards == null || opp == null || !sa.canTarget(opp)) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final int x = Math.min(max, opp.getCardsIn(ZoneType.Graveyard).size());
+        final boolean lethal = x >= opp.getLife() && opp.canLoseLife() && !opp.cantLoseForZeroOrLessLife();
+        if (x < 3 && !lethal) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        sa.setXManaCostPaid(x);
+        sa.resetTargets();
+        sa.getTargets().add(opp);
+        cards.resetTargets();
+        opp.getCardsIn(ZoneType.Graveyard).stream().limit(x).forEach(c -> cards.getTargets().add(c));
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
         final int max = maxX(ai, sa);
         if (max < 0) {
             return new AiAbilityDecision(0, AiPlayDecision.CantAfford);
+        }
+        if ("GraveX".equals(sa.getParam("AILogic"))) {
+            return sa.getApi() == forge.game.ability.ApiType.Pump ? drainGraveyard(ai, sa, max) : graveX(ai, sa, max);
         }
         int best = Integer.MIN_VALUE;
         int bestX = -1;
