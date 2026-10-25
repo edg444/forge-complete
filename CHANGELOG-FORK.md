@@ -496,6 +496,22 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       Skies, Cultural Exchange, Gauntlets of Chaos, Shell of the Last Kappa, Cadaverous Bloom, Knowledge Vault,
       Synthesis Pod, Magus of the Jar, Memory Jar, Kaho, Breath of Fury, Mask of the Mimic, Ride the Avalanche, Savage
       Summoning, Aquitect's Will, Boros Battleshaper, False Orders, Blaze of Glory.
+  - *Final pass, batches 130-131* (`NoAiBatch130Test`, `NoAiBatch131Test`):
+    - New `LastCardAi`: Dazzling Reflection, Lightning Volley and Flame Fusillade (at their end step, with pingers),
+      Past in Flames, Cauldron of Souls, Destined Confrontation and Covetous Elegy (when they lose clearly more),
+      Simulacrum, Immovable Rod and Giant Oyster (their best creature locked), Dark Triumph, Balthor the Defiled.
+      Banishing Knack: `GrantAbility`. A new `AIUntapPreference:LockEffect` keeps Entrancing Lyre, Immovable Rod and
+      Giant Oyster tapped while what they lock is still there (Entrancing Lyre used to untap and let it go).
+    - New `FinalCardAi`: Garth One-Eye, Wake to Slaughter, Fire Covenant (life for their creatures, keeping 8),
+      Necrodominance, Hallow (their burn), Prismatic Strands (the color of the attackers that would hurt most).
+      Demoralize: `AlphaClear`, with menace alone counting half their blockers. Fossil Find: its script now names
+      the card type the AI reads (it crashed the AI).
+    - Kept, with reasons: Shieldmage Advocate, Arcane Lighthouse, Detection Tower, Repel Intruders, Unnerving
+      Assault, Firespout, Panoptic Mirror, Spellweaver Helix, Sylvan Library, Unstable Footing, Desolation Giant,
+      Dragonrage, Jetfire, Bane of the Living, Phyrexian Splicer, Mindblaze, Abyssal Persecutor, Mystic Reflection,
+      Soul Strings, Assault Suit, Cabal Therapist, Island Sanctuary, Lim-Dûl's Vault, Moonlight Bargain, Krovikan
+      Plague, Leeches, and the prevent-and-deal shields (Healing Grace, Acolyte's Reward, Divine Deflection,
+      Refraction Trap, Vengeful Archon).
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) â€” AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 

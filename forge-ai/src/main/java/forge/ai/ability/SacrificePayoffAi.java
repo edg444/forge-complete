@@ -58,7 +58,7 @@ public final class SacrificePayoffAi {
 
     // logics decided elsewhere that still leave a sacrifice plan for the cost (Scapegoat)
     private static boolean plans(final String logic) {
-        return handles(logic) || "SaveBounce".equals(logic) || "TwoKill".equals(logic);
+        return handles(logic) || "SaveBounce".equals(logic) || "TwoKill".equals(logic) || "TeamPumpLethal".equals(logic);
     }
 
     /** Another logic's choice of what the cost sacrifices (Scapegoat: the creature it doesn't save). */

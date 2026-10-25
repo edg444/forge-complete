@@ -1153,6 +1153,15 @@ public class PlayerControllerAi extends PlayerController {
                                 }
                             }
                             return true;
+                        case "LockEffect":
+                            // Entrancing Lyre: the lock lasts while it stays tapped and its target is still around
+                            for (final Card e : player.getCardsIn(ZoneType.Command)) {
+                                if (source.equals(e.getEffectSource()) && com.google.common.collect.Iterables.any(e.getRemembered(),
+                                        o -> o instanceof Card r && r.isInPlay())) {
+                                    return false;
+                                }
+                            }
+                            return true;
                         case "NothingRemembered":
                             if (!source.hasRemembered()) {
                                 return true;

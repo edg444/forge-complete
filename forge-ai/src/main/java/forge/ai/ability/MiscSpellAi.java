@@ -254,9 +254,15 @@ public final class MiscSpellAi {
         return YES;
     }
 
-    /** Root Greevil: the color it decided on. */
+    /** Prismatic Strands: a color another logic settled on. */
+    public static void planColor(final Card host, final String color) {
+        COLORS.put(host.getId(), color);
+    }
+
+    /** Root Greevil, Prismatic Strands: the color it decided on. */
     public static String plannedColor(final SpellAbility sa) {
-        return "WipeEnchantColor".equals(sa.getRootAbility().getParam("AILogic")) ? COLORS.get(sa.getHostCard().getId()) : null;
+        final String logic = sa.getRootAbility().getParam("AILogic");
+        return "WipeEnchantColor".equals(logic) || "ColorFog".equals(logic) ? COLORS.get(sa.getHostCard().getId()) : null;
     }
 
     private static AiAbilityDecision shapeshift(final Player ai, final SpellAbility sa) {

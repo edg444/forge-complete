@@ -63,12 +63,15 @@ public final class AlphaClearAi {
         }
         powers.sort(Comparator.reverseOrder());
         // Goblin War Cry: one of theirs can still block
-        final int left = sa.getApi() == ApiType.ChooseCard ? 1 : 0;
+        final int fixedLeft = sa.getApi() == ApiType.ChooseCard ? 1 : 0;
+        // Demoralize: creatures can't block only at threshold; menace alone halves what can block
+        final boolean menaceOnly = sa.getApi() == ApiType.PumpAll && ai.getCardsIn(forge.game.zone.ZoneType.Graveyard).size() < 7;
         for (final Player opp : ai.getOpponents()) {
             if (!sa.canTarget(opp) || !opp.canLoseLife() || opp.cantLoseForZeroOrLessLife()) {
                 continue;
             }
             final int blockers = CardLists.count(opp.getCreaturesInPlay(), Card::isUntapped);
+            final int left = menaceOnly ? blockers / 2 : fixedLeft;
             if (blockers <= left || damage(powers, blockers) >= opp.getLife()) {
                 // nothing for the spell to do, or lethal anyway
                 continue;
