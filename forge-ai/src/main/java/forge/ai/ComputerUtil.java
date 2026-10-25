@@ -2583,6 +2583,11 @@ public class ComputerUtil {
 
         final Game game = ai.getGame();
         String chosen = "";
+        // Blood Oath, Fertile Imagination: the type it guessed when it decided
+        final String guessed = forge.ai.ability.NumberGuessAi.plannedType(sa);
+        if (guessed != null && validTypes.contains(guessed)) {
+            return guessed;
+        }
         if ("ForceAttack".equals(logic) || "HurtType".equals(logic)) {
             // Walking Desecration, Outbreak: the type it decided on
             final String meant = "HurtType".equals(logic) ? forge.ai.ability.TypeHurtAi.chosenType(sa.getHostCard())

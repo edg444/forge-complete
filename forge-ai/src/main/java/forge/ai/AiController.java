@@ -2484,6 +2484,11 @@ public class AiController {
         if (planned != null) {
             return Math.max(min, Math.min(max, planned));
         }
+        // Void, Sanctum Prelate: the number it settled on
+        final Integer named = forge.ai.ability.NumberGuessAi.plannedNumber(sa);
+        if (named != null) {
+            return Math.max(min, Math.min(max, named));
+        }
         final Card source = sa.getHostCard();
         final String logic = sa.getParamOrDefault("AILogic", "Max");
         if ("GainLife".equals(logic)) {

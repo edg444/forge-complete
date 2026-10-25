@@ -400,6 +400,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       attacker) makes the attack lethal and it isn't lethal anyway. Sudden Spoiling: once blocks are known, when its
       blocked creatures would die and won't (and their 0/2 blockers would), or on their turn when their attack
       would kill it.
+  - *Second pass, batch 117* (`NoAiBatch117Test`):
+    - Void, Blood Oath, Fertile Imagination, Sanctum Prelate: new `NumberGuessAi`, for a number or card type named
+      as the spell resolves, settled when the AI decides. Void names the mana value whose artifacts and creatures
+      cost them the most less its own; Blood Oath and Fertile Imagination the card type most common among the cards
+      of theirs it has seen (it doesn't look at their hand), when their hand should hold enough of it; Sanctum
+      Prelate the noncreature mana value they've shown most and its own deck has least.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 
