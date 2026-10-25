@@ -329,6 +329,19 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Setting: Exclude Funny Cards** (`FPref.EXCLUDE_FUNNY_CARDS`, off by default; desktop Preferences and mobile
+  Settings, under Random Deck Generation, next to Exclude The List). Random decks and Full card pool draft and sealed
+  packs leave out Un-cards. A card is one when every printing of it is acorn-stamped, or from a silver-bordered or
+  Funny-type set (the Un-sets, Heroes of the Realm, Ponies: The Galloping, HasCon, Happy Holidays, Celebration
+  Cards, the playtest cards in Mystery Booster 1 and 2) outside that set's `[eternal]` section
+  (`StaticData.isFunnyCard`, `PaperCardPredicates.NOT_FUNNY`). So it goes by name: basics, Steamflogger Boss,
+  Unfinity's eternal-legal cards and Mystery Booster 2's real reprints stay. Color decks and the desktop deck
+  editor's generator drop them from the generator pool (`DeckGeneratorBase.excludeCards`, via
+  `DeckgenUtil.applyPrintingPreferences`); random Commander, Oathbreaker, Brawl and Tiny Leaders decks don't pick them
+  as commander or as cards, and the generated-commander lists leave them out (`DeckgenUtil.randomDeckCards`);
+  Full card pool packs filter them (`LimitedPoolType.fullCardpoolBooster()`, also used by Full metasets).
+  Chaos drafts, block/set drafts, theme decks and Adventure are unchanged. Test: `ExcludeFunnyCardsTest`.
+
 ### 2026-10-25, twenty-third deploy (desktop, Android, GitHub) — 20-commit upstream merge
 
 - **Upstream merge** (20 commits). Cinderheart Giant, Froghemoth, Ghostly Dancers, Knight Rampager and Stockpiling

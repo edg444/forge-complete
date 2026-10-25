@@ -49,10 +49,18 @@ public class DeckgenUtil {
         return FModel.getPreferences().getPrefBoolean(FPref.EXCLUDE_THE_LIST);
     }
 
-    /** Applies the Exclude The List preference to a generator, before it picks printings of its own. */
+    /** Cards random decks may use: all of them, or no Un-cards with the Exclude Funny Cards preference on. */
+    public static Predicate<PaperCard> randomDeckCards() {
+        return FModel.getPreferences().getPrefBoolean(FPref.EXCLUDE_FUNNY_CARDS) ? PaperCardPredicates.NOT_FUNNY : c -> true;
+    }
+
+    /** Applies the Exclude The List and Exclude Funny Cards preferences to a generator, before it picks cards. */
     public static void applyPrintingPreferences(DeckGeneratorBase gen) {
         if (excludeTheList()) {
             gen.setPrintingFilter(PaperCardPredicates.NOT_ON_THE_LIST);
+        }
+        if (FModel.getPreferences().getPrefBoolean(FPref.EXCLUDE_FUNNY_CARDS)) {
+            gen.excludeCards(Predicate.not(PaperCardPredicates.NOT_FUNNY));
         }
     }
 
@@ -691,6 +699,7 @@ public class DeckgenUtil {
         PaperCard commander = FModel.getMagicDb().getCommonCards().streamAllCards()
                 .filter(format.isLegalCardPredicate())
                 .filter(format.isLegalCommanderPredicate())
+                .filter(randomDeckCards())
                 .filter(PaperCardPredicates.fromRules(canPlay))
                 .collect(StreamUtil.random()).get();
         return generateRandomCommanderDeck(commander, format, forAi, false);
@@ -705,6 +714,7 @@ public class DeckgenUtil {
         final Deck deck;
         PaperCard selectedPartner = null;
         List<PaperCard> preSelectedCards = new ArrayList<>();
+        final Predicate<PaperCard> allowed = randomDeckCards();
         if(isCardGen){
             if(format.equals(DeckFormat.Brawl)){//TODO: replace with actual Brawl based data
                 Set<String> uniqueCards = new HashSet<>();
@@ -717,7 +727,7 @@ public class DeckgenUtil {
                 }
                 for(String card:uniqueCards){
                     PaperCard paperCard = StaticData.instance().getCommonCards().getUniqueByName(card);
-                    if(format.isLegalCard(paperCard)) {
+                    if(format.isLegalCard(paperCard) && allowed.test(paperCard)) {
                         preSelectedCards.add(paperCard);
                     }
                 }
@@ -726,7 +736,7 @@ public class DeckgenUtil {
                 List<Map.Entry<PaperCard, Integer>> potentialCards = new ArrayList<>(CardRelationMatrixGenerator.cardPools.get(matrixKey).get(commander.getName()));
                 prepareWeightedRandomizedCardPool(potentialCards);
                 for(Map.Entry<PaperCard,Integer> pair:potentialCards){
-                    if(format.isLegalCard(pair.getKey())) {
+                    if(format.isLegalCard(pair.getKey()) && allowed.test(pair.getKey())) {
                         preSelectedCards.add(pair.getKey());
                     }
                 }
@@ -769,7 +779,7 @@ public class DeckgenUtil {
         } else {
             IDeckGenPool cardDb = FModel.getMagicDb().getCommonCards();
             Iterable<PaperCard> colorList = IterableUtil.filter(format.getCardPool(cardDb).getAllCards(),
-                    format.isLegalCardPredicate().and(PaperCardPredicates.fromRules(
+                    format.isLegalCardPredicate().and(allowed).and(PaperCardPredicates.fromRules(
                             new CardThemedDeckBuilder.MatchColorIdentity(commander.getRules().getColorIdentity())
                                     .or(DeckGeneratorBase.COLORLESS_CARDS.and(c -> DeckGeneratorBase.meetsColorNeeds(c, commander.getRules().getColorIdentity()))))));
             if (format == DeckFormat.Brawl) {

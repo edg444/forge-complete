@@ -71,6 +71,7 @@ public enum VSubmenuPreferences implements IVSubmenu<CSubmenuPreferences> {
     private final JCheckBox cbSingletons = new OptionsCheckBox(localizer.getMessage("cbSingletons"));
     private final JCheckBox cbRemoveArtifacts = new OptionsCheckBox(localizer.getMessage("cbRemoveArtifacts"));
     private final JCheckBox cbExcludeTheList = new OptionsCheckBox(localizer.getMessage("cbExcludeTheList"));
+    private final JCheckBox cbExcludeFunnyCards = new OptionsCheckBox(localizer.getMessage("cbExcludeFunnyCards"));
     private final JCheckBox cbAnte = new OptionsCheckBox(localizer.getMessage("cbAnte"));
     private final JCheckBox cbAnteMatchRarity = new OptionsCheckBox(localizer.getMessage("cbAnteMatchRarity"));
     private final JCheckBox cbAnteIncludeBasicLands = new OptionsCheckBox(localizer.getMessage("cbAnteIncludeBasicLands"));
@@ -341,6 +342,9 @@ public enum VSubmenuPreferences implements IVSubmenu<CSubmenuPreferences> {
 
         pnlPrefs.add(cbExcludeTheList, titleConstraints);
         pnlPrefs.add(new NoteLabel(localizer.getMessage("nlExcludeTheList")), descriptionConstraints);
+
+        pnlPrefs.add(cbExcludeFunnyCards, titleConstraints);
+        pnlPrefs.add(new NoteLabel(localizer.getMessage("nlExcludeFunnyCards")), descriptionConstraints);
 
         pnlPrefs.add(cbCardBased, titleConstraints);
         pnlPrefs.add(new NoteLabel(localizer.getMessage("nlCardBased")), descriptionConstraints);
@@ -776,6 +780,10 @@ public enum VSubmenuPreferences implements IVSubmenu<CSubmenuPreferences> {
 
     public JCheckBox getCbExcludeTheList() {
         return cbExcludeTheList;
+    }
+
+    public JCheckBox getCbExcludeFunnyCards() {
+        return cbExcludeFunnyCards;
     }
 
     /** @return {@link javax.swing.JCheckBox} */

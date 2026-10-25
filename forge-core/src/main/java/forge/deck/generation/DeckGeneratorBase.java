@@ -57,7 +57,7 @@ public abstract class DeckGeneratorBase {
     /** Cards whose print was picked on purpose, for Deck.optimiseCardArt to leave alone. */
     protected final Set<String> pinnedPrintings = new HashSet<>();
     protected Predicate<PaperCard> printingFilter = x -> true;
-    protected final IDeckGenPool pool;
+    protected final DeckGenPool pool;
     protected IDeckGenPool landPool;
     protected final DeckFormat format;
     protected final IDeckGenPool fullCardDB;
@@ -85,6 +85,11 @@ public abstract class DeckGeneratorBase {
     /** Printings the generator may pick on its own (the Exclude The List preference). */
     public void setPrintingFilter(Predicate<PaperCard> filter) {
         printingFilter = filter;
+    }
+
+    /** Takes cards out of the pool the generator picks from (the Exclude Funny Cards preference). */
+    public void excludeCards(Predicate<PaperCard> excluded) {
+        pool.removeIf(excluded);
     }
 
     public void setSingleton(boolean singleton) {

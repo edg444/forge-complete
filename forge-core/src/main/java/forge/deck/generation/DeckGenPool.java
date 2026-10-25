@@ -64,6 +64,10 @@ public class DeckGenPool implements IDeckGenPool {
         }
     }
 
+    public void removeIf(Predicate<PaperCard> filter) {
+        cards.values().removeIf(filter);
+    }
+
     public int size() {
         return cards.size();
     }

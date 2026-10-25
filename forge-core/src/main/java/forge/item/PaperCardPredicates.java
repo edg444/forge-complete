@@ -284,6 +284,8 @@ public abstract class PaperCardPredicates {
     /** The List and its Unfinity foil edition: reprint-only, every card on them is also printed elsewhere. */
     public static final Set<String> THE_LIST_SETS = Set.of("PLST", "ULST");
     public static final Predicate<PaperCard> NOT_ON_THE_LIST = c -> !THE_LIST_SETS.contains(c.getEdition());
+    /** Any card but an Un-card ({@link StaticData#isFunnyCard}): by name, so every printing of it goes. */
+    public static final Predicate<PaperCard> NOT_FUNNY = c -> !StaticData.instance().isFunnyCard(c.getName());
     /** Matches any card except Plains, Island, Swamp, Mountain, or Forest. */
     public static final Predicate<PaperCard> NOT_TRUE_BASIC_LAND = fromRules(Predicate.not(CardRulesPredicates.IS_TRUE_BASIC_LAND));
     public static final Predicate<PaperCard> IS_NONBASIC_LAND = fromRules(CardRulesPredicates.IS_NONBASIC_LAND);

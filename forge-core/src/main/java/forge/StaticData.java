@@ -603,6 +603,31 @@ public class StaticData {
         return variantCards;
     }
 
+    private volatile Map<String, Boolean> funnyByName;
+
+    /**
+     * An Un-card: every printing of it is acorn-stamped, or from a silver-bordered or Funny set (Heroes of the Realm,
+     * Ponies: The Galloping, playtest cards) outside the set's [eternal] section. A card with any other printing
+     * isn't one, so basics and the real reprints in Mystery Booster 2 stay. Read from the edition files rather than
+     * the loaded cards, which leave Un-cards out when non-legal cards aren't loaded.
+     */
+    public boolean isFunnyCard(String cardName) {
+        Map<String, Boolean> funny = funnyByName;
+        if (funny == null) {
+            funny = new HashMap<>();
+            for (CardEdition e : editions) {
+                final boolean funnySet = e.getType() == CardEdition.Type.FUNNY || e.getBorderColor() == CardEdition.BorderColor.SILVER;
+                final List<CardEdition.EditionEntry> eternal = e.getFunnyEternalCards();
+                for (CardEdition.EditionEntry entry : e.getAllCardsInSet()) {
+                    final boolean printing = entry.isAcorn() || funnySet && (eternal == null || !eternal.contains(entry));
+                    funny.merge(entry.name(), printing, Boolean::logicalAnd);
+                }
+            }
+            funnyByName = funny;
+        }
+        return funny.getOrDefault(cardName, false);
+    }
+
     public Map<String, CardDb> getAvailableDatabases(){
         Map<String, CardDb> databases = new LinkedHashMap<>();  // to process dbs in this exact order
         databases.put("Common", commonCards);

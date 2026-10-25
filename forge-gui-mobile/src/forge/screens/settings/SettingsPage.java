@@ -495,6 +495,9 @@ public class SettingsPage extends TabPage<SettingsScreen> {
         lstSettings.addItem(new BooleanSetting(FPref.EXCLUDE_THE_LIST,
             Forge.getLocalizer().getMessage("cbExcludeTheList"),
             Forge.getLocalizer().getMessage("nlExcludeTheList")), 2);
+        lstSettings.addItem(new BooleanSetting(FPref.EXCLUDE_FUNNY_CARDS,
+            Forge.getLocalizer().getMessage("cbExcludeFunnyCards"),
+            Forge.getLocalizer().getMessage("nlExcludeFunnyCards")), 2);
 
         // ADVANCED SETTINGS TAB
         lstSettings.addItem(new BooleanSetting(FPref.DEV_MODE_ENABLED,
