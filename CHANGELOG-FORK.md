@@ -390,6 +390,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Sacrifice, Burnt Offering, Metamorphosis: new `SacRitual`. The mana is the sacrificed creature's mana value,
       which the ritual logic never knew in advance; the AI now plans the creature it can spare (junk, or a small
       one) that makes the most mana, and casts the ritual when that mana casts something it otherwise couldn't.
+  - *Second pass, batch 115* (`NoAiBatch115Test`):
+    - Profaner of the Dead: exploit now sacrifices only a creature whose toughness bounces more of theirs than it's
+      worth (it used to sacrifice one for nothing). Silumgar Sorcerer needed no change: it exploits only with a
+      creature spell to counter.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 

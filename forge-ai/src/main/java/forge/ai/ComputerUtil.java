@@ -946,6 +946,22 @@ public class ComputerUtil {
                             // AI would not run this trigger if given the chance
                             return sacrificed;
                         }
+                        // Profaner of the Dead: their creatures with less toughness than the exploited one go back to
+                        // hand, so only a creature whose toughness bounces more than it's worth
+                        if (exSA.getApi() == ApiType.ChangeZoneAll && host.getSVar("X").startsWith("TriggeredExploited$CardToughness")) {
+                            remaining = CardLists.filter(remaining, c -> {
+                                int bounced = 0;
+                                for (final Card o : ai.getOpponents().getCreaturesInPlay()) {
+                                    if (o.getNetToughness() < c.getNetToughness()) {
+                                        bounced += o.isToken() ? ComputerUtilCard.evaluateCreature(o) : ComputerUtilCard.evaluateCreature(o) / 2 + o.getCMC() * 10;
+                                    }
+                                }
+                                return bounced >= ComputerUtilCard.evaluateCreature(c) / 2 + 60;
+                            });
+                            if (remaining.isEmpty()) {
+                                return sacrificed;
+                            }
+                        }
                     }
                 }
             }
