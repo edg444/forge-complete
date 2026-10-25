@@ -329,6 +329,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-25, twenty-fourth deploy (desktop, Android, GitHub) — Exclude Funny Cards setting; cards a clone effect changed no longer look free to cast
+
 - **Fix: after Bombardment, every card in hand was highlighted as castable.** When a card's characteristics change
   (a clone effect starting or ending, a text change), its first spell's cost is resynced to its mana cost with
   `Cost.copyWithDefinedMana`, which built on `copyWithNoMana()`, and that keeps a `{0}` mana part: the real cost went
