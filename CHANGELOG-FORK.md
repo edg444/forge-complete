@@ -472,6 +472,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Kept, with reasons: Cytoshape, Emrakul, the Promised End, the converge cards (Prismatic Ending, Radiant Flames,
       Roilmage's Trick, Infuse with the Elements, Bring to Light), Storm King's Thunder, Jester's Scepter, Phyrexian
       Devourer, Judge Unworthy, Riddle of Lightning, Captain's Maneuver, Arcbond.
+  - *Final pass, batch 127* (`NoAiBatch127Test`):
+    - New `HandAi`: Venomous Breath (the fight where destroying the other side helps most), Descent of the Dragons
+      (its creatures worth less than a 4/4 flying Dragon), Recall, Grimoire of the Dead, Chandra Ablaze (a red card
+      discarded for the damage; the -2 when its hand is nearly empty), Jandor's Ring, Meteor Shower (divided: kills
+      first, the rest to their face), Ruthless Disposal (their two best for a creature it can spare), Read the Runes,
+      Laquatus's Creativity, Aladdin's Lamp and Mangara's Tome (in its upkeep, before the draw). Nahiri's Wrath: new
+      `DiscardMv`, the discard cost now follows a plan. Nantuko Cultivator: `DiscardAny`, the lands it can spare.
+      Caldera Hellion: cast only when its sweep favors it.
+    - Kept, with reasons: Bog Witch, Cloak of Confusion, Lightning Storm, Insidious Dreams, Artificer's Intuition,
+      Diamond Lion, Bazaar Trader.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 

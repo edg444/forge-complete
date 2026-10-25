@@ -79,6 +79,12 @@ public final class DiscardAnyAi {
 
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
         final SpellAbility pay = payoff(sa);
+        if (pay == null && "Land".equals(sa.getParam("DiscardValid"))) {
+            // Nantuko Cultivator: a counter and a card for each land in hand beyond what it still needs to play
+            final int inHand = CardLists.count(ai.getCardsIn(ZoneType.Hand), Card::isLand);
+            final int need = Math.max(0, 5 - ai.getLandsInPlay().size());
+            return yes(sa, Math.max(0, inHand - need));
+        }
         if (pay == null) {
             return no(AiPlayDecision.CantPlayAi);
         }

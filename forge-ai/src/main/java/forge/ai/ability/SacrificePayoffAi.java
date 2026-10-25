@@ -53,12 +53,12 @@ public final class SacrificePayoffAi {
         return "SacrificeFor".equals(logic) || "SacrificeAny".equals(logic) || "RevealFor".equals(logic) || "ExileForX".equals(logic)
                 || "ExileFor".equals(logic) || "RevealX".equals(logic) || "SacXForX".equals(logic)
                 || "SacForLethal".equals(logic) || "SacPumpLethal".equals(logic) || "SacXJunk".equals(logic)
-                || "SacRitual".equals(logic) || "TapFor".equals(logic) || "ReshapeX".equals(logic);
+                || "SacRitual".equals(logic) || "TapFor".equals(logic) || "ReshapeX".equals(logic) || "DiscardMv".equals(logic);
     }
 
     // logics decided elsewhere that still leave a sacrifice plan for the cost (Scapegoat)
     private static boolean plans(final String logic) {
-        return handles(logic) || "SaveBounce".equals(logic);
+        return handles(logic) || "SaveBounce".equals(logic) || "TwoKill".equals(logic);
     }
 
     /** Another logic's choice of what the cost sacrifices (Scapegoat: the creature it doesn't save). */
@@ -98,6 +98,7 @@ public final class SacrificePayoffAi {
             case "SacXJunk" -> sacXJunk(ai, sa);
             case "SacRitual" -> sacRitual(ai, sa);
             case "TapFor" -> tapFor(ai, sa);
+            case "DiscardMv" -> discardMv(ai, sa);
             case "ReshapeX" -> reshape(ai, sa);
             default -> sacrificeFor(ai, sa);
         };
@@ -837,6 +838,41 @@ public final class SacrificePayoffAi {
         }
         sa.setXManaCostPaid(get.getCMC());
         PLANNED.put(host.getId(), new CardCollection(give));
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    // Nahiri's Wrath: X discards whose total mana value kills up to X of their creatures, the most value for the cards
+    private static AiAbilityDecision discardMv(final Player ai, final SpellAbility sa) {
+        final Card host = sa.getHostCard();
+        final List<Card> hand = new ArrayList<>(CardLists.filter(ai.getCardsIn(ZoneType.Hand), c -> !c.equals(host) && !c.isLand()));
+        // the cards that give the most mana value for what they're worth
+        hand.sort(Comparator.comparingInt((Card c) -> worth(c) - c.getCMC() * 40));
+        final List<Card> theirs = new ArrayList<>(CardLists.filter(CardUtil.getValidCardsToTarget(sa), c -> c.getController().isOpponentOf(ai)));
+        theirs.sort(Comparator.comparingInt((Card c) -> ComputerUtilCard.evaluateCreature(c)).reversed());
+        int best = 0;
+        List<Card> bestDiscard = null;
+        List<Card> bestTargets = null;
+        int total = 0;
+        for (int x = 1; x <= Math.min(3, hand.size()); x++) {
+            total += hand.get(x - 1).getCMC();
+            final int dmg = total;
+            final List<Card> kills = CardLists.filter(theirs, c -> c.isCreature() && dmg >= c.getLethalDamage() && c.canBeDestroyed());
+            final List<Card> picks = kills.subList(0, Math.min(x, kills.size()));
+            final int v = picks.stream().mapToInt(ComputerUtilCard::evaluateCreature).sum()
+                    - hand.subList(0, x).stream().mapToInt(c -> 30 + c.getCMC() * 15).sum();
+            if (v > best) {
+                best = v;
+                bestDiscard = new ArrayList<>(hand.subList(0, x));
+                bestTargets = new ArrayList<>(picks);
+            }
+        }
+        if (bestDiscard == null || best < 120) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        sa.setXManaCostPaid(bestDiscard.size());
+        sa.resetTargets();
+        bestTargets.forEach(c -> sa.getTargets().add(c));
+        PLANNED.put(host.getId(), new CardCollection(bestDiscard));
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
 

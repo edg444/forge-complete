@@ -725,6 +725,11 @@ public class PlayerControllerAi extends PlayerController {
 
     @Override
     public CardCollection chooseCardsToDiscardFrom(Player p, SpellAbility sa, CardCollection validCards, int min, int max, CardCollectionView visibleToChooser) {
+        // Chandra Ablaze: a red card, for the damage
+        final Card red = p == player ? forge.ai.ability.HandAi.redDiscard(sa, validCards) : null;
+        if (red != null && min <= 1 && max >= 1) {
+            return new CardCollection(red);
+        }
         // the Odyssey Rites: as many as it decided on when casting
         final Integer planned = p == player ? forge.ai.ability.DiscardAnyAi.planned(sa) : null;
         if (planned != null) {

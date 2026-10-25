@@ -51,6 +51,24 @@ public class PermanentAi extends SpellAbilityAi {
         if (source.hasSVar("LifePaidOnETB") && StoreSVarAi.lifeToPay(ai, source, sa) < 2) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
+        // Caldera Hellion: a sweep as it enters, worth it only when it hurts them more
+        for (final forge.game.trigger.Trigger t : source.getTriggers()) {
+            final SpellAbility etb = t.ensureAbility();
+            if (t.getMode() != forge.game.trigger.TriggerType.ChangesZone || etb == null || etb.getApi() != forge.game.ability.ApiType.DamageAll
+                    || !"Battlefield".equals(t.getParam("Destination")) || !etb.getParamOrDefault("NumDmg", "").matches("\\d+")) {
+                continue;
+            }
+            final int dmg = Integer.parseInt(etb.getParam("NumDmg"));
+            int v = 0;
+            for (final Card c : ai.getGame().getCardsIn(ZoneType.Battlefield)) {
+                if (c.isCreature() && dmg >= c.getLethalDamage() && c.canBeDestroyed()) {
+                    v += (c.getController().isOpponentOf(ai) ? 1 : -1) * ComputerUtilCard.evaluateCreature(c);
+                }
+            }
+            if (v < 100) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            }
+        }
         // Megatherium: sacrificed as it enters unless the mana is still there once it's cast
         for (final forge.game.trigger.Trigger t : source.getTriggers()) {
             final SpellAbility etb = t.ensureAbility();

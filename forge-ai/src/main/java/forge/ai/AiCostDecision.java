@@ -115,6 +115,11 @@ public class AiCostDecision extends CostDecisionMakerBase {
         if (type.contains("WithSameName")) {
             return null;
         }
+        // Nahiri's Wrath: the damage is the discarded cards' mana value, so it chose them when it decided
+        final CardCollection plannedDiscard = forge.ai.ability.SacrificePayoffAi.planned(ability);
+        if (plannedDiscard != null && !plannedDiscard.isEmpty() && hand.containsAll(plannedDiscard)) {
+            return PaymentDecision.card(plannedDiscard);
+        }
         int c = cost.getAbilityAmount(ability);
 
         if (type.equals("Random")) {
