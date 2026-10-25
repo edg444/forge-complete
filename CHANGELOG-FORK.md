@@ -364,6 +364,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       ability. It now ends the turn when their spells and abilities on the stack add up and none of its own are
       there, or on their turn when the combat it's in would kill it. Obeka goes only on its own turn, since the
       player whose turn it is decides, and the AI says yes to someone else's Obeka only when that suits it.
+  - *Second pass, batch 110* (`NoAiBatch110Test`):
+    - Minion of the Wastes, Nameless Race, Phyrexian Processor: "pay any amount of life" as it enters always paid 0
+      (Minion died as a 0/0). The AI now pays half of its life above 8, within the card's own cap, and doesn't
+      cast them when that comes to less than 2.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 

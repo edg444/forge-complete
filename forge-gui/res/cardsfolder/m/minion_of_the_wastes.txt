@@ -9,5 +9,4 @@ S:Mode$ Continuous | CharacteristicDefining$ True | SetPower$ LifePaidOnETB | Se
 SVar:X:Count$xPaid
 SVar:LifePaidOnETB:Number$0
 SVar:NoZeroToughnessAI:True
-AI:RemoveDeck:All
 Oracle:Trample\nAs this creature enters, pay any amount of life.\nMinion of the Wastes's power and toughness are each equal to the life paid as it entered.

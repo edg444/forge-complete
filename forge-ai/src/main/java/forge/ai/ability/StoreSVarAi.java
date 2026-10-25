@@ -3,13 +3,29 @@ package forge.ai.ability;
 import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
 import forge.ai.SpellAbilityAi;
+import forge.game.ability.AbilityUtils;
+import forge.game.card.Card;
 import forge.game.cost.Cost;
+import forge.game.cost.CostPayLife;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.trigger.WrappedAbility;
 import forge.util.collect.FCollectionView;
 
 public class StoreSVarAi extends SpellAbilityAi {
+
+    /**
+     * Minion of the Wastes, Nameless Race, Phyrexian Processor: "pay any amount of life" as it enters, half of what's
+     * above 8, within the card's own cap.
+     */
+    public static int lifeToPay(final Player ai, final Card host, final SpellAbility sa) {
+        int x = Math.max(0, (ai.getLife() - 8) / 2);
+        final java.util.regex.Matcher cap = java.util.regex.Pattern.compile("XMax\\$ (\\w+)").matcher(host.getSVar("PayLife"));
+        if (cap.find()) {
+            x = Math.min(x, AbilityUtils.calculateAmount(host, cap.group(1), sa));
+        }
+        return x;
+    }
 
     @Override
     protected AiAbilityDecision canPlay(Player ai, SpellAbility sa) {
@@ -26,6 +42,10 @@ public class StoreSVarAi extends SpellAbilityAi {
         if ("FoldWithOctoOpus".equals(sa.getParam("AILogic")) && !mandatory
                 && aiPlayer.getCardsIn(forge.game.zone.ZoneType.Battlefield).stream().noneMatch(c -> c.getName().equals("Octo Opus"))) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        if (sa.getPayCosts() != null && "Count$xPaid".equals(sa.getSVar("X"))
+                && sa.getPayCosts().getCostParts().stream().anyMatch(p -> p instanceof CostPayLife && "X".equals(p.getAmount()))) {
+            sa.setXManaCostPaid(lifeToPay(aiPlayer, sa.getHostCard(), sa));
         }
         if (sa instanceof WrappedAbility) {
             SpellAbility origSa = ((WrappedAbility)sa).getWrappedAbility();

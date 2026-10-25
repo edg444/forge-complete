@@ -47,6 +47,11 @@ public class PermanentAi extends SpellAbilityAi {
     protected AiAbilityDecision checkApiLogic(final Player ai, final SpellAbility sa) {
         final Card source = sa.getHostCard();
 
+        // Minion of the Wastes: only with life enough to make it worth having
+        if (source.hasSVar("LifePaidOnETB") && StoreSVarAi.lifeToPay(ai, source, sa) < 2) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+
         // check on legendary
         if (!source.ignoreLegendRule() && ai.isCardInPlay(source.getName())) {
             // TODO check the risk we'd lose the effect with bad timing
