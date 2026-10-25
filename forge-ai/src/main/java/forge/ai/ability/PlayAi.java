@@ -64,6 +64,11 @@ public class PlayAi extends SpellAbilityAi {
         if (cards.isEmpty()) {
             return new AiAbilityDecision(0, AiPlayDecision.MissingNeededCards);
         }
+        // Isochron Scepter: a free copy is only worth making when the AI would cast it now
+        if (sa.hasParam("CopyCard") && sa.hasParam("WithoutManaCost") && !sa.isTrigger()
+                && cards.stream().noneMatch(c -> GraveCastAi.castValue(ai, c) > 0)) {
+            return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
+        }
 
         if ("ReplaySpell".equals(logic)) {
             if (ComputerUtil.targetPlayableSpellCard(ai, cards, sa, sa.hasParam("WithoutManaCost"), false)) {
