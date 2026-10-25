@@ -37,7 +37,8 @@ public final class NumberGuessAi {
     private NumberGuessAi() { }
 
     public static boolean handles(final String logic) {
-        return "VoidNumber".equals(logic) || "GuessHandType".equals(logic) || "TypeSave".equals(logic) || "LiquidFire".equals(logic);
+        return "VoidNumber".equals(logic) || "GuessHandType".equals(logic) || "TypeSave".equals(logic) || "LiquidFire".equals(logic)
+                || "WrathEnergy".equals(logic);
     }
 
     /** The number the AI decided on for this card, if it decided on one. */
@@ -46,7 +47,7 @@ public final class NumberGuessAi {
             return prelateNumber(sa.getActivatingPlayer() != null ? sa.getActivatingPlayer() : sa.getHostCard().getController());
         }
         final String root = sa.getRootAbility().getParam("AILogic");
-        return "VoidNumber".equals(root) || "LiquidFire".equals(root) ? NUMBERS.get(sa.getHostCard().getId()) : null;
+        return "VoidNumber".equals(root) || "LiquidFire".equals(root) || "WrathEnergy".equals(root) ? NUMBERS.get(sa.getHostCard().getId()) : null;
     }
 
     /** The card type the AI decided on for this card, if it decided on one. */
@@ -79,6 +80,9 @@ public final class NumberGuessAi {
         }
         if ("LiquidFire".equals(sa.getParam("AILogic"))) {
             return liquidFire(ai, sa);
+        }
+        if ("WrathEnergy".equals(sa.getParam("AILogic"))) {
+            return wrathEnergy(ai, sa);
         }
         return "VoidNumber".equals(sa.getParam("AILogic")) ? voidNumber(ai, sa) : guessHand(ai, sa);
     }
@@ -180,6 +184,38 @@ public final class NumberGuessAi {
         }
         sa.resetTargets();
         sa.getTargets().add(best);
+        NUMBERS.put(sa.getHostCard().getId(), bestN);
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    // Wrath of the Skies: X energy from mana, then that much paid: the mana value that wipes the most of theirs
+    private static AiAbilityDecision wrathEnergy(final Player ai, final SpellAbility sa) {
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        if (!ph.isPlayerTurn(ai) || !ph.is(PhaseType.MAIN1) && !ph.is(PhaseType.MAIN2)) {
+            return no(AiPlayDecision.AnotherTime);
+        }
+        final forge.card.mana.ManaCost cost = sa.getPayCosts().getTotalMana();
+        final int max = (forge.ai.ComputerUtilMana.getAvailableManaEstimate(ai, false) - cost.getCMC()) / Math.max(1, cost.countX())
+                + ai.getCounters(forge.game.card.CounterEnumType.ENERGY);
+        int best = 0;
+        int bestN = -1;
+        int value = 0;
+        for (int n = 0; n <= max; n++) {
+            for (final Card c : ai.getGame().getCardsIn(ZoneType.Battlefield)) {
+                if ((c.isArtifact() || c.isCreature() || c.isEnchantment()) && c.getCMC() == n && c.canBeDestroyed()) {
+                    final int w = c.isCreature() ? ComputerUtilCard.evaluateCreature(c) : ExchangeTradeAi.value(c);
+                    value += c.getController().isOpponentOf(ai) ? w : -w;
+                }
+            }
+            if (value > best) {
+                best = value;
+                bestN = n;
+            }
+        }
+        if (bestN < 0 || best < 200) {
+            return no(AiPlayDecision.CantPlayAi);
+        }
+        sa.setXManaCostPaid(Math.max(0, bestN - ai.getCounters(forge.game.card.CounterEnumType.ENERGY)));
         NUMBERS.put(sa.getHostCard().getId(), bestN);
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }

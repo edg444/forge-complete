@@ -482,6 +482,20 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       Caldera Hellion: cast only when its sweep favors it.
     - Kept, with reasons: Bog Witch, Cloak of Confusion, Lightning Storm, Insidious Dreams, Artificer's Intuition,
       Diamond Lion, Bazaar Trader.
+  - *Final pass, batches 128-129* (`NoAiBatch128Test`, `NoAiBatch129Test`):
+    - New `MiscCardAi`: Wistful Thinking (at their hand), Corpse Augur (the graveyard it can afford in life), Soul's
+      Might, Aura Barbs, Confiscation Coup and HELIOS One (within its energy), Safe Haven and Synod Sanctum (its
+      permanent exiled ahead of their removal, back once safe), Juxtapose. Wrath of the Skies: new `WrathEnergy`,
+      the energy paid that wipes the most of theirs. Firefright Mage: `MakeUnblockable`.
+    - New `ExtraCardAi`: Izzet Chemister, Aven Mimeomancer (their best creature made a 3/1), Pack Hunt, Alpha Brawl,
+      Grim Contest, Surprise Deployment (a blocker from hand), Quiet Speculation, Chariot of the Sun. Hour of Need:
+      the Dragons logic, limited by strive. Channel the Suns: `ManaRitual`.
+    - Already sound, flag removed: Betrayal of Flesh, Demonmail Hauberk, Lobelia Sackville-Baggins, Overcharged
+      Amalgam, Faith's Shield, Circling Vultures, Dualcaster Mage.
+    - Kept, with reasons: Aggression, Araumi of the Dead Tide, Dragon Throne of Tarkir, Dead-Iron Sledge, Invert the
+      Skies, Cultural Exchange, Gauntlets of Chaos, Shell of the Last Kappa, Cadaverous Bloom, Knowledge Vault,
+      Synthesis Pod, Magus of the Jar, Memory Jar, Kaho, Breath of Fury, Mask of the Mimic, Ride the Avalanche, Savage
+      Summoning, Aquitect's Will, Boros Battleshaper, False Orders, Blaze of Glory.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 

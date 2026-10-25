@@ -377,6 +377,12 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         if (forge.ai.ability.LandAlphaGiveBackAi.handles(logic)) {
             return forge.ai.ability.LandAlphaGiveBackAi.decide(ai, sa);
         }
+        if (forge.ai.ability.ExtraCardAi.handles(logic)) {
+            return forge.ai.ability.ExtraCardAi.decide(ai, sa);
+        }
+        if (forge.ai.ability.MiscCardAi.handles(sa)) {
+            return forge.ai.ability.MiscCardAi.decide(ai, sa);
+        }
         if (forge.ai.ability.HandAi.handles(logic)) {
             return forge.ai.ability.HandAi.decide(ai, sa);
         }

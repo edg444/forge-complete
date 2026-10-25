@@ -152,7 +152,16 @@ public final class HandAi {
                 gain += v - dragon;
             }
         }
-        if (gain < 150) {
+        if (sa.getHostCard().hasKeyword(forge.game.keyword.Keyword.STRIVE)) {
+            // {1}{U} more for each target past the first
+            final int extra = Math.max(0, (ComputerUtilMana.getAvailableManaEstimate(ai, false) - sa.getHostCard().getCMC()) / 2);
+            picks.sort(Comparator.comparingInt((Card c) -> ComputerUtilCard.evaluateCreature(c)));
+            while (picks.size() > extra + 1) {
+                final Card c = picks.remove(picks.size() - 1);
+                gain -= c.getController().equals(ai) ? dragon - ComputerUtilCard.evaluateCreature(c) : ComputerUtilCard.evaluateCreature(c) - dragon;
+            }
+        }
+        if (gain < 90) {
             return no(AiPlayDecision.CantPlayAi);
         }
         sa.resetTargets();
