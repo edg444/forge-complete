@@ -329,6 +329,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Fix: after Bombardment, every card in hand was highlighted as castable.** When a card's characteristics change
+  (a clone effect starting or ending, a text change), its first spell's cost is resynced to its mana cost with
+  `Cost.copyWithDefinedMana`, which built on `copyWithNoMana()`, and that keeps a `{0}` mana part: the real cost went
+  in after it, and `getTotalMana()` reads the first one, so the actionable highlight (and the AI's affordability
+  checks) saw `{0}`. Bombardment changes every card you own off the battlefield, so the whole hand stayed marked
+  once it ended. The `{0}` part is now replaced. Upstream has the same code. Test: `BombardmentTest.afterTheTurnCardsCostWhatTheyDidAndArentHighlighted`.
+
 - **Setting: Exclude Funny Cards** (`FPref.EXCLUDE_FUNNY_CARDS`, off by default; desktop Preferences and mobile
   Settings, under Random Deck Generation, next to Exclude The List). Random decks and Full card pool draft and sealed
   packs leave out Un-cards. A card is one when every printing of it is acorn-stamped, or from a silver-bordered or

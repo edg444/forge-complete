@@ -752,7 +752,10 @@ public class Cost implements Serializable {
     }
     public final Cost copyWithDefinedMana(ManaCost manaCost) {
         Cost toRet = copyWithNoMana();
-        toRet.costParts.add(new CostPartMana(manaCost, null));
+        // copyWithNoMana leaves a {0} mana part, which getTotalMana would read instead of this one: every card a
+        // clone effect had changed (Bombardment's Missiles) looked free to cast afterward
+        toRet.costParts.removeIf(CostPartMana.class::isInstance);
+        toRet.costParts.add(0, new CostPartMana(manaCost, null));
         toRet.cacheTapCost();
         return toRet;
     }

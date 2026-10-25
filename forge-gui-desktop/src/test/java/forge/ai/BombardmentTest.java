@@ -80,6 +80,23 @@ public class BombardmentTest extends AITest {
     }
 
     @Test
+    public void afterTheTurnCardsCostWhatTheyDidAndArentHighlighted() {
+        Game game = bombard();
+        Player ai = game.getPlayers().get(1);
+        Card wurm = ai.getCardsIn(ZoneType.Hand).get(0);
+        // a card's first spell is resynced to its mana cost when it changes, which used to put a {0} part in front
+        AssertJUnit.assertEquals("{R}", castable(wurm, ai).getPayCosts().getTotalMana().toString());
+        playUntilNextTurn(game);
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN1, ai);
+        game.getAction().checkStateEffects(true);
+        wurm = game.getCardState(wurm);
+        AssertJUnit.assertEquals("Craw Wurm", wurm.getName());
+        AssertJUnit.assertEquals("{4}{G}{G}", castable(wurm, ai).getPayCosts().getTotalMana().toString());
+        // four Mountains, one tapped for Bombardment: the actionable highlight read the {0} and marked the whole hand
+        AssertJUnit.assertFalse(AvailableActions.collectActionable(ai, 10000).contains(wurm.getView()));
+    }
+
+    @Test
     public void drawnAndShuffledCardsArentMissiles() {
         Game game = bombard();
         Player ai = game.getPlayers().get(1);
