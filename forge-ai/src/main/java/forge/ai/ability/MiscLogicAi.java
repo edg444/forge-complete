@@ -45,7 +45,8 @@ public final class MiscLogicAi {
     public static boolean handles(final String logic) {
         return "BounceBoth".equals(logic) || "GraveShuffle".equals(logic) || "RemoveCombatant".equals(logic) || "CashIn".equals(logic)
                 || "WipeWithSub".equals(logic) || "RecycleForDamage".equals(logic) || "EchoDestroy".equals(logic)
-                || "SelfDamage".equals(logic) || "BounceWithAuras".equals(logic) || "PayLifePump".equals(logic);
+                || "SelfDamage".equals(logic) || "BounceWithAuras".equals(logic) || "PayLifePump".equals(logic)
+                || "DrawOnDamage".equals(logic);
     }
 
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
@@ -59,6 +60,7 @@ public final class MiscLogicAi {
             case "SelfDamage" -> selfDamage(ai, sa);
             case "BounceWithAuras" -> bounceWithAuras(ai, sa);
             case "PayLifePump" -> payLifePump(ai, sa);
+            case "DrawOnDamage" -> drawOnDamage(ai, sa);
             default -> cashIn(ai, sa);
         };
     }
@@ -422,6 +424,29 @@ public final class MiscLogicAi {
             }
         }
         return no();
+    }
+
+    // ---- Hunter's Insight: cards for its unblocked attacker's damage ----
+
+    private static AiAbilityDecision drawOnDamage(final Player ai, final SpellAbility sa) {
+        final Combat combat = ai.getGame().getCombat();
+        if (combat == null || !ai.equals(combat.getAttackingPlayer()) || !ai.getGame().getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS)
+                || !sa.usesTargeting()) {
+            return new AiAbilityDecision(0, AiPlayDecision.WaitForCombat);
+        }
+        sa.resetTargets();
+        Card best = null;
+        for (final Card att : combat.getAttackers()) {
+            if (combat.isUnblocked(att) && sa.canTarget(att) && att.getNetCombatDamage() >= 2
+                    && (best == null || att.getNetCombatDamage() > best.getNetCombatDamage())) {
+                best = att;
+            }
+        }
+        if (best == null) {
+            return no();
+        }
+        sa.getTargets().add(best);
+        return yes();
     }
 
     // ---- verse counters ----

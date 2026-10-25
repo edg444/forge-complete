@@ -56,7 +56,9 @@ public final class CantripAi {
             }
             return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
         }
-        if (!ph.is(PhaseType.END_OF_TURN) || !ph.getNextTurn().equals(ai)) {
+        // Overmaster, Insist: a sorcery goes in its own second main phase instead
+        final boolean sorcery = sa.isSpell() && sa.getHostCard().isSorcery();
+        if (sorcery ? !ph.isPlayerTurn(ai) || !ph.is(PhaseType.MAIN2) : !ph.is(PhaseType.END_OF_TURN) || !ph.getNextTurn().equals(ai)) {
             return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
         }
         if (tgt != null && tgt.getMinTargets() > 0) {

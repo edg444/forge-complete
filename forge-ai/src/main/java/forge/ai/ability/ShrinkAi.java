@@ -38,35 +38,36 @@ public final class ShrinkAi {
             return new AiAbilityDecision(0, AiPlayDecision.WaitForCombat);
         }
         sa.resetTargets();
+        // Polymorphist's Jest: every creature the player controls
+        if (sa.getTargetRestrictions().canTgtPlayer()) {
+            int total = 0;
+            Player who = null;
+            for (final Player p : ai.getOpponents()) {
+                if (!sa.canTarget(p)) {
+                    continue;
+                }
+                int v = 0;
+                for (final Card c : p.getCreaturesInPlay()) {
+                    v += shrinkValue(ai, combat, c);
+                }
+                if (v > total) {
+                    total = v;
+                    who = p;
+                }
+            }
+            if (who == null || total < 150) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            }
+            sa.getTargets().add(who);
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
         Card best = null;
         int bestV = 0;
         for (final Card c : CardUtil.getValidCardsToTarget(sa)) {
             if (!c.getController().isOpponentOf(ai)) {
                 continue;
             }
-            int v = 0;
-            if (combat.isAttacking(c)) {
-                if (combat.isUnblocked(c)) {
-                    v += Math.max(0, ComputerUtilCombat.damageIfUnblocked(c, ai, combat, false) - 1) * 6;
-                }
-                for (final Card b : combat.getBlockers(c)) {
-                    if (b.getNetCombatDamage() >= 1) {
-                        v += ComputerUtilCard.evaluateCreature(c);
-                    }
-                    if (ComputerUtilCombat.canDestroyBlocker(ai, b, c, combat, false) && b.getNetToughness() > 1) {
-                        v += ComputerUtilCard.evaluateCreature(b);
-                    }
-                }
-            } else if (combat.isBlocking(c)) {
-                for (final Card a : combat.getAttackersBlockedBy(c)) {
-                    if (a.getNetCombatDamage() >= 1) {
-                        v += ComputerUtilCard.evaluateCreature(c);
-                    }
-                    if (ComputerUtilCombat.canDestroyAttacker(ai, a, c, combat, false) && a.getNetToughness() > 1) {
-                        v += ComputerUtilCard.evaluateCreature(a);
-                    }
-                }
-            }
+            final int v = shrinkValue(ai, combat, c);
             if (v > bestV) {
                 bestV = v;
                 best = c;
@@ -77,6 +78,33 @@ public final class ShrinkAi {
         }
         sa.getTargets().add(best);
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    private static int shrinkValue(final Player ai, final Combat combat, final Card c) {
+        int v = 0;
+        if (combat.isAttacking(c)) {
+            if (combat.isUnblocked(c)) {
+                v += Math.max(0, ComputerUtilCombat.damageIfUnblocked(c, ai, combat, false) - 1) * 6;
+            }
+            for (final Card b : combat.getBlockers(c)) {
+                if (b.getNetCombatDamage() >= 1) {
+                    v += ComputerUtilCard.evaluateCreature(c);
+                }
+                if (ComputerUtilCombat.canDestroyBlocker(ai, b, c, combat, false) && b.getNetToughness() > 1) {
+                    v += ComputerUtilCard.evaluateCreature(b);
+                }
+            }
+        } else if (combat.isBlocking(c)) {
+            for (final Card a : combat.getAttackersBlockedBy(c)) {
+                if (a.getNetCombatDamage() >= 1) {
+                    v += ComputerUtilCard.evaluateCreature(c);
+                }
+                if (ComputerUtilCombat.canDestroyAttacker(ai, a, c, combat, false) && a.getNetToughness() > 1) {
+                    v += ComputerUtilCard.evaluateCreature(a);
+                }
+            }
+        }
+        return v;
     }
 
     private static AiAbilityDecision strip(final Player ai, final SpellAbility sa) {

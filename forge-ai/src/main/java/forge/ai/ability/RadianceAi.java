@@ -96,7 +96,7 @@ public final class RadianceAi {
                         }
                     }
                 }
-                case Pump -> {
+                case Pump, Untap -> {
                     if (sa.getParamOrDefault("KW", "").contains("can't block")) {
                         // Incite Hysteria: its first main phase, for an attack the group can't block
                         if (!ph.isPlayerTurn(ai) || !ph.is(PhaseType.MAIN1)) {

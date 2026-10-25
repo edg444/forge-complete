@@ -837,6 +837,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Strip Bare: `StripAttachments`, for the creature with the most of their Auras and Equipment on it, its own
       creature held down by theirs above all.
     - Square Up, Wings of Velis Vel: `Upgrade`. Djinn of Infinite Deceits: `ExchangePair`.
+    - Insist, Overmaster: `Cantrip`, which now casts a sorcery in its own second main phase. Phantasmal Form:
+      `Cantrip`.
+    - Hunter's Insight, Warriors' Lesson: new `DrawOnDamage`, on its biggest unblocked attacker.
+    - Polymorphist's Jest: `Shrink`, now also for a player target (all their creatures in combat). Rally the
+      Righteous: `Radiance`, now also with an untap root, judged like its pump.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).
