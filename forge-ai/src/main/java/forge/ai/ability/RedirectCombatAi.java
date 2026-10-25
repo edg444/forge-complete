@@ -50,6 +50,21 @@ public final class RedirectCombatAi {
         return host == null ? null : CHOSEN_SOURCES.get(host.getId());
     }
 
+    /** The most damage one hit the AI faces right now would deal, as decide sees it (Shining Shoal sizes X on it). */
+    public static int biggestHit(final Player ai) {
+        final Game game = ai.getGame();
+        final Combat combat = game.getCombat();
+        final List<Hit> hits;
+        if (!game.getStack().isEmpty()) {
+            hits = stackHits(ai, game.getStack().peekAbility());
+        } else if (combat != null && game.getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS)) {
+            hits = hits(combat);
+        } else {
+            hits = List.of();
+        }
+        return hits.stream().mapToInt(Hit::dmg).max().orElse(0);
+    }
+
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
         final Game game = ai.getGame();
         final Combat combat = game.getCombat();
@@ -190,6 +205,12 @@ public final class RedirectCombatAi {
                     final String var = with.get("VarName");
                     if (var != null && sub.getSVar(var).startsWith("Number$")) {
                         amount = Integer.parseInt(sub.getSVar(var).substring(7));
+                    }
+                    // Shining Shoal: the shield's size is stored from X as it resolves
+                    for (SpellAbility st = sa; var != null && st != null; st = st.getSubAbility()) {
+                        if (st.getApi() == ApiType.StoreSVar && var.equals(st.getParam("SVar")) && st.hasParam("Expression")) {
+                            amount = AbilityUtils.calculateAmount(sa.getHostCard(), st.getParam("Expression"), sa);
+                        }
                     }
                 } else {
                     // a "next time" shield exiles its effect once used; without that it lasts the turn

@@ -329,6 +329,17 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **AI for cards marked `AI:RemoveDeck:All`, continued** (each card below now has AI that uses it sensibly, and its
+  flag is gone).
+  - *Second pass, batch 105* (`NoAiBatch105Test`):
+    - The Shoals (Blazing, Disrupting, Nourishing, Shining, Sickening Shoal): new `ShoalAi` (`AILogic$ Shoal`). X
+      used to come only from mana, so the exile-a-card alternative cost always meant X = 0. Now the Xs on offer are
+      what the mana covers or the mana values of the cards it could exile, and each Shoal takes the smallest one
+      that does its job: Sickening kills their best creature it can, Blazing makes an unblocked attacker lethal (in
+      life or poison), Disrupting counters their spell when an X matches its mana value, Nourishing gains just
+      enough to survive their attack, and Shining moves the whole of the biggest hit. The redirect AI now reads a
+      shield size stored from X as it resolves.
+
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 
 - **AI for cards marked `AI:RemoveDeck:All`, continued** (the entry under the eighteenth deploy has the start; each
