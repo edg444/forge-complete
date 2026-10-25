@@ -870,6 +870,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Mana Vapors: new `LandLock`, cast in its second main phase when most of their lands are tapped. Soul's Grace:
       new `LifeFromPower`, the biggest power for life when life is short. Phyrexian Purge: new `LifePerTarget`, their
       creatures worth 3 life each, keeping 8 back.
+    - Hail Storm: new `AttackerSweep`, in their combat when the attackers it kills outweigh its own losses. Immoral
+      Bargain: new `SacXForX`, X of its junk creatures for X of their best nonland permanents.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

@@ -48,7 +48,7 @@ public final class MiscLogicAi {
                 || "SelfDamage".equals(logic) || "BounceWithAuras".equals(logic) || "PayLifePump".equals(logic)
                 || "DrawOnDamage".equals(logic) || "DamageKill".equals(logic) || "LethalOnly".equals(logic)
                 || "LifeForGraveyard".equals(logic) || "LandLock".equals(logic) || "LifeFromPower".equals(logic)
-                || "LifePerTarget".equals(logic);
+                || "LifePerTarget".equals(logic) || "AttackerSweep".equals(logic);
     }
 
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
@@ -69,6 +69,7 @@ public final class MiscLogicAi {
             case "LandLock" -> landLock(ai, sa);
             case "LifeFromPower" -> lifeFromPower(ai, sa);
             case "LifePerTarget" -> lifePerTarget(ai, sa);
+            case "AttackerSweep" -> attackerSweep(ai, sa);
             default -> cashIn(ai, sa);
         };
     }
@@ -601,6 +602,33 @@ public final class MiscLogicAi {
             life -= 3;
         }
         return sa.getTargets().isEmpty() ? no() : yes();
+    }
+
+    // ---- Hail Storm: damage to their attackers, and some to itself and its own creatures ----
+
+    private static AiAbilityDecision attackerSweep(final Player ai, final SpellAbility sa) {
+        final Combat combat = ai.getGame().getCombat();
+        if (combat == null || ai.equals(combat.getAttackingPlayer()) || !ai.getGame().getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS)) {
+            return new AiAbilityDecision(0, AiPlayDecision.WaitForCombat);
+        }
+        int v = 0;
+        for (SpellAbility s = sa; s != null; s = s.getSubAbility()) {
+            if (s.getApi() == forge.game.ability.ApiType.DamageAll) {
+                final int n = forge.game.ability.AbilityUtils.calculateAmount(sa.getHostCard(), s.getParam("NumDmg"), s);
+                for (final Card c : CardLists.getValidCards(ai.getGame().getCardsIn(ZoneType.Battlefield), s.getParam("ValidCards"), ai, sa.getHostCard(), s)) {
+                    if (n >= c.getLethalDamage() && c.canBeDestroyed()) {
+                        v += (c.getController().isOpponentOf(ai) ? 1 : -1) * ComputerUtilCard.evaluateCreature(c);
+                    }
+                }
+            } else if (s.getApi() == forge.game.ability.ApiType.DealDamage && "You".equals(s.getParam("Defined"))) {
+                final int n = forge.game.ability.AbilityUtils.calculateAmount(sa.getHostCard(), s.getParam("NumDmg"), s);
+                if (n >= ai.getLife()) {
+                    return no();
+                }
+                v -= n * 6;
+            }
+        }
+        return v >= 100 ? yes() : no();
     }
 
     // ---- verse counters ----

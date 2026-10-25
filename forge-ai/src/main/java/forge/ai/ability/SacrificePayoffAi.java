@@ -50,7 +50,7 @@ public final class SacrificePayoffAi {
 
     public static boolean handles(final String logic) {
         return "SacrificeFor".equals(logic) || "SacrificeAny".equals(logic) || "RevealFor".equals(logic) || "ExileForX".equals(logic)
-                || "ExileFor".equals(logic) || "RevealX".equals(logic);
+                || "ExileFor".equals(logic) || "RevealX".equals(logic) || "SacXForX".equals(logic);
     }
 
     /** What the AI decided to sacrifice for this card, if anything. */
@@ -67,6 +67,7 @@ public final class SacrificePayoffAi {
             case "ExileForX" -> exileForX(ai, sa);
             case "ExileFor" -> exileFor(ai, sa);
             case "RevealX" -> revealX(ai, sa);
+            case "SacXForX" -> sacXForX(ai, sa);
             default -> sacrificeFor(ai, sa);
         };
     }
@@ -309,6 +310,35 @@ public final class SacrificePayoffAi {
         }
         payoff(ai, sa, List.of(bestCard));
         PLANNED.put(host.getId(), new CardCollection(bestCard));
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    // Immoral Bargain: X of its junk creatures for X of their best nonland permanents
+    private static AiAbilityDecision sacXForX(final Player ai, final SpellAbility sa) {
+        final CostSacrifice cost = sacCost(sa);
+        if (cost == null || !sa.usesTargeting()) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final CardCollection junk = junk(ai, CardLists.getValidCards(ai.getCardsIn(ZoneType.Battlefield), cost.getType().split(";"), ai, sa.getHostCard(), sa));
+        sa.setXManaCostPaid(Math.max(1, junk.size()));
+        sa.resetTargets();
+        final List<Card> theirs = new ArrayList<>(CardLists.filter(CardUtil.getValidCardsToTarget(sa),
+                c -> c.getController().isOpponentOf(ai) && c.canBeDestroyed()));
+        theirs.sort(Comparator.comparingInt(SacrificePayoffAi::worth).reversed());
+        junk.sort(Comparator.comparingInt(SacrificePayoffAi::worth));
+        int x = 0;
+        int v = 0;
+        while (x < junk.size() && x < theirs.size() && worth(theirs.get(x)) > worth(junk.get(x)) + 40) {
+            v += worth(theirs.get(x)) - worth(junk.get(x));
+            x++;
+        }
+        if (x < 1 || v < 100) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        sa.setXManaCostPaid(x);
+        sa.resetTargets();
+        theirs.stream().limit(x).forEach(c -> sa.getTargets().add(c));
+        PLANNED.put(sa.getHostCard().getId(), new CardCollection(junk.subList(0, x)));
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
 
