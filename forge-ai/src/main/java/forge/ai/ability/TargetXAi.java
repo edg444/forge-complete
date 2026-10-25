@@ -105,49 +105,77 @@ public final class TargetXAi {
         return dmg;
     }
 
+    // what the pump does for one of its creatures in the fight
+    private static int pumpValue(final Player ai, final SpellAbility sa, final Card c, final Combat combat) {
+        final int att = amount(sa, "NumAtt");
+        final int def = amount(sa, "NumDef");
+        final boolean trample = sa.getParamOrDefault("KW", "").contains("Trample") || c.hasKeyword(Keyword.TRAMPLE);
+        final int left = c.getNetToughness() - c.getDamage();
+        final int dmg = damageTo(c, combat);
+        int value = 0;
+        if (dmg >= left && dmg < left + def && c.canBeDestroyed()) {
+            value += ComputerUtilCard.evaluateCreature(c);
+        }
+        final java.util.List<Card> foes = combat.isAttacking(c) ? combat.getBlockers(c) : combat.getAttackersBlockedBy(c);
+        if (foes.size() == 1) {
+            final Card foe = foes.get(0);
+            if (c.getNetCombatDamage() < foe.getLethalDamage() && c.getNetCombatDamage() + att >= foe.getLethalDamage()) {
+                value += ComputerUtilCard.evaluateCreature(foe);
+            }
+        }
+        if (combat.isAttacking(c) && (foes.isEmpty() || trample) && att > 0) {
+            final Player opp = combat.getDefenderPlayerByAttacker(c);
+            final int remaining = opp == null ? Integer.MAX_VALUE : forge.ai.ComputerUtilCombat.lifeThatWouldRemain(opp, combat);
+            value += remaining > 0 && remaining <= att ? 1000 : att * 10;
+        }
+        return value;
+    }
+
     private static AiAbilityDecision combatPump(final Player ai, final SpellAbility sa) {
         final Game game = ai.getGame();
         final Combat combat = game.getCombat();
         if (combat == null || !game.getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS)) {
             return no(AiPlayDecision.WaitForCombat);
         }
+        // Belbe's Armor: X paid in mana, so the least X that does the job
+        final boolean payX = "Count$xPaid".equals(sa.getSVar("X"));
+        if (payX) {
+            sa.setXManaCostPaid(null);
+        }
+        final int maxX = payX ? forge.ai.ComputerUtilMana.determineLeftoverMana(sa, ai, false) : 0;
         Card best = null;
         int bestValue = 0;
+        int bestX = 0;
         for (final Card c : CardUtil.getValidCardsToTarget(sa)) {
             if (!c.getController().equals(ai) || !combat.isAttacking(c) && !combat.isBlocking(c)) {
                 continue;
             }
             sa.resetTargets();
             sa.getTargets().add(c);
-            final int att = amount(sa, "NumAtt");
-            final int def = amount(sa, "NumDef");
-            final boolean trample = sa.getParamOrDefault("KW", "").contains("Trample") || c.hasKeyword(Keyword.TRAMPLE);
-            final int left = c.getNetToughness() - c.getDamage();
-            final int dmg = damageTo(c, combat);
-            int value = 0;
-            if (dmg >= left && dmg < left + def && c.canBeDestroyed()) {
-                value += ComputerUtilCard.evaluateCreature(c);
-            }
-            final java.util.List<Card> foes = combat.isAttacking(c) ? combat.getBlockers(c) : combat.getAttackersBlockedBy(c);
-            if (foes.size() == 1) {
-                final Card foe = foes.get(0);
-                if (c.getNetCombatDamage() < foe.getLethalDamage() && c.getNetCombatDamage() + att >= foe.getLethalDamage()) {
-                    value += ComputerUtilCard.evaluateCreature(foe);
+            for (int x = payX ? 1 : 0; x <= maxX; x++) {
+                if (payX) {
+                    sa.setXManaCostPaid(x);
                 }
-            }
-            if (combat.isAttacking(c) && (foes.isEmpty() || trample) && att > 0) {
-                final Player opp = combat.getDefenderPlayerByAttacker(c);
-                final int remaining = opp == null ? Integer.MAX_VALUE : forge.ai.ComputerUtilCombat.lifeThatWouldRemain(opp, combat);
-                value += remaining > 0 && remaining <= att ? 1000 : att * 10;
-            }
-            if (value > bestValue) {
-                bestValue = value;
-                best = c;
+                final int value = pumpValue(ai, sa, c, combat);
+                if (value >= 100) {
+                    if (value > bestValue) {
+                        bestValue = value;
+                        best = c;
+                        bestX = x;
+                    }
+                    break;
+                }
             }
         }
         sa.resetTargets();
         if (best == null || bestValue < 100) {
+            if (payX) {
+                sa.setXManaCostPaid(null);
+            }
             return no(AiPlayDecision.DoesntImpactCombat);
+        }
+        if (payX) {
+            sa.setXManaCostPaid(bestX);
         }
         sa.getTargets().add(best);
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);

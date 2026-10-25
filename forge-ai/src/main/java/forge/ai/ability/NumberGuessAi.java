@@ -37,7 +37,7 @@ public final class NumberGuessAi {
     private NumberGuessAi() { }
 
     public static boolean handles(final String logic) {
-        return "VoidNumber".equals(logic) || "GuessHandType".equals(logic);
+        return "VoidNumber".equals(logic) || "GuessHandType".equals(logic) || "TypeSave".equals(logic);
     }
 
     /** The number the AI decided on for this card, if it decided on one. */
@@ -50,7 +50,8 @@ public final class NumberGuessAi {
 
     /** The card type the AI decided on for this card, if it decided on one. */
     public static String plannedType(final SpellAbility sa) {
-        return "GuessHandType".equals(sa.getRootAbility().getParam("AILogic")) ? TYPES.get(sa.getHostCard().getId()) : null;
+        final String logic = sa.getRootAbility().getParam("AILogic");
+        return "GuessHandType".equals(logic) || "TypeSave".equals(logic) ? TYPES.get(sa.getHostCard().getId()) : null;
     }
 
     private static AiAbilityDecision no(final AiPlayDecision why) {
@@ -72,7 +73,55 @@ public final class NumberGuessAi {
     }
 
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
+        if ("TypeSave".equals(sa.getParam("AILogic"))) {
+            return typeSave(ai, sa);
+        }
         return "VoidNumber".equals(sa.getParam("AILogic")) ? voidNumber(ai, sa) : guessHand(ai, sa);
+    }
+
+    // Defensive Maneuvers: +0/+X to a creature type, once blocks are known - the type of its fighters it saves most of
+    private static AiAbilityDecision typeSave(final Player ai, final SpellAbility sa) {
+        final forge.game.combat.Combat combat = ai.getGame().getCombat();
+        if (combat == null || !ai.getGame().getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS)) {
+            return no(AiPlayDecision.WaitForCombat);
+        }
+        final SpellAbility pump = sa.getSubAbility();
+        final int def = pump == null ? 0 : AbilityUtilsShim.amount(pump, "NumDef");
+        final Map<String, Integer> saved = new java.util.HashMap<>();
+        for (final Card c : ai.getCreaturesInPlay()) {
+            if (!combat.isAttacking(c) && !combat.isBlocking(c) || !forge.ai.ComputerUtilCombat.combatantWouldBeDestroyed(ai, c, combat)) {
+                continue;
+            }
+            int dmg = 0;
+            for (final Card o : combat.isAttacking(c) ? combat.getBlockers(c) : combat.getAttackersBlockedBy(c)) {
+                dmg += o.getNetCombatDamage();
+            }
+            if (dmg >= c.getNetToughness() - c.getDamage() + def) {
+                continue;
+            }
+            for (final String t : c.getType().getCreatureTypes()) {
+                saved.merge(t, ComputerUtilCard.evaluateCreature(c), Integer::sum);
+            }
+        }
+        String best = null;
+        int bestV = 0;
+        for (final Map.Entry<String, Integer> e : saved.entrySet()) {
+            if (e.getValue() > bestV) {
+                bestV = e.getValue();
+                best = e.getKey();
+            }
+        }
+        if (best == null || bestV < 100) {
+            return no(AiPlayDecision.DoesntImpactCombat);
+        }
+        TYPES.put(sa.getHostCard().getId(), best);
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    private static final class AbilityUtilsShim {
+        static int amount(final SpellAbility sa, final String param) {
+            return forge.game.ability.AbilityUtils.calculateAmount(sa.getHostCard(), sa.getParamOrDefault(param, "0").replace("+", ""), sa);
+        }
     }
 
     private static AiAbilityDecision voidNumber(final Player ai, final SpellAbility sa) {

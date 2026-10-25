@@ -59,6 +59,11 @@ public class PermanentAi extends SpellAbilityAi {
                 continue;
             }
             final String unless = etb.getParamOrDefault("UnlessCost", "");
+            final java.util.regex.Matcher lands = java.util.regex.Pattern.compile("Return<(\\d+)/Land\\.Basic>").matcher(unless);
+            if (lands.find() && forge.game.card.CardLists.count(ai.getLandsInPlay(), forge.game.card.Card::isBasicLand) < Integer.parseInt(lands.group(1))) {
+                // Ovinomancer: three basics to return, or it's sacrificed
+                return new AiAbilityDecision(0, AiPlayDecision.CantAfford);
+            }
             if (!unless.matches("\\d+") && !source.hasSVar(unless)) {
                 continue;
             }

@@ -429,6 +429,21 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       is settled when the AI decides - just enough, tapped lands first - and that many go back as it resolves (it
       could return them all). Barrel Down kills their best creature it's worth the lands for; Charge Across the
       Araba goes once blocks are known, for lethal unblocked.
+  - *Final pass, batches 123-124* (`NoAiBatch123Test`, `NoAiBatch124Test`; `NoAiTriageTest` records the AI's decision
+    for a list of cards in five standard situations, skipped unless given a list):
+    - Belbe's Armor, Alpha Kavu: `TargetX`, now choosing the least X that does the job. Defensive Maneuvers: new
+      `TypeSave`, the creature type of its fighters it saves most. Choice of Damnations: cast when they have clearly
+      more permanents or little life, then the life or the permanents, whichever their number leaves worse. Acidic
+      Dagger on an attacker they can block; Aether Shockwave's modes before their attack; Chimeric Staff and
+      Chimeric Coils as blockers that win, or for lethal into no blockers (new `MiscCombatAi`). Ovinomancer: cast
+      only with three basics to return. Balancing Act, Primal Plasma: the existing logic was already sound.
+    - New `XAbilityAi`, X worked out for what it does: Alexi, Zephyr Mage (bounce for spare discards), Droning
+      Bureaucrats (the mana value to keep out of combat), Painbringer (just enough graveyard cards), Mercadian Lift,
+      Simic Manipulator, Night Dealings, Firestorm, Exponential Growth (doublings for lethal), Foul-Tongue Shriek,
+      Fresh Meat, Lifecraft Awakening, Spoils of War. Forge Armor (`SacrificeFor` now targets its best creature, and
+      a card marked to be sacrificed costs nothing to give up), Titan's Presence (`RevealFor`, exiling within the
+      revealed power), Rupture (`SacrificeFor`).
+    - Kept, with reasons: Camouflage, Batwing Brume, Marath, Will of the Wild.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 

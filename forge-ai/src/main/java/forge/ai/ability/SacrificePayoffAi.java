@@ -244,6 +244,17 @@ public final class SacrificePayoffAi {
                     if (s.getParamOrDefault("Origin", "").contains("Library") && "Hand".equals(s.getParam("Destination"))) {
                         total += 110;
                     }
+                    // Titan's Presence: exile their creature if its power is at most the revealed card's
+                    if (s.usesTargeting() && "LEY".equals(s.getParam("ConditionSVarCompare")) && s.getSVar("Y").startsWith("Revealed$")) {
+                        final int cap = sac.isEmpty() ? -1 : sac.get(0).getNetPower();
+                        s.resetTargets();
+                        final Card t = ComputerUtilCard.getBestCreatureAI(CardLists.filter(CardUtil.getValidCardsToTarget(s),
+                                c -> c.getController().isOpponentOf(ai) && c.getNetPower() <= cap));
+                        if (t != null) {
+                            s.getTargets().add(t);
+                            total += ComputerUtilCard.evaluateCreature(t);
+                        }
+                    }
                 }
                 case Token -> total += x(s, "TokenAmount", sac) * tokenValue(s.getParam("TokenScript"));
                 case Draw -> total += x(s, "NumCards", sac) * 50;
@@ -268,7 +279,19 @@ public final class SacrificePayoffAi {
                     }
                 }
                 case GainLife -> total += x(s, "LifeAmount", sac) * (ComputerUtil.aiLifeInDanger(ai, false, 0) ? 15 : 3);
-                case PutCounter -> total += x(s, "CounterNum", sac) * 35;
+                case PutCounter -> {
+                    // Forge Armor: on its best creature
+                    if (s.usesTargeting()) {
+                        s.resetTargets();
+                        final Card t = ComputerUtilCard.getBestCreatureAI(CardLists.filter(CardUtil.getValidCardsToTarget(s),
+                                c -> c.getController().equals(ai) && !sac.contains(c)));
+                        if (t == null) {
+                            continue;
+                        }
+                        s.getTargets().add(t);
+                    }
+                    total += x(s, "CounterNum", sac) * 35;
+                }
                 case DealDamage -> {
                     final int dmg = x(s, "NumDmg", sac);
                     final int[] v = new int[1];
@@ -688,7 +711,8 @@ public final class SacrificePayoffAi {
             if (!free && !quiet) {
                 continue;
             }
-            final int lost = free ? 0 : sac.stream().mapToInt(SacrificePayoffAi::worth).sum();
+            // a card marked to be sacrificed costs nothing to give up
+            final int lost = free ? 0 : sac.stream().filter(c -> !c.hasSVar("SacMe")).mapToInt(SacrificePayoffAi::worth).sum();
             final int v = payoff(ai, sa, sac) - lost;
             if (v > best) {
                 best = v;
