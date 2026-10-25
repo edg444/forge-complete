@@ -656,6 +656,12 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         if (alreadyPaid || (payers.size() > 1 && isMine)) {
             return false;
         }
+        // Knight of the Mists: paying would stop its own removal from hitting only their things
+        if (isMine && !sa.hasParam("UnlessSwitched") && (sa.getApi() == ApiType.Destroy || sa.getApi() == ApiType.DealDamage) && sa.usesTargeting()
+                && !sa.getTargets().isEmpty() && sa.getTargets().getTargetCards().allMatch(c -> c.getController().isOpponentOf(payer))
+                && com.google.common.collect.Iterables.all(sa.getTargets().getTargetPlayers(), p -> p.isOpponentOf(payer))) {
+            return false;
+        }
 
         return ComputerUtilCost.checkLifeCost(payer, cost, source, 4, sa)
                 && ComputerUtilCost.checkDamageCost(payer, cost, source, 4, sa)

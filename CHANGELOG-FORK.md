@@ -419,6 +419,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Mass Polymorph, Synthetic Destiny, Reweave: new `PolymorphAi` (`AILogic$ Polymorph`). Its creatures are traded
       for creatures from its library when what it gives up is worth less than the average creature card left there
       (in its second main phase), or in answer to their sweeper; Reweave targets its weakest creature, a token best.
+  - *Second pass, batch 121* (`NoAiBatch121Test`):
+    - Utopia Sprawl, Shimmerwilds Growth: the color is the one most common in its deck (it was left to chance).
+      Gaea's Liege: marked as never really 0/0, since its Forests size it (the AI refused to cast it).
+    - Megatherium: cast only when the mana to pay {1} a card in hand is still there afterward. Knight of the Mists:
+      the AI no longer pays {U} to spare their Knight; it pays only when the Knight it must destroy is its own.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 

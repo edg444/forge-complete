@@ -51,6 +51,25 @@ public class PermanentAi extends SpellAbilityAi {
         if (source.hasSVar("LifePaidOnETB") && StoreSVarAi.lifeToPay(ai, source, sa) < 2) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
+        // Megatherium: sacrificed as it enters unless the mana is still there once it's cast
+        for (final forge.game.trigger.Trigger t : source.getTriggers()) {
+            final SpellAbility etb = t.ensureAbility();
+            if (t.getMode() != forge.game.trigger.TriggerType.ChangesZone || etb == null
+                    || etb.getApi() != forge.game.ability.ApiType.Sacrifice || !"You".equals(etb.getParam("UnlessPayer"))) {
+                continue;
+            }
+            final String unless = etb.getParamOrDefault("UnlessCost", "");
+            if (!unless.matches("\\d+") && !source.hasSVar(unless)) {
+                continue;
+            }
+            int need = forge.game.ability.AbilityUtils.calculateAmount(source, unless, etb);
+            if (source.getSVar(unless).contains("ValidHand") && source.isInZone(ZoneType.Hand)) {
+                need--;
+            }
+            if (need > forge.ai.ComputerUtilMana.getAvailableManaEstimate(ai, false) - source.getCMC()) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantAfford);
+            }
+        }
 
         // check on legendary
         if (!source.ignoreLegendRule() && ai.isCardInPlay(source.getName())) {
