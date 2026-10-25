@@ -50,7 +50,8 @@ public final class SacrificePayoffAi {
 
     public static boolean handles(final String logic) {
         return "SacrificeFor".equals(logic) || "SacrificeAny".equals(logic) || "RevealFor".equals(logic) || "ExileForX".equals(logic)
-                || "ExileFor".equals(logic) || "RevealX".equals(logic) || "SacXForX".equals(logic);
+                || "ExileFor".equals(logic) || "RevealX".equals(logic) || "SacXForX".equals(logic)
+                || "SacForLethal".equals(logic) || "SacPumpLethal".equals(logic) || "SacXJunk".equals(logic);
     }
 
     /** What the AI decided to sacrifice for this card, if anything. */
@@ -68,6 +69,9 @@ public final class SacrificePayoffAi {
             case "ExileFor" -> exileFor(ai, sa);
             case "RevealX" -> revealX(ai, sa);
             case "SacXForX" -> sacXForX(ai, sa);
+            case "SacForLethal" -> sacForLethal(ai, sa);
+            case "SacPumpLethal" -> sacPumpLethal(ai, sa);
+            case "SacXJunk" -> sacXJunk(ai, sa);
             default -> sacrificeFor(ai, sa);
         };
     }
@@ -310,6 +314,133 @@ public final class SacrificePayoffAi {
         }
         payoff(ai, sa, List.of(bestCard));
         PLANNED.put(host.getId(), new CardCollection(bestCard));
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    private static CostSacrifice sacXCost(final SpellAbility sa) {
+        if (sa.getPayCosts() != null) {
+            for (final CostPart part : sa.getPayCosts().getCostParts()) {
+                if (part instanceof CostSacrifice sac && !sac.payCostFromSource()) {
+                    return sac;
+                }
+            }
+        }
+        return null;
+    }
+
+    // Sword of the Ages: its creatures' total power to the face - just enough of them for lethal
+    private static AiAbilityDecision sacForLethal(final Player ai, final SpellAbility sa) {
+        final CostSacrifice cost = sacXCost(sa);
+        final Player opp = ai.getWeakestOpponent();
+        if (cost == null || opp == null || !sa.usesTargeting() || !sa.canTarget(opp) || !opp.canLoseLife() || opp.cantLoseForZeroOrLessLife()) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final List<Card> valid = new ArrayList<>(CardLists.getValidCards(ai.getCardsIn(ZoneType.Battlefield), cost.getType().split(";"), ai, sa.getHostCard(), sa));
+        valid.remove(sa.getHostCard());
+        valid.sort(Comparator.comparingInt(Card::getNetPower).reversed());
+        final CardCollection plan = new CardCollection();
+        int power = 0;
+        for (final Card c : valid) {
+            if (power >= opp.getLife()) {
+                break;
+            }
+            plan.add(c);
+            power += c.getNetPower();
+        }
+        if (power < opp.getLife()) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        sa.setXManaCostPaid(plan.size());
+        sa.resetTargets();
+        sa.getTargets().add(opp);
+        PLANNED.put(sa.getHostCard().getId(), plan);
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    // Vicious Betrayal, Devouring Rage: creatures sacrificed to pump an unblocked attacker - just enough for lethal
+    private static AiAbilityDecision sacPumpLethal(final Player ai, final SpellAbility sa) {
+        final forge.game.combat.Combat combat = ai.getGame().getCombat();
+        final CostSacrifice cost = sacXCost(sa);
+        if (cost == null || combat == null || !ai.equals(combat.getAttackingPlayer())
+                || !ai.getGame().getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS) || !sa.usesTargeting()) {
+            return new AiAbilityDecision(0, AiPlayDecision.WaitForCombat);
+        }
+        final List<Card> fodder = new ArrayList<>(CardLists.filter(CardLists.getValidCards(ai.getCardsIn(ZoneType.Battlefield),
+                cost.getType().split(";"), ai, sa.getHostCard(), sa), c -> !combat.isAttacking(c) || !combat.isUnblocked(c)));
+        fodder.sort(Comparator.comparingInt(SacrificePayoffAi::worth));
+        for (final Card att : combat.getAttackers()) {
+            final Player def = combat.getDefenderPlayerByAttacker(att);
+            if (def == null || !combat.isUnblocked(att) || !sa.canTarget(att) || !def.canLoseLife() || def.cantLoseForZeroOrLessLife()) {
+                continue;
+            }
+            final int coming = forge.ai.ComputerUtilCombat.sumDamageIfUnblocked(CardLists.filter(combat.getAttackers(), combat::isUnblocked), def);
+            final CardCollection plan = new CardCollection();
+            for (final Card f : fodder) {
+                if (f.equals(att)) {
+                    continue;
+                }
+                plan.add(f);
+                sa.setXManaCostPaid(plan.size());
+                if (coming + sacAmount(sa, sa.getParamOrDefault("NumAtt", "0").replace("+", ""), plan.size()) >= def.getLife()) {
+                    sa.resetTargets();
+                    sa.getTargets().add(att);
+                    PLANNED.put(sa.getHostCard().getId(), plan);
+                    return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+                }
+            }
+        }
+        return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+    }
+
+    // "SVar$Y/Times.2" over "Sacrificed$Amount/Plus.1" and the like, for n cards sacrificed
+    private static int sacAmount(final SpellAbility sa, final String name, final int n) {
+        final String expr = sa.getSVar(name);
+        if (expr.isEmpty()) {
+            return 0;
+        }
+        final String[] parts = expr.split("/");
+        int v;
+        if (parts[0].startsWith("SVar$")) {
+            v = sacAmount(sa, parts[0].substring(5), n);
+        } else if (parts[0].equals("Sacrificed$Amount")) {
+            v = n;
+        } else {
+            return 0;
+        }
+        for (int i = 1; i < parts.length; i++) {
+            final String op = parts[i];
+            if (op.startsWith("Times.")) {
+                v *= Integer.parseInt(op.substring(6));
+            } else if (op.startsWith("Plus.")) {
+                v += Integer.parseInt(op.substring(5));
+            } else if (op.equals("Twice")) {
+                v *= 2;
+            } else if (op.equals("Thrice")) {
+                v *= 3;
+            }
+        }
+        return v;
+    }
+
+    // Copper-Leaf Angel, Nahiri's Lithoforming: X is the lands it can spare
+    private static AiAbilityDecision sacXJunk(final Player ai, final SpellAbility sa) {
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        if (!ph.isPlayerTurn(ai) || !ph.is(PhaseType.MAIN2)) {
+            return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
+        }
+        final CostSacrifice cost = sacXCost(sa);
+        final String type = cost != null ? cost.getType() : sa.getParamOrDefault("SacValid", "Land");
+        final CardCollection junk = junk(ai, CardLists.getValidCards(ai.getCardsIn(ZoneType.Battlefield), type.split(";"), ai, sa.getHostCard(), sa));
+        int x = junk.size();
+        if (cost == null && sa.getPayCosts() != null && sa.getPayCosts().getTotalMana() != null) {
+            // Nahiri's Lithoforming pays X in mana too
+            x = Math.min(x, forge.ai.ComputerUtilMana.getAvailableManaEstimate(ai, false) - sa.getPayCosts().getTotalMana().getCMC());
+        }
+        if (x < 2) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        sa.setXManaCostPaid(x);
+        PLANNED.put(sa.getHostCard().getId(), new CardCollection(junk.subList(0, x)));
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
 

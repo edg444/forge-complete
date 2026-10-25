@@ -876,6 +876,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       opponents' spells on the stack are worth it and none of its own would go too; Mindbreak Trap targets only
       theirs.
     - Uncage the Menagerie: new `TutorX`, the X with the most different creatures of that mana value in its library.
+    - Sword of the Ages: new `SacForLethal`, just enough of its creatures' power for lethal.
+    - Devouring Rage, Vicious Betrayal: new `SacPumpLethal`, just enough sacrifices for an unblocked attacker's pump
+      to be lethal.
+    - Copper-Leaf Angel, Nahiri's Lithoforming: new `SacXJunk`, with X its spare lands, two or more.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).
