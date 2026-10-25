@@ -861,6 +861,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Burning Cloak, Goblin Cannon: new `DamageKill`. The damage is removal, on their best creature it kills; Goblin
       Cannon, which sacrifices itself, only for a kill worth more than it, or the last point of their life.
     - Fire and Brimstone: new `LethalOnly`, only when its damage to them is lethal and the AI survives its own share.
+    - Disciple of Bolas: `SacrificeFor` now also plans a "sacrifice another creature" effect. It sacrifices the
+      creature whose power buys the most life and cards for what it's worth, and a mandatory trigger still picks one.
+      Brain Weevil: `SacrificeFor`, mostly in answer to removal, since its body is worth about its two discards.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

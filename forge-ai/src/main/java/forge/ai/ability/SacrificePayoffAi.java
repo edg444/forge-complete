@@ -376,6 +376,30 @@ public final class SacrificePayoffAi {
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
 
+    // Disciple of Bolas: "sacrifice another creature" as an effect, the payoff by what was sacrificed - the creature
+    // that buys the most for what it's worth, and when it's a trigger it must happen anyway
+    private static AiAbilityDecision sacrificeEffect(final Player ai, final SpellAbility sa) {
+        final Card host = sa.getHostCard();
+        final CardCollection valid = CardLists.getValidCards(ai.getCardsIn(ZoneType.Battlefield),
+                sa.getParamOrDefault("SacValid", "Creature").split(","), ai, host, sa);
+        valid.remove(host);
+        int best = Integer.MIN_VALUE;
+        Card bestCard = null;
+        for (final Card c : valid) {
+            final int v = payoff(ai, sa.getSubAbility(), List.of(c)) - worth(c);
+            if (v > best) {
+                best = v;
+                bestCard = c;
+            }
+        }
+        if (bestCard == null) {
+            return new AiAbilityDecision(sa.isTrigger() ? 100 : 0, sa.isTrigger() ? AiPlayDecision.WillPlay : AiPlayDecision.CantPlayAi);
+        }
+        PLANNED.put(host.getId(), new CardCollection(bestCard));
+        return best >= 0 || sa.isTrigger() ? new AiAbilityDecision(100, AiPlayDecision.WillPlay)
+                : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+    }
+
     // Corpse Lunge: X is the exiled creature card's power, so the card from its graveyard that does the most
     private static AiAbilityDecision exileFor(final Player ai, final SpellAbility sa) {
         final forge.game.cost.CostExile exile = costPart(sa, forge.game.cost.CostExile.class);
@@ -453,6 +477,9 @@ public final class SacrificePayoffAi {
         }
         final Card host = sa.getHostCard();
         final CostSacrifice cost = sacCost(sa);
+        if (cost == null && sa.getApi() == ApiType.Sacrifice) {
+            return sacrificeEffect(ai, sa);
+        }
         if (cost == null) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
