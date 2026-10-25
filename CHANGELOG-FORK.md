@@ -374,6 +374,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       creatures would die with mana left to regenerate them, Showstopper when they die in combat with something of
       theirs to hit, Shade's Breath in combat with black mana to pump, Retraction Helix on its weakest untapped
       creature when they have something worth bouncing.
+  - *Second pass, batch 112* (`NoAiBatch112Test`):
+    - Natural Affinity, Sylvan Awakening: new `LandAlpha`, cast in its first main phase only when the 2/2 lands make
+      the attack lethal with their biggest attackers blocked (Natural Affinity counts their lands as blockers too).
+    - Nullmage Advocate, Pulsemage Advocate: new `GiveBack`. Their least useful graveyard cards (lands first) go back
+      to their hand when what follows - their best artifact or enchantment destroyed, its best creature back - is
+      worth clearly more.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 
