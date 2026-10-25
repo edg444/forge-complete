@@ -48,7 +48,7 @@ public final class MiscLogicAi {
                 || "SelfDamage".equals(logic) || "BounceWithAuras".equals(logic) || "PayLifePump".equals(logic)
                 || "DrawOnDamage".equals(logic) || "DamageKill".equals(logic) || "LethalOnly".equals(logic)
                 || "LifeForGraveyard".equals(logic) || "LandLock".equals(logic) || "LifeFromPower".equals(logic)
-                || "LifePerTarget".equals(logic) || "AttackerSweep".equals(logic);
+                || "LifePerTarget".equals(logic) || "AttackerSweep".equals(logic) || "MassBounce".equals(logic);
     }
 
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
@@ -70,6 +70,7 @@ public final class MiscLogicAi {
             case "LifeFromPower" -> lifeFromPower(ai, sa);
             case "LifePerTarget" -> lifePerTarget(ai, sa);
             case "AttackerSweep" -> attackerSweep(ai, sa);
+            case "MassBounce" -> massBounce(ai, sa);
             default -> cashIn(ai, sa);
         };
     }
@@ -629,6 +630,21 @@ public final class MiscLogicAi {
             }
         }
         return v >= 100 ? yes() : no();
+    }
+
+    // ---- Crush of Tentacles: every nonland permanent back to hand, each side weighed ----
+
+    private static AiAbilityDecision massBounce(final Player ai, final SpellAbility sa) {
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        if (!ph.isPlayerTurn(ai) || !ph.is(PhaseType.MAIN1)) {
+            return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
+        }
+        int v = 0;
+        for (final Card c : CardLists.getValidCards(ai.getGame().getCardsIn(ZoneType.Battlefield), sa.getParamOrDefault("ChangeType", "Permanent.nonLand"),
+                ai, sa.getHostCard(), sa)) {
+            v += c.getController().isOpponentOf(ai) ? theirBounce(c) : c.getController().equals(ai) ? -theirBounce(c) : 0;
+        }
+        return v >= 200 ? yes() : no();
     }
 
     // ---- verse counters ----

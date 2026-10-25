@@ -15,7 +15,30 @@ public final class StackClearAi {
 
     private StackClearAi() { }
 
+    // Aethersnatch, Commandeer: their spell becomes its own - a permanent worth having twice over (they lose it too),
+    // an instant or sorcery worth its new targets
+    private static AiAbilityDecision steal(final Player ai, final SpellAbility sa) {
+        if (ai.getGame().getStack().isEmpty() || !sa.usesTargeting()) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final SpellAbility top = ai.getGame().getStack().peekAbility();
+        if (!top.isSpell() || !top.getActivatingPlayer().isOpponentOf(ai) || !sa.canTargetSpellAbility(top)) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final forge.game.card.Card c = top.getHostCard();
+        final int v = c.isPermanent() ? 2 * (40 + c.getCMC() * 30) : c.getCMC() * 30 + Math.max(0, RetargetAi.gain(ai, top, null));
+        if (v < 150) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        sa.resetTargets();
+        sa.getTargets().add(top);
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
+        if ("StealSpell".equals(sa.getParam("AILogic"))) {
+            return steal(ai, sa);
+        }
         int theirs = 0;
         boolean mine = false;
         for (final SpellAbilityStackInstance si : ai.getGame().getStack()) {

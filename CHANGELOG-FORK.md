@@ -880,6 +880,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Devouring Rage, Vicious Betrayal: new `SacPumpLethal`, just enough sacrifices for an unblocked attacker's pump
       to be lethal.
     - Copper-Leaf Angel, Nahiri's Lithoforming: new `SacXJunk`, with X its spare lands, two or more.
+    - Aethersnatch, Commandeer: `ControlSpell` had no AI. New `StealSpell` takes their spell on top of the stack: a
+      permanent spell counts twice (they lose it too), an instant or sorcery counts what new targets would gain. The
+      "you may choose new targets" that follows uses `RetargetAi`.
+    - Crush of Tentacles: new `MassBounce`, each side's nonland permanents weighed (their tokens gone for good).
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).
