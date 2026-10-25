@@ -380,6 +380,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Nullmage Advocate, Pulsemage Advocate: new `GiveBack`. Their least useful graveyard cards (lands first) go back
       to their hand when what follows - their best artifact or enchantment destroyed, its best creature back - is
       worth clearly more.
+  - *Second pass, batch 113* (`NoAiBatch113Test`):
+    - Weight of Spires, Whipkeeper, Great Defender, Might of the Nephilim, Surge of Strength, Nantuko Mentor,
+      Parallectric Feedback, Refuse // Cooperate: new `TargetXAi` (`AILogic$ TargetX`), for an X that depends on the
+      target, so each target is tried with its own X. Damage goes on their best creature it kills; a pump, once
+      blocks are known, on its creature the pump saves, lets win its fight or makes lethal unblocked (Nantuko
+      Mentor's ability is now used too); a spell on the stack, their priciest at 3 or more, or lethal.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 
