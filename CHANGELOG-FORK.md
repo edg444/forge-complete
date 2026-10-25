@@ -867,6 +867,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Banshee: new `HalfX`, with X twice what the kill (or lethal) takes, when it can spare the other half.
     - Command the Dreadhorde: new `LifeForGraveyard`. The creatures and planeswalkers in any graveyard worth the most
       for the life they cost, keeping 6 life back.
+    - Mana Vapors: new `LandLock`, cast in its second main phase when most of their lands are tapped. Soul's Grace:
+      new `LifeFromPower`, the biggest power for life when life is short. Phyrexian Purge: new `LifePerTarget`, their
+      creatures worth 3 life each, keeping 8 back.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).

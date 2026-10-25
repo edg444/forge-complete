@@ -47,7 +47,8 @@ public final class MiscLogicAi {
                 || "WipeWithSub".equals(logic) || "RecycleForDamage".equals(logic) || "EchoDestroy".equals(logic)
                 || "SelfDamage".equals(logic) || "BounceWithAuras".equals(logic) || "PayLifePump".equals(logic)
                 || "DrawOnDamage".equals(logic) || "DamageKill".equals(logic) || "LethalOnly".equals(logic)
-                || "LifeForGraveyard".equals(logic);
+                || "LifeForGraveyard".equals(logic) || "LandLock".equals(logic) || "LifeFromPower".equals(logic)
+                || "LifePerTarget".equals(logic);
     }
 
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
@@ -65,6 +66,9 @@ public final class MiscLogicAi {
             case "DamageKill" -> damageKill(ai, sa);
             case "LethalOnly" -> lethalOnly(ai, sa);
             case "LifeForGraveyard" -> lifeForGraveyard(ai, sa);
+            case "LandLock" -> landLock(ai, sa);
+            case "LifeFromPower" -> lifeFromPower(ai, sa);
+            case "LifePerTarget" -> lifePerTarget(ai, sa);
             default -> cashIn(ai, sa);
         };
     }
@@ -538,6 +542,65 @@ public final class MiscLogicAi {
             return no();
         }
         return yes();
+    }
+
+    // ---- Mana Vapors: their lands don't untap next turn - when most of them are tapped now ----
+
+    private static AiAbilityDecision landLock(final Player ai, final SpellAbility sa) {
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        if (!sa.usesTargeting() || !ph.isPlayerTurn(ai) || !ph.is(PhaseType.MAIN2)) {
+            return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
+        }
+        sa.resetTargets();
+        for (final Player p : ai.getOpponents()) {
+            final long tapped = p.getLandsInPlay().stream().filter(Card::isTapped).count();
+            if (sa.canTarget(p) && tapped >= 3 && tapped * 2 >= p.getLandsInPlay().size()) {
+                sa.getTargets().add(p);
+                return yes();
+            }
+        }
+        return no();
+    }
+
+    // ---- Soul's Grace: life equal to a creature's power, when the life matters ----
+
+    private static AiAbilityDecision lifeFromPower(final Player ai, final SpellAbility sa) {
+        if (!sa.usesTargeting() || !(forge.ai.ComputerUtil.aiLifeInDanger(ai, false, 0) || ai.getLife() <= 8)) {
+            return no();
+        }
+        sa.resetTargets();
+        Card best = null;
+        for (final Card c : CardUtil.getValidCardsToTarget(sa)) {
+            if (best == null || c.getNetPower() > best.getNetPower()) {
+                best = c;
+            }
+        }
+        if (best == null || best.getNetPower() < 3) {
+            return no();
+        }
+        sa.getTargets().add(best);
+        return yes();
+    }
+
+    // ---- Phyrexian Purge: 3 life for each target - their creatures worth it, keeping 8 life back ----
+
+    private static AiAbilityDecision lifePerTarget(final Player ai, final SpellAbility sa) {
+        if (!sa.usesTargeting()) {
+            return no();
+        }
+        sa.resetTargets();
+        final java.util.List<Card> theirs = new java.util.ArrayList<>(CardLists.filter(CardUtil.getValidCardsToTarget(sa),
+                c -> c.getController().isOpponentOf(ai) && c.canBeDestroyed() && ComputerUtilCard.evaluateCreature(c) >= 150));
+        theirs.sort(Comparator.comparingInt((Card c) -> ComputerUtilCard.evaluateCreature(c)).reversed());
+        int life = ai.getLife();
+        for (final Card c : theirs) {
+            if (life - 3 < 8) {
+                break;
+            }
+            sa.getTargets().add(c);
+            life -= 3;
+        }
+        return sa.getTargets().isEmpty() ? no() : yes();
     }
 
     // ---- verse counters ----
