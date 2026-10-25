@@ -2546,6 +2546,23 @@ public class AiController {
             } else {
                 return random;
             }
+        } else if ("MostCommonPower".equals(logic)) {
+            // Fluros of Myra's Marvels: the power the creature cards it has yet to cast share most
+            final Map<Integer, Integer> counts = new HashMap<>();
+            for (final Card c : player.getCardsIn(ZoneType.Library, ZoneType.Hand)) {
+                if (c.isCreature() && c.getNetPower() > 0) {
+                    counts.merge(c.getNetPower(), 1, Integer::sum);
+                }
+            }
+            int best = Math.max(min, 2);
+            int most = 0;
+            for (final Map.Entry<Integer, Integer> e : counts.entrySet()) {
+                if (e.getValue() > most && e.getKey() >= min && e.getKey() <= max) {
+                    most = e.getValue();
+                    best = e.getKey();
+                }
+            }
+            return best;
         } else if ("Damnation".equals(logic)) {
             int chosenMax = player.getLife() - 1;
             int cardsInPlay = player.getCardsIn(ZoneType.Battlefield).size();

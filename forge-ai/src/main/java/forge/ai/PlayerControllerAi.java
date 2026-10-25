@@ -1884,6 +1884,10 @@ public class PlayerControllerAi extends PlayerController {
         if (delayedReveal != null) {
             reveal(delayedReveal);
         }
+        // Flash, Jester's Mask: the card it planned on, or their worst
+        if (forge.ai.ability.ZonePickAi.planned(sa)) {
+            return forge.ai.ability.ZonePickAi.pick(sa, fetchList);
+        }
         // Barrel Down Sokenzan: as many lands as it planned on
         if (forge.ai.ability.SweepAi.planned(sa)) {
             return forge.ai.ability.SweepAi.nextLand(player, sa, fetchList);

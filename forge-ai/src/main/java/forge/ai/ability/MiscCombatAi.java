@@ -39,7 +39,8 @@ public final class MiscCombatAi {
     private static final AiAbilityDecision YES = new AiAbilityDecision(100, AiPlayDecision.WillPlay);
 
     public static boolean handles(final String logic) {
-        return "Dagger".equals(logic) || "TapAllBefore".equals(logic) || "AnimateX".equals(logic) || "Damnation".equals(logic);
+        return "Dagger".equals(logic) || "TapAllBefore".equals(logic) || "AnimateX".equals(logic) || "Damnation".equals(logic)
+                || "CoinPump".equals(logic) || "BlueBlocker".equals(logic) || "DefiantStand".equals(logic);
     }
 
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
@@ -47,6 +48,9 @@ public final class MiscCombatAi {
             case "Dagger" -> dagger(ai, sa);
             case "TapAllBefore" -> tapAllBefore(ai, sa);
             case "AnimateX" -> animateX(ai, sa);
+            case "CoinPump" -> coinPump(ai, sa);
+            case "BlueBlocker" -> blueBlocker(ai, sa);
+            case "DefiantStand" -> defiantStand(ai, sa);
             default -> damnation(ai, sa);
         };
     }
@@ -143,6 +147,71 @@ public final class MiscCombatAi {
             }
         }
         return no(AiPlayDecision.CantPlayAi);
+    }
+
+    // the damage a creature takes in its fight
+    private static int fightDamage(final Card c, final Combat combat) {
+        int dmg = 0;
+        for (final Card o : combat.isAttacking(c) ? combat.getBlockers(c) : combat.getAttackersBlockedBy(c)) {
+            dmg += o.getNetCombatDamage();
+        }
+        return dmg;
+    }
+
+    // Aleatory: +1/+1 on a coin flip, so a fight it would change, a creature it saves or lets kill
+    private static AiAbilityDecision coinPump(final Player ai, final SpellAbility sa) {
+        final Combat combat = ai.getGame().getCombat();
+        if (combat == null || !ai.getGame().getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS)) {
+            return no(AiPlayDecision.WaitForCombat);
+        }
+        for (final Card c : CardUtil.getValidCardsToTarget(sa)) {
+            if (!c.getController().equals(ai) || !combat.isAttacking(c) && !combat.isBlocking(c)) {
+                continue;
+            }
+            final int left = c.getNetToughness() - c.getDamage();
+            final int dmg = fightDamage(c, combat);
+            final java.util.List<Card> foes = combat.isAttacking(c) ? combat.getBlockers(c) : combat.getAttackersBlockedBy(c);
+            final boolean saves = dmg == left;
+            final boolean kills = foes.size() == 1 && c.getNetCombatDamage() + 1 == foes.get(0).getLethalDamage();
+            if (saves || kills) {
+                sa.resetTargets();
+                sa.getTargets().add(c);
+                return YES;
+            }
+        }
+        return no(AiPlayDecision.DoesntImpactCombat);
+    }
+
+    // Metathran Transport: as it attacks, their creature that could block it turned blue
+    private static AiAbilityDecision blueBlocker(final Player ai, final SpellAbility sa) {
+        final Combat combat = ai.getGame().getCombat();
+        final Card host = sa.getHostCard();
+        if (combat == null || !combat.isAttacking(host) || !ai.getGame().getPhaseHandler().is(PhaseType.COMBAT_DECLARE_ATTACKERS)) {
+            return no(AiPlayDecision.WaitForCombat);
+        }
+        final Card best = ComputerUtilCard.getBestCreatureAI(CardLists.filter(CardUtil.getValidCardsToTarget(sa),
+                c -> c.getController().isOpponentOf(ai) && c.isUntapped() && !c.getColor().hasBlue() && CombatUtil.canBlock(host, c)));
+        if (best == null) {
+            return no(AiPlayDecision.TargetingFailed);
+        }
+        sa.resetTargets();
+        sa.getTargets().add(best);
+        return YES;
+    }
+
+    // Defiant Stand: as their attack comes in, its tapped creature untapped to block, or its best blocker made sturdier
+    private static AiAbilityDecision defiantStand(final Player ai, final SpellAbility sa) {
+        Card best = ComputerUtilCard.getBestCreatureAI(CardLists.filter(CardUtil.getValidCardsToTarget(sa),
+                c -> c.getController().equals(ai) && c.isTapped()));
+        if (best == null) {
+            best = ComputerUtilCard.getBestCreatureAI(CardLists.filter(CardUtil.getValidCardsToTarget(sa), c -> c.getController().equals(ai)));
+        }
+        if (best == null) {
+            return no(AiPlayDecision.TargetingFailed);
+        }
+        sa.resetTargets();
+        sa.getTargets().add(best);
+        return YES;
     }
 
     private static AiAbilityDecision damnation(final Player ai, final SpellAbility sa) {

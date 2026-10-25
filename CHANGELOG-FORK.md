@@ -458,6 +458,20 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       `SacrificeFor`. Thermal Flux: `Cantrip`. Burden of Guilt: a curse on their creature.
     - Already sound, flag removed: Bargaining Table, Embalmed Brawler, Essence Flare, Convincing Mirage, Aetherplasm,
       Baron Helmut Zemo, Betrothed of Fire. Kept: Close Encounter, Nebuchadnezzar, Ebonblade Reaper.
+  - *Final pass, batch 126* (`NoAiBatch126Test`):
+    - New `MiscSpellAi`: Chainer, Nightmare Adept, Mission Briefing, Knowledge Exploitation, Throes of Chaos (it only
+      cascades), Blast Zone (charged to the mana value that costs them most, then the sweep), Mystic Confluence (the
+      charm AI couldn't repeat modes: three cards at their end step, or their spell countered and two cards), Flash
+      (only a creature whose reduced cost it can pay; new `ZonePickAi` makes the hidden-zone pick follow the plan),
+      Root Greevil (the color whose enchantments cost them most), Riptide Shapeshifter, Jester's Mask (their worst
+      cards back), Riptide Mangler, Bite of the Black Rose. Aleatory, Metathran Transport, Defiant Stand: more
+      `MiscCombatAi`. Fluros of Myra's Marvels: names the power its creature cards share most (it named 99). Fiery
+      Bombardment: `SacrificeFor`, now counting red mana symbols. Altar of the Wretched: `SacrificeFor` on its draw.
+    - Already sound, flag removed: Spellweaver Volute, Memory Plunder, Windshaper Planetar, Jester's Cap, Copy
+      Enchantment, Gallowbraid, Backslide.
+    - Kept, with reasons: Cytoshape, Emrakul, the Promised End, the converge cards (Prismatic Ending, Radiant Flames,
+      Roilmage's Trick, Infuse with the Elements, Bring to Light), Storm King's Thunder, Jester's Scepter, Phyrexian
+      Devourer, Judge Unworthy, Riddle of Lightning, Captain's Maneuver, Arcbond.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 

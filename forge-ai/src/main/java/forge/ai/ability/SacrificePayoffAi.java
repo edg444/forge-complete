@@ -126,6 +126,9 @@ public final class SacrificePayoffAi {
                 case "CardPower" -> c.getNetPower();
                 case "CardToughness" -> c.getNetToughness();
                 case "CardManaCost" -> c.getCMC();
+                case "ChromaSource.Red" -> c.getManaCost().getShardCount(forge.card.mana.ManaCostShard.RED)
+                        + c.getManaCost().getShardCount(forge.card.mana.ManaCostShard.RG) + c.getManaCost().getShardCount(forge.card.mana.ManaCostShard.BR)
+                        + c.getManaCost().getShardCount(forge.card.mana.ManaCostShard.RW) + c.getManaCost().getShardCount(forge.card.mana.ManaCostShard.UR);
                 default -> parts[0].startsWith("CardCounters.") ? c.getCounters(CounterType.getType(parts[0].substring(13))) : 0;
             };
         }

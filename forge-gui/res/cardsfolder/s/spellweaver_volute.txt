@@ -9,6 +9,5 @@ SVar:DBExile:DB$ ChangeZone | Origin$ Graveyard | Destination$ Exile | Defined$ 
 SVar:DBAttach:DB$ Attach | Choices$ Instant | ChoiceZone$ Graveyard | Object$ Self | ConditionCheckSVar$ X | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:X:Remembered$Amount
-AI:RemoveDeck:All
 AI:RemoveDeck:Random
 Oracle:Enchant instant card in a graveyard\nWhenever you cast a sorcery spell, copy the enchanted instant card. You may cast the copy without paying its mana cost. If you do, exile the enchanted card and attach this Aura to another instant card in a graveyard.

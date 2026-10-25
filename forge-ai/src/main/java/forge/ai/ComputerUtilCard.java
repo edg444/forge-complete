@@ -1156,6 +1156,12 @@ public class ComputerUtilCard {
         Player ai = sa.getActivatingPlayer();
         final Game game = ai.getGame();
         Player opp = ai.getStrongestOpponent();
+        // Root Greevil: the color it settled on when it decided
+        final String planned = forge.ai.ability.MiscSpellAi.plannedColor(sa);
+        if (planned != null && colorChoices.contains(planned)) {
+            chosen.add(planned);
+            return chosen;
+        }
         if (sa.hasParam("AILogic")) {
             final String logic = sa.getParam("AILogic");
 
