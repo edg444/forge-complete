@@ -424,6 +424,11 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       Gaea's Liege: marked as never really 0/0, since its Forests size it (the AI refused to cast it).
     - Megatherium: cast only when the mana to pay {1} a card in hand is still there afterward. Knight of the Mists:
       the AI no longer pays {U} to spare their Knight; it pays only when the Knight it must destroy is its own.
+  - *Second pass, batch 122* (`NoAiBatch122Test`):
+    - Barrel Down Sokenzan, Charge Across the Araba: new `SweepAi` (`AILogic$ Sweep`). The number of lands to return
+      is settled when the AI decides - just enough, tapped lands first - and that many go back as it resolves (it
+      could return them all). Barrel Down kills their best creature it's worth the lands for; Charge Across the
+      Araba goes once blocks are known, for lethal unblocked.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 
