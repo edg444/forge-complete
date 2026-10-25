@@ -110,6 +110,37 @@ public final class SweepAi {
             LEFT.put(sa.getHostCard().getId(), bestN);
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
+        if (pay.getApi() == ApiType.Pump && pay.usesTargeting()) {
+            // Plow Through Reito: +1/+1 a Plains on its unblocked attacker, for lethal
+            final Combat combat = ai.getGame().getCombat();
+            if (combat == null || !combat.getAttackingPlayer().equals(ai) || !ai.getGame().getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS)) {
+                return no(AiPlayDecision.WaitForCombat);
+            }
+            for (final Card a : combat.getUnblockedAttackers()) {
+                final Player opp = combat.getDefenderPlayerByAttacker(a);
+                final int need = opp == null ? Integer.MAX_VALUE : ComputerUtilCombat.lifeThatWouldRemain(opp, combat);
+                if (pay.canTarget(a) && need > 0 && need <= lands.size()) {
+                    pay.resetTargets();
+                    pay.getTargets().add(a);
+                    LEFT.put(sa.getHostCard().getId(), need);
+                    return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+                }
+            }
+            return no(AiPlayDecision.DoesntImpactCombat);
+        }
+        if (pay.getApi() == ApiType.Discard && pay.usesTargeting()) {
+            // Sink into Takenuma: a discard a Swamp, their hand, from its tapped Swamps
+            final Player opp = ai.getStrongestOpponent();
+            final int tapped = (int) lands.stream().filter(Card::isTapped).count();
+            final int n = opp == null ? 0 : Math.min(opp.getCardsIn(forge.game.zone.ZoneType.Hand).size(), Math.max(tapped, 2));
+            if (n < 2 || !pay.canTarget(opp)) {
+                return no(AiPlayDecision.CantPlayAi);
+            }
+            pay.resetTargets();
+            pay.getTargets().add(opp);
+            LEFT.put(sa.getHostCard().getId(), Math.min(n, lands.size()));
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
         if (pay.getApi() == ApiType.PumpAll) {
             final Combat combat = ai.getGame().getCombat();
             if (combat == null || !combat.getAttackingPlayer().equals(ai) || !ai.getGame().getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS)) {

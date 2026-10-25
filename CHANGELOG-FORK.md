@@ -512,6 +512,25 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       Soul Strings, Assault Suit, Cabal Therapist, Island Sanctuary, Lim-Dûl's Vault, Moonlight Bargain, Krovikan
       Plague, Leeches, and the prevent-and-deal shields (Healing Grace, Acolyte's Reward, Divine Deflection,
       Refraction Trap, Vengeful Archon).
+  - *Final pass, batch 132* (`NoAiBatch132Test`):
+    - New `EndgameAi`: Aether Snap (when their tokens and counters outweigh its own), Ice Floe and Whip Vine (their
+      biggest attacker or blocked creature, kept tapped with `AIUntapPreference:LockEffect`), Anthroplasm, Autumn's
+      Veil, Avizoa, Black Carriage, Bounty of the Hunt, Burn at the Stake (X for lethal), Cataclysm (when they lose
+      clearly more), Chimeric Idol, Dark Heart of the Wood and Claws of Gix (life when it's in danger), Dead Ringers
+      (a same-color pair of theirs), Disarm, Disharmony (their attacker becomes its own), Drown in Filth, Akul the
+      Unrepentant (three spare creatures for the best one in hand), Life Matrix, Nightmare Unmaking, Phyrexian
+      Delver, Rally the Troops, Sewers of Estark, Surreal Memoir, Yare (the blocker that wins). Plow Through Reito and
+      Sink into Takenuma: more Sokenzan sweeps (Plains for lethal on an unblocked attacker; a Swamp a card from
+      their hand). Sacred Mesa needed no new AI.
+    - Kept, with reasons: Armed and Armored, Assembly Hall, Balm of Restoration, Basal Sliver, Bathe in Light,
+      Blinkmoth Infusion, Cataclysmic Gearhulk, Chain Stasis, Chamber of Manipulation, Chronatog, City of Traitors,
+      Command Beacon, Debt of Loyalty, Demonic Appetite, Elfhame Sanctuary, Engineered Explosives, Firedrinker Satyr,
+      Flooded Shoreline, Grell Philosopher, Harmony of Nature, Hellish Rebuke, Infernal Harvest, Jhoira of the Ghitu,
+      Johan, Junkyo Bell, Karona's Zealot, Liliana's Indignation, Mana Seism, Marshaling the Troops, Martyr of Bones,
+      Martyr of Spores, Minion of Leshrac, Misleading Signpost, Nova Pentacle, Petals of Insight, Plagiarize,
+      Polymorphous Rush, Portal Mage, Pyromancy, Rescue from the Underworld, Reverberation, Reverent Mantra, Reverse
+      the Sands, Sage of Hours, Samite Elder, Scapeshift, Scroll Rack, Setessan Tactics, Signal the Clans, Turnabout,
+      Wojek Apothecary.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) â€” AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 

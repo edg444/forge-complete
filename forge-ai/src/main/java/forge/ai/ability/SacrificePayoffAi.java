@@ -58,12 +58,18 @@ public final class SacrificePayoffAi {
 
     // logics decided elsewhere that still leave a sacrifice plan for the cost (Scapegoat)
     private static boolean plans(final String logic) {
-        return handles(logic) || "SaveBounce".equals(logic) || "TwoKill".equals(logic) || "TeamPumpLethal".equals(logic);
+        return handles(logic) || "SaveBounce".equals(logic) || "TwoKill".equals(logic) || "TeamPumpLethal".equals(logic)
+                || "CarriageUntap".equals(logic) || "AkulCheat".equals(logic);
     }
 
     /** Another logic's choice of what the cost sacrifices (Scapegoat: the creature it doesn't save). */
     public static void plan(final Card host, final Card sacrificed) {
         PLANNED.put(host.getId(), new CardCollection(sacrificed));
+    }
+
+    /** Akul the Unrepentant: the creatures another logic chose for the cost. */
+    public static void plan(final Card host, final CardCollection sacrificed) {
+        PLANNED.put(host.getId(), sacrificed);
     }
 
     /** The logic this ability or its root runs on (Plunge into Darkness: on the Charm's mode, not the Charm). */
