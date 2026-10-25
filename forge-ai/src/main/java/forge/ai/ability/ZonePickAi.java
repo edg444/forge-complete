@@ -35,7 +35,7 @@ public final class ZonePickAi {
         final Card host = sa.getHostCard();
         return host != null && (CARDS.containsKey(host.getId()) || WORST.containsKey(host.getId()))
                 && (MiscSpellAi.handles(sa.getRootAbility().getParam("AILogic")) || ExtraCardAi.handles(sa.getRootAbility().getParam("AILogic"))
-                || EndgameAi.handles(sa.getRootAbility().getParam("AILogic")));
+                || EndgameAi.handles(sa.getRootAbility().getParam("AILogic")) || UnCardAi.handles(sa.getRootAbility().getParam("AILogic")));
     }
 
     private static int worth(final Card c) {

@@ -10,6 +10,5 @@ SVar:PartyCast:Mode$ SpellCast | ValidCard$ Card | TriggerZones$ Command | Execu
 SVar:TrigGain:DB$ GainLife | Defined$ You | LifeAmount$ 2
 SVar:Breakfast:DB$ Token | TokenScript$ c_a_food_sac | TokenAmount$ 2 | SubAbility$ DBSacSelf | SpellDescription$ Breakfast at Dawn — Create two Food tokens. Sacrifice this enchantment.
 SVar:DBSacSelf:DB$ Sacrifice | Defined$ Self
-AI:RemoveDeck:All
 DeckHas:Ability$Token|Sacrifice|LifeGain & Type$Food|Artifact
 Oracle:At the beginning of your upkeep, choose one that hasn't been chosen —\n• Wake Up! — Return target creature card from a graveyard to its owner's hand.\n• VIP Line Access — Search your library for a card, then shuffle and put that card on top.\n• Life of the Party — Whenever a spell is cast this turn, you gain 2 life.\n• Breakfast at Dawn — Create two Food tokens. Sacrifice this enchantment.

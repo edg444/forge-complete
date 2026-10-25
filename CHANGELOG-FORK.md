@@ -531,6 +531,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       Polymorphous Rush, Portal Mage, Pyromancy, Rescue from the Underworld, Reverberation, Reverent Mantra, Reverse
       the Sands, Sage of Hours, Samite Elder, Scapeshift, Scroll Rack, Setessan Tactics, Signal the Clans, Turnabout,
       Wojek Apothecary.
+  - *The fork's Un-cards, holiday cards and playtest cards, batch 133* (`NoAiBatch133Test`) - this finishes the
+    pass: every card that was marked `AI:RemoveDeck:All` is now fixed or kept with a recorded reason.
+    - New `UnCardAi`: Evil Presents (its biggest creature in hand, power 3 or more, given to them to attack them),
+      That's No Moonmist (their lethal attack), Chaos Wrap (their permanent worth more than the 4/4 their top card
+      might become). Another Night in Vegas and Yet Another Night in Vegas rank their upkeep modes, saving the ones
+      that end the night for last and never going again for 5 life at 10 or less (Another Night used to sacrifice
+      itself on its first upkeep). Avatar of Me: the AI answers its questions as an ordinary 25-year-old, 5 1/2 feet
+      tall with size 10 shoes (its age question used to crash the AI). Atinlay Igpay, Goblin Mime and Gunk needed no
+      new AI.
+    - Kept, with reasons: Bureaucracy, Censorship, Collector Protector, Common Courtesy, Gleemax, Goblin Bookie,
+      Goblin Sleigh Ride, Guild Pact, Kindslaver, Last-Minute Chopping, Mindslaver Toolkit, Photo Op, Seasonal
+      Sequels, Sex Appeal, Uh, Squen & Cragg Made a Card, Yet Another Aether Vortex, You Compleat Me.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 

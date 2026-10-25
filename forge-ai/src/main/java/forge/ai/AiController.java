@@ -2479,6 +2479,19 @@ public class AiController {
     }
 
     public int chooseNumber(SpellAbility sa, String title, int min, int max) {
+        if (sa == null) {
+            // Avatar of Me's age, asked while its cost is paid with no ability to hand: a young adult's
+            return Math.max(min, Math.min(max, 25));
+        }
+        if (sa.getApi() == forge.game.ability.ApiType.AskFact) {
+            // Avatar of Me: an ordinary person - 5 1/2 feet tall, American shoe size 10 - rather than the largest answer
+            final int typical = switch (sa.getParamOrDefault("Fact", "")) {
+                case "HeightHalves" -> 11;
+                case "ShoeSizeHalves" -> 20;
+                default -> (min + max) / 2;
+            };
+            return Math.max(min, Math.min(max, typical));
+        }
         // Rites of Initiation: the number of random discards it decided on when casting
         final Integer planned = forge.ai.ability.DiscardAnyAi.planned(sa);
         if (planned != null) {

@@ -94,6 +94,8 @@ public class CharmAi extends SpellAbilityAi {
             }
         } else if ("Triskaidekaphobia".equals(ComputerUtilAbility.getAbilitySourceName(sa))) {
             chosenList = chooseTriskaidekaphobia(choices, ai);
+        } else if (UnCardAi.handlesCharm(sa)) {
+            chosenList = UnCardAi.chooseNight(ai, choices);
         } else if (choices.stream().anyMatch(c -> c.hasParam("AIPreferred"))) {
             // the script names the mode the AI wants (Shellephant defines itself as a 3/3)
             chosenList = Lists.newArrayList();

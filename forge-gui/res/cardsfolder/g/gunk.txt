@@ -2,5 +2,4 @@ Name:Gunk
 ManaCost:no cost
 Types:Sorcery Gunk
 K:Cycling:4
-AI:RemoveDeck:All
 Oracle:Cycling {4} ({4}, Discard this card: Draw a card.)

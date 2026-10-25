@@ -12,5 +12,4 @@ SVar:DBCleanupLost:DB$ Cleanup | ClearRemembered$ True
 SVar:GoAgain:DB$ Cleanup | ResetChosenModes$ True | SubAbility$ DBLoseLife | SpellDescription$ I'm fine! Let's go again! — All modes reset and can be chosen again. You lose 5 life.
 SVar:DBLoseLife:DB$ LoseLife | Defined$ You | LifeAmount$ 5
 SVar:GoToBed:DB$ Sacrifice | Defined$ Self | SpellDescription$ Go to bed — Sacrifice this enchantment.
-AI:RemoveDeck:All
 Oracle:At the beginning of your upkeep, choose one that hasn't been chosen—\n• See the sights — Surveil 3.\n• Cause trouble — Target creature gets +1/+0 and gains menace until end of turn.\n• Get lost — Each player exiles a creature they control until this enchantment leaves the battlefield.\n• I'm fine! Let's go again! — All modes reset and can be chosen again. You lose 5 life.\n• Go to bed — Sacrifice this enchantment.

@@ -1,8 +1,7 @@
 Name:That's No Moonmist
 ManaCost:1 G
 Types:Instant
-A:SP$ SetState | Defined$ Valid Artifact.FrontSide,Creature.Phyrexian+FrontSide | Mode$ Transform | SubAbility$ DBPrevent | StackDescription$ SpellDescription | SpellDescription$ Transform all artifacts and Phyrexian creatures on their front face. Prevent all combat damage that would be dealt this turn by creatures other than Phyrexians. (Only double-faced cards and tokens can be transformed.)
+A:SP$ SetState | AILogic$ MoonmistFog | Defined$ Valid Artifact.FrontSide,Creature.Phyrexian+FrontSide | Mode$ Transform | SubAbility$ DBPrevent | StackDescription$ SpellDescription | SpellDescription$ Transform all artifacts and Phyrexian creatures on their front face. Prevent all combat damage that would be dealt this turn by creatures other than Phyrexians. (Only double-faced cards and tokens can be transformed.)
 SVar:DBPrevent:DB$ Effect | ReplacementEffects$ RPrevent
 SVar:RPrevent:Event$ DamageDone | Prevent$ True | IsCombat$ True | ActiveZones$ Command | ValidSource$ Creature.nonPhyrexian | Description$ Prevent all combat damage that would be dealt this turn by creatures other than Phyrexians.
-AI:RemoveDeck:All
 Oracle:Transform all artifacts and Phyrexian creatures on their front face. Prevent all combat damage that would be dealt this turn by creatures other than Phyrexians. (Only double-faced cards and tokens can be transformed.)
