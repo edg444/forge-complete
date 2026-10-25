@@ -25,7 +25,7 @@ public final class XChoiceAi {
 
     public static boolean handles(final String logic) {
         return "StealX".equals(logic) || "WipeX".equals(logic) || "DestroyX".equals(logic) || "GraveX".equals(logic)
-                || "TapX".equals(logic) || "HalfX".equals(logic);
+                || "TapX".equals(logic) || "HalfX".equals(logic) || "TutorX".equals(logic);
     }
 
     private static int maxX(final Player ai, final SpellAbility sa) {
@@ -249,6 +249,26 @@ public final class XChoiceAi {
         final int max = maxX(ai, sa);
         if (max < 0) {
             return new AiAbilityDecision(0, AiPlayDecision.CantAfford);
+        }
+        if ("TutorX".equals(sa.getParam("AILogic"))) {
+            // Uncage the Menagerie: X creatures of mana value X with different names - the X its library has most of
+            int best = 0;
+            int bestX = 0;
+            for (int x = 1; x <= max; x++) {
+                final int n = x;
+                final long names = ai.getCardsIn(ZoneType.Library).stream().filter(c -> c.isCreature() && c.getCMC() == n)
+                        .map(Card::getName).distinct().count();
+                final int v = (int) Math.min(names, x) * 70 - x * 10;
+                if (v > best) {
+                    best = v;
+                    bestX = x;
+                }
+            }
+            if (best < 100) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            }
+            sa.setXManaCostPaid(bestX);
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
         if ("HalfX".equals(sa.getParam("AILogic"))) {
             return halfX(ai, sa, max);

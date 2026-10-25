@@ -872,6 +872,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       creatures worth 3 life each, keeping 8 back.
     - Hail Storm: new `AttackerSweep`, in their combat when the attackers it kills outweigh its own losses. Immoral
       Bargain: new `SacXForX`, X of its junk creatures for X of their best nonland permanents.
+    - Mindbreak Trap, Summary Dismissal, Swift Silence: new `StackClearAi` (`AILogic$ StackClear`). Used when the
+      opponents' spells on the stack are worth it and none of its own would go too; Mindbreak Trap targets only
+      theirs.
+    - Uncage the Menagerie: new `TutorX`, the X with the most different creatures of that mana value in its library.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).
