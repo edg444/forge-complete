@@ -406,6 +406,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       cost them the most less its own; Blood Oath and Fertile Imagination the card type most common among the cards
       of theirs it has seen (it doesn't look at their hand), when their hand should hold enough of it; Sanctum
       Prelate the noncreature mana value they've shown most and its own deck has least.
+  - *Second pass, batch 118* (`NoAiBatch118Test`):
+    - Festival of the Guildpact, Guardian Angel: new `PreventX`, just the X that matters once blocks are known - its
+      creature in the fight that would die, or on their turn the damage that would kill it. With nothing to
+      prevent, Festival of the Guildpact goes at their end step with X of 0 for the card.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 
