@@ -329,6 +329,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-25, twenty-second deploy (desktop, Android, GitHub) — AI for no-AI cards finished: the last regular cards, and the fork's Un, holiday and playtest cards
+
 - **AI for cards marked `AI:RemoveDeck:All`, continued** (each card below now has AI that uses it sensibly, and its
   flag is gone).
   - *Second pass, batch 105* (`NoAiBatch105Test`):
