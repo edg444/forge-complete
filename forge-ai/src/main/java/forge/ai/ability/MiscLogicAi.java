@@ -46,7 +46,7 @@ public final class MiscLogicAi {
         return "BounceBoth".equals(logic) || "GraveShuffle".equals(logic) || "RemoveCombatant".equals(logic) || "CashIn".equals(logic)
                 || "WipeWithSub".equals(logic) || "RecycleForDamage".equals(logic) || "EchoDestroy".equals(logic)
                 || "SelfDamage".equals(logic) || "BounceWithAuras".equals(logic) || "PayLifePump".equals(logic)
-                || "DrawOnDamage".equals(logic);
+                || "DrawOnDamage".equals(logic) || "DamageKill".equals(logic) || "LethalOnly".equals(logic);
     }
 
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
@@ -61,6 +61,8 @@ public final class MiscLogicAi {
             case "BounceWithAuras" -> bounceWithAuras(ai, sa);
             case "PayLifePump" -> payLifePump(ai, sa);
             case "DrawOnDamage" -> drawOnDamage(ai, sa);
+            case "DamageKill" -> damageKill(ai, sa);
+            case "LethalOnly" -> lethalOnly(ai, sa);
             default -> cashIn(ai, sa);
         };
     }
@@ -447,6 +449,66 @@ public final class MiscLogicAi {
         }
         sa.getTargets().add(best);
         return yes();
+    }
+
+    // ---- Burning Cloak, Goblin Cannon: the damage as removal, on a creature of theirs it kills ----
+
+    private static AiAbilityDecision damageKill(final Player ai, final SpellAbility sa) {
+        SpellAbility dmg = null;
+        for (SpellAbility s = sa; s != null; s = s.getSubAbility()) {
+            if (s.getApi() == forge.game.ability.ApiType.DealDamage) {
+                dmg = s;
+                break;
+            }
+        }
+        if (dmg == null || !sa.usesTargeting()) {
+            return no();
+        }
+        final int n = forge.game.ability.AbilityUtils.calculateAmount(sa.getHostCard(), dmg.getParam("NumDmg"), dmg);
+        sa.resetTargets();
+        // Goblin Cannon sacrifices itself, so only for something worth it
+        final boolean sacrifices = sa.getSubAbility() != null && sa.getSubAbility().getApi() == forge.game.ability.ApiType.Sacrifice;
+        final int least = sacrifices ? ExchangeTradeAi.value(sa.getHostCard()) : 60;
+        Card best = null;
+        int bestV = 0;
+        for (final Card c : CardUtil.getValidCardsToTarget(sa)) {
+            if (c.getController().isOpponentOf(ai) && c.isCreature() && n >= c.getLethalDamage() && c.canBeDestroyed()) {
+                final int v = ComputerUtilCard.evaluateCreature(c);
+                if (v > bestV) {
+                    bestV = v;
+                    best = c;
+                }
+            }
+        }
+        if (best == null || bestV < least) {
+            // the last points of their life, if it can aim at a player
+            for (final Player p : ai.getOpponents()) {
+                if (sa.canTarget(p) && n >= p.getLife() && p.canLoseLife() && !p.cantLoseForZeroOrLessLife()) {
+                    sa.getTargets().add(p);
+                    return yes();
+                }
+            }
+            return no();
+        }
+        sa.getTargets().add(best);
+        return yes();
+    }
+
+    // ---- Fire and Brimstone: damage to them and to itself, only for the win ----
+
+    private static AiAbilityDecision lethalOnly(final Player ai, final SpellAbility sa) {
+        if (!sa.usesTargeting()) {
+            return no();
+        }
+        final int n = forge.game.ability.AbilityUtils.calculateAmount(sa.getHostCard(), sa.getParam("NumDmg"), sa);
+        sa.resetTargets();
+        for (final Player p : ai.getOpponents()) {
+            if (sa.canTarget(p) && n >= p.getLife() && p.canLoseLife() && !p.cantLoseForZeroOrLessLife() && ai.getLife() > n) {
+                sa.getTargets().add(p);
+                return yes();
+            }
+        }
+        return no();
     }
 
     // ---- verse counters ----

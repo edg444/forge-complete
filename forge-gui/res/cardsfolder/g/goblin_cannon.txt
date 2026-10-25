@@ -1,7 +1,6 @@
 Name:Goblin Cannon
 ManaCost:4
 Types:Artifact
-A:AB$ DealDamage | Cost$ 2 | ValidTgts$ Any | NumDmg$ 1 | SubAbility$ DBSac | SpellDescription$ This artifact deals 1 damage to any target. Sacrifice this artifact.
+A:AB$ DealDamage | AILogic$ DamageKill | Cost$ 2 | ValidTgts$ Any | NumDmg$ 1 | SubAbility$ DBSac | SpellDescription$ This artifact deals 1 damage to any target. Sacrifice this artifact.
 SVar:DBSac:DB$ Sacrifice
-AI:RemoveDeck:All
 Oracle:{2}: This artifact deals 1 damage to any target. Sacrifice this artifact.

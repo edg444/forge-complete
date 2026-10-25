@@ -858,6 +858,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       attack and lethal, or else their lands as their turn starts (two or more); Malicious Advice's life cost caps X.
     - Isochron Scepter, Spellbinder: `PlayAi` used to activate a free copy of an exiled card whenever there was one.
       It now does so only when the AI would cast that card now (`GraveCastAi.castValue`).
+    - Burning Cloak, Goblin Cannon: new `DamageKill`. The damage is removal, on their best creature it kills; Goblin
+      Cannon, which sacrifices itself, only for a kill worth more than it, or the last point of their life.
+    - Fire and Brimstone: new `LethalOnly`, only when its damage to them is lethal and the AI survives its own share.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).
