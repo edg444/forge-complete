@@ -1743,26 +1743,20 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
     };
 
     /** Cache from {@link AvailableActions#collectActionable}, populated in
-     *  {@link #chooseSpellAbilityToPlay} and reused by {@link #pushActionableCards}. */
+     *  {@link #chooseSpellAbilityToPlay} and reused by {@link #getActionableCards}. */
     private Set<CardView> cachedActionableCards;
 
-    /** Push the actionable-card set to the GUI. Payment mode falls back to the
-     *  "playable mana ability" predicate; non-payment reuses {@link #cachedActionableCards}. */
-    public void pushActionableCards(boolean paymentMode) {
-        pushActionableCards(paymentMode, null);
-    }
-
-    /** Weighted push: actionable cards get strength 1; {@code emphasized} cards (the AI's
-     *  auto-tap plan) are raised to strength 2 by adding them a second time, so the GUI can
-     *  render them more prominently. Each pref layer is gated independently. */
-    public void pushActionableCards(boolean paymentMode, Iterable<CardView> emphasized) {
+    /** The actionable cards. Payment mode falls back to the "playable mana ability" predicate;
+     *  non-payment reuses {@link #cachedActionableCards}. Actionable cards get strength 1;
+     *  {@code emphasized} cards (the AI's auto-tap plan) are raised to strength 2 by adding them
+     *  a second time, so the GUI can render them more prominently. Each pref layer is gated independently. */
+    public List<CardView> getActionableCards(boolean paymentMode, Iterable<CardView> emphasized) {
         final boolean showActionable = yieldController.getBoolPref(FPref.UI_SHOW_ACTIONABLE_HIGHLIGHTS);
         final boolean showAutoTap = emphasized != null
                 && yieldController.getBoolPref(FPref.UI_SHOW_AUTOTAP_PREVIEW);
 
         if (!showActionable && !showAutoTap) {
-            clearActionableCards();
-            return;
+            return List.of();
         }
 
         final Set<CardView> actionable = Sets.newHashSet();
@@ -1795,7 +1789,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
                 weighted.add(cv);
             }
         }
-        getGui().setWeaklySelectable(weighted);
+        return weighted;
     }
 
     private boolean cardHasPlayableManaAbility(Card c) {
@@ -1805,15 +1799,10 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
         return false;
     }
 
-    public void clearActionableCards() {
-        getGui().clearWeaklySelectable();
-    }
-
-    /** Push undeclared, legal attacker candidates. */
-    public void pushAttackerCandidates(final Player attackingPlayer, final Combat combat) {
+    /** Undeclared, legal attacker candidates. */
+    public List<CardView> getAttackerCandidates(final Player attackingPlayer, final Combat combat) {
         if (!yieldController.getBoolPref(FPref.UI_SHOW_ACTIONABLE_HIGHLIGHTS)) {
-            clearActionableCards();
-            return;
+            return List.of();
         }
         final Set<CardView> result = Sets.newHashSet();
         for (final Card c : attackingPlayer.getCreaturesInPlay()) {
@@ -1822,20 +1811,15 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
             if (combat != null && combat.isAttacking(c)) continue;
             result.add(c.getView());
         }
-        getGui().setWeaklySelectable(result);
+        return Lists.newArrayList(result);
     }
 
-    /** Push defenders that could block at least one current attacker. */
-    public void pushBlockerCandidates(final Player defendingPlayer, final Combat combat) {
-        if (!yieldController.getBoolPref(FPref.UI_SHOW_ACTIONABLE_HIGHLIGHTS)) {
-            clearActionableCards();
-            return;
+    /** Defenders that could block at least one current attacker. */
+    public List<CardView> getBlockerCandidates(final Player defendingPlayer, final Combat combat) {
+        if (!yieldController.getBoolPref(FPref.UI_SHOW_ACTIONABLE_HIGHLIGHTS) || combat == null) {
+            return List.of();
         }
         final Set<CardView> result = Sets.newHashSet();
-        if (combat == null) {
-            getGui().setWeaklySelectable(result);
-            return;
-        }
         final Iterable<Card> attackers = combat.getAttackers();
         for (final Card blocker : defendingPlayer.getCreaturesInPlay()) {
             if (!CombatUtil.canBlock(blocker)) continue;
@@ -1851,7 +1835,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
                 result.add(blocker.getView());
             }
         }
-        getGui().setWeaklySelectable(result);
+        return Lists.newArrayList(result);
     }
 
     @Override

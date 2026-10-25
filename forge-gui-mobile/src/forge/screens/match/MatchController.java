@@ -663,6 +663,14 @@ public class MatchController extends NetworkGuiGame {
             Gdx.graphics.requestRendering();
         });
         if (prev.cards().equals(selection.cards())) {
+            if (!prev.actionable().equals(selection.actionable())) {
+                FThreads.invokeInEdtNowOrLater(() -> {
+                    for (final PlayerView p : getGameView().getPlayers()) {
+                        updateCardsNetSafe(p.getCards(ZoneType.Battlefield));
+                        updateCardsNetSafe(p.getCards(ZoneType.Hand));
+                    }
+                });
+            }
             return;
         }
         if (selection.cards().isEmpty()) {
@@ -710,28 +718,6 @@ public class MatchController extends NetworkGuiGame {
             if (selectionZonesBackup != null) {
                 restoreOldZones(selectionZonesBackup);
                 selectionZonesBackup = null;
-            }
-        });
-    }
-
-    @Override
-    public void setWeaklySelectable(final Iterable<CardView> cards) {
-        super.setWeaklySelectable(cards);
-        FThreads.invokeInEdtNowOrLater(() -> {
-            for (final PlayerView p : getGameView().getPlayers()) {
-                updateCardsNetSafe(p.getCards(ZoneType.Battlefield));
-                updateCardsNetSafe(p.getCards(ZoneType.Hand));
-            }
-        });
-    }
-
-    @Override
-    public void clearWeaklySelectable() {
-        super.clearWeaklySelectable();
-        FThreads.invokeInEdtNowOrLater(() -> {
-            for (final PlayerView p : getGameView().getPlayers()) {
-                updateCardsNetSafe(p.getCards(ZoneType.Battlefield));
-                updateCardsNetSafe(p.getCards(ZoneType.Hand));
             }
         });
     }
