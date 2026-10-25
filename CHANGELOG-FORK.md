@@ -368,6 +368,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Minion of the Wastes, Nameless Race, Phyrexian Processor: "pay any amount of life" as it enters always paid 0
       (Minion died as a 0/0). The AI now pays half of its life above 8, within the card's own cap, and doesn't
       cast them when that comes to less than 2.
+  - *Second pass, batch 111* (`NoAiBatch111Test`):
+    - Resuscitate, Showstopper, Shade's Breath, Retraction Helix: new `GrantAbilityAi` (`AILogic$ GrantAbility`), for
+      spells whose whole effect is an ability or trigger handed out until end of turn. Resuscitate goes when its
+      creatures would die with mana left to regenerate them, Showstopper when they die in combat with something of
+      theirs to hit, Shade's Breath in combat with black mana to pump, Retraction Helix on its weakest untapped
+      creature when they have something worth bouncing.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 
