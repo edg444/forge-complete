@@ -25,7 +25,7 @@ public final class XChoiceAi {
 
     public static boolean handles(final String logic) {
         return "StealX".equals(logic) || "WipeX".equals(logic) || "DestroyX".equals(logic) || "GraveX".equals(logic)
-                || "TapX".equals(logic);
+                || "TapX".equals(logic) || "HalfX".equals(logic);
     }
 
     private static int maxX(final Player ai, final SpellAbility sa) {
@@ -131,6 +131,42 @@ public final class XChoiceAi {
         return null;
     }
 
+    // Banshee: half X to the target, the other half to itself - twice what the kill takes, if it can spare the life
+    private static AiAbilityDecision halfX(final Player ai, final SpellAbility sa, final int max) {
+        if (!sa.usesTargeting()) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        sa.resetTargets();
+        forge.game.GameEntity best = null;
+        int bestV = 0;
+        int bestX = 0;
+        for (final Card c : forge.game.card.CardUtil.getValidCardsToTarget(sa)) {
+            final int x = c.getLethalDamage() * 2;
+            if (c.getController().isOpponentOf(ai) && c.isCreature() && c.canBeDestroyed() && x <= max && ai.getLife() > x / 2 + 5) {
+                final int v = ComputerUtilCard.evaluateCreature(c) - x / 2 * 6;
+                if (v > bestV) {
+                    bestV = v;
+                    best = c;
+                    bestX = x;
+                }
+            }
+        }
+        for (final Player p : ai.getOpponents()) {
+            final int x = p.getLife() * 2;
+            if (sa.canTarget(p) && x <= max && ai.getLife() > p.getLife() && p.canLoseLife() && !p.cantLoseForZeroOrLessLife()) {
+                best = p;
+                bestX = x;
+                bestV = 1000;
+            }
+        }
+        if (best == null || bestV < 60) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        sa.setXManaCostPaid(bestX);
+        sa.getTargets().add(best);
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
     // Malicious Advice, Mishra's Helix, Synod Artificer: tap X of theirs - just the blockers that keep its attack from
     // being lethal, or else their lands as their turn starts
     private static AiAbilityDecision tapX(final Player ai, final SpellAbility sa, final int maxMana) {
@@ -213,6 +249,9 @@ public final class XChoiceAi {
         final int max = maxX(ai, sa);
         if (max < 0) {
             return new AiAbilityDecision(0, AiPlayDecision.CantAfford);
+        }
+        if ("HalfX".equals(sa.getParam("AILogic"))) {
+            return halfX(ai, sa, max);
         }
         if ("TapX".equals(sa.getParam("AILogic"))) {
             return tapX(ai, sa, max);

@@ -46,7 +46,8 @@ public final class MiscLogicAi {
         return "BounceBoth".equals(logic) || "GraveShuffle".equals(logic) || "RemoveCombatant".equals(logic) || "CashIn".equals(logic)
                 || "WipeWithSub".equals(logic) || "RecycleForDamage".equals(logic) || "EchoDestroy".equals(logic)
                 || "SelfDamage".equals(logic) || "BounceWithAuras".equals(logic) || "PayLifePump".equals(logic)
-                || "DrawOnDamage".equals(logic) || "DamageKill".equals(logic) || "LethalOnly".equals(logic);
+                || "DrawOnDamage".equals(logic) || "DamageKill".equals(logic) || "LethalOnly".equals(logic)
+                || "LifeForGraveyard".equals(logic);
     }
 
     public static AiAbilityDecision decide(final Player ai, final SpellAbility sa) {
@@ -63,6 +64,7 @@ public final class MiscLogicAi {
             case "DrawOnDamage" -> drawOnDamage(ai, sa);
             case "DamageKill" -> damageKill(ai, sa);
             case "LethalOnly" -> lethalOnly(ai, sa);
+            case "LifeForGraveyard" -> lifeForGraveyard(ai, sa);
             default -> cashIn(ai, sa);
         };
     }
@@ -509,6 +511,33 @@ public final class MiscLogicAi {
             }
         }
         return no();
+    }
+
+    // ---- Command the Dreadhorde: creatures from any graveyard, a life for each point of mana value ----
+
+    private static AiAbilityDecision lifeForGraveyard(final Player ai, final SpellAbility sa) {
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        if (!sa.usesTargeting() || !ph.isPlayerTurn(ai) || !ph.is(PhaseType.MAIN1)) {
+            return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
+        }
+        sa.resetTargets();
+        final java.util.List<Card> options = new java.util.ArrayList<>(CardUtil.getValidCardsToTarget(sa));
+        // the best value for the life first
+        options.sort(Comparator.comparingDouble((Card c) -> -(double) ComputerUtilCard.evaluateCreature(c) / Math.max(1, c.getCMC())));
+        int life = ai.getLife() - 6;
+        int v = 0;
+        for (final Card c : options) {
+            if (c.getCMC() <= life && ComputerUtilCard.evaluateCreature(c) > c.getCMC() * 25) {
+                sa.getTargets().add(c);
+                life -= c.getCMC();
+                v += ComputerUtilCard.evaluateCreature(c) - c.getCMC() * 12;
+            }
+        }
+        if (v < 200) {
+            sa.resetTargets();
+            return no();
+        }
+        return yes();
     }
 
     // ---- verse counters ----

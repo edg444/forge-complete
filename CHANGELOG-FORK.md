@@ -864,6 +864,9 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Disciple of Bolas: `SacrificeFor` now also plans a "sacrifice another creature" effect. It sacrifices the
       creature whose power buys the most life and cards for what it's worth, and a mandatory trigger still picks one.
       Brain Weevil: `SacrificeFor`, mostly in answer to removal, since its body is worth about its two discards.
+    - Banshee: new `HalfX`, with X twice what the kill (or lethal) takes, when it can spare the other half.
+    - Command the Dreadhorde: new `LifeForGraveyard`. The creatures and planeswalkers in any graveyard worth the most
+      for the life they cost, keeping 6 life back.
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only
     during your upkeep" had `ActivationPhases$ Upkeep` without `PlayerTurn$ True`).
