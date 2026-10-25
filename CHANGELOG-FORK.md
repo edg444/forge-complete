@@ -339,6 +339,16 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       life or poison), Disrupting counters their spell when an X matches its mana value, Nourishing gains just
       enough to survive their attack, and Shining moves the whole of the biggest hit. The redirect AI now reads a
       shield size stored from X as it resolves.
+  - *Second pass, batch 106* (`NoAiBatch106Test`):
+    - Knacksaw Clique, Leech Bonder, Merrow Grimeblotter, Merrow Wavebreakers, Pale Wayfarer, Puresight Merrow: new
+      `UntapSymbolAi` (`AILogic$ Untap`). The {Q} untap is most of the value, so the ability goes once the creature
+      is tapped and the AI's own combat is over (it can block again), or on their turn before blocks. Curses go on
+      their best creature, help on the creature itself, and Leech Bonder moves a -1/-1 counter off its side.
+    - Daghatar the Adamant, Fate Transfer, Bioshift: moving counters between two targets was an unwritten TODO in
+      `CountersMoveAi`. Every source and destination pair is now tried for what the move does to each side; a
+      creature about to be destroyed loses nothing (Bioshift in answer to removal). Spells used to be refused
+      outright as not reusable. Nesting Grounds: new `MoveCounterPair`, for the same search when the source is the
+      parent's target.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 

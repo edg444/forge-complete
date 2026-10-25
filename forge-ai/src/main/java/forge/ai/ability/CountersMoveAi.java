@@ -1,6 +1,8 @@
 package forge.ai.ability;
 
+import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Multiset;
 import forge.ai.*;
 import forge.game.Game;
 import forge.game.ability.AbilityUtils;
@@ -28,7 +30,8 @@ public class CountersMoveAi extends SpellAbilityAi {
         } else if (sa.usesTargeting()) {
             sa.resetTargets();
             decision = moveTgtAI(ai, sa);
-            if (!decision.willingToPlay()) {
+            // a pair move is judged on what it does, not on the mana being spare
+            if (!decision.willingToPlay() || sa.getMaxTargets() == 2 && !sa.hasParam("Defined")) {
                 return decision;
             }
         }
@@ -348,8 +351,7 @@ public class CountersMoveAi extends SpellAbilityAi {
 
             return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
         } else if (sa.getMaxTargets() == 2) {
-            // TODO
-            return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
+            return moveBetweenTargets(ai, sa);
         } else {
             // SA uses target for Defined
             // Source => Targeted
@@ -460,6 +462,103 @@ public class CountersMoveAi extends SpellAbilityAi {
             }
             return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
         }
+    }
+
+    private record Pick(Card src, Card dst, int gain) { }
+
+    // Daghatar the Adamant, Fate Transfer, Bioshift: both ends are targets, so every pair is tried for what the move
+    // does to each side
+    private static AiAbilityDecision moveBetweenTargets(final Player ai, final SpellAbility sa) {
+        final List<Card> cands = CardLists.getTargetableCards(ai.getGame().getCardsIn(ZoneType.Battlefield), sa);
+        final Pick p = bestPair(ai, sa, cands, cands, sa.getTargetRestrictions().isSameController());
+        if (p == null || p.gain() < (sa.isSpell() ? 60 : 30)) {
+            return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
+        }
+        sa.getTargets().add(p.src());
+        sa.getTargets().add(p.dst());
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    /** AILogic$ MoveCounterPair (Nesting Grounds): the parent targets the source, the MoveCounter after it the destination. */
+    public static AiAbilityDecision moveFromParentTarget(final Player ai, final SpellAbility root) {
+        final SpellAbility move = root.getSubAbility();
+        if (move == null || move.getApi() != forge.game.ability.ApiType.MoveCounter || !root.usesTargeting()) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        root.resetTargets();
+        move.resetTargets();
+        final CardCollectionView bf = ai.getGame().getCardsIn(ZoneType.Battlefield);
+        final Pick p = bestPair(ai, move, CardLists.getTargetableCards(bf, root), CardLists.getTargetableCards(bf, move), false);
+        if (p == null || p.gain() < 30) {
+            return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
+        }
+        root.getTargets().add(p.src());
+        move.getTargets().add(p.dst());
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    // a creature's worth with some counters added or taken away; one the counters kill is worth nothing
+    private static int worthWith(final Card c, final Multiset<CounterType> moved, final int sign) {
+        final Card lki = CardCopyService.getLKICopy(c);
+        for (final CounterType ct : moved.elementSet()) {
+            lki.setCounters(ct, c.getCounters(ct) + sign * moved.count(ct));
+        }
+        if (lki.getNetToughness() <= 0 || lki.getNetToughness() <= c.getDamage() && !c.hasKeyword(Keyword.INDESTRUCTIBLE)) {
+            return 0;
+        }
+        return ComputerUtilCard.evaluateCreature(lki);
+    }
+
+    private static Pick bestPair(final Player ai, final SpellAbility sa, final List<Card> srcs, final List<Card> dsts,
+            final boolean sameController) {
+        final String type = sa.getParamOrDefault("CounterType", "Any");
+        final String num = sa.getParamOrDefault("CounterNum", "1");
+        // a creature about to be destroyed anyway loses or gains nothing (Bioshift in answer to removal)
+        final List<forge.game.GameObject> threatened = ComputerUtil.predictThreatenedObjects(ai, null);
+        Pick best = null;
+        for (final Card src : srcs) {
+            if (!src.isCreature() || src.getCounters().isEmpty()) {
+                continue;
+            }
+            final List<Multiset<CounterType>> moves = new java.util.ArrayList<>();
+            if ("All".equals(type)) {
+                moves.add(HashMultiset.create(src.getCounters()));
+            } else {
+                for (final CounterType ct : src.getCounters().elementSet()) {
+                    if ("Any".equals(type) || ct.equals(CounterType.getType(type))) {
+                        final int have = src.getCounters(ct);
+                        final int n = "All".equals(num) || "Any".equals(num) ? have
+                                : Math.min(have, AbilityUtils.calculateAmount(sa.getHostCard(), num, sa));
+                        final Multiset<CounterType> m = HashMultiset.create();
+                        m.add(ct, n);
+                        moves.add(m);
+                    }
+                }
+            }
+            for (final Card dst : dsts) {
+                if (dst.equals(src) || !dst.isCreature() || sameController && !dst.getController().equals(src.getController())) {
+                    continue;
+                }
+                for (final Multiset<CounterType> m : moves) {
+                    if (m.isEmpty() || m.elementSet().stream().anyMatch(ct -> !dst.canReceiveCounters(ct))) {
+                        continue;
+                    }
+                    int gain = 0;
+                    if (!threatened.contains(src)) {
+                        gain += (src.getController().isOpponentOf(ai) ? -1 : 1)
+                                * (worthWith(src, m, -1) - ComputerUtilCard.evaluateCreature(src));
+                    }
+                    if (!threatened.contains(dst)) {
+                        gain += (dst.getController().isOpponentOf(ai) ? -1 : 1)
+                                * (worthWith(dst, m, 1) - ComputerUtilCard.evaluateCreature(dst));
+                    }
+                    if (best == null || gain > best.gain()) {
+                        best = new Pick(src, dst, gain);
+                    }
+                }
+            }
+        }
+        return best;
     }
 
     // used for multiple sources -> defined

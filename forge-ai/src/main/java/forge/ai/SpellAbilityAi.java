@@ -374,6 +374,12 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         if (forge.ai.ability.ShrinkAi.handles(logic)) {
             return forge.ai.ability.ShrinkAi.decide(ai, sa);
         }
+        if ("MoveCounterPair".equals(logic)) {
+            return forge.ai.ability.CountersMoveAi.moveFromParentTarget(ai, sa);
+        }
+        if ("Untap".equals(logic)) {
+            return forge.ai.ability.UntapSymbolAi.decide(ai, sa);
+        }
         if ("Shoal".equals(logic)) {
             return forge.ai.ability.ShoalAi.decide(ai, sa);
         }
