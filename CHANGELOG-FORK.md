@@ -329,6 +329,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
+
 - **AI for cards marked `AI:RemoveDeck:All`, continued** (the entry under the eighteenth deploy has the start; each
   card below now has AI that uses it sensibly, and its flag is gone).
   - *B, part 1* (`NoAiBatch06Test`):
