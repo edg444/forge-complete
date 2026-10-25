@@ -394,6 +394,12 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Profaner of the Dead: exploit now sacrifices only a creature whose toughness bounces more of theirs than it's
       worth (it used to sacrifice one for nothing). Silumgar Sorcerer needed no change: it exploits only with a
       creature spell to counter.
+  - *Second pass, batch 116* (`NoAiBatch116Test`):
+    - Sudden Disappearance, Goblin War Cry, Eunuchs' Intrigues: new `AlphaClearAi`, cast in its first main phase when
+      taking their blockers away (all but one, for the War Cry and Intrigues, the one left blocking its biggest
+      attacker) makes the attack lethal and it isn't lethal anyway. Sudden Spoiling: once blocks are known, when its
+      blocked creatures would die and won't (and their 0/2 blockers would), or on their turn when their attack
+      would kill it.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 
