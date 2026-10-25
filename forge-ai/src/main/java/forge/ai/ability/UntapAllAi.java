@@ -8,6 +8,7 @@ import forge.game.card.Card;
 import forge.game.card.CardCollectionView;
 import forge.game.card.CardLists;
 import forge.game.card.CardPredicates;
+import forge.game.phase.PhaseHandler;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
 import forge.game.spellability.AbilitySub;
@@ -20,22 +21,30 @@ public class UntapAllAi extends SpellAbilityAi {
         final Card source = sa.getHostCard();
 
         final AbilitySub abSub = sa.getSubAbility();
-        if (abSub != null) {
-        	if (ApiType.AddPhase == abSub.getApi() 
-        			&& source.getGame().getPhaseHandler().getPhase().isBefore(PhaseType.COMBAT_END)) {
-        		return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
-        	}
-            CardCollectionView list = CardLists.filter(aiPlayer.getGame().getCardsIn(ZoneType.Battlefield), CardPredicates.TAPPED);
-            final String valid = sa.getParamOrDefault("ValidCards", "");
-            list = CardLists.getValidCards(list, valid, source.getController(), source, sa);
-            // don't untap if only opponent benefits
-            if (list.anyMatch(CardPredicates.isControlledByAnyOf(aiPlayer.getYourTeam()))) {
-                return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
-            } else {
-                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
-            }
+        final PhaseHandler ph = source.getGame().getPhaseHandler();
+        if (abSub != null && ApiType.AddPhase == abSub.getApi() && ph.getPhase().isBefore(PhaseType.COMBAT_END)) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
-        return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        CardCollectionView list = CardLists.filter(aiPlayer.getGame().getCardsIn(ZoneType.Battlefield), CardPredicates.TAPPED);
+        final String valid = sa.getParamOrDefault("ValidCards", "");
+        list = CardLists.getValidCards(list, valid, source.getController(), source, sa);
+        // don't untap if only opponent benefits
+        final CardCollectionView mine = CardLists.filter(list, CardPredicates.isControlledByAnyOf(aiPlayer.getYourTeam()));
+        if (mine.isEmpty()) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        if (abSub != null && ApiType.AddPhase == abSub.getApi()) {
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
+        if (mine.allMatch(Card::isCreature)) {
+            // Battle Cry: untapping creatures pays off after they've attacked, as blockers for the opponent's turn
+            if (!ph.isPlayerTurn(aiPlayer) || !(ph.is(PhaseType.MAIN2) || ph.is(PhaseType.COMBAT_END))) {
+                return new AiAbilityDecision(0, AiPlayDecision.WaitForMain2);
+            }
+            return mine.size() >= 2 || abSub != null ? new AiAbilityDecision(100, AiPlayDecision.WillPlay)
+                    : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        return abSub != null ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
     }
 
     @Override

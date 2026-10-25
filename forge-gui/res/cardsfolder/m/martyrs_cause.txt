@@ -6,6 +6,5 @@ SVar:DBEffect:DB$ Effect | ValidTgts$ Any | TgtPrompt$ Select any target to prev
 SVar:RPreventNextFromSource:Event$ DamageDone | ValidSource$ Card.ChosenCardStrict,Emblem.ChosenCard | ValidTarget$ Card.IsRemembered,Player.IsRemembered | ReplaceWith$ ExileEffect | PreventionEffect$ True | Description$ The next time the chosen source deals damage to the target, prevent that damage.
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 SVar:ExileEffect:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
-AI:RemoveDeck:All
 SVar:NonStackingEffect:True
 Oracle:Sacrifice a creature: The next time a source of your choice would deal damage to any target this turn, prevent that damage.

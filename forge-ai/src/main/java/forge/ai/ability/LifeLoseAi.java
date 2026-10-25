@@ -4,10 +4,12 @@ import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
 import forge.ai.ComputerUtil;
 import forge.ai.ComputerUtilCost;
+import forge.ai.ComputerUtilMana;
 import forge.ai.SpellAbilityAi;
 import forge.game.ability.AbilityUtils;
 import forge.game.card.Card;
 import forge.game.cost.Cost;
+import forge.game.cost.CostPayLife;
 import forge.game.cost.CostSacrifice;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
@@ -65,6 +67,11 @@ public class LifeLoseAi extends SpellAbilityAi {
         final String amountStr = sa.getParam("LifeAmount");
         int amount = 0;
 
+        if (amountStr.equals("X") && sa.getSVar(amountStr).equals("Count$xPaid") && cost.getCostPartByType(CostPayLife.class) != null
+                && sa.getRootAbility().getXManaCostPaid() != null) {
+            // Bond of Agony: checkApiLogic already settled X as exactly the kill
+            return sa.getRootAbility().getXManaCostPaid() < payer.getLife();
+        }
         if (amountStr.equals("X") && sa.getSVar(amountStr).equals("Count$xPaid")) {
             amount = ComputerUtilCost.setMaxXValue(sa, payer, sa.isTrigger());
         } else {
@@ -74,6 +81,13 @@ public class LifeLoseAi extends SpellAbilityAi {
         // special logic for checkLifeCost
         if (!ComputerUtilCost.checkLifeCost(payer, cost, source, amount, sa)) {
             return false;
+        }
+
+        // Kaervek's Spite: a kill is worth sacrificing everything for
+        final Player tgt = sa.usesTargeting() ? sa.getTargets().getFirstTargetedPlayer() : null;
+        if (tgt != null && tgt.isOpponentOf(payer) && tgt.canLoseLife() && !tgt.cantLoseForZeroOrLessLife()
+                && amount >= tgt.getLife()) {
+            return true;
         }
 
         // other cost as the same
@@ -97,6 +111,23 @@ public class LifeLoseAi extends SpellAbilityAi {
             if (!doTgt(ai, sa, false)) {
                 return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);
             }
+        }
+
+        final CostPayLife payLife = sa.getPayCosts() == null ? null : sa.getPayCosts().getCostPartByType(CostPayLife.class);
+        if (amountStr.equals("X") && sa.getSVar(amountStr).equals("Count$xPaid") && payLife != null && "X".equals(payLife.getAmount())) {
+            // Bond of Agony: paying X life to take X from the others is an even race, so it's only for the kill
+            int needed = Integer.MAX_VALUE;
+            for (final Player p : getPlayers(ai, sa)) {
+                if (p.isOpponentOf(ai) && p.canLoseLife() && !p.cantLoseForZeroOrLessLife()) {
+                    needed = Math.min(needed, p.getLife());
+                }
+            }
+            final int maxMana = ComputerUtilMana.determineLeftoverMana(sa.getRootAbility(), ai, sa.isTrigger());
+            if (needed == Integer.MAX_VALUE || needed >= ai.getLife() || needed > maxMana) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            }
+            sa.getRootAbility().setXManaCostPaid(needed);
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
 
         if (amountStr.equals("X") && sa.getSVar(amountStr).equals("Count$xPaid")) {

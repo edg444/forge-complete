@@ -6,6 +6,5 @@ S:Mode$ Continuous | AffectedDefined$ Equipped | AddAbility$ HankyuPutCounter & 
 SVar:HankyuPutCounter:AB$ PutCounter | Cost$ T | CounterType$ AIM | CounterNum$ 1 | Defined$ OriginalHost | SpellDescription$ Put an aim counter on ORIGINALHOST.
 SVar:HankyuDmg:AB$ DealDamage | Cost$ T SubCounter<All/AIM/OriginalHost/Hankyu> | ValidTgts$ Any | NumDmg$ HankyuX | SpellDescription$ This creature deals damage to any target equal to the number of aim counters removed this way.
 SVar:HankyuX:SVar$CostCountersRemoved
-AI:RemoveDeck:All
 SVar:NonStackingAttachEffect:True
 Oracle:Equipped creature has "{T}: Put an aim counter on Hankyu" and "{T}, Remove all aim counters from Hankyu: This creature deals damage to any target equal to the number of aim counters removed this way."\nEquip {4} ({4}: Attach to target creature you control. Equip only as a sorcery.)

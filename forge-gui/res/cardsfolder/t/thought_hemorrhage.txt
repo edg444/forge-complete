@@ -1,7 +1,7 @@
 Name:Thought Hemorrhage
 ManaCost:2 B R
 Types:Sorcery
-A:SP$ NameCard | ValidCards$ Card.nonLand | SubAbility$ DBReveal | ValidDescription$ nonland | SpellDescription$ Choose a nonland card name. Target player reveals their hand. CARDNAME deals 3 damage to that player for each card with the chosen name revealed this way. Search that player's graveyard, hand, and library for all cards with that name and exile them. Then that player shuffles.
+A:SP$ NameCard | AILogic$ MostProminentInHumanDeck | ValidCards$ Card.nonLand | SubAbility$ DBReveal | ValidDescription$ nonland | SpellDescription$ Choose a nonland card name. Target player reveals their hand. CARDNAME deals 3 damage to that player for each card with the chosen name revealed this way. Search that player's graveyard, hand, and library for all cards with that name and exile them. Then that player shuffles.
 SVar:DBReveal:DB$ RevealHand | RememberRevealed$ True | ValidTgts$ Player | SubAbility$ DBDamage
 SVar:DBDamage:DB$ DealDamage | Defined$ Targeted | NumDmg$ X | SubAbility$ ExileYard
 SVar:ExileYard:DB$ ChangeZoneAll | Origin$ Graveyard | Destination$ Exile | Defined$ Targeted | ChangeType$ Card.NamedCard | SubAbility$ ExileHand | StackDescription$ None
@@ -11,5 +11,4 @@ SVar:NumInLib:TargetedPlayer$CardsInLibrary
 SVar:NumInHand:TargetedPlayer$CardsInHand
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearNamedCard$ True
 SVar:X:Remembered$Valid Card.NamedCard/Times.3
-AI:RemoveDeck:All
 Oracle:Choose a nonland card name. Target player reveals their hand. Thought Hemorrhage deals 3 damage to that player for each card with the chosen name revealed this way. Search that player's graveyard, hand, and library for all cards with that name and exile them. Then that player shuffles.

@@ -3,5 +3,4 @@ ManaCost:2 U
 Types:Creature Human Wizard
 PT:2/2
 A:AB$ ChangeZone | Cost$ T | ThisDefinedAndTgts$ Self | Origin$ Battlefield | Destination$ Hand | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | SpellDescription$ Return this creature and target creature you control to their owner's hand.
-AI:RemoveDeck:All
 Oracle:{T}: Return this creature and target creature you control to their owner's hand.

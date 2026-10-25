@@ -293,6 +293,16 @@ public class PlayerControllerAi extends PlayerController {
 
     @Override
     public CardCollectionView choosePermanentsToSacrifice(SpellAbility sa, int min, int max, CardCollectionView validTargets, String message) {
+        // Last-Ditch Effort: "any number", as many as it decided on
+        final CardCollection planned = forge.ai.ability.SacrificePayoffAi.planned(sa);
+        if (planned != null && ("SacrificeAny".equals(sa.getRootAbility().getParam("AILogic"))
+                || "SacrificeFor".equals(sa.getRootAbility().getParam("AILogic"))
+                || "SacXJunk".equals(sa.getRootAbility().getParam("AILogic")))) {
+            final CardCollection chosen = CardLists.filter(planned, validTargets::contains);
+            if (chosen.size() >= min && chosen.size() <= max) {
+                return chosen;
+            }
+        }
         return ComputerUtil.choosePermanentsToSacrifice(player, validTargets, max, sa, false, min == 0);
     }
 
@@ -1628,8 +1638,22 @@ public class PlayerControllerAi extends PlayerController {
 
     @Override
     public TargetChoices chooseNewTargetsFor(SpellAbility ability, Predicate<GameObject> filter, boolean optional) {
-        // AI currently can't do this. But when it can it will need to be based on Ability API
-        return null;
+        final SpellAbility sa = ability.isWrapper() ? ((WrappedAbility) ability).getWrappedAbility() : ability;
+        // only ever a change for the better: an unchanged spell keeps its targets
+        final List<GameObject> pick = forge.ai.ability.RetargetAi.best(player, sa, filter);
+        if (pick == null) {
+            return null;
+        }
+        final List<Integer> divided = sa.isDividedAsYouChoose() ? new ArrayList<>(sa.getTargets().getDividedValues()) : null;
+        final int total = sa.isDividedAsYouChoose() ? sa.getTotalDividedValue() : 0;
+        sa.resetTargets();
+        for (int i = 0; i < pick.size(); i++) {
+            sa.getTargets().add(pick.get(i));
+            if (divided != null) {
+                sa.addDividedAllocation(pick.get(i), pick.size() == 1 ? total : i < divided.size() ? divided.get(i) : 0);
+            }
+        }
+        return sa.getTargets();
     }
 
     @Override
@@ -1803,6 +1827,9 @@ public class PlayerControllerAi extends PlayerController {
             String name = "";
             if (logic.equals("MostProminentInComputerDeck")) {
                 name = ComputerUtilCard.getMostProminentCardName(aiLibrary);
+            } else if (logic.equals("MostProminentNonLandInComputerDeck")) {
+                // Demonic Consultation, Cheering Fanatic: a land is a hit nobody casts for
+                name = ComputerUtilCard.getMostProminentCardName(CardLists.filter(aiLibrary, CardPredicates.NON_LANDS));
             } else if (logic.equals("MostProminentInHumanDeck")) {
                 name = ComputerUtilCard.getMostProminentCardName(oppLibrary);
             } else if (logic.equals("MostProminentCreatureInComputerDeck")) {

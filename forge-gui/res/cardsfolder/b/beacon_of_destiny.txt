@@ -8,5 +8,4 @@ SVar:SelflessDamage:Event$ DamageDone | ValidTarget$ You | ValidSource$ Card.Cho
 SVar:SelflessDmg:DB$ ReplaceEffect | VarName$ Affected | VarValue$ EffectSource | VarType$ Card | SubAbility$ ExileEffect
 SVar:ExileEffect:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
-AI:RemoveDeck:All
 Oracle:{T}: The next time a source of your choice would deal damage to you this turn, that damage is dealt to this creature instead.

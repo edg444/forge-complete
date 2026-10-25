@@ -1,6 +1,5 @@
 Name:Leave No Trace
 ManaCost:1 W
 Types:Instant
-A:SP$ Destroy | ValidTgts$ Enchantment | Radiance$ True | SpellDescription$ Radiance — Destroy target enchantment and each other enchantment that shares a color with it.
-AI:RemoveDeck:All
+A:SP$ Destroy | AILogic$ Radiance | ValidTgts$ Enchantment | Radiance$ True | SpellDescription$ Radiance — Destroy target enchantment and each other enchantment that shares a color with it.
 Oracle:Radiance — Destroy target enchantment and each other enchantment that shares a color with it.

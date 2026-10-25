@@ -191,6 +191,12 @@ public class AiCostDecision extends CostDecisionMakerBase {
         if (cost.payCostFromSource()) {
             return PaymentDecision.card(source);
         }
+        // Corpse Lunge: the card whose power it planned on
+        final CardCollection planned = forge.ai.ability.SacrificePayoffAi.planned(ability);
+        if (planned != null && !planned.isEmpty() && "ExileFor".equals(ability.getRootAbility().getParam("AILogic"))
+                && player.getCardsIn(cost.getFrom()).containsAll(planned)) {
+            return PaymentDecision.card(planned);
+        }
 
         if (type.equals("All")) {
             return PaymentDecision.card(player.getCardsIn(cost.getFrom()));
@@ -588,6 +594,11 @@ public class AiCostDecision extends CostDecisionMakerBase {
         if (cost.getType().equals("OriginalHost")) {
             return PaymentDecision.card(ability.getOriginalHost());
         }
+        // Carrion, Soulblast: X is what's sacrificed, so the AI already chose it when it decided
+        final CardCollection planned = forge.ai.ability.SacrificePayoffAi.planned(ability);
+        if (planned != null && !planned.isEmpty() && planned.allMatch(c -> c.isInPlay() && c.getController().equals(player))) {
+            return PaymentDecision.card(planned);
+        }
         if (cost.getAmount().equals("All")) {
             // Does the AI want to use Sacrifice All?
             return null;
@@ -621,6 +632,11 @@ public class AiCostDecision extends CostDecisionMakerBase {
                 return null;
             }
             return PaymentDecision.card(source);
+        }
+        // Induce Despair: the card whose X it planned on
+        final CardCollection planned = forge.ai.ability.SacrificePayoffAi.planned(ability);
+        if (planned != null && !planned.isEmpty() && hand.containsAll(planned)) {
+            return PaymentDecision.card(planned);
         }
 
         if (cost.getType().equals("Hand")) {

@@ -39,6 +39,17 @@ public class ChooseCardNameAi extends SpellAbilityAi {
                 return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
             }
 
+            final SpellAbility digUntil = sa.findSubAbilityByType(forge.game.ability.ApiType.DigUntil);
+            if (digUntil != null && "Exile".equals(digUntil.getParam("RevealedDestination"))) {
+                // Demonic Consultation exiles the whole library when the name isn't found past the top six: only
+                // with several copies left to find
+                final CardCollectionView library = ai.getCardsIn(ZoneType.Library);
+                final String name = ComputerUtilCard.getMostProminentCardName(CardLists.filter(library, CardPredicates.NON_LANDS));
+                if (name.isEmpty() || CardLists.count(library, CardPredicates.nameEquals(name)) < 3) {
+                    return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+                }
+            }
+
             final TargetRestrictions tgt = sa.getTargetRestrictions();
             if (tgt != null) {
                 sa.resetTargets();

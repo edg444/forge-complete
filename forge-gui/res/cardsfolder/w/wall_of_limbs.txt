@@ -8,5 +8,4 @@ SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ P1P1 | Counter
 A:AB$ LoseLife | Cost$ 5 B B Sac<1/CARDNAME> | LifeAmount$ X | ValidTgts$ Player | TgtPrompt$ Select a player | SpellDescription$ Target player loses X life, where X is this creature's power.
 SVar:X:Sacrificed$CardPower
 AI:RemoveDeck:Random
-AI:RemoveDeck:All
 Oracle:Defender (This creature can't attack.)\nWhenever you gain life, put a +1/+1 counter on this creature.\n{5}{B}{B}, Sacrifice this creature: Target player loses X life, where X is this creature's power.

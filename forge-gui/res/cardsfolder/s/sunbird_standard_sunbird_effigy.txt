@@ -4,7 +4,6 @@ Types:Artifact
 A:AB$ Mana | Cost$ T | Produced$ Any | SpellDescription$ Add one mana of any color.
 K:Craft:5 XMin1 ExileCtrlOrGrave<X/Permanent.Other/permanent>
 SVar:X:Count$xPaid
-AI:RemoveDeck:All
 DeckHints:Ability$Discard|Mill|Sacrifice
 DeckHas:Ability$Graveyard
 AlternateMode:DoubleFaced

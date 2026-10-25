@@ -4,7 +4,6 @@ Types:Creature Goblin Artificer
 PT:2/1
 A:AB$ Pump | Cost$ Sac<1/Artifact> | Defined$ Self | KW$ Haste | SpellDescription$ This creature gains haste until end of turn.
 SVar:PlayMain1:TRUE
-AI:RemoveDeck:All
 DeckHas:Ability$Sacrifice
 DeckNeeds:Type$Artifact
 Oracle:Sacrifice an artifact: This creature gains haste until end of turn.

@@ -9,6 +9,5 @@ S:Mode$ Continuous | AffectedDefined$ Enchanted | Affected$ Creature | AddKeywor
 # R&D's Secret Lair: before MB2 it lacks "This effect doesn't remove Flickering Ward", so choosing white makes it fall off.
 S:Mode$ Continuous | AffectedDefined$ Enchanted | Affected$ Creature | AddKeyword$ Protection:Card.ChosenColor:chosenColor | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20240802 | Description$ (As printed) Enchanted creature gains protection from the chosen color.
 A:AB$ ChangeZone | Cost$ W | Origin$ Battlefield | Destination$ Hand | SpellDescription$ Return this Aura to its owner's hand.
-AI:RemoveDeck:All
 SVar:ChosenProtection:True
 Oracle:Enchant creature\nAs this Aura enters, choose a color.\nEnchanted creature has protection from the chosen color. This effect doesn't remove this Aura.\n{W}: Return this Aura to its owner's hand.

@@ -206,6 +206,10 @@ public class PermanentAi extends SpellAbilityAi {
                 if (!ab.hasParam("UnlessCost")) {
                     continue;
                 }
+                // Magmasaur, Junk Golem: the counters it pays with come in with it
+                if (ab.getParam("UnlessCost").startsWith("SubCounter") && source.hasStartOfKeyword("etbCounter")) {
+                    continue;
+                }
                 hasUpkeepCost = true;
                 upkeepCost.add(AbilityUtils.calculateUnlessCost(ab, ab.getParam("UnlessCost"), true));
             } else if (ApiType.LoseLife.equals(ab.getApi()) && !ab.usesTargeting()) {

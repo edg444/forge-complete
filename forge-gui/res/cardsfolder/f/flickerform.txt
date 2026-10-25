@@ -14,6 +14,5 @@ SVar:ClearImprint:DB$ Cleanup | ClearImprinted$ True | SubAbility$ FlickerformAt
 SVar:FlickerformAttach:DB$ RepeatEach | UseImprinted$ True | RepeatCards$ Aura.IsRemembered | Zone$ Exile | RepeatSubAbility$ DBAllAuraAttach
 SVar:DBAllAuraAttach:DB$ ChangeZone | Defined$ Imprinted | Origin$ Exile | Destination$ Battlefield | AttachedTo$ Valid Creature.IsRemembered
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearImprinted$ True
-AI:RemoveDeck:All
 SVar:NonStackingAttachEffect:True
 Oracle:Enchant creature\n{2}{W}{W}: Exile enchanted creature and all Auras attached to it. At the beginning of the next end step, return that card to the battlefield under its owner's control. If you do, return the other cards exiled this way to the battlefield under their owners' control attached to that creature.

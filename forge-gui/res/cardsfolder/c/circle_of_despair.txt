@@ -8,5 +8,4 @@ SVar:ExileEffect:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
 SVar:NonStackingEffect:True
 SVar:AIPreference:SacCost$Creature.namedBrood of Cockroaches,Creature.token
-AI:RemoveDeck:All
 Oracle:{1}, Sacrifice a creature: The next time a source of your choice would deal damage to any target this turn, prevent that damage.

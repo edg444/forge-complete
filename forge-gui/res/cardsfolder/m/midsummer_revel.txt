@@ -2,8 +2,7 @@ Name:Midsummer Revel
 ManaCost:3 G G
 Types:Enchantment
 T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigPutCounter | TriggerDescription$ At the beginning of your upkeep, you may put a verse counter on this enchantment.
-A:AB$ Token | Cost$ G Sac<1/CARDNAME> | TokenAmount$ X | TokenScript$ g_3_3_beast | TokenOwner$ You | SpellDescription$ Create X 3/3 green Beast creature tokens.
+A:AB$ Token | AILogic$ CashIn | Cost$ G Sac<1/CARDNAME> | TokenAmount$ X | TokenScript$ g_3_3_beast | TokenOwner$ You | SpellDescription$ Create X 3/3 green Beast creature tokens.
 SVar:TrigPutCounter:DB$ PutCounter | Defined$ Self | CounterType$ VERSE | CounterNum$ 1
-AI:RemoveDeck:All
 SVar:X:Count$CardCounters.VERSE
 Oracle:At the beginning of your upkeep, you may put a verse counter on this enchantment.\n{G}, Sacrifice this enchantment: Create X 3/3 green Beast creature tokens, where X is the number of verse counters on this enchantment.

@@ -19,5 +19,4 @@ Types:Enchantment Aura
 K:Enchant:Creature
 SVar:AttachAILogic:GainControl
 S:Mode$ Continuous | AffectedDefined$ Enchanted | GainControl$ You | Description$ You control enchanted creature.
-AI:RemoveDeck:All
 Oracle:Enchant creature\nYou control enchanted creature.

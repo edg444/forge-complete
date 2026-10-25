@@ -8,7 +8,6 @@ SVar:TrigPump:DB$ Pump | Defined$ Self | NumAtt$ +X
 SVar:X:Count$Valid Creature.Aurochs+attacking+Other
 A:AB$ Pump | Cost$ 2 S | ValidTgts$ Creature | TgtPrompt$ Select target creature to attack | StackDescription$ None | SubAbility$ DBMustBlock | SpellDescription$ Target creature blocks target creature this turn if able.
 SVar:DBMustBlock:DB$ MustBlock | DefinedAttacker$ ParentTarget | ValidTgts$ Creature | TgtPrompt$ Select target creature to block
-AI:RemoveDeck:All
 AI:RemoveDeck:Random
 SVar:HasAttackEffect:TRUE
 DeckHints:Type$Aurochs

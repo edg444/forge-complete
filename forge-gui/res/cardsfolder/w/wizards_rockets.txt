@@ -8,6 +8,5 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigDraw:DB$ Draw | Defined$ TriggeredCardController | NumCards$ 1
 SVar:X:Count$xPaid
 SVar:SacMe:1
-AI:RemoveDeck:All
 DeckHas:Ability$Sacrifice
 Oracle:This artifact enters tapped.\n{X}, {T}, Sacrifice this artifact: Add X mana in any combination of colors.\nWhen this artifact is put into a graveyard from the battlefield, draw a card.

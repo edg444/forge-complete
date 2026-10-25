@@ -6,7 +6,6 @@ SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
 A:AB$ Mana | Cost$ T | Produced$ C | Amount$ 2 | RestrictValid$ Activated | SpellDescription$ Add {C}{C}. Spend this mana only to activate abilities.
 K:Craft:8 U XMin4 ExileCtrlOrGrave<X/Permanent.Other+nonLand+hasAbility Activated/nonlands with activated abilities>
 SVar:X:Count$xPaid
-AI:RemoveDeck:All
 DeckHints:Ability$Discard|Mill|Sacrifice
 DeckHas:Ability$Graveyard
 AlternateMode:DoubleFaced

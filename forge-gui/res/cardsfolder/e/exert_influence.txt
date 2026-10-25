@@ -4,5 +4,4 @@ Types:Sorcery
 A:SP$ GainControl | ValidTgts$ Creature | ConditionCheckSVar$ X | ConditionSVarCompare$ EQ1 | SpellDescription$ Converge — Gain control of target creature if its power is less than or equal to the number of colors of mana spent to cast this spell.
 SVar:Y:Count$Converge
 SVar:X:Targeted$Valid Creature.powerLEY
-AI:RemoveDeck:All
 Oracle:Converge — Gain control of target creature if its power is less than or equal to the number of colors of mana spent to cast this spell.

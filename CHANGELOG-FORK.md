@@ -329,6 +329,505 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **AI for cards marked `AI:RemoveDeck:All`, continued** (the entry under the eighteenth deploy has the start; each
+  card below now has AI that uses it sensibly, and its flag is gone).
+  - *B, part 1* (`NoAiBatch06Test`):
+    - Barter in Blood: an "each player sacrifices" spell now weighs what each side gives up (everyone sacrifices
+      their least valuable) and is cast when the opponent loses more; it used to need only that the opponent had
+      enough to sacrifice.
+    - Battle Cry: untapping its own creatures waits for the AI's main 2 or end of combat, when it turns attackers
+      into blockers (it was cast whenever one was tapped, and an untap-all with nothing attached was never cast).
+    - Balance of Power: a draw spell that targets an opponent only to count cards (the AI draws) picks the
+      opponent worth the most and wants at least two cards; the targeting used to read as "the opponent draws".
+    - Behold the Beyond: discarding the hand to search for N cards needs fewer than N other cards in hand.
+    - Biorhythm: new RepeatEach `AILogic$ EachPlayerSetLife` works out every new life total: cast for the win or
+      when it leaves the AI further ahead, never into its own loss.
+    - Aysen Abbey, Bag of Holding, Barbed Sextant, Barrage of Expendables, Barrenton Medic, Barrin, Master Wizard,
+      Beacon of Destiny, Beast Within, Birchlore Rangers, Blasting Station, Blessed Reincarnation, Blighted
+      Burgeoning, Blinding Beam: the existing AI (and the sacrifice-cost check above) already plays them sensibly.
+  - *B and C, part 2* (`NoAiBatch08Test`):
+    - Bond of Agony: paying X life to make the others lose X is an even race, so it's cast only with X set to
+      exactly the kill, and only while the AI keeps life to spare.
+    - Bloodflow Connoisseur: its sacrifice outlet eats a creature that's dying anyway.
+    - Cerulean Wisps: the cantrip-cycling fallback above also covers spells that only change colors.
+    - Blinkmoth Well, Blood Celebrant, Blood Rites, Blood Vassal, Basal Thrull, Bloodthirsty Adversary, Bog
+      Elemental, Bog Initiate, Bog Naughty, Bogardan Dragonheart, Bola Warrior, Bone Flute, Bone Shaman, Bosh, Iron
+      Golem, Brand, Brand of Ill Omen, Brave-Kin Duo, Breakthrough, Brilliant Spectrum, Brine Shaman, Browse,
+      Brutalizer Exarch, Bulwark, Burr Grafter, Burst of Speed, Butcher Orgg, Cabal Coffers, Cabal Interrogator,
+      Cabal Patriarch, Cache Raiders, Cagemail, Calciform Pools, Callous Oppressor, Cannibalize, Canopy Claws,
+      Captain of the Mists, Caregiver, Carnage Altar, Carpet of Flowers, Carrion Rats, Cartel Aristocrat, Cascade
+      Bluffs, Castle Sengir, Cave of Temptation, Celestial Prism, Cemetery Puca, Cephalid Broker, Cerebral Vortex,
+      Ceta Disciple, Champion of Stray Souls, Chandra, Pyromaster, Charm Peddler, Chromatic Armor, Chromatic Sphere,
+      Chromatic Star, Chromeshell Crab, Cinderhaze Wretch, Circle of Despair, Civic Guildmage, Civilized Scholar,
+      Clairvoyance, Clock of Omens, Coalhauler Swine, Coastal Wizard, Coffin Puppets, Commune with Lava, Complex
+      Automaton, Composite Golem, Compulsion, Conjured Currency, Conjurer's Closet, Consign to Dream, Conspiracy,
+      Consuming Ferocity, Contagion, Contingency Plan, Contraband Livestock: the existing AI (with the sacrifice and
+      damage checks above) already plays them sensibly. Bonds of Mortality, Burning-Tree Bloodscale: unflagged for
+      their card draw and body (their abilities are never activated).
+  - *C, D and E* (`NoAiBatch19Test`):
+    - Brutal Deceiver, Callous Deceiver, Cruel Deceiver: a paid look at its own top card happens once a turn at the end
+      of the opponent's turn (the AI used to pay for it in every window), and reveal-for-a-bonus waits for blocks with
+      the creature in the fight.
+    - Dangerous Wager: the discard-the-hand check now also covers "then draw N".
+    - Echoing Decay: its -2/-2 was missing `IsCurse$ True`, so the AI read it as a pump.
+    - Dread Charge: uses the existing `AILogic$ Evasion`.
+    - Copperhoof Vorrac, Coral Fighters, Coral Trickster, Corpse Blockade, Corpse Traders, Corrupted Grafstone, Cosmic
+      Larva, Covetous Urge, Cranial Archive, Crater Elemental, Crazed Armodon, Cream of the Crop, Crested Craghorn,
+      Crosis's Attendant, Crossbow Ambush, the Crowns (Ascension, Awe, Convergence, Doom, Fury, Suspicion, Vigor),
+      Crucible of the Spirit Dragon, Cruel Fate, Cruel Sadist, Crypt Creeper, Crypt of Agadeem, Cryptic Gateway,
+      Crystal Quarry, Crystal Shard, Crystal Vein, Culling Dais, Cunning Giant, Cuombajj Witches, Curse of Chaos,
+      Curse of Echoes, Curse of the Swine, Cursecloth Wrappings, Customs Depot, Cytoplast Manipulator, Dakmor Salvage,
+      Dakra Mystic, Daretti, Scrap Savant, Darigaaz's Attendant, Dark Privilege, Darkheart Sliver, Darksteel Mutation,
+      Darkwater Egg, Dauntless Escort, Dawn's Reflection, Dawnfluke, Dawnglare Invoker, Deadly Wanderings, Deadshot,
+      Death-Mask Duplicant, Deathknell Kami, Deathmark Prelate, Decaying Soil, Deceiver of Form, Decree of Pain,
+      Deftblade Elite, Descendant of Masumaro, Detainment Spell, Detritivore, Devastating Summons, Devoted Caretaker,
+      Devoted Druid, Devouring Greed, Devout Decree, Diabolic Revelation, Dimir Charm, Dimir Doppelganger, Dimir
+      Machinations, Disallow, Disappearing Act, Dispatch, Dispersal Shield, Dispersing Orb, Divebomber Griffin,
+      Diversionary Tactics, Djinn Illuminatus, Djinn of Wishes, Doomsday Confluence, Dovin, Hand of Control, Dragon
+      Mask, Dralnu, Lich Lord, Drawn from Dreams, Dreadship Reef, Dream Salvage, Dream Stalker, Dream's Grip,
+      Dreamcatcher, Dromar, the Banisher, Dromar's Attendant, Drowned Rusalka, Dryad's Caress, Dwarven Armorer, Dwarven
+      Armory, Dwarven Ruins, Earthbrawn, Eater of Hope, Ebon Stronghold, Ebony Charm, Edge of Autumn,
+      Eight-and-a-Half-Tails, Elder Druid, Elite Arcanist, Elsewhere Flask, Elusive Tormentor, Elven Palisade, Ember
+      Gale, Embercleave, Emerald Charm, Empty City Ruse, Endling, Endure, Energy Chamber, Enervate: the existing AI
+      already plays them sensibly. Dark Maze: unflagged as a defender (its attack ability is never activated).
+  - *E, F, G and H* (`NoAiBatch25Test`):
+    - Fireblade Artist, Crovax the Cursed: an optional "you may sacrifice a creature" is only accepted when the AI has
+      a creature it can spare (the AI always said yes, so with no other creature it fed the card to itself).
+    - Final Fortune: covered by the losing-extra-turn check above.
+    - Ghostly Possession: attaches as a curse (the creature deals and takes no combat damage), not a pump.
+    - Feral Deceiver, Harsh Deceiver: the Deceiver peek fix above (the reveal-for-a-bonus check also covers an untap).
+    - Heartwarming Redemption: the discard-the-hand check leaves alone a draw that counts the discarded cards.
+    - Damage equal to a sacrificed creature's chroma (Fiery Bombardment) is no longer read as its power.
+    - Enigma Eidolon, Epic Experiment, Epiphany Storm, Errand of Duty, Ertai, the Corrupted, Esix, Fractal Bloom, Esper
+      Sojourners, Essence Bottle, Ethereal Champion, Etherwrought Page, Evasive Maneuvers, Evershrike, Evolution Charm,
+      Evolutionary Leap, Exert Influence, Experiment Kraj, Extravagant Spirit, Eye of Ojer Taq, Eye of Ramos, Eye Spy,
+      Eyekite, Eyes of the Watcher, Fabrication Foundry, Faith Healer, Falkenrath Torturer, False Peace, Falter,
+      Familiar's Ruse, Famished Ghoul, Fanatical Devotion, Faramir, Prince of Ithilien, Farrelite Priest, Fatal
+      Attraction, Fatal Lore, Fatestitcher, Fatigue, Fault Riders, Feed the Pack, Fend Off, Fertile Ground, Fetid Heath,
+      Fettergeist, Final Flare, Fire Sprites, Fire-Lit Thicket, Firecat Blitz, Firemind Vessel, the Flailing Manticore,
+      Ogre and Soldier, Flameshot, Flash of Defiance, Flash of Insight, Fleeting Spirit, Flicker, Flicker of Fate,
+      Flickerform, Flickering Ward, Floating Shield, Flooded Grove, Flurry of Wings, Footbottom Feast, Forbid, Force of
+      Virtue, Foresight, Forgotten Lore, Fortitude, Frantic Salvage, Funeral Pyre, Fungal Reaches, Fungus Elemental,
+      Fury Charm, Gabriel Angelfire, Galepowder Mage, Gargantuan Gorilla, General's Regalia, Generator Servant, Ghave,
+      Guru of Spores, Ghost Tactician, Ghostly Touch, Ghoulcaller's Chant, Giant Caterpillar, Giant Slug, Giant Trap Door
+      Spider, Gideon, Champion of Justice, Gift of Doom, Gilded Light, Gitaxian Probe, Give // Take, Glare of Subdual,
+      Glarewielder, Glen Elendra Pranksters, Gnathosaur, Goblin Bangchuckers, Goblin Bombardment, Goblin Clearcutter,
+      Goblin Dynamo, Goblin Legionnaire, Gore Vassal, Grab the Reins, Graceful Antelope, Grave Servitude, Graven Cairns,
+      Gravepurge, Grazing Kelpie, Greel, Mind Raker, Greenseeker, Gremlin Mine, Grenzo, Dungeon Warden, Grinning Totem,
+      Grixis Charm, Guild Globe, Hankyu, Hapless Researcher, Hard Cover, Haunted Crossroads, Havengul Lich, Havenwood
+      Battleground, Head Games, Heap Doll, Heart of Ramos, Heart Warden, Heartwood Shard, Helionaut: the existing AI
+      already plays them sensibly. Fylamarid: unflagged for its body (its recolor is never activated).
+  - *H, I and J* (`NoAiBatch36Test`):
+    - Windfall, Whispering Madness, Jace's Archivist, Magus of the Wheel: "each player discards their hand, then
+      draws" is only used when the AI gains at least two cards and no opponent gains more (this also tightens Wheel of
+      Fortune). Magus of the Wheel goes off when its sacrifice cost allows it, e.g. when it would die anyway.
+    - Island of Wak-Wak: sets the power of the biggest creature attacking the AI to 0.
+    - Intimidation Bolt: "other creatures can't attack this turn" waits until the AI's own creatures have attacked.
+    - Irencrag Feat: cast as a ritual only for a spell it then pays for.
+    - An optional "you may sacrifice a creature" that costs life when declined (Pillar Tombs of Aku) is accepted
+      again; the spare-creature check above only covers the AI's own cards.
+    - Hell-Bent Raider, Helvault, Henge of Ramos, Heretic's Punishment, Heritage Druid, Heroic Defiance, Hex Parasite,
+      Hidden Strings, Hisoka, Minamo Sensei, Hobbit's Sting, Hollowhenge Spirit, Holy Justiciar, Homing Sliver, Horn of
+      Ramos, Horror of Horrors, Hua Tuo, Honored Physician, Hull Breach, Hundred-Talon Strike, Hydromorph Guardian,
+      Hydromorph Gull, Hyperion Blacksmith, Hypochondria, Ib Halfheart, Goblin Tactician, Idol of Endurance, Ignition
+      Team, Iizuka the Ruthless, Illuminated Folio, Illuminated Wings, Implements of Sacrifice, Imprison, Improbable
+      Alliance, Improvised Club, Iname, Death Aspect, Incandescent Soulstoke, Infernal Tribute, Infernal Tutor, Inferno
+      Trap, Infused Arrows, Initiates of the Ebon Hand, Inkfathom Witch, Innocent Blood, Inspired Sprite, Interdict,
+      Interplanar Beacon, Ion Storm, Iron-Heart Chimera, Ivory Charm, Ivory Gargoyle, Jace, the Living Guildpact,
+      Jalira, Master Polymorphist, Jamuraan Lion: the existing AI already plays them sensibly.
+  - *J and K* (`NoAiBatch37Test`):
+    - Kaervek's Spite: sacrifices everything only when the 5 life loss kills the target.
+    - Kaboom!: "any number of target players" targets every opponent and never the AI.
+    - Kiku, Night's Flower, Kiku's Shadow: aimed at an opposing creature its own power kills.
+    - Jinxed Idol, Jinxed Ring, Jinxed Choker: now `AI:RemoveDeck:Random`, so an AI handed one passes it back, while
+      generated decks still leave them out.
+    - Jandor's Saddlebags, Jangling Automaton, Jar of Eyeballs, Jeweled Spirit, Jolrael, Mwonvuli Recluse, Jolt,
+      Jolting Merfolk, Journey of Discovery, Jund Charm, Kagemaro, First to Suffer, Kagemaro's Clutch, Kaleidostone,
+      Kami of Ancient Law, Karn, Silver Golem, Karn's Touch, Karplusan Minotaur, Kavu Recluse, Kaya, Ghost Assassin,
+      Kazuul's Toll Collector, Keldon Necropolis, Kenrith's Transformation, Kheru Spellsnatcher, Killing Glare, Kiora's
+      Follower, Kithkin Armor, Kjeldoran Javelineer: the existing AI already plays them sensibly. Kill-Suit Cultist:
+      unflagged for its body (its sacrifice ability is never activated).
+  - *K, L and M* (`NoAiBatch37Test`):
+    - Knollspine Dragon: its optional "discard your hand and draw" is only taken when the damage dealt this turn beats
+      the hand (an optional discard-the-hand trigger used to be accepted every time).
+    - Magmasaur, Junk Golem: cast again - the "remove a +1/+1 counter or sacrifice it" upkeep check no longer looks for
+      counters on the card while it is still in hand.
+    - Manamorphose: cast as a free cantrip on the way to another spell (the ritual check also stops reading "two mana
+      in any combination" as four mana of no color).
+    - Land's Edge: now `AI:RemoveDeck:Random`, so the AI uses an opponent's.
+    - Kor Outfitter, Koskun Keep, Krark-Clan Engineers, Krark-Clan Ironworks, Krark-Clan Ogre, Krark-Clan Shaman,
+      Krark-Clan Stoker, Krasis Incubation, Kris Mage, Krosan Archer, Krosan Restorer, Krovikan Sorcerer, Kry Shield,
+      Kukemssa Serpent, Kuldotha Flamefiend, Lady Sun, Lake of the Dead, Last Chance, Latulla, Keldon Overseer, Launch
+      Party, Lead-Belly Chimera, Lieutenant Kirtar, Lightning Dart, Lim-Dûl's Paladin, Limestone Golem, Lithatog,
+      Lithomantic Barrage, Llanowar Druid, Loathsome Catoblepas, Long-Term Plans, Lotus Blossom, Loxodon Lifechanter,
+      Lumengrid Augur, Mad Prophet, Mageta the Lion, Magewright's Stone, Magma Burst, Magma Giant, Magma Vein,
+      Magmatic Channeler, Magmatic Chasm, Magmatic Insight, Magmaw, Magus of the Unseen, Malakir Soothsayer, Malevolent
+      Awakening, Mana Cylix, Mana Prism, Mana Short, Manascape Refractor, Manifold Key, Manor Gargoyle, Maraleaf Rider,
+      Maraxus of Keld, March of the Drowned, Mardu Blazebringer, Marker Beetles, Market Festival, Maro, Marsh Flitter,
+      Marsh Lurker, Marshal's Anthem, Martyred Rusalka, Martyrs' Tomb, Mask of Immolation, Master of the Veil,
+      Masterful Replication, Masticore: the existing AI already plays them sensibly. Lancers en-Kor: unflagged for its
+      body (its redirect is never activated).
+  - *M, N and O*:
+    - Masumaro, First to Live, Medicine Bag, Mental Discipline, Merchant Scroll, Merciless Resolve, Mesmeric Sliver,
+      Mesmeric Trance, Metamorphose, Meteor Crater, Mind Games, Mind Over Matter, Mind Slash, Mindlink Mech,
+      Mindreaver, Minions' Murmurs, Mirage Mirror, Mire Shade, Mirozel, Mirror of the Forebears, Mischievous Quanar,
+      Mishra's Bauble, Mistbreath Elder, Mistform Stalker, Mistform Wall, Mitotic Manipulation, Mizzium Transreliquat,
+      Mogg Raider, Mogg Squad, Mogis's Warhound, Molten Firebird, Molten Slagheap, Moonring Island, Moratorium Stone,
+      Morgue Thrull, Morgue Toad, Morinfen, Moriok Replica, Mossfire Egg, Mourning, Murderous Betrayal, Myojin of
+      Life's Web, Myojin of Seeing Winds, Mystic Gate, Nacatl Hunt-Pride, Nahiri, the Lithomancer, Narcissism,
+      Nature's Chosen, Necromancer's Stockpile, Need for Speed, Nemata, Grove Guardian, Nethergoyf, Neurok Replica,
+      Niblis of the Breath, Night Soil, Nightbird's Clutches, Nightscape Apprentice, Nightshade Assassin, Nihilistic
+      Glee, Nim Replica, Nim Shambler, Nissa's Judgment, Niveous Wisps, Nivix, Aerie of the Firemind, Noble Ox, Nomad
+      Stadium, Nomadic Elf, Nullmage Shepherd, Nyx Weaver, Ob Nixilis of the Black Oath, Oblivion Crown, Oblivion
+      Stone, Oboro Envoy, Obscuring Aether, Odunos River Trawler, Offalsnout, Ogre Battlecaster, Omnath, Locus of Mana,
+      Omnibian, Ophidian, Opposition, Oppressive Will, Orcish Bloodpainter, Orcish Lumberjack, Orcish Mechanics,
+      Ore-Rich Stalactite, Oread of Mountain's Blaze, Oreskos Explorer, Oriss, Samite Guardian, Ormos, Archive Keeper,
+      Ornate Kanzashi, Orochi Leafcaller, Orzhov Charm: the existing AI already plays them sensibly. Mirror Entity,
+      Mirrorwood Treefolk, Mistform Dreamer, Mistform Mutant, Mistform Seaswift, Mistform Shrieker, Mistform Skyreaver,
+      Mistform Sliver, Mistform Wakecaster, Mistform Warchief, Moonlight Geist, Mountain Titan, Nantuko Mentor, Nomads
+      en-Kor, Opal-Eye, Konda's Yojimbo, Oracle's Attendants: unflagged for their bodies (the X animate, the
+      redirects, the type changes, the damage prevention and the pumps are never activated).
+  - *O, P, Q and R*:
+    - Recurring Insight: rescripted as a plain draw that targets the opponent, so the draw-by-their-hand-size check
+      covers it; Repentance: covered by the Kiku check above.
+    - Orzhov Pontiff, Overgrown Estate, Overwhelm, Oxidda Daredevil, Painted Bluffs, Paleontologist's Pick-Axe,
+      Parallax Tide, Parallax Wave, Pardic Lancer, Pardic Miner, Pardic Swordsmith, Paroxysm, Patriarch's Desire, the
+      five Patrons (Akki, Kitsune, Moon, Nezumi, Orochi), Peat Bog, Peek, Peregrine Mask, Perpetual Timepiece,
+      Petrahydrox, Phantasmal Mount, Phantatog, Phyrexia's Core, Phyrexian Plaguelord, Phyrexian Reclamation,
+      Phyrexian Scrapyard, Phyrexian Tower, Phyrexian Vault, Piety, Pitchstone Wall, Plaguemaw Beast, Planeswalker's
+      Fury, Polymorph, Powder Keg, Praetor's Grasp, Precognition, Priest of Yawgmoth, Primal Adversary, Primal Cocoon,
+      Primordial Mist, Prism Array, Prismatic Lens, Prismite, Proclamation of Rebirth, Profane Command, Prohibit,
+      Promise of Power, Prophetic Prism, Prophetic Ravings, Proteus Staff, Psychatog, Psychic Intrusion, Psychic
+      Possession, Psychic Puppetry, Psychic Surgery, Psychic Theft, Psychosis Crawler, Psychotic Episode, Pteron Ghost,
+      Pulse of Llanowar, Puppet Strings, Puppeteer, Putrid Imp, Putrid Leech, Putrid Warrior, Quagmire Druid, Quirion
+      Ranger, Ragamuffyn, Ragnar, Raiding Schemes, Rain of Daggers, Rain of Rust, Rakalite, Rakdos Augermage, Rakdos
+      Charm, Rakdos Riteknife, Ramosian Rally, Ransack, Rapid Decay, Rapid Fire, Rath's Edge, Rats' Feast, Ravenous
+      Vampire, Raze, Razormane Masticore, Reality Spasm, Reckless Abandon, Reckless Assault, Reckless Barbarian, Redcap
+      Melee, Reins of the Vinesteed, Reject Imperfection, Relic Bind, Relic Ward, Repudiate // Replicate, Resilient
+      Wanderer, Resounding Roar, Resounding Scream, Resounding Silence, Restore Balance, Retraced Image, Rhystic
+      Deluge, Rhystic Lightning, Rhystic Shield, Ria Ivor, Bane of Bladehold, Rift Elemental: the existing AI already
+      plays them sensibly. Outrider en-Kor, Pili-Pala, Quarum Trench Gnomes, Quicksilver Dragon, Rainbow Crow, Razia,
+      Boros Archangel, Resistance Fighter: unflagged for their bodies (the redirects, the untap-symbol mana, the color
+      change and the damage prevention are never activated).
+  - *R and S*:
+    - Singing Tree: the Island of Wak-Wak check (zero the power of the biggest attacker).
+    - Saproling Cluster: now `AI:RemoveDeck:Random`, so the AI uses an opponent's.
+    - Righteousness, Rimehorn Aurochs, Rimewind Taskmage, Ring of Gix, Rishadan Port, Rith's Attendant, Ritual of the
+      Machine, River's Grasp, Roar of Jukai, Roar of the Kha, Rock Hydra, Roiling Horror, Role Reversal, Rootrunner,
+      Rootwater Mystic, Rotting Giant, Rouse, Rugged Prairie, Ruins of Trokair, Rummaging Wizard, the seven Runes of
+      Protection, Ruric Thar, the Unbowed, Rushwood Herbalist, Rust, Ruthless Invasion, Sage of Ancient Lore,
+      Saheeli's Lattice, Saltcrusted Steppe, Samite Censer-Bearer, Sanctum Guardian, Sanctum of Eternity, Sandsower,
+      Sandstone Deadfall, Sandstone Needle, Sandstorm Eidolon, Sanguimancy, Sapphire Charm, Saprazzan Skerry, Saproling
+      Burst, Sarulf, Realm Eater, Satyr Piper, Savage Beating, Scab-Clan Giant, Scarwood Bandits, School of the Unseen,
+      Scrounging Bandar, Scryb Ranger, Scrying Sheets, Scuttling Death, Sea Scryer, Sealed Fate, Séance, Search
+      Warrant, Searing Rays, Searing Spear Askari, Second Wind, See Beyond, Seedling Charm, Seedtime, Segmented Wurm,
+      Seismic Stomp, Selesnya Eulogist, Selfless Cathar, Sengir Nosferatu, Sentinel, Serene Master, Serum Powder,
+      Sewerdreg, Shadowblood Egg, Shambling Swarm, Shaper Parasite, Shapesharer, Shield Wall, Shielded by Faith, Shields
+      of Velis Vel, Shifting Loyalties, Shifty Doppelganger, Shimmering Grotto, Shinen of Life's Roar, Shred Memory,
+      Shrine of Boundless Growth, Shrine of Piercing Vision, Shrouded Lore, Signpost Scarecrow, Silverglade Pathfinder,
+      Simic Basilisk, Siren Song Lyre, Sisay's Ingenuity, Skeletal Scrying, Skinshifter, Skirk Volcanist, Skirsdag
+      Flayer, Skulltap, Skycloud Egg, Skyship Plunderer, Skyshroud Elf, Slate of Ancestry, Slaughter-Priest of Mogis,
+      Slingbow Trap, Slinking Skirge, Slobad, Goblin Tinkerer, Slumbering Tora, Smite, Social Snub: the existing AI
+      already plays them sensibly. Scarecrow, Shaman en-Kor, Shield Dancer, Shieldmage Elder, Silent Assassin, Silver
+      Wyvern: unflagged for their bodies (the redirects, the damage prevention and the end-of-combat removal are never
+      activated).
+  - *S and T*:
+    - Squallmonger: now `AI:RemoveDeck:Random`, so the AI uses an opponent's.
+    - Soldevi Adnate, Soldevi Excavations, Soldevi Sage, Soldier Replica, Solidarity, Sophic Centaur, Soramaro, First
+      to Dream, Soratami Cloud Chariot, Soratami Cloudskater, Sorcerer's Broom, Soul Channeling, Soul Kiss, Soul
+      Seizer, Soulbright Flamekin, Spare from Evil, Spark of Creativity, Spawnbinder Mage, Spawning Pit, Specter's
+      Shriek, Spectral Adversary, Spectral Searchlight, Spell Contortion, Spellshift, Sphinx's Decree, Spike Rogue,
+      Spincrusher, Spinning Darkness, Spiteflame Witch, Spitting Slug, Spitting Spider, Spoils of Evil, Springjack
+      Pasture, Springleaf Drum, Spurred Wolverine, Squealing Devil, Stalking Yeti, Starke of Rath, Stasis Cell,
+      Steadfastness, Steal Enchantment, Steeling Stance, Stifle, Stir the Pride, Stitcher's Apprentice, Stonybrook
+      Angler, Stormwatch Eagle, Strands of Night, Strategic Planning, Street Sweeper, Strongarm Tactics, Stronghold
+      Assassin, Sudden Demise, Suicidal Charge, Sultai Ascendancy, Summoner's Egg, Sunbird Standard, Sungrass Egg,
+      Sunken Ruins, Sunscape Apprentice, Suppress, Surveyor's Scope, Survivor of the Unseen, Svogthos, the Restless
+      Tomb, Svyelunite Temple, Swan Song, Swashbuckler Extraordinaire, Sword of the Paruns, Sworn Defender, Sylvan
+      Safekeeper, Sylvan Yeti, Syr Elenora, the Discerning, Tahngarth's Rage, Taigam's Scheming, Taigam, Sidisi's
+      Hand, Tainted Adversary, Takklemaggot, Talon of Pain, Tamiyo, Collector of Tales, Teardrop Kami, Teferi's Care,
+      Teferi's Veil, Temporary Truce, Tendrils of Despair, Tergrid's Shadow, Terrarion: the existing AI already plays
+      them sensibly. Soltari Guerrillas, Spirit en-Kor, Stonewise Fortifier: unflagged for their bodies (the redirects
+      and the damage prevention are never activated).
+  - *T through Z* (the alphabetical pass is done):
+    - Wrack with Madness: the Kiku check above. Wall of Vipers, Wishmonger: now `AI:RemoveDeck:Random`, so the AI uses
+      an opponent's.
+    - Testament of Faith, Thalakos Mistfolk, Thassa's Ire, Thaumatog, The Chain Veil, The Enigma Jewel, The Kingpin of
+      Crime, The Prismatic Piper, The Royal Scions, Thermopod, Think Tank, Thought Courier, Thought Dissector,
+      Thoughtpicker Witch, Thran Forge, Three Wishes, Through the Breach, Throwing Knife, Thrull Wizard, Thunderheads,
+      Thundering Djinn, Thwart the Enemy, Tidal Bore, Tidal Control, Tidal Flats, Tidal Wave, Tideforce Elemental,
+      Tidewater Minion, Timebender, Timecrafting, Timely Interference, Timely Ward, Tin Street Market, Tin-Wing Chimera,
+      Tinder Wall, Titans' Nest, Toils of Night and Day, Tomb Robber, Tomb of Urami, Tomorrow, Azami's Familiar, Tooth
+      of Ramos, Torchling, Torpid Moloch, Tortoise Formation, Tortured Existence, Tower Defense, Trace of Abundance,
+      Trade Routes, Trading Post, Tranquil Frillback, Transluminant, Trash for Treasure, Treacherous Link, Treacherous
+      Terrain, Treacherous Vampire, Treetop Defense, Trenching Steed, Treva's Attendant, Treva's Charm, Triad of Fates,
+      Trial // Error, Tribal Unity, Trickbind, Trickery Charm, Trickster Mage, Triton Tactics, Tropical Storm, Troubled
+      Healer, Truce, Twiddle, Twilight Mire, Twinning Glass, Twitch, Unbender Tine, Undergrowth, Undying Evil, Unearthly
+      Blizzard, Unerring Sling, Unfulfilled Desires, Unlikely Alliance, Unmask, Unspeakable Symbol, Unstable Frontier,
+      Urborg, Urborg Panther, Urza's Bauble, Valleymaker, Vampire Lacerator, Vampire Warlord, Vampiric Tutor, Vanish
+      into Memory, Vanishing, Vault 21: House Gambit, Veil of Secrecy, Venarian Glimmer, Venser, the Sojourner,
+      Ventifact Bottle, Verdant Eidolon, Verdant Haven, Veteran's Voice, Vexing Arcanix, Viashino Skeleton, Vigilant
+      Martyr, Vine Snare, Viridian Acolyte, Viscera Seer, Vish Kal, Blood Arbiter, Vision Charm, Visions, Vitalize,
+      Vivisection, Vizier of Tumbling Sands, Voidmage Apprentice, Voidmage Prodigy, Volrath's Gardens, Volrath's
+      Stronghold, Vona's Hunger, Vortex Elemental, Voyager Staff, Waker of Waves, Walk the Aeons, Wall of Limbs, Wall of
+      Shadows, Wall of Vapor, Wand of Denial, Wandering Eye, Warbreak Trumpeter, Ward of Lights, Warren Weirding,
+      Warrior's Oath, Warrior's Stand, Waterfront Bouncer, Wave Elemental, Wave of Indifference, Weapon Rack, Welcome to
+      the Fold, Whetwheel, Whirlpool Warrior, Whirlpool Whelm, Wicked Reward, Wild Growth, Wild Guess, Wild Magic Surge,
+      Winding Canyons, Wings of Hubris, Winnow, Winter, Cynical Opportunist, Wisedrafter's Will, Wizard Mentor, Wizard
+      Replica, Wizard's Rockets, Wizards' School, Wooded Bastion, Xathrid Slyblade, Xenagos, the Reveler, Xenic
+      Poltergeist, Zedruu the Greathearted, Zephyr Scribe, Zombie Boa, Zombie Infestation: the existing AI already
+      plays them sensibly. Tidal Visionary, Tidal Warrior, Tideshaper Mystic, Tundra Kavu, Urza's Avenger, Warrior
+      en-Kor, Weaver of Lies, Willbender, Wirewood Symbiote, Zealous Inquisitor, Zhalfirin Crusader, Zombie
+      Trailblazer: unflagged for their bodies (the redirects, type changes and keyword trades are never activated).
+  - *Cluster: combat damage prevention* (`NoAiCombatPreventionTest`):
+    - New `AILogic$ PreventCombat` (`CombatPreventionAi`): once blocks are declared, the card's prevention - read
+      from its damage-prevention replacements and "Prevent all ... damage" keywords, on the root or a sub-ability -
+      is scored against that combat: the AI's life (everything if it stops lethal) and creatures it saves, less the
+      opposing life and creatures it saves. A spell has to save about a creature's worth, a repeatable ability less;
+      targeted ones pick the targets that save the most (greedily for "up to" and X targets).
+    - Benalish Missionary, Blinding Fog, Boros Fury-Shield, Brace for Impact, Divine Light, Ebony Horse, Elvish Scout,
+      Energy Arc, Forfend, Foxfire, Gossamer Chains, Hunter's Ambush, Inquisitor's Snare, Ith, High Arcanist, Lady
+      Evangela, Luminesce, Moonmist (no longer needs Humans to be cast), Radiant Kavu, Redeem, Repel the Abominable,
+      Riot Control, Serene Sunset, Shielded Passage, Sivvi's Ruse, Subdue, Terrifying Presence: use it.
+    - Embolden, Martyr's Cause, Panacea, Pollen Remedy, Prismatic Circle, Remedy, Rhystic Circle, Righteous Aura,
+      Serra's Hymn: the existing prevention AI already handles them.
+  - *Cluster: name a card* (`NoAiNameCardTest`): name-a-card spells and abilities were never used without an
+    `AILogic$`; each now has one.
+    - Brain Pry, Cabal Therapy, Dementia Sliver, Dispossess, Foreshadow, Infinite Obliteration, Lammastide Weave, Lost
+      Legacy, Memoricide, Predict, Runed Halo, Slaughter Games, Stain the Mind, Thought Hemorrhage: name the most
+      common card (of the allowed kind) in the opponent's deck.
+    - Desperate Research, Diviner's Lockbox: the most common card in the AI's own deck; Wood Sage: its most common
+      creature; Cheering Fanatic, Demonic Consultation, Divining Witch: its most common nonland card (new
+      `MostProminentNonLandInComputerDeck`).
+    - Demonic Consultation, Divining Witch: only when that card has at least three copies left in the library, since
+      missing it exiles the rest of the library.
+  - *Cluster: damage redirection* (`NoAiRedirectTest`): new `AILogic$ RedirectCombat` judges a redirection against
+    what it would change. Damage comes from the combat once blockers are declared, or from an opponent's burn on top of
+    the stack. The card's redirection is applied to it, and the creatures that die and the life lost on each side are
+    compared, with lethal outweighing everything. Every choice of targets, and of the source for "a source of your
+    choice", is tried. The source picked is the one chosen when the card resolves.
+    - Carom, Glarecaster, Harm's Way, Jade Monolith, Kor Chant, Kor Dirge, Mirror Strike, Reflect Damage, Sivvi's
+      Valor, Vassal's Duty, Ward of Piety, Daughter of Autumn: now used.
+    - The redirect abilities of Lancers, Nomads, Outrider, Shaman, Spirit and Warrior en-Kor, Mirrorwood Treefolk,
+      Opal-Eye, Oracle's Attendants, Razia, Shield Dancer, Soltari Guerrillas, Zealous Inquisitor and Zhalfirin
+      Crusader: these creatures were already in AI decks for their bodies, and now their abilities are used too.
+    - "The next 1 damage" abilities (Daughter of Autumn, the en-Kor, Vassal's Duty, Ward of Piety) are activated again
+      until enough damage has moved. A "next time" or "all damage" shield isn't made twice.
+  - *Cluster: must attack / must block* (`NoAiForcedCombatTest`): new `ForcedCombatAi`, judged by the combat each card
+    forces.
+    - Made to attack (`AILogic$ ForceAttack`): Alluring Siren, Arcum's Whistle, Courtly Provocateur, Imps' Taunt,
+      Incite, Incite War, Instigator, Into the Fray, Maddening Imp, Nettling Imp, Norritt, Siren's Call, Taunt, Walking
+      Desecration. Used as the opponent's combat begins (Taunt: for their next turn). The value is in their creatures
+      that would attack into a blocker that kills them and survives, and, for the cards that destroy what didn't
+      attack, their creatures that can't attack. Not when the attack it forces could be lethal for the AI. Walking
+      Desecration names the creature type it planned for.
+    - Made to block (`AILogic$ ForceBlock`): Courtly Provocateur, Culling Mark, Hunt Down, Mark for Death, Provoke.
+      The blocker the AI's attack kills, taking whichever block is worst for the AI. Sorceries plan the attack in the
+      first main phase; Provoke and Courtly Provocateur wait for attackers to be declared. Mark for Death also counts
+      the attack its "other creatures can't block" makes lethal.
+    - Lures (`AILogic$ Lure`): Alluring Scent, Bloodscent, Roar of Challenge, Taunting Challenge. Used when the rest
+      of the attack is then lethal, or the lured creature survives (Roar's ferocious indestructible counts) and kills
+      blockers. The attack AI's all-out check now counts the blockers a lure takes up.
+    - Irresistible Prey (`AILogic$ MustBeBlocked`): an attacker that kills whichever blocker it gets and survives.
+    - Auriok Siege Sled: its "blocks this creature" ability already had AI; the flag only kept it from being used.
+  - *Cluster: change targets* (`NoAiChangeTargetsTest`): the AI can now choose new targets for a spell or ability
+    (before, it always left them unchanged). New `RetargetAi` scores each possible target by how good it is for the AI
+    that the spell hits it: a harmful spell is best on the opponent's most valuable thing it can kill, a helpful one on
+    the AI's own. It only changes to something better. A change-targets card is used on an opponent's spell on top of
+    the stack when the change is worth it.
+    - Bolt Bend, Deflection, Divert, Goblin Flectomancer, Imp's Mischief, Meddle, Misdirection, Rebound, Redirect,
+      Reflecting Mirror, Reroute, Shunt, Sideswipe, Swerve, Wild Ricochet, Boltbender: now used.
+    - Imp's Mischief counts the life it costs; Goblin Flectomancer needs a gain worth sacrificing itself for; Wild
+      Ricochet adds the value of its copy; Meddle only for a spell whose one target is a creature.
+    - Cards that already had change-target abilities but no AI to use them now use them too: Quicksilver Dragon, Silver
+      Wyvern, Willbender, Deflecting Swat, Redirect Lightning, Ricochet Trap, Untimely Malfunction's mode, and others.
+  - *Cluster: exchange control* (`NoAiExchangeTest`): new `ExchangeTradeAi`.
+    - `AILogic$ ExchangePair` (Legerdemain, Political Trickery, Puca's Mischief, Shifting Borders, Shrewd Negotiation,
+      Spawnbroker, Vedalken Plotter): the best of its permanents-for-theirs pairs the targeting allows (shared type,
+      lesser power or mana value), for what theirs is worth over what it gives. A mandatory trigger takes the best
+      pair there is.
+    - `AILogic$ SwapArmies` (Reins of Power, Twist Allegiance): cast in its first main phase when the opponent's
+      creatures, attacking into its own, are lethal and its own attack isn't.
+    - Whole-card AI logics (combat prevention, redirection, forced combat, exchanges) now also judge triggered
+      abilities, not only spells and activations.
+  - *Cluster: move Auras and Equipment, licids* (`NoAiAttachmentMoveTest`): new `AttachmentMoveAi`.
+    - `AILogic$ MoveAttachment` (Aura Finesse, Aura Graft, Auriok Windwalker, Brass Squire, Crown of the Ages,
+      Enchantment Alteration, Kitsune Mystic's flip side, Kjeldoran Pride, Magnetic Theft, Simic Guildmage): each move
+      is scored by whom the attachment helps. A helpful Aura or Equipment belongs on the AI's best creature, a harmful
+      one on the opponent's. Control Magic-style Auras count for whoever controls them. An attachment on a permanent
+      about to be destroyed counts for nothing where it is, so the move answers removal. Used in its first main phase,
+      at the opponent's end step, or in answer to removal. A "Choices" move attaches where it decided.
+    - `AILogic$ Licid` (all 13 licids): the target is the one AttachAi picks for that Aura, used only when it's worth
+      more than the licid's own body (Dominating Licid: their creature over its 1/1).
+  - *Cluster: X from the sacrificed card* (`NoAiSacrificePayoffTest`): new `SacrificePayoffAi`. Before, the payoff was
+    judged with X = 0, since nothing had been sacrificed yet.
+    - `AILogic$ SacrificeFor` (Call for Blood, Carrion, Ghoulcaller Gisa, Greater Good, Homarid Spawning Bed, Ichor
+      Explosion, Life's Legacy, Lyzolda, Mind Extraction, Momentous Fall, Sanguine Praetor, Scourge of Skola Vale,
+      Shrine of Limitless Power, Soulblast, Worthy Cause): each creature it could sacrifice is tried. The value is the
+      payoff with that creature's power, toughness, mana value or color, less what the creature is worth. A creature
+      about to be destroyed costs nothing, so these answer removal; otherwise they wait for the second main phase or
+      the opponent's end step. The cost then sacrifices the creature it planned on.
+    - `AILogic$ SacrificeAny` (Last-Ditch Effort, Landslide): "sacrifice any number" for damage, when that's lethal,
+      sacrificing no more than it takes.
+  - *Cluster: blink own permanents, pacts* (`NoAiBlinkPactTest`):
+    - `AILogic$ Blink` (Ghostly Flicker, Ghostway, Illusionist's Stratagem, Siren's Ruse): new `BlinkAi`. A blink is
+      worth it for a permanent about to be destroyed (in answer to removal), an enters-the-battlefield trigger to use
+      again, an opponent's Aura to shed, or a tapped land that comes back untapped. Its own Auras and Equipment falling
+      off count against it, and tokens are never blinked. Ghostway answers a sweeper. Ghostly Flicker's second target
+      can be a free one.
+    - Pacts (Intervention Pact, Pact of Negation, Pact of the Titan, Slaughter Pact, Summoner's Pact): new `PactAi`.
+      A pact is cast only when its lands can pay next upkeep's cost in full and in color, on top of any pact already
+      owed. The AI already pays that cost when it can, and each pact's own effect already had AI.
+  - *Cluster: radiance, a creature type to hurt, random-discard costs* (`NoAiRadianceTypeTest`):
+    - `AILogic$ Radiance` (Cleansing Beam, Incite Hysteria, Leave No Trace, Wojek Embermage, Wojek Siren): new
+      `RadianceAi`. Each possible target is judged by the whole group sharing its color, its own permanents included.
+      Incite Hysteria goes for an attack its group can't block that's then lethal; Wojek Siren waits for blocks.
+    - `AILogic$ HurtType` (Outbreak, Pack's Disdain, Pact of the Serpent, Tsabo's Decree): new `TypeHurtAi`. Every
+      creature type in play (and in their hand, for Tsabo's Decree) is tried for what the effect does with it, and that
+      type is the one chosen.
+    - A "discard a card at random" cost (Amok, Canyon Drake, Coral Helm, Frenetic Ogre, and any other card with one)
+      was always refused. It's now paid when at least half the hand is cards the AI would discard anyway, such as lands
+      it doesn't need.
+  - *Cluster: cast from a graveyard, minor cantrips* (`NoAiGraveCastTest`, `NoAiCantripTest`):
+    - `AILogic$ CastFromGraveyard` (Mizzix's Mastery, Psionic Ritual, Sins of the Past, Spelltwine): new
+      `GraveCastAi`. Each instant or sorcery it could cast free is asked, without its mana cost, whether the AI would
+      cast it now. One it would is worth its mana value, and the card is used when that beats the card's own cost. New
+      `SpellAbilityAi.canPlayFromElsewhere` judges a spell its zone restrictions would otherwise turn down.
+    - `AILogic$ Cantrip` (Quicken, Scout's Warning, Skyshroud Blessing, Spiritualize, Sway of Illusion, Touch of
+      Vitae, Verdant Rebirth): new `CantripAi`. Cast at the opponent's end step with mana that would go unused, for the
+      card. Verdant Rebirth also answers removal on its creature, and Skyshroud Blessing answers an effect aimed at its
+      land.
+  - *Cluster: phase out, exchange life totals* (`NoAiPhaseLifeTest`):
+    - `PhasesAi` never chose a target for a targeted phase-out (its preference was an empty stub), so these cards were
+      never used. Now:
+      - Oubliette's "won't phase back in" is removal on their best creature.
+      - Otherwise a phase-out saves its own permanent from removal.
+      - In the opponent's combat, it takes their biggest attacker out (when it's worth at least 4 damage, or the AI is
+        in danger).
+      - In its own combat, it phases out a blocker that would kill its attacker.
+      - Reality Ripple, Vodalian Illusionist, Oubliette, and every other targeted phase-out card.
+    - `LifeExchangeAi` now gives "two target players" (Soul Conduit, Profane Transfusion) both targets: itself and the
+      opponent. Psychic Transfer is cast when the opponent is 3 to 5 life ahead, the only case where its condition
+      lets it work.
+  - *Cluster: X from a revealed card, X cards exiled from the graveyard* (`NoAiRevealExileXTest`), in
+    `SacrificePayoffAi`:
+    - `AILogic$ RevealFor` (Charge of the Forever-Beast, Disaster Radius, Induce Despair): revealing costs nothing, so
+      it reveals the creature card in hand whose power or mana value makes the effect do the most, and the cost reveals
+      that card.
+    - `AILogic$ ExileForX` (Chill Haunting, Harvest Pyre, Haunting Misery): X is what the kill takes (lethal damage, or
+      the target's toughness for -X/-X), or lethal or a real chunk to a player, up to the cards its graveyard can spare.
+  - *Smaller clusters* (`NoAiMiscLogicTest`, `NoAiXChoiceTest`): new `MiscLogicAi` and `XChoiceAi`.
+    - `AILogic$ BounceBoth` (Peel from Reality, Rite of Undoing, Run Away Together): its own permanent that's about to
+      be destroyed (or has an enters trigger) and their best one; tokens of its own never.
+    - `AILogic$ GraveShuffle` (Krosan Reclamation, Memory's Journey, Stream of Consciousness): their flashback and other
+      graveyard-castable cards and big reanimation targets, or its own cards when its library is nearly gone.
+    - `AILogic$ RemoveCombatant` (Labyrinth of Skophos, Reconnaissance): once blocks are known, their biggest attacker,
+      a blocker that would kill its attacker, or its own attacker that would die without trading.
+    - `AILogic$ CashIn` (Midsummer Revel, Recantation, Rumbling Crescendo): sacrificed at three verse counters (two
+      when in danger), on the opponent's best permanents.
+    - `AILogic$ StealX` (Dominate, Entrancing Melody): X is the mana value of the best creature of theirs it can pay
+      for.
+    - `AILogic$ WipeX` (Forced March, Gaze of Granite): every affordable X is tried, and the lowest X with the best
+      result for the two sides is chosen.
+    - `AILogic$ DiscardForX` (Nostalgic Dreams, Restless Dreams, Sickening Dreams, Turbulent Dreams, Vengeful Dreams,
+      `NoAiDiscardForXTest`): new `DiscardForXAi`. X is never more than the cards it would discard anyway, so each
+      spare card buys a worthwhile target: their attackers exiled, their best permanents bounced, its best cards back
+      from the graveyard, or the X that does the most as a sweep.
+  - *Second pass over the remaining todos* (`NoAiBatch84Test` onward), reusing the cluster logics where they fit:
+    - Black Sun's Zenith: `WipeX` now also covers -1/-1 counter and -X/-X sweeps (toughness X or less dies,
+      indestructible or not).
+    - Azorius Ploy: `PreventCombat`. Aether Tradewinds: `BounceBoth`. Abandon Hope: `DiscardForX` (X of their cards
+      for X spare ones, X also paid in mana).
+    - Anurid Brushhopper: `Blink`, now also for an ability that blinks itself out of the way of removal.
+    - Brightflame: `Radiance` now picks X with the target. Coordinated Barrage: `HurtType` gains a damage case.
+      Creeping Renaissance: `HurtType` also takes a card-type choice (the type bringing the most back from its
+      graveyard).
+    - Daring Thief: `ExchangePair` on its inspired trigger. Corpse Lunge: new `ExileFor`, for the graveyard creature
+      card whose power does the most, which the cost then exiles.
+    - Calming Verse: new `WipeWithSub`, which counts every sweep in the card, including the one that hits its own
+      enchantments. Dead Reckoning: new `RecycleForDamage`, a graveyard creature whose power kills their best creature.
+    - Death Bomb, Diabolic Intent: `SacrificeFor` now also values a targeted destroy and a tutor, sacrificing the
+      cheapest creature (nothing, if one is about to die anyway). Deadly Tempest: `WipeWithSub`.
+    - Dregs of Sorrow: new `DestroyX`, X as many of their worthwhile creatures as it can pay for. Echoing Calm,
+      Echoing Ruin: new `EchoDestroy`, the target with the most copies of theirs (less any of its own).
+    - Dance of the Skywise, Dragonshift: new `AnimateUpgradeAi` (`AILogic$ Upgrade`). Before attacking, the creature
+      gaining the most from becoming a 4/4 flyer; one with abilities of its own counts the loss.
+    - Feral Contest: `ForceBlock`. Flowstone Slide: `WipeX`. Gaea's Blessing: `GraveShuffle`. Indestructible Aura:
+      `PreventCombat`. Demonic Collusion: its tutor already had AI.
+    - Inner Struggle (`SelfDamage`): their creature whose own power kills it. Hubris (`BounceWithAuras`): their
+      creature worth bouncing with its Auras. Hatred (`PayLifePump`): exactly the life an unblocked attacker needs for
+      lethal, when the AI can spare it.
+    - Mandate of Peace: new `EndCombatAi` (`AILogic$ EndCombat`). The opponent's combat ends, once blocks are known,
+      when the AI stands to lose more there than it gains (lethal above all).
+    - Martyr of Ashes, Martyr of Frost, Martyr of Sands: new `RevealX`, with X the cards of their color in hand.
+      - Sands: gains 3X life when in danger.
+      - Frost: counters a spell of mana value 3 or more when X beats the caster's open mana.
+      - Ashes: picks the X that does the most to creatures without flying.
+    - Meltdown: `WipeX`. Living Destiny: `RevealFor`.
+    - Moment of Silence: `EndCombat`, which now also has the opponent skip combat ahead of an attack that could be
+      lethal. Orcish Settlers: `DestroyX`, which now takes lands too and counts {X}{X} as two mana per X; a creature
+      that sacrifices itself wants at least two targets. Monstrous Emergence: `RevealFor`.
+    - Jinx, Shadow of Doubt, Shimmering Mirage: `Cantrip`. Wake of Destruction: `EchoDestroy`.
+    - Toxic Deluge: `WipeX`, with X paid in life (keeping 5 back).
+    - Roar of the Crowd: `HurtType`, whose damage case now considers the player too.
+    - Vigean Intuition, Winding Way: `HurtType`, picking the card type its library is heaviest in for the cards
+      revealed off the top.
+    - Diminish, Snakeform, Turn to Frog: new `ShrinkAi` (`AILogic$ Shrink`). Once blocks are known, their combatant
+      becomes a 1/1 that its creature kills, or that no longer kills its creature, or does next to no damage
+      unblocked.
+    - Strip Bare: `StripAttachments`, for the creature with the most of their Auras and Equipment on it, its own
+      creature held down by theirs above all.
+    - Square Up, Wings of Velis Vel: `Upgrade`. Djinn of Infinite Deceits: `ExchangePair`.
+    - Insist, Overmaster: `Cantrip`, which now casts a sorcery in its own second main phase. Phantasmal Form:
+      `Cantrip`.
+    - Hunter's Insight, Warriors' Lesson: new `DrawOnDamage`, on its biggest unblocked attacker.
+    - Polymorphist's Jest: `Shrink`, now also for a player target (all their creatures in combat). Rally the
+      Righteous: `Radiance`, now also with an untap root, judged like its pump.
+    - Ensnare: `EndCombat`, tapping everything as their combat begins, ahead of an attack that could be lethal.
+    - Dance of the Manse, Divergent Equation, Hour of Eternity, Midnight Ritual, Postmortem Lunge, Shattered Crypt,
+      Suffer the Past, Wake the Dead: new `GraveX`. Every affordable X is tried for the best graveyard cards the spell
+      can take, valued by where they go, less the mana:
+      - to hand, or onto the battlefield;
+      - for the turn only (Wake the Dead as surprise blockers, Postmortem Lunge as a hasty attacker);
+      - exiled for tokens or 4/4 copies.
+      Shattered Crypt counts its life loss; Suffer the Past drains for each card it exiles from their graveyard.
+    - God-Eternal Bontu, Renounce, Reprocess: `SacrificeAny` now also covers "sacrifice any number" for a card or
+      life each. It sacrifices only junk: permanents about to die anyway, cheap tokens, lands beyond what its hand
+      needs, and cards marked to be sacrificed. Renounce is cast only when the life matters, and Bontu's trigger keeps
+      everything when there's no junk.
+    - Malicious Advice, Mishra's Helix, Synod Artificer: new `TapX`. It taps just the blockers that stand between its
+      attack and lethal, or else their lands as their turn starts (two or more); Malicious Advice's life cost caps X.
+    - Isochron Scepter, Spellbinder: `PlayAi` used to activate a free copy of an exiled card whenever there was one.
+      It now does so only when the AI would cast that card now (`GraveCastAi.castValue`).
+    - Burning Cloak, Goblin Cannon: new `DamageKill`. The damage is removal, on their best creature it kills; Goblin
+      Cannon, which sacrifices itself, only for a kill worth more than it, or the last point of their life.
+    - Fire and Brimstone: new `LethalOnly`, only when its damage to them is lethal and the AI survives its own share.
+    - Disciple of Bolas: `SacrificeFor` now also plans a "sacrifice another creature" effect. It sacrifices the
+      creature whose power buys the most life and cards for what it's worth, and a mandatory trigger still picks one.
+      Brain Weevil: `SacrificeFor`, mostly in answer to removal, since its body is worth about its two discards.
+    - Banshee: new `HalfX`, with X twice what the kill (or lethal) takes, when it can spare the other half.
+    - Command the Dreadhorde: new `LifeForGraveyard`. The creatures and planeswalkers in any graveyard worth the most
+      for the life they cost, keeping 6 life back.
+    - Mana Vapors: new `LandLock`, cast in its second main phase when most of their lands are tapped. Soul's Grace:
+      new `LifeFromPower`, the biggest power for life when life is short. Phyrexian Purge: new `LifePerTarget`, their
+      creatures worth 3 life each, keeping 8 back.
+    - Hail Storm: new `AttackerSweep`, in their combat when the attackers it kills outweigh its own losses. Immoral
+      Bargain: new `SacXForX`, X of its junk creatures for X of their best nonland permanents.
+    - Mindbreak Trap, Summary Dismissal, Swift Silence: new `StackClearAi` (`AILogic$ StackClear`). Used when the
+      opponents' spells on the stack are worth it and none of its own would go too; Mindbreak Trap targets only
+      theirs.
+    - Uncage the Menagerie: new `TutorX`, the X with the most different creatures of that mana value in its library.
+    - Sword of the Ages: new `SacForLethal`, just enough of its creatures' power for lethal.
+    - Devouring Rage, Vicious Betrayal: new `SacPumpLethal`, just enough sacrifices for an unblocked attacker's pump
+      to be lethal.
+    - Copper-Leaf Angel, Nahiri's Lithoforming: new `SacXJunk`, with X its spare lands, two or more.
+    - Aethersnatch, Commandeer: `ControlSpell` had no AI. New `StealSpell` takes their spell on top of the stack: a
+      permanent spell counts twice (they lose it too), an instant or sorcery counts what new targets would gain. The
+      "you may choose new targets" that follows uses `RetargetAi`.
+    - Crush of Tentacles: new `MassBounce`, each side's nonland permanents weighed (their tokens gone for good).
+    - Endemic Plague: `SacrificeFor`, whose sweep now also counts "shares a creature type with the sacrificed
+      creature". Divine Reckoning: new `KeepOneWipe`, with each side keeping its best creature.
+
 ### 2026-10-24, twentieth deploy (desktop, Android, GitHub) — gentler foil effect
 
 - **Gentler foil effect** (desktop and Android): foil cards no longer look painted over. Android's streaky rainbow

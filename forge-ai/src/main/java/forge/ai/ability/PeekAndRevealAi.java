@@ -1,9 +1,11 @@
 package forge.ai.ability;
 
 import forge.ai.*;
+import forge.game.ability.ApiType;
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
 import forge.game.card.CardLists;
+import forge.game.combat.Combat;
 import forge.game.phase.PhaseHandler;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
@@ -64,6 +66,27 @@ public class PeekAndRevealAi extends SpellAbilityAi {
                             && !topCard.isValid(sub.getParam("ConditionPresent").split(","), aiPlayer, sa.getHostCard(), sa)) {
                         return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
                     }
+                }
+            }
+        }
+
+        if (libraryOwner == aiPlayer && !sa.isTrigger() && sa.isActivatedAbility() && sa.getPayCosts().hasManaCost()) {
+            final PhaseHandler ph = aiPlayer.getGame().getPhaseHandler();
+            final Card host = sa.getHostCard();
+            final AbilitySub sub = sa.getSubAbility();
+            if (sub == null && !sa.hasParam("RememberRevealed")) {
+                // Brutal Deceiver: just a look at its own top card, worth once a turn at the end of the opponent's turn
+                if (sa.getActivationsThisTurn() > 0 || !(ph.is(PhaseType.END_OF_TURN) && ph.getNextTurn().equals(aiPlayer))
+                        || aiPlayer.getCardsIn(ZoneType.Library).getFirst().mayPlayerLook(aiPlayer)) {
+                    return new AiAbilityDecision(0, AiPlayDecision.AnotherTime);
+                }
+            } else if (sub != null && (sub.getApi() == ApiType.Pump || sub.getApi() == ApiType.Animate || sub.getApi() == ApiType.Untap)
+                    && "Self".equals(sub.getParam("Defined"))) {
+                // its reveal-for-a-bonus only matters once blocks are known, with the creature in the fight
+                final Combat combat = aiPlayer.getGame().getCombat();
+                if (combat == null || !ph.is(PhaseType.COMBAT_DECLARE_BLOCKERS)
+                        || !(combat.isAttacking(host) || combat.isBlocking(host))) {
+                    return new AiAbilityDecision(0, AiPlayDecision.WaitForCombat);
                 }
             }
         }

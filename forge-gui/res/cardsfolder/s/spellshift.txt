@@ -6,5 +6,4 @@ SVar:DBDig:DB$ DigUntil | Defined$ TargetedController | Valid$ Instant,Sorcery |
 SVar:DBPlay:DB$ Play | Defined$ Remembered | ValidSA$ Spell | Controller$ TargetedController | WithoutManaCost$ True | Optional$ True | SubAbility$ DBShuffle
 SVar:DBShuffle:DB$ Shuffle | Defined$ TargetedController | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
-AI:RemoveDeck:All
 Oracle:Counter target instant or sorcery spell. Its controller reveals cards from the top of their library until they reveal an instant or sorcery card. That player may cast that card without paying its mana cost. Then the player shuffles.

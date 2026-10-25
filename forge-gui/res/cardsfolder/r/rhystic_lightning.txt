@@ -5,5 +5,4 @@ A:SP$ StoreSVar | SVar$ RhysticPaid | Type$ Number | Expression$ 0 | UnlessPayer
 SVar:DBDmg:DB$ DealDamage | Defined$ Targeted | NumDmg$ X
 SVar:RhysticPaid:Number$1
 SVar:X:Count$Compare RhysticPaid EQ1.2.4
-AI:RemoveDeck:All
 Oracle:Rhystic Lightning deals 4 damage to any target unless that permanent's controller or that player pays {2}. If they do, Rhystic Lightning deals 2 damage to the permanent or player.

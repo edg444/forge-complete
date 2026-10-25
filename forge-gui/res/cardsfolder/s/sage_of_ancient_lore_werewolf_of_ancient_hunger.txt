@@ -9,7 +9,6 @@ SVar:TrigDraw:DB$ Draw | Defined$ You | NumCards$ 1
 T:Mode$ Phase | Phase$ Upkeep | WerewolfTransformCondition$ True | TriggerZones$ Battlefield | Execute$ TrigTransform | TriggerDescription$ At the beginning of each upkeep, if no spells were cast last turn, transform this creature.
 SVar:TrigTransform:DB$ SetState | Defined$ Self | Mode$ Transform
 # TODO: update logic for the AI to play around this
-AI:RemoveDeck:All
 SVar:NeedsToPlayVar:X GE3
 AlternateMode:DoubleFaced
 Oracle:Sage of Ancient Lore's power and toughness are each equal to the number of cards in your hand.\nWhen this creature enters, draw a card.\nAt the beginning of each upkeep, if no spells were cast last turn, transform this creature.

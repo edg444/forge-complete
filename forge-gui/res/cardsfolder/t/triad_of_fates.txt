@@ -8,5 +8,4 @@ SVar:DBReturn:DB$ ChangeZone | Defined$ Remembered | Origin$ Exile | Destination
 SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 A:AB$ ChangeZone | Cost$ B T | ValidTgts$ Creature.counters_GE1_FATE | TgtPrompt$ Select target creature that has a fate counter on it | Origin$ Battlefield | Destination$ Exile | SpellDescription$ Exile target creature that has a fate counter on it. Its controller draws two cards. | SubAbility$ DBDraw
 SVar:DBDraw:DB$ Draw | Defined$ TargetedController | NumCards$ 2
-AI:RemoveDeck:All
 Oracle:{1}, {T}: Put a fate counter on another target creature.\n{W}, {T}: Exile target creature that has a fate counter on it, then return it to the battlefield under its owner's control.\n{B}, {T}: Exile target creature that has a fate counter on it. Its controller draws two cards.

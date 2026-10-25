@@ -691,6 +691,15 @@ public class AiAttackController {
             }
         }
 
+        // a lure (Bloodscent, Roar of Challenge) takes every blocker able to block it
+        for (Card attacker : this.attackers) {
+            if (remainingAttackers.contains(attacker) && forge.ai.ability.ForcedCombatAi.isLure(attacker)) {
+                remainingBlockers.removeIf(b -> CombatUtil.canBlock(attacker, b));
+                remainingAttackers.remove(attacker);
+                blockedAttackers.add(attacker);
+            }
+        }
+
         // presumes the Human will block
         for (Card blocker : remainingBlockers) {
             if (remainingAttackers.isEmpty() || maxBlockersAfterCrew == 0) {

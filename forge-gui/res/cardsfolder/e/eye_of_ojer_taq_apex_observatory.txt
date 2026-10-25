@@ -3,7 +3,6 @@ ManaCost:3
 Types:Artifact
 A:AB$ Mana | Cost$ T | Produced$ Any | SpellDescription$ Add one mana of any color.
 K:Craft:6 ExileCtrlOrGrave<2/Permanent.Other+withSharedCardType/permanent>:two that share a card type:the two
-AI:RemoveDeck:All
 DeckHints:Ability$Discard|Mill|Sacrifice
 DeckHas:Ability$Mill|Graveyard|Token
 AlternateMode:DoubleFaced

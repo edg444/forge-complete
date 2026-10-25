@@ -46,6 +46,11 @@ public class TriggerHandler {
     private final List<Trigger> activeTriggers = new ArrayList<>();
 
     private final List<Trigger> delayedTriggers = new ArrayList<>();
+
+    // for the AI, to see what it already owes (pacts)
+    public final List<Trigger> getDelayedTriggers() {
+        return java.util.Collections.unmodifiableList(delayedTriggers);
+    }
     private final List<Trigger> thisTurnDelayedTriggers = new ArrayList<>();
     private final ListMultimap<Player, Trigger> playerDefinedDelayedTriggers = ArrayListMultimap.create();
     private final List<TriggerWaiting> waitingTriggers = new ArrayList<>();

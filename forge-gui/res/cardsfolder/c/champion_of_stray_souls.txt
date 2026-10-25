@@ -6,5 +6,4 @@ A:AB$ ChangeZone | Cost$ 3 B B T Sac<X/Creature.Other/other creature(s)> | CostD
 A:AB$ ChangeZone | Cost$ 5 B B | Origin$ Graveyard | Destination$ Library | ActivationZone$ Graveyard | Defined$ Self | SpellDescription$ Put this card from your graveyard on top of your library.
 SVar:X:Count$xPaid
 SVar:AIPreference:SacCost$Creature.token,Creature.cmcLE3
-AI:RemoveDeck:All
 Oracle:{3}{B}{B}, {T}, Sacrifice X other creatures: Return X target creature cards from your graveyard to the battlefield.\n{5}{B}{B}: Put this card from your graveyard on top of your library.

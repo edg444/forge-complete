@@ -72,6 +72,14 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
                 sa.getHostCard().getController(), sa.getHostCard(), sa)) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
+        // a pact is only cast with next upkeep's payment in hand
+        if (!forge.ai.ability.PactAi.canPayLater(aiPlayer, sa)) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final AiAbilityDecision whole = wholeCardLogic(aiPlayer, sa, false);
+        if (whole != null) {
+            return whole;
+        }
         AiAbilityDecision decision = canPlay(aiPlayer, sa);
         if (!decision.willingToPlay() && !"PlayForSub".equals(sa.getParam("AILogic"))) {
             return decision;
@@ -94,6 +102,22 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         }
 
         return canPlayWithoutRestrict(ai, sa);
+    }
+
+    /**
+     * As canPlayWithSubs, for a spell cast from somewhere its own restrictions don't allow (Mizzix's Mastery casting a
+     * copy from a graveyard).
+     */
+    public final AiAbilityDecision canPlayFromElsewhere(final Player ai, final SpellAbility sa) {
+        AiAbilityDecision decision = canPlayWithSubs(ai, sa);
+        if (decision.decision() != AiPlayDecision.CantPlaySa) {
+            return decision;
+        }
+        decision = canPlayWithoutRestrict(ai, sa);
+        if (!decision.willingToPlay() || sa.getSubAbility() == null) {
+            return decision;
+        }
+        return chkDrawbackWithSubs(ai, sa.getSubAbility());
     }
 
     private AiAbilityDecision canPlayWithoutRestrict(final Player ai, final SpellAbility sa) {
@@ -295,7 +319,74 @@ public abstract class SpellAbilityAi extends SpellAbilityEffect {
         return doTriggerNoCostWithSubs(aiPlayer, sa, mandatory).willingToPlay();
     }
 
+    // AILogics that judge the card as a whole, whatever API carries them (a prevention shield against the combat it
+    // would change, a two-target exchange...)
+    private static AiAbilityDecision wholeCardLogic(final Player ai, final SpellAbility sa, final boolean mandatory) {
+        final String logic = sa.getParam("AILogic");
+        if ("PreventCombat".equals(logic)) {
+            return forge.ai.ability.CombatPreventionAi.decide(ai, sa);
+        }
+        if ("RedirectCombat".equals(logic)) {
+            return forge.ai.ability.RedirectCombatAi.decide(ai, sa);
+        }
+        if (forge.ai.ability.ForcedCombatAi.handles(logic)) {
+            return forge.ai.ability.ForcedCombatAi.decide(ai, sa);
+        }
+        if (forge.ai.ability.ExchangeTradeAi.handles(logic)) {
+            return forge.ai.ability.ExchangeTradeAi.decide(ai, sa, mandatory);
+        }
+        if (forge.ai.ability.AttachmentMoveAi.handles(logic)) {
+            return forge.ai.ability.AttachmentMoveAi.decide(ai, sa);
+        }
+        if (forge.ai.ability.SacrificePayoffAi.handles(logic)) {
+            return forge.ai.ability.SacrificePayoffAi.decide(ai, sa);
+        }
+        if ("Blink".equals(logic)) {
+            return forge.ai.ability.BlinkAi.decide(ai, sa);
+        }
+        if ("Radiance".equals(logic)) {
+            return forge.ai.ability.RadianceAi.decide(ai, sa);
+        }
+        if ("HurtType".equals(logic)) {
+            return forge.ai.ability.TypeHurtAi.decide(ai, sa);
+        }
+        if ("CastFromGraveyard".equals(logic)) {
+            return forge.ai.ability.GraveCastAi.decide(ai, sa);
+        }
+        if ("Cantrip".equals(logic)) {
+            return forge.ai.ability.CantripAi.decide(ai, sa);
+        }
+        if (forge.ai.ability.MiscLogicAi.handles(logic)) {
+            return forge.ai.ability.MiscLogicAi.decide(ai, sa);
+        }
+        if (forge.ai.ability.XChoiceAi.handles(logic)) {
+            return forge.ai.ability.XChoiceAi.decide(ai, sa);
+        }
+        if ("DiscardForX".equals(logic)) {
+            return forge.ai.ability.DiscardForXAi.decide(ai, sa);
+        }
+        if ("Upgrade".equals(logic)) {
+            return forge.ai.ability.AnimateUpgradeAi.decide(ai, sa);
+        }
+        if ("EndCombat".equals(logic)) {
+            return forge.ai.ability.EndCombatAi.decide(ai, sa);
+        }
+        if (forge.ai.ability.ShrinkAi.handles(logic)) {
+            return forge.ai.ability.ShrinkAi.decide(ai, sa);
+        }
+        if ("StackClear".equals(logic) || "StealSpell".equals(logic)) {
+            return forge.ai.ability.StackClearAi.decide(ai, sa);
+        }
+
+        return null;
+    }
+
     public final AiAbilityDecision doTriggerNoCostWithSubs(final Player aiPlayer, final SpellAbility sa, final boolean mandatory) {
+        final AiAbilityDecision whole = wholeCardLogic(aiPlayer, sa, mandatory);
+        // a mandatory trigger the logic turns down still needs its targets from the usual path
+        if (whole != null && (whole.willingToPlay() || !mandatory)) {
+            return whole;
+        }
         AiAbilityDecision decision = doTriggerNoCost(aiPlayer, sa, mandatory);
 
         if (!decision.willingToPlay() && !"Always".equals(sa.getParam("AILogic"))) {

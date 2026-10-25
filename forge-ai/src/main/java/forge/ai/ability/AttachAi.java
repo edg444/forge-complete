@@ -1705,6 +1705,15 @@ public class AttachAi extends SpellAbilityAi {
 
     @Override
     protected Card chooseSingleCard(Player ai, SpellAbility sa, Iterable<Card> options, boolean isOptional, Player targetedPlayer, Map<String, Object> params) {
+        if ("MoveAttachment".equals(sa.getRootAbility().getParam("AILogic"))) {
+            // Crown of the Ages, Aura Graft: where it decided to move the attachment
+            final Card meant = AttachmentMoveAi.destination(sa.getHostCard());
+            for (final Card c : options) {
+                if (c.equals(meant)) {
+                    return c;
+                }
+            }
+        }
         return attachGeneralAI(ai, sa, (List<Card>)options, !isOptional, sa.getHostCard(), sa.getParam("AILogic"));
     }
 

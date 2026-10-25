@@ -7,6 +7,5 @@ SVar:TrigSurveil:DB$ Surveil | Amount$ 2
 # the graveyard, which isn't a surveil, so "whenever you surveil" doesn't trigger.
 T:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigLook | IsPresent$ Card.Self+PrintedTextActive+PrintedBefore 20140927 | TriggerDescription$ (As printed) At the beginning of your upkeep, look at the top two cards of your library. Put any number of them into your graveyard and the rest back on top of your library in any order.
 SVar:TrigLook:DB$ Dig | DigNum$ 2 | ChangeNum$ Any | DestinationZone$ Graveyard | LibraryPosition2$ 0 | NoReveal$ True
-AI:RemoveDeck:All
 DeckHas:Ability$Surveil|Graveyard
 Oracle:At the beginning of your upkeep, surveil 2. (Look at the top two cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)
