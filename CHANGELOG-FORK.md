@@ -415,6 +415,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       blocks are known, when the unblocked attackers would kill it or deal 4 or more; Feint on the fight where it
       would lose the most of its own (not an even trade); Angelic Favor on their attack before blocks, as a 4/4
       flying blocker that kills an attacker and lives, or when their attack would kill it.
+  - *Second pass, batch 120* (`NoAiBatch120Test`):
+    - Mass Polymorph, Synthetic Destiny, Reweave: new `PolymorphAi` (`AILogic$ Polymorph`). Its creatures are traded
+      for creatures from its library when what it gives up is worth less than the average creature card left there
+      (in its second main phase), or in answer to their sweeper; Reweave targets its weakest creature, a token best.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 
