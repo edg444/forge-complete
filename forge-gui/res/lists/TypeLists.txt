@@ -372,6 +372,7 @@ Time Lord:Time Lords
 Tosk:Tosks
 Toy:Toys
 Treefolk:Treefolk
+Tribble:Tribbles
 Trill:Trills
 Trilobite:Trilobites
 Triskelavite:Triskelavites
