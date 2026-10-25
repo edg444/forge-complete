@@ -129,6 +129,11 @@ public class ManaAi extends SpellAbilityAi {
     
     // Dark Ritual and other similar instants/sorceries that add mana to mana pool
     public static boolean doManaRitualLogic(Player ai, SpellAbility sa, boolean fromTrigger) {
+        return doManaRitualLogic(ai, sa, fromTrigger, null);
+    }
+
+    /** As above, with the mana it makes known in advance (Sacrifice: the mana value of what the AI plans to sacrifice). */
+    public static boolean doManaRitualLogic(Player ai, SpellAbility sa, boolean fromTrigger, Integer manaMade) {
         final Card host = sa.getHostCard();
         final String logic = sa.getParamOrDefault("AILogic", "");
 
@@ -154,6 +159,10 @@ public class ManaAi extends SpellAbilityAi {
         // "Combo Any" (Manamorphose) is one choice of colors for the whole Amount, not one mana per word
         if (!sa.getParam("Produced").startsWith("Combo")) {
             manaReceived *= sa.getParam("Produced").split(" ").length;
+        }
+
+        if (manaMade != null) {
+            manaReceived = manaMade;
         }
 
         int selfCost = sa.getRootAbility().getPayCosts().getCostMana() != null ? sa.getRootAbility().getPayCosts().getCostMana().getMana().getCMC() : 0;

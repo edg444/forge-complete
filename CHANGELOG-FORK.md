@@ -386,6 +386,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
       target, so each target is tried with its own X. Damage goes on their best creature it kills; a pump, once
       blocks are known, on its creature the pump saves, lets win its fight or makes lethal unblocked (Nantuko
       Mentor's ability is now used too); a spell on the stack, their priciest at 3 or more, or lethal.
+  - *Second pass, batch 114* (`NoAiBatch114Test`):
+    - Sacrifice, Burnt Offering, Metamorphosis: new `SacRitual`. The mana is the sacrificed creature's mana value,
+      which the ritual logic never knew in advance; the AI now plans the creature it can spare (junk, or a small
+      one) that makes the most mana, and casts the ritual when that mana casts something it otherwise couldn't.
 
 ### 2026-10-24, twenty-first deploy (desktop, Android, GitHub) — AI for no-AI cards (the rest of the alphabet, about 1,400 more cards); 6-commit upstream merge
 

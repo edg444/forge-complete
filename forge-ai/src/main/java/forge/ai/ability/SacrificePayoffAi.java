@@ -52,7 +52,8 @@ public final class SacrificePayoffAi {
     public static boolean handles(final String logic) {
         return "SacrificeFor".equals(logic) || "SacrificeAny".equals(logic) || "RevealFor".equals(logic) || "ExileForX".equals(logic)
                 || "ExileFor".equals(logic) || "RevealX".equals(logic) || "SacXForX".equals(logic)
-                || "SacForLethal".equals(logic) || "SacPumpLethal".equals(logic) || "SacXJunk".equals(logic);
+                || "SacForLethal".equals(logic) || "SacPumpLethal".equals(logic) || "SacXJunk".equals(logic)
+                || "SacRitual".equals(logic);
     }
 
     /** The logic this ability or its root runs on (Plunge into Darkness: on the Charm's mode, not the Charm). */
@@ -85,6 +86,7 @@ public final class SacrificePayoffAi {
             case "SacForLethal" -> sacForLethal(ai, sa);
             case "SacPumpLethal" -> sacPumpLethal(ai, sa);
             case "SacXJunk" -> sacXJunk(ai, sa);
+            case "SacRitual" -> sacRitual(ai, sa);
             default -> sacrificeFor(ai, sa);
         };
     }
@@ -701,6 +703,38 @@ public final class SacrificePayoffAi {
         payoff(ai, sa, bestSac);
         PLANNED.put(host.getId(), new CardCollection(bestSac));
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    // Sacrifice, Burnt Offering, Metamorphosis: the mana is the sacrificed creature's mana value, so the most mana from
+    // a creature it can spare (junk, or a small one), when that mana casts something it otherwise couldn't
+    private static AiAbilityDecision sacRitual(final Player ai, final SpellAbility sa) {
+        final CostSacrifice cost = sacCost(sa);
+        if (cost == null) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final Card host = sa.getHostCard();
+        final CardCollection valid = CardLists.getValidCards(ai.getCardsIn(ZoneType.Battlefield), cost.getType().split(";"), ai, host, sa);
+        valid.remove(host);
+        final CardCollection spare = junk(ai, valid);
+        for (final Card c : valid) {
+            if (!spare.contains(c) && worth(c) <= 130) {
+                spare.add(c);
+            }
+        }
+        // Metamorphosis makes one more
+        final int plus = host.getSVar("X").contains("Plus.1") ? 1 : 0;
+        final List<Card> order = new java.util.ArrayList<>(spare);
+        order.sort(Comparator.comparingInt((Card c) -> c.getCMC()).reversed());
+        for (final Card c : order) {
+            if (c.getCMC() + plus < 2) {
+                break;
+            }
+            if (ManaAi.doManaRitualLogic(ai, sa, false, c.getCMC() + plus)) {
+                PLANNED.put(host.getId(), new CardCollection(c));
+                return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+            }
+        }
+        return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
     }
 
     // what it can give up for nothing much: what's about to die anyway, cheap tokens, lands past what its hand needs,
