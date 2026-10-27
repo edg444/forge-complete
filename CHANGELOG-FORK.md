@@ -329,6 +329,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-27, twenty-fifth deploy (desktop, Android, GitHub) — 15-commit upstream merge
+
+- **Upstream merge** (15 commits). Fated Clash, Homarid, Mana Matrix, Paragon of the Amesha, Planar Gate, Test of
+  Talents, Urza's Filter, Visage of Bolas and Wand of Orcus take upstream's fixes outright. Enchantment Alteration
+  takes upstream's "permanent of that type" choices but keeps the fork's `MoveAttachment` AI; Vassal's Duty takes
+  upstream's end-of-turn duration but keeps the fork's `RedirectCombat` AI and stays off the no-AI list.
+
 ### 2026-10-25, twenty-fourth deploy (desktop, Android, GitHub) — Exclude Funny Cards setting; cards a clone effect changed no longer look free to cast
 
 - **Fix: after Bombardment, every card in hand was highlighted as castable.** When a card's characteristics change
