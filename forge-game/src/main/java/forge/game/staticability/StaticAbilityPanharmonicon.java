@@ -108,7 +108,7 @@ public class StaticAbilityPanharmonicon {
         }
         int n = 0;
         for (final Card c : tapped) {
-            if (c.tap(true, sa, p)) {
+            if (c.tap(sa, p)) {
                 n++;
             }
         }

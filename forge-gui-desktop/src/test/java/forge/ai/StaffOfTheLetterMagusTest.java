@@ -20,6 +20,9 @@ public class StaffOfTheLetterMagusTest extends AITest {
         final Card c = addCardToZone(name, p, ZoneType.Hand);
         final SpellAbility sa = c.getFirstSpellAbility();
         sa.setActivatingPlayer(p);
+        if (sa.usesTargeting()) {
+            sa.getTargets().add(p.getWeakestOpponent());
+        }
         AssertJUnit.assertTrue(ComputerUtil.handlePlayingSpellAbility(p, sa, null));
         playUntilStackClear(game);
     }

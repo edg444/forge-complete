@@ -62,8 +62,8 @@ public class NoAiBatch06Test extends AITest {
         lands(ai, "Plains", 3);
         Card a = addCard("Savannah Lions", ai);
         Card b = addCard("Savannah Lions", ai);
-        a.tap(true, null, null);
-        b.tap(true, null, null);
+        a.tap(null, null);
+        b.tap(null, null);
         SpellAbility sa = addCardToZone("Battle Cry", ai, ZoneType.Hand).getFirstSpellAbility();
         game.getPhaseHandler().devModeSet(PhaseType.MAIN1, ai);
         AssertJUnit.assertNotSame(AiPlayDecision.WillPlay, decide(ai, sa));

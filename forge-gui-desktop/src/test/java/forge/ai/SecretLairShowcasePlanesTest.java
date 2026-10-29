@@ -192,7 +192,7 @@ public class SecretLairShowcasePlanesTest extends AITest {
         planeswalk(game, ai, "Fblthp: Completely, Utterly, Totally Lost");
         AssertJUnit.assertNotNull(findCardWithName(game, "Map Token"));
         for (Card l : lands) {
-            l.tap(true, null, null);
+            l.tap(null, null);
         }
         int hand = ai.getCardsIn(ZoneType.Hand).size();
         chaos(game, ai);

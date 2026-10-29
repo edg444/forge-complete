@@ -29,7 +29,7 @@ public class LoopyLobsterTest extends AITest {
 
     private void tapAndMove(final Game game, final Card c) {
         c.untap();
-        c.tap(true, null, null);
+        c.tap(null, null);
         game.getAction().checkStateEffects(true);
         game.getStack().addAllTriggeredAbilitiesToStack();
         resolveAll(game);

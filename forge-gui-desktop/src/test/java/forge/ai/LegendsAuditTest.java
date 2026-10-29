@@ -103,7 +103,7 @@ public class LegendsAuditTest extends AITest {
         Card blight = printing("Blight", "LEG", p, ZoneType.Battlefield);
         blight.attachToEntity(land, null);
         game.getAction().checkStateEffects(true);
-        land.tap(true, null, null);
+        land.tap(null, null);
         resolveAll(game);
         AssertJUnit.assertTrue("still there until the end step", land.isInPlay());
     }

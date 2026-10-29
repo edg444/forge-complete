@@ -152,7 +152,7 @@ public class NoAiBatch03Test extends AITest {
         Card angel = addCard("Serra Angel", opp);
         SpellAbility sa = activated(prison).copy(ai);
         sa.getTargets().add(angel);
-        prison.tap(true, null, null);
+        prison.tap(null, null);
         AbilityUtils.resolve(sa);
         AssertJUnit.assertTrue(angel.isTapped());
         SpellAbility untapQuestion = new SpellAbility.EmptySa(prison, ai);

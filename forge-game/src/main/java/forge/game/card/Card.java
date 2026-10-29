@@ -694,10 +694,6 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return setState(state, updateView, false);
     }
     public boolean setState(final CardStateName state, boolean updateView, boolean forceUpdate) {
-        boolean rollback = state == CardStateName.Original
-                && (currentStateName == CardStateName.Flipped || currentStateName == CardStateName.Backside);
-        boolean transform = state == CardStateName.Flipped || state == CardStateName.Backside || state == CardStateName.Meld;
-        boolean needsTransformAnimation = transform || rollback;
         // faceDown has higher priority over clone states
         // while text change states doesn't apply while the card is faceDown
         if (state != CardStateName.FaceDown && state != CardStateName.EmptyRoom) {
@@ -733,7 +729,6 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         updateTypeCache();
         if (updateView) {
             updateStateForView();
-            view.updateNeedsTransformAnimation(needsTransformAnimation);
 
             if (game != null) {
                 // update Type, color and keywords again if they have changed
@@ -4316,10 +4311,6 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return this.collectible;
     }
 
-    public void updateWasDestroyed(boolean value) {
-        view.updateWasDestroyed(value);
-    }
-
     public final Card getCopiedPermanent() {
         return copiedPermanent;
     }
@@ -5959,10 +5950,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return !getGame().getReplacementHandler().cantHappenCheck(ReplacementType.Tap, repParams);
     }
 
-    public final boolean tap(boolean tapAnimation, SpellAbility cause, Player tapper) {
-        return tap(false, tapAnimation, cause, tapper);
+    public final boolean tap(SpellAbility cause, Player tapper) {
+        return tap(false, cause, tapper);
     }
-    public final boolean tap(boolean attacker, boolean tapAnimation, SpellAbility cause, Player tapper) {
+    public final boolean tap(boolean attacker, SpellAbility cause, Player tapper) {
         if (tapped) { return false; }
 
         // Run replacement effects
@@ -5994,7 +5985,6 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         tappedThisTurn++;
 
         setTapped(true);
-        view.updateNeedsTapAnimation(tapAnimation);
         getGame().fireEvent(new GameEventCardTapped(this, true));
         jostleDiceStack();
         return true;
@@ -6032,7 +6022,6 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
         runUntapCommands();
         setTapped(false);
-        view.updateNeedsUntapAnimation(true);
         getGame().fireEvent(new GameEventCardTapped(this, false));
         jostleDiceStack();
         return true;

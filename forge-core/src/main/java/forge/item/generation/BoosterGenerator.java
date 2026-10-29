@@ -50,20 +50,36 @@ import java.util.stream.Stream;
 public class BoosterGenerator {
     private final static Map<String, String> staticSheetsCorrespondance = new HashMap<>();
     private final static Map<String, PrintSheet> cachedSheets = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    private static final ThreadLocal<Collection<String>> EXCLUDED_NAMES = new ThreadLocal<>();
+
     private static synchronized PrintSheet getPrintSheet(String key) {
         if (!cachedSheets.containsKey(key))
             cachedSheets.put(key, makeSheet(key, StaticData.instance().getCommonCards().getAllCards()));
-        return cachedSheets.get(key);
+        return applyExclusions(cachedSheets.get(key));
+    }
+
+    private static PrintSheet applyExclusions(PrintSheet sheet) {
+        if (sheet == null) {
+            return null;
+        }
+        Collection<String> excluded = EXCLUDED_NAMES.get();
+        if (excluded == null || excluded.isEmpty()) {
+            return sheet;
+        }
+        return sheet.copyWithoutNames(excluded);
     }
 
     // null when there's nothing to make a foil of (an empty sheet), so a pack with no foil candidates gets no foil
     private static PaperCard generateFoilCard(PrintSheet sheet) {
-        final List<PaperCard> picked = sheet.random(1, true);
-        return picked.isEmpty() ? null : picked.get(0).getFoiled();
+        List<PaperCard> picked = sheet.random(1, true);
+        if (picked.isEmpty()) {
+            return null;
+        }
+        return picked.get(0).getFoiled();
     }
 
     private static PaperCard generateFoilCard(List<PaperCard> cardList) {
-        if (cardList.isEmpty()) {
+        if (cardList == null || cardList.isEmpty()) {
             return null;
         }
         Collections.shuffle(cardList, MyRandom.getRandom());
@@ -71,16 +87,18 @@ public class BoosterGenerator {
         return randomCard.getFoiled();
     }
 
-    private static void addIfNotNull(final List<PaperCard> cards, final PaperCard card) {
-        if (card != null) {
-            cards.add(card);
+    private static void addFoilIfPresent(List<PaperCard> dest, PaperCard foil) {
+        if (foil != null) {
+            dest.add(foil);
         }
     }
 
     public static PrintSheet tryGetStaticSheet(String sheetName) {
+        PrintSheet sheet;
         if (staticSheetsCorrespondance.containsKey(sheetName)) {
-            return StaticData.instance().getPrintSheets().get(staticSheetsCorrespondance.get(sheetName));
-        };
+            sheet = StaticData.instance().getPrintSheets().get(staticSheetsCorrespondance.get(sheetName));
+            return applyExclusions(sheet);
+        }
 
         String passedEdition = sheetName.split(" ")[0];
         CardEdition realEdition = StaticData.instance().getEditions().get(passedEdition);
@@ -88,7 +106,8 @@ public class BoosterGenerator {
         if (realEdition.getCode().equals(passedEdition)) {
             staticSheetsCorrespondance.put(sheetName, sheetName);
 
-            return StaticData.instance().getPrintSheets().get(sheetName);
+            sheet = StaticData.instance().getPrintSheets().get(sheetName);
+            return applyExclusions(sheet);
         }
         
         String realEditionCode = realEdition.getCode();
@@ -96,10 +115,35 @@ public class BoosterGenerator {
 
         staticSheetsCorrespondance.put(sheetName, alteredSheetName);
 
-        return StaticData.instance().getPrintSheets().get(alteredSheetName);
+        sheet = StaticData.instance().getPrintSheets().get(alteredSheetName);
+        return applyExclusions(sheet);
     }
 
     public static List<PaperCard> getBoosterPack(SealedTemplate template) {
+        return getBoosterPack(template, null);
+    }
+
+    /**
+     * Generate a booster pack, optionally excluding cards by name from every print sheet
+     * used for the pack. Cached sheets are never mutated.
+     *
+     * @param excludedNames card names that must not be rolled; null or empty means no filter
+     */
+    public static List<PaperCard> getBoosterPack(SealedTemplate template, Collection<String> excludedNames) {
+        Collection<String> previous = EXCLUDED_NAMES.get();
+        try {
+            EXCLUDED_NAMES.set(excludedNames);
+            return getBoosterPackInternal(template);
+        } finally {
+            if (previous == null) {
+                EXCLUDED_NAMES.remove();
+            } else {
+                EXCLUDED_NAMES.set(previous);
+            }
+        }
+    }
+
+    private static List<PaperCard> getBoosterPackInternal(SealedTemplate template) {
         if (template instanceof SealedTemplateWithSlots slots) {
             return BoosterGenerator.getBoosterPack(slots);
         }
@@ -332,9 +376,9 @@ public class BoosterGenerator {
                             }
                         }
                         addCardsFromExtraSheet(foilCards, extraFoilSheetKey);
-                        addIfNotNull(result, generateFoilCard(foilCards));
+                        addFoilIfPresent(result, generateFoilCard(foilCards));
                     } else {
-                        addIfNotNull(result, generateFoilCard(ps));
+                        addFoilIfPresent(result, generateFoilCard(ps));
                     }
                 } else { // foilAtEndOfPack
                     if (!extraFoilSheetKey.isEmpty()) {
@@ -349,7 +393,7 @@ public class BoosterGenerator {
                             }
                         }
                         addCardsFromExtraSheet(foilCards, extraFoilSheetKey);
-                        addIfNotNull(foilCardGeneratedAndHeld, generateFoilCard(foilCards));
+                        addFoilIfPresent(foilCardGeneratedAndHeld, generateFoilCard(foilCards));
                     } else {
                         if (edition != null) {
                             if (edition.getName().equals("Vintage Masters")) {
@@ -360,14 +404,14 @@ public class BoosterGenerator {
                                 // match that.
                                 // If not special card, make it always foil.
                                 if ((MyRandom.getRandom().nextInt(30) == 1) || (!foilSlot.equals(BoosterSlots.SPECIAL))) {
-                                    addIfNotNull(foilCardGeneratedAndHeld, generateFoilCard(ps));
+                                    addFoilIfPresent(foilCardGeneratedAndHeld, generateFoilCard(ps));
                                 } else {
                                     // Otherwise it's not foil (even though this is the
                                     // foil slot!)
                                     result.addAll(ps.random(1, true));
                                 }
                             } else {
-                                addIfNotNull(foilCardGeneratedAndHeld, generateFoilCard(ps));
+                                addFoilIfPresent(foilCardGeneratedAndHeld, generateFoilCard(ps));
                             }
                         }
                     }
@@ -664,8 +708,14 @@ public class BoosterGenerator {
      */
     public static void replaceCardFromExtraSheet(List<PaperCard> booster, String printSheetKey) {
         PrintSheet replacementSheet = tryGetStaticSheet(printSheetKey);
-        PaperCard toAdd = replacementSheet.random(1, false).get(0);
-        BoosterGenerator.replaceCard(booster, toAdd);
+        if (replacementSheet == null) {
+            return;
+        }
+        List<PaperCard> picked = replacementSheet.random(1, false);
+        if (picked.isEmpty()) {
+            return;
+        }
+        BoosterGenerator.replaceCard(booster, picked.get(0));
     }
 
     /**

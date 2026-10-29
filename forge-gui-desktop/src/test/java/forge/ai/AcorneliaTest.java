@@ -41,6 +41,9 @@ public class AcorneliaTest extends AITest {
         p.getGame().getAction().checkStateEffects(true);
         SpellAbility spell = c.getFirstSpellAbility();
         spell.setActivatingPlayer(p);
+        if (spell.usesTargeting()) {
+            spell.getTargets().add(p.getWeakestOpponent());
+        }
         AssertJUnit.assertTrue(ComputerUtil.handlePlayingSpellAbility(p, spell, null));
     }
 

@@ -171,7 +171,7 @@ public class NoAiBatch02Test extends AITest {
         lands(ai, "Snow-Covered Island", 2);
         Card windform = addCard("Adarkar Windform", ai);
         windform.setSickness(false);
-        windform.tap(true, null, null);
+        windform.tap(null, null);
         Card angel = addCard("Serra Angel", opp);
         SpellAbility sa = activated(windform);
 

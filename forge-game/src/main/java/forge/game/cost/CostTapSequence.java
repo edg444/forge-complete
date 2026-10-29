@@ -130,7 +130,7 @@ public class CostTapSequence extends CostTap {
                     runParams.put(AbilityKey.Map, map);
                     payer.getGame().getTriggerHandler().runTrigger(TriggerType.UntapAll, runParams, false);
                 }
-            } else if (hostCard.tap(true, ability, payer)) {
+            } else if (hostCard.tap(ability, payer)) {
                 final Map<AbilityKey, Object> runParams = AbilityKey.newMap();
                 runParams.put(AbilityKey.Cards, new CardCollection(hostCard));
                 payer.getGame().getTriggerHandler().runTrigger(TriggerType.TapAll, runParams, false);

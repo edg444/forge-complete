@@ -58,7 +58,7 @@ public class MysteryBooster2PlaytestTest extends AITest {
         game.getPhaseHandler().devModeSet(PhaseType.MAIN1, ai);
         final Card bear = addCard("Grizzly Bears", ai);
         final Card forest = addCard("Forest", ai);
-        forest.tap(true, null, null);
+        forest.tap(null, null);
         castWithTarget(game, ai, addCardToZone("Wrath of Leknif", ai, ZoneType.Hand), null);
         AssertJUnit.assertFalse(game.getCardState(bear).isInPlay());
         AssertJUnit.assertFalse("untapped", forest.isTapped());

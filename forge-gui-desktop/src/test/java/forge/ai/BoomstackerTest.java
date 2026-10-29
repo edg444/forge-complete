@@ -78,7 +78,7 @@ public class BoomstackerTest extends AITest {
         MyRandom.setRandom(new Fixed(0.99));
         Card b = enter(game, ai);
         MyRandom.setRandom(new Fixed(0.0));
-        b.tap(true, null, ai);
+        b.tap(null, ai);
         AssertJUnit.assertEquals(0, b.getStackedDice());
         playUntilStackClear(game);
         AssertJUnit.assertTrue(game.getCardState(b).isInZone(ZoneType.Graveyard));

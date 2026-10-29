@@ -729,7 +729,7 @@ public class RollDiceEffect extends SpellAbilityEffect {
             if (wall == null) {
                 continue;
             }
-            wall.tap(true, null, p);
+            wall.tap(null, p);
             game.getGameLog().add(GameLogEntryType.INFORMATION, p + " taps " + wall.getName() + " to have " + roller
                     + " reroll a " + rolled + ".");
             return true;
@@ -815,7 +815,7 @@ public class RollDiceEffect extends SpellAbilityEffect {
                         "TapToIncrease:" + (p.equals(roller) ? "own" : "opp") + ":" + now + ":" + sides)) {
                     break;
                 }
-                squirrel.tap(true, null, p);
+                squirrel.tap(null, p);
                 increase++;
                 game.getGameLog().add(GameLogEntryType.INFORMATION, p + " taps " + squirrel.getName() + " to make "
                         + roller + "'s " + now + " a " + (now + 1) + ".");

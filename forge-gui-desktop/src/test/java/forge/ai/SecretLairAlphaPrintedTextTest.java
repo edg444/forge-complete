@@ -94,14 +94,14 @@ public class SecretLairAlphaPrintedTextTest extends AITest {
         printing("Manabarbs", "LEA", p, ZoneType.Battlefield);
         Card land = addCard("Mountain", opp);
         game.getAction().checkStateEffects(true);
-        land.tap(true, null, null);
+        land.tap(null, null);
         resolveAll(game);
         AssertJUnit.assertEquals("Oracle: only tapping for mana", 20, opp.getLife());
 
         addCard("R&D's Secret Lair", p);
         land.untap();
         game.getAction().checkStateEffects(true);
-        land.tap(true, null, null);
+        land.tap(null, null);
         resolveAll(game);
         AssertJUnit.assertEquals(19, opp.getLife());
     }

@@ -90,7 +90,7 @@ public class CostTap extends CostPart {
                     + " rather than tapping it.");
             return true;
         }
-        if (hostCard.tap(true, ability, payer)) {
+        if (hostCard.tap(ability, payer)) {
             final Map<AbilityKey, Object> runParams = AbilityKey.newMap();
             runParams.put(AbilityKey.Cards, new CardCollection(hostCard));
             payer.getGame().getTriggerHandler().runTrigger(TriggerType.TapAll, runParams, false);

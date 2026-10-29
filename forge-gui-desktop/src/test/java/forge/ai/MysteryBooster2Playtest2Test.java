@@ -95,7 +95,7 @@ public class MysteryBooster2Playtest2Test extends AITest {
         final int exiled = human.getCardsIn(ZoneType.Exile).size();
         AbilityUtils.resolve(svar(plant, "TrigProcess", ai));
         AssertJUnit.assertEquals("nothing of theirs in exile: their top card is exiled", exiled + 1, human.getCardsIn(ZoneType.Exile).size());
-        plant.tap(true, null, null);
+        plant.tap(null, null);
         final Card theirs = addCardToZone("Grizzly Bears", human, ZoneType.Exile);
         final int exiledBefore = human.getCardsIn(ZoneType.Exile).size();
         final int yardBefore = human.getCardsIn(ZoneType.Graveyard).size();

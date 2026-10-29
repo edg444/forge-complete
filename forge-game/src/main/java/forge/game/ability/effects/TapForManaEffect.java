@@ -58,7 +58,7 @@ public class TapForManaEffect extends SpellAbilityEffect {
                 color = you.getController().chooseColor("Choose the color of mana " + land + " makes for you", sa,
                         forge.card.ColorSet.fromNames(colors));
             }
-            if (!land.tap(true, sa, you)) {
+            if (!land.tap(sa, you)) {
                 continue;
             }
             mana.add(new Mana(color, land, null, you));
