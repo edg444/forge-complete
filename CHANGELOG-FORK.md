@@ -329,6 +329,24 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-29, twenty-sixth deploy (desktop, Android, GitHub) — 37-commit upstream merge
+
+- **Upstream merge** (37 commits). Upstream's mandatory-choice pass (`Mandatory$ True` on ChooseCard) and its new
+  scripts for Fiend of the Shadows, Foreboding Steamboat, Incriminate, Kheru Mind-Eater, Nautiloid Ship, Pouncing
+  Kavu, Pouncing Wurm, Prison Barricade, Turtle Tracks, Valki and Wilt-Leaf Liege are taken with the fork's Scryfall
+  wording; Spry and Mighty keeps the fork's `PowerDifference` AI and Valki the fork's stack text. Library searches go
+  through upstream's new `Player.getSearchableLibrary` and still pay the fork's "Search" action tax. `CostTap` keeps
+  the fork's spend-{T}-from-the-pool payment, `MagicStack` keeps the fork's private `push()` for combat damage next
+  to upstream's stranded-spell recovery, and the AI's exile-cost choice applies upstream's win-card protection before
+  the fork's ExileAndRetFromGrave pick. The mobile avatar now keeps its own life flash (upstream #12500), still
+  counted in hundredths.
+- **Upstream #12500 turned `Card.tap(boolean tapAnimation, ...)` into `tap(boolean attacker, ...)`**, so a fork call
+  passing the old animation flag would still compile but tap as an attacker. Every fork call site (Roll Dice walls
+  and squirrels, TapForMana, CostTapSequence, Panharmonicon, combat taps in PhaseHandler, tests) moved to the new
+  signature with its old meaning.
+- Acornelia and Staff of the Letter Magus tests now target an opponent with Lightning Bolt/Shock: upstream's AI no
+  longer pays for a spell whose targets aren't legal yet.
+
 ### 2026-10-27, twenty-fifth deploy (desktop, Android, GitHub) — 15-commit upstream merge
 
 - **Upstream merge** (15 commits). Fated Clash, Homarid, Mana Matrix, Paragon of the Amesha, Planar Gate, Test of
