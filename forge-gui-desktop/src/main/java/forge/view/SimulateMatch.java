@@ -10,7 +10,10 @@ import org.apache.commons.lang3.time.StopWatch;
 import forge.LobbyPlayer;
 import forge.ai.AiProfileUtil;
 import forge.ai.simulation.FlatMonteCarloStats;
+import forge.deck.CardPool;
 import forge.deck.Deck;
+import forge.deck.DeckSection;
+import forge.deck.DeckgenUtil;
 import forge.deck.DeckGroup;
 import forge.deck.io.DeckSerializer;
 import forge.game.Game;
@@ -157,6 +160,13 @@ public class SimulateMatch {
             }
         }
 
+        // Optional team per player, in deck order (e.g. -T 1 1 2 2); TwoHeadedGiant needs it
+        List<String> teams = params.get("T");
+        if (teams != null && (!params.containsKey("d") || teams.size() != params.get("d").size())) {
+            System.out.println("-T needs one team number per deck");
+            return;
+        }
+
         if (params.containsKey("d")) {
             for (String deck : params.get("d")) {
                 Deck d = deckFromCommandLineParameter(deck, type, deckDir);
@@ -178,8 +188,21 @@ public class SimulateMatch {
 
                 if (type.equals(GameType.Commander)) {
                     rp = RegisteredPlayer.forCommander(d);
+                } else if (type.equals(GameType.Archenemy)) {
+                    // the first deck is the archenemy, as the lobby's default slot; a deck without schemes gets random ones
+                    final boolean archenemy = i == 1;
+                    CardPool schemes = d.get(DeckSection.Schemes);
+                    if (archenemy && (schemes == null || schemes.isEmpty())) {
+                        schemes = DeckgenUtil.generateSchemePool();
+                    }
+                    rp = RegisteredPlayer.forVariants(params.get("d").size(), EnumSet.of(type), d,
+                            archenemy ? schemes.toFlatList() : null, archenemy, null, null);
+                    rp.setTeamNumber(archenemy ? 0 : 1);
                 } else {
                     rp = new RegisteredPlayer(d);
+                }
+                if (teams != null) {
+                    rp.setTeamNumber(Integer.parseInt(teams.get(i - 1)));
                 }
                 rp.setPlayer(GamePlayerUtil.createAiPlayer(name, i - 1, profile));
                 pp.add(rp);
@@ -220,7 +243,7 @@ public class SimulateMatch {
     }
 
     private static void argumentHelp() {
-        System.out.println("Syntax: forge.exe sim -d <deck1[.dck]> ... <deckX[.dck]> -D [D] -n [N] -m [M] -t [T] -p [P] -f [F] -s [S] -a [A] -mc [on|off] -q");
+        System.out.println("Syntax: forge.exe sim -d <deck1[.dck]> ... <deckX[.dck]> -D [D] -n [N] -m [M] -t [T] -p [P] -f [F] -s [S] -a [A] -T [T] -mc [on|off] -q");
         System.out.println("\tsim - stands for simulation mode");
         System.out.println("\tdeck1 (or deck2,...,X) - constructed deck name or filename (has to be quoted when contains multiple words)");
         System.out.println("\tdeck is treated as file if it ends with a dot followed by three numbers or letters");
@@ -231,6 +254,7 @@ public class SimulateMatch {
         System.out.println("\tP - Amount of players per match (used only with Tournaments, defaults to 2)");
         System.out.println("\tF - format of games, defaults to constructed");
         System.out.println("\tS - RNG seed for simulation");
+        System.out.println("\tT - team number per player, in the same order as the decks (e.g. -T 1 1 2 2 with -f TwoHeadedGiant). With -f Archenemy the first deck is the archenemy");
         System.out.println("\tA - AI profile per player, in the same order as the decks (e.g. -a Default Experimental)");
         System.out.println("\tc - Clock flag. Set the maximum time in seconds before calling the match a draw, defaults to 120.");
         System.out.println("\tmc - Flat Monte Carlo AI refinement for this run, on, max or off (default off in simulations; max = desktop strength). Prints timing statistics at the end when on.");

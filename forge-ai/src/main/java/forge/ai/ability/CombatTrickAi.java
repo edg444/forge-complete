@@ -2,6 +2,7 @@ package forge.ai.ability;
 
 import java.util.List;
 
+import forge.ai.AiTeams;
 import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
 import forge.ai.ComputerUtilCard;
@@ -78,11 +79,11 @@ public final class CombatTrickAi {
                 // no combat damage either way in this fight: what each side would have lost
                 int v = 0;
                 if (ComputerUtilCombat.attackerWouldBeDestroyed(ai, a, combat)) {
-                    v += (a.getController().equals(ai) ? 1 : -1) * ComputerUtilCard.evaluateCreature(a);
+                    v -= AiTeams.sign(ai, a.getController()) * ComputerUtilCard.evaluateCreature(a);
                 }
                 for (final Card b : blockers) {
                     if (ComputerUtilCombat.blockerWouldBeDestroyed(ai, b, combat)) {
-                        v += (b.getController().equals(ai) ? 1 : -1) * ComputerUtilCard.evaluateCreature(b);
+                        v -= AiTeams.sign(ai, b.getController()) * ComputerUtilCard.evaluateCreature(b);
                     }
                 }
                 if (v > bestValue) {

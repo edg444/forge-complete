@@ -8,8 +8,8 @@ import forge.game.phase.PhaseType;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
-import forge.util.TextUtil;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,33 +50,21 @@ public class RepeatEachAi extends SpellAbilityAi {
         } else if ("AllPlayerLoseLife".equals(logic)) {
             final Card source = sa.getHostCard();
             SpellAbility repeat = sa.getAdditionalAbility("RepeatSubAbility");
-
-            String svar = repeat.getSVar(repeat.getParam("LifeAmount"));
-            // replace RememberedPlayerCtrl with YouCtrl
-            String svarYou = TextUtil.fastReplace(svar, "RememberedPlayer", "You");
-
-            // Currently all Cards with that are affect all player, including AI
-            if (aiPlayer.canLoseLife()) {
-                int lossYou = AbilityUtils.calculateAmount(source, svarYou, repeat);
-
-                // if playing it would cause AI to lose most life, don't do that
-                if (lossYou + 5 > aiPlayer.getLife()) {
-                    return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
-                }
-            }
+            final String amount = repeat.getParam("LifeAmount");
 
             boolean hitOpp = false;
-            // need a copy for source so YouCtrl can be faked
-            final Card sourceLKI = CardCopyService.getLKICopy(source);
-
-            // check if any opponent is affected
-            for (final Player opp : aiPlayer.getOpponents()) {
-                if (opp.canLoseLife()) {
-                    sourceLKI.setOwner(opp);
-                    int lossOpp = AbilityUtils.calculateAmount(source, svarYou, repeat);
-                    if (lossOpp > 0) {
-                        hitOpp = true;
-                    }
+            for (final Player p : aiPlayer.getGame().getPlayers()) {
+                if (!p.canLoseLife()) {
+                    continue;
+                }
+                source.addRemembered(p);
+                final int loss = AbilityUtils.calculateAmount(source, amount, repeat);
+                source.removeRemembered(p);
+                if (p.isOpponentOf(aiPlayer)) {
+                    hitOpp |= loss > 0;
+                } else if (loss * AiTeams.sharedLifeHits(p) + 5 > p.getLife()) {
+                    // if playing it would cost the AI or a teammate most of their life, don't do that
+                    return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
                 }
             }
 
@@ -148,6 +136,7 @@ public class RepeatEachAi extends SpellAbilityAi {
         int own = 0;
         int theirs = 0;
         boolean lethal = false;
+        final Map<Player, Integer> sideLife = new HashMap<>();
         for (final Player p : AbilityUtils.getDefinedPlayers(source, sa.getParam("RepeatPlayers"), sa)) {
             source.addRemembered(p);
             int n = AbilityUtils.calculateAmount(source, amount, repeat);
@@ -157,20 +146,28 @@ public class RepeatEachAi extends SpellAbilityAi {
             } else if (damage) {
                 n = ComputerUtilCombat.predictDamageTo(p, n, source, false);
             }
-            if (p.equals(ai)) {
-                own = n;
-            } else if (p.isOpponentOf(ai)) {
+            if (p.isOpponentOf(ai)) {
                 theirs += n;
                 lethal |= n > 0 && n >= p.getLife() && !p.cantLoseForZeroOrLessLife();
+            } else {
+                // a teammate's loss is the AI's loss; a Two-Headed Giant team takes it from one life total
+                own += n;
+                sideLife.merge(p.isOnGiantTeam() ? p.getGiantTeam().get(0) : p, n, Integer::sum);
             }
         }
-        if (own >= ai.getLife() && !ai.cantLoseForZeroOrLessLife()) {
-            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        final int danger = AiProfileUtil.getIntProperty(ai, AiProps.AI_IN_DANGER_THRESHOLD);
+        boolean endangered = false;
+        for (final Map.Entry<Player, Integer> e : sideLife.entrySet()) {
+            final Player p = e.getKey();
+            if (e.getValue() >= p.getLife() && !p.cantLoseForZeroOrLessLife()) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            }
+            endangered |= e.getValue() > 0 && p.getLife() - e.getValue() <= danger;
         }
         if (lethal) {
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
-        if (ai.getLife() - own <= AiProfileUtil.getIntProperty(ai, AiProps.AI_IN_DANGER_THRESHOLD) || theirs <= own) {
+        if (endangered || theirs <= own) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);

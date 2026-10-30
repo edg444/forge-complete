@@ -2,6 +2,7 @@ package forge.ai.ability;
 
 import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
+import forge.ai.AiTeams;
 import forge.ai.ComputerUtil;
 import forge.ai.ComputerUtilCard;
 import forge.ai.ComputerUtilCost;
@@ -136,11 +137,16 @@ public class SacrificeAi extends SpellAbilityAi {
             List<Card> humanList = CardLists.getValidCards(ai.getStrongestOpponent().getCardsIn(ZoneType.Battlefield), valid, sa.getActivatingPlayer(), source, sa);
 
             if (defined.equals("Player")) {
-                // Barter in Blood: everyone gives up their least valuable ones, so it's worth it when theirs are worth more
-                final List<Card> computerList = CardLists.getValidCards(ai.getCardsIn(ZoneType.Battlefield), valid, sa.getActivatingPlayer(), source, sa);
-                computerList.remove(source);
+                // Barter in Blood: everyone gives up their least valuable ones, so it's worth it when theirs are worth
+                // more than what the AI and its teammates give up
+                int ours = 0;
+                for (final Player p : AiTeams.side(ai)) {
+                    final List<Card> sideList = CardLists.getValidCards(p.getCardsIn(ZoneType.Battlefield), valid, sa.getActivatingPlayer(), source, sa);
+                    sideList.remove(source);
+                    ours += leastValuable(sideList, amount);
+                }
                 final int theirs = leastValuable(humanList, amount);
-                return !humanList.isEmpty() && theirs > leastValuable(computerList, amount) + 50
+                return !humanList.isEmpty() && theirs > ours + 50
                         ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
             }
 

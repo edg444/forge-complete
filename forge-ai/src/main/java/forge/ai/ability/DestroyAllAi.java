@@ -9,6 +9,7 @@ import forge.game.cost.CostDamage;
 import forge.game.keyword.Keyword;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
+import forge.game.player.PlayerCollection;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 import forge.util.collect.FCollectionView;
@@ -53,9 +54,6 @@ public class DestroyAllAi extends SpellAbilityAi {
         final Card source = sa.getHostCard();
         final String logic = sa.getParamOrDefault("AILogic", "");
 
-        // if we hit the whole board, the other opponents who are not the reason to cast this probably still suffer a bit too
-        final int CREATURE_EVAL_THRESHOLD = 200 / (!sa.usesTargeting() ? ai.getOpponents().size() : 1);
-
         if (logic.equals("Always")) {
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
@@ -66,64 +64,88 @@ public class DestroyAllAi extends SpellAbilityAi {
             ComputerUtilCost.setMaxXValue(sa, ai, sa.isTrigger());
         }
 
-        // TODO should probably sort results when targeted to use on biggest threat instead of first match
-        for (Player opponent: ai.getOpponents()) {
-            CardCollection opplist = CardLists.getValidCards(opponent.getCardsIn(ZoneType.Battlefield), valid, source.getController(), source, sa);
-            CardCollection ailist = CardLists.getValidCards(ai.getCardsIn(ZoneType.Battlefield), valid, source.getController(), source, sa);
-
-            opplist = CardLists.filter(opplist, predicate);
-            ailist = CardLists.filter(ailist, predicate);
-            if (opplist.isEmpty()) {
+        // teammates lose what the AI loses, and every opponent's board counts, not just the first one's
+        CardCollection opplist;
+        CardCollection ailist;
+        PlayerCollection opponents;
+        int sides;
+        if (sa.usesTargeting()) {
+            // aim at the opponent with the most to lose; nothing on the AI's side is hit
+            Player best = null;
+            CardCollection bestList = null;
+            for (Player opponent : ai.getOpponents()) {
+                if (!sa.canTarget(opponent)) {
+                    continue;
+                }
+                CardCollection list = CardLists.filter(CardLists.getValidCards(opponent.getCardsIn(ZoneType.Battlefield),
+                        valid, source.getController(), source, sa), predicate);
+                if (!list.isEmpty() && (bestList == null
+                        || ComputerUtilCard.evaluatePermanentList(list) > ComputerUtilCard.evaluatePermanentList(bestList))) {
+                    best = opponent;
+                    bestList = list;
+                }
+            }
+            if (best == null) {
                 return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
             }
+            sa.resetTargets();
+            sa.getTargets().add(best);
+            opplist = bestList;
+            ailist = new CardCollection();
+            opponents = new PlayerCollection(best);
+            sides = 1;
+        } else {
+            opplist = CardLists.filter(AiTeams.opponentCards(ai, ZoneType.Battlefield, valid, sa), predicate);
+            ailist = CardLists.filter(AiTeams.sideCards(ai, ZoneType.Battlefield, valid, sa), predicate);
+            opponents = ai.getOpponents();
+            sides = AiTeams.opposingSides(ai);
+        }
+        if (opplist.isEmpty()) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final int CREATURE_EVAL_THRESHOLD = 200;
+        final Combat currentCombat = ai.getGame().getCombat();
+        final boolean blockersDeclared = ai.getGame().getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS) && currentCombat != null;
+        final PlayerCollection side = AiTeams.side(ai);
 
-            if (sa.usesTargeting()) {
-                sa.resetTargets();
-                if (sa.canTarget(opponent)) {
-                    sa.getTargets().add(opponent);
-                    ailist.clear();
-                } else {
-                    return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
-                }
+        // Special handling for Raiding Party
+        if (logic.equals("RaidingParty")) {
+            int numAiCanSave = Math.min(CardLists.count(side.getCreaturesInPlay(), CardPredicates.isColor(MagicColor.WHITE).and(CardPredicates.UNTAPPED)) * 2, ailist.size());
+            int numOppsCanSave = Math.min(CardLists.count(ai.getOpponents().getCreaturesInPlay(), CardPredicates.isColor(MagicColor.WHITE).and(CardPredicates.UNTAPPED)) * 2, opplist.size());
+
+            if (numOppsCanSave < opplist.size() && (ailist.size() - numAiCanSave < opplist.size() - numOppsCanSave)) {
+                return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+            } else if (numAiCanSave < ailist.size() && (opplist.size() - numOppsCanSave < ailist.size() - numAiCanSave)) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
             }
+        }
 
-            // Special handling for Raiding Party
-            if (logic.equals("RaidingParty")) {
-                int numAiCanSave = Math.min(CardLists.count(ai.getCreaturesInPlay(), CardPredicates.isColor(MagicColor.WHITE).and(CardPredicates.UNTAPPED)) * 2, ailist.size());
-                int numOppsCanSave = Math.min(CardLists.count(ai.getOpponents().getCreaturesInPlay(), CardPredicates.isColor(MagicColor.WHITE).and(CardPredicates.UNTAPPED)) * 2, opplist.size());
+        // If effect is destroying creatures and AI (or a teammate) is about to lose, activate effect anyway no matter what!
+        if (!CardLists.getType(opplist, "Creature").isEmpty() && blockersDeclared
+                && side.anyMatch(p -> ComputerUtilCombat.lifeInSeriousDanger(p, currentCombat))) {
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
 
-                if (numOppsCanSave < opplist.size() && (ailist.size() - numAiCanSave < opplist.size() - numOppsCanSave)) {
-                    return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
-                } else if (numAiCanSave < ailist.size() && (opplist.size() - numOppsCanSave < ailist.size() - numAiCanSave)) {
-                    return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
-                }
-            }
+        // If effect is destroying creatures and AI is about to get low on life, activate effect anyway if difference in lost permanents not very much
+        if (!CardLists.getType(opplist, "Creature").isEmpty() && blockersDeclared
+                && side.anyMatch(p -> ComputerUtilCombat.lifeInDanger(p, currentCombat))
+                && ComputerUtilCard.evaluatePermanentList(ailist) * sides - 6 >= ComputerUtilCard.evaluatePermanentList(opplist)) {
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
 
-            // If effect is destroying creatures and AI is about to lose, activate effect anyway no matter what!
-            if ((!CardLists.getType(opplist, "Creature").isEmpty()) && (ai.getGame().getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS))
-                    && (ai.getGame().getCombat() != null && ComputerUtilCombat.lifeInSeriousDanger(ai, ai.getGame().getCombat()))) {
+        // if only creatures are affected evaluate both lists and pass only if human creatures are more valuable
+        if (CardLists.getNotType(opplist, "Creature").isEmpty() && CardLists.getNotType(ailist, "Creature").isEmpty()) {
+            if (AiTeams.outweighs(ComputerUtilCard.evaluateCreatureList(opplist), ComputerUtilCard.evaluateCreatureList(ailist),
+                    sides, CREATURE_EVAL_THRESHOLD)) {
                 return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
             }
 
-            // If effect is destroying creatures and AI is about to get low on life, activate effect anyway if difference in lost permanents not very much
-            if ((!CardLists.getType(opplist, "Creature").isEmpty()) && (ai.getGame().getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS))
-                    && (ai.getGame().getCombat() != null && ComputerUtilCombat.lifeInDanger(ai, ai.getGame().getCombat()))
-                    && ((ComputerUtilCard.evaluatePermanentList(ailist) - 6) >= ComputerUtilCard.evaluatePermanentList(opplist))) {
-                return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+            if (ai.getGame().getPhaseHandler().getPhase().isBefore(PhaseType.MAIN2)) {
+                return new AiAbilityDecision(0, AiPlayDecision.WaitForMain2);
             }
 
-            // if only creatures are affected evaluate both lists and pass only if human creatures are more valuable
-            if (CardLists.getNotType(opplist, "Creature").isEmpty() && CardLists.getNotType(ailist, "Creature").isEmpty()) {
-                if (ComputerUtilCard.evaluateCreatureList(ailist) + CREATURE_EVAL_THRESHOLD < ComputerUtilCard.evaluateCreatureList(opplist)) {
-                    return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
-
-                }
-
-                if (ai.getGame().getPhaseHandler().getPhase().isBefore(PhaseType.MAIN2)) {
-                    return new AiAbilityDecision(0, AiPlayDecision.WaitForMain2);
-                }
-
-                // test whether the human can kill the ai next turn
+            // test whether any opponent can kill the ai next turn
+            for (Player opponent : opponents) {
                 Combat combat = new Combat(opponent);
                 boolean containsAttacker = false;
                 for (Card att : opponent.getCreaturesInPlay()) {
@@ -133,7 +155,7 @@ public class DestroyAllAi extends SpellAbilityAi {
                     }
                 }
                 if (!containsAttacker) {
-                    return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+                    continue;
                 }
                 AiBlockController block = new AiBlockController(ai, false);
                 block.assignBlockersForCombat(combat);
@@ -141,36 +163,32 @@ public class DestroyAllAi extends SpellAbilityAi {
                 if (ComputerUtilCombat.lifeInSeriousDanger(ai, combat)) {
                     return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
                 }
-                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
-            } // only lands involved
-            else if (CardLists.getNotType(opplist, "Land").isEmpty() && CardLists.getNotType(ailist, "Land").isEmpty()) {
-                if (ai.isCardInPlay("Crucible of Worlds") && !opponent.isCardInPlay("Crucible of Worlds")) {
-                    // TODO Should care about any land recursion, not just Crucible of Worlds
-                    return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
-
-                }
-                // evaluate the situation with creatures on the battlefield separately, as that's where the AI typically makes mistakes
-                CardCollection aiCreatures = ai.getCreaturesInPlay();
-                CardCollection oppCreatures = opponent.getCreaturesInPlay();
-                if (!oppCreatures.isEmpty()) {
-                    if (ComputerUtilCard.evaluateCreatureList(aiCreatures) < ComputerUtilCard.evaluateCreatureList(oppCreatures) + CREATURE_EVAL_THRESHOLD) {
-                        return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
-                    }
-                }
-                // check if the AI would lose more lands than the opponent would
-                if (ComputerUtilCard.evaluatePermanentList(ailist) > ComputerUtilCard.evaluatePermanentList(opplist) + 1) {
-                    return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
-                }
-            } // otherwise evaluate both lists by CMC and pass only if human permanents are more valuable
-            else if ((ComputerUtilCard.evaluatePermanentList(ailist) + 3) >= ComputerUtilCard.evaluatePermanentList(opplist)) {
+            }
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        } // only lands involved
+        else if (CardLists.getNotType(opplist, "Land").isEmpty() && CardLists.getNotType(ailist, "Land").isEmpty()) {
+            if (side.anyMatch(p -> p.isCardInPlay("Crucible of Worlds")) && !opponents.anyMatch(p -> p.isCardInPlay("Crucible of Worlds"))) {
+                // TODO Should care about any land recursion, not just Crucible of Worlds
+                return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+            }
+            // evaluate the situation with creatures on the battlefield separately, as that's where the AI typically makes mistakes
+            CardCollection aiCreatures = side.getCreaturesInPlay();
+            CardCollection oppCreatures = opponents.getCreaturesInPlay();
+            // land destruction pays off for whoever is ahead on board
+            if (!oppCreatures.isEmpty() && ComputerUtilCard.evaluateCreatureList(aiCreatures) * sides
+                    < ComputerUtilCard.evaluateCreatureList(oppCreatures) + CREATURE_EVAL_THRESHOLD) {
                 return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
             }
-            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
-
+            // check if the AI would lose more lands than the opponents would
+            if (ComputerUtilCard.evaluatePermanentList(ailist) * sides > ComputerUtilCard.evaluatePermanentList(opplist) + sides) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            }
+        } // otherwise evaluate both lists by CMC and pass only if human permanents are more valuable
+        else if (!AiTeams.outweighs(ComputerUtilCard.evaluatePermanentList(opplist), ComputerUtilCard.evaluatePermanentList(ailist), sides, 3)) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
-        return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
-    
 
     @Override
     public boolean willPayUnlessCost(Player payer, SpellAbility sa, Cost cost, boolean alreadyPaid, FCollectionView<Player> payers) {

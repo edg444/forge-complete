@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import forge.ai.AiTeams;
 import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
 import forge.ai.ComputerUtil;
@@ -33,7 +34,7 @@ public final class TypeHurtAi {
     }
 
     private static int side(final Player ai, final Card c) {
-        return c.getController().isOpponentOf(ai) ? 1 : c.getController().equals(ai) ? -1 : 0;
+        return AiTeams.sign(ai, c.getController());
     }
 
     // Winding Way, Vigean Intuition: the type its library has the most of, for the cards revealed off the top

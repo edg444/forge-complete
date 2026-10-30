@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import forge.ai.AiTeams;
 import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
 import forge.ai.ComputerUtil;
@@ -241,7 +242,7 @@ public final class LastCardAi {
         for (final Player p : ai.getGame().getPlayers()) {
             for (final Card c : p.getCardsIn(ZoneType.Graveyard)) {
                 if (c.isCreature() && (c.getColor().hasBlack() || c.getColor().hasRed())) {
-                    v += (p.equals(ai) ? 1 : -1) * ComputerUtilCard.evaluateCreature(c);
+                    v -= AiTeams.sign(ai, p) * ComputerUtilCard.evaluateCreature(c);
                 }
             }
         }

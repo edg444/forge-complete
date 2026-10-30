@@ -1604,6 +1604,18 @@ public class SpecialCardAi {
                 }
             }
 
+            // a teammate's share counts as the AI's own: never kill one, and weigh whoever loses the most of their life
+            double sideShare = aiLands / (double) ai.getLife();
+            for (Player ally : ai.getAllies()) {
+                int allyLands = CardLists.filter(ally.getCardsIn(ZoneType.Battlefield), CardPredicates.NONBASIC_LANDS).size();
+                // a Two-Headed Giant team takes both heads' damage from one life total
+                int teamLands = ally.sharesTurnWith(ai) ? aiLands + allyLands : allyLands;
+                if (teamLands * 2 >= ally.getLife()) {
+                    return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+                }
+                sideShare = Math.max(sideShare, teamLands / (double) ally.getLife());
+            }
+
             boolean willPlay = true;
             for (Player opp : ai.getOpponents()) {
                 int oppLands = CardLists.filter(opp.getCardsIn(ZoneType.Battlefield), CardPredicates.NONBASIC_LANDS).size();
@@ -1625,13 +1637,12 @@ public class SpecialCardAi {
                     return new AiAbilityDecision(1000, AiPlayDecision.WillPlay);
                 }
                 // Don't if we'd lose a larger percentage of our remaining life than enemy
-                if ((aiLands / ((double) ai.getLife())) >
-                        (oppLands / ((double) ai.getOpponentsSmallestLifeTotal()))) {
+                if (sideShare > (oppLands / ((double) ai.getOpponentsSmallestLifeTotal()))) {
                     willPlay = false;
                 }
 
                 // Don't if loss is equal in percentage but we lose more points
-                if (((aiLands / ((double) ai.getLife())) == (oppLands / ((double) ai.getOpponentsSmallestLifeTotal())))
+                if ((sideShare == (oppLands / ((double) ai.getOpponentsSmallestLifeTotal())))
                         && (aiLands > oppLands)) {
                     willPlay = false;
                 }

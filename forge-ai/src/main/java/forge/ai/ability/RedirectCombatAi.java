@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import forge.ai.AiTeams;
 import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
 import forge.ai.ComputerUtilCard;
@@ -292,12 +293,12 @@ public final class RedirectCombatAi {
             final int d = e.getValue();
             if (e.getKey() instanceof Card c) {
                 if (c.isCreature() && c.canBeDestroyed() && (d >= c.getLethalDamage() || deathtouch.containsKey(c))) {
-                    score += (c.getController().equals(ai) ? -1 : 1) * ComputerUtilCard.evaluateCreature(c);
+                    score += AiTeams.sign(ai, c.getController()) * ComputerUtilCard.evaluateCreature(c);
                 }
             } else if (e.getKey() instanceof Player p) {
                 final boolean dies = d >= p.getLife() && p.canLoseLife() && !p.cantLoseForZeroOrLessLife();
-                if (p.equals(ai)) {
-                    score -= dies ? 1000 : d * (danger ? 30 : 6);
+                if (AiTeams.sign(ai, p) < 0) {
+                    score -= dies ? 1000 : d * (danger && p.equals(ai) ? 30 : 6);
                 } else if (p.isOpponentOf(ai)) {
                     score += dies ? 1000 : d * 6;
                 }

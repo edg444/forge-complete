@@ -1,5 +1,6 @@
 package forge.ai.ability;
 
+import forge.ai.AiTeams;
 import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
 import forge.ai.ComputerUtilCard;
@@ -335,7 +336,7 @@ public final class XChoiceAi {
                     continue;
                 }
                 final int w = c.isCreature() ? ComputerUtilCard.evaluateCreature(c) : ExchangeTradeAi.value(c);
-                v += c.getController().isOpponentOf(ai) ? w : c.getController().equals(ai) ? -w : 0;
+                v += AiTeams.sign(ai, c.getController()) * w;
             }
             if (v > best) {
                 best = v;

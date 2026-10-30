@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import forge.ai.AiTeams;
 import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
 import forge.ai.ComputerUtil;
@@ -207,8 +208,8 @@ public final class MiscLogicAi {
             }
             final List<Card> grave = new ArrayList<>(p.getCardsIn(ZoneType.Graveyard));
             final boolean own = p.equals(ai);
-            // its own only to keep from decking
-            if (own && ai.getCardsIn(ZoneType.Library).size() > 5) {
+            // its own only to keep from decking, and never a teammate's
+            if (own && ai.getCardsIn(ZoneType.Library).size() > 5 || !own && !p.isOpponentOf(ai)) {
                 continue;
             }
             grave.sort(Comparator.comparingInt((Card c) -> own ? c.getCMC() : graveValue(c)).reversed());
@@ -644,7 +645,7 @@ public final class MiscLogicAi {
         int v = 0;
         for (final Card c : CardLists.getValidCards(ai.getGame().getCardsIn(ZoneType.Battlefield), sa.getParamOrDefault("ChangeType", "Permanent.nonLand"),
                 ai, sa.getHostCard(), sa)) {
-            v += c.getController().isOpponentOf(ai) ? theirBounce(c) : c.getController().equals(ai) ? -theirBounce(c) : 0;
+            v += AiTeams.sign(ai, c.getController()) * theirBounce(c);
         }
         return v >= 200 ? yes() : no();
     }
@@ -663,7 +664,7 @@ public final class MiscLogicAi {
             for (int i = 1; i < mine.size(); i++) {
                 lost += ComputerUtilCard.evaluateCreature(mine.get(i));
             }
-            v += p.isOpponentOf(ai) ? lost : p.equals(ai) ? -lost : 0;
+            v += AiTeams.sign(ai, p) * lost;
         }
         return v >= 200 ? yes() : no();
     }

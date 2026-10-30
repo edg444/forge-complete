@@ -8,6 +8,7 @@ import forge.game.card.CardLists;
 import forge.game.keyword.Keyword;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
+import forge.game.player.PlayerCollection;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 
@@ -80,12 +81,11 @@ public class  DamageAllAi extends SpellAbilityAi {
         // Attempt to determine which opponent can be finished off such that the most players
         // are killed at the same time, given X damage tops
         final String validP = sa.getParamOrDefault("ValidPlayers", "");
-        int aiLife = ai.getLife();
         Player bestOpp = null; // default opponent, if all else fails
 
         for (int dmg = 1; dmg <= x; dmg++) {
-            // Don't kill yourself in the process
-            if (validP.equals("Player") && aiLife <= ComputerUtilCombat.predictDamageTo(ai, dmg, source, false)) {
+            // Don't kill yourself or a teammate in the process
+            if (validP.equals("Player") && killsOwnSide(ai, dmg, source)) {
                 break;
             }
             for (Player opp : ai.getOpponents()) {
@@ -101,19 +101,22 @@ public class  DamageAllAi extends SpellAbilityAi {
 
     private int evaluateDamageAll(Player ai, SpellAbility sa, final Card source, int dmg) {
         final Player opp = ai.getWeakestOpponent();
-        final CardCollection humanList = getKillableCreatures(sa, opp, dmg);
-        CardCollection computerList = getKillableCreatures(sa, ai, dmg);
+        CardCollection humanList = getKillableCreatures(sa, ai.getOpponents(), dmg);
+        CardCollection computerList = getKillableCreatures(sa, AiTeams.side(ai), dmg);
+        int sides = AiTeams.opposingSides(ai);
 
         if (sa.usesTargeting() && sa.canTarget(opp)) {
             sa.resetTargets();
             sa.getTargets().add(opp);
+            humanList = getKillableCreatures(sa, opp, dmg);
             computerList.clear();
+            sides = 1;
         }
 
         final String validP = sa.getParamOrDefault("ValidPlayers", "");
         // TODO: if damage is dependent on mana paid, maybe have X be human's max life
-        // Don't kill yourself
-        if (validP.equals("Player") && (ai.getLife() <= ComputerUtilCombat.predictDamageTo(ai, dmg, source, false))) {
+        // Don't kill yourself or a teammate
+        if (validP.equals("Player") && killsOwnSide(ai, dmg, source)) {
             return -1;
         }
 
@@ -169,8 +172,19 @@ public class  DamageAllAi extends SpellAbilityAi {
             minGain = 126; // prepare for attack
         }
 
-        return ComputerUtilCard.evaluateCreatureList(humanList) - ComputerUtilCard.evaluateCreatureList(computerList)
+        return ComputerUtilCard.evaluateCreatureList(humanList) - ComputerUtilCard.evaluateCreatureList(computerList) * sides
                 - minGain;
+    }
+
+    /** Whether dealing this much to each player kills the AI or a teammate (a Two-Headed Giant team takes it once per head). */
+    private static boolean killsOwnSide(final Player ai, final int dmg, final Card source) {
+        for (final Player p : AiTeams.side(ai)) {
+            if (p.getLife() <= ComputerUtilCombat.predictDamageTo(p, dmg, source, false) * AiTeams.sharedLifeHits(p)
+                    && !p.cantLoseForZeroOrLessLife()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -188,16 +202,17 @@ public class  DamageAllAi extends SpellAbilityAi {
 
         // Evaluate creatures getting killed
         Player enemy = ai.getWeakestOpponent();
-        final CardCollection humanList = getKillableCreatures(sa, enemy, dmg);
-        CardCollection computerList = getKillableCreatures(sa, ai, dmg);
+        CardCollection humanList = getKillableCreatures(sa, ai.getOpponents(), dmg);
+        CardCollection computerList = getKillableCreatures(sa, AiTeams.side(ai), dmg);
 
         if (sa.usesTargeting() && sa.canTarget(enemy)) {
             sa.resetTargets();
             sa.getTargets().add(enemy);
+            humanList = getKillableCreatures(sa, enemy, dmg);
             computerList.clear();
         }
-        // Don't get yourself killed
-        if (validP.equals("Player") && (ai.getLife() <= ComputerUtilCombat.predictDamageTo(ai, dmg, source, false))) {
+        // Don't get yourself or a teammate killed
+        if (validP.equals("Player") && killsOwnSide(ai, dmg, source)) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
 
@@ -229,12 +244,16 @@ public class  DamageAllAi extends SpellAbilityAi {
      * @return a {@link forge.game.card.CardCollection} object.
      */
     private CardCollection getKillableCreatures(final SpellAbility sa, final Player player, final int dmg) {
+        return getKillableCreatures(sa, new PlayerCollection(player), dmg);
+    }
+
+    private CardCollection getKillableCreatures(final SpellAbility sa, final PlayerCollection players, final int dmg) {
         final Card source = sa.getHostCard();
         String validC = sa.getParamOrDefault("ValidCards", "");
 
         // TODO: X may be something different than X paid
         CardCollection list =
-                CardLists.getValidCards(player.getCardsIn(ZoneType.Battlefield), validC, source.getController(), source, sa);
+                CardLists.getValidCards(players.getCardsIn(ZoneType.Battlefield), validC, source.getController(), source, sa);
 
         final Predicate<Card> filterKillable = c -> ComputerUtilCombat.predictDamageTo(c, dmg, source, false) >= ComputerUtilCombat.getDamageToKill(c, false);
 
@@ -260,12 +279,13 @@ public class  DamageAllAi extends SpellAbilityAi {
 
         // Evaluate creatures getting killed
         Player enemy = ai.getWeakestOpponent();
-        final CardCollection humanList = getKillableCreatures(sa, enemy, dmg);
-        CardCollection computerList = getKillableCreatures(sa, ai, dmg);
+        CardCollection humanList = getKillableCreatures(sa, ai.getOpponents(), dmg);
+        CardCollection computerList = getKillableCreatures(sa, AiTeams.side(ai), dmg);
 
         if (sa.usesTargeting() && sa.canTarget(enemy)) {
             sa.resetTargets();
             sa.getTargets().add(enemy);
+            humanList = getKillableCreatures(sa, enemy, dmg);
             computerList.clear();
         }
 
@@ -273,8 +293,8 @@ public class  DamageAllAi extends SpellAbilityAi {
         if (mandatory) {
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
-        // Don't get yourself killed
-        if (validP.equals("Player") && (ai.getLife() <= ComputerUtilCombat.predictDamageTo(ai, dmg, source, false))) {
+        // Don't get yourself or a teammate killed
+        if (validP.equals("Player") && killsOwnSide(ai, dmg, source)) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
 

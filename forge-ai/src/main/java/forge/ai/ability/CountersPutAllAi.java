@@ -3,6 +3,7 @@ package forge.ai.ability;
 import com.google.common.collect.Lists;
 import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
+import forge.ai.AiTeams;
 import forge.ai.ComputerUtilCost;
 import forge.ai.SpellAbilityAi;
 import forge.game.ability.AbilityUtils;
@@ -36,13 +37,15 @@ public class CountersPutAllAi extends SpellAbilityAi {
         final TargetRestrictions tgt = sa.getTargetRestrictions();
 
         // TODO support ValidCards2 directly instead
+        // every opponent's cards count, and teammates' count as the AI's own
         if ("OwnCreatsAndOtherPWs".equals(logic)) {
-            hList = CardLists.getValidCards(ai.getWeakestOpponent().getCardsIn(ZoneType.Battlefield), "Creature.YouCtrl,Planeswalker.YouCtrl+Other", source.getController(), source, sa);
-            cList = CardLists.getValidCards(ai.getCardsIn(ZoneType.Battlefield), "Creature.YouCtrl,Planeswalker.YouCtrl+Other", source.getController(), source, sa);
+            hList = CardLists.getValidCards(ai.getOpponents().getCardsIn(ZoneType.Battlefield), "Creature.YouCtrl,Planeswalker.YouCtrl+Other", source.getController(), source, sa);
+            cList = CardLists.getValidCards(AiTeams.side(ai).getCardsIn(ZoneType.Battlefield), "Creature.YouCtrl,Planeswalker.YouCtrl+Other", source.getController(), source, sa);
         } else {
-            hList = CardLists.getValidCards(ai.getWeakestOpponent().getCardsIn(ZoneType.Battlefield), valid, source.getController(), source, sa);
-            cList = CardLists.getValidCards(ai.getCardsIn(ZoneType.Battlefield), valid, source.getController(), source, sa);
+            hList = CardLists.getValidCards(ai.getOpponents().getCardsIn(ZoneType.Battlefield), valid, source.getController(), source, sa);
+            cList = CardLists.getValidCards(AiTeams.side(ai).getCardsIn(ZoneType.Battlefield), valid, source.getController(), source, sa);
         }
+        int sides = AiTeams.opposingSides(ai);
 
         // the parent already judged it, e.g. on letters it hasn't chosen yet (Leading Performance)
         if (logic.equals("Always")) {
@@ -61,6 +64,7 @@ public class CountersPutAllAi extends SpellAbilityAi {
 
             hList = CardLists.filterControlledBy(hList, pl);
             cList = CardLists.filterControlledBy(cList, pl);
+            sides = 1;
         }
 
         // TODO improve X value to don't overpay when extra mana won't do
@@ -75,19 +79,20 @@ public class CountersPutAllAi extends SpellAbilityAi {
         if (curse) {
             if (type.equals("M1M1")) {
                 final List<Card> killable = CardLists.filter(hList, c -> c.getNetToughness() <= amount);
-                if (killable.size() <= 2) {
+                final List<Card> ownKillable = CardLists.filter(cList, c -> c.isCreature() && c.getNetToughness() <= amount);
+                if (killable.size() <= 2 || killable.size() <= ownKillable.size() * sides) {
                     return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
                 }
             } else {
                 // make sure compy doesn't harm his stuff more than human's
                 // stuff
-                if (cList.size() > hList.size()) {
+                if (cList.size() * sides > hList.size()) {
                     return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
                 }
             }
         } else {
             // human has more things that will benefit, don't play
-            if (hList.size() >= cList.size()) {
+            if (hList.size() >= cList.size() * sides) {
                 return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
             }
 

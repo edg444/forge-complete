@@ -29,7 +29,7 @@ public class PowerExchangeAi extends SpellAbilityAi {
 
         List<Card> list =
                 CardLists.getValidCards(ai.getGame().getCardsIn(ZoneType.Battlefield), tgt.getValidTgts(), ai, sa.getHostCard(), sa);
-        list = CardLists.filter(list, c -> c.canBeTargetedBy(sa) && c.getController() != ai);
+        list = CardLists.filter(list, c -> c.canBeTargetedBy(sa) && c.getController().isOpponentOf(ai));
         CardLists.sortByPowerDesc(list);
         c1 = list.isEmpty() ? null : list.get(0);
         if (sa.hasParam("Defined")) {

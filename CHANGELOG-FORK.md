@@ -329,6 +329,27 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Multiplayer AI, part 1: teammates' losses count** (a 2v2 simulation had the AI cast Price of Progress for 6 at
+  its own teammate, whose life its Sulfuric Vortex then finished). New `AiTeams`: the AI's side is it and its
+  teammates (team games, Two-Headed Giant, the archenemy's opponents), and a free-for-all comparison scales the
+  AI's loss by the number of opposing sides, so in 1v1 every check is unchanged.
+  - Board wipes (`DestroyAllAi`, so `SacrificeAllAi` too) weigh the whole side against every opponent; they
+    looked at the first opponent only, refusing outright when that one had nothing to lose. A targeted wipe aims
+    at the opponent with the most to lose.
+  - `DamageAllAi` (both sides' creatures; never kills a teammate, counting a 2HG team's damage once per head),
+    `ChangeZoneAllAi`, `PumpAllAi` curses, `CountersPutAllAi`, `TapAllAi`, Balance, Barter in Blood, "each
+    player" life loss (`LifeLoseAi` now also refuses to put its own side under 3 except for a kill) and the
+    `RepeatEachAi` each-player logics (Acidic Soil; `AllPlayerLoseLife` worked every player's loss out as the
+    AI's own). Price of Progress won't kill a teammate or cost one a bigger share of its life.
+  - `TapAllAi`'s optional trigger had its sides swapped and fired when it would tap more of its own team's cards.
+  - Combat scorers (`RedirectCombatAi`, `CombatPreventionAi`, `CombatTrickAi`), Power exchange targets, the
+    fork's own Radiance, type-hurt, sacrifice-payoff, X-choice, bounce and keep-one-wipe AIs, Balthor and
+    graveyard exile count a teammate's creature, player or graveyard as the AI's own (+1 opponent, -1 side, 0
+    neither: `AiTeams.sign`).
+  - `MultiplayerTeamAiTest` (7).
+- **Simulation runs for team games.** `forge sim` takes `-T <team per deck>` (`-T 1 1 2 2`, needed for
+  `-f TwoHeadedGiant`) and `-f Archenemy` (the first deck is the archenemy, with random schemes when its deck has
+  none).
 - **Toy Boat** (unh/130) showed no subtype: Ship, an Un-only creature type, wasn't in `TypeLists.txt`. Fourteen
   more creature types were missing the same way (Armored, Boxer, Champion, Clamfolk, Cow, Designer, Gus, Hawk,
   Mammoth, Mummy, Spuzzem, Townsfolk, Tree, Zonian; type lines checked against Scryfall). New

@@ -2,6 +2,7 @@ package forge.ai.ability;
 
 import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
+import forge.ai.AiTeams;
 import forge.ai.ComputerUtil;
 import forge.ai.ComputerUtilCost;
 import forge.ai.ComputerUtilMana;
@@ -45,7 +46,7 @@ public class LifeLoseAi extends SpellAbilityAi {
             amount = AbilityUtils.calculateAmount(source, amountStr, sa);
         }
 
-        if (tgtPlayers.contains(ai) && amount > 0 && amount + 3 > ai.getLife()) {
+        if (sideLifeAfter(ai, tgtPlayers, amount) < 3) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
         if (sa.usesTargeting()) {
@@ -160,6 +161,11 @@ public class LifeLoseAi extends SpellAbilityAi {
          // TODO: check against the amount we could obtain when multiple activations are possible
         PlayerCollection filteredPlayer = tgtPlayers
                 .filter(PlayerPredicates.isOpponentOf(ai).and(PlayerPredicates.lifeLessOrEqualTo(amount)));
+        // "each player loses" hits the AI's side too: never into losing, and close to it only for a kill
+        final int sideLife = sideLifeAfter(ai, tgtPlayers, amount);
+        if (sideLife <= 0 || (sideLife < 3 && filteredPlayer.isEmpty())) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
         // killing opponents asap
         if (!filteredPlayer.isEmpty()) {
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
@@ -216,7 +222,7 @@ public class LifeLoseAi extends SpellAbilityAi {
         }
 
         // For cards like Foul Imp: ETB you lose life
-        if (!getPlayers(ai, sa).contains(ai) || amount <= 0 || amount + 3 <= ai.getLife()) {
+        if (sideLifeAfter(ai, getPlayers(ai, sa), amount) >= 3) {
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
         return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
@@ -283,6 +289,32 @@ public class LifeLoseAi extends SpellAbilityAi {
             }
         }
         return false;
+    }
+
+    /**
+     * The lowest life left on the AI's side after each of these players loses the amount; a Two-Headed Giant team
+     * loses it once per head from its one life total (CR 810.9).
+     */
+    private static int sideLifeAfter(final Player ai, final PlayerCollection players, final int amount) {
+        int lowest = Integer.MAX_VALUE;
+        if (amount <= 0) {
+            return lowest;
+        }
+        for (final Player p : AiTeams.side(ai)) {
+            if (!p.canLoseLife() || p.cantLoseForZeroOrLessLife()) {
+                continue;
+            }
+            int hits = 0;
+            for (final Player head : p.getGiantTeam()) {
+                if (players.contains(head)) {
+                    hits++;
+                }
+            }
+            if (hits > 0) {
+                lowest = Math.min(lowest, p.getLife() - amount * hits);
+            }
+        }
+        return lowest;
     }
 
     protected PlayerCollection getPlayers(Player ai, SpellAbility sa) {

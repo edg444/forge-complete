@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import forge.ai.AiTeams;
 import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
 import forge.ai.ComputerUtilCard;
@@ -206,7 +207,7 @@ public final class CombatPreventionAi {
                 if (foes.isEmpty() || foes.anyMatch(f -> !prevented(ai, sa, shields, f, c))) {
                     continue;
                 }
-                value += (c.getController().equals(ai) ? 1 : -1) * ComputerUtilCard.evaluateCreature(c);
+                value -= AiTeams.sign(ai, c.getController()) * ComputerUtilCard.evaluateCreature(c);
             }
             return value;
         } finally {

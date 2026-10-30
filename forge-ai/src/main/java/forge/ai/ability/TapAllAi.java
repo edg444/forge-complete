@@ -2,6 +2,7 @@ package forge.ai.ability;
 
 import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
+import forge.ai.AiTeams;
 import forge.ai.ComputerUtilCombat;
 import forge.ai.SpellAbilityAi;
 import forge.game.Game;
@@ -61,9 +62,10 @@ public class TapAllAi extends SpellAbilityAi {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
 
-        final List<Card> human = CardLists.filterControlledBy(validTappables, opp);
-        final List<Card> compy = CardLists.filterControlledBy(validTappables, ai);
-        if (human.size() <= compy.size()) {
+        // every opponent's untapped cards are a gain, and teammates' are a loss like the AI's own
+        final List<Card> human = CardLists.filterControlledBy(validTappables, ai.getOpponents());
+        final List<Card> compy = CardLists.filterControlledBy(validTappables, AiTeams.side(ai));
+        if (human.size() <= compy.size() * (sa.usesTargeting() ? 1 : AiTeams.opposingSides(ai))) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
         // in AI's turn, check if there are possible attackers, before tapping blockers
@@ -107,8 +109,8 @@ public class TapAllAi extends SpellAbilityAi {
         }
 
         if (validTappables.size() > 0) {
-            final int human = CardLists.count(validTappables, CardPredicates.isControlledByAnyOf(ai.getYourTeam()));
-            final int compy = CardLists.count(validTappables, CardPredicates.isControlledByAnyOf(ai.getOpponents()));
+            final int human = CardLists.count(validTappables, CardPredicates.isControlledByAnyOf(ai.getOpponents()));
+            final int compy = CardLists.count(validTappables, CardPredicates.isControlledByAnyOf(ai.getYourTeam()));
             if (human > compy) {
                 return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
             }

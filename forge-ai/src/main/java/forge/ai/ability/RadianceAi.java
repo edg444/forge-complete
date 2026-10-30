@@ -2,6 +2,7 @@ package forge.ai.ability;
 
 import java.util.List;
 
+import forge.ai.AiTeams;
 import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
 import forge.ai.ComputerUtilCard;
@@ -32,7 +33,7 @@ public final class RadianceAi {
     }
 
     private static int side(final Player ai, final Card c) {
-        return c.getController().isOpponentOf(ai) ? 1 : c.getController().equals(ai) ? -1 : 0;
+        return AiTeams.sign(ai, c.getController());
     }
 
     private static CardCollection group(final Player ai, final Card t) {

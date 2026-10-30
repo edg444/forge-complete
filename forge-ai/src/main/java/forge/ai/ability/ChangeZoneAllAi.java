@@ -55,7 +55,9 @@ public class ChangeZoneAllAi extends SpellAbilityAi {
         // ex. "Return all blocking/blocked by target creature"
 
         CardCollectionView oppType = ai.getOpponents().getCardsIn(origin);
-        CardCollectionView computerType = ai.getCardsIn(origin);
+        // teammates' cards move too, and the AI shares their fate
+        CardCollectionView computerType = AiTeams.side(ai).getCardsIn(origin);
+        int sides = AiTeams.opposingSides(ai);
 
         // Ugin AI: always try to sweep before considering +1
         if (sourceName.equals("Ugin, the Spirit Dragon")) {
@@ -136,7 +138,9 @@ public class ChangeZoneAllAi extends SpellAbilityAi {
                 } else {
                     return new AiAbilityDecision(0, AiPlayDecision.CantPlaySa);
                 }
+                oppType = AbilityUtils.filterListByType(oppTarget.getCardsIn(origin), sa.getParam("ChangeType"), sa);
                 computerType = new CardCollection();
+                sides = 1;
             }
 
             int creatureEvalThreshold; // value difference (in evaluateCreatureList units)
@@ -152,7 +156,7 @@ public class ChangeZoneAllAi extends SpellAbilityAi {
             // mass zone change for creatures: if in dire danger, do it; otherwise, only do it if the opponent's
             // creatures are better in value
             if (CardLists.getNotType(oppType, "Creature").isEmpty() && CardLists.getNotType(computerType, "Creature").isEmpty()) {
-                if (game.getCombat() != null && ComputerUtilCombat.lifeInSeriousDanger(ai, game.getCombat())) {
+                if (game.getCombat() != null && AiTeams.side(ai).anyMatch(p -> ComputerUtilCombat.lifeInSeriousDanger(p, game.getCombat()))) {
                     if (game.getPhaseHandler().is(PhaseType.COMBAT_DECLARE_BLOCKERS)
                             && game.getPhaseHandler().getPlayerTurn().isOpponentOf(ai)) {
                         // Life is in serious danger, return all creatures from the battlefield to wherever
@@ -160,12 +164,12 @@ public class ChangeZoneAllAi extends SpellAbilityAi {
                         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
                     }
                 }
-                if ((ComputerUtilCard.evaluateCreatureList(computerType) + creatureEvalThreshold) >= ComputerUtilCard
-                        .evaluateCreatureList(oppType)) {
+                if (!AiTeams.outweighs(ComputerUtilCard.evaluateCreatureList(oppType), ComputerUtilCard.evaluateCreatureList(computerType),
+                        sides, creatureEvalThreshold)) {
                     return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
                 }
-            } else if ((ComputerUtilCard.evaluatePermanentList(computerType) + nonCreatureEvalThreshold) >= ComputerUtilCard
-                    .evaluatePermanentList(oppType)) {
+            } else if (!AiTeams.outweighs(ComputerUtilCard.evaluatePermanentList(oppType), ComputerUtilCard.evaluatePermanentList(computerType),
+                    sides, nonCreatureEvalThreshold)) {
                 return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
             }
             // On its own turn, sweep after combat: an instant-speed sweeper (Perilous Vault) used to fire
@@ -296,8 +300,9 @@ public class ChangeZoneAllAi extends SpellAbilityAi {
         }
         CardCollectionView humanType = ai.getOpponents().getCardsIn(origin);
         humanType = AbilityUtils.filterListByType(humanType, sa.getParam("ChangeType"), sa);
-        CardCollectionView computerType = ai.getCardsIn(origin);
+        CardCollectionView computerType = AiTeams.side(ai).getCardsIn(origin);
         computerType = AbilityUtils.filterListByType(computerType, sa.getParam("ChangeType"), sa);
+        final int sides = AiTeams.opposingSides(ai);
         if (origin.equals(ZoneType.Hand) || origin.equals(ZoneType.Library)) {
             if (sa.usesTargeting()) {
                 final PlayerCollection oppList = ai.getOpponents().filter(PlayerPredicates.isTargetableBy(sa));
@@ -322,10 +327,10 @@ public class ChangeZoneAllAi extends SpellAbilityAi {
                 return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
             }
             if (CardLists.getNotType(humanType, "Creature").isEmpty() && CardLists.getNotType(computerType, "Creature").isEmpty()) {
-                if (ComputerUtilCard.evaluateCreatureList(computerType) >= ComputerUtilCard.evaluateCreatureList(humanType)) {
+                if (!AiTeams.outweighs(ComputerUtilCard.evaluateCreatureList(humanType), ComputerUtilCard.evaluateCreatureList(computerType), sides, 0)) {
                     return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
                 }
-            } else if (ComputerUtilCard.evaluatePermanentList(computerType) >= ComputerUtilCard.evaluatePermanentList(humanType)) {
+            } else if (!AiTeams.outweighs(ComputerUtilCard.evaluatePermanentList(humanType), ComputerUtilCard.evaluatePermanentList(computerType), sides, 0)) {
                 return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
             }
         } else if (origin.equals(ZoneType.Graveyard)) {

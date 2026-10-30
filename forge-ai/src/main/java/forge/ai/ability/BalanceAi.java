@@ -37,6 +37,19 @@ public class BalanceAi extends SpellAbilityAi {
             diff += humPerms.size() - compPerms.size();
         }
 
+        // teammates sacrifice down to the same count, and that's the AI's loss too
+        for (Player ally : aiPlayer.getAllies()) {
+            final CardCollectionView allyPerms = ally.getCardsIn(ZoneType.Battlefield);
+            if ("BalanceCreaturesAndLands".equals(logic)) {
+                diff -= Math.max(0, CardLists.filter(allyPerms, CardPredicates.LANDS).size()
+                        - CardLists.filter(humPerms, CardPredicates.LANDS).size());
+                diff -= 1.5 * Math.max(0, CardLists.filter(allyPerms, CardPredicates.CREATURES).size()
+                        - CardLists.filter(humPerms, CardPredicates.CREATURES).size());
+            } else if ("BalancePermanents".equals(logic)) {
+                diff -= Math.max(0, allyPerms.size() - humPerms.size());
+            }
+        }
+
         if (diff < 0) {
             // Don't sacrifice permanents even if opponent has a ton of cards in hand
             return new AiAbilityDecision(0, forge.ai.AiPlayDecision.CantPlayAi);

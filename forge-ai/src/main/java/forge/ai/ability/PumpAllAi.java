@@ -84,8 +84,9 @@ public class PumpAllAi extends PumpAiBase {
 
         final String valid = sa.getParamOrDefault("ValidCards", "");
 
-        CardCollection comp = CardLists.getValidCards(ai.getCardsIn(ZoneType.Battlefield), valid, source.getController(), source, sa);
-        CardCollection human = CardLists.getValidCards(opp.getCardsIn(ZoneType.Battlefield), valid, source.getController(), source, sa);
+        // teammates' creatures are hit (or helped) like the AI's own, and every opponent's count
+        CardCollection comp = CardLists.getValidCards(AiTeams.side(ai).getCardsIn(ZoneType.Battlefield), valid, source.getController(), source, sa);
+        CardCollection human = CardLists.getValidCards(ai.getOpponents().getCardsIn(ZoneType.Battlefield), valid, source.getController(), source, sa);
 
         if (sa.isCurse()) {
             if (defense < 0) { // try to destroy creatures
@@ -133,7 +134,8 @@ public class PumpAllAi extends PumpAiBase {
             }
 
             // evaluate both lists and pass only if human creatures are more valuable
-            boolean result = (ComputerUtilCard.evaluateCreatureList(comp) + 200) < ComputerUtilCard.evaluateCreatureList(human);
+            boolean result = AiTeams.outweighs(ComputerUtilCard.evaluateCreatureList(human), ComputerUtilCard.evaluateCreatureList(comp),
+                    AiTeams.opposingSides(ai), 200);
             return result ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         } // end Curse
 
