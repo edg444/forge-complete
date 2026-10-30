@@ -286,7 +286,6 @@ public enum TrackableProperty {
     StormCount(TrackableTypes.IntegerType),
     PoisonCountersToLose(TrackableTypes.IntegerType),
     Object(TrackableTypes.ObjectType, FreezeMode.IgnoresFreeze),
-    RevealedCardsCollection(TrackableTypes.CardViewCollectionType, FreezeMode.IgnoresFreeze),
     Dependencies(TrackableTypes.StringType),
     // fork, kept last so the properties before it keep their numbers in recorded replays: players that aren't
     // seated (Interplanar Brushwagg's stand-in), so state sync reaches them and their battlefield like seated ones
