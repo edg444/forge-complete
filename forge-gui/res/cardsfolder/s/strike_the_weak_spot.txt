@@ -1,0 +1,8 @@
+Name:Strike the Weak Spot
+ManaCost:no cost
+Types:Sorcery
+A:SP$ Destroy | ValidTgts$ Creature.Head | TgtPrompt$ Select target Head | SubAbility$ DBAddTurn | SpellDescription$ Destroy target Head. If that Head was elite, the Hydra takes an extra turn after this one.
+SVar:DBAddTurn:DB$ AddTurn | Defined$ You | NumTurns$ 1 | ConditionDefined$ Targeted | ConditionPresent$ Card.Elite | ConditionCompare$ GE1
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Destroy target Head. If that Head was elite, the Hydra takes an extra turn after this one.

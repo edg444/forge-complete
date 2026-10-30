@@ -1,0 +1,14 @@
+Name:Swallow the Hero Whole
+ManaCost:no cost
+Types:Sorcery
+A:SP$ RepeatEach | RepeatPlayers$ Opponent | RepeatSubAbility$ DBChoose | SubAbility$ DBExile | SpellDescription$ Each player exiles a creature they control. Until the Hydra's next turn, when a Head leaves the battlefield, return the exiled cards to the battlefield under their owners' control.
+SVar:DBChoose:DB$ ChooseCard | Defined$ Remembered | Choices$ Creature.RememberedPlayerCtrl | Amount$ 1 | Mandatory$ True | ChoiceTitle$ Choose a creature you control to exile | RememberChosen$ True
+SVar:DBExile:DB$ ChangeZone | Defined$ Remembered | Origin$ Battlefield | Destination$ Exile | RememberChanged$ True | ForgetOtherRemembered$ True | SubAbility$ DBEffect
+SVar:DBEffect:DB$ Effect | Triggers$ TrigHeadLeaves | RememberObjects$ Remembered | Duration$ UntilYourNextTurn | ForgetOnMoved$ Exile | SubAbility$ DBCleanup
+SVar:TrigHeadLeaves:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Head | TriggerZones$ Command | Execute$ DBReturn | TriggerDescription$ Until the Hydra's next turn, when a Head leaves the battlefield, return the exiled cards to the battlefield under their owners' control.
+SVar:DBReturn:DB$ ChangeZone | Defined$ Remembered | Origin$ Exile | Destination$ Battlefield | SubAbility$ DBExileSelf
+SVar:DBExileSelf:DB$ ChangeZone | Defined$ Self | Origin$ Command | Destination$ Exile
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Each player exiles a creature they control. Until the Hydra's next turn, when a Head leaves the battlefield, return the exiled cards to the battlefield under their owners' control.

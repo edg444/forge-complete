@@ -849,7 +849,9 @@ public class Combat {
     /** Tasty: the unblocked creatures attacking a creature, which it deals combat damage to. */
     private CardCollection unblockedAttackersOf(final Card attacked) {
         final CardCollection result = new CardCollection();
-        if (!attacked.isCreature() || !attacked.isInPlay() || !attackedByBands.get().containsKey(attacked)) {
+        // only a tasty creature fights back: Hero's Path challenge creatures attacked directly don't
+        if (!attacked.isCreature() || !attacked.isInPlay() || !attacked.hasKeyword(Keyword.TASTY)
+                || !attackedByBands.get().containsKey(attacked)) {
             return result;
         }
         for (final AttackingBand band : attackedByBands.get().get(attacked)) {

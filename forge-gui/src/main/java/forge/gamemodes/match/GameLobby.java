@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import forge.LobbyPlayer;
 import forge.ai.AIOption;
+import forge.ai.LobbyPlayerChallenge;
 import forge.deck.CardPool;
 import forge.card.CardEdition;
 import forge.deck.CommanderBracketEnforcement;
@@ -17,6 +18,7 @@ import forge.game.GameType;
 import forge.game.PaiGowMagic;
 import forge.game.GameView;
 import forge.game.IHasGameType;
+import forge.game.herospath.HerosPath;
 import forge.game.player.Player;
 import forge.game.player.RegisteredPlayer;
 import forge.gamemodes.net.NetworkEventView;
@@ -268,16 +270,28 @@ public abstract class GameLobby implements IHasGameType {
         case Archenemy:
             data.appliedVariants.remove(GameType.ArchenemyRumble);
             data.appliedVariants.remove(GameType.TwoHeadedGiant);
+            removeHerosPathChallenges(null);
             applyArchenemyTeams();
             break;
         case ArchenemyRumble:
             data.appliedVariants.remove(GameType.Archenemy);
             data.appliedVariants.remove(GameType.TwoHeadedGiant);
+            removeHerosPathChallenges(null);
             break;
         case TwoHeadedGiant:
             // both decide the teams their own way
             data.appliedVariants.remove(GameType.Archenemy);
             data.appliedVariants.remove(GameType.ArchenemyRumble);
+            removeHerosPathChallenges(null);
+            break;
+        case FaceTheHydra:
+        case BattleTheHorde:
+        case DefeatAGod:
+            // every seat is a hero, and the challenge deck sits down at the start
+            data.appliedVariants.remove(GameType.Archenemy);
+            data.appliedVariants.remove(GameType.ArchenemyRumble);
+            data.appliedVariants.remove(GameType.TwoHeadedGiant);
+            removeHerosPathChallenges(variant);
             break;
         case Commander:
             data.appliedVariants.remove(GameType.Oathbreaker);
@@ -393,6 +407,14 @@ public abstract class GameLobby implements IHasGameType {
         return teams;
     }
 
+    private void removeHerosPathChallenges(final GameType keep) {
+        for (final HerosPath.Challenge c : HerosPath.Challenge.values()) {
+            if (c.gameType != keep) {
+                data.appliedVariants.remove(c.gameType);
+            }
+        }
+    }
+
     private boolean isEnoughTeams() {
         int lastTeam = -1;
         for (final LobbySlot slot : data.slots) {
@@ -462,19 +484,25 @@ public abstract class GameLobby implements IHasGameType {
             }
         }
 
-        if (activeSlots.size() < 2) {
-            SOptionPane.showMessageDialog(Localizer.getInstance().getMessage("lblRequiredLeastTwoPlayerStartGame"));
+        final Set<GameType> variantTypes = data.appliedVariants;
+        // Hero's Path: every seat is a hero (one to four), against a challenge deck that joins at the start
+        final HerosPath.Challenge challenge = HerosPath.Challenge.of(variantTypes);
+        if (challenge != null && activeSlots.size() > 4) {
+            SOptionPane.showMessageDialog(Localizer.getInstance().getMessage("lblHerosPathHeroCount"));
             return null;
         }
 
-        final Set<GameType> variantTypes = data.appliedVariants;
+        if (activeSlots.size() < 2 && challenge == null) {
+            SOptionPane.showMessageDialog(Localizer.getInstance().getMessage("lblRequiredLeastTwoPlayerStartGame"));
+            return null;
+        }
 
         final Map<LobbySlot, Integer> giantTeams = variantTypes.contains(GameType.TwoHeadedGiant) ? getGiantTeams(activeSlots) : null;
         if (variantTypes.contains(GameType.TwoHeadedGiant) && giantTeams == null) {
             SOptionPane.showMessageDialog(Localizer.getInstance().getMessage("lblTwoHeadedGiantTeams"));
             return null;
         }
-        if (giantTeams == null && !isEnoughTeams()) {
+        if (giantTeams == null && challenge == null && !isEnoughTeams()) {
             SOptionPane.showMessageDialog(Localizer.getInstance().getMessage("lblNotEnoughTeams"));
             return null;
         }
@@ -658,6 +686,16 @@ public abstract class GameLobby implements IHasGameType {
             }
 
             rp.setTeamNumber(team);
+            if (challenge != null) {
+                final List<String> heroCards = isAI && slot.getHeroCards().isEmpty()
+                        ? HerosPathLobby.randomHeroCards(challenge) : slot.getHeroCards();
+                final String problem = HerosPath.heroCardProblem(challenge,
+                        HerosPath.parseHeroChoices(heroCards).stream().map(hc -> hc.card().getName()).toList());
+                if (problem != null) {
+                    legalityProblems.add(legalityProblemEntry(name, challenge.getName() + ": " + problem));
+                }
+                HerosPath.prepareHero(rp, heroCards);
+            }
             players.add(rp.setPlayer(lobbyPlayer));
 
             if (!isAI) {
@@ -688,6 +726,15 @@ public abstract class GameLobby implements IHasGameType {
             }
             players.clear();
             players.addAll(seated);
+        }
+
+        if (challenge != null) {
+            final HerosPath.Difficulty difficulty = HerosPathLobby.chooseDifficulty(challenge);
+            if (difficulty == null) {
+                return null;
+            }
+            final RegisteredPlayer opponent = HerosPath.registerChallenge(challenge, difficulty, players.size());
+            players.add(opponent.setPlayer(new LobbyPlayerChallenge(challenge.opponentName)));
         }
 
         //if above checks succeed, return runnable that can be used to finish starting game

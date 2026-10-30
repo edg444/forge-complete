@@ -1,0 +1,15 @@
+Name:Enhancement Stickers
+ManaCost:no cost
+Types:Stickers
+SVar:Enhancement1:S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddKeyword$ Vigilance | CanBlockAmount$ 1 | Description$ Equipped creature has vigilance and can block an additional creature each combat.
+SVar:Enhancement2:T:Mode$ DamageDealtOnce | ValidSource$ Card.EquippedBy | Execute$ Enhancement2Exec | TriggerZones$ Battlefield | TriggerDescription$ Whenever equipped creature deals damage, put a +1/+1 counter on it.
+SVar:Enhancement2Exec:DB$ PutCounter | Defined$ TriggeredSource | CounterType$ P1P1 | CounterNum$ 1
+SVar:Enhancement3:T:Mode$ DamageDealtOnce | ValidSource$ Card.EquippedBy | Execute$ Enhancement3Exec | TriggerZones$ Battlefield | TriggerDescription$ Whenever equipped creature deals damage, scry 1.
+SVar:Enhancement3Exec:DB$ Scry | ScryNum$ 1
+SVar:Enhancement4:S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddKeyword$ Protection:Enchantment | Description$ Equipped creature has protection from enchantments.
+SVar:Enhancement5:S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddKeyword$ Double Strike | Description$ Equipped creature has double strike.
+SVar:Enhancement6:T:Mode$ DamageDealtOnce | ValidSource$ Card.EquippedBy | Execute$ Enhancement6Exec | TriggerZones$ Battlefield | TriggerDescription$ Whenever equipped creature deals damage, put a 1/1 white Soldier creature token onto the battlefield.
+SVar:Enhancement6Exec:DB$ Token | TokenAmount$ 1 | TokenScript$ w_1_1_soldier | TokenOwner$ You
+SVar:Enhancement7:T:Mode$ DamageDealtOnce | ValidSource$ Card.EquippedBy | Execute$ Enhancement7Exec | TriggerZones$ Battlefield | TriggerDescription$ Whenever equipped creature deals damage, untap two target lands.
+SVar:Enhancement7Exec:DB$ Untap | ValidTgts$ Land | TgtPrompt$ Select two target lands | TargetMin$ 2 | TargetMax$ 2
+Oracle:Equipped creature has vigilance and can block an additional creature each combat.\nWhenever equipped creature deals damage, put a +1/+1 counter on it.\nWhenever equipped creature deals damage, scry 1.\nEquipped creature has protection from enchantments.\nEquipped creature has double strike.\nWhenever equipped creature deals damage, put a 1/1 white Soldier creature token onto the battlefield.\nWhenever equipped creature deals damage, untap two target lands.

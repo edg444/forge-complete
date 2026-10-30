@@ -1,0 +1,5 @@
+Name:The Destined
+ManaCost:no cost
+Types:HeroCard
+S:Mode$ ReduceCost | ValidTarget$ Creature.YouCtrl | Activator$ You | Type$ Spell | Amount$ 2 | Description$ Spells you control that target a creature you control cost {2} less to cast.
+Oracle:Spells you control that target a creature you control cost {2} less to cast.

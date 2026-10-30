@@ -1,0 +1,6 @@
+Name:The Slayer
+ManaCost:no cost
+Types:HeroCard
+Text:You start the game with an additional 7 life.
+SVar:HeroStartingLife:7
+Oracle:You start the game with an additional 7 life.

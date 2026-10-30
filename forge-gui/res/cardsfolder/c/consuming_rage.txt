@@ -1,0 +1,11 @@
+Name:Consuming Rage
+ManaCost:no cost
+Types:Sorcery
+A:SP$ Effect | Triggers$ TrigAttacks | SpellDescription$ Whenever a Minotaur attacks this turn, it gets +2/+0 until end of turn. Destroy that creature at end of combat.
+SVar:TrigAttacks:Mode$ Attacks | ValidCard$ Creature.Minotaur | Execute$ TrigPump | TriggerDescription$ Whenever a Minotaur attacks this turn, it gets +2/+0 until end of turn. Destroy that creature at end of combat.
+SVar:TrigPump:DB$ Pump | Defined$ TriggeredAttackerLKICopy | NumAtt$ +2 | SubAbility$ DBDelTrig
+SVar:DBDelTrig:DB$ DelayedTrigger | Mode$ Phase | Phase$ EndCombat | ValidPlayer$ Player | Execute$ TrigDestroy | RememberObjects$ TriggeredAttackerLKICopy | TriggerDescription$ Destroy that creature at end of combat.
+SVar:TrigDestroy:DB$ Destroy | Defined$ DelayTriggerRememberedLKI
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Whenever a Minotaur attacks this turn, it gets +2/+0 until end of turn. Destroy that creature at end of combat.

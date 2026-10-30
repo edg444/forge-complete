@@ -1,0 +1,9 @@
+Name:Pheres-Band Revelers
+ManaCost:no cost
+Types:Creature Centaur Reveler
+PT:4/4
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigReward | TriggerDescription$ Hero's Reward — When CARDNAME leaves the battlefield, each player draws a card.
+SVar:TrigReward:DB$ Draw | Defined$ Opponent | NumCards$ 1
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Hero's Reward — When Pheres-Band Revelers leaves the battlefield, each player draws a card.

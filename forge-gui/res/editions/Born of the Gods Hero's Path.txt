@@ -1,0 +1,15 @@
+[metadata]
+Code=THP2
+Date=2014-02-07
+Name=Born of the Gods Hero's Path
+Type=Other
+ScryfallCode=THP2
+
+[cards]
+4a C The General @Chuck Lukacs
+4b C The Savant @Chuck Lukacs
+4c C The Tyrant @Chuck Lukacs
+4d C The Warmonger @Chuck Lukacs
+4e C The Provider @Chuck Lukacs
+5 C The Explorer @Chuck Lukacs
+6 C The Vanquisher @Chuck Lukacs

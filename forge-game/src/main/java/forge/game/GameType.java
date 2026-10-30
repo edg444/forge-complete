@@ -43,6 +43,10 @@ public enum GameType {
     Archenemy           (DeckFormat.Archenemy, false, false, true, "lblArchenemy", "lblArchenemyDesc"),
     ArchenemyRumble     (DeckFormat.Archenemy, false, false, true, "lblArchenemyRumble", "lblArchenemyRumbleDesc"),
     TwoHeadedGiant      (DeckFormat.Constructed, false, true, true, "lblTwoHeadedGiant", "lblTwoHeadedGiantDesc"),
+    // the Theros block's Hero's Path challenge decks (forge.game.herospath.HerosPath)
+    FaceTheHydra        (DeckFormat.Constructed, false, true, false, "lblFaceTheHydra", "lblFaceTheHydraDesc"),
+    BattleTheHorde      (DeckFormat.Constructed, false, true, false, "lblBattleTheHorde", "lblBattleTheHordeDesc"),
+    DefeatAGod          (DeckFormat.Constructed, false, true, false, "lblDefeatAGod", "lblDefeatAGodDesc"),
     MomirBasic          (DeckFormat.Constructed, false, false, false, "lblMomirBasic", "lblMomirBasicDesc", player -> {
         Deck deck = new Deck();
         CardPool mainDeck = deck.getMain();

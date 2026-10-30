@@ -511,6 +511,7 @@ public class Game {
                 }
             }
         }
+        forge.game.herospath.HerosPath.onGameCreated(this);
 
         view.updatePlayers(this);
 

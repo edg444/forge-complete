@@ -1,0 +1,14 @@
+Name:Distract the Hydra
+ManaCost:no cost
+Types:Sorcery
+A:SP$ Sacrifice | Defined$ Opponent | SacValid$ Creature | Optional$ True | RememberSacrificed$ True | SubAbility$ DBRepeat | SpellDescription$ Each player may sacrifice a creature. Each player who sacrificed a creature this way chooses a Head and taps it. Each player who didn't sacrifice a creature loses 3 life.
+SVar:DBRepeat:DB$ RepeatEach | RepeatPlayers$ Opponent | RepeatSubAbility$ DBChooseHead | SubAbility$ DBCleanup
+SVar:DBChooseHead:DB$ ChooseCard | Defined$ Player.IsRemembered | Choices$ Creature.Head | Amount$ 1 | Mandatory$ True | ChoiceTitle$ Choose a Head to tap | ConditionCheckSVar$ X | ConditionSVarCompare$ GE1 | SubAbility$ DBTap
+SVar:DBTap:DB$ Tap | Defined$ ChosenCard | ConditionCheckSVar$ X | ConditionSVarCompare$ GE1 | SubAbility$ DBLoseLife
+SVar:DBLoseLife:DB$ LoseLife | Defined$ Player.IsRemembered | LifeAmount$ 3 | ConditionCheckSVar$ X | ConditionSVarCompare$ EQ0 | SubAbility$ DBClearChosen
+SVar:DBClearChosen:DB$ Cleanup | ClearChosenCard$ True
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
+SVar:X:RememberedLKI$Valid Creature.RememberedPlayerCtrl
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Each player may sacrifice a creature. Each player who sacrificed a creature this way chooses a Head and taps it. Each player who didn't sacrifice a creature loses 3 life.

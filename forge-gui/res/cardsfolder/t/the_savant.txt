@@ -1,0 +1,6 @@
+Name:The Savant
+ManaCost:no cost
+Types:HeroCard
+A:AB$ TapAll | Cost$ Exile<1/CARDNAME> | ValidCards$ Creature.OppCtrl | AILogic$ AtLeast3 | SubAbility$ DBPumpAll | SpellDescription$ Tap all creatures your opponents control. Those creatures don't untap during their controllers' next untap steps.
+SVar:DBPumpAll:DB$ PumpAll | ValidCards$ Creature.OppCtrl | KW$ HIDDEN This card doesn't untap during your next untap step. | IsCurse$ True | Duration$ Permanent
+Oracle:Exile The Savant: Tap all creatures your opponents control. Those creatures don't untap during their controllers' next untap steps.

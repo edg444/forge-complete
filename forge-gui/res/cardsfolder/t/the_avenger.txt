@@ -1,0 +1,5 @@
+Name:The Avenger
+ManaCost:no cost
+Types:HeroCard
+A:AB$ Pump | Cost$ 3 T | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | KW$ Deathtouch | SpellDescription$ Target creature you control gains deathtouch until end of turn.
+Oracle:{3}, {T}: Target creature you control gains deathtouch until end of turn.

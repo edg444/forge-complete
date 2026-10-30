@@ -1,0 +1,23 @@
+[metadata]
+Code=TFTH
+Date=2013-10-19
+Name=Face the Hydra
+Type=Other
+ScryfallCode=TFTH
+
+[cards]
+1 C Hydra Head @Richard Wright
+2 C Ravenous Brute Head @Richard Wright
+3 C Savage Vigor Head @Richard Wright
+4 C Shrieking Titan Head @Richard Wright
+5 C Snapping Fang Head @Richard Wright
+6 C Disorienting Glower @Tomasz Jedruszek
+7 C Distract the Hydra @Alex Horley-Orlandelli
+8 C Grown from the Stump @Tomasz Jedruszek
+9 C Hydra's Impenetrable Hide @Steve Prescott
+10 C Neck Tangle @Jesper Ejsing
+11 C Noxious Hydra Breath @Igor Kieryluk
+12 C Strike the Weak Spot @Jason A. Engle
+13 C Swallow the Hero Whole @Scott Chou
+14 C Torn Between Heads @Mike Sass
+15 C Unified Lunge @Jesper Ejsing

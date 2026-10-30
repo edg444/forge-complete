@@ -1,0 +1,6 @@
+Name:The Protector
+ManaCost:no cost
+Types:HeroCard
+A:AB$ PreventDamage | Cost$ T | ValidTgts$ Any | Amount$ 1 | SpellDescription$ Prevent the next 1 damage that would be dealt to any target this turn.
+SVar:NonCombatPriority:10
+Oracle:{T}: Prevent the next 1 damage that would be dealt to any target this turn.

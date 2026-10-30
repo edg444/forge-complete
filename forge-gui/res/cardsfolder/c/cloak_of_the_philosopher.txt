@@ -1,0 +1,7 @@
+Name:Cloak of the Philosopher
+ManaCost:no cost
+Types:HeroCard Artifact Equipment
+K:Equip:2
+S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddPower$ 1 | AddToughness$ 1 | Description$ Equipped creature gets +1/+1.
+A:AB$ Untap | Cost$ 2 | Defined$ Equipped | SpellDescription$ Untap equipped creature.
+Oracle:Equipped creature gets +1/+1.\n{2}: Untap equipped creature.\nEquip {2}

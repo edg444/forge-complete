@@ -9,6 +9,7 @@ import org.apache.commons.lang3.time.StopWatch;
 
 import forge.LobbyPlayer;
 import forge.ai.AiProfileUtil;
+import forge.ai.LobbyPlayerChallenge;
 import forge.ai.simulation.FlatMonteCarloStats;
 import forge.deck.CardPool;
 import forge.deck.Deck;
@@ -22,8 +23,10 @@ import forge.game.GameLogEntry;
 import forge.game.GameLogEntryType;
 import forge.game.GameRules;
 import forge.game.GameType;
+import forge.game.herospath.HerosPath;
 import forge.game.Match;
 import forge.game.player.RegisteredPlayer;
+import forge.gamemodes.match.HerosPathLobby;
 import forge.gamemodes.tournament.system.AbstractTournament;
 import forge.gamemodes.tournament.system.TournamentBracket;
 import forge.gamemodes.tournament.system.TournamentPairing;
@@ -201,6 +204,10 @@ public class SimulateMatch {
                 } else {
                     rp = new RegisteredPlayer(d);
                 }
+                if (HerosPath.Challenge.of(type) != null) {
+                    // every deck is a hero, bringing random Hero cards
+                    HerosPath.prepareHero(rp, HerosPathLobby.randomHeroCards(HerosPath.Challenge.of(type)));
+                }
                 if (teams != null) {
                     rp.setTeamNumber(Integer.parseInt(teams.get(i - 1)));
                 }
@@ -208,6 +215,14 @@ public class SimulateMatch {
                 pp.add(rp);
                 i++;
             }
+        }
+
+        // Hero's Path: the challenge deck sits down after the heroes, at Normal difficulty
+        final HerosPath.Challenge challenge = HerosPath.Challenge.of(type);
+        if (challenge != null) {
+            pp.add(HerosPath.registerChallenge(challenge, HerosPath.Difficulty.NORMAL, pp.size())
+                    .setPlayer(new LobbyPlayerChallenge(challenge.opponentName)));
+            sb.append(" vs ").append(challenge.opponentName);
         }
 
         if (params.containsKey("c")) {
@@ -254,7 +269,7 @@ public class SimulateMatch {
         System.out.println("\tP - Amount of players per match (used only with Tournaments, defaults to 2)");
         System.out.println("\tF - format of games, defaults to constructed");
         System.out.println("\tS - RNG seed for simulation");
-        System.out.println("\tT - team number per player, in the same order as the decks (e.g. -T 1 1 2 2 with -f TwoHeadedGiant). With -f Archenemy the first deck is the archenemy");
+        System.out.println("\tT - team number per player, in the same order as the decks (e.g. -T 1 1 2 2 with -f TwoHeadedGiant). With -f Archenemy the first deck is the archenemy. With -f FaceTheHydra, BattleTheHorde or DefeatAGod every deck is a hero against the challenge deck");
         System.out.println("\tA - AI profile per player, in the same order as the decks (e.g. -a Default Experimental)");
         System.out.println("\tc - Clock flag. Set the maximum time in seconds before calling the match a draw, defaults to 120.");
         System.out.println("\tmc - Flat Monte Carlo AI refinement for this run, on, max or off (default off in simulations; max = desktop strength). Prints timing statistics at the end when on.");

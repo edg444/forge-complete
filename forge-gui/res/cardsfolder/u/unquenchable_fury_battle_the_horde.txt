@@ -1,0 +1,8 @@
+Name:Unquenchable Fury (Battle the Horde)
+ManaCost:no cost
+Types:Sorcery
+A:SP$ Effect | StaticAbilities$ STMinBlockers | SpellDescription$ Each Minotaur can't be blocked this turn except by two or more creatures.
+SVar:STMinBlockers:Mode$ MinMaxBlocker | ValidCard$ Creature.Minotaur | Min$ 2 | Description$ Each Minotaur can't be blocked this turn except by two or more creatures.
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Each Minotaur can't be blocked this turn except by two or more creatures.

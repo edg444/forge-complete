@@ -1,0 +1,11 @@
+Name:Reckless Minotaur
+ManaCost:no cost
+Types:Creature Minotaur
+PT:4/1
+K:Haste
+S:Mode$ MustAttack | ValidCreature$ Card.Self | Description$ CARDNAME attacks each turn if able.
+T:Mode$ Phase | Phase$ End of Turn | TriggerZones$ Battlefield | Execute$ TrigDestroy | TriggerDescription$ At the beginning of the end step, destroy CARDNAME.
+SVar:TrigDestroy:DB$ Destroy | Defined$ Self
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Haste\nReckless Minotaur attacks each turn if able.\nAt the beginning of the end step, destroy Reckless Minotaur.

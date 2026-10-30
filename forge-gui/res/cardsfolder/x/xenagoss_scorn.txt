@@ -1,0 +1,9 @@
+Name:Xenagos's Scorn
+ManaCost:no cost
+Types:Sorcery
+A:SP$ PumpAll | ValidCards$ Card.namedXenagos Ascended | KW$ Trample | SubAbility$ DBEffect | SpellDescription$ Xenagos Ascended gains trample until end of turn and attacks this turn if able.
+SVar:DBEffect:DB$ Effect | StaticAbilities$ MustAttack
+SVar:MustAttack:Mode$ MustAttack | ValidCreature$ Creature.namedXenagos Ascended | Description$ Xenagos Ascended attacks this turn if able.
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Xenagos Ascended gains trample until end of turn and attacks this turn if able.

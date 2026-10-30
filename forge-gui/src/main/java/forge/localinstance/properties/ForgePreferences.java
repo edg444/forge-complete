@@ -248,6 +248,7 @@ public class ForgePreferences extends AbstractPreferences<ForgePreferences.FPref
         EXCLUDE_THE_LIST ("false"),
         EXCLUDE_FUNNY_CARDS ("false"),
         DECKGEN_MAXIMUM_COMMANDER_BRACKET("5"),
+        HEROS_PATH_DIFFICULTY("NORMAL"),
 
         PROMPT_FOR_AUTOSELL ("true"),
         ADV_COMMANDER_AUTOSELL_VARIANT("true"),

@@ -1,0 +1,8 @@
+Name:Unified Lunge
+ManaCost:no cost
+Types:Sorcery
+A:SP$ DamageAll | ValidPlayers$ Opponent | NumDmg$ X | ValidDescription$ each player | SpellDescription$ CARDNAME deals X damage to each player, where X is the number of Heads on the battlefield.
+SVar:X:Count$Valid Creature.Head
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Unified Lunge deals X damage to each player, where X is the number of Heads on the battlefield.

@@ -1,0 +1,9 @@
+Name:Phoberos Reaver
+ManaCost:no cost
+Types:Creature Minotaur
+PT:2/3
+K:Haste
+S:Mode$ MustAttack | ValidCreature$ Card.Self | Description$ CARDNAME attacks each turn if able.
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Haste\nPhoberos Reaver attacks each turn if able.

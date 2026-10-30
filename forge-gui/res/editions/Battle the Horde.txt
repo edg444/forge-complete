@@ -1,0 +1,23 @@
+[metadata]
+Code=TBTH
+Date=2014-03-01
+Name=Battle the Horde
+Type=Other
+ScryfallCode=TBTH
+
+[cards]
+1 C Minotaur Goreseeker @Wayne Reynolds
+2 C Minotaur Younghorn @Scott Murphy
+3 C Mogis's Chosen @Lars Grant-West
+4 C Phoberos Reaver @Michael Komarck
+5 C Reckless Minotaur @Carl Critchlow
+6 C Consuming Rage @Svetlin Velinov
+7 C Descend on the Prey @Zoltan Boros
+8 C Intervention of Keranos @Dan Murayama Scott
+9 C Touch of the Horned God @Svetlin Velinov
+10 C Unquenchable Fury (Battle the Horde) @Jason Rainville ${"flavorName": "Unquenchable Fury"}
+11 C Altar of Mogis @Aaron Miller
+12 C Massacre Totem @Filip Burburan
+13 C Plundered Statue @Daniel Ljunggren
+14 C Refreshing Elixir @Cyril Van Der Haegen
+15 C Vitality Salve @Daren Bader

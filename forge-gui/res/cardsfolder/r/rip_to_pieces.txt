@@ -1,0 +1,10 @@
+Name:Rip to Pieces
+ManaCost:no cost
+Types:Sorcery
+A:SP$ Effect | Triggers$ TrigPhase | SpellDescription$ At the beginning of combat this turn, each Reveler deals 1 damage to each player and each creature those players control.
+SVar:TrigPhase:Mode$ Phase | Phase$ BeginCombat | Execute$ TrigRepeat | TriggerDescription$ At the beginning of combat this turn, each Reveler deals 1 damage to each player and each creature those players control.
+SVar:TrigRepeat:DB$ RepeatEach | RepeatCards$ Card.Reveler | Zone$ Battlefield | RepeatSubAbility$ DBDamage | DamageMap$ True
+SVar:DBDamage:DB$ DamageAll | ValidPlayers$ Opponent | ValidCards$ Creature.OppCtrl | NumDmg$ 1 | DamageSource$ Remembered
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:At the beginning of combat this turn, each Reveler deals 1 damage to each player and each creature those players control.

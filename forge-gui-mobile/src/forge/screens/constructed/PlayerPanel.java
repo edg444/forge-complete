@@ -31,6 +31,9 @@ import forge.deck.DeckType;
 import forge.deck.FDeckChooser;
 import forge.deck.FVanguardChooser;
 import forge.game.GameType;
+import forge.game.herospath.HerosPath;
+import forge.gui.FThreads;
+import forge.gamemodes.match.HerosPathLobby;
 import forge.gamemodes.match.LobbySlot;
 import forge.gamemodes.match.LobbySlotType;
 import forge.gamemodes.net.event.UpdateLobbyPlayerEvent;
@@ -91,6 +94,7 @@ public class PlayerPanel extends FContainer {
     private final FLabel btnPlanarDeck      = new FLabel.ButtonBuilder().text(Forge.getLocalizer().getMessage("lblPlanarDeckRandomGenerated")).build();
     private final FLabel btnVanguardAvatar  = new FLabel.ButtonBuilder().text(Forge.getLocalizer().getMessage("lblVanguardAvatarRandom")).build();
     private final FLabel btnCommanderPick   = new FLabel.ButtonBuilder().text("").build();
+    private final FLabel btnHeroCards       = new FLabel.ButtonBuilder().text("").build();
 
     // Commander variant: the chosen commander deck, who may lead it, and the commander(s) picked
     // instead of its default (null = the default). The pick applies to the next match only.
@@ -295,6 +299,22 @@ public class PlayerPanel extends FContainer {
             lstPlanarDecks.setHeaderCaption(Forge.getLocalizer().getMessage("lblSelectPlanarDeckFor").replace("%s", txtPlayerName.getText()));
             Forge.openScreen(lstPlanarDecks);
         });
+        add(btnHeroCards);
+        btnHeroCards.setCommand(e -> {
+            final HerosPath.Challenge c = HerosPath.Challenge.of(screen.getLobby().getAppliedVariants());
+            final LobbySlot heroSlot = screen.getLobby().getSlot(index);
+            if (c == null || heroSlot == null) {
+                return;
+            }
+            // the choosers wait for an answer, which the UI thread can't do
+            FThreads.invokeInBackgroundThread(() -> {
+                final List<String> chosen = HerosPathLobby.chooseHeroCards(c, heroSlot.getHeroCards());
+                if (chosen != null) {
+                    heroSlot.setHeroCards(chosen);
+                    FThreads.invokeInEdtLater(this::updateVariantControlsVisibility);
+                }
+            });
+        });
         add(btnVanguardAvatar);
         btnVanguardAvatar.setCommand(e -> {
             lstVanguardAvatars.setHeaderCaption(Forge.getLocalizer().getMessage("lblSelectVanguardFor").replace("%s", txtPlayerName.getText()));
@@ -453,6 +473,10 @@ public class PlayerPanel extends FContainer {
         }
         if (btnVanguardAvatar.isVisible()) {
             btnVanguardAvatar.setBounds(x, y, w, fieldHeight);
+            y += dy;
+        }
+        if (btnHeroCards.isVisible()) {
+            btnHeroCards.setBounds(x, y, w, fieldHeight);
         }
     }
 
@@ -476,6 +500,9 @@ public class PlayerPanel extends FContainer {
             rows++;
         }
         if (btnVanguardAvatar.isVisible()) {
+            rows++;
+        }
+        if (btnHeroCards.isVisible()) {
             rows++;
         }
         if (devModeSwitch.isVisible()) {
@@ -869,6 +896,17 @@ public class PlayerPanel extends FContainer {
         // The commander can be picked for local humans and AI players alike
         btnCommanderPick.setVisible(isCommanderApplied && mayEdit && hasCommanderChoices
                 && (type == LobbySlotType.LOCAL || type == LobbySlotType.AI));
+
+        // Hero's Path: the Hero cards this seat brings
+        final HerosPath.Challenge challenge = HerosPath.Challenge.of(screen.getLobby().getAppliedVariants());
+        btnHeroCards.setVisible(challenge != null && mayEdit);
+        if (challenge != null) {
+            final LobbySlot slot = screen.getLobby().getSlot(index);
+            final List<String> heroCards = slot == null ? null : slot.getHeroCards();
+            btnHeroCards.setText(Forge.getLocalizer().getMessage("lblHerosPathHeroCards") + ": "
+                    + (heroCards == null || heroCards.isEmpty() && type == LobbySlotType.AI
+                    ? Forge.getLocalizer().getMessage("lblRandom") : HerosPathLobby.describe(heroCards)));
+        }
     }
 
     /** Works out who may lead a newly chosen commander deck; an earlier pick is kept only for the same deck. */

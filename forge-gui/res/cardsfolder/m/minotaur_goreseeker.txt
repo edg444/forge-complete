@@ -1,0 +1,9 @@
+Name:Minotaur Goreseeker
+ManaCost:no cost
+Types:Creature Minotaur
+PT:3/2
+K:Haste
+S:Mode$ MustAttack | ValidCreature$ Card.Self | Description$ CARDNAME attacks each turn if able.
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Haste\nMinotaur Goreseeker attacks each turn if able.

@@ -1,0 +1,8 @@
+Name:Dance of Flame
+ManaCost:no cost
+Types:Enchantment
+T:Mode$ Attacks | ValidCard$ Card.Reveler | TriggerZones$ Battlefield | Execute$ TrigDamage | TriggerDescription$ Whenever a Reveler attacks, CARDNAME deals 1 damage to each player.
+SVar:TrigDamage:DB$ DealDamage | Defined$ Opponent | NumDmg$ 1
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Whenever a Reveler attacks, Dance of Flame deals 1 damage to each player.

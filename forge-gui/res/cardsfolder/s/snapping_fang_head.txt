@@ -1,0 +1,12 @@
+Name:Snapping Fang Head
+ManaCost:no cost
+Types:Elite Creature Head
+PT:0/8
+T:Mode$ Phase | Phase$ End of Turn | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigDamage | TriggerDescription$ At the beginning of the Hydra's end step, CARDNAME deals 1 damage to each player.
+SVar:TrigDamage:DB$ DamageAll | ValidPlayers$ Opponent | NumDmg$ 1 | ValidDescription$ each player
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigReward | TriggerDescription$ Hero's Reward — When CARDNAME leaves the battlefield, each player gains 4 life and draws a card.
+SVar:TrigReward:DB$ GainLife | Defined$ Opponent | LifeAmount$ 4 | SubAbility$ DBRewardDraw
+SVar:DBRewardDraw:DB$ Draw | Defined$ Opponent | NumCards$ 1
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:At the beginning of the Hydra's end step, Snapping Fang Head deals 1 damage to each player.\nHero's Reward — When Snapping Fang Head leaves the battlefield, each player gains 4 life and draws a card.

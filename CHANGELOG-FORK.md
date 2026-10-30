@@ -213,6 +213,34 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   seated beside a team, appended to the registered players (which match registrations by position) with their own
   `RegisteredPlayer`; `GameEventPlayerAdded` gives them a field on desktop and a panel on mobile.
 
+### Hero's Path challenges
+
+- **Challenge decks** (`GameType.FaceTheHydra`/`BattleTheHorde`/`DefeatAGod`, `forge.game.herospath.HerosPath`) —
+  one to four heroes (team 0) against a deck that plays itself, seated last (team 1). `HerosPath.registerChallenge`
+  builds its seat: the 60-card list, what starts on the battlefield, no hand. Its playmat's rules are one
+  command-zone effect built at game start (`HerosPath.rulesFor`): the reveal-and-cast triggers, damage/life-loss
+  replacements, "moves to any other zone → graveyard", and a can't-lose replacement; its win checks run at the end
+  of each turn (Hydra, `PhaseHandler` cleanup) and with state-based actions (Horde, `checkGameOverCondition`).
+- **A player that never decides** (`PlayerControllerChallenge`, `LobbyPlayerChallenge`): no priority actions, no
+  mulligans; only creatures with an attack requirement attack. Every choice it would make goes to the hero who makes
+  its choices (`HerosPath.getChooser`, the first human hero): targets of the spells it casts, choices, modes,
+  sacrifices, blocks (`declareBlockers` on the hero's controller), damage assignment, which hero an attacker
+  attacks. With no human hero, a heroes'-favor heuristic (its own most valuable card, the hero best able to block,
+  the charm mode that harms the heroes least; `AILogic$ ChallengeWeakest` = the Head closest to dying).
+- **Attackable creatures** (`S:Mode$ CanBeAttacked | ValidCard$ …`, `StaticAbilityCanBeAttacked`): defenders like a
+  planeswalker, dealing no damage back (Tasty, which does, now checks its keyword in the shared code). AI attacks
+  them with the Tasty logic, and in Defeat a God moves attackers from Xenagos to a Reveler.
+- **Hero cards** — core type `HeroCard`, printed "Hero" before the other types (like `ElementalCard`), a permanent.
+  Chosen per seat (`RegisteredPlayer.getHeroChoices`), they start on the battlefield; SVars `HeroStartingLife` and
+  `HeroStartingHand` change the starting life and hand. A starting-hand-only bonus no longer raises maximum hand size
+  (`Player.addStartingHandOnlyBonus`, `getBaseMaxHandSize`, which `StaticEffect` and the hand-size projection use).
+  Enhancement Stickers (a variant card, `Types:Stickers`) hold the seven abilities as `EnhancementN` SVars
+  (`S:`/`T:` prefixed); the chosen ones are added to the weapon perpetually. `CardRulesPredicates.IS_STICKER_SHEET`
+  leaves it out, so it's never an Unfinity sticker sheet.
+- **Challenge deck never draws** (`Player.drawCards`, `HerosPath.skipsDrawStep`); Face the Hydra's heroes each skip
+  their first draw; the Hydra and Horde games start with the first hero (`GameAction.determineFirstTurnPlayer`);
+  Battle the Horde's head start is a skip-turns effect on the Horde.
+
 ### Pai Gow Magic
 
 - **Pai Gow and Booster Blitz** (`GameType.PaiGow`/`BoosterBlitz`, `PaiGowMagic`) — Frank Karsten's format: each
@@ -350,6 +378,40 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 ## Log
 
 ### Unreleased
+
+- **Hero's Path challenges: Face the Hydra, Battle the Horde, Defeat a God** (user request; the Theros block's Game
+  Day challenge decks). New lobby variants on desktop and mobile; every seat is a hero, the challenge deck joins at
+  the start, and the difficulty is asked as the match starts (remembered, `FPref.HEROS_PATH_DIFFICULTY`). Each seat
+  has a Hero Cards button (AI seats with none chosen get a random legal set). `forge sim -f FaceTheHydra` (or
+  `BattleTheHorde`, `DefeatAGod`) plays every deck as a hero. See the engine section for how it works.
+  - Sources: the Battle the Horde playmat (Wizards' PDF,
+    media.wizards.com/images/magic/daily/arcana/EN_9lakm7zfyxoe.pdf); the Hero's Path FAQ (Dave Guskin, 2013-09-16,
+    archived 2014-05-27: two Hero cards against the Hydra, duplicates allowed; three different ones against the Horde
+    and the God; Defeat a God's multiplayer rules); "Battle the Horde With Your Friends" (Trick Jarrett, 2014-02-28:
+    shared 20 life, one more card revealed per extra player); "Journey into Nyx Game Day and Challenge Deck" (2014-05-23:
+    shared 20 life, one more Rollicking Throng per extra player); Wizards' photo of the Hydra playmat (Easy 2, Normal 3,
+    Hard 4 starting Heads). No official text copy of the Face the Hydra or Defeat a God playmats was found; their rules
+    follow mtg.wiki's transcriptions (matching mtgpl.readthedocs.io's, whose Horde page matches the Wizards PDF word
+    for word). Decklists (60 each) from mtg.wiki. Card text from Scryfall (thp1–thp3, tfth, tbth, tdag), checked
+    2026-10-30.
+  - User rulings (2026-10-30): one to four heroes, each taking their own turn, the challenge deck one turn per round
+    (the Horde's "three turns" are three rounds); the heroes make the challenge deck's choices, blocks included (a human
+    hero is asked); each untapped Head deals its 1 or 2 noncombat damage to each hero after the revealed spell
+    resolves (the start of the Hydra's combat); an attacked Reveler or Xenagos Ascended deals no damage back; damage to
+    Xenagos is dealt to Xenagos Ascended and he doesn't lose life; "each player" on a challenge card means the heroes;
+    Hero cards are picked per seat; a weapon may carry any of the seven Enhancement Stickers.
+  - Face the Hydra (Easy/Normal/Hard: 2/3/4 Heads): Heads attackable; growing new Heads; the Hydra's turn (reveal and
+    cast, then the Heads' damage); damage or life loss to the Hydra goes to a Head of the heroes' choice; win at the
+    end of a turn with no Heads. Battle the Horde (the heroes take 4/3/2 rounds first): two cards revealed and cast
+    each precombat main phase; life loss mills; win when its library is empty and it controls no creatures. Defeat a
+    God (1/2/3 Rollicking Throng, plus one per extra hero): two cards each first main phase; win when Xenagos
+    Ascended leaves.
+  - Cards: the 21 Hero cards and Enhancement Stickers (Theros, Born of the Gods, Journey into Nyx Hero's Path) and the
+    45 challenge cards, with edition files THP1–THP3, TFTH, TBTH, TDAG (`Type=Other`). The Horde's Unquenchable Fury
+    shares its name with the Kamigawa: Neon Dynasty Commander card, so its script is "Unquenchable Fury (Battle the
+    Horde)" with the flavor name "Unquenchable Fury".
+  - Not covered: a network lobby doesn't send a remote seat's Hero cards to the host.
+  - `HerosPathTest` (19, including a whole game of each challenge with two AI heroes).
 
 - **Replays of AI-vs-AI games** (user request). Upstream's local replay (#12266) recorded only games with exactly
   one human, so a watched AI-only match left nothing to rewatch. `ReplaySession.begin` now records one too, from

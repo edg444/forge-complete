@@ -1,0 +1,6 @@
+Name:The Champion
+ManaCost:no cost
+Types:HeroCard
+A:AB$ ChangeZone | Cost$ 2 T Exile<1/CARDNAME> | Origin$ Library | Destination$ Battlefield | ChangeType$ Artifact.Legendary+nonCreature+YouOwn | ChangeNum$ 1 | StackDescription$ SpellDescription | SpellDescription$ Search your library for a legendary artifact card that isn't a creature, reveal it, and put it onto the battlefield. Then shuffle your library.
+DeckHints:Type$Artifact & Type$Legendary
+Oracle:{2}, {T}, Exile The Champion: Search your library for a legendary artifact card that isn't a creature, reveal it, and put it onto the battlefield. Then shuffle your library.

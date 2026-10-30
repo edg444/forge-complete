@@ -36,7 +36,7 @@ public class StickerSheetTest extends AITest {
     private List<PaperCard> allSheets() {
         List<PaperCard> sheets = new ArrayList<>();
         for (PaperCard pc : StaticData.instance().getVariantCards().getAllCards()) {
-            if (pc.getRules().getType().isStickers()) {
+            if (forge.card.CardRulesPredicates.IS_STICKER_SHEET.test(pc.getRules())) {
                 sheets.add(pc);
             }
         }

@@ -1,0 +1,10 @@
+Name:Maddened Oread
+ManaCost:no cost
+Types:Enchantment Creature Nymph Reveler
+PT:4/2
+S:Mode$ MustAttack | ValidCreature$ Card.Self | IsPresent$ Card.Reveler | PresentCompare$ GE5 | Description$ As long as five or more Revelers are on the battlefield, CARDNAME attacks each turn if able.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigReward | TriggerDescription$ Hero's Reward — When CARDNAME leaves the battlefield, each player gains 3 life.
+SVar:TrigReward:DB$ GainLife | Defined$ Opponent | LifeAmount$ 3
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:As long as five or more Revelers are on the battlefield, Maddened Oread attacks each turn if able.\nHero's Reward — When Maddened Oread leaves the battlefield, each player gains 3 life.

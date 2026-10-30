@@ -31,6 +31,7 @@ import forge.game.combat.Combat;
 import forge.game.combat.CombatUtil;
 import forge.game.combat.GlobalAttackRestrictions;
 import forge.game.cost.Cost;
+import forge.game.herospath.HerosPath;
 import forge.game.keyword.Keyword;
 import forge.game.keyword.KeywordInterface;
 import forge.game.player.Player;
@@ -39,6 +40,7 @@ import forge.game.spellability.SpellAbility;
 import forge.game.spellability.SpellAbilityPredicates;
 import forge.game.staticability.StaticAbility;
 import forge.game.staticability.StaticAbilityAssignCombatDamageAsUnblocked;
+import forge.game.staticability.StaticAbilityCanBeAttacked;
 import forge.game.staticability.StaticAbilityMode;
 import forge.game.trigger.Trigger;
 import forge.game.trigger.TriggerType;
@@ -1427,6 +1429,7 @@ public class AiAttackController {
             }
 
             attackTastyCreatures(combat, left);
+            attackRevelersNotXenagos(combat);
             pruneLostAloneEvasion(combat);
             pruneSupportOnlyAttackers(combat);
 
@@ -1449,12 +1452,14 @@ public class AiAttackController {
             }
             Card best = null;
             for (final GameEntity d : combat.getDefenders()) {
-                if (!(d instanceof Card tasty) || !tasty.isCreature() || !tasty.hasKeyword(Keyword.TASTY)
-                        || !canAttackWrapper(attacker, tasty)) {
+                // and a Hero's Path Head or Reveler, which deals nothing back
+                final boolean fightsBack = d instanceof Card c && c.hasKeyword(Keyword.TASTY);
+                if (!(d instanceof Card tasty) || !tasty.isCreature() || !canAttackWrapper(attacker, tasty)
+                        || !fightsBack && !StaticAbilityCanBeAttacked.canBeAttacked(tasty)) {
                     continue;
                 }
                 if (ComputerUtilCombat.damageIfUnblocked(attacker, tasty, combat, false) < ComputerUtilCombat.getDamageToKill(tasty, false)
-                        || tasty.getNetCombatDamage() >= ComputerUtilCombat.getDamageToKill(attacker, false)
+                        || fightsBack && tasty.getNetCombatDamage() >= ComputerUtilCombat.getDamageToKill(attacker, false)
                         || ComputerUtilCard.canBeBlockedProfitably(tasty.getController(), attacker, false)) {
                     continue;
                 }
@@ -1463,6 +1468,46 @@ public class AiAttackController {
                 }
             }
             if (best != null) {
+                combat.addAttacker(attacker, best);
+            }
+        }
+    }
+
+    /**
+     * Defeat a God: damage to Xenagos goes to Xenagos Ascended, which can't leave while a Reveler remains, so an
+     * attacker aimed at Xenagos goes after a Reveler instead - one it kills, the most valuable, else the one closest to
+     * dying.
+     */
+    private void attackRevelersNotXenagos(final Combat combat) {
+        final Player xenagos = HerosPath.getChallengePlayer(ai.getGame());
+        if (HerosPath.getChallenge(ai.getGame()) != HerosPath.Challenge.GOD || xenagos == null) {
+            return;
+        }
+        final CardCollection revelers = CardLists.getType(xenagos.getCreaturesInPlay(), "Reveler");
+        if (revelers.isEmpty()) {
+            return;
+        }
+        for (final Card attacker : new CardCollection(combat.getAttackersOf(xenagos))) {
+            if (!attacker.getController().equals(ai)) {
+                continue;
+            }
+            Card best = null;
+            boolean bestKills = false;
+            for (final Card r : revelers) {
+                if (!canAttackWrapper(attacker, r)) {
+                    continue;
+                }
+                final boolean kills = ComputerUtilCombat.damageIfUnblocked(attacker, r, combat, false)
+                        >= ComputerUtilCombat.getDamageToKill(r, false);
+                if (best == null || kills && !bestKills
+                        || kills == bestKills && (kills ? ComputerUtilCard.evaluateCreature(r) > ComputerUtilCard.evaluateCreature(best)
+                                : ComputerUtilCombat.getDamageToKill(r, false) < ComputerUtilCombat.getDamageToKill(best, false))) {
+                    best = r;
+                    bestKills = kills;
+                }
+            }
+            if (best != null) {
+                combat.removeFromCombat(attacker);
                 combat.addAttacker(attacker, best);
             }
         }

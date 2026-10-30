@@ -26,6 +26,8 @@ import forge.deck.Deck;
 import forge.deck.DeckProxy;
 import forge.deck.DeckSection;
 import forge.game.GameType;
+import forge.game.herospath.HerosPath;
+import forge.gamemodes.match.HerosPathLobby;
 import forge.gamemodes.match.LobbySlot;
 import forge.gamemodes.match.LobbySlotType;
 import forge.gui.UiCommand;
@@ -114,6 +116,10 @@ public class PlayerPanel extends FPanel {
     private final FLabel vgdSelectorBtn = new FLabel.ButtonBuilder().text(localizer.getMessage("lblSelectaVanguardAvatar")).build();
     private final FLabel vgdLabel;
 
+    // Hero's Path: the Hero cards this seat brings
+    private final FLabel heroCardsBtn = new FLabel.ButtonBuilder().text("").build();
+    private final FLabel heroCardsLabel;
+
     private FCheckBox chkDevMode;
 
     private boolean allowNetworking;
@@ -134,6 +140,7 @@ public class PlayerPanel extends FPanel {
         this.cmdPickLabel = lobby.newLabel(localizer.getMessage("lblCommanderPick") + ":");
         this.pchLabel = lobby.newLabel(localizer.getMessage("lblPlanarDeck") + ":");
         this.vgdLabel = lobby.newLabel(localizer.getMessage("lblVanguard") + ":");
+        this.heroCardsLabel = lobby.newLabel(localizer.getMessage("lblHerosPathHeroCards") + ":");
 
         setLayout(new MigLayout("insets 10px, gap 5px"));
 
@@ -209,6 +216,9 @@ public class PlayerPanel extends FPanel {
 
         this.add(vgdLabel, variantBtnConstraints + ", cell 0 6, sx 2, ax right");
         this.add(vgdSelectorBtn, variantBtnConstraints + ", cell 2 6, sx 4, growx, wrap");
+
+        this.add(heroCardsLabel, variantBtnConstraints + ", cell 0 7, sx 2, ax right");
+        this.add(heroCardsBtn, variantBtnConstraints + ", cell 2 7, sx 4, growx, wrap");
 
         addHandlersToVariantsControls();
 
@@ -392,6 +402,25 @@ public class PlayerPanel extends FPanel {
 
         vgdSelectorBtn.setVisible(isVanguardApplied);
         vgdLabel.setVisible(isVanguardApplied);
+
+        final boolean isChallengeApplied = mayEdit && herosPathChallenge() != null;
+        heroCardsBtn.setVisible(isChallengeApplied);
+        heroCardsLabel.setVisible(isChallengeApplied);
+        if (isChallengeApplied) {
+            final LobbySlot slot = lobby.getLobby().getSlot(index);
+            final List<String> heroCards = slot == null ? null : slot.getHeroCards();
+            heroCardsBtn.setText(heroCards == null || heroCards.isEmpty() && type == LobbySlotType.AI
+                    ? localizer.getMessage("lblRandom") : HerosPathLobby.describe(heroCards));
+        }
+    }
+
+    private HerosPath.Challenge herosPathChallenge() {
+        for (final HerosPath.Challenge c : HerosPath.Challenge.values()) {
+            if (lobby.hasVariant(c.gameType)) {
+                return c;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -594,6 +623,20 @@ public class PlayerPanel extends FPanel {
             Singletons.getControl().setCurrentScreen(FScreen.DECK_EDITOR_PLANECHASE);
             CDeckEditorUI.SINGLETON_INSTANCE.setEditorController(
                     new CEditorVariant(FModel.getDecks().getPlane(), predPlanes, DeckSection.Planes, FScreen.DECK_EDITOR_PLANECHASE, CDeckEditorUI.SINGLETON_INSTANCE.getCDetailPicture()));
+        });
+
+        // Hero's Path: choose this seat's Hero cards
+        heroCardsBtn.setCommand((Runnable) () -> {
+            final HerosPath.Challenge c = herosPathChallenge();
+            final LobbySlot slot = lobby.getLobby().getSlot(index);
+            if (c == null || slot == null) {
+                return;
+            }
+            final List<String> chosen = HerosPathLobby.chooseHeroCards(c, slot.getHeroCards());
+            if (chosen != null) {
+                slot.setHeroCards(chosen);
+                updateVariantControlsVisibility();
+            }
         });
 
         // Vanguard buttons

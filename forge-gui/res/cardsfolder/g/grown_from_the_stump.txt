@@ -1,0 +1,10 @@
+Name:Grown from the Stump
+ManaCost:no cost
+Types:Sorcery
+A:SP$ ChangeZone | Origin$ Graveyard | Destination$ Battlefield | ChangeType$ Card.namedHydra Head+YouOwn | ChangeNum$ 2 | Hidden$ True | Mandatory$ True | ConditionCheckSVar$ X | ConditionSVarCompare$ GE2 | RememberChanged$ True | SubAbility$ DBDig | SpellDescription$ Place exactly two cards named Hydra Head onto the battlefield from the Hydra's graveyard. If you can't, reveal cards from the top of the Hydra's library until you reveal a Head card. Put that card onto the battlefield and the rest into the Hydra's graveyard.
+SVar:DBDig:DB$ DigUntil | Defined$ You | Valid$ Card.Head | ValidDescription$ Head | FoundDestination$ Battlefield | RevealedDestination$ Graveyard | ConditionDefined$ Remembered | ConditionPresent$ Card | ConditionCompare$ EQ0 | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:X:Count$ValidGraveyard Card.namedHydra Head+YouOwn
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Place exactly two cards named Hydra Head onto the battlefield from the Hydra's graveyard. If you can't, reveal cards from the top of the Hydra's library until you reveal a Head card. Put that card onto the battlefield and the rest into the Hydra's graveyard.

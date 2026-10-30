@@ -1,0 +1,11 @@
+Name:Impulsive Return
+ManaCost:no cost
+Types:Sorcery
+A:SP$ ChangeZone | Origin$ Graveyard | Destination$ Battlefield | ChangeType$ Card.namedEcstatic Piper+YouOwn | ChangeTypeDesc$ cards named Ecstatic Piper | ChangeNum$ 2 | Hidden$ True | Mandatory$ True | SubAbility$ DBEffect | SpellDescription$ Return two cards named Ecstatic Piper from Xenagos's graveyard to the battlefield.
+SVar:DBEffect:DB$ Effect | Triggers$ TrigPhase | SpellDescription$ At the beginning of combat this turn, CARDNAME deals damage to each player equal to the number of Revelers on the battlefield.
+SVar:TrigPhase:Mode$ Phase | Phase$ BeginCombat | Execute$ TrigDamage | TriggerDescription$ At the beginning of combat this turn, EFFECTSOURCE deals damage to each player equal to the number of Revelers on the battlefield.
+SVar:TrigDamage:DB$ DealDamage | Defined$ Opponent | NumDmg$ X | DamageSource$ EffectSource
+SVar:X:Count$Valid Card.Reveler
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Return two cards named Ecstatic Piper from Xenagos's graveyard to the battlefield. At the beginning of combat this turn, Impulsive Return deals damage to each player equal to the number of Revelers on the battlefield.

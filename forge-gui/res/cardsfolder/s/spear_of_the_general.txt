@@ -1,0 +1,6 @@
+Name:Spear of the General
+ManaCost:no cost
+Types:HeroCard Artifact Equipment
+K:Equip:2
+S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddPower$ 2 | AddKeyword$ First Strike | Description$ Equipped creature gets +2/+0 and has first strike.
+Oracle:Equipped creature gets +2/+0 and has first strike.\nEquip {2}

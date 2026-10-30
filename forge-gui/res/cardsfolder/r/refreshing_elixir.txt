@@ -1,0 +1,12 @@
+Name:Refreshing Elixir
+ManaCost:no cost
+Types:Artifact
+T:Mode$ Phase | Phase$ Main1 | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigReveal | TriggerDescription$ At the beginning of the Horde's first main phase, reveal an additional card from the top of the Horde's library. The Horde casts that card.
+SVar:TrigReveal:DB$ PeekAndReveal | Defined$ You | PeekAmount$ 1 | RememberRevealed$ True | SubAbility$ DBPlay
+SVar:DBPlay:DB$ Play | Defined$ Remembered | Controller$ You | WithoutManaCost$ True | Amount$ All | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Graveyard | ValidCard$ Card.Self | Execute$ TrigReward | TriggerDescription$ Hero's Reward — When CARDNAME is put into a graveyard from anywhere, each player gains 5 life.
+SVar:TrigReward:DB$ GainLife | Defined$ Opponent | LifeAmount$ 5
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:At the beginning of the Horde's first main phase, reveal an additional card from the top of the Horde's library. The Horde casts that card.\nHero's Reward — When Refreshing Elixir is put into a graveyard from anywhere, each player gains 5 life.

@@ -1,0 +1,10 @@
+Name:Mogis's Chosen
+ManaCost:no cost
+Types:Creature Minotaur
+PT:5/4
+R:Event$ Moved | ValidCard$ Card.Self | Destination$ Battlefield | ReplacementResult$ Updated | ReplaceWith$ ETBTapped | Description$ CARDNAME enters the battlefield tapped.
+SVar:ETBTapped:DB$ Tap | Defined$ Self | ETB$ True
+S:Mode$ MustAttack | ValidCreature$ Card.Self | Description$ CARDNAME attacks each turn if able.
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Mogis's Chosen enters the battlefield tapped.\nMogis's Chosen attacks each turn if able.

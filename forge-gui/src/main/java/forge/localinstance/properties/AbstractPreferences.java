@@ -163,5 +163,11 @@ public abstract class AbstractPreferences<T extends Enum<T> & IPreferences.IPref
             result.add(GameType.ArchenemyRumble);
         else if (gameType.equals("Two-Headed Giant"))
             result.add(GameType.TwoHeadedGiant);
+        else if (gameType.equals("Face the Hydra"))
+            result.add(GameType.FaceTheHydra);
+        else if (gameType.equals("Battle the Horde"))
+            result.add(GameType.BattleTheHorde);
+        else if (gameType.equals("Defeat a God"))
+            result.add(GameType.DefeatAGod);
     }
 }

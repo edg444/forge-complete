@@ -1,0 +1,9 @@
+Name:Descend on the Prey
+ManaCost:no cost
+Types:Sorcery
+A:SP$ Effect | Triggers$ TrigAttacks | SpellDescription$ Whenever a Minotaur attacks this turn, it gains first strike until end of turn and must be blocked this turn if able.
+SVar:TrigAttacks:Mode$ Attacks | ValidCard$ Creature.Minotaur | Execute$ TrigPump | TriggerDescription$ Whenever a Minotaur attacks this turn, it gains first strike until end of turn and must be blocked this turn if able.
+SVar:TrigPump:DB$ Pump | Defined$ TriggeredAttackerLKICopy | KW$ First Strike & HIDDEN CARDNAME must be blocked if able.
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Whenever a Minotaur attacks this turn, it gains first strike until end of turn and must be blocked this turn if able.

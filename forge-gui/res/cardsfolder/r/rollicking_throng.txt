@@ -1,0 +1,11 @@
+Name:Rollicking Throng
+ManaCost:no cost
+Types:Creature Human Reveler
+PT:1/3
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigReveal | TriggerDescription$ When CARDNAME enters the battlefield, reveal the top card of Xenagos's library and Xenagos casts that card. (This ability doesn't trigger as the game begins.)
+SVar:TrigReveal:DB$ PeekAndReveal | Defined$ You | PeekAmount$ 1 | RememberRevealed$ True | SubAbility$ DBPlay
+SVar:DBPlay:DB$ Play | Defined$ Remembered | Controller$ You | WithoutManaCost$ True | Amount$ All | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:When Rollicking Throng enters the battlefield, reveal the top card of Xenagos's library and Xenagos casts that card. (This ability doesn't trigger as the game begins.)

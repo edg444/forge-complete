@@ -351,7 +351,8 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         switch (phase) {
             case DRAW:
                 // CR 810.6: in Two-Headed Giant the team who plays first skips its first draw step too
-                return turn == 1 && (game.getPlayers().size() == 2 || game.getRules().hasAppliedVariant(GameType.TwoHeadedGiant));
+                return turn == 1 && (game.getPlayers().size() == 2 || game.getRules().hasAppliedVariant(GameType.TwoHeadedGiant))
+                        || forge.game.herospath.HerosPath.skipsDrawStep(playerTurn);
 
             case COMBAT_BEGIN:
             case COMBAT_DECLARE_ATTACKERS:
@@ -691,6 +692,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 break;
 
             case CLEANUP:
+                if (!bRepeatCleanup && forge.game.herospath.HerosPath.checkEndOfTurn(game) && game.isGameOver()) {
+                    break;
+                }
                 if (!bRepeatCleanup) {
                     // the turn passes on from whoever's turn it really was
                     endStolenPhase();

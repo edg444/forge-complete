@@ -1,0 +1,23 @@
+[metadata]
+Code=TDAG
+Date=2014-05-25
+Name=Defeat a God
+Type=Other
+ScryfallCode=TDAG
+
+[cards]
+1 C Xenagos Ascended @Tyler Jacobson
+2 C Rollicking Throng @Karl Kopinski
+3 C Ecstatic Piper @Steve Argyle
+4 C Maddened Oread @Julie Dillon
+5 C Pheres-Band Revelers @Mathias Kollros
+6 C Serpent Dancers @Ulrich Brunin
+7 C Wild Maenads @Winona Nelson
+8 C Impulsive Charge @Willian Murai
+9 C Impulsive Destruction @Zoltan Boros
+10 C Impulsive Return @Cyril Van Der Haegen
+11 C Rip to Pieces @Kev Walker
+12 C Xenagos's Scorn @Lucas Graciano
+13 C Xenagos's Strike @Zoltan Boros
+14 C Dance of Flame @Christopher Moeller
+15 C Dance of Panic @Mike Bierek

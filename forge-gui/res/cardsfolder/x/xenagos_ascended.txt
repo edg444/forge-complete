@@ -1,0 +1,10 @@
+Name:Xenagos Ascended
+ManaCost:no cost
+Types:Legendary Enchantment Creature God
+PT:6/5
+R:Event$ Moved | ActiveZones$ Battlefield | Origin$ Battlefield | ValidCard$ Card.Self | IsPresent$ Card.Reveler | Prevent$ True | Layer$ CantHappen | Description$ CARDNAME can't leave the battlefield as long as a Reveler is on the battlefield.
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigWin | TriggerDescription$ When CARDNAME leaves the battlefield, each player wins the game.
+SVar:TrigWin:DB$ WinsGame | Defined$ Opponent
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Xenagos Ascended can't leave the battlefield as long as a Reveler is on the battlefield.\nWhen Xenagos Ascended leaves the battlefield, each player wins the game.

@@ -63,9 +63,9 @@ public class CombatUtil {
         for (final Player defender : playerWhoAttacks.getOpponents()) {
             defenders.add(defender);
             defenders.addAll(defender.getPlaneswalkersInPlay());
-            // Seasoned Weaponsmith: tasty creatures can be attacked directly
+            // Seasoned Weaponsmith: tasty creatures can be attacked directly; so can the Hero's Path Heads and Revelers
             for (final Card c : defender.getCreaturesInPlay()) {
-                if (c.hasKeyword(Keyword.TASTY)) {
+                if (c.hasKeyword(Keyword.TASTY) || forge.game.staticability.StaticAbilityCanBeAttacked.canBeAttacked(c)) {
                     defenders.add(c);
                 }
             }
@@ -989,7 +989,8 @@ public class CombatUtil {
             return false;
         }
         // Tasty: an attacked creature can't block creatures that didn't attack it
-        if (combat != null && !combat.getAttackersOf(blocker).isEmpty() && !combat.isAttacking(attacker, blocker)) {
+        if (combat != null && blocker.hasKeyword(Keyword.TASTY) && !combat.getAttackersOf(blocker).isEmpty()
+                && !combat.isAttacking(attacker, blocker)) {
             return false;
         }
 

@@ -1,0 +1,15 @@
+[metadata]
+Code=THP1
+Date=2013-09-27
+Name=Theros Hero's Path
+Type=Other
+ScryfallCode=THP1
+
+[cards]
+1a C The Protector @Chuck Lukacs
+1b C The Philosopher @Chuck Lukacs
+1c C The Avenger @Chuck Lukacs
+1d C The Warrior @Chuck Lukacs
+1e C The Hunter @Chuck Lukacs
+2 C The Harvester @Chuck Lukacs
+3 C The Slayer @Chuck Lukacs

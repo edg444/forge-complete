@@ -63,7 +63,10 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
         ElementalCard(false, "elemental cards", "lblElementalCard"),
         // Byode, Inverse Sun's card type: a permanent with loyalty abilities, but not a planeswalker - loyalty is a
         // planeswalker-only characteristic (CR 306.5), so it has none, enters with no counters and never dies at 0
-        Universewalker(true, "universewalkers", "lblUniversewalker");
+        Universewalker(true, "universewalkers", "lblUniversewalker"),
+        // the Hero's Path challenges' "Hero" card type (Hero's Path FAQ: "type 'Hero,' a new card type ... They do
+        // function as permanents"); scripts say HeroCard so that "Hero" keeps meaning the creature type
+        HeroCard(true, "hero cards", "lblHeroCard");
 
         public final boolean isPermanent;
         public final String pluralName;
@@ -656,8 +659,12 @@ public final class CardType implements Comparable<CardType>, CardTypeView {
         if (coreTypes.contains(CoreType.ElementalCard)) {
             types.add("Elemental");
         }
+        // printed first too: "Hero Artifact — Equipment"
+        if (coreTypes.contains(CoreType.HeroCard)) {
+            types.add("Hero");
+        }
         for (final CoreType ct : coreTypes) {
-            if (ct != CoreType.Kindred && ct != CoreType.ElementalCard) {
+            if (ct != CoreType.Kindred && ct != CoreType.ElementalCard && ct != CoreType.HeroCard) {
                 types.add(ct.name());
             }
         }

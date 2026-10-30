@@ -1,0 +1,8 @@
+Name:Bow of the Hunter
+ManaCost:no cost
+Types:HeroCard Artifact Equipment
+K:Equip:2
+S:Mode$ Continuous | AffectedDefined$ Equipped | Affected$ Creature | AddAbility$ Damage | Description$ Equipped creature has "{T}: This creature deals 2 damage to any target."
+SVar:Damage:AB$ DealDamage | Cost$ T | ValidTgts$ Any | NumDmg$ 2 | SpellDescription$ This creature deals 2 damage to any target.
+SVar:NonStackingAttachEffect:True
+Oracle:Equipped creature has "{T}: This creature deals 2 damage to any target."\nEquip {2}

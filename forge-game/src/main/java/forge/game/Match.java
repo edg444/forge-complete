@@ -126,6 +126,7 @@ public class Match {
 
     public void startGame(final Game game, Runnable startGameHook) {
         prepareAllZones(game);
+        forge.game.herospath.HerosPath.onGameStarted(game);
         createPendingFirstUpkeepEffects(game);
         if (rules.useAnte()) {  // Deciding which cards go to ante
             Multimap<Player, Card> list = game.chooseCardsForAnte(rules.getMatchAnteRarity(), rules.getAnteIncludeBasicLands());

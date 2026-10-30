@@ -1,0 +1,8 @@
+Name:The Provider
+ManaCost:no cost
+Types:HeroCard
+A:AB$ PutCounter | Cost$ Exile<1/CARDNAME> | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | CounterType$ P1P1 | CounterNum$ 2 | SubAbility$ DBGainLife | SpellDescription$ Put two +1/+1 counters on target creature you control. You gain life equal to that creature's toughness.
+SVar:DBGainLife:DB$ GainLife | Defined$ You | LifeAmount$ X
+SVar:X:Targeted$CardToughness
+DeckHas:Ability$Counters|LifeGain
+Oracle:Exile The Provider: Put two +1/+1 counters on target creature you control. You gain life equal to that creature's toughness.

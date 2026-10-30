@@ -1339,7 +1339,7 @@ public final class StaticAbilityContinuous {
             }
         }
         effects.sort(java.util.Comparator.comparingLong(StaticAbility::getTimestamp).thenComparingInt(StaticAbility::getId));
-        int size = p.getStartingHandSize();
+        int size = p.getBaseMaxHandSize();
         boolean unlimited = false;
         for (final StaticAbility st : effects) {
             if (st.hasParam("SetMaxHandSize")) {

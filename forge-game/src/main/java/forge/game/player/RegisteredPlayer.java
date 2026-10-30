@@ -7,6 +7,7 @@ import forge.deck.CardPool;
 import forge.deck.Deck;
 import forge.deck.DeckSection;
 import forge.game.GameType;
+import forge.game.herospath.HerosPath;
 import forge.item.IPaperCard;
 import forge.item.PaperCard;
 
@@ -43,6 +44,11 @@ public class RegisteredPlayer {
     private Integer id = null;
     private boolean randomFoil = false;
     private boolean enableETBCountersEffect = false;
+    // Hero's Path: the challenge deck's seat, or a hero's Hero cards
+    private HerosPath.Challenge challenge = null;
+    private HerosPath.Difficulty challengeDifficulty = HerosPath.Difficulty.NORMAL;
+    private int challengeHeroes = 1;
+    private List<HerosPath.HeroChoice> heroChoices = null;
 
     public RegisteredPlayer(Deck deck0) {
         originalDeck = deck0;
@@ -79,6 +85,27 @@ public class RegisteredPlayer {
     }
     public void setEnableETBCountersEffect(boolean value) {
         enableETBCountersEffect = value;
+    }
+
+    public final HerosPath.Challenge getChallenge() {
+        return challenge;
+    }
+    public final HerosPath.Difficulty getChallengeDifficulty() {
+        return challengeDifficulty;
+    }
+    public final int getChallengeHeroes() {
+        return challengeHeroes;
+    }
+    public final void setChallenge(final HerosPath.Challenge c, final HerosPath.Difficulty difficulty, final int heroes) {
+        challenge = c;
+        challengeDifficulty = difficulty;
+        challengeHeroes = heroes;
+    }
+    public final List<HerosPath.HeroChoice> getHeroChoices() {
+        return heroChoices;
+    }
+    public final void setHeroChoices(final List<HerosPath.HeroChoice> choices) {
+        heroChoices = choices;
     }
 
     public final Iterable<? extends IPaperCard> getCardsOnBattlefield() {

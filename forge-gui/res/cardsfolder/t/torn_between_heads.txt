@@ -1,0 +1,11 @@
+Name:Torn Between Heads
+ManaCost:no cost
+Types:Sorcery
+A:SP$ ChooseCard | Defined$ You | Choices$ Creature.Head | MinAmount$ 0 | Amount$ 2 | ChoiceTitle$ Choose up to two Heads to tap | SubAbility$ DBTap | SpellDescription$ Tap up to two Heads. They don't untap during the Hydra's next untap step. CARDNAME deals 5 damage to each player.
+SVar:DBTap:DB$ Tap | Defined$ ChosenCard | SubAbility$ DBPump
+SVar:DBPump:DB$ Pump | Defined$ ChosenCard | KW$ HIDDEN This card doesn't untap during your next untap step. | Duration$ Permanent | SubAbility$ DBDamage
+SVar:DBDamage:DB$ DamageAll | ValidPlayers$ Opponent | NumDmg$ 5 | ValidDescription$ each player | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Tap up to two Heads. They don't untap during the Hydra's next untap step. Torn Between Heads deals 5 damage to each player.

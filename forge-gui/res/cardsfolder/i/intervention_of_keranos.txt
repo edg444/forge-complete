@@ -1,0 +1,9 @@
+Name:Intervention of Keranos
+ManaCost:no cost
+Types:Sorcery
+A:SP$ Effect | Triggers$ TrigCombat | SpellDescription$ At the beginning of combat this turn, CARDNAME deals 3 damage to each creature.
+SVar:TrigCombat:Mode$ Phase | Phase$ BeginCombat | ValidPlayer$ Player | Execute$ TrigDamage | TriggerDescription$ At the beginning of combat this turn, Intervention of Keranos deals 3 damage to each creature.
+SVar:TrigDamage:DB$ DamageAll | ValidCards$ Creature | NumDmg$ 3 | DamageSource$ EffectSource | ValidDescription$ each creature.
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:At the beginning of combat this turn, Intervention of Keranos deals 3 damage to each creature.

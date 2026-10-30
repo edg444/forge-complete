@@ -1,5 +1,8 @@
 package forge.gamemodes.match;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.common.collect.ImmutableSet;
 import forge.ai.AIOption;
 import forge.deck.Deck;
@@ -29,6 +32,8 @@ public final class LobbySlot implements Serializable {
     private String PlanarDeckName;
     private String DeckName;
     private String aiProfile;
+    // Hero's Path: the Hero cards this seat brings, as HerosPath.HeroChoice strings
+    private List<String> heroCards = new ArrayList<>();
 
     public LobbySlot(final LobbySlotType type, final String name, final int avatarIndex, final int sleeveIndex, final int team, final boolean isArchenemy, final boolean isReady, final Set<AIOption> aiOptions) {
         this.type = type;
@@ -160,6 +165,13 @@ public final class LobbySlot implements Serializable {
     }
     public void setAiOptions(final Set<AIOption> aiOptions) {
         this.aiOptions = aiOptions == null ? ImmutableSet.of() : ImmutableSet.copyOf(aiOptions);
+    }
+
+    public List<String> getHeroCards() {
+        return heroCards == null ? new ArrayList<>() : heroCards;
+    }
+    public void setHeroCards(final List<String> heroCards) {
+        this.heroCards = heroCards == null ? new ArrayList<>() : new ArrayList<>(heroCards);
     }
 
     public String getAiProfile() {

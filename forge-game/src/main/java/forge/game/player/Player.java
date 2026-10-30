@@ -1546,7 +1546,8 @@ public class Player extends GameEntity implements Comparable<Player> {
     public final CardCollectionView drawCards(final int n, SpellAbility cause, Map<AbilityKey, Object> params, PlayerZone zone,
             final Player libraryOf) {
         final CardCollection drawn = new CardCollection();
-        if (n <= 0) {
+        // a Hero's Path challenge deck ignores effects that would make it draw
+        if (n <= 0 || forge.game.herospath.HerosPath.ignoresDraw(this)) {
             return drawn;
         }
 
@@ -3002,6 +3003,17 @@ public class Player extends GameEntity implements Comparable<Player> {
     public int getStartingHandSize() {
         return startingHandSize;
     }
+
+    // The Vanquisher (Hero's Path): a bigger starting hand that isn't a bigger maximum hand size
+    private int startingHandOnlyBonus = 0;
+    public void addStartingHandOnlyBonus(final int n) {
+        startingHandOnlyBonus += n;
+        startingHandSize += n;
+    }
+    /** What maximum hand size effects start from. */
+    public int getBaseMaxHandSize() {
+        return startingHandSize - startingHandOnlyBonus;
+    }
     public int getPsychicDamage() {
         return psychicDamage;
     }
@@ -4065,6 +4077,8 @@ public class Player extends GameEntity implements Comparable<Player> {
                 }
             }
         }
+
+        forge.game.herospath.HerosPath.putHeroCardsOntoBattlefield(this, registeredPlayer);
 
         PlayerZone com = getZone(ZoneType.Command);
 

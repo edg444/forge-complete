@@ -1,0 +1,5 @@
+Name:The Warrior
+ManaCost:no cost
+Types:HeroCard
+A:AB$ Pump | Cost$ T | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | KW$ Haste | SpellDescription$ Target creature you control gains haste until end of turn.
+Oracle:{T}: Target creature you control gains haste until end of turn.

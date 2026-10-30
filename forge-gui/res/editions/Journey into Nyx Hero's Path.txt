@@ -1,0 +1,16 @@
+[metadata]
+Code=THP3
+Date=2014-05-02
+Name=Journey into Nyx Hero's Path
+Type=Other
+ScryfallCode=THP3
+
+[cards]
+0 C Enhancement Stickers @
+7a C Spear of the General @Chuck Lukacs
+7b C Cloak of the Philosopher @Chuck Lukacs
+7c C Lash of the Tyrant @Chuck Lukacs
+7d C Axe of the Warmonger @Chuck Lukacs
+7e C Bow of the Hunter @Chuck Lukacs
+8 C The Destined @Chuck Lukacs
+9 C The Champion @Chuck Lukacs

@@ -1,0 +1,13 @@
+Name:Neck Tangle
+ManaCost:no cost
+Types:Sorcery
+A:SP$ ChooseCard | Defined$ You | Choices$ Creature.Head | Amount$ 2 | Mandatory$ True | ChoiceTitle$ Choose two Heads to tap | ConditionCheckSVar$ X | ConditionSVarCompare$ GE5 | SubAbility$ DBTap | SpellDescription$ If there are five or more Heads on the battlefield, tap two of them and they don't untap during the Hydra's next untap step. Otherwise, reveal the top card of the Hydra's library and the Hydra casts that card.
+SVar:DBTap:DB$ Tap | Defined$ ChosenCard | ConditionCheckSVar$ X | ConditionSVarCompare$ GE5 | SubAbility$ DBPump
+SVar:DBPump:DB$ Pump | Defined$ ChosenCard | KW$ HIDDEN This card doesn't untap during your next untap step. | Duration$ Permanent | ConditionCheckSVar$ X | ConditionSVarCompare$ GE5 | SubAbility$ DBRevealOtherwise
+SVar:DBRevealOtherwise:DB$ PeekAndReveal | Defined$ You | PeekAmount$ 1 | RememberRevealed$ True | ConditionCheckSVar$ X | ConditionSVarCompare$ LT5 | SubAbility$ DBCast
+SVar:DBCast:DB$ Play | Defined$ Remembered | Controller$ You | WithoutManaCost$ True | Amount$ All | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True | ClearChosenCard$ True
+SVar:X:Count$Valid Creature.Head
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:If there are five or more Heads on the battlefield, tap two of them and they don't untap during the Hydra's next untap step. Otherwise, reveal the top card of the Hydra's library and the Hydra casts that card.

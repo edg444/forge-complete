@@ -85,8 +85,12 @@ public class VLobby implements ILobbyView {
     private final VariantCheckBox vntArchenemyRumble = new VariantCheckBox(GameType.ArchenemyRumble);
     private final VariantCheckBox vntVanguard = new VariantCheckBox(GameType.Vanguard);
     private final VariantCheckBox vntTwoHeadedGiant = new VariantCheckBox(GameType.TwoHeadedGiant);
+    private final VariantCheckBox vntFaceTheHydra = new VariantCheckBox(GameType.FaceTheHydra);
+    private final VariantCheckBox vntBattleTheHorde = new VariantCheckBox(GameType.BattleTheHorde);
+    private final VariantCheckBox vntDefeatAGod = new VariantCheckBox(GameType.DefeatAGod);
     private final ImmutableList<VariantCheckBox> vntBoxes  =
-            ImmutableList.of(vntPlanechase, vntArchenemy, vntArchenemyRumble, vntVanguard, vntTwoHeadedGiant);
+            ImmutableList.of(vntPlanechase, vntArchenemy, vntArchenemyRumble, vntVanguard, vntTwoHeadedGiant,
+                    vntFaceTheHydra, vntBattleTheHorde, vntDefeatAGod);
 
     /**
      * The mutually exclusive game types, in the order the deck editor's own format

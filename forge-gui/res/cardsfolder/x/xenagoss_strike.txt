@@ -1,0 +1,7 @@
+Name:Xenagos's Strike
+ManaCost:no cost
+Types:Sorcery
+A:SP$ DealDamage | Defined$ Opponent | NumDmg$ 4 | SpellDescription$ CARDNAME deals 4 damage to each player.
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Xenagos's Strike deals 4 damage to each player.

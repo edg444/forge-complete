@@ -1,0 +1,9 @@
+Name:Noxious Hydra Breath
+ManaCost:no cost
+Types:Sorcery
+A:SP$ Charm | Choices$ DBDamage,DBDestroy
+SVar:DBDamage:DB$ DamageAll | ValidPlayers$ Opponent | NumDmg$ 5 | ValidDescription$ each player | SpellDescription$ CARDNAME deals 5 damage to each player.
+SVar:DBDestroy:DB$ DestroyAll | ValidCards$ Creature.tapped+nonHead | SpellDescription$ Destroy each tapped non-Head creature.
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Choose one — Noxious Hydra Breath deals 5 damage to each player; or destroy each tapped non-Head creature.

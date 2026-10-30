@@ -1,0 +1,9 @@
+Name:Hydra Head
+ManaCost:no cost
+Types:Creature Head
+PT:0/3
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigReward | TriggerDescription$ Hero's Reward — When CARDNAME leaves the battlefield, each player gains 2 life.
+SVar:TrigReward:DB$ GainLife | Defined$ Opponent | LifeAmount$ 2
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Hero's Reward — When Hydra Head leaves the battlefield, each player gains 2 life.

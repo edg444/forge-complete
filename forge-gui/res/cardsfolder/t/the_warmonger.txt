@@ -1,0 +1,5 @@
+Name:The Warmonger
+ManaCost:no cost
+Types:HeroCard
+A:AB$ PumpAll | Cost$ Exile<1/CARDNAME> | ValidCards$ Creature.YouCtrl | NumAtt$ +2 | KW$ Haste | SpellDescription$ Creatures you control get +2/+0 and gain haste until end of turn.
+Oracle:Exile The Warmonger: Creatures you control get +2/+0 and gain haste until end of turn.

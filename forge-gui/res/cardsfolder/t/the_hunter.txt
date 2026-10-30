@@ -1,0 +1,5 @@
+Name:The Hunter
+ManaCost:no cost
+Types:HeroCard
+A:AB$ Pump | Cost$ T | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | NumAtt$ +1 | NumDef$ +1 | SpellDescription$ Target creature you control gets +1/+1 until end of turn.
+Oracle:{T}: Target creature you control gets +1/+1 until end of turn.

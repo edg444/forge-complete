@@ -1,0 +1,7 @@
+Name:The Vanquisher
+ManaCost:no cost
+Types:HeroCard
+Text:Your starting hand size is increased by one.
+SVar:HeroStartingHand:1
+S:Mode$ Continuous | Affected$ You | RaiseMaxHandSize$ 1 | Description$ Your maximum hand size is increased by one.
+Oracle:Your starting hand size is increased by one.\nYour maximum hand size is increased by one.

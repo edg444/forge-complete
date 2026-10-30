@@ -1,0 +1,10 @@
+Name:Ravenous Brute Head
+ManaCost:no cost
+Types:Elite Creature Head
+PT:0/6
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigReward | TriggerDescription$ Hero's Reward — When CARDNAME leaves the battlefield, each player gains 2 life and draws a card.
+SVar:TrigReward:DB$ GainLife | Defined$ Opponent | LifeAmount$ 2 | SubAbility$ DBRewardDraw
+SVar:DBRewardDraw:DB$ Draw | Defined$ Opponent | NumCards$ 1
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:Hero's Reward — When Ravenous Brute Head leaves the battlefield, each player gains 2 life and draws a card.

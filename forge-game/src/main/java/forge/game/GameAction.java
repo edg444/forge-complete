@@ -2589,6 +2589,7 @@ public class GameAction {
         if (game.isGameOver()) {
             return;
         }
+        forge.game.herospath.HerosPath.checkDefeated(game);
 
         // award loses as SBE
         GameEndReason reason = null;
@@ -3113,6 +3114,12 @@ public class GameAction {
         if (game != null) {
             if (game.getRules().getGameType().equals(GameType.Puzzle)) {
                 return game.getPlayers().get(0);
+            }
+
+            // the heroes go first against the Hydra and the Horde
+            final Player hero = forge.game.herospath.HerosPath.firstPlayer(game);
+            if (hero != null) {
+                return hero;
             }
 
             // 904.6: in Archenemy games the Archenemy goes first

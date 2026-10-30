@@ -92,6 +92,8 @@ public enum StaticAbilityMode {
     PlayerMustAttack,
     // StaticAbilityAttacksItsController
     AttacksItsController,
+    // StaticAbilityCanBeAttacked
+    CanBeAttacked,
     // StaticAbilityAttackDuringOpponentsTurn
     AttackDuringOpponentsTurn,
     // StaticAbilityMustBlock

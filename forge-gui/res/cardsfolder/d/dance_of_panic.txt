@@ -1,0 +1,8 @@
+Name:Dance of Panic
+ManaCost:no cost
+Types:Enchantment
+S:Mode$ Continuous | Affected$ Card.Reveler | AddKeyword$ Haste | IsPresent$ Card.Reveler | PresentCompare$ GE5 | Description$ As long as five or more Revelers are on the battlefield, all Revelers have haste and attack each turn if able.
+S:Mode$ MustAttack | ValidCreature$ Card.Reveler | IsPresent$ Card.Reveler | PresentCompare$ GE5 | Secondary$ True | Description$ As long as five or more Revelers are on the battlefield, all Revelers have haste and attack each turn if able.
+AI:RemoveDeck:All
+AI:RemoveDeck:Random
+Oracle:As long as five or more Revelers are on the battlefield, all Revelers have haste and attack each turn if able.
