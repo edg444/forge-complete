@@ -58,6 +58,7 @@ import forge.game.staticability.StaticAbilityTopLibraryOnBattlefield;
 import forge.game.trigger.TriggerType;
 import forge.game.zone.PlayerZone;
 import forge.game.zone.PlayerZoneBattlefield;
+import forge.game.zone.SharedPlayerZone;
 import forge.game.zone.Zone;
 import forge.game.zone.ZoneType;
 import forge.item.PaperCard;
@@ -124,6 +125,9 @@ public class GameAction {
     }
 
     private Card changeZone(final Zone zoneFrom, Zone zoneTo, final Card c, Integer position, SpellAbility cause, Map<AbilityKey, Object> params) {
+        if (game.hasSharedZones() && zoneTo != null && !c.isToken()) {
+            takeOwnership(zoneFrom, zoneTo, c, cause);
+        }
         // Taught by ___: a commander enchantment stays attached to its commander as it moves between face-up zones
         final List<Card> followers = c.hasCardAttachments()
                 ? CardLists.filter(c.getAttachedCards(), a -> a.hasSVar("CommanderEnchantment")) : List.of();
@@ -137,6 +141,64 @@ public class GameAction {
             }
         }
         return moved;
+    }
+
+    /**
+     * Dandan: the owner of a spell or of a permanent is the player who cast it (Secret Lair Dandan Deck rules,
+     * 2026-03-15), and a card in a hand is that player's to cast. A permanent that wasn't cast (a land played, one put
+     * onto the battlefield) is the one who put it there; a control change keeps the owner.
+     */
+    private void takeOwnership(final Zone zoneFrom, final Zone zoneTo, final Card c, final SpellAbility cause) {
+        Player newOwner = null;
+        if (zoneTo.is(ZoneType.Hand)) {
+            newOwner = zoneTo.getPlayer();
+        } else if (zoneTo.is(ZoneType.Battlefield)
+                && (zoneFrom == null || !(zoneFrom.is(ZoneType.Stack) || zoneFrom.is(ZoneType.Battlefield)))) {
+            newOwner = zoneTo.getPlayer();
+        } else if (zoneTo.is(ZoneType.Stack) && cause != null && cause.isSpell() && cause.getHostCard() == c) {
+            newOwner = cause.getActivatingPlayer();
+        }
+        if (newOwner != null) {
+            c.setOwner(newOwner);
+        }
+    }
+
+    /**
+     * Dandan: a card in the shared library or graveyard is every player's, so whoever takes it out by an effect that
+     * goes by its owner ("return it to its owner's hand", "exile it") is taking their own card - it's theirs from then.
+     */
+    private void claimFromSharedZone(final Card c, final SpellAbility cause) {
+        if (cause != null && cause.getActivatingPlayer() != null && c.getZone() instanceof SharedPlayerZone && !c.isToken()) {
+            c.setOwner(cause.getActivatingPlayer());
+        }
+    }
+
+    /**
+     * Dandan: opening hands and cards several players draw at once are dealt from the shared library one at a time,
+     * in turn order from whoever goes first or whose turn it is (Secret Lair Dandan Deck rules, 2026-03-15). counts
+     * is in that order; returns what each player drew.
+     */
+    public Map<Player, CardCollection> dealCards(final Map<Player, Integer> counts, final SpellAbility cause,
+            final Map<AbilityKey, Object> params) {
+        final Map<Player, CardCollection> drawn = Maps.newLinkedHashMap();
+        final Map<Player, Integer> left = Maps.newLinkedHashMap(counts);
+        for (final Player p : counts.keySet()) {
+            drawn.put(p, new CardCollection());
+        }
+        boolean dealing = true;
+        while (dealing && !game.isGameOver()) {
+            dealing = false;
+            for (final Map.Entry<Player, Integer> e : left.entrySet()) {
+                if (e.getValue() <= 0) {
+                    continue;
+                }
+                final Player p = e.getKey();
+                e.setValue(e.getValue() - 1);
+                drawn.get(p).addAll(p.drawCards(1, cause, params == null ? AbilityKey.newMap() : params));
+                dealing = true;
+            }
+        }
+        return drawn;
     }
 
     /**
@@ -1009,6 +1071,7 @@ public class GameAction {
     }
 
     public final Card moveTo(final ZoneType name, final Card c, final int libPosition, SpellAbility cause, Map<AbilityKey, Object> params) {
+        claimFromSharedZone(c, cause);
         // Call specific functions to set PlayerZone, then move onto moveTo
         try {
             return switch (name) {
@@ -1118,11 +1181,13 @@ public class GameAction {
         return moveToHand(c, cause, AbilityKey.newMap());
     }
     public final Card moveToHand(final Card c, SpellAbility cause, Map<AbilityKey, Object> params) {
+        claimFromSharedZone(c, cause);
         final PlayerZone hand = c.getOwner().getZone(ZoneType.Hand);
         return moveTo(hand, c, cause, params);
     }
 
     public final Card moveToPlay(final Card c, SpellAbility cause, Map<AbilityKey, Object> params) {
+        claimFromSharedZone(c, cause);
         return moveToPlay(c, c.getController(), cause, params);
     }
     public final Card moveToPlay(final Card c, final Player p, SpellAbility cause, Map<AbilityKey, Object> params) {
@@ -1378,6 +1443,7 @@ public class GameAction {
     }
     public final Card exile(final Card c, SpellAbility cause, Map<AbilityKey, Object> params) {
         final Zone origin = c.getZone();
+        claimFromSharedZone(c, cause);
         final PlayerZone removed = c.getOwner().getZone(ZoneType.Exile);
         final Card copied = moveTo(removed, c, cause, params);
 
@@ -3141,11 +3207,15 @@ public class GameAction {
 
             game.setAge(GameStage.Mulligan);
             final boolean paiGow = PaiGowMagic.isPlayed(game.getRules());
+            final boolean dealt = game.isSharedZone(ZoneType.Library);
             for (final Player p1 : game.getPlayers()) {
                 // anything already in hand started the game there (Rift)
                 p1.setOpeningHandStarters(p1.getCardsIn(ZoneType.Hand));
                 if (paiGow) {
                     continue; // the pile already in hand is the opening hand, with no library to draw from
+                }
+                if (dealt) {
+                    continue;
                 }
                 // Choose starting hand for each player with multiple hands
                 if (StaticData.instance().getFilteredHandsEnabled() ) {
@@ -3158,6 +3228,13 @@ public class GameAction {
                 if (backupPlans.initializeExtraHands()) {
                     backupPlans.chooseHand();
                 }
+            }
+            if (dealt) {
+                final Map<Player, Integer> handSizes = Maps.newLinkedHashMap();
+                for (final Player p1 : game.getPlayersInTurnOrder(first)) {
+                    handSizes.put(p1, p1.getStartingHandSize() - p1.getOpeningHandStartersInHand());
+                }
+                dealCards(handSizes, null, null);
             }
 
             if (game.getRules().getGameType() != GameType.Puzzle && !paiGow) {

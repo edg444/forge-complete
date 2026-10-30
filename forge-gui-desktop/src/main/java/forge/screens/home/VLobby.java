@@ -18,6 +18,7 @@ import forge.deck.*;
 import forge.deckchooser.FDeckChooser;
 import forge.game.GameType;
 import forge.game.card.CardView;
+import forge.gamemodes.match.DandanDecks;
 import forge.gamemodes.match.GameLobby;
 import forge.gamemodes.match.LobbySlot;
 import forge.gamemodes.match.LobbySlotType;
@@ -101,11 +102,14 @@ public class VLobby implements ILobbyView {
     private static final ImmutableList<GameType> GAME_FORMATS = ImmutableList.of(
             GameType.Constructed, GameType.Commander, GameType.Oathbreaker,
             GameType.Brawl, GameType.TinyLeaders,
-            GameType.MomirBasic, GameType.MoJhoSto, GameType.PaiGow, GameType.BoosterBlitz);
+            GameType.MomirBasic, GameType.MoJhoSto, GameType.PaiGow, GameType.BoosterBlitz, GameType.Dandan);
 
     private final FComboBoxPanel<GameType> cboFormatPanel =
             new FComboBoxPanel<>(Localizer.getInstance().getMessage("lblGameFormat") + ":", GAME_FORMATS);
     private boolean suppressFormatListener = false;
+    // which shared deck a Dandan game is played with, shown while that's the format
+    private final FComboBoxPanel<String> cboDandanDeckPanel =
+            new FComboBoxPanel<>(Localizer.getInstance().getMessage("lblDandanDeck") + ":", DandanDecks.names());
 
     // Player frame elements
     private final JPanel playersFrame = new JPanel(new MigLayout("insets 0, gap 0 5, wrap, hidemode 3"));
@@ -255,6 +259,17 @@ public class VLobby implements ILobbyView {
             c.setFont(FSkin.getBoldFont(14).getBaseFont());
         }
         constructedFrame.add(cboFormatPanel, "w 100%, h 28px!, gapbottom 10px, spanx 2, wrap");
+        cboDandanDeckPanel.addActionListener(e -> {
+            final String chosen = cboDandanDeckPanel.getSelectedItem();
+            if (chosen != null && !chosen.equals(DandanDecks.selectedName())) {
+                DandanDecks.select(chosen);
+            }
+        });
+        for (final Component c : cboDandanDeckPanel.getComponents()) {
+            c.setFont(FSkin.getBoldFont(14).getBaseFont());
+        }
+        cboDandanDeckPanel.setVisible(false);
+        constructedFrame.add(cboDandanDeckPanel, "w 100%, h 28px!, gapbottom 10px, spanx 2, wrap");
 
         ////////////////////////////////////////////////////////
         //////////////////// Variants Panel ////////////////////
@@ -402,6 +417,11 @@ public class VLobby implements ILobbyView {
         controller.onLobbyDataChanged();
 
         syncGameFormatCombo();
+        cboDandanDeckPanel.setVisible(cboFormatPanel.isVisible() && hasVariant(GameType.Dandan));
+        if (cboDandanDeckPanel.isVisible() && !DandanDecks.selectedName().equals(cboDandanDeckPanel.getSelectedItem())) {
+            cboDandanDeckPanel.setSelectedItem(DandanDecks.selectedName());
+        }
+        cboDandanDeckPanel.setEnabled(lobby.hasControl());
 
         for (final VariantCheckBox vcb : vntBoxes) {
             vcb.setSelected(hasVariant(vcb.variant));
@@ -1014,6 +1034,7 @@ public class VLobby implements ILobbyView {
 
     void setVariantsVisible(boolean visible) {
         cboFormatPanel.setVisible(visible);
+        cboDandanDeckPanel.setVisible(visible && hasVariant(GameType.Dandan));
         Container scrollPane = variantsPanel.getParent();
         while (scrollPane != null && !(scrollPane instanceof JScrollPane)) {
             scrollPane = scrollPane.getParent();

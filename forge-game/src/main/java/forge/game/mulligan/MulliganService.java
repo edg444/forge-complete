@@ -1,16 +1,20 @@
 package forge.game.mulligan;
 
 import java.util.List;
+import java.util.Map;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 import forge.MulliganDefs;
 import forge.StaticData;
 import forge.game.Game;
+import forge.game.GameLogEntryType;
 import forge.game.GameType;
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
+import forge.game.event.GameEventAddLog;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
@@ -73,6 +77,10 @@ public class MulliganService {
     private void runPlayerMulligans() {
         if (game.hasGiantTeams()) {
             runTeamMulligans();
+            return;
+        }
+        if (game.isSharedZone(ZoneType.Library)) {
+            runSharedLibraryMulligans();
             return;
         }
         boolean allKept;
@@ -143,6 +151,73 @@ public class MulliganService {
             }
             for (AbstractMulligan mulligan : taking) {
                 mulligan.mulligan();
+            }
+        }
+    }
+
+    /**
+     * Dandan: everyone declares in turn order (CR 103.5), then all who mulligan shuffle their hands into the shared
+     * library at once and are dealt their new hands from it, as the opening hands were. A hand that qualifies for a
+     * free mulligan is revealed and doesn't count as a mulligan; the AI always takes one it's offered.
+     */
+    private void runSharedLibraryMulligans() {
+        while (true) {
+            final List<AbstractMulligan> taking = Lists.newArrayList();
+            final List<AbstractMulligan> free = Lists.newArrayList();
+            for (AbstractMulligan mulligan : mulligans) {
+                if (mulligan.hasKept()) {
+                    continue;
+                }
+                final Player p = mulligan.getPlayer();
+                final boolean canBeFree = mulligan.canTakeFreeMulligan();
+                final boolean keep;
+                if (canBeFree && p.getController().isAI()) {
+                    keep = false;
+                } else {
+                    p.setFreeMulliganOffered(canBeFree);
+                    keep = !mulligan.canMulligan()
+                            || p.getController().mulliganKeepHand(firstPlayer, mulligan.tuckCardsDuringMulligan());
+                    p.setFreeMulliganOffered(false);
+                }
+                if (game.isGameOver()) {
+                    // conceded during mulligan prompt
+                    return;
+                }
+                if (keep) {
+                    mulligan.keep();
+                } else {
+                    taking.add(mulligan);
+                    if (canBeFree) {
+                        free.add(mulligan);
+                    }
+                }
+            }
+            if (taking.isEmpty()) {
+                return;
+            }
+            for (AbstractMulligan mulligan : taking) {
+                final Player p = mulligan.getPlayer();
+                if (free.contains(mulligan)) {
+                    final CardCollection hand = new CardCollection(p.getCardsIn(ZoneType.Hand));
+                    game.getAction().reveal(hand, p, true, "Free mulligan - revealed by ");
+                    game.fireEvent(new GameEventAddLog(GameLogEntryType.MULLIGAN, p.getName()
+                            + " reveals their hand and takes a free mulligan."));
+                } else {
+                    mulligan.countMulligan();
+                }
+                mulligan.returnHand();
+            }
+            taking.get(0).getPlayer().shuffle(null);
+            final Map<Player, Integer> handSizes = Maps.newLinkedHashMap();
+            for (AbstractMulligan mulligan : mulligans) {
+                if (taking.contains(mulligan)) {
+                    handSizes.put(mulligan.getPlayer(), mulligan.cardsToDrawAfterMulligan());
+                }
+            }
+            game.getAction().dealCards(handSizes, null, null);
+            for (AbstractMulligan mulligan : taking) {
+                mulligan.afterMulliganDraw();
+                mulligan.getPlayer().onMulliganned();
             }
         }
     }

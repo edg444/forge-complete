@@ -1744,7 +1744,7 @@ public class Player extends GameEntity implements Comparable<Player> {
             updateLibrariesForView();
             return;
         }
-        view.updateZone(zone);
+        view.updateZone(this, zone);
         if (zone.is(ZoneType.Library) && !libraryTopsMarked.isEmpty()) {
             refreshLibraryMarkers();
         }
@@ -1766,6 +1766,11 @@ public class Player extends GameEntity implements Comparable<Player> {
     private final List<String> spelledWords = Lists.newArrayList();
     public final List<String> getSpelledWords() {
         return spelledWords;
+    }
+
+    /** Dandan: this player's zone of that type becomes the shared one (Game.shareZones). */
+    public final void useSharedZone(final forge.game.zone.SharedPlayerZone zone) {
+        zones.put(zone.getZoneType(), zone);
     }
 
     public final boolean hasSeveralLibraries() {
@@ -3471,7 +3476,10 @@ public class Player extends GameEntity implements Comparable<Player> {
             c.setDrawnThisTurn(false);
         }
         for (final PlayerZone pz : zones.values()) {
-            pz.resetCardsAddedThisTurn();
+            // a shared zone (Dandan) once, not once per sharer, or the second would wipe what came in last turn
+            if (pz.getPlayer() == this) {
+                pz.resetCardsAddedThisTurn();
+            }
         }
         if (libraries != null) {
             for (final PlayerZone pz : libraries) {
@@ -3775,6 +3783,15 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
     public void removeInboundToken(Card c) {
         inboundTokens.remove(c);
+    }
+
+    // Dandan: whether the hand this player is deciding on would be a free mulligan (MulliganService)
+    private boolean freeMulliganOffered = false;
+    public boolean isFreeMulliganOffered() {
+        return freeMulliganOffered;
+    }
+    public void setFreeMulliganOffered(final boolean offered) {
+        freeMulliganOffered = offered;
     }
 
     public void onMulliganned() {

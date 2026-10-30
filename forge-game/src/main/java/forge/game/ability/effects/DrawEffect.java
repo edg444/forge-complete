@@ -1,15 +1,19 @@
 package forge.game.ability.effects;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
+import forge.game.Game;
 import forge.game.ability.AbilityKey;
 import forge.game.ability.AbilityUtils;
 import forge.game.ability.SpellAbilityEffect;
 import forge.game.card.Card;
+import forge.game.card.CardCollection;
 import forge.game.card.CardCollectionView;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
@@ -82,7 +86,17 @@ public class DrawEffect extends SpellAbilityEffect {
             return;
         }
 
-        for (final Player p : Sets.newLinkedHashSet(tgts)) {
+        final Game game = source.getGame();
+        final Collection<Player> targeted = Sets.newLinkedHashSet(tgts);
+        // Dandan: players drawing at once from the shared library are dealt the cards one at a time, from the active
+        // player in turn order; choices of how many come first, in the same order
+        final boolean deal = game.isSharedZone(ZoneType.Library) && targeted.size() > 1
+                && !sa.hasParam("FromLibraryOf") && !sa.hasParam("FromBottom");
+        final Map<Player, Integer> toDeal = Maps.newLinkedHashMap();
+        final Collection<Player> drawers = deal
+                ? game.getPlayersInTurnOrder(game.getPhaseHandler().getPlayerTurn()).filter(targeted::contains) : targeted;
+
+        for (final Player p : drawers) {
             if (!p.isInGame()) {
                 continue;
             }
@@ -107,6 +121,10 @@ public class DrawEffect extends SpellAbilityEffect {
             if (upto) {
                 actualNum = p.getController().chooseNumber(sa, Localizer.getInstance().getMessage("lblHowManyCardDoYouWantDraw"), 0, actualNum);
             }
+            if (deal) {
+                toDeal.put(p, actualNum);
+                continue;
+            }
 
             // FromLibraryOf$: draw from that player's library instead (Spy Eye)
             // Centrifuge: ToTheirRight - each drawer from the library of the player to their right
@@ -126,12 +144,22 @@ public class DrawEffect extends SpellAbilityEffect {
                     p.setDrawingFromBottom(false);
                 }
             }
-            if (sa.hasParam("Reveal")) {
-                p.getGame().getAction().reveal(drawn, p, !sa.getParam("Reveal").equals("All"));
+            afterDraw(sa, source, p, drawn);
+        }
+
+        if (!toDeal.isEmpty()) {
+            for (final Map.Entry<Player, CardCollection> e : game.getAction().dealCards(toDeal, sa, moveParams).entrySet()) {
+                afterDraw(sa, source, e.getKey(), e.getValue());
             }
-            if (sa.hasParam("RememberDrawn")) {
-                source.addRemembered(drawn);
-            }
+        }
+    }
+
+    private static void afterDraw(final SpellAbility sa, final Card source, final Player p, final CardCollectionView drawn) {
+        if (sa.hasParam("Reveal")) {
+            p.getGame().getAction().reveal(drawn, p, !sa.getParam("Reveal").equals("All"));
+        }
+        if (sa.hasParam("RememberDrawn")) {
+            source.addRemembered(drawn);
         }
     }
 }

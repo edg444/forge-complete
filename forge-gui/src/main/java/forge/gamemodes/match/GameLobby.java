@@ -268,17 +268,20 @@ public abstract class GameLobby implements IHasGameType {
             data.appliedVariants.retainAll(EnumSet.of(variant, GameType.Planechase));
             break;
         case Archenemy:
+            data.appliedVariants.remove(GameType.Dandan);
             data.appliedVariants.remove(GameType.ArchenemyRumble);
             data.appliedVariants.remove(GameType.TwoHeadedGiant);
             removeHerosPathChallenges(null);
             applyArchenemyTeams();
             break;
         case ArchenemyRumble:
+            data.appliedVariants.remove(GameType.Dandan);
             data.appliedVariants.remove(GameType.Archenemy);
             data.appliedVariants.remove(GameType.TwoHeadedGiant);
             removeHerosPathChallenges(null);
             break;
         case TwoHeadedGiant:
+            data.appliedVariants.remove(GameType.Dandan);
             // both decide the teams their own way
             data.appliedVariants.remove(GameType.Archenemy);
             data.appliedVariants.remove(GameType.ArchenemyRumble);
@@ -288,12 +291,14 @@ public abstract class GameLobby implements IHasGameType {
         case BattleTheHorde:
         case DefeatAGod:
             // every seat is a hero, and the challenge deck sits down at the start
+            data.appliedVariants.remove(GameType.Dandan);
             data.appliedVariants.remove(GameType.Archenemy);
             data.appliedVariants.remove(GameType.ArchenemyRumble);
             data.appliedVariants.remove(GameType.TwoHeadedGiant);
             removeHerosPathChallenges(variant);
             break;
         case Commander:
+            data.appliedVariants.remove(GameType.Dandan);
             data.appliedVariants.remove(GameType.Oathbreaker);
             data.appliedVariants.remove(GameType.TinyLeaders);
             data.appliedVariants.remove(GameType.Brawl);
@@ -301,6 +306,7 @@ public abstract class GameLobby implements IHasGameType {
             data.appliedVariants.remove(GameType.MoJhoSto);
             break;
         case Oathbreaker:
+            data.appliedVariants.remove(GameType.Dandan);
             data.appliedVariants.remove(GameType.Commander);
             data.appliedVariants.remove(GameType.TinyLeaders);
             data.appliedVariants.remove(GameType.Brawl);
@@ -308,6 +314,7 @@ public abstract class GameLobby implements IHasGameType {
             data.appliedVariants.remove(GameType.MoJhoSto);
             break;
         case TinyLeaders:
+            data.appliedVariants.remove(GameType.Dandan);
             data.appliedVariants.remove(GameType.Commander);
             data.appliedVariants.remove(GameType.Oathbreaker);
             data.appliedVariants.remove(GameType.Brawl);
@@ -315,6 +322,7 @@ public abstract class GameLobby implements IHasGameType {
             data.appliedVariants.remove(GameType.MoJhoSto);
             break;
         case Brawl:
+            data.appliedVariants.remove(GameType.Dandan);
             data.appliedVariants.remove(GameType.Commander);
             data.appliedVariants.remove(GameType.Oathbreaker);
             data.appliedVariants.remove(GameType.TinyLeaders);
@@ -326,6 +334,7 @@ public abstract class GameLobby implements IHasGameType {
             data.appliedVariants.remove(GameType.MoJhoSto);
             break;
         case MomirBasic:
+            data.appliedVariants.remove(GameType.Dandan);
             data.appliedVariants.remove(GameType.Commander);
             data.appliedVariants.remove(GameType.Oathbreaker);
             data.appliedVariants.remove(GameType.TinyLeaders);
@@ -334,12 +343,22 @@ public abstract class GameLobby implements IHasGameType {
             data.appliedVariants.remove(GameType.MoJhoSto);
             break;
         case MoJhoSto:
+            data.appliedVariants.remove(GameType.Dandan);
             data.appliedVariants.remove(GameType.Commander);
             data.appliedVariants.remove(GameType.Oathbreaker);
             data.appliedVariants.remove(GameType.TinyLeaders);
             data.appliedVariants.remove(GameType.Brawl);
             data.appliedVariants.remove(GameType.Vanguard);
             data.appliedVariants.remove(GameType.MomirBasic);
+            break;
+        case Dandan:
+            // the shared deck replaces everyone's, and there are no teams or schemes in it
+            for (final GameType other : List.of(GameType.Commander, GameType.Oathbreaker, GameType.TinyLeaders,
+                    GameType.Brawl, GameType.MomirBasic, GameType.MoJhoSto, GameType.TwoHeadedGiant,
+                    GameType.Archenemy, GameType.ArchenemyRumble, GameType.FaceTheHydra, GameType.BattleTheHorde,
+                    GameType.DefeatAGod)) {
+                data.appliedVariants.remove(other);
+            }
             break;
         default:
             break;
@@ -612,6 +631,7 @@ public abstract class GameLobby implements IHasGameType {
             Deck deck = slot.getDeck();
             if (autoGenerateVariant != null) {
                 deck = boosterSets != null ? PaiGowMagic.openBooster(boosterSets.get(slot))
+                        : autoGenerateVariant == GameType.Dandan ? DandanDecks.selected()
                         : autoGenerateVariant.autoGenerateDeck(null);
                 // The generated deck replaces the seat's cards, not the planes and schemes it brought
                 if (slotDeck != null) {

@@ -511,6 +511,10 @@ public class PlayerView extends GameEntityView {
     }
 
     void updateZone(PlayerZone zone) {
+        updateZone(zone.getPlayer(), zone);
+    }
+    /** p: whose view this is - a shared zone (Dandan) is p's too, but its getPlayer() is just the first sharer. */
+    void updateZone(Player p, PlayerZone zone) {
         TrackableProperty prop = zone.getZoneType().getTrackableProperty();
         if (prop == null) { return; }
         set(prop, CardView.getCollection(zone.getCards(false)));
@@ -521,7 +525,7 @@ public class PlayerView extends GameEntityView {
             case Graveyard:
             case Library:
             case Exile:
-                updateFlashback(zone.getPlayer());
+                updateFlashback(p);
                 break;
             default:
                 break;

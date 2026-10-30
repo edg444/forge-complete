@@ -263,6 +263,32 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   local human picks the set of their booster (or Random), and AI and remote seats open the first human's set
   (`GameLobby.chooseBoosterSets`).
 
+### Dandân (Forgetful Fish)
+
+- **Shared zones** (`Game.shareZones`, `SharedPlayerZone`) — every player's library and graveyard are one zone object,
+  so "your library/graveyard" is the shared one with no special cases in effects. Its `getPlayer()` is the first
+  sharer; `Zone.belongsTo`/`is(type, player)` are true for each sharer; view updates and zone events go to every
+  sharer. Collectors that assumed a card is in one player's zone (`Game.getCardsIn`, `getCardsIncludePhasingIn`,
+  `PlayerCollection.getCardsIn`) dedupe shared zones, and only the first sharer resets its turn bookkeeping.
+- **"Yours" in a shared zone** — `CardProperty` YouOwn/YouCtrl/OppOwn/OppCtrl/YouDontOwn/YouDontCtrl/OwnedBy/
+  TargetedPlayerOwn treat a card there as each sharer's; casting from it (flashback) is open to any sharer
+  (`SpellAbilityRestriction.holdsZone`, `PlayerZone.getCardsPlayerCanActivate`).
+- **Ownership** (`GameAction.takeOwnership`, `claimFromSharedZone`) — the owner of a spell or permanent is who cast
+  it; a card in a hand is that player's; a permanent put onto the battlefield otherwise is whoever put it there
+  (control changes keep the owner); an effect that takes a card out of a shared zone by its owner ("return it to its
+  owner's hand", exile) gives it to the effect's controller.
+- **Dealt cards** (`GameAction.dealCards`) — opening hands, mulligan hands and effects making several players draw
+  at once (`DrawEffect`) deal one card at a time in turn order from the starting or active player; choices of how
+  many to draw come first, in the same order.
+- **Mulligans** (`MulliganService.runSharedLibraryMulligans`) — declared in turn order, taken together into the
+  shared library, new hands dealt. A hand with fewer than two lands or fewer than two spells may be revealed for a
+  free mulligan until a regular one is taken (`AbstractMulligan.canTakeFreeMulligan`); the human's prompt says so,
+  the AI always takes it.
+- **Lobby** — Dandân is a game format (desktop Game Format dropdown with a Dandân deck dropdown beside it; mobile
+  variant list with a deck picker). The decks are `res/dandan/*.dck` (`DandanDecks`, `FPref.DANDAN_DECK`): the
+  Secret Lair Dandân Deck (2026, its SLD printings), Nick Floyd's Forgetful Fish Classic, Braden Bowish's Dandân
+  Tempo, and Floyd's 60-card 1997 list.
+
 ### Other
 
 - `DB$ RememberNumber` — writes a number into the remembered set (which is a `Set`, so repeats
@@ -452,6 +478,20 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - With no library a game can stall for good, and the AI used to decline every draw offer. In Pai Gow it now
     takes one once its hand is empty and it has nothing that could deal damage, or the board has stopped moving
     (its creatures could attack last turn, it didn't, and no one lost life) - `PaiGowAi.acceptsDraw`.
+- **Dandân (Forgetful Fish)** (user request; the user chose to pick the deck in the lobby and to include AI work).
+  Rules are the ones Wizards published with the Secret Lair Dandân Deck (magic.wizards.com, March 15, 2026): shared
+  library and graveyard, the caster owns a spell or permanent, simultaneous draws dealt from the active player, free
+  mulligan for a hand with fewer than two lands or spells. Deck lists checked against Floyd's own Google Doc, the
+  TCGplayer deck page and Scryfall's SLD printings (SLD 2138-2164). See the capability section.
+  - AI: new `ChangeTextAi` (ChangeText had no AI at all): Magical Hack, and Mind Bend and Crystal Spray through
+    ChooseGenericAi's `ChangeTextKill`, kill an opposing creature with a "when you control no [type], sacrifice"
+    trigger by swapping that type for one its controller has none of (`ComputerUtil.chooseSomeType` reads the plan).
+    Day's Undoing (`AILogic$ DaysUndoing`: Timetwister's hand-size rule, second main phase only) and Diminishing
+    Returns (`AILogic$ Timetwister`). Magical Hack, Mind Bend, Crystal Spray and Day's Undoing lose
+    `AI:RemoveDeck:All`.
+  - `EndTurnAi.chkDrawback` refused every "end the turn" rider, so Day's Undoing could never be cast by the AI; it
+    now allows one off the AI's turn or from its second main phase on.
+  - Tests: `DandanTest`.
 - **Commander bracket enforcement** (user request; the user chose all three modes, a warning that can be
   overridden, and AI decks made to fit). Bracket detection was already upstream's (`CommanderBracketCalculator`:
   the Bracket column and explanation views, the lobby's Maximum Bracket for generated decks); its Game Changers

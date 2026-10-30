@@ -9,6 +9,7 @@ import forge.ai.ComputerUtilCombat;
 import forge.ai.SpellAbilityAi;
 import forge.game.Game;
 import forge.game.combat.Combat;
+import forge.game.phase.PhaseHandler;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
 import forge.game.player.PlayerActionConfirmMode;
@@ -32,7 +33,14 @@ public class EndTurnAi extends SpellAbilityAi  {
     }
 
     @Override
-    public AiAbilityDecision chkDrawback(Player aiPlayer, SpellAbility sa) { return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi); }
+    public AiAbilityDecision chkDrawback(Player aiPlayer, SpellAbility sa) {
+        // a rider ending the turn (Day's Undoing) costs only what's left of the AI's own turn: nothing from main 2 on
+        final PhaseHandler ph = aiPlayer.getGame().getPhaseHandler();
+        if (!ph.isPlayerTurn(aiPlayer) || !ph.getPhase().isBefore(PhaseType.MAIN2)) {
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
+        return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+    }
 
     @Override
     protected AiAbilityDecision canPlay(Player aiPlayer, SpellAbility sa) {

@@ -169,5 +169,7 @@ public abstract class AbstractPreferences<T extends Enum<T> & IPreferences.IPref
             result.add(GameType.BattleTheHorde);
         else if (gameType.equals("Defeat a God"))
             result.add(GameType.DefeatAGod);
+        else if (gameType.equals("Dandân"))
+            result.add(GameType.Dandan);
     }
 }

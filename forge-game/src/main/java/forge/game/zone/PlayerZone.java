@@ -108,14 +108,14 @@ public class PlayerZone extends Zone {
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return Lang.getInstance().getPossessedObject(player.toString(), zoneType.toString());
     }
 
     public Iterable<Card> getCardsPlayerCanActivate(Player who) {
         Iterable<Card> cl = getCards(false);
         // a Graveyard Busybody's controller has every graveyard as their own
-        boolean checkingForOwner = who == player
+        boolean checkingForOwner = belongsTo(who)
                 || (is(ZoneType.Graveyard) && who.equals(player.getGame().getGraveyardHolder()));
 
         if (checkingForOwner && (is(ZoneType.Battlefield) || is(ZoneType.Hand))) {

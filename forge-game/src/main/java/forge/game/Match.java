@@ -625,7 +625,8 @@ public class Match {
                 final CardPool pile = new CardPool();
                 pile.add(getPaiGowPile(player, psc, myDeck.getLeft()));
                 preparePlayerZone(player, ZoneType.Hand, pile, psc.useRandomFoil());
-            } else {
+            } else if (!game.isSharedZone(ZoneType.Library) || i == 0) {
+                // Dandan: every player has the same deck, and it becomes the one shared library
                 preparePlayerZone(player, ZoneType.Library, myDeck.getLeft().getMain(), psc.useRandomFoil());
             }
             if (myDeck.getLeft().has(DeckSection.Sideboard)) {

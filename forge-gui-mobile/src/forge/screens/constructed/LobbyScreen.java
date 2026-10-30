@@ -28,6 +28,7 @@ import forge.deck.DeckSection;
 import forge.deck.DeckType;
 import forge.deck.FDeckChooser;
 import forge.game.GameType;
+import forge.gamemodes.match.DandanDecks;
 import forge.gamemodes.match.GameLobby;
 import forge.gamemodes.match.LobbySlot;
 import forge.gamemodes.match.LobbySlotType;
@@ -51,6 +52,7 @@ import forge.toolbox.FLabel;
 import forge.toolbox.FList;
 import forge.toolbox.FOptionPane;
 import forge.toolbox.FScrollPane;
+import forge.toolbox.GuiChoose;
 import forge.util.MyRandom;
 import forge.util.TextUtil;
 import forge.util.Utils;
@@ -168,6 +170,7 @@ public abstract class LobbyScreen extends LaunchScreen implements ILobbyView {
         cbVariants.addItem(GameType.FaceTheHydra);
         cbVariants.addItem(GameType.BattleTheHorde);
         cbVariants.addItem(GameType.DefeatAGod);
+        cbVariants.addItem(GameType.Dandan);
         cbVariants.addItem(Forge.getLocalizer().getMessage("lblMore"));
         cbVariants.setChangedHandler(event -> {
             if (cbVariants.getSelectedIndex() <= 0) {
@@ -184,6 +187,9 @@ public abstract class LobbyScreen extends LaunchScreen implements ILobbyView {
             else {
                 lobby.clearVariants();
                 lobby.applyVariant((GameType)cbVariants.getSelectedItem());
+                if (cbVariants.getSelectedItem() == GameType.Dandan) {
+                    chooseDandanDeck();
+                }
                 updateLayoutForVariants();
                 Set<GameType> gameTypes = new HashSet<>();
                 for (GameType variant: lobby.getAppliedVariants()) {
@@ -278,6 +284,20 @@ public abstract class LobbyScreen extends LaunchScreen implements ILobbyView {
             }
             cbVariants.setText(text.toString());
         }
+    }
+
+    /** Dandan: which of the shared decks to play it with (DandanDecks), asked as it's chosen. */
+    private static void chooseDandanDeck() {
+        final List<String> names = DandanDecks.names();
+        if (names.size() < 2) {
+            return;
+        }
+        GuiChoose.oneOrNone(Forge.getLocalizer().getMessage("lblDandanDeck") + " (" + DandanDecks.selectedName() + ")",
+                names, chosen -> {
+                    if (chosen != null) {
+                        DandanDecks.select(chosen);
+                    }
+                });
     }
 
     void updateLayoutForVariants() {
@@ -482,6 +502,7 @@ public abstract class LobbyScreen extends LaunchScreen implements ILobbyView {
             lstVariants.addItem(new Variant(GameType.FaceTheHydra));
             lstVariants.addItem(new Variant(GameType.BattleTheHorde));
             lstVariants.addItem(new Variant(GameType.DefeatAGod));
+            lstVariants.addItem(new Variant(GameType.Dandan));
         }
 
         @Override
@@ -508,6 +529,9 @@ public abstract class LobbyScreen extends LaunchScreen implements ILobbyView {
                 }
                 else {
                     lobby.applyVariant(gameType);
+                    if (gameType == GameType.Dandan) {
+                        chooseDandanDeck();
+                    }
                 }
                 updateVariantSelection();
                 updateLayoutForVariants();

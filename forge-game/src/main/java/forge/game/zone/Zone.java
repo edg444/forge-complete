@@ -152,7 +152,7 @@ public class Zone implements java.io.Serializable, Iterable<Card> {
         }
         onChanged();
 
-        game.fireEvent(new GameEventZone(zoneType, getPlayer(), EventValueChangeType.Added, c));
+        fireZoneEvent(EventValueChangeType.Added, c);
    }
 
     public final boolean contains(final Card c) {
@@ -168,7 +168,7 @@ public class Zone implements java.io.Serializable, Iterable<Card> {
         cardList.add(index, c);
         c.setShadowZone(this);
         onChanged();
-        game.fireEvent(new GameEventZone(zoneType, getPlayer(), EventValueChangeType.Added, c));
+        fireZoneEvent(EventValueChangeType.Added, c);
     }
 
     public void remove(final Card c) {
@@ -182,7 +182,7 @@ public class Zone implements java.io.Serializable, Iterable<Card> {
         }
         if (cardList.remove(c)) {
             onChanged();
-            game.fireEvent(new GameEventZone(zoneType, getPlayer(), EventValueChangeType.Removed, c));
+            fireZoneEvent(EventValueChangeType.Removed, c);
         }
     }
 
@@ -196,7 +196,7 @@ public class Zone implements java.io.Serializable, Iterable<Card> {
             cardList.add(c);
         }
         onChanged();
-        game.fireEvent(new GameEventZone(zoneType, getPlayer(), EventValueChangeType.ComplexUpdate, null));
+        fireZoneEvent(EventValueChangeType.ComplexUpdate, null);
     }
 
     public final void removeAllCards(boolean forcedWithoutEvents) {
@@ -214,7 +214,16 @@ public class Zone implements java.io.Serializable, Iterable<Card> {
     }
 
     public final boolean is(final ZoneType zone, final Player player) {
-        return zoneType == zone && player == getPlayer();
+        return zoneType == zone && belongsTo(player);
+    }
+
+    /** Whether this is that player's zone - for a shared zone (Dandan), each sharing player's. */
+    public boolean belongsTo(final Player player) {
+        return player == getPlayer();
+    }
+
+    protected void fireZoneEvent(final EventValueChangeType type, final Card c) {
+        game.fireEvent(new GameEventZone(zoneType, getPlayer(), type, c));
     }
 
     public final ZoneType getZoneType() {

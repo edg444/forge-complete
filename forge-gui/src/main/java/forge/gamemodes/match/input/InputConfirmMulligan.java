@@ -72,6 +72,9 @@ public class InputConfirmMulligan extends InputSyncronizedBase {
         }
 
         getController().getGui().updateButtons(getOwner(), localizer.getMessage("lblKeep"), localizer.getMessage("lblMulligan"), true, true, true);
+        if (player.isFreeMulliganOffered()) {
+            sb.append(localizer.getMessage("lblDandanFreeMulligan")).append("\n\n");
+        }
         sb.append(localizer.getMessage("lblDoYouWantToKeepYourHand"));
 
         showMessage(sb.toString());

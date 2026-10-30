@@ -83,6 +83,8 @@ public class Game {
     // CR 805/810: teams playing under Two-Headed Giant rules - every team in a Two-Headed Giant game, or the one
     // team Better Than One makes of "your side of the game" (Unstable FAQ) while everyone else plays on as before
     private final Set<Integer> giantTeams = Sets.newHashSet();
+    // Dandan: the zone types every player shares one of
+    private final Set<ZoneType> sharedZones = EnumSet.noneOf(ZoneType.class);
     private final PlayerCollection lostPlayers = new PlayerCollection();
     private GameEntityViewMap<Player, PlayerView> playerCache = new GameEntityViewMap<Player, PlayerView>();
 
@@ -513,9 +515,41 @@ public class Game {
         }
         forge.game.herospath.HerosPath.onGameCreated(this);
 
+        if (rules.hasAppliedVariant(GameType.Dandan)) {
+            shareZones(EnumSet.of(ZoneType.Library, ZoneType.Graveyard));
+        }
+
         view.updatePlayers(this);
 
         subscribeToEvents(gameLog.getEventVisitor());
+    }
+
+    /**
+     * Dandan (Forgetful Fish): the players share one library and one graveyard, and anything referring to "your"
+     * library or graveyard means the shared one (Secret Lair Dandan Deck rules, 2026-03-15). Whatever was in each
+     * player's zone of that type goes into it, the first player's first.
+     */
+    public void shareZones(final Set<ZoneType> types) {
+        for (final ZoneType z : types) {
+            final SharedPlayerZone shared = new SharedPlayerZone(z, allPlayers);
+            final CardCollection cards = new CardCollection();
+            for (final Player p : allPlayers) {
+                cards.addAll(p.getZone(z).getCards(false));
+            }
+            shared.setCards(cards);
+            for (final Player p : allPlayers) {
+                p.useSharedZone(shared);
+            }
+            sharedZones.add(z);
+        }
+    }
+
+    public boolean hasSharedZones() {
+        return !sharedZones.isEmpty();
+    }
+
+    public boolean isSharedZone(final ZoneType z) {
+        return sharedZones.contains(z);
     }
 
     public GameView getView() {
@@ -940,9 +974,14 @@ public class Game {
         final CardCollection cards = new CardCollection(0);
 
         for (int pi = 0; pi < playerCount; pi++) {
-            // a card is in one zone of one player only: no duplicate check needed
+            // a card is in one zone of one player only, so no duplicate check is needed - except in a shared zone
             final Player p = players.get(pi);
-            cards.addAllUnique(zone == ZoneType.Library ? p.getCardsInAllLibraries() : p.getCardsIn(zone, false));
+            final CardCollectionView zoneCards = zone == ZoneType.Library ? p.getCardsInAllLibraries() : p.getCardsIn(zone, false);
+            if (isSharedZone(zone)) {
+                cards.addAll(zoneCards);
+            } else {
+                cards.addAllUnique(zoneCards);
+            }
         }
         if (zone == ZoneType.Battlefield && interplanarPlayer != null) {
             cards.addAllUnique(interplanarPlayer.getCardsIn(zone, false));
@@ -953,7 +992,7 @@ public class Game {
     // cached: ZoneType.values() clones the array on every call
     private static final ZoneType[] ALL_ZONE_TYPES = ZoneType.values();
 
-    // z is a single zone type, so the cards of the different players (and the stack) are all distinct
+    // z is a single zone type, so the cards of the different players (and the stack) are all distinct, unless shared
     private void addCardsIn(final CardCollection cards, final ZoneType z, final PlayerCollection players, final int playerCount) {
         if (z == ZoneType.Stack) {
             cards.addAllUnique(getStackZone().getCards());
@@ -961,7 +1000,12 @@ public class Game {
         }
         for (int i = 0; i < playerCount; i++) {
             final Player p = players.get(i);
-            cards.addAllUnique(z == ZoneType.Library ? p.getCardsInAllLibraries() : p.getCardsIn(z));
+            final CardCollectionView zoneCards = z == ZoneType.Library ? p.getCardsInAllLibraries() : p.getCardsIn(z);
+            if (isSharedZone(z)) {
+                cards.addAll(zoneCards);
+            } else {
+                cards.addAllUnique(zoneCards);
+            }
         }
         if (z == ZoneType.Battlefield && interplanarPlayer != null) {
             cards.addAllUnique(interplanarPlayer.getCardsIn(z));

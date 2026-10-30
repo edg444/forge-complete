@@ -63,6 +63,8 @@ public class ForgePreferences extends AbstractPreferences<ForgePreferences.FPref
         MATCH_HOT_SEAT_MODE("false"),
 
         UI_MATCHES_PER_GAME("3"),
+        // the shared deck for Dandan games, by its deck name (forge.gamemodes.match.DandanDecks)
+        DANDAN_DECK(""),
         UI_APPLIED_VARIANTS(""),
         UI_RANDOM_FOIL ("false"),
         UI_AVATARS ("0,1"),
