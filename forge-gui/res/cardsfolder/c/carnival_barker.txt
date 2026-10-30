@@ -5,7 +5,7 @@ PT:3/3
 # Honor system: thirty seconds of lauding to real people, and its controller enters how many applauded. The AI has no
 # audience, so a simulated one: up to three people, as for Gimme Five's high fives (user, 2026-10-21). "Only once" is for
 # this object (rulings): a new one, or the same one back from another zone, can bark again.
-A:AB$ ChooseCard | Cost$ T | Defined$ You | Choices$ Creature.YouCtrl | ChoiceTitle$ Choose a creature you control to laud | Mandatory$ True | SorcerySpeed$ True | GameActivationLimit$ 1 | AILogic$ AtLeast1 | SubAbility$ DBApplause | SpellDescription$ You have thirty seconds to laud a creature you control to any people outside the game. Until end of turn, that creature gains trample and haste and gets +X/+0, where X is the number of those people who applauded. Activate only as a sorcery and only once.
+A:AB$ ChooseCard | Cost$ T | Defined$ You | Choices$ Creature.YouCtrl | ChoiceTitle$ Choose a creature you control to laud | Mandatory$ True | SorcerySpeed$ True | GameActivationLimit$ 1 | AILogic$ PumpAttacker | SubAbility$ DBApplause | SpellDescription$ You have thirty seconds to laud a creature you control to any people outside the game. Until end of turn, that creature gains trample and haste and gets +X/+0, where X is the number of those people who applauded. Activate only as a sorcery and only once.
 SVar:DBApplause:DB$ ChooseNumber | Defined$ You | Min$ 0 | Max$ 99 | ListTitle$ You have thirty seconds to laud the creature to people outside the game. How many applauded? | AILogic$ HighFives | SubAbility$ DBPump
 SVar:DBPump:DB$ Pump | Defined$ ChosenCard | NumAtt$ +X | KW$ Trample & Haste | SubAbility$ DBCleanup
 SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True

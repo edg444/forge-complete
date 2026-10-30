@@ -34,6 +34,7 @@ Ape:Apes
 Archer:Archers
 Archon:Archons
 Armadillo:Armadillos
+Armored:Armored
 Art:Arts
 Artificer:Artificers
 Army:Armies
@@ -65,6 +66,7 @@ Bison:Bisons
 Blinkmoth:Blinkmoths
 Boar:Boars
 Borg:Borg
+Boxer:Boxers
 Brainiac:Brainiacs
 Bringer:Bringers
 Brushwagg:Brushwaggs
@@ -79,15 +81,18 @@ Carrier:Carriers
 Cat:Cats
 Centaur:Centaurs
 Chameleon:Chameleons
+Champion:Champions
 Chef:Chefs
 Chicken:Chickens
 Chimera:Chimeras
 Child:Children
 Citizen:Citizens
+Clamfolk:Clamfolk
 Cleric:Clerics
 Clown:Clowns
 Cockatrice:Cockatrices
 Construct:Constructs
+Cow:Cows
 Coward:Cowards
 Coyote:Coyotes
 Crab:Crabs
@@ -97,6 +102,7 @@ Cyberman:Cybermen
 Cyborg:Cyborgs
 Cyclops:Cyclopes
 Dalek:Daleks
+Designer:Designers
 Detective:Detectives
 Dauthi:Dauthis
 Deer:Deer
@@ -161,12 +167,14 @@ Graveborn:Graveborn
 Gremlin:Gremlins
 Griffin:Griffins
 Guest:Guests
+Gus:Gus
 Hag:Hags
 Half:Halves
 Halfling:Halflings
 Hamster:Hamsters
 Harpy:Harpies
 Hatificer:Hatificers
+Hawk:Hawks
 Head:Heads
 Hedgehog:Hedgehogs
 Hellion:Hellions
@@ -219,6 +227,7 @@ Lizard:Lizards
 Llama:Llamas
 Lobster:Lobsters
 Locus:Loci
+Mammoth:Mammoths
 Manticore:Manticores
 Masticore:Masticores
 Mercenary:Mercenaries
@@ -238,6 +247,7 @@ Moogle:Moogles
 Moonfolk:Moonfolk
 Mount:Mounts
 Mouse:Mice
+Mummy:Mummies
 Mutant:Mutants
 Myr:Myrs
 Mystic:Mystics
@@ -325,6 +335,7 @@ Shapeshifter:Shapeshifters
 Shark:Sharks
 Sheep:Sheep
 Shi'ar:Shi'ar
+Ship:Ships
 Siren:Sirens
 Skeleton:Skeletons
 Sketch:Sketches
@@ -348,6 +359,7 @@ Spike:Spikes
 Spirit:Spirits
 Splinter:Splinters
 Sponge:Sponges
+Spuzzem:Spuzzems
 Spy:Spies
 Squid:Squids
 Squirrel:Squirrels
@@ -370,7 +382,9 @@ Thrull:Thrulls
 Tiefling:Tieflings
 Time Lord:Time Lords
 Tosk:Tosks
+Townsfolk:Townsfolk
 Toy:Toys
+Tree:Trees
 Treefolk:Treefolk
 Tribble:Tribbles
 Trill:Trills
@@ -411,6 +425,7 @@ Wurm:Wurms
 Xindi:Xindi
 Yeti:Yetis
 Zombie:Zombies
+Zonian:Zonians
 Zubera:Zuberas
 [SpellTypes]
 Adventure

@@ -329,6 +329,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Toy Boat** (unh/130) showed no subtype: Ship, an Un-only creature type, wasn't in `TypeLists.txt`. Fourteen
+  more creature types were missing the same way (Armored, Boxer, Champion, Clamfolk, Cow, Designer, Gus, Hawk,
+  Mammoth, Mummy, Spuzzem, Townsfolk, Tree, Zonian; type lines checked against Scryfall). New
+  `ScriptSubtypeListTest` fails on any creature or kindred script subtype that `TypeLists.txt` doesn't have.
+- **Carnival Barker AI** lauded itself, though it taps to activate and so couldn't attack. New ChooseCard
+  `AILogic$ PumpAttacker`: activated only in the AI's precombat main phase, and only with an untapped creature that
+  could attack once given haste (not the host when it taps to activate), which it picks.
+
 ### 2026-10-29, twenty-sixth deploy (desktop, Android, GitHub) — 37-commit upstream merge
 
 - **Upstream merge** (37 commits). Upstream's mandatory-choice pass (`Mandatory$ True` on ChooseCard) and its new
@@ -567,7 +575,7 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     - Kept, with reasons: Shieldmage Advocate, Arcane Lighthouse, Detection Tower, Repel Intruders, Unnerving
       Assault, Firespout, Panoptic Mirror, Spellweaver Helix, Sylvan Library, Unstable Footing, Desolation Giant,
       Dragonrage, Jetfire, Bane of the Living, Phyrexian Splicer, Mindblaze, Abyssal Persecutor, Mystic Reflection,
-      Soul Strings, Assault Suit, Cabal Therapist, Island Sanctuary, Lim-D�l's Vault, Moonlight Bargain, Krovikan
+      Soul Strings, Assault Suit, Cabal Therapist, Island Sanctuary, Lim-Dûl's Vault, Moonlight Bargain, Krovikan
       Plague, Leeches, and the prevent-and-deal shields (Healing Grace, Acolyte's Reward, Divine Deflection,
       Refraction Trap, Vengeful Archon).
   - *Final pass, batch 132* (`NoAiBatch132Test`):
@@ -1440,7 +1448,6 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   each rare 8 times a mythic, so a mythic turned up in about 1 pack in 29. Still not handled: a foil Will and Rowan
   pair uses the regular #1/#2 printings instead of the foil-only alternate art (#255/#256), and a foil uncommon partner
   pair can't open, since the uncommon sheet the foil is drawn from leaves partners out.
-
 
 - **Set review: Limited Edition Alpha** (all 290 names, `LimitedEditionAlphaAuditTest`).
   - Rock Hydra's `{R}{R}{R}` and Cyclopean Tomb could be activated in an opponent's upkeep ("Activate only

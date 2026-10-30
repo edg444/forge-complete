@@ -7,6 +7,7 @@ import forge.game.Game;
 import forge.game.ability.AbilityUtils;
 import forge.game.card.*;
 import forge.game.combat.Combat;
+import forge.game.combat.CombatUtil;
 import forge.game.keyword.Keyword;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
@@ -73,6 +74,13 @@ public class ChooseCardAi extends SpellAbilityAi {
             }
         }
         return worst;
+    }
+
+    /** Untapped creatures that could attack this turn once given haste. */
+    private static CardCollection possibleAttackers(final Player ai, final Iterable<Card> options) {
+        final Player defender = AiAttackController.choosePreferredDefenderPlayer(ai);
+        return CardLists.filter(options, c -> c.isCreature() && c.isUntapped()
+                && CombatUtil.canAttackNextTurn(c, defender));
     }
 
     /**
@@ -216,6 +224,16 @@ public class ChooseCardAi extends SpellAbilityAi {
                 ownChoices = CardLists.filter(choices, CardPredicates.isControlledByAnyOf(ai.getAllies()));
             }
             return !ownChoices.isEmpty();
+        } else if (aiLogic.equals("PumpAttacker")) {
+            // The pump only pays off in this turn's combat, so it's worthless after combat or on a creature
+            // that's tapped - which includes the host itself when it taps to activate (Carnival Barker).
+            if (!game.getPhaseHandler().is(PhaseType.MAIN1, ai)) {
+                return false;
+            }
+            if (sa.getPayCosts().hasTapCost()) {
+                choices = CardLists.filter(choices, c -> !c.equals(host));
+            }
+            return !possibleAttackers(ai, choices).isEmpty();
         } else if (aiLogic.equals("GoodCreature")) {
             for (Card choice : choices) {
                 if (choice.isCreature() && ComputerUtilCard.evaluateCreature(choice) >= 250) {
@@ -377,6 +395,9 @@ public class ChooseCardAi extends SpellAbilityAi {
                 // Choose the best (hopefully the fattest, whatever) creature so that hopefully it won't die too easily
                 choice = ComputerUtilCard.getBestAI(creatures);
             }
+        } else if ("PumpAttacker".equals(logic)) {
+            final CardCollection attackers = possibleAttackers(ai, options);
+            choice = attackers.isEmpty() ? ComputerUtilCard.getBestAI(options) : ComputerUtilCard.getBestCreatureAI(attackers);
         } else if ("NextTurnAttacker".equals(logic)) {
             choice = ComputerUtilCard.getBestCreatureToAttackNextTurnAI(ai, options);
         } else if ("TargetHasChoices".equals(logic)) {

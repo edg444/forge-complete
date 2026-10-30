@@ -113,4 +113,35 @@ public class UnfinityRedBatchTest extends AITest {
         AssertJUnit.assertEquals(3 + applause, barker.getNetPower());
         AssertJUnit.assertTrue(barker.hasKeyword(Keyword.TRAMPLE) && barker.hasKeyword(Keyword.HASTE));
     }
+
+    @Test
+    public void testCarnivalBarkerAiLaudsAnAttacker() {
+        final Game game = initAndCreateGame();
+        final Player ai = game.getPlayers().get(1);
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN1, ai);
+        final Card barker = addCard("Carnival Barker", ai);
+        barker.setSickness(false);
+        SpellAbility laud = null;
+        for (final SpellAbility s : barker.getSpellAbilities()) {
+            if (s.isActivatedAbility()) {
+                laud = s;
+            }
+        }
+        laud.setActivatingPlayer(ai);
+        final AiController aic = ((PlayerControllerAi) ai.getController()).getAi();
+        AssertJUnit.assertNotSame("the barker taps to activate, so it can't laud itself into an attack",
+                AiPlayDecision.WillPlay, aic.canPlaySa(laud));
+
+        final Card bear = addCard("Grizzly Bears", ai);
+        AssertJUnit.assertEquals(AiPlayDecision.WillPlay, aic.canPlaySa(laud));
+
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN2, ai);
+        AssertJUnit.assertNotSame("no combat left to attack in", AiPlayDecision.WillPlay, aic.canPlaySa(laud));
+
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN1, ai);
+        barker.setTapped(true);
+        AbilityUtils.resolve(laud);
+        AssertJUnit.assertTrue("the summoning-sick bear gets haste", bear.hasKeyword(Keyword.HASTE));
+        AssertJUnit.assertFalse(barker.hasKeyword(Keyword.HASTE));
+    }
 }
