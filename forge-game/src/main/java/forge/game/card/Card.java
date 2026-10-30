@@ -2849,7 +2849,11 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
 
     public final void addChangedCardKeywordsRemoving(final java.util.function.Predicate<KeywordInterface> matches,
             final long timestamp, final StaticAbility st) {
-        changedCardKeywords.put(timestamp, st == null ? 0L : st.getId(),
+        addChangedCardKeywordsRemoving(matches, timestamp, st == null ? 0L : st.getId());
+    }
+    public final void addChangedCardKeywordsRemoving(final java.util.function.Predicate<KeywordInterface> matches,
+            final long timestamp, final long orderId) {
+        changedCardKeywords.put(timestamp, orderId,
                 new KeywordsChange((Iterable<KeywordInterface>) null, (Collection<String>) null, false).setRemoveMatching(matches));
         updateKeywords();
     }
@@ -6097,6 +6101,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
             result = StaticAbility.create(str, this, stAb.getCardState(), false);
             // apply text changes from the statics host
             result.changeTextIntrinsic(stAb.getChangedTextColors(), stAb.getChangedTextTypes());
+            result.setGrantor(stAb);
             storedStaticAbility.put(stAb, str, result);
         }
         return result;
@@ -6338,6 +6343,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
     }
     public final List<KeywordInterface> addChangedCardKeywords(final List<String> keywords, final List<String> removeKeywords,
             final boolean removeAllKeywords, final long timestamp, final StaticAbility st, final boolean updateView) {
+        return addChangedCardKeywords(keywords, removeKeywords, removeAllKeywords, timestamp, st, st == null ? 0L : st.getId(), updateView);
+    }
+    public final List<KeywordInterface> addChangedCardKeywords(final List<String> keywords, final List<String> removeKeywords,
+            final boolean removeAllKeywords, final long timestamp, final StaticAbility st, final long orderId, final boolean updateView) {
         List<KeywordInterface> kws = Lists.newArrayList();
         if (keywords != null) {
             long idx = 1;
@@ -6358,7 +6367,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         }
 
         final KeywordsChange newCks = new KeywordsChange(kws, removeKeywords, removeAllKeywords);
-        changedCardKeywords.put(timestamp, st == null ? 0l : st.getId(), newCks);
+        changedCardKeywords.put(timestamp, orderId, newCks);
 
         if (updateView) {
             updateKeywords();

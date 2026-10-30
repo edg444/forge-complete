@@ -67,6 +67,7 @@ import forge.util.collect.FCollectionView;
 
 import io.sentry.Breadcrumb;
 import io.sentry.Sentry;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.jgrapht.alg.cycle.SzwarcfiterLauerSimpleCycles;
 import org.jgrapht.graph.DefaultDirectedGraph;
@@ -87,7 +88,13 @@ public class GameAction {
     private boolean holdCheckingStaticAbilities = false;
 
     private final static Comparator<StaticAbility> effectOrder = Comparator.comparing(StaticAbility::isCharacteristicDefining).reversed()
-            .thenComparing(StaticAbility::getTimestamp);
+            .thenComparing(StaticAbility::getTimestamp).thenComparing(StaticAbility::getId);
+
+    // the layers whose card tables replay changes in (timestamp, static id) order, so application order shows
+    private final static Set<StaticAbilityLayer> TABLE_ORDERED_LAYERS = EnumSet.of(StaticAbilityLayer.TYPE, StaticAbilityLayer.ABILITIES, StaticAbilityLayer.SETPT);
+    // above any static id, so a late-applied effect sorts after everything else sharing its timestamp
+    private final static long LATE_ORDER_BASE = 1L << 40;
+    private long lateOrder = 0;
 
     public GameAction(Game game0) {
         game = game0;
@@ -1610,6 +1617,7 @@ public class GameAction {
         for (final StaticAbilityLayer layer : StaticAbilityLayer.CONTINUOUS_LAYERS) {
             List<StaticAbility> toAdd = Lists.newArrayList();
             List<StaticAbility> staticsForLayer = Lists.newArrayList();
+            long[] lastOrder = null;
             for (StaticAbility stAb : staticAbilities) {
                 if (stAb.getLayers().contains(layer)) {
                     staticsForLayer.add(stAb);
@@ -1623,6 +1631,7 @@ public class GameAction {
                     stAb = findStaticAbilityToApply(layer, staticsForLayer, preList, affectedPerAbility, dependencies);
                 }
                 staticsForLayer.remove(stAb);
+                lastOrder = recordOrder(stAb, layer, lastOrder);
                 final CardCollectionView previouslyAffected = affectedPerAbility.get(stAb);
                 final CardCollectionView affectedHere;
                 if (previouslyAffected == null) {
@@ -1641,11 +1650,15 @@ public class GameAction {
                     affectedPerLayer.computeIfAbsent(layer, l -> Sets.newHashSet()).addAll(affectedHere);
                     for (final Card c : affectedHere) {
                         for (final StaticAbility st2 : c.getStaticAbilities()) {
-                            if (!staticAbilities.contains(st2) && st2.checkMode(StaticAbilityMode.Continuous) && st2.zonesCheck()) {
+                            if (!staticAbilities.contains(st2) && !toAdd.contains(st2) && st2.checkMode(StaticAbilityMode.Continuous) && st2.zonesCheck()) {
                                 toAdd.add(st2);
-                                CardCollectionView newAffected = st2.applyContinuousAbilityBefore(layer, enteringWith != null && enteringWith.contains(st2.getHostCard()) ? CardCollection.EMPTY : preList);
-                                if (newAffected != null) {
-                                    affectedPerLayer.computeIfAbsent(layer, l -> Sets.newHashSet()).addAll(newAffected);
+                                // CR 613.7a: a gained ability waits its turn by its own timestamp among the effects still to apply here
+                                if (st2.getLayers().contains(layer)) {
+                                    int index = 0;
+                                    while (index < staticsForLayer.size() && effectOrder.compare(staticsForLayer.get(index), st2) <= 0) {
+                                        index++;
+                                    }
+                                    staticsForLayer.add(index, st2);
                                 }
                             }
                         }
@@ -1656,6 +1669,8 @@ public class GameAction {
                 // dependent on or independent of one or more other effects that have not yet been applied.
             }
             staticAbilities.addAll(toAdd);
+            // gained abilities join the later layers in timestamp order, not after everything else
+            staticAbilities.sort(effectOrder);
             for (Player p : game.getPlayers()) {
                 p.afterStaticAbilityLayer(layer);
             }
@@ -1790,12 +1805,13 @@ public class GameAction {
 
             boolean exists = stAb.getHostCard().getStaticAbilities().contains(stAb);
             boolean compareAffected = false;
-            CardCollectionView affectedHere = affectedPerAbility.get(stAb);
+            final CardCollectionView previouslyAffected = affectedPerAbility.get(stAb);
+            CardCollectionView affectedHere = previouslyAffected;
             if (affectedHere == null) {
                 affectedHere = StaticAbilityContinuous.getAffectedCards(stAb, preList);
                 compareAffected = true;
             }
-            Iterable<Object> effectResults = generateContinuousEffectChanges(layer, stAb);
+            Iterable<Object> effectResults = generateContinuousEffectChanges(layer, stAb, preList, previouslyAffected);
 
             for (StaticAbility otherStAb : staticsForLayer) {
                 if (stAb == otherStAb) {
@@ -1818,7 +1834,8 @@ public class GameAction {
                 // CR 613.8a An effect is said to "depend on" another if
                 // * (a) + (c) already handled *
                 // (b) applying the other would change the text or the existence of the first effect...
-                boolean dependency = exists != stAb.getHostCard().getStaticAbilities().contains(stAb);
+                // (CR 613.6: once an effect has started applying in an earlier layer, losing its ability doesn't end it)
+                boolean dependency = compareAffected && exists != stAb.getHostCard().getStaticAbilities().contains(stAb);
                 // ...what it applies to...
                 if (!dependency && compareAffected) {
                     CardCollectionView affectedAfterOther = StaticAbilityContinuous.getAffectedCards(stAb, preList);
@@ -1826,7 +1843,7 @@ public class GameAction {
                 }
                 // ...or what it does to any of the things it applies to
                 if (!dependency) {
-                    Iterable<Object> effectResultsAfterOther = generateContinuousEffectChanges(layer, stAb);
+                    Iterable<Object> effectResultsAfterOther = generateContinuousEffectChanges(layer, stAb, preList, previouslyAffected);
                     dependency = !effectResults.equals(effectResultsAfterOther);
                 }
 
@@ -1879,13 +1896,87 @@ public class GameAction {
         return statics.get(0);
     }
 
-    private Iterable<Object> generateContinuousEffectChanges(StaticAbilityLayer layer, StaticAbility stAb) {
+    private Iterable<Object> generateContinuousEffectChanges(StaticAbilityLayer layer, StaticAbility stAb, CardCollectionView preList, CardCollectionView previouslyAffected) {
         List<Object> result = Collections.emptyList();
         if (layer == StaticAbilityLayer.CONTROL) {
             result = Lists.newArrayList();
             result.addAll(AbilityUtils.getDefinedPlayers(stAb.getHostCard(), stAb.getParam("GainControl"), stAb));
+        } else if (resultReadsSameLayer(layer, stAb)) {
+            // apply it on its own and read back what it recorded for each object, then take it off again
+            final CardCollectionView affected = previouslyAffected != null ? stAb.applyContinuousAbility(layer, previouslyAffected)
+                    : stAb.applyContinuousAbilityBefore(layer, preList);
+            if (affected == null) {
+                return result;
+            }
+            final StaticEffect se = game.getStaticEffects().getStaticEffect(stAb);
+            final long ts = se.getLayerTimestamp(layer);
+            final long id = se.getLayerId(layer);
+            result = Lists.newArrayList();
+            for (final Card c : affected) {
+                result.add(c);
+                if (layer == StaticAbilityLayer.SETPT) {
+                    result.add(c.getSetPTTable().get(ts, id));
+                    continue;
+                }
+                final List<String> changes = Lists.newArrayList();
+                final ICardTraitChanges traits = c.getChangedCardTraits().get(ts, id);
+                if (traits != null) {
+                    traits.applySpellAbility(Lists.newArrayList()).forEach(t -> changes.add(t.toString()));
+                    traits.applyTrigger(Lists.newArrayList()).forEach(t -> changes.add(t.toString()));
+                    traits.applyReplacementEffect(Lists.newArrayList()).forEach(t -> changes.add(t.toString()));
+                    traits.applyStaticAbility(Lists.newArrayList()).forEach(t -> changes.add(t.toString()));
+                }
+                final forge.game.keyword.KeywordsChange keywords = c.getChangedCardKeywords().get(ts, id);
+                if (keywords != null) {
+                    keywords.getKeywords().forEach(k -> changes.add(k.getOriginal()));
+                }
+                Collections.sort(changes);
+                result.add(changes);
+            }
+            game.getStaticEffects().removeStaticEffect(stAb, layer, previouslyAffected == null);
         }
         return result;
+    }
+
+    /**
+     * CR 613.8a "what it does": in the ability and P/T-setting layers only an effect that copies other objects'
+     * abilities or computes its values can do something different once another effect applies, so the rest
+     * skip the extra trial application.
+     */
+    private static boolean resultReadsSameLayer(StaticAbilityLayer layer, StaticAbility stAb) {
+        if (layer == StaticAbilityLayer.ABILITIES) {
+            for (final String key : stAb.getMapParams().keySet()) {
+                if (key.startsWith("Gains") || key.startsWith("Share")) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        if (layer == StaticAbilityLayer.SETPT) {
+            return !StringUtils.isNumeric(stAb.getParamOrDefault("SetPower", "0"))
+                    || !StringUtils.isNumeric(stAb.getParamOrDefault("SetToughness", "0"));
+        }
+        return false;
+    }
+
+    /**
+     * CR 613.8b: a dependent effect waits until just after the effects it depends on, even when its own
+     * timestamp is earlier. The card tables replay changes in (timestamp, static id) order, so an effect applied
+     * after one with a later key is recorded under a key just after it instead of its own.
+     */
+    private long[] recordOrder(StaticAbility stAb, StaticAbilityLayer layer, long[] lastOrder) {
+        // characteristic-defining abilities have tables of their own and always come first
+        if (!TABLE_ORDERED_LAYERS.contains(layer) || stAb.isCharacteristicDefining()) {
+            return lastOrder;
+        }
+        final long ts = stAb.getTimestamp();
+        final long id = stAb.getId();
+        if (lastOrder == null || ts > lastOrder[0] || (ts == lastOrder[0] && id > lastOrder[1])) {
+            return new long[] {ts, id};
+        }
+        final long[] order = {lastOrder[0], LATE_ORDER_BASE + ++lateOrder};
+        game.getStaticEffects().getStaticEffect(stAb).setLayerOrder(layer, order[0], order[1]);
+        return order;
     }
 
     public final boolean checkStateEffects(final boolean runEvents) {

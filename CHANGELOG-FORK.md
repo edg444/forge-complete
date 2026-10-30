@@ -413,6 +413,26 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - Not covered: a network lobby doesn't send a remote seat's Hero cards to the host.
   - `HerosPathTest` (19, including a whole game of each challenge with two AI heroes).
 
+- **Layer timestamps and dependency, CR 613** (user request: find and fix where layers and dependency differ
+  from the Comprehensive Rules, September 25, 2026). `LayerDependencyTest` covers each case.
+  - A static ability granted by an effect has the later of its object's and that effect's timestamps (613.7a,
+    the rule's own Rune of Flight/Colossus Hammer example). It had the host's, so an Aura that entered between
+    the Hammer and the Rune beat the Rune's granted flying. `StaticAbility.setGrantor`.
+  - 613.8a's "what it does" is now compared for effects that copy other objects' abilities (`Gains...` and
+    `Share...` params) or compute base P/T; it was only ever compared in the control layer. Experiment Kraj now
+    has an ability Arcane Teachings granted after Kraj entered.
+  - A dependent effect applied after a later-timestamped one is now recorded after it as well (layers 4, 6,
+    7b). Cards replay those changes in (timestamp, static id) order, so the dependency order was lost: an older
+    Blood Moon correctly waited for Life and Limb, but the Saproling still ended up a Forest.
+    `StaticEffect.setLayerOrder` gives such an effect a key just past the last one applied.
+  - Abilities gained during the pass are applied among the remaining effects by timestamp instead of at once,
+    and are re-sorted for the later layers.
+  - Losing its ability no longer counts as a dependency for an effect that already started in an earlier layer
+    (613.6).
+  - Not changed: layers 5 and 7c still skip dependency checks (no card has a color- or P/T-dependent effect
+    there), two characteristic-defining abilities depending on each other, control results kept by timestamp
+    alone, and player and rules effects (613.10-11).
+
 - **Replays of AI-vs-AI games** (user request). Upstream's local replay (#12266) recorded only games with exactly
   one human, so a watched AI-only match left nothing to rewatch. `ReplaySession.begin` now records one too, from
   a spectator's seat: no player of ours, so every card shows on playback as when it was watched live (the
