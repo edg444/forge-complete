@@ -351,6 +351,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Replays of AI-vs-AI games** (user request). Upstream's local replay (#12266) recorded only games with exactly
+  one human, so a watched AI-only match left nothing to rewatch. `ReplaySession.begin` now records one too, from
+  a spectator's seat: no player of ours, so every card shows on playback as when it was watched live (the
+  forwarder's own priority and end-of-turn flushes stand in for the missing human input queue). On playback
+  `ReplayPlayer` puts Pause/Speed on the spectator's prompt (owner `null`, as live spectating does) and gives the
+  screen a spectator controller that reaches it, and both win/lose screens' Close replay stop it directly, since a
+  spectator recording has no game controller to hear the quit. Hosted and multi-human games are still not
+  recorded. Launcher and setting texts say "play or watch".
 - **Pai Gow Magic and Booster Blitz** (user request; rules from mtg.wiki/page/Pai_Gow_Magic). New lobby formats:
   everyone opens a booster and splits it into face-down piles of three, which are shuffled and become the opening
   hands of five separate games (four for Booster Blitz) with no libraries, 5 life and unlimited mana of any
@@ -362,7 +370,6 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   - With no library a game can stall for good, and the AI used to decline every draw offer. In Pai Gow it now
     takes one once its hand is empty and it has nothing that could deal damage, or the board has stopped moving
     (its creatures could attack last turn, it didn't, and no one lost life) - `PaiGowAi.acceptsDraw`.
-
 - **Commander bracket enforcement** (user request; the user chose all three modes, a warning that can be
   overridden, and AI decks made to fit). Bracket detection was already upstream's (`CommanderBracketCalculator`:
   the Bracket column and explanation views, the lobby's Maximum Bracket for generated decks); its Game Changers

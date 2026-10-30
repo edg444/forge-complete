@@ -5,6 +5,7 @@ import javax.swing.JButton;
 import forge.Singletons;
 import forge.game.GameView;
 import forge.gamemodes.match.NextGameDecision;
+import forge.gamemodes.net.client.ReplayPlayer;
 import forge.gui.SOverlayUtils;
 import forge.gui.framework.FScreen;
 import forge.interfaces.IGameController;
@@ -54,6 +55,8 @@ public class ControlWinLose {
     /** Action performed when "quit" button is pressed in default win/lose UI. */
     public void actionOnQuit() {
         nextGameAction(NextGameDecision.QUIT);
+        // A replay watched as a spectator (AI against AI) has no controller above to hear the quit
+        ReplayPlayer.stopFor(matchUI, true);
         Singletons.getControl().setCurrentScreen(FScreen.HOME_SCREEN);
     }
 

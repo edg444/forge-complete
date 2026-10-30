@@ -38,21 +38,22 @@ public final class ReplaySession implements IHasForgeLog {
     }
 
     /**
-     * Starts recording {@code game} from the point of view of its local players, or returns null when replays are
-     * off or not wanted for this kind of game (no human playing, or Adventure which runs its own match flow).
+     * Starts recording {@code game} from the point of view of its local player, or of a spectator who sees every card
+     * when only AI players are in it (as the person watching it live does). Returns null when replays are off or not
+     * wanted for this kind of game (Adventure runs its own match flow).
      */
     public static ReplaySession begin(final Game game, final List<PlayerControllerHuman> humans) {
         try {
             final boolean wanted = FModel.getPreferences() != null
                     && FModel.getPreferences().getPrefBoolean(FPref.UI_RECORD_REPLAYS);
             final GameType type = game.getRules().getGameType();
-            if (!wanted || humans.isEmpty() || type == GameType.Adventure || type == GameType.AdventureEvent) {
+            if (!wanted || type == GameType.Adventure || type == GameType.AdventureEvent) {
                 return null;
             }
-            // Local games only: one person at this device, nobody connected over the network. A replay is shown from
-            // its players' side, so recording several humans would put everyone's hidden cards in one file.
+            // Local games only: at most one person at this device, nobody connected over the network. A replay is
+            // shown from its players' side, so recording several humans would put everyone's hidden cards in one file.
             if (humans.size() > 1 || HostingServer.isHosting()
-                    || humans.get(0).getGui() instanceof forge.gamemodes.net.ProtocolGuiGame) {
+                    || !humans.isEmpty() && humans.get(0).getGui() instanceof forge.gamemodes.net.ProtocolGuiGame) {
                 return null;
             }
             final ReplayRecorder recorder = new ReplayRecorder(ReplayStore.newFile(), title(game));
@@ -86,7 +87,9 @@ public final class ReplaySession implements IHasForgeLog {
         gui.setGameView(game.getView());
         gui.setForwarder(forwarder);
         game.subscribeToEvents(forwarder);
-        // Events must be flushed on the game thread before it blocks for any human's input.
+        // Events must be flushed on the game thread before it blocks for any human's input. With no human the
+        // forwarder's own priority and end-of-turn flushes are enough, and no player is ours: the replay is watched
+        // as a spectator, with every card shown.
         final List<PlayerView> mine = new ArrayList<>();
         for (final PlayerControllerHuman hc : observed) {
             hc.getInputQueue().addObserver(forwarder);

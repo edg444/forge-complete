@@ -216,7 +216,7 @@ public class SettingsPage extends TabPage<SettingsScreen> {
             Forge.getLocalizer().getMessage("nlAnteIncludeBasicLands")), 1);
         lstSettings.addItem(new BooleanSetting(FPref.UI_RECORD_REPLAYS,
             "Record replays",
-            "Save each game you play so it can be watched again later. Only the last 20 are kept."), 1);
+            "Save each game you play or watch so it can be watched again later. Only the last 20 are kept."), 1);
         lstSettings.addItem(new BooleanSetting(FPref.MATCH_HOT_SEAT_MODE,
             Forge.getLocalizer().getMessage("lblHotSeatMode"),
             Forge.getLocalizer().getMessage("nlHotSeatMode")), 1);

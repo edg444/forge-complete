@@ -49,6 +49,8 @@ public final class ReplayPlayer implements Runnable, IHasForgeLog {
     private boolean finished;
     private int speedIndex;
     private volatile boolean controlsShown;
+    /** Set once the match screen has been asked for, which a recording with no player of ours can't show otherwise. */
+    private volatile boolean viewOpened;
     /** Set once the first batch of game events has gone through: the opening position is on screen. */
     private volatile boolean setupDone;
 
@@ -63,6 +65,8 @@ public final class ReplayPlayer implements Runnable, IHasForgeLog {
             public void channelRead(final ChannelHandlerContext ctx, final Object msg) {
                 if (msg instanceof GuiGameEvent e && e.getMethod() == ProtocolMethod.applyDelta) {
                     setupDone = true;
+                } else if (msg instanceof GuiGameEvent e && e.getMethod() == ProtocolMethod.openView) {
+                    viewOpened = true;
                 }
                 ctx.fireChannelRead(msg);
             }
@@ -73,6 +77,9 @@ public final class ReplayPlayer implements Runnable, IHasForgeLog {
             // a shared GUI (mobile) still holds the last match's view; merging into it would bind the
             // screen to the old trackers. The cast ((GameView) null) is only there to avoid an ambiguous overload.
             g.setGameView((GameView) null);
+            // A game between AI players is recorded with no player of ours, so it is watched as a spectator and the
+            // prompt's buttons go to the spectator's controller, as when it was watched live.
+            g.setSpectator(new NetGameController(client));
         }
     }
 
@@ -209,6 +216,7 @@ public final class ReplayPlayer implements Runnable, IHasForgeLog {
         }
     }
 
+    /** The player the prompt belongs to; null for a spectator, whose prompt the screens show as for live watching. */
     private PlayerView viewer() {
         if (gui instanceof AbstractGuiGame g) {
             for (final PlayerView p : g.getLocalPlayers()) {
@@ -220,7 +228,7 @@ public final class ReplayPlayer implements Runnable, IHasForgeLog {
 
     /** The first time the match screen exists, put the controls on the prompt. */
     private void showControlsOnce() {
-        if (!controlsShown && viewer() != null) {
+        if (!controlsShown && viewOpened) {
             controlsShown = true;
             updateControls();
         }
@@ -232,7 +240,7 @@ public final class ReplayPlayer implements Runnable, IHasForgeLog {
         final String cancel;
         final boolean cancelEnabled;
         synchronized (lock) {
-            if (stopped || !controlsShown && !finished) {
+            if (stopped || !viewOpened || !controlsShown && !finished) {
                 return;
             }
             if (finished) {
@@ -248,9 +256,6 @@ public final class ReplayPlayer implements Runnable, IHasForgeLog {
             }
         }
         final PlayerView who = viewer();
-        if (who == null) {
-            return;
-        }
         FThreads.invokeInEdtNowOrLater(() -> {
             gui.showPromptMessage(who, message);
             gui.updateButtons(who, ok, cancel, true, cancelEnabled, true);
