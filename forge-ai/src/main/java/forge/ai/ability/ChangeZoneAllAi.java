@@ -72,6 +72,12 @@ public class ChangeZoneAllAi extends SpellAbilityAi {
             return SpecialCardAi.LivingDeath.consider(ai, sa);
         } else if ("Timetwister".equals(aiLogic)) {
             return SpecialCardAi.Timetwister.consider(ai, sa);
+        } else if ("DaysUndoing".equals(aiLogic)) {
+            // a Timetwister that ends the turn it's cast in (always the caster's, a sorcery): last thing in the turn
+            if (!ai.getGame().getPhaseHandler().is(PhaseType.MAIN2, ai)) {
+                return new AiAbilityDecision(0, AiPlayDecision.WaitForMain2);
+            }
+            return SpecialCardAi.Timetwister.consider(ai, sa);
         } else if ("RetDiscardedThisTurn".equals(aiLogic)) {
             boolean result = !ai.getDiscardedThisTurn().isEmpty() && ai.getGame().getPhaseHandler().is(PhaseType.END_OF_TURN);
             return result ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);

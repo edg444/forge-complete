@@ -2632,6 +2632,11 @@ public class ComputerUtil {
 
         final Game game = ai.getGame();
         String chosen = "";
+        // Magical Hack and the like: the land types it planned to swap when it chose the target
+        final String swapped = forge.ai.ability.ChangeTextAi.plannedType(sa, validTypes);
+        if (swapped != null) {
+            return swapped;
+        }
         // Blood Oath, Fertile Imagination: the type it guessed when it decided
         final String guessed = forge.ai.ability.NumberGuessAi.plannedType(sa);
         if (guessed != null && validTypes.contains(guessed)) {

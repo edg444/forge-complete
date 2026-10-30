@@ -21,8 +21,7 @@ public class LondonMulligan extends AbstractMulligan {
     }
 
     @Override
-    public void mulliganDraw() {
-        player.drawCards(Math.max(0, handSizeAfterNextMulligan() - player.getOpeningHandStartersInHand()));
+    public void afterMulliganDraw() {
         int tuckingCards = tuckCardsDuringMulligan();
         CardCollection hand = new CardCollection(player.getCardsIn(ZoneType.Hand));
 

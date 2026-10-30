@@ -563,7 +563,10 @@ public class Match {
                 }
             }
 
-            preparePlayerZone(player, ZoneType.Library, myDeck.getLeft().getMain(), psc.useRandomFoil());
+            // Dandan: every player has the same deck, and it becomes the one shared library
+            if (!game.isSharedZone(ZoneType.Library) || i == 0) {
+                preparePlayerZone(player, ZoneType.Library, myDeck.getLeft().getMain(), psc.useRandomFoil());
+            }
             if (myDeck.getLeft().has(DeckSection.Sideboard)) {
                 preparePlayerZone(player, ZoneType.Sideboard, myDeck.getLeft().get(DeckSection.Sideboard), psc.useRandomFoil());
 

@@ -32,8 +32,13 @@ public class PlayerCollection extends FCollection<Player> {
     public final CardCollection getCardsIn(ZoneType zone) {
         final CardCollection result = new CardCollection(0);
         for (Player p : this) {
-            // one zone type: the cards of different players are distinct, no duplicate check needed
-            result.addAllUnique(p.getCardsIn(zone));
+            // one zone type: the cards of different players are distinct, no duplicate check needed - unless the
+            // players share that zone (Dandan)
+            if (p.getGame().isSharedZone(zone)) {
+                result.addAll(p.getCardsIn(zone));
+            } else {
+                result.addAllUnique(p.getCardsIn(zone));
+            }
         }
         return result;
     }

@@ -35,6 +35,7 @@ import forge.game.staticability.StaticAbilityAdditionalActivations;
 import forge.game.staticability.StaticAbilityCastWithFlash;
 import forge.game.staticability.StaticAbilityNumLoyaltyAct;
 import forge.game.zone.CostPaymentStack;
+import forge.game.zone.SharedPlayerZone;
 import forge.game.zone.Zone;
 import forge.game.zone.ZoneType;
 import forge.util.Expressions;
@@ -239,7 +240,7 @@ public class SpellAbilityRestriction extends SpellAbilityVariables {
                     // NOTE: this assumes that it's always possible to cast cards from hand and you don't
                     // need special permissions for that. If WotC ever prints a card that forbids casting
                     // cards from hand, this may become relevant.
-                    if (!o.grantsZonePermissions() && cardZone != null && (!cardZone.is(ZoneType.Hand) || activator != zoneHolder(c, cardZone))
+                    if (!o.grantsZonePermissions() && cardZone != null && (!cardZone.is(ZoneType.Hand) || !holdsZone(activator, c, cardZone))
                             && !c.mayPlay(activator).stream().anyMatch(opt -> opt.grantsZonePermissions())) {
                         return false;
                     }
@@ -264,7 +265,7 @@ public class SpellAbilityRestriction extends SpellAbilityVariables {
         // Reaching here means the card is in a zone of the restricted type, and that has to be
         // the activator's own. CR 109.5: a card outside the battlefield has no controller, so the
         // "you" in "your graveyard" is its owner. Shaman's Trance makes every graveyard theirs.
-        if (sa.isSpell() && activator != zoneHolder(c, cardZone)
+        if (sa.isSpell() && !holdsZone(activator, c, cardZone)
                 && !(this.getZone() == ZoneType.Graveyard && activator.hasKeyword("Shaman's Trance"))) {
             return false;
         }
@@ -282,6 +283,14 @@ public class SpellAbilityRestriction extends SpellAbilityVariables {
             return c.getGame().getGraveyardHolder();
         }
         return cardZone != null && cardZone.getPlayer() != null ? cardZone.getPlayer() : c.getOwner();
+    }
+
+    /** Whether the card's zone is the activator's own - a shared zone (Dandan) is each sharing player's. */
+    private static boolean holdsZone(final Player activator, final Card c, final Zone cardZone) {
+        if (cardZone instanceof SharedPlayerZone) {
+            return cardZone.belongsTo(activator);
+        }
+        return activator == zoneHolder(c, cardZone);
     }
 
     /**

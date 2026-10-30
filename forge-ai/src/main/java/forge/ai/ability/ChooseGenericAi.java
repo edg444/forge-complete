@@ -45,6 +45,9 @@ public class ChooseGenericAi extends SpellAbilityAi {
             return chooseFlavorJudgeTarget(ai, sa);
         } else if ("BestPT".equals(aiLogic)) {
             return chooseBestPT(ai, sa.getAdditionalAbilityList("Choices")) != null;
+        } else if ("ChangeTextKill".equals(aiLogic)) {
+            // Mind Bend, Crystal Spray: the target is the parent's, the land type swap is the choice
+            return ChangeTextAi.targetKill(ai, sa);
         }
         return false;
     }
@@ -263,6 +266,13 @@ public class ChooseGenericAi extends SpellAbilityAi {
         final Game game = host.getGame();
         final String logic = sa.getParam("AILogic");
         if (logic == null) {
+            return spells.get(0);
+        } else if ("ChangeTextKill".equals(logic)) {
+            for (final SpellAbility sp : spells) {
+                if (sp.hasParam("ChangeTypeWord")) {
+                    return sp;
+                }
+            }
             return spells.get(0);
         } else if ("DamnationChoice".equals(logic)) {
             return MiscCombatAi.damnationChoice(sa, spells);

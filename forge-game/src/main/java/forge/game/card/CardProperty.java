@@ -30,6 +30,7 @@ import forge.game.staticability.StaticAbilityCantBeBeamedUp;
 import forge.game.spellability.OptionalCost;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.SpellAbilityStackInstance;
+import forge.game.zone.SharedPlayerZone;
 import forge.game.zone.Zone;
 import forge.game.zone.ZoneType;
 import forge.item.IPaperCard;
@@ -50,6 +51,23 @@ public class CardProperty {
      * Whose a card is in zone terms - scripts write "a card in your graveyard" as YouOwn. That's its owner,
      * except that with a Graveyard Busybody out every graveyard is its controller's.
      */
+    /**
+     * Dandan: the players sharing the zone the card is in - a card in the shared library or graveyard is in each of
+     * their libraries or graveyards, so it's "yours" and "an opponent's" alike. Null for any other zone.
+     */
+    private static List<Player> sharersOf(final Card card) {
+        return card.getZone() instanceof SharedPlayerZone shared ? shared.getSharers() : null;
+    }
+
+    private static boolean anySharerIsOpponentOf(final List<Player> sharers, final Player p) {
+        for (final Player s : sharers) {
+            if (s.getOpponents().contains(p)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private static Player whoseZone(final Card card) {
         if (card.isInZone(ZoneType.Graveyard) && card.getGame() != null && card.getGame().getGraveyardHolder() != null) {
             return card.getGame().getGraveyardHolder();
@@ -970,7 +988,8 @@ public class CardProperty {
                 return false;
             }
         } else if (property.startsWith("YouCtrl")) {
-            if (!controller.equals(sourceController)) {
+            final List<Player> sharers = sharersOf(card);
+            if (sharers != null ? !sharers.contains(sourceController) : !controller.equals(sourceController)) {
                 return false;
             }
         } else if (property.startsWith("YourTeamCtrl")) {
@@ -978,11 +997,13 @@ public class CardProperty {
                 return false;
             }
         } else if (property.startsWith("YouDontCtrl")) {
-            if (controller.equals(sourceController)) {
+            final List<Player> sharers = sharersOf(card);
+            if (sharers != null ? sharers.contains(sourceController) : controller.equals(sourceController)) {
                 return false;
             }
         } else if (property.startsWith("OppCtrl")) {
-            if (!controller.getOpponents().contains(sourceController)) {
+            final List<Player> sharers = sharersOf(card);
+            if (sharers != null ? !anySharerIsOpponentOf(sharers, sourceController) : !controller.getOpponents().contains(sourceController)) {
                 return false;
             }
         } else if (property.startsWith("ChosenCtrl")) {
@@ -1089,19 +1110,33 @@ public class CardProperty {
                 return false;
             }
         } else if (property.startsWith("YouOwn")) {
-            if (!whoseZone(card).equals(sourceController)) {
+            final List<Player> sharers = sharersOf(card);
+            if (sharers != null ? !sharers.contains(sourceController) : !whoseZone(card).equals(sourceController)) {
                 return false;
             }
         } else if (property.startsWith("YouDontOwn")) {
-            if (whoseZone(card).equals(sourceController)) {
+            final List<Player> sharers = sharersOf(card);
+            if (sharers != null ? sharers.contains(sourceController) : whoseZone(card).equals(sourceController)) {
                 return false;
             }
         } else if (property.startsWith("OppOwn")) {
-            if (!whoseZone(card).getOpponents().contains(sourceController)) {
+            final List<Player> sharers = sharersOf(card);
+            if (sharers != null ? !anySharerIsOpponentOf(sharers, sourceController) : !whoseZone(card).getOpponents().contains(sourceController)) {
                 return false;
             }
         } else if (property.equals("TargetedPlayerOwn")) {
-            if (!AbilityUtils.getDefinedPlayers(source, "TargetedPlayer", spellAbility).contains(whoseZone(card))) {
+            final List<Player> owners = sharersOf(card) != null ? sharersOf(card) : List.of(whoseZone(card));
+            if (Collections.disjoint(AbilityUtils.getDefinedPlayers(source, "TargetedPlayer", spellAbility), owners)) {
+                return false;
+            }
+        } else if (property.startsWith("OwnedBy") && sharersOf(card) != null) {
+            final String valid = property.substring(8);
+            boolean any = false;
+            for (final Player s : sharersOf(card)) {
+                any |= s.isValid(valid, sourceController, source, spellAbility)
+                        || AbilityUtils.getDefinedPlayers(source, valid, spellAbility).contains(s);
+            }
+            if (!any) {
                 return false;
             }
         } else if (property.startsWith("OwnedBy")) {
