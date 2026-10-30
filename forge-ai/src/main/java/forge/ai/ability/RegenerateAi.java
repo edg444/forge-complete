@@ -50,8 +50,8 @@ public class RegenerateAi extends SpellAbilityAi {
 
         if (sa.usesTargeting()) {
             sa.resetTargets();
-            // filter AIs battlefield by what I can target
-            List<Card> targetables = CardLists.getTargetableCards(ai.getCardsIn(ZoneType.Battlefield), sa);
+            // filter the AI's and its teammates' battlefields by what I can target
+            List<Card> targetables = CardLists.getTargetableCards(AiTeams.side(ai).getCardsIn(ZoneType.Battlefield), sa);
 
             if (targetables.isEmpty()) {
                 return new AiAbilityDecision(0, AiPlayDecision.TargetingFailed);

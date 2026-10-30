@@ -1586,12 +1586,17 @@ public class AiController {
         removeUnpayableAttackers(combat);
 
         // if invalid: just try an attack declaration that we know to be legal
+        // (a Two-Headed Giant team shares one combat, so only this head's own attackers are redone)
         if (!CombatUtil.validateAttackers(combat)) {
-            combat.clearAttackers();
+            for (final Card own : CardLists.filterControlledBy(combat.getAttackers(), player)) {
+                combat.removeFromCombat(own);
+            }
             final Map<Card, GameEntity> legal = combat.getAttackConstraints().getLegalAttackers().getLeft();
             System.err.println("AI Attack declaration invalid, defaulting to: " + legal);
             for (final Map.Entry<Card, GameEntity> mandatoryAttacker : legal.entrySet()) {
-                combat.addAttacker(mandatoryAttacker.getKey(), mandatoryAttacker.getValue());
+                if (mandatoryAttacker.getKey().getController().equals(player) && !combat.isAttacking(mandatoryAttacker.getKey())) {
+                    combat.addAttacker(mandatoryAttacker.getKey(), mandatoryAttacker.getValue());
+                }
             }
             if (!CombatUtil.validateAttackers(combat)) {
                 aiAtk.declareAttackers(combat);
@@ -1599,8 +1604,29 @@ public class AiController {
         }
     }
 
+    private int defenderPickTurn = -1;
+    private final Player[] defenderPicks = new Player[2];
+
+    /**
+     * The opponent this AI treats as its main target this turn, for combat damage or anything else: picked once per
+     * turn with the supplier, and again only if that opponent has left the game.
+     */
+    public Player preferredDefender(final boolean forCombatDmg, final PlayerCollection opponents, final Supplier<Player> pick) {
+        final int turn = game.getPhaseHandler().getTurn();
+        if (turn != defenderPickTurn) {
+            defenderPickTurn = turn;
+            Arrays.fill(defenderPicks, null);
+        }
+        final int purpose = forCombatDmg ? 1 : 0;
+        if (defenderPicks[purpose] == null || !opponents.contains(defenderPicks[purpose])) {
+            defenderPicks[purpose] = pick.get();
+        }
+        return defenderPicks[purpose];
+    }
+
     private void removeUnpayableAttackers(Combat combat) {
-        for (Card attacker : combat.getAttackers().threadSafeIterable()) {
+        // a teammate's attackers are paid from its own mana
+        for (Card attacker : CardLists.filterControlledBy(combat.getAttackers(), player)) {
             Cost attackCost = CombatUtil.getAttackCost(game, attacker, combat.getDefenderByAttacker(attacker));
             if (attackCost == null) {
                 continue;

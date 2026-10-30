@@ -376,6 +376,11 @@ public abstract class PumpAiBase extends SpellAbilityAi {
             final List<String> keywords, final boolean immediately) {
         CardCollection list = CardLists.getTargetableCards(ai.getCreaturesInPlay(), sa);
         list = CardLists.filter(list, c -> ComputerUtilCard.shouldPumpCard(ai, sa, c, defense, attack, keywords, immediately));
+        if (list.isEmpty()) {
+            // nothing of its own worth it: a teammate's creature, then
+            list = CardLists.getTargetableCards(ai.getAllies().getCreaturesInPlay(), sa);
+            list = CardLists.filter(list, c -> ComputerUtilCard.shouldPumpCard(ai, sa, c, defense, attack, keywords, immediately));
+        }
         return list;
     }
 

@@ -2006,7 +2006,7 @@ public class ComputerUtil {
                     }
                 } else if (o instanceof Player p) {
                     if (source.hasKeyword(Keyword.INFECT)) {
-                        if (p.canReceiveCounters(CounterEnumType.POISON) && ComputerUtilCombat.predictDamageTo(p, dmg, source, false) >= 10 - p.getPoisonCounters()) {
+                        if (p.canReceiveCounters(CounterEnumType.POISON) && ComputerUtilCombat.predictDamageTo(p, dmg, source, false) >= p.getPoisonCountersToLose() - p.getPoisonCounters()) {
                             threatened.add(p);
                         }
                     } else if (ComputerUtilCombat.predictDamageTo(p, dmg, source, false) >= p.getLife()) {
@@ -3842,7 +3842,8 @@ public class ComputerUtil {
         boolean thisCombat = ai.getGame().getPhaseHandler().isPlayerTurn(opp) && ai.getGame().getPhaseHandler().getPhase().isBefore(PhaseType.COMBAT_BEGIN);
 
         // TODO !thisCombat should include cards that will phase in
-        for (Card att : opp.getCreaturesInPlay()) {
+        // a Two-Headed Giant team attacks as one (CR 805.10a)
+        for (Card att : opp.getGiantTeam().getCreaturesInPlay()) {
             // TODO should be limited based on how much getAttackCost the opp can pay
             if ((thisCombat && CombatUtil.canAttack(att, ai)) || (!thisCombat && ComputerUtilCombat.canAttackNextTurn(att, ai))) {
                 // TODO need to copy the card

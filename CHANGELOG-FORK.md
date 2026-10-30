@@ -346,7 +346,24 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
     fork's own Radiance, type-hurt, sacrifice-payoff, X-choice, bounce and keep-one-wipe AIs, Balthor and
     graveyard exile count a teammate's creature, player or graveyard as the AI's own (+1 opponent, -1 side, 0
     neither: `AiTeams.sign`).
-  - `MultiplayerTeamAiTest` (7).
+- **Multiplayer AI, part 2: Two-Headed Giant combat** (CR 805.10, 810.8d, 810.11).
+  - Attacking counts both defending heads' blockers (`AiAttackController.getOpponentCreatures`), and predicting the
+    next attack against the AI pictures the other team's whole combined attack (`ComputerUtil.predictNextCombat`).
+  - Poison lethality and danger use `getPoisonCountersToLose` (15 for two heads) instead of a hard-coded 10
+    (`AiAttackController`, `SpecialAiLogic`, `ComputerUtil`; `ComputerUtilCombat.lifeInDanger`'s 7 is now the
+    limit less 3).
+  - The second head to declare blockers leaves an attacker its partner already blocked alone, and a head repairing
+    an invalid attack declaration, or dropping attackers it can't pay for, touches only its own attackers in the
+    shared combat (it cleared the partner's).
+- **Multiplayer AI, part 3: helping teammates.** Protection, regeneration and damage prevention save a teammate's
+  creature (or the teammate) from a spell or ability aimed at it, and a pump with no worthwhile creature of the
+  AI's own goes to a teammate's.
+- **Multiplayer AI, part 4: one main target a turn.** `AiAttackController.choosePreferredDefenderPlayer` picked at
+  random among the top threats on every call, and some 35 card AIs call it, so one decision could aim at two
+  opponents. The pick now holds for the turn (per purpose, kept on the `AiController`), unless that opponent has
+  left the game. The archenemy picks its target among its opponents the same way. Schemes need no AI of their own:
+  they're set in motion regardless, and their choices go through the ordinary (now team-aware) effect AIs.
+  `MultiplayerTeamAiTest` is 12 tests.
 - **Simulation runs for team games.** `forge sim` takes `-T <team per deck>` (`-T 1 1 2 2`, needed for
   `-f TwoHeadedGiant`) and `-f Archenemy` (the first deck is the archenemy, with random schemes when its deck has
   none).

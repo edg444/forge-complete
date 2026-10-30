@@ -459,7 +459,7 @@ public class ComputerUtilCombat {
             }
         }
 
-        if (resultingPoison(ai, combat) > Math.max(7, ai.getPoisonCounters())) {
+        if (resultingPoison(ai, combat) > Math.max(ai.getPoisonCountersToLose() - 3, ai.getPoisonCounters())) {
             return true;
         }
 

@@ -15,6 +15,7 @@ import forge.game.GameStage;
 import forge.game.GameType;
 import forge.game.Match;
 import forge.game.card.Card;
+import forge.game.combat.Combat;
 import forge.game.phase.PhaseType;
 import forge.game.player.Player;
 import forge.game.player.RegisteredPlayer;
@@ -140,6 +141,91 @@ public class MultiplayerTeamAiTest extends AITest {
         addCards("Steam Vents", 2, game.getPlayers().get(3));
         ally.setLife(6, null);
         AssertJUnit.assertNotSame("6 damage would kill its teammate", AiPlayDecision.WillPlay, decide(ai, "Price of Progress"));
+    }
+
+    @Test
+    public void giantHeadSeesTheOtherDefendingHeadsBlockers() {
+        final Game game = createGame(new int[] {0, 0, 1, 1}, true, 3);
+        final Player ai = game.getPlayers().get(0);
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN1, ai, 3);
+        final Card bears = addCard("Grizzly Bears", ai);
+        bears.setSickness(false);
+        // only one defending head has a blocker, and it blocks for both (CR 805.10d)
+        addCard("Serra Angel", game.getPlayers().get(3));
+        game.getAction().checkStateEffects(true);
+        // the defending head is picked at random among similar threats, once a turn: try enough turns to land on either
+        for (int i = 0; i < 12; i++) {
+            game.getPhaseHandler().devModeSet(PhaseType.MAIN1, ai, 3 + i);
+            final Combat combat = new Combat(ai);
+            new AiAttackController(ai).declareAttackers(combat);
+            AssertJUnit.assertFalse("a 2/2 into an untapped Serra Angel", combat.isAttacking(bears));
+        }
+    }
+
+    @Test
+    public void mainTargetHoldsForTheTurn() {
+        final Game game = createGame(new int[] {-1, -1, -1, -1}, false, 5);
+        final Player ai = game.getPlayers().get(0);
+        final Player first = AiAttackController.choosePreferredDefenderPlayer(ai);
+        for (int i = 0; i < 20; i++) {
+            AssertJUnit.assertSame(first, AiAttackController.choosePreferredDefenderPlayer(ai));
+        }
+        // gone from the game: pick again
+        first.concede();
+        game.getAction().checkStateEffects(true);
+        AssertJUnit.assertFalse(ai.getOpponents().contains(first));
+        AssertJUnit.assertNotSame(first, AiAttackController.choosePreferredDefenderPlayer(ai));
+    }
+
+    @Test
+    public void giantTeamPoisonDangerUsesFifteen() {
+        final Game game = createGame(new int[] {0, 0, 1, 1}, true, 3);
+        final Player ai = game.getPlayers().get(0), opp = game.getPlayers().get(2);
+        game.getPhaseHandler().devModeSet(PhaseType.COMBAT_DECLARE_BLOCKERS, opp, 3);
+        ai.setPoisonCounters(9, opp);
+        final Card agent = addCard("Blighted Agent", opp);
+        final Combat combat = new Combat(opp);
+        combat.addAttacker(agent, ai);
+        // 10 of a team's 15: not yet the danger 10 of 10 would be
+        AssertJUnit.assertFalse(ComputerUtilCombat.lifeInDanger(ai, combat));
+    }
+
+    @Test
+    public void secondGiantHeadLeavesItsPartnersBlockAlone() {
+        final Game game = createGame(new int[] {0, 0, 1, 1}, true, 3);
+        final Player a1 = game.getPlayers().get(0), a2 = game.getPlayers().get(1), b1 = game.getPlayers().get(2);
+        game.getPhaseHandler().devModeSet(PhaseType.COMBAT_DECLARE_ATTACKERS, b1, 3);
+        final Card attacker = addCard("Grizzly Bears", b1);
+        final Card giant = addCard("Hill Giant", a1);
+        final Card angel = addCard("Serra Angel", a2);
+        final Combat combat = new Combat(b1);
+        combat.addAttacker(attacker, a1);
+        combat.addBlocker(attacker, giant);
+        new AiBlockController(a2, false).assignBlockersForCombat(combat);
+        AssertJUnit.assertFalse("the Hill Giant already handles the Bears", combat.isBlocking(angel));
+    }
+
+    @Test
+    public void savesATeammatesCreatureFromABolt() {
+        final Game game = createTwoVersusTwo();
+        final Player ai = game.getPlayers().get(0), opp1 = game.getPlayers().get(1), ally = game.getPlayers().get(2);
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN1, opp1, 12);
+        addCard("Plains", ai);
+        final Card bears = addCard("Grizzly Bears", ally);
+
+        Card bolt = addCardToZone("Lightning Bolt", opp1, ZoneType.Hand);
+        final SpellAbility boltSa = bolt.getFirstSpellAbility();
+        boltSa.setActivatingPlayer(opp1);
+        boltSa.getTargets().add(bears);
+        bolt = game.getAction().moveToStack(bolt, boltSa);
+        boltSa.setHostCard(bolt);
+        game.getStack().add(boltSa);
+
+        final Card hands = addCardToZone("Mending Hands", ai, ZoneType.Hand);
+        final SpellAbility sa = hands.getFirstSpellAbility();
+        sa.setActivatingPlayer(ai);
+        AssertJUnit.assertEquals(AiPlayDecision.WillPlay, ((PlayerControllerAi) ai.getController()).getAi().canPlaySa(sa));
+        AssertJUnit.assertTrue(sa.getTargets().contains(bears));
     }
 
     @Test

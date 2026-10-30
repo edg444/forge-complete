@@ -72,13 +72,16 @@ public class DamagePreventAi extends SpellAbilityAi {
             // check stack for something on the stack will kill anything i control
             final List<GameObject> objects = ComputerUtil.predictThreatenedObjects(sa.getActivatingPlayer(), sa);
 
-            if (objects.contains(ai) && sa.canTarget(ai)) {
-            	tcs.add(ai);
-                chance = true;
+            // the AI, then a teammate
+            for (final Player p : AiTeams.side(ai)) {
+                if (objects.contains(p) && sa.canTarget(p) && sa.canAddMoreTarget()) {
+                    tcs.add(p);
+                    chance = true;
+                }
             }
             final List<Card> threatenedTargets = new ArrayList<>();
-            // filter AIs battlefield by what I can target
-            List<Card> targetables = CardLists.getTargetableCards(ai.getCardsIn(ZoneType.Battlefield), sa);
+            // filter the AI's and its teammates' battlefields by what I can target
+            List<Card> targetables = CardLists.getTargetableCards(AiTeams.side(ai).getCardsIn(ZoneType.Battlefield), sa);
 
             for (final Card c : targetables) {
                 if (objects.contains(c)) {

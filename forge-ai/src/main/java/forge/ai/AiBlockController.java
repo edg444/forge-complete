@@ -1010,6 +1010,8 @@ public class AiBlockController {
         }
 
         attackersLeft = new ArrayList<>(attackers);
+        // a Two-Headed Giant teammate who declared first has already dealt with these (CR 805.10d)
+        attackersLeft.removeIf(a -> !combat.getBlockers(a).isEmpty());
         blockersLeft = new ArrayList<>(possibleBlockers);
         blockedButUnkilled = new ArrayList<>();
     }

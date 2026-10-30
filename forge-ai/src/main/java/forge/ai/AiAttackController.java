@@ -127,7 +127,8 @@ public class AiAttackController {
     }
 
     public static List<Card> getOpponentCreatures(final Player defender) {
-        List<Card> defenders = defender.getCreaturesInPlay();
+        // CR 805.10d: a Two-Headed Giant head's teammate blocks for it too
+        List<Card> defenders = defender.getGiantTeam().getCreaturesInPlay();
         int totalMana = ComputerUtilMana.getAvailableManaEstimate(defender, true);
         int manaReserved = 0; // for paying the cost to transform
         Predicate<Card> canAnimate = c -> !c.isTapped() && !c.isCreature() && !c.isPlaneswalker();
@@ -199,6 +200,16 @@ public class AiAttackController {
         if (opponents.size() < 2) {
             return Iterables.getFirst(opponents, null);
         }
+
+        // one pick per turn and purpose: card AIs ask this many times within one decision, and a fresh random pick
+        // each time had the AI aim removal at one opponent and attack another
+        if (ai.getController() instanceof PlayerControllerAi pca) {
+            return pca.getAi().preferredDefender(forCombatDmg, opponents, () -> pickPreferredDefender(ai, opponents, forCombatDmg));
+        }
+        return pickPreferredDefender(ai, opponents, forCombatDmg);
+    }
+
+    private static Player pickPreferredDefender(final Player ai, final PlayerCollection opponents, final boolean forCombatDmg) {
 
         Map<Player, Integer> threatScores = Maps.newHashMap();
         for (Player opp : opponents) {
@@ -757,7 +768,8 @@ public class AiAttackController {
         }
 
         int totalPoisonDamage = ComputerUtilCombat.sumPoisonIfUnblocked(unblockedAttackers, defendingOpponent);
-        if (totalPoisonDamage >= 10 - defendingOpponent.getPoisonCounters()) {
+        final int poisonToLose = defendingOpponent.getPoisonCountersToLose() - defendingOpponent.getPoisonCounters();
+        if (totalPoisonDamage >= poisonToLose) {
             return true;
         }
         for (Card trampler : trampleDmg.keySet()) {
@@ -766,7 +778,7 @@ public class AiAttackController {
                 totalPoisonDamage += dmg;
             }
             totalPoisonDamage += ComputerUtilCombat.predictExtraPoisonWithDamage(trampler, defendingOpponent, dmg);
-            if (totalPoisonDamage >= 10 - defendingOpponent.getPoisonCounters()) {
+            if (totalPoisonDamage >= poisonToLose) {
                 return true;
             }
         }

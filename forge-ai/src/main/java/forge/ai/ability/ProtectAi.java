@@ -98,6 +98,12 @@ public class ProtectAi extends SpellAbilityAi {
         
         CardCollection list = ai.getCreaturesInPlay();
         final List<GameObject> threatenedObjects = ComputerUtil.predictThreatenedObjects(sa.getActivatingPlayer(), sa, true);
+        // a teammate's creature is worth saving from a spell or ability
+        for (final Card c : ai.getAllies().getCreaturesInPlay()) {
+            if (threatenedObjects.contains(c)) {
+                list.add(c);
+            }
+        }
         list = CardLists.filter(list, c -> {
             if (!c.canBeTargetedBy(sa)) {
                 return false;
