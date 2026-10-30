@@ -2884,6 +2884,48 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
     }
 
     @Override
+    public List<List<PaperCard>> makePaiGowPiles(final List<PaperCard> pack, final List<Integer> sizes) {
+        while (true) {
+            final List<PaperCard> left = Lists.newArrayList(pack);
+            final List<List<PaperCard>> piles = Lists.newArrayList();
+            for (int i = 0; i < sizes.size(); i++) {
+                final int size = sizes.get(i);
+                List<PaperCard> pile;
+                if (size == 0 || size == left.size()) {
+                    pile = Lists.newArrayList(left.subList(0, size)); // nothing left to choose
+                } else {
+                    pile = getGui().many(localizer.getMessage("lblPaiGowChoosePile", String.valueOf(i + 1),
+                            String.valueOf(sizes.size()), String.valueOf(size)),
+                            localizer.getMessage("lblPaiGowPile", String.valueOf(i + 1)), size, size, left, null);
+                    if (pile == null || pile.size() != size) {
+                        break; // start over
+                    }
+                }
+                for (final PaperCard pc : pile) {
+                    left.remove(pc);
+                }
+                piles.add(pile);
+            }
+            if (piles.size() < sizes.size()) {
+                continue;
+            }
+            final StringBuilder summary = new StringBuilder(localizer.getMessage("lblPaiGowYourPiles"));
+            for (int i = 0; i < piles.size(); i++) {
+                summary.append("\n").append(localizer.getMessage("lblPaiGowPile", String.valueOf(i + 1))).append(": ");
+                summary.append(piles.get(i).isEmpty() ? "-" : Lang.joinHomogenous(piles.get(i), PaperCard::getName));
+            }
+            if (!left.isEmpty()) {
+                summary.append("\n").append(localizer.getMessage("lblPaiGowLeftOut")).append(": ")
+                        .append(Lang.joinHomogenous(left, PaperCard::getName));
+            }
+            if (getGui().confirm(null, summary.toString(), true, ImmutableList.of(localizer.getMessage("lblPaiGowKeepPiles"),
+                    localizer.getMessage("lblPaiGowStartOver")))) {
+                return piles;
+            }
+        }
+    }
+
+    @Override
     public boolean payManaCost(final ManaCost toPay, final CostPartMana costPartMana, final SpellAbility sa,
                                final String prompt, ManaConversionMatrix matrix, final boolean effect) {
         return PlaySpellAbility.payManaCost(this, toPay, costPartMana, sa, player, prompt, matrix, effect);
@@ -2891,6 +2933,12 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
 
     @Override
     public boolean applyManaToCost(ManaCostBeingPaid toPay, SpellAbility ability, String prompt, ManaConversionMatrix matrix, boolean effect) {
+        // Pai Gow's unlimited mana pays any cost in full, so there's nothing to click; what it can't pay
+        // (snow mana, say) is left to the usual payment
+        if (player.getManaPool().isUnlimited()
+                && player.getManaPool().payManaCostFromPool(toPay, ability, false, ability.getPayingMana())) {
+            return true;
+        }
         InputPayMana inpPayment = new InputPayManaOfCostPayment(this, toPay, ability, player, matrix, effect);
         inpPayment.setMessagePrefix(prompt);
         inpPayment.showAndWait();

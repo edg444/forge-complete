@@ -128,7 +128,12 @@ public class GameCopier {
             newPlayer.setProgramSources(origPlayer.getProgramSources());
             // TODO creatureAttackedThisTurn
             for (Mana m : origPlayer.getManaPool()) {
-                newPlayer.getManaPool().addManaNoEvent(m);
+                if (!origPlayer.getManaPool().isUnlimitedMana(m)) {
+                    newPlayer.getManaPool().addManaNoEvent(m);
+                }
+            }
+            if (origPlayer.getManaPool().isUnlimited()) {
+                newPlayer.getManaPool().makeUnlimited(origPlayer.getManaPool().getUnlimitedSource());
             }
             playerMap.put(origPlayer, newPlayer);
         }

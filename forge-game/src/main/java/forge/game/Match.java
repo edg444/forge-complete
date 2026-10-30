@@ -43,6 +43,11 @@ public class Match {
     private final Map<Integer, GameOutcome> gameOutcomes = Maps.newHashMap();
 
     private GameOutcome lastOutcome = null;
+    private RegisteredPlayer lastStartingPlayer = null;
+
+    // Pai Gow Magic: each player's piles, made before the first game and shuffled face down, in the order they
+    // become opening hands - game n gets pile n
+    private final Map<RegisteredPlayer, List<List<PaperCard>>> paiGowPiles = Maps.newHashMap();
 
     // Cards like Double Dip need to carry a delayed effect from one game in the match into the
     // next - there's no Card/Player object that survives across Game instances to host a normal
@@ -133,6 +138,9 @@ public class Match {
         }
 
         game.getAction().startGame(this.lastOutcome, startGameHook);
+        if (game.getStartingPlayer() != null) {
+            lastStartingPlayer = game.getStartingPlayer().getRegisteredPlayer();
+        }
 
         recordBank(game);
         recordTallyMarks(game);
@@ -171,9 +179,17 @@ public class Match {
         return gameOutcomes.get(id);
     }
 
+    /** Who played first in the last game that was played. */
+    public RegisteredPlayer getLastStartingPlayer() {
+        return lastStartingPlayer;
+    }
+
     public void clearGamesPlayed() {
         gameOutcomes.clear();
         banked.clear();
+        // a restarted Pai Gow match is made into piles again
+        paiGowPiles.clear();
+        lastStartingPlayer = null;
         for (RegisteredPlayer p : players) {
             p.restoreDeck();
         }
@@ -205,6 +221,10 @@ public class Match {
             if (go.isDecidesMatch() && go.getWinningPlayer() != null) {
                 return true;
             }
+        }
+        // out of piles: with draws along the way no one may have won three
+        if (PaiGowMagic.isPlayed(rules) && getOutcomes().size() >= PaiGowMagic.pileCount(rules)) {
+            return true;
         }
         int[] victories = new int[players.size()];
         for (GameOutcome go : getOutcomes()) {
@@ -252,14 +272,49 @@ public class Match {
                 return go.isWinner(questPlayer);
             }
         }
-        return getGamesWonBy(questPlayer) >= rules.getGamesToWinMatch();
+        if (getGamesWonBy(questPlayer) >= rules.getGamesToWinMatch()) {
+            return true;
+        }
+        final RegisteredPlayer most = getPaiGowWinner();
+        return most != null && most.getPlayer().equals(questPlayer);
     }
 
     public RegisteredPlayer getWinner() {
         if (this.isMatchOver()) {
-            return lastOutcome.getWinningPlayer();
+            final RegisteredPlayer most = getPaiGowWinner();
+            return most != null ? most : lastOutcome.getWinningPlayer();
         }
         return null;
+    }
+
+    /**
+     * A Pai Gow match that ran out of piles with draws along the way goes to whoever won more games than each other
+     * player; null when that's no one (or the match isn't over, or isn't Pai Gow).
+     */
+    private RegisteredPlayer getPaiGowWinner() {
+        if (!PaiGowMagic.isPlayed(rules) || getOutcomes().size() < PaiGowMagic.pileCount(rules)) {
+            return null;
+        }
+        RegisteredPlayer most = null;
+        int mostWins = -1;
+        boolean tied = false;
+        for (final RegisteredPlayer rp : players) {
+            // not getGamesWon(), which stops counting at a drawn game as if it hadn't finished
+            int wins = 0;
+            for (final GameOutcome go : getOutcomes()) {
+                if (go.isWinner(rp)) {
+                    wins++;
+                }
+            }
+            if (wins > mostWins) {
+                most = rp;
+                mostWins = wins;
+                tied = false;
+            } else if (wins == mostWins) {
+                tied = true;
+            }
+        }
+        return tied || mostWins <= 0 ? null : most;
     }
 
     public List<RegisteredPlayer> getPlayers() {
@@ -440,8 +495,9 @@ public class Match {
                     card.setRandomFoil();
                 }
                 card.setCollectible(true);
-                if (zoneType == ZoneType.Library) {
-                    // Sideboard is explicitly excluded from "starting deck" per rule 702.139f (Companion)
+                // Sideboard is explicitly excluded from "starting deck" per rule 702.139f (Companion); a hand is
+                // only prepared for Pai Gow, where the pile is the whole deck for that game
+                if (zoneType == ZoneType.Library || zoneType == ZoneType.Hand) {
                     card.setStartingDeckCard(true);
                 }
 
@@ -465,7 +521,8 @@ public class Match {
         final List<RegisteredPlayer> playersConditions = game.getMatch().getPlayers();
 
         boolean isFirstGame = gameOutcomes.isEmpty();
-        boolean canSideBoard = !isFirstGame && rules.getGameType().isSideboardingAllowed();
+        final boolean paiGow = PaiGowMagic.isPlayed(rules);
+        boolean canSideBoard = !isFirstGame && rules.getGameType().isSideboardingAllowed() && !paiGow;
         // Only allow this if feature flag is on AND for certain match types
         boolean sideboardForAIs = rules.getSideboardForAI() &&
             rules.getGameType().getDeckFormat().equals(DeckFormat.Constructed);
@@ -563,7 +620,13 @@ public class Match {
                 }
             }
 
-            preparePlayerZone(player, ZoneType.Library, myDeck.getLeft().getMain(), psc.useRandomFoil());
+            if (paiGow) {
+                final CardPool pile = new CardPool();
+                pile.add(getPaiGowPile(player, psc, myDeck.getLeft()));
+                preparePlayerZone(player, ZoneType.Hand, pile, psc.useRandomFoil());
+            } else {
+                preparePlayerZone(player, ZoneType.Library, myDeck.getLeft().getMain(), psc.useRandomFoil());
+            }
             if (myDeck.getLeft().has(DeckSection.Sideboard)) {
                 preparePlayerZone(player, ZoneType.Sideboard, myDeck.getLeft().get(DeckSection.Sideboard), psc.useRandomFoil());
 
@@ -571,6 +634,9 @@ public class Match {
             }
 
             player.initVariantsZones(psc);
+            if (paiGow) {
+                PaiGowMagic.createRulesEffect(player);
+            }
 
             player.shuffle(null);
             startBanked(game, player, psc);
@@ -606,6 +672,21 @@ public class Match {
         if (!unsupported.isEmpty()) {
             game.getAction().revealUnsupported(unsupported);
         }
+    }
+
+    /** This game's pile, splitting the player's booster into piles first if this is the match's first game. */
+    private List<PaperCard> getPaiGowPile(final Player player, final RegisteredPlayer psc, final Deck deck) {
+        List<List<PaperCard>> piles = paiGowPiles.get(psc);
+        if (piles == null) {
+            final List<PaperCard> pack = deck.getMain().toFlatList();
+            final List<Integer> sizes = PaiGowMagic.pileSizes(pack.size(), PaiGowMagic.pileCount(rules));
+            piles = Lists.newArrayList(player.getController().makePaiGowPiles(pack, sizes));
+            // the piles are face down when they're shuffled, so no one knows which comes up when
+            Collections.shuffle(piles, MyRandom.getRandom());
+            paiGowPiles.put(psc, piles);
+        }
+        final int gameNumber = gameOutcomes.size();
+        return gameNumber < piles.size() ? piles.get(gameNumber) : Collections.emptyList();
     }
 
     /** Saves a deck whose cards were written on (legacy); the GUI sets it, so a stored deck file keeps the word. */

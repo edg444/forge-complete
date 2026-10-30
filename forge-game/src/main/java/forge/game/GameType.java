@@ -70,7 +70,10 @@ public enum GameType {
         deck.getOrCreate(DeckSection.Avatar).add(StaticData.instance().getVariantCards()
                 .getCard("Stonehewer Giant Avatar"), 1);
         return deck;
-    });
+    }),
+    // a booster of a random set when nobody picks one (the lobby asks each human)
+    PaiGow        (DeckFormat.Limited, true, false, false, "lblPaiGow", "lblPaiGowDesc", player -> PaiGowMagic.openBooster(null)),
+    BoosterBlitz  (DeckFormat.Limited, true, false, false, "lblBoosterBlitz", "lblBoosterBlitzDesc", player -> PaiGowMagic.openBooster(null));
 
     private static final EnumSet<GameType> DRAFT_FORMATS = EnumSet.of(Draft, CommanderDraft, QuestDraft, AdventureEvent);
 

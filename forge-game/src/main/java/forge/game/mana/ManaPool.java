@@ -76,6 +76,37 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
     // and every mana an unbounded color hands back is identical by construction.
     private final Map<Byte, Mana> infiniteMana = Maps.newHashMap();
 
+    // Pai Gow Magic: unlimited mana of any combination of colors, all game. It rides on the unbounded colors above,
+    // but doesn't empty, burn or convert, and doesn't make X = ∞ a choice - unlimited is any number, not infinity.
+    private Card unlimitedSource = null;
+
+    public final void makeUnlimited(final Card source) {
+        unlimitedSource = source;
+        restoreUnlimited(false);
+    }
+    public final boolean isUnlimited() {
+        return unlimitedSource != null;
+    }
+    public final Card getUnlimitedSource() {
+        return unlimitedSource;
+    }
+    public final boolean isUnlimitedMana(final Mana m) {
+        return unlimitedSource != null && infiniteMana.get(m.getColor()) == m;
+    }
+    private void restoreUnlimited(final boolean fireEvent) {
+        for (final byte color : ManaAtom.MANATYPES) {
+            if (!infiniteMana.containsKey(color)) {
+                final Mana mana = new Mana(color, unlimitedSource, null, owner);
+                infiniteMana.put(color, mana);
+                floatingMana.put(color, mana);
+            }
+        }
+        owner.updateManaForView();
+        if (fireEvent) {
+            owner.getGame().fireEvent(new GameEventManaPool(owner, EventValueChangeType.Added, null));
+        }
+    }
+
     public final int getHalfMana(final byte color) {
         return floatingHalves.getOrDefault(color, 0);
     }
@@ -164,7 +195,8 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
      * </p>
      */
     public final boolean willManaBeLostAtEndOfPhase() {
-        if (floatingMana.isEmpty() && !hasHalfMana()) {
+        final int finite = finiteMana();
+        if (finite == 0 && !hasHalfMana()) {
             return false;
         }
 
@@ -180,12 +212,20 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
 
         int safeMana = 0;
         for (final byte c : StaticAbilityUnspentMana.getManaToKeep(owner)) {
-            safeMana += getAmountOfColor(c);
+            safeMana += getAmountOfColor(c) - (int) floatingMana.get(c).stream().filter(this::isUnlimitedMana).count();
         }
 
         // TODO isPersistentMana
 
-        return totalMana() != safeMana; //won't lose floating mana if all mana is of colors that aren't going to be emptied
+        return finite != safeMana; //won't lose floating mana if all mana is of colors that aren't going to be emptied
+    }
+
+    /** Floating mana that empties as usual, leaving out Pai Gow's unlimited mana. */
+    private int finiteMana() {
+        if (unlimitedSource == null) {
+            return totalMana();
+        }
+        return (int) floatingMana.values().stream().filter(m -> !isUnlimitedMana(m)).count();
     }
 
     public final boolean hasBurn() {
@@ -197,9 +237,24 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
         // This should only be used to reset the pool to empty by things like restores.
         floatingMana.clear();
         floatingHalves.clear();
+        // a restore copies the unbounded colors back itself, with makeUnlimited for Pai Gow's
+        infiniteMana.clear();
+        unlimitedSource = null;
     }
 
     public final List<Mana> clearPool(boolean isEndOfPhase) {
+        if (unlimitedSource == null) {
+            return clearFloating(isEndOfPhase);
+        }
+        for (final Mana m : infiniteMana.values()) {
+            floatingMana.get(m.getColor()).removeIf(x -> x == m);
+        }
+        final List<Mana> cleared = clearFloating(isEndOfPhase);
+        restoreUnlimited(true);
+        return cleared;
+    }
+
+    private List<Mana> clearFloating(boolean isEndOfPhase) {
         // isEndOfPhase parameter: true = end of phase, false = mana drain effect
         List<Mana> cleared = Lists.newArrayList();
         // a floating half empties with the rest of the pool, and does so before the early return
@@ -309,6 +364,9 @@ public class ManaPool extends ManaConversionMatrix implements Iterable<Mana> {
      * while paying, after X is announced.
      */
     public final boolean canPayInfiniteX(final SpellAbility sa) {
+        if (unlimitedSource != null) {
+            return false;
+        }
         final String xColor = sa.getXColor();
         if (xColor == null || xColor.isEmpty()) {
             if (hasAnyInfinite()) {

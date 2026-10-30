@@ -3048,9 +3048,13 @@ public class GameAction {
             runPreOpeningHandActions(first);
 
             game.setAge(GameStage.Mulligan);
+            final boolean paiGow = PaiGowMagic.isPlayed(game.getRules());
             for (final Player p1 : game.getPlayers()) {
                 // anything already in hand started the game there (Rift)
                 p1.setOpeningHandStarters(p1.getCardsIn(ZoneType.Hand));
+                if (paiGow) {
+                    continue; // the pile already in hand is the opening hand, with no library to draw from
+                }
                 // Choose starting hand for each player with multiple hands
                 if (StaticData.instance().getFilteredHandsEnabled() ) {
                     drawStartingHand(p1);
@@ -3064,7 +3068,7 @@ public class GameAction {
                 }
             }
 
-            if (game.getRules().getGameType() != GameType.Puzzle) {
+            if (game.getRules().getGameType() != GameType.Puzzle && !paiGow) {
                 new MulliganService(first).perform();
             }
             if (game.isGameOver()) { break; } // conceded during "mulligan" prompt
@@ -3134,6 +3138,10 @@ public class GameAction {
             return players.get(0);
         }
 
+        if (PaiGowMagic.isPlayed(game.getRules())) {
+            return determinePaiGowFirstPlayer(lastGameOutcome);
+        }
+
         boolean isFirstGame = lastGameOutcome == null;
         if (isFirstGame) {
             goesFirst = Aggregates.random(game.getPlayers());
@@ -3165,6 +3173,32 @@ public class GameAction {
         // CR 103.1a: with shared team turns there's a starting team, whose turn is its primary player's (805.2) -
         // that also puts the whole team first in seat order for mulligans and opening-hand actions (805.3)
         return goesFirst.getGiantTeam().get(0);
+    }
+
+    /**
+     * Pai Gow: a coin flip for the first game (user ruling 2026-10-30, not "whoever made their piles first" - the AI
+     * makes its piles at once), then the loser of the previous game, or after a draw whoever played first in it.
+     * With no library there's nothing to gain from drawing first, so the chosen player isn't asked.
+     */
+    private Player determinePaiGowFirstPlayer(final GameOutcome lastGameOutcome) {
+        if (lastGameOutcome == null || game.getMatch().getOutcomes().isEmpty()) {
+            final Player flipped = Aggregates.random(game.getPlayers());
+            game.fireEvent(new GameEventFlipCoin(flipped.getView(), true, true));
+            return flipped;
+        }
+        if (lastGameOutcome.isDraw()) {
+            for (final Player p : game.getPlayers()) {
+                if (p.getRegisteredPlayer() == game.getMatch().getLastStartingPlayer()) {
+                    return p;
+                }
+            }
+        }
+        for (final Player p : game.getPlayers()) {
+            if (!lastGameOutcome.isWinner(p.getRegisteredPlayer())) {
+                return p;
+            }
+        }
+        return game.getPlayers().get(0);
     }
 
     private void runPreOpeningHandActions(final Player first) {

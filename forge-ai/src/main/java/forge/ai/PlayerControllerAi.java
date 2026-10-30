@@ -497,9 +497,9 @@ public class PlayerControllerAi extends PlayerController {
         return getAi().confirmStaticApplication(hostCard, logic);
     }
 
-    // TODO: accept based on game state (infinite loop / unwinnable position); always declines for now
+    // TODO: accept based on game state (infinite loop / unwinnable position); only Pai Gow's stalled games for now
     public boolean acceptsDrawOffer() {
-        return false;
+        return PaiGowAi.acceptsDraw(player);
     }
 
     @Override
@@ -1892,6 +1892,11 @@ public class PlayerControllerAi extends PlayerController {
     public List<PaperCard> chooseCardsYouWonToAddToDeck(List<PaperCard> losses) {
         // TODO AI takes all by default
         return losses;
+    }
+
+    @Override
+    public List<List<PaperCard>> makePaiGowPiles(final List<PaperCard> pack, final List<Integer> sizes) {
+        return PaiGowAi.makePiles(player, pack, sizes);
     }
 
     @Override

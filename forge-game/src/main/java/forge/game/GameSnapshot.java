@@ -209,7 +209,13 @@ public class GameSnapshot {
         Game toGame = toPlayer.getGame();
         toPlayer.getManaPool().resetPool();
         for (Mana m : fromPlayer.getManaPool()) {
-            toPlayer.getManaPool().addManaNoEvent(copyMana(m, toGame, toPlayer));
+            if (!fromPlayer.getManaPool().isUnlimitedMana(m)) {
+                toPlayer.getManaPool().addManaNoEvent(copyMana(m, toGame, toPlayer));
+            }
+        }
+        if (fromPlayer.getManaPool().isUnlimited()) {
+            final Card source = findBy(toGame, fromPlayer.getManaPool().getUnlimitedSource());
+            toPlayer.getManaPool().makeUnlimited(source != null ? source : fromPlayer.getManaPool().getUnlimitedSource());
         }
         toPlayer.updateManaForView();
     }

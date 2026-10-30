@@ -213,6 +213,28 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   seated beside a team, appended to the registered players (which match registrations by position) with their own
   `RegisteredPlayer`; `GameEventPlayerAdded` gives them a field on desktop and a panel on mobile.
 
+### Pai Gow Magic
+
+- **Pai Gow and Booster Blitz** (`GameType.PaiGow`/`BoosterBlitz`, `PaiGowMagic`) — Frank Karsten's format: each
+  player splits one booster into face-down piles of three (five, or four for Blitz); the piles are shuffled and pile
+  n is the whole opening hand of game n. `Match` keeps the piles (`getPaiGowPile`), made on the first game by
+  `PlayerController.makePaiGowPiles` (human: choose each pile, then keep them or start over; AI: `PaiGowAi`, a
+  creature to each pile, then each card to the weakest pile with room). A short pack shortens the last pile (14
+  cards: 3,3,3,3,2); cards beyond the piles are left out.
+- **The game** — no library (the opening draw and mulligans are skipped, `GameAction.startGame`), 5 life, and a
+  command-zone rules card with the no-decking-loss replacement and the unlimited mana (`createRulesEffect`).
+- **Unlimited mana** (`ManaPool.makeUnlimited`) — every color and colorless as unbounded mana that survives the pool
+  emptying, doesn't burn or convert, isn't "mana you're about to lose", and doesn't make X = ∞ a choice. A human's
+  costs are paid from it without clicking (`PlayerControllerHuman.applyManaToCost`). Undo snapshots and AI
+  simulation copies carry it.
+- **Who plays first, and the match** — a coin flip, then the previous game's loser, or after a draw whoever played
+  first in it, with no play-or-draw question (`GameAction.determinePaiGowFirstPlayer`,
+  `Match.getLastStartingPlayer`). Three wins end the match; out of piles, whoever won more games than each other
+  player takes it, or no one (`Match.getPaiGowWinner`). Games per match follow the pile count (`GameRules`).
+- **Lobby** — desktop Game Format dropdown and mobile variant lists; combines only with Planechase. At Start each
+  local human picks the set of their booster (or Random), and AI and remote seats open the first human's set
+  (`GameLobby.chooseBoosterSets`).
+
 ### Other
 
 - `DB$ RememberNumber` — writes a number into the remembered set (which is a `Set`, so repeats
@@ -328,6 +350,18 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 ## Log
 
 ### Unreleased
+
+- **Pai Gow Magic and Booster Blitz** (user request; rules from mtg.wiki/page/Pai_Gow_Magic). New lobby formats:
+  everyone opens a booster and splits it into face-down piles of three, which are shuffled and become the opening
+  hands of five separate games (four for Booster Blitz) with no libraries, 5 life and unlimited mana of any
+  colors; three wins take the match. User rulings 2026-10-30: each human picks their own booster's set and the AI
+  opens the first human's; a 14-card Play Booster makes piles of 3,3,3,3,2; Booster Blitz is its own variant; the
+  first game is a coin flip rather than "whoever finished their piles first" (the AI finishes at once).
+  - Unlimited mana pays every cost by itself, but X is still a number you choose (not ∞), and snow costs still
+    need snow mana, since the format's mana doesn't come from a snow source.
+  - With no library a game can stall for good, and the AI used to decline every draw offer. In Pai Gow it now
+    takes one once its hand is empty and it has nothing that could deal damage, or the board has stopped moving
+    (its creatures could attack last turn, it didn't, and no one lost life) - `PaiGowAi.acceptsDraw`.
 
 - **Commander bracket enforcement** (user request; the user chose all three modes, a warning that can be
   overridden, and AI decks made to fit). Bracket detection was already upstream's (`CommanderBracketCalculator`:

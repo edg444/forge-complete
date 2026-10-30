@@ -111,10 +111,20 @@ public class GameRules {
     public void setAppliedVariants(final Set<GameType> appliedVariants) {
         if (appliedVariants != null && !appliedVariants.isEmpty())
             this.appliedVariants.addAll(appliedVariants);
+        matchPaiGowPiles();
     }
 
     public void addAppliedVariant(final GameType variant) {
         this.appliedVariants.add(variant);
+        matchPaiGowPiles();
+    }
+
+    // Pai Gow plays one game per pile, whatever the games-per-match setting says
+    private void matchPaiGowPiles() {
+        final int piles = PaiGowMagic.pileCount(this);
+        if (piles > 0) {
+            setGamesPerMatch(piles);
+        }
     }
 
     public boolean hasAppliedVariant(final GameType variant) {

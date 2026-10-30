@@ -125,6 +125,11 @@ public abstract class PlayerController {
     }
     public abstract List<PaperCard> chooseCardsYouWonToAddToDeck(List<PaperCard> losses);
 
+    /** Pai Gow Magic: split the opened booster into piles of these sizes (cards beyond them are left out). */
+    public List<List<PaperCard>> makePaiGowPiles(final List<PaperCard> pack, final List<Integer> sizes) {
+        return forge.game.PaiGowMagic.dealInOrder(pack, sizes);
+    }
+
     public abstract Map<Card, Integer> assignCombatDamage(Card attacker, CardCollectionView blockers, CardCollectionView remaining, int damageDealt, GameEntity defender, boolean overrideOrder);
     public abstract Map<GameEntity, Integer> divideShield(Card effectSource, Map<GameEntity, Integer> affected, int shieldAmount);
     public abstract Map<Byte, Integer> specifyManaCombo(SpellAbility sa, ColorSet colorSet, int manaAmount, boolean different);

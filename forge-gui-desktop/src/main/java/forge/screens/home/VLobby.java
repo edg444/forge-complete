@@ -91,13 +91,13 @@ public class VLobby implements ILobbyView {
     /**
      * The mutually exclusive game types, in the order the deck editor's own format
      * dropdown lists them. GameLobby.applyVariant already treats these as a radio
-     * group; the dropdown just makes that visible. Momir Basic and MoJhoSto sit at
-     * the end because they replace the deck outright rather than constrain it.
+     * group; the dropdown just makes that visible. Momir Basic, MoJhoSto and the Pai Gow
+     * formats sit at the end because they replace the deck outright rather than constrain it.
      */
     private static final ImmutableList<GameType> GAME_FORMATS = ImmutableList.of(
             GameType.Constructed, GameType.Commander, GameType.Oathbreaker,
             GameType.Brawl, GameType.TinyLeaders,
-            GameType.MomirBasic, GameType.MoJhoSto);
+            GameType.MomirBasic, GameType.MoJhoSto, GameType.PaiGow, GameType.BoosterBlitz);
 
     private final FComboBoxPanel<GameType> cboFormatPanel =
             new FComboBoxPanel<>(Localizer.getInstance().getMessage("lblGameFormat") + ":", GAME_FORMATS);
