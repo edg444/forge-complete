@@ -35,6 +35,7 @@ import forge.game.card.*;
 import forge.game.combat.Combat;
 import forge.game.event.*;
 import forge.game.extrahands.BackupPlanService;
+import forge.game.judgetower.JudgeTowerOptions;
 import forge.game.keyword.Keyword;
 import forge.game.keyword.KeywordInterface;
 import forge.game.mulligan.MulliganService;
@@ -149,13 +150,20 @@ public class GameAction {
      * onto the battlefield) is the one who put it there; a control change keeps the owner.
      */
     private void takeOwnership(final Zone zoneFrom, final Zone zoneTo, final Card c, final SpellAbility cause) {
+        // Judge Tower's default is the same, "the player who last played it"; its house rules go by less
+        final JudgeTowerOptions.Ownership model = game.getJudge() == null ? JudgeTowerOptions.Ownership.LAST_PLAYED
+                : game.getJudge().getOptions().ownership;
         Player newOwner = null;
         if (zoneTo.is(ZoneType.Hand)) {
             newOwner = zoneTo.getPlayer();
         } else if (zoneTo.is(ZoneType.Battlefield)
                 && (zoneFrom == null || !(zoneFrom.is(ZoneType.Stack) || zoneFrom.is(ZoneType.Battlefield)))) {
-            newOwner = zoneTo.getPlayer();
-        } else if (zoneTo.is(ZoneType.Stack) && cause != null && cause.isSpell() && cause.getHostCard() == c) {
+            if (model == JudgeTowerOptions.Ownership.LAST_PLAYED || (model == JudgeTowerOptions.Ownership.DREW_OR_REANIMATED
+                    && zoneFrom != null && zoneFrom.is(ZoneType.Graveyard))) {
+                newOwner = zoneTo.getPlayer();
+            }
+        } else if (zoneTo.is(ZoneType.Stack) && cause != null && cause.isSpell() && cause.getHostCard() == c
+                && model == JudgeTowerOptions.Ownership.LAST_PLAYED) {
             newOwner = cause.getActivatingPlayer();
         }
         if (newOwner != null) {
@@ -168,6 +176,9 @@ public class GameAction {
      * goes by its owner ("return it to its owner's hand", "exile it") is taking their own card - it's theirs from then.
      */
     private void claimFromSharedZone(final Card c, final SpellAbility cause) {
+        if (game.getJudge() != null && game.getJudge().getOptions().ownership != JudgeTowerOptions.Ownership.LAST_PLAYED) {
+            return;
+        }
         if (cause != null && cause.getActivatingPlayer() != null && c.getZone() instanceof SharedPlayerZone && !c.isToken()) {
             c.setOwner(cause.getActivatingPlayer());
         }
@@ -3237,7 +3248,9 @@ public class GameAction {
                 dealCards(handSizes, null, null);
             }
 
-            if (game.getRules().getGameType() != GameType.Puzzle && !paiGow) {
+            // Judge Tower: no hand, no mulligan
+            final boolean noHands = game.getJudge() != null && game.getJudge().getOptions().startingHand == 0;
+            if (game.getRules().getGameType() != GameType.Puzzle && !paiGow && !noHands) {
                 new MulliganService(first).perform();
             }
             if (game.isGameOver()) { break; } // conceded during "mulligan" prompt

@@ -38,6 +38,9 @@ public enum GameLossReason {
 
     OpponentWon,
 
+    /** Judge Tower: caught breaking a rule. */
+    JudgeInfraction,
+
     IntentionalDraw // Not a real "game loss" as such, but a reason not to continue playing.
     ;
 

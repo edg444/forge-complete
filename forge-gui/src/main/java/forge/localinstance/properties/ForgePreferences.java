@@ -65,6 +65,9 @@ public class ForgePreferences extends AbstractPreferences<ForgePreferences.FPref
         UI_MATCHES_PER_GAME("3"),
         // the shared deck for Dandan games, by its deck name (forge.gamemodes.match.DandanDecks)
         DANDAN_DECK(""),
+        // the Tower for Judge Tower games by its deck name (forge.gamemodes.match.JudgeTowerDecks), and its house rules
+        JUDGE_TOWER_DECK(""),
+        JUDGE_TOWER_RULES(""),
         UI_APPLIED_VARIANTS(""),
         UI_RANDOM_FOIL ("false"),
         UI_AVATARS ("0,1"),

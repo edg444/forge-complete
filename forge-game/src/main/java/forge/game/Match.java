@@ -639,11 +639,17 @@ public class Match {
             if (paiGow) {
                 PaiGowMagic.createRulesEffect(player);
             }
+            if (game.getJudge() != null) {
+                game.getJudge().createRulesEffect(player);
+            }
 
             player.shuffle(null);
             startBanked(game, player, psc);
 
-            if (isFirstGame) {
+            // Judge Tower: every player plays by force, so there's nothing the AI could play badly on purpose
+            if (isFirstGame && game.getJudge() != null) {
+                // no complaints to collect
+            } else if (isFirstGame) {
                 Map<DeckSection, List<? extends PaperCard>> cardsComplained = player.getController().complainCardsCantPlayWell(myDeck.getLeft());
                 if (cardsComplained != null && !cardsComplained.isEmpty()) {
                     rAICards.put(player, cardsComplained);

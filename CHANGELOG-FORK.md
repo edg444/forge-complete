@@ -289,6 +289,39 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   Secret Lair Dandân Deck (2026, its SLD printings), Nick Floyd's Forgetful Fish Classic, Braden Bowish's Dandân
   Tempo, and Floyd's 60-card 1997 list.
 
+### Judge Tower
+
+Phase 1 of 5: the format's rules in normal play. Players still use Forge's usual prompts, which only offer legal plays;
+what a human can do wrong so far is break the format's own rules. The later phases take the filters off and hand over
+triggers, state-based actions and carrying out effects to the player.
+
+- **Judge** (`forge.game.judgetower.Judge`, `Game.getJudge()`, null in other games) — `mandatoryActions(player)` is
+  everything the player must do before passing: what they can cast, activate or do now, with mana abilities included,
+  each activated ability once a turn, the bottom-most printed ability of a card first (`printedPosition` goes by the
+  Oracle text, because scripts list keywords and mana abilities first), and an alternative cost in place of a normal
+  cast. Taking them is in any order.
+- **Infractions** — a `JudgeInfraction` (an Error, so effect code that catches Exception can't swallow it) unwinds to
+  `PhaseHandler.mainLoopStep` from wherever the human was. `Judge.rule` restores the last checkpoint (taken before a
+  human's priority, before a resolution and before a phase change, with a `GameMemento.Recorder` of its own), asks the
+  offender (`PlayerController.appealJudgeRuling`: accept, or overrule, so a script bug can't put anyone out), and
+  then takes a strike or the game: `GameLossReason.JudgeInfraction`. Passing with a mandatory action left, an ability
+  twice or out of order, a normal cast with an alternative cost to use, X other than the format's, an unpaid additional
+  cost, declining a "may", not attacking or blocking with everything.
+- **Forced by the format, for all players** — `Mode$ MustAttack` and `Mode$ MustBlock` on a rules effect in each
+  player's command zone; every optional mode of a charm (`CharmEffect`); no mulligan with no hand; unlimited mana
+  (`ManaPool.makeUnlimited`, Pai Gow's).
+- **AI** (`JudgeTowerAi`) — plays `mandatoryActions` without asking whether it wants to, the AI's own targets if it
+  has them when it has no choice (`doTrigger`, mandatory), or else any legal ones. It doesn't commit infractions.
+- **Shared zones past two players** — a lost player's cards in a shared zone pass to the next player instead of leaving
+  the game (`Game.onPlayerLost`), and `SharedPlayerZone.getPlayer` is the first sharer still in the game.
+- **House rules** (`JudgeTowerOptions`, `GameRules.setJudgeTowerOptions`, which also sets the match length; asked at
+  the start of a match by `JudgeTowerLobby`, remembered in `FPref.JUDGE_TOWER_RULES`) — the sources disagree, so:
+  ownership, life, hidden information, points to win, X, starting hand, shared or separate graveyard, strikes, One and
+  Done. Defaults are the user's rulings: last to play owns it, life tracked and 0 doesn't lose, hands revealed, first to 3,
+  X 5, no hand, shared, one strike, One and Done off.
+- **Lobby** — a game format on desktop with a Tower dropdown beside it, and a variant on mobile with a picker
+  (`JudgeTowerDecks`, `FPref.JUDGE_TOWER_DECK`): `res/judgetower/the_judges_tower.dck`, or the first seat's deck.
+
 ### Other
 
 - `DB$ RememberNumber` — writes a number into the remembered set (which is a `Set`, so repeats
@@ -404,6 +437,15 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 ## Log
 
 ### Unreleased
+
+- **Judge Tower, Phase 1** (user request, rules from mtg.wiki, TheGamer's guide of 2024-09-12 and Cube Cobra's "The
+  Judge's Tower" primer, with the user's rulings of 2026-10-30; see the engine section). The format's rules in normal
+  play, with AI seats playing by force and a human who breaks one losing the game while it goes back to the last legal
+  state and carries on for the others. Ships SuperTainted's 200-card Tower from Cube Cobra as the default.
+  - Judgment calls of mine, not from a source: a spell back in the zone it was cast from (buyback) isn't required
+    again that turn, or a mandatory buyback would loop forever; multikicker and the like are paid as many times as the
+    format's X; a cast from hand with cycling available may be either, in any order, since casting isn't a printed
+    ability; snow costs still need snow permanents, as in Pai Gow.
 
 ### 2026-10-30, twenty-seventh deploy (desktop, Android, GitHub) — Hero's Path challenges, Pai Gow Magic, Dandân, layers per CR 613, AI-vs-AI replays, Commander brackets, multiplayer AI; 11-commit upstream merge
 

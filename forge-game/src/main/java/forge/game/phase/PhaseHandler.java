@@ -35,6 +35,7 @@ import forge.game.cost.CostEnlist;
 import forge.game.cost.CostExert;
 import forge.game.event.*;
 import forge.game.keyword.Keyword;
+import forge.game.judgetower.JudgeInfraction;
 import forge.game.player.Player;
 import forge.game.player.PlayerCollection;
 import forge.game.player.PlayerView;
@@ -876,6 +877,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 combat.removeAbsentCombatants();
 
                 success = CombatUtil.validateAttackers(combat);
+                if (!success && game.getJudge() != null && !whoDeclares.getController().isAI()) {
+                    success = game.getJudge().checkAttack(whoDeclares);
+                }
                 if (!success) {
                     whoDeclares.getController().notifyOfValue(null, null, "Attack declaration invalid");
                     continue;
@@ -1038,6 +1042,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                         }
                         // If not replaced, run normal declare blockers
                         whoDeclaresBlockers.getController().declareBlockers(p, combat);
+                        if (game.getJudge() != null && !whoDeclaresBlockers.getController().isAI()) {
+                            game.getJudge().checkBlocks(whoDeclaresBlockers, CombatUtil.validateBlocks(combat, p));
+                        }
                     }
                 }
             }
@@ -1422,6 +1429,21 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     }
 
     public void mainLoopStep() {
+        try {
+            runLoopStep();
+        } catch (final JudgeInfraction infraction) {
+            game.getJudge().rule(infraction);
+            // whoever had priority or would have it back may be gone now, and the rest pass all over again
+            if (pPlayerPriority.hasLost() && !game.isGameOver()) {
+                pPlayerPriority = game.getNextPlayerAfter(pPlayerPriority);
+                pFirstPriority = pPlayerPriority;
+            } else if (pFirstPriority.hasLost()) {
+                pFirstPriority = pPlayerPriority;
+            }
+        }
+    }
+
+    private void runLoopStep() {
         if (givePriorityToPlayer) {
             if (DEBUG_PHASES) {
                 sw.start();
@@ -1440,6 +1462,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 // CR 117.3 A player receives priority once state-based actions are done, and again after each thing they do
                 game.fireEvent(new GameEventPlayerPriority(PlayerView.get(playerTurn), phase, PlayerView.get(getPriorityPlayer())));
                 game.stashGameState();
+                if (game.getJudge() != null && !pPlayerPriority.getController().isAI()) {
+                    game.getJudge().checkpoint();
+                }
 
                 final long priorityStart = System.nanoTime();
                 chosenSa = pPlayerPriority.getController().chooseSpellAbilityToPlay();
@@ -1457,6 +1482,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 }
 
                 if (chosenSa == null) {
+                    if (game.getJudge() != null && !pPlayerPriority.getController().isAI()) {
+                        game.getJudge().checkPass(pPlayerPriority);
+                    }
                     break; // that means 'I pass'
                 }
 
@@ -1475,6 +1503,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     final Zone originZone = saHost.getZone();
                     final CardZoneTable triggerList = new CardZoneTable(game.getLastStateBattlefield(), game.getLastStateGraveyard());
 
+                    if (game.getJudge() != null && !pPlayerPriority.getController().isAI()) {
+                        game.getJudge().checkPlay(pPlayerPriority, sa);
+                    }
                     if (pPlayerPriority.getController().playChosenSpellAbility(sa)) {
                         // 117.3c If a player has priority when they cast a spell, activate an ability, [play a land]
                         // that player receives priority afterward.
@@ -1526,6 +1557,10 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
             System.out.println(TextUtil.concatWithSpace(playerTurn.toString(),TextUtil.addSuffix(phase.toString(),":"), pPlayerPriority.toString(),"is active, previous was", nextPlayer.toString()));
         }
         if (pFirstPriority == nextPlayer) {
+            // what's next can ask a human something: their decision shouldn't undo this much of the game
+            if (game.getJudge() != null) {
+                game.getJudge().checkpoint();
+            }
             if (game.getStack().isEmpty()) {
                 if (playerTurn.hasLost()) {
                     setPriority(game.getNextPlayerAfter(playerTurn));

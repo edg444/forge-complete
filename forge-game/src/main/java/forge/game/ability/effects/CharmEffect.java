@@ -412,6 +412,10 @@ public class CharmEffect extends SpellAbilityEffect {
             }
         }
 
+        // Judge Tower: every optional mode that can be chosen is
+        if (source.getGame().getJudge() != null) {
+            min = Math.min(num, canRepeat ? num : choices.size());
+        }
         List<AbilitySub> chosen = chooser.getController().chooseModeForAbility(sa, choices, min, num, canRepeat);
         chainAbilities(sa, chosen);
 

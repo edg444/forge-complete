@@ -102,7 +102,8 @@ public class InputBlock extends InputSyncronizedBase {
     @Override
     public final void onOk() {
         final String blockErrors = CombatUtil.validateBlocks(combat, defender);
-        if (blockErrors == null) {
+        // Judge Tower: the judge rules on an illegal block, it isn't refused
+        if (blockErrors == null || combat.getAttackers().anyMatch(a -> a.getGame().getJudge() != null)) {
             // Done blocking
             stop();
         } else {

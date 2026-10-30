@@ -586,6 +586,15 @@ public class Player extends GameEntity implements Comparable<Player> {
         return change || remainder > 0;
     }
 
+    /** Judge Tower's end-of-turn reset: the total is set outright, which isn't gaining or losing life. */
+    public final void resetLife() {
+        final int oldLife = lifeTotal.life;
+        lifeTotal.life = startingLife;
+        setHalfLife(0);
+        updateLifeViews();
+        game.fireEvent(new GameEventPlayerLivesChanged(this, oldLife, lifeTotal.life));
+    }
+
     public final int getStartingLife() {
         return startingLife;
     }
@@ -2804,7 +2813,8 @@ public class Player extends GameEntity implements Comparable<Player> {
         // Rule 704.5a -  If a player has 0 or less life, he or she loses the game.
         // 1/2 life is still more than 0, so a player sitting on the fraction hasn't lost yet
         final boolean hasNoLife = getLife() < 0 || (getLife() == 0 && !hasFractionalLife());
-        if (hasNoLife && loseConditionMet(GameLossReason.LifeReachedZero, null)) {
+        // Judge Tower: every version of the format lets you play on at 0 or less
+        if (hasNoLife && game.getJudge() == null && loseConditionMet(GameLossReason.LifeReachedZero, null)) {
             return true;
         }
 

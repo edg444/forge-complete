@@ -356,8 +356,21 @@ public abstract class PlayerController {
 
     public abstract int chooseNumberForCostReduction(final SpellAbility sa, final int min, final int max);
     public abstract int chooseNumberForKeywordCost(SpellAbility sa, Cost cost, KeywordInterface keyword, String prompt, int max);
+    /** chooseNumberForKeywordCost, with Judge Tower's say over how many. */
+    public final int keywordCostAmount(SpellAbility sa, Cost cost, KeywordInterface keyword, String prompt, int max) {
+        final forge.game.judgetower.Judge judge = getGame().getJudge();
+        return judge == null ? chooseNumberForKeywordCost(sa, cost, keyword, prompt, max)
+                : judge.keywordCostAmount(this, sa, cost, keyword, prompt, max);
+    }
+    /**
+     * Judge Tower: the player's say on a ruling against them, after the game has gone back to the last legal state.
+     * True overrules it. Only a human can be ruled against.
+     */
+    public boolean appealJudgeRuling(String reason) {
+        return false;
+    }
     public boolean addKeywordCost(SpellAbility sa, Cost cost, KeywordInterface keyword, String prompt) {
-        return chooseNumberForKeywordCost(sa, cost, keyword, prompt, 1) == 1;
+        return keywordCostAmount(sa, cost, keyword, prompt, 1) == 1;
     }
 
     public abstract int chooseNumber(SpellAbility sa, String title, int min, int max);

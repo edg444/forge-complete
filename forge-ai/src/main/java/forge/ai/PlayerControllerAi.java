@@ -484,6 +484,10 @@ public class PlayerControllerAi extends PlayerController {
 
     @Override
     public boolean confirmAction(SpellAbility sa, PlayerActionConfirmMode mode, String message, List<String> options, Card cardToShow, Map<String, Object> params) {
+        // Judge Tower: what a player "may" do, they must. A choice between named options is no such thing
+        if (player.getGame().getJudge() != null && (options == null || options.isEmpty())) {
+            return true;
+        }
         return getAi().confirmAction(sa, mode, message, params);
     }
 
@@ -507,7 +511,7 @@ public class PlayerControllerAi extends PlayerController {
     public boolean confirmTrigger(WrappedAbility wrapper) {
         final SpellAbility sa = wrapper.getWrappedAbility();
         //final Trigger regtrig = wrapper.getTrigger();
-        if (wrapper.isMandatory()) {
+        if (wrapper.isMandatory() || player.getGame().getJudge() != null) {
             return true;
         }
         // Store/replace target choices more properly to get this SA cleared.
@@ -1087,6 +1091,9 @@ public class PlayerControllerAi extends PlayerController {
 
     @Override
     public List<SpellAbility> chooseSpellAbilityToPlay() {
+        if (player.getGame().getJudge() != null) {
+            return JudgeTowerAi.chooseAction(player, brains);
+        }
         return brains.chooseSpellAbilityToPlay();
     }
 
@@ -1372,6 +1379,9 @@ public class PlayerControllerAi extends PlayerController {
 
     @Override
     public List<AbilitySub> chooseModeForAbility(SpellAbility sa, List<AbilitySub> possible, int min, int num, boolean allowRepeat) {
+        if (player.getGame().getJudge() != null) {
+            return JudgeTowerAi.chooseModes(possible, num);
+        }
         List<AbilitySub> result = brains.chooseModeForAbility(sa, possible, min, num, allowRepeat);
         if (result != null) {
             return result;
@@ -2171,6 +2181,9 @@ public class PlayerControllerAi extends PlayerController {
 
     @Override
     public List<OptionalCostValue> chooseOptionalCosts(SpellAbility chosen, List<OptionalCostValue> optionalCostValues) {
+        if (player.getGame().getJudge() != null) {
+            return player.getGame().getJudge().requiredOptionalCosts(chosen, optionalCostValues);
+        }
         return SpellApiToAi.Converter.get(chosen).chooseOptionalCosts(player, chosen, optionalCostValues);
     }
 

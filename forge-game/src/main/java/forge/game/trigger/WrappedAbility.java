@@ -433,6 +433,9 @@ public class WrappedAbility extends Ability {
                 decider = SpellAbilityEffect.getNewChooser(sa, decider);
             }
             if (!decider.getController().confirmTrigger(this)) {
+                if (decider.getGame().getJudge() != null) {
+                    decider.getGame().getJudge().checkDeclined(decider, this, getHostCard().getName());
+                }
                 return;
             }
         }

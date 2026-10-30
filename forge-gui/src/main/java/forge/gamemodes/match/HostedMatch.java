@@ -120,6 +120,10 @@ public class HostedMatch {
 
         if (appliedVariants != null && !appliedVariants.isEmpty()) {
             gameRules.setAppliedVariants(appliedVariants);
+            if (appliedVariants.contains(GameType.JudgeTower)) {
+                gameRules.setJudgeTowerOptions(forge.game.judgetower.JudgeTowerOptions.parse(
+                        FModel.getPreferences().getPref(FPref.JUDGE_TOWER_RULES)));
+            }
         }
 
         final List<RegisteredPlayer> sortedPlayers = Lists.newArrayList(players);

@@ -143,7 +143,8 @@ public class ComputerUtil {
             abandonCast(game, sa, hz, movedToStack, new CostPayment(sa.getPayCosts(), sa));
             return false;
         }
-        if (sa.getApi() == ApiType.Charm && (sa.hasParam("Chooser") || sa.hasParam("PhoneAFriend"))) {
+        // Judge Tower too: it chose its modes by force, with no target picked on the way
+        if (sa.getApi() == ApiType.Charm && (sa.hasParam("Chooser") || sa.hasParam("PhoneAFriend") || game.getJudge() != null)) {
             // Another player chose the modes (Phone a Friend: or a simulated friend), so targets the AI picked while deciding may belong to a mode that
             // wasn't chosen, or may not exist yet (Truth or Dare's target is whoever chose)
             for (AbilitySub sub = sa.getSubAbility(); sub != null; sub = sub.getSubAbility()) {
