@@ -329,6 +329,14 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Replays of AI-vs-AI games** (user request). Upstream's local replay (#12266) recorded only games with exactly
+  one human, so a watched AI-only match left nothing to rewatch. `ReplaySession.begin` now records one too, from
+  a spectator's seat: no player of ours, so every card shows on playback as when it was watched live (the
+  forwarder's own priority and end-of-turn flushes stand in for the missing human input queue). On playback
+  `ReplayPlayer` puts Pause/Speed on the spectator's prompt (owner `null`, as live spectating does) and gives the
+  screen a spectator controller that reaches it, and both win/lose screens' Close replay stop it directly, since a
+  spectator recording has no game controller to hear the quit. Hosted and multi-human games are still not
+  recorded. Launcher and setting texts say "play or watch".
 - **Commander bracket enforcement** (user request; the user chose all three modes, a warning that can be
   overridden, and AI decks made to fit). Bracket detection was already upstream's (`CommanderBracketCalculator`:
   the Bracket column and explanation views, the lobby's Maximum Bracket for generated decks); its Game Changers

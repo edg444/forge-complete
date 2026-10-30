@@ -39,6 +39,8 @@ public class ControlWinLose {
                 for (final forge.interfaces.IGameController c : MatchController.instance.getOriginalGameControllers()) {
                     c.nextGameDecision(forge.gamemodes.match.NextGameDecision.QUIT);
                 }
+                // a replay watched as a spectator (AI against AI) has no such controller
+                forge.gamemodes.net.client.ReplayPlayer.stopFor(MatchController.instance, true);
             });
             return;
         }
