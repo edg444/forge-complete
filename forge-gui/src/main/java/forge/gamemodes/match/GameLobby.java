@@ -7,8 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import forge.LobbyPlayer;
 import forge.ai.AIOption;
-import forge.card.CardEdition;
 import forge.deck.CardPool;
+import forge.card.CardEdition;
 import forge.deck.CommanderBracketEnforcement;
 import forge.deck.Deck;
 import forge.deck.DeckFormat;

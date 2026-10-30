@@ -7,7 +7,6 @@ import forge.deck.CardPool;
 import forge.deck.Deck;
 import forge.deck.DeckSection;
 import forge.game.GameType;
-import forge.game.PaiGowMagic;
 import forge.item.IPaperCard;
 import forge.item.PaperCard;
 
@@ -191,7 +190,7 @@ public class RegisteredPlayer {
             start.planes = planes;
     	}
         if (appliedVariants.contains(GameType.PaiGow) || appliedVariants.contains(GameType.BoosterBlitz)) {
-            start.setStartingLife(PaiGowMagic.STARTING_LIFE);
+            start.setStartingLife(forge.game.PaiGowMagic.STARTING_LIFE);
         }
         if (appliedVariants.contains(GameType.Vanguard) || appliedVariants.contains(GameType.MomirBasic)
                 || appliedVariants.contains(GameType.MoJhoSto)) { //fix the crash, if somehow the avatar is null, get it directly from the deck
