@@ -405,6 +405,13 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+### 2026-10-30, twenty-seventh deploy (desktop, Android, GitHub) — Hero's Path challenges, Pai Gow Magic, Dandân, layers per CR 613, AI-vs-AI replays, Commander brackets, multiplayer AI; 11-commit upstream merge
+
+- **Upstream merge** (11 commits). Upstream moved each player's reveal history into their own GUI (#12503), which
+  drops `TrackableProperty.RevealedCardsCollection`; the fork's `UnseatedPlayers` stays last. _____ _____ _____
+  Trespasser takes upstream's can't-be-blocked effect (#12457) with the fork's wording, and MagicFest 2026 keeps the
+  fork's Shrimp creature type next to upstream's two new printings (Encounter the Unknown and Nyota Uhura,
+  Communications, which have no scripts upstream yet).
 - **Hero's Path challenges: Face the Hydra, Battle the Horde, Defeat a God** (user request; the Theros block's Game
   Day challenge decks). New lobby variants on desktop and mobile; every seat is a hero, the challenge deck joins at
   the start, and the difficulty is asked as the match starts (remembered, `FPref.HEROS_PATH_DIFFICULTY`). Each seat
