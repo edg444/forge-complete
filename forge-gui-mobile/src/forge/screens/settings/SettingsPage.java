@@ -9,6 +9,7 @@ import forge.StaticData;
 import forge.adventure.util.Config;
 import forge.ai.AiProfileUtil;
 import forge.assets.*;
+import forge.deck.CommanderBracketEnforcement;
 import forge.game.GameLogEntryType;
 import forge.game.GameLogVerbosity;
 import forge.gui.GuiBase;
@@ -237,6 +238,10 @@ public class SettingsPage extends TabPage<SettingsScreen> {
         lstSettings.addItem(new BooleanSetting(FPref.ENFORCE_DECK_LEGALITY,
             Forge.getLocalizer().getMessage("cbEnforceDeckLegality"),
             Forge.getLocalizer().getMessage("nlEnforceDeckLegality")), 1);
+        lstSettings.addItem(new CustomSelectSetting(FPref.ENFORCE_COMMANDER_BRACKET,
+            Forge.getLocalizer().getMessage("cbpCommanderBracket"),
+            Forge.getLocalizer().getMessage("nlCommanderBracket"),
+            CommanderBracketEnforcement.CHOICES), 1);
         lstSettings.addItem(new BooleanSetting(FPref.PERFORMANCE_MODE,
             Forge.getLocalizer().getMessage("cbPerformanceMode"),
             Forge.getLocalizer().getMessage("nlPerformanceMode")), 1);

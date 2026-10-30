@@ -706,7 +706,8 @@ public class DeckgenUtil {
     }
 
     public static Deck generateRandomCommanderDeck(PaperCard commander, DeckFormat format, boolean forAi, boolean isCardGen) {
-        return generateRandomCommanderDeck(commander, format, forAi, isCardGen, FModel.getPreferences().getPrefInt(ForgePreferences.FPref.DECKGEN_MAXIMUM_COMMANDER_BRACKET));
+        return generateRandomCommanderDeck(commander, format, forAi, isCardGen,
+                CommanderBracketEnforcement.generationCap(FModel.getPreferences().getPrefInt(ForgePreferences.FPref.DECKGEN_MAXIMUM_COMMANDER_BRACKET)));
     }
 
     /** Generate a random Commander deck with an optional maximum bracket. */

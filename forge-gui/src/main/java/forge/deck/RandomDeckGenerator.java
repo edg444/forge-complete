@@ -156,6 +156,7 @@ public class RandomDeckGenerator extends DeckProxy implements Comparable<RandomD
             case Planechase -> DeckProxy.getAllPlanarDecks(DeckFormat.Planechase.isLegalDeckPredicate());
             default -> DeckProxy.getAllConstructedDecks(gameType.getDeckFormat().isLegalDeckPredicate());
         };
+        decks = withinBracketCap(decks);
         if (Iterables.isEmpty(decks)) {
             return getGeneratedDeck(); //fall back to generated deck if no decks in filtered list
         }
@@ -176,11 +177,28 @@ public class RandomDeckGenerator extends DeckProxy implements Comparable<RandomD
             case Planechase -> DeckProxy.getAllPlanarDecks();
             default -> DeckProxy.getAllConstructedDecks();
         };
-        decks = IterableUtil.filter(decks, DeckProxy::isFavoriteDeck);
+        decks = withinBracketCap(IterableUtil.filter(decks, DeckProxy::isFavoriteDeck));
         if (Iterables.isEmpty(decks)) {
             return getGeneratedDeck(); //fall back to generated deck if no favorite decks
         }
         return Aggregates.random(decks).getDeck();
+    }
+
+    /** Under an enforced bracket cap, an AI seat's random Commander deck is one that fits, when any does. */
+    private Iterable<DeckProxy> withinBracketCap(final Iterable<DeckProxy> decks) {
+        final CommanderBracketEnforcement.Rule rule = CommanderBracketEnforcement.currentRule();
+        if (!isAi || rule.mode() != CommanderBracketEnforcement.Mode.MAX) {
+            return decks;
+        }
+        switch (lstDecks.getGameType()) {
+            case CommanderGauntlet, Commander, Oathbreaker, TinyLeaders, Brawl -> { }
+            default -> {
+                return decks;
+            }
+        }
+        final Iterable<DeckProxy> fit = IterableUtil.filter(decks,
+                d -> CommanderBracketCalculator.getBracket(d.getDeck()) <= rule.maxBracket());
+        return Iterables.isEmpty(fit) ? decks : fit;
     }
 
     @Override

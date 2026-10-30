@@ -21,6 +21,7 @@ import forge.localinstance.properties.IPreferences;
 import forge.menus.LayoutMenu;
 import forge.model.FModel;
 import forge.player.GamePlayerUtil;
+import forge.deck.CommanderBracketEnforcement;
 import forge.screens.deckeditor.CDeckEditorUI;
 import forge.screens.deckeditor.controllers.CEditorTokenViewer;
 import forge.sound.MusicPlaylist;
@@ -215,6 +216,7 @@ public enum CSubmenuPreferences implements ICDoc {
         initializeMulliganRuleComboBox();
         initializeAiProfilesComboBox();
         initializeAiSideboardingModeComboBox();
+        initializeCommanderBracketComboBox();
         initializeAiTimeoutComboBox();
         initializeSoundSetsComboBox();
         initializeMusicSetsComboBox();
@@ -532,6 +534,13 @@ public enum CSubmenuPreferences implements ICDoc {
         final String selectedItem = this.prefs.getPref(userSetting);
         panel.setComboBox(comboBox, selectedItem);
         comboBox.addActionListener(actionEvent -> AiProfileUtil.setAiSideboardingMode(AiProfileUtil.AISideboardingMode.normalizedValueOf(comboBox.getSelectedItem())));
+    }
+
+    private void initializeCommanderBracketComboBox() {
+        final FPref userSetting = FPref.ENFORCE_COMMANDER_BRACKET;
+        final FComboBoxPanel<String> panel = this.view.getCommanderBracketComboBoxPanel();
+        final FComboBox<String> comboBox = createComboBox(CommanderBracketEnforcement.CHOICES, userSetting);
+        panel.setComboBox(comboBox, this.prefs.getPref(userSetting));
     }
 
     private void initializeAiTimeoutComboBox() {

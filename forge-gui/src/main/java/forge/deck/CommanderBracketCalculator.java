@@ -226,6 +226,23 @@ public final class CommanderBracketCalculator {
             return bracket;
         }
 
+        /** The cards and two-card combos that raise the deck above bracket 1. */
+        public List<String> getReasonCards() {
+            final List<String> result = new ArrayList<>(gamechangers);
+            result.addAll(massLandDenial);
+            if (extraTurns.size() >= 2) {
+                result.addAll(extraTurns);
+            }
+            result.addAll(chainedExtraTurns);
+            for (final Combo combo : earlyGameCombos) {
+                result.add(combo.toString());
+            }
+            for (final Combo combo : lateGameCombos) {
+                result.add(combo.toString());
+            }
+            return result;
+        }
+
         public String toExplanation() {
             final StringBuilder sb = new StringBuilder();
             sb.append(localizer.getMessage("lblCommanderBracketMinimum", bracket)).append("\n\n");

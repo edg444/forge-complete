@@ -218,6 +218,7 @@ public class ForgePreferences extends AbstractPreferences<ForgePreferences.FPref
         //MATCH_EXPERIMENTAL_RESTORE("false"),
 
         ENFORCE_DECK_LEGALITY ("true"),
+        ENFORCE_COMMANDER_BRACKET ("Off"),
         PERFORMANCE_MODE ("false"),
         FILTERED_HANDS ("false"),
         MULLIGAN_RULE(MulliganDefs.getDefaultRule().name()),

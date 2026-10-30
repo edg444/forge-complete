@@ -329,6 +329,22 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Unreleased
 
+- **Commander bracket enforcement** (user request; the user chose all three modes, a warning that can be
+  overridden, and AI decks made to fit). Bracket detection was already upstream's (`CommanderBracketCalculator`:
+  the Bracket column and explanation views, the lobby's Maximum Bracket for generated decks); its Game Changers
+  list matched Wizards' current one (the October 21, 2025 list of 51 plus Farewell and Biorhythm from February 9,
+  2026, checked 2026-10-30).
+  - New setting **Commander Bracket Enforcement** (desktop Preferences and mobile Settings, under Deck
+    Conformance; `FPref.ENFORCE_COMMANDER_BRACKET`): Off, Max 1-4, or All Match. Separate from conformance.
+  - At the start of a Commander-family match (`GameLobby`), decks over the cap, or every deck when they don't all
+    share a bracket, are listed with their bracket and the cards and combos behind it, with Play Anyway or
+    Cancel (`CommanderBracketEnforcement`).
+  - AI decks are held to it: a capped generator makes AI Commander decks at or under the cap, random and favorite
+    AI decks are picked among those that fit when any do, and at match start an AI seat's generated deck that
+    doesn't fit is made again with the same commander (for All Match, aiming at the bracket the other decks
+    share; the generator only caps, so a deck can still come out under it and get listed).
+  - Mobile deck lists show "Bracket N" on each Commander deck's second line (desktop already had the column).
+  - `CommanderBracketEnforcementTest` (5).
 - **Multiplayer AI, part 1: teammates' losses count** (a 2v2 simulation had the AI cast Price of Progress for 6 at
   its own teammate, whose life its Sulfuric Vortex then finished). New `AiTeams`: the AI's side is it and its
   teammates (team games, Two-Headed Giant, the archenemy's opponents), and a free-for-all comparison scales the

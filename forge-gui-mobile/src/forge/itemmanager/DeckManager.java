@@ -1,6 +1,8 @@
 package forge.itemmanager;
 
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.WeakHashMap;
 
 import com.badlogic.gdx.utils.Align;
 
@@ -12,6 +14,8 @@ import forge.assets.FSkinImage;
 import forge.card.CardFaceSymbols;
 import forge.card.CardRenderer;
 import forge.card.ColorSet;
+import forge.deck.CommanderBracketCalculator;
+import forge.deck.Deck;
 import forge.deck.DeckProxy;
 import forge.deck.FDeckViewer;
 import forge.deck.io.DeckPreferences;
@@ -30,6 +34,8 @@ import forge.util.Utils;
  */
 public final class DeckManager extends ItemManager<DeckProxy> implements IHasGameType {
     private final GameType gameType;
+    // working a bracket out checks every listed combo, too slow to repeat for each row on each frame
+    private final Map<DeckProxy, String> bracketLabels = new WeakHashMap<>();
 
     /**
      * Creates deck list for selected decks for quick deleting, editing, and
@@ -173,11 +179,22 @@ public final class DeckManager extends ItemManager<DeckProxy> implements IHasGam
                     sideSize = 0; //show sideboard as 0 if empty
                 }
 
-                g.drawText(deck.getFormatsString() + " (" + mainSize + " / " + sideSize + ")", font, foreColor, x, y, availableFormatWidth, lineHeight, false, Align.left, true);
+                g.drawText(bracketLabel(deck) + deck.getFormatsString() + " (" + mainSize + " / " + sideSize + ")", font, foreColor, x, y, availableFormatWidth, lineHeight, false, Align.left, true);
 
                 x += availableFormatWidth + CardRenderer.SET_BOX_MARGIN;
                 y -= CardRenderer.SET_BOX_MARGIN;
                 CardRenderer.drawSetLabel(g, font, set, deck.getHighestRarity(), x, y, setWidth, lineHeight + 2 * CardRenderer.SET_BOX_MARGIN);
+            }
+
+            /** "Bracket N - " for a deck with a commander, else nothing. */
+            private String bracketLabel(final DeckProxy deck) {
+                return bracketLabels.computeIfAbsent(deck, d -> {
+                    final Deck full = d.getDeck();
+                    if (full == null || full.getCommanders() == null || full.getCommanders().isEmpty()) {
+                        return "";
+                    }
+                    return Forge.getLocalizer().getMessage("lblBracket") + " " + CommanderBracketCalculator.getBracket(full) + " - ";
+                });
             }
 
             @Override

@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import forge.LobbyPlayer;
 import forge.ai.AIOption;
 import forge.deck.CardPool;
+import forge.deck.CommanderBracketEnforcement;
 import forge.deck.Deck;
 import forge.deck.DeckFormat;
 import forge.deck.DeckSection;
@@ -422,6 +423,20 @@ public abstract class GameLobby implements IHasGameType {
                 localizer.getMessage("lblIgnore"), localizer.getMessage("lblCancel"), false);
     }
 
+    /** Lists every deck breaking the Commander bracket rule and offers to play anyway. Returns true to continue. */
+    private static boolean confirmIgnoreCommanderBracket(final CommanderBracketEnforcement.Rule rule, final List<String> problems) {
+        final Localizer localizer = Localizer.getInstance();
+        final StringBuilder message = new StringBuilder(rule.mode() == CommanderBracketEnforcement.Mode.MAX
+                ? localizer.getMessage("lblCommanderBracketDecksOverMax", rule.maxBracket())
+                : localizer.getMessage("lblCommanderBracketDecksDontMatch"));
+        message.append('\n');
+        for (final String problem : problems) {
+            message.append('\n').append(problem);
+        }
+        return SOptionPane.showConfirmDialog(message.toString(), localizer.getMessage("lblCommanderBracket"),
+                localizer.getMessage("lblPlayAnyway"), localizer.getMessage("lblCancel"), false);
+    }
+
     /** Returns a runnable to start a match with the applied variants if allowed. */
     public Runnable startGame() {
         final List<LobbySlot> activeSlots = Lists.newArrayListWithCapacity(getNumberOfSlots());
@@ -495,6 +510,21 @@ public abstract class GameLobby implements IHasGameType {
             }
         }
 
+        // the Commander bracket rule, separate from conformance; generated AI decks are made again to fit it
+        final CommanderBracketEnforcement.Rule bracketRule = isCommanderMatch && !data.isLimitedMode()
+                ? CommanderBracketEnforcement.currentRule() : CommanderBracketEnforcement.Rule.parse(CommanderBracketEnforcement.OFF);
+        Integer bracketTarget = null;
+        if (bracketRule.mode() == CommanderBracketEnforcement.Mode.ALL_MATCH) {
+            final List<Deck> fixedDecks = new ArrayList<>();
+            for (final LobbySlot slot : activeSlots) {
+                if (slot.getDeck() != null && !(slot.getType() == LobbySlotType.AI && CommanderBracketEnforcement.isGenerated(slot.getDeck()))) {
+                    fixedDecks.add(slot.getDeck());
+                }
+            }
+            bracketTarget = CommanderBracketEnforcement.sharedTarget(fixedDecks);
+        }
+        final Map<String, Deck> bracketDecks = new LinkedHashMap<>();
+
         final List<RegisteredPlayer> players = new ArrayList<>();
         final Map<RegisteredPlayer, IGuiGame> guis = Maps.newHashMap();
         final Map<RegisteredPlayer, LobbySlot> playerToSlot = Maps.newHashMap();
@@ -548,6 +578,12 @@ public abstract class GameLobby implements IHasGameType {
                                 isTinyLeadersMatch ? GameType.TinyLeaders :
                                     isBrawlMatch ? GameType.Brawl :
                                         GameType.Commander;
+                    if (!bracketRule.isOff()) {
+                        if (isAI) {
+                            deck = CommanderBracketEnforcement.refitGenerated(deck, commanderGameType.getDeckFormat(), bracketRule, bracketTarget);
+                        }
+                        bracketDecks.put(name, deck);
+                    }
                     if (checkLegality) {
                         final String errMsg = commanderGameType.getDeckFormat().getDeckConformanceProblem(deck);
                         if (errMsg != null) {
@@ -604,6 +640,10 @@ public abstract class GameLobby implements IHasGameType {
         }
 
         if (!legalityProblems.isEmpty() && !confirmIgnoreDeckLegality(legalityProblems)) {
+            return null;
+        }
+        final List<String> bracketProblems = CommanderBracketEnforcement.problems(bracketRule, bracketDecks);
+        if (!bracketProblems.isEmpty() && !confirmIgnoreCommanderBracket(bracketRule, bracketProblems)) {
             return null;
         }
 
