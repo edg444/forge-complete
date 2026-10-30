@@ -882,7 +882,7 @@ public final class StaticAbilityContinuous {
                         setToughness = AbilityUtils.calculateAmount(affectedCard, setT, stAb, true);
                     }
                     affectedCard.addNewPT(setPower, setToughness,
-                        se.getTimestamp(), stAb.getId(), layer == StaticAbilityLayer.CHARACTERISTIC, false);
+                        se.getLayerTimestamp(layer), se.getLayerId(layer), layer == StaticAbilityLayer.CHARACTERISTIC, false);
                     if (setPowerHalves != null) {
                         affectedCard.setHalfPower(Math.floorMod(setPowerHalves, 2) != 0);
                     }
@@ -954,7 +954,7 @@ public final class StaticAbilityContinuous {
                 }
 
                 affectedCard.addChangedCardKeywords(newKeywords, removeKeywords,
-                        removeAbilities != null, se.getTimestamp(), stAb, false);
+                        removeAbilities != null, se.getLayerTimestamp(layer), stAb, se.getLayerId(layer), false);
                 affectedCard.updateKeywordsCache();
             }
 
@@ -1148,12 +1148,12 @@ public final class StaticAbilityContinuous {
                     || !addedReplacementEffects.isEmpty() || !addedStaticAbility.isEmpty()
                     || removeTraits != null) {
                     affectedCard.addChangedCardTraits(
-                        addedAbilities, addedTrigger, addedReplacementEffects, addedStaticAbility, removeTraits, se.getTimestamp(), stAb.getId(), false
+                        addedAbilities, addedTrigger, addedReplacementEffects, addedStaticAbility, removeTraits, se.getLayerTimestamp(layer), se.getLayerId(layer), false
                     );
                 }
                 if (loseWord != null) {
                     final String lost = loseWord;
-                    affectedCard.addChangedCardKeywordsRemoving(k -> Card.keywordMatchesWord(k, lost), se.getTimestamp(), stAb);
+                    affectedCard.addChangedCardKeywordsRemoving(k -> Card.keywordMatchesWord(k, lost), se.getLayerTimestamp(layer), se.getLayerId(layer));
                 }
 
                 if (cantHaveKeyword != null) {
@@ -1167,7 +1167,7 @@ public final class StaticAbilityContinuous {
             // add Types
             if ((addTypes != null && !addTypes.isEmpty()) || (removeTypes != null && !removeTypes.isEmpty()) || addAllCreatureTypes || !remove.isEmpty()) {
                 affectedCard.addChangedCardTypes(addTypes != null ? new CardType(addTypes, true) : null, removeTypes != null ? new CardType(removeTypes, true) : null, addAllCreatureTypes, remove,
-                        se.getTimestamp(), stAb.getId(), false, stAb.isCharacteristicDefining());
+                        se.getLayerTimestamp(layer), se.getLayerId(layer), false, stAb.isCharacteristicDefining());
             }
 
             // add colors

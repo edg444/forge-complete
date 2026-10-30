@@ -65,6 +65,7 @@ public class StaticAbility extends CardTraitBase implements IIdentifiable, Clone
     private int mayPlayTurn = 0;
 
     private SpellAbility payingTrigSA;
+    private StaticAbility grantor;
     private StaticAbilityView view = null;
 
     @Override
@@ -607,7 +608,16 @@ public class StaticAbility extends CardTraitBase implements IIdentifiable, Clone
         if (hasParam("Timestamp")) {
             return Long.valueOf(getParam("Timestamp"));
         }
+        // CR 613.7a: an ability granted by an effect has the later of its object's and that effect's timestamps.
+        // When they tie, the later static id keeps it after the object's own abilities.
+        if (grantor != null) {
+            return Math.max(getHostCard().getLayerTimestamp(), grantor.getTimestamp());
+        }
         return getHostCard().getLayerTimestamp();
+    }
+
+    public void setGrantor(final StaticAbility grantor) {
+        this.grantor = grantor;
     }
 
     @Override

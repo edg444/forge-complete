@@ -47,6 +47,8 @@ public class StaticEffect {
     private CardCollectionView affectedCards = new CardCollection();
     private List<Player> affectedPlayers = Lists.newArrayList();
     private long timestamp = -1;
+    // (timestamp, id) keys standing in for the defaults in the layers where this effect was applied late
+    private final Map<StaticAbilityLayer, long[]> layerOrder = Maps.newEnumMap(StaticAbilityLayer.class);
 
     private Map<String, String> mapParams = Maps.newTreeMap();
 
@@ -65,6 +67,7 @@ public class StaticEffect {
         copy.affectedCards = map.mapCollection(this.affectedCards);
         copy.affectedPlayers  = map.mapList(this.affectedPlayers);
         copy.timestamp = this.timestamp;
+        copy.layerOrder.putAll(this.layerOrder);
         copy.mapParams = this.mapParams;
         return copy;
     }
@@ -86,6 +89,24 @@ public class StaticEffect {
      */
     public final long getTimestamp() {
         return this.timestamp;
+    }
+
+    /**
+     * CR 613.8b: an effect that waited for a later-timestamped one is applied after it, so its changes are
+     * recorded under a key that the card's (timestamp, static id) tables sort after that one's.
+     */
+    public final void setLayerOrder(final StaticAbilityLayer layer, final long ts, final long id) {
+        layerOrder.put(layer, new long[] {ts, id});
+    }
+
+    public final long getLayerTimestamp(final StaticAbilityLayer layer) {
+        final long[] order = layerOrder.get(layer);
+        return order == null ? getTimestamp() : order[0];
+    }
+
+    public final long getLayerId(final StaticAbilityLayer layer) {
+        final long[] order = layerOrder.get(layer);
+        return order == null ? ability.getId() : order[1];
     }
 
     /**
@@ -263,7 +284,7 @@ public class StaticEffect {
                 // remove Types
                 if (hasParam("AddType") || hasParam("AddAllCreatureTypes") || hasParam("RemoveType") || hasParam("RemoveLandTypes")) {
                     // the view is updated in GameAction#checkStaticAbilities to avoid flickering
-                    if (affectedCard.removeChangedCardTypes(getTimestamp(), ability.getId(), false)) {
+                    if (affectedCard.removeChangedCardTypes(getLayerTimestamp(StaticAbilityLayer.TYPE), getLayerId(StaticAbilityLayer.TYPE), false)) {
                         addCard(affectedPerLayer, StaticAbilityLayer.TYPE, affectedCard);
                     }
                 }
@@ -281,7 +302,7 @@ public class StaticEffect {
                 boolean abilitiesChanged = false;
                 if (hasParam("AddKeyword") || hasParam("RemoveKeyword") || hasParam("LoseKeywordOrAbilityWord") || hasParam("GainsPrintedKeywordsOf")
                         || hasParam("ShareRememberedKeywords") || hasParam("RemoveAllAbilities") || hasParam("RemoveNonManaAbilities")) {
-                    abilitiesChanged |= affectedCard.removeChangedCardKeywords(getTimestamp(), ability.getId(), false);
+                    abilitiesChanged |= affectedCard.removeChangedCardKeywords(getLayerTimestamp(StaticAbilityLayer.ABILITIES), getLayerId(StaticAbilityLayer.ABILITIES), false);
                 }
 
                 // remove abilities
@@ -290,7 +311,7 @@ public class StaticEffect {
                         || hasParam("AddTrigger") || hasParam("AddStaticAbility")
                         || hasParam("AddReplacementEffect") || hasParam("RemoveAllAbilities") || hasParam("RemoveNonManaAbilities")
                         || hasParam("LoseKeywordOrAbilityWord")) {
-                    abilitiesChanged |= affectedCard.removeChangedCardTraits(getTimestamp(), ability.getId());
+                    abilitiesChanged |= affectedCard.removeChangedCardTraits(getLayerTimestamp(StaticAbilityLayer.ABILITIES), getLayerId(StaticAbilityLayer.ABILITIES));
                 }
 
                 if (hasParam("CantHaveKeyword")) {
@@ -310,7 +331,7 @@ public class StaticEffect {
 
             if (layers.contains(StaticAbilityLayer.CHARACTERISTIC) || layers.contains(StaticAbilityLayer.SETPT)) {
                 if (hasParam("SetPower") || hasParam("SetToughness")) {
-                    if (affectedCard.removeNewPT(getTimestamp(), ability.getId(), false)) {
+                    if (affectedCard.removeNewPT(getLayerTimestamp(StaticAbilityLayer.SETPT), getLayerId(StaticAbilityLayer.SETPT), false)) {
                         addCard(affectedPerLayer, ability.isCharacteristicDefining() ? StaticAbilityLayer.CHARACTERISTIC : StaticAbilityLayer.SETPT, affectedCard);
                     }
                 }
