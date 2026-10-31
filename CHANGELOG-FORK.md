@@ -478,6 +478,14 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-10-31, twenty-eighth deploy (desktop, Android, GitHub) - Judge Tower; 14-commit upstream merge
+
+- **Upstream merge** (14 commits, 5 conflicts). Upstream's unified Format dropdown (#12521) replaces the lobby's game
+  format list, so Pai Gow, Booster Blitz, Dandan and Judge Tower join `FormatChoices` next to Momir Basic and MoJhoSto,
+  and on mobile they move from the Variants list to Format, with the deck pick for Dandan and the Tower moving along.
+  Urza, Academy Headmaster takes upstream's `RememberDestroyed$` (#12471). Upstream's `FlatMcOnlyPlayTest` used Parallax
+  Wave as its AI:RemoveDeck:All example, which the no-AI pass unflagged here, so it uses Magus of the Bazaar.
+
 - **Judge Tower, Phase 1** (user request, rules from mtg.wiki, TheGamer's guide of 2024-09-12 and Cube Cobra's "The
   Judge's Tower" primer, with the user's rulings of 2026-10-30; see the engine section). The format's rules in normal
   play, with AI seats playing by force and a human who breaks one losing the game while it goes back to the last legal

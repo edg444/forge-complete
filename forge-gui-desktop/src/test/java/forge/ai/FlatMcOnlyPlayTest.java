@@ -25,18 +25,19 @@ public class FlatMcOnlyPlayTest extends AITest {
         game.AI_FLAT_MONTE_CARLO = true;
         final Player ai = game.getPlayers().get(1);
         brainOf(ai).setUseSimulation(null);
-        final Card wave = addCardToZone("Parallax Wave", ai, ZoneType.Hand);
+        // this fork gave Parallax Wave AI logic in the no-AI pass, so it needs a card that is still marked
+        final Card marked = addCardToZone("Magus of the Bazaar", ai, ZoneType.Hand);
         final Card growth = addCardToZone("Giant Growth", ai, ZoneType.Hand);
-        final SpellAbility waveSpell = wave.getFirstSpellAbility();
-        waveSpell.setActivatingPlayer(ai);
+        final SpellAbility markedSpell = marked.getFirstSpellAbility();
+        markedSpell.setActivatingPlayer(ai);
 
         if (!brainOf(ai).flatMonteCarloActive()) {
             return; // the profile of the test run has it off: nothing to show
         }
-        AssertJUnit.assertTrue(brainOf(ai).isFlatMcOnlyPlay(waveSpell));
+        AssertJUnit.assertTrue(brainOf(ai).isFlatMcOnlyPlay(markedSpell));
         AssertJUnit.assertFalse(brainOf(ai).isFlatMcOnlyPlay(growth.getFirstSpellAbility()));
 
         game.AI_FLAT_MONTE_CARLO = false;
-        AssertJUnit.assertFalse("without Flat MC the heuristics' filter stays", brainOf(ai).isFlatMcOnlyPlay(waveSpell));
+        AssertJUnit.assertFalse("without Flat MC the heuristics' filter stays", brainOf(ai).isFlatMcOnlyPlay(markedSpell));
     }
 }
