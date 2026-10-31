@@ -37,6 +37,12 @@ public record Selection(List<CardView> cards, int min, int max, List<TrackableOb
         return new Selection(cards, min, max, targets, chosen, actionable);
     }
 
+    /** Judge Tower: nothing marks what's legal, working that out is the game. The stack view still has to take a pick. */
+    public Selection withoutHints() {
+        return new Selection(List.of(), min, max, new ArrayList<>(targets.stream().filter(StackItemView.class::isInstance).toList()),
+                chosen, List.of());
+    }
+
     public boolean offersStackItems() {
         return targets.stream().anyMatch(StackItemView.class::isInstance);
     }

@@ -66,7 +66,8 @@ public class SpellAbilityView extends TrackableObject implements IHasCardView {
         return get(TrackableProperty.CanPlay);
     }
     public void updateCanPlay(SpellAbility sa) {
-        set(TrackableProperty.CanPlay, sa.canPlay(true));
+        // Judge Tower: nothing is grayed out, the judge rules on what's tried
+        set(TrackableProperty.CanPlay, sa.canPlay(true) || sa.getHostCard().getGame().getJudge() != null);
     }
 
     public boolean promptIfOnlyPossibleAbility() {

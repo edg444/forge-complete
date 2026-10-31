@@ -815,6 +815,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
                     : InputConfirm.confirm(this, cardToShow.getView(), message, true, options);
             endTempShowCards();
             recordConfirm(cardToShow.getView(), result);
+            checkDeclinedForJudge(sa, result, options);
             return result;
         }
 
@@ -822,7 +823,22 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
         final boolean result = options.isEmpty() ? InputConfirm.confirm(this, sa, message) :
                 InputConfirm.confirm(this, sa.getHostCard().getView(), sa, message, true, options);
         recordConfirm(sa, result);
+        checkDeclinedForJudge(sa, result, options);
         return result;
+    }
+
+    /** Judge Tower: what a player "may" do, they must. A choice between named options is no such thing. */
+    private void checkDeclinedForJudge(final SpellAbility sa, final boolean result, final List<String> options) {
+        final forge.game.judgetower.Judge judge = getGame().getJudge();
+        if (judge != null && !result && options.isEmpty()) {
+            judge.checkDeclined(player, sa, "");
+        }
+    }
+
+    @Override
+    public boolean appealJudgeRuling(final String reason) {
+        return getGui().confirm(null, reason, false, ImmutableList.of(localizer.getMessage("lblJudgeOverrule"),
+                localizer.getMessage("lblJudgeAcceptRuling")));
     }
 
     @Override
@@ -1866,7 +1882,8 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
         // shouldAutoYield, not isYieldActive: it clears yields that have run their course, so an expiring one no longer skips the scan
         // Compute the actionable set when APINA / suggestions / highlights need it.
         boolean highlightsEnabled = yieldController.getBoolPref(FPref.UI_SHOW_ACTIONABLE_HIGHLIGHTS);
-        if (!yieldController.shouldAutoYield() && (needsAvailableActions() || highlightsEnabled)) {
+        // Judge Tower: what's playable is for the player to work out, and nothing here gets to use the answer
+        if (!isJudgeTower() && !yieldController.shouldAutoYield() && (needsAvailableActions() || highlightsEnabled)) {
             long timeoutMs = computeAvailableActionsBudgetMs(getPlayer());
             if (highlightsEnabled) {
                 // Highlights need the full set; APINA derives its boolean from the same scan.
@@ -1886,7 +1903,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
         // Only a real yield counts here: this tracks when one ends, and skipped phases happen every turn
         boolean autoPassing = mayAutoPass();
         yieldController.noteMayAutoPassResult(autoPassing);
-        boolean nowMayAutoPass = autoPassing || skipsPromptForStackOrPhase();
+        final boolean nowMayAutoPass = autoPassing || skipsPromptForStackOrPhase();
 
         if (nowMayAutoPass) {
             // A skipped phase has no priority input to record its implicit pass.
@@ -1920,7 +1937,10 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
         }
         final UndoManager undo = getGame().getUndoManager();
         undo.setMode(undoModeFromPrefs());      // the host's setting decides, for every player in the game
-        if (!isMacroActive()) {
+        if (isJudgeTower()) {
+            // an infraction can't be taken back
+            undo.barrier(localizer.getMessage("lblJudgeTower"));
+        } else if (!isMacroActive()) {
             if (UndoManager.OWN_TURN_ONLY && getGame().getPhaseHandler().getPlayerTurn() != player) {
                 undo.barrier("Opponent's turn");
             } else {
@@ -4288,12 +4308,18 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
     public boolean mayAutoPass() {
         return !isMacroActive()
                 && (yieldController.shouldAutoYield()
-                || yieldController.isAutoPassingNoActions(getLocalPlayerView()));
+                || (!isJudgeTower() && yieldController.isAutoPassingNoActions(getLocalPlayerView())));
+    }
+
+    /** In Judge Tower only a pass the player asked for (End Turn, a yield they set) is made for them, and it's judged like any other. */
+    private boolean isJudgeTower() {
+        return getGame() != null && getGame().getJudge() != null;
     }
 
     /** An auto-yielded ability on top of the stack, or a phase set to be skipped with the stack empty.
      *  Reads the view, not the engine, because this also runs on network threads. */
     private boolean skipsPromptForStackOrPhase() {
+        if (isJudgeTower()) return false;
         if (macros != null && macros.isReplaying()) return false;
         final GameView gameView = getGui().getGameView();
         if (gameView == null) return false;

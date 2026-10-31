@@ -79,7 +79,7 @@ public class InputSelectEntitiesFromList<T extends GameEntity> extends InputSele
 
     @Override
     public String getActivateAction(final Card card) {
-        if (validChoices.contains(card)) {
+        if (validChoices.contains(card) || mayChooseIllegally(card)) {
             if (selected.contains(card)) {
                 return "unselect card";
             }
@@ -108,7 +108,7 @@ public class InputSelectEntitiesFromList<T extends GameEntity> extends InputSele
 
     @SuppressWarnings("unchecked")
     protected boolean selectEntity(final GameEntity c) {
-        if (!validChoices.contains(c)) {
+        if (!validChoices.contains(c) && !mayChooseIllegally(c)) {
             return false;
         }
 
@@ -120,6 +120,34 @@ public class InputSelectEntitiesFromList<T extends GameEntity> extends InputSele
         }
 
         return true;
+    }
+
+    /**
+     * Judge Tower: for a cost or an effect, whatever's clicked is taken and the judge rules on it. Prompts with no
+     * ability behind them aren't the game's (Dev Mode), and a card can't stand in for a player, or the other way around.
+     */
+    private boolean mayChooseIllegally(final GameEntity c) {
+        if (sa == null || !isJudged()) {
+            return false;
+        }
+        for (final T v : validChoices) {
+            if (v instanceof Card == c instanceof Card) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void showAndWait() {
+        super.showAndWait();
+        if (sa != null && !hasCancelled() && getJudge() != null) {
+            for (final T chosen : selected) {
+                if (!validChoices.contains(chosen)) {
+                    getJudge().illegalChoice(getController().getPlayer(), sa, chosen);
+                }
+            }
+        }
     }
 
     // might re-define later

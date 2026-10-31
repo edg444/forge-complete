@@ -35,6 +35,8 @@ public enum GameType {
     DeckManager         (DeckFormat.Constructed, false, true, true, "lblDeckManager", ""),
     // Forgetful Fish: one shared deck, which the lobby supplies (forge.gamemodes.match.DandanDecks)
     Dandan              (DeckFormat.Constructed, false, false, false, "lblDandan", "lblDandanDesc", player -> new Deck()),
+    // one shared deck too, the Tower, which the lobby supplies (forge.gamemodes.match.JudgeTowerDecks)
+    JudgeTower          (DeckFormat.Constructed, false, false, false, "lblJudgeTower", "lblJudgeTowerDesc", player -> new Deck()),
     Vanguard            (DeckFormat.Vanguard, true, true, true, "lblVanguard", "lblVanguardDesc"),
     Commander           (DeckFormat.Commander, false, false, false, "lblCommander", "lblCommanderDesc"),
     Oathbreaker         (DeckFormat.Oathbreaker, false, false, false, "lblOathbreaker", "lblOathbreakerDesc"),

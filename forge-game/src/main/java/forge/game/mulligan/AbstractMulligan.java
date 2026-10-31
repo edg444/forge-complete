@@ -71,7 +71,7 @@ public abstract class AbstractMulligan {
      * mulligan, until the player has taken a regular one (Secret Lair Dandan Deck rules, 2026-03-15).
      */
     public boolean canTakeFreeMulligan() {
-        if (timesMulliganed > 0 || !canMulligan()) {
+        if (timesMulliganed > 0 || !canMulligan() || !player.getGame().getRules().hasAppliedVariant(forge.game.GameType.Dandan)) {
             return false;
         }
         final CardCollectionView hand = player.getCardsIn(ZoneType.Hand);

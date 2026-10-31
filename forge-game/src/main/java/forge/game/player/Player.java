@@ -586,6 +586,15 @@ public class Player extends GameEntity implements Comparable<Player> {
         return change || remainder > 0;
     }
 
+    /** Judge Tower's end-of-turn reset: the total is set outright, which isn't gaining or losing life. */
+    public final void resetLife() {
+        final int oldLife = lifeTotal.life;
+        lifeTotal.life = startingLife;
+        setHalfLife(0);
+        updateLifeViews();
+        game.fireEvent(new GameEventPlayerLivesChanged(this, oldLife, lifeTotal.life));
+    }
+
     public final int getStartingLife() {
         return startingLife;
     }
@@ -2263,7 +2272,14 @@ public class Player extends GameEntity implements Comparable<Player> {
         // Note: Shuffling once is sufficient.
         Collections.shuffle(list, MyRandom.getRandom());
 
-        getZone(ZoneType.Library).setCards(getController().cheatShuffle(list));
+        // Judge Tower: a table that's been shuffled has the order, and the engine takes it
+        final List<Card> tableOrder = game.getJudge() == null || game.getJudge().getTableLink() == null ? null
+                : game.getJudge().getTableLink().adoptShuffle(list);
+        if (tableOrder != null) {
+            list.clear();
+            list.addAll(tableOrder);
+        }
+        getZone(ZoneType.Library).setCards(tableOrder != null ? list : getController().cheatShuffle(list));
 
         // Form of the Approach of the Second Sun: a player who is a card in this library stops being one when it's shuffled
         for (final Card c : Lists.newArrayList(list)) {
@@ -2804,7 +2820,8 @@ public class Player extends GameEntity implements Comparable<Player> {
         // Rule 704.5a -  If a player has 0 or less life, he or she loses the game.
         // 1/2 life is still more than 0, so a player sitting on the fraction hasn't lost yet
         final boolean hasNoLife = getLife() < 0 || (getLife() == 0 && !hasFractionalLife());
-        if (hasNoLife && loseConditionMet(GameLossReason.LifeReachedZero, null)) {
+        // Judge Tower: every version of the format lets you play on at 0 or less
+        if (hasNoLife && game.getJudge() == null && loseConditionMet(GameLossReason.LifeReachedZero, null)) {
             return true;
         }
 

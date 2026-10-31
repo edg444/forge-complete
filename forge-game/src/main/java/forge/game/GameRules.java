@@ -18,6 +18,7 @@ public class GameRules {
     private boolean allowCheatShuffle = false;
     private final Set<GameType> appliedVariants = EnumSet.noneOf(GameType.class);
     private int simTimeout = 120;
+    private forge.game.judgetower.JudgeTowerOptions judgeTowerOptions = new forge.game.judgetower.JudgeTowerOptions();
 
     // it's a preference, not rule... but I could hardly find a better place for it
     private boolean useGrayText;
@@ -102,6 +103,15 @@ public class GameRules {
     }
     public void setAllowCheatShuffle(boolean allowCheatShuffle) {
         this.allowCheatShuffle = allowCheatShuffle;
+    }
+
+    public forge.game.judgetower.JudgeTowerOptions getJudgeTowerOptions() {
+        return judgeTowerOptions;
+    }
+    /** The house rules, and with them the match length: first to the points they ask for. */
+    public void setJudgeTowerOptions(final forge.game.judgetower.JudgeTowerOptions options) {
+        judgeTowerOptions = options;
+        setGamesPerMatch(options.pointsToWin * 2 - 1);
     }
 
     public int getGamesToWinMatch() {

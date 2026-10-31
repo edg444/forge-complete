@@ -805,6 +805,15 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
         }
     }
 
+    /** Judge Tower's table: an item that's only looked at, with none of what the rules do when something goes on the stack. */
+    public final void pushForTable(final SpellAbilityStackInstance si) {
+        stack.addFirst(si);
+    }
+
+    public final List<SpellAbilityStackInstance> asList() {
+        return new java.util.ArrayList<>(stack);
+    }
+
     public final boolean isEmpty() {
         return stack.isEmpty();
     }

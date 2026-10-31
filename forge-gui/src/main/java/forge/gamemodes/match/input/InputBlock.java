@@ -32,7 +32,10 @@ import forge.util.ITriggerEvent;
 import forge.util.Localizer;
 import forge.util.ThreadUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * <p>
@@ -50,6 +53,8 @@ public class InputBlock extends InputSyncronizedBase {
     // some cards may block several creatures at a time. (ex:  Two-Headed Dragon, Vanguard's Shield)
     private final Combat combat;
     private final Player defender;
+    // Judge Tower: the blocks that couldn't be declared as they were picked (blocker, attacker), for the judge
+    private final List<Pair<Card, Card>> illegalBlocks = new ArrayList<>();
 
     public InputBlock(final PlayerControllerHuman controller, final Player defender0, final Combat combat0) {
         super(controller);
@@ -57,6 +62,11 @@ public class InputBlock extends InputSyncronizedBase {
         combat = combat0;
 
         //auto-select first attacker to declare blockers for
+        if (isJudged()) {
+            // which one that is mustn't say anything about what can block
+            currentAttacker = combat.getAttackers().stream().filter(a -> a.getController() != defender).findFirst().orElse(null);
+            return;
+        }
         for (final Card attacker : combat.getAttackers()) {
             for (final Card c : defender.getCreaturesInPlay()) {
                 if (CombatUtil.canBlock(attacker, c, combat)) {
@@ -102,7 +112,8 @@ public class InputBlock extends InputSyncronizedBase {
     @Override
     public final void onOk() {
         final String blockErrors = CombatUtil.validateBlocks(combat, defender);
-        if (blockErrors == null) {
+        // Judge Tower: the judge rules on an illegal block, it isn't refused
+        if (blockErrors == null || isJudged()) {
             // Done blocking
             stop();
         } else {
@@ -130,30 +141,32 @@ public class InputBlock extends InputSyncronizedBase {
         } else if (isAttackerToBlock(card)) {
             currentAttacker = card;
             isCorrectAction = true;
-        } else if (currentAttacker != null && card.isCreature() && defender.getZone(ZoneType.Battlefield).contains(card)) {
+        } else if (currentAttacker != null && mayPick(card)) {
             // card is valid to even be a blocker
             if (combat.isBlocking(card, currentAttacker)) {
                 //if creature already blocking current attacker, remove blocker from combat
                 combat.removeBlockAssignment(currentAttacker, card);
+                illegalBlocks.remove(Pair.of(card, currentAttacker));
                 card.getGame().getMatch().fireEvent(new UiEventBlockerAssigned(CardView.get(card), null));
                 if (otherCardsToSelect != null) {
                     for (Card c : otherCardsToSelect) {
                         if (combat.isBlocking(c, currentAttacker)) {
                             combat.removeBlockAssignment(currentAttacker, c);
+                            illegalBlocks.remove(Pair.of(c, currentAttacker));
                             c.getGame().getMatch().fireEvent(new UiEventBlockerAssigned(CardView.get(c), null));
                         }
                     }
                 }
                 isCorrectAction = true;
             } else {
-                isCorrectAction = CombatUtil.canBlock(currentAttacker, card, combat);
+                isCorrectAction = mayBlock(card);
                 if (isCorrectAction) {
                     combat.addBlocker(currentAttacker, card);
                     card.getGame().getMatch().fireEvent(new UiEventBlockerAssigned(
                             CardView.get(card), CardView.get(currentAttacker)));
                     if (otherCardsToSelect != null) {
                         for (Card c : otherCardsToSelect) {
-                            if (CombatUtil.canBlock(currentAttacker, c, combat)) {
+                            if (mayBlock(c)) {
                                 combat.addBlocker(currentAttacker, c);
                                 c.getGame().getMatch().fireEvent(new UiEventBlockerAssigned(
                                         CardView.get(c), CardView.get(currentAttacker)));
@@ -173,6 +186,38 @@ public class InputBlock extends InputSyncronizedBase {
         return isCorrectAction;
     }
 
+    private boolean mayPick(final Card card) {
+        return isJudged() ? card.isInPlay() : card.isCreature() && defender.getZone(ZoneType.Battlefield).contains(card);
+    }
+
+    private boolean mayBlock(final Card card) {
+        if (!isJudged()) {
+            return CombatUtil.canBlock(currentAttacker, card, combat);
+        }
+        if (!isLegalBlock(card, currentAttacker)) {
+            illegalBlocks.add(Pair.of(card, currentAttacker));
+        }
+        return true;
+    }
+
+    private boolean isLegalBlock(final Card blocker, final Card attacker) {
+        return defender.getZone(ZoneType.Battlefield).contains(blocker) && CombatUtil.canBlock(attacker, blocker, combat);
+    }
+
+    @Override
+    public void showAndWait() {
+        super.showAndWait();
+        for (final Pair<Card, Card> block : illegalBlocks) {
+            // taking another block back since then can have made this one fine
+            combat.removeBlockAssignment(block.getRight(), block.getLeft());
+            final boolean legal = isLegalBlock(block.getLeft(), block.getRight());
+            combat.addBlocker(block.getRight(), block.getLeft());
+            if (!legal) {
+                getJudge().illegalBlock(getController().getPlayer(), block.getLeft(), block.getRight());
+            }
+        }
+    }
+
     /**
      * Party Crasher: during an opponent's turn their attackers and yours share a combat, and an untapped creature of
      * yours that's attacking can still block - so only other players' attackers are picked out to be blocked.
@@ -183,6 +228,7 @@ public class InputBlock extends InputSyncronizedBase {
 
     // undoes only the block of a creature that's attacking as well
     private void unblock(final Card card) {
+        illegalBlocks.removeIf(block -> block.getLeft().equals(card));
         if (combat.isAttacking(card)) {
             combat.undoBlockingAssignment(card);
         } else {
@@ -195,11 +241,11 @@ public class InputBlock extends InputSyncronizedBase {
         if (isAttackerToBlock(card)) {
             return Localizer.getInstance().getMessage("lblDeclareBlockersForCard");
         }
-        if (currentAttacker != null && card.isCreature() && defender.getZone(ZoneType.Battlefield).contains(card)) {
+        if (currentAttacker != null && mayPick(card)) {
             if (combat.isBlocking(card, currentAttacker)) {
                 return Localizer.getInstance().getMessage("lblRemoveFromCombat");
             }
-            if (CombatUtil.canBlock(currentAttacker, card, combat)) {
+            if (isJudged() || CombatUtil.canBlock(currentAttacker, card, combat)) {
                 return Localizer.getInstance().getMessage("lblBlockWithCard");
             }
         }

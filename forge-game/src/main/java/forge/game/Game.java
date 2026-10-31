@@ -85,6 +85,8 @@ public class Game {
     private final Set<Integer> giantTeams = Sets.newHashSet();
     // Dandan: the zone types every player shares one of
     private final Set<ZoneType> sharedZones = EnumSet.noneOf(ZoneType.class);
+    // Judge Tower: null in any other game
+    private forge.game.judgetower.Judge judge = null;
     private final PlayerCollection lostPlayers = new PlayerCollection();
     private GameEntityViewMap<Player, PlayerView> playerCache = new GameEntityViewMap<Player, PlayerView>();
 
@@ -521,6 +523,12 @@ public class Game {
         if (rules.hasAppliedVariant(GameType.Dandan)) {
             shareZones(EnumSet.of(ZoneType.Library, ZoneType.Graveyard));
         }
+        if (rules.hasAppliedVariant(GameType.JudgeTower)) {
+            judge = new forge.game.judgetower.Judge(this, rules.getJudgeTowerOptions());
+            shareZones(judge.getOptions().sharedGraveyard ? EnumSet.of(ZoneType.Library, ZoneType.Graveyard)
+                    : EnumSet.of(ZoneType.Library));
+            judge.onGameCreated();
+        }
 
         view.updatePlayers(this);
 
@@ -545,6 +553,10 @@ public class Game {
             }
             sharedZones.add(z);
         }
+    }
+
+    public forge.game.judgetower.Judge getJudge() {
+        return judge;
     }
 
     public boolean hasSharedZones() {
@@ -1374,6 +1386,14 @@ public class Game {
         p.setHasLost(true);
         // the hands they lent go with them (Handy Dandy Clone Machine)
         Hands.playerLeft(p);
+        // what's in a shared zone stays in the game, whoever it last belonged to
+        for (final ZoneType z : sharedZones) {
+            for (final Card c : p.getZone(z).getCards(false)) {
+                if (c.getOwner().equals(p)) {
+                    c.setOwner(getNextPlayerAfter(p));
+                }
+            }
+        }
         // CR 800.4 Losing a Multiplayer game
         CardCollectionView cards = this.getCardsInGame();
         boolean planarControllerLost = false;
@@ -1733,6 +1753,9 @@ public class Game {
     }
 
     public void onCleanupPhase() {
+        if (judge != null) {
+            judge.onEndOfTurn();
+        }
         resolvedThisTurn.clear();
         resetNumPiledGuessedSA();
         clearLeftBattlefieldThisTurn();

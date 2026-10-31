@@ -158,7 +158,11 @@ public class PlaySpellAbility {
 
         List<OptionalCostValue> list = GameActionUtil.getOptionalCostValues(choosen);
         if (!list.isEmpty()) {
+            final List<OptionalCostValue> offered = list;
             list = c.chooseOptionalCosts(choosen, list);
+            if (p.getGame().getJudge() != null) {
+                p.getGame().getJudge().checkOptionalCosts(p, choosen, offered, list);
+            }
         }
 
         return chooseCleaves(p, GameActionUtil.addOptionalCosts(choosen, list));
@@ -800,6 +804,9 @@ public class PlaySpellAbility {
                 }
 
                 if ("X".equalsIgnoreCase(varName)) {
+                    if (ability.getHostCard().getGame().getJudge() != null) {
+                        ability.getHostCard().getGame().getJudge().checkX(ability.getActivatingPlayer(), ability, value, range);
+                    }
                     needX = false;
                     ability.setXManaCostPaid(value);
                 } else {
@@ -819,6 +826,9 @@ public class PlaySpellAbility {
                     final Integer value = controller.announceRequirements(ability, range.getMinimum(), range.getMaximum(), "X");
                     if (value == null) {
                         return false;
+                    }
+                    if (ability.getHostCard().getGame().getJudge() != null) {
+                        ability.getHostCard().getGame().getJudge().checkX(ability.getActivatingPlayer(), ability, value, range);
                     }
                     ability.setXManaCostPaid(value);
                 }

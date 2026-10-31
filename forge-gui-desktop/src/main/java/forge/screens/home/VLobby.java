@@ -19,6 +19,7 @@ import forge.deckchooser.FDeckChooser;
 import forge.game.GameType;
 import forge.game.card.CardView;
 import forge.gamemodes.match.DandanDecks;
+import forge.gamemodes.match.JudgeTowerDecks;
 import forge.gamemodes.match.GameLobby;
 import forge.gamemodes.match.LobbySlot;
 import forge.gamemodes.match.LobbySlotType;
@@ -102,11 +103,15 @@ public class VLobby implements ILobbyView {
     private static final ImmutableList<GameType> GAME_FORMATS = ImmutableList.of(
             GameType.Constructed, GameType.Commander, GameType.Oathbreaker,
             GameType.Brawl, GameType.TinyLeaders,
-            GameType.MomirBasic, GameType.MoJhoSto, GameType.PaiGow, GameType.BoosterBlitz, GameType.Dandan);
+            GameType.MomirBasic, GameType.MoJhoSto, GameType.PaiGow, GameType.BoosterBlitz, GameType.Dandan,
+            GameType.JudgeTower);
 
     private final FComboBoxPanel<GameType> cboFormatPanel =
             new FComboBoxPanel<>(Localizer.getInstance().getMessage("lblGameFormat") + ":", GAME_FORMATS);
     private boolean suppressFormatListener = false;
+    // which Tower a Judge Tower game is played with, shown while that's the format
+    private final FComboBoxPanel<String> cboJudgeTowerDeckPanel =
+            new FComboBoxPanel<>(Localizer.getInstance().getMessage("lblJudgeTowerDeck") + ":", JudgeTowerDecks.names());
     // which shared deck a Dandan game is played with, shown while that's the format
     private final FComboBoxPanel<String> cboDandanDeckPanel =
             new FComboBoxPanel<>(Localizer.getInstance().getMessage("lblDandanDeck") + ":", DandanDecks.names());
@@ -270,6 +275,17 @@ public class VLobby implements ILobbyView {
         }
         cboDandanDeckPanel.setVisible(false);
         constructedFrame.add(cboDandanDeckPanel, "w 100%, h 28px!, gapbottom 10px, spanx 2, wrap");
+        cboJudgeTowerDeckPanel.addActionListener(e -> {
+            final String chosen = cboJudgeTowerDeckPanel.getSelectedItem();
+            if (chosen != null && !chosen.equals(JudgeTowerDecks.selectedName())) {
+                JudgeTowerDecks.select(chosen);
+            }
+        });
+        for (final Component c : cboJudgeTowerDeckPanel.getComponents()) {
+            c.setFont(FSkin.getBoldFont(14).getBaseFont());
+        }
+        cboJudgeTowerDeckPanel.setVisible(false);
+        constructedFrame.add(cboJudgeTowerDeckPanel, "w 100%, h 28px!, gapbottom 10px, spanx 2, wrap");
 
         ////////////////////////////////////////////////////////
         //////////////////// Variants Panel ////////////////////
@@ -422,6 +438,11 @@ public class VLobby implements ILobbyView {
             cboDandanDeckPanel.setSelectedItem(DandanDecks.selectedName());
         }
         cboDandanDeckPanel.setEnabled(lobby.hasControl());
+        cboJudgeTowerDeckPanel.setVisible(cboFormatPanel.isVisible() && hasVariant(GameType.JudgeTower));
+        if (cboJudgeTowerDeckPanel.isVisible() && !JudgeTowerDecks.selectedName().equals(cboJudgeTowerDeckPanel.getSelectedItem())) {
+            cboJudgeTowerDeckPanel.setSelectedItem(JudgeTowerDecks.selectedName());
+        }
+        cboJudgeTowerDeckPanel.setEnabled(lobby.hasControl());
 
         for (final VariantCheckBox vcb : vntBoxes) {
             vcb.setSelected(hasVariant(vcb.variant));
@@ -1035,6 +1056,7 @@ public class VLobby implements ILobbyView {
     void setVariantsVisible(boolean visible) {
         cboFormatPanel.setVisible(visible);
         cboDandanDeckPanel.setVisible(visible && hasVariant(GameType.Dandan));
+        cboJudgeTowerDeckPanel.setVisible(visible && hasVariant(GameType.JudgeTower));
         Container scrollPane = variantsPanel.getParent();
         while (scrollPane != null && !(scrollPane instanceof JScrollPane)) {
             scrollPane = scrollPane.getParent();

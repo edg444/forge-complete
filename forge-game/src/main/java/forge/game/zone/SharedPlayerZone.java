@@ -28,6 +28,17 @@ public class SharedPlayerZone extends PlayerZone {
         return sharers;
     }
 
+    /** The first sharer still in the game: the zone outlives whoever leaves (Judge Tower has more than two players). */
+    @Override
+    public Player getPlayer() {
+        for (final Player p : sharers) {
+            if (!p.hasLost()) {
+                return p;
+            }
+        }
+        return sharers.get(0);
+    }
+
     @Override
     public boolean belongsTo(final Player player) {
         return sharers.contains(player);

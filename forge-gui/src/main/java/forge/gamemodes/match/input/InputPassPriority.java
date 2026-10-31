@@ -28,6 +28,7 @@ import forge.game.player.actions.PassPriorityAction;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.StackItemView;
 import forge.game.undo.UndoManager;
+import forge.game.zone.ZoneType;
 import forge.gamemodes.match.DeclineScope;
 import forge.gamemodes.match.SuggestionType;
 import forge.gamemodes.match.YieldController;
@@ -80,6 +81,11 @@ public class InputPassPriority extends InputSyncronizedBase {
     /** {@inheritDoc} */
     @Override
     public final void showMessage() {
+        // Judge Tower: a suggestion to yield would say there's nothing to do
+        if (getController().getGame().getJudge() != null) {
+            showNormalPrompt();
+            return;
+        }
         if (!getController().isMacroActive() && !isAlreadyYielding()) {
             // Suppress one prompt after a yield ends — avoids "yielded → ended → yield again?" loop
             if (getController().getYieldController().getBoolPref(FPref.YIELD_SUPPRESS_AFTER_END)
@@ -340,11 +346,23 @@ public class InputPassPriority extends InputSyncronizedBase {
 
     public List<SpellAbility> getChosenSa() { return chosenSa; }
 
+    private List<SpellAbility> getAbilities(final Card card, final boolean removeUnplayable) {
+        if (!isJudged()) {
+            return card.getAllPossibleAbilities(getController().getPlayer(), removeUnplayable);
+        }
+        final List<SpellAbility> abilities = card.getAllPossibleAbilities(getController().getPlayer(), false);
+        // what a card can do once it's cast is what clicking it means, not casting it over again
+        if (card.isInPlay() || card.isInZone(ZoneType.Stack)) {
+            abilities.removeIf(sa -> (sa.isSpell() || sa.isLandAbility()) && !sa.canPlay(true));
+        }
+        return abilities;
+    }
+
     @Override
     protected boolean onCardSelected(final Card card, final List<Card> otherCardsToSelect, final ITriggerEvent triggerEvent) {
         // remove unplayable unless triggerEvent specified, in which case unplayable may be shown as disabled options
         // (so shortcuts are constant regardless of game state)
-        List<SpellAbility> abilities = card.getAllPossibleAbilities(getController().getPlayer(), triggerEvent == null); 
+        List<SpellAbility> abilities = getAbilities(card, triggerEvent == null); 
         if (abilities.isEmpty()) {
             return false;
         }
@@ -372,7 +390,7 @@ public class InputPassPriority extends InputSyncronizedBase {
 
     @Override
     public String getActivateAction(final Card card) {
-        final List<SpellAbility> abilities = card.getAllPossibleAbilities(getController().getPlayer(), true); 
+        final List<SpellAbility> abilities = getAbilities(card, true); 
         if (abilities.isEmpty()) {
             return null;
         }

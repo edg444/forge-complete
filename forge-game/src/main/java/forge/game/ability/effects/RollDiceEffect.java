@@ -680,7 +680,10 @@ public class RollDiceEffect extends SpellAbilityEffect {
     }
     private static int rollCountedDie(final Player player, final int sides, final int thumbs) {
         if (thumbs <= 0) {
-            final int roll = MyRandom.getRandom().nextInt(sides) + 1;
+            // Judge Tower: the die rolled is the one on the table
+            final Integer tableDie = player.getGame().getJudge() == null || player.getGame().getJudge().getTableLink() == null ? null
+                    : player.getGame().getJudge().getTableLink().nextDie(sides);
+            final int roll = tableDie != null ? tableDie : MyRandom.getRandom().nextInt(sides) + 1;
             player.getGame().fireEvent(new GameEventRollDie(sides, roll));
             return roll;
         }

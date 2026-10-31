@@ -16,6 +16,7 @@ import forge.game.ability.AbilityUtils;
 import forge.game.ability.SpellAbilityEffect;
 import forge.game.card.Card;
 import forge.game.cost.Cost;
+import forge.game.judgetower.Judge;
 import forge.game.keyword.Keyword;
 import forge.game.player.Player;
 import forge.game.spellability.AbilitySub;
@@ -412,7 +413,19 @@ public class CharmEffect extends SpellAbilityEffect {
             }
         }
 
-        List<AbilitySub> chosen = chooser.getController().chooseModeForAbility(sa, choices, min, num, canRepeat);
+        // Judge Tower: every optional mode that can be chosen is, and a human can try one that can't
+        final Judge judge = source.getGame().getJudge();
+        List<AbilitySub> offered = choices;
+        if (judge != null) {
+            min = Math.min(num, canRepeat ? num : choices.size());
+            if (judge.isJudging() && !chooser.getController().isAI()) {
+                offered = makePossibleOptions(sa, false);
+            }
+        }
+        List<AbilitySub> chosen = chooser.getController().chooseModeForAbility(sa, offered, min, num, canRepeat);
+        if (offered != choices && chosen != null) {
+            judge.checkModes(chooser, sa, chosen, choices);
+        }
         chainAbilities(sa, chosen);
 
         if (chosen != null && !chosen.isEmpty()) {

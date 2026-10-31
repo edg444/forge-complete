@@ -698,7 +698,7 @@ public final class GameActionUtil {
 
                 String str = "Choose Amount for Multikicker: " + cost.toSimpleString();
 
-                int v = pc.chooseNumberForKeywordCost(sa, cost, ki, str, Integer.MAX_VALUE);
+                int v = pc.keywordCostAmount(sa, cost, ki, str, Integer.MAX_VALUE);
 
                 for (int i = 0; i < v; i++) {
                     if (result == null) {
@@ -730,7 +730,7 @@ public final class GameActionUtil {
 
                 String str = "Choose Amount for Replicate: " + cost.toSimpleString();
 
-                int v = pc.chooseNumberForKeywordCost(sa, cost, ki, str, Integer.MAX_VALUE);
+                int v = pc.keywordCostAmount(sa, cost, ki, str, Integer.MAX_VALUE);
 
                 for (int i = 0; i < v; i++) {
                     if (result == null) {
@@ -748,7 +748,7 @@ public final class GameActionUtil {
 
                 String str = "Choose amount for Squad: " + cost.toSimpleString();
 
-                int v = pc.chooseNumberForKeywordCost(sa, cost, ki, str, Integer.MAX_VALUE);
+                int v = pc.keywordCostAmount(sa, cost, ki, str, Integer.MAX_VALUE);
 
                 for (int i = 0; i < v; i++) {
                     if (result == null) {
@@ -793,7 +793,7 @@ public final class GameActionUtil {
                         final Cost cost = new Cost(ManaCost.ONE, false);
                         String str = "Choose Amount for " + c.getDisplayName() + ": " + cost.toSimpleString();
 
-                        int v = pc.chooseNumberForKeywordCost(sa, cost, ki, str, Integer.MAX_VALUE);
+                        int v = pc.keywordCostAmount(sa, cost, ki, str, Integer.MAX_VALUE);
 
                         if (v > 0) {
                             Card eff = createETBCountersEffect(c, host, activator, "P1P1", String.valueOf(v));

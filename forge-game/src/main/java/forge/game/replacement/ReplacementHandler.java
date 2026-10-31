@@ -370,8 +370,13 @@ public class ReplacementHandler {
                 ? Localizer.getInstance().getMessage("lblApplyCardReplacementEffectToCardConfirm", name, runParams.get(AbilityKey.Card).toString(), effectDesc)
                 : Localizer.getInstance().getMessage("lblApplyReplacementEffectOfCardConfirm", name, effectDesc);
             GameEntity affected = (GameEntity) runParams.get(AbilityKey.Affected);
-            boolean confirmed = optDecider.getController().confirmReplacementEffect(replacementEffect, effectSA, affected, question);
+            final forge.game.judgetower.Judge judge = optDecider.getGame().getJudge();
+            boolean confirmed = (judge != null && optDecider.getController().isAI())
+                    || optDecider.getController().confirmReplacementEffect(replacementEffect, effectSA, affected, question);
             if (!confirmed) {
+                if (judge != null) {
+                    judge.checkDeclined(optDecider, effectSA, name);
+                }
                 return ReplacementResult.NotReplaced;
             }
         }

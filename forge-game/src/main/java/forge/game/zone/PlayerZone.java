@@ -103,7 +103,7 @@ public class PlayerZone extends Zone {
         player.updateZoneForView(this);
     }
 
-    public final Player getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 

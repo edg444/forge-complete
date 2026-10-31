@@ -35,6 +35,7 @@ import forge.game.cost.CostEnlist;
 import forge.game.cost.CostExert;
 import forge.game.event.*;
 import forge.game.keyword.Keyword;
+import forge.game.judgetower.JudgeInfraction;
 import forge.game.player.Player;
 import forge.game.player.PlayerCollection;
 import forge.game.player.PlayerView;
@@ -370,7 +371,23 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         }
     }
 
+    private forge.game.judgetower.table.TableLink getTableLink() {
+        return game.getJudge() == null ? null : game.getJudge().getTableLink();
+    }
+
+    /** State-based actions and triggers, as when a player would get priority; Judge Tower's table checks against this. */
+    public void settleForTable() {
+        checkStateBasedEffects();
+    }
+
     private void onPhaseBegin() {
+        runPhaseBegin();
+        if (getTableLink() != null && !game.isGameOver()) {
+            getTableLink().afterStepBegan();
+        }
+    }
+
+    private void runPhaseBegin() {
         boolean skipped = false;
 
         game.getTriggerHandler().resetActiveTriggers();
@@ -407,7 +424,10 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     }
                     // CR 805.4b: each player on the active team draws, in seat order (805.6a)
                     for (final Player active : getActivePlayers()) {
-                        active.drawCard();
+                        // a turn goes on after its player has left the game, but with nobody there to draw (CR 800.4j)
+                        if (!active.hasLost()) {
+                            active.drawCard();
+                        }
                     }
                     break;
 
@@ -857,12 +877,18 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         game.fireEvent(new GameEventCombatChanged());
     }
 
+    /** Judge Tower: having nothing legal to declare is for a human to see for themselves, and get wrong if they do. */
+    private boolean isAskedAnyway(final Player declarer, final Player creaturesOf) {
+        return game.getJudge() != null && game.getJudge().isJudging() && !declarer.getController().isAI()
+                && !creaturesOf.getCreaturesInPlay().isEmpty();
+    }
+
     private void declareAttackersFor(final Player active) {
         final Player whoDeclares = Objects.requireNonNullElse(active.getDeclaresAttackers(), active);
         // Over My Dead Bodies: creature cards in the attacker's graveyard can be declared too
         final CardCollection fromGraveyard = game.getAction().enlistGraveyardCombatants(active);
 
-        if (CombatUtil.canAttack(active)) {
+        if (CombatUtil.canAttack(active) || isAskedAnyway(whoDeclares, active)) {
             boolean success = false;
             do {
                 if (game.isGameOver()) { // they just like to close window at any moment
@@ -872,10 +898,17 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 if (!game.getUndoManager().isOwner(whoDeclares)) {
                     game.getUndoManager().barrier("Opponent declared attackers");
                 }
+                final CardCollection attackingAlready = new CardCollection(combat.getAttackers());
                 whoDeclares.getController().declareAttackers(active, combat);
+                if (game.getJudge() != null && !whoDeclares.getController().isAI()) {
+                    game.getJudge().checkAttackers(whoDeclares, active, combat, attackingAlready);
+                }
                 combat.removeAbsentCombatants();
 
                 success = CombatUtil.validateAttackers(combat);
+                if (!success && game.getJudge() != null && !whoDeclares.getController().isAI()) {
+                    success = game.getJudge().checkAttack(whoDeclares);
+                }
                 if (!success) {
                     whoDeclares.getController().notifyOfValue(null, null, "Attack declaration invalid");
                     continue;
@@ -1027,7 +1060,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
             // CR 805.10d: on a Two-Headed Giant team a player blocks for the whole defending team
             final boolean teamAttacked = p.getGiantTeam().anyMatch(combat::isPlayerAttacked);
             if (teamAttacked) {
-                if (CombatUtil.canBlock(p, combat)) {
+                if (CombatUtil.canBlock(p, combat) || isAskedAnyway(whoDeclaresBlockers, p)) {
                     // Replacement effects (for Camouflage)
                     final Map<AbilityKey, Object> repRunParams = AbilityKey.mapFromAffected(p);
                     repRunParams.put(AbilityKey.Player, whoDeclaresBlockers);
@@ -1038,6 +1071,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                         }
                         // If not replaced, run normal declare blockers
                         whoDeclaresBlockers.getController().declareBlockers(p, combat);
+                        if (game.getJudge() != null && !whoDeclaresBlockers.getController().isAI()) {
+                            game.getJudge().checkBlocks(whoDeclaresBlockers, CombatUtil.validateBlocks(combat, p));
+                        }
                     }
                 }
             }
@@ -1422,6 +1458,21 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     }
 
     public void mainLoopStep() {
+        try {
+            runLoopStep();
+        } catch (final JudgeInfraction infraction) {
+            game.getJudge().rule(infraction);
+            // whoever had priority or would have it back may be gone now, and the rest pass all over again
+            if (pPlayerPriority.hasLost() && !game.isGameOver()) {
+                pPlayerPriority = game.getNextPlayerAfter(pPlayerPriority);
+                pFirstPriority = pPlayerPriority;
+            } else if (pFirstPriority.hasLost()) {
+                pFirstPriority = pPlayerPriority;
+            }
+        }
+    }
+
+    private void runLoopStep() {
         if (givePriorityToPlayer) {
             if (DEBUG_PHASES) {
                 sw.start();
@@ -1437,9 +1488,15 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     // state-based effects check could lead to game over
                     return;
                 }
+                if (getTableLink() != null) {
+                    getTableLink().beforePriority(pPlayerPriority);
+                }
                 // CR 117.3 A player receives priority once state-based actions are done, and again after each thing they do
                 game.fireEvent(new GameEventPlayerPriority(PlayerView.get(playerTurn), phase, PlayerView.get(getPriorityPlayer())));
                 game.stashGameState();
+                if (game.getJudge() != null && !pPlayerPriority.getController().isAI()) {
+                    game.getJudge().checkpoint();
+                }
 
                 final long priorityStart = System.nanoTime();
                 chosenSa = pPlayerPriority.getController().chooseSpellAbilityToPlay();
@@ -1457,6 +1514,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 }
 
                 if (chosenSa == null) {
+                    if (game.getJudge() != null && !pPlayerPriority.getController().isAI()) {
+                        game.getJudge().checkPass(pPlayerPriority);
+                    }
                     break; // that means 'I pass'
                 }
 
@@ -1475,10 +1535,16 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     final Zone originZone = saHost.getZone();
                     final CardZoneTable triggerList = new CardZoneTable(game.getLastStateBattlefield(), game.getLastStateGraveyard());
 
+                    if (game.getJudge() != null && !pPlayerPriority.getController().isAI()) {
+                        game.getJudge().checkPlay(pPlayerPriority, sa);
+                    }
                     if (pPlayerPriority.getController().playChosenSpellAbility(sa)) {
                         // 117.3c If a player has priority when they cast a spell, activate an ability, [play a land]
                         // that player receives priority afterward.
                         pFirstPriority = pPlayerPriority; // all opponents have to pass before stack is allowed to resolve
+                        if (getTableLink() != null && pPlayerPriority.getController().isAI()) {
+                            getTableLink().afterAiAction();
+                        }
                     } else if (game.EXPERIMENTAL_RESTORE_SNAPSHOT) {
                         rollback = true;
                     }
@@ -1526,6 +1592,10 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
             System.out.println(TextUtil.concatWithSpace(playerTurn.toString(),TextUtil.addSuffix(phase.toString(),":"), pPlayerPriority.toString(),"is active, previous was", nextPlayer.toString()));
         }
         if (pFirstPriority == nextPlayer) {
+            // what's next can ask a human something: their decision shouldn't undo this much of the game
+            if (game.getJudge() != null) {
+                game.getJudge().checkpoint();
+            }
             if (game.getStack().isEmpty()) {
                 if (playerTurn.hasLost()) {
                     setPriority(game.getNextPlayerAfter(playerTurn));
@@ -1539,7 +1609,11 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 onPhaseBegin();
             }
             else if (!game.getStack().hasSimultaneousStackEntries()) {
-                game.getStack().resolveStack();
+                if (getTableLink() != null) {
+                    getTableLink().resolveTop();
+                } else {
+                    game.getStack().resolveStack();
+                }
             }
         } else {
             pPlayerPriority = nextPlayer;

@@ -23,6 +23,7 @@ import forge.game.card.Card;
 import forge.game.card.CardCollection;
 import forge.game.card.CardUtil;
 import forge.game.card.CardView;
+import forge.game.judgetower.Judge;
 import forge.game.player.Player;
 import forge.game.player.PlayerCollection;
 import forge.game.spellability.SpellAbility;
@@ -64,6 +65,19 @@ public class TargetSelection {
     }
 
     private boolean bTargetingDone = false;
+
+    /** Judge Tower: whether every choice is offered, and the judge rules on the ones that can't be made. */
+    private boolean isJudged() {
+        final Judge judge = controller.getGame().getJudge();
+        return judge != null && judge.isJudging();
+    }
+
+    private void checkStackTarget(final SpellAbility onStack) {
+        if (isJudged() && !ability.canTargetSpellAbility(onStack)) {
+            controller.getGame().getJudge().illegalTarget(controller.getPlayer(), ability, onStack,
+                    ability.getHostCard() + " - Cannot target this.");
+        }
+    }
 
     private boolean isMandatory() {
         // even if its an optionalTrigger, the targeting is still mandatory
@@ -117,7 +131,8 @@ public class TargetSelection {
         }
         mandatory &= hasEnoughCandidates;
 
-        if (!hasEnoughCandidates && !hasEnoughTargets) {
+        // a trigger with nothing to target is simply gone (CR 603.3d); casting a spell without one is for the judge
+        if (!hasEnoughCandidates && !hasEnoughTargets && (ability.isTrigger() || !isJudged())) {
             // Cancel ability if there aren't any valid Candidates
             return false;
         }
@@ -164,7 +179,9 @@ public class TargetSelection {
             validTargets = new CardCollection(IterableUtil.filter(validTargets, filter));
         }
 
-        if (validTargets.isEmpty()) {
+        if (isJudged()) {
+            // nothing is decided for the player: no auto-target, and no cancelling because there's nothing legal
+        } else if (validTargets.isEmpty()) {
             // If all targets are filtered after applying MustTarget static ability, the spell can't be cast or the ability can't be activated
             if (mustTargetFiltered && mustTargetPlayers.isEmpty()) {
                 return false;
@@ -317,7 +334,7 @@ public class TargetSelection {
 
         for (final SpellAbilityStackInstance si : game.getStack()) {
             final SpellAbility onStack = si.getSpellAbility();
-            if (ability.canTargetSpellAbility(onStack) && !ability.getTargets().contains(onStack)) {
+            if ((isJudged() || ability.canTargetSpellAbility(onStack)) && !ability.getTargets().contains(onStack)) {
                 choices.add(si);
             }
         }
@@ -342,6 +359,7 @@ public class TargetSelection {
             return false;
         }
         for (final SpellAbilityStackInstance si : inp.getSelected()) {
+            checkStackTarget(si.getSpellAbility());
             ability.getTargets().add(si.getSpellAbility());
         }
         bTargetingDone = true;
@@ -359,7 +377,7 @@ public class TargetSelection {
         final Game game = ability.getActivatingPlayer().getGame();
         for (final SpellAbilityStackInstance si : game.getStack()) {
             SpellAbility abilityOnStack = si.getSpellAbility();
-            if (ability.canTargetSpellAbility(abilityOnStack)) {
+            if (isJudged() || ability.canTargetSpellAbility(abilityOnStack)) {
                 stackItemViewCache.put(si.getView(), si);
                 selectOptions.add(si.getView());
             }
@@ -385,6 +403,7 @@ public class TargetSelection {
                 return false;
             }
             if (madeChoice instanceof StackItemView) {
+                checkStackTarget(stackItemViewCache.get(madeChoice).getSpellAbility());
                 ability.getTargets().add(stackItemViewCache.get(madeChoice).getSpellAbility());
             } else {// 'FINISH TARGETING' chosen
                 bTargetingDone = true;

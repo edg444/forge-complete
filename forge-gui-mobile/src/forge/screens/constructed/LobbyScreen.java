@@ -29,6 +29,7 @@ import forge.deck.DeckType;
 import forge.deck.FDeckChooser;
 import forge.game.GameType;
 import forge.gamemodes.match.DandanDecks;
+import forge.gamemodes.match.JudgeTowerDecks;
 import forge.gamemodes.match.GameLobby;
 import forge.gamemodes.match.LobbySlot;
 import forge.gamemodes.match.LobbySlotType;
@@ -171,6 +172,7 @@ public abstract class LobbyScreen extends LaunchScreen implements ILobbyView {
         cbVariants.addItem(GameType.BattleTheHorde);
         cbVariants.addItem(GameType.DefeatAGod);
         cbVariants.addItem(GameType.Dandan);
+        cbVariants.addItem(GameType.JudgeTower);
         cbVariants.addItem(Forge.getLocalizer().getMessage("lblMore"));
         cbVariants.setChangedHandler(event -> {
             if (cbVariants.getSelectedIndex() <= 0) {
@@ -189,6 +191,9 @@ public abstract class LobbyScreen extends LaunchScreen implements ILobbyView {
                 lobby.applyVariant((GameType)cbVariants.getSelectedItem());
                 if (cbVariants.getSelectedItem() == GameType.Dandan) {
                     chooseDandanDeck();
+                }
+                if (cbVariants.getSelectedItem() == GameType.JudgeTower) {
+                    chooseJudgeTowerDeck();
                 }
                 updateLayoutForVariants();
                 Set<GameType> gameTypes = new HashSet<>();
@@ -296,6 +301,16 @@ public abstract class LobbyScreen extends LaunchScreen implements ILobbyView {
                 names, chosen -> {
                     if (chosen != null) {
                         DandanDecks.select(chosen);
+                    }
+                });
+    }
+
+    /** Judge Tower: which Tower to play it with (JudgeTowerDecks), asked as it's chosen. */
+    private static void chooseJudgeTowerDeck() {
+        GuiChoose.oneOrNone(Forge.getLocalizer().getMessage("lblJudgeTowerDeck") + " (" + JudgeTowerDecks.selectedName() + ")",
+                JudgeTowerDecks.names(), chosen -> {
+                    if (chosen != null) {
+                        JudgeTowerDecks.select(chosen);
                     }
                 });
     }
@@ -503,6 +518,7 @@ public abstract class LobbyScreen extends LaunchScreen implements ILobbyView {
             lstVariants.addItem(new Variant(GameType.BattleTheHorde));
             lstVariants.addItem(new Variant(GameType.DefeatAGod));
             lstVariants.addItem(new Variant(GameType.Dandan));
+            lstVariants.addItem(new Variant(GameType.JudgeTower));
         }
 
         @Override
@@ -531,6 +547,9 @@ public abstract class LobbyScreen extends LaunchScreen implements ILobbyView {
                     lobby.applyVariant(gameType);
                     if (gameType == GameType.Dandan) {
                         chooseDandanDeck();
+                    }
+                    if (gameType == GameType.JudgeTower) {
+                        chooseJudgeTowerDeck();
                     }
                 }
                 updateVariantSelection();
