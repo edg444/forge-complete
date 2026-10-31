@@ -71,7 +71,7 @@ final class JudgeTowerAi {
     }
 
     /** The AI's own pick if it has one when it has no choice, or else any legal target. False if there's none to be had. */
-    private static boolean chooseTargets(final SpellAbility sa, final AiController ai, final Player player) {
+    static boolean chooseTargets(final SpellAbility sa, final AiController ai, final Player player) {
         boolean uses = false;
         for (SpellAbility a = sa; a != null; a = a.getSubAbility()) {
             uses |= a.usesTargeting();

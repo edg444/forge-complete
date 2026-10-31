@@ -12,11 +12,22 @@ public final class JudgeInfraction extends Error {
 
     private final transient Player offender;
     private final String key;
+    private final boolean appealed;
 
     JudgeInfraction(final Player offender0, final String key0, final String reason) {
+        this(offender0, key0, reason, false);
+    }
+
+    /** @param appealed0 they've been asked already and accepted it, there being something to show them first */
+    public JudgeInfraction(final Player offender0, final String key0, final String reason, final boolean appealed0) {
         super(reason, null, false, false);
         offender = offender0;
         key = key0;
+        appealed = appealed0;
+    }
+
+    public boolean isAppealed() {
+        return appealed;
     }
 
     public Player getOffender() {

@@ -371,7 +371,23 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         }
     }
 
+    private forge.game.judgetower.table.TableLink getTableLink() {
+        return game.getJudge() == null ? null : game.getJudge().getTableLink();
+    }
+
+    /** State-based actions and triggers, as when a player would get priority; Judge Tower's table checks against this. */
+    public void settleForTable() {
+        checkStateBasedEffects();
+    }
+
     private void onPhaseBegin() {
+        runPhaseBegin();
+        if (getTableLink() != null && !game.isGameOver()) {
+            getTableLink().afterStepBegan();
+        }
+    }
+
+    private void runPhaseBegin() {
         boolean skipped = false;
 
         game.getTriggerHandler().resetActiveTriggers();
@@ -408,7 +424,10 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     }
                     // CR 805.4b: each player on the active team draws, in seat order (805.6a)
                     for (final Player active : getActivePlayers()) {
-                        active.drawCard();
+                        // a turn goes on after its player has left the game, but with nobody there to draw (CR 800.4j)
+                        if (!active.hasLost()) {
+                            active.drawCard();
+                        }
                     }
                     break;
 
@@ -1469,6 +1488,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                     // state-based effects check could lead to game over
                     return;
                 }
+                if (getTableLink() != null) {
+                    getTableLink().beforePriority(pPlayerPriority);
+                }
                 // CR 117.3 A player receives priority once state-based actions are done, and again after each thing they do
                 game.fireEvent(new GameEventPlayerPriority(PlayerView.get(playerTurn), phase, PlayerView.get(getPriorityPlayer())));
                 game.stashGameState();
@@ -1520,6 +1542,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                         // 117.3c If a player has priority when they cast a spell, activate an ability, [play a land]
                         // that player receives priority afterward.
                         pFirstPriority = pPlayerPriority; // all opponents have to pass before stack is allowed to resolve
+                        if (getTableLink() != null && pPlayerPriority.getController().isAI()) {
+                            getTableLink().afterAiAction();
+                        }
                     } else if (game.EXPERIMENTAL_RESTORE_SNAPSHOT) {
                         rollback = true;
                     }
@@ -1584,7 +1609,11 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 onPhaseBegin();
             }
             else if (!game.getStack().hasSimultaneousStackEntries()) {
-                game.getStack().resolveStack();
+                if (getTableLink() != null) {
+                    getTableLink().resolveTop();
+                } else {
+                    game.getStack().resolveStack();
+                }
             }
         } else {
             pPlayerPriority = nextPlayer;

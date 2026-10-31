@@ -236,7 +236,10 @@ public class FlipCoinEffect extends SpellAbilityEffect {
             }
 
             for (int i = 0; i < multiplier; i++) {
-                flipResults.add(MyRandom.getRandom().nextBoolean());
+                // Judge Tower: the coin flipped is the one on the table
+                final Boolean tableCoin = flipper.getGame().getJudge() == null || flipper.getGame().getJudge().getTableLink() == null ? null
+                        : flipper.getGame().getJudge().getTableLink().nextCoin();
+                flipResults.add(tableCoin != null ? tableCoin : MyRandom.getRandom().nextBoolean());
             }
         }
 

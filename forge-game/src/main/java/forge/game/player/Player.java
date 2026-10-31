@@ -2272,7 +2272,14 @@ public class Player extends GameEntity implements Comparable<Player> {
         // Note: Shuffling once is sufficient.
         Collections.shuffle(list, MyRandom.getRandom());
 
-        getZone(ZoneType.Library).setCards(getController().cheatShuffle(list));
+        // Judge Tower: a table that's been shuffled has the order, and the engine takes it
+        final List<Card> tableOrder = game.getJudge() == null || game.getJudge().getTableLink() == null ? null
+                : game.getJudge().getTableLink().adoptShuffle(list);
+        if (tableOrder != null) {
+            list.clear();
+            list.addAll(tableOrder);
+        }
+        getZone(ZoneType.Library).setCards(tableOrder != null ? list : getController().cheatShuffle(list));
 
         // Form of the Approach of the Second Sun: a player who is a card in this library stops being one when it's shuffled
         for (final Card c : Lists.newArrayList(list)) {

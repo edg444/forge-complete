@@ -27,6 +27,7 @@ import forge.game.combat.CombatUtil;
 import forge.game.cost.Cost;
 import forge.game.cost.CostPayment;
 import forge.game.event.GameEventAddLog;
+import forge.game.judgetower.table.TableLink;
 import forge.game.keyword.KeywordInterface;
 import forge.game.player.GameLossReason;
 import forge.game.player.Player;
@@ -59,6 +60,7 @@ public final class Judge {
     private final AtomicReference<UndoManager.Mark> lastLegal = new AtomicReference<>();
     private final Map<Player, Integer> strikes = new HashMap<>();
     private final Set<String> overruled = new HashSet<>();
+    private TableLink tableLink;
 
     public Judge(final Game game0, final JudgeTowerOptions options0) {
         game = game0;
@@ -69,10 +71,20 @@ public final class Judge {
         return options;
     }
 
+    /** The physical table this game is checking, when humans are playing it all by hand. */
+    public TableLink getTableLink() {
+        return tableLink;
+    }
+
+    public void setTableLink(final TableLink link) {
+        tableLink = link;
+    }
+
     /** What a player's zones, life and hand size are set to, once the players exist. */
     public void onGameCreated() {
         for (final Player p : game.getRegisteredPlayers()) {
-            p.setStartingHandSize(options.startingHand);
+            // the starting hand only: the maximum hand size stays what it is
+            p.addStartingHandOnlyBonus(options.startingHand - p.getStartingHandSize());
             if (options.life == JudgeTowerOptions.LifeRule.INFINITE) {
                 p.setStartingLife(Infinity.VALUE);
             }
@@ -127,6 +139,9 @@ public final class Judge {
         }
         try {
             lastLegal.set(new UndoManager.Mark(recorder.capture(game), game.getGameLog().size()));
+            if (tableLink != null) {
+                tableLink.onCheckpoint();
+            }
         } catch (final RuntimeException ex) {
             System.err.println("Judge Tower: could not take a snapshot: " + ex);
         }
@@ -476,6 +491,12 @@ public final class Judge {
                 loc().getMessage("lblJudgeInfractionBlocker", player.getName(), blocker.getName(), attacker.getName()));
     }
 
+    /** The engine couldn't go through with what a player has played on the table. */
+    public JudgeInfraction cannotBeDone(final Player player, final SpellAbility sa) {
+        return infraction(player, "undoable:" + actionKey(sa) + thisTurn(),
+                loc().getMessage("lblJudgeInfractionIllegalPlay", player.getName(), sa.getHostCard().getName(), sa.toString()));
+    }
+
     /** X as the player announced it, from the range the rules allow. */
     public void checkX(final Player player, final SpellAbility sa, final int value, final Range<Integer> range) {
         final int required = requiredX(sa, player, range.getMaximum());
@@ -575,21 +596,30 @@ public final class Judge {
         final Player offender = inf.getOffender();
         final String reason = inf.getMessage();
         game.getUndoManager().rollbackTo(game, lastLegal.get());
+        if (tableLink != null) {
+            tableLink.onRolledBack();
+        }
 
-        if (offender.getController().appealJudgeRuling(reason)) {
+        if (!inf.isAppealed() && offender.getController().appealJudgeRuling(reason)) {
             overruled.add(inf.getKey());
             log(loc().getMessage("lblJudgeOverruled", offender.getName(), reason));
+            if (tableLink != null) {
+                tableLink.onRuled();
+            }
             return;
         }
 
         final int committed = strikes.merge(offender, 1, Integer::sum);
         if (committed < options.strikes) {
             log(loc().getMessage("lblJudgeStrike", reason, committed, options.strikes));
-            return;
+        } else {
+            log(reason);
+            offender.loseConditionMet(GameLossReason.JudgeInfraction, reason);
+            game.getAction().checkGameOverCondition();
         }
-        log(reason);
-        offender.loseConditionMet(GameLossReason.JudgeInfraction, reason);
-        game.getAction().checkGameOverCondition();
+        if (tableLink != null) {
+            tableLink.onRuled();
+        }
     }
 
     private void log(final String message) {

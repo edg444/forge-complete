@@ -627,6 +627,32 @@ public class JudgeTowerTest extends AITest {
         }
     }
 
+    /** CR 800.4j: the turn goes on, but no one is there to draw for it, and the Tower keeps its card. */
+    @Test
+    public void testNoOneDrawsForAPlayerWhoHasLeft() {
+        final Game game = createGame();
+        final Player a = seat(game, 0);
+        final int tower = a.getCardsIn(ZoneType.Library).size();
+        game.getPhaseHandler().devModeSet(PhaseType.UPKEEP, a);
+        a.loseConditionMet(GameLossReason.JudgeInfraction, "test");
+        game.getAction().checkGameOverCondition();
+        final Player b = seat(game, 0);
+        for (int i = 0; i < 12 && game.getPhaseHandler().getPhase() != PhaseType.MAIN1; i++) {
+            game.getPhaseHandler().mainLoopStep();
+        }
+        AssertJUnit.assertEquals(a, game.getPhaseHandler().getPlayerTurn());
+        AssertJUnit.assertEquals(tower, b.getCardsIn(ZoneType.Library).size());
+    }
+
+    @Test
+    public void testOnlyTheStartingHandIsSmaller() {
+        final Game game = createGame();
+        final Player a = seat(game, 0);
+        AssertJUnit.assertEquals(0, a.getStartingHandSize());
+        AssertJUnit.assertEquals(7, a.getMaxHandSize());
+        AssertJUnit.assertEquals(7, a.getBaseMaxHandSize());
+    }
+
     @Test
     public void testOptionsRoundTrip() {
         final JudgeTowerOptions o = new JudgeTowerOptions();

@@ -291,8 +291,27 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Judge Tower
 
-Phases 1 and 2 of 5: the format's rules, and prompts that take illegal choices for the judge to rule on. The later phases
-hand over triggers, state-based actions and carrying out effects to the player.
+All five phases: the format's rules, prompts that take illegal choices for the judge to rule on, and the game played by
+hand on a physical table with the rules engine checking it behind the scenes (`JudgeTowerOptions.manual`, on by default;
+off, a human plays through the prompts of phases 1 and 2).
+
+- **The table** is the hosted `Game`, with no rules running on it: only `forge.game.judgetower.table.TableActions` changes
+  it (around `GameAction`, with no triggers or statics, so it shows printed characteristics plus counters). Forge's board
+  views show it as they are, on desktop and mobile and in hotseat, and `GameMemento` snapshots it.
+- **The judge** is `forge.ai.TableJudge`, a `Match.GameRunner` in place of `GameAction.startGame`: a private real `Game`, with
+  humans as `PlayerControllerJudge` (the AI's controller for the long tail) and AI seats as usual, copied to the table.
+  `PhaseHandler` calls it through `TableLink` at each step, before each priority, to resolve, and after an AI acts.
+- **Comparing** (`Observed`, `TableDiff`): zones, the Tower's order, tapped, face-down and faces, counters, attachments,
+  control, combat marks, life, poison, the stack. Not damage marks or summoning sickness, which nobody keeps in paper.
+- **Resolving** by hand: a window for the human, then `TableJudge.search` re-executes the object under a snapshot, walking its
+  decisions (what's declared on the stack, then the cards the player touched, then the other options) until the engine
+  comes to what's on the table. No way there is an infraction: the resolver's if the effect is wrong, the owner's if only
+  state-based actions or triggers are missing. An AI seat's part is copied, or asked for with Ask the AI. Out of attempts
+  (128), the table stands. Overrule also has the table stand, by forcing the engine to it. Shuffles, coins and dice come from
+  the table.
+- **The UI** is `InputTable` with `HumanTableSeat`: click a card, player or stack item, or the Table... button, for a menu of
+  primitives through the `IGuiGame` lists, so one implementation serves every GUI; OK commits. Reset puts the table back at
+  no cost. No drag and drop.
 
 - **Judge** (`forge.game.judgetower.Judge`, `Game.getJudge()`, null in other games) — `mandatoryActions(player)` is
   everything the player must do before passing: what they can cast, activate or do now, with mana abilities included,
@@ -324,9 +343,10 @@ hand over triggers, state-based actions and carrying out effects to the player.
   offered, since a pick there depends on it). No playable-card scan, no yield suggestions, no phase skipping, no
   auto-yield on a stack item, no auto-pass when nothing can be done. End Turn and a yield the player set still pass, and
   each pass is judged. Paying stays automatic: an unlimited pool leaves no decision (snow aside).
-- **Not yet**: list dialogs (zones that aren't shown as cards), single choices filled in for the player, the number of
-  targets or modes, numbers chosen from a range and damage assignment stay enforced; those go with carrying out effects
-  by hand.
+- **Limits**: a human's own decisions while the AI resolves something, and combat damage split among several blockers, are
+  still dialogs that only offer what's legal. In assisted play, list dialogs, filled-in single choices and counts stay
+  enforced. The long tail of rare controller decisions gets the AI's answer; a mismatch there goes to the ruling, where
+  Overrule has the table stand. Hand-size mulligans are always kept at the table. First player is random each game.
 - **Forced by the format, for all players** — `Mode$ MustAttack` and `Mode$ MustBlock` on a rules effect in each
   player's command zone; every optional mode of a charm (`CharmEffect`); no mulligan with no hand; unlimited mana
   (`ManaPool.makeUnlimited`, Pai Gow's).
@@ -466,6 +486,15 @@ hand over triggers, state-based actions and carrying out effects to the player.
     again that turn, or a mandatory buyback would loop forever; multikicker and the like are paid as many times as the
     format's X; a cast from hand with cycling available may be either, in any order, since casting isn't a printed
     ability; snow costs still need snow permanents, as in Pai Gow.
+- **Judge Tower, Phases 3-5** (user request). The game by hand: humans do everything on a physical table, including
+  turn-based actions, triggers, state-based actions and carrying out effects, and the engine checks it all. Hotseat works
+  through the same prompts. Fixed a Phase 1 bug on the way: a starting hand of 0 also made the maximum hand size 0, so
+  everyone discarded their hand at each cleanup. A player who has left no longer draws on what remains of their turn
+  (CR 800.4j), which took a card out of a shared Tower.
+  - Judgment calls of mine: the table is a rule-less second `Game` rather than a separate data model, so all board UI is
+    reused; menus rather than drag and drop; damage marks and summoning sickness aren't held against anyone; an
+    AI seat's window prompts can be skipped with "OK everything until something is cast or it's my turn", at the player's
+    own risk; costs are paid by hand, tapping included.
 - **Judge Tower, Phase 2** (user request). The rules engine stops precluding: a human can try an illegal cast, activate
   someone else's permanent, target or choose something illegal, or declare an illegal attack or block, and loses for it.
   Nothing is marked as legal any more and no pass is made unasked, so every priority stop has to be passed by hand, End

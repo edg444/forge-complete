@@ -40,7 +40,8 @@ public final class JudgeTowerLobby {
             final String graveyard = msg("lblJudgeTowerGraveyard") + ": " + msg(o.sharedGraveyard ? "lblJudgeTowerGraveyardShared" : "lblJudgeTowerGraveyardSeparate");
             final String strikes = msg("lblJudgeTowerStrikes") + ": " + o.strikes;
             final String oneAndDone = msg("lblJudgeTowerOneAndDone") + ": " + onOff(o.oneAndDone);
-            rows.addAll(List.of(ownership, life, hidden, points, x, hand, graveyard, strikes, oneAndDone));
+            final String manual = msg("lblJudgeTowerManual") + ": " + onOff(o.manual);
+            rows.addAll(List.of(ownership, life, hidden, points, x, hand, graveyard, strikes, oneAndDone, manual));
 
             final String row = SGuiChoose.oneOrNone(msg("lblJudgeTowerRules"), rows, start, null);
             if (row == null) {
@@ -69,6 +70,8 @@ public final class JudgeTowerLobby {
                 o.strikes = chooseNumber("lblJudgeTowerStrikes", 1, 5, o.strikes);
             } else if (row.equals(oneAndDone)) {
                 o.oneAndDone = !o.oneAndDone;
+            } else if (row.equals(manual)) {
+                o.manual = !o.manual;
             }
         }
     }

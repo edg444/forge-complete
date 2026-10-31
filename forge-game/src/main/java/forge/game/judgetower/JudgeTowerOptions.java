@@ -46,11 +46,13 @@ public final class JudgeTowerOptions {
     public int strikes = 1;
     /** TheGamer: a card can't be played twice in a turn. Off by user ruling: a flashback is cast at once. */
     public boolean oneAndDone = false;
+    /** Humans do everything by hand on a physical table (user ruling). Off, they use Forge's prompts and the engine does it. */
+    public boolean manual = true;
 
     public String serialize() {
         return "ownership=" + ownership + ";life=" + life + ";hidden=" + hidden + ";points=" + pointsToWin
                 + ";x=" + xValue + ";hand=" + startingHand + ";sharedGraveyard=" + sharedGraveyard
-                + ";strikes=" + strikes + ";oneAndDone=" + oneAndDone;
+                + ";strikes=" + strikes + ";oneAndDone=" + oneAndDone + ";manual=" + manual;
     }
 
     /** Anything missing or no longer understood keeps its default. */
@@ -76,6 +78,7 @@ public final class JudgeTowerOptions {
                     case "sharedgraveyard" -> o.sharedGraveyard = Boolean.parseBoolean(v);
                     case "strikes" -> o.strikes = Math.max(1, Integer.parseInt(v));
                     case "oneanddone" -> o.oneAndDone = Boolean.parseBoolean(v);
+                    case "manual" -> o.manual = Boolean.parseBoolean(v);
                     default -> { }
                 }
             } catch (final IllegalArgumentException ignored) {

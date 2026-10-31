@@ -160,6 +160,12 @@ public class HostedMatch {
         nextGameDecisions.clear();
         SoundSystem.instance.setBackgroundMusic(this.matchPlaylist == null ? MusicPlaylist.MATCH : this.matchPlaylist);
 
+        // Judge Tower played by hand: the hosted game is the physical table, which the judge's own game checks
+        final forge.game.judgetower.JudgeTowerOptions tower = match.getRules().getJudgeTowerOptions();
+        final boolean byHand = match.getRules().hasAppliedVariant(GameType.JudgeTower) && tower != null && tower.manual && !HostingServer.isHosting()
+                && match.getPlayers().stream().anyMatch(rp -> rp.getPlayer() instanceof LobbyPlayerHuman);
+        match.setGameRunner(byHand ? new forge.ai.TableJudge(p -> new forge.player.HumanTableSeat((PlayerControllerHuman) p.getController())) : null);
+
         game = match.createGame();
         //game.EXPERIMENTAL_RESTORE_SNAPSHOT = FModel.getPreferences().getPrefBoolean(FPref.MATCH_EXPERIMENTAL_RESTORE);
         game.AI_TIMEOUT = FModel.getPreferences().getPrefInt(FPref.MATCH_AI_TIMEOUT);

@@ -43,6 +43,26 @@ public class Match {
     private final Map<Integer, GameOutcome> gameOutcomes = Maps.newHashMap();
 
     private GameOutcome lastOutcome = null;
+    private GameRunner gameRunner = null;
+    private java.util.function.Consumer<Game> zonesPreparedHook = null;
+
+    /** Plays a game out in place of the rules running on it (Judge Tower's table, which has no rules of its own). */
+    public interface GameRunner {
+        void run(Game game, GameOutcome lastOutcome, Runnable startGameHook);
+    }
+
+    public void setGameRunner(final GameRunner runner) {
+        gameRunner = runner;
+    }
+
+    public GameRunner getGameRunner() {
+        return gameRunner;
+    }
+
+    /** Runs once a game's decks are in their zones, before anything is done with them. */
+    public void setZonesPreparedHook(final java.util.function.Consumer<Game> hook) {
+        zonesPreparedHook = hook;
+    }
     private RegisteredPlayer lastStartingPlayer = null;
 
     // Pai Gow Magic: each player's piles, made before the first game and shuffled face down, in the order they
@@ -126,6 +146,9 @@ public class Match {
 
     public void startGame(final Game game, Runnable startGameHook) {
         prepareAllZones(game);
+        if (zonesPreparedHook != null) {
+            zonesPreparedHook.accept(game);
+        }
         forge.game.herospath.HerosPath.onGameStarted(game);
         createPendingFirstUpkeepEffects(game);
         if (rules.useAnte()) {  // Deciding which cards go to ante
@@ -138,7 +161,11 @@ public class Match {
             game.fireEvent(GameEventAnteCardsSelected.fromCards(list));
         }
 
-        game.getAction().startGame(this.lastOutcome, startGameHook);
+        if (gameRunner != null) {
+            gameRunner.run(game, this.lastOutcome, startGameHook);
+        } else {
+            game.getAction().startGame(this.lastOutcome, startGameHook);
+        }
         if (game.getStartingPlayer() != null) {
             lastStartingPlayer = game.getStartingPlayer().getRegisteredPlayer();
         }
