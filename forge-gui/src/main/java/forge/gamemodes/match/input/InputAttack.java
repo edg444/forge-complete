@@ -41,7 +41,9 @@ import forge.util.Localizer;
 import forge.util.collect.FCollectionView;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -61,6 +63,8 @@ public class InputAttack extends InputSyncronizedBase {
     private final Player playerAttacks;
     private AttackingBand activeBand = null;
     private boolean potentialBanding;
+    // Judge Tower: combat has no place for an attack on someone who isn't a defender, so it's noted for the judge
+    private final Map<Card, GameEntity> attacksOnNonDefenders = new LinkedHashMap<>();
 
     public InputAttack(PlayerControllerHuman controller, Player attacks0, Combat combat0) {
         super(controller);
@@ -84,7 +88,7 @@ public class InputAttack extends InputSyncronizedBase {
 
     //determine whether currently attackers can be called back (undeclared)
     private boolean canCallBackAttackers() {
-        return !ownAttackers().isEmpty();
+        return !ownAttackers().isEmpty() || !attacksOnNonDefenders.isEmpty();
     }
 
     // a Two-Headed Giant teammate declares into the same combat (CR 805.10b), but their attackers are theirs to call back
@@ -95,7 +99,9 @@ public class InputAttack extends InputSyncronizedBase {
     private void updatePrompt() {
         Localizer localizer = Localizer.getInstance();
         String alphaLabel = canCallBackAttackers() ? localizer.getMessage("lblCallBack") : localizer.getMessage("lblAlphaStrike");
-        getController().getGui().updateButtons(getOwner(), localizer.getMessage("lblOK"), alphaLabel, true, true, true);
+        // Judge Tower: an alpha strike is the engine working out who can attack
+        getController().getGui().updateButtons(getOwner(), localizer.getMessage("lblOK"), alphaLabel, true,
+                canCallBackAttackers() || !isJudged(), true);
     }
 
     private void disablePrompt() {
@@ -118,6 +124,7 @@ public class InputAttack extends InputSyncronizedBase {
             for (Card c : attackers) {
                 undeclareAttacker(c);
             }
+            attacksOnNonDefenders.clear();
         } else {
             alphaStrike();
         }
@@ -125,6 +132,9 @@ public class InputAttack extends InputSyncronizedBase {
     }
 
     void alphaStrike() {
+        if (isJudged()) {
+            return;
+        }
         final List<Player> defenders = playerAttacks.getOpponents();
         final Set<CardView> refreshCards = Sets.newHashSet();
 
@@ -167,7 +177,7 @@ public class InputAttack extends InputSyncronizedBase {
 
     @Override
     protected final void onPlayerSelected(Player selected, final ITriggerEvent triggerEvent) {
-        if (defenders.contains(selected)) {
+        if (defenders.contains(selected) || isJudged()) {
             setCurrentDefender(selected);
         } else {
             getController().getGui().flashIncorrectAction(); // cannot attack that player
@@ -177,6 +187,10 @@ public class InputAttack extends InputSyncronizedBase {
     @Override
     protected final boolean onCardSelected(final Card card, final List<Card> otherCardsToSelect, final ITriggerEvent triggerEvent) {
         disablePrompt();
+        if (attacksOnNonDefenders.remove(card) != null) {
+            updateMessage();
+            return true;
+        }
         final List<Card> att = ownAttackers();
         if (triggerEvent != null && triggerEvent.getButton() == 3 && att.contains(card)) {
             undeclareAttacker(card);
@@ -235,7 +249,7 @@ public class InputAttack extends InputSyncronizedBase {
             }
         }
 
-        if (playerAttacks.getZone(ZoneType.Battlefield).contains(card) && CombatUtil.canAttack(card, currentDefender)) {
+        if (mayDeclare(card)) {
             if (activeBand != null && !activeBand.canJoinBand(card)) {
                 activeBand = null;
                 updateMessage();
@@ -245,7 +259,7 @@ public class InputAttack extends InputSyncronizedBase {
             declareAttacker(card);
             if (otherCardsToSelect != null) {
                 for (Card c : otherCardsToSelect) {
-                    if (CombatUtil.canAttack(c, currentDefender)) {
+                    if (isJudged() || CombatUtil.canAttack(c, currentDefender)) {
                         declareAttacker(c);
                     }
                 }
@@ -271,16 +285,34 @@ public class InputAttack extends InputSyncronizedBase {
             if (defenders.contains(card)) {
                 return Localizer.getInstance().getMessage("lblDeclareAttackersForCard");
             }
-            return null;
+            if (!isJudged()) {
+                return null;
+            }
         }
-        if (playerAttacks.getZone(ZoneType.Battlefield).contains(card) && CombatUtil.canAttack(card, currentDefender)) {
+        if (mayDeclare(card)) {
             return Localizer.getInstance().getMessage("lblAttackWithCard");
         }
         return null;
     }
 
+    private boolean mayDeclare(final Card card) {
+        return isJudged() ? card.isInPlay()
+                : playerAttacks.getZone(ZoneType.Battlefield).contains(card) && CombatUtil.canAttack(card, currentDefender);
+    }
+
+    @Override
+    public void showAndWait() {
+        super.showAndWait();
+        attacksOnNonDefenders.forEach((attacker, defender) ->
+                getJudge().illegalAttack(getController().getPlayer(), attacker, defender));
+    }
+
     private void declareAttacker(final Card card) {
         combat.removeFromCombat(card);
+        if (!defenders.contains(currentDefender)) {
+            attacksOnNonDefenders.put(card, currentDefender);
+            return;
+        }
         combat.addAttacker(card, currentDefender, activeBand);
 
         card.getGame().getMatch().fireEvent(new UiEventAttackerDeclared(CardView.get(card), GameEntityView.get(currentDefender)));
@@ -288,6 +320,7 @@ public class InputAttack extends InputSyncronizedBase {
 
     private boolean undeclareAttacker(final Card card) {
         combat.removeFromCombat(card);
+        attacksOnNonDefenders.remove(card);
         // When removing an attacker clear the attacking band
         activeBand = null;
 

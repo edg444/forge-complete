@@ -291,9 +291,8 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
 
 ### Judge Tower
 
-Phase 1 of 5: the format's rules in normal play. Players still use Forge's usual prompts, which only offer legal plays;
-what a human can do wrong so far is break the format's own rules. The later phases take the filters off and hand over
-triggers, state-based actions and carrying out effects to the player.
+Phases 1 and 2 of 5: the format's rules, and prompts that take illegal choices for the judge to rule on. The later phases
+hand over triggers, state-based actions and carrying out effects to the player.
 
 - **Judge** (`forge.game.judgetower.Judge`, `Game.getJudge()`, null in other games) — `mandatoryActions(player)` is
   everything the player must do before passing: what they can cast, activate or do now, with mana abilities included,
@@ -307,6 +306,27 @@ triggers, state-based actions and carrying out effects to the player.
   then takes a strike or the game: `GameLossReason.JudgeInfraction`. Passing with a mandatory action left, an ability
   twice or out of order, a normal cast with an alternative cost to use, X other than the format's, an unpaid additional
   cost, declining a "may", not attacking or blocking with everything.
+- **Unfiltered prompts** — a human seat can pick anything the prompts have room for, and is ruled on when they commit to
+  it (`Judge.isJudging`: once there's a legal state to go back to; before that, prompts filter as usual). The prompt notes
+  what's illegal and throws from `showAndWait`, on the game thread, so the infraction reaches `mainLoopStep`.
+  - Plays: `Card.getAllPossibleAbilities(human, false)` keeps everything in Judge Tower (spells on a permanent or on
+    the stack that can't be cast from there are dropped by `InputPassPriority`, or clicking a creature would cast it
+    again), `SpellAbilityView` grays nothing out, and `Judge.checkPlay` rules on `canPlay`, the cost and missing targets.
+  - Targets: `InputSelectTargets` (its checks moved to `getCardError`/`getPlayerError`), both stack pickers in
+    `TargetSelection`, no auto-target, and no cancelling a spell for lack of a target (a trigger with none still goes,
+    CR 603.3d).
+  - Combat: `InputAttack` and `InputBlock` take any permanent, `Judge.checkAttackers` goes through the declared attack
+    before anything removes an attacker from combat, an attack on a non-defender is noted aside since `Combat` has no
+    place for it, and an illegal block is rechecked at commit (taking another block back can make it legal).
+    `PhaseHandler.isAskedAnyway` asks a player with creatures even when none can attack or block. No alpha strike.
+  - Costs and effects: `InputSelectEntitiesFromList` when there's an ability behind it. Charm modes (`CharmEffect`).
+- **No hints, no passes made unasked** — `Selection.withoutHints` marks nothing as legal (the stack view keeps what's
+  offered, since a pick there depends on it). No playable-card scan, no yield suggestions, no phase skipping, no
+  auto-yield on a stack item, no auto-pass when nothing can be done. End Turn and a yield the player set still pass, and
+  each pass is judged. Paying stays automatic: an unlimited pool leaves no decision (snow aside).
+- **Not yet**: list dialogs (zones that aren't shown as cards), single choices filled in for the player, the number of
+  targets or modes, numbers chosen from a range and damage assignment stay enforced; those go with carrying out effects
+  by hand.
 - **Forced by the format, for all players** — `Mode$ MustAttack` and `Mode$ MustBlock` on a rules effect in each
   player's command zone; every optional mode of a charm (`CharmEffect`); no mulligan with no hand; unlimited mana
   (`ManaPool.makeUnlimited`, Pai Gow's).
@@ -446,6 +466,11 @@ triggers, state-based actions and carrying out effects to the player.
     again that turn, or a mandatory buyback would loop forever; multikicker and the like are paid as many times as the
     format's X; a cast from hand with cycling available may be either, in any order, since casting isn't a printed
     ability; snow costs still need snow permanents, as in Pai Gow.
+- **Judge Tower, Phase 2** (user request). The rules engine stops precluding: a human can try an illegal cast, activate
+  someone else's permanent, target or choose something illegal, or declare an illegal attack or block, and loses for it.
+  Nothing is marked as legal any more and no pass is made unasked, so every priority stop has to be passed by hand, End
+  Turn apart (my call: it's a pass the player asked for, and it's judged like any other, so it isn't stopped for what they
+  had to do). A misclick is an infraction too; the ruling's Overrule takes it back, for that turn.
 
 ### 2026-10-30, twenty-seventh deploy (desktop, Android, GitHub) — Hero's Path challenges, Pai Gow Magic, Dandân, layers per CR 613, AI-vs-AI replays, Commander brackets, multiplayer AI; 11-commit upstream merge
 

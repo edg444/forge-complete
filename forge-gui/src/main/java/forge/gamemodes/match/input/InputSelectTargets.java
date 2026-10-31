@@ -23,7 +23,9 @@ import forge.util.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -45,6 +47,8 @@ public final class InputSelectTargets extends InputSyncronizedBase {
     private Predicate<GameObject> filter;
     private boolean mustTargetFiltered;
     private List<Player> mustTargetPlayers = new ArrayList<>();
+    // Judge Tower: the targets that can't be, with the reason, for the judge when the player commits to them
+    private final Map<GameEntity, String> illegal = new LinkedHashMap<>();
     private static final long serialVersionUID = -1091595663541356356L;
 
     /** The players a must-target requirement still allows (a Flagbearer player); others can't be chosen once it filters. */
@@ -91,7 +95,7 @@ public final class InputSelectTargets extends InputSyncronizedBase {
         for (final SpellAbilityStackInstance si : getController().getGame().getStack()) {
             final SpellAbility onStack = si.getSpellAbility();
             final Card host = onStack.getHostCard();
-            if (!onStack.isSpell() || host == null || !choices.contains(host)) { continue; }
+            if (!onStack.isSpell() || host == null || !(choices.contains(host) || isJudged())) { continue; }
             offered.add(si.getView());
             if (targets.contains(host)) {
                 chosen.add(si.getView());
@@ -188,143 +192,13 @@ public final class InputSelectTargets extends InputSyncronizedBase {
             return false;
         }
 
-        // TODO should use sa.canTarget(card) instead?
-        // it doesn't have messages
-
-        if (sa.isSpell() && sa.getHostCard().isAura()) {
-            String msg = card.cantBeAttachedMsg(sa.getHostCard(), sa);
-            if (msg != null) {
-                showMessage(sa.getHostCard() + " - " + msg);
+        final String error = getCardError(card);
+        if (error != null) {
+            if (!isJudged()) {
+                showMessage(error);
                 return false;
             }
-        }
-        //If the card is not a valid target
-        if (!card.canBeTargetedBy(sa)) {
-            showMessage(sa.getHostCard() + " - Cannot target this card (Shroud? Protection? Restrictions).");
-            return false;
-        }
-
-        // If the cards can't share a creature type
-        if (tgt.isWithoutSameCreatureType() && lastTarget != null && card.sharesCreatureTypeWith(lastTarget)) {
-            showMessage(sa.getHostCard() + " - Cannot target this card (should not share a creature type)");
-            return false;
-        }
-        // If the cards share a creature type
-        if (tgt.isWithSameCreatureType() && lastTarget != null && !card.sharesCreatureTypeWith(lastTarget)) {
-            showMessage(sa.getHostCard() + " - Cannot target this card (should share a creature type)");
-            return false;
-        }
-
-        // If the cards share a card type
-        if (tgt.isWithSameCardType() && lastTarget != null && !card.sharesCardTypeWith(lastTarget)) {
-            showMessage(sa.getHostCard() + " - Cannot target this card (should share a Card type)");
-            return false;
-        }
-
-        if (sa.hasParam("MaxTotalTargetCMC")) {
-            int maxTotalCMC = tgt.getMaxTotalCMC(sa.getHostCard(), sa);
-            if (maxTotalCMC > 0) {
-                int soFar = Aggregates.sum(sa.getTargets().getTargetCards(), Card::getCMC);
-                if (!sa.isTargeting(card)) {
-                    soFar += card.getCMC();
-                }
-                if (soFar > maxTotalCMC) {
-                    showMessage(sa.getHostCard() + " - Cannot target this card (mana value limit exceeded)");
-                    return false;
-                }
-            }
-        }
-
-        if (sa.hasParam("MaxTotalTargetPower")) {
-            int maxTotalPower = tgt.getMaxTotalPower(sa.getHostCard(), sa);
-            if (maxTotalPower > 0) {
-                int soFar = Aggregates.sum(sa.getTargets().getTargetCards(), Card::getNetPower);
-                if (!sa.isTargeting(card)) {
-                    soFar += card.getNetPower();
-                }
-                if (soFar > maxTotalPower) {
-                    showMessage(sa.getHostCard() + " - Cannot target this card (power limit exceeded)");
-                    return false;
-                }
-            }
-        }
-
-        // If all cards must have same controllers
-        if (tgt.isSameController()) {
-            final List<Player> targetedControllers = new ArrayList<>();
-            for (final GameObject o : targets) {
-                if (o instanceof Card) {
-                    final Player p = ((Card) o).getController();
-                    targetedControllers.add(p);
-                }
-            }
-            if (!targetedControllers.isEmpty() && !targetedControllers.contains(card.getController())) {
-                showMessage(sa.getHostCard() + " - Cannot target this card (must have same controller)");
-                return false;
-            }
-        }
-
-        // If all cards must have different controllers
-        if (tgt.isDifferentControllers() || tgt.isForEachPlayer()) {
-            final List<Player> targetedControllers = new ArrayList<>();
-            for (final GameObject o : targets) {
-                if (o instanceof Card) {
-                    final Player p = ((Card) o).getController();
-                    targetedControllers.add(p);
-                }
-            }
-            if (targetedControllers.contains(card.getController())) {
-                showMessage(sa.getHostCard() + " - Cannot target this card (must have different controllers)");
-                return false;
-            }
-        }
-
-        // If all cards must have equal toughness
-        if (tgt.isEqualToughness()) {
-            final List<Integer> tgtTs = new ArrayList<>();
-            for (final GameObject o : targets) {
-                if (o instanceof Card) {
-                    final Integer cmc = ((Card) o).getNetToughness();
-                    tgtTs.add(cmc);
-                }
-            }
-            if (!tgtTs.isEmpty() && !tgtTs.contains(card.getNetToughness())) {
-                showMessage(sa.getHostCard() + " - Cannot target this card (must have equal toughness)");
-                return false;
-            }
-        }
-
-        // If all cards must have different mana values
-        if (tgt.isDifferentCMC()) {
-            final List<Integer> targetedCMCs = new ArrayList<>();
-            for (final GameObject o : targets) {
-                if (o instanceof Card) {
-                    final Integer cmc = ((Card) o).getCMC();
-                    targetedCMCs.add(cmc);
-                }
-            }
-            if (targetedCMCs.contains(card.getCMC())) {
-                showMessage(sa.getHostCard() + " - Cannot target this card (must have different mana values)");
-                return false;
-            }
-        }
-
-        if (tgt.isDifferentNames()) {
-            for (final GameObject o : targets) {
-                if (o instanceof Card c && c.sharesNameWith(card)) {
-                    showMessage(sa.getHostCard() + " - Cannot target this card (must have different names)");
-                    return false;
-                }
-            }
-        }
-
-        if (!choices.contains(card)) {
-            // the card's own wording is what R&D's Secret Lair is overriding, so quoting it back
-            // ("not a player or planeswalker" at a planeswalker) would be actively misleading
-            final String errata = forge.game.staticability.StaticAbilityIgnoreErrata.targetBlockedReason(sa, card);
-            showMessage(sa.getHostCard() + " - " + (errata != null ? errata
-                    : "The selected card is not " + Lang.nounWithAmount(1, tgt.getValidDesc()) + "."));
-            return false;
+            illegal.put(card, error);
         }
 
         if (divisionValues != null && !divisionValues.isEmpty()) {
@@ -343,11 +217,142 @@ public final class InputSelectTargets extends InputSyncronizedBase {
         return true;
     }
 
+    /** Why the card can't be a target of this, or null if it can. */
+    private String getCardError(final Card card) {
+        // TODO should use sa.canTarget(card) instead?
+        // it doesn't have messages
+
+        if (sa.isSpell() && sa.getHostCard().isAura()) {
+            String msg = card.cantBeAttachedMsg(sa.getHostCard(), sa);
+            if (msg != null) {
+                return sa.getHostCard() + " - " + msg;
+            }
+        }
+        //If the card is not a valid target
+        if (!card.canBeTargetedBy(sa)) {
+            return sa.getHostCard() + " - Cannot target this card (Shroud? Protection? Restrictions).";
+        }
+
+        // If the cards can't share a creature type
+        if (tgt.isWithoutSameCreatureType() && lastTarget != null && card.sharesCreatureTypeWith(lastTarget)) {
+            return sa.getHostCard() + " - Cannot target this card (should not share a creature type)";
+        }
+        // If the cards share a creature type
+        if (tgt.isWithSameCreatureType() && lastTarget != null && !card.sharesCreatureTypeWith(lastTarget)) {
+            return sa.getHostCard() + " - Cannot target this card (should share a creature type)";
+        }
+
+        // If the cards share a card type
+        if (tgt.isWithSameCardType() && lastTarget != null && !card.sharesCardTypeWith(lastTarget)) {
+            return sa.getHostCard() + " - Cannot target this card (should share a Card type)";
+        }
+
+        if (sa.hasParam("MaxTotalTargetCMC")) {
+            int maxTotalCMC = tgt.getMaxTotalCMC(sa.getHostCard(), sa);
+            if (maxTotalCMC > 0) {
+                int soFar = Aggregates.sum(sa.getTargets().getTargetCards(), Card::getCMC);
+                if (!sa.isTargeting(card)) {
+                    soFar += card.getCMC();
+                }
+                if (soFar > maxTotalCMC) {
+                    return sa.getHostCard() + " - Cannot target this card (mana value limit exceeded)";
+                }
+            }
+        }
+
+        if (sa.hasParam("MaxTotalTargetPower")) {
+            int maxTotalPower = tgt.getMaxTotalPower(sa.getHostCard(), sa);
+            if (maxTotalPower > 0) {
+                int soFar = Aggregates.sum(sa.getTargets().getTargetCards(), Card::getNetPower);
+                if (!sa.isTargeting(card)) {
+                    soFar += card.getNetPower();
+                }
+                if (soFar > maxTotalPower) {
+                    return sa.getHostCard() + " - Cannot target this card (power limit exceeded)";
+                }
+            }
+        }
+
+        // If all cards must have same controllers
+        if (tgt.isSameController()) {
+            final List<Player> targetedControllers = new ArrayList<>();
+            for (final GameObject o : targets) {
+                if (o instanceof Card) {
+                    final Player p = ((Card) o).getController();
+                    targetedControllers.add(p);
+                }
+            }
+            if (!targetedControllers.isEmpty() && !targetedControllers.contains(card.getController())) {
+                return sa.getHostCard() + " - Cannot target this card (must have same controller)";
+            }
+        }
+
+        // If all cards must have different controllers
+        if (tgt.isDifferentControllers() || tgt.isForEachPlayer()) {
+            final List<Player> targetedControllers = new ArrayList<>();
+            for (final GameObject o : targets) {
+                if (o instanceof Card) {
+                    final Player p = ((Card) o).getController();
+                    targetedControllers.add(p);
+                }
+            }
+            if (targetedControllers.contains(card.getController())) {
+                return sa.getHostCard() + " - Cannot target this card (must have different controllers)";
+            }
+        }
+
+        // If all cards must have equal toughness
+        if (tgt.isEqualToughness()) {
+            final List<Integer> tgtTs = new ArrayList<>();
+            for (final GameObject o : targets) {
+                if (o instanceof Card) {
+                    final Integer cmc = ((Card) o).getNetToughness();
+                    tgtTs.add(cmc);
+                }
+            }
+            if (!tgtTs.isEmpty() && !tgtTs.contains(card.getNetToughness())) {
+                return sa.getHostCard() + " - Cannot target this card (must have equal toughness)";
+            }
+        }
+
+        // If all cards must have different mana values
+        if (tgt.isDifferentCMC()) {
+            final List<Integer> targetedCMCs = new ArrayList<>();
+            for (final GameObject o : targets) {
+                if (o instanceof Card) {
+                    final Integer cmc = ((Card) o).getCMC();
+                    targetedCMCs.add(cmc);
+                }
+            }
+            if (targetedCMCs.contains(card.getCMC())) {
+                return sa.getHostCard() + " - Cannot target this card (must have different mana values)";
+            }
+        }
+
+        if (tgt.isDifferentNames()) {
+            for (final GameObject o : targets) {
+                if (o instanceof Card c && c.sharesNameWith(card)) {
+                    return sa.getHostCard() + " - Cannot target this card (must have different names)";
+                }
+            }
+        }
+
+        if (!choices.contains(card)) {
+            // the card's own wording is what R&D's Secret Lair is overriding, so quoting it back
+            // ("not a player or planeswalker" at a planeswalker) would be actively misleading
+            final String errata = forge.game.staticability.StaticAbilityIgnoreErrata.targetBlockedReason(sa, card);
+            return sa.getHostCard() + " - " + (errata != null ? errata
+                    : "The selected card is not " + Lang.nounWithAmount(1, tgt.getValidDesc()) + ".");
+        }
+
+        return null;
+    }
+
     @Override
     public boolean selectAbility(final SpellAbility ab) {
         final Card host = ab == null ? null : ab.getHostCard();
         if (isFinished() || ab == null || !ab.isSpell()) { return false; }
-        if (host == null || !choices.contains(host)) { return false; }
+        if (host == null || !(choices.contains(host) || isJudged())) { return false; }
         return onCardSelected(host, null, null);
     }
 
@@ -356,7 +361,7 @@ public final class InputSelectTargets extends InputSyncronizedBase {
         if (!tgt.isUniqueTargets() && targets.contains(card)) {
             return null;
         }
-        if (choices.contains(card)) {
+        if (choices.contains(card) || isJudged()) {
             return "select card as target";
         }
         return null;
@@ -374,18 +379,13 @@ public final class InputSelectTargets extends InputSyncronizedBase {
             return;
         }
 
-        //TODO return the correct reason to display
-        if (sa.isSpell() && sa.getHostCard().isAura() && !player.canBeAttached(sa.getHostCard(), sa)) {
-            showMessage(sa.getHostCard() + " - Cannot enchant this player (Hexproof? Protection? Restrictions?).");
-            return;
-        }
-        if (!sa.canTarget(player) || mustTargetFiltered && !mustTargetPlayers.contains(player)) {
-            showMessage(sa.getHostCard() + " - Cannot target this player (Hexproof? Protection? Restrictions?).");
-            return;
-        }
-        if (filter != null && !filter.test(player)) {
-            showMessage(sa.getHostCard() + " - Cannot target this player (Hexproof? Protection? Restrictions?).");
-            return;
+        final String error = getPlayerError(player);
+        if (error != null) {
+            if (!isJudged()) {
+                showMessage(error);
+                return;
+            }
+            illegal.put(player, error);
         }
 
         if (divisionValues != null && !divisionValues.isEmpty()) {
@@ -395,6 +395,26 @@ public final class InputSelectTargets extends InputSyncronizedBase {
             }
         }
         addTarget(player);
+    }
+
+    private String getPlayerError(final Player player) {
+        //TODO return the correct reason to display
+        if (sa.isSpell() && sa.getHostCard().isAura() && !player.canBeAttached(sa.getHostCard(), sa)) {
+            return sa.getHostCard() + " - Cannot enchant this player (Hexproof? Protection? Restrictions?).";
+        }
+        if (!sa.canTarget(player) || mustTargetFiltered && !mustTargetPlayers.contains(player)
+                || filter != null && !filter.test(player)) {
+            return sa.getHostCard() + " - Cannot target this player (Hexproof? Protection? Restrictions?).";
+        }
+        return null;
+    }
+
+    @Override
+    public void showAndWait() {
+        super.showAndWait();
+        if (!bCancel) {
+            illegal.forEach((target, why) -> getJudge().illegalTarget(getController().getPlayer(), sa, target, why));
+        }
     }
 
     public boolean selectPlayerForMacro(final Player player, final ITriggerEvent triggerEvent) {
@@ -458,6 +478,7 @@ public final class InputSelectTargets extends InputSyncronizedBase {
             divisionValues.add(sa.getDividedValue(ge));
         }
         targets.remove(ge);
+        illegal.remove(ge);
         sa.getTargets().remove(ge);
         if (ge instanceof Card) {
             // try to get last selected card

@@ -360,6 +360,120 @@ public class JudgeTowerTest extends AITest {
     }
 
     @Test
+    public void testAPlayTheRulesForbidIsAnInfraction() {
+        final Game game = createGame();
+        final Player a = seat(game, 0);
+        final Card divination = addCardToZone("Divination", a, ZoneType.Hand);
+        final SpellAbility cast = divination.getFirstSpellAbility();
+        cast.setActivatingPlayer(a);
+        judgedController(game, a, false, () -> Collections.singletonList(cast));
+        // a sorcery, on someone else's turn
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN1, seat(game, 1));
+        game.getPhaseHandler().onStackResolved();
+
+        for (int i = 0; i < 6 && !a.hasLost(); i++) {
+            game.getPhaseHandler().mainLoopStep();
+        }
+
+        AssertJUnit.assertTrue(a.hasLost());
+        AssertJUnit.assertEquals(GameLossReason.JudgeInfraction, a.getOutcome().lossState);
+        AssertJUnit.assertTrue(game.getStack().isEmpty());
+    }
+
+    @Test
+    public void testCastingWithNoLegalTargetIsAnInfraction() {
+        final Game game = createGame();
+        final Player a = seat(game, 0);
+        final Card blade = addCardToZone("Doom Blade", a, ZoneType.Hand);
+        final SpellAbility cast = blade.getFirstSpellAbility();
+        cast.setActivatingPlayer(a);
+        judgedController(game, a, false, () -> Collections.singletonList(cast));
+
+        game.getPhaseHandler().mainLoopStep();
+
+        AssertJUnit.assertTrue(a.hasLost());
+        AssertJUnit.assertEquals(GameLossReason.JudgeInfraction, a.getOutcome().lossState);
+    }
+
+    /** Overruling a mistaken play takes the ruling back for that turn, not for the same mistake any time after. */
+    @Test
+    public void testAnOverruledIllegalPlayIsForThatTurnOnly() {
+        final Game game = createGame();
+        final Player a = seat(game, 0);
+        final Card blade = addCardToZone("Doom Blade", a, ZoneType.Hand);
+        final SpellAbility cast = blade.getFirstSpellAbility();
+        cast.setActivatingPlayer(a);
+        judgedController(game, a, true, () -> Collections.singletonList(cast));
+
+        game.getPhaseHandler().mainLoopStep();
+        AssertJUnit.assertFalse(a.hasLost());
+
+        // the ruling was taken back: the same play now stands this turn
+        game.getJudge().checkPlay(a, cast);
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN1, a, game.getPhaseHandler().getTurn() + 1);
+        boolean ruled = false;
+        try {
+            game.getJudge().checkPlay(a, cast);
+        } catch (final forge.game.judgetower.JudgeInfraction inf) {
+            ruled = true;
+        }
+        AssertJUnit.assertTrue(ruled);
+    }
+
+    /** A mode with nothing to target can't be chosen: it's on offer to a human, and they lose for choosing it. */
+    @Test
+    public void testAModeThatCannotBeChosenIsOfferedAndRuledOn() {
+        final Game game = createGame();
+        final Player a = seat(game, 0);
+        addCard("Grizzly Bears", seat(game, 1));
+        final Card abrade = addCardToZone("Abrade", a, ZoneType.Hand);
+        final SpellAbility cast = abrade.getFirstSpellAbility();
+        cast.setActivatingPlayer(a);
+        final List<Integer> offered = Lists.newArrayList();
+        a.dangerouslySetController(new PlayerControllerAi(game, a, a.getLobbyPlayer()) {
+            @Override
+            public boolean isAI() {
+                return false;
+            }
+
+            @Override
+            public List<SpellAbility> chooseSpellAbilityToPlay() {
+                return Collections.singletonList(cast);
+            }
+
+            @Override
+            public List<forge.game.spellability.AbilitySub> chooseModeForAbility(final SpellAbility sa,
+                    final List<forge.game.spellability.AbilitySub> possible, final int min, final int num, final boolean allowRepeat) {
+                offered.add(possible.size());
+                // the artifact it would destroy isn't there
+                return Lists.newArrayList(possible.get(1));
+            }
+
+            @Override
+            public boolean appealJudgeRuling(final String reason) {
+                return false;
+            }
+        });
+
+        game.getPhaseHandler().mainLoopStep();
+
+        AssertJUnit.assertEquals(List.of(2), offered);
+        AssertJUnit.assertTrue(a.hasLost());
+        AssertJUnit.assertEquals(GameLossReason.JudgeInfraction, a.getOutcome().lossState);
+    }
+
+    /** The AI isn't offered anything the rules forbid. */
+    @Test
+    public void testTheAiIsStillOfferedOnlyWhatIsLegal() {
+        final Game game = createGame();
+        final Player a = seat(game, 0);
+        final Card bears = addCardToZone("Grizzly Bears", a, ZoneType.Graveyard);
+        AssertJUnit.assertTrue(bears.getAllPossibleAbilities(a, false).isEmpty());
+        judgedController(game, a, false, () -> null);
+        AssertJUnit.assertFalse(bears.getAllPossibleAbilities(a, false).isEmpty());
+    }
+
+    @Test
     public void testAttackersAndBlockersAreForced() {
         final Game game = createGame();
         final Player a = seat(game, 0);

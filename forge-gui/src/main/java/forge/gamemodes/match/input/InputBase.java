@@ -106,7 +106,17 @@ public abstract class InputBase implements java.io.Serializable, Input {
 
     /** Sends this prompt's marks, with the targets kept marked while a spell's cost is paid. */
     protected final void showSelection() {
-        controller.getGui().setSelection(getSelection().withChosen(controller.getKeptMarks()).withActionable(getActionable()));
+        final Selection selection = getSelection().withChosen(controller.getKeptMarks()).withActionable(getActionable());
+        controller.getGui().setSelection(controller.getGame().getJudge() != null ? selection.withoutHints() : selection);
+    }
+
+    /** Judge Tower: whether what's picked here is the player's to get wrong and the judge's to rule on, rather than refused. */
+    protected final boolean isJudged() {
+        return getJudge() != null && getJudge().isJudging();
+    }
+
+    protected final forge.game.judgetower.Judge getJudge() {
+        return controller.getGame().getJudge();
     }
 
     @Override

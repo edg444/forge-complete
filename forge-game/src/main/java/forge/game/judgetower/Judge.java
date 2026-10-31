@@ -16,9 +16,14 @@ import forge.ImageKeys;
 import forge.card.GamePieceType;
 import forge.card.mana.ManaCostShard;
 import forge.game.Game;
+import forge.game.GameEntity;
 import forge.game.GameLogEntryType;
+import forge.game.GameStage;
 import forge.game.card.Card;
+import forge.game.card.CardCollection;
 import forge.game.card.CardLists;
+import forge.game.combat.Combat;
+import forge.game.combat.CombatUtil;
 import forge.game.cost.Cost;
 import forge.game.cost.CostPayment;
 import forge.game.event.GameEventAddLog;
@@ -26,6 +31,7 @@ import forge.game.keyword.KeywordInterface;
 import forge.game.player.GameLossReason;
 import forge.game.player.Player;
 import forge.game.player.PlayerController;
+import forge.game.spellability.AbilitySub;
 import forge.game.spellability.OptionalCostValue;
 import forge.game.spellability.SpellAbility;
 import forge.game.staticability.StaticAbilityAlternativeCost;
@@ -41,9 +47,9 @@ import forge.util.Localizer;
  * it can be. A player caught breaking a rule of the format or the Comprehensive Rules loses; the game goes back to the
  * most recent legal state and carries on for the others (user rulings, 2026-10-30).
  *
- * This is the per-game judge. Human players are ruled on when they act; AI seats play the forced actions from
- * mandatoryActions, so they never commit an infraction. Its strikes and overruled rulings are part of the game state,
- * so they're written after a rollback, never before one.
+ * This is the per-game judge. Human players can try anything their prompts have room for, and are ruled on when they
+ * commit to it; AI seats play the forced actions from mandatoryActions, so they never commit an infraction. Its strikes
+ * and overruled rulings are part of the game state, so they're written after a rollback, never before one.
  */
 public final class Judge {
     private final Game game;
@@ -124,6 +130,14 @@ public final class Judge {
         } catch (final RuntimeException ex) {
             System.err.println("Judge Tower: could not take a snapshot: " + ex);
         }
+    }
+
+    /**
+     * Whether what a human picks now is theirs to get wrong. An infraction needs a legal state to go back to, so before
+     * there is one (the mulligans, say) prompts keep to what's legal.
+     */
+    public boolean isJudging() {
+        return game.getAge() == GameStage.Play && lastLegal.get() != null;
     }
 
     private boolean hasHumanPlayer() {
@@ -379,11 +393,16 @@ public final class Judge {
 
     /** A player has chosen something to cast, activate or do. */
     public void checkPlay(final Player player, final SpellAbility sa) {
+        final Card host = sa.getHostCard();
+        // an ability already used this turn gets the format's ruling below; overruling a mistaken play is for that turn
+        if (!isSpent(sa) && (!sa.canPlay(true) || !canPay(sa, player) || !hasTargets(sa))) {
+            illegal(player, "illegal:" + actionKey(sa) + thisTurn(),
+                    loc().getMessage("lblJudgeInfractionIllegalPlay", player.getName(), host.getName(), sa.toString()));
+        }
         final String key = "play:" + actionKey(sa);
         if (isOverruled(key)) {
             return;
         }
-        final Card host = sa.getHostCard();
         if (isSpent(sa)) {
             throw infraction(player, key, loc().getMessage("lblJudgeInfractionTwice", player.getName(), host.getName()));
         }
@@ -397,6 +416,64 @@ public final class Judge {
         if (sa.isSpell() && hasAlternativeToIt(sa, able)) {
             throw infraction(player, key, loc().getMessage("lblJudgeInfractionAlternative", player.getName(), host.getName()));
         }
+    }
+
+    private void illegal(final Player player, final String key, final String reason) {
+        if (!isOverruled(key)) {
+            throw infraction(player, key, reason);
+        }
+    }
+
+    private String thisTurn() {
+        return ":" + game.getPhaseHandler().getTurn();
+    }
+
+    /** Something a player has chosen as a target that can't be one. The reason comes from the prompt that took it. */
+    public void illegalTarget(final Player player, final SpellAbility sa, final Object target, final String why) {
+        illegal(player, "target:" + actionKey(sa) + ":" + target + thisTurn(),
+                loc().getMessage("lblJudgeInfractionTarget", player.getName(), target, sa.getHostCard().getName(), why));
+    }
+
+    /** Something a player has chosen, for a cost or an effect, from outside what could be chosen. */
+    public void illegalChoice(final Player player, final SpellAbility sa, final Object chosen) {
+        illegal(player, "choice:" + actionKey(sa) + ":" + chosen + thisTurn(),
+                loc().getMessage("lblJudgeInfractionChoice", player.getName(), chosen, sa.getHostCard().getName()));
+    }
+
+    /** Which modes were chosen, out of all of them, and which of them can legally be. */
+    public void checkModes(final Player player, final SpellAbility sa, final List<AbilitySub> chosen,
+            final List<AbilitySub> legal) {
+        for (final AbilitySub mode : chosen) {
+            if (!legal.contains(mode)) {
+                illegal(player, "mode:" + actionKey(sa) + ":" + mode.getDescription() + thisTurn(),
+                        loc().getMessage("lblJudgeInfractionMode", player.getName(), sa.getHostCard().getName(), mode.toString()));
+            }
+        }
+    }
+
+    /** A creature declared as an attacker (or anything else), that can't attack that defender, or isn't the attacker's to send. */
+    public void illegalAttack(final Player declarer, final Card attacker, final GameEntity defender) {
+        illegal(declarer, "attacker:" + attacker.getId() + thisTurn(),
+                loc().getMessage("lblJudgeInfractionAttacker", declarer.getName(), attacker.getName(), defender));
+    }
+
+    /** The attack as declared, before anything takes an illegal attacker out of combat again. */
+    public void checkAttackers(final Player declarer, final Player attacking, final Combat combat,
+            final CardCollection attackingAlready) {
+        for (final Card attacker : combat.getAttackers()) {
+            if (attackingAlready.contains(attacker)) {
+                continue;
+            }
+            final GameEntity defender = combat.getDefenderByAttacker(attacker);
+            if (!attacker.getController().equals(attacking) || !CombatUtil.canAttack(attacker, defender)) {
+                illegalAttack(declarer, attacker, defender);
+            }
+        }
+    }
+
+    public void illegalBlock(final Player player, final Card blocker, final Card attacker) {
+        illegal(player, "blocker:" + blocker.getId() + ":" + attacker.getId() + thisTurn(),
+                loc().getMessage("lblJudgeInfractionBlocker", player.getName(), blocker.getName(), attacker.getName()));
     }
 
     /** X as the player announced it, from the range the rules allow. */

@@ -858,12 +858,18 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         game.fireEvent(new GameEventCombatChanged());
     }
 
+    /** Judge Tower: having nothing legal to declare is for a human to see for themselves, and get wrong if they do. */
+    private boolean isAskedAnyway(final Player declarer, final Player creaturesOf) {
+        return game.getJudge() != null && game.getJudge().isJudging() && !declarer.getController().isAI()
+                && !creaturesOf.getCreaturesInPlay().isEmpty();
+    }
+
     private void declareAttackersFor(final Player active) {
         final Player whoDeclares = Objects.requireNonNullElse(active.getDeclaresAttackers(), active);
         // Over My Dead Bodies: creature cards in the attacker's graveyard can be declared too
         final CardCollection fromGraveyard = game.getAction().enlistGraveyardCombatants(active);
 
-        if (CombatUtil.canAttack(active)) {
+        if (CombatUtil.canAttack(active) || isAskedAnyway(whoDeclares, active)) {
             boolean success = false;
             do {
                 if (game.isGameOver()) { // they just like to close window at any moment
@@ -873,7 +879,11 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
                 if (!game.getUndoManager().isOwner(whoDeclares)) {
                     game.getUndoManager().barrier("Opponent declared attackers");
                 }
+                final CardCollection attackingAlready = new CardCollection(combat.getAttackers());
                 whoDeclares.getController().declareAttackers(active, combat);
+                if (game.getJudge() != null && !whoDeclares.getController().isAI()) {
+                    game.getJudge().checkAttackers(whoDeclares, active, combat, attackingAlready);
+                }
                 combat.removeAbsentCombatants();
 
                 success = CombatUtil.validateAttackers(combat);
@@ -1031,7 +1041,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
             // CR 805.10d: on a Two-Headed Giant team a player blocks for the whole defending team
             final boolean teamAttacked = p.getGiantTeam().anyMatch(combat::isPlayerAttacked);
             if (teamAttacked) {
-                if (CombatUtil.canBlock(p, combat)) {
+                if (CombatUtil.canBlock(p, combat) || isAskedAnyway(whoDeclaresBlockers, p)) {
                     // Replacement effects (for Camouflage)
                     final Map<AbilityKey, Object> repRunParams = AbilityKey.mapFromAffected(p);
                     repRunParams.put(AbilityKey.Player, whoDeclaresBlockers);
