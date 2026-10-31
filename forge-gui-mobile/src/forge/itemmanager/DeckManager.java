@@ -19,6 +19,7 @@ import forge.deck.Deck;
 import forge.deck.DeckProxy;
 import forge.deck.FDeckViewer;
 import forge.deck.io.DeckPreferences;
+import forge.game.GameFormat;
 import forge.game.GameType;
 import forge.game.IHasGameType;
 import forge.itemmanager.filters.AdvancedSearchFilter;
@@ -36,6 +37,8 @@ public final class DeckManager extends ItemManager<DeckProxy> implements IHasGam
     private final GameType gameType;
     // working a bracket out checks every listed combo, too slow to repeat for each row on each frame
     private final Map<DeckProxy, String> bracketLabels = new WeakHashMap<>();
+    private GameFormat requiredFormat;
+    private DeckFormatFilter formatFilter;
 
     /**
      * Creates deck list for selected decks for quick deleting, editing, and
@@ -67,11 +70,35 @@ public final class DeckManager extends ItemManager<DeckProxy> implements IHasGam
 
     @Override
     protected void addDefaultFilters() {
+        formatFilter = null;
         if (getConfig() == ItemManagerConfig.STRING_ONLY) { return; }
 
         addFilter(new DeckColorFilter(this));
-        if (!Forge.isMobileAdventureMode)
-            addFilter(new DeckFormatFilter(this));
+        if (!Forge.isMobileAdventureMode) {
+            formatFilter = new DeckFormatFilter(this);
+            addFilter(formatFilter);
+            if (requiredFormat != null) {
+                formatFilter.setFormat(requiredFormat);
+            }
+        }
+    }
+
+    /** Sets the Format filter to the format, or clears it when it is null. Restoring or resetting the filters keeps it. */
+    public void setRequiredFormat(final GameFormat format) {
+        if (format == requiredFormat) { return; }
+
+        requiredFormat = format;
+        if (formatFilter != null) {
+            formatFilter.setFormat(format);
+        }
+    }
+
+    @Override
+    public void resetFilters() {
+        super.resetFilters();
+        if (requiredFormat != null && formatFilter != null) {
+            formatFilter.setFormat(requiredFormat);
+        }
     }
 
     @Override

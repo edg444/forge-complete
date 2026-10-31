@@ -719,7 +719,7 @@ public class DeckgenUtil {
         if(isCardGen){
             if(format.equals(DeckFormat.Brawl)){//TODO: replace with actual Brawl based data
                 Set<String> uniqueCards = new HashSet<>();
-                List<List<Pair<String, Double>>> cardArchetypes = CardArchetypeLDAGenerator.ldaPools.get(FModel.getFormats().getStandard().getName()).get(commander.getName());
+                List<List<Pair<String, Double>>> cardArchetypes = CardArchetypeLDAGenerator.ldaPools.get(FModel.getFormats().getHistoric().getName()).get(commander.getName());
                 for(List<Pair<String, Double>> archetype:cardArchetypes){
                     for(Pair<String, Double> cardPair:archetype){
                         String cardName = cardPair.getLeft();
@@ -785,7 +785,7 @@ public class DeckgenUtil {
                                     .or(DeckGeneratorBase.COLORLESS_CARDS.and(c -> DeckGeneratorBase.meetsColorNeeds(c, commander.getRules().getColorIdentity()))))));
             if (format == DeckFormat.Brawl) {
                 // add additional filterprinted rule to remove old reprints for a consistent look
-                colorList = IterableUtil.filter(colorList,FModel.getFormats().getStandard().getFilterPrinted());
+                colorList = IterableUtil.filter(colorList,FModel.getFormats().get("Brawl").getFilterPrinted());
             }
             //shuffle first 400 random cards
             List<PaperCard> cardList = Lists.newArrayList(colorList);
