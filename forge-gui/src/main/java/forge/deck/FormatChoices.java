@@ -2,6 +2,7 @@ package forge.deck;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import forge.game.GameFormat;
@@ -18,7 +19,7 @@ public final class FormatChoices {
             GameType.PaiGow, GameType.BoosterBlitz, GameType.Dandan, GameType.JudgeTower);
     /** Game types that replace Constructed's deck rules. Only one of them can be applied at a time. */
     public static final List<GameType> FORMAT_GAME_TYPES = Stream.concat(
-            COMMANDER_GAME_TYPES.stream(), GENERATED_GAME_TYPES.stream()).toList();
+            COMMANDER_GAME_TYPES.stream(), GENERATED_GAME_TYPES.stream()).collect(Collectors.toList());
 
     private FormatChoices() {
     }

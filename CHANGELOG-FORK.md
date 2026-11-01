@@ -478,6 +478,11 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+- **Upstream merge** (18 commits, 12 conflicts, 2026-11-01). Upstream's `CounterType$ STUN` spelling goes into eight
+  scripts with the fork's wording, Booby Trap gets upstream's `AILogic$` with the fork's wording, and Thelon's Curse takes
+  upstream outright. `LifeLoseAi` applies upstream's storm total to the fork's own-side life check too. New upstream:
+  Canadian Highlander format, Flat MC Tutor Storm.
+
 - **Random decks follow the lobby's Format** (user request). With a format picked, Random Color Decks and Random Decks
   generate from that format's cards, with one copy at most of anything it restricts (`DeckGeneratorBase.setRestrictedCards`,
   for Vintage), and Random User/Favorite Deck pick among decks legal in it. Random Standard, Modern and Pauper Color Decks
