@@ -635,8 +635,6 @@ public abstract class LobbyScreen extends LaunchScreen implements ILobbyView {
             case VINTAGE_CARDGEN_DECK:
             case PAUPER_CARDGEN_DECK:
             case COLOR_DECK:
-            case STANDARD_COLOR_DECK:
-            case MODERN_COLOR_DECK:
                 deckChooser.refreshDeckListForAI();
                 break;
             default:

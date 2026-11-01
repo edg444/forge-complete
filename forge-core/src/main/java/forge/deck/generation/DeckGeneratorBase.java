@@ -47,6 +47,7 @@ public abstract class DeckGeneratorBase {
     protected final DebugTrace trace = new DebugTrace();
     protected final Map<String, Integer> cardCounts = new HashMap<>();
     protected int maxDuplicates = 4;
+    private Set<String> restrictedCards = Set.of();
     protected boolean useArtifacts = true;
     protected String basicLandEdition = null;
     protected List<String> inverseDLands = new ArrayList<>();
@@ -94,6 +95,15 @@ public abstract class DeckGeneratorBase {
 
     public void setSingleton(boolean singleton) {
         maxDuplicates = singleton ? 1 : 4;
+    }
+
+    /** One copy at most of these cards (a format's restricted list). */
+    public void setRestrictedCards(Collection<String> names) {
+        restrictedCards = new HashSet<>(names);
+    }
+
+    private int maxCopies(String name) {
+        return restrictedCards.contains(name) ? 1 : maxDuplicates;
     }
     public void setUseArtifacts(boolean value) {
         useArtifacts = value;
@@ -267,7 +277,7 @@ public abstract class DeckGeneratorBase {
         for (int attempt = 0; added < want - have && attempt < candidates.size() * 4; attempt++) {
             final String name = candidates.get(MyRandom.getRandom().nextInt(candidates.size())).getName();
             final int newCount = cardCounts.getOrDefault(name, 0) + 1;
-            if (newCount > maxDuplicates
+            if (newCount > maxCopies(name)
                     || !removeOneFiller(c -> payoffNames.contains(c.getName()) || printedBorder(c) == border)) {
                 continue;
             }
@@ -337,7 +347,7 @@ public abstract class DeckGeneratorBase {
 
     private boolean addOneCopy(PaperCard cp) {
         final int newCount = cardCounts.getOrDefault(cp.getName(), 0) + 1;
-        if (newCount > maxDuplicates) {
+        if (newCount > maxCopies(cp.getName())) {
             return false;
         }
         tDeck.add(pool.getCard(cp.getName(), cp.getEdition()));
@@ -402,7 +412,7 @@ public abstract class DeckGeneratorBase {
             int newCount = cardCounts.get(cp.getName()) + 1;
 
             //add card to deck if not already maxed out on card
-            if (newCount <= maxDuplicates) {
+            if (newCount <= maxCopies(cp.getName())) {
                 tDeck.add(pool.getCard(cp.getName(), cp.getEdition()));
                 //see if current card is from an edition with basic lands to use for this deck
                 if(basicLandEdition == null){
@@ -416,7 +426,7 @@ public abstract class DeckGeneratorBase {
             }
 
             //remove card from source if now maxed out on card
-            if (newCount >= maxDuplicates) {
+            if (newCount >= maxCopies(cp.getName())) {
                 source.remove(cp);
                 srcLen--;
                 if (srcLen == 0) { break; }
@@ -435,7 +445,7 @@ public abstract class DeckGeneratorBase {
             int newCount = cardCounts.get(s) + 1;
 
             //add card to deck if not already maxed out on card
-            if (newCount <= maxDuplicates) {
+            if (newCount <= maxCopies(s)) {
                 tDeck.add(pool.getCard(s));
                 cardCounts.put(s, newCount);
                 trace.append(s + "\n");
@@ -443,7 +453,7 @@ public abstract class DeckGeneratorBase {
             }
 
             //remove card from source if now maxed out on card
-            if (newCount >= maxDuplicates) {
+            if (newCount >= maxCopies(s)) {
                 source.remove(s);
                 srcLen--;
                 if (srcLen == 0) { break; }

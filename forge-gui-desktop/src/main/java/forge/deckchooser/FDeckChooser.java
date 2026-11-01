@@ -11,7 +11,6 @@ import forge.gamemodes.quest.QuestEventChallenge;
 import forge.gamemodes.quest.QuestUtil;
 import forge.gui.FThreads;
 import forge.gui.UiCommand;
-import forge.item.PaperCard;
 import forge.itemmanager.DeckManager;
 import forge.itemmanager.ItemManagerConfig;
 import forge.itemmanager.ItemManagerContainer;
@@ -32,7 +31,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
 
 @SuppressWarnings("serial")
 public class FDeckChooser extends JPanel implements IDecksComboBoxListener {
@@ -162,10 +160,10 @@ public class FDeckChooser extends JPanel implements IDecksComboBoxListener {
         }
     }
 
-    private void updateColors(Predicate<PaperCard> formatFilter) {
+    private void updateColors() {
         lstDecks.setAllowMultipleSelections(true);
 
-        setDeckPoolWithConfig(ColorDeckGenerator.getColorDecks(lstDecks, formatFilter, isAi), ItemManagerConfig.STRING_ONLY);
+        setDeckPoolWithConfig(ColorDeckGenerator.getColorDecks(lstDecks, lstDecks::getRequiredFormat, isAi), ItemManagerConfig.STRING_ONLY);
 
         btnRandom.setText(localizer.getMessage("lblRandomColors"));
         btnRandom.setCommand((UiCommand) () -> DeckgenUtil.randomSelectColors(lstDecks));
@@ -235,7 +233,7 @@ public class FDeckChooser extends JPanel implements IDecksComboBoxListener {
     }
 
     private void updateRandom() {
-        updateDecks(RandomDeckGenerator.getRandomDecks(lstDecks, isAi), ItemManagerConfig.STRING_ONLY);
+        updateDecks(RandomDeckGenerator.getRandomDecks(lstDecks, lstDecks::getRequiredFormat, isAi), ItemManagerConfig.STRING_ONLY);
     }
 
     private void updateNetDecks() {
@@ -677,16 +675,7 @@ public class FDeckChooser extends JPanel implements IDecksComboBoxListener {
                 updateCustom();
                 break;
             case COLOR_DECK:
-                updateColors(null);
-                break;
-            case STANDARD_COLOR_DECK:
-                updateColors(FModel.getFormats().getStandard().getFilterPrinted());
-                break;
-            case MODERN_COLOR_DECK:
-                updateColors(FModel.getFormats().getModern().getFilterPrinted());
-                break;
-            case PAUPER_COLOR_DECK:
-                updateColors(FModel.getFormats().getPauper().getFilterPrinted());
+                updateColors();
                 break;
             case STANDARD_CARDGEN_DECK:
                 if(FModel.isdeckGenMatrixLoaded()) {
@@ -901,7 +890,7 @@ public class FDeckChooser extends JPanel implements IDecksComboBoxListener {
                     NetDeckArchiveBlock = NetDeckArchiveBlock.selectAndLoad(lstDecks.getGameType(), deckType.substring(NetDeckArchiveBlock.PREFIX.length()));
                     return DeckType.NET_ARCHIVE_BLOCK_DECK;
                 }
-                return DeckType.valueOf(deckType);
+                return DeckType.valueOf(deckType).forDeckChooser();
             }
         } catch (final IllegalArgumentException ex) {
             System.err.println(ex.getMessage() + ". Using default : " + selectedDeckType);

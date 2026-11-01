@@ -478,6 +478,15 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+- **Random decks follow the lobby's Format** (user request). With a format picked, Random Color Decks and Random Decks
+  generate from that format's cards, with one copy at most of anything it restricts (`DeckGeneratorBase.setRestrictedCards`,
+  for Vintage), and Random User/Favorite Deck pick among decks legal in it. Random Standard, Modern and Pauper Color Decks
+  leave the deck category menus on desktop and mobile; a saved pick of one opens as Random Color Decks. The Gauntlet
+  opponent lists keep them, having no Format dropdown.
+
+- **Adventure-style cards show the second half's type in the card details** (user request): "Instant — Adventure — Stomp",
+  "Sorcery — Omen — Claim Territory", "Prepared — Sorcery — Have a Bite", on desktop and mobile.
+
 ### 2026-10-31, twenty-eighth deploy (desktop, Android, GitHub) - Judge Tower; 14-commit upstream merge
 
 - **Upstream merge** (14 commits, 5 conflicts). Upstream's unified Format dropdown (#12521) replaces the lobby's game

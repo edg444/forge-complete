@@ -12,6 +12,7 @@ import forge.util.IterableUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class RandomDeckGenerator extends DeckProxy implements Comparable<RandomDeckGenerator> {
     private enum RandomDeckType {
@@ -20,31 +21,34 @@ public class RandomDeckGenerator extends DeckProxy implements Comparable<RandomD
         Favorite
     }
 
-    public static List<DeckProxy> getRandomDecks(final IHasGameType lstDecks0, final boolean isAi0) {
+    /** @param format0 the format the decks must be legal in when they are picked, or null for none */
+    public static List<DeckProxy> getRandomDecks(final IHasGameType lstDecks0, final Supplier<GameFormat> format0, final boolean isAi0) {
         final List<DeckProxy> decks = new ArrayList<>();
 
-        decks.add(new RandomDeckGenerator("Random Generated Deck", RandomDeckType.Generated, lstDecks0, isAi0));
-        decks.add(new RandomDeckGenerator("Random User Deck", RandomDeckType.User, lstDecks0, isAi0));
-        decks.add(new RandomDeckGenerator("Random Favorite Deck", RandomDeckType.Favorite, lstDecks0, isAi0));
+        decks.add(new RandomDeckGenerator("Random Generated Deck", RandomDeckType.Generated, lstDecks0, format0, isAi0));
+        decks.add(new RandomDeckGenerator("Random User Deck", RandomDeckType.User, lstDecks0, format0, isAi0));
+        decks.add(new RandomDeckGenerator("Random Favorite Deck", RandomDeckType.Favorite, lstDecks0, format0, isAi0));
 
         return decks;
     }
 
     public static Deck getRandomUserDeck(final IHasGameType lstDecks0, final boolean isAi0) {
-        RandomDeckGenerator generator = new RandomDeckGenerator(null, RandomDeckType.User, lstDecks0, isAi0);
+        RandomDeckGenerator generator = new RandomDeckGenerator(null, RandomDeckType.User, lstDecks0, () -> null, isAi0);
         return generator.getDeck();
     }
 
     private final String name;
     private final RandomDeckType type;
     private final IHasGameType lstDecks;
+    private final Supplier<GameFormat> format;
     private final boolean isAi;
 
-    private RandomDeckGenerator(final String name0, final RandomDeckType type0, final IHasGameType lstDecks0, final boolean isAi0) {
+    private RandomDeckGenerator(final String name0, final RandomDeckType type0, final IHasGameType lstDecks0, final Supplier<GameFormat> format0, final boolean isAi0) {
         super();
         name = name0;
         type = type0;
         lstDecks = lstDecks0;
+        format = format0;
         isAi = isAi0;
     }
 
@@ -91,6 +95,10 @@ public class RandomDeckGenerator extends DeckProxy implements Comparable<RandomD
             case Planechase:
                 return DeckgenUtil.generatePlanarDeck();
             default:
+                final GameFormat required = format.get();
+                if (required != null) {
+                    return generateRandomColorDeckOfFormat(required);
+                }
                 while (true) {
                     switch (Aggregates.random(DeckType.ConstructedOptions)) {
                         case PRECONSTRUCTED_DECK:
@@ -118,12 +126,6 @@ public class RandomDeckGenerator extends DeckProxy implements Comparable<RandomD
                             return DeckgenUtil.buildLDACArchetypeDeck(FModel.getFormats().get("Vintage"), isAi);
                         case PAUPER_CARDGEN_DECK:
                             return DeckgenUtil.buildLDACArchetypeDeck(FModel.getFormats().getPauper(), isAi);
-                        case STANDARD_COLOR_DECK:
-                            return generateRandomColorDeckOfFormat(FModel.getFormats().getStandard());
-                        case MODERN_COLOR_DECK:
-                            return generateRandomColorDeckOfFormat(FModel.getFormats().getModern());
-                        case PAUPER_COLOR_DECK:
-                            return generateRandomColorDeckOfFormat(FModel.getFormats().getPauper());
                         case THEME_DECK:
                             return Aggregates.random(DeckProxy.getAllThemeDecks()).getDeck();
                         default:
@@ -133,7 +135,7 @@ public class RandomDeckGenerator extends DeckProxy implements Comparable<RandomD
         }
     }
 
-    private Deck generateRandomColorDeckOfFormat(GameFormat format) {
+    private Deck generateRandomColorDeckOfFormat(GameFormat required) {
         int count;
         List<String> colors;
         colors = new ArrayList<>();
@@ -141,7 +143,7 @@ public class RandomDeckGenerator extends DeckProxy implements Comparable<RandomD
         for (int i = 1; i <= count; i++) {
             colors.add("Random " + i);
         }
-        return DeckgenUtil.buildColorDeck(colors, format.getFilterPrinted(), isAi);
+        return DeckgenUtil.buildFormatColorDeck(colors, required, isAi);
     }
 
     private Deck getUserDeck() {
@@ -156,7 +158,7 @@ public class RandomDeckGenerator extends DeckProxy implements Comparable<RandomD
             case Planechase -> DeckProxy.getAllPlanarDecks(DeckFormat.Planechase.isLegalDeckPredicate());
             default -> DeckProxy.getAllConstructedDecks(gameType.getDeckFormat().isLegalDeckPredicate());
         };
-        decks = withinBracketCap(decks);
+        decks = legalInFormat(withinBracketCap(decks));
         if (Iterables.isEmpty(decks)) {
             return getGeneratedDeck(); //fall back to generated deck if no decks in filtered list
         }
@@ -177,11 +179,16 @@ public class RandomDeckGenerator extends DeckProxy implements Comparable<RandomD
             case Planechase -> DeckProxy.getAllPlanarDecks();
             default -> DeckProxy.getAllConstructedDecks();
         };
-        decks = withinBracketCap(IterableUtil.filter(decks, DeckProxy::isFavoriteDeck));
+        decks = legalInFormat(withinBracketCap(IterableUtil.filter(decks, DeckProxy::isFavoriteDeck)));
         if (Iterables.isEmpty(decks)) {
             return getGeneratedDeck(); //fall back to generated deck if no favorite decks
         }
         return Aggregates.random(decks).getDeck();
+    }
+
+    private Iterable<DeckProxy> legalInFormat(final Iterable<DeckProxy> decks) {
+        final GameFormat required = format.get();
+        return required == null ? decks : IterableUtil.filter(decks, d -> required.isDeckLegal(d.getDeck()));
     }
 
     /** Under an enforced bracket cap, an AI seat's random Commander deck is one that fits, when any does. */

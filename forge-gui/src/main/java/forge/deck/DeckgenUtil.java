@@ -372,6 +372,17 @@ public class DeckgenUtil {
      * @return {@link forge.deck.Deck}
      */
     public static Deck buildColorDeck(List<String> selection, Predicate<PaperCard> formatFilter, boolean forAi) {
+        return buildColorDeck(selection, formatFilter, List.of(), forAi);
+    }
+
+    /** A color deck legal in the format, which may be null: only its cards, and one copy of each it restricts. */
+    public static Deck buildFormatColorDeck(List<String> selection, GameFormat format, boolean forAi) {
+        return format == null
+                ? buildColorDeck(selection, null, forAi)
+                : buildColorDeck(selection, format.getFilterPrinted(), format.getRestrictedCards(), forAi);
+    }
+
+    private static Deck buildColorDeck(List<String> selection, Predicate<PaperCard> formatFilter, List<String> restrictedCards, boolean forAi) {
         try {
             final Deck deck;
             String deckName = null;
@@ -405,6 +416,7 @@ public class DeckgenUtil {
                 }
             }
             gen.setSingleton(FModel.getPreferences().getPrefBoolean(FPref.DECKGEN_SINGLETONS));
+            gen.setRestrictedCards(restrictedCards);
             gen.setUseArtifacts(!FModel.getPreferences().getPrefBoolean(FPref.DECKGEN_ARTIFACTS));
             applyPrintingPreferences(gen);
             final CardPool cards = gen.getDeck(60, forAi);
@@ -424,7 +436,7 @@ public class DeckgenUtil {
         catch (Exception e) {
             e.printStackTrace();
         }
-        return buildColorDeck(selection, formatFilter, forAi); //try again if previous color deck couldn't be generated
+        return buildColorDeck(selection, formatFilter, restrictedCards, forAi); //try again if previous color deck couldn't be generated
     }
 
     public static QuestEvent getQuestEvent(final String name) {

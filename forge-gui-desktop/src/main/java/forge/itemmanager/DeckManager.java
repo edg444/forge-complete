@@ -169,6 +169,10 @@ public final class DeckManager extends ItemManager<DeckProxy> implements IHasGam
         applyRequiredFormat();
     }
 
+    public GameFormat getRequiredFormat() {
+        return requiredFormat;
+    }
+
     private void applyRequiredFormat() {
         final DeckFormatFilter current = getFilter(DeckFormatFilter.class);
         if (current != null) {

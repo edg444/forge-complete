@@ -396,8 +396,6 @@ public class VLobby implements ILobbyView {
             case VINTAGE_CARDGEN_DECK:
             case PAUPER_CARDGEN_DECK:
             case COLOR_DECK:
-            case STANDARD_COLOR_DECK:
-            case MODERN_COLOR_DECK:
             case RANDOM_CARDGEN_COMMANDER_DECK:
             case RANDOM_COMMANDER_DECK:
                 deckChooser.refreshDeckListForAI();

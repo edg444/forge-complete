@@ -3,6 +3,7 @@ package forge.gui.card;
 import com.google.common.collect.Multiset;
 import forge.card.CardRarity;
 import forge.card.CardStateName;
+import forge.card.CardTypeView;
 import forge.card.ColorSet;
 import forge.card.MagicColor;
 import forge.game.GameView;
@@ -725,25 +726,23 @@ public class CardDetailUtil {
         }
 
         if (card.hasAlternateState() && state.getState() == CardStateName.Original) {
-            if (card.getAlternateState().getType().hasSubtype("Adventure")) {
-                area.append("\n\n").append(Localizer.getInstance().getMessage("lblAdventure")).append(" — ").append(getAlternateStateDesc(card));
+            final CardTypeView alternateType = card.getAlternateState().getType();
+            if (alternateType.hasSubtype("Adventure") || alternateType.hasSubtype("Omen") || alternateType.hasSubtype("Vengeance")) {
+                area.append("\n\n").append(getAlternateStateType(card)).append(" — ").append(getAlternateStateDesc(card));
             }
 
-            if (card.getAlternateState().getType().hasSubtype("Omen")) {
-                area.append("\n\n").append(Localizer.getInstance().getMessage("lblOmen")).append(" — ").append(getAlternateStateDesc(card));
-            }
-
-            if (card.getAlternateState().getType().hasSubtype("Vengeance")) {
-                area.append("\n\n");
-                area.append(Localizer.getInstance().getMessage("lblVengeance") + " — " + getAlternateStateDesc(card));
-            }
-
+            // the prepared spell's type line doesn't say it's prepared
             if (card.hasPreparedSpell()) {
-                area.append("\n\n").append(Localizer.getInstance().getMessage("lblPrepared")).append(" — ").append(getAlternateStateDesc(card));
+                area.append("\n\n").append(Localizer.getInstance().getMessage("lblPrepared")).append(" — ")
+                        .append(getAlternateStateType(card)).append(" — ").append(getAlternateStateDesc(card));
             }
         }
 
         return area.toString().trim();
+    }
+
+    private static String getAlternateStateType(CardView card) {
+        return formatCardType(card.getAlternateState(), true).replace(" - ", " — ");
     }
 
     protected static String getAlternateStateDesc(CardView card) {

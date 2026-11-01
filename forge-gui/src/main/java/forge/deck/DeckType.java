@@ -54,9 +54,6 @@ public enum DeckType {
                     DeckType.PRECONSTRUCTED_DECK,
                     DeckType.QUEST_OPPONENT_DECK,
                     DeckType.COLOR_DECK,
-                    DeckType.STANDARD_COLOR_DECK,
-                    DeckType.MODERN_COLOR_DECK,
-                    DeckType.PAUPER_COLOR_DECK,
                     DeckType.STANDARD_CARDGEN_DECK,
                     DeckType.MODERN_CARDGEN_DECK,
                     DeckType.PAUPER_CARDGEN_DECK,
@@ -83,9 +80,6 @@ public enum DeckType {
                     DeckType.PRECONSTRUCTED_DECK,
                     DeckType.QUEST_OPPONENT_DECK,
                     DeckType.COLOR_DECK,
-                    DeckType.STANDARD_COLOR_DECK,
-                    DeckType.MODERN_COLOR_DECK,
-                    DeckType.PAUPER_COLOR_DECK,
                     DeckType.THEME_DECK,
                     DeckType.RANDOM_DECK,
                     DeckType.NET_DECK,
@@ -129,6 +123,14 @@ public enum DeckType {
     DeckType(final String value) {
         final Localizer localizer = Localizer.getInstance();
         this.value = localizer.getMessage(value);
+    }
+
+    /** The deck chooser entry for a saved deck type: the format color decks left the menu for the lobby's Format. */
+    public DeckType forDeckChooser() {
+        return switch (this) {
+            case STANDARD_COLOR_DECK, MODERN_COLOR_DECK, PAUPER_COLOR_DECK -> COLOR_DECK;
+            default -> this;
+        };
     }
 
     @Override

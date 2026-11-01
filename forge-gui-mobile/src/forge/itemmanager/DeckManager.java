@@ -93,6 +93,10 @@ public final class DeckManager extends ItemManager<DeckProxy> implements IHasGam
         }
     }
 
+    public GameFormat getRequiredFormat() {
+        return requiredFormat;
+    }
+
     @Override
     public void resetFilters() {
         super.resetFilters();
