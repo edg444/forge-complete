@@ -817,6 +817,9 @@ public class AiController {
 
         for (final SpellAbility sa : ComputerUtilAbility.getOriginalAndAltCostAbilities(possibleCounters, player)) {
             sa.setActivatingPlayer(player);
+            if (StifleCombo.keepsForDreadnought(player, sa)) {
+                continue; // the Stifle is for the Dreadnought's own trigger, not for whatever the opponent does first
+            }
             // check everything necessary
 
             AiPlayDecision opinion = canPlayAndPayFor(sa);
@@ -1952,6 +1955,14 @@ public class AiController {
         }
         final boolean topOwnedByAI = top != null && top.getActivatingPlayer().equals(player);
 
+        if (topOwnedByAI) {
+            // Stiflenought: the AI's own "sacrifice it unless" trigger is answered with Stifle, which nothing else would do
+            final SpellAbility stifle = StifleCombo.stifleOwnTrigger(player, top);
+            if (stifle != null) {
+                return stifle;
+            }
+        }
+
         // Must respond: cases where the AI should respond to its own triggers or other abilities (need to add negative stuff to be countered here)
         boolean mustRespond = false;
         if (top != null) {
@@ -2013,6 +2024,11 @@ public class AiController {
         skipped = saList.stream().filter(SpellAbility::isSkip).collect(Collectors.toList());
         if (!skipped.isEmpty())
             saList.removeAll(skipped);
+        // Stiflenought: the Dreadnought is cast as soon as its Stifle can be paid for as well, without rollouts
+        final SpellAbility sureStifle = StifleCombo.sureCast(player, saList);
+        if (sureStifle != null) {
+            return sureStifle;
+        }
         if (flatMonteCarloActive() && game.getStack().isEmpty()) {
             final SpellAbility sure = deckPlan(player).combos.sureMadnessPlay(player, saList);
             if (sure != null) {
