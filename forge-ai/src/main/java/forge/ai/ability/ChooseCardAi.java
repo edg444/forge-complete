@@ -1,6 +1,5 @@
 package forge.ai.ability;
 
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import forge.ai.*;
 import forge.game.Game;
@@ -50,7 +49,7 @@ public class ChooseCardAi extends SpellAbilityAi {
         if (sa.hasParam("Choices")) {
             choices = CardLists.getValidCards(choices, sa.getParam("Choices"), host.getController(), host, sa);
         }
-        if (sa.hasParam("TargetControls")) {
+        if ("Chooser".equals(sa.getParam("ControlledByPlayer"))) {
             choices = CardLists.filterControlledBy(choices, ai.getOpponents());
         }
         return choices;

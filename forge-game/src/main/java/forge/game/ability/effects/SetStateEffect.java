@@ -28,7 +28,7 @@ public class SetStateEffect extends SpellAbilityEffect {
     protected String getStackDescription(final SpellAbility sa) {
         final Card host = sa.getHostCard();
         final StringBuilder sb = new StringBuilder();
-        boolean specialize = sa.getParam("Mode").equals("Specialize");
+        boolean specialize = "Specialize".equals(sa.getParam("Mode"));
 
         if ("OtherFace".equals(sa.getParam("Mode"))) {
             sb.append("Turn ").append(Lang.joinHomogenous(getTargetCards(sa))).append(" to its other face.");

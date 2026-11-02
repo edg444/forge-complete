@@ -179,6 +179,7 @@ public enum Keyword {
     POISONOUS("Poisonous", KeywordWithAmount.class, false, "Whenever this creature deals combat damage to a player, that player gets {%d:poison counter}."),
     PARTNER_WITH_ITSELF("Partner with itself", SimpleKeyword.class, true, "When this enters, target player may put a card with this name into their hand from their library, then shuffle. A Commander deck can include two of this card, and they can be your commanders."),
     PRECIOUS("Precious", SimpleKeyword.class, true, "You can have two commanders if the other one is a legendary noncreature artifact."),
+    PRISMATIC("Prismatic", SimpleKeyword.class, true, "You may spend mana as though it were mana of any color to cast this spell."),
     PROLIFERATELINK("Proliferatelink", SimpleKeyword.class, true, "Damage dealt by this creature also causes you to proliferate that many times. You proliferate before checking for lethal damage on creatures."),
     PROTECTION("Protection", Protection.class, true, "This creature can't be blocked, targeted, dealt damage, or equipped/enchanted by %s."),
     PROTOTYPE("Prototype", KeywordWithCost.class, false, "You may cast this spell with different mana cost, color, and size. It keeps its abilities and types."),

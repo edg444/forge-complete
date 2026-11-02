@@ -154,6 +154,7 @@ public class Player extends GameEntity implements Comparable<Player> {
 
     private List<Card> discardedThisTurn = new ArrayList<>();
     private List<Card> sacrificedThisTurn = new ArrayList<>();
+    private List<Card> playedLandsThisTurn = new ArrayList<>();
 
     private int simultaneousDamage = 0;
     // The Countering Runner: psychic damage dealt to this player, which doesn't cause loss of life (20 loses the game)
@@ -2319,10 +2320,13 @@ public class Player extends GameEntity implements Comparable<Player> {
 
         Map<AbilityKey, Object> runParams = AbilityKey.mapFromCard(land);
         runParams.put(AbilityKey.Origin, land.getZone().getZoneType().name());
+        // LKI from before the move remembers the zone the land is played from
+        final Card playedLKI = CardCopyService.getLKICopy(land);
 
         game.copyLastState();
         final Card c = game.getAction().moveTo(getZone(ZoneType.Battlefield), land, cause);
         game.updateLastStateForCard(c);
+        playedLandsThisTurn.add(playedLKI);
 
         // Run triggers
         runParams.put(AbilityKey.SpellAbility, cause);
@@ -3050,6 +3054,9 @@ public class Player extends GameEntity implements Comparable<Player> {
     public final int getLandsPlayedThisTurn() {
         return landsPlayedThisTurn;
     }
+    public final List<Card> getPlayedLandsThisTurn() {
+        return playedLandsThisTurn;
+    }
     public final int getLandsPlayedLastTurn() {
         return landsPlayedLastTurn;
     }
@@ -3060,6 +3067,7 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
     public final void resetLandsPlayedThisTurn() {
         landsPlayedThisTurn = 0;
+        playedLandsThisTurn.clear();
         view.updateNumLandThisTurn(this);
     }
     public final void setLandsPlayedThisTurn(int num) {

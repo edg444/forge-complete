@@ -46,7 +46,7 @@ public final class MiscCardAi {
     public static boolean handles(final SpellAbility sa) {
         final String logic = sa.getParamOrDefault("AILogic", "");
         // Juxtapose's WorstCard is the opponent's choice as it resolves; casting it is this
-        if ("WorstCard".equals(logic) && sa.getApi() == ApiType.ChooseCard && sa.usesTargeting() && sa.hasParam("TargetControls")
+        if ("WorstCard".equals(logic) && sa.getApi() == ApiType.ChooseCard && sa.usesTargeting() && "Chooser".equals(sa.getParam("ControlledByPlayer"))
                 && sa.getSubAbility() != null) {
             return true;
         }

@@ -3203,7 +3203,7 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.equals("Split second") || keyword.equals("Just a second") || keyword.equals("Sunburst") || keyword.equals("Riot")
                         || keyword.equals("Soulbond") || keyword.equals("Retrace")
                         || keyword.equals("Double team") || keyword.equals("Living metal")
-                        || keyword.equals("Foretell") // for the ones without cost
+                        || keyword.equals("Foretell") || keyword.equals("Prismatic") // for the ones without cost
                         || keyword.equals("Ascend") || keyword.equals("Umbra armor")
                         || keyword.equals("Battle cry") || keyword.equals("Devoid")
                         || keyword.equals("Daybound") || keyword.equals("Nightbound")
@@ -3907,7 +3907,8 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         || keyword.equals("Devoid") ||  keyword.equals("Lifelink")
                         || keyword.equals("Bargain") || keyword.equals("Spree")
                         || keyword.equals("Tiered") || keyword.equals("Split second")
-                        || keyword.equals("Just a second")) {
+                        || keyword.equals("Just a second")
+                        || keyword.equals("Prismatic")) {
                     sbBefore.append(keyword).append(" (").append(inst.getReminderText()).append(")");
                     sbBefore.append("\r\n\r\n");
                 } else if (keyword.startsWith("Trample:")) {

@@ -1452,7 +1452,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
     public void mainGameLoop() {
         // MAIN GAME LOOP
-        while (!game.isGameOver() && !(game.getAge() == GameStage.RestartedByKarn)) {
+        while (!game.isGameOver() && game.getAge() != GameStage.RestartedByKarn) {
             mainLoopStep();
         }
     }

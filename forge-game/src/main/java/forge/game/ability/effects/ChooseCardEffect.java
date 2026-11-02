@@ -72,9 +72,6 @@ public class ChooseCardEffect extends SpellAbilityEffect {
             choices = CardLists.getValidCards(choices, sa.getParam("Choices"), activator, host, sa);
             choices = StaticAbilityCantBeChosen.filter(new CardCollection(choices));
         }
-        if (sa.hasParam("TargetControls")) {
-            choices = CardLists.filterControlledBy(choices, tgtPlayers);
-        }
         if (sa.hasParam("DefinedCards")) {
             choices = AbilityUtils.getDefinedCards(host, sa.getParam("DefinedCards"), sa);
         }
@@ -96,9 +93,8 @@ public class ChooseCardEffect extends SpellAbilityEffect {
         final int minAmount = sa.hasParam("MinAmount") ? Integer.parseInt(sa.getParam("MinAmount")) : validAmount;
 
         if (validAmount <= 0) {
-            // Choosing nothing must clear any prior choice; otherwise a following
-            // SubAbility (e.g. RepeatEach over ChosenCard) can reuse a stale card
-            // after the last legal choice left the battlefield (Magnetic Mountain et al.).
+            // there could be some linked ability that depends on the last choice while it's impossible to choose another
+            // but for now this is a safeguard for scripts that forget to cleanup
             host.setChosenCards(allChosen);
             return;
         }

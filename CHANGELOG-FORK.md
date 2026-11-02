@@ -478,6 +478,11 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+- **Upstream merge** (20 commits, 17 conflicts, 2026-11-01). Upstream's Prismatic keyword goes into the Alchemy cards with
+  the fork's Oracle wording. `TargetControls$` became `ControlledByPlayer$ Chooser` upstream, so `ChooseCardAi` and
+  `MiscCardAi` read the new param. Phyrexian Dreadnought and Sutured Ghoul take upstream's chosen-card scripting with the
+  fork's wording.
+
 - **Archetype lists force their format; Canadian Highlander color decks** (user request). Picking a Random Modern
   Archetype list sets the lobby's Format to Modern, and likewise for the other archetype lists, for the host and outside
   Limited and format game types such as Commander or Momir. Choosing another format moves archetype slots to that format's
