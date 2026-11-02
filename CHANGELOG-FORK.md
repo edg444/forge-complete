@@ -478,6 +478,8 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-01, twenty-ninth deploy (desktop, Android, GitHub) - random decks follow the Format; archetype lists force theirs; upstream merges
+
 - **Upstream merge** (20 commits, 17 conflicts, 2026-11-01). Upstream's Prismatic keyword goes into the Alchemy cards with
   the fork's Oracle wording. `TargetControls$` became `ControlledByPlayer$ Chooser` upstream, so `ChooseCardAi` and
   `MiscCardAi` read the new param. Phyrexian Dreadnought and Sutured Ghoul take upstream's chosen-card scripting with the
