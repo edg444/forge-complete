@@ -53,6 +53,8 @@ public final class FormatChoices {
         choices.addAll(COMMANDER_GAME_TYPES);
         if (generatedDecks) {
             choices.add(new ListHeading(localizer.getMessage("lblOther")));
+            // digital formats aren't filter choices, but the Random Historic Archetype Decks select this one
+            choices.add(FModel.getFormats().getHistoric());
             choices.addAll(GENERATED_GAME_TYPES);
         }
         return choices;

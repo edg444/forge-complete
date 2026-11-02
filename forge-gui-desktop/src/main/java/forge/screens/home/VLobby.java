@@ -712,6 +712,10 @@ public class VLobby implements ILobbyView {
             fireDeckChangeListener(playerIndex, prepareCommanderPick(playerIndex, deck));
         }
         mainChooser.saveState();
+        if (type.getArchetypeFormat() != null) {
+            // later, since this also runs while the lobby is building its panels
+            FThreads.invokeInEdtLater(() -> lobby.applyFormatOf(mainChooser.getSelectedDeckType()));
+        }
     }
 
     /**
@@ -1304,7 +1308,10 @@ public class VLobby implements ILobbyView {
     private void applyDeckListFormat() {
         final GameFormat format = deckListFormat();
         for (final FDeckChooser chooser : cachedDeckChoosers.values()) {
-            chooser.getLstDecks().setRequiredFormat(format);
+            if (chooser.getLstDecks().getRequiredFormat() != format) {
+                chooser.getLstDecks().setRequiredFormat(format);
+                chooser.followRequiredFormat();
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package forge.deck;
 
+import forge.game.GameFormat;
 import forge.model.FModel;
 import forge.util.Localizer;
 
@@ -131,6 +132,32 @@ public enum DeckType {
             case STANDARD_COLOR_DECK, MODERN_COLOR_DECK, PAUPER_COLOR_DECK -> COLOR_DECK;
             default -> this;
         };
+    }
+
+    /** The format an archetype list builds for, or null for any other deck type. */
+    public GameFormat getArchetypeFormat() {
+        return switch (this) {
+            case STANDARD_CARDGEN_DECK -> FModel.getFormats().getStandard();
+            case PIONEER_CARDGEN_DECK -> FModel.getFormats().getPioneer();
+            case HISTORIC_CARDGEN_DECK -> FModel.getFormats().getHistoric();
+            case MODERN_CARDGEN_DECK -> FModel.getFormats().getModern();
+            case LEGACY_CARDGEN_DECK -> FModel.getFormats().getLegacy();
+            case VINTAGE_CARDGEN_DECK -> FModel.getFormats().get("Vintage");
+            case PAUPER_CARDGEN_DECK -> FModel.getFormats().getPauper();
+            default -> null;
+        };
+    }
+
+    /** What an archetype list of another format becomes under this format: its own list, or color decks if it has none. */
+    public static DeckType archetypeListFor(final GameFormat format) {
+        if (FModel.isdeckGenMatrixLoaded()) {
+            for (final DeckType type : values()) {
+                if (type.getArchetypeFormat() == format) {
+                    return type;
+                }
+            }
+        }
+        return COLOR_DECK;
     }
 
     @Override

@@ -217,7 +217,23 @@ public class FDeckChooser extends JPanel implements IDecksComboBoxListener {
     }
 
     private void updateThemes() {
-        updateDecks(DeckProxy.getAllThemeDecks(), ItemManagerConfig.STRING_ONLY);
+        updateDecks(DeckProxy.getAllThemeDecks(lstDecks.getRequiredFormat()), ItemManagerConfig.STRING_ONLY);
+    }
+
+    /** After the lobby's format changes: an archetype list of another format gives way, and the themes are listed again. */
+    public void followRequiredFormat() {
+        if (selectedDeckType == null) { return; }
+        final GameFormat format = lstDecks.getRequiredFormat();
+        final GameFormat archetypeFormat = selectedDeckType.getArchetypeFormat();
+        if (selectedDeckType == DeckType.THEME_DECK) {
+            if (DeckProxy.getAllThemeDecks(format).isEmpty()) {
+                setSelectedDeckType(DeckType.COLOR_DECK);
+            } else {
+                refreshDecksList(DeckType.THEME_DECK, true, null);
+            }
+        } else if (format != null && archetypeFormat != null && archetypeFormat != format) {
+            setSelectedDeckType(DeckType.archetypeListFor(format));
+        }
     }
 
     private void updatePrecons() {

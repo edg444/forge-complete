@@ -977,7 +977,7 @@ public class FDeckChooser extends FScreen {
             config = ItemManagerConfig.STRING_ONLY;
             break;
         case THEME_DECK:
-            pool = DeckProxy.getAllThemeDecks();
+            pool = DeckProxy.getAllThemeDecks(lstDecks.getRequiredFormat());
             config = ItemManagerConfig.STRING_ONLY;
             break;
         case QUEST_OPPONENT_DECK:
@@ -1201,6 +1201,22 @@ public class FDeckChooser extends FScreen {
     }
 
     public DeckManager getLstDecks() { return lstDecks; }
+
+    /** After the lobby's format changes: an archetype list of another format gives way, and the themes are listed again. */
+    public void followRequiredFormat() {
+        if (selectedDeckType == null) { return; }
+        final GameFormat format = lstDecks.getRequiredFormat();
+        final GameFormat archetypeFormat = selectedDeckType.getArchetypeFormat();
+        if (selectedDeckType == DeckType.THEME_DECK) {
+            if (DeckProxy.getAllThemeDecks(format).isEmpty()) {
+                setSelectedDeckType(DeckType.COLOR_DECK);
+            } else {
+                refreshDecksList(DeckType.THEME_DECK, true, null);
+            }
+        } else if (format != null && archetypeFormat != null && archetypeFormat != format) {
+            setSelectedDeckType(DeckType.archetypeListFor(format));
+        }
+    }
 
     public Deck getDeck() {
         /*if(selectedDeckType.equals(DeckType.STANDARD_CARDGEN_DECK)){

@@ -478,6 +478,23 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+- **Archetype lists force their format; Canadian Highlander color decks** (user request). Picking a Random Modern
+  Archetype list sets the lobby's Format to Modern, and likewise for the other archetype lists, for the host and outside
+  Limited and format game types such as Commander or Momir. Choosing another format moves archetype slots to that format's
+  list, or to Random Color Decks when it has none. Historic joins the lobby's dropdown under Other, since it has an archetype
+  list. Random color decks in Canadian Highlander are 100 singleton cards with none from the points list, so they are always
+  under the cap. Themes have no format of their own, so with a format picked the Theme list shows only themes that always
+  build legally: Vintage 59 of 68, Legacy 55, Modern 1, none in Standard, Pioneer, Pauper, Premodern or Canadian Highlander.
+  A theme slot whose list empties moves to Random Color Decks.
+
+- **Generated deck legality fixes**, found stress-testing 1,446 archetype decks. A restricted key card got a playset, and a
+  filler could pick a restricted card still in the sideboard. Filling a deck's rounding gap could add a second copy of a
+  restricted card to a theme. `addBasicLand` lost lands when each color's share rounded down, leaving a singleton deck at 99.
+
+- **A card lookup no longer falls through to a face of another card** (`CardDb.tryToGetCardFromEditions`). With no print of
+  Sign in Blood after a date, the lookup returned Scheming Silvertongue, whose Prepare face copies it, and art selection
+  swapped the creature into decks. Any deck with a spell that shares its name with such a face was affected, in any mode.
+
 - **Upstream merge** (18 commits, 12 conflicts, 2026-11-01). Upstream's `CounterType$ STUN` spelling goes into eight
   scripts with the fork's wording, Booby Trap gets upstream's `AILogic$` with the fork's wording, and Thelon's Curse takes
   upstream outright. `LifeLoseAi` applies upstream's storm total to the fork's own-side life check too. New upstream:

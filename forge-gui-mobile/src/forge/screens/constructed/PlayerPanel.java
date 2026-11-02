@@ -142,6 +142,7 @@ public class PlayerPanel extends FContainer {
                 if (allowNetworking && btnDeck.isEnabled() && humanAiSwitch.isToggled()) { //if its ready but changed the deck, update it
                     screen.updateMyDeck(index);
                 }
+                screen.applyFormatOfDeckLater(deckChooser);
             }
         });
         lstCommanderDecks = new FDeckChooser(GameType.Commander, isAi, new FEventHandler() {

@@ -589,19 +589,25 @@ public class DeckProxy implements InventoryItem {
 
     private static class ThemeDeckGenerator extends DeckProxy {
         private final String name;
-        public ThemeDeckGenerator(final String name0) {
+        private final GameFormat format;
+        public ThemeDeckGenerator(final String name0, final GameFormat format0) {
             super();
             name = name0;
+            format = format0;
         }
 
         @Override
         public Deck getDeck() {
             final DeckGeneratorTheme gen = new DeckGeneratorTheme(FModel.getMagicDb().getCommonCards());
+            if (format != null) {
+                // a theme's group percentages round down, and filling that gap adds copies of cards already in the deck
+                gen.setRestrictedCards(format.getRestrictedCards());
+            }
             gen.setSingleton(FModel.getPreferences().getPrefBoolean(FPref.DECKGEN_SINGLETONS));
             gen.setUseArtifacts(!FModel.getPreferences().getPrefBoolean(FPref.DECKGEN_ARTIFACTS));
             final Deck deck = new Deck();
             final StringBuilder errorBuilder = new StringBuilder();
-            deck.getMain().addAll(gen.getThemeDeck(this.getName(), 60, errorBuilder));
+            deck.getMain().addAll(gen.getThemeDeck(this.getName(), DeckGeneratorTheme.THEME_DECK_SIZE, errorBuilder));
             deck.optimiseCardArt(null); // follow the Card Art Preference, coherent era and border
             DeckgenUtil.dropTheListPrintings(deck);
             if (errorBuilder.length() > 0) {
@@ -627,9 +633,17 @@ public class DeckProxy implements InventoryItem {
     }
 
     public static List<DeckProxy> getAllThemeDecks() {
+        return getAllThemeDecks(null);
+    }
+
+    /** With a format, only the themes that always build a deck legal in it, as the other deck lists show. */
+    public static List<DeckProxy> getAllThemeDecks(final GameFormat format) {
+        final DeckGeneratorTheme reader = format == null ? null : new DeckGeneratorTheme(FModel.getMagicDb().getCommonCards());
         final List<DeckProxy> decks = new ArrayList<>();
         for (final String s : DeckGeneratorTheme.getThemeNames()) {
-            decks.add(new ThemeDeckGenerator(s));
+            if (format == null || reader.isLegalIn(s, format)) {
+                decks.add(new ThemeDeckGenerator(s, format));
+            }
         }
         return decks;
     }

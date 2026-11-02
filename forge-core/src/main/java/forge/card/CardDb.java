@@ -1168,7 +1168,9 @@ public final class CardDb implements ICardDatabase, IDeckGenPool {
         // Check no-alt cards first. Exact name matches are prioritized more highly than an alt face or half of a split
         // card. That way "Ancestral Recall" won't return Emeritus of Ideation but "Wild Idea" can return Sanar, Unfinished Genius.
         cards = getAllCardsNoAlt(cr.cardName, cardQueryFilter);
-        if(cards.isEmpty())
+        // A card with its own name never falls through to an alt face, however tight the filter: with no print of
+        // Sign in Blood after a date, the Prepare creature whose back face copies it would replace it in the deck.
+        if(cards.isEmpty() && getRules(cr.cardName, false) == null)
             cards = getAllCards(cr.cardName, cardQueryFilter);
 
         if (cards.isEmpty())

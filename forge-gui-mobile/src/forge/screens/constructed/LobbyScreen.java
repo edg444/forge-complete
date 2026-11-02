@@ -286,7 +286,17 @@ public abstract class LobbyScreen extends LaunchScreen implements ILobbyView {
         // Limited mode lists event pools, which the Constructed format does not apply to
         final GameFormat format = lobby.getData().isLimitedMode() ? null : lobby.getFormat();
         for (final PlayerPanel panel : playerPanels) {
-            panel.getDeckChooser().getLstDecks().setRequiredFormat(format);
+            if (panel.getDeckChooser().getLstDecks().getRequiredFormat() != format) {
+                panel.getDeckChooser().getLstDecks().setRequiredFormat(format);
+                panel.getDeckChooser().followRequiredFormat();
+            }
+        }
+    }
+
+    /** Called as a player's deck list changes, which can be while the lobby is building its panels. */
+    void applyFormatOfDeckLater(final FDeckChooser chooser) {
+        if (chooser.getSelectedDeckType().getArchetypeFormat() != null) {
+            FThreads.invokeInEdtLater(() -> lobby.applyFormatOf(chooser.getSelectedDeckType()));
         }
     }
 

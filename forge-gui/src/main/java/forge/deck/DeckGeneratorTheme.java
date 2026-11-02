@@ -19,6 +19,7 @@ package forge.deck;
 
 import forge.deck.generation.DeckGeneratorBase;
 import forge.deck.generation.IDeckGenPool;
+import forge.game.GameFormat;
 import forge.item.PaperCard;
 import forge.localinstance.properties.ForgeConstants;
 import forge.util.FileUtil;
@@ -27,7 +28,9 @@ import forge.util.MyRandom;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -39,6 +42,8 @@ import java.util.stream.Collectors;
  * @version $Id: ThemeDeckGenerator.java 25022 2014-03-02 14:19:50Z teferi $
  */
 public class DeckGeneratorTheme extends DeckGeneratorBase {
+    static final int THEME_DECK_SIZE = 60;
+
     @Override
     protected final float getLandPercentage() {
         return 0.44f;
@@ -187,6 +192,28 @@ public class DeckGeneratorTheme extends DeckGeneratorBase {
         }
 
         return tDeck;
+    }
+
+    /** Whether every deck this theme can build is legal in the format: all its cards at the most copies it allows. */
+    public final boolean isLegalIn(final String themeName, final GameFormat format) {
+        if (format.getDeckRules().minMainDeckSize() > THEME_DECK_SIZE) {
+            return false;
+        }
+        final Map<String, Integer> copies = new HashMap<>();
+        for (final Grp g : readGroups(FileUtil.readFile(ForgeConstants.THEMES_DIR + "/" + themeName + ".thm"))) {
+            for (final String line : g.cardnames) {
+                copies.merge(line.split("\\|")[0], g.maxCnt, Math::max);
+            }
+        }
+        final Deck deck = new Deck();
+        for (final Map.Entry<String, Integer> entry : copies.entrySet()) {
+            final PaperCard card = pool.getCard(entry.getKey());
+            if (card == null) {
+                return false;
+            }
+            deck.getMain().add(card, entry.getValue());
+        }
+        return format.isDeckLegal(deck);
     }
 
     private class Grp {

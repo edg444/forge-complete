@@ -507,6 +507,15 @@ public abstract class DeckGeneratorBase {
 
             landsLeft -= nLand;
         }
+
+        // each color's share rounds on its own, so one land split three ways adds none and shorts a singleton deck
+        if (landsLeft > 0) {
+            final String mostCommon = Collections.max(clrCnts.entrySet(), Entry.comparingByValue()).getKey();
+            cardCounts.merge(mostCommon, landsLeft, Integer::sum);
+            for (int i = 0; i < landsLeft; i++) {
+                tDeck.add(landPool.getCard(mostCommon, edition != null ? edition : basicLandEdition), 1);
+            }
+        }
     }
 
     protected void adjustDeckSize(int targetSize) {

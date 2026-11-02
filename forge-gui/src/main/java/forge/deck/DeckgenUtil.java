@@ -322,7 +322,9 @@ public class DeckgenUtil {
         //Add keycard
         List<PaperCard> playsetList = new ArrayList<>();
         int keyCardCount=4;
-        if(card.getRules().getMainPart().getManaCost().getCMC()>7){
+        if(format.getRestrictedCards().contains(card.getName())){
+            keyCardCount=1;
+        }else if(card.getRules().getMainPart().getManaCost().getCMC()>7){
             keyCardCount=1+MyRandom.getRandom().nextInt(4);
         }else if(card.getRules().getMainPart().getManaCost().getCMC()>5){
             keyCardCount=2+MyRandom.getRandom().nextInt(3);
@@ -332,9 +334,11 @@ public class DeckgenUtil {
         }
         List<String> restrictedCardsAdded = new ArrayList<>();
         for (PaperCard c:selectedCards){
-            if (format.getRestrictedCards().contains(c.getName())&&!restrictedCardsAdded.contains(c.getName())){
-                playsetList.add(c);
-                restrictedCardsAdded.add(c.getName());
+            if (format.getRestrictedCards().contains(c.getName())){
+                if (!restrictedCardsAdded.contains(c.getName())){
+                    playsetList.add(c);
+                    restrictedCardsAdded.add(c.getName());
+                }
                 continue;
             }
             for(int j=0;j<4;++j) {
@@ -358,6 +362,17 @@ public class DeckgenUtil {
         }
         // spells of a colour the lands cannot make are dead cards (and a fetch land with nothing to find is a tapped land)
         DeckManaBase.fix(deck);
+        // a filler can pick a restricted card still waiting in the sideboard, and the limit counts both
+        for(String restricted : format.getRestrictedCards()){
+            if(deck.getMain().countByName(restricted)>0){
+                final CardPool side = deck.get(DeckSection.Sideboard);
+                for(PaperCard c : side.toFlatList()){
+                    if(c.getName().equals(restricted)){
+                        side.remove(c);
+                    }
+                }
+            }
+        }
         while(deck.get(DeckSection.Sideboard).countAll()>15){
             deck.get(DeckSection.Sideboard).remove(deck.get(DeckSection.Sideboard).get(0));
         }
@@ -372,17 +387,15 @@ public class DeckgenUtil {
      * @return {@link forge.deck.Deck}
      */
     public static Deck buildColorDeck(List<String> selection, Predicate<PaperCard> formatFilter, boolean forAi) {
-        return buildColorDeck(selection, formatFilter, List.of(), forAi);
+        return buildColorDeck(selection, formatFilter, null, forAi);
     }
 
-    /** A color deck legal in the format, which may be null: only its cards, and one copy of each it restricts. */
+    /** A color deck legal in the format, which may be null: only its cards, within its deck rules. */
     public static Deck buildFormatColorDeck(List<String> selection, GameFormat format, boolean forAi) {
-        return format == null
-                ? buildColorDeck(selection, null, forAi)
-                : buildColorDeck(selection, format.getFilterPrinted(), format.getRestrictedCards(), forAi);
+        return buildColorDeck(selection, format == null ? null : format.getFilterPrinted(), format, forAi);
     }
 
-    private static Deck buildColorDeck(List<String> selection, Predicate<PaperCard> formatFilter, List<String> restrictedCards, boolean forAi) {
+    private static Deck buildColorDeck(List<String> selection, Predicate<PaperCard> formatFilter, GameFormat format, boolean forAi) {
         try {
             final Deck deck;
             String deckName = null;
@@ -416,10 +429,22 @@ public class DeckgenUtil {
                 }
             }
             gen.setSingleton(FModel.getPreferences().getPrefBoolean(FPref.DECKGEN_SINGLETONS));
-            gen.setRestrictedCards(restrictedCards);
             gen.setUseArtifacts(!FModel.getPreferences().getPrefBoolean(FPref.DECKGEN_ARTIFACTS));
             applyPrintingPreferences(gen);
-            final CardPool cards = gen.getDeck(60, forAi);
+            int size = 60;
+            if (format != null) {
+                final GameFormat.DeckRules rules = format.getDeckRules();
+                gen.setRestrictedCards(format.getRestrictedCards());
+                if (rules.singleton()) {
+                    gen.setSingleton(true);
+                }
+                // the generator can't budget points, so a deck with none is always under the cap
+                if (!rules.cardPoints().isEmpty()) {
+                    gen.excludeCards(c -> rules.cardPoints().containsKey(cardDb.getNormalizedName(c.getName())));
+                }
+                size = Math.max(size, rules.minMainDeckSize());
+            }
+            final CardPool cards = gen.getDeck(size, forAi);
 
             if (null == deckName) {
                 deckName = Lang.joinHomogenous(List.of(selection));
@@ -436,7 +461,7 @@ public class DeckgenUtil {
         catch (Exception e) {
             e.printStackTrace();
         }
-        return buildColorDeck(selection, formatFilter, restrictedCards, forAi); //try again if previous color deck couldn't be generated
+        return buildColorDeck(selection, formatFilter, format, forAi); //try again if previous color deck couldn't be generated
     }
 
     public static QuestEvent getQuestEvent(final String name) {
