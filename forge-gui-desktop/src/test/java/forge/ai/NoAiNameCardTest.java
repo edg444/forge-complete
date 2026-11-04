@@ -36,6 +36,9 @@ public class NoAiNameCardTest extends AITest {
         game.getPhaseHandler().devModeSet(PhaseType.MAIN1, ai);
         AssertJUnit.assertNotSame(AiPlayDecision.WillPlay, decide(ai, sa));
 
+        // upstream's NamedDiscard casts it blind from the hand only against two or more cards
+        addCardToZone("Lightning Bolt", opp, ZoneType.Hand);
+        AssertJUnit.assertNotSame(AiPlayDecision.WillPlay, decide(ai, sa));
         addCardToZone("Lightning Bolt", opp, ZoneType.Hand);
         AssertJUnit.assertEquals(AiPlayDecision.WillPlay, decide(ai, sa));
         AssertJUnit.assertEquals("Lightning Bolt",

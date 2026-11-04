@@ -245,8 +245,9 @@ public class FlatMonteCarloStandardScenarioTest extends AITest {
     // ------------------------------------------------------------------------------------ RemoveDeck
 
     /**
-     * Springleaf Drum is AI:RemoveDeck:All: the heuristics never approve it, and Flat MC is offered it as a play of its
-     * own. With mana to spare and nothing else to do the rollouts must take it (a permanent that makes mana).
+     * Upstream marks Springleaf Drum AI:RemoveDeck:All, so only Flat MC is offered it; the fork's no-AI pass gave it AI,
+     * so it is an ordinary play here. With mana to spare and nothing else to do it must still be cast (a permanent that
+     * makes mana).
      */
     @Test(timeOut = LONG_TIMEOUT_MS)
     public void springleafDrumIsOfferedToFlatMcAndCastWithSpareMana() {
@@ -264,7 +265,7 @@ public class FlatMonteCarloStandardScenarioTest extends AITest {
         if (!brainOf(ai).flatMonteCarloActive()) {
             return; // the profile of the test run has Flat MC off: nothing to show
         }
-        AssertJUnit.assertTrue("only Flat MC may play it", brainOf(ai).isFlatMcOnlyPlay(cast));
+        AssertJUnit.assertFalse("the heuristics may play it too", brainOf(ai).isFlatMcOnlyPlay(cast));
 
         playFirstMain(game, ai);
 

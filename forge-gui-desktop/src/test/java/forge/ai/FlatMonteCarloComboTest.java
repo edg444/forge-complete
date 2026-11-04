@@ -577,9 +577,11 @@ public class FlatMonteCarloComboTest extends AITest {
         final Player p = deal(game, MYSTIC_FORGE);
         final DeckPlan plan = DeckPlan.forSetting("auto", p);
         AssertJUnit.assertTrue(plan.combos.summary(), plan.combos.has(ComboPlan.Kind.ARTIFACT_ENGINE));
-        // Manifold Key is marked "the heuristic AI can't play this": as a piece of the combo Flat MC may still try it
+        // upstream marks Manifold Key AI:RemoveDeck:All and expects the combo to override that; the fork's no-AI pass
+        // gave it AI and no other piece of this list is still marked, so there is nothing left to override
         final Card key = addCardToZone("Manifold Key", p, ZoneType.Hand);
-        AssertJUnit.assertTrue(plan.combos.overridesRemAi(key));
+        AssertJUnit.assertFalse(ComputerUtilCard.isCardRemAIDeck(key));
+        AssertJUnit.assertFalse(plan.combos.overridesRemAi(key));
     }
 
     @Test

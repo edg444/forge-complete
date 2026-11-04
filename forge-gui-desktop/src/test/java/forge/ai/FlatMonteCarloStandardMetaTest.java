@@ -153,15 +153,15 @@ public class FlatMonteCarloStandardMetaTest extends AITest {
     }
 
     /**
-     * Cards of the Standard metagame marked for the heuristic AI to leave out: Springleaf Drum is {@code AI:RemoveDeck:All}
-     * (the Momo decks), so it is only ever played through Flat MC's own discovery, never by the heuristics; Demolition
+     * Cards of the Standard metagame marked for the heuristic AI to leave out. Upstream marks Springleaf Drum
+     * {@code AI:RemoveDeck:All} (the Momo decks); the fork's no-AI pass gave it AI, so it stays unmarked here. Demolition
      * Field, Flamebraider, Doorkeeper Thrull, Lunar Convocation and Omniscience are {@code AI:RemoveDeck:Random}, which
      * only drops them from AI built decks. Omniscience stays a piece of the free cast combo, so it is always on offer.
      */
     @Test
     public void theRemoveDeckCardsOfTheMetaAreStillMarked() {
         final Player p = deal(KONA_OMNISCIENCE);
-        AssertJUnit.assertTrue(ComputerUtilCard.isCardRemAIDeck(addCardToZone("Springleaf Drum", p, ZoneType.Hand)));
+        AssertJUnit.assertFalse(ComputerUtilCard.isCardRemAIDeck(addCardToZone("Springleaf Drum", p, ZoneType.Hand)));
         for (final String name : new String[] { "Demolition Field", "Flamebraider", "Doorkeeper Thrull",
                 "Lunar Convocation", "Omniscience" }) {
             AssertJUnit.assertTrue(name, ComputerUtilCard.isCardRemRandomDeck(addCardToZone(name, p, ZoneType.Hand)));

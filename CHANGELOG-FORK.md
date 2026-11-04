@@ -478,6 +478,16 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-04, thirtieth deploy (desktop, Android, GitHub) - upstream merge
+
+- **Upstream merge** (19 commits, 6 conflicts, 2026-11-04). Cabal Therapy takes upstream's new `AILogic$ NamedDiscard`
+  (it casts blind from the hand only against two or more cards); Descendants' Path takes upstream's bottom-of-library
+  line and keeps the fork's as-printed trigger. `ChooseCardNameAi` keeps StandardProcedure next to NamedDiscard;
+  `ChooseCardNameEffect` keeps AddToFavorites and adds upstream's "names X" log line. `PhaseHandler` takes upstream's
+  CR 800.4a priority handoff for a player who left and keeps the Table link and Judge checkpoints. The AI sideboard
+  check keeps the fork's team-aware `isWinner` with upstream's null guard. Three upstream Flat MC tests expected
+  Manifold Key and Springleaf Drum to be `AI:RemoveDeck:All`; the fork gave both AI, so they assert that instead.
+
 ### 2026-11-01, twenty-ninth deploy (desktop, Android, GitHub) - random decks follow the Format; archetype lists force theirs; upstream merges
 
 - **Upstream merge** (20 commits, 17 conflicts, 2026-11-01). Upstream's Prismatic keyword goes into the Alchemy cards with
