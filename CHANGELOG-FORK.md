@@ -478,6 +478,16 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-04, thirty-first deploy (desktop, Android, GitHub) - Flat MC speed caps; upstream merge
+
+- **Upstream merge** (7 commits, 7 conflicts, 2026-11-04). Upstream now saves the lobby's variants and format in one
+  preference, `UI_LOBBY_SETUP`, by enum name, so the fork's own variants are covered and its `UI_APPLIED_VARIANTS`
+  name list (`AbstractPreferences.getGameType`) is gone. The mobile Format list still asks for the Dandan deck and the
+  Judge Tower after upstream's `applyFormatChoice`. `GameLobby` keeps `applyFormatOf` next to `saveSetup`/`restoreSetup`.
+  `PhaseHandler.isPlayerTurn` keeps the fork's team and switched-upkeep turn with upstream's null guard; upstream's
+  `is(phase, player)` now goes through it. New upstream: archived formats and Historic in the Format dropdowns,
+  `isPlayerNextTurn`.
+
 - **Flat Monte Carlo AI sped up** (user report: a modest board made a 1v1 crawl). Profiling showed upstream's Flat MC
   rollouts took about 78% of the game loop, mostly copying the whole game per rollout, and its land-choice pass ran on
   every land drop without once changing the land. `FlatMcSpeedCaps` (fork-only, kept out of upstream's file) turns

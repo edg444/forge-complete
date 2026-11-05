@@ -68,7 +68,7 @@ public class ForgePreferences extends AbstractPreferences<ForgePreferences.FPref
         // the Tower for Judge Tower games by its deck name (forge.gamemodes.match.JudgeTowerDecks), and its house rules
         JUDGE_TOWER_DECK(""),
         JUDGE_TOWER_RULES(""),
-        UI_APPLIED_VARIANTS(""),
+        UI_LOBBY_SETUP(""),
         UI_RANDOM_FOIL ("false"),
         UI_AVATARS ("0,1"),
         UI_SLEEVES ("0,1"),

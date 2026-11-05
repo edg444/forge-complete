@@ -174,6 +174,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
     /** CR 805.4: on a Two-Headed Giant team it's every teammate's turn too. */
     public final boolean isPlayerTurn(final Player player) {
+        if (player == null) {
+            return false;
+        }
         // a switched upkeep's player is active, but it's still the other player's turn (Chronobot's rulings)
         final Player turnPlayer = upkeepSwitched ? phaseStolenFrom : playerTurn;
         return player.equals(turnPlayer) || (turnPlayer != null && turnPlayer.sharesTurnWith(player));
@@ -207,6 +210,11 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         playerTurn = playerTurn0;
         game.updatePlayerTurnForView();
         resetPriority();
+    }
+
+    /** True if the next turn is this player's, or under shared team turns their team's (CR 805.4). */
+    public final boolean isPlayerNextTurn(final Player player) {
+        return getNextTurn().equals(player);
     }
 
     public final Player getPreviousPlayerTurn() {
@@ -1304,7 +1312,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     }
 
     public final synchronized boolean is(final PhaseType phase0, final Player player0) {
-        return phase == phase0 && playerTurn.equals(player0);
+        return phase == phase0 && isPlayerTurn(player0);
     }
     public final synchronized boolean is(final PhaseType phase0) {
         return phase == phase0;
