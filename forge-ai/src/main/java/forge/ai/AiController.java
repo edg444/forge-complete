@@ -2261,9 +2261,9 @@ public class AiController {
         }
         final FlatMonteCarloPicker.Config cfg = FlatMonteCarloPicker.Config.fromProfile(this, player);
         if (flatMcMaxOverride != null ? flatMcMaxOverride : game.getAIFlatMonteCarloMax()) {
-            cfg.maximized();
+            forge.ai.simulation.FlatMcSpeedCaps.apply(cfg.maximized(), false);
         } else if (game.getAIFlatMonteCarloLite()) {
-            cfg.mobileLite();
+            forge.ai.simulation.FlatMcSpeedCaps.apply(cfg.mobileLite(), true);
         }
         if (flatMcSlowTrips > 0) {
             // Back after a pause for slowness: a smaller search, and no look at the opponent's turn, which costs most.

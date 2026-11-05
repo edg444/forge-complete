@@ -478,6 +478,24 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+- **Flat Monte Carlo AI sped up** (user report: a modest board made a 1v1 crawl). Profiling showed upstream's Flat MC
+  rollouts took about 78% of the game loop, mostly copying the whole game per rollout, and its land-choice pass ran on
+  every land drop without once changing the land. `FlatMcSpeedCaps` (fork-only, kept out of upstream's file) turns
+  land choice off and caps the search: phone 250 ms per decision and 1 s per turn with no look at the opponent's turn;
+  desktop 750 ms and 3 s. Seeded sim, Ajani vs Chandra, 4 games: phone settings 68.5 s to 28.3 s, desktop settings
+  121.7 s to 80.1 s. `-Dflatmc.nocaps=true` runs upstream's settings for comparison, and `sim -mc lite` runs the phone
+  settings on desktop.
+
+- **All-Star Kicker no longer shows plain Kicker** next to Assist kicker. The script carries `K:Kicker` for the cost, so
+  the card text skips the Kicker line on cards with an `AssistKicker` SVar.
+
+- **Immortal Obligation**: "can't block creatures you control" no longer appears on every creature its caster controls,
+  only the duty creature carries the paragraph. The card is kept out of random non-Commander AI decks
+  (`AI:RemoveDeck:NonCommander`), since in a two-player game it only hands the opponent back a creature.
+
+- **Stack drop-down always opens at the right edge** in landscape on Android. It was placed under its menu tab, whose
+  screen position is unknown until the tab is drawn, so a stack that opened on its own early sat at the left edge.
+
 ### 2026-11-04, thirtieth deploy (desktop, Android, GitHub) - upstream merge
 
 - **Upstream merge** (19 commits, 6 conflicts, 2026-11-04). Cabal Therapy takes upstream's new `AILogic$ NamedDiscard`

@@ -255,7 +255,7 @@ public class FlatMcCircuitBreakerTest extends FlatMcTestBase {
         game.AI_FLAT_MONTE_CARLO_LITE = true;
         final FlatMonteCarloPicker.Config c = config();
         assertEquals(c.lookaheadMaxCandidates, 3 /* MOBILE_LOOKAHEAD_MAX_CANDIDATES */);
-        assertTrue(c.opponentLookaheadPercent >= 35 /* LOOKAHEAD_PERCENT_MOBILE */);
+        assertEquals(c.opponentLookaheadPercent, 0, "the fork's phone cap (FlatMcSpeedCaps) skips the opponent's turn");
         assertTrue(c.maxCandidates >= 5 /* MAX_CANDIDATES_MOBILE */);
         assertTrue(c.pruning);
     }

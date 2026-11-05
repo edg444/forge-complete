@@ -3171,7 +3171,10 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                                 ? ", or " : n + 2 == costs.length ? " or " : ", ");
                     }
                 } else if (keyword.startsWith("Kicker")) {
-                    sbLong.append(kickerDesc(keyword, inst.getReminderText())).append("\r\n");
+                    // All-Star Kicker: its Text: line prints "Assist kicker"; the Kicker keyword is only the engine's hook
+                    if (!hasSVar("AssistKicker")) {
+                        sbLong.append(kickerDesc(keyword, inst.getReminderText())).append("\r\n");
+                    }
                 } else if (keyword.startsWith("Trample:")) {
                     sbLong.append(inst.getTitle()).append(" (").append(inst.getReminderText()).append(")").append("\r\n");
                 } else if (keyword.startsWith("Hexproof:")) {
@@ -3779,6 +3782,11 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                         if (!stAb.hasParam("ValidAttacker") || (stAb.hasParam("ValidBlocker") && stAb.getParam("ValidBlocker").equals("Creature.Self"))) {
                             continue;
                         }
+                        // Immortal Obligation: "can't block creatures you control" is part of a paragraph about the
+                        // creature with the duty counter, so it doesn't belong on every creature its caster controls
+                        if (stAb.isSecondary() && stAb.getParamOrDefault("ValidBlocker", "").contains("IsRemembered")) {
+                            continue;
+                        }
                         if (stAb.matchesValidParam("ValidAttacker", this)) {
                             found = true;
                         }
@@ -3942,7 +3950,9 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
                     final Cost cost = new Cost(n[1], false);
                     sbBefore.append("Multikicker ").append(cost.toSimpleString()).append(" (").append(inst.getReminderText()).append(")").append("\r\n");
                 } else if (keyword.startsWith("Kicker")) {
-                    sbBefore.append(kickerDesc(keyword, inst.getReminderText())).append("\r\n");
+                    if (!hasSVar("AssistKicker")) { // see the sbLong case above
+                        sbBefore.append(kickerDesc(keyword, inst.getReminderText())).append("\r\n");
+                    }
                 } else if (keyword.startsWith("AlternateAdditionalCost")) {
                     final String[] costs = keyword.split(":", 2)[1].split(":");
                     sbBefore.append("As an additional cost to cast this spell, ");

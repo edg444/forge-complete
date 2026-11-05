@@ -275,6 +275,10 @@ public class VStack extends FDropDown {
                 if (getHeight() > limit) {
                     setBounds(getLeft(), getTop(), getWidth(), limit);
                 }
+                // the drop down starts at its Stack tab's screen position, which is only known once the tab has been
+                // drawn: a stack that opened on its own before that (or while the tab is hidden) sat at the left edge
+                final Rectangle boundary = Forge.getCurrentScreen().getDropDownBoundary();
+                setBounds(Math.round(boundary.x + boundary.width - getWidth()), getTop(), getWidth(), getHeight());
             }
             if (slides()) { //shift what the drop down placed by how far it has slid in
                 compactRestX = getLeft();

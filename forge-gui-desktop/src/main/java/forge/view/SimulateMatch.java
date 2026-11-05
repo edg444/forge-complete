@@ -46,6 +46,7 @@ public class SimulateMatch {
     /** Set by -mc: null leaves the game default (off, as the GUI's preference is only applied by HostedMatch). */
     private static Boolean flatMonteCarlo = null;
     private static Boolean flatMonteCarloMax = null;
+    private static Boolean flatMonteCarloLite = null;
 
     public static void simulate(String[] args) {
         FModel.initialize(null, null);
@@ -103,6 +104,7 @@ public class SimulateMatch {
         // simulation always runs the plain heuristic AI, whatever the preference says.
         flatMonteCarlo = null;
         flatMonteCarloMax = null;
+        flatMonteCarloLite = null;
         if (params.containsKey("mc")) {
             final List<String> mcValues = params.get("mc");
             final String mcValue = mcValues.isEmpty() ? "on" : mcValues.get(0);
@@ -111,10 +113,13 @@ public class SimulateMatch {
             } else if ("max".equalsIgnoreCase(mcValue)) {
                 flatMonteCarlo = Boolean.TRUE;
                 flatMonteCarloMax = Boolean.TRUE; // the strength a desktop match gets automatically
+            } else if ("lite".equalsIgnoreCase(mcValue)) {
+                flatMonteCarlo = Boolean.TRUE;
+                flatMonteCarloLite = Boolean.TRUE; // the strength a phone match gets automatically
             } else if ("off".equalsIgnoreCase(mcValue) || "false".equalsIgnoreCase(mcValue)) {
                 flatMonteCarlo = Boolean.FALSE;
             } else {
-                System.out.println("Unknown value for -mc (use on, max or off): " + mcValue);
+                System.out.println("Unknown value for -mc (use on, max, lite or off): " + mcValue);
                 return;
             }
         }
@@ -272,7 +277,7 @@ public class SimulateMatch {
         System.out.println("\tT - team number per player, in the same order as the decks (e.g. -T 1 1 2 2 with -f TwoHeadedGiant). With -f Archenemy the first deck is the archenemy. With -f FaceTheHydra, BattleTheHorde or DefeatAGod every deck is a hero against the challenge deck");
         System.out.println("\tA - AI profile per player, in the same order as the decks (e.g. -a Default Experimental)");
         System.out.println("\tc - Clock flag. Set the maximum time in seconds before calling the match a draw, defaults to 120.");
-        System.out.println("\tmc - Flat Monte Carlo AI refinement for this run, on, max or off (default off in simulations; max = desktop strength). Prints timing statistics at the end when on.");
+        System.out.println("\tmc - Flat Monte Carlo AI refinement for this run, on, max, lite or off (default off in simulations; max = desktop strength, lite = phone strength). Prints timing statistics at the end when on.");
         System.out.println("\tq - Quiet flag. Output just the game result, not the entire game log.");
     }
 
@@ -285,6 +290,7 @@ public class SimulateMatch {
         if (flatMonteCarlo != null) {
             g1.AI_FLAT_MONTE_CARLO = flatMonteCarlo;
             g1.AI_FLAT_MONTE_CARLO_MAX = Boolean.TRUE.equals(flatMonteCarloMax);
+            g1.AI_FLAT_MONTE_CARLO_LITE = Boolean.TRUE.equals(flatMonteCarloLite);
         }
         // will run match in the same thread
         try {
