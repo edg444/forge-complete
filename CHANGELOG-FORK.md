@@ -478,6 +478,14 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-06, thirty-third deploy (desktop, Android, GitHub) - replay tap crash on Android
+
+- **Watching a replay of an AI-vs-AI game on Android no longer crashes on the first tap.** Such a replay has no local
+  players, so the match screen took the "no humans: a tap pauses the game" path and called `pause()` on a hosted match
+  that a replay doesn't have (it is null after a fresh start). The tap now pauses only a live hosted match. Found from
+  the phone's logcat: `NullPointerException` in `MatchController`'s touch listener on the GL thread, which looked like a
+  freeze before Android closed the app.
+
 ### 2026-11-06, thirty-second deploy (desktop, Android, GitHub) - upstream merge
 
 - **Upstream merge** (17 commits, 21 conflicts, 2026-11-06). Upstream #12604 builds each trigger's triggering objects

@@ -283,7 +283,8 @@ public class MatchController extends NetworkGuiGame {
 
                 @Override
                 public void buildTouchListeners(final float screenX, final float screenY, final List<FDisplayObject> listeners) {
-                    if (screenY < view.getHeight() - VPrompt.HEIGHT) {
+                    // A replay of an AI-vs-AI game has no local players either, but no hosted match to pause
+                    if (screenY < view.getHeight() - VPrompt.HEIGHT && !isReplay() && hostedMatch != null) {
                         hostedMatch.pause();
                     }
                 }
