@@ -191,8 +191,12 @@ public final class AiCardLists {
         if (cardName == null) {
             return false;
         }
+        // asked for every flagged card each time a deck list is filtered or a random deck built: normalize once
+        final String key = normalize(cardName);
+        final Map<Role, Set<String>> roles = data().roles;
         for (final Role role : Role.values()) {
-            if (role != Role.ANTI_COMBO_SEEN && has(role, cardName)) {
+            final Set<String> names = roles.get(role);
+            if (role != Role.ANTI_COMBO_SEEN && names != null && names.contains(key)) {
                 return true;
             }
         }
@@ -253,8 +257,39 @@ public final class AiCardLists {
 
     /** Lower case, no accents, single spaces: "Éomer,  Marshal" and "eomer, marshal" are the same card. */
     public static String normalize(final String name) {
-        final String plain = Normalizer.normalize(name.trim(), Normalizer.Form.NFD).replaceAll("\\p{M}+", "");
-        return plain.toLowerCase(Locale.ROOT).replaceAll("\\s+", " ");
+        // Same result as replaceAll("\\p{M}+", "") then replaceAll("\\s+", " "), without regular expressions: Android
+        // compiles every replaceAll pattern natively, and this runs for each card a random deck or deck list looks at,
+        // which froze the phone's screen for a minute and more (2026-11-06)
+        String s = name.trim();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) >= 0x80) {
+                s = Normalizer.normalize(s, Normalizer.Form.NFD);
+                break;
+            }
+        }
+        final StringBuilder sb = new StringBuilder(s.length());
+        boolean space = false;
+        for (int i = 0; i < s.length(); i++) {
+            final char ch = s.charAt(i);
+            if (ch == ' ' || ch == '\t' || ch == '\n' || ch == 0x0B || ch == '\f' || ch == '\r') {
+                space = true;
+                continue;
+            }
+            final int type = Character.getType(ch);
+            if (type == Character.NON_SPACING_MARK || type == Character.ENCLOSING_MARK
+                    || type == Character.COMBINING_SPACING_MARK) {
+                continue;
+            }
+            if (space) {
+                sb.append(' ');
+                space = false;
+            }
+            sb.append(ch);
+        }
+        if (space) {
+            sb.append(' ');
+        }
+        return sb.toString().toLowerCase(Locale.ROOT);
     }
 
     // ---------------------------------------------------------------------------------------------- the reading
