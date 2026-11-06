@@ -98,8 +98,16 @@ public class Main extends AndroidApplication {
     private TextView progressText;
     private String versionString;
     private Handler heapHeartbeatHandler;
+    private boolean exitReasonsLogged;
     private final Runnable heapHeartbeat = new Runnable() {
         @Override public void run() {
+            if (!exitReasonsLogged) {
+                // the first heartbeat comes after the log file is open: logged from onCreate, it would reach logcat only
+                exitReasonsLogged = true;
+                logLastExits();
+                startStallWatchdog();
+            }
+            mainThreadAnsweredAt = System.currentTimeMillis();
             Runtime r = Runtime.getRuntime();
             long total = r.totalMemory(), free = r.freeMemory(), max = r.maxMemory();
             netLog.info("[heap] used={}MB free={}MB total={}MB max={}MB",
@@ -109,6 +117,196 @@ public class Main extends AndroidApplication {
             }
         }
     };
+
+    /**
+     * Logs why Android ended the app's last runs. A low-memory kill, an ANR closed from the system dialog or a native
+     * crash ends the process without a Java exception, so forge.log just stops; only the system knows the cause. The
+     * system's ANR or native-crash trace of the newest such exit goes to last-exit-trace.txt next to forge.log.
+     */
+    private void logLastExits() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            return;
+        }
+        try {
+            ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            java.util.List<android.app.ApplicationExitInfo> exits = am.getHistoricalProcessExitReasons(getPackageName(), 0, 5);
+            boolean traceSaved = false;
+            for (android.app.ApplicationExitInfo e : exits) {
+                netLog.info("[exit] {} reason={} status={} importance={} pss={}MB rss={}MB desc={}",
+                        new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.US).format(new Date(e.getTimestamp())),
+                        exitReasonName(e.getReason()), e.getStatus(), e.getImportance(),
+                        e.getPss() >> 10, e.getRss() >> 10, e.getDescription());
+                if (!traceSaved) {
+                    try (InputStream trace = e.getTraceInputStream()) {
+                        if (trace != null) {
+                            File out = new File(forge.localinstance.properties.ForgeConstants.USER_DIR, "last-exit-trace.txt");
+                            try (OutputStream os = new FileOutputStream(out)) {
+                                byte[] buf = new byte[8192];
+                                for (int n; (n = trace.read(buf)) > 0; ) {
+                                    os.write(buf, 0, n);
+                                }
+                            }
+                            traceSaved = true;
+                            netLog.info("[exit] trace saved to {}", out.getPath());
+                        }
+                    } catch (IOException | RuntimeException ignore) {}
+                }
+            }
+        } catch (RuntimeException e) {
+            netLog.warn("[exit] exit reasons unavailable: {}", e.toString());
+        }
+    }
+
+    private static final long STALL_MS = 5_000L;
+    private static final long STALL_REDUMP_MS = 15_000L;
+    private volatile long mainThreadAnsweredAt = System.currentTimeMillis();
+    private volatile long glPingSentAt, glAnsweredAt;
+    // a paused app's render thread is stopped on purpose
+    private volatile boolean backgrounded;
+    private Thread stallWatchdog;
+
+    /**
+     * Writes the stacks of the busy threads to forge.log while the render (GL) thread or Android's main thread stops
+     * answering for more than five seconds, and again every fifteen while it lasts. A freeze on the phone otherwise
+     * leaves no trace in the log, and the desktop build does not reproduce the phone's freezes.
+     */
+    private void startStallWatchdog() {
+        if (stallWatchdog != null) {
+            return;
+        }
+        stallWatchdog = new Thread(() -> {
+            long glStalledSince = 0, mainStalledSince = 0, glDumpedAt = 0, mainDumpedAt = 0;
+            while (!Thread.currentThread().isInterrupted()) {
+                try {
+                    Thread.sleep(1_000L);
+                } catch (InterruptedException e) {
+                    return;
+                }
+                final long now = System.currentTimeMillis();
+                if (backgrounded) {
+                    glStalledSince = 0;
+                } else if (Gdx.app != null && glAnsweredAt >= glPingSentAt) {
+                    if (glStalledSince != 0) {
+                        netLog.warn("[stall] render thread answered again after {} ms", now - glStalledSince);
+                        glStalledSince = 0;
+                    }
+                    glPingSentAt = now;
+                    Gdx.app.postRunnable(() -> glAnsweredAt = System.currentTimeMillis());
+                } else if (Gdx.app != null && now - glPingSentAt > STALL_MS) {
+                    if (glStalledSince == 0) {
+                        glStalledSince = glPingSentAt;
+                        glDumpedAt = 0;
+                    }
+                    if (now - glDumpedAt > STALL_REDUMP_MS) {
+                        glDumpedAt = now;
+                        dumpThreads("render thread silent for " + (now - glStalledSince) + " ms");
+                    }
+                }
+                if (now - gameSnapshotAt > STALL_REDUMP_MS) {
+                    gameSnapshotAt = now;
+                    logBusyGameThreads();
+                }
+                // the heap heartbeat stamps mainThreadAnsweredAt every 30 s, so a main-thread stall shows up late but surely
+                final long mainSilent = now - mainThreadAnsweredAt;
+                if (mainSilent > HEAP_HEARTBEAT_MS + STALL_MS) {
+                    if (mainStalledSince == 0) {
+                        mainStalledSince = mainThreadAnsweredAt;
+                        mainDumpedAt = 0;
+                    }
+                    if (now - mainDumpedAt > STALL_REDUMP_MS) {
+                        mainDumpedAt = now;
+                        dumpThreads("Android main thread silent for " + mainSilent + " ms");
+                    }
+                } else if (mainStalledSince != 0) {
+                    netLog.warn("[stall] Android main thread answered again");
+                    mainStalledSince = 0;
+                }
+            }
+        }, "Forge stall watchdog");
+        stallWatchdog.setDaemon(true);
+        stallWatchdog.start();
+    }
+
+    private long gameSnapshotAt;
+
+    /**
+     * Where the running game and background threads are, in a few frames each. A match can hang while the screen keeps
+     * drawing (the AI thinking, a deck being built), which the render-thread check cannot see.
+     */
+    private static void logBusyGameThreads() {
+        try {
+            StringBuilder sb = null;
+            for (java.util.Map.Entry<Thread, StackTraceElement[]> e : Thread.getAllStackTraces().entrySet()) {
+                Thread t = e.getKey();
+                StackTraceElement[] st = e.getValue();
+                if (!t.getName().startsWith("Game") || t.getState() != Thread.State.RUNNABLE || st.length == 0) {
+                    continue;
+                }
+                if (sb == null) {
+                    Runtime r = Runtime.getRuntime();
+                    sb = new StringBuilder("[busy] heap used=").append((r.totalMemory() - r.freeMemory()) >> 20).append("MB");
+                }
+                sb.append("\n  \"").append(t.getName()).append("\"");
+                for (int i = 0; i < Math.min(st.length, 14); i++) {
+                    sb.append("\n      at ").append(st[i]);
+                }
+            }
+            if (sb != null) {
+                netLog.info(sb.toString());
+            }
+        } catch (Throwable ignore) {}
+    }
+
+    private static void dumpThreads(String why) {
+        try {
+            Runtime r = Runtime.getRuntime();
+            StringBuilder sb = new StringBuilder("[stall] ").append(why)
+                    .append(", heap used=").append((r.totalMemory() - r.freeMemory()) >> 20).append("MB max=")
+                    .append(r.maxMemory() >> 20).append("MB");
+            for (java.util.Map.Entry<Thread, StackTraceElement[]> e : Thread.getAllStackTraces().entrySet()) {
+                StackTraceElement[] st = e.getValue();
+                Thread t = e.getKey();
+                if (st.length == 0 || t == Thread.currentThread()) {
+                    continue;
+                }
+                // idle threads park in the JDK or in native polling; only threads with app frames say where the time goes
+                boolean ours = t.getName().startsWith("GLThread") || "main".equals(t.getName());
+                for (int i = 0; i < st.length && !ours; i++) {
+                    ours = st[i].getClassName().startsWith("forge.");
+                }
+                if (!ours) {
+                    continue;
+                }
+                sb.append("\n  \"").append(t.getName()).append("\" ").append(t.getState());
+                for (int i = 0; i < Math.min(st.length, 45); i++) {
+                    sb.append("\n      at ").append(st[i]);
+                }
+            }
+            netLog.warn(sb.toString());
+        } catch (Throwable ignore) {}
+    }
+
+    private static String exitReasonName(int reason) {
+        switch (reason) {
+            case 1: return "EXIT_SELF";
+            case 2: return "SIGNALED";
+            case 3: return "LOW_MEMORY";
+            case 4: return "CRASH";
+            case 5: return "CRASH_NATIVE";
+            case 6: return "ANR";
+            case 7: return "INITIALIZATION_FAILURE";
+            case 8: return "PERMISSION_CHANGE";
+            case 9: return "EXCESSIVE_RESOURCE_USAGE";
+            case 10: return "USER_REQUESTED";
+            case 11: return "USER_STOPPED";
+            case 12: return "DEPENDENCY_DIED";
+            case 13: return "OTHER";
+            case 14: return "FREEZER";
+            case 15: return "PACKAGE_STATE_CHANGE";
+            case 16: return "PACKAGE_UPDATED";
+            default: return "UNKNOWN(" + reason + ")";
+        }
+    }
 
     // The package name the resources are compiled under (stable across dev/prod).
     // If you ever change the base app package, update this constant once.
@@ -169,6 +367,8 @@ public class Main extends AndroidApplication {
     @Override
     protected void onResume() {
         netLog.info("[lifecycle] onResume");
+        glAnsweredAt = glPingSentAt = System.currentTimeMillis();
+        backgrounded = false;
         try {
             super.onResume();
         } catch (Exception ignore) {}
@@ -610,6 +810,7 @@ public class Main extends AndroidApplication {
     @Override
     protected void onPause() {
         netLog.info("[lifecycle] onPause");
+        backgrounded = true;
         super.onPause();
 
         /*ForgePreferences prefs = FModel.getPreferences();
