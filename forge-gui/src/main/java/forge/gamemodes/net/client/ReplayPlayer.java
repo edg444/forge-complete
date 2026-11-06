@@ -171,13 +171,18 @@ public final class ReplayPlayer implements Runnable, IHasForgeLog {
     void onControl(final ProtocolMethod method) {
         switch (method) {
             case selectButtonOk:
+                final boolean nowPaused;
                 synchronized (lock) {
                     if (finished) {
                         break;
                     }
                     paused = !paused;
+                    nowPaused = paused;
                     lock.notifyAll();
                 }
+                // The screen's own pause flag: a zoomed card pauses a spectated game through it every frame, pressing OK
+                // whenever the flag says "running", which flipped a paused replay back on (2026-11-06)
+                gui.setGamePause(nowPaused);
                 updateControls();
                 return;
             case selectButtonCancel:
@@ -205,6 +210,7 @@ public final class ReplayPlayer implements Runnable, IHasForgeLog {
             lock.notifyAll();
         }
         active = null;
+        gui.setGamePause(false); // the mobile GUI is shared with the next match
         try {
             reader.close();
         } catch (final IOException ignored) {
