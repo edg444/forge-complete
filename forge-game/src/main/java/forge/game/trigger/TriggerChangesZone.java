@@ -187,16 +187,16 @@ public class TriggerChangesZone extends Trigger {
 
     /** {@inheritDoc} */
     @Override
-    public final void setTriggeringObjects(final SpellAbility sa, Map<AbilityKey, Object> runParams) {
+    public final void setTriggeringObjects(final Map<AbilityKey, Object> objects, Map<AbilityKey, Object> runParams) {
         // TODO use better way to always copy both Card and CardLKI
         if ("Battlefield".equals(getParam("Origin"))) {
-            sa.setTriggeringObject(AbilityKey.Card, runParams.get(AbilityKey.CardLKI));
-            sa.setTriggeringObject(AbilityKey.NewCard, runParams.get(AbilityKey.Card));
+            objects.put(AbilityKey.Card, runParams.get(AbilityKey.CardLKI));
+            objects.put(AbilityKey.NewCard, runParams.get(AbilityKey.Card));
         } else {
-            sa.setTriggeringObjectsFrom(runParams, AbilityKey.Card, AbilityKey.CardLKI);
+            AbilityKey.copyKeys(runParams, objects, AbilityKey.Card, AbilityKey.CardLKI);
         }
         // the spell that left the stack (Trial and Error copies itself when it fizzles)
-        sa.setTriggeringObjectsFrom(runParams, AbilityKey.StackSa);
+        AbilityKey.copyKeys(runParams, objects, AbilityKey.StackSa);
     }
 
     @Override

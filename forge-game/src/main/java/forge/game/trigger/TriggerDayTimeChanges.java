@@ -22,7 +22,7 @@ public class TriggerDayTimeChanges extends Trigger {
     }
 
     @Override
-    public void setTriggeringObjects(SpellAbility sa, Map<AbilityKey, Object> runParams) {
+    public void setTriggeringObjects(Map<AbilityKey, Object> objects, Map<AbilityKey, Object> runParams) {
     }
 
     @Override

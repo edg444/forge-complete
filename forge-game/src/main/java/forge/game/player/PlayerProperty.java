@@ -98,10 +98,6 @@ public class PlayerProperty {
             if (!player.hasProgram()) {
                 return false;
             }
-        } else if (property.equals("NonActive")) {
-            if (game.getPhaseHandler().isPlayerTurn(player)) {
-                return false;
-            }
         } else if (property.equals("OpponentToActive")) {
             final Player active = game.getPhaseHandler().getPlayerTurn();
             if (player.equals(active) || !player.isOpponentOf(active)) {

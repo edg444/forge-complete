@@ -70,8 +70,7 @@ import java.util.*;
  * @author Forge
  * @version $Id: PhaseHandler.java 13001 2012-01-08 12:25:25Z Sloth $
  */
-public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
-    private static final long serialVersionUID = 5207222278370963197L;
+public class PhaseHandler implements IHasForgeLog {
 
     // used for debugging phase timing
     private final StopWatch sw = new StopWatch();
@@ -80,8 +79,8 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     private PhaseType phase = null;
     private int turn = 0;
 
-    private final transient Stack<ExtraTurn> extraTurns = new Stack<>();
-    private final transient Map<PhaseType, Stack<ExtraPhase>> extraPhases = Maps.newEnumMap(PhaseType.class);
+    private final Stack<ExtraTurn> extraTurns = new Stack<>();
+    private final Map<PhaseType, Stack<ExtraPhase>> extraPhases = Maps.newEnumMap(PhaseType.class);
 
     private int nUpkeepsThisTurn = 0;
     private int nUpkeepsThisGame = 0;
@@ -90,8 +89,8 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     private int nEndOfTurnsThisTurn = 0;
     private int planarDiceSpecialActionThisTurn = 0;
 
-    private transient Player playerTurn = null;
-    private transient Player playerPreviousTurn = null;
+    private Player playerTurn = null;
+    private Player playerPreviousTurn = null;
 
     // Unstable's Clocknapper: a phase stolen from a player's next turn happens as though it were the
     // thief's turn, so the thief is the active player for just that phase and the victim gets it back after
@@ -105,24 +104,24 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
             // Forge splits the ending phase into two groups (for Topsy Turvy), but it's one phase to steal
             List.of(PhaseType.END_OF_TURN, PhaseType.CLEANUP));
     private record StolenPhase(Player thief, Player victim, int victimTurn, int phaseIndex) {}
-    private final transient List<StolenPhase> stolenPhases = Lists.newArrayList();
-    private transient Player phaseStolenFrom = null;
-    private transient List<PhaseType> stolenPhaseSteps = null;
-    private transient boolean upkeepSwitched = false;
+    private final List<StolenPhase> stolenPhases = Lists.newArrayList();
+    private Player phaseStolenFrom = null;
+    private List<PhaseType> stolenPhaseSteps = null;
+    private boolean upkeepSwitched = false;
 
     // Runed Terror: players take their phases one after another. Each phase goes first to the leader (the active
     // player when it began), then to each next player in turn order. A player's turn runs from when they become
     // active until their cleanup step ends; turns of several players are under way at once (rulings).
-    private transient Player seqLeader = null;
-    private final transient Set<Player> seqTurnsUnderway = new HashSet<>();
-    private transient PhaseType seqNextPhase = null;
-    private transient boolean seqNewTurn = false;
+    private Player seqLeader = null;
+    private final Set<Player> seqTurnsUnderway = new HashSet<>();
+    private PhaseType seqNextPhase = null;
+    private boolean seqNewTurn = false;
 
     // priority player
 
-    private transient Player pPlayerPriority = null;
-    private transient Player pFirstPriority = null;
-    private transient Combat combat = null;
+    private Player pPlayerPriority = null;
+    private Player pFirstPriority = null;
+    private Combat combat = null;
     private boolean skipDamageSteps = false;
     private boolean bRepeatCleanup = false;
     // Unstable's last strike: the combat damage step is followed by another one, for creatures with last strike
@@ -131,9 +130,9 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     private boolean firstestStrikeDamageStep = false;
     // Throat Wolf: how many combat phases each player has had as the active player this turn, and the creature that
     // alone may attack during a combat phase it added
-    private final transient Map<Player, Integer> combatsAsActiveThisTurn = Maps.newHashMap();
-    private transient Card onlyAttacker = null;
-    private transient boolean aggressiveCombat = false;
+    private final Map<Player, Integer> combatsAsActiveThisTurn = Maps.newHashMap();
+    private Card onlyAttacker = null;
+    private boolean aggressiveCombat = false;
 
     // Stack of Paperwork: combat damage uses the stack while it's on the battlefield
     private void dealOrStackCombatDamage() {
@@ -149,10 +148,10 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
     private boolean givePriorityToPlayer = false;
 
     // Do-Over: the game as it stood when this turn began, and a restart asked for by a resolving spell
-    private transient TurnRestart turnStart = null;
-    private transient Card pendingRestart = null;
+    private TurnRestart turnStart = null;
+    private Card pendingRestart = null;
 
-    private final transient Game game;
+    private final Game game;
 
 
     public PhaseHandler(final Game game0) {
@@ -365,7 +364,7 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
 
             case COMBAT_BEGIN:
             case COMBAT_DECLARE_ATTACKERS:
-                return getActivePlayers().anyMatch(Player::isSkippingCombat);
+                return getActivePlayers().anyMatch(p -> !p.isInGame());
 
             case COMBAT_DECLARE_BLOCKERS:
                 skipDamageSteps = !inCombat() || combat.getAttackers().isEmpty();
@@ -840,7 +839,6 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         // Goblin Haberdasher: a hat gives menace, which matters from here on
         game.getAction().askHatInArt(combat.getAttackers());
 
-        // Reset all active Triggers
         game.getTriggerHandler().resetActiveTriggers();
 
         // Prepare and fire event 'attackers declared'
@@ -1311,10 +1309,10 @@ public class PhaseHandler implements java.io.Serializable, IHasForgeLog {
         return nextPlayer;
     }
 
-    public final synchronized boolean is(final PhaseType phase0, final Player player0) {
+    public final boolean is(final PhaseType phase0, final Player player0) {
         return phase == phase0 && isPlayerTurn(player0);
     }
-    public final synchronized boolean is(final PhaseType phase0) {
+    public final boolean is(final PhaseType phase0) {
         return phase == phase0;
     }
 

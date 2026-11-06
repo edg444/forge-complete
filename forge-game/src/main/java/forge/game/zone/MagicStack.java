@@ -86,7 +86,7 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
     private List<Card> lastTurnCast = Lists.newArrayList();
     private final List<SpellAbility> thisTurnActivated = Lists.newArrayList();
 
-    private Card curResolvingCard = null;
+    private SpellAbility curResolving = null;
     // Nah Yeah: a spell that resolves as soon as the one resolving now is done, before anyone gets priority
     private SpellAbilityStackInstance resolveNow = null;
     private final Map<Integer, Integer> triggerRepeats = new HashMap<>();
@@ -117,7 +117,7 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
         lastTurnCast.clear();
         thisTurnCast.clear();
         thisTurnActivated.clear();
-        curResolvingCard = null;
+        curResolving = null;
         triggerRepeats.clear();
         illegalAdditions.clear();
         frozenStack.clear();
@@ -202,10 +202,14 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
     }
 
     public final boolean isResolving(Card c) {
-        if (!isResolving() || curResolvingCard == null) {
+        if (!isResolving()) {
             return false;
         }
-        return c.equals(curResolvingCard);
+        return c.equals(curResolving.getHostCard());
+    }
+
+    public final SpellAbility getResolvingAbility() {
+        return curResolving;
     }
 
     public final void add(SpellAbility sp) {
@@ -836,7 +840,7 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
         game.getPhaseHandler().resetPriority();
 
         final Card source = sa.getHostCard();
-        curResolvingCard = source;
+        curResolving = sa;
 
         boolean thisHasFizzled = hasFizzled(sa, null);
 
@@ -956,7 +960,7 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
             game.getPhaseHandler().onStackResolved();
         }
 
-        curResolvingCard = null;
+        curResolving = null;
     }
 
     /** Toofer: the cards a player has - in hand, and nontoken permanents they control (tokens aren't cards). */

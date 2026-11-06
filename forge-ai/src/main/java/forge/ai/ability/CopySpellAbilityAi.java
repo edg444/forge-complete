@@ -2,15 +2,21 @@ package forge.ai.ability;
 
 import forge.ai.*;
 import forge.game.Game;
+import forge.game.ability.AbilityUtils;
 import forge.game.ability.ApiType;
+import forge.game.card.Card;
 import forge.game.cost.Cost;
+import forge.game.keyword.Keyword;
 import forge.game.player.Player;
 import forge.game.player.PlayerActionConfirmMode;
 import forge.game.spellability.Spell;
 import forge.game.spellability.SpellAbility;
+import forge.game.zone.ZoneType;
 import forge.util.MyRandom;
 import forge.util.collect.FCollectionView;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -121,18 +127,59 @@ public class CopySpellAbilityAi extends SpellAbilityAi {
 
         if ("BestInShow".equals(logic)) {
             // Blue Ribbon: a copy aimed at the creature with best in show helps only if what's copied helps a creature
-            for (final SpellAbility copied : forge.game.ability.AbilityUtils.getDefinedSpellAbilities(sa.getHostCard(),
-                    "TriggeredSourceSA", sa)) {
-                final forge.game.ability.ApiType api = copied.getApi();
-                if (!copied.isCurse() && (api == forge.game.ability.ApiType.Pump || api == forge.game.ability.ApiType.PutCounter
-                        || api == forge.game.ability.ApiType.Protection || api == forge.game.ability.ApiType.Regenerate
-                        || api == forge.game.ability.ApiType.Untap)) {
+            for (final SpellAbility copied : AbilityUtils.getDefinedSpellAbilities(sa.getHostCard(), "TriggeredSourceSA", sa)) {
+                final ApiType api = copied.getApi();
+                if (!copied.isCurse() && (api == ApiType.Pump || api == ApiType.PutCounter
+                        || api == ApiType.Protection || api == ApiType.Regenerate || api == ApiType.Untap)) {
                     return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
                 }
             }
         }
 
+        // the AI copies its own abilities if it has enough mana to still pay for other spells in its hand afterward
+        if ("TriggeredSpellAbility".equals(sa.getParam("Defined"))) {
+            for (SpellAbility copied : AbilityUtils.getDefinedSpellAbilities(sa.getHostCard(), "TriggeredSpellAbility", sa)) {
+                if (copied.getActivatingPlayer() != null && copied.getActivatingPlayer().equals(aiPlayer)
+                        && !copied.isManaAbility() && copied.getApi() != ApiType.CopySpellAbility
+                        && !(SpellApiToAi.Converter.get(copied.getApi()) instanceof CannotPlayAi)
+                        && !ComputerUtilCard.isCardRemAIDeck(copied.getHostCard())) {
+                    return costsSpellsFromHand(aiPlayer, sa) ? new AiAbilityDecision(0, AiPlayDecision.CantAfford)
+                            : new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+                }
+            }
+        }
+
         return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+    }
+
+    // Would paying for this leave us unable to cast a spell from hand we could otherwise still cast this turn
+    private static boolean costsSpellsFromHand(final Player ai, final SpellAbility sa) {
+        int cost = sa.getPayCosts().getTotalMana().getCMC();
+        if (cost == 0) {
+            return false;
+        }
+        boolean ourTurn = ai.getGame().getPhaseHandler().isPlayerTurn(ai);
+        List<Integer> spellCosts = new ArrayList<>();
+        for (Card c : ai.getCardsIn(ZoneType.Hand)) {
+            if (!c.isLand() && (ourTurn || c.isInstant() || c.hasKeyword(Keyword.FLASH))) {
+                spellCosts.add(c.getCMC());
+            }
+        }
+        Collections.sort(spellCosts);
+        int available = ComputerUtilMana.getAvailableManaEstimate(ai);
+        return countAffordable(spellCosts, available - cost) < countAffordable(spellCosts, available);
+    }
+
+    private static int countAffordable(final List<Integer> sortedCosts, int mana) {
+        int count = 0;
+        for (int spellCost : sortedCosts) {
+            if (spellCost > mana) {
+                break;
+            }
+            mana -= spellCost;
+            count++;
+        }
+        return count;
     }
 
     @Override

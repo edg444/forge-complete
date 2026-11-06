@@ -29,8 +29,8 @@ public class TriggerTaxPaid extends Trigger {
     }
 
     @Override
-    public final void setTriggeringObjects(final SpellAbility sa, final Map<AbilityKey, Object> runParams) {
-        sa.setTriggeringObjectsFrom(runParams, AbilityKey.Amount, AbilityKey.Player);
+    public final void setTriggeringObjects(final Map<AbilityKey, Object> objects, Map<AbilityKey, Object> runParams) {
+        AbilityKey.copyKeys(runParams, objects, AbilityKey.Amount, AbilityKey.Player);
     }
 
     @Override

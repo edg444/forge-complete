@@ -9817,16 +9817,12 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         // Judge Tower: a human may try anything at all, and the judge rules on it
         final boolean offerAll = !removeUnplayable && player != null && player.getGame().getJudge() != null
                 && !player.getController().isAI();
-        final Collection<SpellAbility> toRemove = Lists.newArrayListWithCapacity(abilities.size());
-        for (final SpellAbility sa : abilities) {
+        abilities.removeIf(sa -> {
             sa.setActivatingPlayer(player);
             // fix things like retrace
             // check only if SA can't be cast normally
-            if (!offerAll && !sa.canPlay(true) && (removeUnplayable || !sa.isPossible())) {
-                toRemove.add(sa);
-            }
-        }
-        abilities.removeAll(toRemove);
+            return !offerAll && !sa.canPlay(true) && (removeUnplayable || !sa.isPossible());
+        });
 
         return abilities;
     }

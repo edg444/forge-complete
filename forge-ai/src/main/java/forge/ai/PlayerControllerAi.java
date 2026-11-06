@@ -251,12 +251,10 @@ public class PlayerControllerAi extends PlayerController {
                         if (!cMain.getRules().getType().sharesCardTypeWith(cSide.getRules().getType())) {
                             continue; // Only equivalent types allowed
                         }
-                    } else {
-                        if ((cMain.getRules().getType().isCreature() && !cSide.getRules().getType().isCreature())
-                                || (cSide.getRules().getType().isCreature()) && !cMain.getRules().getType().isCreature()) {
-                            if (!(sbPlaneswalkerException && (cMain.getRules().getType().isPlaneswalker() || cSide.getRules().getType().isPlaneswalker()))) {
-                                continue; // Creature exception: only trade a creature for another creature unless planeswalkers are allowed as a replacement
-                            }
+                    } else if ((cMain.getRules().getType().isCreature() && !cSide.getRules().getType().isCreature())
+                            || (cSide.getRules().getType().isCreature()) && !cMain.getRules().getType().isCreature()) {
+                        if (!(sbPlaneswalkerException && (cMain.getRules().getType().isPlaneswalker() || cSide.getRules().getType().isPlaneswalker()))) {
+                            continue; // Creature exception: only trade a creature for another creature unless planeswalkers are allowed as a replacement
                         }
                     }
 
@@ -1694,7 +1692,7 @@ public class PlayerControllerAi extends PlayerController {
                         }
                     }
 
-                    if (sa.isMayChooseNewTargets()) {
+                    if (sa.isMayChooseNewTargets() && !sa.getAllTargetChoices().isEmpty()) {
                         chooseNewTargetsForCopy(sa);
                         // FIXME: the new implementation (below) requires implementing setupNewTargets in the AI controller, among other possible changes, otherwise breaks AI
                         // sa.setupNewTargets(player);
@@ -2098,6 +2096,10 @@ public class PlayerControllerAi extends PlayerController {
                 return name;
             }
         } else {
+            final String outside = forge.ai.simulation.ConsultationWin.nameOutsideLibrary(player, sa);
+            if (outside != null) {
+                return outside; // Demonic Consultation with Thassa's Oracle: a card that is not in the library
+            }
             CardCollectionView list = CardLists.filterControlledBy(getGame().getCardsInGame(), player.getOpponents());
             list = CardLists.filter(list, CardPredicates.NON_LANDS);
             // the name still has to satisfy ValidCards - Psychic Paper asks for a creature card

@@ -22,8 +22,8 @@ public class TriggerManaLost extends Trigger {
     }
 
     @Override
-    public void setTriggeringObjects(final SpellAbility sa, final Map<AbilityKey, Object> runParams) {
-        sa.setTriggeringObjectsFrom(runParams, AbilityKey.Player);
+    public void setTriggeringObjects(final Map<AbilityKey, Object> objects, Map<AbilityKey, Object> runParams) {
+        AbilityKey.copyKeys(runParams, objects, AbilityKey.Player);
     }
 
     @Override
