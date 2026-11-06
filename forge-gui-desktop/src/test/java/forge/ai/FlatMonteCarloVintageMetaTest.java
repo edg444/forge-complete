@@ -6,11 +6,9 @@ import org.testng.annotations.Test;
 import forge.ai.simulation.AiCardLists;
 import forge.ai.simulation.ComboPlan;
 import forge.ai.simulation.DeckPlan;
-import forge.ai.simulation.FlatMonteCarloPicker;
 import forge.game.Game;
 import forge.game.card.Card;
 import forge.game.player.Player;
-import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 
 /**
@@ -64,25 +62,20 @@ public class FlatMonteCarloVintageMetaTest extends AITest {
 
     /**
      * The AI:RemoveDeck:All cards of the metagame stay marked (a card that loses the mark is no longer a play of the
-     * rollouts only), and the cantrips and tutors among them are offered to the rollouts.
+     * rollouts only). The fork's no-AI pass gave the rest of upstream's list real AI, so those are unmarked here, and
+     * upstream's check that Flat MC offers the marked cantrips (Gitaxian Probe, the Baubles, Vampiric Tutor, Demonic
+     * Consultation) is gone: the heuristic AI plays them itself now.
      */
     @Test
     public void theRemoveDeckCardsAreMarkedAndTheCantripsAreOffered() {
         final Player p = deal(BESEECH_STORM);
-        for (final String name : new String[] { "Gitaxian Probe", "Vampiric Tutor", "Mishra's Bauble", "Urza's Bauble",
-                "Demonic Consultation", "Merchant Scroll", "Prismatic Ending", "Mindbreak Trap", "Manifold Key",
-                "Lion's Eye Diamond", "Doomsday", "Goblin Welder", "Commandeer", "Flash", "Nethergoyf" }) {
+        for (final String name : new String[] { "Prismatic Ending", "Lion's Eye Diamond", "Doomsday", "Goblin Welder" }) {
             AssertJUnit.assertTrue(name, ComputerUtilCard.isCardRemAIDeck(addCardToZone(name, p, ZoneType.Hand)));
         }
         for (final String name : new String[] { "Gitaxian Probe", "Vampiric Tutor", "Mishra's Bauble", "Urza's Bauble",
-                "Demonic Consultation" }) {
-            final Card c = addCardToZone(name, p, ZoneType.Hand);
-            boolean offered = false;
-            for (final SpellAbility sa : c.getSpellAbilities()) {
-                sa.setActivatingPlayer(p);
-                offered |= FlatMonteCarloPicker.isDiscoverable(sa);
-            }
-            AssertJUnit.assertTrue(name, offered);
+                "Demonic Consultation", "Merchant Scroll", "Mindbreak Trap", "Manifold Key", "Commandeer", "Flash",
+                "Nethergoyf" }) {
+            AssertJUnit.assertFalse(name, ComputerUtilCard.isCardRemAIDeck(addCardToZone(name, p, ZoneType.Hand)));
         }
     }
 
@@ -118,8 +111,10 @@ public class FlatMonteCarloVintageMetaTest extends AITest {
     public void aiDecksKeepTheRemoveDeckCardsFlatMcPlays() {
         final Player p = deal(OATH);
         final String[] kept = { "Gitaxian Probe", "Mishra's Bauble", "Urza's Bauble", "Vampiric Tutor",
-                "Demonic Consultation", "Merchant Scroll", "Manifold Key", "Goblin Welder", "Doomsday" };
-        final String[] left = { "Prismatic Ending", "Mindbreak Trap", "Commandeer", "Flash", "Nethergoyf" };
+                "Demonic Consultation", "Merchant Scroll", "Manifold Key", "Goblin Welder", "Doomsday", "Mindbreak Trap",
+                "Commandeer", "Flash", "Nethergoyf" };
+        // the fork gave Mindbreak Trap, Commandeer, Flash and Nethergoyf AI, so they are kept whether or not Flat MC plays them
+        final String[] left = { "Prismatic Ending" };
         try {
             forge.card.CardAiHints.setKeptForFlatMc(AiCardLists::isFlatMcPlayable);
             for (final String name : kept) {
@@ -141,7 +136,7 @@ public class FlatMonteCarloVintageMetaTest extends AITest {
             }
             forge.card.CardAiHints.setKeptForFlatMc(null); // Flat MC off
             AssertJUnit.assertFalse("with Flat MC off nothing is kept", forge.card.CardRulesPredicates.IS_KEPT_IN_AI_DECKS
-                    .test(addCardToZone("Gitaxian Probe", p, ZoneType.Hand).getRules()));
+                    .test(addCardToZone("Doomsday", p, ZoneType.Hand).getRules()));
         } finally {
             forge.card.CardAiHints.setKeptForFlatMc(null);
         }

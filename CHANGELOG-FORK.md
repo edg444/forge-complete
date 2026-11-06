@@ -478,6 +478,28 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-06, thirty-second deploy (desktop, Android, GitHub) - upstream merge
+
+- **Upstream merge** (17 commits, 21 conflicts, 2026-11-06). Upstream #12604 builds each trigger's triggering objects
+  once per event (`Trigger.setTriggeringObjects(objects, runParams)`, `AbilityKey.copyKeys`) so conditions can read
+  them. The fork's own trigger modes (Augments, CardAdvantage, CardsFellOffHead, DiceStackFell, GuessedWrong, ManaLost,
+  TaxPaid, WordGuessed) fill the objects map now; ChangesController keeps `Donor`, CounterRemovedOnce and Taps keep
+  `Player`, ChangesZone keeps `StackSa`, and The Vast Scrier's `runOwnTriggers` runs through a `TriggerWaiting`.
+  Upstream dropped the `NonActive` player property and the attack-life `Condition$` values
+  (`NoOpponentHasMoreLifeThanAttacked`, `AttackedPlayerWithMostLife`): Ghost Town, March of the World Ooze, Scytheclaw
+  Raptor, The Brothers' War, Guild Artisan, Sword Coast Sailor, Scourge of the Throne and Veteran Soldier (both its
+  Oracle and as-printed triggers) take `!Active`, `CheckSVar$` and `CheckDefinedPlayer$` with the fork's wording and
+  Oracle lines (Veteran Soldier keeps "attacking that opponent", as on Scryfall). `PhaseHandler` is no longer
+  Serializable and keeps skipping combat when any active player has left; `Player` takes `LandsPlayedMyLastTurn` and
+  keeps the Party Crasher attack reset every turn; random and themed decks keep the `AI:RemoveDeck:NoSideboard` filter
+  on upstream's Flat MC-aware `CardAiHints` checks; `Card` keeps Cast As spells and Judge Tower's offer-all;
+  `MagicStack` keeps Nah Yeah's `resolveNow` next to upstream's `curResolving`; the mobile Tactics grid is one of
+  upstream's new arrow occluders. Upstream's new `FlatMonteCarloVintageMetaTest` assumed 11 cards are
+  `AI:RemoveDeck:All` that the fork gave AI (Gitaxian Probe, Vampiric Tutor, the Baubles, Demonic Consultation,
+  Merchant Scroll, Mindbreak Trap, Manifold Key, Commandeer, Flash, Nethergoyf), so it asserts they are unmarked and
+  kept in AI decks. New upstream: Flat MC Vintage metagame combo plans and timed-ability discovery, the AI pays
+  optional copy costs, Paralyzed creatures read right, mobile lobby and New Game fixes.
+
 ### 2026-11-04, thirty-first deploy (desktop, Android, GitHub) - Flat MC speed caps; upstream merge
 
 - **Upstream merge** (7 commits, 7 conflicts, 2026-11-04). Upstream now saves the lobby's variants and format in one
