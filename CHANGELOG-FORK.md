@@ -478,6 +478,15 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-06, thirty-fifth deploy (desktop, Android, GitHub) - replays stay paused while a card is zoomed
+
+- **A paused replay stays paused while you look at a card**, until you press Resume. Long-pressing a card opens the
+  zoom, which pauses a spectated game every frame through the screen's pause flag, pressing OK whenever that flag
+  says the game is running. A replay kept its pause to itself, so the flag always said "running" and the zoom kept
+  pressing the replay's Pause/Resume button, playing a paused replay on. `ReplayPlayer` now sets the flag when it
+  pauses or resumes and clears it when it ends. Like a live AI-vs-AI game, a running replay now pauses when you zoom a
+  card and waits for Resume.
+
 ### 2026-11-06, thirty-fourth deploy (desktop, Android, GitHub) - Android freezes; upstream merge
 
 - **Picking a deck and starting a random-deck match no longer freeze Android for a minute or more**, and tapping
