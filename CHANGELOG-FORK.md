@@ -478,6 +478,28 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-06, thirty-fourth deploy (desktop, Android, GitHub) - Android freezes; upstream merge
+
+- **Picking a deck and starting a random-deck match no longer freeze Android for a minute or more**, and tapping
+  during the wait no longer ends in "Forge isn't responding" (both crashes today were ANRs). Since the thirty-second
+  deploy, random decks and deck lists ask, for every `AI:RemoveDeck` card, whether Flat MC plays it
+  (`CardAiHints.isRemovedFromRandomDecks` and `AiCardLists.isFlatMcPlayable`, from upstream). Each answer normalized
+  the card name once per role, and `AiCardLists.normalize` ran two `replaceAll` calls, each compiling a regular
+  expression. The desktop JVM shrugs that off; Android compiles every pattern natively (ICU), and the render thread sat
+  in it for 34-67 s at a time. `normalize` is now a character loop with the same result (a test checks it against the
+  regex version for every card name), and `isFlatMcPlayable` normalizes once. Flat MC's combo checks during a game,
+  which call `normalize` too, are faster on the phone as well.
+- **Android logs why it last exited and where it stalls.** At start, forge.log lists the system's exit reasons for the
+  last runs (low memory, ANR, native crash) and saves the newest ANR or native trace as `last-exit-trace.txt`; a
+  watchdog dumps the busy threads when the render thread or Android's main thread stops answering for 5 s, and logs
+  the running Game threads every 15 s. These exits leave no Java exception, and the phone's freezes don't reproduce on
+  desktop; this is how the freeze above was found.
+- **Upstream merge** (8 commits, 1 conflict, 2026-11-06). Werewolf Pack Leader takes upstream's new ability (it becomes
+  a Werewolf instead of losing Human) with the fork's "Whenever this creature attacks", both as on Scryfall. New
+  upstream: Flat MC Doomsday, Trix and Channel combos, Channel mana kept for its combo, a better hold valuation for
+  flash creatures, Flat MC AI sideboarding against a human, a concede that leaves only AI players ends the game, edition
+  updates (PWCS, SLD, TRK).
+
 ### 2026-11-06, thirty-third deploy (desktop, Android, GitHub) - replay tap crash on Android
 
 - **Watching a replay of an AI-vs-AI game on Android no longer crashes on the first tap.** Such a replay has no local
