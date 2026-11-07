@@ -53,19 +53,22 @@ public class ChooseColorEffect extends SpellAbilityEffect {
             if (cs.isColorless()) {
                 return;
             }
-            colorChoices = cs.stream().map(Object::toString).collect(Collectors.toCollection(ArrayList::new));
+            colorChoices = cs.stream().map(Object::toString).map(String::toLowerCase).collect(Collectors.toCollection(ArrayList::new));
         }
         if (sa.hasParam("Exclude")) {
             for (String s : sa.getParam("Exclude").split(",")) {
                 colorChoices.remove(s);
             }
         }
-        if (sa.hasParam("ExcludeOwnColors")) {
-            // Unlike Exclude$ (a static literal list), this reads the host card's
-            // actual current colors at resolve time - needed for effects like
-            // Opulent Clomper that gain a random color they don't already have.
-            for (MagicColor.Color mc : card.getColor()) {
-                colorChoices.remove(mc.getName());
+        if (sa.hasParam("ExcludeColorsFrom")) {
+            ColorSet cs = CardUtil.getColorsFromCards(AbilityUtils.getDefinedCards(card, sa.getParam("ExcludeColorsFrom"), sa));
+            if (!cs.isColorless()) {
+                for (String s : cs.stream().map(Object::toString).map(String::toLowerCase).collect(Collectors.toCollection(ArrayList::new))) {
+                    colorChoices.remove(s);
+                }
+                if (colorChoices.isEmpty()) {
+                    return;
+                }
             }
         }
 
