@@ -50,6 +50,7 @@ Automaton:Automatons
 Avatar:Avatars
 Azra:Azra
 Badger:Badgers
+Bajoran:Bajorans
 Balloon:Balloons
 Barbarian:Barbarians
 Bard:Bards
@@ -61,13 +62,16 @@ Beaver:Beavers
 Beeble:Beebles
 Beholder:Beholders
 Berserker:Berserkers
+Betazoid:Betazoids
 Bird:Birds
 Bison:Bisons
 Blinkmoth:Blinkmoths
 Boar:Boars
+Bolian:Bolians
 Borg:Borg
 Boxer:Boxers
 Brainiac:Brainiacs
+Brikar:Brikars
 Bringer:Bringers
 Brushwagg:Brushwaggs
 Bureaucrat:Bureaucrats
@@ -76,6 +80,7 @@ C'tan:C'tan
 Caitian:Caitians
 Camel:Camels
 Capybara:Capybaras
+Cardassian:Cardassians
 Caribou:Caribous
 Carrier:Carriers
 Cat:Cats
@@ -108,6 +113,7 @@ Dauthi:Dauthis
 Deer:Deer
 Demigod:Demigods
 Demon:Demons
+Denobulan:Denobulans
 Deserter:Deserters
 Devil:Devils
 Die:Dice
@@ -125,8 +131,10 @@ Druid:Druids
 Dryad:Dryads
 Dwarf:Dwarves
 Echidna:Echidnas
+Edosian:Edosians
 Efreet:Efreets
 Egg:Eggs
+El-Aurian:El-Aurians
 Elder:Elders
 Eldrazi:Eldrazi
 Elemental:Elementals
@@ -136,9 +144,11 @@ Elf:Elves
 Elk:Elks
 Employee:Employees
 Eternal:Eternals
+Excalbian:Excalbians
 Expansion-Symbol:Expansion-Symbols
 Eye:Eyes
 Faerie:Faeries
+Ferengi:Ferengi
 Ferret:Ferrets
 Fish:Fish
 Flagbearer:Flagbearers
@@ -181,6 +191,7 @@ Hellion:Hellions
 Hero:Heroes
 Hippo:Hippos
 Hippogriff:Hippogriffs
+Hirogen:Hirogens
 Homarid:Homarids
 Homunculus:Homunculi
 Horror:Horrors
@@ -191,6 +202,7 @@ Hydra:Hydras
 Hyena:Hyenas
 Igpay:Igpays
 Illusion:Illusions
+Illyrian:Illyrians
 Imp:Imps
 Incarnation:Incarnations
 Inhuman:Inhumans
@@ -199,6 +211,7 @@ Inquisitor:Inquisitors
 Insect:Insects
 Jackal:Jackals
 Jellyfish:Jellyfishes
+Jem'Hadar:Jem'Hadar
 Judge:Judges
 Juggernaut:Juggernauts
 Kangaroo:Kangaroos
@@ -214,6 +227,7 @@ Kobold:Kobolds
 Kor:Kors
 Kraken:Krakens
 Kree:Kree
+Kwejian:Kwejians
 Lady of Proper Etiquette:Ladies of Proper Etiquette
 Lamia:Lamias
 Lammasu:Lammasus
@@ -230,6 +244,8 @@ Locus:Loci
 Mammoth:Mammoths
 Manticore:Manticores
 Masticore:Masticores
+Medusan:Medusans
+Melkotian:Melkotians
 Mercenary:Mercenaries
 Merfolk:Merfolk
 Metathran:Metathrans
@@ -251,6 +267,7 @@ Mummy:Mummies
 Mutant:Mutants
 Myr:Myrs
 Mystic:Mystics
+Na'kuhl:Na'kuhl
 Naga:Nagas
 Nautilus:Nautili
 Necron:Necrons
@@ -262,6 +279,7 @@ Noble:Nobles
 Noggle:Noggles
 Nomad:Nomads
 Nymph:Nymphs
+Ocampa:Ocampa
 Octopus:Octopi
 Officer:Officers
 Ogre:Ogres
@@ -368,9 +386,11 @@ Surrakar:Surrakars
 Symbiote:Symbiotes
 Synth:Synths
 Survivor:Survivors
+Talaxian:Talaxians
 Talosian:Talosians
-Teddy:Teddies
+Tamarian:Tamarians
 Teddy Bear:Teddy Bears
+Teddy:Teddies
 Tellarite:Tellarites
 Tentacle:Tentacles
 Tetravite:Tetravites
@@ -399,6 +419,7 @@ Utrom:Utroms
 Vampire:Vampires
 Vampyre:Vampyres
 Varmint:Varmints
+Vau-N'Akat:Vau-N'Akat
 Vedalken:Vedalkens
 Villain:Villains
 Volver:Volvers
