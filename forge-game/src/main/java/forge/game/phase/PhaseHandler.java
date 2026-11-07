@@ -213,7 +213,7 @@ public class PhaseHandler implements IHasForgeLog {
 
     /** True if the next turn is this player's, or under shared team turns their team's (CR 805.4). */
     public final boolean isPlayerNextTurn(final Player player) {
-        return getNextTurn().equals(player);
+        return player.sharesTurnWith(getNextTurn());
     }
 
     public final Player getPreviousPlayerTurn() {
@@ -1049,48 +1049,74 @@ public class PhaseHandler implements IHasForgeLog {
         }
     }
 
+    private void declareBlockersFor(final Player p) {
+        // Apply Odric's effect here
+        final Player whoDeclaresBlockers = Objects.requireNonNullElse(p.getDeclaresBlockers(), p);
+        if (CombatUtil.canBlock(p, combat) || isAskedAnyway(whoDeclaresBlockers, p)) {
+            // Replacement effects (for Camouflage)
+            final Map<AbilityKey, Object> repRunParams = AbilityKey.mapFromAffected(p);
+            repRunParams.put(AbilityKey.Player, whoDeclaresBlockers);
+            ReplacementResult repres = game.getReplacementHandler().run(ReplacementType.DeclareBlocker, repRunParams);
+            if (repres == ReplacementResult.NotReplaced) {
+                if (!game.getUndoManager().isOwner(whoDeclaresBlockers)) {
+                    game.getUndoManager().barrier("Opponent declared blockers");
+                }
+                // If not replaced, run normal declare blockers
+                whoDeclaresBlockers.getController().declareBlockers(p, combat);
+                if (game.getJudge() != null && !whoDeclaresBlockers.getController().isAI()) {
+                    game.getJudge().checkBlocks(whoDeclaresBlockers, CombatUtil.validateBlocks(combat, p));
+                }
+            }
+        }
+    }
+
     private void declareBlockersTurnBasedAction() {
         Player p = playerTurn;
+        final PlayerCollection declared = new PlayerCollection();
+        final Map<Player, CardCollection> fromGraveyards = Maps.newHashMap();
 
         do {
             p = game.getNextPlayerAfter(p);
-            // Apply Odric's effect here
-            Player whoDeclaresBlockers = Objects.requireNonNullElse(p.getDeclaresBlockers(), p);
-            // Over My Dead Bodies: graveyard creatures can block only graveyard attackers, so they're offered only
-            // when one is attacking this player
-            CardCollection fromGraveyard = new CardCollection();
-            if (combat.isPlayerAttacked(p)) {
-                final Player defender = p;
-                if (combat.getAttackers().anyMatch(a -> GameAction.isAlsoInGraveyard(a)
-                        && defender.equals(combat.getDefenderPlayerByAttacker(a)))) {
-                    fromGraveyard = game.getAction().enlistGraveyardCombatants(p);
-                }
-            }
             // CR 805.10d: on a Two-Headed Giant team a player blocks for the whole defending team
-            final boolean teamAttacked = p.getGiantTeam().anyMatch(combat::isPlayerAttacked);
-            if (teamAttacked) {
-                if (CombatUtil.canBlock(p, combat) || isAskedAnyway(whoDeclaresBlockers, p)) {
-                    // Replacement effects (for Camouflage)
-                    final Map<AbilityKey, Object> repRunParams = AbilityKey.mapFromAffected(p);
-                    repRunParams.put(AbilityKey.Player, whoDeclaresBlockers);
-                    ReplacementResult repres = game.getReplacementHandler().run(ReplacementType.DeclareBlocker, repRunParams);
-                    if (repres == ReplacementResult.NotReplaced) {
-                        if (!game.getUndoManager().isOwner(whoDeclaresBlockers)) {
-                            game.getUndoManager().barrier("Opponent declared blockers");
+            final PlayerCollection defendingTeam = p.getGiantTeam();
+            if (!defendingTeam.anyMatch(combat::isPlayerAttacked)) {
+                continue;
+            }
+            if (!declared.contains(p)) {
+                declared.addAll(defendingTeam);
+                for (final Player defender : defendingTeam) {
+                    // Over My Dead Bodies: graveyard creatures can block only graveyard attackers, so they're offered only
+                    // when one is attacking this player
+                    if (combat.isPlayerAttacked(defender) && combat.getAttackers().anyMatch(a -> GameAction.isAlsoInGraveyard(a)
+                            && defender.equals(combat.getDefenderPlayerByAttacker(a)))) {
+                        fromGraveyards.put(defender, game.getAction().enlistGraveyardCombatants(defender));
+                    }
+                }
+                // the team's block must be legal as a whole once all its players have declared, or they declare again
+                for (int tries = 1; ; tries++) {
+                    for (final Player defender : defendingTeam) {
+                        declareBlockersFor(defender);
+                        if (game.isGameOver()) { // they just like to close window at any moment
+                            return;
                         }
-                        // If not replaced, run normal declare blockers
-                        whoDeclaresBlockers.getController().declareBlockers(p, combat);
-                        if (game.getJudge() != null && !whoDeclaresBlockers.getController().isAI()) {
-                            game.getJudge().checkBlocks(whoDeclaresBlockers, CombatUtil.validateBlocks(combat, p));
+                    }
+                    final String teamError = defendingTeam.size() > 1 ? CombatUtil.validateTeamBlock(combat, p) : null;
+                    if (teamError == null) {
+                        break;
+                    }
+                    if (tries >= 10) {
+                        // a team that can't settle on a legal block doesn't block
+                        for (final Card blocker : CardLists.filterControlledBy(combat.getAllBlockers(), defendingTeam)) {
+                            combat.undoBlockingAssignment(blocker);
                         }
+                        break;
+                    }
+                    for (final Player defender : defendingTeam) {
+                        Objects.requireNonNullElse(defender.getDeclaresBlockers(), defender).getController().notifyOfValue(null, null, teamError);
                     }
                 }
             }
-            else { continue; }
-
-            if (game.isGameOver()) { // they just like to close window at any moment
-                return;
-            }
+            final CardCollection fromGraveyard = fromGraveyards.getOrDefault(p, new CardCollection());
 
             // Handles removing cards like Mogg Flunkies from combat if group block didn't occur
             for (Card blocker : CardLists.filterControlledBy(combat.getAllBlockers(), p)) {
@@ -1111,7 +1137,8 @@ public class PhaseHandler implements IHasForgeLog {
             boolean reachedSteadyState;
             do {
                 reachedSteadyState = true;
-                List<Card> remainingBlockers = CardLists.filterControlledBy(combat.getAllBlockers(), p);
+                // a teammate's blockers count too: the team blocks together (CR 805.10d)
+                List<Card> remainingBlockers = CardLists.filterControlledBy(combat.getAllBlockers(), defendingTeam);
                 for (Card c : remainingBlockers) {
                     boolean removeBlocker = false;
                     boolean cantBlockAlone = c.hasKeyword("CARDNAME can't attack or block alone.") || c.hasKeyword("CARDNAME can't block alone.");
@@ -1287,9 +1314,16 @@ public class PhaseHandler implements IHasForgeLog {
 
         nextPlayer.setExtraTurnCount(getExtraTurnForPlayer(nextPlayer));
 
-        final Map<AbilityKey, Object> repRunParams = AbilityKey.mapFromAffected(nextPlayer);
-        repRunParams.put(AbilityKey.ExtraTurn, isExtraTurn);
-        ReplacementResult repres = game.getReplacementHandler().run(ReplacementType.BeginTurn, repRunParams);
+        // CR 805.8: a turn that any player on a Two-Headed Giant team skips, the team skips
+        ReplacementResult repres = ReplacementResult.NotReplaced;
+        for (final Player member : nextPlayer.getGiantTeam()) {
+            final Map<AbilityKey, Object> repRunParams = AbilityKey.mapFromAffected(member);
+            repRunParams.put(AbilityKey.ExtraTurn, isExtraTurn);
+            repres = game.getReplacementHandler().run(ReplacementType.BeginTurn, repRunParams);
+            if (repres != ReplacementResult.NotReplaced) {
+                break;
+            }
+        }
         if (repres != ReplacementResult.NotReplaced) {
             if (extraTurn == null) {
                 setPlayerTurn(nextPlayer);
@@ -1536,6 +1570,7 @@ public class PhaseHandler implements IHasForgeLog {
                 }
 
                 boolean rollback = false;
+                boolean acted = false;
                 for (SpellAbility sa : chosenSa) {
                     Card saHost = sa.getHostCard();
                     final Zone originZone = saHost.getZone();
@@ -1548,6 +1583,7 @@ public class PhaseHandler implements IHasForgeLog {
                         // 117.3c If a player has priority when they cast a spell, activate an ability, [play a land]
                         // that player receives priority afterward.
                         pFirstPriority = pPlayerPriority; // all opponents have to pass before stack is allowed to resolve
+                        acted = true;
                         if (getTableLink() != null && pPlayerPriority.getController().isAI()) {
                             getTableLink().afterAiAction();
                         }
@@ -1564,6 +1600,10 @@ public class PhaseHandler implements IHasForgeLog {
                         triggerList.put(originZone.getZoneType(), currentZone.getZoneType(), saHost);
                         triggerList.triggerChangesZoneAll(game, sa);
                     }
+                }
+                if (acted && pPlayerPriority.isOnGiantTeam()) {
+                    // CR 805.5: teams have priority, so the acting player's whole team gets it back, from its first player
+                    setPriority(pPlayerPriority.getGiantTeam().getFirst());
                 }
                 // Don't copy last state if we're in the middle of rolling back a spell...
                 if (!rollback) {

@@ -2806,8 +2806,14 @@ public class GameAction {
             // CR 810.8a: if either player on a Two-Headed Giant team loses the game, the team loses
             for (Player p : Lists.newArrayList(losers)) {
                 for (Player mate : p.getGiantTeam()) {
-                    if (!losers.contains(mate) && !mate.hasLost()
-                            && mate.loseConditionMet(p.getOutcome().lossState, p.getOutcome().loseConditionSpell)) {
+                    if (losers.contains(mate) || mate.hasLost()) {
+                        continue;
+                    }
+                    // CR 810.8b: a concession takes the team out at once
+                    if (p.conceded()) {
+                        mate.concede();
+                        losers.add(mate);
+                    } else if (mate.loseConditionMet(p.getOutcome().lossState, p.getOutcome().loseConditionSpell)) {
                         losers.add(mate);
                     }
                 }

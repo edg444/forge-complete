@@ -1941,7 +1941,7 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
             // an infraction can't be taken back
             undo.barrier(localizer.getMessage("lblJudgeTower"));
         } else if (!isMacroActive()) {
-            if (UndoManager.OWN_TURN_ONLY && getGame().getPhaseHandler().getPlayerTurn() != player) {
+            if (UndoManager.OWN_TURN_ONLY && !getGame().getPhaseHandler().isPlayerTurn(player)) {
                 undo.barrier("Opponent's turn");
             } else {
                 undo.checkpoint(getGame(), player);      // must come BEFORE the prompt is built
@@ -2659,6 +2659,9 @@ public class PlayerControllerHuman extends PlayerController implements IGameCont
         List<SpellAbility> orderedSAs = orderSimultaneousSa(activePlayerSAs);
         for (int i = orderedSAs.size() - 1; i >= 0; i--) {
             final SpellAbility next = orderedSAs.get(i);
+            if (playedByTeammate(next)) {
+                continue;
+            }
             if (next.isTrigger() && !next.isCopied()) {
                 PlaySpellAbility.playSpellAbility(this, player, next);
             } else {

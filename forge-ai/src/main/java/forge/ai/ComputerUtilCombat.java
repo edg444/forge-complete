@@ -373,6 +373,7 @@ public class ComputerUtilCombat {
         return ai.getPoisonCounters() + poison;
     }
 
+    /** The attackers whose damage reaches this player's life total: those attacking them, and in Two-Headed Giant those attacking a teammate (CR 810.4). */
     public static List<Card> getLifeThreateningCommanders(final Player ai, final Combat combat) {
         List<Card> res = Lists.newArrayList();
         for (Card c : combat.getAttackersOf(ai)) {

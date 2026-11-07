@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
+import java.util.stream.Collectors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Timer;
@@ -432,26 +433,23 @@ public class MatchController extends NetworkGuiGame {
         //TODO
     }
 
-    private PlayerView lastPlayer;
+    private List<PlayerView> lastPlayers = new ArrayList<>();
     @Override
     public void updatePhase(boolean saveState) {
         final PhaseType ph = getGameView().getPhase();
         if (ph != null) {
+            // a team that shares its turns shows the phase on each of its players
+            final List<PlayerView> takingTurn = getGameView().getPlayers().stream().filter(p -> p.sharesTeamWith(getGameView().getPlayerTurn())).collect(Collectors.toList());
             if (ph.isBefore(PhaseType.END_OF_TURN))
-                lastPlayer = getGameView().getPlayerTurn();
+                lastPlayers = takingTurn;
             //reset phase labels
             view.resetAllPhaseButtons();
-            final PlayerView turnPlayer = lastPlayer != null && PhaseType.CLEANUP.equals(ph) ? lastPlayer : getGameView().getPlayerTurn();
-            if (turnPlayer != null) {
-                // it's every head's turn on a Two-Headed Giant team (CR 805.4), so their panels light up too
-                for (final PlayerView p : getGameView().getPlayers()) {
-                    if (p.equals(turnPlayer) || turnPlayer.isGiantTeammateOf(p)) {
-                        final VPlayerPanel panel = view.getPlayerPanel(p);
-                        final VPhaseIndicator.PhaseLabel phaseLabel = panel == null ? null : panel.getPhaseIndicator().getLabel(ph);
-                        if (phaseLabel != null)
-                            phaseLabel.setActive(true);
-                    }
-                }
+            for (final PlayerView p : PhaseType.CLEANUP.equals(ph) && !lastPlayers.isEmpty() ? lastPlayers : takingTurn) {
+                //set phaselabel
+                final VPlayerPanel panel = view.getPlayerPanel(p);
+                final VPhaseIndicator.PhaseLabel phaseLabel = panel == null ? null : panel.getPhaseIndicator().getLabel(ph);
+                if (phaseLabel != null)
+                    phaseLabel.setActive(true);
             }
         }
 

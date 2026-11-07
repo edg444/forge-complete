@@ -283,7 +283,7 @@ public class AiController {
         for (final Card c : ccvGameBattlefield) {
             final String curse = c.getSVar("AICurseEffect");
             final Card host = sa.getHostCard();
-            if ("NonActive".equals(curse) && !player.equals(game.getPhaseHandler().getPlayerTurn())) {
+            if ("NonActive".equals(curse) && !game.getPhaseHandler().isPlayerTurn(player)) {
                 return true;
             } else if ("DestroyCreature".equals(curse) && sa.isSpell() && host.isCreature()
                     && !host.hasKeyword(Keyword.INDESTRUCTIBLE)) {
@@ -1570,7 +1570,9 @@ public class AiController {
         if (!(flatMcOverride != null ? flatMcOverride : game.getAIFlatMonteCarlo()) || flatMcOff() || simMode != null
                 || !getBoolProperty(AiProps.FLAT_MC_ENABLED)
                 || !(flatMcAttackOverride != null ? flatMcAttackOverride : getBoolProperty(AiProps.FLAT_MC_ATTACK) || isFlatMonteCarloMax() || isFlatMonteCarloLite())
-                || attacker != player || !game.getPhaseHandler().is(PhaseType.COMBAT_DECLARE_ATTACKERS)) {
+                || attacker != player || !game.getPhaseHandler().is(PhaseType.COMBAT_DECLARE_ATTACKERS)
+                // the rollouts choose a whole attack, so they would withdraw a teammate's attackers (CR 805.10b)
+                || combat.getAttackers().anyMatch(c -> !attacker.equals(c.getController()))) {
             return;
         }
         final FlatMonteCarloPicker.Config cfg = flatMonteCarloConfig();

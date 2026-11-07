@@ -1079,6 +1079,7 @@ public class AiBlockController {
         }
     }
     public void assignBlockersForCombat(final Combat combat, final CardCollection excludedBlockers) {
+        // TODO plan blocks together with teammates (CR 805.10d)
         List<Card> possibleBlockers = ai.getCreaturesInPlay();
         if (excludedBlockers != null && !excludedBlockers.isEmpty()) {
             possibleBlockers.removeAll(excludedBlockers);

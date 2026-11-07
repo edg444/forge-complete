@@ -951,6 +951,9 @@ public class VLobby implements ILobbyView {
                 populateDeckPanel(GameType.Constructed);
             }
             break;
+        case TwoHeadedGiant:
+            populateDeckPanel(GameType.Constructed);
+            break;
         case Commander:
         case Oathbreaker:
         case TinyLeaders:

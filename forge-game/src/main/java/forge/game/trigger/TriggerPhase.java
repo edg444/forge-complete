@@ -21,6 +21,7 @@ import java.util.Map;
 
 import forge.game.ability.AbilityKey;
 import forge.game.card.Card;
+import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.util.Localizer;
 
@@ -54,13 +55,20 @@ public class TriggerPhase extends Trigger {
      * @param runParams*/
     @Override
     public final boolean performTest(final Map<AbilityKey, Object> runParams) {
-        if (!matchesValidParam("ValidPlayer", runParams.get(AbilityKey.Player))) {
+        final Player player = (Player) runParams.get(AbilityKey.Player);
+        if (!matchesValidParam("ValidPlayer", player)) {
             return false;
         }
-        // CR 805.4d: a Two-Headed Giant team's turn runs this once per active player, but only a trigger about "that
-        // player" goes off for each of them - one that names no player goes off once, for the primary player's
-        if (!hasParam("ValidPlayer") && runParams.get(AbilityKey.Player) != getHostCard().getGame().getPhaseHandler().getPlayerTurn()) {
-            return false;
+        // CR 805.4d: an ability that doesn't refer to that player triggers once per team step, for the first active player it matches
+        if (getHostCard().getGame().hasGiantTeams() && !refersToTriggering(AbilityKey.Player)) {
+            for (final Player earlier : getHostCard().getGame().getPhaseHandler().getActivePlayers()) {
+                if (earlier.equals(player)) {
+                    break;
+                }
+                if (matchesValidParam("ValidPlayer", earlier)) {
+                    return false;
+                }
+            }
         }
         return true;
     }

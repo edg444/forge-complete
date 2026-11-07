@@ -432,7 +432,7 @@ public class Player extends GameEntity implements Comparable<Player> {
     }
 
     public void updateOpponentsForView() {
-        view.updateOpponents(this);
+        view.updateOpponentsAndTeam(this);
     }
 
     public void updateFlashbackForView() {
@@ -886,7 +886,8 @@ public class Player extends GameEntity implements Comparable<Player> {
         if (lifePayment > 0 && lifeTotal.life < lifePayment && !Infinity.isInfinite(lifeTotal.life)) {
             return false;
         }
-        return lifePayment <= 0 || !StaticAbilityCantGainLosePayLife.anyCantPayLife(this, effect, cause);
+        return lifePayment <= 0 || !StaticAbilityCantGainLosePayLife.anyCantPayLife(this, effect, cause)
+                && !getSharedTeam().anyMatch(p -> p != this && StaticAbilityCantGainLosePayLife.anyCantLoseLife(p));
     }
 
     public final boolean payLife(final int lifePayment, final SpellAbility cause, final boolean effect) {
@@ -1205,7 +1206,8 @@ public class Player extends GameEntity implements Comparable<Player> {
         if (!isInGame()) {
             return false;
         }
-        if (StaticAbilityCantPutCounter.anyCantPutCounter(this, type)) {
+        if (type.is(CounterEnumType.POISON) ? getSharedTeam().anyMatch(p -> StaticAbilityCantPutCounter.anyCantPutCounter(p, type))
+                : StaticAbilityCantPutCounter.anyCantPutCounter(this, type)) {
             return false;
         }
         return true;
@@ -2741,6 +2743,10 @@ public class Player extends GameEntity implements Comparable<Player> {
             Map<AbilityKey, Object> repParams = AbilityKey.mapFromAffected(this);
             repParams.put(AbilityKey.LoseReason, state);
             if (game.getReplacementHandler().run(ReplacementType.GameLoss, repParams) != ReplacementResult.NotReplaced) {
+                return false;
+            }
+            // CR 810.8a: a teammate who can't lose the game keeps the whole team in it
+            if (getSharedTeam().anyMatch(p -> p != this && p.cantLoseCheck(state))) {
                 return false;
             }
         }
@@ -4933,6 +4939,19 @@ public class Player extends GameEntity implements Comparable<Player> {
         }
 
         this.updateZoneForView(com);
+    }
+
+    /**
+     * Upstream's name for {@link #sharesTurnWith}: this player, or a teammate on a Two-Headed Giant team. The fork marks
+     * giant teams per team (Better Than One makes one mid-game), not per game.
+     */
+    public final boolean sharesTeamWith(final Player other) {
+        return sharesTurnWith(other);
+    }
+
+    /** Upstream's name for {@link #getGiantTeam}: the players who share a turn, life total and poison with this one. */
+    public final PlayerCollection getSharedTeam() {
+        return getGiantTeam();
     }
 
     public final boolean sameTeam(final Player other) {

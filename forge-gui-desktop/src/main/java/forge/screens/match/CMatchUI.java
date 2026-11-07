@@ -1034,28 +1034,21 @@ public final class CMatchUI
 
     @Override
     public void updatePhase(boolean saveState) {
-        final PlayerView p = getGameView().getPlayerTurn();
         final PhaseType ph = getGameView().getPhase();
-        // this should never happen, but I've seen it periodically... so, need to get to the bottom of it
-        PhaseLabel lbl = null;
-        if (ph != null) {
-            lbl = p == null ? null : getFieldViewFor(p).getPhaseIndicator().getLabelFor(ph);
-        } else {
-            // not sure what debugging information would help here, log for now
+        if (ph == null) {
+            // this should never happen, but I've seen it periodically... so, need to get to the bottom of it
             System.err.println("getGameView().getPhase() returned 'null'");
         }
 
         resetAllPhaseButtons();
-        if (lbl != null) {
-            lbl.setActive(true);
-        }
-        // it's every head's turn on a Two-Headed Giant team (CR 805.4), so their fields light up too
-        if (p != null && ph != null) {
-            for (final PlayerView mate : sortedPlayers) {
-                final VField field = p.isGiantTeammateOf(mate) ? getFieldViewFor(mate) : null;
-                final PhaseLabel mateLbl = field == null ? null : field.getPhaseIndicator().getLabelFor(ph);
-                if (mateLbl != null) {
-                    mateLbl.setActive(true);
+        if (ph != null) {
+            // a team that shares its turns shows the phase on each of its players
+            final PlayerView turnPlayer = getGameView().getPlayerTurn();
+            for (final PlayerView p : getGameView().getPlayers()) {
+                final VField field = p.sharesTeamWith(turnPlayer) ? getFieldViewFor(p) : null;
+                final PhaseLabel lbl = field == null ? null : field.getPhaseIndicator().getLabelFor(ph);
+                if (lbl != null) {
+                    lbl.setActive(true);
                 }
             }
         }

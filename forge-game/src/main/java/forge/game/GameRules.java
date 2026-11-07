@@ -148,6 +148,11 @@ public class GameRules {
                 || appliedVariants.contains(GameType.Brawl);
     }
 
+    /** Teams take turns and hold priority together (CR 805), as in Two-Headed Giant. */
+    public boolean hasSharedTeamTurns() {
+        return appliedVariants.contains(GameType.TwoHeadedGiant);
+    }
+
     public boolean useGrayText() {
         return useGrayText;
     }

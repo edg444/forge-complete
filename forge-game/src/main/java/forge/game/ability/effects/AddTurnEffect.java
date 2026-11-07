@@ -42,7 +42,7 @@ public class AddTurnEffect extends SpellAbilityEffect {
             return;
         }
 
-        for (final Player p : getTargetPlayers(sa)) {
+        for (final Player p : getTargetPlayersOnePerTeam(sa)) {
             if (!p.isInGame()) {
                 continue;
             }
