@@ -478,6 +478,39 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-06, thirty-sixth deploy (desktop, Android, GitHub) - five AI play fixes; upstream merge
+
+- **The AI only takes a land on top of its library when it wants one.** Silver Deputy's "search for a basic land or
+  Desert, put it on top" was taken every time, burying the next draw under a land the AI had no use for. Land-to-top
+  triggers (`ChangeZoneAi.wantsLandOnTop`: a library search to the top whose every candidate is a land) are now declined
+  when a mana land is already in hand, or when the AI would scry every candidate to the bottom. Dune Mover's trigger
+  is now optional, as printed ("you may").
+- **The AI no longer sacrifices a Lotus Ring creature for a worse one.** The Ring gives the equipped creature
+  "{T}, Sacrifice this creature: Add three mana", and the AI sacrificed a ringed 6/6 Bloodsworn Squire to cast a
+  second Squire. Sacrifice mana an Equipment or other static grants to its creature is now weighed like any other
+  sacrifice mana (`ManaSacrifice.sacrificesGrantedCreature`): the creature has to be worth less than what it pays for,
+  and the mana estimate leaves it out otherwise. A ringed token is still a fair trade. Lotus Ring's granted ability
+  now needs {T}, as printed.
+- **A permanent that raises a spell's count is cast before the spell.** The AI cast Storm of Forms ("copy it for each
+  kind of counter among permanents you control") and then Noble's Purse, whose coin counters would have made one
+  more copy. When the chosen spell has a count-based amount, `EnablerFirst` tries up to two affordable permanents in a
+  game copy and casts first the one that raises the count while keeping the spell payable.
+- **Creatures that gain nothing from the first main phase wait for the second again.** With Flat MC's broad
+  discovery (desktop's maximum setting), the AI cast every creature before combat: the rollout of the "pass" line
+  never plays on past combat, so the creature cast after combat was missing from its score. `FlatMcMain1Guard`
+  keeps such creatures out of discovery when the heuristics hold them for Main 2; haste, combo pieces and creatures
+  whose search finds something to cast this turn are rolled out as before.
+- **Eddytrail Hawk's energy isn't paid for a creature that flies anyway, and a saddled Brightfield Glider attacks
+  as the flier it becomes.** The Hawk's "pay {E}: another attacking creature gains flying" skips creatures that have
+  flying or get it from their own trigger still waiting to resolve (`SelfGrantedKeywords.hasOrWillGain`). The attack
+  AI now judges blockers against the attacker as its own free attack triggers leave it, so a saddled Glider is no
+  longer kept home by ground blockers that can't block it.
+- **Upstream merge** (472 commits, 7 conflicts, 2026-11-06). Brazen Collector, Cavalier of Thorns, Defend the
+  Celestus and Tenured Inkcaster keep the fork's Oracle wording (as on Scryfall) with upstream's script changes;
+  TypeLists takes both sides' new types; upstream's extra-turn count (`YourExtraTurns`) is kept beside the fork's
+  per-player turn counting and Gus. New upstream: TRK (Star Trek) cards and review fixes, Flat MC Trix/Channel, Dig,
+  Scry and Surveil choices with the deck plan, discovery of hidden-origin ChangeZone abilities.
+
 ### 2026-11-06, thirty-fifth deploy (desktop, Android, GitHub) - replays stay paused while a card is zoomed
 
 - **A paused replay stays paused while you look at a card**, until you press Resume. Long-pressing a card opens the
