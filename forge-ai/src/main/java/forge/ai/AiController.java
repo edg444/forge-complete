@@ -2679,7 +2679,10 @@ public class AiController {
             return false;
         }
         switch (opinion) {
-            case CantPlaySa, CantAfford, CantAffordX, TimingRestrictions, WouldDestroyLegend, WouldBecomeZeroToughnessCreature:
+            // NeedsToPlayVar is the script's own condition, which a rollout can't see past: Dack Fayden, Helping Hand
+            // with one opponent gives them a goaded creature that only attacks after the rollout has ended
+            case CantPlaySa, CantAfford, CantAffordX, TimingRestrictions, WouldDestroyLegend, WouldBecomeZeroToughnessCreature,
+                    NeedsToPlayCriteriaNotMet:
                 return false;
             default:
                 break;

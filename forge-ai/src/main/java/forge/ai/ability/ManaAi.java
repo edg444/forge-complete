@@ -7,6 +7,7 @@ import forge.card.mana.ManaAtom;
 import forge.card.mana.ManaCost;
 import forge.game.CardTraitPredicates;
 import forge.game.ability.AbilityUtils;
+import forge.game.ability.ApiType;
 import forge.game.card.*;
 import forge.game.cost.CostRemoveCounter;
 import forge.game.keyword.Keyword;
@@ -200,6 +201,7 @@ public class ManaAi extends SpellAbilityAi {
         String restrictValid = sa.getParamOrDefault("RestrictValid", "Card");
 
         CardCollection cardList = new CardCollection();
+        boolean xSpell = false;
         // TODO check other zones
         List<SpellAbility> all = ComputerUtilAbility.getSpellAbilities(ai.getCardsIn(ZoneType.Hand), ai);
         final List<SpellAbility> testable = ComputerUtilAbility.getOriginalAndAltCostAbilities(all, ai);
@@ -245,6 +247,7 @@ public class ManaAi extends SpellAbilityAi {
                 if (!cardList.contains(testSa.getHostCard())) {
                     cardList.add(testSa.getHostCard());
                 }
+                xSpell |= cost.countX() > 0;
             }
         }
 
@@ -261,8 +264,51 @@ public class ManaAi extends SpellAbilityAi {
             sa.setXManaCostPaid(Math.min(numCounters, maxCtrs));
         }
 
-        // TODO: this will probably still waste the card from time to time. Somehow improve detection of castable material.
-        return castableSpells.size() > 0;
+        if (castableSpells.isEmpty()) {
+            return false;
+        }
+        if (fromTrigger || xSpell) {
+            return true;
+        }
+        // Only worth a card when it lets the AI spend more than it already could. Pyretic Ritual into a second
+        // Pyretic Ritual into one 1R spell passed the check above each time: two untapped lands, or the RRR already
+        // floating, cast that spell without either ritual.
+        final int available = numManaSrcs + ai.getManaPool().totalMana();
+        final int withRitual = mostManaSpent(castableSpells, available + manaReceived - selfCost);
+        final int without = mostManaSpent(castableSpells, available);
+        // one that replaces itself (Manamorphose) is a free cycle as long as its mana still gets spent
+        return replacesItself(sa) ? withRitual >= without : withRitual > without;
+    }
+
+    private static boolean replacesItself(SpellAbility sa) {
+        for (SpellAbility sub = sa.getSubAbility(); sub != null; sub = sub.getSubAbility()) {
+            if (sub.getApi() == ApiType.Draw) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** The largest total mana value of a set of these spells that fits in the budget. */
+    static int mostManaSpent(Iterable<Card> spells, int budget) {
+        if (budget <= 0) {
+            return 0;
+        }
+        budget = Math.min(budget, 64);
+        final boolean[] reachable = new boolean[budget + 1];
+        reachable[0] = true;
+        for (Card c : spells) {
+            final int cmc = c.getCMC();
+            for (int s = budget; s >= cmc; s--) {
+                reachable[s] |= reachable[s - cmc];
+            }
+        }
+        for (int s = budget; s > 0; s--) {
+            if (reachable[s]) {
+                return s;
+            }
+        }
+        return 0;
     }
 
     private boolean improvesPosition(Player ai, SpellAbility sa) {

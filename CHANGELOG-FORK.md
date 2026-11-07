@@ -478,6 +478,23 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+- **Random decks get their basic lands from a random edition.** With Latest Art and Exclude The List, one of the
+  two random color decks nearly always had Marvel: Darkhold Destiny basics. The card art pass put about half of all
+  decks' basics on The List, and dropping List printings then took the newest other printing (MDD, dated 2027).
+  `DeckGeneratorBase.randomizeBasicLandEdition` now picks one edition that prints all five basics, at random, with
+  the deck's printing filter, the format's printings and the Card Art Preference's set types where any edition fits,
+  and pins them so the art pass leaves them alone. Test: `RandomBasicLandEditionTest`.
+- **The AI casts a mana ritual only when it lets it spend more mana.** It cast Pyretic Ritual, a second Pyretic Ritual
+  off the first one's mana, then one 1R spell its lands could have cast alone. `ManaAi.doManaRitualLogic` now also
+  counts mana already floating, and casts the ritual only if the spells it would enable use more mana than the AI
+  could already spend (best subset of their mana values; X spells and triggers keep the old check). One that draws
+  a card (Manamorphose) only has to not lose any. Test:
+  `ManaRitualNeedTest`.
+- **Dack Fayden, Helping Hand: the AI casts it only with two or more opponents.** With one opponent it hands that
+  opponent a goaded creature from your library that attacks you every turn. `SVar:NeedsToPlayVar:X GE2`. Flat MC
+  discovery no longer adds back a play whose NeedsToPlay condition failed (`AiController.isLegalDiscovery`): its
+  rollouts end before the goaded creature attacks. Test: `DackHelpingHandAiTest`.
+
 ### 2026-11-06, thirty-sixth deploy (desktop, Android, GitHub) - five AI play fixes; upstream merge
 
 - **The AI only takes a land on top of its library when it wants one.** Silver Deputy's "search for a basic land or

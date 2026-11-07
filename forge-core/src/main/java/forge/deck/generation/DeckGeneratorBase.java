@@ -62,6 +62,8 @@ public abstract class DeckGeneratorBase {
     protected IDeckGenPool landPool;
     protected final DeckFormat format;
     protected final IDeckGenPool fullCardDB;
+    private Predicate<PaperCard> formatFilter = null;
+    private boolean basicsRandomized = false;
 
     protected abstract float getLandPercentage();
     protected abstract float getCreaturePercentage();
@@ -71,6 +73,7 @@ public abstract class DeckGeneratorBase {
         pool = new DeckGenPool(format0.getCardPool(pool0).getAllCards(formatFilter0));
         format = format0;
         fullCardDB = pool0;
+        formatFilter = formatFilter0;
     }
 
     public DeckGeneratorBase(IDeckGenPool pool0, DeckFormat format0) {
@@ -401,6 +404,59 @@ public abstract class DeckGeneratorBase {
         return true;
     }
 
+    /**
+     * The basics come from a random edition that prints all five, pinned so Deck.optimiseCardArt leaves them alone.
+     * That pass moves basics to the edition closest to the deck's era, so with Latest Art every recent deck got the
+     * newest set with basics (Marvel: Darkhold Destiny, dated 2027, in November 2026). The edition still follows the
+     * format's printings and the Card Art Preference's set types and border where any edition does.
+     */
+    void randomizeBasicLandEdition() {
+        final CardDb.CardArtPreference pref = StaticData.instance().getCardArtPreference();
+        final int five = MagicColor.Constant.BASIC_LANDS.size();
+        final Map<String, Set<String>> basicsByEdition = new HashMap<>();
+        final Map<String, Set<String>> legalBasicsByEdition = new HashMap<>();
+        for (String name : MagicColor.Constant.BASIC_LANDS) {
+            for (PaperCard pc : StaticData.instance().getCommonCards().getAllCards(name)) {
+                if (!printingFilter.test(pc)) {
+                    continue;
+                }
+                basicsByEdition.computeIfAbsent(pc.getEdition(), k -> new HashSet<>()).add(name);
+                if (formatFilter == null || formatFilter.test(pc)) {
+                    legalBasicsByEdition.computeIfAbsent(pc.getEdition(), k -> new HashSet<>()).add(name);
+                }
+            }
+        }
+        final List<String> all = new ArrayList<>();
+        final List<String> inFormat = new ArrayList<>();
+        final List<String> preferred = new ArrayList<>();
+        final List<String> both = new ArrayList<>();
+        for (Entry<String, Set<String>> e : basicsByEdition.entrySet()) {
+            if (e.getValue().size() < five) {
+                continue;
+            }
+            final String code = e.getKey();
+            final boolean fmt = legalBasicsByEdition.getOrDefault(code, Set.of()).size() == five;
+            final boolean pref0 = pref.accept(StaticData.instance().getCardEdition(code));
+            all.add(code);
+            if (fmt) inFormat.add(code);
+            if (pref0) preferred.add(code);
+            if (fmt && pref0) both.add(code);
+        }
+        for (List<String> editions : List.of(both, inFormat, preferred, all)) {
+            if (editions.isEmpty()) {
+                continue;
+            }
+            Collections.sort(editions);  // HashMap order would make a seeded test unrepeatable
+            final String code = editions.get(MyRandom.getRandom().nextInt(editions.size()));
+            if (setBasicLandPool(code)) {
+                basicLandEdition = code;
+                pinnedPrintings.addAll(MagicColor.Constant.BASIC_LANDS);
+                trace.append("Basic lands from ").append(code).append("\n");
+            }
+            return;
+        }
+    }
+
     protected int addSome(int cnt, List<PaperCard> source) {
         int srcLen = source.size();
         if (srcLen == 0) { return 0; }
@@ -467,6 +523,10 @@ public abstract class DeckGeneratorBase {
     }
     protected void addBasicLand(int cnt, String edition) {
         trace.append(cnt).append(" basic lands remain").append("\n");
+        if (edition == null && !basicsRandomized) {
+            basicsRandomized = true;
+            randomizeBasicLandEdition();
+        }
 
         // attempt to optimize basic land counts according to colors of picked cards
         final Map<String, Integer> clrCnts = countLands(tDeck);
