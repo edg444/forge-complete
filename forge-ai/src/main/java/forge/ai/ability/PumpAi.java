@@ -525,7 +525,10 @@ public class PumpAi extends PumpAiBase {
         if (attack == 0 && defense == 0 && !keywords.isEmpty()) {
             // granting the same keywords twice is wasted (an earlier trigger of this ability may already target it)
             final CardCollection twinned = ComputerUtil.targetedByPendingTwins(ai, sa);
-            list = CardLists.filter(list, c -> !twinned.contains(c));
+            // so is a keyword the creature has, or gets from its own trigger waiting beside this one (a triggered
+            // pump approves any attacker in shouldPumpCard without asking what the keyword adds)
+            list = CardLists.filter(list, c -> !twinned.contains(c)
+                    && !keywords.stream().allMatch(kw -> SelfGrantedKeywords.hasOrWillGain(c, kw, sa)));
         }
 
         if (list.isEmpty() && (mandatory || ComputerUtil.activateForCost(sa, ai))) {

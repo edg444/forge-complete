@@ -1656,7 +1656,7 @@ public class ComputerUtilMana {
                 ma.setActivatingPlayer(p);
                 // mana that needs a sacrifice only counts when something that costs next to nothing can be given up
                 if (!checkPlayable || ma.canPlay()) {
-                    if (ManaSacrifice.isSacrificeMana(ma) && !ManaSacrifice.hasExpendableFodder(p, ma)) {
+                    if (!ManaSacrifice.hasExpendableFodder(p, ma)) {
                         continue;
                     }
                     int costsToActivate = getManaToActivate(ma);

@@ -1374,7 +1374,7 @@ public class AiAttackController {
                     AITimeoutTracker.check();
                     final Card attacker = left.get(i);
                     if (aiAggression < 5 && !attacker.hasFirstStrike() && !attacker.hasDoubleStrike()
-                            && ComputerUtilCombat.getTotalFirstStrikeBlockPower(attacker, defendingOpponent)
+                            && ComputerUtilCombat.getTotalFirstStrikeBlockPower(SelfGrantedKeywords.asAttacking(attacker, combat), defendingOpponent)
                             >= ComputerUtilCombat.getDamageToKill(attacker, false)) {
                         continue;
                     }
@@ -1681,7 +1681,9 @@ public class AiAttackController {
                     || attacker.isWitherDamage() || attacker.hasKeyword(Keyword.LIFELINK) || attacker.hasKeyword(Keyword.AFFLICT);
 
             // contains only the defender's blockers that can actually block the attacker
-            CardCollection validBlockers = CardLists.filter(defenders, defender1 -> CombatUtil.canBlock(attacker, defender1));
+            // blockers come after the attacker's own attack triggers resolved: a saddled Brightfield Glider flies by then
+            final Card asAttacking = SelfGrantedKeywords.asAttacking(attacker, combat);
+            CardCollection validBlockers = CardLists.filter(defenders, defender1 -> CombatUtil.canBlock(asAttacking, defender1));
 
             canTrampleOverDefenders = attacker.hasKeyword(Keyword.TRAMPLE) && attacker.getNetCombatDamage() > Aggregates.sum(validBlockers, Card::getNetToughness);
 

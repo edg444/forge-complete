@@ -2129,6 +2129,10 @@ public class AiController {
             chosenSa = chooseSpellAbilityToPlayFromList(saList, true);
         }
 
+        if (chosenSa != null && reactiveMode == null && !topOwnedByAI) {
+            chosenSa = enablerFirst(chosenSa, saList);
+        }
+
         if (topOwnedByAI && !mustRespond && chosenSa != ComputerUtilAbility.getFirstCopySASpell(saList)) {
             return null; // not planning to copy the spell and not marked as something the AI would respond to
         }
@@ -2625,6 +2629,9 @@ public class AiController {
             // know which: their "not now" is final, and the rollouts cannot see the waste (nothing in the score)
             return false;
         }
+        if (FlatMcMain1Guard.waitsForMain2(this, player, sa)) {
+            return false; // the pass line's rollout never casts it after combat, so "now" would always look better
+        }
         final Card host = sa.getHostCard();
         final ComboPlan combos = deckPlan(player).combos;
         if (!FlatMonteCarloPicker.isDiscoverable(sa, getBoolProperty(AiProps.FLAT_MC_BROAD_DISCOVERY) || isFlatMonteCarloMax())
@@ -2663,6 +2670,34 @@ public class AiController {
     }
 
     /** The heuristic verdict on one play, the way the spell choice loop asks for it. */
+    private SpellAbility enablerFirst(final SpellAbility payoff, final List<SpellAbility> plays) {
+        if (game.isSimulationCopy()) {
+            return payoff; // a rollout copying the game again for every decision would cost more than the rollout
+        }
+        try {
+            // "wait for Main 2" is only the timing rule of thumb: the payoff is cast now, so the permanent is too
+            final SpellAbility enabler = forge.ai.simulation.EnablerFirst.before(player, payoff, plays, sa -> {
+                final AiPlayDecision d = playDecision(sa);
+                if (d == AiPlayDecision.WillPlay || d == AiPlayDecision.WaitForMain2) {
+                    return true;
+                }
+                // canPlaySa reports a permanent held for Main 2 as CantPlayAi, so ask its own AI why
+                final AiPlayDecision why = d != AiPlayDecision.CantPlayAi ? d
+                        : SpellApiToAi.Converter.get(sa).canPlayWithSubs(player, sa).decision();
+                return why == AiPlayDecision.MissingPhaseRestrictions || why == AiPlayDecision.WaitForMain2;
+            });
+            if (enabler == null) {
+                return payoff;
+            }
+            enabler.setActivatingPlayer(player);
+            return enabler;
+        } catch (final AITimeoutTracker.Expired e) {
+            throw e;
+        } catch (final RuntimeException e) {
+            return payoff;
+        }
+    }
+
     private AiPlayDecision playDecision(final SpellAbility sa) {
         sa.setActivatingPlayer(player);
         final SpellAbility root = sa.getRootAbility();

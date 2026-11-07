@@ -762,8 +762,26 @@ public class ChangeZoneAi extends SpellAbilityAi {
             if (list.isEmpty()) {
                 return new AiAbilityDecision(0, AiPlayDecision.MissingNeededCards);
             }
+
+            if (p == ai && !wantsLandOnTop(ai, sa, origin, list)) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            }
         }
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+    }
+
+    // A land tutored to the top replaces the next draw, which beats a random card only while the AI is short on lands
+    // (Silver Deputy, Campus Guide, Compass Gnome...): never with a land in hand, else by the Scry rule
+    private static boolean wantsLandOnTop(final Player ai, final SpellAbility sa, final List<ZoneType> origin, final CardCollectionView list) {
+        if (origin.size() != 1 || origin.get(0) != ZoneType.Library
+                || !"Library".equals(sa.getParam("Destination")) || !"0".equals(sa.getParam("LibraryPosition"))
+                || !Iterables.all(list, Card::isLand)) {
+            return true;
+        }
+        if (Iterables.any(ai.getCardsIn(ZoneType.Hand), CardPredicates.LANDS_PRODUCING_MANA::test)) {
+            return false;
+        }
+        return Iterables.any(list, c -> !ComputerUtil.scryWillMoveCardToBottomOfLibrary(ai, c));
     }
 
     // *********** Utility functions for Hidden ********************

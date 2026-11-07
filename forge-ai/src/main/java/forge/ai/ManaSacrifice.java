@@ -72,13 +72,35 @@ public final class ManaSacrifice {
      * Whether the AI should pay for {@code paidFor} with this mana ability. True for every ability that does not
      * sacrifice something, and for a player that is not an AI (the human pays by hand).
      */
+    /**
+     * Whether this mana ability sacrifices its own source, a creature, and was given to it by something else (Lotus
+     * Ring, Basal Sliver). A creature with such mana of its own (Blood Pet, Tinder Wall) was made to be cashed in; one
+     * that was given it is a real creature, often the one wearing the equipment that gave it.
+     */
+    public static boolean sacrificesGrantedCreature(final SpellAbility ma) {
+        if (ma == null || !ma.isManaAbility() || ma.getGrantorStatic() == null || ma.getPayCosts() == null) {
+            return false;
+        }
+        final Card host = ma.getHostCard();
+        if (host == null || !host.isCreature()) {
+            return false;
+        }
+        for (final CostPart part : ma.getPayCosts().getCostParts()) {
+            if (part instanceof CostSacrifice && part.payCostFromSource()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static boolean worthIt(final Player ai, final SpellAbility ma, final SpellAbility paidFor) {
         final CostSacrifice part = sacrificePart(ma);
-        if (part == null || ai == null || !ai.isAI() || paidFor == null || paidFor.isManaAbility()) {
+        final boolean grantedSelf = part == null && sacrificesGrantedCreature(ma);
+        if (part == null && !grantedSelf || ai == null || !ai.isAI() || paidFor == null || paidFor.isManaAbility()) {
             return true;
         }
         try {
-            final CardCollection given = chosen(ai, part, ma);
+            final CardCollection given = grantedSelf ? new CardCollection(ma.getHostCard()) : chosen(ai, part, ma);
             if (given == null || given.isEmpty()) {
                 return true; // the payment code will find out that nothing can be sacrificed
             }
@@ -98,14 +120,15 @@ public final class ManaSacrifice {
     /** Whether the mana of this ability can be planned on: something that costs next to nothing can be given up. */
     public static boolean hasExpendableFodder(final Player p, final SpellAbility ma) {
         final CostSacrifice part = sacrificePart(ma);
-        if (part == null) {
+        final boolean grantedSelf = part == null && sacrificesGrantedCreature(ma);
+        if (part == null && !grantedSelf) {
             return true;
         }
         if (!p.isAI()) {
             return true; // a human decides for themselves
         }
         try {
-            final CardCollection given = chosen(p, part, ma);
+            final CardCollection given = grantedSelf ? new CardCollection(ma.getHostCard()) : chosen(p, part, ma);
             if (given == null || given.isEmpty()) {
                 return false;
             }
