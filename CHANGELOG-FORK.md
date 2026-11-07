@@ -186,7 +186,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   forms mid-game. One turn: `PhaseHandler.isPlayerTurn` is true for every head, `getActivePlayers()` lists them
   (primary first), and each head untaps, draws, plays a land, discards to hand size, and gets its "that player"
   phase triggers (`TriggerPhase`/`TriggerTurnBegin` fire triggers naming no player once, on the primary's run).
-  Turn hand-off skips teammates (`nextTurnAfter`); a skip or added step one head gets, the team gets (805.8).
+  Turn hand-off skips teammates (`nextTurnAfter`); a skip or added step one head gets, the team gets (805.8), and a
+  turn any head would skip (a BeginTurn replacement on any of them) the team skips. After a head acts, priority goes
+  back to the team's first player (805.5). Upstream's names `getSharedTeam`/`sharesTeamWith` delegate to
+  `getGiantTeam`/`sharesTurnWith`, and `PlayerView.sharesTeamWith` reads the `SharedTeam` property.
 - **Shared life** — teammates hold one `Player.LifeTotal` (`joinLifeTotal`, `getLifeSharers`), so gains, losses and
   payments still happen to each player (triggers, replacements, life lost this turn) while the total is the team's.
   Can't-gain/can't-lose-life (810.9g/h) and can't-lose/can't-win the game (810.8a) are team-wide.
@@ -194,8 +197,10 @@ Game's Giant Teddy Bear is pink; "choose a color" prompts still offer exactly fi
   teammates when needed (810.10b), `getOpponentsTotalPoisonCounters` counts a team once, and a team of n loses at
   `getPoisonCountersToLose()` = 5n + 5.
 - **Team combat** — each head declares into one combined attack (805.10b); a defender may block creatures attacking
-  any player on their team (805.10d, `CombatUtil.canBeBlocked`). AI blocks and danger checks count attackers aimed
-  at teammates (`ComputerUtilCombat.getAttackersOfTeam`).
+  any player on their team (805.10d, `CombatUtil.canBeBlocked`). The defending team declares together, and its
+  combined block is checked once (`CombatUtil.validateTeamBlock`; `validateBlocks` skips the per-player check for a
+  team) and declared again if illegal, up to ten times before the team's blocks are dropped. AI blocks and danger
+  checks count attackers aimed at teammates (`ComputerUtilCombat.getAttackersOfTeam`).
 - **Starting team** — whoever starts, their team's primary player takes the first turn (103.1a, 805.2); mulligans
   are declared by everyone, starting team first, then taken together (`MulliganService.runTeamMulligans`, 805.3a).
 - **Proliferate** — one poison counter per team however many heads are chosen (701.34b); heads count their team's
@@ -476,7 +481,7 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ## Log
 
-### Unreleased
+### 2026-11-07, thirty-seventh deploy (desktop, Android, GitHub) - Two-Headed Giant merged with upstream's; random basic lands, Pyretic Ritual and Dack AI fixes; upstream merge
 
 - **Random decks get their basic lands from a random edition.** With Latest Art and Exclude The List, one of the
   two random color decks nearly always had Marvel: Darkhold Destiny basics. The card art pass put about half of all
@@ -494,6 +499,24 @@ off, a human plays through the prompts of phases 1 and 2).
   opponent a goaded creature from your library that attacks you every turn. `SVar:NeedsToPlayVar:X GE2`. Flat MC
   discovery no longer adds back a play whose NeedsToPlay condition failed (`AiController.isLegalDiscovery`): its
   rollouts end before the goaded creature attacks. Test: `DackHelpingHandAiTest`.
+- **Two-Headed Giant takes the rules upstream's own version added.** Upstream built its own Two-Headed Giant
+  (#12587); the fork keeps its team model (shared life total, Three-Headed Giant, Better Than One) and adds:
+  - a team gets priority back as a whole, from its first player, after either player casts or activates something
+    (CR 805.5);
+  - a turn either player would skip, the team skips (805.8);
+  - a defending team declares one combined block, checked as a whole and declared again if it's illegal, so a
+    teammate can complete a menace block (805.10d);
+  - a player can't pay life while a teammate can't lose life, poison immunity covers the team, a teammate who can't
+    lose keeps the team in, and a concession takes the whole team out (810.8);
+  - each teammate's own attack requirements in the team's attack, and "each player's upkeep" cards check that
+    player's cards rather than the active player's (Rivalry, Oath of Lieges, Tangle Wire and others).
+  Tests: upstream's suite runs as `UpstreamTwoHeadedGiantTest` beside the fork's `TwoHeadedGiantTest`.
+- **Upstream merge** (30 commits in three steps, 98 conflicts, 2026-11-07). Card scripts take upstream's
+  TriggeredPlayer rewrites with the fork's Oracle wording, and keep the fork's Oath of Lieges and Oath of Scholars
+  prompts (upstream's Scholars prompt asked for "more life"). Opulent Clomper takes upstream's script, whose
+  `ExcludeColorsFrom` replaces the fork's `ExcludeOwnColors`. New upstream: Two-Headed Giant (above), TRK/TRC
+  scripts moved out of upcoming, Alchemy cards, Realm of Legends 1.091, TRK draft rankings, and
+  `ForceRevealToController` removed from card scripts.
 
 ### 2026-11-06, thirty-sixth deploy (desktop, Android, GitHub) - five AI play fixes; upstream merge
 
