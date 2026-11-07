@@ -2695,6 +2695,9 @@ public class AiController {
         if (FlatMcMain1Guard.waitsForMain2(this, player, sa)) {
             return false; // the pass line's rollout never casts it after combat, so "now" would always look better
         }
+        if (ActivationGuard.problem(player, sa) != null) {
+            return false; // nothing to act on: a discovered tap or mana for no effect (Oran-Rief with no new green creature)
+        }
         final Card host = sa.getHostCard();
         final ComboPlan combos = deckPlan(player).combos;
         if (!FlatMonteCarloPicker.isDiscoverable(sa, getBoolProperty(AiProps.FLAT_MC_BROAD_DISCOVERY) || isFlatMonteCarloMax())
