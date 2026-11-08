@@ -1210,6 +1210,7 @@ public class AttachAi extends SpellAbilityAi {
         if (totToughness + totPower < 4 && (!keywords.isEmpty() || grantingExtraBlock)) {
             final int pow = totPower;
             final boolean extraBlock = grantingExtraBlock;
+            final CardCollection beforeKeywords = prefList;
             prefList = CardLists.filter(prefList, c -> {
                 if (!keywords.isEmpty()) {
                     for (final String keyword : keywords) {
@@ -1228,6 +1229,14 @@ public class AttachAi extends SpellAbilityAi {
                 }
                 return false;
             });
+            // Equipment stays on the battlefield, so a small bonus is still worth an equip on a creature that fights
+            // with it (Strider Harness's +1/+1 when no creature needs its haste); an Aura would be a card spent on it
+            if (prefList.isEmpty() && attachSource.isEquipment() && totPower + totToughness > 0) {
+                final int tgh = totToughness;
+                prefList = CardLists.filter(beforeKeywords, c -> c.isCreature()
+                        && (pow > 0 && c.getNetPower() + pow > 0 && ComputerUtilCombat.canAttackNextTurn(c)
+                            || tgh > 0 && CombatUtil.canBlock(c, true)));
+            }
         }
 
         //some auras/equipment aren't useful in multiples

@@ -3,6 +3,7 @@ package forge.ai.simulation;
 import forge.ai.AiController;
 import forge.ai.AiProps;
 import forge.ai.ComputerUtil;
+import forge.ai.ComputerUtilAbility;
 import forge.ai.ComputerUtilMana;
 import forge.ai.PlayerControllerAi;
 import forge.ai.simulation.GameStateEvaluator.Score;
@@ -11,6 +12,7 @@ import forge.game.GameEntity;
 import forge.game.GameObject;
 import forge.game.ability.ApiType;
 import forge.game.card.Card;
+import forge.game.card.CardCollection;
 import forge.game.keyword.Keyword;
 import forge.game.phase.PhaseHandler;
 import forge.game.phase.PhaseType;
@@ -1144,7 +1146,7 @@ public final class FlatMonteCarloPicker {
         GameEntity best = null;
         int bestRank = Integer.MIN_VALUE;
         for (final GameEntity e : tr.getAllCandidates(ts)) {
-            if (!(e instanceof Card) || !Boolean.FALSE.equals(isOwnSide(player, e))) {
+            if (!(e instanceof Card) || !Boolean.FALSE.equals(isOwnSide(player, e)) || wastedTarget(player, ts, e)) {
                 continue;
             }
             final int rank = targetRank(player, e);
@@ -1196,7 +1198,8 @@ public final class FlatMonteCarloPicker {
         final List<GameEntity> usable = new ArrayList<>();
         for (final GameEntity e : candidates) {
             // never offer the legend the AI already has working as a target to bring back: the legend rule ends it
-            if (e != current && wantsOwn == isOwnSide(player, e) && !ComboGuard.wouldBreakLegendRule(player, ts, e)) {
+            if (e != current && wantsOwn == isOwnSide(player, e) && !ComboGuard.wouldBreakLegendRule(player, ts, e)
+                    && !wastedTarget(player, ts, e)) {
                 usable.add(e);
             }
         }
@@ -1205,6 +1208,18 @@ public final class FlatMonteCarloPicker {
             result.add(usable.get(i));
         }
         return result;
+    }
+
+    /**
+     * A target the play can't change: tapping a permanent that is already tapped, or one a tap on the stack already aims
+     * at. Rollouts barely see the cost of such a play (Storm Elemental exiles a card of the AI's library each time), so
+     * the noise between it and passing picked it over and over.
+     */
+    static boolean wastedTarget(final Player player, final SpellAbility ts, final GameEntity e) {
+        if (ts.getApi() != ApiType.Tap || !(e instanceof Card c)) {
+            return false;
+        }
+        return !c.canTap() || !ComputerUtilAbility.getCardsTargetedWithApi(player, new CardCollection(c), null, ApiType.Tap).isEmpty();
     }
 
     /** True for the AI itself and its permanents, false for opponents and theirs, null for anything else. */

@@ -481,6 +481,18 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ## Log
 
+### Unreleased
+
+- **The AI equips small bonuses.** Strider Harness (+1/+1 and haste, equip {1}) stayed unattached unless a creature
+  was summoning sick: under +4 total, Equipment counted only through its keywords. When no creature wants the
+  keywords, Equipment now goes on a creature that attacks with the power bonus or blocks with the toughness bonus
+  (`AttachAi.attachAIPumpPreference`); Auras keep the old rule. Test: `StriderHarnessEquipAiTest`.
+- **Evie Frye discards after drawing.** Its script made the discard optional. Test: `EvieFryeDiscardTest`.
+- **The Monte Carlo AI no longer taps tapped creatures.** Its discovered plays and other targets offered a tapped
+  creature, or one a tap on the stack already aims at, as a Tap target, and rollouts barely tell that from passing;
+  Storm Elemental exiled its own library away doing it (`FlatMonteCarloPicker.wastedTarget`). Test:
+  `StormElementalTapTargetTest`.
+
 ### 2026-11-07, thirty-seventh deploy (desktop, Android, GitHub) - Two-Headed Giant merged with upstream's; random basic lands, Pyretic Ritual and Dack AI fixes; upstream merge
 
 - **Random decks get their basic lands from a random edition.** With Latest Art and Exclude The List, one of the
