@@ -481,7 +481,7 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ## Log
 
-### Unreleased
+### 2026-11-08, thirty-eighth deploy (desktop, Android, GitHub) - Strider Harness equip, Evie Frye, Storm Elemental and Vintage restricted-card fixes; upstream merge
 
 - **The AI equips small bonuses.** Strider Harness (+1/+1 and haste, equip {1}) stayed unattached unless a creature
   was summoning sick: under +4 total, Equipment counted only through its keywords. When no creature wants the
@@ -496,6 +496,8 @@ off, a human plays through the prompts of phases 1 and 2).
   spells out of with more copies of the spells it already plays, up to four, and didn't know the restricted list: Control
   Grixis came out with two Mental Missteps and Dark Depths Dragon with three Demonic Tutors. `DeckManaBase.fix` takes
   the format's restricted cards now. Tests: `DeckManaBaseTest`, `FormatRandomDeckTest`.
+- **Upstream merge** (6 commits, no conflicts, 2026-11-08): Flat MC Planeswalker loyalty plays and combo assembly,
+  Adventure items that start cards in hand or suspended and raise maximum hand size, Realm of Legends inventory.
 
 ### 2026-11-07, thirty-seventh deploy (desktop, Android, GitHub) - Two-Headed Giant merged with upstream's; random basic lands, Pyretic Ritual and Dack AI fixes; upstream merge
 
