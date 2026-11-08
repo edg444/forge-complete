@@ -184,4 +184,22 @@ public class DeckManaBaseTest extends AITest {
         AssertJUnit.assertEquals(0, deck.getMain().count(card("Junkyo Bell")));
         AssertJUnit.assertTrue("nothing the AI cannot play is left", DeckManaBase.uncastable(deck.getMain()).isEmpty());
     }
+
+    /** Vintage archetype decks, 2026-11-07: the refill took restricted cards to two and three copies. */
+    @Test
+    public void refillNeverAddsASecondRestrictedCard() {
+        initAndCreateGame();
+        final Deck deck = new Deck("test");
+        add(deck, "Island", 25); // enough lands that the refill adds spells
+        add(deck, "Brainstorm", 4);
+        add(deck, "Counterspell", 4);
+        add(deck, "Ancestral Recall", 1);
+        add(deck, "Time Walk", 1);
+        add(deck, "Explore", 2); // dead without green mana, and too few to earn Forests
+        AssertJUnit.assertEquals("two removed, two added", 4, DeckManaBase.fix(deck, List.of("Ancestral Recall", "Time Walk")));
+        AssertJUnit.assertEquals(37, deck.getMain().countAll());
+        AssertJUnit.assertEquals(1, deck.getMain().countByName("Ancestral Recall"));
+        AssertJUnit.assertEquals(1, deck.getMain().countByName("Time Walk"));
+        AssertJUnit.assertEquals(0, deck.getMain().countByName("Explore"));
+    }
 }

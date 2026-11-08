@@ -8,6 +8,8 @@ import forge.card.mana.ManaCost;
 import forge.item.PaperCard;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -117,6 +119,14 @@ public final class DeckManaBase {
      * @return the number of cards that were changed (added or removed); zero when the deck was fine
      */
     public static int fix(final Deck deck) {
+        return fix(deck, Collections.emptyList());
+    }
+
+    /**
+     * @param restricted names of the cards the format allows one copy of, which a refill never adds another of (Vintage
+     *            archetype decks came out with two Mental Missteps and three Demonic Tutors)
+     */
+    public static int fix(final Deck deck, final Collection<String> restricted) {
         final CardPool main = deck.getMain();
         final int size = main.countAll();
         int changed = 0;
@@ -163,7 +173,7 @@ public final class DeckManaBase {
         // 3. back to the original size with what the deck can use
         int missing = size - main.countAll();
         while (missing > 0) {
-            final PaperCard add = refillCard(main);
+            final PaperCard add = refillCard(main, restricted);
             if (add == null) {
                 break;
             }
@@ -288,7 +298,7 @@ public final class DeckManaBase {
      * The card that takes the place of one that was removed: a basic land of the colour the deck is shortest of while
      * it has few lands, else one more copy of the spell it plays most copies of (never past four, one for legends).
      */
-    private static PaperCard refillCard(final CardPool main) {
+    private static PaperCard refillCard(final CardPool main, final Collection<String> restricted) {
         final byte available = availableColors(main);
         final int lands = main.countAll(c -> c.getRules().getType().isLand());
         if (lands < MAX_LANDS_WHEN_REFILLING) {
@@ -305,7 +315,8 @@ public final class DeckManaBase {
                 continue;
             }
             final int count = main.countByName(e.getKey());
-            final int max = rules.getType().isLegendary() || rules.getType().isPlaneswalker() ? 1 : 4;
+            final int max = rules.getType().isLegendary() || rules.getType().isPlaneswalker()
+                    || restricted.contains(e.getKey().getName()) ? 1 : 4;
             if (count < max && count > bestCount) {
                 bestCount = count;
                 best = e.getKey();

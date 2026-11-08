@@ -130,6 +130,24 @@ public class FormatRandomDeckTest extends AITest {
         }
     }
 
+    /**
+     * 2026-11-07: Control Grixis Vintage came out with two Mental Missteps. A restricted card that filled the main deck
+     * from the full pool left its own copy unused, and the unused cards became the sideboard.
+     */
+    @Test
+    public void vintageArchetypeDecksKeepOneOfEachRestrictedCard() {
+        initAndCreateGame();
+        AssertJUnit.assertTrue(CardArchetypeLDAGenerator.initialize());
+        final GameFormat format = DeckType.VINTAGE_CARDGEN_DECK.getArchetypeFormat();
+        for (int round = 0; round < 3; round++) {
+            for (final DeckProxy proxy : ArchetypeDeckGenerator.getMatrixDecks(format, round % 2 == 0)) {
+                final Deck deck = proxy.getDeck();
+                final String problem = format.getDeckConformanceProblem(deck);
+                AssertJUnit.assertNull(proxy.getName() + ": " + problem + "\n" + deck.getMain() + "\n" + deck.get(forge.deck.DeckSection.Sideboard), problem);
+            }
+        }
+    }
+
     /** Sign in Blood is both its own card and the back of Scheming Silvertongue, a rare that isn't legal in Pauper. */
     @Test
     public void aSpellNeverTurnsIntoTheCardWhoseBackCopiesIt() {

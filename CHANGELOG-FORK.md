@@ -492,6 +492,10 @@ off, a human plays through the prompts of phases 1 and 2).
   creature, or one a tap on the stack already aims at, as a Tap target, and rollouts barely tell that from passing;
   Storm Elemental exiled its own library away doing it (`FlatMonteCarloPicker.wastedTarget`). Test:
   `StormElementalTapTargetTest`.
+- **Vintage archetype decks keep one of each restricted card.** The mana base check refills a deck it swapped dead
+  spells out of with more copies of the spells it already plays, up to four, and didn't know the restricted list: Control
+  Grixis came out with two Mental Missteps and Dark Depths Dragon with three Demonic Tutors. `DeckManaBase.fix` takes
+  the format's restricted cards now. Tests: `DeckManaBaseTest`, `FormatRandomDeckTest`.
 
 ### 2026-11-07, thirty-seventh deploy (desktop, Android, GitHub) - Two-Headed Giant merged with upstream's; random basic lands, Pyretic Ritual and Dack AI fixes; upstream merge
 

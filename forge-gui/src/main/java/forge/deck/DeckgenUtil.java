@@ -252,7 +252,7 @@ public class DeckgenUtil {
             deck=buildLDACArchetypeDeck(format,isForAI);
         }
         // spells of a colour the lands cannot make are dead cards (and a fetch land with nothing to find is a tapped land)
-        DeckManaBase.fix(deck);
+        DeckManaBase.fix(deck, format.getRestrictedCards());
         while(deck.get(DeckSection.Sideboard).countAll()>15){
             deck.get(DeckSection.Sideboard).remove(deck.get(DeckSection.Sideboard).get(0));
         }
@@ -361,7 +361,7 @@ public class DeckgenUtil {
             deck=buildLDACArchetypeDeck(format,isForAI);
         }
         // spells of a colour the lands cannot make are dead cards (and a fetch land with nothing to find is a tapped land)
-        DeckManaBase.fix(deck);
+        DeckManaBase.fix(deck, format.getRestrictedCards());
         // a filler can pick a restricted card still waiting in the sideboard, and the limit counts both
         for(String restricted : format.getRestrictedCards()){
             if(deck.getMain().countByName(restricted)>0){
