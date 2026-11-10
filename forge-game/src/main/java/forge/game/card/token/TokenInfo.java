@@ -11,8 +11,10 @@ import forge.card.GamePieceType;
 import forge.card.MagicColor;
 import forge.card.mana.ManaCost;
 import forge.game.Game;
+import forge.game.ability.AbilityFactory;
 import forge.game.ability.AbilityUtils;
 import forge.game.card.Card;
+import forge.game.card.CardCollection;
 import forge.game.card.CardFactory;
 import forge.game.card.CardFactoryUtil;
 import forge.game.keyword.KeywordInterface;
@@ -289,6 +291,14 @@ public class TokenInfo {
 
         final Card result = CardFactory.getCard(token, owner, game);
 
+        // Enter the Eternities: the exiled creature's name
+        if (sa.hasParam("TokenName")) {
+            final CardCollection named = AbilityUtils.getDefinedCards(host, sa.getParam("TokenName"), sa);
+            if (!named.isEmpty()) {
+                result.setName(named.getFirst().getName());
+            }
+        }
+
         if (sa.hasParam("TokenPower")) {
             String str = sa.getParam("TokenPower");
             result.setBasePowerString(str);
@@ -319,6 +329,30 @@ public class TokenInfo {
             colors = colors.replace("ChosenColors", String.join(",", host.getChosenColors()));
             colors = colors.replace("ChosenColor", host.getChosenColor());
             result.setColor(colors.split(","));
+        }
+
+        // Enter the Eternities: the exiled creature's colors. Its own param, so TokenColors$ keeps meaning color names.
+        if (sa.hasParam("TokenColorsOf")) {
+            byte mask = 0;
+            for (final Card c : AbilityUtils.getDefinedCards(host, sa.getParam("TokenColorsOf"), sa)) {
+                mask |= c.getColor().getColor();
+            }
+            result.setColor(ColorSet.fromMask(mask));
+        }
+
+        // Enter the Eternities: drafted abilities are part of the token as created, so copies of it have them too.
+        // The host's SVars come along because those abilities' sub-abilities and counts are SVars of the host.
+        if (sa.hasParam("TokenAbilities")) {
+            for (final Map.Entry<String, String> e : host.getSVars().entrySet()) {
+                if (!result.hasSVar(e.getKey())) {
+                    result.setSVar(e.getKey(), e.getValue());
+                }
+            }
+            for (final String name : sa.getParam("TokenAbilities").split(",")) {
+                final SpellAbility ab = AbilityFactory.getAbility(result, name.trim());
+                ab.setIntrinsic(true);
+                result.addSpellAbility(ab, true);
+            }
         }
 
         return result;

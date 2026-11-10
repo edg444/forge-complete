@@ -324,6 +324,9 @@ public enum StaticAbilityMode {
 
     // StaticAbilityManaRestriction
     ManaRestriction,
+
+    // StaticAbilityEmpowerInstead
+    EmpowerInstead,
     ;
 
     public static StaticAbilityMode smartValueOf(final String value) {

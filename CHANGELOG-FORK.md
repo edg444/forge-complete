@@ -476,6 +476,14 @@ off, a human plays through the prompts of phases 1 and 2).
   same foil state and in collector number order. A rare or mythic pair takes an uncommon's place, a foil pair a
   common's, and packs without a rare pair get an uncommon pair at the given chance in place of two uncommons. Sheet
   operator `PartnerWith` matches cards with "partner with" (`Uncommon:!PartnerWith` keeps them out of a slot).
+- **Alchemy per-game counts:** `Count$YouCastThisGameNotFromStartingDeck` (Actualize: Echogoyfs, Etali) and
+  `Count$LifeYouGainedThisGame` (Flourishing Forces).
+- **Empower somewhere else** (`S:Mode$ EmpowerInstead | ValidPlayer$ | Type$ | ValidCard$`, Remnants of Beleren):
+  the empowering player may put the counters on a matching permanent instead (`StaticAbilityEmpowerInstead`).
+- **Draft an ability** (`DB$ DraftAbility | Abilities$ <SVars> | Offered$ 3 | ResultSVar$`, Enter the Eternities):
+  random choices from a pool, the kept one written into the host's SVar; the AI keeps the earliest listed.
+- **Token overrides** `TokenName$ <Defined>`, `TokenColorsOf$ <Defined>` and `TokenAbilities$ <SVars>`: part of the
+  token as created, so copies keep them; the host's SVars are copied onto the token for those abilities.
 
 ---
 
@@ -492,6 +500,19 @@ off, a human plays through the prompts of phases 1 and 2).
 - **Desktop AI vs AI: creatures meet in the middle.** With no local player every field was mirrored, so the bottom
   player's lands sat in front of its creatures. Like mobile, the bottom field now keeps creatures on top while the
   others stay mirrored (`CMatchUI.initMatch`); games with a person playing are unchanged. Not driven live.
+- **Alchemy: Reality Fracture complete** (9 cards upstream hasn't scripted): Valgavoth, the Lifeline; Crux of the
+  Theory; Echogoyfs; Remnants of Beleren; Etali, Primal Garden; Nylea's Oracle; Enter the Eternities; Flourishing
+  Forces; Willbound Quill. Checked against Scryfall 2026-11-10 (no rulings). Beleren Spellbook from Wizards' YFRA
+  spellbook article. Enter the Eternities' ten-per-cost ability pools aren't published; they're the MTG Wiki's list
+  from players' Arena observations. Upstream has Enter the Eternities as an open PR (#12584): compare when it lands.
+  Engine: `Count$YouCastThisGameNotFromStartingDeck` and `Count$LifeYouGainedThisGame` (per-game counters on
+  `Player`), static `Mode$ EmpowerInstead`, `DB$ DraftAbility`, token params `TokenName$`/`TokenColorsOf$`/
+  `TokenAbilities$`. Test: `AlchemyRealityFractureTest`.
+- **Jace's Saga empowers 3.** Its chapter III empowered by the number of Islands you control; Scryfall says
+  "Empower Jace 3". Upstream has the same script.
+- **The AI uses Empower abilities.** Upstream gave `Empower` no AI class, so it fell back to CannotPlayAi and the AI
+  never activated one (Remnants of Beleren's {T}). `EmpowerAi` always empowers; given Remnants' choice it puts the
+  counters on a real Jace planeswalker.
 
 ### 2026-11-08, thirty-eighth deploy (desktop, Android, GitHub) - Strider Harness equip, Evie Frye, Storm Elemental and Vintage restricted-card fixes; upstream merge
 

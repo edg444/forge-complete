@@ -10,6 +10,7 @@ import forge.game.Game;
 import forge.game.GameEntityCounterTable;
 import forge.game.ability.AbilityUtils;
 import forge.game.card.Card;
+import forge.game.card.CardCollection;
 import forge.game.card.CardCollectionView;
 import forge.game.card.CardLists;
 import forge.game.card.CardPredicates;
@@ -20,6 +21,7 @@ import forge.game.event.GameEventCombatChanged;
 import forge.game.event.GameEventTokenCreated;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
+import forge.game.staticability.StaticAbilityEmpowerInstead;
 import forge.game.zone.ZoneType;
 import forge.util.Lang;
 import forge.util.Localizer;
@@ -54,6 +56,22 @@ public class EmpowerEffect extends TokenEffectBase {
         }
         final int amount = AbilityUtils.calculateAmount(source, sa.getParamOrDefault("Num", "1"), sa);
         final String type = sa.getParam("Type");
+
+        // Remnants of Beleren: the counters may go on any Jace you control instead, and then no token is made
+        final CardCollection instead = StaticAbilityEmpowerInstead.candidates(p, type);
+        if (!instead.isEmpty() && p.getController().confirmAction(sa, null,
+                Localizer.getInstance().getMessage("lblEmpowerInstead", String.valueOf(amount), type), null)) {
+            Map<String, Object> params = Maps.newHashMap();
+            params.put("CounterType", CounterEnumType.LOYALTY);
+            params.put("Amount", amount);
+            final Card jace = p.getController().chooseSingleEntityForEffect(instead, sa, Localizer.getInstance().getMessage("lblChooseaCard"), false, params);
+            if (jace != null) {
+                GameEntityCounterTable table = new GameEntityCounterTable();
+                jace.addCounter(CounterEnumType.LOYALTY, amount, p, table);
+                table.replaceCounterEffect(game, sa);
+                return;
+            }
+        }
 
         if (!p.getCardsIn(ZoneType.Battlefield).anyMatch(CardPredicates.isType(type).and(CardPredicates.TOKEN))) {
             CardZoneTable triggerList = new CardZoneTable();

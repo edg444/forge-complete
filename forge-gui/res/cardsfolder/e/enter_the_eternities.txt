@@ -1,0 +1,64 @@
+Name:Enter the Eternities
+ManaCost:G U
+Types:Sorcery
+A:SP$ ChangeZone | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | Origin$ Battlefield | Destination$ Exile | RememberLKI$ True | SubAbility$ DraftPlus | SpellDescription$ Exile target creature you control. Draft a [+1] ability, a [−2] ability, and a [−8] ability. Create a legendary planeswalker token with the exiled creature's name and colors and the drafted abilities. Put a number of loyalty counters on it equal to the exiled creature's power.
+# The pools aren't published; these are the ten per cost listed on the MTG Wiki (from players' Arena observations). Each
+# pool is in the AI's order of preference: DraftAbilityAi keeps the offered ability listed first.
+SVar:DraftPlus:DB$ DraftAbility | Abilities$ Plus1,Plus2,Plus3,Plus4,Plus5,Plus6,Plus7,Plus8,Plus9,Plus10 | ResultSVar$ DraftedPlus | SubAbility$ DraftMinus
+SVar:DraftMinus:DB$ DraftAbility | Abilities$ Minus1,Minus2,Minus3,Minus4,Minus5,Minus6,Minus7,Minus8,Minus9,Minus10 | ResultSVar$ DraftedMinus | SubAbility$ DraftUltimate
+SVar:DraftUltimate:DB$ DraftAbility | Abilities$ Ult1,Ult2,Ult3,Ult4,Ult5,Ult6,Ult7,Ult8,Ult9,Ult10 | ResultSVar$ DraftedUltimate | SubAbility$ DBToken
+SVar:DBToken:DB$ Token | TokenScript$ planeswalker | TokenOwner$ You | TokenName$ RememberedLKI | TokenColorsOf$ RememberedLKI | TokenAbilities$ DraftedPlus,DraftedMinus,DraftedUltimate | WithCountersType$ LOYALTY | WithCountersAmount$ ExiledPower | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:ExiledPower:RememberedLKI$CardPower
+# [+1]
+SVar:Plus1:AB$ Draw | Cost$ AddCounter<1/LOYALTY> | Planeswalker$ True | NumCards$ 1 | SpellDescription$ Draw a card.
+SVar:Plus2:AB$ PutCounter | Cost$ AddCounter<1/LOYALTY> | Planeswalker$ True | ValidTgts$ Creature | TgtPrompt$ Select up to two target creatures | TargetMin$ 0 | TargetMax$ 2 | CounterType$ P1P1 | CounterNum$ 1 | SpellDescription$ Put a +1/+1 counter on each of up to two target creatures.
+SVar:Plus3:AB$ GainLife | Cost$ AddCounter<1/LOYALTY> | Planeswalker$ True | LifeAmount$ 2 | SubAbility$ DBPlus3Loyalty | SpellDescription$ You gain 2 life. Put a loyalty counter on this planeswalker.
+SVar:DBPlus3Loyalty:DB$ PutCounter | Defined$ Self | CounterType$ LOYALTY | CounterNum$ 1
+SVar:Plus4:AB$ Draw | Cost$ AddCounter<1/LOYALTY> | Planeswalker$ True | NumCards$ 2 | SubAbility$ DBPlus4Discard | SpellDescription$ Draw two cards. Then discard two cards unless you discard a creature card.
+SVar:DBPlus4Discard:DB$ Discard | NumCards$ 2 | Mode$ TgtChoose | UnlessType$ Creature
+SVar:Plus5:AB$ Token | Cost$ AddCounter<1/LOYALTY> | Planeswalker$ True | TokenScript$ g_1_1_elf_druid_g | TokenOwner$ You | SpellDescription$ Create a 1/1 green Elf Druid creature token with "{T}: Add {G}."
+SVar:Plus6:AB$ Pump | Cost$ AddCounter<1/LOYALTY> | Planeswalker$ True | ValidTgts$ Creature | TgtPrompt$ Select up to one target creature | TargetMin$ 0 | TargetMax$ 1 | NumAtt$ -4 | IsCurse$ True | Duration$ UntilYourNextTurn | SpellDescription$ Until your next turn, up to one target creature gets -4/-0.
+SVar:Plus7:AB$ Effect | Cost$ AddCounter<1/LOYALTY> | Planeswalker$ True | Triggers$ Plus7Attacks | Duration$ UntilYourNextTurn | AILogic$ Main2 | SpellDescription$ Until your next turn, whenever a creature attacks you or a planeswalker you control, that creature gets -1/-0 until end of turn.
+SVar:Plus7Attacks:Mode$ Attacks | ValidCard$ Creature | Attacked$ You,Planeswalker.YouCtrl | TriggerZones$ Command | Execute$ DBPlus7Weaken | TriggerDescription$ Whenever a creature attacks you or a planeswalker you control, that creature gets -1/-0 until end of turn.
+SVar:DBPlus7Weaken:DB$ Pump | Defined$ TriggeredAttacker | NumAtt$ -1 | IsCurse$ True
+SVar:Plus8:AB$ Animate | Cost$ AddCounter<1/LOYALTY> | Planeswalker$ True | ValidTgts$ Land.YouCtrl | TgtPrompt$ Select up to one target land you control | TargetMin$ 0 | TargetMax$ 1 | Power$ 3 | Toughness$ 3 | Types$ Creature,Elemental | Keywords$ Vigilance & Haste | Duration$ Permanent | SpellDescription$ Up to one target land you control becomes a 3/3 Elemental creature with vigilance and haste. It's still a land.
+SVar:Plus9:AB$ Untap | Cost$ AddCounter<1/LOYALTY> | Planeswalker$ True | ValidTgts$ Creature | TgtPrompt$ Select up to one target creature | TargetMin$ 0 | TargetMax$ 1 | SubAbility$ DBPlus9Land | SpellDescription$ Untap up to one target creature and up to one target land.
+SVar:DBPlus9Land:DB$ Untap | ValidTgts$ Land | TgtPrompt$ Select up to one target land | TargetMin$ 0 | TargetMax$ 1
+SVar:Plus10:AB$ Untap | Cost$ AddCounter<1/LOYALTY> | Planeswalker$ True | ValidTgts$ Land | TgtPrompt$ Select up to two target lands | TargetMin$ 0 | TargetMax$ 2 | SpellDescription$ Untap up to two target lands.
+# [−2]
+SVar:Minus1:AB$ Pump | Cost$ SubCounter<2/LOYALTY> | Planeswalker$ True | ValidTgts$ Creature.YouCtrl | TgtPrompt$ Select target creature you control | AILogic$ PowerDmg | SubAbility$ DBMinus1Damage | StackDescription$ None | SpellDescription$ Target creature you control deals damage equal to its power to target creature or planeswalker.
+SVar:DBMinus1Damage:DB$ DealDamage | ValidTgts$ Creature,Planeswalker | TgtPrompt$ Select target creature or planeswalker | NumDmg$ Minus1Power | DamageSource$ ParentTarget
+SVar:Minus1Power:ParentTargeted$CardPower
+SVar:Minus2:AB$ Animate | Cost$ SubCounter<2/LOYALTY> | Planeswalker$ True | ValidTgts$ Artifact,Creature | TgtPrompt$ Select target artifact or creature | Power$ 3 | Toughness$ 3 | RemoveAllAbilities$ True | Colors$ Green | OverwriteColors$ True | Types$ Creature,Elk | RemoveCreatureTypes$ True | RemoveCardTypes$ True | Duration$ Permanent | IsCurse$ True | SpellDescription$ Target artifact or creature loses all abilities and becomes a green Elk creature with base power and toughness 3/3.
+SVar:Minus3:AB$ Token | Cost$ SubCounter<2/LOYALTY> | Planeswalker$ True | TokenScript$ u_2_2_bird_flying | TokenOwner$ You | SubAbility$ DBMinus3Draw | SpellDescription$ Create a 2/2 blue Bird creature token with flying. Draw a card, then discard a card.
+SVar:DBMinus3Draw:DB$ Draw | NumCards$ 1 | SubAbility$ DBMinus3Discard
+SVar:DBMinus3Discard:DB$ Discard | Defined$ You | NumCards$ 1 | Mode$ TgtChoose
+SVar:Minus4:AB$ Draw | Cost$ SubCounter<2/LOYALTY> | Planeswalker$ True | NumCards$ Minus4Cards | SpellDescription$ Draw two cards if you control a creature with the greatest power. Otherwise, draw a card.
+SVar:Minus4Cards:Number$1/Plus.Minus4Bonus
+SVar:Minus4Bonus:Count$Valid Creature.greatestPower+YouCtrl/LimitMax.1
+SVar:Minus5:AB$ ChangeZone | Cost$ SubCounter<2/LOYALTY> | Planeswalker$ True | ValidTgts$ Permanent.Other+nonLand | TgtPrompt$ Select another target nonland permanent | Origin$ Battlefield | Destination$ Hand | SpellDescription$ Return another target nonland permanent to its owner's hand.
+SVar:Minus6:AB$ Seek | Cost$ SubCounter<2/LOYALTY> | Planeswalker$ True | Type$ Card.nonCreature+nonLand | SpellDescription$ Seek a noncreature, nonland card.
+SVar:Minus7:AB$ ChangeZone | Cost$ SubCounter<2/LOYALTY> | Planeswalker$ True | ValidTgts$ Card.YouOwn | TgtZone$ Graveyard | TgtPrompt$ Select target card in your graveyard | Origin$ Graveyard | Destination$ Hand | SpellDescription$ Return target card from your graveyard to your hand.
+SVar:Minus8:AB$ Destroy | Cost$ SubCounter<2/LOYALTY> | Planeswalker$ True | ValidTgts$ Artifact,Enchantment | TgtPrompt$ Select target artifact or enchantment | SpellDescription$ Destroy target artifact or enchantment.
+SVar:Minus9:AB$ MakeCard | Cost$ SubCounter<2/LOYALTY> | Planeswalker$ True | Conjure$ True | Name$ Tropical Island | Zone$ Battlefield | SpellDescription$ Conjure a card named Tropical Island onto the battlefield.
+SVar:Minus10:AB$ Untap | Cost$ SubCounter<2/LOYALTY> | Planeswalker$ True | ValidTgts$ Permanent | TgtPrompt$ Select one, two, or three target permanents | TargetMin$ 1 | TargetMax$ 3 | SpellDescription$ Untap one, two, or three target permanents.
+# [−8]
+SVar:Ult1:AB$ AddTurn | Cost$ SubCounter<8/LOYALTY> | Planeswalker$ True | Ultimate$ True | Defined$ You | NumTurns$ 1 | SpellDescription$ Take an extra turn after this one.
+SVar:Ult2:AB$ Token | Cost$ SubCounter<8/LOYALTY> | Planeswalker$ True | Ultimate$ True | TokenAmount$ 2 | TokenScript$ u_8_8_octopus | TokenOwner$ You | SpellDescription$ Create two 8/8 blue Octopus creature tokens.
+SVar:Ult3:AB$ GainControl | Cost$ SubCounter<8/LOYALTY> | Planeswalker$ True | Ultimate$ True | ValidTgts$ Permanent.Other | TgtPrompt$ Select another target permanent | SpellDescription$ Gain control of another target permanent.
+SVar:Ult4:AB$ PumpAll | Cost$ SubCounter<8/LOYALTY> | Planeswalker$ True | Ultimate$ True | ValidCards$ Creature.YouCtrl | NumAtt$ +3 | NumDef$ +3 | KW$ Trample | SpellDescription$ Creatures you control get +3/+3 and gain trample until end of turn.
+SVar:Ult5:AB$ Draw | Cost$ SubCounter<8/LOYALTY> | Planeswalker$ True | Ultimate$ True | NumCards$ Ult5Cards | SpellDescription$ Draw a card for each creature you control.
+SVar:Ult5Cards:Count$Valid Creature.YouCtrl
+SVar:Ult6:AB$ CopyPermanent | Cost$ SubCounter<8/LOYALTY> | Planeswalker$ True | Ultimate$ True | Defined$ Valid Permanent.Other+nonLand+YouCtrl | SpellDescription$ For each other nonland permanent you control, create a token that's a copy of that permanent.
+SVar:Ult7:AB$ Effect | Cost$ SubCounter<8/LOYALTY> | Planeswalker$ True | Ultimate$ True | Name$ Emblem — Enter the Eternities | Abilities$ Ult7Draw | Duration$ Permanent | AILogic$ Always | SpellDescription$ You get an emblem with "{2}: Draw a card."
+SVar:Ult7Draw:AB$ Draw | Cost$ 2 | ActivationZone$ Command | NumCards$ 1 | SpellDescription$ Draw a card.
+SVar:Ult8:AB$ ChangeZone | Cost$ SubCounter<8/LOYALTY> | Planeswalker$ True | Ultimate$ True | Origin$ Library | Destination$ Exile | ChangeType$ Instant,Sorcery | ChangeNum$ 1 | RememberChanged$ True | SubAbility$ DBUlt8Play | SpellDescription$ Search your library for an instant or sorcery card, exile it, then shuffle. You may cast that card without paying its mana cost.
+SVar:DBUlt8Play:DB$ Play | Defined$ Remembered | WithoutManaCost$ True | ValidSA$ Spell | Optional$ True | SubAbility$ DBUlt8Cleanup
+SVar:DBUlt8Cleanup:DB$ Cleanup | ClearRemembered$ True
+SVar:Ult9:AB$ Effect | Cost$ SubCounter<8/LOYALTY> | Planeswalker$ True | Ultimate$ True | Triggers$ Ult9Cast | SpellDescription$ Until end of turn, whenever you cast a spell, copy it. You may choose new targets for the copy.
+SVar:Ult9Cast:Mode$ SpellCast | ValidCard$ Card | ValidActivatingPlayer$ You | TriggerZones$ Command | Execute$ DBUlt9Copy | TriggerDescription$ Whenever you cast a spell, copy it. You may choose new targets for the copy.
+SVar:DBUlt9Copy:DB$ CopySpellAbility | Defined$ TriggeredSpellAbility | MayChooseTarget$ True
+SVar:Ult10:AB$ Mana | Cost$ SubCounter<8/LOYALTY> | Planeswalker$ True | Ultimate$ True | Produced$ Any | Amount$ 10 | SpellDescription$ Add ten mana of any one color.
+DeckHas:Ability$Token
+Oracle:Exile target creature you control. Draft a [+1] ability, a [−2] ability, and a [−8] ability. Create a legendary planeswalker token with the exiled creature's name and colors and the drafted abilities. Put a number of loyalty counters on it equal to the exiled creature's power.

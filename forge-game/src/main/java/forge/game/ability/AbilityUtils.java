@@ -2958,6 +2958,13 @@ public class AbilityUtils {
             return doXMath(player.getDescended(), expr, c, ctb);
         }
 
+        if (sq[0].equals("YouCastThisGameNotFromStartingDeck")) {
+            return doXMath(player.getSpellsCastNotFromStartingDeckThisGame(), expr, c, ctb);
+        }
+        if (sq[0].equals("LifeYouGainedThisGame")) {
+            return doXMath(player.getLifeGainedThisGame(), expr, c, ctb);
+        }
+
         if (sq[0].equals("YouCastThisGame")) {
             return doXMath(player.getSpellsCastThisGame(), expr, c, ctb);
         }

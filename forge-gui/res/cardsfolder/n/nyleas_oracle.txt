@@ -1,0 +1,13 @@
+Name:Nylea's Oracle
+ManaCost:G G
+Types:Creature Centaur Druid
+PT:3/1
+T:Mode$ ChangesZone | ValidCard$ Card.Self | Origin$ Any | Destination$ Battlefield | Execute$ TrigConjure | TriggerDescription$ When this creature enters, conjure X cards named Nylea's Oracle into your library, where X is your devotion to green, then shuffle. Then if there are more cards in your library than your starting deck, creatures you control get +X/+X and gain haste until end of turn.
+SVar:TrigConjure:DB$ MakeCard | Conjure$ True | Name$ Nylea's Oracle | Amount$ X | Zone$ Library | SubAbility$ DBShuffle
+SVar:DBShuffle:DB$ Shuffle | Defined$ You | SubAbility$ DBPumpAll
+SVar:DBPumpAll:DB$ PumpAll | ValidCards$ Creature.YouCtrl | NumAtt$ +X | NumDef$ +X | KW$ Haste | ConditionCheckSVar$ LibrarySize | ConditionSVarCompare$ GTStartingDeck
+SVar:X:Count$Devotion.Green
+SVar:LibrarySize:Count$ValidLibrary Card.YouOwn
+SVar:StartingDeck:Count$YourStartingLibrarySize
+SVar:BuffedBy:Permanent.Green
+Oracle:When this creature enters, conjure X cards named Nylea's Oracle into your library, where X is your devotion to green, then shuffle. Then if there are more cards in your library than your starting deck, creatures you control get +X/+X and gain haste until end of turn.

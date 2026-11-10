@@ -96,6 +96,8 @@ public class Player extends GameEntity implements Comparable<Player> {
     private int lifeLostThisTurn;
     private int lifeLostLastTurn;
     private int lifeGainedThisTurn;
+    private int lifeGainedThisGame;
+    private int spellsCastNotFromStartingDeckThisGame;
     private int lifeGainedTimesThisTurn;
     private int lifeGainedByTeamThisTurn;
     private int maxHandSize = 7;
@@ -792,6 +794,7 @@ public class Player extends GameEntity implements Comparable<Player> {
         updateLifeViews();
         boolean firstGain = lifeGainedTimesThisTurn == 0;
         lifeGainedThisTurn = Infinity.add(lifeGainedThisTurn, lifeGain);
+        lifeGainedThisGame = Infinity.add(lifeGainedThisGame, lifeGain);
         lifeGainedTimesThisTurn++;
 
         // team mates need to be notified about life gained
@@ -3158,8 +3161,26 @@ public class Player extends GameEntity implements Comparable<Player> {
     public final int getSpellsCastThisGame() {
         return spellsCastThisGame;
     }
+    /** Actualize (Echogoyfs, Etali): spells cast this game that weren't from the starting deck - conjured, drafted, heisted. */
+    public final int getSpellsCastNotFromStartingDeckThisGame() {
+        return spellsCastNotFromStartingDeckThisGame;
+    }
+    public final void setSpellsCastNotFromStartingDeckThisGame(final int n) {
+        spellsCastNotFromStartingDeckThisGame = n;
+    }
+    public final void addSpellCastNotFromStartingDeck() {
+        spellsCastNotFromStartingDeckThisGame++;
+    }
+    public final int getLifeGainedThisGame() {
+        return lifeGainedThisGame;
+    }
+    public final void setLifeGainedThisGame(final int n) {
+        lifeGainedThisGame = n;
+    }
     public final void resetSpellCastThisGame() {
         spellsCastThisGame = 0;
+        spellsCastNotFromStartingDeckThisGame = 0;
+        lifeGainedThisGame = 0;
     }
 
     public final int getLifeGainedByTeamThisTurn() {
