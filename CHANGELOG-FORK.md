@@ -491,6 +491,8 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-10, thirty-ninth deploy (desktop, Android, GitHub) - Alchemy: Reality Fracture complete; Mana Flair, Lavaleaper and Empower AI; desktop AI-vs-AI layout; upstream merge
+
 - **Mana Flair is cast only for mana it can use.** Its artist choice played unconditionally, so the AI cast it with
   only lands in play for no mana. `ChooseTypeAi` now counts the best artist's nonland permanents and asks the ritual
   check on its Mana sub-ability with that number. Test: `ManaFlairAiTest`.
@@ -513,6 +515,14 @@ off, a human plays through the prompts of phases 1 and 2).
 - **The AI uses Empower abilities.** Upstream gave `Empower` no AI class, so it fell back to CannotPlayAi and the AI
   never activated one (Remnants of Beleren's {T}). `EmpowerAi` always empowers; given Remnants' choice it puts the
   counters on a real Jace planeswalker.
+- **Upstream merge** (27 commits, 2026-11-10): Flat MC activated abilities and timing, Connive and Incubate AI, the AI
+  no longer pumps keywords a creature already has, Grenzo-style cast-only effects no longer let lands be played,
+  "each player" hidden-zone moves in APNAP order, Tutorial mode, Star Trek precons, YFRA cards in the Adventure
+  digital-exclusive rewards. Conflicts: card scripts took upstream's mechanics (Targeted in place of the dropped
+  `AlwaysRemember`, `blockedBySourceLKI`, `nonLand` on may-play statics) with the fork's wording and AI, dropping
+  upstream's new `AI:RemoveDeck:All` on Monstrous Emergence, Strip Bare, Vortex Elemental and Wild Magic Surge; the
+  fork's Main 2 guard sits beside upstream's combo-aware activation guard; the Hero's Path challenges joined
+  upstream's consolidated variants list (`FormatChoices.VARIANTS`).
 
 ### 2026-11-08, thirty-eighth deploy (desktop, Android, GitHub) - Strider Harness equip, Evie Frye, Storm Elemental and Vintage restricted-card fixes; upstream merge
 
