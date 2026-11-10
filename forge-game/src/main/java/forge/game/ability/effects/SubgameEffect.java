@@ -7,6 +7,7 @@ import java.util.Map;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import forge.deck.DeckFormat;
 import forge.game.Game;
 import forge.game.GameOutcome;
 import forge.game.ability.AbilityKey;
@@ -23,7 +24,9 @@ import forge.game.player.RegisteredPlayer;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.PlayerZone;
 import forge.game.zone.ZoneType;
+import forge.item.IPaperCard;
 import forge.item.PaperCard;
+import forge.util.Aggregates;
 import forge.util.Localizer;
 import forge.util.collect.FCollectionView;
 
@@ -147,6 +150,16 @@ public class SubgameEffect extends SpellAbilityEffect {
 
             // Attractions
             setCardsInZone(player, ZoneType.AttractionDeck, maingamePlayer.getCardsIn(ZoneType.AttractionDeck), false);
+
+            // Stickers
+            // Starting a new means we have to select new sticker-sheets again
+            PlayerZone stickerSheets = player.getZone(ZoneType.StickerSheets);
+            for (IPaperCard cp : Aggregates.random(maingamePlayer.getRegisteredPlayer().getStickerSheets(), DeckFormat.CHOSEN_STICKER_SHEETS)) {
+                Card sheet = Card.fromPaperCard(cp, player);
+                sheet.setCollectible(false);
+                stickerSheets.add(sheet);
+            }
+            Card.refreshSheetViews(player);
 
             // Contraptions
             setCardsInZone(player, ZoneType.ContraptionDeck, maingamePlayer.getCardsIn(ZoneType.ContraptionDeck), false);

@@ -159,14 +159,9 @@ public abstract class LobbyScreen extends LaunchScreen implements ILobbyView {
         add(cbVariants);
         cbVariants.setFont(VARIANTS_FONT);
         cbVariants.addItem("(" + Forge.getLocalizer().getMessage("lblNone") + ")");
-        cbVariants.addItem(GameType.Vanguard);
-        cbVariants.addItem(GameType.Planechase);
-        cbVariants.addItem(GameType.Archenemy);
-        cbVariants.addItem(GameType.ArchenemyRumble);
-        cbVariants.addItem(GameType.TwoHeadedGiant);
-        cbVariants.addItem(GameType.FaceTheHydra);
-        cbVariants.addItem(GameType.BattleTheHorde);
-        cbVariants.addItem(GameType.DefeatAGod);
+        for (final GameType variant : FormatChoices.VARIANTS) {
+            cbVariants.addItem(variant);
+        }
         cbVariants.addItem(Forge.getLocalizer().getMessage("lblMore"));
         cbVariants.setChangedHandler(event -> {
             final List<GameType> applied = Lists.newArrayList(Iterables.filter(lobby.getAppliedVariants(),
@@ -380,12 +375,14 @@ public abstract class LobbyScreen extends LaunchScreen implements ILobbyView {
         float x = PADDING;
         float y = startY + PADDING;
         float fieldHeight = cbPlayerCount.getHeight();
-        if (Forge.isLandscapeMode()) {
+        final float comboWidth = (width - (x + lblFormat.getAutoSizeBounds().width + PADDING / 2
+                + lblVariants.getAutoSizeBounds().width + PADDING / 2
+                + lblGamesInMatch.getAutoSizeBounds().width + PADDING/2
+                + lblPlayers.getAutoSizeBounds().width + (Utils.AVG_FINGER_WIDTH + PADDING)*2)) / 2;
+        // a narrow landscape screen, such as an unfolded foldable, uses the stacked rows
+        if (Forge.isLandscapeMode() && comboWidth >= Utils.AVG_FINGER_WIDTH * 2) {
             lblFormat.setBounds(x, y, lblFormat.getAutoSizeBounds().width + PADDING / 2, fieldHeight);
             x += lblFormat.getWidth();
-            final float comboWidth = (width - (x + lblVariants.getAutoSizeBounds().width + PADDING / 2
-                    + lblGamesInMatch.getAutoSizeBounds().width + PADDING/2
-                    + lblPlayers.getAutoSizeBounds().width + (Utils.AVG_FINGER_WIDTH + PADDING)*2)) / 2;
             cbFormat.setBounds(x, y, comboWidth, fieldHeight);
             x += cbFormat.getWidth();
             lblVariants.setBounds(x, y, lblVariants.getAutoSizeBounds().width + PADDING / 2, fieldHeight);
@@ -565,14 +562,9 @@ public abstract class LobbyScreen extends LaunchScreen implements ILobbyView {
             super(Forge.getLocalizer().getInstance().getMessage("lblSelectVariants"));
 
             lstVariants.setListItemRenderer(new VariantRenderer());
-            lstVariants.addItem(new Variant(GameType.Vanguard));
-            lstVariants.addItem(new Variant(GameType.Planechase));
-            lstVariants.addItem(new Variant(GameType.Archenemy));
-            lstVariants.addItem(new Variant(GameType.ArchenemyRumble));
-            lstVariants.addItem(new Variant(GameType.TwoHeadedGiant));
-            lstVariants.addItem(new Variant(GameType.FaceTheHydra));
-            lstVariants.addItem(new Variant(GameType.BattleTheHorde));
-            lstVariants.addItem(new Variant(GameType.DefeatAGod));
+            for (final GameType variant : FormatChoices.VARIANTS) {
+                lstVariants.addItem(new Variant(variant));
+            }
         }
 
         @Override

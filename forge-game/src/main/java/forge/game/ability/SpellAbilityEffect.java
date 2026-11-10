@@ -350,7 +350,6 @@ public abstract class SpellAbilityEffect {
         return getPlayers(definedFirst, definedParam, sa, null);
     }
     private static PlayerCollection getPlayers(final boolean definedFirst, final String definedParam, final SpellAbility sa, List<Player> resultDuplicate) {
-        Game game = sa.getHostCard().getGame();
         PlayerCollection resultUnique = null;
         final boolean useTargets = sa.usesTargeting() && (!definedFirst || !sa.hasParam(definedParam));
         if (useTargets) {
@@ -372,14 +371,18 @@ public abstract class SpellAbilityEffect {
             }
         }
 
-        // try sort in APNAP order
+        sortAPNAP(sa, resultDuplicate);
+        return resultUnique;
+    }
+
+    protected static void sortAPNAP(final SpellAbility sa, final List<Player> players) {
+        final Game game = sa.getHostCard().getGame();
         Player starter = game.getPhaseHandler().getPlayerTurn();
         if (sa.hasParam("StartingWith")) {
             starter = AbilityUtils.getDefinedPlayers(sa.getHostCard(), sa.getParam("StartingWith"), sa).getFirst();
         }
         PlayerCollection ordered = game.getPlayersInTurnOrder(starter);
-        resultDuplicate.sort(Comparator.comparingInt(ordered::indexOf));
-        return resultUnique;
+        players.sort(Comparator.comparingInt(ordered::indexOf));
     }
 
     // Spells

@@ -10,7 +10,6 @@ import forge.game.GameType;
 import forge.game.herospath.HerosPath;
 import forge.item.IPaperCard;
 import forge.item.PaperCard;
-import org.apache.commons.lang3.tuple.Pair;
 
 import forge.card.CardRules;
 
@@ -30,11 +29,8 @@ public class RegisteredPlayer {
     private int startingLife = 20;
     private int startingHand = 7;
     private int manaShards = 0;
-    private int maxHandSizeModifier = 0;
     private Iterable<IPaperCard> extraCardsOnBattlefield = null;
     private Iterable<IPaperCard> extraCardsInCommandZone = null;
-    private Iterable<IPaperCard> extraCardsInHand = null;
-    private Iterable<Pair<IPaperCard, Integer>> extraCardsSuspended = null;
     private Iterable<? extends IPaperCard> schemes = null;
     private Iterable<PaperCard> planes = null;
     private Iterable<PaperCard> conspiracies = null;
@@ -53,6 +49,7 @@ public class RegisteredPlayer {
     private HerosPath.Difficulty challengeDifficulty = HerosPath.Difficulty.NORMAL;
     private int challengeHeroes = 1;
     private List<HerosPath.HeroChoice> heroChoices = null;
+    private final List<List<String>> startGameScripts = Lists.newArrayList();
 
     public RegisteredPlayer(Deck deck0) {
         originalDeck = deck0;
@@ -118,12 +115,6 @@ public class RegisteredPlayer {
     public final Iterable<? extends IPaperCard> getExtraCardsInCommandZone() {
         return extraCardsInCommandZone == null ? EmptyList : extraCardsInCommandZone;
     }
-    public final Iterable<? extends IPaperCard> getExtraCardsInHand() {
-        return extraCardsInHand == null ? EmptyList : extraCardsInHand;
-    }
-    public final Iterable<Pair<IPaperCard, Integer>> getExtraCardsSuspended() {
-        return extraCardsSuspended == null ? Collections.emptyList() : extraCardsSuspended;
-    }
 
     public final void addExtraCardsOnBattlefield(Iterable<IPaperCard> extraCardsonTable) {
         if (this.extraCardsOnBattlefield == null)
@@ -137,25 +128,12 @@ public class RegisteredPlayer {
         else
             this.extraCardsInCommandZone = Iterables.concat(this.extraCardsInCommandZone, extraCardsInCommandZone);
     }
-    public final void addExtraCardsInHand(Iterable<IPaperCard> extraCardsInHand) {
-        if (this.extraCardsInHand == null)
-            this.extraCardsInHand = extraCardsInHand;
-        else
-            this.extraCardsInHand = Iterables.concat(this.extraCardsInHand, extraCardsInHand);
+    public final List<List<String>> getStartGameScripts() {
+        return startGameScripts;
     }
-
-    public int getMaxHandSizeModifier() {
-        return maxHandSizeModifier;
-    }
-    public void setMaxHandSizeModifier(int maxHandSizeModifier0) {
-        this.maxHandSizeModifier = maxHandSizeModifier0;
-    }
-
-    public final void addExtraCardsSuspended(Iterable<Pair<IPaperCard, Integer>> extraCardsSuspended) {
-        if (this.extraCardsSuspended == null)
-            this.extraCardsSuspended = extraCardsSuspended;
-        else
-            this.extraCardsSuspended = Iterables.concat(this.extraCardsSuspended, extraCardsSuspended);
+    /** Card-script lines run after mulligans. A line {@code SVar:Name:Value} sets an SVar the other lines can use, every other line is an ability. */
+    public final void addStartGameScript(List<String> script) {
+        startGameScripts.add(script);
     }
 
     public int getStartingHand() {
