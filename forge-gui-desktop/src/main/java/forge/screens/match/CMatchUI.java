@@ -397,9 +397,15 @@ public final class CMatchUI
         Singletons.getView().getLpnDocument().add(targetingOverlay.getPanel(), FView.TARGETING_LAYER);
         targetingOverlay.getPanel().setSize(Singletons.getControl().getDisplaySize());
 
+        // Watching AI vs AI nobody is local, which mirrored every field: the bottom player's lands then sat in front of
+        // its creatures. Like mobile, the bottom field keeps creatures on top so both sides' creatures meet mid-board.
+        boolean spectating = true;
+        for (final PlayerView p : sortedPlayers) {
+            spectating &= !isLocalPlayer(p);
+        }
         int i = 0;
         for (final PlayerView p : sortedPlayers) {
-            final boolean mirror = !isLocalPlayer(p);
+            final boolean mirror = spectating ? i > 0 : !isLocalPlayer(p);
             // A field must be initialized after it's instantiated, to update player info.
             // No player, no init.
             final EDocID fieldDoc = EDocID.Fields[i];
