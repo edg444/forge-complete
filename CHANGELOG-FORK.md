@@ -481,6 +481,15 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ## Log
 
+### Unreleased
+
+- **Mana Flair is cast only for mana it can use.** Its artist choice played unconditionally, so the AI cast it with
+  only lands in play for no mana. `ChooseTypeAi` now counts the best artist's nonland permanents and asks the ritual
+  check on its Mana sub-ability with that number. Test: `ManaFlairAiTest`.
+- **Lavaleaper comes down before combat.** "All creatures have haste" includes itself, but the Main 1 check only saw a
+  printed Haste keyword or haste granters already in play. `ComputerUtil.givesItselfHaste` reads the card's own
+  unconditional haste statics. Test: `AiPlayReportsTest.testHasteForEveryoneIncludesItself`.
+
 ### 2026-11-08, thirty-eighth deploy (desktop, Android, GitHub) - Strider Harness equip, Evie Frye, Storm Elemental and Vintage restricted-card fixes; upstream merge
 
 - **The AI equips small bonuses.** Strider Harness (+1/+1 and haste, equip {1}) stayed unattached unless a creature

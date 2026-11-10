@@ -1376,7 +1376,8 @@ public class ComputerUtil {
         }
 
         if (card.isCreature() && !cardState.hasKeyword(Keyword.DEFENDER)
-                && (cardState.hasKeyword(Keyword.HASTE) || hasACardGivingHaste(ai, true) || sa.isDash())) {
+                && (cardState.hasKeyword(Keyword.HASTE) || hasACardGivingHaste(ai, true) || sa.isDash()
+                        || givesItselfHaste(ai, card, cardState))) {
             return true;
         }
 
@@ -1592,6 +1593,26 @@ public class ComputerUtil {
                         return true;
                     }
                 }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * A creature whose own static gives creatures haste, itself included (Lavaleaper: "All creatures have haste").
+     * The static isn't on yet while the card is in hand, so neither the keyword check nor hasACardGivingHaste sees it.
+     * Conditional grants are left out: their conditions can't be judged from the hand.
+     */
+    public static boolean givesItselfHaste(final Player ai, final Card card, final CardState cardState) {
+        for (final StaticAbility stAb : cardState.getStaticAbilities()) {
+            if (!stAb.checkMode(StaticAbilityMode.Continuous) || !stAb.hasParam("AddKeyword")
+                    || !stAb.getParam("AddKeyword").contains("Haste") || !stAb.hasParam("Affected")
+                    || stAb.hasParam("AffectedDefined") || stAb.hasParam("Condition") || stAb.hasParam("IsPresent")
+                    || stAb.hasParam("CheckSVar") || stAb.hasParam("EffectZone")) {
+                continue;
+            }
+            if (card.isValid(stAb.getParam("Affected").split(","), ai, card, stAb)) {
+                return true;
             }
         }
         return false;

@@ -116,6 +116,20 @@ public class AiPlayReportsTest extends AITest {
         AssertJUnit.assertTrue(ComputerUtil.castPermanentInMain1(ai, sa));
     }
 
+    // Lavaleaper: "All creatures have haste." - it has haste itself once it's out, so it belongs before combat
+    @Test
+    public void testHasteForEveryoneIncludesItself() {
+        Game game = initAndCreateGame();
+        Player ai = game.getPlayers().get(1);
+        SpellAbility sa = addCardToZone("Lavaleaper", ai, ZoneType.Hand).getFirstSpellAbility();
+        sa.setActivatingPlayer(ai);
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN1, ai);
+        AssertJUnit.assertTrue(ComputerUtil.castPermanentInMain1(ai, sa));
+        SpellAbility giant = addCardToZone("Hill Giant", ai, ZoneType.Hand).getFirstSpellAbility();
+        giant.setActivatingPlayer(ai);
+        AssertJUnit.assertFalse(ComputerUtil.castPermanentInMain1(ai, giant));
+    }
+
     // Signal Pest: "Battle cry ... This creature can't be blocked except by creatures with flying or reach." 0/1.
     @Test
     public void testSignalPestDoesNotAttackAlone() {

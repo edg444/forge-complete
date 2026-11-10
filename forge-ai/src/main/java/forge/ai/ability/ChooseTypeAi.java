@@ -75,6 +75,17 @@ public class ChooseTypeAi extends SpellAbilityAi {
             return !chooseType(sa, aiPlayer.getOpponents().getCardsIn(ZoneType.Battlefield)).isEmpty()
                     ? new AiAbilityDecision(100, AiPlayDecision.WillPlay)
                     : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        } else if ("MostProminentNonLand".equals(aiLogic)) {
+            // Mana Flair: the mana is the best artist's headcount, so the ritual check on the Mana sub-ability has
+            // to be asked with that number - falling through to "always play" cast it into an all-land board for 0
+            final int mana = mostNonLandPermanentsByOneArtist(aiPlayer);
+            final SpellAbility manaSub = sa.findSubAbilityByType(ApiType.Mana);
+            if (mana <= 0 || manaSub == null) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            }
+            return ManaAi.doManaRitualLogic(aiPlayer, manaSub, false, mana)
+                    ? new AiAbilityDecision(100, AiPlayDecision.WillPlay)
+                    : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
 
         return doTriggerNoCost(aiPlayer, sa, false);
@@ -233,5 +244,29 @@ public class ChooseTypeAi extends SpellAbilityAi {
         }
 
         return chosenType;
+    }
+
+    /** The most nonland permanents on the battlefield credited to any one artist (same tally ComputerUtil picks by). */
+    static int mostNonLandPermanentsByOneArtist(Player ai) {
+        final java.util.Map<String, Integer> counts = new java.util.HashMap<>();
+        for (final Card c : ai.getGame().getCardsIn(ZoneType.Battlefield)) {
+            if (c.isLand()) {
+                continue;
+            }
+            final Set<String> artists = new HashSet<>(ArtistCredit.individuals(c.getArtist()));
+            if (c.hasMergedCard()) {
+                for (final Card m : c.getMergedCards()) {
+                    artists.addAll(ArtistCredit.individuals(m.getArtist()));
+                }
+            }
+            for (final String artist : artists) {
+                counts.merge(artist, 1, Integer::sum);
+            }
+        }
+        int best = 0;
+        for (final int n : counts.values()) {
+            best = Math.max(best, n);
+        }
+        return best;
     }
 }
