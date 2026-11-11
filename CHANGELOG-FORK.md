@@ -491,6 +491,17 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-11, fortieth deploy (desktop, Android, GitHub) - upstream forge-2.0.16 release with Star Trek; Commander Two-Headed Giant
+
+- **Upstream merge** (30 commits, 13 conflicts, 2026-11-11): the forge-2.0.16 release (Star Trek: all its cards are in), and
+  the version moves to 2.0.17-SNAPSHOT. Also: objects that reach the stack while nobody has priority no longer take
+  it (#12785, so `IgnoreFreeze` is gone), offline booster drafts choose picks per pack, the deck editor places a
+  partner commander explicitly, and Shandalar and Realm of Legends updates.
+- **Commander with Two-Headed Giant follows the format page.** The fork already allowed the pair; a Commander team now
+  starts at 60 life (still 15 more per head beyond the second), and commander damage counts per team, 21 from one
+  commander taking the team out (with Triple Threat's tripling kept). The lobby switches the deck chooser to
+  Commander. Tests: upstream's new ones in `UpstreamTwoHeadedGiantTest`.
+
 ### 2026-11-10, thirty-ninth deploy (desktop, Android, GitHub) - Alchemy: Reality Fracture complete; Mana Flair, Lavaleaper and Empower AI; desktop AI-vs-AI layout; upstream merge
 
 - **Mana Flair is cast only for mana it can use.** Its artist choice played unconditionally, so the AI cast it with
