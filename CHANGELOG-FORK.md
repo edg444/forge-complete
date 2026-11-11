@@ -491,6 +491,12 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-11, forty-first deploy (desktop, Android, GitHub) - CR 712.13a; AI holds 0/0 lands; upstream merge
+
+- **Upstream merge** (7 commits, 4 conflicts, 2026-11-11): Net Archive Commander decks, per-thread `MyRandom` streams
+  (the fork's whole-method forwarding kept on top), Adventure data backed up on version change, one index-download
+  button. Upstream's Nylea's Oracle came in next to the fork's (add/add); the fork's script stays, since it shuffles as
+  Oracle says.
 - **CR 712.13a: a double-faced spell that would enter transformed with an instant or sorcery back face goes to its
   owner's graveyard.** The rule's own example now works: under Mycosynth Lattice + March of the Machines, Invasion
   of Kylem entering as a copy of a daybound creature at night (Mystic Reflection) used to enter as that creature.
