@@ -309,6 +309,7 @@ public class ComputerUtil {
         }
 
         final Card source = sa.getHostCard();
+        final int waitingMark = game.getTriggerHandler().getWaitingTriggerCount();
 
         Zone fromZone = game.getZoneOf(source);
         int zonePosition = 0;
@@ -326,7 +327,7 @@ public class ComputerUtil {
 
         // do this after card got added to stack
         if (!sa.checkRestrictions(ai)) {
-            GameActionUtil.rollbackAbility(sa, fromZone, zonePosition, pay, source);
+            GameActionUtil.rollbackAbility(sa, fromZone, zonePosition, pay, source, waitingMark);
             return false;
         }
 

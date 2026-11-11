@@ -406,6 +406,9 @@ public abstract class GameLobby implements IHasGameType {
             data.appliedVariants.remove(GameType.Archenemy);
             data.appliedVariants.remove(GameType.ArchenemyRumble);
             removeHerosPathChallenges(null);
+            if (hasVariant(GameType.Commander)) {
+                setGameType(GameType.Commander); // the desktop deck choosers follow the game type
+            }
             break;
         case FaceTheHydra:
         case BattleTheHorde:

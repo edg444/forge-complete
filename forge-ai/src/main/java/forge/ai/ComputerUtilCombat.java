@@ -376,7 +376,7 @@ public class ComputerUtilCombat {
     /** The attackers whose damage reaches this player's life total: those attacking them, and in Two-Headed Giant those attacking a teammate (CR 810.4). */
     public static List<Card> getLifeThreateningCommanders(final Player ai, final Combat combat) {
         List<Card> res = Lists.newArrayList();
-        for (Card c : combat.getAttackersOf(ai)) {
+        for (Card c : getAttackersOfTeam(ai, combat)) {
             if (c.isCommander()) {
                 CardCollection blockers = combat.getBlockers(c);
                 int currentCommanderDamage = ai.getCommanderDamage(c);

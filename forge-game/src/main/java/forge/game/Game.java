@@ -513,8 +513,10 @@ public class Game {
             for (final Player pl : allPlayers) {
                 if (!giantTeams.contains(pl.getTeam())) {
                     final PlayerCollection team = allPlayers.filter(p -> p.getTeam() == pl.getTeam());
-                    // CR 103.4a/810.11: 30, and 15 more for each head beyond the second
-                    formGiantTeam(team, 30 + 15 * Math.max(0, team.size() - 2));
+                    // CR 103.4a/810.11: 30, and 15 more for each head beyond the second; a Commander team starts at 60
+                    // (not in the CR: the Two-Headed Giant format page)
+                    final int base = rules.hasAppliedVariant(GameType.Commander) ? 60 : 30;
+                    formGiantTeam(team, base + 15 * Math.max(0, team.size() - 2));
                 }
             }
         }

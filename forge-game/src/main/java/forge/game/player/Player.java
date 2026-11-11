@@ -1038,10 +1038,13 @@ public class Player extends GameEntity implements Comparable<Player> {
                     commanderDamage *= 3;
                 }
             }
-            addCommanderDamage(realCommander, commanderDamage);
-            view.updateCommanderDamage(this);
-            if (realCommander != source) {
-                view.updateMergedCommanderDamage(source, realCommander);
+            // not in the CR: the Two-Headed Giant format page counts commander damage per team
+            for (final Player p : getSharedTeam()) {
+                p.addCommanderDamage(realCommander, commanderDamage);
+                p.view.updateCommanderDamage(p);
+                if (realCommander != source) {
+                    p.view.updateMergedCommanderDamage(source, realCommander);
+                }
             }
         } else if (source.hasSVar("DamageIsCommanderDamage") && source.getController().isOpponentOf(this)
                 && !source.getController().getCommanders().isEmpty()) {

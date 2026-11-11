@@ -74,8 +74,8 @@ public final class ReplayPlayer implements Runnable, IHasForgeLog {
         channel.pipeline().addLast(new GameClientHandler(client));
         if (gui0 instanceof AbstractGuiGame g) {
             g.setReplay(true); // so the screens know this is a recording: no new match, a smaller menu
-            // a shared GUI (mobile) still holds the last match's view; merging into it would bind the
-            // screen to the old trackers. The cast ((GameView) null) is only there to avoid an ambiguous overload.
+            // a shared GUI (mobile) still holds the last match's view, which nothing should update before the recording's own arrives.
+            // The cast ((GameView) null) is only there to avoid an ambiguous overload.
             g.setGameView((GameView) null);
             // A game between AI players is recorded with no player of ours, so it is watched as a spectator and the
             // prompt's buttons go to the spectator's controller, as when it was watched live.

@@ -74,7 +74,6 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
 
     // They don't provide a LIFO queue, so had to use a deque
     private final Deque<SpellAbilityStackInstance> stack = new LinkedBlockingDeque<>();
-    private final Stack<SpellAbilityStackInstance> frozenStack = new Stack<>();
     private final Stack<SpellAbility> undoStack = new Stack<>();
     private Player undoStackOwner;
 
@@ -120,7 +119,6 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
         curResolving = null;
         triggerRepeats.clear();
         illegalAdditions.clear();
-        frozenStack.clear();
         clearUndoStack();
         clear();
     }
@@ -178,11 +176,6 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
         frozen = false;
         primaryAbility = null;
 
-        // Add all Frozen Abilities onto the stack
-        while (!frozenStack.isEmpty()) {
-            final SpellAbilityStackInstance si = frozenStack.pop();
-            add(si.getSpellAbility(), si);
-        }
         // Add all waiting triggers onto the stack
         game.getTriggerHandler().resetActiveTriggers();
         game.getTriggerHandler().runWaitingTriggers();
@@ -191,7 +184,6 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
     public final void clearFrozen() {
         // TODO: frozen triggered abilities and undoable costs have nasty consequences
         frozen = false;
-        frozenStack.clear();
     }
 
     public final boolean isResolving() {
@@ -340,12 +332,6 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
             }
         }
 
-        if (frozen && !sp.hasParam("IgnoreFreeze") && !sp.isCastFromPlayEffect()) {
-            si = new SpellAbilityStackInstance(sp, id);
-            frozenStack.push(si);
-            return;
-        }
-
         if (sp.isAbility() && !sp.isCopied() && !sp.isTrigger()) {
             addAbilityActivatedThisTurn(sp);
         }
@@ -373,13 +359,6 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
         }
         distinctSources += sources.size();
         if (distinctSources > maxDistinctSources) maxDistinctSources = distinctSources;
-
-        // 2012-07-21 the following comparison needs to move below the pushes but somehow screws up priority
-        // When it's down there. That makes absolutely no sense to me, so i'm putting it back for now
-        if (!(sp.isTrigger() || (sp instanceof AbilityStatic))) {
-            // when something is added we need to setPriority
-            game.getPhaseHandler().setPriority(sp.getActivatingPlayer());
-        }
 
         if (sp.isSpell() && !sp.isCopied()) {
             applyStickerKickers(sp);
@@ -959,10 +938,6 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
         unfreezeStack();
         sa.resetOnceResolved();
 
-        if (sa.getApi() != ApiType.EndTurn) {
-            game.getPhaseHandler().onStackResolved();
-        }
-
         curResolving = null;
     }
 
@@ -1112,7 +1087,6 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
 
     public final void remove(final SpellAbilityStackInstance si) {
         stack.remove(si);
-        frozenStack.remove(si);
         game.updateStackForView();
         game.fireEvent(new GameEventSpellRemovedFromStack(SpellAbilityView.get(si.getSpellAbility())));
     }
@@ -1257,12 +1231,6 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
             }
         }
 
-        for (final SpellAbilityStackInstance sasi : frozenStack) {
-            if (sasi.isStateTrigger(triggerID)) {
-                return true;
-            }
-        }
-
         for (final SpellAbility sa : simultaneousStackEntryList) {
             if (sa.getSourceTrigger() == triggerID) {
                 return true;
@@ -1373,7 +1341,7 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
 
     @Override
     public String toString() {
-        return TextUtil.concatNoSpace(simultaneousStackEntryList.toString(),"==", frozenStack.toString(), "==", stack.toString());
+        return TextUtil.concatNoSpace(simultaneousStackEntryList.toString(),"==", stack.toString());
     }
 
     static protected boolean commitCrimeCheck(Player p, Iterable<TargetChoices> chosenTargets) {
