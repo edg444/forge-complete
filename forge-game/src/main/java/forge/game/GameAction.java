@@ -586,6 +586,16 @@ public class GameAction {
             }
         }
 
+        // CR 712.13a: an "enters transformed" replacement found this spell's back face is an instant or sorcery face
+        if (copied.isTransformedEntryFailed()) {
+            copied.setTransformedEntryFailed(false);
+            if (toBattlefield && c.isInZone(ZoneType.Stack)) {
+                c.clearControllers();
+                cleanStaticEffect(staticEff, copied);
+                return moveToGraveyard(c, cause, params);
+            }
+        }
+
         // Animate Library, Animate Graveyard: if the library or graveyard permanent would still go somewhere once
         // replacements have had their say, it doesn't - it just stops being a permanent, never a card in a zone
         if ((c.getGamePieceType() == GamePieceType.LIBRARY || c.getGamePieceType() == GamePieceType.GRAVEYARD) && !toBattlefield) {

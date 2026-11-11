@@ -167,6 +167,14 @@ public class SetStateEffect extends SpellAbilityEffect {
                 }
             }
 
+            // CR 712.13a: a double-faced spell that would enter transformed with an instant or sorcery back face
+            // goes to its owner's graveyard instead; GameAction moves it once the replacements are done
+            if ("Transform".equals(cardMode) && sa.hasParam("ETB") && gameCard.isInZone(ZoneType.Stack)
+                    && entersWithNonPermanentBackFace(gameCard)) {
+                gameCard.setTransformedEntryFailed(true);
+                continue;
+            }
+
             // for reasons it can't transform, skip
             if ("Transform".equals(cardMode) && !gameCard.canTransform(sa)) {
                 continue;
@@ -244,5 +252,14 @@ public class SetStateEffect extends SpellAbilityEffect {
         if (!transformedCards.isEmpty()) {
             game.getAction().revealForDisplay(transformedCards, p, true, "Transformed cards in ");
         }
+    }
+
+    private static boolean entersWithNonPermanentBackFace(final Card card) {
+        if (!card.isTransformable() || card.hasMergedCard()) {
+            return false;
+        }
+        // the card's own back face, not a copy effect's: Invasion of Kylem as a copy of Bird Admirer still has a sorcery back
+        final CardState back = card.getOriginalState(CardStateName.Backside);
+        return back != null && !back.getType().isPermanent();
     }
 }

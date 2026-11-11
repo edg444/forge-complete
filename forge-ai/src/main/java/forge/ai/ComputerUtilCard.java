@@ -2006,6 +2006,39 @@ public class ComputerUtilCard {
     }
 
     /**
+     * Whether each of these cards would be a creature with 0 or less toughness as soon as it entered the battlefield
+     * under {@code controller}, with every continuous effect applied - not just P/T boosts - so a land under
+     * Mycosynth Lattice + March of the Machines (a 0/0 artifact creature) counts.
+     */
+    public static Set<Card> wouldDieOnEntering(final Iterable<Card> cards, final Player controller) {
+        final Game game = controller.getGame();
+        final Set<Card> doomed = Sets.newHashSet();
+        // a full static pass per card is too costly to run on every priority, so only when something could
+        // make a noncreature into a creature (Living Plane, March of the Machines) or the card already is one
+        final boolean animators = game.getCardsIn(ZoneType.listValueOf("Battlefield,Command")).anyMatch(s ->
+                s.getStaticAbilities().stream().anyMatch(st -> st.checkMode(StaticAbilityMode.Continuous)
+                        && st.getParamOrDefault("AddType", "").contains("Creature")));
+        boolean checked = false;
+        for (final Card c : cards) {
+            if (!animators && !c.isCreature()) {
+                continue;
+            }
+            final Card copy = CardCopyService.getLKICopy(c);
+            copy.setLastKnownZone(controller.getZone(ZoneType.Battlefield));
+            game.getAction().checkStaticAbilities(false, Sets.newHashSet(copy), new CardCollection(copy));
+            checked = true;
+            if (copy.isCreature() && copy.getNetToughness() <= 0
+                    && !StaticAbilityIgnoreStateBasedActions.exemptsItselfFromZeroToughness(copy)) {
+                doomed.add(c);
+            }
+        }
+        if (checked) {
+            game.getAction().checkStaticAbilities(false);
+        }
+        return doomed;
+    }
+
+    /**
      * Applies static continuous Power/Toughness effects to a (virtual) creature.
      *
      * @param game    game instance to work with

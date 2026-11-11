@@ -491,6 +491,15 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+- **CR 712.13a: a double-faced spell that would enter transformed with an instant or sorcery back face goes to its
+  owner's graveyard.** The rule's own example now works: under Mycosynth Lattice + March of the Machines, Invasion
+  of Kylem entering as a copy of a daybound creature at night (Mystic Reflection) used to enter as that creature.
+  `SetStateEffect` flags the spell (`Card.isTransformedEntryFailed`) and `GameAction` moves it once replacements are
+  done. Before this, a copy on both faces carried daybound's "enters transformed" on each, so it flipped there and back.
+- **The AI doesn't play a land that would be a 0/0 creature** (Mycosynth Lattice + March of the Machines), even with no
+  other mana: `ComputerUtilCard.wouldDieOnEntering` applies every continuous effect to a battlefield copy, only when
+  something on the board can turn a noncreature into a creature. Tests: `EnterTransformedNonPermanentBackTest`.
+
 ### 2026-11-11, fortieth deploy (desktop, Android, GitHub) - upstream forge-2.0.16 release with Star Trek; Commander Two-Headed Giant
 
 - **Upstream merge** (30 commits, 13 conflicts, 2026-11-11): the forge-2.0.16 release (Star Trek: all its cards are in), and

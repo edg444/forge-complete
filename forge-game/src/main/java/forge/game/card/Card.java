@@ -1364,6 +1364,16 @@ public class Card extends GameEntity implements Comparable<Card>, IHasSVars, ITr
         return backside;
     }
 
+    // CR 712.13a: an "enters transformed" replacement found this spell's back face is an instant or sorcery face,
+    // so it goes to its owner's graveyard instead of entering
+    private boolean transformedEntryFailed = false;
+    public final boolean isTransformedEntryFailed() {
+        return transformedEntryFailed;
+    }
+    public final void setTransformedEntryFailed(final boolean failed) {
+        transformedEntryFailed = failed;
+    }
+
     // MayPlayPermission: who was refused permission to play this card, and on which turn
     private final Map<Player, Integer> playPermissionRefused = Maps.newHashMap();
     public final void refusePlayPermission(Player p, int turn) {

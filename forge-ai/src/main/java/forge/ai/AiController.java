@@ -535,6 +535,11 @@ public class AiController {
 
         landList = ComputerUtilCard.dedupeCards(landList);
 
+        // a land that would be a 0/0 creature (Mycosynth Lattice + March of the Machines) is only a card lost,
+        // even when the AI has no other way to make mana
+        final Set<Card> doomed = ComputerUtilCard.wouldDieOnEntering(CardLists.filter(landList, Card::isLand), player);
+        landList = CardLists.filter(landList, c -> !doomed.contains(c));
+
         landList = CardLists.filter(landList, c -> {
             String name = c.getName();
             CardCollectionView battlefield = player.getCardsIn(ZoneType.Battlefield);
