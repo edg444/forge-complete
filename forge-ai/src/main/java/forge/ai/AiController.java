@@ -2834,11 +2834,13 @@ public class AiController {
     /**
      * A mana rock or mana creature marked AI:RemoveDeck:All (Springleaf Drum): the heuristics never cast it, and
      * without broad discovery nothing else would either, so it is always offered to the rollouts, which decide.
+     * The fork took that mark off the Drum, so a mana source that taps a creature counts too.
      */
     private boolean isRemoveDeckManaPermanent(final SpellAbility sa) {
         final Card h = sa.getHostCard();
-        return h != null && sa.isSpell() && h.isPermanent() && !h.isLand() && ComputerUtilCard.isCardRemAIDeck(h)
-                && !h.getManaAbilities().isEmpty();
+        return h != null && sa.isSpell() && h.isPermanent() && !h.isLand() && !h.getManaAbilities().isEmpty()
+                && (ComputerUtilCard.isCardRemAIDeck(h) || h.getManaAbilities().stream().anyMatch(m -> m.getPayCosts() != null
+                        && m.getPayCosts().getCostParts().stream().anyMatch(part -> part instanceof forge.game.cost.CostTapType)));
     }
 
     /**

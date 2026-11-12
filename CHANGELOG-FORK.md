@@ -491,6 +491,14 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-12, forty-second deploy (desktop, Android, GitHub) - AI fixes from play; upstream merge
+
+- **Upstream merge** (3 commits, 13 conflicts, 2026-11-12): Adventure global and biome effects, Flat MC fixes, and
+  Station reminder text worked out from the card. Upstream now matches only a bare `K:Station`, so the fork's
+  `K:Station:12` (Kavaron, Memorial World) and `K:Station:10` (Land Station) dropped their numbers. Name-and-exile
+  cards (Memoricide and the like) take upstream's `AILogic$ NamedExile`.
+  Upstream's new Springleaf Drum scenario needed its Flat MC exception for mana sources marked `AI:RemoveDeck:All`
+  widened, since the fork took that mark off the Drum: a mana source whose ability taps a creature counts too.
 - **AI fixes from play (2026-11-12)**, tests in `AiPlayReports20261112Test`:
   - Scry and surveil triggers resolve before draw triggers that go on the stack with them (Sorcerer Role on an attacking
     Howling Golem).
