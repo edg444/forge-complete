@@ -141,14 +141,17 @@ public abstract class PumpAiBase extends SpellAbilityAi {
             return card.isTapped() && card.canUntap(card.getController(), true);
         } else if (keyword.endsWith("Prevent all combat damage that would be dealt by CARDNAME.")
                 || keyword.endsWith("Prevent all damage that would be dealt by CARDNAME.")) {
-            if (ph.isPlayerTurn(ai) && (!(CombatUtil.canBlock(card) || combat != null && combat.isBlocking(card))
-                    || card.getNetCombatDamage() <= 0
-                    || ph.getPhase().isAfter(PhaseType.COMBAT_DECLARE_BLOCKERS)
-                    || ph.getPhase().isBefore(PhaseType.MAIN1)
-                    || CardLists.getNotKeyword(ai.getCreaturesInPlay(), Keyword.DEFENDER).isEmpty())) {
+            if (card.getNetCombatDamage() <= 0 || combat == null) {
                 return false;
             }
-            return ph.isPlayerTurn(ai) || (combat != null && combat.isAttacking(card) && card.getNetCombatDamage() > 0);
+            if (ph.isPlayerTurn(ai)) {
+                // Soul Parry: on its own turn only once blocks are known, to save an attacker this blocker would kill -
+                // spent before combat on a creature that might block, the AI often didn't attack at all
+                return ph.is(PhaseType.COMBAT_DECLARE_BLOCKERS) && combat.isBlocking(card)
+                        && combat.getAttackersBlockedBy(card).stream().anyMatch(a -> a.getController().equals(ai)
+                                && ComputerUtilCombat.attackerWouldBeDestroyed(ai, a, combat));
+            }
+            return combat.isAttacking(card);
         } else return true;
     }
 

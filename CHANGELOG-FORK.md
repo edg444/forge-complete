@@ -491,6 +491,20 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+- **AI fixes from play (2026-11-12)**, tests in `AiPlayReports20261112Test`:
+  - Scry and surveil triggers resolve before draw triggers that go on the stack with them (Sorcerer Role on an attacking
+    Howling Golem).
+  - A "whenever you draw your Nth card each turn" permanent (Atlantean Cavalry) is cast before combat when one of its
+    likely attackers draws a card as it attacks (Howling Golem).
+  - Hatred (`AILogic$ PayLifePump`) only counts attackers that are on the player for lethal. One on a planeswalker or
+    battle gets exactly the damage that finishes it, for at most a third of the AI's life (it paid 13 for a token on a
+    9-loyalty Ugin). The attack AI also treats a Hatred in hand as lethal through unblocked attackers, so they go at the
+    player.
+  - Soul Parry and other "prevent all damage that would be dealt by" curses: on the AI's own turn only after blocks,
+    on a blocker that would kill one of its attackers (it was cast in main 1 and the AI then didn't attack).
+  - A creature's own instant-speed pump (Roterothopter) waits until it's attacking. A 0-power creature with an
+    affordable pump of its own counts as an attacker.
+
 ### 2026-11-11, forty-first deploy (desktop, Android, GitHub) - CR 712.13a; AI holds 0/0 lands; upstream merge
 
 - **Upstream merge** (7 commits, 4 conflicts, 2026-11-11): Net Archive Commander decks, per-thread `MyRandom` streams

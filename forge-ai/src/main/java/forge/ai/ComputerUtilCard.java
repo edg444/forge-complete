@@ -1631,8 +1631,11 @@ public class ComputerUtilCard {
 
         //create and buff attackers
         if (phase.getPhase().isBefore(PhaseType.COMBAT_DECLARE_ATTACKERS) && phase.isPlayerTurn(ai) && opp.getLife() > 0) {
+            // its own instant-speed pump (Roterothopter) can wait until it's attacking: spent first, the AI may
+            // still keep it home
+            final boolean ownPumpCanWait = c.equals(sa.getHostCard()) && sa.isActivatedAbility() && !SpellAbilityAi.isSorcerySpeed(sa, ai);
             //1. become attacker for whatever reason
-            if (!doesCreatureAttackAI(ai, c) && doesSpecifiedCreatureAttackAI(ai, pumped)) {
+            if (!ownPumpCanWait && !doesCreatureAttackAI(ai, c) && doesSpecifiedCreatureAttackAI(ai, pumped)) {
                 float threat = 1.0f * ComputerUtilCombat.damageIfUnblocked(pumped, opp, combat, true) / opp.getLife();
                 if (oppCreatures.stream().noneMatch(CardPredicates.possibleBlockers(pumped))) {
                     threat *= 2;

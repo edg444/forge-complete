@@ -3814,6 +3814,8 @@ public class AiController {
         List<SpellAbility> mandatoryDiscard = filterList(discard, SpellAbility::isMandatory);
 
         List<SpellAbility> draw = filterListByApi(activePlayerSAs, ApiType.Draw);
+        List<SpellAbility> lookAtTop = filterListByApi(activePlayerSAs, ApiType.Scry);
+        lookAtTop.addAll(filterListByApi(activePlayerSAs, ApiType.Surveil));
 
         List<SpellAbility> putCounter = filterListByApi(activePlayerSAs, ApiType.PutCounter);
         List<SpellAbility> putCounterAll = filterListByApi(activePlayerSAs, ApiType.PutCounterAll);
@@ -3837,6 +3839,8 @@ public class AiController {
         result.addAll(discard);
         // do Draw before Discard
         result.addAll(draw);
+        // scry/surveil before a draw (Sorcerer Role with Howling Golem), so the draw takes the card it chose
+        result.addAll(lookAtTop);
 
         result.addAll(putCounterAll);
         // do putCounter before Draw/Discard because it can cause a Draw Trigger

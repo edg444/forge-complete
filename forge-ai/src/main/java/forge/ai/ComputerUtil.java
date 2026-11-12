@@ -1317,6 +1317,10 @@ public class ComputerUtil {
             }
         }
 
+        if (drawsItsCountedCardInCombat(ai, cardState)) {
+            return true;
+        }
+
         // cast Backup creatures in main 1 to pump attackers
         if (cardState.hasKeyword(Keyword.BACKUP)) {
             for (Card potentialAtkr: ai.getCreaturesInPlay()) {
@@ -1454,6 +1458,41 @@ public class ComputerUtil {
             if (((creatures2.size() + CardUtil.getThisTurnCast("Creature.YouCtrl", vengevines.get(0), null, ai).size()) > 1)
                     && card.isCreature() && card.getManaCost().getCMC() <= 3) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * A "whenever you draw your Nth card each turn" permanent (Atlantean Cavalry) that hasn't seen that card yet, while
+     * one of our likely attackers draws us a card as it attacks (Howling Golem): cast it before combat to catch it.
+     */
+    private static boolean drawsItsCountedCardInCombat(final Player ai, final CardState state) {
+        boolean waiting = false;
+        for (final Trigger t : state.getTriggers()) {
+            if (t.getMode() == TriggerType.Drawn && t.hasParam("Number")
+                    && ai.getNumDrawnThisTurn() < Integer.parseInt(t.getParam("Number"))) {
+                waiting = true;
+                break;
+            }
+        }
+        if (!waiting) {
+            return false;
+        }
+        for (final Card attacker : ai.getCreaturesInPlay()) {
+            if (!ComputerUtilCard.doesCreatureAttackAI(ai, attacker)) {
+                continue;
+            }
+            for (final Trigger t : attacker.getTriggers()) {
+                if (t.getMode() != TriggerType.Attacks || !"Card.Self".equals(t.getParam("ValidCard"))) {
+                    continue;
+                }
+                for (SpellAbility ab = t.ensureAbility(); ab != null; ab = ab.getSubAbility()) {
+                    if (ab.getApi() == ApiType.Draw && !ab.hasParam("OptionalDecider")
+                            && AbilityUtils.getDefinedPlayers(attacker, ab.getParamOrDefault("Defined", "You"), ab).contains(ai)) {
+                        return true;
+                    }
+                }
             }
         }
         return false;

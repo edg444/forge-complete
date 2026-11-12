@@ -16,6 +16,7 @@ import forge.game.ability.AbilityUtils;
 import forge.game.card.Card;
 import forge.game.card.CardLists;
 import forge.game.card.CardUtil;
+import forge.game.card.CounterEnumType;
 import forge.game.card.CounterType;
 import forge.game.combat.Combat;
 import forge.game.keyword.Keyword;
@@ -423,20 +424,42 @@ public final class MiscLogicAi {
             return new AiAbilityDecision(0, AiPlayDecision.WaitForCombat);
         }
         sa.resetTargets();
+        // lethal first, through an attacker that's on the player: one on their planeswalker or battle hits that instead
         for (final Card att : combat.getAttackers()) {
-            final Player def = combat.getDefenderPlayerByAttacker(att);
-            if (def == null || !combat.isUnblocked(att) || !sa.canTarget(att) || !def.canLoseLife() || def.cantLoseForZeroOrLessLife()) {
+            if (!(combat.getDefenderByAttacker(att) instanceof Player def) || !combat.isUnblocked(att) || !sa.canTarget(att)
+                    || !def.canLoseLife() || def.cantLoseForZeroOrLessLife()) {
                 continue;
             }
-            final int coming = ComputerUtilCombat.sumDamageIfUnblocked(CardLists.filter(combat.getAttackers(), combat::isUnblocked), def);
+            final int coming = ComputerUtilCombat.sumDamageIfUnblocked(CardLists.filter(combat.getAttackersOf(def), combat::isUnblocked), def);
             final int x = def.getLife() - coming;
             if (x > 0 && ai.getLife() > x + 2) {
-                sa.setXManaCostPaid(x);
-                sa.getTargets().add(att);
-                return yes();
+                return payLifePumpOn(sa, att, x);
+            }
+        }
+        // otherwise finish off a planeswalker or battle, paying exactly what it still needs and no more than a third of its life
+        for (final Card att : combat.getAttackers()) {
+            if (!(combat.getDefenderByAttacker(att) instanceof Card attacked) || !combat.isUnblocked(att) || !sa.canTarget(att)) {
+                continue;
+            }
+            final int left = attacked.isPlaneswalker() ? attacked.getCurrentLoyalty() : attacked.getCounters(CounterEnumType.DEFENSE);
+            int coming = 0;
+            for (final Card other : combat.getAttackersOf(attacked)) {
+                if (combat.isUnblocked(other)) {
+                    coming += ComputerUtilCombat.damageIfUnblocked(other, attacked, combat, false);
+                }
+            }
+            final int x = left - coming;
+            if (x > 0 && x * 3 <= ai.getLife()) {
+                return payLifePumpOn(sa, att, x);
             }
         }
         return no();
+    }
+
+    private static AiAbilityDecision payLifePumpOn(final SpellAbility sa, final Card att, final int x) {
+        sa.setXManaCostPaid(x);
+        sa.getTargets().add(att);
+        return yes();
     }
 
     // ---- Hunter's Insight: cards for its unblocked attacker's damage ----

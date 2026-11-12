@@ -305,6 +305,10 @@ public class AiAttackController {
                 return true;
             }
         }
+        // nothing on its own, but its own affordable pump makes it count (Roterothopter), used once it's attacking
+        if (dmgIfUnblocked <= 0 && ComputerUtilCombat.damageIfUnblocked(attacker, defender, combat, false) > 0) {
+            return true;
+        }
         // Poison opponent if unblocked
         if (defender instanceof Player player
                 && ComputerUtilCombat.poisonIfUnblocked(attacker, player) > 0) {
@@ -763,6 +767,9 @@ public class AiAttackController {
             if (totalCombatDamage >= defendingOpponent.getLife()) {
                 return true;
             }
+            if (lifePumpMakesUpTheRest(defendingOpponent.getLife() - totalCombatDamage, unblockedAttackers)) {
+                return true;
+            }
             totalCombatDamage += ComputerUtil.possibleNonCombatDamage(ai, defendingOpponent);
             if (totalCombatDamage >= defendingOpponent.getLife()) {
                 return true;
@@ -785,6 +792,33 @@ public class AiAttackController {
             }
         }
 
+        return false;
+    }
+
+    /**
+     * Whether a pay-life pump in hand (Hatred) could put the missing damage on one of these unblocked attackers - the same
+     * test its AI makes once blocks are known, so the attack goes at the player rather than their planeswalker.
+     */
+    private boolean lifePumpMakesUpTheRest(final int missing, final CardCollectionView unblocked) {
+        if (missing <= 0 || unblocked.isEmpty() || ai.getLife() <= missing + 2) {
+            return false;
+        }
+        for (final Card c : ai.getCardsIn(ZoneType.Hand)) {
+            for (final SpellAbility sa : c.getSpellAbilities()) {
+                if (!"PayLifePump".equals(sa.getParam("AILogic")) || !sa.usesTargeting()) {
+                    continue;
+                }
+                sa.setActivatingPlayer(ai);
+                if (!ComputerUtilCost.canPayCost(sa, ai, false)) {
+                    continue;
+                }
+                for (final Card att : unblocked) {
+                    if (sa.canTarget(att)) {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
