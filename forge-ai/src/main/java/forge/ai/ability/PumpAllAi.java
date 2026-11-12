@@ -157,6 +157,13 @@ public class PumpAllAi extends PumpAiBase {
             // with a cantrip attached it can just be cycled at the end of the opponent's turn
             result = true;
         }
+        if (!result && sa.isSpell() && sa.getHostCard().hasKeyword(Keyword.CASCADE)
+                && (!(ai.getController() instanceof PlayerControllerAi)
+                || ((PlayerControllerAi) ai.getController()).getAi().deckPlan(ai).combos.mayCascadeForTheFreeSpell(ai))) {
+            // the free spell from cascade is worth the mana even when nothing is there to pump (Violent Outburst, #4210),
+            // unless the deck plan keeps its cascade spells for the right moment (Living End)
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
         return result ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
     }
 
