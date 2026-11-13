@@ -491,6 +491,10 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-13, forty-fourth deploy (desktop, Android, GitHub) - Saddle and Soulbright Flamekin AI; upstream merge
+
+- **Upstream merge** (1 commit, no conflicts, 2026-11-13): the Card Dealer's Cave reward in Adventure's Realm of
+  Legends.
 - **AI fixes from play (2026-11-13)**, tests in `AiPlayReports20261113Test`:
   - Saddle only when the Mount would attack once saddled (checked on a saddled copy, the way Crew checks an animated
     one). It saddled Gila Courser and then kept it home from a Hill Giant.
