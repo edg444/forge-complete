@@ -90,10 +90,12 @@ public class UnknownEventBatch54Test extends AITest {
     public void testPlayfulWinnersCopiesAPartner() {
         final Game game = initAndCreateGame();
         final Player ai = game.getPlayers().get(1);
-        final Card winners = addCard("The Playful Winners", ai);
+        // the partner is picked at random; a planeswalker partner (Will or Rowan Kenrith) has no power to check, and
+        // the copy no longer has DBCopy, so each retry needs a fresh Winners
+        Card winners = addCard("The Playful Winners", ai);
         AbilityUtils.resolve(svar(winners, "DBCopy", ai));
-        // the partner is picked at random; a planeswalker partner (Will or Rowan Kenrith) has no power to check
         for (int i = 0; i < 20 && !winners.isCreature(); i++) {
+            winners = addCard("The Playful Winners", ai);
             AbilityUtils.resolve(svar(winners, "DBCopy", ai));
         }
         AssertJUnit.assertFalse(winners.getName().equals("The Playful Winners"));

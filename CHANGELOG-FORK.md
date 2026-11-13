@@ -491,6 +491,15 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-13, forty-third deploy (desktop, Android, GitHub) - upstream merge
+
+- **Upstream merge** (9 commits, no conflicts, 2026-11-13): Flat MC misplay fixes (`LegalityGuard`, `EnablerGuard`,
+  `ProwessTiming`), AI mana payment using the active part of conditional mana abilities, uncounterable mana sources
+  (Cavern of Souls, Delighted Halfling) paying {C} when nothing else can, Adventure realm options, and a mobile lobby
+  header that fits the screen width.
+- `UnknownEventBatch54Test.testPlayfulWinnersCopiesAPartner` retries on a fresh The Playful Winners. When the random
+  partner was a planeswalker, the old retry asked the copy for `DBCopy`, which it no longer has, and threw.
+
 ### 2026-11-12, forty-second deploy (desktop, Android, GitHub) - AI fixes from play; upstream merge
 
 - **Upstream merge** (3 commits, 13 conflicts, 2026-11-12): Adventure global and biome effects, Flat MC fixes, and
