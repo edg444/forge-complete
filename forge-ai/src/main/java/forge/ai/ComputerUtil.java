@@ -1526,6 +1526,11 @@ public class ComputerUtil {
             return true;
         }
 
+        // an instant or sorcery before combat pumps a prowess creature that is going to attack
+        if (ProwessTiming.worthBeforeCombat(ai, sa)) {
+            return true;
+        }
+
         if (sub != null) {
             final ApiType api = sub.getApi();
             if (ApiType.Encode == api && !ai.getCreaturesInPlay().isEmpty()) {
