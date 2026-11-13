@@ -7,6 +7,7 @@ import forge.ai.SpellAbilityAi;
 import forge.game.ability.AbilityUtils;
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
+import forge.game.card.CardCopyService;
 import forge.game.card.CardLists;
 import forge.game.card.CardPredicates;
 import forge.game.combat.CombatUtil;
@@ -98,6 +99,14 @@ public class AlterAttributeAi extends SpellAbilityAi {
                         // AI should not try to Saddle again?
                         if (c.isSaddled()) {
                             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+                        }
+                        // the creatures tapped to saddle are spent for the turn: only worth it if the Mount then attacks
+                        // (a copy, since saddling the real card counts toward "saddled this turn")
+                        final Card saddled = CardCopyService.getLKICopy(c);
+                        saddled.setSickness(c.hasSickness());
+                        saddled.setSaddled(true);
+                        if (!ComputerUtilCard.doesSpecifiedCreatureAttackAI(aiPlayer, saddled)) {
+                            return new AiAbilityDecision(0, AiPlayDecision.DoesntImpactCombat);
                         }
                         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
                     case "Prepare":

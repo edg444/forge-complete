@@ -4,15 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import forge.ai.ComputerUtilCard;
+import forge.ai.ComputerUtilMana;
 import forge.game.ability.ApiType;
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
 import forge.game.card.CardLists;
 import forge.game.card.CounterEnumType;
+import forge.game.combat.Combat;
+import forge.game.combat.CombatUtil;
 import forge.game.cost.Cost;
 import forge.game.cost.CostDiscard;
 import forge.game.cost.CostExile;
 import forge.game.cost.CostPart;
+import forge.game.cost.CostPartMana;
 import forge.game.cost.CostPutCounter;
 import forge.game.cost.CostRemoveCounter;
 import forge.game.cost.CostReturn;
@@ -20,6 +24,8 @@ import forge.game.cost.CostSacrifice;
 import forge.game.cost.CostTapType;
 import forge.game.cost.CostUntapType;
 import forge.game.GameEntity;
+import forge.game.phase.PhaseHandler;
+import forge.game.phase.PhaseType;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.TargetRestrictions;
@@ -192,6 +198,9 @@ public final class ActivationGuard {
     // ------------------------------------------------------------------------------------------ one effect
 
     private static Verdict judge(final Player ai, final SpellAbility node) {
+        if (nthResolutionOutOfReach(ai, node)) {
+            return Verdict.IDLE;
+        }
         if (node.usesTargeting()) {
             if (node.getTargetRestrictions() == null) {
                 return Verdict.USEFUL;
@@ -267,6 +276,14 @@ public final class ActivationGuard {
             }
             return Verdict.IDLE_TARGETS;
         }
+        if (api == ApiType.Pump && grantsOnlyTrample(node)) {
+            for (final GameEntity e : tr.getAllCandidates(node)) {
+                if (e instanceof Card && trampleMatters(ai, (Card) e)) {
+                    return null;
+                }
+            }
+            return Verdict.IDLE_TARGETS;
+        }
         if (api == ApiType.Attach && node.isEquip() && node.getHostCard().isEquipping()
                 && !attachPayoff(ai, node.getHostCard())) {
             final Card current = node.getHostCard().getEquipping();
@@ -278,6 +295,100 @@ public final class ActivationGuard {
             return Verdict.IDLE_TARGETS;
         }
         return null;
+    }
+
+    /** "Target creature gains trample until end of turn" and nothing else (Soulbright Flamekin). */
+    private static boolean grantsOnlyTrample(final SpellAbility node) {
+        if (!node.hasParam("KW") || node.hasParam("NumAtt") || node.hasParam("NumDef")) {
+            return false;
+        }
+        for (final String kw : node.getParam("KW").split(" & ")) {
+            if (!"Trample".equals(kw.trim())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Trample only changes the damage of a blocked attacker. It helps the AI's creature on its own turn before blocks
+     * (one that is attacking, or still could), a blocked attacker until regular combat damage, and nothing after that
+     * unless another combat is still to come. The rollouts score the keyword itself, so trample on an unblocked
+     * attacker looked like a gain.
+     */
+    private static boolean trampleMatters(final Player ai, final Card c) {
+        final Player controller = c.getController();
+        if (controller == null || controller.isOpponentOf(ai)) {
+            return false;
+        }
+        final PhaseHandler ph = ai.getGame().getPhaseHandler();
+        if (!ph.isPlayerTurn(controller)) {
+            return false;
+        }
+        final PhaseType phase = ph.getPhase();
+        final Combat combat = ph.getCombat();
+        if (phase.isBefore(PhaseType.COMBAT_DECLARE_ATTACKERS)) {
+            return CombatUtil.canAttack(c);
+        }
+        if (phase == PhaseType.COMBAT_DECLARE_ATTACKERS) {
+            return combat != null && combat.isAttacking(c);
+        }
+        if (combat != null && !phase.isAfter(PhaseType.COMBAT_FIRST_STRIKE_DAMAGE)) {
+            if (combat.isAttacking(c) && combat.isBlocked(c)) {
+                return true;
+            }
+        }
+        for (final PhaseType after : PhaseType.values()) {
+            if (ph.hasExtraPhaseAfter(after, PhaseType.COMBAT_BEGIN)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * "If this is the third time this ability has resolved this turn" (Soulbright Flamekin, Soulbright Seeker): the
+     * conditional part does something on that resolution only. Before it, the activation is a step toward it, worth
+     * taking only when the AI can pay for the activations that are still needed this turn; after it, never. The count
+     * goes up before the ability resolves, so this activation is resolution number count + 1.
+     */
+    private static boolean nthResolutionOutOfReach(final Player ai, final SpellAbility node) {
+        final String svar = node.getParam("ConditionCheckSVar");
+        final Card host = node.getHostCard();
+        if (svar == null || host == null || !"Count$ResolvedThisTurn".equals(host.getSVar(svar))) {
+            return false;
+        }
+        final String compare = node.getParamOrDefault("ConditionSVarCompare", "GE1");
+        final boolean exact = compare.startsWith("EQ");
+        if (!exact && !compare.startsWith("GE")) {
+            return false;
+        }
+        final int n;
+        try {
+            n = Integer.parseInt(compare.substring(2));
+        } catch (final NumberFormatException e) {
+            return false;
+        }
+        final SpellAbility root = node.getRootAbility();
+        final int resolved = root.getResolvedThisTurn();
+        final int next = resolved + 1;
+        if (next == n || (!exact && next > n)) {
+            return false;
+        }
+        if (next > n) {
+            return true;
+        }
+        final Cost cost = root.getPayCosts();
+        if (cost == null || cost.getTotalMana() == null) {
+            return false;
+        }
+        for (final CostPart part : cost.getCostParts()) {
+            if (!(part instanceof CostPartMana)) {
+                return false; // a tap, sacrifice or other cost: how often it can be paid is not read here
+            }
+        }
+        final int each = cost.getTotalMana().getCMC();
+        return ComputerUtilMana.getAvailableManaEstimate(ai, false) < each * (n - resolved);
     }
 
     /**

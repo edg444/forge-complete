@@ -491,6 +491,14 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+- **AI fixes from play (2026-11-13)**, tests in `AiPlayReports20261113Test`:
+  - Saddle only when the Mount would attack once saddled (checked on a saddled copy, the way Crew checks an animated
+    one). It saddled Gila Courser and then kept it home from a Hill Giant.
+  - Flat MC no longer spends Soulbright Flamekin on trample that does nothing. `ActivationGuard` treats a trample-only
+    pump as idle unless a creature the AI could target can still use it: before blocks, a blocked attacker before
+    regular damage, or another combat to come. "If this is the Nth time this ability has resolved this turn" parts
+    count only on that resolution, or when the AI can pay for the activations still needed to reach it.
+
 ### 2026-11-13, forty-third deploy (desktop, Android, GitHub) - upstream merge
 
 - **Upstream merge** (9 commits, no conflicts, 2026-11-13): Flat MC misplay fixes (`LegalityGuard`, `EnablerGuard`,
