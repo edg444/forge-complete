@@ -491,6 +491,8 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-16, forty-seventh deploy (desktop, Android, GitHub) - Starfish and Hydrolash AI; upstream merge
+
 - **AI card selection and cantrip timing** (report 2026-11-16): Sigiled Starfish and other creatures that tap to
   scry or surveil are no longer tapped in the AI's own turn or before the opponent attacks, and Hydrolash is no longer
   cast in the AI's own turn. Flat Monte Carlo discovery handed the rollouts these plays after the heuristics had
@@ -500,6 +502,13 @@ off, a human plays through the prompts of phases 1 and 2).
   memory); it still is when the first one bottomed the card. Hydrolash is still cast in the AI's own turn when it is
   starved for cards: nothing else to play, at most one other card in hand, and a land drop or spare mana to use the
   card it draws. Tested in `CardFlowTimingTest`.
+- **Upstream merge** (6 commits, 15 conflicts): the AI now pays with stored counters (#12910: Mana Batteries, storage
+  lands, Kyren Toy), so the `ManaRitualBattery` AI logic and its script param are gone; the scripts took upstream's
+  mechanics with the fork's Oracle wording. "Could produce" mana checks now see replacement effects (#12863):
+  `ComputerUtilMana` took upstream's `CardUtil.canProduce` in place of its own replacement guess (it already skips pink
+  and gold), and `ReplaceManaEffect` took upstream's `replaceMana` split with the fork's Mana Abundance `AllPlayers`
+  flag kept in `resolve`. `ManaAi` keeps the fork's ritual-chaining check. Also Dune and Nauctis previews (#12854),
+  `CountersPutAi` fight targets (#12915) and draft rankings (#12913).
 
 ### 2026-11-16, forty-sixth deploy (desktop, Android, GitHub) - previewed cards; Cephalid; upstream merge
 
