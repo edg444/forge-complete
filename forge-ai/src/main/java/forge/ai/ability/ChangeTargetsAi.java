@@ -6,10 +6,18 @@ import forge.game.Game;
 import forge.game.card.Card;
 import forge.game.mana.ManaCostBeingPaid;
 import forge.game.player.Player;
+import forge.game.player.PlayerActionConfirmMode;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.TargetChoices;
 
+import java.util.Map;
+
 public class ChangeTargetsAi extends SpellAbilityAi {
+    @Override
+    public boolean confirmAction(Player player, SpellAbility sa, PlayerActionConfirmMode mode, String message, Map<String, Object> params) {
+        return MayDecisions.changeTargets(player, sa);
+    }
+
 
     /*
      * (non-Javadoc)
@@ -55,13 +63,6 @@ public class ChangeTargetsAi extends SpellAbilityAi {
             return ComputerUtilCost.checkLifeCost(payer, cost, source, 4, sa) && ComputerUtilCost.checkDiscardCost(payer, cost, source, sa);
         }
         return super.willPayCosts(payer, sa, cost, source);
-    }
-
-    @Override
-    public boolean confirmAction(Player player, SpellAbility sa, forge.game.player.PlayerActionConfirmMode mode, String message,
-            java.util.Map<String, Object> params) {
-        // "you may choose new targets": the new targets are only taken if they're better
-        return true;
     }
 
     // Deflection, Meddle, Redirect, Willbender: the opponent's spell on top of the stack, if new targets are worth it

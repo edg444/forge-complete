@@ -3,14 +3,12 @@ package forge.ai.ability;
 import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
 import forge.ai.AiTeams;
-import forge.ai.ComputerUtil;
 import forge.ai.PlaceholderTargetAi;
 import forge.ai.ComputerUtilCard;
 import forge.ai.ComputerUtilCost;
 import forge.ai.SpellAbilityAi;
 import forge.game.Game;
 import forge.game.ability.AbilityUtils;
-import forge.game.ability.ApiType;
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
 import forge.game.card.CardLists;
@@ -191,15 +189,8 @@ public class SacrificeAi extends SpellAbilityAi {
         if ("BirthingRitual".equals(sa.getParam("AILogic"))) {
             return birthingRitualPaysOff(player, sa);
         }
-        final Card source = sa.getHostCard();
-        // Pillar Tombs of Aku and the like punish not sacrificing with life loss; keep paying those
-        if (sa.hasParam("Optional") && sa.getParamOrDefault("SacValid", "").startsWith("Creature")
-                && player.equals(source.getController()) && sa.findSubAbilityByType(ApiType.LoseLife) == null) {
-            // Fireblade Artist, Crovax the Cursed: "you may sacrifice a creature" - only one it can spare, never the source
-            final CardCollection options = CardLists.getValidCards(player.getCardsIn(ZoneType.Battlefield),
-                    sa.getParam("SacValid"), player, source, sa);
-            options.remove(source);
-            return ComputerUtil.getCardPreference(player, source, "SacCost", options, sa) != null;
+        if (SacrificeWorth.applies(sa)) {
+            return SacrificeWorth.confirm(player, sa);
         }
         return !sacrificesOnlyItselfForItsOwnBenefit(player, sa);
     }

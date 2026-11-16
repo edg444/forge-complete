@@ -365,7 +365,15 @@ public abstract class PumpAiBase extends SpellAbilityAi {
         } else if (keyword.equals("Prevent all combat damage that would be dealt to CARDNAME.")) {
             return combat != null && (combat.isBlocking(card) || combat.isBlocked(card));
         } else if (keyword.equals("Menace")) {
-            return combat != null && combat.isAttacking(card);
+            // only before blocks, and only against a single possible blocker: two can still block it together. The
+            // mana it takes may be the mana for a card in hand (Searing Spear Askari with a Gray Ogre to cast)
+            if (combat == null || !combat.isAttacking(card) || combat.isBlocked(card)
+                    || ph.getPhase().isAfter(PhaseType.COMBAT_DECLARE_ATTACKERS)) {
+                return false;
+            }
+            final Player defender = combat.getDefenderPlayerByAttacker(card);
+            return defender != null && CardLists.count(defender.getCreaturesInPlay(), b -> CombatUtil.canBlock(card, b)) == 1
+                    && forge.ai.simulation.FlatMonteCarloPicker.sparesMana(ai, sa);
         }
         return true;
     }
