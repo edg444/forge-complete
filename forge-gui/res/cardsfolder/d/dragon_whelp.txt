@@ -3,7 +3,7 @@ ManaCost:2 R R
 Types:Creature Dragon
 PT:2/3
 K:Flying
-A:AB$ Pump | Cost$ R | Defined$ Self | NumAtt$ +1 | SubAbility$ DBPump | SpellDescription$ This creature gets +1/+0 until end of turn. If this ability has been activated four or more times this turn, sacrifice this creature at the beginning of the next end step.
-SVar:DBPump:DB$ Pump | Defined$ Self | AtEOT$ Sacrifice | ConditionActivationLimit$ GE4
+A:AB$ Pump | Cost$ R | Defined$ Self | NumAtt$ +1 | SubAbility$ DBDelay | SpellDescription$ This creature gets +1/+0 until end of turn. If this ability has been activated four or more times this turn, sacrifice this creature at the beginning of the next end step.
+SVar:DBDelay:DB$ EndOfTurn | Defined$ Self | AtEOT$ Sacrifice | ConditionActivationLimit$ GE4
 DeckHas:Ability$Sacrifice
 Oracle:Flying\n{R}: This creature gets +1/+0 until end of turn. If this ability has been activated four or more times this turn, sacrifice this creature at the beginning of the next end step.

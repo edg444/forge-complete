@@ -2,6 +2,6 @@ Name:Kazuul's Toll Collector
 ManaCost:2 R
 Types:Creature Ogre Warrior
 PT:3/2
-A:AB$ Pump | Cost$ 0 | ValidTgts$ Equipment.YouCtrl | AITgts$ Equipment.YouCtrl+!equipping | TgtPrompt$ Select target Equipment you control | SubAbility$ KazuulAttach | SorcerySpeed$ True | StackDescription$ None | SpellDescription$ Attach target Equipment you control to this creature. Activate only as a sorcery.
+A:AB$ TargetOnly | Cost$ 0 | ValidTgts$ Equipment.YouCtrl | AITgts$ Equipment.YouCtrl+!equipping | TgtPrompt$ Select target Equipment you control | SubAbility$ KazuulAttach | SorcerySpeed$ True | StackDescription$ None | SpellDescription$ Attach target Equipment you control to this creature. Activate only as a sorcery.
 SVar:KazuulAttach:DB$ Attach | Object$ ParentTarget | Defined$ Self
 Oracle:{0}: Attach target Equipment you control to this creature. Activate only as a sorcery.

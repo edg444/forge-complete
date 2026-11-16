@@ -113,7 +113,9 @@ public class CostSacrifice extends CostPartWithList {
                 desc = this.getTypeDescription();
             }
 
-            // a description with its own article ("an artifact", "an Equipment attached to it") reads as is
+            // a description with its own article ("an artifact", "an Equipment attached to it") reads as is for one;
+            // more than one ("a permanent with mana value 1 or greater") is counted by the amount, not given an article twice
+            if (!"1".equals(getAmount())) desc = desc.replaceFirst("^an? ", "");
             if (desc.startsWith("another") || desc.startsWith("a ") || desc.startsWith("an ")) sb.append(desc);
             else sb.append(convertAmount() == null ? Lang.nounWithNumeralExceptOne(getAmount(), desc)
                     : Lang.nounWithNumeralExceptOne(convertAmount(), desc));

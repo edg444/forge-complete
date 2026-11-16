@@ -1,6 +1,6 @@
 Name:Wake of Destruction
 ManaCost:3 R R R
 Types:Sorcery
-A:SP$ Pump | AILogic$ EchoDestroy | ValidTgts$ Land | SubAbility$ DBWakeofDestructionDestroyThemAll | SpellDescription$ Destroy target land and all other lands with the same name as that land.
+A:SP$ TargetOnly | ValidTgts$ Land | SubAbility$ DBWakeofDestructionDestroyThemAll | AILogic$ EchoDestroy | SpellDescription$ Destroy target land and all other lands with the same name as that land.
 SVar:DBWakeofDestructionDestroyThemAll:DB$ DestroyAll | ValidCards$ TargetedCard.Self,Land.NotDefinedTargeted+sharesNameWith Targeted
 Oracle:Destroy target land and all other lands with the same name as that land.

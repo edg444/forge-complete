@@ -21,6 +21,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import forge.game.card.Card;
 import forge.game.card.CardLists;
+import forge.game.card.CardPlayOption;
 import forge.game.keyword.Keyword;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
@@ -42,7 +43,7 @@ public class PlayerZone extends Zone {
 
     // the this is not the owner of the card
     private static Predicate<Card> alienCardsActivationFilter(final Player who) {
-        return c -> !c.mayPlay(who).isEmpty() || c.mayPlayerLook(who);
+        return c -> c.mayPlay(who).stream().anyMatch(CardPlayOption::grantsZonePermissions) || c.mayPlayerLook(who);
     }
 
     private final class OwnCardsActivationFilter implements Predicate<Card> {
@@ -52,7 +53,7 @@ public class PlayerZone extends Zone {
                 return true;
             }
 
-            if (!c.mayPlay(c.getController()).isEmpty()) {
+            if (c.mayPlay(c.getController()).stream().anyMatch(CardPlayOption::grantsZonePermissions)) {
                 return true;
             }
 
