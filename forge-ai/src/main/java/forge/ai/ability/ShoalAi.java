@@ -79,7 +79,8 @@ public final class ShoalAi {
         if (api == ApiType.Pump && sa.getParamOrDefault("NumAtt", "").equals("+X")) {
             return lethalPump(ai, sa, xs);
         }
-        if (api == ApiType.Pump && sa.getSubAbility() != null && sa.getSubAbility().getApi() == ApiType.Counter) {
+        // the target spell is chosen by a TargetOnly (once a Pump) whose Counter sub does the work
+        if ((api == ApiType.TargetOnly || api == ApiType.Pump) && sa.getSubAbility() != null && sa.getSubAbility().getApi() == ApiType.Counter) {
             return counter(ai, sa, xs);
         }
         if (api == ApiType.GainLife) {

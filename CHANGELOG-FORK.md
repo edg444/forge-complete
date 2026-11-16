@@ -491,6 +491,39 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-16, forty-fifth deploy (desktop, Android, GitHub) - upstream merge; Oracle sync
+
+- **Upstream merge** (52 commits, 193 conflicts, 2026-11-16): the Pump cleanup (#12858, #12876) moves abilities that
+  only choose a target or keep track of something to `TargetOnly`, `Bookkeeping`, `Nothing` and `EndOfTurn`, with
+  upstream's new `TargetOnlyAi` and `PlaceholderTargetAi`; Fiend Hunter, Journey to Nowhere and nine others track their
+  card with `ExiledWith` instead of remembering it (#12875); `LimitedMatch` replaces `GauntletMini` (#12868); AI fixes
+  (mana preferences, Grenzo, Flat MC regeneration shields and block keywords, copies that would be 0/0, color-fixing
+  mana abilities such as Chromatic Star); Adventure settings and quest journal; edition updates.
+  - 180 card scripts take upstream's mechanics with the fork's Oracle-matching descriptions, Oracle line and
+    `AILogic`. The fork's logics are dispatched from `SpellAbilityAi`'s whole-card check whatever the API, so they keep
+    working on `TargetOnly` lines. Upstream's new `AI:RemoveDeck:All` on Irencrag Feat and Mark for Death is dropped.
+    Tempest Efreet keeps its R&D's Secret Lair printed-text choices, Go Nuts! and HULK SMASH! keep `MinCharmNum` (cast
+    with teamwork, both modes are required), and Recurring Insight keeps its target prompt.
+  - Java: `AiAttackController` keeps Roterothopter's pump check beside upstream's Mindskinner check; `ChooseNumberAi`
+    keeps the Doors logic after upstream's no-logic check; `DestroyAllAi` keeps the fork's team-aware lists and adds
+    upstream's harmless-creature filter; `SacrificeAi` checks Birthing Ritual, then the fork's spare-a-creature rule,
+    then upstream's own-benefit rule; `CloneEffect` keeps `CopyCardName` ahead of upstream's chosen-on-resolution
+    text; `CostSacrifice` keeps a description's own article for one and strips it for more; `PhaseHandler` keeps
+    planes changing hands outside Planechase; `LimitedMatch` gives the human `setEventLosses` (Underdog Racer);
+    `DeckManaBaseTest` keeps Scroll Rack and Junkyo Bell; `PumpAi` needed its `Maps` import back.
+  - Fixed after the suite: Disrupting Shoal and Parallectric Feedback's AI (`ShoalAi`, `TargetXAi`) recognizes their
+    target lines as `TargetOnly` as well as `Pump`; Smell Fear and Glacian, Powerstone Engineer no longer repeat words
+    in their text; a token whose abilities are drafted on resolution (Enter the Eternities) no longer fails while its
+    stack text is built; Largepox prompts for each permanent type again (upstream's descriptions now join a `SacValid`
+    of several types into one phrase); Crovax the Cursed sacrifices a creature worth a 2/2 or less for its counter,
+    as upstream's new scenario expects, and still never itself.
+- **Oracle sync** (Scryfall bulk data 2026-11-16): Celestial Vault, Face Yourself, Hit It!, Pure Energy, Slagwurm
+  Armor, Storied Veteran, Temporal Conqueror and The Caretaker, with matching ability descriptions. Behavior is
+  unchanged. Khod, Etlan Shiis Envoy is left as is: Scryfall's text now says "Cephalids", which is not a creature type
+  in Scryfall's own catalog (Octopus is).
+- **Set audit** (Scryfall bulk data 2026-11-15): every released set through Star Trek, Star Trek Commander and
+  Stardates is complete. Unscripted are only previews of unreleased sets: Nauctis: The Sunken Realm (7 cards) and
+  Marvel: Darkhold Destiny (Temple of Khonshu).
 ### 2026-11-13, forty-fourth deploy (desktop, Android, GitHub) - Saddle and Soulbright Flamekin AI; upstream merge
 
 - **Upstream merge** (1 commit, no conflicts, 2026-11-13): the Card Dealer's Cave reward in Adventure's Realm of

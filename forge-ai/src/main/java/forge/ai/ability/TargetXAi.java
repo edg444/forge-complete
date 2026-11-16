@@ -42,7 +42,7 @@ public final class TargetXAi {
         if (sa.getApi() == ApiType.DealDamage) {
             return kill(ai, sa);
         }
-        if (sa.getApi() == ApiType.Pump && "Stack".equals(sa.getParam("TgtZone"))) {
+        if ((sa.getApi() == ApiType.TargetOnly || sa.getApi() == ApiType.Pump) && "Stack".equals(sa.getParam("TgtZone"))) {
             return spellBurn(ai, sa);
         }
         if (sa.getApi() == ApiType.Pump) {

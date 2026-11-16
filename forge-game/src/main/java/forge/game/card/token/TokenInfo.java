@@ -349,6 +349,10 @@ public class TokenInfo {
                 }
             }
             for (final String name : sa.getParam("TokenAbilities").split(",")) {
+                // drafted on resolution: a stack description built before then has nothing to add yet
+                if (!result.hasSVar(name.trim())) {
+                    continue;
+                }
                 final SpellAbility ab = AbilityFactory.getAbility(result, name.trim());
                 ab.setIntrinsic(true);
                 result.addSpellAbility(ab, true);
