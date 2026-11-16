@@ -3006,6 +3006,9 @@ public class AiController {
             // know which: their "not now" is final, and the rollouts cannot see the waste (nothing in the score)
             return false;
         }
+        if (!opinion.willingToPlay() && forge.ai.ability.CardFlowTiming.heuristicsHoldIt(sa)) {
+            return false; // Sigiled Starfish tapped in the AI's own turn, Hydrolash cast with no attack to shrink
+        }
         if (FlatMcMain1Guard.waitsForMain2(this, player, sa)) {
             return false; // the pass line's rollout never casts it after combat, so "now" would always look better
         }

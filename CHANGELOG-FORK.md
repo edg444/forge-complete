@@ -491,6 +491,16 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+- **AI card selection and cantrip timing** (report 2026-11-16): Sigiled Starfish and other creatures that tap to
+  scry or surveil are no longer tapped in the AI's own turn or before the opponent attacks, and Hydrolash is no longer
+  cast in the AI's own turn. Flat Monte Carlo discovery handed the rollouts these plays after the heuristics had
+  turned them down, and the rollouts only see the card shown or drawn: a pure scry or surveil, or a cantrip whose
+  other effect only shrinks attackers, now keeps the heuristics' "no" (`CardFlowTiming`). A second Starfish is no
+  longer activated when the first one kept its card on top and the AI would keep it again (new `KEPT_ON_TOP` card
+  memory); it still is when the first one bottomed the card. Hydrolash is still cast in the AI's own turn when it is
+  starved for cards: nothing else to play, at most one other card in hand, and a land drop or spare mana to use the
+  card it draws. Tested in `CardFlowTimingTest`.
+
 ### 2026-11-16, forty-sixth deploy (desktop, Android, GitHub) - previewed cards; Cephalid; upstream merge
 
 - **Previewed cards** scripted ahead of release (Scryfall 2026-11-16): Nauctis: The Sunken Realm's Calmwater Mentor,

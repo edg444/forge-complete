@@ -66,6 +66,9 @@ public class SurveilAi extends SpellAbilityAi {
         if (ai.getCardsIn(ZoneType.Library).isEmpty()) {
             return new AiAbilityDecision(0, AiPlayDecision.MissingNeededCards);
         }
+        if (CardFlowTiming.onlySeesKeptCards(ai, sa)) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
 
         // Only Surveil for life when at decent amount of life remaining
         final Cost cost = sa.getPayCosts();

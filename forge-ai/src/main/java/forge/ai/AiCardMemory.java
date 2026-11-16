@@ -67,7 +67,8 @@ public class AiCardMemory {
         CHOSEN_FOG_EFFECT, // These cards are marked as the Fog-like effect the AI is planning to cast this turn
         PAYS_TAP_COST, // These cards will be tapped as part of a cost and cannot be chosen in another part
         PAYS_SAC_COST, // These cards will be sacrificed as part of a cost and cannot be chosen in another part
-        REVEALED_CARDS // These cards were recently revealed to the AI by a call to PlayerControllerAi.reveal
+        REVEALED_CARDS, // These cards were recently revealed to the AI by a call to PlayerControllerAi.reveal
+        KEPT_ON_TOP // These cards were left on top of the AI's library by its own scry or surveil (see CardFlowTiming)
     }
 
     public enum MemorySetMana implements MemoryType<ManaCostBeingPaid> {

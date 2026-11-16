@@ -104,6 +104,9 @@ public class PumpAllAi extends PumpAiBase {
                 }); // leaves all creatures that will be destroyed
             } // -X/-X end
             else if (power < 0) { // -X/-0
+                if (sa.isSpell() && sa.findSubAbilityByType(ApiType.Draw) != null && CardFlowTiming.starvedForCards(ai, sa)) {
+                    return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+                }
                 if (phase.isAfter(PhaseType.COMBAT_DECLARE_BLOCKERS)
                         || phase.isBefore(PhaseType.COMBAT_DECLARE_ATTACKERS)
                         || game.getPhaseHandler().isPlayerTurn(sa.getActivatingPlayer())

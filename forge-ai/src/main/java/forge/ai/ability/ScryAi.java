@@ -147,6 +147,9 @@ public class ScryAi extends SpellAbilityAi {
         if (ai.getCardsIn(ZoneType.Library).isEmpty()) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
+        if (CardFlowTiming.onlySeesKeptCards(ai, sa)) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
 
         double chance = .4; // 40 percent chance of milling with instant speed stuff
         if (isSorcerySpeed(sa, ai)) {

@@ -641,6 +641,7 @@ public class PlayerControllerAi extends PlayerController {
 
         // put the rest on top in random order
         CardLists.shuffle(toTop);
+        forge.ai.ability.CardFlowTiming.rememberKeptOnTop(player, toTop);
         return ImmutablePair.of(toTop, toBottom);
     }
 
@@ -667,6 +668,7 @@ public class PlayerControllerAi extends PlayerController {
         }
 
         CardLists.shuffle(toTop);
+        forge.ai.ability.CardFlowTiming.rememberKeptOnTop(player, toTop);
         return ImmutablePair.of(toTop, toGraveyard);
     }
 
