@@ -1,0 +1,12 @@
+Name:Goramou the Coral-Taken
+ManaCost:1 R G
+Types:Legendary Creature Shark
+PT:3/4
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigToken | TriggerDescription$ When NICKNAME enters, create a Blood token. (It's an artifact with "{1}, {T}, Discard a card, Sacrifice this token: Draw a card.")
+SVar:TrigToken:DB$ Token | TokenScript$ c_a_blood_draw | TokenOwner$ You
+T:Mode$ DiscardedAll | ValidPlayer$ You | ValidCard$ Land | TriggerZones$ Battlefield | Execute$ TrigDelay | TriggerDescription$ Whenever you discard one or more land cards, you may exile one of them from your graveyard. If you do, put that card onto the battlefield tapped at the beginning of the next end step.
+SVar:TrigDelay:AB$ DelayedTrigger | Cost$ ExileFromGrave<1/Land.TriggeredCards/land card discarded this way> | Mode$ Phase | Phase$ End of Turn | RememberObjects$ ExiledCards | Execute$ TrigReturn | TriggerDescription$ Put the exiled card onto the battlefield tapped at the beginning of the next end step.
+SVar:TrigReturn:DB$ ChangeZone | Origin$ Exile | Destination$ Battlefield | Defined$ DelayTriggerRemembered | Tapped$ True
+DeckHas:Ability$Token|Sacrifice|Discard & Type$Blood|Artifact
+DeckHints:Ability$Discard
+Oracle:When Goramou enters, create a Blood token. (It's an artifact with "{1}, {T}, Discard a card, Sacrifice this token: Draw a card.")\nWhenever you discard one or more land cards, you may exile one of them from your graveyard. If you do, put that card onto the battlefield tapped at the beginning of the next end step.

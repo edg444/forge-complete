@@ -85,6 +85,7 @@ Caribou:Caribous
 Carrier:Carriers
 Cat:Cats
 Centaur:Centaurs
+Cephalid:Cephalids
 Chameleon:Chameleons
 Champion:Champions
 Chef:Chefs

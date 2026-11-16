@@ -491,6 +491,17 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-16, forty-sixth deploy (desktop, Android, GitHub) - previewed cards; Cephalid
+
+- **Previewed cards** scripted ahead of release (Scryfall 2026-11-16): Nauctis: The Sunken Realm's Calmwater Mentor,
+  Salinae, the Ocean Mother, Tecton, Malignant Ruin, Goramou the Coral-Taken, Abyssal Lotus, Ring of Unity and
+  Shimmering Citadel, and Marvel: Darkhold Destiny's Temple of Khonshu. No card has the Dimension type yet, so the
+  Temple enters tapped until one does; it looks for a permanent with that subtype, whichever card type it turns out to
+  be. Tested in `PreviewCards20261116Test`.
+- **Cephalid** is a creature type again. The others were updated to Octopus, but Learned Learner is still a Cephalid
+  Wizard (it was scripted as an Octopus), and Khod, Etlan Shiis Envoy now gives other Cephalids +1/+1, as Scryfall's
+  text says.
+
 ### 2026-11-16, forty-fifth deploy (desktop, Android, GitHub) - upstream merge; Oracle sync
 
 - **Upstream merge** (52 commits, 193 conflicts, 2026-11-16): the Pump cleanup (#12858, #12876) moves abilities that
