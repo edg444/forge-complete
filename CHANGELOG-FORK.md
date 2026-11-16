@@ -491,7 +491,7 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
-### 2026-11-16, forty-sixth deploy (desktop, Android, GitHub) - previewed cards; Cephalid
+### 2026-11-16, forty-sixth deploy (desktop, Android, GitHub) - previewed cards; Cephalid; upstream merge
 
 - **Previewed cards** scripted ahead of release (Scryfall 2026-11-16): Nauctis: The Sunken Realm's Calmwater Mentor,
   Salinae, the Ocean Mother, Tecton, Malignant Ruin, Goramou the Coral-Taken, Abyssal Lotus, Ring of Unity and
@@ -501,6 +501,14 @@ off, a human plays through the prompts of phases 1 and 2).
 - **Cephalid** is a creature type again. The others were updated to Octopus, but Learned Learner is still a Cephalid
   Wizard (it was scripted as an Octopus), and Khod, Etlan Shiis Envoy now gives other Cephalids +1/+1, as Scryfall's
   text says.
+- **Upstream merge** (FlatMC evasion and "you may" decisions, #12905, 8 conflicts): menace, fear and the like for an
+  attacker the blockers would stop, upstream's `SacrificeWorth` for "you may sacrifice" (it replaces the fork's
+  spare-a-creature rule; Crovax the Cursed still never sacrifices itself), `MayDecisions` for other "you may"
+  choices, pact upkeeps the AI can't pay, and legality guards. `ChangeTargetsAi` takes upstream's answer in place of
+  the fork's "always". The fork's checks in `AiController`, `PlayerControllerAi` (Last-Ditch Effort),
+  `PeekAndRevealAi` (Brutal Deceiver) and `ActivationGuard` (trample) stay beside upstream's. The AI's own menace
+  check in `PumpAiBase` now asks for a single possible blocker, before blocks, with mana to spare, as upstream's new
+  scenarios expect.
 
 ### 2026-11-16, forty-fifth deploy (desktop, Android, GitHub) - upstream merge; Oracle sync
 

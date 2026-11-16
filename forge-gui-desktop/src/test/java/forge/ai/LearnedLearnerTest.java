@@ -12,7 +12,7 @@ import forge.game.spellability.SpellAbility;
 /**
  * Learned Learner (Mystery Booster playtest card), Oracle text checked against Scryfall 2026-10-10 (no rulings): it
  * has "{T}: Draw a card." while your maximum hand size isn't 7 - and no maximum hand size counts (user, 2026-10-10).
- * Its Cephalid type is Octopus now, as real Cephalids' are.
+ * It is still a Cephalid: the other Cephalids became Octopuses, not this one (user, 2026-11-16).
  */
 public class LearnedLearnerTest extends AITest {
 
@@ -31,7 +31,7 @@ public class LearnedLearnerTest extends AITest {
         Player ai = game.getPlayers().get(1);
         Card learner = addCard("Learned Learner", ai);
         game.getAction().checkStateEffects(true);
-        AssertJUnit.assertTrue(learner.getType().hasCreatureType("Octopus"));
+        AssertJUnit.assertTrue(learner.getType().hasCreatureType("Cephalid"));
         AssertJUnit.assertFalse(canDraw(learner));
 
         Card tower = addCard("Reliquary Tower", ai);
