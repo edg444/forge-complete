@@ -432,8 +432,8 @@ public final class CardRules implements ICardCharacteristics {
         }
         if (impliedPartnership) {
             // Imply partnership for Commander Draft. (Really only Commander Masters)
-            if (this.canBeCommander() && (this.hasKeyword("Partner") || this.getColorIdentity().countColors() <= 1)
-             && b.canBeCommander() && (b.hasKeyword("Partner") || b.getColorIdentity().countColors() <= 1)) {
+            if (this.canBeCommander() && !this.canBeBackground() && (this.hasKeyword("Partner") || this.getColorIdentity().countColors() <= 1)
+             && b.canBeCommander() && !b.canBeBackground() && (b.hasKeyword("Partner") || b.getColorIdentity().countColors() <= 1)) {
                 return true;
             }
         }

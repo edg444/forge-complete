@@ -5,6 +5,7 @@ import java.util.List;
 
 import forge.ai.ComputerUtilCard;
 import forge.ai.ComputerUtilMana;
+import forge.ai.ability.AnimateAi;
 import forge.game.ability.ApiType;
 import forge.game.card.Card;
 import forge.game.card.CardCollection;
@@ -85,11 +86,17 @@ public final class ActivationGuard {
         if (costUnpayable(ai, sa)) {
             return "cost-unpayable";
         }
+        if (AnimateAi.needsItsOwnMana(ai, sa)) {
+            return "cost-unpayable"; // the land would tap itself to animate itself: a tapped creature
+        }
         if (onlyValuableSacrifice(ai, sa)) {
             return "valuable-sacrifice";
         }
         if (poorSacrifice(ai, sa)) {
             return "poor-sacrifice";
+        }
+        if (enoughCopies(ai, sa)) {
+            return "enough-copies";
         }
         if (declinedByAristocratLogic(ai, sa)) {
             return "aristocrat-declines";
@@ -129,10 +136,75 @@ public final class ActivationGuard {
                     return null;
                 }
             }
+            if (givesMoreThanItTakes(ai, sa)) {
+                return "gift-exceeds-target";
+            }
             return idleChain(ai, sa);
         } catch (final RuntimeException e) {
             return null; // a refinement only
         }
+    }
+
+    /** What a basic land is worth to the player who gets it, on the scale of {@link ComputerUtilCard#evaluateCreature}. */
+    static final int LAND_GIFT = 130;
+    /** What a 3/3 token is worth to the player who gets it (Beast Within, Generous Gift). */
+    static final int TOKEN_GIFT = 190;
+
+    /**
+     * Removal that pays its victim's controller (Path to Exile, Erode, Assassin's Trophy: a land; Beast Within, Generous
+     * Gift: a 3/3) is only worth it for a target that is worth more than the gift: aimed at a mana dork or a small body
+     * it spends the card to ramp the opponent, and the removal is gone for something that matters. Judged on the chosen
+     * targets, else on everything the spell could be aimed at, so a real threat in play still gets the spell.
+     */
+    public static boolean givesMoreThanItTakes(final Player ai, final SpellAbility sa) {
+        if (sa == null || !sa.isSpell() || !sa.usesTargeting()) {
+            return false;
+        }
+        int gift = 0;
+        for (SpellAbility node = sa.getSubAbility(); node != null; node = node.getSubAbility()) {
+            if (node.getApi() == ApiType.ChangeZone && "Library".equals(node.getParam("Origin"))
+                    && "Battlefield".equals(node.getParam("Destination"))
+                    && node.getParamOrDefault("ChangeType", "").contains("Land")
+                    && "TargetedController".equals(node.getParam("DefinedPlayer"))) {
+                gift = Math.max(gift, LAND_GIFT);
+            } else if (node.getApi() == ApiType.Token && "TargetedController".equals(node.getParam("TokenOwner"))) {
+                gift = Math.max(gift, TOKEN_GIFT);
+            }
+        }
+        if (gift == 0) {
+            return false;
+        }
+        final List<Card> candidates = new ArrayList<>();
+        if (sa.getTargets() != null && !sa.getTargets().getTargetCards().isEmpty()) {
+            candidates.addAll(sa.getTargets().getTargetCards());
+        } else {
+            for (final Card c : ai.getOpponents().getCardsIn(ZoneType.Battlefield)) {
+                if (sa.canTarget(c)) {
+                    candidates.add(c);
+                }
+            }
+        }
+        if (candidates.isEmpty()) {
+            return false;
+        }
+        for (final Card c : candidates) {
+            if (!c.isCreature() || c.isLand()) {
+                return false; // a planeswalker, an artifact, an enchantment: not judged here
+            }
+            if (!isSmallBody(c) && ComputerUtilCard.evaluateCreature(c) >= gift) {
+                return false; // something that is worth the gift
+            }
+        }
+        return true;
+    }
+
+    /** A creature worth less than what a removal spell gives away for it: a mana creature or another body with no use of its own. */
+    private static boolean isSmallBody(final Card c) {
+        // no ability but mana (Stoneforge Mystic, Mother of Runes are worth removing), no continuous effect on others (a lord), power 1 at most
+        // (a 0/3 Treefolk Harbinger has nothing left to do once it has fetched its card)
+        return c.getCMC() <= 2 && c.getNetPower() <= 1 && c.getStaticAbilities().stream().noneMatch(st -> st.checkMode(forge.game.staticability.StaticAbilityMode.Continuous)) // (flying and the like are statics too, but no lord's)
+                && c.getSpellAbilities().stream().noneMatch(a -> a.isAbility() && !a.isManaAbility()) // (the cast of the card itself is a Spell, not an ability)
+                && !c.hasSVar("HasAttackEffect") && c.getAttachedCards().isEmpty() && c.getCounters(CounterEnumType.P1P1) == 0;
     }
 
     private static String idleChain(final Player ai, final SpellAbility sa) {
@@ -225,6 +297,33 @@ public final class ActivationGuard {
      * own cost payment would choose; it is fine to give up when it is fodder (a token, a creature marked SacMe, a weak
      * one), when it is about to die anyway, or when what the ability gives is worth at least as much as the creature.
      */
+    /** The most hasty copies a turn needs: a copy loop (Splinter Twin, Kiki-Jiki) stops here whatever the life total. */
+    public static final int MAX_COPIES = 40;
+
+    /**
+     * A "tap: create a hasty copy that goes away at the end of turn" ability (Splinter Twin, Kiki-Jiki) is used for as
+     * long as it makes something: the copy's enters trigger is worth it, or another attacker. It stops when the copies
+     * already in play are lethal (their power covers the life of the weakest opponent) or there are as many as a
+     * turn needs ({@link #MAX_COPIES}); more is the loop going round for nothing.
+     */
+    public static boolean enoughCopies(final Player ai, final SpellAbility sa) {
+        final SpellAbility root = sa == null ? null : sa.getRootAbility();
+        if (root == null || root.getApi() != ApiType.CopyPermanent || !root.hasParam("AtEOT")
+                || !root.getParamOrDefault("AddKeywords", "").contains("Haste")) {
+            return false;
+        }
+        final Player opp = ai.getWeakestOpponent();
+        int copies = 0;
+        int power = 0;
+        for (final Card c : ai.getCardsIn(ZoneType.Battlefield)) {
+            if (c.isToken() && c.isCreature() && c.hasKeyword(Keyword.HASTE) && !c.isTapped()) {
+                copies++;
+                power += Math.max(0, c.getNetPower());
+            }
+        }
+        return copies >= MAX_COPIES || opp != null && copies > 0 && power >= opp.getLife() + 3;
+    }
+
     static boolean poorSacrifice(final Player ai, final SpellAbility sa) {
         final Cost cost = sa.getPayCosts();
         final Card host = sa.getHostCard();
@@ -393,6 +492,16 @@ public final class ActivationGuard {
             }
             return node.hasParam("Monstrosity") && host.isMonstrous();
         }
+        // a shield that is up, a tap of the tapped, an untap of the untapped, an animate that has happened
+        if (node.getApi() == ApiType.Regenerate && host.getShieldCount() > 0 && !node.hasParam("Cleanup")) {
+            return true;
+        }
+        if (node.getApi() == ApiType.Tap && host.isTapped() || node.getApi() == ApiType.Untap && !host.isTapped()) {
+            return true;
+        }
+        if (alreadyAnimated(node, host)) {
+            return true;
+        }
         if (node.getApi() == ApiType.Pump && node.hasParam("KW")) {
             for (final String extra : PUMP_EXTRAS) {
                 if (node.hasParam(extra)) {
@@ -407,6 +516,60 @@ public final class ActivationGuard {
             return true;
         }
         return false;
+    }
+
+    /** A pump that hands out keywords and nothing else. */
+    private static boolean keywordGrantOnly(final SpellAbility node) {
+        if (!node.hasParam("KW") || node.hasParam("NumAtt") || node.hasParam("NumDef")) {
+            return false;
+        }
+        for (final String extra : PUMP_EXTRAS) {
+            if (node.hasParam(extra)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean hasAllKeywords(final Card c, final SpellAbility node) {
+        for (final String kw : node.getParam("KW").split(" & ")) {
+            if (!c.hasKeyword(kw)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /** An animate of the host that has already happened this turn: it is a creature of those types and that size already. */
+    private static boolean alreadyAnimated(final SpellAbility node, final Card host) {
+        if (node.getApi() != ApiType.Animate || !node.hasParam("Types") || !host.isCreature()
+                || node.hasParam("RemoveTypes") || node.hasParam("RemoveCreatureTypes") || node.hasParam("Colors")
+                || node.hasParam("OverwriteTypes") || node.hasParam("Abilities") || node.hasParam("Triggers")) {
+            return false;
+        }
+        for (final String t : node.getParam("Types").split(",")) {
+            if (!host.getType().hasStringType(t.trim())) {
+                return false;
+            }
+        }
+        try {
+            if (node.hasParam("Power") && host.getCurrentPower() != Integer.parseInt(node.getParam("Power").trim())) {
+                return false;
+            }
+            if (node.hasParam("Toughness") && host.getCurrentToughness() != Integer.parseInt(node.getParam("Toughness").trim())) {
+                return false;
+            }
+        } catch (final NumberFormatException e) {
+            return false;
+        }
+        if (node.hasParam("Keywords")) {
+            for (final String kw : node.getParam("Keywords").split(" & ")) {
+                if (!host.hasKeyword(kw)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /** A pump with numbers it can read, none of them negative, and no keyword that hurts (Giant Growth, not a curse). */
@@ -468,10 +631,51 @@ public final class ActivationGuard {
             return Verdict.IDLE_TARGETS;
         }
         if (api == ApiType.Pump && beneficialPump(node)) {
-            // a pump that only helps (Giant Growth) when every creature it could go on is an opponent's: it helps him
+            // a pump that only helps (Giant Growth) when every creature it could go on is an opponent's: it helps him; a
+            // grant of keywords (Arnjlot's Ascent: flying) when every creature of its own already has them
+            final boolean keywordsOnly = keywordGrantOnly(node);
             for (final GameEntity e : tr.getAllCandidates(node)) {
-                if (!(e instanceof Card) || !((Card) e).getController().isOpponentOf(ai)) {
-                    return null; // something of its own (or a player): the ordinary count decides
+                if (!(e instanceof Card)) {
+                    return null; // a player: the ordinary count decides
+                }
+                final Card c = (Card) e;
+                if (!c.getController().isOpponentOf(ai) && !(keywordsOnly && hasAllKeywords(c, node))) {
+                    return null; // something of its own that gains from it: the ordinary count decides
+                }
+            }
+            return Verdict.IDLE_TARGETS;
+        }
+        if (api == ApiType.Tap || api == ApiType.Untap) {
+            // tapping what is tapped already, or untapping what is untapped (and never an opponent's permanent: untapping it helps him)
+            final boolean tap = api == ApiType.Tap;
+            for (final GameEntity e : tr.getAllCandidates(node)) {
+                if (!(e instanceof Card)) {
+                    return null;
+                }
+                final Card c = (Card) e;
+                if (tap ? !c.isTapped() : c.getController().equals(ai) && c.isTapped()) {
+                    return null; // something it works on (a tap of an untapped permanent of its own is not judged)
+                }
+            }
+            return Verdict.IDLE_TARGETS;
+        }
+        if (api == ApiType.Regenerate && !node.hasParam("Cleanup")) {
+            for (final GameEntity e : tr.getAllCandidates(node)) {
+                if (!(e instanceof Card) || ((Card) e).getController().equals(ai) && ((Card) e).getShieldCount() == 0) {
+                    return null; // a creature of its own that has no shield yet
+                }
+            }
+            return Verdict.IDLE_TARGETS;
+        }
+        if (api == ApiType.Destroy && !node.hasParam("Sacrifice")) {
+            // nothing it could destroy: every opposing candidate is indestructible
+            for (final GameEntity e : tr.getAllCandidates(node)) {
+                if (!(e instanceof Card)) {
+                    return null;
+                }
+                final Card c = (Card) e;
+                if (!c.getController().isOpponentOf(ai) || !c.hasKeyword(Keyword.INDESTRUCTIBLE)) {
+                    return null; // a permanent of its own (not judged) or one that can be destroyed
                 }
             }
             return Verdict.IDLE_TARGETS;
