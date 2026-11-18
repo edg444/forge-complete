@@ -491,6 +491,19 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-18, forty-eighth deploy (desktop, Android, GitHub) - upstream merge
+
+- **Upstream merge** (20 commits, 7 conflicts): FlatMC attack update (#12932), more AI fixes (#12936, #12921), AI
+  rolls the planar die (#12928), AI mana payment uses color-choosing abilities like Nykthos (#12933), Commander Draft
+  rules consolidated in `DeckFormat` (#12919), deck import no longer swaps cards for prepared cards (#12924), FlatMC
+  High Tide and Splinter Twin (#12912), edition updates (PLST, PSPL, SLC, TRK), NAU First Look cards (#12867) and
+  Adventure updates. `AiAttackController` keeps the fork's battle defenders and Party Crasher beside upstream's
+  zero-loyalty planeswalker filter and attack-loss checks. Splinter Twin took upstream's `AttachAIPick`; Unidentified
+  Hovership took upstream's exiled-with-source mechanics with the fork's wording; Uchbenbak and Valleymaker kept the
+  fork's Scryfall Oracle wording. Upstream's six `upcoming/` NAU scripts duplicated cards the fork already scripts
+  (Abyssal Lotus, Calmwater Mentor, Goramou, Salinae, Shimmering Citadel, Tecton): the fork's versions stay, and
+  Abyssal Lotus took upstream's "this artifact" cost text.
+
 ### 2026-11-16, forty-seventh deploy (desktop, Android, GitHub) - Starfish and Hydrolash AI; upstream merge
 
 - **AI card selection and cantrip timing** (report 2026-11-16): Sigiled Starfish and other creatures that tap to
