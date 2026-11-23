@@ -90,11 +90,13 @@ public class CostTap extends CostPart {
                     + " rather than tapping it.");
             return true;
         }
-        if (hostCard.tap(ability, payer)) {
-            final Map<AbilityKey, Object> runParams = AbilityKey.newMap();
-            runParams.put(AbilityKey.Cards, new CardCollection(hostCard));
-            payer.getGame().getTriggerHandler().runTrigger(TriggerType.TapAll, runParams, false);
+        // Recheck at payment time: a discovered or queued ability may have become unpayable since it was offered.
+        if (!canPay(ability, payer, effect) || !hostCard.tap(ability, payer)) {
+            return false;
         }
+        final Map<AbilityKey, Object> runParams = AbilityKey.newMap();
+        runParams.put(AbilityKey.Cards, new CardCollection(hostCard));
+        payer.getGame().getTriggerHandler().runTrigger(TriggerType.TapAll, runParams, false);
         return true;
     }
 

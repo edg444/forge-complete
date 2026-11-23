@@ -50,6 +50,7 @@ public class FlavorJudgeTest extends AITest {
         Player opp = game.getPlayers().get(0);
         Player ai = game.getPlayers().get(1);
         Card judge = addCard("Flavor Judge", ai);
+        judge.setSickness(false); // a {T} cost is rechecked when it is paid (upstream #13003)
         Card bears = addCard("Grizzly Bears", ai);
         Card bolt = addCardToZone("Lightning Bolt", opp, ZoneType.Hand);
         game.getPhaseHandler().devModeSet(PhaseType.MAIN1, opp);

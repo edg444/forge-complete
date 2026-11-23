@@ -29,6 +29,14 @@ import forge.util.*;
 import forge.util.collect.FCollection;
 
 public class DamageDealEffect extends DamageBaseEffect {
+    public static final String[] OPTIONAL_PARAMS = {
+        "CardChoices", "ChoiceAmount", "ChoicePrompt", "DamageMap", "DamageSource", "Defined",
+        "DivideEvenly", "DividerOnResolution", "ExcessDamage", "ExcessDamageCondition", "Halves",
+        "NextGameFirstUpkeep", "OptionalDecider", "PlayerChoices", "Radiance", "Random",
+        "RelativeTarget", "RememberRedirectedExcess", "ReplaceDyingCondition",
+        "ReplaceDyingDefined", "ReplaceDyingExiledWith", "ReplaceDyingValid", "ReplaceDyingZone",
+    };
+    public static final String[][] REQUIRED_PARAMS = {{"NumDmg"}};
 
     /* (non-Javadoc)
      * @see forge.game.ability.SpellAbilityEffect#getStackDescription(forge.game.spellability.SpellAbility)

@@ -56,7 +56,14 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class AbilityUtils {
+public class AbilityUtils implements IHasForgeParams {
+    public static final String[] OPTIONAL_PARAMS = {
+        "AbilityCount", "AnnounceMax", "ChooseOnResolve", "ETB", "ForgetOtherTargets",
+        "GiftAbility", "IncludeAllComponentCards", "LockInText", "NotifyMessage",
+        "RememberCostMana", "RememberTargets", "UnlessColor", "UnlessCost", "UnlessPaidSubAbility",
+        "UnlessPayer", "UnlessResolveSubs", "UnlessSwitched", "UnlessUpTo", "XMax", "XMin",
+    };
+
     /** The real-world local time, for cards that read the clock. Tests replace it. */
     public static java.util.function.Supplier<LocalTime> realWorldTime = LocalTime::now;
     public static java.util.function.Supplier<java.time.ZonedDateTime> realWorldNow = java.time.ZonedDateTime::now;
@@ -671,7 +678,7 @@ public class AbilityUtils {
                 val = handlePaid(tgtList, calcX[1], card, ability);
             }
             else if (calcX[0].equals("TriggeredSpellAbility") || calcX[0].equals("SpellTargeted")) {
-                final SpellAbility sat = Iterables.getFirst(getDefinedSpellAbilities(card, calcX[0], sa), null);
+                final SpellAbility sat = getDefinedSpellAbilities(card, calcX[0], sa).getFirst();
                 val = sat == null ? 0 : xCount(sat.getHostCard(), calcX[1], sat);
             }
             else if (calcX[0].startsWith("ReplaceCount")) {

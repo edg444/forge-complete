@@ -20,6 +20,7 @@ package forge.card;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import forge.card.mana.ManaCost;
 import forge.util.TextUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -369,8 +370,17 @@ public final class CardRules implements ICardCharacteristics {
             return true;
         }
         CardType type = mainPart.getType();
-        // Spacecraft need printed PT
-        return canBeCreature() || type.isVehicle() || (type.isSpacecraft() && getPower() != null);
+        if (canBeCreature() || type.isVehicle()) {
+            return true;
+        }
+        if (type.isSpacecraft()) { // a Spacecraft card with one or more power/toughness boxes
+            for (String staticAbility : mainPart.getStaticAbilities()) {
+                if (staticAbility.contains("Station$ ") && staticAbility.contains("SetPower$ ")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public boolean hasLegendaryPartner() {
@@ -465,16 +475,22 @@ public final class CardRules implements ICardCharacteristics {
     }
 
     public boolean canBePartnerCommander() {
+        // Barce, Friend Finder can pair with any commander of one color or less, and The Knight of Land Drops with
+        // any legendary Knight, so those may be a second commander too
+        return hasOwnPartnerAbility() || canBeCommander()
+                && (getColorIdentity().countColors() <= 1 || getType().hasCreatureType("Knight"));
+    }
+
+    /** Whether this card's own text gives it a partner, not just another commander's text (Barce's, a Knight's). */
+    public boolean hasOwnPartnerAbility() {
         if (canBeBackground()) {
             return true;
         }
         if (!canBeCommander()) {
             return false;
         }
-        // Barce, Friend Finder can pair with any commander of one color or less, so those may be a second commander
         return hasKeyword("Partner") || !this.partnerWith.isEmpty() || !this.partnerType.isEmpty() || hasLegendaryPartner() ||
-                findsFriends() || hasPrecious() || hasKeyword("Partner with itself") || getColorIdentity().countColors() <= 1 || partnersWithKnights()
-                || canBeCommander() && getType().hasCreatureType("Knight") ||
+                findsFriends() || hasPrecious() || hasKeyword("Partner with itself") || partnersWithKnights() ||
                 hasKeyword("Choose a Background") || hasKeyword("Doctor's companion") || isDoctor();
     }
 
@@ -483,10 +499,7 @@ public final class CardRules implements ICardCharacteristics {
     }
 
     public boolean isDoctor() {
-        Set<String> subtypes = new HashSet<>();
-        for (String type : mainPart.getType().getSubtypes()) {
-            subtypes.add(type);
-        }
+        Set<String> subtypes = Sets.newHashSet(mainPart.getType().getSubtypes());
 
         return subtypes.size() == 2 && subtypes.contains("Time Lord") && subtypes.contains("Doctor");
     }

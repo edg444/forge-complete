@@ -21,7 +21,7 @@ import forge.item.PaperCard;
 import forge.model.FModel;
 
 /**
- * Black Lotus Unknown Planechase (PUNK) planes and phenomena, checked against Scryfall 2026-10-22 (none has rulings).
+ * Black Lotus Unknown Planechase (OUNK, PUNK until 2026-11) planes and phenomena, checked against Scryfall 2026-10-22 (none has rulings).
  * Phenomena without "planeswalk away" text still go away once their trigger is done (CR 704.6f).
  */
 public class BlackLotusUnknownPlanechaseTest extends AITest {

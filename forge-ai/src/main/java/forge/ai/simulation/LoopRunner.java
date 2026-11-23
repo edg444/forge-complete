@@ -93,6 +93,10 @@ public final class LoopRunner {
         if (elves != null) {
             return elves;
         }
+        final SpellAbility aluren = AlurenPlan.next(ai, candidates, target, approve);
+        if (aluren != null) {
+            return aluren;
+        }
         final SpellAbility affinity = AffinityPlan.next(ai, candidates, approve);
         if (affinity != null) {
             return affinity;
@@ -313,7 +317,7 @@ public final class LoopRunner {
     }
 
     /** The spell of that name from the hand, or null. */
-    static SpellAbility castFromHand(final Player ai, final List<SpellAbility> candidates, final String name) {
+    public static SpellAbility castFromHand(final Player ai, final List<SpellAbility> candidates, final String name) {
         for (final SpellAbility sa : candidates) {
             final Card host = sa == null ? null : sa.getHostCard();
             if (host != null && sa.isSpell() && !sa.isLandAbility() && host.isInZone(ZoneType.Hand)
@@ -335,7 +339,12 @@ public final class LoopRunner {
      * three High Tides and two Strokes away, one by one, before it had the lands to go round with.
      */
     public static boolean held(final Player ai, final SpellAbility sa) {
-        if (ElfLoop.held(ai, sa)) {
+        if (ElfLoop.held(ai, sa) || AlurenPlan.pointlessHarpy(ai, sa) || RampPlan.wolfRunWaits(ai, sa)) {
+            return true;
+        }
+        final String landfall = LandfallGuard.fetchProblem(ai, sa);
+        if (landfall != null) {
+            VetoLog.note(ai, landfall + " | " + (sa.getHostCard() == null ? "?" : sa.getHostCard().getName()));
             return true;
         }
         final Card host = sa == null ? null : sa.getHostCard();
@@ -638,7 +647,7 @@ public final class LoopRunner {
     }
 
     /** The first spell of that name in the hand as a play of the list, or null; a copy with the targets cleared. */
-    private static SpellAbility aimedAtPlayer(final Player ai, final SpellAbility sa, final Player target) {
+    static SpellAbility aimedAtPlayer(final Player ai, final SpellAbility sa, final Player target) {
         sa.setActivatingPlayer(ai);
         sa.resetTargets();
         if (!sa.canTarget(target)) {

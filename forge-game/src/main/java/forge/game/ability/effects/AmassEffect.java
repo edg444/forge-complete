@@ -27,6 +27,15 @@ import forge.util.Lang;
 import forge.util.Localizer;
 
 public class AmassEffect extends TokenEffectBase {
+    public static final String[] OPTIONAL_PARAMS = {
+        "AddTriggersFrom", "AtEOT", "AtEOTCondition", "AtEOTDesc", "AtEOTTrig", "AttachAfter",
+        "AttachedTo", "CleanupForEach", "Defined", "DieFace", "DieSides", "ForEach",
+        "ImprintTokens", "Num", "OwnAttackTriggers", "PumpDuration", "PumpKeywords",
+        "RememberAmass", "RememberOriginalTokens", "RememberSource", "RememberTokens",
+        "RepresentedByHand", "TokenAttacking", "TokenBlocking", "TokenRemembered", "TokenTapped",
+        "TokenZone", "WithCountersAmount", "WithCountersType",
+    };
+    public static final String[][] REQUIRED_PARAMS = {{"Type"}};
 
     @Override
     protected String getStackDescription(SpellAbility sa) {

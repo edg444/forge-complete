@@ -12,6 +12,7 @@ import forge.game.card.CardLists;
 import forge.game.combat.Combat;
 import forge.game.combat.CombatUtil;
 import forge.game.player.OutsidePlayers;
+import forge.game.player.DelayedReveal;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.util.Aggregates;
@@ -100,7 +101,7 @@ public class PlayerControllerOutsidePerson extends PlayerControllerAi {
 
     @Override
     public CardCollection chooseCardsToDiscardFrom(final Player p, final SpellAbility sa, final CardCollection validCards,
-            final int min, final int max, final CardCollectionView visibleToChooser) {
+            final int min, final int max, final DelayedReveal delayedReveal) {
         if (p == getPlayer()) {
             switch (style) {
                 case NOVICE:
@@ -111,7 +112,7 @@ public class PlayerControllerOutsidePerson extends PlayerControllerAi {
                     break;
             }
         }
-        return super.chooseCardsToDiscardFrom(p, sa, validCards, min, max, visibleToChooser);
+        return super.chooseCardsToDiscardFrom(p, sa, validCards, min, max, delayedReveal);
     }
 
     @Override

@@ -38,6 +38,7 @@ import forge.game.card.CardCollection;
 import forge.game.card.CardCollectionView;
 import forge.game.card.CardLists;
 import forge.game.card.CardState;
+import forge.game.card.CounterEnumType;
 import forge.game.cost.Cost;
 import forge.game.cost.CostPart;
 import forge.game.phase.PhaseHandler;
@@ -487,6 +488,14 @@ public class StaticAbility extends CardTraitBase implements IIdentifiable, Clone
             final String comparator = getParamOrDefault("DefinedPlayerCompare", "GE1");
             final int operandValue = AbilityUtils.calculateAmount(this.hostCard, comparator.substring(2), this);
             if (!Expressions.compare(players, comparator.substring(0, 2), operandValue)) {
+                return false;
+            }
+        }
+
+        if (hasParam("Station")) {
+            final int counters = this.hostCard.getCounters(CounterEnumType.CHARGE);
+            final int station = Integer.parseInt(getParam("Station"));
+            if (counters < station) {
                 return false;
             }
         }

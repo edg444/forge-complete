@@ -19,6 +19,16 @@ import forge.util.TextUtil;
 
 
 public class AnimateEffect extends AnimateEffectBase {
+    public static final String[] OPTIONAL_PARAMS = {
+        "Abilities", "AddAllCreatureTypes", "AtEOT", "AtEOTCondition", "AtEOTDesc",
+        "CantHaveKeyword", "Colors", "Defined", "DefinedDesc", "Duration", "HiddenKeywords",
+        "IfDesc", "ImprintCards", "Incorporate", "Keywords", "LeaveBattlefield", "ManaCost", "Name",
+        "OptionQuestion", "Optional", "OverwriteColors", "Power", "RememberAnimated",
+        "RememberObjects", "RemoveArtifactTypes", "RemoveCreatureTypes", "RemoveEnchantmentTypes",
+        "RemoveLandTypes", "RemoveNonManaAbilities", "RemoveSuperTypes", "RemoveThisAbility",
+        "RemoveTypes", "Replacements", "RevertCost", "Toughness", "TransferActivator", "Triggers",
+        "Types", "sVars", "staticAbilities",
+    };
 
     /* (non-Javadoc)
      * @see forge.card.abilityfactory.SpellEffect#resolve(java.util.Map, forge.card.spellability.SpellAbility)

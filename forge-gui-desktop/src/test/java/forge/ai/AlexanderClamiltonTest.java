@@ -42,6 +42,7 @@ public class AlexanderClamiltonTest extends AITest {
         Player ai = game.getPlayers().get(1);
         addCards("Mountain", 2, ai);
         Card clam = addCard("Alexander Clamilton", ai);
+        clam.setSickness(false); // a {T} cost is rechecked when it is paid (upstream #13003)
         Card bears = addCard("Grizzly Bears", opp);
         fillLibrary(ai, 3);
         onTop(top, set, ai);

@@ -18,6 +18,16 @@ import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 
 public class AnimateAllEffect extends AnimateEffectBase {
+    public static final String[] OPTIONAL_PARAMS = {
+        "Abilities", "AddAllCreatureTypes", "CantHaveKeyword", "Colors", "Defined", "Duration",
+        "HiddenKeywords", "Incorporate", "Keywords", "LeaveBattlefield", "ManaCost",
+        "OverwriteColors", "Power", "RememberAnimated", "RemoveArtifactTypes",
+        "RemoveCreatureTypes", "RemoveEnchantmentTypes", "RemoveLandTypes",
+        "RemoveNonManaAbilities", "RemoveSuperTypes", "RemoveThisAbility", "RemoveTypes",
+        "Replacements", "RevertCost", "Toughness", "TransferActivator", "Triggers", "Types", "Zone",
+        "sVars", "staticAbilities",
+    };
+    public static final String[][] REQUIRED_PARAMS = {{"ValidCards"}};
 
     @Override
     protected String getStackDescription(SpellAbility sa) {

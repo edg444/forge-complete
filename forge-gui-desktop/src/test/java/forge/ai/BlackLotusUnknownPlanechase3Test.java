@@ -18,7 +18,7 @@ import forge.item.PaperCard;
 import forge.model.FModel;
 
 /**
- * Black Lotus Unknown Planechase (PUNK), third part: the booster phenomena, Year-End Review and the Artist Alley plane,
+ * Black Lotus Unknown Planechase (OUNK, PUNK until 2026-11), third part: the booster phenomena, Year-End Review and the Artist Alley plane (The Art of Magic since 2026-11),
  * checked against Scryfall 2026-10-22 (no rulings). User rulings 2026-10-22: each player picks their pack's set (the AI
  * at random); Unknown Event's cards are each player's own; The Pro Tour's draft is one card from your own pack; a plane
  * may share its name with another card.
@@ -56,21 +56,19 @@ public class BlackLotusUnknownPlanechase3Test extends AITest {
         return game;
     }
 
+    /** Scryfall renamed the plane The Art of Magic (and its set OUNK) in 2026-11: the land keeps the name. */
     @Test
-    public void testArtistAlleySharesItsName() {
+    public void testArtistAlleyAndTheArtOfMagic() {
         initAndCreateGame();
         final PaperCard land = FModel.getMagicDb().getCommonCards().getCard("Artist Alley");
-        final PaperCard plane = FModel.getMagicDb().getVariantCards().getCard("Artist Alley");
+        final PaperCard plane = FModel.getMagicDb().getVariantCards().getCard("The Art of Magic");
         AssertJUnit.assertNotNull(land);
         AssertJUnit.assertNotNull(plane);
         AssertJUnit.assertTrue(land.getRules().getType().isLand());
         AssertJUnit.assertTrue(plane.getRules().getType().isPlane());
         AssertJUnit.assertEquals("UNK", land.getEdition());
-        AssertJUnit.assertEquals("PUNK", plane.getEdition());
-        AssertJUnit.assertTrue("no plane printing in Unknown Event", FModel.getMagicDb().getVariantCards().getAllCards("Artist Alley")
-                .stream().allMatch(pc -> pc.getEdition().equals("PUNK")));
-        AssertJUnit.assertTrue("no land printing in the Planechase set", FModel.getMagicDb().getCommonCards().getAllCards("Artist Alley")
-                .stream().allMatch(pc -> pc.getEdition().equals("UNK")));
+        AssertJUnit.assertEquals("OUNK", plane.getEdition());
+        AssertJUnit.assertNull("no plane named Artist Alley", FModel.getMagicDb().getVariantCards().getCard("Artist Alley"));
     }
 
     @Test
@@ -79,7 +77,7 @@ public class BlackLotusUnknownPlanechase3Test extends AITest {
         final Player ai = game.getPlayers().get(1);
         fillLibrary(ai, 10);
         final int exiled = ai.getCardsIn(ZoneType.Exile).size();
-        planeswalk(game, ai, "Artist Alley");
+        planeswalk(game, ai, "The Art of Magic");
         AssertJUnit.assertEquals(exiled + 1, ai.getCardsIn(ZoneType.Exile).size());
         final Card top = ai.getCardsIn(ZoneType.Exile).get(ai.getCardsIn(ZoneType.Exile).size() - 1);
         AssertJUnit.assertFalse("it may be played this turn", top.mayPlay(ai).isEmpty());

@@ -410,7 +410,7 @@ final class PlayerControllerJudge extends PlayerControllerAi {
 
     @Override
     public CardCollection chooseCardsToDiscardFrom(final Player playerDiscard, final SpellAbility sa, final CardCollection validCards, final int min, final int max,
-            final CardCollectionView visibleToChooser) {
+            final DelayedReveal delayedReveal) {
         return new CardCollection(pickCards("Discard", validCards, min, max));
     }
 

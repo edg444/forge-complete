@@ -21,7 +21,7 @@ import forge.item.PaperCard;
 import forge.model.FModel;
 
 /**
- * Black Lotus Unknown Planechase (PUNK), second part, checked against Scryfall 2026-10-22 (no rulings). User rulings
+ * Black Lotus Unknown Planechase (OUNK, PUNK until 2026-11), second part, checked against Scryfall 2026-10-22 (no rulings). User rulings
  * 2026-10-22: worn pins and years played are said once per match (the AI's are random: 0-5 pins, 1 to this year - 1993
  * years); Shrinking Plane folds seven times; Windmill Farm's spin is a random permanent and a full turn 80% of the time;
  * the animal and horror-monster type lists are mine; D&D is the Forgotten Realms sets plus the D&D Secret Lairs.

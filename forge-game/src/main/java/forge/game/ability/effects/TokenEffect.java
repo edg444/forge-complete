@@ -35,6 +35,15 @@ import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 
 public class TokenEffect extends TokenEffectBase {
+    public static final String[] OPTIONAL_PARAMS = {
+        "AddTriggersFrom", "AtEOT", "AtEOTCondition", "AtEOTDesc", "AtEOTTrig", "AttachAfter",
+        "AttachedTo", "ChangeZoneTable", "CleanupForEach", "DieFace", "DieSides", "ForEach",
+        "ImprintTokens", "OwnAttackTriggers", "PumpDuration", "PumpKeywords",
+        "RememberOriginalTokens", "RememberSource", "RememberTokens", "RepresentedByHand",
+        "TokenAmount", "TokenAttacking", "TokenBlocking", "TokenOwner", "TokenRemembered",
+        "TokenTapped", "TokenZone", "WithCountersAmount", "WithCountersType",
+    };
+    public static final String[][] REQUIRED_PARAMS = {{"TokenScript"}};
 
     @Override
     protected String getStackDescription(SpellAbility sa) {

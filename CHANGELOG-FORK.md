@@ -491,6 +491,34 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-23, forty-ninth deploy (desktop, Android, GitHub) - upstream merge
+
+- **Upstream merge** (68 commits, 37 conflicts): card-script param declarations and linter (#12030, #12988), attack
+  explanations (#12053), Rogue Commander on desktop (#12841), a desktop scry/surveil dialog with top and bottom piles
+  (#13013), FlatMC runaway activations and revalidated discovered abilities (#13003: a `{T}` cost is rechecked when
+  it is paid, so a summoning-sick creature can no longer be tapped for it), Station via `SetPower`/`SetToughness`
+  (#12900), RampPlan/LandfallGuard and other AI work, Mystery Booster Commander boosters, and edition updates.
+  14 card scripts took upstream's mechanics (mostly `Targeted` in place of `RememberLKI`) with the fork's Scryfall
+  wording. Fork code moved onto upstream's changes: Throat Wolf and Aggressive attack checks return a
+  `CantAttackReason`; Rule with an Even Hand's `EvenAttackers` sits in upstream's `attackRestrictSources`; Hot Fix's
+  timed rearrange is rebuilt on the new `ListCardArea` (whole library, top and bottom sections); the Judge and
+  Outside-Person controllers take upstream's `DelayedReveal` discard signature; `InputAttack` doesn't refuse an
+  illegal attack under Judge Tower (the judge rules on it). The fork-only params the engine reads are declared
+  (`CardScriptParamDeclarationTest`); `RemoveAllAbilities` is a framework param here (CardFactory reads it for Clone),
+  so `AnimateEffectBase` no longer declares it. Upstream's three new Two-Headed Giant tests are ported into
+  `UpstreamTwoHeadedGiantTest`; the linter test's unknown-key example is `Hosts$` (the fork reads `Host$`).
+- **Scryfall renumbered Unknown Event** (`UNK` collector numbers like `20230208`) and moved Black Lotus Unknown
+  Planechase from `PUNK` to `OUNK` (`PUNK` is now Prismatic Pride); upstream followed. `PrintingTraits.txt` (563
+  rows) and `FlavorText.txt` (58 rows) were remapped by Scryfall id, and 107 new UNK/OUNK printings got their
+  `playtest`/border traits from Scryfall (2026-11-23). Scryfall also renamed the Artist Alley plane **The Art of
+  Magic**: the fork's plane script is renamed to match (the UNK land keeps Artist Alley).
+- Shai-Hulud (upstream `upcoming/`): Oracle text gains Scryfall's "Trample, indestructible" line.
+- **Rogue Commander** (upstream's new mode): a mono-colored commander no longer takes the partner deck path. The
+  fork lets any commander of one color or less be a second commander (Barce, Friend Finder), which upstream's
+  generator read as the commander having partner, so the starting deck was built from the whole legal pool in place
+  of Forge's generated deck. The generator now asks `CardRules.hasOwnPartnerAbility()` (the card's own partner text);
+  `canBePartnerCommander()` is unchanged, so choosing Barce as a second commander still works.
+
 ### 2026-11-18, forty-eighth deploy (desktop, Android, GitHub) - upstream merge
 
 - **Upstream merge** (20 commits, 7 conflicts): FlatMC attack update (#12932), more AI fixes (#12936, #12921), AI

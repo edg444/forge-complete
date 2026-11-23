@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 
 import forge.ai.*;
 import forge.card.CardType;
+import forge.card.CardTypeView;
 import forge.card.ColorSet;
 import forge.card.mana.ManaCostShard;
 import forge.game.CardTraitPredicates;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +50,9 @@ import java.util.Map;
  */
 
 public class AnimateAi extends SpellAbilityAi {
+    public static final String[] OPTIONAL_PARAMS = {
+        "AITgts", "AITgtsStrict",
+    };
 
     @Override
     protected boolean checkAiLogic(final Player ai, final SpellAbility sa, final String aiLogic) {
@@ -161,9 +166,9 @@ public class AnimateAi extends SpellAbilityAi {
         final Card host = sa.getHostCard();
         if (sa.getApi() != ApiType.Animate || host == null || !host.isLand() || !host.isInZone(ZoneType.Battlefield)
                 || host.isTapped() || host.getManaAbilities().isEmpty() || sa.getPayCosts() == null
-                || sa.getPayCosts().getCostMana() == null || sa.costHasManaX()
+                || sa.getPayCosts().getCostMana() == null || sa.costHasManaX() || sa.usesTargeting()
                 || "Permanent".equals(sa.getParam("Duration"))
-                || !("Self".equals(sa.getParam("Defined")) || "Self".equals(sa.getParam("ValidCards")))) {
+                || !"Self".equals(sa.getParamOrDefault("Defined", "Self"))) {
             return false;
         }
         final ManaCostBeingPaid cost = new ManaCostBeingPaid(sa.getPayCosts().getCostMana().getMana());
@@ -205,7 +210,7 @@ public class AnimateAi extends SpellAbilityAi {
         sa = sa.getRootAbility();
         if (sa.getApi() != ApiType.Animate || sa.usesTargeting() || !"Permanent".equals(sa.getParam("Duration"))
                 || !sa.hasParam("Power") || !sa.hasParam("Toughness")
-                || !("Self".equals(sa.getParam("ValidCards")) || "Self".equals(sa.getParam("Defined")))) {
+                || !"Self".equals(sa.getParamOrDefault("Defined", "Self"))) {
             return false;
         }
         if (sa.hasParam("Keywords") || sa.hasParam("HiddenKeywords") || sa.hasParam("Types") || sa.hasParam("RemoveTypes")
@@ -402,6 +407,13 @@ public class AnimateAi extends SpellAbilityAi {
                     && (!c.hasSickness() || givesHaste || !ph.isPlayerTurn(aiPlayer))
                     && !c.isEquipping();
 
+            // A permanent Animate can be useful even when it leaves P/T unchanged: Figure-of-Destiny-style
+            // transformations and Nog's Scout-to-Officer promotion change the creature types instead.
+            if (!bFlag && (sa.hasParam("Types") || sa.hasParam("RemoveTypes") || sa.hasParam("RemoveCreatureTypes"))) {
+                final Card animatedCopy = becomeAnimated(c, sa);
+                bFlag = hasDifferentCardType(c, animatedCopy);
+            }
+
             // for creatures that could be improved (like Figure of Destiny)
             if (!bFlag && c.isCreature() && ("Permanent".equals(sa.getParam("Duration")) || (!c.isTapped() && !c.isSick()))) {
                 int power = -5;
@@ -458,6 +470,14 @@ public class AnimateAi extends SpellAbilityAi {
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
         return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+    }
+
+    private static boolean hasDifferentCardType(final Card current, final Card projected) {
+        final CardTypeView oldType = current.getType();
+        final CardTypeView newType = projected.getType();
+        return !new HashSet<>(oldType.getCoreTypes()).equals(new HashSet<>(newType.getCoreTypes()))
+                || !new HashSet<>(oldType.getSupertypes()).equals(new HashSet<>(newType.getSupertypes()))
+                || !new HashSet<>(oldType.getSubtypes()).equals(new HashSet<>(newType.getSubtypes()));
     }
 
     @Override
