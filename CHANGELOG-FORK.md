@@ -518,6 +518,7 @@ off, a human plays through the prompts of phases 1 and 2).
   generator read as the commander having partner, so the starting deck was built from the whole legal pool in place
   of Forge's generated deck. The generator now asks `CardRules.hasOwnPartnerAbility()` (the card's own partner text);
   `canBePartnerCommander()` is unchanged, so choosing Barce as a second commander still works.
+- A second, one-commit upstream merge (no conflicts): Android's Original Texture Quality setting (#13035).
 
 ### 2026-11-18, forty-eighth deploy (desktop, Android, GitHub) - upstream merge
 
