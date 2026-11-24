@@ -42,6 +42,7 @@ import forge.gui.framework.IVTopLevelUI;
 import forge.localinstance.properties.ForgePreferences.FPref;
 import forge.localinstance.skin.FSkinProp;
 import forge.model.FModel;
+import forge.screens.home.conquest.*;
 import forge.screens.home.gauntlet.*;
 import forge.screens.home.rogue.VSubmenuRogueMap;
 import forge.screens.home.rogue.VSubmenuRogueStart;
@@ -152,6 +153,17 @@ public enum VHomeUI implements IVTopLevelUI {
 
         allSubmenus.add(VSubmenuRogueStart.SINGLETON_INSTANCE);
         allSubmenus.add(VSubmenuRogueMap.SINGLETON_INSTANCE);
+
+        allSubmenus.add(VSubmenuConquestMultiverse.INSTANCE);
+        allSubmenus.add(VSubmenuConquestAether.INSTANCE);
+        allSubmenus.add(VSubmenuConquestCommanders.INSTANCE);
+        allSubmenus.add(VSubmenuConquestPlaneswalkers.INSTANCE);
+        allSubmenus.add(VSubmenuConquestCollection.INSTANCE);
+        allSubmenus.add(VSubmenuConquestPlaneswalk.INSTANCE);
+        allSubmenus.add(VSubmenuConquestStats.INSTANCE);
+        allSubmenus.add(VSubmenuConquestNew.INSTANCE);
+        allSubmenus.add(VSubmenuConquestLoad.INSTANCE);
+        allSubmenus.add(VSubmenuConquestPrefs.INSTANCE);
 
         allSubmenus.add(VSubmenuPuzzleSolve.SINGLETON_INSTANCE);
         allSubmenus.add(VSubmenuPuzzleCreate.SINGLETON_INSTANCE);

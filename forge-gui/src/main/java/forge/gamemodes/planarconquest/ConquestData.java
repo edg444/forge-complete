@@ -527,6 +527,15 @@ public final class ConquestData {
     private static final Function<Entry<? extends InventoryItem, Integer>, Object> fnNewGet =
             from -> FModel.getConquest().getModel().newCards.contains(from.getKey()) ? "NEW" : "";
 
+    // the desktop item managers take these directly rather than mobile's ItemColumn map
+    public static Function<Entry<InventoryItem, Integer>, Comparable<?>> getFnNewCompare() {
+        return fnNewCompare;
+    }
+
+    public static Function<Entry<? extends InventoryItem, Integer>, Object> getFnNewGet() {
+        return fnNewGet;
+    }
+
     public static Map<ColumnDef, ItemColumn> getColOverrides(ItemManagerConfig config) {
         Map<ColumnDef, ItemColumn> colOverrides = new HashMap<>();
         ItemColumn.addColOverride(config, colOverrides, ColumnDef.NEW, fnNewCompare, fnNewGet);

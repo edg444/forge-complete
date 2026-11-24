@@ -46,6 +46,7 @@ import forge.localinstance.skin.ISkinImage;
 import forge.model.FModel;
 import forge.screens.deckeditor.CDeckEditorUI;
 import forge.screens.deckeditor.controllers.CEditorQuestCardShop;
+import forge.screens.home.conquest.ConquestCardArt;
 import forge.screens.match.CMatchUI;
 import forge.sound.AltSoundSystem;
 import forge.sound.AudioClip;
@@ -146,7 +147,8 @@ public class GuiDesktop implements IGuiBase {
 
     @Override
     public ISkinImage getCardArt(final PaperCard card, final boolean backFace) {
-        return null; //TODO
+        final BufferedImage art = ConquestCardArt.getArt(card, backFace);
+        return art == null ? null : new FSkin.UnskinnedIcon(art);
     }
 
     @Override

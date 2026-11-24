@@ -491,6 +491,19 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+- **Planar Conquest on desktop** (branch `conquest-desktop`): upstream only ever built the mode's screens for
+  mobile, so desktop had no way to play it. A new *Planar Conquest* home menu group ports every mobile screen to
+  Swing: New Conquest (plane, commander, planeswalker), Load (rename, delete), the Multiverse (region art grid with
+  fog of war, conquest badges, an animated planeswalker token, and a side panel with the event, opponent and
+  Battle button), the Aether (color/type/rarity/mana value filters and the same rarity roll as mobile), Commanders
+  (select, view or edit deck; invalid decks can't be selected), Planeswalkers, Collection (exile/retrieve for
+  shards), Planeswalk (travel or unlock planes), Statistics and Preferences. The reward reveal, region-commander
+  award and Chaos Wheel (mobile's spin physics) run as dialogs after each battle. Conquest decks open in the desktop
+  deck editor (singleton, catalog = unlocked unexiled cards, NEW column), and the win/lose screen records results
+  through the shared conquest controller. Plane and card art use mobile's crops, and the conquest sprites the
+  desktop skin never loaded are read straight from the skin folder. A battle left without its win/lose screen no
+  longer blocks the next one.
+
 ### 2026-11-23, forty-ninth deploy (desktop, Android, GitHub) - upstream merge
 
 - **Upstream merge** (68 commits, 37 conflicts): card-script param declarations and linter (#12030, #12988), attack

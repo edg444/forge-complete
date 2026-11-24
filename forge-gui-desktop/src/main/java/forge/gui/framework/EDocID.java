@@ -11,6 +11,7 @@ import com.google.common.collect.ObjectArrays;
 import forge.game.zone.ZoneType;
 import forge.screens.deckeditor.views.*;
 import forge.screens.home.gauntlet.*;
+import forge.screens.home.conquest.*;
 import forge.screens.home.rogue.VSubmenuRogueAether;
 import forge.screens.home.rogue.VSubmenuRogueCodex;
 import forge.screens.home.rogue.VSubmenuRogueHistory;
@@ -84,6 +85,16 @@ public enum EDocID {
     HOME_ROGUESTATS (VSubmenuRogueCodex.SINGLETON_INSTANCE),
     HOME_ROGUEAETHER (VSubmenuRogueAether.SINGLETON_INSTANCE),
     HOME_ROGUEHISTORY (VSubmenuRogueHistory.SINGLETON_INSTANCE),
+    HOME_CONQUESTNEW (VSubmenuConquestNew.INSTANCE),
+    HOME_CONQUESTLOAD (VSubmenuConquestLoad.INSTANCE),
+    HOME_CONQUESTMULTIVERSE (VSubmenuConquestMultiverse.INSTANCE),
+    HOME_CONQUESTAETHER (VSubmenuConquestAether.INSTANCE),
+    HOME_CONQUESTCOMMANDERS (VSubmenuConquestCommanders.INSTANCE),
+    HOME_CONQUESTPLANESWALKERS (VSubmenuConquestPlaneswalkers.INSTANCE),
+    HOME_CONQUESTCOLLECTION (VSubmenuConquestCollection.INSTANCE),
+    HOME_CONQUESTPLANESWALK (VSubmenuConquestPlaneswalk.INSTANCE),
+    HOME_CONQUESTSTATS (VSubmenuConquestStats.INSTANCE),
+    HOME_CONQUESTPREFS (VSubmenuConquestPrefs.INSTANCE),
     HOME_PREFERENCES (VSubmenuPreferences.SINGLETON_INSTANCE),
     HOME_ACHIEVEMENTS (VSubmenuAchievements.SINGLETON_INSTANCE),
     HOME_AVATARS (VSubmenuAvatars.SINGLETON_INSTANCE),
