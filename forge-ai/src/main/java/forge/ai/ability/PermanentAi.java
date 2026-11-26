@@ -36,6 +36,11 @@ public class PermanentAi extends SpellAbilityAi {
             return false;
         }
 
+        // Temporary evaluation copies can inspect spells held for Main 2.
+        if (sa.isSpell() && ph.is(PhaseType.MAIN1, ai) && "True".equals(sa.getParam("AIIgnoreMain2Preference"))) {
+            return true;
+        }
+
         // Wait for Main2 if possible - but a spell cast by an effect (Scrycast, cascade-likes) is now or never
         return !ph.is(PhaseType.MAIN1) || !ph.isPlayerTurn(ai) || sa.hasParam("WithoutManaCost") || sa.isCastFromPlayEffect()
                 || ComputerUtil.castPermanentInMain1(ai, sa)
@@ -115,6 +120,20 @@ public class PermanentAi extends SpellAbilityAi {
             }
             if (need > forge.ai.ComputerUtilMana.getAvailableManaEstimate(ai, false) - source.getCMC()) {
                 return new AiAbilityDecision(0, AiPlayDecision.CantAfford);
+            }
+        }
+
+        if ("SleeperAgent".equals(sa.getParam("AILogic"))) {
+            final AiAbilityDecision lend = ControlGainAi.lendToOpponent(ai, source);
+            if (!lend.willingToPlay()) {
+                return lend;
+            }
+        }
+
+        if ("SleeperAgent".equals(source.getSVar("AICastLogic"))) {
+            final AiAbilityDecision lend = ControlGainAi.lendToOpponent(ai, source);
+            if (!lend.willingToPlay()) {
+                return lend;
             }
         }
 

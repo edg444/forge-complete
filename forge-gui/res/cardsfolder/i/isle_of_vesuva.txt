@@ -9,5 +9,5 @@ T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ 
 T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, destroy target creature and all other creatures with the same name as that creature.
 SVar:RolledChaos:DB$ Destroy | ValidTgts$ Creature | SubAbility$ DestroyOtherAll
 SVar:DestroyOtherAll:DB$ DestroyAll | ValidCards$ Targeted.sameName+Other
-SVar:AIRollPlanarDieParams:Mode$ Always | OppHasCreatureInPlay$ True
+SVar:AIRollPlanarDieParams:Mode$ Always | HasValidCardInZone$ Battlefield:Creature.OppCtrl
 Oracle:Whenever a nontoken creature enters, its controller creates a token that's a copy of that creature.\nWhenever chaos ensues, destroy target creature and all other creatures with the same name as that creature.

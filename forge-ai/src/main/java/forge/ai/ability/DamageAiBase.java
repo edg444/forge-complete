@@ -2,6 +2,7 @@ package forge.ai.ability;
 
 import forge.ai.ComputerUtil;
 import forge.ai.ComputerUtilCombat;
+import forge.ai.ProwessTiming;
 import forge.ai.SpellAbilityAi;
 import forge.game.Game;
 import forge.game.ability.AbilityUtils;
@@ -145,8 +146,9 @@ public abstract class DamageAiBase extends SpellAbilityAi {
         }
 
         final TargetRestrictions restrictions = sa.getTargetRestrictions();
-        if (restrictions != null && restrictions.canTgtPlayer() && !restrictions.canTgtCreature() && isFaceBurnWorthCasting(comp, sa)) {
-            return true; // nothing else it could hit
+        if (restrictions != null && restrictions.canTgtPlayer() && !restrictions.canTgtCreature()
+                && (ProwessTiming.worthBeforeCombat(comp, sa) || isFaceBurnWorthCasting(comp, sa))) {
+            return true; // nothing else it could hit; Prowess also rewards casting before combat
         }
 
         if (sa.isSpell()) {

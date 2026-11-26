@@ -8,5 +8,5 @@ T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ 
 T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, each creature you control gets +2/+2, gains trample, and becomes a Werewolf in addition to its other types until end of turn.
 SVar:RolledChaos:DB$ AnimateAll | ValidCards$ Creature.YouCtrl | Types$ Werewolf | SubAbility$ DBPump
 SVar:DBPump:DB$ PumpAll | ValidCards$ Creature.YouCtrl | KW$ Trample | NumAtt$ +2 | NumDef$ +2
-SVar:AIRollPlanarDieParams:Mode$ Always | RollInMain1$ True | HasCreatureInPlay$ True
+SVar:AIRollPlanarDieParams:Mode$ Always | RollInMain1$ True | HasValidCardInZone$ Battlefield:Creature.YouCtrl
 Oracle:Prevent all combat damage that would be dealt by non-Werewolf creatures.\nWhenever chaos ensues, each creature you control gets +2/+2, gains trample, and becomes a Werewolf in addition to its other types until end of turn.

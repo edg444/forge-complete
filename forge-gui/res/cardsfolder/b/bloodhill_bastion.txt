@@ -9,5 +9,5 @@ T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ 
 T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20230421 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, exile target nontoken creature you control, then return it to the battlefield under your control.
 SVar:RolledChaos:DB$ ChangeZone | ValidTgts$ Creature.!token+YouCtrl | TgtPrompt$ Select target nontoken creature you control | Origin$ Battlefield | Destination$ Exile | RememberTargets$ True | ForgetOtherTargets$ True | SubAbility$ RestorationReturn
 SVar:RestorationReturn:DB$ ChangeZone | Defined$ Remembered | Origin$ Exile | Destination$ Battlefield | GainControl$ True
-SVar:AIRollPlanarDieParams:Mode$ Always | MinTurn$ 3 | RollInMain1$ True
+SVar:AIRollPlanarDieParams:Mode$ Always | HasValidCardInZone$ Battlefield:Creature.!token+YouCtrl | RollInMain1$ True | MinTurn$ 1
 Oracle:Whenever a creature enters, it gains double strike and haste until end of turn.\nWhenever chaos ensues, exile target nontoken creature you control, then return it to the battlefield under your control.

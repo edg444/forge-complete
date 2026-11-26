@@ -7,5 +7,5 @@ T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | IsPresent$ 
 # any other way (Missy, Will of the Planeswalkers, Fixed Point in Time) doesn't trigger it.
 T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ RolledChaos | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, creatures you control get +1/+0 and gain first strike until end of turn.
 SVar:RolledChaos:DB$ PumpAll | ValidCards$ Creature.YouCtrl | NumAtt$ +1 | KW$ First Strike
-SVar:AIRollPlanarDieParams:Mode$ Always | HasCreatureInPlay$ True | RollInMain1$ True
+SVar:AIRollPlanarDieParams:Mode$ Always | HasAttackableCreature$ True | RollInMain1$ True | MinTurn$ 1
 Oracle:All creatures are black and have deathtouch.\nWhenever chaos ensues, creatures you control get +1/+0 and gain first strike until end of turn.

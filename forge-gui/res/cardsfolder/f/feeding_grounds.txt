@@ -9,5 +9,5 @@ T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ DBPutCounter | IsPresent$
 T:Mode$ ChaosEnsues | TriggerZones$ Command | Execute$ DBPutCounter | RolledOnly$ True | IsPresent$ Card.PrintedTextActive+PrintedBefore 20161126 | PresentDefined$ Self | TriggerDescription$ (As printed) Whenever you roll {CHAOS}, put X +1/+1 counters on target creature, where X is that creature's mana value.
 SVar:DBPutCounter:DB$ PutCounter | ValidTgts$ Creature | CounterType$ P1P1 | CounterNum$ Y
 SVar:Y:Targeted$CardManaCost
-SVar:AIRollPlanarDieParams:Mode$ Always | HasCreatureInPlay$ True
+SVar:AIRollPlanarDieParams:Mode$ Always | HasValidCardInZone$ Battlefield:Creature.YouCtrl+cmcGE1 | RollInMain1$ True | MinTurn$ 1
 Oracle:Red spells cost {1} less to cast.\nGreen spells cost {1} less to cast.\nWhenever chaos ensues, put X +1/+1 counters on target creature, where X is that creature's mana value.

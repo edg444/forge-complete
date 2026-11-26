@@ -36,11 +36,11 @@ public class HumanCostDecision extends CostDecisionMakerBase {
     private final String orString;
     private boolean mandatory;
 
-    public HumanCostDecision(final PlayerControllerHuman controller, final Player p, final SpellAbility sa, final boolean effect, String prompt) {
+    public HumanCostDecision(final PlayerControllerHuman controller, final Player p, final SpellAbility sa, final boolean effect, String orString) {
         super(p, effect, sa, sa.getHostCard());
         this.controller = controller;
         mandatory = sa.getPayCosts().isMandatory();
-        this.orString = PlaySpellAbility.getOrStringFromCost(ability, prompt);
+        this.orString = orString;
     }
 
     @Override
@@ -203,10 +203,11 @@ public class HumanCostDecision extends CostDecisionMakerBase {
 
         String message;
         if (orString != null && !orString.isEmpty()) {
+            // res = players who would draw; player = the one deciding whether to pay
             if (res.contains(player)) {
-                message = Localizer.getInstance().getMessage("lblDoYouWantLetThatPlayerDrawNCardOrDoAction", c, orString);
-            } else {
                 message = Localizer.getInstance().getMessage("lblDoYouWantDrawNCardOrDoAction", c, orString);
+            } else {
+                message = Localizer.getInstance().getMessage("lblDoYouWantLetThatPlayerDrawNCardOrDoAction", c, orString);
             }
         } else {
             message = Localizer.getInstance().getMessage("lblDrawNCardsConfirm", c);
