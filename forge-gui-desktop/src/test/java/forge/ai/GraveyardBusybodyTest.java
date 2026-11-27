@@ -8,6 +8,8 @@ import forge.game.card.Card;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
+import forge.item.PaperCard;
+import forge.model.FModel;
 
 /**
  * Graveyard Busybody, following its Unstable rulings: every graveyard is its controller's and no one else has
@@ -18,6 +20,20 @@ public class GraveyardBusybodyTest extends AITest {
     private static final String[] FILLER = {"Grizzly Bears", "Shivan Dragon", "Runeclaw Bear", "Serra Angel",
             "Llanowar Elves", "Giant Growth"};
 
+    // Tests run with a fresh profile (upstream surefire config), so the default print can be one without flavor text
+    // (The Zeta Set) and a Busybody counting it would be 0/0.
+    private Card flavored(String name, Player p, ZoneType zone) {
+        for (PaperCard pc : FModel.getMagicDb().getCommonCards().getAllCards(name)) {
+            Card c = Card.fromPaperCard(pc, p);
+            if (!c.getFlavorText().isEmpty()) {
+                c.setGameTimestamp(p.getGame().getNextTimestamp());
+                p.getZone(zone).add(c);
+                return c;
+            }
+        }
+        throw new AssertionError("no print of " + name + " has flavor text");
+    }
+
     private static void refresh(Game game) {
         game.getAction().checkStateEffects(true);
     }
@@ -27,8 +43,8 @@ public class GraveyardBusybodyTest extends AITest {
         Game game = initAndCreateGame();
         Player me = game.getPlayers().get(1);
         Player opp = game.getPlayers().get(0);
-        Card mine = addCardToZone("Grizzly Bears", me, ZoneType.Graveyard);
-        Card theirs = addCardToZone("Serra Angel", opp, ZoneType.Graveyard);
+        Card mine = flavored("Grizzly Bears", me, ZoneType.Graveyard);
+        Card theirs = flavored("Serra Angel", opp, ZoneType.Graveyard);
         refresh(game);
         AssertJUnit.assertEquals(1, me.getCardsIn(ZoneType.Graveyard).size());
         AssertJUnit.assertEquals(opp, theirs.getController());
@@ -118,9 +134,9 @@ public class GraveyardBusybodyTest extends AITest {
             for (int i = 0; i < 5; i++) {
                 addCard("Island", p);
             }
-            addCardToZone("Think Twice", p, ZoneType.Graveyard);
+            flavored("Think Twice", p, ZoneType.Graveyard);
             addCardToZone("Gravedigger", p, ZoneType.Hand);
-            addCardToZone("Grizzly Bears", p, ZoneType.Graveyard);
+            flavored("Grizzly Bears", p, ZoneType.Graveyard);
         }
         addCard("Graveyard Busybody", me);
         refresh(game);
