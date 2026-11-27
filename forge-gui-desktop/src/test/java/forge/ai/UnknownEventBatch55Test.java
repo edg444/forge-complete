@@ -1,6 +1,7 @@
 package forge.ai;
 
 import org.testng.AssertJUnit;
+import java.util.stream.Collectors;
 import org.testng.annotations.Test;
 
 import forge.game.Game;
@@ -216,7 +217,7 @@ public class UnknownEventBatch55Test extends AITest {
         AssertJUnit.assertEquals(6, melded.getCMC());
         AssertJUnit.assertTrue(ai.getCardsIn(ZoneType.Merged).contains(bears));
         game.getAction().destroy(melded, null, true, null);
-        final java.util.List<String> graveyard = ai.getCardsIn(ZoneType.Graveyard).stream().map(Card::getName).toList();
+        final java.util.List<String> graveyard = ai.getCardsIn(ZoneType.Graveyard).stream().map(Card::getName).collect(Collectors.toList());
         AssertJUnit.assertTrue(graveyard.toString(), graveyard.contains("Hill Giant") && graveyard.contains("Grizzly Bears"));
     }
 

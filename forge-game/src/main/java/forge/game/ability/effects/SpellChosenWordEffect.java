@@ -1,6 +1,7 @@
 package forge.game.ability.effects;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableList;
@@ -54,7 +55,7 @@ public class SpellChosenWordEffect extends SpellAbilityEffect {
         final Card host = sa.getHostCard();
         final Player you = sa.getActivatingPlayer();
         host.setSVar("SpelledCorrectly", "Number$0");
-        final CardCollection top = new CardCollection(you.getCardsIn(ZoneType.Library).stream().limit(1).toList());
+        final CardCollection top = new CardCollection(you.getCardsIn(ZoneType.Library).stream().limit(1).collect(Collectors.toList()));
         if (top.isEmpty()) {
             return;
         }

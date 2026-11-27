@@ -1,6 +1,7 @@
 package forge.game.ability.effects;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -164,6 +165,6 @@ public class GuessWhoEffect extends SpellAbilityEffect {
             counts.merge(c.getName(), 1, Integer::sum);
         }
         final int most = counts.values().stream().max(Integer::compare).orElse(0);
-        return Aggregates.random(counts.entrySet().stream().filter(e -> e.getValue() == most).map(Map.Entry::getKey).toList());
+        return Aggregates.random(counts.entrySet().stream().filter(e -> e.getValue() == most).map(Map.Entry::getKey).collect(Collectors.toList()));
     }
 }

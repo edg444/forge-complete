@@ -1,6 +1,7 @@
 package forge.gamemodes.match;
 
 import forge.game.card.CardView;
+import java.util.stream.Collectors;
 import forge.game.spellability.StackItemView;
 import forge.trackable.TrackableObject;
 
@@ -39,7 +40,7 @@ public record Selection(List<CardView> cards, int min, int max, List<TrackableOb
 
     /** Judge Tower: nothing marks what's legal, working that out is the game. The stack view still has to take a pick. */
     public Selection withoutHints() {
-        return new Selection(List.of(), min, max, new ArrayList<>(targets.stream().filter(StackItemView.class::isInstance).toList()),
+        return new Selection(List.of(), min, max, new ArrayList<>(targets.stream().filter(StackItemView.class::isInstance).collect(Collectors.toList())),
                 chosen, List.of());
     }
 

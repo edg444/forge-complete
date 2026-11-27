@@ -18,6 +18,7 @@
 package forge.game.spellability;
 
 import com.google.common.collect.Iterables;
+import java.util.stream.Collectors;
 import forge.card.ColorSet;
 import forge.game.Game;
 import forge.game.GameObject;
@@ -382,7 +383,7 @@ public class SpellAbilityCondition extends SpellAbilityVariables implements IHas
             }
 
             Predicate<GameObject> restriction = GameObjectPredicates.restriction(getIsPresent().split(","), activator, host, sa);
-            final int left = CountsAsCreatures.count(list.stream().filter(restriction).toList(), getIsPresent(), activator, host, sa);
+            final int left = CountsAsCreatures.count(list.stream().filter(restriction).collect(Collectors.toList()), getIsPresent(), activator, host, sa);
 
             final String rightString = this.getPresentCompare().substring(2);
             int right = AbilityUtils.calculateAmount(host, rightString, sa);
@@ -410,7 +411,7 @@ public class SpellAbilityCondition extends SpellAbilityVariables implements IHas
             }
 
             Predicate<GameObject> restriction = GameObjectPredicates.restriction(getIsPresent2().split(","), activator, host, sa);
-            final int left = CountsAsCreatures.count(list.stream().filter(restriction).toList(), getIsPresent2(), activator, host, sa);
+            final int left = CountsAsCreatures.count(list.stream().filter(restriction).collect(Collectors.toList()), getIsPresent2(), activator, host, sa);
 
             final String rightString = this.getPresentCompare2().substring(2);
             int right = AbilityUtils.calculateAmount(host, rightString, sa);

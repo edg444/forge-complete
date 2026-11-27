@@ -1,6 +1,7 @@
 package forge.game.ability.effects;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,7 +107,7 @@ public class WhiteboardEffect extends SpellAbilityEffect {
         final Card.WhiteboardNote power = pickNumber(sa, p, notes, "Power");
         final Card.WhiteboardNote toughness = pickNumber(sa, p, notes, "Toughness");
         final List<Card.WhiteboardNote> abilities = new ArrayList<>();
-        final List<Card.WhiteboardNote> abilityNotes = new ArrayList<>(notes.stream().filter(n -> "Ability".equals(n.kind())).toList());
+        final List<Card.WhiteboardNote> abilityNotes = new ArrayList<>(notes.stream().filter(n -> "Ability".equals(n.kind())).collect(Collectors.toList()));
         while (abilities.size() < 2 && !abilityNotes.isEmpty()) {
             final Card.WhiteboardNote n;
             if (p.getController().isAI()) {
@@ -159,7 +160,7 @@ public class WhiteboardEffect extends SpellAbilityEffect {
     }
 
     private static Card.WhiteboardNote pickNumber(final SpellAbility sa, final Player p, final List<Card.WhiteboardNote> notes, final String kind) {
-        final List<Card.WhiteboardNote> numbers = notes.stream().filter(n -> kind.equals(n.kind())).toList();
+        final List<Card.WhiteboardNote> numbers = notes.stream().filter(n -> kind.equals(n.kind())).collect(Collectors.toList());
         if (numbers.isEmpty()) {
             return null;
         }

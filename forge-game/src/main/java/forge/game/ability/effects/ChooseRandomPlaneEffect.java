@@ -1,6 +1,7 @@
 package forge.game.ability.effects;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import forge.StaticData;
 import forge.game.GameLogEntryType;
@@ -26,7 +27,7 @@ public class ChooseRandomPlaneEffect extends SpellAbilityEffect {
     public void resolve(final SpellAbility sa) {
         final Card host = sa.getHostCard();
         final List<PaperCard> planes = StaticData.instance().getVariantCards().getUniqueCards().stream()
-                .filter(pc -> pc.getRules().getType().isPlane()).toList();
+                .filter(pc -> pc.getRules().getType().isPlane()).collect(Collectors.toList());
         final PaperCard plane = Aggregates.random(planes);
         if (plane == null) {
             return;

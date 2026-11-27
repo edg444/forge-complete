@@ -108,8 +108,9 @@ public final class VSubmenuConquestAether extends AConquestSubmenu {
             resetFilters();
         }
         pool.clear();
-        for (final PaperCard card : plane.getCardPool().getAllCards()) {
-            if (!model.hasUnlockedCard(card) && !card.getRules().getType().isBasicLand()) {
+        for (final PaperCard original : plane.getCardPool().getAllCards()) {
+            final PaperCard card = plane.awardablePrint(original);
+            if (card != null && !model.hasUnlockedCard(card) && !model.hasUnlockedCard(original) && !card.getRules().getType().isBasicLand()) {
                 pool.add(card);
             }
         }

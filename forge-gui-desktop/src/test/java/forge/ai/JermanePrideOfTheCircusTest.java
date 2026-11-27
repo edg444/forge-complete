@@ -1,6 +1,7 @@
 package forge.ai;
 
 import org.testng.AssertJUnit;
+import java.util.stream.Collectors;
 import org.testng.annotations.Test;
 
 import forge.game.Game;
@@ -29,7 +30,7 @@ public class JermanePrideOfTheCircusTest extends AITest {
 
     private SpellAbility ability(final Card jermane, final int index, final Player p, final Card target) {
         final SpellAbility sa = jermane.getSpellAbilities().stream().filter(SpellAbility::isActivatedAbility)
-                .toList().get(index);
+                .collect(Collectors.toList()).get(index);
         sa.setActivatingPlayer(p);
         sa.getTargets().add(target);
         return sa;

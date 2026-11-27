@@ -120,7 +120,7 @@ public final class VSubmenuConquestNew extends AConquestSubmenu {
         switch (step) {
             case 0 -> {
                 startingPlane = planeSelector.getSelectedPlane();
-                fill(commanderModel, lstCommanders, startingPlane.getCommanders());
+                fill(commanderModel, lstCommanders, startingPlane.getAwardableCommanders());
                 showStep(1);
             }
             case 1 -> {
@@ -129,7 +129,7 @@ public final class VSubmenuConquestNew extends AConquestSubmenu {
                     return;
                 }
                 startingCommander = sel.value();
-                fill(planeswalkerModel, lstPlaneswalkers, ConquestUtil.getStartingPlaneswalkerOptions(startingCommander));
+                fill(planeswalkerModel, lstPlaneswalkers, ConquestUtil.getStartingPlaneswalkerOptions(startingCommander, startingPlane));
                 showStep(2);
             }
             default -> {

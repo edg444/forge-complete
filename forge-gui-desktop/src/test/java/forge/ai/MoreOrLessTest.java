@@ -1,6 +1,7 @@
 package forge.ai;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
@@ -30,7 +31,7 @@ public class MoreOrLessTest extends AITest {
     }
 
     private static List<String> labels(Card c) {
-        return NumberInstances.of(c).stream().map(n -> n.label).toList();
+        return NumberInstances.of(c).stream().map(n -> n.label).collect(Collectors.toList());
     }
 
     private static void nudge(Game game, Card c, String labelStart, int to) {

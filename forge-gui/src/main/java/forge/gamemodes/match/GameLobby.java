@@ -1,6 +1,7 @@
 package forge.gamemodes.match;
 
 import com.google.common.collect.Lists;
+import java.util.stream.Collectors;
 import com.google.common.collect.Maps;
 import com.google.common.primitives.Ints;
 import org.apache.commons.lang3.StringUtils;
@@ -863,7 +864,7 @@ public abstract class GameLobby implements IHasGameType {
                 final List<String> heroCards = isAI && slot.getHeroCards().isEmpty()
                         ? HerosPathLobby.randomHeroCards(challenge) : slot.getHeroCards();
                 final String problem = HerosPath.heroCardProblem(challenge,
-                        HerosPath.parseHeroChoices(heroCards).stream().map(hc -> hc.card().getName()).toList());
+                        HerosPath.parseHeroChoices(heroCards).stream().map(hc -> hc.card().getName()).collect(Collectors.toList()));
                 if (problem != null) {
                     legalityProblems.add(legalityProblemEntry(name, challenge.getName() + ": " + problem));
                 }

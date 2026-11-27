@@ -1,6 +1,7 @@
 package forge.game.ability.effects;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.Set;
 
@@ -229,7 +230,7 @@ public class OpenBoosterEffect extends SpellAbilityEffect {
         List<String> codes = boosterSetCodes();
         if (sa.hasParam("Sets")) {
             final List<String> allowed = java.util.Arrays.asList(sa.getParam("Sets").split(","));
-            codes = allowed.stream().filter(codes::contains).toList();
+            codes = allowed.stream().filter(codes::contains).collect(Collectors.toList());
         }
         for (final String code : codes) {
             final CardEdition ed = StaticData.instance().getEditions().get(code);

@@ -1,6 +1,7 @@
 package forge.ai;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
@@ -55,7 +56,7 @@ public class SmeltHerdSawTest extends AITest {
         AssertJUnit.assertTrue(bauble.isInZone(ZoneType.Graveyard));
 
         AbilityUtils.resolve(face(card, CardStateName.RightSplit, ai));
-        List<Card> elks = ai.getCreaturesInPlay().stream().filter(c -> c.getType().hasCreatureType("Elk")).toList();
+        List<Card> elks = ai.getCreaturesInPlay().stream().filter(c -> c.getType().hasCreatureType("Elk")).collect(Collectors.toList());
         AssertJUnit.assertEquals(3, elks.size());
         AssertJUnit.assertEquals(2, elks.get(0).getNetPower());
         AssertJUnit.assertTrue(elks.get(0).getColor().hasGreen());
@@ -66,7 +67,7 @@ public class SmeltHerdSawTest extends AITest {
         saw.getTargets().add(bears);
         AbilityUtils.resolve(saw);
         AssertJUnit.assertTrue(bears.isInZone(ZoneType.Graveyard));
-        List<Card> halves = opp.getCreaturesInPlay().stream().filter(c -> c.getType().hasCreatureType("Half")).toList();
+        List<Card> halves = opp.getCreaturesInPlay().stream().filter(c -> c.getType().hasCreatureType("Half")).collect(Collectors.toList());
         AssertJUnit.assertEquals("its controller gets them", 2, halves.size());
         AssertJUnit.assertEquals(1, halves.get(0).getNetPower());
         AssertJUnit.assertEquals(2, halves.get(0).getNetToughness());

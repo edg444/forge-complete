@@ -1,6 +1,7 @@
 package forge.ai.ability;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -260,7 +261,7 @@ public final class ForcedCombatAi {
         if (opp == null) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }
-        final List<SpellAbility> tgts = chain(sa).stream().filter(SpellAbility::usesTargeting).toList();
+        final List<SpellAbility> tgts = chain(sa).stream().filter(SpellAbility::usesTargeting).collect(Collectors.toList());
         if (tgts.isEmpty()) {
             return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
         }

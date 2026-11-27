@@ -18,6 +18,7 @@
 package forge.game.spellability;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.function.Predicate;
 
 import com.google.common.collect.Sets;
@@ -456,7 +457,7 @@ public class SpellAbilityRestriction extends SpellAbilityVariables implements IH
             }
 
             Predicate<GameObject> restriction = GameObjectPredicates.restriction(getIsPresent().split(","), activator, c, sa);
-            final int left = CountsAsCreatures.count(list.stream().filter(restriction).toList(), getIsPresent(), activator, c, sa);
+            final int left = CountsAsCreatures.count(list.stream().filter(restriction).collect(Collectors.toList()), getIsPresent(), activator, c, sa);
 
             final String rightString = this.getPresentCompare().substring(2);
             int right = AbilityUtils.calculateAmount(c, rightString, sa);

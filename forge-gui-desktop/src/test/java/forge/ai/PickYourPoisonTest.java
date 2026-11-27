@@ -1,6 +1,7 @@
 package forge.ai;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
@@ -62,7 +63,7 @@ public class PickYourPoisonTest extends AITest {
         }
         AbilityUtils.resolve(sa);
         AssertJUnit.assertEquals(2, bears.getCounters(CounterEnumType.P1P1));
-        List<Card> snakes = ai.getCreaturesInPlay().stream().filter(c -> c.getType().hasCreatureType("Snake")).toList();
+        List<Card> snakes = ai.getCreaturesInPlay().stream().filter(c -> c.getType().hasCreatureType("Snake")).collect(Collectors.toList());
         AssertJUnit.assertEquals(1, snakes.size());
         AssertJUnit.assertEquals(0, snakes.get(0).getCounters(CounterEnumType.P1P1));
         AssertJUnit.assertTrue(snakes.get(0).hasKeyword("Deathtouch"));

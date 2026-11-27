@@ -1,6 +1,7 @@
 package forge.ai.ability;
 
 import forge.ai.AiTeams;
+import java.util.stream.Collectors;
 import forge.ai.AiAbilityDecision;
 import forge.ai.AiPlayDecision;
 import forge.ai.ComputerUtilCard;
@@ -189,14 +190,14 @@ public final class XChoiceAi {
             final java.util.List<Card> blockers = new java.util.ArrayList<>(CardLists.filter(opp.getCreaturesInPlay(), forge.game.combat.CombatUtil::canBlock));
             blockers.sort(java.util.Comparator.comparingInt((Card c) -> ComputerUtilCard.evaluateCreature(c)).reversed());
             for (final Card b : blockers) {
-                if (ForcedCombatAi.assault(attackers, blockers.stream().filter(x -> !picks.contains(x)).toList(), opp) >= opp.getLife()) {
+                if (ForcedCombatAi.assault(attackers, blockers.stream().filter(x -> !picks.contains(x)).collect(Collectors.toList()), opp) >= opp.getLife()) {
                     break;
                 }
                 if (options.contains(b) && picks.size() < max) {
                     picks.add(b);
                 }
             }
-            final java.util.List<Card> left = blockers.stream().filter(x -> !picks.contains(x)).toList();
+            final java.util.List<Card> left = blockers.stream().filter(x -> !picks.contains(x)).collect(Collectors.toList());
             if (picks.isEmpty() || ForcedCombatAi.assault(attackers, left, opp) < opp.getLife()) {
                 picks.clear();
             }

@@ -1,6 +1,7 @@
 package forge.ai;
 
 import org.testng.AssertJUnit;
+import java.util.stream.Collectors;
 import org.testng.annotations.Test;
 
 import forge.game.Game;
@@ -18,7 +19,7 @@ import forge.game.zone.ZoneType;
 public class UrzasFunHouseTest extends AITest {
 
     private SpellAbility ability(final Card c, final int index, final Player p) {
-        final SpellAbility sa = c.getSpellAbilities().stream().filter(SpellAbility::isActivatedAbility).toList().get(index);
+        final SpellAbility sa = c.getSpellAbilities().stream().filter(SpellAbility::isActivatedAbility).collect(Collectors.toList()).get(index);
         sa.setActivatingPlayer(p);
         return sa;
     }

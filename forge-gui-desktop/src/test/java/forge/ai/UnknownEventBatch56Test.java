@@ -1,6 +1,7 @@
 package forge.ai;
 
 import org.testng.AssertJUnit;
+import java.util.stream.Collectors;
 import org.testng.annotations.Test;
 
 import forge.game.Game;
@@ -85,7 +86,7 @@ public class UnknownEventBatch56Test extends AITest {
         addCardToZone("Island", ai, ZoneType.Library);
         addCardToZone("Forest", ai, ZoneType.Library);
         addCardToZone("Mountain", ai, ZoneType.Library);
-        final java.util.List<String> before = ai.getCardsIn(ZoneType.Library).stream().map(Card::getName).toList();
+        final java.util.List<String> before = ai.getCardsIn(ZoneType.Library).stream().map(Card::getName).collect(Collectors.toList());
         final Card wurm = addCard("Craw Wurm", ai);
         final Card vanguard = addCard("Elite Vanguard", ai);
         final Card welcome = addCard("Welcome to Australia", ai);
@@ -95,7 +96,7 @@ public class UnknownEventBatch56Test extends AITest {
         AssertJUnit.assertTrue(wurm.hasKeyword(Keyword.DEATHTOUCH));
         AssertJUnit.assertFalse("Humans don't", vanguard.hasKeyword(Keyword.DEATHTOUCH));
         AbilityUtils.resolve(svar(welcome, "TrigFlip", ai));
-        final java.util.List<String> after = ai.getCardsIn(ZoneType.Library).stream().map(Card::getName).toList();
+        final java.util.List<String> after = ai.getCardsIn(ZoneType.Library).stream().map(Card::getName).collect(Collectors.toList());
         final java.util.List<String> reversed = new java.util.ArrayList<>(before);
         java.util.Collections.reverse(reversed);
         AssertJUnit.assertEquals(reversed, after);

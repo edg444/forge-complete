@@ -1,6 +1,7 @@
 package forge.game.staticability;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -118,7 +119,7 @@ public class StaticAbilityCastAs {
                 }
                 // Enolc: CastAs$ YourCommander - any of the activator's commanders
                 final List<String> names = "YourCommander".equals(name)
-                        ? activator.getCommanders().stream().map(Card::getName).filter(n -> !n.equals(card.getName())).toList()
+                        ? activator.getCommanders().stream().map(Card::getName).filter(n -> !n.equals(card.getName())).collect(Collectors.toList())
                         : List.of(name);
                 for (final String each : names) {
                     List<SpellAbility> spells = castAsSpells(card, activator, each);
@@ -236,7 +237,7 @@ public class StaticAbilityCastAs {
             });
         }
         final List<String> used = stAb != null && stAb.hasParam("NoRepeat") ? stAb.getHostCard().getNamedCards() : List.of();
-        return all.stream().filter(f -> !f.getName().equals(card.getName()) && !used.contains(f.getName())).toList();
+        return all.stream().filter(f -> !f.getName().equals(card.getName()) && !used.contains(f.getName())).collect(Collectors.toList());
     }
 
     private static synchronized boolean usedThisTurn(final StaticAbility stAb) {

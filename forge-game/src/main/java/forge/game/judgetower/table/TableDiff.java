@@ -1,6 +1,7 @@
 package forge.game.judgetower.table;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +48,7 @@ public final class TableDiff {
         // only the order of what's in the Tower on both sides: a card that's in the wrong place has its own difference
         final Set<Integer> inBoth = new HashSet<>(table.tower);
         inBoth.retainAll(judge.tower);
-        if (!table.tower.stream().filter(inBoth::contains).toList().equals(judge.tower.stream().filter(inBoth::contains).toList())) {
+        if (!table.tower.stream().filter(inBoth::contains).collect(Collectors.toList()).equals(judge.tower.stream().filter(inBoth::contains).collect(Collectors.toList()))) {
             items.add(new Item(Kind.TOWER, -1, -1, "The Tower isn't in the order it should be."));
         }
         for (int i = 0; i < judge.players.size(); i++) {

@@ -1,6 +1,7 @@
 package forge.ai;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
@@ -42,7 +43,7 @@ public class WickerPickerTest extends AITest {
                 .noneMatch(o -> o.getType() == OptionalCost.StickerKicker1));
 
         final SpellAbility kicked = GameActionUtil.addOptionalCosts(cast,
-                options.stream().filter(o -> o.getType() == OptionalCost.StickerKicker1).toList());
+                options.stream().filter(o -> o.getType() == OptionalCost.StickerKicker1).collect(Collectors.toList()));
         kicked.setActivatingPlayer(ai);
         final int tickets = ai.getCounters(CounterEnumType.TICKET);
         AssertJUnit.assertTrue(ComputerUtil.handlePlayingSpellAbility(ai, kicked, null));

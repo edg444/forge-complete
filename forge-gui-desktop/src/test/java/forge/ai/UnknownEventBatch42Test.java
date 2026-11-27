@@ -1,6 +1,7 @@
 package forge.ai;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
@@ -72,7 +73,7 @@ public class UnknownEventBatch42Test extends AITest {
         cast.getTargets().add(ooze);
         AbilityUtils.resolve(cast);
         AssertJUnit.assertEquals("no damage, and a counter moved off", 0, ooze.getDamage());
-        final List<Card> tokens = ai.getCardsIn(ZoneType.Battlefield).stream().filter(Card::isToken).toList();
+        final List<Card> tokens = ai.getCardsIn(ZoneType.Battlefield).stream().filter(Card::isToken).collect(Collectors.toList());
         AssertJUnit.assertEquals(1, tokens.size());
         AssertJUnit.assertTrue(tokens.get(0).getNetPower() >= 1);
         AssertJUnit.assertEquals(ooze.getNetPower() + tokens.get(0).getNetPower(), 4);

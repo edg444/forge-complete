@@ -1,6 +1,7 @@
 package forge.ai;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
@@ -44,7 +45,7 @@ public class StartFireTest extends AITest {
         SpellAbility start = card.getState(CardStateName.LeftSplit).getFirstAbility();
         start.setActivatingPlayer(ai);
         AbilityUtils.resolve(start);
-        List<Card> warriors = ai.getCreaturesInPlay().stream().filter(c -> c.getType().hasCreatureType("Warrior")).toList();
+        List<Card> warriors = ai.getCreaturesInPlay().stream().filter(c -> c.getType().hasCreatureType("Warrior")).collect(Collectors.toList());
         AssertJUnit.assertEquals(2, warriors.size());
         AssertJUnit.assertTrue(warriors.get(0).hasKeyword(Keyword.VIGILANCE));
         AssertJUnit.assertTrue(warriors.get(0).getColor().hasWhite());

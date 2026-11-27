@@ -2904,6 +2904,7 @@ public class AiController {
             cfg.rolloutsPerCandidate = Math.max(2, cfg.rolloutsPerCandidate - flatMcSlowTrips);
             cfg.extraRounds = Math.min(cfg.extraRounds, 1);
             cfg.opponentLookaheadPercent = 0;
+            cfg.opponentResponses = false;
         }
         final long left = cfg.turnBudgetNanos - flatMcTurnSpentNanos;
         if (left <= 0 || cfg.budgetNanos <= 0) {

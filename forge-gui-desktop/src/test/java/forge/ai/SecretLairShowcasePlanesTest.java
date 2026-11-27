@@ -1,6 +1,7 @@
 package forge.ai;
 
 import forge.card.ICardFace;
+import java.util.stream.Collectors;
 import forge.game.Game;
 import forge.game.PlanarDice;
 import forge.game.card.Card;
@@ -267,12 +268,12 @@ public class SecretLairShowcasePlanesTest extends AITest {
         Card bolt = addCardToZone("Lightning Bolt", ai, ZoneType.Hand);
         planeswalk(game, ai, "Imaginary Friends (Plane)");
         List<String> names = bolt.getAllPossibleAbilities(ai, false).stream().map(SpellAbility::getCastAs)
-                .filter(java.util.Objects::nonNull).distinct().toList();
+                .filter(java.util.Objects::nonNull).distinct().collect(Collectors.toList());
         AssertJUnit.assertEquals(names.toString(), 3, names.size());
         List<String> playable = StaticAbilityCastAs.aiPlayableChoices(bolt);
         AssertJUnit.assertTrue(playable.containsAll(names));
         List<String> again = bolt.getAllPossibleAbilities(ai, false).stream().map(SpellAbility::getCastAs)
-                .filter(java.util.Objects::nonNull).distinct().toList();
+                .filter(java.util.Objects::nonNull).distinct().collect(Collectors.toList());
         AssertJUnit.assertEquals("same picks all turn", names, again);
     }
 

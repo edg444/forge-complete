@@ -1,6 +1,7 @@
 package forge.game.ability.effects;
 
 import java.util.Comparator;
+import java.util.stream.Collectors;
 import java.util.List;
 import java.util.Map;
 
@@ -357,7 +358,7 @@ public class CharmEffect extends SpellAbilityEffect {
             num = Math.min(num, choices.size());
         }
 
-        if (sa.hasParam("PawprintExact") && !canTotalExactly(choices.stream().map(CharmEffect::pawprintValue).toList(),
+        if (sa.hasParam("PawprintExact") && !canTotalExactly(choices.stream().map(CharmEffect::pawprintValue).collect(Collectors.toList()),
                 AbilityUtils.calculateAmount(source, sa.getParam("Pawprint"), sa), canRepeat)) {
             return false;
         }

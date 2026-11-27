@@ -1,6 +1,7 @@
 package forge.game.ability.effects;
 
 import java.util.LinkedHashSet;
+import java.util.stream.Collectors;
 import java.util.List;
 import java.util.Set;
 
@@ -42,7 +43,7 @@ public class BuddyListEffect extends SpellAbilityEffect {
         final Player p = sa.getActivatingPlayer();
         final Set<String> list = buddyListOf(p);
         for (final Card c : AbilityUtils.getDefinedCards(sa.getHostCard(), sa.getParamOrDefault("Defined", "Self"), sa)) {
-            final List<String> unwritten = c.getType().getCreatureTypes().stream().filter(t -> !list.contains(t)).toList();
+            final List<String> unwritten = c.getType().getCreatureTypes().stream().filter(t -> !list.contains(t)).collect(Collectors.toList());
             if (unwritten.isEmpty()) {
                 continue;
             }

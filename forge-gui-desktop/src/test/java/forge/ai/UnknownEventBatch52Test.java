@@ -1,6 +1,7 @@
 package forge.ai;
 
 import org.testng.AssertJUnit;
+import java.util.stream.Collectors;
 import org.testng.annotations.Test;
 
 import forge.game.Game;
@@ -107,7 +108,7 @@ public class UnknownEventBatch52Test extends AITest {
         copy.setActivatingPlayer(ai);
         AbilityUtils.resolve(copy);
         AssertJUnit.assertEquals("Zrodigal Sorcerer", cos.getName());
-        final java.util.List<Trigger> copiers = cos.getTriggers().stream().filter(t -> t.hasParam("SharedLimit")).toList();
+        final java.util.List<Trigger> copiers = cos.getTriggers().stream().filter(t -> t.hasParam("SharedLimit")).collect(Collectors.toList());
         AssertJUnit.assertEquals(2, copiers.size());
         AssertJUnit.assertEquals(1, copiers.get(1).limitByActivations(1));
         cos.addAbilityActivated(copiers.get(0).ensureAbility());
