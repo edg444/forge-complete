@@ -491,6 +491,8 @@ off, a human plays through the prompts of phases 1 and 2).
 
 ### Unreleased
 
+### 2026-11-27, fiftieth deploy (desktop, Android, GitHub) - Planar Conquest on desktop, upstream merges
+
 - **Planar Conquest on desktop** (branch `conquest-desktop`): upstream only ever built the mode's screens for
   mobile, so desktop had no way to play it. A new *Planar Conquest* home menu group ports every mobile screen to
   Swing: New Conquest (plane, commander, planeswalker), Load (rename, delete), the Multiverse (region art grid with
@@ -503,6 +505,31 @@ off, a human plays through the prompts of phases 1 and 2).
   through the shared conquest controller. Plane and card art use mobile's crops, and the conquest sprites the
   desktop skin never loaded are read straight from the skin folder. A battle left without its win/lose screen no
   longer blocks the next one.
+
+- **Upstream merge** (33 commits, 12 conflicts): Rogue Commander on mobile (#13023, and its Android start fix
+  #13078), planar-die AI that rolls in the main phases when a plane's chaos ability is worth it (#13024, with
+  `HasValidCardInZone`/`RollInMain1` params on most planes), AI combo sequencing (#13004), Fireball and Griselbrand
+  AI, Meekstone's creature counts, Universes Beyond excluded from card art and Adventure (#12388), plainer draw-cost
+  and untap prompts, and a game-end crash when a layout gap can't be filled. Esper, Grand Ossuary, Raven's Run and
+  The Great Forest took upstream's AI params and mechanics and kept the fork's printed-text "roll {CHAOS}" triggers;
+  Elixir of Immortality, Nihil Spellbomb and Ursine Champion took upstream's mechanics with the fork's Scryfall
+  wording. Upstream's SacEachValid crash fix is already covered by the fork's guarded `SacMessage` split.
+- **Second upstream merge** (11 commits, 2 conflicts): Un-card, digital and Alchemy exclusions became print tags
+  (#13079: Excluded Sets gains Funny/Digital/Rebalanced, the Enable Non-Legal Cards setting is gone), Rogue Commander
+  fixes (Android crash and New Run freeze, negative-life wins, boss curses, a free first mulligan), FlatMC rollout
+  fixes, Dawnbreak Reclaimer, and UNK edition updates. CardDb lost its filtered-card set; the fork keeps its
+  shared-name printing filter (Artist Alley). **Exclude Funny Cards** (the fork setting) now also honors upstream's
+  Funny print tag, and reads the `[eternal]` section through `CardEdition.getEternalCards()`. Desktop Planar Conquest
+  follows upstream's mobile changes: awardable commanders, planeswalker options per plane, awardable prints in the
+  Aether. Upstream's new `androidStreamToList` checkstyle rule (Stream.toList() is missing before Android 14) caught
+  34 fork lines, now `collect(Collectors.toList())`.
+- **Tests run with their own profile now** (upstream surefire config: `user.home`/`APPDATA` point at
+  `target/test-home`), so they no longer see the user's art preference or custom editions. Graveyard Busybody's tests
+  had relied on that preference (the default print is now The Zeta Set, which has no flavor text) and pin flavored
+  printings instead.
+- **Deck import reads two more Un-card names**: the card-name pattern now takes `®` and `;`, for "The Ultimate
+  Nightmare of Wizards of the Coast® Customer Service" and "TL;DR". Upstream's all-names test found it once tests
+  loaded Un-cards.
 
 ### 2026-11-23, forty-ninth deploy (desktop, Android, GitHub) - upstream merge
 
